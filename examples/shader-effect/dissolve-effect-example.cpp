@@ -1,0 +1,405 @@
+//
+// Copyright (c) 2014 Samsung Electronics Co., Ltd.
+//
+// Licensed under the Flora License, Version 1.0 (the License);
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://floralicense.org/license/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an AS IS BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+// EXTERNAL INCLUDES
+#include <math.h>
+
+// INTERNAL INCLUDES
+#include "../shared/view.h"
+
+#include <dali/dali.h>
+#include <dali-toolkit/dali-toolkit.h>
+
+using namespace Dali;
+
+// LOCAL STUFF
+namespace
+{
+
+const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char* APPLICATION_TITLE_HIGHP( "Dissolve Effect(highp)" );
+const char* APPLICATION_TITLE_MEDIUMP( "Dissolve Effect(mediump)" );
+const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon_mode.png" );
+const char* PLAY_ICON( DALI_IMAGE_DIR "icon-play.png" );
+const char* STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
+
+const char* IMAGES[] =
+{
+  DALI_IMAGE_DIR "gallery-large-1.jpg",
+  DALI_IMAGE_DIR "gallery-large-2.jpg",
+  DALI_IMAGE_DIR "gallery-large-3.jpg",
+  DALI_IMAGE_DIR "gallery-large-4.jpg",
+  DALI_IMAGE_DIR "gallery-large-5.jpg",
+  DALI_IMAGE_DIR "gallery-large-6.jpg",
+  DALI_IMAGE_DIR "gallery-large-7.jpg",
+  DALI_IMAGE_DIR "gallery-large-8.jpg",
+  DALI_IMAGE_DIR "gallery-large-9.jpg",
+  DALI_IMAGE_DIR "gallery-large-10.jpg",
+  DALI_IMAGE_DIR "gallery-large-11.jpg",
+  DALI_IMAGE_DIR "gallery-large-12.jpg",
+  DALI_IMAGE_DIR "gallery-large-13.jpg",
+  DALI_IMAGE_DIR "gallery-large-14.jpg",
+  DALI_IMAGE_DIR "gallery-large-15.jpg",
+  DALI_IMAGE_DIR "gallery-large-16.jpg",
+  DALI_IMAGE_DIR "gallery-large-17.jpg",
+  DALI_IMAGE_DIR "gallery-large-18.jpg",
+  DALI_IMAGE_DIR "gallery-large-19.jpg",
+  DALI_IMAGE_DIR "gallery-large-20.jpg",
+  DALI_IMAGE_DIR "gallery-large-21.jpg",
+};
+
+const int NUM_IMAGES( sizeof(IMAGES) / sizeof(IMAGES[0]) );
+
+// The duration of the current image staying on screen when slideshow is on
+const int VIEWINGTIME = 2000; // 2 seconds
+
+const float TRANSITION_DURATION = 2.5f; //2.5 second
+
+const float INITIAL_DEPTH = -10.0f;
+} // namespace
+
+class DissolveEffectApp : public ConnectionTracker
+{
+public:
+
+  /**
+   * Constructor
+   * @param application class, stored as reference
+   */
+  DissolveEffectApp( Application& application );
+
+  ~DissolveEffectApp();
+
+private:
+
+  /**
+   * This method gets called once the main loop of application is up and running
+   */
+  void OnInit( Application& application );
+  /**
+   * PanGesture callback. This method gets called when the pan gesture is detected.
+   * @param[in] actor The actor receiving the pan gesture.
+   * @param[in] gesture The detected pan gesture.
+   */
+  void OnPanGesture( Actor actor, PanGesture gesture );
+
+  /**
+   * Set up the animations for transition
+   * @param[in] position The point ( locates within rectange {(0,0),(0,1),(1,0),(1,1)} ) passing through the central line of the dissolve effect
+   * @param[in] displacement The direction of the central line of the dissolve effect
+   */
+  void StartTransition(Vector2 position, Vector2 displacement);
+  /**
+   * Callback function of effect-switch button
+   * Change the precision of the effect shader when the effect button is clicked
+   * @param[in] button The handle of the clicked button
+   */
+  bool OnEffectButtonClicked( Toolkit::Button button );
+  /**
+   * Callback function of slideshow button
+   * Start or stop the automatical image display when the slideshow button is clicked
+   * @param[in] button The handle of the clicked button
+   */
+  bool OnSildeshowButtonClicked( Toolkit::Button button );
+  /**
+   * Callback function of cube transition completed signal
+   * @param[in] effect The cube effect used for the transition
+   * @param[in] imageActor The target imageActor of the completed transition
+   */
+  void OnTransitionCompleted(Animation& source);
+  /**
+   * Callback function of timer tick
+   * The timer is used to count the image display duration after cube transition in slideshow,
+   */
+  bool OnTimerTick();
+
+  /**
+   * Main key event handler
+   */
+  void OnKeyEvent(const KeyEvent& event);
+
+private:
+  Application&                    mApplication;
+  Toolkit::View                   mView;
+  Toolkit::ToolBar                mToolBar;
+  Layer                           mContent;
+  Toolkit::TextView               mTitleActor;
+
+  ImageActor                      mCurrentImage;
+  ImageActor                      mNextImage;
+  unsigned int                    mIndex;
+  Constraint                      mSizeConstraint;
+
+  Toolkit::DissolveEffect         mCurrentImageEffect;
+  Toolkit::DissolveEffect         mNextImageEffect;
+  bool                            mUseHighPrecision;
+  Animation                       mAnimation;
+
+  PanGestureDetector              mPanGestureDetector;
+  bool                            mIsTransiting;
+
+  bool                            mSlideshow;
+  Timer                           mViewTimer;
+  bool                            mTimerReady;
+  unsigned int                    mCentralLineIndex;
+
+  Image                           mIconPlay;
+  Image                           mIconStop;
+  Toolkit::PushButton             mPlayStopButton;
+};
+
+DissolveEffectApp::DissolveEffectApp( Application& application )
+: mApplication( application ),
+  mIndex( 0 ),
+  mUseHighPrecision(true),
+  mIsTransiting( false ),
+  mSlideshow( false ),
+  mTimerReady( false ),
+  mCentralLineIndex( 0 )
+{
+  mApplication.InitSignal().Connect( this, &DissolveEffectApp::OnInit );
+}
+
+DissolveEffectApp::~DissolveEffectApp()
+{
+  //Nothing to do
+}
+
+void DissolveEffectApp::OnInit( Application& application )
+{
+  Stage::GetCurrent().KeyEventSignal().Connect(this, &DissolveEffectApp::OnKeyEvent);
+
+  // Creates a default view with a default tool bar, the view is added to the stage.
+  mContent = DemoHelper::CreateView( application, mView,mToolBar, "", TOOLBAR_IMAGE, "" );
+
+  // Add an effect-changing button on the right of the tool bar.
+  Image imageChangeEffect = Image::New( CHANGE_EFFECT_IMAGE );
+  Toolkit::PushButton effectChangeButton = Toolkit::PushButton::New();
+  effectChangeButton.SetBackgroundImage(imageChangeEffect);
+  effectChangeButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnEffectButtonClicked );
+  mToolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+
+  // Add title to the tool bar.
+  mTitleActor = Toolkit::TextView::New();
+  mTitleActor.SetText( APPLICATION_TITLE_HIGHP );
+  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+  mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
+
+  // Add an slide-show button on the right of the title
+  mIconPlay = Image::New( PLAY_ICON );
+  mIconStop = Image::New( STOP_ICON );
+  mPlayStopButton = Toolkit::PushButton::New();
+  mPlayStopButton.SetBackgroundImage( mIconPlay );
+  mPlayStopButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnSildeshowButtonClicked );
+  mToolBar.AddControl( mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
+
+  // use pan gesture to detect the cursor or finger movement
+  mPanGestureDetector = PanGestureDetector::New();
+  mPanGestureDetector.DetectedSignal().Connect( this, &DissolveEffectApp::OnPanGesture );
+
+  // create the dissolve effect object
+  mCurrentImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
+  mNextImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
+
+
+  mViewTimer = Timer::New( VIEWINGTIME );
+  mViewTimer.TickSignal().Connect( this, &DissolveEffectApp::OnTimerTick );
+  mTimerReady = true;
+
+  mSizeConstraint= Constraint::New<Vector3>( Actor::SCALE, LocalSource( Actor::SIZE ), ParentSource( Actor::SIZE ), ScaleToFitKeepAspectRatioConstraint() );
+
+  // show the first image
+  mCurrentImage = ImageActor::New( Image::New( IMAGES[mIndex] ) );
+  mCurrentImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
+  mCurrentImage.ApplyConstraint( mSizeConstraint );
+  mContent.Add(mCurrentImage);
+  mPanGestureDetector.Attach( mCurrentImage );
+}
+
+// signal handler, called when the pan gesture is detected
+void DissolveEffectApp::OnPanGesture( Actor actor, PanGesture gesture )
+{
+  // does not response when the animation has not finished
+  if( mIsTransiting || mSlideshow )
+  {
+    return;
+  }
+
+  if( gesture.state == Gesture::Continuing )
+  {
+    if( gesture.displacement.x < 0)
+    {
+      mIndex = (mIndex + 1)%NUM_IMAGES;
+    }
+    else
+    {
+      mIndex = (mIndex + NUM_IMAGES -1)%NUM_IMAGES;
+    }
+
+    Image image = Image::New( IMAGES[ mIndex ] );
+    mNextImage = ImageActor::New( image );
+    mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
+    mNextImage.ApplyConstraint( mSizeConstraint );
+    mNextImage.SetZ(INITIAL_DEPTH);
+    mContent.Add(mNextImage);
+    Vector2 size = Vector2( mCurrentImage.GetCurrentSize() );
+    StartTransition( gesture.position / size, gesture.displacement * Vector2(1.0, size.x/size.y));
+  }
+}
+
+void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
+{
+  mAnimation = Animation::New(TRANSITION_DURATION);
+
+  mCurrentImageEffect.SetCentralLine(position,displacement);
+  mCurrentImageEffect.SetDistortion(0.0f);
+  mCurrentImage.SetShaderEffect(mCurrentImageEffect);
+  mAnimation.AnimateTo( Property(mCurrentImageEffect, mCurrentImageEffect.GetDistortionPropertyName()), 1.0f, AlphaFunctions::Linear );
+
+  mNextImage.SetOpacity(0.0f);
+  mAnimation.OpacityTo( mNextImage, 1.0, AlphaFunctions::Linear );
+
+  if(mUseHighPrecision)
+  {
+    mNextImageEffect.SetCentralLine(position,-displacement);
+    mNextImageEffect.SetDistortion(1.0f);
+    mNextImage.SetShaderEffect(mNextImageEffect);
+    mAnimation.AnimateTo( Property(mNextImageEffect, mNextImageEffect.GetDistortionPropertyName()), 0.0f, AlphaFunctions::Linear );
+  }
+  else
+  {
+    mAnimation.MoveTo(mNextImage, Vector3(0.0f, 0.0f, 0.0f), AlphaFunctions::Linear);
+  }
+
+  mAnimation.FinishedSignal().Connect( this, &DissolveEffectApp::OnTransitionCompleted );
+  mAnimation.Play();
+  mIsTransiting = true;
+}
+
+void DissolveEffectApp::OnKeyEvent(const KeyEvent& event)
+{
+  if(event.state == KeyEvent::Down)
+  {
+    if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+    {
+      mApplication.Quit();
+    }
+  }
+}
+
+bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
+{
+  mUseHighPrecision = !mUseHighPrecision;
+  mCurrentImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
+  if(mUseHighPrecision)
+  {
+    mTitleActor.SetText( APPLICATION_TITLE_HIGHP );
+  }
+  else
+  {
+    mTitleActor.SetText( APPLICATION_TITLE_MEDIUMP );
+  }
+  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+
+  return true;
+}
+
+bool DissolveEffectApp::OnSildeshowButtonClicked( Toolkit::Button button )
+{
+  mSlideshow = !mSlideshow;
+  if( mSlideshow )
+  {
+    mPlayStopButton.SetBackgroundImage( mIconStop );
+    mPanGestureDetector.Detach( mContent );
+    mViewTimer.Start();
+    mTimerReady = false;
+  }
+  else
+  {
+    mPlayStopButton.SetBackgroundImage( mIconPlay );
+    mTimerReady = true;
+    mPanGestureDetector.Attach( mContent );
+  }
+  return true;
+}
+
+void DissolveEffectApp::OnTransitionCompleted( Animation& source )
+{
+  mCurrentImage.RemoveShaderEffect();
+  mNextImage.RemoveShaderEffect();
+  mContent.Remove(mCurrentImage);
+  mPanGestureDetector.Detach( mCurrentImage );
+  mCurrentImage = mNextImage;
+  mPanGestureDetector.Attach( mCurrentImage );
+  mIsTransiting = false;
+
+  if( mSlideshow)
+  {
+    mViewTimer.Start();
+    mTimerReady = false;
+  }
+}
+
+bool DissolveEffectApp::OnTimerTick()
+{
+  mTimerReady = true;
+  if(mSlideshow)
+  {
+    mIndex = (mIndex + 1)%NUM_IMAGES;
+    Image image = Image::New( IMAGES[ mIndex ] );
+    mNextImage = ImageActor::New( image );
+    mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
+    mNextImage.ApplyConstraint( mSizeConstraint );
+    mNextImage.SetZ(INITIAL_DEPTH);
+    mContent.Add(mNextImage);
+    switch(mCentralLineIndex%4)
+    {
+      case 0:
+      {
+        StartTransition(Vector2(1.0f,0.5f), Vector2(-1.0f, 0.0f));
+        break;
+      }
+      case 1:
+      {
+        StartTransition(Vector2(0.5f,0.0f), Vector2(0.0f, 1.0f));
+        break;
+      }
+      case 2:
+      {
+        StartTransition(Vector2(0.0f,0.5f), Vector2(1.0f, 0.0f));
+        break;
+      }
+      default:
+      {
+        StartTransition(Vector2(0.5f,1.0f), Vector2(0.0f, -1.0f));
+        break;
+      }
+
+    }
+    mCentralLineIndex++;
+  }
+  return false;   //return false to stop the timer
+}
+
+// Entry point for Linux & SLP applications
+int main( int argc, char **argv )
+{
+  Application application = Application::New( &argc, &argv );
+  DissolveEffectApp test( application );
+  application.MainLoop();
+
+  return 0;
+}

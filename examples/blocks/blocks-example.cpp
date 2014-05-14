@@ -1,0 +1,917 @@
+//
+// Copyright (c) 2014 Samsung Electronics Co., Ltd.
+//
+// Licensed under the Flora License, Version 1.0 (the License);
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://floralicense.org/license/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an AS IS BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+#include <boost/any.hpp>
+#include <boost/function.hpp>
+#include <dali/dali.h>
+#include <dali-toolkit/dali-toolkit.h>
+#include "../shared/view.h"
+
+using namespace std;
+using namespace Dali;
+using namespace Dali::Toolkit;
+using namespace DemoHelper;
+
+namespace
+{
+const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
+const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char* APPLICATION_TITLE( "DALi Blocks" );
+const char* BALL_IMAGE = DALI_IMAGE_DIR "ball.png";
+const char* PADDLE_IMAGE = DALI_IMAGE_DIR "paddle.png";
+const char* PADDLE_HANDLE_IMAGE = DALI_IMAGE_DIR "paddle_handle.png";
+
+const char* BRICK_IMAGE_PATH[] =    { DALI_IMAGE_DIR "brick1.png",
+                                      DALI_IMAGE_DIR "brick2.png",
+                                      DALI_IMAGE_DIR "brick3.png",
+                                      DALI_IMAGE_DIR "brick4.png" };
+
+const int TOTAL_BRICKS(4);                                                  ///< Total bricks in game.
+const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
+
+const float SCREEN_MARGIN = 10.0f;                                          ///< Margin indentation around screen
+const Vector3 MENU_BUTTON_SIZE = Vector3(0.15f, 0.05f, 1.0f);               ///< Standard Menu Buttons.
+
+const float MAX_ANIMATION_DURATION = 60.0f;                                 ///< 60 seconds animations. Long enough for ball to hit an obstacle.
+const float BALL_VELOCITY = 300.0f;                                         ///< Ball velocity in pixels/second.
+const float MAX_VELOCITY = 500.0f;                                          ///< Max. velocity in pixels/second.
+const Vector3 PADDLE_COLLISION_MARGIN(0.0f, 0.0f, 0.0f);                    ///< Collision margin for ball-paddle detection.
+const Vector3 BRICK_COLLISION_MARGIN(0.0f, 0.0f, 0.0f);                     ///< Collision margin for ball-brick detection.
+const Vector3 INITIAL_BALL_DIRECTION(1.0f, 1.0f, 0.0f);                     ///< Initial ball direction.
+
+const std::string WOBBLE_PROPERTY_NAME("wobble-property");                  ///< Wobble property name.
+const std::string COLLISION_PROPERTY_NAME("collision-property");            ///< Collision property name.
+
+const Vector2 BRICK_SIZE(0.1f, 0.05f );                                     ///< Brick size relative to width of stage.
+const Vector2 BALL_SIZE( 0.05f, 0.05f );                                    ///< Ball size relative to width of stage.
+const Vector2 PADDLE_SIZE( 0.2f, 0.05f );                                   ///< Paddle size relative to width of stage.
+const Vector2 PADDLE_HANDLE_SIZE( 0.3f, 0.3f );                             ///< Paddle handle size relative to width of stage.
+const Vector2 BALL_START_POSITION(0.5f, 0.8f);                              ///< Ball start position relative to stage size.
+const Vector2 PADDLE_START_POSITION(0.5f, 0.9f);                            ///< Paddler start position relative to stage size.
+const Vector2 PADDLE_HIT_MARGIN( 0.1, 0.15f );                              ///< Extra hit Area for Paddle when touching.
+
+const int TOTAL_LIVES(3);                                                   ///< Total lives in game before it's game over!
+const int TOTAL_LEVELS(3);                                                  ///< 3 Levels total, then repeats.
+
+// constraints ////////////////////////////////////////////////////////////////
+
+/**
+ * CollisionConstraint generates a collision vector
+ * between two actors a and b, assuming they're rectangular
+ * based on their size.
+ */
+struct CollisionConstraint
+{
+  /**
+   * Collision Constraint constructor
+   * The adjust (optional) parameter can be used to add a margin
+   * to the actors. A +ve size will result in larger collisions,
+   * while a -ve size will result in tighter collisions.
+   *
+   * @param[in] adjust (optional) Adjusts the rectangular size detection
+   */
+  CollisionConstraint(Vector3 adjust = Vector3::ZERO)
+  : mAdjust(adjust)
+  {
+  }
+
+  /**
+   * Generates collision vector indicating whether Actor's A and B
+   * have overlapped eachother, and the relative position of Actor B to A.
+   *
+   * @param[in] current The current collision-property (ignored)
+   * @param[in] propertyA Actor A's Position property.
+   * @param[in] propertyB Actor B's Position property.
+   * @param[in] propertySizeA Actor A's Size property.
+   * @param[in] propertySizeB Actor B's Size property.
+   * @return The collision vector is returned.
+   */
+  Vector3 operator()(const Vector3& current,
+                     const PropertyInput& propertyA,
+                     const PropertyInput& propertyB,
+                     const PropertyInput& propertySizeA,
+                     const PropertyInput& propertySizeB)
+  {
+    const Vector3& a = propertyA.GetVector3();
+    const Vector3& b = propertyB.GetVector3();
+    const Vector3& sizeA = propertySizeA.GetVector3();
+    const Vector3& sizeB = propertySizeB.GetVector3();
+    const Vector3 sizeComb = (sizeA + sizeB + mAdjust) * 0.5f;
+
+    // get collision relative to a.
+    Vector3 delta = b - a;
+
+    // Check if not overlapping Actors.
+    if( (fabsf(delta.x) > sizeComb.width) ||
+        (fabsf(delta.y) > sizeComb.height) )
+    {
+      delta = Vector3::ZERO; // not overlapping
+    }
+
+    return delta; // overlapping, return overlap vector relative to actor a.
+  }
+
+  const Vector3 mAdjust;            ///< Size Adjustment value
+};
+
+/**
+ * CollisionCircleRectangleConstraint generates a collision vector
+ * between two actors a (circle) and b (rectangle)
+ */
+struct CollisionCircleRectangleConstraint
+{
+  /**
+   * Collision Constraint constructor
+   * The adjust (optional) parameter can be used to add a margin
+   * to the actors. A +ve size will result in larger collisions,
+   * while a -ve size will result in tighter collisions.
+   *
+   * @param[in] adjustPosition (optional) Adjusts the position offset of detection
+   * @param[in] adjustSize (optional) Adjusts the rectangular size of detection
+   */
+  CollisionCircleRectangleConstraint(Vector3 adjustPosition = Vector3::ZERO,
+                                     Vector3 adjustSize = Vector3::ZERO)
+  : mAdjustPosition(adjustPosition),
+    mAdjustSize(adjustSize)
+  {
+  }
+
+  /**
+   * Generates collision vector indicating whether Actor's A and B
+   * have overlapped eachother, and the relative position of Actor B to A.
+   *
+   * @param[in] current The current collision-property (ignored)
+   * @param[in] propertyA Actor A's Position property.
+   * @param[in] propertyB Actor B's Position property.
+   * @param[in] propertySizeA Actor A's Size property.
+   * @param[in] propertySizeB Actor B's Size property.
+   * @return The collision vector is returned.
+   */
+  Vector3 operator()(const Vector3& current,
+                     const PropertyInput& propertyA,
+                     const PropertyInput& propertyB,
+                     const PropertyInput& propertySizeA,
+                     const PropertyInput& propertySizeB)
+  {
+    const Vector3& a = propertyA.GetVector3();
+    const Vector3 b = propertyB.GetVector3() + mAdjustPosition;
+    const Vector3& sizeA = propertySizeA.GetVector3();
+    const Vector3& sizeB = propertySizeB.GetVector3();
+    const Vector3 sizeA2 = sizeA * 0.5f; // circle radius
+    const Vector3 sizeB2 = (sizeB + mAdjustSize) * 0.5f; // rectangle half rectangle.
+
+    // get collision relative to a (rectangle).
+    Vector3 delta = a - b;
+
+    // reduce rectangle to 0.
+    if (delta.x > sizeB2.x)
+    {
+      delta.x -= sizeB2.x;
+    }
+    else if (delta.x < -sizeB2.x)
+    {
+      delta.x += sizeB2.x;
+    }
+    else
+    {
+      delta.x = 0;
+    }
+
+    if (delta.y > sizeB2.y)
+    {
+      delta.y -= sizeB2.y;
+    }
+    else if (delta.y < -sizeB2.y)
+    {
+      delta.y += sizeB2.y;
+    }
+    else
+    {
+      delta.y = 0;
+    }
+
+    // now calculate collision vector vs origin. (assume A is a circle, not ellipse)
+    if(delta.Length() < sizeA2.x)
+    {
+      delta.Normalize();
+      return delta;
+    }
+
+    return Vector3::ZERO;
+  }
+
+  const Vector3 mAdjustPosition;            ///< Position Adjustment value
+  const Vector3 mAdjustSize;                ///< Size Adjustment value
+};
+
+/**
+ * WobbleConstraint generates a decaying sinusoidial rotation.
+ * The result when applied to an Actor, is the Actor rotating left/right
+ * initially a large amount (deviation degrees, when wobble property is 0.0f)
+ * then eventually coming to a stop (once wobble property reaches 1.0f)
+ */
+struct WobbleConstraint
+{
+  /**
+   * Wobble Constraint constructor
+   * Generates a sinusoidial rotation that starts with
+   * high amplitude (deviation), and then decays to zero over input 0.0f to 1.0f
+   *
+   * @param[in] deviation The max. deviation of wobble effect in degrees.
+   */
+  WobbleConstraint(float deviation)
+  : mDeviation(Radian(Degree(deviation)))
+  {
+
+  }
+
+  /**
+   * @param[in] current The current rotation property (ignored)
+   * @param[in] propertyWobble The wobble property (value from 0.0f to 1.0f)
+   * @return The rotation (quaternion) is generated.
+   */
+  Quaternion operator()(const Quaternion& current,
+                     const PropertyInput& propertyWobble)
+  {
+    const float& wobble = propertyWobble.GetFloat();
+
+    float f = sinf(wobble * 10.0f) * (1.0f-wobble);
+
+    Quaternion q(mDeviation * f, Vector3::ZAXIS);
+
+    return q;
+  }
+
+  const float mDeviation;           ///< Deviation factor in radians.
+};
+
+} // unnamed namespace
+
+/**
+ * This example shows how to use PropertyNotifications
+ */
+class ExampleController : public ConnectionTracker
+{
+public:
+
+  /**
+   * Constructor
+   * @param application Application class, stored as reference
+   */
+  ExampleController( Application& application )
+  : mApplication( application ),
+    mView()
+  {
+    // Connect to the Application's Init and orientation changed signal
+    mApplication.InitSignal().Connect(this, &ExampleController::Create);
+  }
+
+  /**
+   * This method gets called once the main loop of application is up and running
+   * @param[in] application Reference to the application instance
+   */
+  void Create(Application& application)
+  {
+    Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
+
+    // Creates a default view with a default tool bar.
+    // The view is added to the stage.
+    Toolkit::ToolBar toolBar;
+    mContentLayer = DemoHelper::CreateView( application,
+                                            mView,
+                                            toolBar,
+                                            BACKGROUND_IMAGE,
+                                            TOOLBAR_IMAGE,
+                                            APPLICATION_TITLE );
+
+    // Add an extra space on the right to center the title text.
+    toolBar.AddControl( Actor::New(), DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight );
+
+    // Create the content layer, which is where game actors appear.
+    AddContentLayer();
+  }
+
+private:
+
+  /**
+   * Adds a new layer to the stage, containing game actors.
+   */
+  void AddContentLayer()
+  {
+    Stage stage = Stage::GetCurrent();
+    const Vector3 stageSize(stage.GetSize());
+
+    // Ball setup
+    mBallStartPosition = stageSize * Vector3( BALL_START_POSITION );
+    mBall = CreateImage(BALL_IMAGE);
+    mBall.SetPosition( mBallStartPosition );
+    mBall.SetSize( BALL_SIZE * stageSize.width );
+    mContentLayer.Add(mBall);
+    mBallVelocity = Vector3::ZERO;
+
+    // Paddle setup
+    mPaddleHitMargin = Vector2(stageSize) * PADDLE_HIT_MARGIN;
+    mPaddle = Actor::New();
+    mPaddleHandle = CreateImage(PADDLE_HANDLE_IMAGE);
+    mPaddleImage = CreateImage(PADDLE_IMAGE);
+    mPaddle.Add( mPaddleHandle );
+    mPaddle.Add( mPaddleImage );
+    mPaddleHandle.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    mPaddleHandle.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mPaddleHandle.SetPosition( 0.0f, stageSize.width * 0.0125f );
+    mPaddleImage.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    mPaddleImage.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mPaddle.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    mPaddle.SetAnchorPoint( AnchorPoint::CENTER );
+    mPaddleFullSize = PADDLE_SIZE * stageSize.width;
+    mPaddle.SetSize( mPaddleFullSize + mPaddleHitMargin );
+    mPaddleHandle.SetSize( PADDLE_HANDLE_SIZE * stageSize.width );
+    mPaddleImage.SetSize( mPaddleFullSize );
+
+    mWobbleProperty = mPaddle.RegisterProperty(WOBBLE_PROPERTY_NAME, 0.0f);
+    Constraint wobbleConstraint = Constraint::New<Quaternion>( Actor::ROTATION,
+                                                    LocalSource(mWobbleProperty),
+                                                    WobbleConstraint(10.0f));
+    mPaddle.ApplyConstraint(wobbleConstraint);
+
+    mPaddle.SetPosition( stageSize * Vector3( PADDLE_START_POSITION ) );
+    mContentLayer.Add(mPaddle);
+    mPaddle.TouchedSignal().Connect(this, &ExampleController::OnTouchPaddle);
+    mContentLayer.TouchedSignal().Connect(this, &ExampleController::OnTouchLayer);
+
+    const float margin(BALL_SIZE.width * stageSize.width * 0.5f);
+
+    // Set up notifications for ball's collisions against walls.
+    PropertyNotification leftNotification = mBall.AddPropertyNotification( Actor::POSITION_X, LessThanCondition(margin) );
+    leftNotification.NotifySignal().Connect( this, &ExampleController::OnHitLeftWall );
+
+    PropertyNotification rightNotification = mBall.AddPropertyNotification( Actor::POSITION_X, GreaterThanCondition(stageSize.width - margin) );
+    rightNotification.NotifySignal().Connect( this, &ExampleController::OnHitRightWall );
+
+    PropertyNotification topNotification = mBall.AddPropertyNotification( Actor::POSITION_Y, LessThanCondition(margin) );
+    topNotification.NotifySignal().Connect( this, &ExampleController::OnHitTopWall );
+
+    PropertyNotification bottomNotification = mBall.AddPropertyNotification( Actor::POSITION_Y, GreaterThanCondition(stageSize.height + margin) );
+    bottomNotification.NotifySignal().Connect( this, &ExampleController::OnHitBottomWall );
+
+    // Set up notification for ball colliding against paddle.
+    Actor delegate = Actor::New();
+    stage.Add(delegate);
+    Property::Index property = delegate.RegisterProperty(COLLISION_PROPERTY_NAME, Vector3::ZERO);
+    Constraint constraint = Constraint::New<Vector3>( property,
+                                                    Source(mBall, Actor::POSITION),
+                                                    Source(mPaddle, Actor::POSITION),
+                                                    Source(mBall, Actor::SIZE),
+                                                    Source(mPaddle, Actor::SIZE),
+                                                    CollisionCircleRectangleConstraint( -Vector3(0.0f, mPaddleHitMargin.height * 0.575f, 0.0f),-Vector3(mPaddleHitMargin) ));
+    delegate.ApplyConstraint(constraint);
+
+    PropertyNotification paddleNotification = delegate.AddPropertyNotification( property, GreaterThanCondition(0.0f) );
+    paddleNotification.NotifySignal().Connect( this, &ExampleController::OnHitPaddle );
+
+    RestartGame();
+  }
+
+  /**
+   * Restarts Game
+   * Resets Lives count and other stats, and loads level
+   */
+  void RestartGame()
+  {
+    mLives = TOTAL_LIVES;
+    mLevel = 0;
+    mBall.SetPosition( mBallStartPosition );
+    mBallVelocity = Vector3::ZERO;
+    mPaddle.SetSize( mPaddleFullSize + mPaddleHitMargin );
+    mPaddleImage.SetSize( mPaddleFullSize );
+
+    LoadLevel(mLevel);
+  }
+
+  /**
+   * Loads level
+   * All existing level content is removed, and new bricks
+   * are added.
+   * @param[in] level Level index to load.
+   */
+  void LoadLevel(int level)
+  {
+    if(mLevelContainer && mLevelContainer.GetParent() == mContentLayer)
+    {
+      mContentLayer.Remove( mLevelContainer );
+    }
+
+    mLevelContainer = Actor::New();
+    mLevelContainer.SetAnchorPoint( AnchorPoint::CENTER );
+    mLevelContainer.SetParentOrigin( ParentOrigin::CENTER );
+    mLevelContainer.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+    mContentLayer.Add( mLevelContainer );
+
+    mBrickCount = 0;
+
+    switch(level%TOTAL_LEVELS)
+    {
+      case 0:
+      {
+        GenerateLevel0();
+        break;
+      }
+      case 1:
+      {
+        GenerateLevel1();
+        break;
+      }
+      case 2:
+      {
+        GenerateLevel2();
+        break;
+      }
+      default:
+      {
+        break;
+      }
+    } // end switch
+  }
+
+  /**
+   * Generates level 0
+   */
+  void GenerateLevel0()
+  {
+    Vector2 stageSize(Stage::GetCurrent().GetSize());
+    const Vector2 brickSize(BRICK_SIZE * stageSize.width);
+
+    const int columns = (0.85f * stageSize.width) / brickSize.width; // 85 percent of the width of the screen covered with bricks.
+    const int rows = (0.3f * stageSize.height) / brickSize.height;   // 30 percent of the height of the screen covered with bricks.
+    const Vector2 offset( (stageSize.x - (columns * brickSize.width)) * 0.5f,
+                           stageSize.y * 0.125f );
+
+    for(int j = 0; j < rows; j++)
+    {
+      for(int i = 0; i < columns; i++)
+      {
+        Actor brick = CreateBrick(Vector2(i * brickSize.width + offset.x, j * brickSize.height + offset.y) + (brickSize * 0.5f), j % TOTAL_BRICKS );
+        mLevelContainer.Add(brick);
+        mBrickCount++;
+      }
+    }
+  }
+
+  /**
+   * Generates level 1
+   */
+  void GenerateLevel1()
+  {
+    Vector2 stageSize(Stage::GetCurrent().GetSize());
+    const Vector2 brickSize(BRICK_SIZE * stageSize.width);
+
+    const int columns = (0.85f * stageSize.width) / brickSize.width; // 85 percent of the width of the screen covered with bricks.
+    const int rows = (0.3f * stageSize.height) / brickSize.height;   // 30 percent of the height of the screen covered with bricks.
+    const Vector2 offset( (stageSize.x - (columns * brickSize.width)) * 0.5f,
+                           stageSize.y * 0.125f );
+
+    for(int j = 0; j < rows; j++)
+    {
+      for(int i = 0; i < columns; i++)
+      {
+        int i2 = columns - i - 1;
+        int j2 = rows - j - 1;
+        int brickIndex = std::min( std::min(i, j), std::min(i2, j2) ) % TOTAL_BRICKS;
+
+        Actor brick = CreateBrick(Vector2(i * brickSize.width + offset.x, j * brickSize.height + offset.y) + (brickSize * 0.5f), brickIndex );
+
+        mLevelContainer.Add(brick);
+        mBrickCount++;
+      }
+    }
+  }
+
+  /**
+   * Generates level 2
+   */
+  void GenerateLevel2()
+  {
+    Vector2 stageSize(Stage::GetCurrent().GetSize());
+    const Vector2 brickSize(BRICK_SIZE * stageSize.width);
+
+    const int columns = (0.85f * stageSize.width) / brickSize.width; // 85 percent of the width of the screen covered with bricks.
+    const int rows = (0.3f * stageSize.height) / brickSize.height;   // 30 percent of the height of the screen covered with bricks.
+    const Vector2 offset( (stageSize.x - (columns * brickSize.width)) * 0.5f,
+                           stageSize.y * 0.125f );
+
+    // lays down bricks in a spiral formation starting at i,j = (0,0) top left corner
+    // travelling right di,dj = (1,0) initially
+    int i = 0;
+    int j = 0;
+    int di = 1;
+    int dj = 0;
+
+    // contracting boundaries
+    int left = 0;
+    int right = columns - 1;
+    int top = 2;
+    int bottom = rows - 1;
+
+    // length of current line. we stop laying down bricks when the length is 1 brick or less.
+    int length = 0;
+    while(true)
+    {
+      Actor brick = CreateBrick(Vector2(i * brickSize.width + offset.x, j * brickSize.height + offset.y) + (brickSize * 0.5f), 0 );
+      mLevelContainer.Add(brick);
+      i+=di;
+      j+=dj;
+      bool turn(false);
+      if((i==right) && (di==1))
+      {
+        right -= 2;
+        turn = true;
+      }
+      if((j==bottom) && (dj==1))
+      {
+        bottom -= 2;
+        turn = true;
+      }
+      if((i==left) && (di==-1))
+      {
+        left += 2;
+        turn = true;
+      }
+      if((j==top) && (dj==-1))
+      {
+        top += 2;
+        turn = true;
+      }
+      if(turn)
+      {
+        // turn 90 degrees clockwise.
+        swap(di, dj);
+        di = -di;
+        if (length<=1)
+        {
+          break;
+        }
+        length = 0;
+      }
+      length++;
+      mBrickCount++;
+    }
+  }
+
+
+  /**
+   * Creates a brick at a specified position on the stage
+   * @param[in] position the position for the brick
+   * @param[in] type the type of brick
+   * @return The Brick Actor is returned.
+   */
+  Actor CreateBrick( const Vector2& position, int type )
+  {
+    Vector2 stageSize(Stage::GetCurrent().GetSize());
+    const Vector2 brickSize(BRICK_SIZE * Vector2(stageSize.x, stageSize.x));
+
+    ImageAttributes attr;
+    attr.SetSize( 128, 64 );
+    attr.SetScalingMode( ImageAttributes::ScaleToFill );
+    Image img = Image::New(BRICK_IMAGE_PATH[type], attr);
+    ImageActor brick = ImageActor::New(img);
+    brick.SetParentOrigin(ParentOrigin::TOP_LEFT);
+    brick.SetAnchorPoint(AnchorPoint::CENTER);
+    brick.SetSize( brickSize );
+    brick.SetPosition( Vector3( position ) );
+
+    // Add a constraint on the brick between it and the ball generating a collision-property
+    Property::Index property = brick.RegisterProperty(COLLISION_PROPERTY_NAME, Vector3::ZERO);
+    Constraint constraint = Constraint::New<Vector3>( property,
+                                                    Source(mBall, Actor::POSITION),
+                                                    Source(brick, Actor::POSITION),
+                                                    Source(mBall, Actor::SIZE),
+                                                    Source(brick, Actor::SIZE),
+                                                    CollisionCircleRectangleConstraint(BRICK_COLLISION_MARGIN));
+    brick.ApplyConstraint(constraint);
+
+    // Now add a notification on this collision-property
+
+    PropertyNotification brickNotification = brick.AddPropertyNotification( property, GreaterThanCondition(0.0f) );
+    brickNotification.NotifySignal().Connect( this, &ExampleController::OnHitBrick );
+
+    return brick;
+  }
+
+  /**
+   * Creates an Image (Helper)
+   *
+   * @param[in] filename the path of the image.
+   */
+  ImageActor CreateImage(const std::string& filename)
+  {
+    Image img = Image::New(filename);
+    ImageActor actor = ImageActor::New(img);
+    actor.SetParentOrigin(ParentOrigin::TOP_LEFT);
+    actor.SetAnchorPoint(AnchorPoint::CENTER);
+    return actor;
+  }
+
+  /**
+   * Continue animation (based on current velocity)
+   */
+  void ContinueAnimation()
+  {
+    if(mBallAnimation)
+    {
+      mBallAnimation.Clear();
+    }
+
+    mBallAnimation = Animation::New(MAX_ANIMATION_DURATION);
+    mBallAnimation.AnimateBy( Property( mBall, Actor::POSITION ), mBallVelocity * MAX_ANIMATION_DURATION);
+    mBallAnimation.Play();
+  }
+
+  /**
+   * Signal invoked whenever user touches the Paddle.
+   * @param[in] actor The actor touched
+   * @param[in] event The touch event
+   */
+  bool OnTouchPaddle(Actor actor, const TouchEvent& event)
+  {
+    if(event.GetPointCount()>0)
+    {
+      const TouchPoint& point = event.GetPoint(0);
+      if(point.state==TouchPoint::Down) // Commence dragging
+      {
+        // Get point where user touched paddle (relative to paddle's center)
+        mRelativeDragPoint = Vector3(point.screen.x, point.screen.y, 0.0f);
+        mRelativeDragPoint -= actor.GetCurrentPosition();
+
+        mDragActor = actor;
+        mDragAnimation = Animation::New(0.25f);
+        mDragAnimation.AnimateTo( Property(mDragActor, Actor::SCALE), Vector3(1.1f, 1.1f, 1.0f), AlphaFunctions::EaseOut);
+        mDragAnimation.AnimateTo( Property(mPaddleHandle, Actor::COLOR), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunctions::EaseOut);
+        mDragAnimation.Play();
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Signal invoked whenever user touches anywhere on the screen.
+   * @param[in] actor The actor touched
+   * @param[in] event The touch event
+   */
+  bool OnTouchLayer(Actor actor, const TouchEvent& event)
+  {
+    if(event.GetPointCount()>0)
+    {
+      const TouchPoint& point = event.GetPoint(0);
+      if(mDragActor)
+      {
+        Vector3 position(point.screen.x, point.screen.y, 0.0f);
+        mPaddle.SetPosition( position - mRelativeDragPoint );
+
+        if(point.state==TouchPoint::Up) // Stop dragging
+        {
+          mDragAnimation = Animation::New(0.25f);
+          mDragAnimation.AnimateTo( Property(mDragActor, Actor::SCALE), Vector3(1.0f, 1.0f, 1.0f), AlphaFunctions::EaseIn);
+          mDragAnimation.AnimateTo( Property(mPaddleHandle, Actor::COLOR), Vector4(1.0f, 1.0f, 1.0f, 1.0f), AlphaFunctions::EaseOut);
+          mDragAnimation.Play();
+          mDragActor.Reset();
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Notification: Ball hit left wall
+   * @param source The notification
+   */
+  void OnHitLeftWall(PropertyNotification& source)
+  {
+    mBallVelocity.x = fabsf(mBallVelocity.x);
+    ContinueAnimation();
+  }
+
+  /**
+   * Notification: Ball hit right wall
+   * @param source The notification
+   */
+  void OnHitRightWall(PropertyNotification& source)
+  {
+    mBallVelocity.x = -fabsf(mBallVelocity.x);
+    ContinueAnimation();
+  }
+
+  /**
+   * Notification: Ball hit top wall
+   * @param source The notification
+   */
+  void OnHitTopWall(PropertyNotification& source)
+  {
+    mBallVelocity.y = fabsf(mBallVelocity.y);
+    ContinueAnimation();
+  }
+
+  /**
+   * Notification: Ball hit bottom wall
+   * @param source The notification
+   */
+  void OnHitBottomWall(PropertyNotification& source)
+  {
+    if(mBallAnimation)
+    {
+      mBallAnimation.Clear();
+    }
+
+    if(mLives>0)
+    {
+      mLives--;
+      const float f(static_cast<float>(mLives) / TOTAL_LIVES);
+      mBallVelocity = Vector3::ZERO;
+
+      Animation shrink = Animation::New(0.5f);
+      shrink.AnimateTo( Property(mPaddle, Actor::SIZE_WIDTH), mPaddleFullSize.x * f + mPaddleHitMargin.x);
+      shrink.AnimateTo( Property(mPaddleImage, Actor::SIZE_WIDTH), mPaddleFullSize.x * f );
+
+      shrink.FinishedSignal().Connect( this, &ExampleController::OnPaddleShrunk );
+      shrink.Play();
+    }
+  }
+
+  /**
+   * Paddle Shrink Animation complete.
+   * @param[in] source The animation responsible for shrinking the paddle.
+   */
+  void OnPaddleShrunk( Animation &source )
+  {
+    // Reposition Ball in start position, and make ball appear.
+    mBall.SetPosition( mBallStartPosition );
+    mBall.SetColor( Vector4(1.0f, 1.0f, 1.0f, 0.1f) );
+    Animation appear = Animation::New(0.5f);
+    appear.AnimateTo( Property(mBall, Actor::COLOR), Vector4(1.0f, 1.0f, 1.0f, 1.0f) );
+    appear.Play();
+
+    if(!mLives)
+    {
+      RestartGame();
+    }
+  }
+
+  /**
+   * Notification: Ball hit paddle
+   * @param source The notification
+   */
+  void OnHitPaddle(PropertyNotification& source)
+  {
+    Actor delegate = Actor::DownCast(source.GetTarget());
+    Vector3 collisionVector = delegate.GetProperty<Vector3>(source.GetTargetProperty());
+    Vector3 ballRelativePosition(mBall.GetCurrentPosition() - mPaddle.GetCurrentPosition());
+    ballRelativePosition.Normalize();
+
+    collisionVector.x += ballRelativePosition.x * 0.5f;
+
+    if(mBallVelocity.LengthSquared() < Math::MACHINE_EPSILON_1)
+    {
+      mBallVelocity += collisionVector * BALL_VELOCITY;
+    }
+    else
+    {
+      const float normalVelocity = fabsf(mBallVelocity.Dot(collisionVector));
+      mBallVelocity += collisionVector * normalVelocity * 2.0f;
+      const float currentSpeed = mBallVelocity.Length();
+      const float limitedSpeed = std::min( currentSpeed, MAX_VELOCITY );
+      mBallVelocity = mBallVelocity * limitedSpeed / currentSpeed;
+    }
+
+    ContinueAnimation();
+
+    // wobble paddle
+    mWobbleAnimation = Animation::New(0.5f);
+    mWobbleAnimation.AnimateTo( Property( mPaddle, mWobbleProperty ), 1.0f );
+    mWobbleAnimation.Play();
+    mPaddle.SetProperty(mWobbleProperty, 0.0f);
+  }
+
+  /**
+   * Notification: Ball hit brick
+   * @param source The notification
+   */
+  void OnHitBrick(PropertyNotification& source)
+  {
+    Actor brick = Actor::DownCast(source.GetTarget());
+    Vector3 collisionVector = brick.GetProperty<Vector3>(source.GetTargetProperty());
+
+    const float normalVelocity = fabsf(mBallVelocity.Dot(collisionVector));
+    mBallVelocity += collisionVector * normalVelocity * 2.0f;
+    const float currentSpeed = mBallVelocity.Length();
+    const float limitedSpeed = std::min( currentSpeed, MAX_VELOCITY );
+    mBallVelocity = mBallVelocity * limitedSpeed / currentSpeed;
+
+    ContinueAnimation();
+
+    // remove collision-constraint and notification.
+    brick.RemovePropertyNotification(source);
+    brick.RemoveConstraints();
+
+    // fade brick (destroy)
+    Animation destroyAnimation = Animation::New(0.5f);
+    destroyAnimation.AnimateTo( Property( brick, Actor::COLOR_ALPHA ), 0.0f, AlphaFunctions::EaseIn );
+    destroyAnimation.Play();
+    destroyAnimation.FinishedSignal().Connect( this, &ExampleController::OnBrickDestroyed );
+    mDestroyAnimationMap[destroyAnimation] = brick;
+  }
+
+  /**
+   * Brick Destruction Animation complete.
+   * @param[in] source The animation responsible for destroying the brick
+   */
+  void OnBrickDestroyed( Animation& source )
+  {
+    // Remove brick from stage, it's constraint and property notification should also remove themselves.
+    Actor brick = mDestroyAnimationMap[source];
+    mDestroyAnimationMap.erase(source);
+    brick.GetParent().Remove(brick);
+    mBrickCount--;
+
+    if(!mBrickCount)
+    {
+      mLevel++;
+      LoadLevel(mLevel);
+    }
+  }
+
+  /**
+   * Main key event handler
+   */
+  void OnKeyEvent(const KeyEvent& event)
+  {
+    if(event.state == KeyEvent::Down)
+    {
+      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      {
+        mApplication.Quit();
+      }
+    }
+  }
+
+private:
+
+  Application& mApplication;                            ///< Application instance
+  Toolkit::View mView;                                  ///< The View instance.
+  Layer mContentLayer;                                  ///< The content layer (contains game actors)
+  ImageActor mBall;                                     ///< The Moving ball image.
+  Vector3 mBallStartPosition;                           ///< Ball Start position
+  Vector3 mBallVelocity;                                ///< Ball's current direction.
+  Animation mBallAnimation;                             ///< Ball's animation
+  Actor mPaddle;                                        ///< The paddle including hit area.
+  ImageActor mPaddleImage;                              ///< The paddle's image.
+  ImageActor mPaddleHandle;                             ///< The paddle's handle (where the user touches)
+  Vector2 mPaddleHitMargin;                             ///< The paddle hit margin.
+  Animation mWobbleAnimation;                           ///< Paddle's animation when hit (wobbles)
+  Property::Index mWobbleProperty;                      ///< The wobble property (generated from animation)
+  Actor mLevelContainer;                                ///< The level container (contains bricks)
+
+  // actor - dragging functionality
+
+  Animation mDragAnimation;                             ///< Animation for dragging. (grows - affects ACTOR::SCALE)
+  Actor mDragActor;                                     ///< The actor which is being dragged (if any)
+  Vector3 mRelativeDragPoint;                           ///< The point the user touched, relative to the actor.
+  std::map<Animation, Actor> mDestroyAnimationMap;      ///< Keep track of which actors are to be destroyed.
+  Vector2 mPaddleFullSize;                              ///< Initial 100% size of the paddle.
+  int mLevel;                                           ///< Current level
+  int mLives;                                           ///< Total lives.
+  int mBrickCount;                                      ///< Total bricks on screen.
+};
+
+void RunTest(Application& app)
+{
+  ExampleController test(app);
+
+  app.MainLoop();
+}
+
+int main(int argc, char **argv)
+{
+  Application app = Application::New(&argc, &argv);
+
+  RunTest(app);
+
+  return 0;
+}

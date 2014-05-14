@@ -1,0 +1,448 @@
+//
+// Copyright (c) 2014 Samsung Electronics Co., Ltd.
+//
+// Licensed under the Flora License, Version 1.0 (the License);
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://floralicense.org/license/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an AS IS BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+#include <sstream>
+#include <iomanip>
+
+#include "../shared/view.h"
+#include <dali/dali.h>
+#include <dali-toolkit/dali-toolkit.h>
+
+using namespace Dali;
+using namespace Dali::Toolkit;
+using namespace std;
+
+
+
+namespace // unnamed namespace
+{
+
+////////////////////////////////////////////////////
+//
+// Demo setup parameters
+//
+
+const float MOTION_STRETCH_ACTOR_WIDTH = 256;                                          // actor size on screen
+const float MOTION_STRETCH_ACTOR_HEIGHT = 256;                                         // ""
+
+const int MOTION_STRETCH_NUM_ACTOR_IMAGES = 5;
+const char* MOTION_STRETCH_ACTOR_IMAGE1( DALI_IMAGE_DIR "image-with-border-1.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE2( DALI_IMAGE_DIR "image-with-border-2.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE3( DALI_IMAGE_DIR "image-with-border-3.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE4( DALI_IMAGE_DIR "image-with-border-4.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE5( DALI_IMAGE_DIR "image-with-border-5.jpg" );
+
+const char* MOTION_STRETCH_ACTOR_IMAGES[] = {
+  MOTION_STRETCH_ACTOR_IMAGE1,
+  MOTION_STRETCH_ACTOR_IMAGE2,
+  MOTION_STRETCH_ACTOR_IMAGE3,
+  MOTION_STRETCH_ACTOR_IMAGE4,
+  MOTION_STRETCH_ACTOR_IMAGE5,
+};
+
+const int NUM_ACTOR_ANIMATIONS = 4;
+const int NUM_CAMERA_ANIMATIONS = 2;
+
+
+const char* BACKGROUND_IMAGE_PATH = DALI_IMAGE_DIR "background-default.png";
+
+const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char* LAYOUT_IMAGE( DALI_IMAGE_DIR "icon_mode.png" );
+const char* APPLICATION_TITLE( "Motion Stretch" );
+const char* ANIM_START_ICON( DALI_IMAGE_DIR "icon_play_small.png" );
+const char* ANIM_STOP_ICON( DALI_IMAGE_DIR "icon_stop_small.png" );
+
+// These values depend on the button background image
+const Vector4 BUTTON_IMAGE_BORDER( Vector4::ONE * 3.0f );
+
+const float UI_MARGIN = 4.0f;                              ///< Screen Margin for placement of UI buttons
+
+const Vector3 BUTTON_SIZE_CONSTRAINT( 0.24f, 0.09f, 1.0f );
+
+// move this button down a bit so it is visible on target and not covered up by toolbar
+const float BUTTON_TITLE_LABEL_Y_OFFSET = 0.05f;
+
+const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to new orientation.
+} // unnamed namespace
+
+
+
+
+//
+class MotionStretchExampleApp : public ConnectionTracker
+{
+public:
+
+  /**
+     * DeviceOrientation describes the four different
+     * orientations the device can be in based on accelerometer reports.
+     */
+  enum DeviceOrientation
+  {
+    PORTRAIT = 0,
+    LANDSCAPE = 90,
+    PORTRAIT_INVERSE = 180,
+    LANDSCAPE_INVERSE = 270
+  };
+
+  /**
+   * Constructor
+   * @param application class, stored as reference
+   */
+  MotionStretchExampleApp(Application &app)
+  : mApplication(app),
+    mActorAnimationsEnabled(false),
+    mCurrentActorAnimation(0),
+    mCurrentImage(0)
+  {
+    // Connect to the Application's Init signal
+    app.InitSignal().Connect(this, &MotionStretchExampleApp::OnInit);
+  }
+
+  ~MotionStretchExampleApp()
+  {
+    // Nothing to do here; everything gets deleted automatically
+  }
+
+  /**
+   * This method gets called once the main loop of application is up and running
+   */
+  void OnInit(Application& app)
+  {
+    // The Init signal is received once (only) during the Application lifetime
+
+    Stage::GetCurrent().KeyEventSignal().Connect(this, &MotionStretchExampleApp::OnKeyEvent);
+
+    // Creates a default view with a default tool bar.
+    // The view is added to the stage.
+    mContentLayer = DemoHelper::CreateView( mApplication,
+                                            mView,
+                                            mToolBar,
+                                            BACKGROUND_IMAGE_PATH,
+                                            TOOLBAR_IMAGE,
+                                            APPLICATION_TITLE);
+
+    //Add an slideshow icon on the right of the title
+    mIconAnimsStart = Image::New( ANIM_START_ICON );
+    mIconAnimsStop = Image::New( ANIM_STOP_ICON );
+    mActorAnimsButton = Toolkit::PushButton::New();
+    mActorAnimsButton.SetBackgroundImage( mIconAnimsStart );
+    mActorAnimsButton.ClickedSignal().Connect( this, &MotionStretchExampleApp::OnAnimationButtonClicked );
+    mToolBar.AddControl( mActorAnimsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
+
+    // Creates a mode button.
+    // Create a effect toggle button. (right of toolbar)
+    Image imageLayout = Image::New( LAYOUT_IMAGE );
+    Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
+    layoutButton.SetBackgroundImage(imageLayout);
+    layoutButton.ClickedSignal().Connect( this, &MotionStretchExampleApp::OnLayoutButtonClicked);
+    layoutButton.SetLeaveRequired( true );
+    mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+
+    // Input
+    mTapGestureDetector = TapGestureDetector::New();
+    mTapGestureDetector.Attach( mContentLayer );
+    mTapGestureDetector.DetectedSignal().Connect( this, &MotionStretchExampleApp::OnTap );
+
+    // set initial orientation
+    Dali::Window winHandle = app.GetWindow();
+    winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT );
+    winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
+    winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
+    winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
+
+    app.GetOrientation().ChangedSignal().Connect( this, &MotionStretchExampleApp::OnOrientationChanged );
+    unsigned int degrees = app.GetOrientation().GetDegrees();
+    Rotate( static_cast< DeviceOrientation >( degrees ) );
+
+
+    ///////////////////////////////////////////////////////
+    //
+    // Motion stretched actor
+    //
+
+    Image image = Image::New( MOTION_STRETCH_ACTOR_IMAGE1 );
+    mMotionStretchImageActor = ImageActor::New(image);
+    mMotionStretchImageActor.SetParentOrigin( ParentOrigin::CENTER );
+    mMotionStretchImageActor.SetAnchorPoint( AnchorPoint::CENTER );
+    mMotionStretchImageActor.SetSize(MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT);
+
+    mContentLayer.Add( mMotionStretchImageActor );
+
+    // Create shader used for doing motion stretch
+    mMotionStretchEffect = MotionStretchEffect::Apply(mMotionStretchImageActor);
+  }
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Device Orientation Support
+  //
+  //
+
+  void OnOrientationChanged( Orientation orientation )
+  {
+    unsigned int degrees = orientation.GetDegrees();
+    Rotate( static_cast< DeviceOrientation >( degrees ) );
+  }
+
+  void Rotate( DeviceOrientation orientation )
+  {
+    // Resize the root actor
+    Vector2 stageSize = Stage::GetCurrent().GetSize();
+    Vector2 targetSize = stageSize;
+    if( orientation == LANDSCAPE ||
+        orientation == LANDSCAPE_INVERSE )
+    {
+      targetSize = Vector2( stageSize.y, stageSize.x );
+    }
+
+    if( mOrientation != orientation )
+    {
+      mOrientation = orientation;
+
+      // check if actor is on stage
+      if( mView.GetParent() )
+      {
+        // has parent so we expect it to be on stage, start animation
+        mRotateAnimation = Animation::New( ORIENTATION_DURATION );
+        mRotateAnimation.SetDestroyAction( Animation::Bake );
+        mRotateAnimation.RotateTo( mView, Degree( -orientation ), Vector3::ZAXIS, AlphaFunctions::EaseOut );
+        mRotateAnimation.Resize( mView, targetSize.width, targetSize.height );
+        mRotateAnimation.Play();
+      }
+      else
+      {
+        // set the rotation to match the orientation
+        mView.SetRotation( Degree( -orientation ), Vector3::ZAXIS );
+        mView.SetSize( targetSize );
+      }
+    }
+    else
+    {
+      // for first time just set size
+      mView.SetSize( targetSize );
+    }
+  }
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Actor Animation
+  //
+  //
+
+  // move to point on screen that was tapped
+  void OnTap( Actor actor, TapGesture tapGesture )
+  {
+    Vector3 destPos;
+    float originOffsetX, originOffsetY;
+
+    // rotate offset (from top left origin to centre) into actor space
+    Vector2 stageSize = Dali::Stage::GetCurrent().GetSize();
+    actor.ScreenToLocal(originOffsetX, originOffsetY, stageSize.width * 0.5f, stageSize.height * 0.5f);
+
+    // get dest point in local actor space
+    destPos.x = tapGesture.localPoint.x - originOffsetX;
+    destPos.y = tapGesture.localPoint.y - originOffsetY;
+    destPos.z = 0.0f;
+
+    float animDuration = 0.5f;
+    mActorTapMovementAnimation = Animation::New( animDuration );
+    if ( mMotionStretchImageActor )
+    {
+      mActorTapMovementAnimation.AnimateTo( Property(mMotionStretchImageActor, Actor::POSITION), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
+    }
+    mActorTapMovementAnimation.SetEndAction( Animation::Bake );
+    mActorTapMovementAnimation.Play();
+
+
+    // perform some spinning etc
+    if(mActorAnimationsEnabled)
+    {
+      switch(mCurrentActorAnimation)
+      {
+        // spin around y
+        case 0:
+        {
+          float animDuration = 1.0f;
+          mActorAnimation = Animation::New(animDuration);
+          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(720), Vector3::YAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.SetEndAction( Animation::Bake );
+          mActorAnimation.Play();
+        }
+        break;
+
+        // spin around z
+        case 1:
+        {
+          float animDuration = 1.0f;
+          mActorAnimation = Animation::New(animDuration);
+          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(720), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.SetEndAction( Animation::Bake );
+          mActorAnimation.Play();
+        }
+        break;
+
+        // spin around y and z
+        case 2:
+        {
+          float animDuration = 1.0f;
+          mActorAnimation = Animation::New(animDuration);
+          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(360), Vector3::YAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(360), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.SetEndAction( Animation::Bake );
+          mActorAnimation.Play();
+        }
+        break;
+
+        // scale
+        case 3:
+        {
+          float animDuration = 1.0f;
+          mActorAnimation = Animation::New(animDuration);
+          mActorAnimation.ScaleBy(mMotionStretchImageActor, Vector3(2.0f, 2.0f, 2.0f), AlphaFunctions::Bounce, 0.0f, 1.0f);
+          mActorAnimation.SetEndAction( Animation::Bake );
+          mActorAnimation.Play();
+        }
+        break;
+
+        default:
+          break;
+      }
+
+      mCurrentActorAnimation++;
+      if(NUM_ACTOR_ANIMATIONS == mCurrentActorAnimation)
+      {
+        mCurrentActorAnimation = 0;
+      }
+    }
+  }
+
+  void ToggleActorAnimations()
+  {
+    if(!mActorAnimationsEnabled)
+    {
+      mActorAnimationsEnabled = true;
+      mActorAnimsButton.SetBackgroundImage( mIconAnimsStop );
+    }
+    else
+    {
+      mActorAnimationsEnabled = false;
+      mActorAnimsButton.SetBackgroundImage( mIconAnimsStart );
+    }
+  }
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Input handlers
+  //
+  //
+
+  bool OnLayoutButtonClicked( Toolkit::Button button )
+  {
+    ChangeImage();
+    return true;
+  }
+
+  /**
+   * Main key event handler
+   */
+  void OnKeyEvent(const KeyEvent& event)
+  {
+    if(event.state == KeyEvent::Down)
+    {
+      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      {
+        mApplication.Quit();
+      }
+    }
+  }
+
+  bool OnAnimationButtonClicked( Toolkit::Button button )
+  {
+    ToggleActorAnimations();
+    return true;
+  }
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Misc
+  //
+  //
+
+
+  void ChangeImage()
+  {
+    mCurrentImage++;
+    if(MOTION_STRETCH_NUM_ACTOR_IMAGES == mCurrentImage)
+    {
+      mCurrentImage = 0;
+    }
+
+    Image stretchImage = Image::New( MOTION_STRETCH_ACTOR_IMAGES[mCurrentImage] );
+    mMotionStretchImageActor.SetImage(stretchImage);
+  }
+
+
+private:
+  Application&               mApplication;            ///< Application instance
+  Toolkit::View              mView;
+  Toolkit::ToolBar           mToolBar;
+  TextView                   mTitleActor;             ///< The Toolbar's Title.
+  Image                      mIconAnimsStart;
+  Image                      mIconAnimsStop;
+  Layer                      mContentLayer;           ///< Content layer (contains actor for this stretch demo)
+
+  PushButton                 mActorAnimsButton;       ///< The actor animation toggling Button.
+
+  // Motion stretch
+  MotionStretchEffect mMotionStretchEffect;
+  ImageActor mMotionStretchImageActor;
+
+  // animate actor to position where user taps screen
+  Animation mActorTapMovementAnimation;
+
+  // show different animations to demonstrate stretch effect working on an object only movement basis
+  bool mActorAnimationsEnabled;
+  Animation mActorAnimation;
+  int mCurrentActorAnimation;
+
+  // offer a selection of images that user can cycle between
+  int mCurrentImage;
+
+  TapGestureDetector mTapGestureDetector;
+
+  DeviceOrientation mOrientation;               ///< Current Device orientation
+  Animation mRotateAnimation;                   ///< Animation for rotating between landscape and portrait.
+
+};
+
+void RunTest(Application& app)
+{
+  MotionStretchExampleApp test(app);
+
+  app.MainLoop();
+}
+
+// Entry point for Linux & SLP applications
+//
+int main(int argc, char **argv)
+{
+  Application app = Application::New(&argc, &argv);
+
+  RunTest(app);
+
+  return 0;
+}
