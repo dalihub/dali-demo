@@ -31,6 +31,9 @@
 	<ui-application appid="dissolve-effect.example" exec="/opt/apps/com.samsung.dali-demo/bin/dissolve-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Dissolve effect</label>
 	</ui-application>
+	<ui-application appid="item-view.example" exec="/opt/apps/com.samsung.dali-demo/bin/item-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Item View</label>
+	</ui-application>
 	<ui-application appid="magnifier.example" exec="/opt/apps/com.samsung.dali-demo/bin/magnifier.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Magnifier</label>
 	</ui-application>

@@ -23,6 +23,7 @@ bin_PROGRAMS = \
                cube-transition-effect.example \
                dissolve-effect.example \
                hello-world.example \
+               item-view.example \
                magnifier.example \
                motion-blur.example \
                motion-stretch.example \
@@ -81,6 +82,11 @@ hello_world_example_SOURCES = $(examples_src_dir)/hello-world/hello-world-exampl
 hello_world_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 hello_world_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 hello_world_example_LDADD = $(EXAMPLE_LDADD)
+
+item_view_example_SOURCES = $(examples_src_dir)/item-view/item-view-example.cpp
+item_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
+item_view_example_DEPENDENCIES = $(EXAMPLE_DEPS)
+item_view_example_LDADD = $(EXAMPLE_LDADD)
 
 magnifier_example_SOURCES = $(examples_src_dir)/magnifier/magnifier-example.cpp
 magnifier_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)

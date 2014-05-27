@@ -28,6 +28,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("cluster.example", "Cluster control"));
   demo.AddExample(Example("cube-transition-effect.example", "Cube Transition"));
   demo.AddExample(Example("dissolve-effect.example", "Dissolve Transition"));
+  demo.AddExample(Example("item-view.example", "Item View"));
   demo.AddExample(Example("magnifier.example", "Magnifier"));
   demo.AddExample(Example("motion-blur.example", "Motion Blur"));
   demo.AddExample(Example("motion-stretch.example", "Motion Stretch"));
