@@ -82,17 +82,17 @@ hello_world_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 hello_world_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 hello_world_example_LDADD = $(EXAMPLE_LDADD)
 
-magnifier_example_SOURCES = $(examples_src_dir)/magnifier-example/magnifier-example.cpp
+magnifier_example_SOURCES = $(examples_src_dir)/magnifier/magnifier-example.cpp
 magnifier_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 magnifier_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 magnifier_example_LDADD = $(EXAMPLE_LDADD)
 
-motion_blur_example_SOURCES = $(examples_src_dir)/motion-blur/motion-blur-example.cpp
+motion_blur_example_SOURCES = $(examples_src_dir)/motion/motion-blur-example.cpp
 motion_blur_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 motion_blur_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 motion_blur_example_LDADD = $(EXAMPLE_LDADD)
 
-motion_stretch_example_SOURCES = $(examples_src_dir)/motion-stretch/motion-stretch-example.cpp
+motion_stretch_example_SOURCES = $(examples_src_dir)/motion/motion-stretch-example.cpp
 motion_stretch_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 motion_stretch_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 motion_stretch_example_LDADD = $(EXAMPLE_LDADD)

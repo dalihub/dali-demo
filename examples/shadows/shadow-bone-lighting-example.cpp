@@ -37,8 +37,8 @@ const char* APPLICATION_TITLE_PAN_LIGHT( "Lighting: Pan Light" );
 const char* APPLICATION_TITLE_PAN_OBJECT( "Lighting: Pan Object" );
 const char* APPLICATION_TITLE_PAN_SCENE( "Lighting: Pan Scene" );
 const char* APPLICATION_TITLE_ROTATE_SCENE( "Lighting: Rotate Scene" );
-const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon_mode.png" );
-const char* RESET_ICON( DALI_IMAGE_DIR "icon_stop_small.png" );
+const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
+const char* RESET_ICON( DALI_IMAGE_DIR "icon-reset.png" );
 
 const Quaternion JAUNTY_ROTATION(Math::PI/5.0f, Math::PI/5.0f, 0.0f); // Euler angles
 const float MIN_PINCH_SCALE( 0.3f );

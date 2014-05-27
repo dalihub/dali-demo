@@ -29,12 +29,13 @@ using namespace Dali;
 namespace
 {
 
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char* APPLICATION_TITLE_HIGHP( "Dissolve Effect(highp)" );
-const char* APPLICATION_TITLE_MEDIUMP( "Dissolve Effect(mediump)" );
-const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon_mode.png" );
-const char* PLAY_ICON( DALI_IMAGE_DIR "icon-play.png" );
-const char* STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
+const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char * const APPLICATION_TITLE_HIGHP( "Dissolve Effect(highp)" );
+const char * const APPLICATION_TITLE_MEDIUMP( "Dissolve Effect(mediump)" );
+const char * const EFFECT_HIGHP_IMAGE( DALI_IMAGE_DIR "icon-highp.png" );
+const char * const EFFECT_MEDIUMP_IMAGE( DALI_IMAGE_DIR "icon-mediump.png" );
+const char * const PLAY_ICON( DALI_IMAGE_DIR "icon-play.png" );
+const char * const STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
 
 const char* IMAGES[] =
 {
@@ -159,6 +160,10 @@ private:
   Image                           mIconPlay;
   Image                           mIconStop;
   Toolkit::PushButton             mPlayStopButton;
+
+  Image                           mIconHighP;
+  Image                           mIconMediumP;
+  Toolkit::PushButton             mEffectChangeButton;
 };
 
 DissolveEffectApp::DissolveEffectApp( Application& application )
@@ -186,11 +191,12 @@ void DissolveEffectApp::OnInit( Application& application )
   mContent = DemoHelper::CreateView( application, mView,mToolBar, "", TOOLBAR_IMAGE, "" );
 
   // Add an effect-changing button on the right of the tool bar.
-  Image imageChangeEffect = Image::New( CHANGE_EFFECT_IMAGE );
-  Toolkit::PushButton effectChangeButton = Toolkit::PushButton::New();
-  effectChangeButton.SetBackgroundImage(imageChangeEffect);
-  effectChangeButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnEffectButtonClicked );
-  mToolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+  mIconHighP = Image::New( EFFECT_HIGHP_IMAGE );
+  mIconMediumP = Image::New( EFFECT_MEDIUMP_IMAGE );
+  mEffectChangeButton = Toolkit::PushButton::New();
+  mEffectChangeButton.SetBackgroundImage(mIconHighP);
+  mEffectChangeButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnEffectButtonClicked );
+  mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
   mTitleActor = Toolkit::TextView::New();
@@ -307,10 +313,12 @@ bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
   if(mUseHighPrecision)
   {
     mTitleActor.SetText( APPLICATION_TITLE_HIGHP );
+    mEffectChangeButton.SetBackgroundImage(mIconHighP);
   }
   else
   {
     mTitleActor.SetText( APPLICATION_TITLE_MEDIUMP );
+    mEffectChangeButton.SetBackgroundImage(mIconMediumP);
   }
   mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 

@@ -32,7 +32,7 @@ namespace
 const char * const TEXTURE_IMAGE ( DALI_IMAGE_DIR "bubble-effect-texture-border.png" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "Bubble Effect" );
-const char * const CHANGE_IMAGE_ICON( DALI_IMAGE_DIR "icon_mode.png" );
+const char * const CHANGE_IMAGE_ICON( DALI_IMAGE_DIR "icon-change.png" );
 
 const char* BACKGROUND_IMAGES[]=
 {
@@ -40,6 +40,7 @@ const char* BACKGROUND_IMAGES[]=
   DALI_IMAGE_DIR "background-2.jpg",
   DALI_IMAGE_DIR "background-3.jpg",
   DALI_IMAGE_DIR "background-4.jpg",
+  DALI_IMAGE_DIR "background-5.jpg",
 };
 const unsigned int NUM_BACKGROUND_IMAGES( sizeof(BACKGROUND_IMAGES) / sizeof(BACKGROUND_IMAGES[0]) );
 

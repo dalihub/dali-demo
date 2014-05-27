@@ -36,14 +36,14 @@ namespace
 const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "DALi Blocks" );
-const char* BALL_IMAGE = DALI_IMAGE_DIR "ball.png";
-const char* PADDLE_IMAGE = DALI_IMAGE_DIR "paddle.png";
-const char* PADDLE_HANDLE_IMAGE = DALI_IMAGE_DIR "paddle_handle.png";
+const char* BALL_IMAGE = DALI_IMAGE_DIR "blocks-ball.png";
+const char* PADDLE_IMAGE = DALI_IMAGE_DIR "blocks-paddle.png";
+const char* PADDLE_HANDLE_IMAGE = DALI_IMAGE_DIR "blocks-paddle-handle.png";
 
-const char* BRICK_IMAGE_PATH[] =    { DALI_IMAGE_DIR "brick1.png",
-                                      DALI_IMAGE_DIR "brick2.png",
-                                      DALI_IMAGE_DIR "brick3.png",
-                                      DALI_IMAGE_DIR "brick4.png" };
+const char* BRICK_IMAGE_PATH[] =    { DALI_IMAGE_DIR "blocks-brick-1.png",
+                                      DALI_IMAGE_DIR "blocks-brick-2.png",
+                                      DALI_IMAGE_DIR "blocks-brick-3.png",
+                                      DALI_IMAGE_DIR "blocks-brick-4.png" };
 
 const int TOTAL_BRICKS(4);                                                  ///< Total bricks in game.
 const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);

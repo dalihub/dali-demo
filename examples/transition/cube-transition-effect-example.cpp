@@ -29,13 +29,15 @@ using namespace Dali;
 namespace
 {
 
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char* APPLICATION_TITLE_WAVE( "Cube Transition: Wave" );
-const char* APPLICATION_TITLE_CROSS( "Cube Transition: Cross" );
-const char* APPLICATION_TITLE_FOLD( "Cube Transition: Fold" );
-const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon_mode.png" );
-const char* SLIDE_SHOW_START_ICON( DALI_IMAGE_DIR "icon-play.png" );
-const char* SLIDE_SHOW_STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
+const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char * const APPLICATION_TITLE_WAVE( "Cube Transition: Wave" );
+const char * const APPLICATION_TITLE_CROSS( "Cube Transition: Cross" );
+const char * const APPLICATION_TITLE_FOLD( "Cube Transition: Fold" );
+const char * const EFFECT_WAVE_IMAGE( DALI_IMAGE_DIR "icon-effect-wave.png" );
+const char * const EFFECT_CROSS_IMAGE( DALI_IMAGE_DIR "icon-effect-cross.png" );
+const char * const EFFECT_FOLD_IMAGE( DALI_IMAGE_DIR "icon-effect-fold.png" );
+const char * const SLIDE_SHOW_START_ICON( DALI_IMAGE_DIR "icon-play.png" );
+const char * const SLIDE_SHOW_STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
 
 const char* IMAGES[] =
 {
@@ -177,6 +179,11 @@ private:
 
   Vector2                         mPanPosition;
   Vector2                         mPanDisplacement;
+
+  Image                           mImageWave;
+  Image                           mImageCross;
+  Image                           mImageFold;
+  Toolkit::PushButton             mEffectChangeButton;
 };
 
 CubeTransitionApp::CubeTransitionApp( Application& application )
@@ -201,11 +208,13 @@ void CubeTransitionApp::OnInit( Application& application )
   mContent = DemoHelper::CreateView( application, mView, mToolBar, "", TOOLBAR_IMAGE, "" );
 
   // Add an effect-changing button on the right of the tool bar.
-  Image imageChangeEffect = Image::New( CHANGE_EFFECT_IMAGE );
-  Toolkit::PushButton effectChangeButton = Toolkit::PushButton::New();
-  effectChangeButton.SetBackgroundImage(imageChangeEffect);
-  effectChangeButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
-  mToolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+  mImageWave = Image::New( EFFECT_WAVE_IMAGE );
+  mImageCross = Image::New( EFFECT_CROSS_IMAGE );
+  mImageFold = Image::New( EFFECT_FOLD_IMAGE );
+  mEffectChangeButton = Toolkit::PushButton::New();
+  mEffectChangeButton.SetBackgroundImage(mImageWave);
+  mEffectChangeButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
+  mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
   mTitleActor = Toolkit::TextView::New();
@@ -330,18 +339,22 @@ bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
     mCurrentEffect = mCubeCrossEffect;
     mTitleActor.SetText( APPLICATION_TITLE_CROSS );
     mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_CROSS ) );
+    mEffectChangeButton.SetBackgroundImage(mImageCross);
+
   }
   else if(mCurrentEffect == mCubeCrossEffect)
   {
     mCurrentEffect = mCubeFoldEffect;
     mTitleActor.SetText( APPLICATION_TITLE_FOLD );
     mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_FOLD ) );
+    mEffectChangeButton.SetBackgroundImage(mImageFold);
   }
   else
   {
     mCurrentEffect = mCubeWaveEffect;
     mTitleActor.SetText( APPLICATION_TITLE_WAVE );
     mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_WAVE ) );
+    mEffectChangeButton.SetBackgroundImage(mImageWave);
   }
   mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 

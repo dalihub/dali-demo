@@ -29,10 +29,13 @@ using namespace DemoHelper;
 namespace // unnamed namespace
 {
 
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char* APPLICATION_TITLE( "Clusters" );
-const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon_mode.png" );
+const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
+const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char * const APPLICATION_TITLE( "Clusters" );
+const char * const LAYOUT_NONE_IMAGE( DALI_IMAGE_DIR "icon-cluster-none.png" );
+const char * const LAYOUT_WOBBLE_IMAGE( DALI_IMAGE_DIR "icon-cluster-wobble.png" );
+const char * const LAYOUT_CAROUSEL_IMAGE( DALI_IMAGE_DIR "icon-cluster-carousel.png" );
+const char * const LAYOUT_SPHERE_IMAGE( DALI_IMAGE_DIR "icon-cluster-sphere.png" );
 
 enum ClusterType
 {
@@ -134,12 +137,12 @@ const float SHEAR_EFFECT_MAX_OVERSHOOT = 30.0f;             ///< Max Overshoot f
 
 const float UI_MARGIN = 10.0f;                              ///< Screen Margin for placement of UI buttons
 
-const float CAROUSEL_EFFECT_RADIUS = 500.0f;                  ///< In Carousel Effect mode: Radius of carousel (Z peak depth)
-const float CAROUSEL_EFFECT_ANGLE_SWEEP = 90.0f;              ///< In Carousel Effect mode: Angle sweep from left to right of screen
-const float SPHERE_EFFECT_RADIUS = 1000.0f;                   ///< In Sphere Effect mode: Radius of sphere carousel (Z peak depth)
-const float SPHERE_EFFECT_POSITION_Z = -700.0f;               ///< In Sphere Effect mode: Z position alter (as carousel is coming out to screen we move back)
-const float SPHERE_EFFECT_ANGLE_SWEEP = 90.0f;                ///< In Sphere Effect mode: Angle sweep from edge to opposite side of circle.
-const float SPHERE_EFFECT_VERTICAL_DOMAIN = 0.15f;             ///< In Sphere Effect mode: How much the user can pan in the vertical axis. (in stageHeights)
+const float CAROUSEL_EFFECT_RADIUS = 500.0f;                ///< In Carousel Effect mode: Radius of carousel (Z peak depth)
+const float CAROUSEL_EFFECT_ANGLE_SWEEP = 90.0f;            ///< In Carousel Effect mode: Angle sweep from left to right of screen
+const float SPHERE_EFFECT_RADIUS = 1000.0f;                 ///< In Sphere Effect mode: Radius of sphere carousel (Z peak depth)
+const float SPHERE_EFFECT_POSITION_Z = -700.0f;             ///< In Sphere Effect mode: Z position alter (as carousel is coming out to screen we move back)
+const float SPHERE_EFFECT_ANGLE_SWEEP = 90.0f;              ///< In Sphere Effect mode: Angle sweep from edge to opposite side of circle.
+const float SPHERE_EFFECT_VERTICAL_DOMAIN = 0.15f;          ///< In Sphere Effect mode: How much the user can pan in the vertical axis. (in stageHeights)
 
 /**
  * List of effect types that user can select through.
@@ -159,7 +162,8 @@ enum ExampleEffectType
 const char* EXAMPLE_EFFECT_LABEL[] = { "NONE",
                                        "WOBBLE",
                                        "CAROUSEL",
-                                       "SPHERE" };
+                                       "SPHERE",
+                                     };
 
 /**
  * CarouselEffectOrientationConstraint
@@ -339,6 +343,36 @@ struct ShearEffectCenterConstraint
 };
 
 /**
+ * SphereEffectOffsetConstraint
+ *
+ * Sets SphereEffect's center to be a function of the
+ * screen orientation (portrait or landscape).
+ */
+struct SphereEffectOffsetConstraint
+{
+  /**
+   * @param[in] stageSize The stage size (not subject to orientation)
+   * @param[in] center Shear Center position based on initial orientation.
+   */
+  SphereEffectOffsetConstraint(float offset)
+  : mOffset(offset)
+  {
+  }
+
+  /**
+   * @param[in] current The current center
+   * @param[in] propertyViewSize The current view size
+   * @return vector to provide SphereShaderEffect
+   */
+  float operator()(const float& current)
+  {
+    return current + mOffset;
+  }
+
+  float mOffset;
+};
+
+/**
  * ClusterInfo struct
  *
  * Contains information about each cluster in mClusterInfo list.
@@ -376,10 +410,11 @@ struct ClusterInfo
 
   }
 
-  Cluster mCluster;             ///< Cluster instance
-  int mIndex;                   ///< Cluster index
-  Vector3 mPosition;            ///< Cluster original position
-  Vector3 mSize;                ///< Cluster original size
+  Cluster mCluster;                   ///< Cluster instance
+  int mIndex;                         ///< Cluster index
+  Vector3 mPosition;                  ///< Cluster original position
+  Vector3 mSize;                      ///< Cluster original size
+  ActiveConstraint mEffectConstraint; ///< Cluster constraint
 };
 
 /**
@@ -466,11 +501,14 @@ public:
                                             "" );
 
     // Create a effect toggle button. (right of toolbar)
-    Image imageLayout = Image::New( CHANGE_EFFECT_IMAGE );
-    Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
-    layoutButton.SetBackgroundImage(imageLayout);
-    layoutButton.ClickedSignal().Connect( this, &ClusterController::OnEffectTouched );
-    mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    mLayoutButtonImages[ NO_EFFECT ] = Image::New( LAYOUT_NONE_IMAGE );
+    mLayoutButtonImages[ WOBBLE_EFFECT ] = Image::New( LAYOUT_WOBBLE_IMAGE );
+    mLayoutButtonImages[ CAROUSEL_EFFECT ] = Image::New( LAYOUT_CAROUSEL_IMAGE );
+    mLayoutButtonImages[ SPHERE_EFFECT ] = Image::New( LAYOUT_SPHERE_IMAGE );
+
+    mLayoutButton = Toolkit::PushButton::New();
+    mLayoutButton.ClickedSignal().Connect( this, &ClusterController::OnEffectTouched );
+    mToolBar.AddControl( mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // create and setup the scroll view...
     mScrollView = ScrollView::New();
@@ -677,10 +715,17 @@ public:
     mScrollView.RemoveShaderEffect();
     mScrollView.SetPosition(Vector3::ZERO);
 
+    mLayoutButton.SetBackgroundImage( mLayoutButtonImages[ type ] );
+
     for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
     {
       Cluster cluster = i->mCluster;
       cluster.RemoveShaderEffect();
+      if( i->mEffectConstraint )
+      {
+        cluster.RemoveConstraint(i->mEffectConstraint);
+        i->mEffectConstraint = 0;
+      }
     }
 
     // Apply new shader-effects.
@@ -694,6 +739,7 @@ public:
       {
         break;
       }
+
       case WOBBLE_EFFECT:
       {
         for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
@@ -734,6 +780,7 @@ public:
         }
         break;
       }
+
       case CAROUSEL_EFFECT:
       {
         // Apply Carousel Shader Effect to scrollView
@@ -752,6 +799,7 @@ public:
 
         break;
       }
+
       case SPHERE_EFFECT:
       {
         // Change ruler to free panning...
@@ -771,10 +819,18 @@ public:
         shaderEffect.SetRadius( SPHERE_EFFECT_RADIUS );
         shaderEffect.SetAnglePerUnit( Vector2( SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y, SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y ) );
         mScrollView.SetShaderEffect( shaderEffect );
-        mScrollView.SetPosition( Vector3( 0.0f, 0.0f, SPHERE_EFFECT_POSITION_Z ) );
+        for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
+        {
+          Constraint constraint = Constraint::New<float>(Actor::POSITION_Z, SphereEffectOffsetConstraint(SPHERE_EFFECT_POSITION_Z));
+          constraint.SetRemoveAction(Constraint::Discard);
+          Cluster cluster = i->mCluster;
+          i->mEffectConstraint = cluster.ApplyConstraint(constraint);
+        }
         break;
       }
-      default:break;
+
+      default:
+        break;
     }
 
   }
@@ -824,21 +880,23 @@ public:
 
 private:
 
-  Application&               mApplication;            ///< Application instance
-  Toolkit::View              mView;                   ///< The View instance.
-  Toolkit::ToolBar           mToolBar;                ///< The View's Toolbar.
-  TextView                   mTitleActor;             ///< The Toolbar's Title.
+  Application&               mApplication;                       ///< Application instance
+  Toolkit::View              mView;                              ///< The View instance.
+  Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
+  TextView                   mTitleActor;                        ///< The Toolbar's Title.
 
-  Layer                      mContentLayer;           ///< Content layer (scrolling cluster content)
+  Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)
 
-  ScrollView                 mScrollView;             ///< The ScrollView container for all clusters
-  ScrollViewWobbleEffect     mScrollViewEffect;       ///< ScrollView Wobble effect
-  Image                      mClusterBorderImage;     ///< The border frame that appears on each image
+  ScrollView                 mScrollView;                        ///< The ScrollView container for all clusters
+  ScrollViewWobbleEffect     mScrollViewEffect;                  ///< ScrollView Wobble effect
+  Image                      mClusterBorderImage;                ///< The border frame that appears on each image
 
-  vector<ClusterInfo>        mClusterInfo;            ///< Keeps track of each cluster's information.
-  int                        mClusterCount;           ///< Current number of clusters in use
-  ExampleEffectType          mExampleEffect;          ///< Current example effect.
+  vector<ClusterInfo>        mClusterInfo;                       ///< Keeps track of each cluster's information.
+  int                        mClusterCount;                      ///< Current number of clusters in use
+  ExampleEffectType          mExampleEffect;                     ///< Current example effect.
 
+  Toolkit::PushButton        mLayoutButton;                      ///< The layout button
+  Image                      mLayoutButtonImages[TOTAL_EFFECTS]; ///< Image when no layout
 };
 
 void RunTest(Application& app)
