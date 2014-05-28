@@ -14,25 +14,18 @@
 // limitations under the License.
 //
 
-#include <stdio.h>
-#include <unistd.h>
-#include <getopt.h>
-#include <sstream>
 #include <dali/dali.h>
-#include "dali-toolkit/dali-toolkit.h"
-
+#include <dali-toolkit/dali-toolkit.h>
 #include "../shared/view.h"
 
 using namespace Dali;
 
-using Dali::Material;
-
 namespace
 {
-const char * const TEXTURE_IMAGE ( DALI_IMAGE_DIR "bubble-effect-texture-border.png" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "Bubble Effect" );
-const char * const CHANGE_IMAGE_ICON( DALI_IMAGE_DIR "icon-change.png" );
+const char * const CHANGE_BACKGROUND_ICON( DALI_IMAGE_DIR "icon-change.png" );
+const char * const CHANGE_BUBBLE_SHAPE_ICON( DALI_IMAGE_DIR "icon-replace.png" );
 
 const char* BACKGROUND_IMAGES[]=
 {
@@ -42,180 +35,34 @@ const char* BACKGROUND_IMAGES[]=
   DALI_IMAGE_DIR "background-4.jpg",
   DALI_IMAGE_DIR "background-5.jpg",
 };
-const unsigned int NUM_BACKGROUND_IMAGES( sizeof(BACKGROUND_IMAGES) / sizeof(BACKGROUND_IMAGES[0]) );
+const unsigned int NUM_BACKGROUND_IMAGES( sizeof( BACKGROUND_IMAGES ) / sizeof( BACKGROUND_IMAGES[0] ) );
 
-const float MIN_DISTANCE( 2.f);
-const float MAX_DISTANCE( 200.f);
-const float BUBBLE_SIZE( 40.f );
-const float BUBBLE_MIN_SIZE( 5.f );
-const unsigned long MAX_TIME_INTERVAL(100);
-const unsigned int NUMBER_OF_BUBBLES( 100 );  //this value cannot be bigger than 100;
-const unsigned int NUMBER_OF_GROUP( 7 );
-const unsigned int TOTAL_NUMBER_OF_BUBBLES( NUMBER_OF_BUBBLES * NUMBER_OF_GROUP );
-} // unnamed namespace
-
-class BubbleEffect : public ShaderEffect
+const char* BUBBLE_SHAPE_IMAGES[] =
 {
-public:
-
-  BubbleEffect()
-  {}
-
-  static BubbleEffect New( unsigned int numberOfBubble )
-  {
-    std::ostringstream meshVertexStringStream;
-    meshVertexStringStream << "#define NUMBER_OF_BUBBLE "<< numberOfBubble << "\n";
-    std::string meshVertex(
-    "  uniform float uGravity; \n"
-    "  uniform vec4 uStartAndEndPos[NUMBER_OF_BUBBLE];\n"
-    "  uniform float uEasing[NUMBER_OF_BUBBLE];\n"
-    "  uniform float uPercentage[NUMBER_OF_BUBBLE];\n"
-    "  uniform vec2 uStageSize; \n"
-    "  uniform vec2 offset[9]; \n"
-    "  varying float vPercentage;\n"
-    "  varying vec2  vEffectTexCoord;\n"
-    "  void main()\n"
-    "  {\n"
-    "    mediump vec4 position = vec4( aPosition.x, aPosition.y, 0.0, 1.0 );\n"
-    "    int zCoord = int(aPosition.z); \n"
-    "    int idx = int(mod(aPosition.z, float(NUMBER_OF_BUBBLE)));\n"
-    "    int groupIdx = (zCoord - idx) / NUMBER_OF_BUBBLE;\n"
-    "    vec4 startAndEnd = uStartAndEndPos[idx]; \n"
-    "    startAndEnd.zw += offset[groupIdx];\n"
-    "\n"
-    "    if( uPercentage[idx] < 1.0 )\n"
-    "    {\n"
-    "      float positionDelta = uPercentage[idx];\n"
-    "      if (mod(uEasing[idx], 4.0) > 1.5) { positionDelta = pow(uPercentage[idx], 2.0); } \n"
-    "      else if (mod(uEasing[idx], 8.0) > 3.5) { positionDelta = 1.0 - pow((1.0-uPercentage[idx]),2.0); }\n"
-    "      else if (mod(uEasing[idx], 16.0) > 7.5) { positionDelta = pow(2.0, 10.0 * (uPercentage[idx] - 1.0)) - 0.001; }\n"
-    "      else if (mod(uEasing[idx], 32.0) > 15.5) { positionDelta = 1.001 * (-pow(2.0, -10.0 * uPercentage[idx]) + 1.0); }\n"
-
-    "      position.xy = position.xy + startAndEnd.xy + startAndEnd.zw * positionDelta; \n"
-    "      if (mod(uEasing[idx],64.0) > 31.5) { position.y = position.y - (0.5*uGravity * pow(uPercentage[idx]+0.1, 2.0)); }\n"
-    "    }\n"
-    "    gl_Position = uMvpMatrix * position;\n"
-    "\n"
-    "    mediump vec2 start = uCustomTextureCoords.xy;\n"
-    "    mediump vec2 scale = uCustomTextureCoords.zw;\n"
-    "    vTexCoord = vec2( start.x + aTexCoord.x * scale.x, start.y + aTexCoord.y * scale.y );\n"
-    "    vPercentage = uPercentage[idx];\n"
-    "    vEffectTexCoord = startAndEnd.xy / uStageSize; \n"
-    "  }\n" );
-    meshVertexStringStream << meshVertex;
-
-    std::string meshFragment(
-    "  varying float vPercentage;\n"
-    "  varying vec2  vEffectTexCoord;\n"
-    "\n"
-    "  void main()\n"
-    "  {\n"
-    "    vec4 fragColor = texture2D(sEffect, vEffectTexCoord);\n"
-    "    fragColor.rgb *= 1.2; \n"
-    "    fragColor *= uColor;\n"
-    "    fragColor.a  *= texture2D(sTexture, vTexCoord).a * ( 1.0-vPercentage*vPercentage );\n"
-    "    gl_FragColor = fragColor;\n"
-    "  }\n");
-
-    ShaderEffect shaderEffect = ShaderEffect::New( meshVertexStringStream.str(), meshFragment,
-                                                   GeometryType( GEOMETRY_TYPE_TEXTURED_MESH),
-                                                   ShaderEffect::GeometryHints( ShaderEffect::HINT_BLENDING ) );
-    BubbleEffect handle( shaderEffect );
-    handle.mNumOfBubbles = numberOfBubble;
-    handle.SetUniform( "uGravity", 100.f );
-    handle.SetUniform( "uStageSize", Stage::GetCurrent().GetSize() );
-    for( unsigned int i=0; i<numberOfBubble; i++ )
-    {
-      handle.SetPercentage( i, 1.f);
-    }
-
-    srand(time(NULL));
-
-    return handle;
-  }
-
-  void SetBubbleParameter(unsigned int idx, const Vector2& emitPosition, Vector2 direction)
-  {
-     Vector2 randomVec(rand()%400-200, rand()%400-200);
-     float length = randomVec.Length();
-     randomVec /= length;
-     direction.Normalize();
-     Vector2 endPos = (randomVec -  direction*4.f);
-     endPos.Normalize();
-     Vector4 startAndEndPos( emitPosition.x, emitPosition.y, endPos.x*length, endPos.y*length );
-     SetStartAndEndPos( idx, startAndEndPos );
-
-     float easing = pow( 2, rand()%5-1 ) + ( rand()%2-1 )*32;
-     SetEasing( idx, easing );
-
-     SetPercentage( idx, 0.f);
-
-     float offset = 100.f;
-     SetUniform("offset[0]", Vector2(0.f,0.f));
-     SetUniform("offset[1]", Vector2(offset,0.f));
-     SetUniform("offset[2]", Vector2(-offset,0.f));
-     SetUniform("offset[3]", Vector2(0.f,offset));
-     SetUniform("offset[4]", Vector2(0.f,-offset));
-     SetUniform("offset[5]", Vector2(offset,offset)*0.707f );
-     SetUniform("offset[6]", Vector2(offset,-offset)*0.707f);
-     SetUniform("offset[7]", Vector2(-offset,offset)*0.707f);
-     SetUniform("offset[8]", Vector2(-offset,-offset)*0.707f);
-  }
-
-  std::string GetPercentagePropertyName( unsigned int idx ) const
-  {
-    assert( idx < mNumOfBubbles );
-    std::ostringstream oss;
-    oss<< "uPercentage["<< idx << "]";
-    return oss.str();
-  }
-
-private:
-  // Helper for New()
-  BubbleEffect( ShaderEffect handle )
-  : ShaderEffect( handle )
-  {}
-
-  void SetStartAndEndPos( unsigned int idx, const Vector4& startAndEndPos )
-  {
-    assert( idx < mNumOfBubbles );
-    std::ostringstream oss;
-    oss<< "uStartAndEndPos["<< idx << "]";
-    SetUniform( oss.str(), startAndEndPos );
-  }
-
-  void SetEasing( unsigned int idx, float easing )
-  {
-    assert( idx < mNumOfBubbles );
-    std::ostringstream oss;
-    oss<< "uEasing["<< idx << "]";
-    SetUniform( oss.str(), easing );
-  }
-
-  void SetPercentage( unsigned int idx, float percentage )
-  {
-    assert( idx < mNumOfBubbles );
-    std::ostringstream oss;
-    oss<< "uPercentage["<< idx << "]";
-    SetUniform( oss.str(), percentage );
-  }
-
-private:
-
-  unsigned int mNumOfBubbles;
+  DALI_IMAGE_DIR "blocks-ball.png",
+  DALI_IMAGE_DIR "icon-item-view-layout-spiral.png",
+  DALI_IMAGE_DIR "icon-replace.png",
+  DALI_IMAGE_DIR "icon-effect-cross.png"
 };
+const unsigned int NUM_BUBBLE_SHAPE_IMAGES( sizeof( BUBBLE_SHAPE_IMAGES ) / sizeof( BUBBLE_SHAPE_IMAGES[0] ) );
 
+const Vector2 DEFAULT_BUBBLE_SIZE( 10.f, 30.f );
+const unsigned int DEFAULT_NUMBER_OF_BUBBLES( 1000 );
+}// end LOCAL_STUFF
+
+// This example shows the usage of BubbleEmitter which displays lots of moving bubbles on the stage.
 class BubbleEffectExample : public ConnectionTracker
 {
 public:
   BubbleEffectExample(Application &app)
   : mApp(app),
-    mCurrentUniform( 0 ),
-    mTouchable( false ),
-    mLastTouchTime( 0 ),
-    mRescoucesCleared( false ),
-    mCurrentBackgroundImageId( 0 )
+    mHSVDelta( Vector3( 0.f, 0.f, 0.5f ) ),
+    mNeedNewAnimation( true ),
+    mTimerInterval( 16 ),
+    mCurrentBackgroundImageId( 0 ),
+    mCurrentBubbleShapeImageId( 0 )
   {
+    // Connect to the Application's Init signal
     app.InitSignal().Connect(this, &BubbleEffectExample::Create);
   }
 
@@ -223,58 +70,186 @@ public:
   {
   }
 
-public:
+private:
 
+  // The Init signal is received once (only) during the Application lifetime
   void Create(Application& app)
   {
     Stage stage = Stage::GetCurrent();
-    Vector2 size = stage.GetSize();
+    Vector2 stageSize = stage.GetSize();
+
+    stage.KeyEventSignal().Connect(this, &BubbleEffectExample::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
     Toolkit::ToolBar toolBar;
-    mContent = DemoHelper::CreateView( app,
-                                       mView,
-                                       toolBar,
-                                       "",
-                                       TOOLBAR_IMAGE,
-                                       APPLICATION_TITLE );
+    Toolkit::View    view;
+    Layer content = DemoHelper::CreateView( app,
+                                            view,
+                                            toolBar,
+                                            "",
+                                            TOOLBAR_IMAGE,
+                                            APPLICATION_TITLE );
 
-    // Create a effect toggle button. (right of toolbar)
-    Image imageLayout = Image::New( CHANGE_IMAGE_ICON );
-    Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
-    layoutButton.SetBackgroundImage(imageLayout);
-    layoutButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnImageChageIconClicked );
-    toolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    // Add a button to change background. (right of toolbar)
+    mChangeBackgroundButton = Toolkit::PushButton::New();
+    mChangeBackgroundButton.SetBackgroundImage( Image::New( CHANGE_BACKGROUND_ICON ) );
+    mChangeBackgroundButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
+    toolBar.AddControl( mChangeBackgroundButton,
+                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
+                        Toolkit::Alignment::HorizontalRight,
+                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    // Add a button to change bubble shape. ( left of bar )
+    mChangeBubbleShapeButton = Toolkit::PushButton::New();
+    mChangeBubbleShapeButton.SetBackgroundImage( Image::New( CHANGE_BUBBLE_SHAPE_ICON ) );
+    mChangeBubbleShapeButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
+    toolBar.AddControl( mChangeBubbleShapeButton,
+                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
+                        Toolkit::Alignment::HorizontalLeft,
+                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
-    mRoot = Actor::New();
-    mRoot.SetParentOrigin( ParentOrigin::CENTER );
-    stage.Add(mRoot);
+    // Create and initialize the BubbleEmitter object
+    mBubbleEmitter = Toolkit::BubbleEmitter::New( stageSize,
+                                                  Image::New( BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId] ),
+                                                  DEFAULT_NUMBER_OF_BUBBLES,
+                                                  DEFAULT_BUBBLE_SIZE);
+    mBackgroundImage = Image::New( BACKGROUND_IMAGES[mCurrentBackgroundImageId] );
+    mBubbleEmitter.SetBackground( mBackgroundImage, mHSVDelta );
 
-    mFrameBufferImage = FrameBufferImage::New( size.width/4.f, size.height/4.f, Pixel::RGBA8888, Dali::Image::Unused );
-    mTimer = Timer::New( 1000 );
-    mTimer.TickSignal().Connect( this, &BubbleEffectExample::ClearBlurResource );
+    // Get the root actor of all bubbles, and add it to stage.
+    Actor bubbleRoot = mBubbleEmitter.GetRootActor();
+    bubbleRoot.SetParentOrigin(ParentOrigin::CENTER);
+    bubbleRoot.SetZ(0.1f); // Make sure the bubbles displayed on top og the background.
+    content.Add( bubbleRoot );
 
-    SetImage( BACKGROUND_IMAGES[ mCurrentBackgroundImageId ] );
+    // Add the background image actor to stage
+    mBackgroundActor = ImageActor::New( mBackgroundImage );
+    view.SetBackground( mBackgroundActor );
 
-    GenMaterial();
-    MeshData meshData;
-    ConstructBubbleMesh( meshData, NUMBER_OF_BUBBLES*9, BUBBLE_SIZE);
-    for(unsigned int i=0; i < NUMBER_OF_GROUP; i++ )
-    {
-      mMesh[i] = Mesh::New( meshData );
-      mMeshActor[i] = MeshActor::New( mMesh[i] );
-      mMeshActor[i].SetAffectedByLighting( false );
-      mMeshActor[i].SetParentOrigin(ParentOrigin::TOP_LEFT);
-      stage.Add( mMeshActor[i] );
-      mEffect[i] = BubbleEffect::New( NUMBER_OF_BUBBLES );
-      mEffect[i].SetEffectImage( mFrameBufferImage );
-      mMeshActor[i].SetShaderEffect( mEffect[i] );
-    }
+    // Set up the timer to emit bubble regularly when the finger is touched down but not moved
+    mTimerForBubbleEmission = Timer::New( mTimerInterval );
+    mTimerForBubbleEmission.TickSignal().Connect(this, &BubbleEffectExample::OnTimerTick);
 
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &BubbleEffectExample::OnKeyEvent);
+    // Connect the callback to the touch signal on the background
+    mBackgroundActor.TouchedSignal().Connect( this, &BubbleEffectExample::OnTouch );
   }
 
+
+/***********
+ * Emit bubbles
+ *****************/
+
+  // Set up the animation of emitting bubbles, to be efficient, every animation controls multiple bubbles ( 4 here )
+  void SetUpAnimation( Vector2 emitPosition, Vector2 direction )
+  {
+    if( mNeedNewAnimation )
+    {
+      float duration = Random::Range(1.f, 1.5f);
+      mEmitAnimation = Animation::New( duration );
+      mNeedNewAnimation = false;
+      mAnimateComponentCount = 0;
+    }
+
+    mBubbleEmitter.EmitBubble( mEmitAnimation, emitPosition, direction + Vector2(0.f, 30.f) /* upwards */, Vector2(300, 600) );
+
+    mAnimateComponentCount++;
+
+    if( mAnimateComponentCount % 4 ==0 )
+    {
+      mEmitAnimation.Play();
+      mNeedNewAnimation = true;
+    }
+  }
+
+  // Emit bubbles when the finger touches down but keep stationary.
+  // And stops emitting new bubble after being stationary for 2 seconds
+  bool OnTimerTick()
+  {
+    if(mEmitPosition == mCurrentTouchPosition) // finger is not moving
+    {
+      mNonMovementCount++;
+      if(mNonMovementCount < (1000 / mTimerInterval)) // 1 seconds
+      {
+        for(int i = 0; i < 4; i++) // emit 4 bubbles every timer tick
+        {
+          SetUpAnimation( mCurrentTouchPosition+Vector2(rand()%5, rand()%5), Vector2(rand()%60-30, rand()%100-50) );
+        }
+      }
+    }
+    else
+    {
+      mNonMovementCount = 0;
+      mEmitPosition = mCurrentTouchPosition;
+    }
+
+    return true;
+  }
+
+  // Callback function of the touch signal on the background
+  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& event)
+  {
+    const TouchPoint &point = event.GetPoint(0);
+    switch(point.state)
+    {
+      case TouchPoint::Down:
+      {
+        mCurrentTouchPosition = point.screen;
+        mEmitPosition = point.screen;
+        mTimerForBubbleEmission.Start();
+        mNonMovementCount = 0;
+
+        break;
+      }
+      case TouchPoint::Motion:
+      {
+        Vector2 displacement = point.screen - mCurrentTouchPosition;
+        mCurrentTouchPosition = point.screen;
+        //emit multiple bubbles along the moving direction when the finger moves quickly
+        float step = std::min(5.f, displacement.Length());
+        for( float i=0.25f; i<step; i=i+1.f)
+        {
+          SetUpAnimation( mCurrentTouchPosition+displacement*(i/step), displacement );
+        }
+        break;
+      }
+      case TouchPoint::Up:
+      case TouchPoint::Leave:
+      case TouchPoint::Interrupted:
+      {
+        mTimerForBubbleEmission.Stop();
+        break;
+      }
+      case TouchPoint::Stationary:
+      case TouchPoint::Last:
+      default:
+      {
+        break;
+      }
+
+    }
+    return true;
+  }
+
+  bool OnChangeIconClicked( Toolkit::Button button )
+  {
+    if(button == mChangeBackgroundButton)
+    {
+      mBackgroundImage = Image::New( BACKGROUND_IMAGES[ ++mCurrentBackgroundImageId % NUM_BACKGROUND_IMAGES  ] );
+
+      mBubbleEmitter.SetBackground( mBackgroundImage, mHSVDelta );
+
+      mBackgroundActor.SetImage( mBackgroundImage );
+    }
+    else if( button == mChangeBubbleShapeButton )
+    {
+      mBubbleEmitter.SetShapeImage( Image::New( BUBBLE_SHAPE_IMAGES[ ++mCurrentBubbleShapeImageId % NUM_BUBBLE_SHAPE_IMAGES ] ) );
+    }
+    return true;
+  }
+
+  /**
+   * Main key event handler
+   */
   void OnKeyEvent(const KeyEvent& event)
   {
     if(event.state == KeyEvent::Down)
@@ -286,201 +261,30 @@ public:
     }
   }
 
-  void SetImage( const std::string& imagePath )
-  {
-    mTouchable = false;
-
-    if( mScreen )
-    {
-      mScreen.TouchedSignal().Disconnect( this, &BubbleEffectExample::OnTouch );
-      mRoot.Remove( mScreen );
-      ClearBlurResource();
-    }
-
-    Stage stage = Stage::GetCurrent();
-
-    Image image = Image::New( imagePath );
-    mScreen = ImageActor::New( image );
-    mScreen.SetSize( stage.GetSize() );
-    mScreen.SetZ( -1.f );
-    mScreen.SetParentOrigin(ParentOrigin::CENTER);
-    mRoot.Add(mScreen);
-    mScreen.TouchedSignal().Connect( this, &BubbleEffectExample::OnTouch );
-
-    mGaussianBlurView = Toolkit::GaussianBlurView::New( 7, 2.5f, Pixel::RGBA8888, 0.25f, 0.25f, true );
-    mGaussianBlurView.SetParentOrigin(ParentOrigin::CENTER);
-    mGaussianBlurView.SetSize(stage.GetSize());
-    mGaussianBlurView.SetUserImageAndOutputRenderTarget(  image, mFrameBufferImage );
-    stage.Add( mGaussianBlurView );
-    mGaussianBlurView.Activate();
-
-    mRescoucesCleared = false;
-    mTimer.Start();
-
-    mTouchable = true;
-  }
-
-  bool ClearBlurResource()
-  {
-    if( !mRescoucesCleared )
-    {
-      Stage::GetCurrent().Remove( mGaussianBlurView );
-      mGaussianBlurView.Deactivate();
-      mGaussianBlurView.Reset();
-      mRescoucesCleared = true;
-    }
-    return false;
- }
-
-  void GenMaterial()
-  {
-    mCustomMaterial = Material::New("CustomMaterial");
-    mCustomMaterial.SetOpacity(1.0f);
-    mCustomMaterial.SetDiffuseColor(Color::WHITE);
-    mCustomMaterial.SetAmbientColor(Vector4(0.0, 0.1, 0.1, 1.0));
-    mCustomMaterial.SetMapU( Material::MAPPING_MODE_WRAP );
-    mCustomMaterial.SetMapV( Material::MAPPING_MODE_WRAP );
-    mCustomMaterial.SetDiffuseTexture( Image::New( TEXTURE_IMAGE ) );
-  }
-
-  void AddVertex(MeshData::VertexContainer& vertices, Vector3 V, Vector2 UV)
-  {
-    MeshData::Vertex meshVertex;
-    meshVertex.x = V.x;
-    meshVertex.y = V.y;
-    meshVertex.z = V.z;
-    meshVertex.u = UV.x;
-    meshVertex.v = UV.y;
-    vertices.push_back(meshVertex);
-  }
-
-  void AddTriangle(MeshData::FaceIndices& faces,
-                   size_t v0, size_t v1, size_t v2)
-  {
-    faces.push_back(v0);
-    faces.push_back(v1);
-    faces.push_back(v2);
-  }
-
-  void ConstructBubbleMesh( MeshData& meshData, unsigned int numOfBubble, int size )
-  {
-    MeshData::VertexContainer    vertices;
-    MeshData::FaceIndices        faces;
-    BoneContainer                bones(0);
-
-    for(unsigned int index = 0; index < numOfBubble; index ++)
-    {
-      float curSize =  static_cast<float>( rand()%size + BUBBLE_MIN_SIZE);
-      float depth = static_cast<float>( index );
-      AddVertex( vertices, Vector3(0.f,0.f,depth), Vector2(0.f,0.f) );
-      AddVertex( vertices, Vector3(0.f,curSize,depth), Vector2( 0.f,1.f ));
-      AddVertex( vertices, Vector3(curSize,curSize,depth), Vector2(1.f,1.f) );
-      AddVertex( vertices, Vector3(curSize,0.f,depth), Vector2(1.f,0.f) );
-
-      unsigned int idx = index * 4;
-      AddTriangle( faces, idx, idx+1, idx+2);
-      AddTriangle( faces, idx, idx+2, idx+3);
-    }
-
-    meshData.SetData(vertices, faces, bones, mCustomMaterial);
-    meshData.SetHasColor(false);
-    meshData.SetHasNormals(true);
-    meshData.SetHasTextureCoords(true);
-  }
-
-  void SetUpAnimation( Vector2 emitPosition, Vector2 direction )
-  {
-    unsigned int curUniform = mCurrentUniform  % NUMBER_OF_BUBBLES;
-    unsigned int groupIdx = mCurrentUniform / NUMBER_OF_BUBBLES;
-    mEffect[groupIdx].SetBubbleParameter(curUniform, emitPosition, direction);
-    float duration = RandomRange( 1.f, 2.f );
-    mAnimation[mCurrentUniform] = Animation::New( duration );
-    mAnimationIndexPair[mAnimation[mCurrentUniform]] = mCurrentUniform;
-    mAnimation[mCurrentUniform].AnimateTo( Property( mEffect[groupIdx], mEffect[groupIdx].GetPercentagePropertyName(curUniform) ),
-                                           1.f, AlphaFunctions::DoubleEaseInOutSine60 );
-    mAnimation[mCurrentUniform].Play();
-    mAnimation[mCurrentUniform].FinishedSignal().Connect(this, &BubbleEffectExample::OnAnimationFinished);
-
-    mCurrentUniform = (mCurrentUniform + 1) % (TOTAL_NUMBER_OF_BUBBLES);
-  }
-
-  void OnAnimationFinished( Animation& source )
-  {
-    mAnimation[mAnimationIndexPair[source]].Reset();
-    mAnimationIndexPair.erase( source );
-  }
-
-  float RandomRange(float f0, float f1)
-  {
-    return f0 + (rand() & 0xfff) * (f1-f0) * (1.0f/4095.0f);
-  }
-
-  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& event)
-  {
-    if(!mTouchable)
-    {
-      return false;
-    }
-
-    if ( event.GetPointCount() > 0 )
-    {
-      const TouchPoint &point = event.GetPoint(0);
-      float distance = hypotf( point.local.x - mLastTouchPosition.x, point.local.y - mLastTouchPosition.y );
-      if ( distance > MIN_DISTANCE )
-      {
-        // when the finger moves fast, interpolate linearly between two touch points
-        if(event.time - mLastTouchTime < MAX_TIME_INTERVAL  && distance < MAX_DISTANCE)
-        {
-          float num = floor(distance / MIN_DISTANCE);
-          unsigned int numStep = static_cast<unsigned int>( num );
-          Vector2 step = ( point.screen - mLastTouchPosition ) * MIN_DISTANCE / distance;
-          for(unsigned int i = 0; i<numStep; i++)
-          {
-            SetUpAnimation( mLastTouchPosition + step*i, step );
-          }
-        }
-        else
-        {
-          SetUpAnimation( point.screen, point.screen-mLastTouchPosition );
-        }
-
-        mLastTouchTime = event.time;
-        mLastTouchPosition = point.screen;
-      }
-    }
-    return true;
-  }
-
-  bool OnImageChageIconClicked( Toolkit::Button button )
-  {
-    mCurrentBackgroundImageId = (mCurrentBackgroundImageId + 1 ) % NUM_BACKGROUND_IMAGES;
-    SetImage( BACKGROUND_IMAGES[ mCurrentBackgroundImageId ] );
-    return true;
-  }
-
 private:
-  Application&                      mApp;
-  Actor                             mRoot;
-  ImageActor                        mScreen;
-  Mesh                              mMesh[NUMBER_OF_GROUP];
-  MeshActor                         mMeshActor[NUMBER_OF_GROUP];
-  Material                          mCustomMaterial;
-  BubbleEffect                      mEffect[NUMBER_OF_GROUP];
-  unsigned int                      mCurrentUniform;
-  Animation                         mAnimation[TOTAL_NUMBER_OF_BUBBLES];
-  bool                              mTouchable;
-  std::map<Animation, unsigned int> mAnimationIndexPair;
-  unsigned long                     mLastTouchTime;
-  Vector2                           mLastTouchPosition;
 
-  Toolkit::GaussianBlurView         mGaussianBlurView;
-  FrameBufferImage                  mFrameBufferImage;
-  Timer                             mTimer;
-  bool                              mRescoucesCleared;
+  Application&               mApp;
+  Image                      mBackgroundImage;
+  ImageActor                 mBackgroundActor;
 
-  Layer                             mContent;
-  Toolkit::View                     mView;
-  unsigned int                      mCurrentBackgroundImageId;
+  Toolkit::BubbleEmitter     mBubbleEmitter;
+  Vector3                    mHSVDelta;
+
+  Animation                  mEmitAnimation;
+  unsigned int               mAnimateComponentCount;
+  bool                       mNeedNewAnimation;
+
+  Timer                      mTimerForBubbleEmission;
+  unsigned int               mNonMovementCount;
+  unsigned int               mTimerInterval;
+
+  Vector2                    mCurrentTouchPosition;
+  Vector2                    mEmitPosition;
+
+  Toolkit::PushButton        mChangeBackgroundButton;
+  Toolkit::PushButton        mChangeBubbleShapeButton;
+  unsigned int               mCurrentBackgroundImageId;
+  unsigned int               mCurrentBubbleShapeImageId;
 };
 
 /*****************************************************************************/
