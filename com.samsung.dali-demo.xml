@@ -43,6 +43,9 @@
 	<ui-application appid="motion-stretch.example" exec="/opt/apps/com.samsung.dali-demo/bin/motion-stretch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Motion Stretch</label>
 	</ui-application>
+	<ui-application appid="scroll-view.example" exec="/opt/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Scroll View</label>
+	</ui-application>
 	<ui-application appid="shadow-bone-lighting.example" exec="/opt/apps/com.samsung.dali-demo/bin/shadow-bone-lighting.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Shadows and Lights</label>
 	</ui-application>

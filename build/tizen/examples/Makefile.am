@@ -28,6 +28,7 @@ bin_PROGRAMS = \
                motion-blur.example \
                motion-stretch.example \
                page-turn-view.example \
+               scroll-view.example \
                shadow-bone-lighting.example
 
 daliimagedir = $(appdatadir)/images/
@@ -107,6 +108,11 @@ page_turn_view_example_SOURCES = $(examples_src_dir)/page-turn-view/page-turn-vi
 page_turn_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 page_turn_view_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 page_turn_view_example_LDADD = $(EXAMPLE_LDADD)
+
+scroll_view_example_SOURCES = $(examples_src_dir)/scroll-view/scroll-view-example.cpp
+scroll_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
+scroll_view_example_DEPENDENCIES = $(EXAMPLE_DEPS)
+scroll_view_example_LDADD = $(EXAMPLE_LDADD)
 
 shadow_bone_lighting_example_SOURCES = $(examples_src_dir)/shadows/shadow-bone-lighting-example.cpp
 shadow_bone_lighting_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)

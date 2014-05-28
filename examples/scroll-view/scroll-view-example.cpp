@@ -1,0 +1,798 @@
+//
+// Copyright (c) 2014 Samsung Electronics Co., Ltd.
+//
+// Licensed under the Flora License, Version 1.0 (the License);
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://floralicense.org/license/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an AS IS BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+// EXTERNAL INCLUDES
+#include <sstream>
+
+// INTERNAL INCLUDES
+#include "../shared/view.h"
+#include <dali/dali.h>
+#include <dali-toolkit/dali-toolkit.h>
+
+using namespace std;
+using namespace Dali;
+using namespace Dali::Toolkit;
+
+namespace
+{
+const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
+const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char * const APPLICATION_TITLE( "ScrollView" );
+const char * const EFFECT_NORMAL_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-normal.png" );
+const char * const EFFECT_OUTER_CUBE_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-outer-cube.png" );
+const char * const EFFECT_DEPTH_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-depth.png" );
+const char * const EFFECT_INNER_CUBE_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-inner-cube.png" );
+const char * const EFFECT_CAROUSEL_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-carousel.png" );
+const char * const EFFECT_SPIRAL_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-spiral.png" );
+
+const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
+
+const char* EFFECT_MODE_NAME[] = { "Normal",
+                                   "OuterCube",
+                                   "Depth",
+                                   "InnerCube",
+                                   "Carousel",
+                                   "Spiral",
+                                 };
+
+const char* PEOPLE_IMAGE_PATHS[] =   { DALI_IMAGE_DIR "people-medium-1.jpg",
+                                       DALI_IMAGE_DIR "people-medium-2.jpg",
+                                       DALI_IMAGE_DIR "people-medium-3.jpg",
+                                       DALI_IMAGE_DIR "people-medium-4.jpg",
+                                       DALI_IMAGE_DIR "people-medium-5.jpg",
+                                       DALI_IMAGE_DIR "people-medium-6.jpg",
+                                       DALI_IMAGE_DIR "people-medium-7.jpg",
+                                       DALI_IMAGE_DIR "people-medium-8.jpg",
+                                       NULL};
+
+const char* TODAY_IMAGE_PATHS[] =    { DALI_IMAGE_DIR "gallery-medium-1.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-2.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-3.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-4.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-5.jpg",
+                                       NULL};
+
+const char* PHONE_IMAGE_PATHS[] =    { DALI_IMAGE_DIR "gallery-medium-5.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-6.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-7.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-8.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-9.jpg",
+                                       NULL};
+
+const char* PICTURES_IMAGE_PATHS[] = { DALI_IMAGE_DIR "gallery-medium-10.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-11.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-12.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-13.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-14.jpg",
+                                       NULL};
+
+const char* MUSIC_IMAGE_PATHS[] =    { DALI_IMAGE_DIR "gallery-medium-15.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-16.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-17.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-18.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-19.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-20.jpg",
+                                       NULL};
+
+const char* MAGAZINE_IMAGE_PATHS[] = { DALI_IMAGE_DIR "gallery-medium-21.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-22.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-23.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-24.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-25.jpg",
+                                       DALI_IMAGE_DIR "gallery-medium-26.jpg",
+                                       NULL};
+
+const char **IMAGE_GROUPS[] = {PEOPLE_IMAGE_PATHS,
+                               TODAY_IMAGE_PATHS,
+                               PHONE_IMAGE_PATHS,
+                               PICTURES_IMAGE_PATHS,
+                               MUSIC_IMAGE_PATHS,
+                               MAGAZINE_IMAGE_PATHS,
+                               NULL};
+
+const int PAGE_COLUMNS = 10;                                                 ///< Number of Pages going across (columns)
+const int PAGE_ROWS = 1;                                                    ///< Number of Pages going down (rows)
+const int IMAGE_COLUMNS = 3;                                                ///< Number of Images going across (columns) within a Page
+const int IMAGE_ROWS = 5;                                                   ///< Number of Images going down (rows) with a Page
+
+// 3D Effect constants
+const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.2f, Math::PI * 0.2f, 0.0f);  ///< Cube page rotates as if it has ten sides with the camera positioned inside
+const Vector2 ANGLE_CUSTOM_CUBE_SWING(-Math::PI * 0.45f, -Math::PI * 0.45f);  ///< outer cube pages swing 90 degrees as they pan offscreen
+const Vector2 ANGLE_SPIRAL_SWING_IN(Math::PI * 0.45f, Math::PI * 0.45f);
+const Vector2 ANGLE_SPIRAL_SWING_OUT(Math::PI * 0.3f, Math::PI * 0.3f);
+
+// Depth Effect constants
+const Vector2 POSITION_EXTENT_DEPTH_EFFECT(0.5f, 2.5f);                     ///< Extent of X & Y position to alter function exponent.
+const Vector2 OFFSET_EXTENT_DEPTH_EFFECT(1.0f, 1.0f);                       ///< Function exponent offset constant.
+const float POSITION_SCALE_DEPTH_EFFECT(1.5f);                              ///< Position scaling.
+const float SCALE_EXTENT_DEPTH_EFFECT(0.5f);                                ///< Maximum scale factor when Actors scrolled one page away (50% size)
+
+const unsigned int IMAGE_THUMBNAIL_WIDTH  = 256;                            ///< Width of Thumbnail Image in texels
+const unsigned int IMAGE_THUMBNAIL_HEIGHT = 256;                            ///< Height of Thumbnail Image in texels
+
+const float SPIN_DURATION = 5.0f;                                           ///< Times to spin an Image by upon touching, each spin taking a second.
+
+const float EFFECT_SNAP_DURATION(0.66f);                                    ///< Scroll Snap Duration for Effects
+const float EFFECT_FLICK_DURATION(0.5f);                                    ///< Scroll Flick Duration for Effects
+
+/**
+ * WrapActorOffsetedConstraint
+ * Wraps an Actor's position based on its position
+ * within a scroll domain taking into account its
+ * size, anchor point, and an offset.
+ */
+struct WrapActorOffsetedConstraint
+{
+  WrapActorOffsetedConstraint(Vector2 offset)
+  : mOffset(offset)
+  {
+  }
+
+  Vector3 operator()(const Vector3&    current,
+                     const PropertyInput& actorScaleProperty,
+                     const PropertyInput& actorAnchorPointProperty,
+                     const PropertyInput& actorSizeProperty,
+                     const PropertyInput& scrollPositionMin,
+                     const PropertyInput& scrollPositionMax,
+                     const PropertyInput& scrollWrap)
+  {
+    Vector3 position = current;
+    bool wrap = scrollWrap.GetBoolean();
+
+    if(wrap)
+    {
+      Vector3 min = scrollPositionMin.GetVector3();
+      Vector3 max = scrollPositionMax.GetVector3();
+
+      Vector3 anchor = actorAnchorPointProperty.GetVector3();
+      Vector3 scale = actorScaleProperty.GetVector3();
+      Vector3 size = actorSizeProperty.GetVector3();
+
+      if(fabsf(min.x - max.x) > Math::MACHINE_EPSILON_1)
+      {
+        // WRAP X (based on the position of the right side)
+        float offsetX = (1.0f - anchor.x) * size.x * scale.x;
+        offsetX += mOffset.x;
+        position.x = WrapInDomain(position.x + offsetX, min.x, max.x) - offsetX;
+      }
+
+      if(fabsf(min.y - max.y) > Math::MACHINE_EPSILON_1)
+      {
+        // WRAP Y (based on the position of the bottom side)
+        float offsetY = (1.0f - anchor.y) * size.y * scale.y;
+        offsetY += mOffset.y;
+        position.y = WrapInDomain(position.y + offsetY, min.y, max.y) - offsetY;
+      }
+    }
+
+    return position;
+  }
+
+private:
+
+  const Vector2 mOffset;
+
+};
+
+
+} // unnamed namespace
+
+/**
+ * This example shows how to do custom Scroll Effects
+ */
+class ExampleController : public ConnectionTracker
+{
+public:
+
+  /**
+   * Constructor
+   * @param application class, stored as reference
+   */
+  ExampleController( Application& application )
+  : mApplication( application ),
+    mView(),
+    mScrolling(false),
+    mEffectMode(CarouselEffect)
+  {
+    // Connect to the Application's Init and orientation changed signal
+    mApplication.InitSignal().Connect(this, &ExampleController::OnInit);
+  }
+
+  ~ExampleController()
+  {
+    // Nothing to do here; everything gets deleted automatically
+  }
+
+  /**
+   * This method gets called once the main loop of application is up and running
+   */
+  void OnInit(Application& app)
+  {
+    Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
+
+    // Hide the indicator bar
+    mApplication.GetWindow().ShowIndicator(false);
+
+    // Creates a default view with a default tool bar.
+    // The view is added to the stage.
+
+    mContentLayer = DemoHelper::CreateView( app,
+                                            mView,
+                                            mToolBar,
+                                            BACKGROUND_IMAGE,
+                                            TOOLBAR_IMAGE,
+                                            "" );
+
+    mEffectIcon[ Normal ]          = Image::New( EFFECT_NORMAL_IMAGE );
+    mEffectIcon[ OuterCubeEffect ] = Image::New( EFFECT_OUTER_CUBE_IMAGE );
+    mEffectIcon[ DepthEffect ]     = Image::New( EFFECT_DEPTH_IMAGE );
+    mEffectIcon[ InnerCubeEffect ] = Image::New( EFFECT_INNER_CUBE_IMAGE );
+    mEffectIcon[ CarouselEffect ]  = Image::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIcon[ SpiralEffect ]    = Image::New( EFFECT_SPIRAL_IMAGE );
+
+    // Create a effect change button. (right of toolbar)
+    mEffectChangeButton = Toolkit::PushButton::New();
+    mEffectChangeButton.ClickedSignal().Connect( this, &ExampleController::OnEffectTouched );
+    mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+
+    // Create the content layer.
+    AddContentLayer();
+
+    // Hack to force screen refresh.
+    Animation animation = Animation::New(1.0f);
+    animation.AnimateTo(Property(mContentLayer, Actor::POSITION), Vector3::ZERO );
+    animation.Play();
+  }
+
+private:
+
+  /**
+   * Adds content to the ContentLayer. This is everything we see
+   * excluding the toolbar at the top.
+   */
+  void AddContentLayer()
+  {
+    Stage stage = Stage::GetCurrent();
+    Vector2 stageSize = stage.GetSize();
+
+    mScrollView = ScrollView::New();
+    mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
+    mScrollView.SetParentOrigin(ParentOrigin::CENTER);
+    mContentLayer.Add( mScrollView );
+    mScrollView.SetSize( stageSize );
+    mScrollView.SetAxisAutoLock( true );
+    mScrollView.SetAxisAutoLockGradient( 1.0f );
+
+    mScrollView.ScrollStartedSignal().Connect( this, &ExampleController::OnScrollStarted );
+    mScrollView.ScrollCompletedSignal().Connect( this, &ExampleController::OnScrollCompleted );
+
+    int groupIndex = 0;
+    for(int row = 0;row<PAGE_ROWS;row++)
+    {
+      for(int column = 0;column<PAGE_COLUMNS;column++)
+      {
+        Actor page = CreatePage(IMAGE_GROUPS[groupIndex]);
+
+        page.SetPosition( column * stageSize.x, row * stageSize.y );
+        mScrollView.Add( page );
+
+        groupIndex++;
+        if(!IMAGE_GROUPS[groupIndex])
+        {
+          groupIndex = 0;
+        }
+
+        mPages.push_back(page);
+      }
+    }
+
+    Update();
+  }
+
+  /**
+   * Updates the ScrollView and it's children based
+   * on the current effect.
+   */
+  void Update()
+  {
+    std::stringstream ss(APPLICATION_TITLE);
+    ss << APPLICATION_TITLE << ": " << EFFECT_MODE_NAME[mEffectMode];
+    SetTitle(ss.str());
+
+    mEffectChangeButton.SetBackgroundImage( mEffectIcon[ mEffectMode ] );
+
+    // remove old Effect if exists.
+    if(mScrollViewEffect)
+    {
+      mScrollView.RemoveEffect(mScrollViewEffect);
+    }
+
+    // apply new Effect to ScrollView
+    ApplyEffectToScrollView();
+
+    for(ActorIter pageIter = mPages.begin(); pageIter != mPages.end(); ++pageIter)
+    {
+      Actor page = *pageIter;
+      ApplyEffectToPage( page );
+
+      unsigned int numChildren = (*pageIter).GetChildCount();
+      for(unsigned int i=0; i<numChildren; ++i)
+      {
+        Actor image = (*pageIter).GetChildAt(i);
+
+        // Remove old effect's manual constraints.
+        image.RemoveConstraints();
+
+        // Apply new effect's manual constraints.
+        ApplyEffectToActor( image, page, (rand()&1) );
+      }
+    }
+  }
+
+  /**
+   * Creates a page using a source of images.
+   * @param[in] paths pointer to Null-terminated array of Null-terminated strings.
+   */
+  Actor CreatePage(const char **paths)
+  {
+    int pathIndex = 0;
+    Actor page = Actor::New();
+    page.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+    page.SetParentOrigin( ParentOrigin::CENTER );
+    page.SetAnchorPoint( AnchorPoint::CENTER );
+
+    Stage stage = Stage::GetCurrent();
+    Vector2 stageSize = stage.GetSize();
+
+    const float margin = 10.0f;
+
+    const Vector3 imageSize((stageSize.x / IMAGE_COLUMNS) - margin, (stageSize.y / IMAGE_ROWS) - margin, 0.0f);
+
+    for(int row = 0;row<IMAGE_ROWS;row++)
+    {
+      for(int column = 0;column<IMAGE_COLUMNS;column++)
+      {
+        ImageActor image = CreateImage(paths[pathIndex]);
+
+        image.SetParentOrigin( ParentOrigin::CENTER );
+        image.SetAnchorPoint( AnchorPoint::CENTER );
+
+        Vector3 position( margin * 0.5f + (imageSize.x + margin) * column - stageSize.width * 0.5f,
+                         margin * 0.5f + (imageSize.y + margin) * row - stageSize.height * 0.5f,
+                          0.0f);
+        image.SetPosition( position + imageSize * 0.5f );
+        image.SetSize( imageSize );
+        page.Add(image);
+
+        pathIndex++;
+        if(!paths[pathIndex])
+        {
+          pathIndex = 0;
+        }
+      }
+    }
+
+    return page;
+  }
+
+  /**
+   * [ScrollView]
+   * Applies effect to scrollView
+   */
+  void ApplyEffectToScrollView()
+  {
+    bool wrap(true);
+    bool snap(true);
+
+    Stage stage = Stage::GetCurrent();
+    Vector2 stageSize = stage.GetSize();
+
+    switch(mEffectMode)
+    {
+      case Normal:
+      {
+        SetupNormalPageEffect();
+        break;
+      }
+
+      case OuterCubeEffect:
+      {
+        SetupOuterPageCubeEffect();
+        break;
+      }
+
+      case DepthEffect:
+      {
+        mScrollViewEffect = ScrollViewDepthEffect::New();
+        mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
+        mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.RemoveConstraintsFromChildren();
+        break;
+      }
+
+      case InnerCubeEffect:
+      {
+        SetupInnerPageCubeEffect();
+        break;
+      }
+
+      case CarouselEffect:
+      {
+        SetupCarouselPageEffect();
+        break;
+      }
+
+      case SpiralEffect:
+      {
+        SetupSpiralPageEffect();
+        break;
+      }
+
+      default:
+      {
+        break;
+      }
+    } // end switch
+
+    if(mScrollViewEffect)
+    {
+      mScrollView.ApplyEffect(mScrollViewEffect);
+    }
+
+    mScrollView.SetWrapMode(wrap);
+
+    RulerPtr rulerX = CreateRuler(snap ? stageSize.width : 0.0f);
+    RulerPtr rulerY = new DefaultRuler;
+    rulerX->SetDomain(RulerDomain(0.0f, stageSize.x * PAGE_COLUMNS, !wrap));
+    rulerY->Disable();
+
+    mScrollView.SetRulerX( rulerX );
+    mScrollView.SetRulerY( rulerY );
+  }
+
+  /**
+   * Creates a Ruler that snaps to a specified grid size.
+   * If that grid size is 0.0 then this ruler does not
+   * snap.
+   *
+   * @param[in] gridSize (optional) The grid size for the ruler,
+   * (Default = 0.0 i.e. no snapping)
+   * @return The ruler is returned.
+   */
+  RulerPtr CreateRuler(float gridSize = 0.0f)
+  {
+    if(gridSize <= Math::MACHINE_EPSILON_0)
+    {
+        return new DefaultRuler();
+    }
+    return new FixedRuler(gridSize);
+  }
+
+  void SetupNormalPageEffect()
+  {
+    mScrollViewEffect.Reset();
+    mScrollView.SetScrollSnapDuration(ScrollView::DEFAULT_SLOW_SNAP_ANIMATION_DURATION);
+    mScrollView.SetScrollFlickDuration(ScrollView::DEFAULT_FAST_SNAP_ANIMATION_DURATION);
+    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
+    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+    mScrollView.RemoveConstraintsFromChildren();
+  }
+
+  void SetupInnerPageCubeEffect()
+  {
+    ScrollViewCustomEffect customEffect;
+    mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
+    mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
+    mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
+    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOutBack);
+    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOutBack);
+    mScrollView.RemoveConstraintsFromChildren();
+
+    customEffect.SetPageSpacing(Vector2(30.0f, 30.0f));
+    customEffect.SetAngledOriginPageRotation(ANGLE_CUBE_PAGE_ROTATE);
+    customEffect.SetSwingAngle(ANGLE_CUBE_PAGE_ROTATE.x, Vector3(0,-1,0));
+    customEffect.SetOpacityThreshold(0.7f);
+  }
+
+  void SetupOuterPageCubeEffect()
+  {
+    ScrollViewCustomEffect customEffect;
+    mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
+    mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
+    mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
+    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
+    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+    mScrollView.RemoveConstraintsFromChildren();
+
+    Vector2 pageSize = Stage::GetCurrent().GetSize();
+    customEffect.SetPageTranslation(Vector3(pageSize.x, pageSize.y, 0));
+    customEffect.SetSwingAngleOut(ANGLE_CUSTOM_CUBE_SWING.x, Vector3(0.0f, -1.0f, 0.0f));
+    customEffect.SetSwingAnchor(AnchorPoint::CENTER, AnchorPoint::CENTER_LEFT);
+    customEffect.SetOpacityThreshold(0.5f);
+  }
+
+  void SetupCarouselPageEffect()
+  {
+    ScrollViewCustomEffect customEffect;
+    mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
+    mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
+    mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
+    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOutBack);
+    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOutBack);
+    mScrollView.RemoveConstraintsFromChildren();
+
+    customEffect.SetPageTranslation(Vector3(0,0,0), Vector3(-30, 0, 0));
+    customEffect.SetPageSpacing(Vector2(60.0f, 60.0f));
+    customEffect.SetAngledOriginPageRotation(-ANGLE_CUBE_PAGE_ROTATE);
+    customEffect.SetOpacityThreshold(0.2f, 0.6f);
+  }
+
+  void SetupSpiralPageEffect()
+  {
+    ScrollViewCustomEffect customEffect;
+    mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
+    mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
+    mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
+    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOutBack);
+    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOutBack);
+    mScrollView.RemoveConstraintsFromChildren();
+
+    Vector2 pageSize = Stage::GetCurrent().GetSize();
+    customEffect.SetPageTranslation(Vector3(pageSize.x, pageSize.y, 0.0f));
+    customEffect.SetSwingAngle(-ANGLE_SPIRAL_SWING_IN.x, Vector3(0.0f, -1.0f, 0.0f), ANGLE_SPIRAL_SWING_OUT.x, Vector3(0.0f, -1.0f, 0.0f));
+    customEffect.SetSwingAnchor(AnchorPoint::CENTER_RIGHT);
+    customEffect.SetPageTranslation(Vector3(pageSize.x, pageSize.y, 0), Vector3(pageSize.x, pageSize.y, 0) * 0.5f);
+    customEffect.SetOpacityThreshold(0.66f);
+  }
+
+  /**
+   * [Page]
+   * Applies effect to the pages within scroll view.
+   *
+   * @param[in] page The page Actor to apply effect to.
+   */
+  void ApplyEffectToPage(Actor page)
+  {
+    page.RemoveConstraints();
+    page.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+
+    if( mEffectMode == Normal )
+    {
+      Constraint constraint;
+
+      // MoveActor (scrolling)
+      constraint = Constraint::New<Vector3>( Actor::POSITION,
+                                             Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
+                                             MoveActorConstraint );
+      constraint.SetRemoveAction(Constraint::Discard);
+      page.ApplyConstraint(constraint);
+
+      // WrapActor (wrap functionality) - takes into account parent origin
+      constraint = Constraint::New<Vector3>( Actor::POSITION,
+                                             LocalSource( Actor::SCALE ),
+                                             LocalSource( Actor::ANCHOR_POINT ),
+                                             LocalSource( Actor::SIZE ),
+                                             Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_MIN_PROPERTY_NAME ) ),
+                                             Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_MAX_PROPERTY_NAME ) ),
+                                             Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_WRAP_PROPERTY_NAME ) ),
+                                             WrapActorOffsetedConstraint( Stage::GetCurrent().GetSize() * 0.5f ) );
+      constraint.SetRemoveAction(Constraint::Discard);
+      page.ApplyConstraint(constraint);
+    }
+    else if( ( mEffectMode == InnerCubeEffect ) ||
+             ( mEffectMode == OuterCubeEffect ) ||
+             ( mEffectMode == SpiralEffect )    ||
+             ( mEffectMode == CarouselEffect) )
+    {
+      ApplyCustomEffectToPage(page);
+    }
+  }
+
+  void ApplyCustomEffectToPage(Actor page)
+  {
+    ScrollViewCustomEffect customEffect = ScrollViewCustomEffect::DownCast(mScrollViewEffect);
+    Vector2 vStageSize(Stage::GetCurrent().GetSize());
+    customEffect.ApplyToPage(page, Vector3(vStageSize.x, vStageSize.y, 1.0f));
+  }
+
+  /**
+   * [Actor]
+   * Applies effect to child which resides in page (which in turn resides in scrollview)
+   *
+   * @note Page is typically the Parent of child, although in
+   * some scenarios Page is simply a container which has a child as
+   * a descendent.
+   *
+   * @param[in] child The child actor to apply effect to
+   * @param[in] page The page which this child is inside
+   * @param[in] style The style of effect either 0 or 1. (changes anchor point)
+   */
+  void ApplyEffectToActor(Actor child, Actor page, int style)
+  {
+    if( mEffectMode == DepthEffect )
+    {
+      ApplyDepthEffectToActor(child, style);
+    }
+  }
+
+  /**
+   * Applies depth effect to the child which resides in page (which in turn resides in scrollview)
+   *
+   * @param[in] child The child actor to apply depth effect to
+   * @param[in] style The style of effect either 0 or 1. (changes anchor point)
+   */
+  void ApplyDepthEffectToActor(Actor child, int style)
+  {
+    ScrollViewDepthEffect depthEffect = ScrollViewDepthEffect::DownCast(mScrollViewEffect);
+    depthEffect.ApplyToActor( child,
+                              POSITION_EXTENT_DEPTH_EFFECT,
+                              OFFSET_EXTENT_DEPTH_EFFECT,
+                              POSITION_SCALE_DEPTH_EFFECT,
+                              SCALE_EXTENT_DEPTH_EFFECT );
+  }
+
+  /**
+   * Creates an Image (Helper)
+   *
+   * @param[in] filename the path of the image.
+   * @param[in] width the width of the image in texels
+   * @param[in] height the height of the image in texels.
+   */
+  ImageActor CreateImage( const std::string& filename, unsigned int width = IMAGE_THUMBNAIL_WIDTH, unsigned int height = IMAGE_THUMBNAIL_HEIGHT )
+  {
+    ImageAttributes attributes;
+
+    attributes.SetSize(width, height);
+    attributes.SetScalingMode(ImageAttributes::ShrinkToFit);
+    Image img = Image::New(filename, attributes);
+    ImageActor actor = ImageActor::New(img);
+    actor.SetName( filename );
+    actor.SetParentOrigin(ParentOrigin::CENTER);
+    actor.SetAnchorPoint(AnchorPoint::CENTER);
+
+    actor.TouchedSignal().Connect( this, &ExampleController::OnTouchImage );
+    return actor;
+  }
+
+  /**
+   * When scroll starts (i.e. user starts to drag scrollview),
+   * note this state (mScrolling = true)
+   * @param[in] position Current Scroll Position
+   */
+  void OnScrollStarted( const Vector3& position )
+  {
+    mScrolling = true;
+  }
+
+  /**
+   * When scroll starts (i.e. user stops dragging scrollview, and scrollview has snapped to destination),
+   * note this state (mScrolling = false)
+   * @param[in] position Current Scroll Position
+   */
+  void OnScrollCompleted( const Vector3& position )
+  {
+    mScrolling = false;
+  }
+
+  /**
+   * Upon Touching an image (Release), make it spin
+   * (provided we're not scrolling).
+   * @param[in] actor The actor touched
+   * @param[in] event The TouchEvent.
+   */
+  bool OnTouchImage( Actor actor, const TouchEvent& event )
+  {
+    if( (event.points.size() > 0) && (!mScrolling) )
+    {
+      TouchPoint point = event.points[0];
+      if(point.state == TouchPoint::Up)
+      {
+        // Spin the Image a few times.
+        Animation animation = Animation::New(SPIN_DURATION);
+        animation.RotateBy( actor, Degree(360.0f * SPIN_DURATION), Vector3::XAXIS, AlphaFunctions::EaseOut);
+        animation.Play();
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Signal handler, called when the 'Effect' button has been touched.
+   *
+   * @param[in] button The button that was pressed.
+   */
+  bool OnEffectTouched(Button button)
+  {
+    mEffectMode = static_cast<EffectMode>((static_cast<int>(mEffectMode) + 1) % static_cast<int>(Total));
+    Update();
+    return true;
+  }
+
+  /**
+   * Sets/Updates the title of the View
+   * @param[in] title The new title for the view.
+   */
+  void SetTitle(const std::string& title)
+  {
+    if(!mTitleActor)
+    {
+      mTitleActor = TextView::New();
+      // Add title to the tool bar.
+      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+    }
+
+    Font font = Font::New();
+    mTitleActor.SetText( title );
+    mTitleActor.SetSize( font.MeasureText( title ) );
+    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+  }
+
+  /**
+   * Main key event handler
+   */
+  void OnKeyEvent(const KeyEvent& event)
+  {
+    if(event.state == KeyEvent::Down)
+    {
+      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      {
+        mApplication.Quit();
+      }
+    }
+  }
+
+private:
+
+  Application& mApplication;                            ///< Application instance
+  Toolkit::View mView;                                  ///< The View instance.
+  Toolkit::ToolBar mToolBar;                            ///< The View's Toolbar.
+  TextView mTitleActor;                                 ///< The Toolbar's Title.
+  Layer mContentLayer;                                  ///< The content layer (contains game actors)
+  ScrollView mScrollView;                               ///< ScrollView UI Component
+  bool mScrolling;                                      ///< ScrollView scrolling state (true = scrolling, false = stationary)
+  ScrollViewEffect mScrollViewEffect;                   ///< ScrollView Effect instance.
+  ActorContainer mPages;                                ///< Keeps track of all the pages for applying effects.
+
+  /**
+   * Enumeration of different effects this scrollview can operate under.
+   */
+  enum EffectMode
+  {
+    Normal,                                             ///< No Effect (Standard ScrollView)
+    OuterCubeEffect,                                    ///< 3D Rotating Cube Effect
+    DepthEffect,                                        ///< Depth Effect
+    InnerCubeEffect,                                    ///< Page Cube Effect
+    CarouselEffect,                                     ///< Page Carousel Effect
+    SpiralEffect,                                       ///< Page Spiral Effect
+
+    Total,
+  };
+
+  EffectMode mEffectMode;                               ///< Current Effect mode
+
+  Image mEffectIcon[Total];                             ///< Icons for the effect button
+  Toolkit::PushButton mEffectChangeButton;              ///< Effect Change Button
+};
+
+int main(int argc, char **argv)
+{
+  Application app = Application::New(&argc, &argv);
+  ExampleController test(app);
+  app.MainLoop();
+  return 0;
+}
