@@ -39,7 +39,7 @@ const unsigned int NUM_BACKGROUND_IMAGES( sizeof( BACKGROUND_IMAGES ) / sizeof( 
 
 const char* BUBBLE_SHAPE_IMAGES[] =
 {
-  DALI_IMAGE_DIR "blocks-ball.png",
+  DALI_IMAGE_DIR "bubble-ball.png",
   DALI_IMAGE_DIR "icon-item-view-layout-spiral.png",
   DALI_IMAGE_DIR "icon-replace.png",
   DALI_IMAGE_DIR "icon-effect-cross.png"

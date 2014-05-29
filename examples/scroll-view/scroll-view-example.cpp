@@ -31,7 +31,6 @@ namespace
 const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "ScrollView" );
-const char * const EFFECT_NORMAL_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-normal.png" );
 const char * const EFFECT_OUTER_CUBE_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-outer-cube.png" );
 const char * const EFFECT_DEPTH_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-depth.png" );
 const char * const EFFECT_INNER_CUBE_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-inner-cube.png" );
@@ -40,76 +39,91 @@ const char * const EFFECT_SPIRAL_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-spiral.
 
 const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
 
-const char* EFFECT_MODE_NAME[] = { "Normal",
-                                   "OuterCube",
-                                   "Depth",
-                                   "InnerCube",
-                                   "Carousel",
-                                   "Spiral",
-                                 };
+const char* EFFECT_MODE_NAME[] = {
+    "OuterCube",
+    "Depth",
+    "InnerCube",
+    "Carousel",
+    "Spiral",
+};
 
-const char* PEOPLE_IMAGE_PATHS[] =   { DALI_IMAGE_DIR "people-medium-1.jpg",
-                                       DALI_IMAGE_DIR "people-medium-2.jpg",
-                                       DALI_IMAGE_DIR "people-medium-3.jpg",
-                                       DALI_IMAGE_DIR "people-medium-4.jpg",
-                                       DALI_IMAGE_DIR "people-medium-5.jpg",
-                                       DALI_IMAGE_DIR "people-medium-6.jpg",
-                                       DALI_IMAGE_DIR "people-medium-7.jpg",
-                                       DALI_IMAGE_DIR "people-medium-8.jpg",
-                                       NULL};
+const char * const IMAGE_PATHS[] = {
+    DALI_IMAGE_DIR "gallery-medium-1.jpg",
+    DALI_IMAGE_DIR "gallery-medium-2.jpg",
+    DALI_IMAGE_DIR "gallery-medium-3.jpg",
+    DALI_IMAGE_DIR "gallery-medium-4.jpg",
+    DALI_IMAGE_DIR "gallery-medium-5.jpg",
+    DALI_IMAGE_DIR "gallery-medium-6.jpg",
+    DALI_IMAGE_DIR "gallery-medium-7.jpg",
+    DALI_IMAGE_DIR "gallery-medium-8.jpg",
+    DALI_IMAGE_DIR "gallery-medium-9.jpg",
+    DALI_IMAGE_DIR "gallery-medium-10.jpg",
+    DALI_IMAGE_DIR "gallery-medium-11.jpg",
+    DALI_IMAGE_DIR "gallery-medium-12.jpg",
+    DALI_IMAGE_DIR "gallery-medium-13.jpg",
+    DALI_IMAGE_DIR "gallery-medium-14.jpg",
+    DALI_IMAGE_DIR "gallery-medium-15.jpg",
+    DALI_IMAGE_DIR "gallery-medium-16.jpg",
+    DALI_IMAGE_DIR "gallery-medium-17.jpg",
+    DALI_IMAGE_DIR "gallery-medium-18.jpg",
+    DALI_IMAGE_DIR "gallery-medium-19.jpg",
+    DALI_IMAGE_DIR "gallery-medium-20.jpg",
+    DALI_IMAGE_DIR "gallery-medium-21.jpg",
+    DALI_IMAGE_DIR "gallery-medium-22.jpg",
+    DALI_IMAGE_DIR "gallery-medium-23.jpg",
+    DALI_IMAGE_DIR "gallery-medium-24.jpg",
+    DALI_IMAGE_DIR "gallery-medium-25.jpg",
+    DALI_IMAGE_DIR "gallery-medium-26.jpg",
+    DALI_IMAGE_DIR "gallery-medium-27.jpg",
+    DALI_IMAGE_DIR "gallery-medium-28.jpg",
+    DALI_IMAGE_DIR "gallery-medium-29.jpg",
+    DALI_IMAGE_DIR "gallery-medium-30.jpg",
+    DALI_IMAGE_DIR "gallery-medium-31.jpg",
+    DALI_IMAGE_DIR "gallery-medium-32.jpg",
+    DALI_IMAGE_DIR "gallery-medium-33.jpg",
+    DALI_IMAGE_DIR "gallery-medium-34.jpg",
+    DALI_IMAGE_DIR "gallery-medium-35.jpg",
+    DALI_IMAGE_DIR "gallery-medium-36.jpg",
+    DALI_IMAGE_DIR "gallery-medium-37.jpg",
+    DALI_IMAGE_DIR "gallery-medium-38.jpg",
+    DALI_IMAGE_DIR "gallery-medium-39.jpg",
+    DALI_IMAGE_DIR "gallery-medium-40.jpg",
+    DALI_IMAGE_DIR "gallery-medium-41.jpg",
+    DALI_IMAGE_DIR "gallery-medium-42.jpg",
+    DALI_IMAGE_DIR "gallery-medium-43.jpg",
+    DALI_IMAGE_DIR "gallery-medium-44.jpg",
+    DALI_IMAGE_DIR "gallery-medium-45.jpg",
+    DALI_IMAGE_DIR "gallery-medium-46.jpg",
+    DALI_IMAGE_DIR "gallery-medium-47.jpg",
+    DALI_IMAGE_DIR "gallery-medium-48.jpg",
+    DALI_IMAGE_DIR "gallery-medium-49.jpg",
+    DALI_IMAGE_DIR "gallery-medium-50.jpg",
+    DALI_IMAGE_DIR "gallery-medium-51.jpg",
+    DALI_IMAGE_DIR "gallery-medium-52.jpg",
+    DALI_IMAGE_DIR "gallery-medium-53.jpg",
 
-const char* TODAY_IMAGE_PATHS[] =    { DALI_IMAGE_DIR "gallery-medium-1.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-2.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-3.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-4.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-5.jpg",
-                                       NULL};
+    NULL
+};
 
-const char* PHONE_IMAGE_PATHS[] =    { DALI_IMAGE_DIR "gallery-medium-5.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-6.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-7.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-8.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-9.jpg",
-                                       NULL};
+const char * const GetNextImagePath()
+{
+  static const char * const * imagePtr = &IMAGE_PATHS[0];
 
-const char* PICTURES_IMAGE_PATHS[] = { DALI_IMAGE_DIR "gallery-medium-10.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-11.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-12.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-13.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-14.jpg",
-                                       NULL};
+  if ( *(++imagePtr) == NULL )
+  {
+    imagePtr = &IMAGE_PATHS[0];
+  }
 
-const char* MUSIC_IMAGE_PATHS[] =    { DALI_IMAGE_DIR "gallery-medium-15.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-16.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-17.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-18.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-19.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-20.jpg",
-                                       NULL};
+  return *imagePtr;
+}
 
-const char* MAGAZINE_IMAGE_PATHS[] = { DALI_IMAGE_DIR "gallery-medium-21.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-22.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-23.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-24.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-25.jpg",
-                                       DALI_IMAGE_DIR "gallery-medium-26.jpg",
-                                       NULL};
-
-const char **IMAGE_GROUPS[] = {PEOPLE_IMAGE_PATHS,
-                               TODAY_IMAGE_PATHS,
-                               PHONE_IMAGE_PATHS,
-                               PICTURES_IMAGE_PATHS,
-                               MUSIC_IMAGE_PATHS,
-                               MAGAZINE_IMAGE_PATHS,
-                               NULL};
-
-const int PAGE_COLUMNS = 10;                                                 ///< Number of Pages going across (columns)
+const int PAGE_COLUMNS = 10;                                                ///< Number of Pages going across (columns)
 const int PAGE_ROWS = 1;                                                    ///< Number of Pages going down (rows)
 const int IMAGE_COLUMNS = 3;                                                ///< Number of Images going across (columns) within a Page
 const int IMAGE_ROWS = 5;                                                   ///< Number of Images going down (rows) with a Page
 
 // 3D Effect constants
-const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.2f, Math::PI * 0.2f, 0.0f);  ///< Cube page rotates as if it has ten sides with the camera positioned inside
+const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.2f, Math::PI * 0.2f, 0.0f); ///< Cube page rotates as if it has ten sides with the camera positioned inside
 const Vector2 ANGLE_CUSTOM_CUBE_SWING(-Math::PI * 0.45f, -Math::PI * 0.45f);  ///< outer cube pages swing 90 degrees as they pan offscreen
 const Vector2 ANGLE_SPIRAL_SWING_IN(Math::PI * 0.45f, Math::PI * 0.45f);
 const Vector2 ANGLE_SPIRAL_SWING_OUT(Math::PI * 0.3f, Math::PI * 0.3f);
@@ -127,66 +141,6 @@ const float SPIN_DURATION = 5.0f;                                           ///<
 
 const float EFFECT_SNAP_DURATION(0.66f);                                    ///< Scroll Snap Duration for Effects
 const float EFFECT_FLICK_DURATION(0.5f);                                    ///< Scroll Flick Duration for Effects
-
-/**
- * WrapActorOffsetedConstraint
- * Wraps an Actor's position based on its position
- * within a scroll domain taking into account its
- * size, anchor point, and an offset.
- */
-struct WrapActorOffsetedConstraint
-{
-  WrapActorOffsetedConstraint(Vector2 offset)
-  : mOffset(offset)
-  {
-  }
-
-  Vector3 operator()(const Vector3&    current,
-                     const PropertyInput& actorScaleProperty,
-                     const PropertyInput& actorAnchorPointProperty,
-                     const PropertyInput& actorSizeProperty,
-                     const PropertyInput& scrollPositionMin,
-                     const PropertyInput& scrollPositionMax,
-                     const PropertyInput& scrollWrap)
-  {
-    Vector3 position = current;
-    bool wrap = scrollWrap.GetBoolean();
-
-    if(wrap)
-    {
-      Vector3 min = scrollPositionMin.GetVector3();
-      Vector3 max = scrollPositionMax.GetVector3();
-
-      Vector3 anchor = actorAnchorPointProperty.GetVector3();
-      Vector3 scale = actorScaleProperty.GetVector3();
-      Vector3 size = actorSizeProperty.GetVector3();
-
-      if(fabsf(min.x - max.x) > Math::MACHINE_EPSILON_1)
-      {
-        // WRAP X (based on the position of the right side)
-        float offsetX = (1.0f - anchor.x) * size.x * scale.x;
-        offsetX += mOffset.x;
-        position.x = WrapInDomain(position.x + offsetX, min.x, max.x) - offsetX;
-      }
-
-      if(fabsf(min.y - max.y) > Math::MACHINE_EPSILON_1)
-      {
-        // WRAP Y (based on the position of the bottom side)
-        float offsetY = (1.0f - anchor.y) * size.y * scale.y;
-        offsetY += mOffset.y;
-        position.y = WrapInDomain(position.y + offsetY, min.y, max.y) - offsetY;
-      }
-    }
-
-    return position;
-  }
-
-private:
-
-  const Vector2 mOffset;
-
-};
-
 
 } // unnamed namespace
 
@@ -236,7 +190,6 @@ public:
                                             TOOLBAR_IMAGE,
                                             "" );
 
-    mEffectIcon[ Normal ]          = Image::New( EFFECT_NORMAL_IMAGE );
     mEffectIcon[ OuterCubeEffect ] = Image::New( EFFECT_OUTER_CUBE_IMAGE );
     mEffectIcon[ DepthEffect ]     = Image::New( EFFECT_DEPTH_IMAGE );
     mEffectIcon[ InnerCubeEffect ] = Image::New( EFFECT_INNER_CUBE_IMAGE );
@@ -279,21 +232,14 @@ private:
     mScrollView.ScrollStartedSignal().Connect( this, &ExampleController::OnScrollStarted );
     mScrollView.ScrollCompletedSignal().Connect( this, &ExampleController::OnScrollCompleted );
 
-    int groupIndex = 0;
     for(int row = 0;row<PAGE_ROWS;row++)
     {
       for(int column = 0;column<PAGE_COLUMNS;column++)
       {
-        Actor page = CreatePage(IMAGE_GROUPS[groupIndex]);
+        Actor page = CreatePage();
 
         page.SetPosition( column * stageSize.x, row * stageSize.y );
         mScrollView.Add( page );
-
-        groupIndex++;
-        if(!IMAGE_GROUPS[groupIndex])
-        {
-          groupIndex = 0;
-        }
 
         mPages.push_back(page);
       }
@@ -337,18 +283,16 @@ private:
         image.RemoveConstraints();
 
         // Apply new effect's manual constraints.
-        ApplyEffectToActor( image, page, (rand()&1) );
+        ApplyEffectToActor( image, page );
       }
     }
   }
 
   /**
    * Creates a page using a source of images.
-   * @param[in] paths pointer to Null-terminated array of Null-terminated strings.
    */
-  Actor CreatePage(const char **paths)
+  Actor CreatePage()
   {
-    int pathIndex = 0;
     Actor page = Actor::New();
     page.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
     page.SetParentOrigin( ParentOrigin::CENTER );
@@ -365,7 +309,7 @@ private:
     {
       for(int column = 0;column<IMAGE_COLUMNS;column++)
       {
-        ImageActor image = CreateImage(paths[pathIndex]);
+        ImageActor image = CreateImage( GetNextImagePath() );
 
         image.SetParentOrigin( ParentOrigin::CENTER );
         image.SetAnchorPoint( AnchorPoint::CENTER );
@@ -376,12 +320,6 @@ private:
         image.SetPosition( position + imageSize * 0.5f );
         image.SetSize( imageSize );
         page.Add(image);
-
-        pathIndex++;
-        if(!paths[pathIndex])
-        {
-          pathIndex = 0;
-        }
       }
     }
 
@@ -402,12 +340,6 @@ private:
 
     switch(mEffectMode)
     {
-      case Normal:
-      {
-        SetupNormalPageEffect();
-        break;
-      }
-
       case OuterCubeEffect:
       {
         SetupOuterPageCubeEffect();
@@ -481,16 +413,6 @@ private:
         return new DefaultRuler();
     }
     return new FixedRuler(gridSize);
-  }
-
-  void SetupNormalPageEffect()
-  {
-    mScrollViewEffect.Reset();
-    mScrollView.SetScrollSnapDuration(ScrollView::DEFAULT_SLOW_SNAP_ANIMATION_DURATION);
-    mScrollView.SetScrollFlickDuration(ScrollView::DEFAULT_FAST_SNAP_ANIMATION_DURATION);
-    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
-    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
-    mScrollView.RemoveConstraintsFromChildren();
   }
 
   void SetupInnerPageCubeEffect()
@@ -571,33 +493,10 @@ private:
     page.RemoveConstraints();
     page.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
 
-    if( mEffectMode == Normal )
-    {
-      Constraint constraint;
-
-      // MoveActor (scrolling)
-      constraint = Constraint::New<Vector3>( Actor::POSITION,
-                                             Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
-                                             MoveActorConstraint );
-      constraint.SetRemoveAction(Constraint::Discard);
-      page.ApplyConstraint(constraint);
-
-      // WrapActor (wrap functionality) - takes into account parent origin
-      constraint = Constraint::New<Vector3>( Actor::POSITION,
-                                             LocalSource( Actor::SCALE ),
-                                             LocalSource( Actor::ANCHOR_POINT ),
-                                             LocalSource( Actor::SIZE ),
-                                             Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_MIN_PROPERTY_NAME ) ),
-                                             Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_MAX_PROPERTY_NAME ) ),
-                                             Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_WRAP_PROPERTY_NAME ) ),
-                                             WrapActorOffsetedConstraint( Stage::GetCurrent().GetSize() * 0.5f ) );
-      constraint.SetRemoveAction(Constraint::Discard);
-      page.ApplyConstraint(constraint);
-    }
-    else if( ( mEffectMode == InnerCubeEffect ) ||
-             ( mEffectMode == OuterCubeEffect ) ||
-             ( mEffectMode == SpiralEffect )    ||
-             ( mEffectMode == CarouselEffect) )
+    if( ( mEffectMode == InnerCubeEffect ) ||
+        ( mEffectMode == OuterCubeEffect ) ||
+        ( mEffectMode == SpiralEffect )    ||
+        ( mEffectMode == CarouselEffect) )
     {
       ApplyCustomEffectToPage(page);
     }
@@ -620,13 +519,12 @@ private:
    *
    * @param[in] child The child actor to apply effect to
    * @param[in] page The page which this child is inside
-   * @param[in] style The style of effect either 0 or 1. (changes anchor point)
    */
-  void ApplyEffectToActor(Actor child, Actor page, int style)
+  void ApplyEffectToActor( Actor child, Actor page )
   {
     if( mEffectMode == DepthEffect )
     {
-      ApplyDepthEffectToActor(child, style);
+      ApplyDepthEffectToActor( child );
     }
   }
 
@@ -634,9 +532,8 @@ private:
    * Applies depth effect to the child which resides in page (which in turn resides in scrollview)
    *
    * @param[in] child The child actor to apply depth effect to
-   * @param[in] style The style of effect either 0 or 1. (changes anchor point)
    */
-  void ApplyDepthEffectToActor(Actor child, int style)
+  void ApplyDepthEffectToActor( Actor child )
   {
     ScrollViewDepthEffect depthEffect = ScrollViewDepthEffect::DownCast(mScrollViewEffect);
     depthEffect.ApplyToActor( child,
@@ -773,8 +670,7 @@ private:
    */
   enum EffectMode
   {
-    Normal,                                             ///< No Effect (Standard ScrollView)
-    OuterCubeEffect,                                    ///< 3D Rotating Cube Effect
+    OuterCubeEffect,                                    ///< Outer Cube Effect
     DepthEffect,                                        ///< Depth Effect
     InnerCubeEffect,                                    ///< Page Cube Effect
     CarouselEffect,                                     ///< Page Carousel Effect

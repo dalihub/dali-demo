@@ -33,7 +33,7 @@ using namespace DemoHelper;
 
 namespace
 {
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
+const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-blocks.jpg" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "DALi Blocks" );
 const char* BALL_IMAGE = DALI_IMAGE_DIR "blocks-ball.png";

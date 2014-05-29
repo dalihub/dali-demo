@@ -38,7 +38,7 @@ const std::string BUTTON_OK( "Ok" );
 const std::string BUTTON_CANCEL( "Cancel" );
 
 const std::string DEFAULT_BACKGROUND_IMAGE_PATH( DALI_IMAGE_DIR "background-default.png" );
-const std::string LOGO_PATH( DALI_IMAGE_DIR "dali-logo-small.png" );
+const std::string LOGO_PATH( DALI_IMAGE_DIR "dali-logo.png" );
 const std::string DEFAULT_TOOLBAR_IMAGE_PATH( DALI_IMAGE_DIR "top-bar-demo.png" );
 const std::string BUTTON_BACKGROUND(DALI_IMAGE_DIR "button-background.png");
 const std::string TILE_BACKGROUND(DALI_IMAGE_DIR "item-background.png");
