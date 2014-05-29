@@ -34,6 +34,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("motion-blur.example", "Motion Blur"));
   demo.AddExample(Example("motion-stretch.example", "Motion Stretch"));
   demo.AddExample(Example("page-turn-view.example", "Page Turn View"));
+  demo.AddExample(Example("radial-menu.example", "Radial Menu"));
   demo.AddExample(Example("scroll-view.example", "Scroll View"));
   demo.AddExample(Example("shadow-bone-lighting.example", "Lights and shadows"));
   app.MainLoop();

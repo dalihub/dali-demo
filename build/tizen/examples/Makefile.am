@@ -28,6 +28,7 @@ bin_PROGRAMS = \
                motion-blur.example \
                motion-stretch.example \
                page-turn-view.example \
+               radial-menu.example \
                scroll-view.example \
                shadow-bone-lighting.example
 
@@ -51,7 +52,7 @@ EXAMPLE_CXXFLAGS      = $(DALI_CFLAGS) \
 
 EXAMPLE_DEPS =
 
-EXAMPLE_LDADD = $(DALI_LIBS) $(DALI_TOOLKIT_LIBS) $(ECORE_X_LIBS) $(CAPI_MEDIA_PLAYER_LIBS) $(CAPI_APPFW_APPLICATION_LIBS) -lrt
+EXAMPLE_LDADD = $(DALI_LIBS) $(DALI_TOOLKIT_LIBS) $(ECORE_X_LIBS) $(CAPI_MEDIA_PLAYER_LIBS) $(CAPI_APPFW_APPLICATION_LIBS) -lrt -lEGL
 
 
 blocks_example_SOURCES = $(examples_src_dir)/blocks/blocks-example.cpp
@@ -108,6 +109,13 @@ page_turn_view_example_SOURCES = $(examples_src_dir)/page-turn-view/page-turn-vi
 page_turn_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 page_turn_view_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 page_turn_view_example_LDADD = $(EXAMPLE_LDADD)
+
+radial_menu_example_SOURCES = $(examples_src_dir)/radial-menu/radial-menu-example.cpp \
+                              $(examples_src_dir)/radial-menu/radial-sweep-view.cpp \
+                              $(examples_src_dir)/radial-menu/radial-sweep-view-impl.cpp
+radial_menu_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
+radial_menu_example_DEPENDENCIES = $(EXAMPLE_DEPS)
+radial_menu_example_LDADD = $(EXAMPLE_LDADD)
 
 scroll_view_example_SOURCES = $(examples_src_dir)/scroll-view/scroll-view-example.cpp
 scroll_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
