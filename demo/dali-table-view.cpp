@@ -39,10 +39,12 @@ const std::string BUTTON_CANCEL( "Cancel" );
 
 const std::string DEFAULT_BACKGROUND_IMAGE_PATH( DALI_IMAGE_DIR "background-gradient.jpg" );
 const std::string LOGO_PATH( DALI_IMAGE_DIR "dali-logo.png" );
-const std::string DEFAULT_TOOLBAR_IMAGE_PATH( DALI_IMAGE_DIR "top-bar-demo.png" );
+const std::string DEFAULT_TOOLBAR_IMAGE_PATH( DALI_IMAGE_DIR "top-bar.png" );
 const std::string BUTTON_BACKGROUND(DALI_IMAGE_DIR "button-background.png");
 const std::string TILE_BACKGROUND(DALI_IMAGE_DIR "item-background.png");
 const std::string TILE_BACKGROUND_ALPHA(DALI_IMAGE_DIR "item-background-alpha.png");
+
+const char * const DEFAULT_TOOLBAR_TEXT( "TOUCH TO LAUNCH EXAMPLE" );
 
 const float BUTTON_PRESS_ANIMATION_TIME = 0.25f;                ///< Time to perform button scale effect.
 const float ROTATE_ANIMATION_TIME = 0.5f;                       ///< Time to perform rotate effect.
@@ -78,8 +80,8 @@ const Vector4 BACKGROUND_COLOR( 1.0f, 1.0f, 1.0f, 1.0f );
 const std::string             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
 const std::string             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
 const Dali::PointSize         DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
-const Dali::TextStyle::Weight DEFAULT_TEXT_STYLE_WEIGHT(Dali::TextStyle::LIGHT);
-const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.0f, 0.75f, 1.0f, 1.0f);
+const Dali::TextStyle::Weight DEFAULT_TEXT_STYLE_WEIGHT(Dali::TextStyle::REGULAR);
+const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.7f, 0.7f, 0.7f, 1.0f);
 
 const std::string             TABLE_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
 const std::string             TABLE_TEXT_STYLE_FONT_STYLE("Regular");
@@ -95,6 +97,7 @@ TextStyle GetDefaultTextStyle()
   textStyle.SetFontPointSize(DEFAULT_TEXT_STYLE_POINT_SIZE);
   textStyle.SetWeight(DEFAULT_TEXT_STYLE_WEIGHT);
   textStyle.SetTextColor(DEFAULT_TEXT_STYLE_COLOR);
+  textStyle.SetShadow( true );
   return textStyle;
 }
 
@@ -281,7 +284,7 @@ void DaliTableView::Initialize( Application& application )
   Stage::GetCurrent().Add( mRootActor );
 
   // Toolbar at top
-  CreateToolbar( mRootActor, std::string(), DEFAULT_TOOLBAR_IMAGE_PATH );
+  CreateToolbar( mRootActor, DEFAULT_TOOLBAR_TEXT, DEFAULT_TOOLBAR_IMAGE_PATH );
 
   // Add logo
   mLogo = CreateLogo( LOGO_PATH );
@@ -502,7 +505,7 @@ void DaliTableView::Populate()
       pageNumberText.ApplyConstraint( Constraint::New< Quaternion >( Actor::ROTATION, Source( tableView, Actor::WORLD_ROTATION ), EqualToConstraint() ) );
       pageNumberText.ApplyConstraint( Constraint::New< Vector4 >( Actor::COLOR, Source( tableView, Actor::COLOR ), EqualToConstraint() ) );
 
-      Stage::GetCurrent().Add( pageNumberText );
+      //Stage::GetCurrent().Add( pageNumberText );
 
       // Set tableview position
       Vector3 tableViewPos( stageSize.x * TABLE_RELATIVE_SIZE.x * t, 0.0f, 0.0f );
