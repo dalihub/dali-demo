@@ -29,7 +29,6 @@ const char* TEST_OUTER_RING_FILENAME = DALI_IMAGE_DIR "layer2.png"; // Image to 
 const char* TEST_INNER_RING_FILENAME = DALI_IMAGE_DIR "layer1.png"; // Image to be masked
 const char* TEST_MENU_FILENAME = DALI_IMAGE_DIR "layer3.png"; // Image to be masked
 const char* TEST_DIAL_FILENAME = DALI_IMAGE_DIR "layer4.png"; // Image to be masked
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "desktop_background.png" ); // Background for view
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" ); // Background for toolbar
 const char* APPLICATION_TITLE( "Radial Menu" );
 const char * const PLAY_ICON( DALI_IMAGE_DIR "icon-play.png" );
@@ -129,7 +128,7 @@ void RadialMenuExample::OnInit(Application& app)
   mContents = DemoHelper::CreateView( mApplication,
                                       mView,
                                       toolBar,
-                                      BACKGROUND_IMAGE,
+                                      "",
                                       TOOLBAR_IMAGE,
                                       APPLICATION_TITLE );
 
