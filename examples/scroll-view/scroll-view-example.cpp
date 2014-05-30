@@ -42,6 +42,7 @@ const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
 const char* EFFECT_MODE_NAME[] = {
     "OuterCube",
     "Depth",
+    "Cube",
     "InnerCube",
     "Carousel",
     "Spiral",
@@ -134,6 +135,13 @@ const Vector2 OFFSET_EXTENT_DEPTH_EFFECT(1.0f, 1.0f);                       ///<
 const float POSITION_SCALE_DEPTH_EFFECT(1.5f);                              ///< Position scaling.
 const float SCALE_EXTENT_DEPTH_EFFECT(0.5f);                                ///< Maximum scale factor when Actors scrolled one page away (50% size)
 
+// 3D Effect constants
+const Vector2 ANGLE_SWING_3DEFFECT(Math::PI_2 * 0.75, Math::PI_2 * 0.75f); ///< Angle Swing in radians
+const Vector2 POSITION_SWING_3DEFFECT(0.25f, 0.25f); ///< Position Swing relative to stage size.
+const Vector3 ANCHOR_3DEFFECT_STYLE0(-105.0f, 30.0f, -240.0f); ///< Rotation Anchor position for 3D Effect (Style 0)
+const Vector3 ANCHOR_3DEFFECT_STYLE1(65.0f, -70.0f, -300.0f); ///< Rotation Anchor position for 3D Effect (Style 1)
+
+
 const unsigned int IMAGE_THUMBNAIL_WIDTH  = 256;                            ///< Width of Thumbnail Image in texels
 const unsigned int IMAGE_THUMBNAIL_HEIGHT = 256;                            ///< Height of Thumbnail Image in texels
 
@@ -159,7 +167,7 @@ public:
   : mApplication( application ),
     mView(),
     mScrolling(false),
-    mEffectMode(CarouselEffect)
+    mEffectMode(CubeEffect)
   {
     // Connect to the Application's Init and orientation changed signal
     mApplication.InitSignal().Connect(this, &ExampleController::OnInit);
@@ -192,6 +200,7 @@ public:
 
     mEffectIcon[ OuterCubeEffect ] = Image::New( EFFECT_OUTER_CUBE_IMAGE );
     mEffectIcon[ DepthEffect ]     = Image::New( EFFECT_DEPTH_IMAGE );
+    mEffectIcon[ CubeEffect ]      = Image::New( EFFECT_INNER_CUBE_IMAGE );
     mEffectIcon[ InnerCubeEffect ] = Image::New( EFFECT_INNER_CUBE_IMAGE );
     mEffectIcon[ CarouselEffect ]  = Image::New( EFFECT_CAROUSEL_IMAGE );
     mEffectIcon[ SpiralEffect ]    = Image::New( EFFECT_SPIRAL_IMAGE );
@@ -353,6 +362,16 @@ private:
         mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
         mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
         mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.RemoveConstraintsFromChildren();
+        break;
+      }
+      case CubeEffect:
+      {
+        mScrollViewEffect = ScrollViewCubeEffect::New();
+        mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
+        mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOutBack);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOutBack);
         mScrollView.RemoveConstraintsFromChildren();
         break;
       }
@@ -526,6 +545,10 @@ private:
     {
       ApplyDepthEffectToActor( child );
     }
+    else if(mEffectMode == CubeEffect )
+    {
+      ApplyCubeEffectToActor( child );
+    }
   }
 
   /**
@@ -541,6 +564,25 @@ private:
                               OFFSET_EXTENT_DEPTH_EFFECT,
                               POSITION_SCALE_DEPTH_EFFECT,
                               SCALE_EXTENT_DEPTH_EFFECT );
+  }
+
+  void ApplyCubeEffectToActor( Actor child )
+  {
+    Vector3 anchor;
+    if(rand()&1)
+    {
+      anchor = ANCHOR_3DEFFECT_STYLE0;
+    }
+    else
+    {
+      anchor = ANCHOR_3DEFFECT_STYLE1;
+    }
+
+    ScrollViewCubeEffect cubeEffect = ScrollViewCubeEffect::DownCast(mScrollViewEffect);
+    cubeEffect.ApplyToActor( child,
+                             anchor,
+                             ANGLE_SWING_3DEFFECT,
+                             POSITION_SWING_3DEFFECT * Vector2(Stage::GetCurrent().GetSize()));
   }
 
   /**
@@ -672,6 +714,7 @@ private:
   {
     OuterCubeEffect,                                    ///< Outer Cube Effect
     DepthEffect,                                        ///< Depth Effect
+    CubeEffect,                                         ///< Cube effect
     InnerCubeEffect,                                    ///< Page Cube Effect
     CarouselEffect,                                     ///< Page Carousel Effect
     SpiralEffect,                                       ///< Page Spiral Effect
