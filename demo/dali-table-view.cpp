@@ -37,7 +37,7 @@ const std::string BUTTON_QUIT( "Quit" );
 const std::string BUTTON_OK( "Ok" );
 const std::string BUTTON_CANCEL( "Cancel" );
 
-const std::string DEFAULT_BACKGROUND_IMAGE_PATH( DALI_IMAGE_DIR "background-default.png" );
+const std::string DEFAULT_BACKGROUND_IMAGE_PATH( DALI_IMAGE_DIR "background-gradient.jpg" );
 const std::string LOGO_PATH( DALI_IMAGE_DIR "dali-logo.png" );
 const std::string DEFAULT_TOOLBAR_IMAGE_PATH( DALI_IMAGE_DIR "top-bar-demo.png" );
 const std::string BUTTON_BACKGROUND(DALI_IMAGE_DIR "button-background.png");
@@ -865,7 +865,8 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BitmapImage dis
   for( int i = 0; i < count; ++i )
   {
     float randSize = Random::Range( 10.0f, 400.0f );
-    Vector4 randColour( 0.0f, Random::Range( 0.0f, 0.75f ), 1.0f, Random::Range( 0.3f, 0.6f ));
+    float hue = Random::Range( 0.3f, 1.0f );
+    Vector4 randColour( hue, hue*0.5, 0.0f, Random::Range( 0.3f, 0.6f ));
 
     ImageActor dfActor = ImageActor::New( distanceField );
     mBackgroundActors.push_back( dfActor );
