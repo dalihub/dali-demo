@@ -3,7 +3,7 @@ Summary:    The OpenGLES Canvas Core Demo
 Version:    0.9.13
 Release:    1
 Group:      System/Libraries
-License:    Flora
+License:    Apache-2.0
 URL:        https://review.tizen.org/git/?p=platform/core/uifw/dali-demo.git;a=summary
 Source0:    %{name}-%{version}.tar.gz
 
@@ -20,7 +20,7 @@ BuildRequires:  pkgconfig(aul)
 BuildRequires:  dali-toolkit-devel
 BuildRequires:  dali-adaptor-devel
 BuildRequires:  pkgconfig(dlog)
-ExclusiveArch:  armv7l
+
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations
