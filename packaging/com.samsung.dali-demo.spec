@@ -1,3 +1,5 @@
+%bcond_with wayland
+
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
 Version:    1.0.0
@@ -20,7 +22,9 @@ BuildRequires:  pkgconfig(aul)
 BuildRequires:  dali-toolkit-devel
 BuildRequires:  dali-adaptor-devel
 BuildRequires:  pkgconfig(dlog)
-
+%if %{with wayland}
+BuildRequires:  pkgconfig(egl)
+%endif
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations
@@ -79,8 +83,10 @@ cp -f %{_builddir}/%{name}-%{version}/%{name}.xml %{buildroot}%{dali_xml_file_di
 mkdir -p %{buildroot}%{dali_icon_dir}
 mv %{buildroot}/%{dali_app_ro_dir}/images/%{name}.png %{buildroot}%{dali_icon_dir}
 
+%if !%{with wayland}
 mkdir -p %{buildroot}%{smack_rule_dir}
 cp -f %{_builddir}/%{name}-%{version}/%{name}.rule %{buildroot}%{smack_rule_dir}
+%endif
 
 # LICENSE
 mkdir -p %{buildroot}/usr/share/license
@@ -113,5 +119,7 @@ exit 0
 %{dali_app_ro_dir}/models/*
 %{dali_xml_file_dir}/%{name}.xml
 %{dali_icon_dir}/*
+%if !%{with wayland}
 %config %{smack_rule_dir}/%{name}.rule
+%endif
 %{_datadir}/license/%{name}
