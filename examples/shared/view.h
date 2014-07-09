@@ -97,8 +97,9 @@ Dali::Layer CreateView( Dali::Application& application,
     view.SetBackground( backgroundImageActor );
   }
 
+  // FIXME
   // Connects the orientation signal with the View::OrientationChanged method.
-  application.GetOrientation().ChangedSignal().Connect( &view, &Dali::Toolkit::View::OrientationChanged );
+  //application.GetOrientation().ChangedSignal().Connect( &view, &Dali::Toolkit::View::OrientationChanged );
 
   // Create default ToolBar
 
