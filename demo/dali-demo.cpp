@@ -38,6 +38,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("radial-menu.example", "Radial Menu"));
   demo.AddExample(Example("scroll-view.example", "Scroll View"));
   demo.AddExample(Example("shadow-bone-lighting.example", "Lights and shadows"));
+  demo.AddExample(Example("builder.example", "Script Based UI"));
   app.MainLoop();
 
   return 0;

@@ -1,0 +1,131 @@
+/*
+ * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+{
+  "stage": [{
+    "type": "Slider",
+    "parent-origin": "TOP_CENTER",
+    "position": [0, 144, 0],
+    "size": [480, 72, 1],
+    "lower-bound": 0,
+    "upper-bound": 1,
+    "show-popup": true,
+    "show-value": true,
+    "value-precision": 2,
+    "value": 0.0
+  }, {
+    "type": "Slider",
+    "parent-origin": "TOP_CENTER",
+    "position": [0, 224, 0],
+    "size": [300, 72, 1],
+    "lower-bound": 1,
+    "upper-bound": 10,
+    "show-popup": false,
+    "show-value": true,
+    "value-precision": 0,
+    "value": 5.0
+  }, {
+    "type": "Slider",
+    "parent-origin": "TOP_CENTER",
+    "position": [0, 304, 0],
+    "size": [300, 72, 1],
+    "lower-bound": 0,
+    "upper-bound": 5,
+    "show-popup": false,
+    "show-value": false,
+    "value": 0.0,
+    "mark-tolerance": 0.1,
+    "marks": [0, 1, 2, 3, 4, 5]
+  }, {
+    "type": "Slider",
+    "parent-origin": "TOP_CENTER",
+    "position": [0, 384, 0],
+    "size": [480, 72, 1],
+    "lower-bound": 0,
+    "upper-bound": 5,
+    "show-popup": false,
+    "show-value": false,
+    "value": 0.0,
+    "mark-tolerance": 0.1,
+    "snap-to-marks": true,
+    "marks": [0, 1, 2, 3, 4, 5]
+  }, {
+    "type": "Slider",
+    "parent-origin": "TOP_CENTER",
+    "position": [0, 464, 0],
+    "size": [480, 72, 1],
+    "lower-bound": 5,
+    "upper-bound": 100,
+    "show-popup": true,
+    "show-value": true,
+    "value-precision": 0,
+    "value": 50.0,
+    "popup-text-color": [1, 0, 0, 1],
+    "hit-region": [0, 48],
+    "backing-region": [0, 10],
+    "handle-region": [48, 48]
+  }, {
+    "type": "Slider",
+    "parent-origin": "TOP_CENTER",
+    "position": [0, 544, 0],
+    "size": [480, 72, 1],
+    "lower-bound": 10,
+    "upper-bound": 100,
+    "show-popup": true,
+    "show-value": true,
+    "value-prescision": 0,
+    "value": 100.0,
+    "hit-region": [0, 48],
+    "backing-region": [0, 10],
+    "handle-region": [48, 48],
+    "backing-image-name": "{DALI_IMAGE_DIR}circle_point_32x32.png",
+    "handle-image-name": "{DALI_IMAGE_DIR}circle_point_shadow_32x32.png",
+    "progress-image-name": "{DALI_IMAGE_DIR}circle_point.png",
+    "backing-scale9-border": [16, 0, 16, 0],
+    "progress-scale9-border": [16, 0, 16, 0]
+  }, {
+    "type": "Slider",
+    "parent-origin": "TOP_CENTER",
+    "position": [0, 624, 0],
+    "size": [480, 72, 1],
+    "lower-bound": 10,
+    "upper-bound": 100,
+    "show-popup": true,
+    "show-value": true,
+    "value-precision": 0,
+    "value": 50.0,
+    "hit-region": [0, 48],
+    "backing-region": [0, 10],
+    "handle-region": [48, 48],
+    "enabled": false
+  }, {
+    "type": "Slider",
+    "parent-origin": "TOP_CENTER",
+    "position": [0, 704, 0],
+    "size": [480, 72, 1],
+    "lower-bound": 10,
+    "upper-bound": 100,
+    "show-popup": true,
+    "show-value": true,
+    "value-precision": 0,
+    "value": 50.0,
+    "hit-region": [0, 48],
+    "backing-region": [0, 10],
+    "handle-region": [48, 48],
+    "enabled": false,
+    "disable-color": [1, 0, 0, 1]
+  }]
+}

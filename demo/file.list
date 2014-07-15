@@ -15,3 +15,6 @@ demo_image_files = \
 
 demo_model_files = \
     $(demo_src_dir)/models/*
+
+demo_script_files = \
+    $(demo_src_dir)/scripts/*
