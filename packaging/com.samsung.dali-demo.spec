@@ -111,7 +111,11 @@ exit 0
 ##############################
 
 %files
+%if 0%{?enable_dali_smack_rules}
+%manifest com.samsung.dali-demo.manifest-smack
+%else
 %manifest com.samsung.dali-demo.manifest
+%endif
 %defattr(-,root,root,-)
 %{dali_app_exe_dir}/dali-demo
 %{dali_app_exe_dir}/*.example
