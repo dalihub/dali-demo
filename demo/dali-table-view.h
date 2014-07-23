@@ -72,27 +72,7 @@ struct Example
   std::string title;                      ///< title (caption) of example to appear on tile button.
 };
 
-/**
- * Provide a style for the view and its tool bar.
- */
-struct ViewStyle
-{
-  ViewStyle( float toolBarButtonPercentage, float toolBarTitlePercentage, float dpi, float toolBarHeight, float toolBarPadding )
-  : mToolBarButtonPercentage( toolBarButtonPercentage ),
-    mToolBarTitlePercentage( toolBarTitlePercentage ),
-    mDpi( dpi ),
-    mToolBarHeight( toolBarHeight ),
-    mToolBarPadding( toolBarPadding )
-  {}
 
-  float mToolBarButtonPercentage; ///< The tool bar button width is a percentage of the tool bar width.
-  float mToolBarTitlePercentage;  ///< The tool bar title width is a percentage of the tool bar width.
-  float mDpi;                     ///< This style is indented for the given dpi.
-  float mToolBarHeight;           ///< The tool bar height for the given dpi above.
-  float mToolBarPadding;          ///< The tool bar padding between controls for the given dpi above.
-};
-
-const ViewStyle DEFAULT_VIEW_STYLE( 0.1f, 0.7f, 315.f, 80.f, 4.f );
 
 /**
  * Dali-Demo instance
@@ -274,11 +254,6 @@ private: // Application callbacks & implementation
    * Apply effect to the content of a tile
    */
   void ApplyEffectToTileContent(Dali::Actor tileContent);
-
-  /**
-   * Create a toolbar
-   */
-  void CreateToolbar(Dali::Toolkit::TableView root, const std::string& title, const std::string& toolbarImagePath, const ViewStyle& style = DEFAULT_VIEW_STYLE);
 
   /**
    * Key event handler

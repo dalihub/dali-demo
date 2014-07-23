@@ -121,7 +121,6 @@ const char * const GetNextImagePath()
 
 const int PAGE_COLUMNS = 10;                                                ///< Number of Pages going across (columns)
 const int PAGE_ROWS = 1;                                                    ///< Number of Pages going down (rows)
-const int IMAGE_COLUMNS = 3;                                                ///< Number of Images going across (columns) within a Page
 const int IMAGE_ROWS = 5;                                                   ///< Number of Images going down (rows) with a Page
 
 // 3D Effect constants
@@ -184,14 +183,14 @@ public:
    */
   void OnInit(Application& app)
   {
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
+    Stage stage = Dali::Stage::GetCurrent();
+    stage.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
     // Hide the indicator bar
     mApplication.GetWindow().ShowIndicator(false);
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
-
     mContentLayer = DemoHelper::CreateView( app,
                                             mView,
                                             mToolBar,
@@ -313,11 +312,13 @@ private:
 
     const float margin = 10.0f;
 
-    const Vector3 imageSize((stageSize.x / IMAGE_COLUMNS) - margin, (stageSize.y / IMAGE_ROWS) - margin, 0.0f);
+    // Calculate the number of images going across (columns) within a page, according to the screen resolution and dpi.
+    int imageColumns = round(IMAGE_ROWS * (stageSize.x / stage.GetDpi().x) / (stageSize.y / stage.GetDpi().y));
+    const Vector3 imageSize((stageSize.x / imageColumns) - margin, (stageSize.y / IMAGE_ROWS) - margin, 0.0f);
 
     for(int row = 0;row<IMAGE_ROWS;row++)
     {
-      for(int column = 0;column<IMAGE_COLUMNS;column++)
+      for(int column = 0;column<imageColumns;column++)
       {
         ImageActor image = CreateImage( GetNextImagePath() );
 

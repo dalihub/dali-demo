@@ -246,9 +246,9 @@ public:
    */
   void OnInit(Application& app)
   {
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
-
     Stage stage = Dali::Stage::GetCurrent();
+    stage.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
+
     Vector2 stageSize = Stage::GetCurrent().GetSize();
 
     // Create a border image shared by all the item actors
@@ -265,9 +265,6 @@ public:
 
     mView.OrientationAnimationStartedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
 
-    // Set the title to the current layout
-    SetLayoutTitle();
-
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
     editButton.SetBackgroundImage( Image::New( EDIT_IMAGE ) );
@@ -281,7 +278,6 @@ public:
     mLayoutButton.ClickedSignal().Connect( this, &ItemViewExample::OnLayoutButtonClicked);
     mLayoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
-    SetLayoutImage();
 
     // Create a delete button (bottom right of screen)
     mDeleteButton = Toolkit::PushButton::New();
@@ -347,10 +343,13 @@ public:
     mItemView.SetMinimumSwipeSpeed(MIN_SWIPE_SPEED);
 
     // Activate the spiral layout
-    Vector3 size(stage.GetSize());
-    mItemView.ActivateLayout(mCurrentLayout, size, 0.0f/*immediate*/);
+    UseLayout(mCurrentLayout, 0.0f);
     mItemView.SetKeyboardFocusable( true );
     KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &ItemViewExample::OnKeyboardPreFocusChange );
+
+    // Set the title and icon to the current layout
+    SetLayoutTitle();
+    SetLayoutImage();
   }
 
   Actor OnKeyboardPreFocusChange( Actor current, Actor proposed, Control::KeyboardFocusNavigationDirection direction )
@@ -366,7 +365,7 @@ public:
   /**
    * Switch to a different item view layout
    */
-  void UseLayout(int layoutId)
+  void UseLayout(int layoutId, float duration)
   {
     // Set the new orientation to the layout
     mItemView.GetLayout(layoutId)->SetOrientation(static_cast<ControlOrientation::Type>(mOrientation / 90));
@@ -375,15 +374,7 @@ public:
 
     if(layoutId == SPIRAL_LAYOUT)
     {
-      // Set up the spiral layout according to the new orientation
-      if(Toolkit::IsVertical(mSpiralLayout->GetOrientation()))
-      {
-        mSpiralLayout->SetRevolutionDistance(stageSize.y / SPIRAL_LAYOUT_REVOLUTION_NUMBER_PORTRAIT);
-      }
-      else
-      {
-        mSpiralLayout->SetRevolutionDistance(stageSize.x / SPIRAL_LAYOUT_REVOLUTION_NUMBER_LANDSCAPE);
-      }
+      mSpiralLayout->SetRevolutionDistance(stageSize.height / Stage::GetCurrent().GetDpi().y * 45.0f);
     }
 
     if(layoutId == GRID_LAYOUT)
@@ -422,7 +413,7 @@ public:
     mItemView.SetAnchoring(layoutId == DEPTH_LAYOUT);
 
     // Activate the layout
-    mItemView.ActivateLayout(layoutId, Vector3(stageSize.x, stageSize.y, stageSize.x), mDurationSeconds);
+    mItemView.ActivateLayout(layoutId, Vector3(stageSize.x, stageSize.y, stageSize.x), duration);
   }
 
   /**
@@ -439,7 +430,7 @@ public:
       // Remember orientation
       mOrientation = angle;
 
-      UseLayout(mCurrentLayout);
+      UseLayout(mCurrentLayout, mDurationSeconds);
     }
   }
 
@@ -448,7 +439,7 @@ public:
     // Switch to the next layout
     mCurrentLayout = (mCurrentLayout + 1) % mItemView.GetLayoutCount();
 
-    UseLayout(mCurrentLayout);
+    UseLayout(mCurrentLayout, mDurationSeconds);
 
     SetLayoutTitle();
     SetLayoutImage();

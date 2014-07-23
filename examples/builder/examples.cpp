@@ -404,7 +404,14 @@ public:
   {
     TextView t = TextView::New();
     t.SetMarkupProcessingEnabled(true);
-    t.SetText( std::string("<font size=6>") + ShortName( text ) + std::string("</font>") );
+
+    int size = static_cast<int>(DemoHelper::ScalePointSize(6));
+
+    std::ostringstream fontString;
+    fontString << "<font size="<< size <<">"<<  ShortName( text ) << "</font>";
+
+    t.SetText( fontString.str() );
+
     t.SetTextAlignment( Alignment::HorizontalLeft );
     return t;
   }
