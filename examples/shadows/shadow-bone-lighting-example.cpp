@@ -264,7 +264,13 @@ public:
     mCastingLight.SetAnchorPoint(AnchorPoint::CENTER);
     mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
 
-    TextActor text = TextActor::New("Light", Font::New(FontParameters("Times New Roman", "Book", PointSize(20.0f))));
+    TextStyle style;
+    style.SetFontPointSize( PointSize(20.0f) );
+    style.SetFontName("Times New Roman");
+    style.SetFontStyle("Book");
+
+    TextActorParameters parameters( style, TextActorParameters::FONT_DETECTION_ON );
+    TextActor text = TextActor::New("Light", parameters);
     text.SetColor(Color::BLUE);
 
     mCastingLight.Add(text);
