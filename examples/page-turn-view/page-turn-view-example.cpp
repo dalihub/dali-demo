@@ -229,7 +229,8 @@ void PageTurnController::OnInit( Application& app )
   winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
   winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
   winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
-  app.GetOrientation().ChangedSignal().Connect( &mView, &View::OrientationChanged );
+  // FIXME
+  //app.GetOrientation().ChangedSignal().Connect( &mView, &View::OrientationChanged );
   // view will response to orientation change to display portrait or landscape views
   mView.OrientationAnimationStartedSignal().Connect( this, &PageTurnController::OnOrientationAnimationStarted );
 

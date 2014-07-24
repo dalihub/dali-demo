@@ -18,6 +18,7 @@ BROWSE
 *.fodt
 *.test
 *.example
+dali-builder
 *.a
 *.apk
 *.ap_

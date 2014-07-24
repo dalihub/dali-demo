@@ -235,7 +235,8 @@ RadialSweepView RadialMenuExample::CreateSweepView( std::string imageName,
   mImageActor.SetAnchorPoint(AnchorPoint::CENTER);
 
   // Create the stencil
-  float diameter = std::max(image.GetWidth(), image.GetHeight());
+  Vector2 imageSize = Image::GetImageSize(imageName);
+  float diameter = std::max(imageSize.width, imageSize.height);
   RadialSweepView radialSweepView = RadialSweepView::New();
   radialSweepView.SetDiameter( diameter );
   radialSweepView.SetInitialAngle( initialAngle );

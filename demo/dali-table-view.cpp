@@ -194,7 +194,7 @@ public:
 
   Vector3 operator()( const Vector3& current, const PropertyInput& scrollProperty )
   {
-    float scrollPos = scrollProperty.GetFloat();
+    float scrollPos = scrollProperty.GetVector3().x;
 
     return mInitialPos + Vector3( -scrollPos * mScale, 0.0f, 0.0f );
   }
@@ -829,17 +829,17 @@ void DaliTableView::SetupBackground( Actor addToLayer, const Vector2& size )
 
   // Add constraints
   Constraint animConstraint0 = Constraint::New < Vector3 > ( Actor::POSITION,
-      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_X_PROPERTY_NAME ) ),
+      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
       AnimScrollConstraint( backgroundAnimLayer0.GetCurrentPosition(), 0.75f ) );
   backgroundAnimLayer0.ApplyConstraint( animConstraint0 );
 
   Constraint animConstraint1 = Constraint::New < Vector3 > ( Actor::POSITION,
-      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_X_PROPERTY_NAME ) ),
+      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
       AnimScrollConstraint( backgroundAnimLayer1.GetCurrentPosition(), 0.5f ) );
   backgroundAnimLayer1.ApplyConstraint( animConstraint1 );
 
   Constraint animConstraint2 = Constraint::New < Vector3 > ( Actor::POSITION,
-      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_X_PROPERTY_NAME ) ),
+      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
       AnimScrollConstraint( backgroundAnimLayer2.GetCurrentPosition(), 0.25f ) );
   backgroundAnimLayer2.ApplyConstraint( animConstraint2 );
 

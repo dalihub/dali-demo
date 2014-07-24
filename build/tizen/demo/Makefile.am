@@ -25,8 +25,17 @@ dalidemoimages_DATA = $(demo_image_files)
 dalidemomodelsdir = $(appdatadir)/models/
 dalidemomodels_DATA = $(demo_model_files)
 
+dalidemoshadersdir = $(appdatadir)/shaders/
+dalidemoshaders_DATA = $(demo_shader_files)
+
+dalidemoscriptsdir = $(appdatadir)/scripts/
+dalidemoscripts_DATA = $(demo_script_files)
+
+
 DEMO_CXXFLAGS = -DDALI_IMAGE_DIR="\"$(dalidemoimagesdir)\"" \
                 -DDALI_MODEL_DIR="\"$(dalidemomodelsdir)\"" \
+                -DDALI_SCRIPT_DIR="\"$(dalidemoscriptsdir)\"" \
+                -DDALI_SHADER_DIR="\"$(dalidemoshadersdir)\"" \
                 -DDALI_EXAMPLE_BIN="\"$(exedir)\"" \
                 -I../../../demo -I../../.. \
                 $(DALIDEMO_CFLAGS) \

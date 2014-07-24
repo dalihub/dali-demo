@@ -1,0 +1,99 @@
+/*
+ * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+{
+  // library of styles
+  "styles": {
+    "red-theme": {
+      "color": [1, 0, 0, 1]
+    },
+    "basic-text": {
+      "parent-origin": "CENTER"
+    }
+  },
+  // library of animations
+  "animations": {
+    "animate": {
+      "duration": 10.0,
+      "properties": [{
+        "actor": "greeting", // referenced actors must exist on stage
+        "property": "position",
+        "value": [300, 300, -1000],
+        "alpha-function": "EASE_IN_OUT",
+        "time-period": {
+          "delay": 0,
+          "duration": 3
+        }
+      }, {
+        "actor": "greeting", // referenced actors must exist on stage
+        "property": "scale",
+        "value": [5, 5, 1],
+        "time-period": {
+          "delay": 2,
+          "duration": 3
+        }
+      }]
+    },
+    "rotate": {
+      "duration": 10.0,
+      "properties": [{
+        "actor": "image", // referenced actors must exist on stage
+        "property": "rotation",
+        "value": [0, 0, -45],
+        "alpha-function": "EASE_IN_OUT",
+        "time-period": {
+          "delay": 0,
+          "duration": 3
+        }
+      }]
+    }
+  },
+  // a tree of actors
+  "stage": [{
+    "name": "greeting",
+    "type": "TextView",
+    "text": "Touch me",
+    "styles": ["basic-text"],
+    "position": [0, -120, 0],
+    "size": [200, 200, 1],
+    "rotation": [0, 0, 30],
+    "signals": [{
+      "name": "touched",
+      "action": "play",
+      "animation": "animate"
+    }]
+  }, {
+    "type": "TextView", // styles can be additive
+    "parent-origin": "CENTER",
+    "anchor-point": "CENTER",
+    "size": [200, 200, 1],
+    "text": "or the image.."
+  }, {
+    "name": "image",
+    "type": "ImageActor",
+    "image": {
+      "filename": "{DALI_IMAGE_DIR}gallery-large-21.jpg"
+    },
+    "position": [0, 200, 0],
+    "size": [200, 200, 1],
+    "signals": [{
+      "name": "touched",
+      "action": "play",
+      "animation": "rotate"
+    }],
+    "position-inheritance": "DONT_INHERIT_POSITION"
+  }]
+}

@@ -1,0 +1,120 @@
+/*
+ * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+{
+  "constants": {
+    "CONFIG_SCRIPT_LOG_LEVEL": "Verbose"
+  },
+  "stage": [
+    // First Button
+    {
+      "type": "PushButton",
+      "parent-origin": "TOP_CENTER",
+      "anchor-point": "TOP_CENTER",
+      "position": [0, 0, 0],
+      "size": [0, 200, 0],
+      "normal-state-actor": {
+        "type": "ImageActor",
+        "image": {
+          "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
+        }
+      },
+      "pressed-state-actor": {
+        "type": "ImageActor",
+        "image": {
+          "filename": "{DALI_IMAGE_DIR}blocks-brick-2.png"
+        }
+      },
+      "label-actor": {
+        "type": "TextView",
+        "text": "Normal"
+      }
+    },
+
+    // Second Button
+    {
+      "type": "PushButton",
+      "parent-origin": "CENTER",
+      "anchor-point": "CENTER",
+      "position": [0, 0, 0],
+      "size": [0, 200, 0],
+      "label-actor": {
+        "type": "TextView",
+        "text": "Dimmed"
+      },
+      "dimmed": true,
+      "normal-state-actor": {
+        "type": "ImageActor",
+        "image": {
+          "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
+        }
+      },
+      "pressed-state-actor": {
+        "type": "ImageActor",
+        "image": {
+          "filename": "{DALI_IMAGE_DIR}blocks-brick-2.png"
+        }
+      },
+      "dimmed-state-actor": {
+        "type": "ImageActor",
+        "image": {
+          "filename": "{DALI_IMAGE_DIR}blocks-brick-3.png"
+        }
+      }
+    },
+
+    // Third Button
+    {
+      "type": "PushButton",
+      "name": "toggle-button",
+      "parent-origin": "BOTTOM_CENTER",
+      "anchor-point": "BOTTOM_CENTER",
+      "position": [0, 0, 0],
+      "size": [0, 200, 0],
+      "label-actor": {
+        "type": "TextView",
+        "text": "Toggle"
+      },
+      "togglable": true,
+      "normal-state-actor": {
+        "type": "ImageActor",
+        "style": "STYLE_NINE_PATCH",
+        "border": [26, 24, 26, 23],
+        "image": {
+          "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
+        }
+      },
+      "pressed-state-actor": {
+        "type": "ImageActor",
+        "style": "STYLE_NINE_PATCH",
+        "border": [26, 24, 26, 23],
+        "image": {
+          "filename": "{DALI_IMAGE_DIR}blocks-paddle.png"
+        }
+      },
+      "signals": [{
+        "name": "toggled",
+        "action": "set",
+        "actor": "toggle-button",
+        "property": "label-actor",
+        "value": {
+          "type": "TextView",
+          "text": "Using a 9-patch image"
+        }
+      }]
+    }
+  ]
+}
