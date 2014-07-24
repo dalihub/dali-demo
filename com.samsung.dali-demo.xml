@@ -58,4 +58,7 @@
 	<ui-application appid="builder.example" exec="/opt/apps/com.samsung.dali-demo/bin/builder.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Script Based UI</label>
 	</ui-application>
+	<ui-application appid="image-scaling-irregular-grid.example" exec="/opt/apps/com.samsung.dali-demo/bin/image-scaling-irregular-grid.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Image Scaling Modes</label>
+	</ui-application>
 </manifest>
