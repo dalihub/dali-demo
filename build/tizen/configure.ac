@@ -15,7 +15,7 @@
 
 m4_define([dali_version],[0.1.0])
 AC_INIT([dali], [dali_version])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+AM_INIT_AUTOMAKE([-Wall foreign])
 
 AC_PROG_CXX
 AC_PROG_LIBTOOL
@@ -29,10 +29,9 @@ AC_SUBST(DALI_VERSION)
 
 PKG_CHECK_MODULES(DALI, dali)
 PKG_CHECK_MODULES(DALI_TOOLKIT, dali-toolkit)
-PKG_CHECK_MODULES(CAPI_MEDIA_PLAYER, capi-media-player)
-PKG_CHECK_MODULES(CAPI_APPFW_APPLICATION, capi-appfw-application)
-PKG_CHECK_MODULES(AUL, aul)
-PKG_CHECK_MODULES(DLOG, dlog)
+PKG_CHECK_MODULES(AUL, aul,
+                  [AC_DEFINE([HAS_AUL], [1])],
+                  [1])
 
 DALIDEMO_CFLAGS=-DPLATFORM_SLP
 
