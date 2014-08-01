@@ -11,7 +11,11 @@ demo_src_files = \
 
 demo_image_files = \
     $(demo_src_dir)/images/*.png \
-    $(demo_src_dir)/images/*.jpg
+    $(demo_src_dir)/images/*.jpg \
+    $(demo_src_dir)/images/*.gif \
+    $(demo_src_dir)/images/*.bmp \
+    $(demo_src_dir)/images/*.ico \
+    $(demo_src_dir)/images/*.wbmp
 
 demo_model_files = \
     $(demo_src_dir)/models/*
