@@ -21,12 +21,7 @@
 // EXTERNAL INCLUDES
 #include <algorithm>
 #include <sstream>
-
-#ifdef USE_AUL
-#include <aul.h>
-#else
 #include<unistd.h>
-#endif // USE_AUL
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -715,9 +710,7 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
     else
     {
       const Example& example( iter->second );
-#ifdef USE_AUL
-      aul_open_app( example.name.c_str() );
-#else // USE_AUL
+
       std::stringstream stream;
       stream << DALI_EXAMPLE_BIN << example.name.c_str();
       pid_t pid = fork();
@@ -726,7 +719,6 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
         execlp( stream.str().c_str(), example.name.c_str(), NULL );
         DALI_ASSERT_ALWAYS(false && "exec failed!");
       }
-#endif // USE_AUL
     }
     mPressedActor.Reset();
   }

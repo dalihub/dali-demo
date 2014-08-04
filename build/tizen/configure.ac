@@ -29,9 +29,6 @@ AC_SUBST(DALI_VERSION)
 
 PKG_CHECK_MODULES(DALI, dali)
 PKG_CHECK_MODULES(DALI_TOOLKIT, dali-toolkit)
-PKG_CHECK_MODULES(AUL, aul,
-                  [AC_DEFINE([HAS_AUL], [1])],
-                  [1])
 
 DALIDEMO_CFLAGS=-DPLATFORM_SLP
 
