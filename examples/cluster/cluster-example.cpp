@@ -713,7 +713,6 @@ public:
     mScrollView.SetActorAutoSnap(false);
 
     // Remove all shader-effects from mScrollView and it's children (the clusters)
-    mScrollView.RemoveShaderEffect();
     mScrollView.SetPosition(Vector3::ZERO);
 
     mLayoutButton.SetBackgroundImage( mLayoutButtonImages[ type ] );
@@ -721,7 +720,7 @@ public:
     for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
     {
       Cluster cluster = i->mCluster;
-      cluster.RemoveShaderEffect();
+      RemoveShaderEffectRecursively( cluster );
       if( i->mEffectConstraint )
       {
         cluster.RemoveConstraint(i->mEffectConstraint);
@@ -759,7 +758,7 @@ public:
                                                             ShearEffectCenterConstraint(stageSize, shearCenter) );
           shaderEffect.ApplyConstraint(constraint);
 
-          cluster.SetShaderEffect(shaderEffect);
+          SetShaderEffectRecursively( cluster,shaderEffect );
 
           // Apply Constraint to Shader Effect
           Property::Index scrollOvershootProperty = /*targetGroup*/mScrollView.GetPropertyIndex(ScrollViewWobbleEffect::EFFECT_OVERSHOOT);
@@ -787,7 +786,12 @@ public:
         // Apply Carousel Shader Effect to scrollView
         CarouselEffect shaderEffect = CarouselEffect::New();
         shaderEffect.SetRadius( -CAROUSEL_EFFECT_RADIUS );
-        mScrollView.SetShaderEffect( shaderEffect );
+        // dont apply shader effect to scrollview as it might override internal shaders for bounce effect etc
+        for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
+        {
+          Cluster cluster = i->mCluster;
+          SetShaderEffectRecursively( cluster, shaderEffect );
+        }
         mScrollView.SetPosition( Vector3( 0.0f, 0.0f, CAROUSEL_EFFECT_RADIUS ) );
 
         const Vector2 angleSweep( CAROUSEL_EFFECT_ANGLE_SWEEP / stageSize.width,
@@ -819,12 +823,13 @@ public:
 
         shaderEffect.SetRadius( SPHERE_EFFECT_RADIUS );
         shaderEffect.SetAnglePerUnit( Vector2( SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y, SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y ) );
-        mScrollView.SetShaderEffect( shaderEffect );
+        // dont apply shader effect to scrollview as it might override internal shaders for bounce effect etc
         for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {
           Constraint constraint = Constraint::New<float>(Actor::POSITION_Z, SphereEffectOffsetConstraint(SPHERE_EFFECT_POSITION_Z));
           constraint.SetRemoveAction(Constraint::Discard);
           Cluster cluster = i->mCluster;
+          SetShaderEffectRecursively( cluster, shaderEffect );
           i->mEffectConstraint = cluster.ApplyConstraint(constraint);
         }
         break;
