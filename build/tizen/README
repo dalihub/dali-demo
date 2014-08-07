@@ -1,5 +1,0 @@
-autoreconf --install
-# see /build/slp/sbs-dependencies/README for instructions on installing dependencies for SBS.
-#
-./configure --prefix=$DESKTOP_PREFIX
-make install -j3
