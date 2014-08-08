@@ -1061,7 +1061,7 @@ private:
 
     if( mItemView )
     {
-      mItemView.SetDefaultAlphaFunction( ALPHA_FUNCTIONS[mAlphaFuncIndex] );
+      mItemView.GetActiveLayout()->SetAlphaFunction( ALPHA_FUNCTIONS[mAlphaFuncIndex] );
     }
   }
 
