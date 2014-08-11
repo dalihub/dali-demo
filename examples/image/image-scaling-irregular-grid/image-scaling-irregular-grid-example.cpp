@@ -295,7 +295,7 @@ public:
     stage.KeyEventSignal().Connect(this, &ImageScalingIrregularGridController::OnKeyEvent);
 
     // Hide the indicator bar
-    mApplication.GetWindow().ShowIndicator(false);
+    mApplication.GetWindow().ShowIndicator(Dali::Window::INVISIBLE);
 
     // Create a default view with a default tool bar:
     mContentLayer = DemoHelper::CreateView( mApplication,
