@@ -490,7 +490,7 @@ public:
     // The Init signal is received once (only) during the Application lifetime
 
     // Hide the indicator bar
-    application.GetWindow().ShowIndicator( false );
+    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
