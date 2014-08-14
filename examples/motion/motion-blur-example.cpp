@@ -147,7 +147,7 @@ public:
                                             mToolBar,
                                             BACKGROUND_IMAGE_PATH,
                                             TOOLBAR_IMAGE,
-                                            APPLICATION_TITLE);
+                                            APPLICATION_TITLE );
 
     //Add an effects icon on the right of the title
     mIconEffectsOff = Image::New( EFFECTS_OFF_ICON );

@@ -127,11 +127,8 @@ const float CLUSTER_RELATIVE_SIZE = 0.65f;                  ///< Cluster size re
 const float CLUSTER_GROUP_DELAY_TOP = 0.25f;                ///< Delay for top Clusters in seconds.
 const float CLUSTER_GROUP_DELAY_BOTTOM = 0.0f;              ///< Delay for bottom Clusters in seconds.
 
-const float CLUSTER_COLUMN_SPACING = 1.0f;                  ///< Spacing in screen coordinates.
 const float CLUSTER_COLUMN_INDENT = 0.1f;                   ///< Left Indentation in screen coordinates.
-const float CLUSTER_ROW_SPACING = 0.42f;                    ///< Spacing in screen coordinates.
 const float CLUSTER_ROW_INDENT = 0.13f;                     ///< Top Indentation in screen coordinates.
-const float CLUSTER_BOTTOM_SHIFT = 0.15f;                   ///< Bottom row is shifted right by 15% of screen width.
 
 const Vector3 SHEAR_EFFECT_ANCHOR_POINT(0.5f, 1.0f, 0.5f);  ///< Anchor Point used for the shear effect (extends outside of Cluster)
 const float SHEAR_EFFECT_MAX_OVERSHOOT = 30.0f;             ///< Max Overshoot for shear effect (in degrees).
@@ -557,7 +554,8 @@ public:
     clusterActor.SetAnchorPoint(AnchorPoint::CENTER);
 
     Vector2 stageSize = Dali::Stage::GetCurrent().GetSize();
-    clusterActor.SetSize(stageSize.x * CLUSTER_RELATIVE_SIZE, stageSize.x * CLUSTER_RELATIVE_SIZE, 0.0f);
+    float minStageDimension = min(stageSize.x, stageSize.y);
+    clusterActor.SetSize(minStageDimension * CLUSTER_RELATIVE_SIZE, minStageDimension * CLUSTER_RELATIVE_SIZE, 0.0f);
 
     DALI_ASSERT_ALWAYS(clusterType < CLUSTER_COUNT);
     const char **paths = IMAGE_GROUPS[clusterType];
@@ -650,8 +648,11 @@ public:
 
     int column = mClusterCount>>1;
     int row = mClusterCount&1;
-    Vector3 clusterPosition = Vector3((CLUSTER_COLUMN_INDENT + row * CLUSTER_BOTTOM_SHIFT) * stageSize.width,
-                               (row * CLUSTER_ROW_SPACING + CLUSTER_ROW_INDENT) * stageSize.height, 0.0f);
+
+    float minStageDimension = min(stageSize.x, stageSize.y);
+    float clusterRightShift = 1.0f - CLUSTER_COLUMN_INDENT * 2.0f;
+    Vector3 clusterPosition = Vector3(CLUSTER_COLUMN_INDENT * stageSize.width + row * (clusterRightShift * stageSize.width - minStageDimension * CLUSTER_RELATIVE_SIZE),
+                                      CLUSTER_ROW_INDENT * stageSize.height + row * (clusterRightShift * stageSize.height - minStageDimension * CLUSTER_RELATIVE_SIZE), 0.0f);
 
     Actor pageView = Actor::New();
     mScrollView.Add(pageView);
