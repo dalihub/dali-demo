@@ -265,7 +265,7 @@ public:
     mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
 
     TextStyle style;
-    style.SetFontPointSize( PointSize(20.0f) );
+    style.SetFontPointSize( PointSize(DemoHelper::ScalePointSize(20.0f)) );
     style.SetFontName("Times New Roman");
     style.SetFontStyle("Book");
 
