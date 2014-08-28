@@ -566,7 +566,14 @@ public:
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
       {
-        mApp.Quit();
+        if ( mItemView.IsVisible() )
+        {
+          mApp.Quit();
+        }
+        else
+        {
+          EnterSelection();
+        }
       }
     }
   }
