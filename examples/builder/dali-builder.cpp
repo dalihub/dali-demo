@@ -276,7 +276,7 @@ private:
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
-        Application::Get().Quit();
+        mApp.Quit();
       }
     }
   }
