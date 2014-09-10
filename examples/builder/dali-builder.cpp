@@ -196,6 +196,7 @@ private:
     Stage stage = Stage::GetCurrent();
 
     builder = Builder::New();
+    builder.QuitSignal().Connect( this, &ExampleApp::OnBuilderQuit );
 
     PropertyValueMap defaultDirs;
     defaultDirs[ TOKEN_STRING(DALI_IMAGE_DIR) ]  = DALI_IMAGE_DIR;
@@ -276,9 +277,14 @@ private:
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
-        Application::Get().Quit();
+        mApp.Quit();
       }
     }
+  }
+
+  void OnBuilderQuit()
+  {
+    mApp.Quit();
   }
 
   Builder mBuilder;

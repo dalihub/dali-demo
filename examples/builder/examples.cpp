@@ -431,6 +431,7 @@ public:
     Stage stage = Stage::GetCurrent();
 
     builder = Builder::New();
+    builder.QuitSignal().Connect( this, &ExampleApp::OnBuilderQuit );
 
     PropertyValueMap defaultDirs;
     defaultDirs[ TOKEN_STRING(DALI_IMAGE_DIR) ]  = DALI_IMAGE_DIR;
@@ -575,6 +576,21 @@ public:
           EnterSelection();
         }
       }
+    }
+  }
+
+  /**
+   * Event handler when Builder wants to quit (we only want to close the shown json unless we're at the top-level)
+   */
+  void OnBuilderQuit()
+  {
+    if ( mItemView.IsVisible() )
+    {
+      mApp.Quit();
+    }
+    else
+    {
+      EnterSelection();
     }
   }
 
