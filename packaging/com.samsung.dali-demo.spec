@@ -21,9 +21,7 @@ BuildRequires:  pkgconfig(capi-media-player)
 BuildRequires:  dali-toolkit-devel
 BuildRequires:  dali-adaptor-devel
 BuildRequires:  pkgconfig(dlog)
-%if %{with wayland}
 BuildRequires:  pkgconfig(egl)
-%endif
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations
