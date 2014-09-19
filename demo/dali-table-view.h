@@ -185,6 +185,16 @@ private: // Application callbacks & implementation
   bool OnTilePressed( Dali::Actor actor, const Dali::TouchEvent& event );
 
   /**
+   * Signal emitted when any tile has been hovered
+   *
+   * @param[in] actor The Actor representing this tile.
+   * @param[in] event The HoverEvent
+   *
+   * @return Consume flag
+   */
+  bool OnTileHovered( Dali::Actor actor, const Dali::HoverEvent& event );
+
+  /**
    * Signal emitted when the pressed animation has completed.
    *
    * @param[in] source The animation source.

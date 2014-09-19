@@ -550,6 +550,7 @@ Actor DaliTableView::CreateTile( const string& name, const string& title, const 
 
   // connect to the touch events
   tile.TouchedSignal().Connect( this, &DaliTableView::OnTilePressed );
+  tile.HoveredSignal().Connect( this, &DaliTableView::OnTileHovered );
 
   return tile;
 }
@@ -1041,3 +1042,11 @@ void DaliTableView::OnFocusedActorActivated( Dali::Actor activatedActor )
     OnTilePressed(mPressedActor, touchEventUp);
   }
 }
+
+bool DaliTableView::OnTileHovered( Actor actor, const HoverEvent& event )
+{
+  KeyboardFocusManager::Get().SetCurrentFocusActor( actor );
+  return true;
+}
+
+
