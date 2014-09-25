@@ -92,18 +92,6 @@ const Dali::TextStyle::Weight TABLE_TEXT_STYLE_WEIGHT(Dali::TextStyle::LIGHT);
 const Dali::Vector4           TABLE_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
 
-TextStyle GetDefaultTextStyle()
-{
-  TextStyle textStyle;
-  textStyle.SetFontName(DEFAULT_TEXT_STYLE_FONT_FAMILY);
-  textStyle.SetFontStyle(DEFAULT_TEXT_STYLE_FONT_STYLE);
-  textStyle.SetFontPointSize( Dali::PointSize(DemoHelper::ScalePointSize(DEFAULT_TEXT_STYLE_POINT_SIZE)));
-  textStyle.SetWeight(DEFAULT_TEXT_STYLE_WEIGHT);
-  textStyle.SetTextColor(DEFAULT_TEXT_STYLE_COLOR);
-  textStyle.SetShadow( true );
-  return textStyle;
-}
-
 TextStyle GetTableTextStyle()
 {
   TextStyle textStyle;
@@ -169,15 +157,6 @@ Vector3 ShapeMovementConstraint( const Vector3& current,
   }
 
   return pos;
-}
-
-/**
- * Constraint to return a bool value based on the alpha channel value
- */
-bool AlphaVisibleConstraint( bool current, const PropertyInput& alphaProperty )
-{
-  Vector4 colour = alphaProperty.GetVector4();
-  return ( colour.a > Math::MACHINE_EPSILON_10000 );
 }
 
 /**
