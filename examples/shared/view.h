@@ -59,7 +59,7 @@ float ScalePointSize(int pointSize)
 {
   Dali::Vector2 dpi = Dali::Stage::GetCurrent().GetDpi();
   float meanDpi = (dpi.height + dpi.width) * 0.5f;
-  return (pointSize * 220.0f) / meanDpi;
+  return pointSize * meanDpi / 220.0f;        // 220 is the default horizontal DPI defined in adaptor Application
 }
 
 Dali::TextStyle& GetDefaultTextStyle()
