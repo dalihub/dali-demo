@@ -606,7 +606,7 @@ bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
     if( consumed )
     {
       mPressedAnimation = Animation::New( BUTTON_PRESS_ANIMATION_TIME );
-      mPressedAnimation.SetDestroyAction( Animation::Discard );
+      mPressedAnimation.SetEndAction( Animation::Discard );
 
       // scale the content actor within the Tile, as to not affect the placement within the Table.
       Actor content = actor.GetChildAt(0);

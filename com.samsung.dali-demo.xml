@@ -61,4 +61,7 @@
 	<ui-application appid="image-scaling-irregular-grid.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-scaling-irregular-grid.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Image Scaling Modes</label>
 	</ui-application>
+	<ui-application appid="buttons.example" exec="/usr/apps/com.samsung.dali-demo/bin/buttons.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Radio Buttons</label>
+	</ui-application>
 </manifest>

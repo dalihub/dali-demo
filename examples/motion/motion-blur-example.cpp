@@ -306,7 +306,6 @@ public:
       {
         // has parent so we expect it to be on stage, start animation
         mRotateAnimation = Animation::New( ORIENTATION_DURATION );
-        mRotateAnimation.SetDestroyAction( Animation::Bake );
         mRotateAnimation.RotateTo( mView, Degree( -orientation ), Vector3::ZAXIS, AlphaFunctions::EaseOut );
         mRotateAnimation.Resize( mView, targetSize.width, targetSize.height );
         mRotateAnimation.Play();
