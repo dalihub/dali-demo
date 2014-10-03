@@ -64,4 +64,7 @@
 	<ui-application appid="buttons.example" exec="/usr/apps/com.samsung.dali-demo/bin/buttons.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Radio Buttons</label>
 	</ui-application>
+	<ui-application appid="text-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text View</label>
+	</ui-application>
 </manifest>
