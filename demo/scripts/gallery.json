@@ -1,0 +1,346 @@
+{
+  "templates":
+  {
+    "selection-type":
+    {
+      "type": "Control",
+      "background-color": [ 1, 0.5, 0, 0.6 ],
+      "color-alpha": 0.05,
+      "parent-origin": "CENTER",
+      "anchor-point": "CENTER",
+      "size": [ 450, 90, 1 ]
+    },
+    "image-type":
+    {
+      "type": "ImageActor",
+      "position": [ 450, 0, 1 ],
+      "parent-origin": "CENTER",
+      "anchor-point": "CENTER",
+      "size": [ 450, 795, 1 ],
+      "actors": [
+        {
+          "type": "Control",
+          "position-inheritance": "USE_PARENT_POSITION",
+          "size": [ 450, 795, 1 ],
+          "signals": [
+            {
+              "name": "tapped",
+              "action": "play",
+              "animation": "BackAnimation"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "stage": [
+    {
+      "type": "Control",
+      "name": "stencil",
+      "background-color": [ 1, 1, 1, 1 ],
+      "parent-origin": "CENTER",
+      "anchor-point": "CENTER",
+      "draw-mode": "STENCIL",
+      "size": [ 450, 795, 0 ],
+      "position-z": 0.1
+    },
+    {
+      "type": "ImageActor",
+      "actors": [],
+      "name": "list",
+      "parent-origin": "CENTER",
+      "anchor-point": "CENTER",
+      "position": [ 0, 0, -1 ],
+      "size": [ 450, 795, 1 ],
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}animation-list.png"
+      }
+    },
+    {
+      "type": "selection-type",
+      "name": "selection-1",
+      "position-y": -105,
+      "signals": [
+        {
+          "name": "tapped",
+          "action": "play",
+          "animation": "Animation_1"
+        }
+      ]
+    },
+    {
+      "type": "selection-type",
+      "name": "selection-2",
+      "position-y": -15,
+      "signals": [
+        {
+          "name": "tapped",
+          "action": "play",
+          "animation": "Animation_2"
+        }
+      ]
+    },
+    {
+      "type": "selection-type",
+      "name": "selection-3",
+      "position-y": 75,
+      "signals": [
+        {
+          "name": "tapped",
+          "action": "play",
+          "animation": "Animation_3"
+        }
+      ]
+    },
+    {
+      "type": "selection-type",
+      "name": "selection-4",
+      "position-y": 165,
+      "signals": [
+        {
+          "name": "tapped",
+          "action": "play",
+          "animation": "Animation_4"
+        }
+      ]
+    },
+    {
+      "type": "selection-type",
+      "name": "selection-5",
+      "position-y": 255,
+      "signals": [
+        {
+          "name": "tapped",
+          "action": "play",
+          "animation": "Animation_5"
+        }
+      ]
+    },
+    {
+      "type": "image-type",
+      "name": "picture-1",
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}animation-picture-1.png"
+      }
+    },
+    {
+      "type": "image-type",
+      "name": "picture-2",
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}animation-picture-2.png"
+      }
+    },
+    {
+      "type": "image-type",
+      "name": "picture-3",
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}animation-picture-3.png"
+      }
+    },
+    {
+      "type": "image-type",
+      "name": "picture-4",
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}animation-picture-4.png"
+      }
+    },
+    {
+      "type": "image-type",
+      "name": "picture-5",
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}animation-picture-5.png"
+      }
+    }
+  ],
+  "animations": {
+    "Animation_1": {
+      "properties": [
+        {
+          "actor": "selection-1",
+          "property": "color-alpha",
+          "value": 0.5,
+          "alpha-function": "SIN",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.5
+          },
+          "timelineColor": "#83bcc5"
+        },
+        {
+          "actor": "picture-1",
+          "property": "position-x",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.25,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        }
+      ]
+    },
+    "Animation_2": {
+      "properties": [
+        {
+          "actor": "selection-2",
+          "property": "color-alpha",
+          "value": 0.5,
+          "alpha-function": "SIN",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.5
+          },
+          "timelineColor": "#83bcc5"
+        },
+        {
+          "actor": "picture-2",
+          "property": "position-x",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.25,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        }
+      ]
+    },
+    "Animation_3": {
+      "properties": [
+        {
+          "actor": "selection-3",
+          "property": "color-alpha",
+          "value": 0.5,
+          "alpha-function": "SIN",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.5
+          },
+          "timelineColor": "#83bcc5"
+        },
+        {
+          "actor": "picture-3",
+          "property": "position-x",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.25,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        }
+      ]
+    },
+    "Animation_4": {
+      "properties": [
+        {
+          "actor": "selection-4",
+          "property": "color-alpha",
+          "value": 0.5,
+          "alpha-function": "SIN",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.5
+          },
+          "timelineColor": "#83bcc5"
+        },
+        {
+          "actor": "picture-4",
+          "property": "position-x",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.25,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        }
+      ]
+    },
+    "Animation_5": {
+      "properties": [
+        {
+          "actor": "selection-5",
+          "property": "color-alpha",
+          "value": 0.5,
+          "alpha-function": "SIN",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.5
+          },
+          "timelineColor": "#83bcc5"
+        },
+        {
+          "actor": "picture-5",
+          "property": "position-x",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.25,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        }
+      ]
+    },
+    "BackAnimation": {
+      "properties": [
+        {
+          "actor": "picture-1",
+          "property": "position-x",
+          "value": 450,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        },
+        {
+          "actor": "picture-2",
+          "property": "position-x",
+          "value": 450,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        },
+        {
+          "actor": "picture-3",
+          "property": "position-x",
+          "value": 450,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        },
+        {
+          "actor": "picture-4",
+          "property": "position-x",
+          "value": 450,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        },
+        {
+          "actor": "picture-5",
+          "property": "position-x",
+          "value": 450,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.25
+          },
+          "timelineColor": "#83bcc5"
+        }
+      ]
+    }
+  }
+}
