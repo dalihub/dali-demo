@@ -104,7 +104,7 @@
       ],
       "signals": [
         {
-          "name": "touched",
+          "name": "tapped",
           "action": "play",
           "animation": "Animation_1"
         }
