@@ -1,0 +1,550 @@
+{
+  "templates":
+  {
+    "color-control":
+    {
+      "type": "Control",
+      "parent-origin": "CENTER",
+      "anchor-point": "CENTER",
+      "size": [ 100, 100, 1 ],
+      "scale": [ 0.1, 0.1, 1 ],
+      "color-alpha": 0,
+      "background-color": [ 0.95, 0.65, 0.1, 1 ]
+    }
+  },
+  "stage": [
+    {
+      "type": "color-control",
+      "name": "Container 1",
+      "position": [
+        -165,
+        -55,
+        0
+      ]
+    },
+    {
+      "type": "color-control",
+      "name": "Container 2",
+      "position": [
+        -55,
+        -55,
+        0
+      ]
+    },
+    {
+      "type": "color-control",
+      "name": "Container 3",
+      "position": [
+        55,
+        -55,
+        0
+      ]
+    },
+    {
+      "type": "color-control",
+      "name": "Container 4",
+      "position": [
+        165,
+        -55,
+        0
+      ]
+    },
+    {
+      "type": "color-control",
+      "name": "Container 5",
+      "position": [
+        -165,
+        55,
+        0
+      ]
+    },
+    {
+      "type": "color-control",
+      "name": "Container 6",
+      "position": [
+        -55,
+        55,
+        0
+      ]
+    },
+    {
+      "type": "color-control",
+      "name": "Container 7",
+      "position": [
+        55,
+        55,
+        0
+      ]
+    },
+    {
+      "type": "color-control",
+      "name": "Container 8",
+      "position": [
+        165,
+        55,
+        0
+      ]
+    },
+    {
+      "type": "Control",
+      "actors": [],
+      "name": "ControlBack",
+      "parent-origin": "CENTER",
+      "anchor-point": "CENTER",
+      "position": [
+        0,
+        0,
+        -1
+      ],
+      "background-color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "signals": [
+        {
+          "name": "tapped",
+          "action": "play",
+          "animation": "Animation_1"
+        }
+      ]
+    },
+    {
+      "type": "TextView",
+      "text": "<font size='20' color='#fea011'><b>Touch</b></font>",
+      "markup-enabled": true,
+      "name": "Instruction",
+      "parent-origin": "BOTTOM_CENTER",
+      "anchor-point": "BOTTOM_CENTER",
+      "position": [
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "animations": {
+    "Animation_1": {
+      "properties": [
+        {
+          "actor": "Container 1",
+          "property": "scale",
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.35,
+            "duration": 0.15
+          },
+          "timelineColor": "#e098ab"
+        },
+        {
+          "actor": "Container 1",
+          "property": "scale",
+          "value": [
+            0.1,
+            0.10000000000000003,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.449,
+            "duration": 0.15
+          },
+          "timelineColor": "#e098ab"
+        },
+        {
+          "actor": "Container 1",
+          "property": "color-alpha",
+          "value": 1,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.3,
+            "duration": 0.05
+          },
+          "timelineColor": "#e098ab"
+        },
+        {
+          "actor": "Container 1",
+          "property": "color-alpha",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.599,
+            "duration": 0.051
+          },
+          "timelineColor": "#e098ab"
+        },
+        {
+          "actor": "Container 2",
+          "property": "scale",
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.4,
+            "duration": 0.15
+          },
+          "timelineColor": "#f4efa3"
+        },
+        {
+          "actor": "Container 2",
+          "property": "scale",
+          "value": [
+            0.1,
+            0.1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.5,
+            "duration": 0.15
+          },
+          "timelineColor": "#f4efa3"
+        },
+        {
+          "actor": "Container 2",
+          "property": "color-alpha",
+          "value": 1,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.35,
+            "duration": 0.05
+          },
+          "timelineColor": "#f4efa3"
+        },
+        {
+          "actor": "Container 2",
+          "property": "color-alpha",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.65,
+            "duration": 0.05
+          },
+          "timelineColor": "#f4efa3"
+        },
+        {
+          "actor": "Container 3",
+          "property": "scale",
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.45,
+            "duration": 0.15
+          },
+          "timelineColor": "#a8a9dc"
+        },
+        {
+          "actor": "Container 3",
+          "property": "scale",
+          "value": [
+            0.1,
+            0.1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.55,
+            "duration": 0.15
+          },
+          "timelineColor": "#a8a9dc"
+        },
+        {
+          "actor": "Container 3",
+          "property": "color-alpha",
+          "value": 1,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.4,
+            "duration": 0.05
+          },
+          "timelineColor": "#a8a9dc"
+        },
+        {
+          "actor": "Container 3",
+          "property": "color-alpha",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.7,
+            "duration": 0.05
+          },
+          "timelineColor": "#a8a9dc"
+        },
+        {
+          "actor": "Container 4",
+          "property": "scale",
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.5,
+            "duration": 0.15
+          },
+          "timelineColor": "#cae6f9"
+        },
+        {
+          "actor": "Container 4",
+          "property": "scale",
+          "value": [
+            0.1,
+            0.1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.6,
+            "duration": 0.15
+          },
+          "timelineColor": "#cae6f9"
+        },
+        {
+          "actor": "Container 4",
+          "property": "color-alpha",
+          "value": 1,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.45,
+            "duration": 0.05
+          },
+          "timelineColor": "#cae6f9"
+        },
+        {
+          "actor": "Container 4",
+          "property": "color-alpha",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.75,
+            "duration": 0.05
+          },
+          "timelineColor": "#cae6f9"
+        },
+        {
+          "actor": "Container 5",
+          "property": "scale",
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.45,
+            "duration": 0.15
+          },
+          "timelineColor": "#8291cb"
+        },
+        {
+          "actor": "Container 5",
+          "property": "scale",
+          "value": [
+            0.1,
+            0.1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.65,
+            "duration": 0.15
+          },
+          "timelineColor": "#8291cb"
+        },
+        {
+          "actor": "Container 5",
+          "property": "color-alpha",
+          "value": 1,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.4,
+            "duration": 0.05
+          },
+          "timelineColor": "#8291cb"
+        },
+        {
+          "actor": "Container 5",
+          "property": "color-alpha",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.8,
+            "duration": 0.05
+          },
+          "timelineColor": "#8291cb"
+        },
+        {
+          "actor": "Container 6",
+          "property": "scale",
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.5,
+            "duration": 0.15
+          },
+          "timelineColor": "#8eeeae"
+        },
+        {
+          "actor": "Container 6",
+          "property": "scale",
+          "value": [
+            0.1,
+            0.1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.7,
+            "duration": 0.15
+          },
+          "timelineColor": "#8eeeae"
+        },
+        {
+          "actor": "Container 6",
+          "property": "color-alpha",
+          "value": 1,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.45,
+            "duration": 0.05
+          },
+          "timelineColor": "#8eeeae"
+        },
+        {
+          "actor": "Container 6",
+          "property": "color-alpha",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.85,
+            "duration": 0.05
+          },
+          "timelineColor": "#8eeeae"
+        },
+        {
+          "actor": "Container 7",
+          "property": "scale",
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.55,
+            "duration": 0.15
+          },
+          "timelineColor": "#8c7f9f"
+        },
+        {
+          "actor": "Container 7",
+          "property": "scale",
+          "value": [
+            0.1,
+            0.1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.75,
+            "duration": 0.15
+          },
+          "timelineColor": "#8c7f9f"
+        },
+        {
+          "actor": "Container 7",
+          "property": "color-alpha",
+          "value": 1,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.5,
+            "duration": 0.05
+          },
+          "timelineColor": "#8c7f9f"
+        },
+        {
+          "actor": "Container 7",
+          "property": "color-alpha",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.9,
+            "duration": 0.05
+          },
+          "timelineColor": "#8c7f9f"
+        },
+        {
+          "actor": "Container 8",
+          "property": "scale",
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.6,
+            "duration": 0.15
+          },
+          "timelineColor": "#ebe3df"
+        },
+        {
+          "actor": "Container 8",
+          "property": "scale",
+          "value": [
+            0.1,
+            0.1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.8,
+            "duration": 0.15
+          },
+          "timelineColor": "#ebe3df"
+        },
+        {
+          "actor": "Container 8",
+          "property": "color-alpha",
+          "value": 1,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.55,
+            "duration": 0.05
+          },
+          "timelineColor": "#ebe3df"
+        },
+        {
+          "actor": "Container 8",
+          "property": "color-alpha",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 2.95,
+            "duration": 0.05
+          },
+          "timelineColor": "#ebe3df"
+        }
+      ],
+      "page": ""
+    }
+  }
+}
