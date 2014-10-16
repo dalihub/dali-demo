@@ -1,0 +1,816 @@
+{
+  "stage": [
+    {
+      "type": "Control",
+      "background-color": [ 1, 1, 1, 1 ],
+      "parent-origin": "TOP_LEFT",
+      "anchor-point": "TOP_LEFT",
+      "draw-mode": "STENCIL",
+      "size": [ 400, 720, 0 ]
+    },
+    {
+      "type": "ImageActor",
+      "actors": [],
+      "name": "Screen",
+      "position": [
+        200,
+        355,
+        -1
+      ],
+      "inherit-position": true,
+      "size": [
+        400,
+        630,
+        1
+      ],
+      "sizeAspectRatio": false,
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}music-libray-main-screen.png",
+        "width": 545,
+        "height": 860,
+        "load-policy": "IMMEDIATE",
+        "release-policy": "NEVER"
+      }
+    },
+    {
+      "type": "Control",
+      "actors": [
+        {
+          "type": "ImageActor",
+          "actors": [],
+          "name": "Circle",
+          "position": [
+            200,
+            25,
+            1
+          ],
+          "inherit-position": true,
+          "size": [
+            30,
+            30,
+            1
+          ],
+          "sizeAspectRatio": true,
+          "image": {
+            "filename": "{DALI_IMAGE_DIR}music-libray-circle.png",
+            "width": 128,
+            "height": 128,
+            "load-policy": "IMMEDIATE",
+            "release-policy": "NEVER"
+          }
+        },
+        {
+          "type": "ImageActor",
+          "actors": [],
+          "name": "Triangle",
+          "position": [
+            100,
+            25,
+            1
+          ],
+          "inherit-position": true,
+          "size": [
+            28.030303030303028,
+            30,
+            1
+          ],
+          "sizeAspectRatio": true,
+          "image": {
+            "filename": "{DALI_IMAGE_DIR}music-libray-triangle.png",
+            "width": 185,
+            "height": 198,
+            "load-policy": "IMMEDIATE",
+            "release-policy": "NEVER"
+          }
+        },
+        {
+          "type": "ImageActor",
+          "actors": [],
+          "name": "Rectangle",
+          "position": [
+            300,
+            25,
+            1
+          ],
+          "inherit-position": true,
+          "size": [
+            30,
+            30,
+            1
+          ],
+          "sizeAspectRatio": true,
+          "image": {
+            "filename": "{DALI_IMAGE_DIR}music-libray-rectangle.png",
+            "width": 128,
+            "height": 128,
+            "load-policy": "IMMEDIATE",
+            "release-policy": "NEVER"
+          }
+        }
+      ],
+      "name": "Toolbar",
+      "position": [
+        200,
+        695,
+        1
+      ],
+      "inherit-position": true,
+      "size": [
+        400,
+        50,
+        1
+      ],
+      "sizeAspectRatio": false,
+      "background-color": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "type": "Control",
+      "actors": [
+        {
+          "type": "TextView",
+          "actors": [],
+          "name": "Time",
+          "position": [
+            345,
+            20,
+            0
+          ],
+          "inherit-position": true,
+          "size": [
+            50,
+            20,
+            1
+          ],
+          "sizeAspectRatio": false,
+          "markup-enabled": true,
+          "text": "<font size=10px color=#ffffff><b>12:30</b></font>"
+        }
+      ],
+      "name": "Indicators",
+      "position": [
+        200,
+        20,
+        0
+      ],
+      "inherit-position": true,
+      "size": [
+        400,
+        40,
+        1
+      ],
+      "sizeAspectRatio": false,
+      "background-color": [
+            0.33725490196078434,
+            0.7568627450980392,
+            0.6509803921568628,
+            1
+      ],
+      "color": [
+            0.33725490196078434,
+            0.7568627450980392,
+            0.6509803921568628,
+            0
+      ]
+    },
+    {
+      "type": "ImageActor",
+      "actors": [],
+      "name": "Foxtrot Oscar",
+      "position": [
+        100,
+        288,
+        0
+      ],
+      "inherit-position": true,
+      "size": [
+        200,
+        35,
+        1
+      ],
+      "color":[0,0,0,0],
+      "sizeAspectRatio": false,
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}music-libray-foxtrot-oscar.png",
+        "width": 545,
+        "height": 95,
+        "load-policy": "IMMEDIATE",
+        "release-policy": "NEVER"
+      }
+    },
+    {
+      "type": "Control",
+      "actors": [],
+      "name": "Foxtrot Oscar container",
+      "position": [
+        100,
+        288,
+        0
+      ],
+      "inherit-position": true,
+      "size": [
+        200,
+        35,
+        1
+      ],
+      "sizeAspectRatio": false,
+      "background-color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "type": "ImageActor",
+      "actors": [],
+      "name": "Record text",
+      "position": [
+        100,
+        266,
+        0
+      ],
+      "inherit-position": true,
+      "size": [
+        200,
+        80,
+        1
+      ],
+      "color" : [
+        0,0,0,0
+      ],
+      "sizeAspectRatio": true,
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}music-libray-the-solars.png",
+        "width": 545,
+        "height": 218,
+        "load-policy": "IMMEDIATE",
+        "release-policy": "NEVER"
+      }
+    },
+    {
+      "type": "Control",
+      "actors": [],
+      "name": "Record container",
+      "position": [
+        100,
+        266,
+        0
+      ],
+      "inherit-position": true,
+      "size": [
+        200,
+        80,
+        1
+      ],
+      "sizeAspectRatio": false,
+      "background-color": [
+        0.18823529411764706,
+        0.3411764705882353,
+        0.403921568627451,
+        1
+      ]
+    },
+    {
+      "type": "ImageActor",
+      "actors": [
+        {
+          "type": "Control",
+          "name": "Tapped Record",
+          "actors": [],
+          "position-inheritance":"USE_PARENT_POSITION",
+          "signals": [
+            {
+              "name": "tapped",
+              "action": "play",
+              "animation": "Animation_1"
+            }
+          ],
+          "size": [
+            200,
+            200,
+            1
+          ]
+        }
+      ],
+      "name": "Record image",
+      "position": [
+        100,
+        206,
+        0
+      ],
+      "inherit-position": true,
+      "size": [
+        200,
+        200,
+        1
+      ],
+      "sizeAspectRatio": false,
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}music-libray-record-cover.png",
+        "width": 545,
+        "height": 502,
+        "load-policy": "IMMEDIATE",
+        "release-policy": "NEVER"
+      }
+    },
+    {
+      "type": "ImageActor",
+      "actors": [],
+      "name": "Arrow",
+      "position": [
+        -16,
+        70,
+        2
+      ],
+      "inherit-position": true,
+      "size": [
+        30,
+        30,
+        1
+      ],
+      "sizeAspectRatio": true,
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}music-libray-arrow.png",
+        "width": 128,
+        "height": 128,
+        "load-policy": "IMMEDIATE",
+        "release-policy": "NEVER"
+      }
+    },
+    {
+      "type": "ImageActor",
+      "actors": [],
+      "name": "Star",
+      "position": [
+        415,
+        70,
+        2
+      ],
+      "inherit-position": true,
+      "size": [
+        30,
+        30,
+        1
+      ],
+      "sizeAspectRatio": false,
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}music-libray-star.png",
+        "width": 121,
+        "height": 128,
+        "load-policy": "IMMEDIATE",
+        "release-policy": "NEVER"
+      }
+    },
+    {
+      "type": "ImageActor",
+      "actors": [],
+      "name": "Pause",
+      "position": [
+        425,
+        440,
+        3
+      ],
+      "inherit-position": true,
+      "size": [
+        50,
+        50,
+        1
+      ],
+      "sizeAspectRatio": true,
+      "scale": [
+        0.1,
+        0.1,
+        1
+      ],
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}music-libray-pause.png",
+        "width": 128,
+        "height": 128,
+        "load-policy": "IMMEDIATE",
+        "release-policy": "NEVER"
+      }
+    },
+    {
+      "type": "ImageActor",
+      "actors": [],
+      "name": "Menu",
+      "position": [
+        465,
+        70,
+        2
+      ],
+      "inherit-position": true,
+      "size": [
+        30,
+        30,
+        1
+      ],
+      "sizeAspectRatio": true,
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}music-libray-menu.png",
+        "width": 32,
+        "height": 32,
+        "load-policy": "IMMEDIATE",
+        "release-policy": "NEVER"
+      }
+    }
+  ],
+  "animations": {
+    "Animation_1": {
+      "properties": [
+        {
+          "actor": "Tapped Record",
+          "property": "color-alpha",
+          "value": 0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.1
+          },
+          "timelineColor": "#e7dbba"
+        },
+        {
+          "actor": "Record image",
+          "property": "position",
+          "value": [
+            200,
+            240,
+            0
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#e7dbbf"
+        },
+        {
+          "actor": "Record image",
+          "property": "scale",
+          "value": [
+            2,
+            2,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#e7dbbf"
+        },
+        {
+          "actor": "Indicators",
+          "property": "color",
+          "value": [
+            0.33725490196078434,
+            0.7568627450980392,
+            0.6509803921568628,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.3,
+            "duration": 0.2
+          },
+          "timelineColor": "#97a0e7"
+        },
+        {
+          "actor": "Record text",
+          "property": "position",
+          "value": [
+            200,
+            360,
+            0
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#90c2ca"
+        },
+        {
+          "actor": "Record text",
+          "property": "position",
+          "value": [
+            200,
+            520,
+            0
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.3,
+            "duration": 0.2
+          },
+          "timelineColor": "#90c2ca"
+        },
+        {
+          "actor": "Record text",
+          "property": "scale",
+          "value": [
+            2,
+            2,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#90c2ca"
+        },
+        {
+          "actor": "Record container",
+          "property": "position",
+          "value": [
+            200,
+            360,
+            0
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#eba6ba"
+        },
+        {
+          "actor": "Record container",
+          "property": "position",
+          "value": [
+            200,
+            520,
+            0
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.3,
+            "duration": 0.2
+          },
+          "timelineColor": "#eba6ba"
+        },
+        {
+          "actor": "Record container",
+          "property": "scale",
+          "value": [
+            2,
+            2,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#eba6ba"
+        },
+        {
+          "actor": "Record text",
+          "property": "color",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.5,
+            "duration": 0.2
+          },
+          "timelineColor": "#eba6ba"
+        },
+        {
+          "actor": "Foxtrot Oscar",
+          "property": "position",
+          "value": [
+            200,
+            288,
+            0
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#e1d2d6"
+        },
+        {
+          "actor": "Foxtrot Oscar",
+          "property": "position",
+          "value": [
+            200,
+            635,
+            0
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.3,
+            "duration": 0.2
+          },
+          "timelineColor": "#e1d2d6"
+        },
+        {
+          "actor": "Foxtrot Oscar",
+          "property": "scale",
+          "value": [
+            2,
+            2,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#e1d2d6"
+        },
+        {
+          "actor": "Foxtrot Oscar container",
+          "property": "position",
+          "value": [
+            200,
+            288,
+            0
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#fbda85"
+        },
+        {
+          "actor": "Foxtrot Oscar container",
+          "property": "position",
+          "value": [
+            200,
+            635,
+            0
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.3,
+            "duration": 0.2
+          },
+          "timelineColor": "#fbda85"
+        },
+        {
+          "actor": "Foxtrot Oscar container",
+          "property": "scale",
+          "value": [
+            2,
+            2,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 0.3
+          },
+          "timelineColor": "#fbda85"
+        },
+        {
+          "actor": "Foxtrot Oscar",
+          "property": "color",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.5,
+            "duration": 0.2
+          },
+          "timelineColor": "#fbda85"
+        },
+        {
+          "actor": "Arrow",
+          "property": "position",
+          "value": [
+            30,
+            70,
+            2
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.3,
+            "duration": 0.2
+          },
+          "timelineColor": "#8a9098"
+        },
+        {
+          "actor": "Star",
+          "property": "position",
+          "value": [
+            320,
+            70,
+            2
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.299,
+            "duration": 0.2
+          },
+          "timelineColor": "#9ae2c6"
+        },
+        {
+          "actor": "Menu",
+          "property": "position",
+          "value": [
+            370,
+            70,
+            2
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.3,
+            "duration": 0.2
+          },
+          "timelineColor": "#cf7feb"
+        },
+        {
+          "actor": "Pause",
+          "property": "position",
+          "value": [
+            360,
+            440,
+            3
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.599,
+            "duration": 0.1
+          },
+          "timelineColor": "#d3eaa7"
+        },
+        {
+          "actor": "Pause",
+          "property": "scale",
+          "value": [
+            0.1,
+            0.1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.6,
+            "duration": 0.1
+          },
+          "timelineColor": "#d3eaa7"
+        },
+        {
+          "actor": "Pause",
+          "property": "scale",
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0.7,
+            "duration": 0.3
+          },
+          "timelineColor": "#d3eaa7"
+        }
+      ],
+      "page": ""
+    }
+  },
+  "connections": {
+    "Named_conn_1": {
+      "id": "_191ss6ct70d1",
+      "name": "Named_conn_1",
+      "target": {
+        "type": "animation",
+        "name": "Animation_1",
+        "action": "play"
+      },
+      "sources": [
+        "Record image"
+      ],
+      "signal": "click"
+    }
+  },
+  "constants": {},
+  "styles": {},
+  "deviceHeight": 720,
+  "deviceWidth": 400,
+  "deviceOrientation": "portrait",
+  "version": "781"
+}
