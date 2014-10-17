@@ -18,6 +18,8 @@
  *
  */
 
+#include <map>
+
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
