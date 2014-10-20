@@ -198,7 +198,7 @@ private:
     builder = Builder::New();
     builder.QuitSignal().Connect( this, &ExampleApp::OnBuilderQuit );
 
-    PropertyValueMap defaultDirs;
+    Property::Map defaultDirs;
     defaultDirs[ TOKEN_STRING(DALI_IMAGE_DIR) ]  = DALI_IMAGE_DIR;
     defaultDirs[ TOKEN_STRING(DALI_MODEL_DIR) ]  = DALI_MODEL_DIR;
     defaultDirs[ TOKEN_STRING(DALI_SCRIPT_DIR) ] = DALI_SCRIPT_DIR;
