@@ -17,8 +17,8 @@
 
 #include <sstream>
 #include <iostream>
-#include <vector>
 #include <string>
+#include <map>
 #include <algorithm>
 
 #include <boost/any.hpp>

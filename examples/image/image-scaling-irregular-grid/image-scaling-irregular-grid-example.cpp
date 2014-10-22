@@ -40,13 +40,15 @@
  *
  * @see CreateImage CreateImageActor
  */
-// INTERNAL INCLUDES
-#include "grid-flags.h"
-#include "../../shared/view.h"
-#include <dali-toolkit/dali-toolkit.h>
 
 // EXTERNAL INCLUDES
 #include <algorithm>
+#include <map>
+#include <dali-toolkit/dali-toolkit.h>
+
+// INTERNAL INCLUDES
+#include "grid-flags.h"
+#include "../../shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
