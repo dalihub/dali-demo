@@ -13,6 +13,9 @@
 	<ui-application appid="hello-world.example" exec="/usr/apps/com.samsung.dali-demo/bin/hello-world.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Hello World</label>
 	</ui-application>
+	<ui-application appid="new-window.example" exec="/usr/apps/com.samsung.dali-demo/bin/new-window.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>New Window</label>
+	</ui-application>
 	<ui-application appid="page-turn-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/page-turn-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>PageTurnView Example</label>
 	</ui-application>

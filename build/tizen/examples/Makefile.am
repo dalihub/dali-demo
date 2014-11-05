@@ -26,6 +26,7 @@ bin_PROGRAMS = \
                magnifier.example \
                motion-blur.example \
                motion-stretch.example \
+               new-window.example \
                page-turn-view.example \
                radial-menu.example \
                scroll-view.example \
@@ -111,6 +112,11 @@ motion_stretch_example_SOURCES = $(examples_src_dir)/motion/motion-stretch-examp
 motion_stretch_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 motion_stretch_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 motion_stretch_example_LDADD = $(EXAMPLE_LDADD)
+
+new_window_example_SOURCES = $(examples_src_dir)/new-window/new-window-example.cpp
+new_window_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
+new_window_example_DEPENDENCIES = $(EXAMPLE_DEPS)
+new_window_example_LDADD = $(EXAMPLE_LDADD)
 
 page_turn_view_example_SOURCES = $(examples_src_dir)/page-turn-view/page-turn-view-example.cpp
 page_turn_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
