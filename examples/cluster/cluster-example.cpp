@@ -725,7 +725,7 @@ public:
       if( i->mEffectConstraint )
       {
         cluster.RemoveConstraint(i->mEffectConstraint);
-        i->mEffectConstraint = 0;
+        i->mEffectConstraint.Reset();
       }
     }
 
