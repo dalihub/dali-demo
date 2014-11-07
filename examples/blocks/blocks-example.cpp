@@ -27,7 +27,6 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include "../shared/view.h"
 
-using namespace std;
 using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace DemoHelper;
@@ -564,7 +563,7 @@ private:
       if(turn)
       {
         // turn 90 degrees clockwise.
-        swap(di, dj);
+        std::swap(di, dj);
         di = -di;
         if (length<=1)
         {

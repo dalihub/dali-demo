@@ -26,7 +26,6 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
-using namespace std;
 using namespace Dali;
 using namespace Dali::Toolkit;
 
