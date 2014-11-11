@@ -393,7 +393,7 @@ public:
     SetTitle("View");
   }
 
-  void OnTap( Actor actor, TapGesture tap )
+  void OnTap( Actor actor, const TapGesture& tap )
   {
     ItemId id = mItemView.GetItemId( actor );
 

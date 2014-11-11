@@ -96,7 +96,7 @@ private:
    * @param[in] actor The actor receiving the pan gesture.
    * @param[in] gesture The detected pan gesture.
    */
-  void OnPanGesture( Actor actor, PanGesture gesture );
+  void OnPanGesture( Actor actor, const PanGesture& gesture );
 
   /**
    * Set up the animations for transition
@@ -237,7 +237,7 @@ void DissolveEffectApp::OnInit( Application& application )
 }
 
 // signal handler, called when the pan gesture is detected
-void DissolveEffectApp::OnPanGesture( Actor actor, PanGesture gesture )
+void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
 {
   // does not response when the animation has not finished
   if( mIsTransiting || mSlideshow )

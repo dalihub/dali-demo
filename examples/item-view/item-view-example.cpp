@@ -534,7 +534,7 @@ public:
     mTapDetector.Reset();
   }
 
-  void RemoveOnTap( Actor actor, TapGesture tap )
+  void RemoveOnTap( Actor actor, const TapGesture& tap )
   {
     mItemView.RemoveItem( mItemView.GetItemId(actor), 0.5f );
   }
@@ -586,7 +586,7 @@ public:
     mDeleteButton.SetVisible( false );
   }
 
-  void SelectOnTap( Actor actor, TapGesture tap )
+  void SelectOnTap( Actor actor, const TapGesture& tap )
   {
     Actor tick = actor.FindChildByName( "Tick" );
     if( tick )
@@ -637,7 +637,7 @@ public:
     mTapDetector.Reset();
   }
 
-  void InsertOnTap( Actor actor, TapGesture tap )
+  void InsertOnTap( Actor actor, const TapGesture& tap )
   {
     ItemId id = mItemView.GetItemId( actor );
 
@@ -730,7 +730,7 @@ public:
     mTapDetector.DetectedSignal().Connect( this, &ItemViewExample::ReplaceOnTap );
   }
 
-  void ReplaceOnTap( Actor actor, TapGesture tap )
+  void ReplaceOnTap( Actor actor, const TapGesture& tap )
   {
     mItemView.ReplaceItem( Item( mItemView.GetItemId(actor), NewItem(rand()) ), 0.5f );
   }
@@ -1037,7 +1037,7 @@ private:
     return true;
   }
 
-  void ChangeAlphaFunctionOnTap( Actor actor, TapGesture tap )
+  void ChangeAlphaFunctionOnTap( Actor actor, const TapGesture& tap )
   {
     if( NUM_ALPHA_FUNCTIONS <= ++mAlphaFuncIndex )
     {
