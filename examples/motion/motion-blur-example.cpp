@@ -24,7 +24,6 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
-using namespace std;
 
 
 
@@ -332,7 +331,7 @@ public:
   //
 
   // move to point on screen that was tapped
-  void OnTap( Actor actor, TapGesture tapGesture )
+  void OnTap( Actor actor, const TapGesture& tapGesture )
   {
     Vector3 destPos;
     float originOffsetX, originOffsetY;

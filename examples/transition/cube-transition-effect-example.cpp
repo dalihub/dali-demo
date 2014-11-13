@@ -110,7 +110,7 @@ private:
    * @param[in] actor The actor receiving the pan gesture.
    * @param[in] gesture The detected pan gesture.
    */
-  void OnPanGesture( Actor actor, PanGesture gesture );
+  void OnPanGesture( Actor actor, const PanGesture& gesture );
   /**
    * Load the next image and start the transition;
    */
@@ -281,7 +281,7 @@ void CubeTransitionApp::OnInit( Application& application )
 }
 
 // signal handler, called when the pan gesture is detected
-void CubeTransitionApp::OnPanGesture( Actor actor, PanGesture gesture )
+void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
 {
   // does not response when the transition has not finished
   if( mIsImageLoading || mCubeWaveEffect.IsTransiting() || mCubeCrossEffect.IsTransiting() || mCubeFoldEffect.IsTransiting() || mSlideshow )

@@ -133,7 +133,7 @@ public:
   /**
    * Destructor
    */
-  virtual ~RadialSweepView();
+  ~RadialSweepView();
 
   /**
    * Downcast method

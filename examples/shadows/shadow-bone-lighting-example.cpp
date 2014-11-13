@@ -326,7 +326,7 @@ public:
     return p*q;
   }
 
-  void OnTap(Dali::Actor actor, TapGesture gesture)
+  void OnTap(Dali::Actor actor, const TapGesture& gesture)
   {
     if( ! mPaused )
     {
@@ -342,7 +342,7 @@ public:
     }
   }
 
-  void OnPan(Actor actor, PanGesture gesture)
+  void OnPan(Actor actor, const PanGesture& gesture)
   {
     switch (gesture.state)
     {
@@ -396,7 +396,7 @@ public:
     }
   }
 
-  void OnPinch(Actor actor, PinchGesture gesture)
+  void OnPinch(Actor actor, const PinchGesture& gesture)
   {
     if (gesture.state == Gesture::Started)
     {

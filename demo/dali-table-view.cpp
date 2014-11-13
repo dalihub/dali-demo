@@ -26,7 +26,6 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
-using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -492,7 +491,7 @@ void DaliTableView::Rotate( unsigned int degrees )
   mRotateAnimation.Play();
 }
 
-Actor DaliTableView::CreateTile( const string& name, const string& title, const Size& parentSize, bool addBackground )
+Actor DaliTableView::CreateTile( const std::string& name, const std::string& title, const Size& parentSize, bool addBackground )
 {
   Actor tile = Actor::New();
   tile.SetName( name );

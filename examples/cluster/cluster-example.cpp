@@ -24,7 +24,6 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
-using namespace std;
 using namespace DemoHelper;
 
 namespace // unnamed namespace
@@ -554,7 +553,7 @@ public:
     clusterActor.SetAnchorPoint(AnchorPoint::CENTER);
 
     Vector2 stageSize = Dali::Stage::GetCurrent().GetSize();
-    float minStageDimension = min(stageSize.x, stageSize.y);
+    float minStageDimension = std::min(stageSize.x, stageSize.y);
     clusterActor.SetSize(minStageDimension * CLUSTER_RELATIVE_SIZE, minStageDimension * CLUSTER_RELATIVE_SIZE, 0.0f);
 
     DALI_ASSERT_ALWAYS(clusterType < CLUSTER_COUNT);
@@ -649,7 +648,7 @@ public:
     int column = mClusterCount>>1;
     int row = mClusterCount&1;
 
-    float minStageDimension = min(stageSize.x, stageSize.y);
+    float minStageDimension = std::min(stageSize.x, stageSize.y);
     float clusterRightShift = 1.0f - CLUSTER_COLUMN_INDENT * 2.0f;
     Vector3 clusterPosition = Vector3(CLUSTER_COLUMN_INDENT * stageSize.width + row * (clusterRightShift * stageSize.width - minStageDimension * CLUSTER_RELATIVE_SIZE),
                                       CLUSTER_ROW_INDENT * stageSize.height + row * (clusterRightShift * stageSize.height - minStageDimension * CLUSTER_RELATIVE_SIZE), 0.0f);
@@ -718,14 +717,14 @@ public:
 
     mLayoutButton.SetBackgroundImage( mLayoutButtonImages[ type ] );
 
-    for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
+    for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
     {
       Cluster cluster = i->mCluster;
       RemoveShaderEffectRecursively( cluster );
       if( i->mEffectConstraint )
       {
         cluster.RemoveConstraint(i->mEffectConstraint);
-        i->mEffectConstraint = 0;
+        i->mEffectConstraint.Reset();
       }
     }
 
@@ -743,7 +742,7 @@ public:
 
       case WOBBLE_EFFECT:
       {
-        for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
+        for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {
           Cluster cluster = i->mCluster;
           Vector3 position = i->mPosition;
@@ -788,7 +787,7 @@ public:
         CarouselEffect shaderEffect = CarouselEffect::New();
         shaderEffect.SetRadius( -CAROUSEL_EFFECT_RADIUS );
         // dont apply shader effect to scrollview as it might override internal shaders for bounce effect etc
-        for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
+        for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {
           Cluster cluster = i->mCluster;
           SetShaderEffectRecursively( cluster, shaderEffect );
@@ -825,7 +824,7 @@ public:
         shaderEffect.SetRadius( SPHERE_EFFECT_RADIUS );
         shaderEffect.SetAnglePerUnit( Vector2( SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y, SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y ) );
         // dont apply shader effect to scrollview as it might override internal shaders for bounce effect etc
-        for( vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
+        for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {
           Constraint constraint = Constraint::New<float>(Actor::POSITION_Z, SphereEffectOffsetConstraint(SPHERE_EFFECT_POSITION_Z));
           constraint.SetRemoveAction(Constraint::Discard);
@@ -898,7 +897,7 @@ private:
   ScrollViewWobbleEffect     mScrollViewEffect;                  ///< ScrollView Wobble effect
   Image                      mClusterBorderImage;                ///< The border frame that appears on each image
 
-  vector<ClusterInfo>        mClusterInfo;                       ///< Keeps track of each cluster's information.
+  std::vector<ClusterInfo>   mClusterInfo;                       ///< Keeps track of each cluster's information.
   int                        mClusterCount;                      ///< Current number of clusters in use
   ExampleEffectType          mExampleEffect;                     ///< Current example effect.
 
