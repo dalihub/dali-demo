@@ -58,7 +58,7 @@ namespace
 {
 
 /** Controls the output of application logging. */
-const bool DEBUG_PRINT_DIAGNOSTICS = false;
+//#define DEBUG_PRINT_DIAGNOSTICS;
 
 const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-4.jpg" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
@@ -175,10 +175,9 @@ const unsigned NUM_IMAGE_PATHS = sizeof(IMAGE_PATHS) / sizeof(IMAGE_PATHS[0]) - 
  */
 Image CreateImage(const std::string& filename, unsigned int width, unsigned int height, ImageAttributes::ScalingMode scalingMode )
 {
-  if( DEBUG_PRINT_DIAGNOSTICS )
-  {
+#ifdef DEBUG_PRINT_DIAGNOSTICS
     fprintf( stderr, "CreateImage(%s, %u, %u, scalingMode=%u)\n", filename.c_str(), width, height, unsigned( scalingMode ) );
-  }
+#endif
   ImageAttributes attributes;
 
   attributes.SetSize( width, height );
@@ -402,10 +401,9 @@ public:
       bool allocated = grid.AllocateRegion( config->dimensions, cellX, cellY, imageGridDims );
       if( !allocated )
       {
-        if( DEBUG_PRINT_DIAGNOSTICS )
-        {
+#ifdef DEBUG_PRINT_DIAGNOSTICS
           fprintf( stderr, "Failed to allocate image in grid with dims (%f, %f) and path: %s.\n", config->dimensions.x, config->dimensions.y, config->path );
-        }
+#endif
         continue;
       }
 

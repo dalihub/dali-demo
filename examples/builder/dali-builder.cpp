@@ -87,7 +87,7 @@ class FileWatcher
 public:
   FileWatcher(void);
   ~FileWatcher(void);
-  explicit FileWatcher(const std::string &fn) { SetFilename(fn) ; };
+  explicit FileWatcher(const std::string &fn): mLastTime(0) { SetFilename(fn) ; };
 
   void SetFilename(const std::string &fn);
   std::string GetFilename();

@@ -874,8 +874,12 @@ void DaliTableView::CreateShapeImage( ShapeType shapeType, const Size& size, Bit
       break;
   }
 
-  GenerateDistanceFieldMap( &imageDataA8[ 0 ], size, distanceFieldOut.GetBuffer(), size, 8.0f, size );
-  distanceFieldOut.Update();
+  PixelBuffer* buffer = distanceFieldOut.GetBuffer();
+  if( buffer )
+  {
+    GenerateDistanceFieldMap( &imageDataA8[ 0 ], size, buffer, size, 8.0f, size );
+    distanceFieldOut.Update();
+  }
 }
 
 void DaliTableView::GenerateSquare( const Size& size, std::vector< unsigned char >& distanceFieldOut )

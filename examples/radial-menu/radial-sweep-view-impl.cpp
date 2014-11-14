@@ -141,6 +141,8 @@ RadialSweepViewImpl::RadialSweepViewImpl( float duration, float diameter, Degree
   mInitialActorAngle(0),
   mFinalActorAngle(0),
   mEasingFunction(HoldZeroFastEaseInOutHoldOne),
+  mStartAngleIndex(Property::INVALID_INDEX),
+  mRotationAngleIndex(Property::INVALID_INDEX),
   mRotateActorsWithStencil(false),
   mRotateActors(false)
 {
