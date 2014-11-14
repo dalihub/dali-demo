@@ -70,4 +70,7 @@
 	<ui-application appid="text-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text View</label>
 	</ui-application>
+	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Logging</label>
+	</ui-application>
 </manifest>
