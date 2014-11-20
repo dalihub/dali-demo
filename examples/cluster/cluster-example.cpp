@@ -407,6 +407,22 @@ struct ClusterInfo
 
   }
 
+  /**
+   * Assignment operator
+   */
+  ClusterInfo& operator=( const ClusterInfo& rhs )
+  {
+    if( this != &rhs )
+    {
+      mCluster = rhs.mCluster;
+      mIndex = rhs.mIndex;
+      mPosition = rhs.mPosition;
+      mSize = rhs.mSize;
+    }
+    return *this;
+  }
+
+
   Cluster mCluster;                   ///< Cluster instance
   int mIndex;                         ///< Cluster index
   Vector3 mPosition;                  ///< Cluster original position
