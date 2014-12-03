@@ -24,6 +24,14 @@
       "parent-origin": "CENTER"
     }
   },
+  "paths":
+  {
+    "path0":
+    {
+      "points":[ [-150, -50, 0], [0.0,70.0,0.0], [190.0,-150.0,0.0] ],
+      "curvature":0.35
+    }
+  },
   // library of animations
   "animations": {
     "animate": {
@@ -59,6 +67,19 @@
           "duration": 3
         }
       }]
+    },
+    "path-animation": {
+      "duration": 3.0,
+      "properties": [{
+        "actor": "greeting2", // referenced actors must exist on stage
+        "path":"path0",
+        "forward":[1,0,0],
+        "alpha-function": "EASE_IN_OUT",
+        "time-period": {
+          "delay": 0,
+          "duration": 3
+        }
+      }]
     }
   },
   // a tree of actors
@@ -74,6 +95,20 @@
       "name": "touched",
       "action": "play",
       "animation": "animate"
+    }]
+  }, {
+    "name":"greeting2",
+    "type": "TextView",
+    "parent-origin": "CENTER",
+    "anchor-point": "CENTER",
+    "size": [200, 200, 1],
+    "rotation": [0, 0, 39],
+    "position": [-150, -50, 0],
+    "text": "or me",
+    "signals": [{
+      "name": "touched",
+      "action": "play",
+      "animation": "path-animation"
     }]
   }, {
     "type": "TextView", // styles can be additive
