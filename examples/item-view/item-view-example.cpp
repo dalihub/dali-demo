@@ -349,6 +349,9 @@ public:
     // Set the title and icon to the current layout
     SetLayoutTitle();
     SetLayoutImage();
+
+    // Store one 1x1 white image for multiple items to share for backgrounds:
+    mWhiteImage = BitmapImage::WHITE();
   }
 
   Actor OnKeyboardPreFocusChange( Actor current, Actor proposed, Control::KeyboardFocusNavigationDirection direction )
@@ -905,7 +908,7 @@ public: // From ItemFactory
 
     // Add a checkbox child actor; invisible until edit-mode is enabled
 
-    ImageActor checkbox = ImageActor::New( BitmapImage::WHITE() );
+    ImageActor checkbox = ImageActor::New( mWhiteImage );
     checkbox.SetName( "CheckBox" );
     checkbox.SetColor( Vector4(0.0f,0.0f,0.0f,0.6f) );
     checkbox.SetParentOrigin( ParentOrigin::TOP_RIGHT );
@@ -1131,6 +1134,7 @@ private:
 
   unsigned int mAlphaFuncIndex;
   TextView mAlphaFunctionText;
+  BitmapImage mWhiteImage;
 };
 
 void RunTest(Application& app)
