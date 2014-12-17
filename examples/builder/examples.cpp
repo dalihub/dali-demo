@@ -280,6 +280,9 @@ public:
   {
     Stage stage = Stage::GetCurrent();
 
+    mTapDetector = TapGestureDetector::New();
+    mTapDetector.DetectedSignal().Connect( this, &ExampleApp::OnTap );
+
     if( mItemView )
     {
       stage.Remove( mItemView );
@@ -361,15 +364,6 @@ public:
       }
     }
 
-    mTapDetector = TapGestureDetector::New();
-
-    for( unsigned int i = 0u; i < mItemView.GetChildCount(); ++i )
-    {
-      mTapDetector.Attach( mItemView.GetChildAt(i) );
-    }
-
-    mTapDetector.DetectedSignal().Connect( this, &ExampleApp::OnTap );
-
     // Display item view on the stage
     stage.Add( mItemView );
 
@@ -413,6 +407,10 @@ public:
     t.SetText( fontString.str() );
 
     t.SetTextAlignment( Alignment::HorizontalLeft );
+
+    // Hook up tap detector
+    mTapDetector.Attach( t );
+
     return t;
   }
 
