@@ -60,7 +60,7 @@ namespace
 /** Controls the output of application logging. */
 //#define DEBUG_PRINT_DIAGNOSTICS;
 
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-4.jpg" );
+const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-gradient.jpg" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "Image Scaling Modes" );
 const char* TOGGLE_SCALING_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
