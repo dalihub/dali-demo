@@ -42,22 +42,7 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    std::cout << "HelloWorldController::Create" << std::endl;
-
-    // Initialize the actor
-    TextActor textActor = TextActor::New( "Hello World" );
-
-    // Reposition the actor
-    textActor.SetParentOrigin( ParentOrigin::CENTER );
-
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-
-    // Display the actor on the stage
-    stage.Add( textActor );
-
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchedSignal().Connect( this, &HelloWorldController::OnTouch );
+    // TODO
   }
 
   bool OnTouch( Actor actor, const TouchEvent& touch )

@@ -105,9 +105,9 @@ AlphaFunction ALPHA_FUNCTIONS[] = { AlphaFunctions::Linear,
 
 const unsigned int NUM_ALPHA_FUNCTIONS = sizeof(ALPHA_FUNCTIONS) / sizeof(AlphaFunction);
 
-const char* ALPHA_FUNCTIONS_TEXT[] = { "Linear",
-                                       "EaseIn",
-                                       "EaseOut" };
+//const char* ALPHA_FUNCTIONS_TEXT[] = { "Linear",
+//                                       "EaseIn",
+//                                       "EaseOut" };
 
 const char* BACKGROUND_IMAGE( "" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
@@ -156,11 +156,9 @@ const float BUTTON_BORDER = -10.0f;
 const float MENU_OPTION_HEIGHT(140.0f);
 const float LABEL_TEXT_SIZE_Y = 20.0f;
 
-const char*             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
-const char*             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
-const PointSize         DEFAULT_TEXT_STYLE_POINT_SIZE( 5.0f );
-const TextStyle::Weight DEFAULT_TEXT_STYLE_WEIGHT(Dali::TextStyle::MEDIUM);
-const Vector4           DEFAULT_TEXT_STYLE_COLOR(1.0f, 1.0f, 1.0f, 1.0f);
+//const char*             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
+//const char*             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
+//const Vector4           DEFAULT_TEXT_STYLE_COLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 const Vector3 INITIAL_OFFSCREEN_POSITION( 1000.0f, 0, -1000.0f );
 
@@ -951,17 +949,7 @@ private:
    */
   void SetTitle(const std::string& title)
   {
-    if(!mTitleActor)
-    {
-      mTitleActor = TextView::New();
-      // Add title to the tool bar.
-      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
-    }
-
-    Font font = Font::New();
-    mTitleActor.SetText( title );
-    mTitleActor.SetSize( font.MeasureText( title ) );
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+    // TODO
   }
 
   void ShowMenu()
@@ -990,45 +978,6 @@ private:
     tableView.AddChild( slider, TableView::CellPosition( 0, 0 ) );
     tableView.SetRelativeHeight( 0, 0.5f );
 
-    TextStyle defaultTextStyle;
-    defaultTextStyle.SetFontName(DEFAULT_TEXT_STYLE_FONT_FAMILY);
-    defaultTextStyle.SetFontStyle(DEFAULT_TEXT_STYLE_FONT_STYLE);
-    defaultTextStyle.SetFontPointSize(DEFAULT_TEXT_STYLE_POINT_SIZE);
-    defaultTextStyle.SetWeight(DEFAULT_TEXT_STYLE_WEIGHT);
-    defaultTextStyle.SetTextColor(DEFAULT_TEXT_STYLE_COLOR);
-
-    TextView text = TextView::New( "Duration" );
-    text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
-    text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
-    text.SetStyleToCurrentText( defaultTextStyle );
-    text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::SIZE_WIDTH, Dali::ParentSource( Dali::Actor::SIZE_WIDTH ), Dali::EqualToConstraint() ) );
-    text.SetZ( -0.9f );
-    slider.Add( text );
-
-    Actor textContainer = Actor::New();
-    mAlphaFunctionText = TextView::New( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
-    mAlphaFunctionText.SetAnchorPoint( ParentOrigin::CENTER );
-    mAlphaFunctionText.SetParentOrigin( ParentOrigin::CENTER );
-    mAlphaFunctionText.SetTextAlignment( Toolkit::Alignment::VerticalCenter );
-    textContainer.Add( mAlphaFunctionText );
-    tableView.AddChild( textContainer, TableView::CellPosition( 1, 0 ) );
-    tableView.SetRelativeHeight( 0, 0.5f );
-
-    mTapDetector = TapGestureDetector::New();
-    mTapDetector.Attach(mAlphaFunctionText);
-    mTapDetector.DetectedSignal().Connect( this, &ItemViewExample::ChangeAlphaFunctionOnTap );
-
-    text = TextView::New( "Alpha Function" );
-    text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
-    text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
-    text.SetStyleToCurrentText( defaultTextStyle );
-    text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::SIZE_WIDTH, Dali::ParentSource( Dali::Actor::SIZE_WIDTH ), Dali::EqualToConstraint() ) );
-    textContainer.Add( text );
-
     mMenu.Show();
     mMenuShown = true;
   }
@@ -1045,11 +994,6 @@ private:
     if( NUM_ALPHA_FUNCTIONS <= ++mAlphaFuncIndex )
     {
       mAlphaFuncIndex = 0;
-    }
-
-    if( mAlphaFunctionText )
-    {
-      mAlphaFunctionText.SetText( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
     }
 
     if( mItemView )
@@ -1113,7 +1057,6 @@ private:
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;
-  TextView mTitleActor;             ///< The Toolbar's Title.
 
   ItemView mItemView;
   Image mBorderImage;
@@ -1133,7 +1076,6 @@ private:
   Toolkit::PushButton mReplaceButton;
 
   unsigned int mAlphaFuncIndex;
-  TextView mAlphaFunctionText;
   BitmapImage mWhiteImage;
 };
 

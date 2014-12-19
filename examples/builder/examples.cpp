@@ -242,17 +242,7 @@ public:
 
   void SetTitle(const std::string& title)
   {
-    if(!mTitleActor)
-    {
-      mTitleActor = TextView::New();
-      // Add title to the tool bar.
-      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
-    }
-
-    Font font = Font::New();
-    mTitleActor.SetText( title );
-    mTitleActor.SetSize( font.MeasureText( title ) );
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+    // TODO
   }
 
   bool OnToolSelectLayout( Toolkit::Button button )
@@ -402,18 +392,7 @@ public:
 
   Actor MenuItem(const std::string& text)
   {
-    TextView t = TextView::New();
-    t.SetMarkupProcessingEnabled(true);
-
-    int size = static_cast<int>(DemoHelper::ScalePointSize(6));
-
-    std::ostringstream fontString;
-    fontString << "<font size="<< size <<">"<<  ShortName( text ) << "</font>";
-
-    t.SetText( fontString.str() );
-
-    t.SetTextAlignment( Alignment::HorizontalLeft );
-    return t;
+    return Actor();
   }
 
   bool OnTimer()
@@ -604,7 +583,6 @@ private:
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;
-  TextView mTitleActor;             ///< The Toolbar's Title.
 
   Layer mBuilderLayer;
 

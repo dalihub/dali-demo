@@ -34,10 +34,10 @@ const char* gBinaryModelFile = DALI_MODEL_DIR "AlbumCute.dali-bin";
 const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 
-const char* APPLICATION_TITLE_PAN_LIGHT( "Lighting: Pan Light" );
-const char* APPLICATION_TITLE_PAN_OBJECT( "Lighting: Pan Object" );
-const char* APPLICATION_TITLE_PAN_SCENE( "Lighting: Pan Scene" );
-const char* APPLICATION_TITLE_ROTATE_SCENE( "Lighting: Rotate Scene" );
+//const char* APPLICATION_TITLE_PAN_LIGHT( "Lighting: Pan Light" );
+//const char* APPLICATION_TITLE_PAN_OBJECT( "Lighting: Pan Object" );
+//const char* APPLICATION_TITLE_PAN_SCENE( "Lighting: Pan Scene" );
+//const char* APPLICATION_TITLE_ROTATE_SCENE( "Lighting: Rotate Scene" );
 const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
 const char* RESET_ICON( DALI_IMAGE_DIR "icon-reset.png" );
 
@@ -155,13 +155,7 @@ public:
     toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Add title to the tool bar.
-    mTitleActor = Toolkit::TextView::New();
-    toolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
-
-    // Set Title text
-    mTitleActor.SetText( APPLICATION_TITLE_PAN_SCENE );
-    mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_SCENE ) );
-    mTitleActor.SetStyleToCurrentText( DemoHelper::GetDefaultTextStyle() );
+    // TODO
 
     //Add a reset button
     Image resetImage = Image::New( RESET_ICON );
@@ -264,20 +258,9 @@ public:
     mCastingLight.SetAnchorPoint(AnchorPoint::CENTER);
     mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
 
-    TextStyle style;
-    style.SetFontPointSize( PointSize(DemoHelper::ScalePointSize(20.0f)) );
-    style.SetFontName("Times New Roman");
-    style.SetFontStyle("Book");
-
-    TextActorParameters parameters( style, TextActorParameters::FONT_DETECTION_ON );
-    TextActor text = TextActor::New("Light", parameters);
-    text.SetColor(Color::BLUE);
-
-    mCastingLight.Add(text);
     mLightAnchor.Add(mCastingLight);
     mShadowPlaneBg.Add(mLightAnchor);
 
-    text.SetParentOrigin(ParentOrigin::CENTER);
     mShadowView.SetPointLight(mCastingLight);
   }
 
@@ -436,34 +419,6 @@ public:
 
   bool OnEffectButtonClicked( Toolkit::Button button )
   {
-    switch(mPanState)
-    {
-      case PAN_SCENE:
-        mPanState = ROTATE_SCENE;
-        mTitleActor.SetText( APPLICATION_TITLE_ROTATE_SCENE );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_ROTATE_SCENE ) );
-        break;
-      case ROTATE_SCENE:
-        mPanState = PAN_LIGHT;
-        mTitleActor.SetText( APPLICATION_TITLE_PAN_LIGHT );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_LIGHT ) );
-        break;
-      case PAN_LIGHT:
-        mPanState = PAN_OBJECT;
-        mTitleActor.SetText( APPLICATION_TITLE_PAN_OBJECT );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_OBJECT ) );
-        break;
-      case PAN_OBJECT:
-        mPanState = PAN_SCENE;
-        mTitleActor.SetText( APPLICATION_TITLE_PAN_SCENE );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_SCENE ) );
-        break;
-      default:
-        break;
-    }
-
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
-
     return true;
   }
 
@@ -508,8 +463,6 @@ private:
   Degree                    mObjectAxisTilt;
   float                     mPinchScale;
   float                     mScaleAtPinchStart;
-
-  Toolkit::TextView         mTitleActor;
 
   enum PanState
   {

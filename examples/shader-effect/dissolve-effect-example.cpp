@@ -138,7 +138,6 @@ private:
   Toolkit::View                   mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
-  Toolkit::TextView               mTitleActor;
 
   ImageActor                      mCurrentImage;
   ImageActor                      mNextImage;
@@ -200,10 +199,7 @@ void DissolveEffectApp::OnInit( Application& application )
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
-  mTitleActor = Toolkit::TextView::New();
-  mTitleActor.SetText( APPLICATION_TITLE_HIGHP );
-  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
-  mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
+  // TODO
 
   // Add an slide-show button on the right of the title
   mIconPlay = Image::New( PLAY_ICON );
@@ -313,15 +309,12 @@ bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
   mCurrentImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
   if(mUseHighPrecision)
   {
-    mTitleActor.SetText( APPLICATION_TITLE_HIGHP );
     mEffectChangeButton.SetBackgroundImage(mIconHighP);
   }
   else
   {
-    mTitleActor.SetText( APPLICATION_TITLE_MEDIUMP );
     mEffectChangeButton.SetBackgroundImage(mIconMediumP);
   }
-  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 
   return true;
 }

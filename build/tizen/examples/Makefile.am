@@ -34,8 +34,7 @@ bin_PROGRAMS = \
                dali-builder \
                builder.example \
                image-scaling-irregular-grid.example \
-               buttons.example \
-               text-view.example
+               buttons.example
 
 
 daliimagedir = $(appdatadir)/images/

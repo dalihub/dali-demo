@@ -78,29 +78,13 @@ const float BACKGROUND_SIZE_SCALE = 2.0f;
 const Vector4 BACKGROUND_COLOR( 1.0f, 1.0f, 1.0f, 1.0f );
 
 
-const std::string             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
-const std::string             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
-const Dali::PointSize         DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
-const Dali::TextStyle::Weight DEFAULT_TEXT_STYLE_WEIGHT(Dali::TextStyle::REGULAR);
-const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.7f, 0.7f, 0.7f, 1.0f);
+//const std::string             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
+//const std::string             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
+//const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.7f, 0.7f, 0.7f, 1.0f);
 
-const std::string             TABLE_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
-const std::string             TABLE_TEXT_STYLE_FONT_STYLE("Regular");
-const Dali::PointSize         TABLE_TEXT_STYLE_POINT_SIZE( 8.0f );
-const Dali::TextStyle::Weight TABLE_TEXT_STYLE_WEIGHT(Dali::TextStyle::LIGHT);
-const Dali::Vector4           TABLE_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
-
-
-TextStyle GetTableTextStyle()
-{
-  TextStyle textStyle;
-  textStyle.SetFontName(TABLE_TEXT_STYLE_FONT_FAMILY);
-  textStyle.SetFontStyle(TABLE_TEXT_STYLE_FONT_STYLE);
-  textStyle.SetFontPointSize( Dali::PointSize(DemoHelper::ScalePointSize(TABLE_TEXT_STYLE_POINT_SIZE)));
-  textStyle.SetWeight(TABLE_TEXT_STYLE_WEIGHT);
-  textStyle.SetTextColor(TABLE_TEXT_STYLE_COLOR);
-  return textStyle;
-}
+//const std::string             TABLE_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
+//const std::string             TABLE_TEXT_STYLE_FONT_STYLE("Regular");
+//const Dali::Vector4           TABLE_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
 /**
  * Creates the background image
@@ -269,8 +253,7 @@ void DaliTableView::Initialize( Application& application )
   Dali::Layer toolBarLayer = DemoHelper::CreateToolbar(toolbar,
                                                        DEFAULT_TOOLBAR_IMAGE_PATH,
                                                        DEFAULT_TOOLBAR_TEXT,
-                                                       DemoHelper::DEFAULT_VIEW_STYLE,
-                                                       DemoHelper::GetDefaultTextStyle());
+                                                       DemoHelper::DEFAULT_VIEW_STYLE);
 
   mRootActor.AddChild( toolBarLayer, TableView::CellPosition( 0, 0 ) );
   mRootActor.SetFixedHeight( 0, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight );
@@ -528,21 +511,6 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
     stencil.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
     image.Add( stencil );
   }
-
-  TextView text = TextView::New( title );
-  text.SetAnchorPoint( AnchorPoint::CENTER );
-  text.SetParentOrigin( ParentOrigin::CENTER );
-  text.SetWidthExceedPolicy( Toolkit::TextView::ShrinkToFit );
-  text.SetMultilinePolicy( Toolkit::TextView::SplitByWord );
-  text.SetLineJustification( Toolkit::TextView::Center );
-  text.SetTextAlignment( Toolkit::Alignment::Type( Alignment::HorizontalCenter | Alignment::VerticalCenter ) );
-  text.SetColor( Color::WHITE );
-  text.SetZ( 1 );
-  // make the text 90% of tile
-  text.SetSize( 0.9f * parentSize.width, 0.9f * parentSize.height );
-  text.SetStyleToCurrentText( GetTableTextStyle() );
-  text.SetSnapshotModeEnabled( false );
-  content.Add( text );
 
   // Set the tile to be keyboard focusable
   tile.SetKeyboardFocusable(true);

@@ -399,7 +399,6 @@ private:
   Application&               mApplication;            ///< Application instance
   Toolkit::View              mView;
   Toolkit::ToolBar           mToolBar;
-  TextView                   mTitleActor;             ///< The Toolbar's Title.
   Image                      mIconEffectsOff;
   Image                      mIconEffectsOn;
   Layer                      mContentLayer;           ///< Content layer (contains actor for this stretch demo)

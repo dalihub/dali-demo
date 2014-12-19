@@ -83,7 +83,6 @@ private:
   Animation                  mModelAnimation;
   Actor                      mModelActor;
   Actor                      mCastingLight;
-  TextActor                  mTextActor;
   ImageActor                 mImageActor;
   ImageActor                 mBlendActor;
   Image                      mEffectImage;
@@ -95,7 +94,6 @@ private:
 
   Toolkit::View              mView;                              ///< The View instance.
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
-  TextView                   mTitleActor;                        ///< The Toolbar's Title.
   Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)
   Toolkit::PushButton        mLoseContextButton;
   Vector3                    mHSVDelta;
@@ -182,7 +180,6 @@ void NewWindowController::Create( Application& app )
 
 void NewWindowController::Destroy( Application& app )
 {
-  UnparentAndReset(mTextActor);
 }
 
 bool NewWindowController::OnLoseContextButtonClicked( Toolkit::Button button )
@@ -387,11 +384,7 @@ void NewWindowController::CreateBlending()
 
 void NewWindowController::CreateText()
 {
-  mTextActor = TextActor::New("Some text");
-  mTextActor.SetParentOrigin(ParentOrigin::CENTER);
-  mTextActor.SetColor(Color::RED);
-  mTextActor.SetName("PushMe text");
-  mContentLayer.Add( mTextActor );
+  // TODO
 }
 
 Mesh NewWindowController::CreateMesh(bool hasColor, Material material)

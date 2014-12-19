@@ -45,15 +45,10 @@ const ViewStyle DEFAULT_VIEW_STYLE( 0.1f, 0.7f, 80.f, 4.f );
 
 const char*                   DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
 const char*                   DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
-const Dali::PointSize         DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
-const Dali::TextStyle::Weight DEFAULT_TEXT_STYLE_WEIGHT(Dali::TextStyle::EXTRALIGHT);
 const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
 const Dali::Toolkit::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
 const Dali::Toolkit::Alignment::Padding DEFAULT_MODE_SWITCH_PADDING(8.0f, 8.0f, 8.0f, 8.0f);
-
-static Dali::TextStyle defaultTextStyle;
-static bool textStyleSet=false;
 
 float ScalePointSize(int pointSize)
 {
@@ -62,26 +57,10 @@ float ScalePointSize(int pointSize)
   return pointSize * 220.0f / meanDpi;        // 220 is the default horizontal DPI defined in adaptor Application
 }
 
-Dali::TextStyle& GetDefaultTextStyle()
-{
-  if(!textStyleSet)
-  {
-    defaultTextStyle.SetFontName(DEFAULT_TEXT_STYLE_FONT_FAMILY);
-    defaultTextStyle.SetFontStyle(DEFAULT_TEXT_STYLE_FONT_STYLE);
-    defaultTextStyle.SetFontPointSize(Dali::PointSize(ScalePointSize(DEFAULT_TEXT_STYLE_POINT_SIZE)));
-    defaultTextStyle.SetWeight(DEFAULT_TEXT_STYLE_WEIGHT);
-    defaultTextStyle.SetTextColor(DEFAULT_TEXT_STYLE_COLOR);
-    textStyleSet = true;
-  }
-
-  return defaultTextStyle;
-}
-
 Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
                            const std::string& toolbarImagePath,
                            const std::string& title,
-                           const ViewStyle& style,
-                           const Dali::TextStyle& textStyle )
+                           const ViewStyle& style )
 {
   Dali::Layer toolBarLayer = Dali::Layer::New();
   toolBarLayer.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
@@ -106,20 +85,10 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   // Add the tool bar to the too bar layer.
   toolBarLayer.Add( toolBar );
 
-  Dali::Font font = Dali::Font::New();
-
   // Tool bar text.
   if( !title.empty() )
   {
-    Dali::Toolkit::TextView titleActor = Dali::Toolkit::TextView::New();
-    titleActor.SetName( "ToolbarTitle" );
-    titleActor.SetText( title );
-    titleActor.SetSize( font.MeasureText( title ) );
-    titleActor.SetStyleToCurrentText(textStyle);
-
-    // Add title to the tool bar.
-    const float padding( style.mToolBarPadding );
-    toolBar.AddControl( titleActor, style.mToolBarTitlePercentage, Dali::Toolkit::Alignment::HorizontalCenter, Dali::Toolkit::Alignment::Padding( padding, padding, padding, padding ) );
+    // TODO
   }
 
   return toolBarLayer;
@@ -131,8 +100,7 @@ Dali::Layer CreateView( Dali::Application& application,
                         const std::string& backgroundImagePath,
                         const std::string& toolbarImagePath,
                         const std::string& title,
-                        const ViewStyle& style,
-                        const Dali::TextStyle& textStyle )
+                        const ViewStyle& style = DEFAULT_VIEW_STYLE )
 {
   Dali::Stage stage = Dali::Stage::GetCurrent();
 
@@ -155,7 +123,7 @@ Dali::Layer CreateView( Dali::Application& application,
   //application.GetOrientation().ChangedSignal().Connect( &view, &Dali::Toolkit::View::OrientationChanged );
 
   // Create default ToolBar
-  Dali::Layer toolBarLayer = CreateToolbar( toolBar, toolbarImagePath, title, style, textStyle );
+  Dali::Layer toolBarLayer = CreateToolbar( toolBar, toolbarImagePath, title, style );
 
   // Add tool bar layer to the view.
   view.AddContentLayer( toolBarLayer );
@@ -172,19 +140,6 @@ Dali::Layer CreateView( Dali::Application& application,
 
   return contentLayer;
 }
-
-Dali::Layer CreateView( Dali::Application& application,
-                        Dali::Toolkit::View& view,
-                        Dali::Toolkit::ToolBar& toolBar,
-                        const std::string& backgroundImagePath,
-                        const std::string& toolbarImagePath,
-                        const std::string& title,
-                        const ViewStyle& style  = DEFAULT_VIEW_STYLE )
-{
-  return CreateView( application, view, toolBar, backgroundImagePath, toolbarImagePath, title, style,
-                     GetDefaultTextStyle() );
-}
-
 
 } // DemoHelper
 

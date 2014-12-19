@@ -234,11 +234,6 @@ class ButtonsController: public ConnectionTracker
       Toolkit::TableView tableView = Toolkit::TableView::New( 1, 2 );
       tableView.SetSize( DP(260), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
-      Toolkit::TextView textView = Toolkit::TextView::New( "Select enabled" );
-      Toolkit::Alignment alignment = Toolkit::Alignment::New( Toolkit::Alignment::HorizontalLeft );
-      alignment.Add( textView );
-      tableView.AddChild( alignment, Toolkit::TableView::CellPosition( 0, 0 ) );
-
       ImageActor imageActor = ImageActor::New( Image::New( ENABLED_IMAGE ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
       tableView.AddChild( imageActor, Toolkit::TableView::CellPosition( 0, 1 ) );
@@ -298,13 +293,6 @@ class ButtonsController: public ConnectionTracker
       checkBoxBackground.Add( checkBox );
     }
 
-    mCheckBox1State = Toolkit::TextView::New( "CheckBox1 is unchecked" );
-
-    mCheckBox1State.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mCheckBox1State.SetPosition( DP(80), DP(checkYPos) );
-
-    checkBoxBackground.Add( mCheckBox1State );
-
     checkYPos += 60;
 
     {
@@ -321,13 +309,6 @@ class ButtonsController: public ConnectionTracker
       checkBoxBackground.Add( checkBox );
     }
 
-    mCheckBox2State = Toolkit::TextView::New( "CheckBox2 is checked" );
-    mCheckBox2State.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mCheckBox2State.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mCheckBox2State.SetPosition( DP(80), DP(checkYPos) );
-
-    checkBoxBackground.Add( mCheckBox2State );
-
     checkYPos += 60;
 
     {
@@ -342,13 +323,6 @@ class ButtonsController: public ConnectionTracker
 
       checkBoxBackground.Add( checkBox );
     }
-
-    mCheckBox3State = Toolkit::TextView::New( "CheckBox3 is unchecked" );
-
-    mCheckBox3State.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mCheckBox3State.SetPosition( DP(80), DP(checkYPos) );
-
-    checkBoxBackground.Add( mCheckBox3State );
 
     // Create toggle button
     yPos += GROUP3_HEIGHT + MARGIN_SIZE;
@@ -440,42 +414,6 @@ class ButtonsController: public ConnectionTracker
 
   bool OnCheckBoxesToggled( Toolkit::Button button, bool state )
   {
-    if( button.GetName() == "checkbox1" )
-    {
-      if( state )
-      {
-        mCheckBox1State.SetText("CheckBox1 is checked");
-      }
-      else
-      {
-        mCheckBox1State.SetText("CheckBox1 is unchecked");
-      }
-    }
-
-    if( button.GetName() == "checkbox2" )
-    {
-      if( state )
-      {
-        mCheckBox2State.SetText("CheckBox2 is checked");
-      }
-      else
-      {
-        mCheckBox2State.SetText("CheckBox2 is unchecked");
-      }
-    }
-
-    if( button.GetName() == "checkbox3" )
-    {
-      if( state )
-      {
-        mCheckBox3State.SetText("CheckBox3 is checked");
-      }
-      else
-      {
-        mCheckBox3State.SetText("CheckBox3 is unchecked");
-      }
-    }
-
     return true;
   }
 
@@ -496,10 +434,6 @@ class ButtonsController: public ConnectionTracker
   Image mBigImage2;
   Image mBigImage3;
   ImageActor mImage;
-
-  Toolkit::TextView mCheckBox1State;
-  Toolkit::TextView mCheckBox2State;
-  Toolkit::TextView mCheckBox3State;
 };
 
 void RunTest( Application& application )

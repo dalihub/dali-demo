@@ -154,7 +154,6 @@ private:
   Toolkit::View                   mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
-  Toolkit::TextView               mTitleActor;
   Actor                           mParent;
 
   Vector2                         mViewSize;
@@ -217,10 +216,6 @@ void CubeTransitionApp::OnInit( Application& application )
   mEffectChangeButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
-  // Add title to the tool bar.
-  mTitleActor = Toolkit::TextView::New();
-  mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
-
   //Add an slideshow icon on the right of the title
   mIconSlideshowStart = Image::New( SLIDE_SHOW_START_ICON );
   mIconSlideshowStop = Image::New( SLIDE_SHOW_STOP_ICON );
@@ -273,11 +268,6 @@ void CubeTransitionApp::OnInit( Application& application )
 
   mCurrentEffect = mCubeWaveEffect;
   mCurrentEffect.SetCurrentImage( mCurrentImage );
-
-  // Set Title text
-  mTitleActor.SetText( APPLICATION_TITLE_WAVE );
-  mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_WAVE ) );
-  mTitleActor.SetStyleToCurrentText( DemoHelper::GetDefaultTextStyle() );
 }
 
 // signal handler, called when the pan gesture is detected
@@ -338,26 +328,19 @@ bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
   if(mCurrentEffect == mCubeWaveEffect)
   {
     mCurrentEffect = mCubeCrossEffect;
-    mTitleActor.SetText( APPLICATION_TITLE_CROSS );
-    mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_CROSS ) );
     mEffectChangeButton.SetBackgroundImage(mImageCross);
 
   }
   else if(mCurrentEffect == mCubeCrossEffect)
   {
     mCurrentEffect = mCubeFoldEffect;
-    mTitleActor.SetText( APPLICATION_TITLE_FOLD );
-    mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_FOLD ) );
     mEffectChangeButton.SetBackgroundImage(mImageFold);
   }
   else
   {
     mCurrentEffect = mCubeWaveEffect;
-    mTitleActor.SetText( APPLICATION_TITLE_WAVE );
-    mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_WAVE ) );
     mEffectChangeButton.SetBackgroundImage(mImageWave);
   }
-  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 
   // Set the current image to cube transition effect
   // only need to set at beginning or change from another effect
