@@ -709,8 +709,6 @@ void DaliTableView::SetupInnerPageCubeEffect()
   mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
   mScrollView.SetScrollSnapDuration( EFFECT_SNAP_DURATION );
   mScrollView.SetScrollFlickDuration( EFFECT_FLICK_DURATION );
-  mScrollView.SetScrollSnapAlphaFunction( AlphaFunctions::EaseOutBack );
-  mScrollView.SetScrollFlickAlphaFunction( AlphaFunctions::EaseOutBack );
   mScrollView.RemoveConstraintsFromChildren();
 
   customEffect.SetPageSpacing( Vector2( 30.0f, 30.0f ) );
