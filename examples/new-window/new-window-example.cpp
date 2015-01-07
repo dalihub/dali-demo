@@ -24,7 +24,7 @@ class NewWindowController;
 
 namespace
 {
-const char * gModelFile = DALI_MODEL_DIR "AlbumCute.dae";
+const char * gModelFile = DALI_MODEL_DIR "AlbumCute.dali-bin";
 const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-2.jpg" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const LOSE_CONTEXT_IMAGE( DALI_IMAGE_DIR "icon-cluster-wobble.png" );
@@ -39,12 +39,12 @@ Application gApplication;
 NewWindowController* gNewWindowController(NULL);
 
 const char*const FRAG_SHADER=
-  "uniform float alpha;\n"
+  "uniform mediump float alpha;\n"
   "\n"
   "void main()\n"
   "{\n"
-  "  vec4 fragColor = texture2D(sTexture, vTexCoord);\n"
-  "  vec4 fxColor   = texture2D(sEffect, vTexCoord);\n"
+  "  mediump vec4 fragColor = texture2D(sTexture, vTexCoord);\n"
+  "  mediump vec4 fxColor   = texture2D(sEffect, vTexCoord);\n"
   "  gl_FragColor   = mix(fragColor,fxColor, alpha);\n"
   "}\n";
 
@@ -442,7 +442,7 @@ void NewWindowController::OnModelLoaded( Model model )
 {
   if( model.GetLoadingState() == ResourceLoadingSucceeded )
   {
-    std::cout << "Succeeded loading collada model" << std::endl;
+    std::cout << "Succeeded loading model" << std::endl;
     mModelActor = ModelActorFactory::BuildActorTree(mModel, "");  // Gets root actor
     mModelActor.SetSize(250.0f, 250.0f);
     mModelActor.SetPosition(0.0f, 200.0f, 70.0f);
@@ -461,7 +461,7 @@ void NewWindowController::OnModelLoaded( Model model )
   }
   else
   {
-    std::cout << "Failed loading collada model" << std::endl;
+    std::cout << "Failed loading model" << std::endl;
     mApplication.Quit();
   }
 }

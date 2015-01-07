@@ -260,6 +260,8 @@ void DaliTableView::Initialize( Application& application )
 
   // Add logo
   mLogo = CreateLogo( LOGO_PATH );
+  mRootActor.SetFixedHeight( 1, mLogo.GetImage().GetHeight() + LOGO_BOTTOM_PADDING_HEIGHT );
+
   Alignment alignment = Alignment::New();
   alignment.Add(mLogo);
   mRootActor.AddChild( alignment, TableView::CellPosition( 1, 0 ) );
@@ -675,8 +677,6 @@ void DaliTableView::SetupInnerPageCubeEffect()
   mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
   mScrollView.SetScrollSnapDuration( EFFECT_SNAP_DURATION );
   mScrollView.SetScrollFlickDuration( EFFECT_FLICK_DURATION );
-  mScrollView.SetScrollSnapAlphaFunction( AlphaFunctions::EaseOutBack );
-  mScrollView.SetScrollFlickAlphaFunction( AlphaFunctions::EaseOutBack );
   mScrollView.RemoveConstraintsFromChildren();
 
   customEffect.SetPageSpacing( Vector2( 30.0f, 30.0f ) );
@@ -888,19 +888,12 @@ void DaliTableView::GenerateCircle( const Size& size, std::vector< unsigned char
 ImageActor DaliTableView::CreateLogo( std::string imagePath )
 {
   Image image = Image::New( imagePath );
-  image.LoadingFinishedSignal().Connect( this, &DaliTableView::OnLogoLoaded );
-
   ImageActor logo = ImageActor::New( image );
 
   logo.SetAnchorPoint( AnchorPoint::CENTER );
   logo.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
 
   return logo;
-}
-
-void DaliTableView::OnLogoLoaded( Dali::Image image )
-{
-  mRootActor.SetFixedHeight( 1, image.GetHeight() + LOGO_BOTTOM_PADDING_HEIGHT );
 }
 
 bool DaliTableView::PauseBackgroundAnimation()

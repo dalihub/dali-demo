@@ -327,13 +327,6 @@ private: // Application callbacks & implementation
   Dali::ImageActor CreateLogo( std::string imagePath );
 
   /**
-   * Callback for when the logo image is loaded
-   *
-   * @param[in] image The loaded logo image
-   */
-  void OnLogoLoaded( Dali::Image image );
-
-  /**
    * Timer handler for ending background animation
    *
    * @return Return value for timer handler

@@ -34,8 +34,8 @@ bin_PROGRAMS = \
                dali-builder \
                builder.example \
                image-scaling-irregular-grid.example \
-               buttons.example
-
+               buttons.example \
+               logging.example
 
 daliimagedir = $(appdatadir)/images/
 dalimodeldir = $(appdatadir)/models/
@@ -159,7 +159,7 @@ buttons_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 buttons_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 buttons_example_LDADD = $(EXAMPLE_LDADD)
 
-text_view_example_SOURCES = $(examples_src_dir)/text-view/text-view-example.cpp
-text_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
-text_view_example_DEPENDENCIES = $(EXAMPLE_DEPS)
-text_view_example_LDADD = $(EXAMPLE_LDADD)
+logging_example_SOURCES = $(examples_src_dir)/logging/logging-example.cpp
+logging_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
+logging_example_DEPENDENCIES = $(EXAMPLE_DEPS)
+logging_example_LDADD = $(EXAMPLE_LDADD)
