@@ -243,19 +243,19 @@ private: // Application callbacks & implementation
   void ApplyScrollViewEffect();
 
   /**
+   * Apply the cube effect to all the page actors
+   */
+  void ApplyCubeEffectToActors();
+
+  /**
    * Setup the inner cube effect
    */
   void SetupInnerPageCubeEffect();
 
   /**
-   * Apply the scroll view effect to a page
+   * Apply the cube effect to an actor
    */
-  void ApplyEffectToPage(Dali::Actor page, const Dali::Vector3& tableRelativeSize);
-
-  /**
-   * Apply a custom effect scroll view effect to a page
-   */
-  void ApplyCustomEffectToPage(Dali::Actor page);
+  void ApplyCubeEffectToActor( Dali::Actor actor );
 
   /**
    * Apply a shader effect to a table tile
@@ -275,9 +275,10 @@ private: // Application callbacks & implementation
   /**
    * Create a depth field background
    *
-   * @param[in] addToLayer Add the graphics to this layer
+   * @param[in] bubbleLayer Add the graphics to this layer
+   * @param[in] backgroundLayer Add the background to this layer
    */
-  void SetupBackground( Dali::Actor addToLayer, const Dali::Vector2& size );
+  void SetupBackground(  Dali::Actor bubbleLayer, Dali::Actor backgroundLayer, const Dali::Vector2& size );
 
   /**
    * Create background actors for the given layer
@@ -378,7 +379,7 @@ private:
   Dali::Toolkit::TableView        mButtons;             ///< Navigation buttons
   ExampleList                     mExampleList;         ///< List of examples.
   ExampleMap                      mExampleMap;          ///< Map LUT for examples.
-  TableViewList                   mTableViewList;       ///< List of tableviews
+  Dali::ActorContainer            mPages;               ///< List of pages.
   Dali::Actor                     mPressedActor;        ///< The currently pressed actor.
   int                             mTotalPages;          ///< Total pages within scrollview.
   std::string                     mBackgroundImagePath; ///< The path to the background image.
@@ -390,6 +391,8 @@ private:
   AnimationList                   mBackgroundAnimations;///< List of background bubble animations
   Dali::Timer                     mAnimationTimer;      ///< Timer used to turn off animation after a specific time period
   bool                            mBackgroundAnimsPlaying; ///< Are background animations playing
+
+  Dali::Vector3                   mButtonsPageRelativeSize; ///< Size of a buttons page relative to the stage size
 };
 
 #endif // __DALI_DEMO_H__
