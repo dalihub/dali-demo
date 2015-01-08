@@ -31,21 +31,18 @@ namespace
 const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "ScrollView" );
-const char * const EFFECT_OUTER_CUBE_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-outer-cube.png" );
 const char * const EFFECT_DEPTH_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-depth.png" );
 const char * const EFFECT_INNER_CUBE_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-inner-cube.png" );
 const char * const EFFECT_CAROUSEL_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-carousel.png" );
-const char * const EFFECT_SPIRAL_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-spiral.png" );
 
 const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
 
 const char* EFFECT_MODE_NAME[] = {
-    "OuterCube",
     "Depth",
     "Cube",
-    "InnerCube",
-    "Carousel",
-    "Spiral",
+    "PageCarousel",
+    "PageCube",
+    "PageSpiral"
 };
 
 const char * const IMAGE_PATHS[] = {
@@ -197,12 +194,11 @@ public:
                                             TOOLBAR_IMAGE,
                                             "" );
 
-    mEffectIcon[ OuterCubeEffect ] = Image::New( EFFECT_OUTER_CUBE_IMAGE );
     mEffectIcon[ DepthEffect ]     = Image::New( EFFECT_DEPTH_IMAGE );
     mEffectIcon[ CubeEffect ]      = Image::New( EFFECT_INNER_CUBE_IMAGE );
-    mEffectIcon[ InnerCubeEffect ] = Image::New( EFFECT_INNER_CUBE_IMAGE );
-    mEffectIcon[ CarouselEffect ]  = Image::New( EFFECT_CAROUSEL_IMAGE );
-    mEffectIcon[ SpiralEffect ]    = Image::New( EFFECT_SPIRAL_IMAGE );
+    mEffectIcon[ PageCarouselEffect ] = Image::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIcon[ PageCubeEffect ]     = Image::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIcon[ PageSpiralEffect ]   = Image::New( EFFECT_CAROUSEL_IMAGE );
 
     // Create a effect change button. (right of toolbar)
     mEffectChangeButton = Toolkit::PushButton::New();
@@ -348,14 +344,8 @@ private:
     Stage stage = Stage::GetCurrent();
     Vector2 stageSize = stage.GetSize();
 
-    switch(mEffectMode)
+    switch( mEffectMode )
     {
-      case OuterCubeEffect:
-      {
-        SetupOuterPageCubeEffect();
-        break;
-      }
-
       case DepthEffect:
       {
         mScrollViewEffect = ScrollViewDepthEffect::New();
@@ -366,6 +356,7 @@ private:
         mScrollView.RemoveConstraintsFromChildren();
         break;
       }
+
       case CubeEffect:
       {
         mScrollViewEffect = ScrollViewCubeEffect::New();
@@ -377,21 +368,36 @@ private:
         break;
       }
 
-      case InnerCubeEffect:
+      case PageCarouselEffect:
       {
-        SetupInnerPageCubeEffect();
+        mScrollViewEffect = ScrollViewPageCarouselEffect::New();
+        mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
+        mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.RemoveConstraintsFromChildren();
         break;
       }
 
-      case CarouselEffect:
+      case PageCubeEffect:
       {
-        SetupCarouselPageEffect();
+        mScrollViewEffect = ScrollViewPageCubeEffect::New();
+        mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
+        mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.RemoveConstraintsFromChildren();
         break;
       }
 
-      case SpiralEffect:
+      case PageSpiralEffect:
       {
-        SetupSpiralPageEffect();
+        mScrollViewEffect = ScrollViewPageSpiralEffect::New();
+        mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
+        mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.RemoveConstraintsFromChildren();
         break;
       }
 
@@ -399,9 +405,9 @@ private:
       {
         break;
       }
-    } // end switch
+    }
 
-    if(mScrollViewEffect)
+    if( mScrollViewEffect )
     {
       mScrollView.ApplyEffect(mScrollViewEffect);
     }
@@ -434,100 +440,47 @@ private:
     }
     return new FixedRuler(gridSize);
   }
-
-  void SetupInnerPageCubeEffect()
-  {
-    ScrollViewCustomEffect customEffect;
-    mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
-    mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
-    mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOutBack);
-    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOutBack);
-    mScrollView.RemoveConstraintsFromChildren();
-
-    customEffect.SetPageSpacing(Vector2(30.0f, 30.0f));
-    customEffect.SetAngledOriginPageRotation(ANGLE_CUBE_PAGE_ROTATE);
-    customEffect.SetSwingAngle(ANGLE_CUBE_PAGE_ROTATE.x, Vector3(0,-1,0));
-    customEffect.SetOpacityThreshold(0.7f);
-  }
-
-  void SetupOuterPageCubeEffect()
-  {
-    ScrollViewCustomEffect customEffect;
-    mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
-    mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
-    mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
-    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
-    mScrollView.RemoveConstraintsFromChildren();
-
-    Vector2 pageSize = Stage::GetCurrent().GetSize();
-    customEffect.SetPageTranslation(Vector3(pageSize.x, pageSize.y, 0));
-    customEffect.SetSwingAngleOut(ANGLE_CUSTOM_CUBE_SWING.x, Vector3(0.0f, -1.0f, 0.0f));
-    customEffect.SetSwingAnchor(AnchorPoint::CENTER, AnchorPoint::CENTER_LEFT);
-    customEffect.SetOpacityThreshold(0.5f);
-  }
-
-  void SetupCarouselPageEffect()
-  {
-    ScrollViewCustomEffect customEffect;
-    mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
-    mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
-    mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOutBack);
-    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOutBack);
-    mScrollView.RemoveConstraintsFromChildren();
-
-    customEffect.SetPageTranslation(Vector3(0,0,0), Vector3(-30, 0, 0));
-    customEffect.SetPageSpacing(Vector2(60.0f, 60.0f));
-    customEffect.SetAngledOriginPageRotation(-ANGLE_CUBE_PAGE_ROTATE);
-    customEffect.SetOpacityThreshold(0.2f, 0.6f);
-  }
-
-  void SetupSpiralPageEffect()
-  {
-    ScrollViewCustomEffect customEffect;
-    mScrollViewEffect = customEffect = ScrollViewCustomEffect::New();
-    mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
-    mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-    mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOutBack);
-    mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOutBack);
-    mScrollView.RemoveConstraintsFromChildren();
-
-    Vector2 pageSize = Stage::GetCurrent().GetSize();
-    customEffect.SetPageTranslation(Vector3(pageSize.x, pageSize.y, 0.0f));
-    customEffect.SetSwingAngle(-ANGLE_SPIRAL_SWING_IN.x, Vector3(0.0f, -1.0f, 0.0f), ANGLE_SPIRAL_SWING_OUT.x, Vector3(0.0f, -1.0f, 0.0f));
-    customEffect.SetSwingAnchor(AnchorPoint::CENTER_RIGHT);
-    customEffect.SetPageTranslation(Vector3(pageSize.x, pageSize.y, 0), Vector3(pageSize.x, pageSize.y, 0) * 0.5f);
-    customEffect.SetOpacityThreshold(0.66f);
-  }
-
+  // end switch
   /**
-   * [Page]
-   * Applies effect to the pages within scroll view.
-   *
-   * @param[in] page The page Actor to apply effect to.
-   */
-  void ApplyEffectToPage(Actor page)
-  {
-    page.RemoveConstraints();
-    page.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+    * [Page]
+    * Applies effect to the pages within scroll view.
+    *
+    * @param[in] page The page Actor to apply effect to.
+    */
+   void ApplyEffectToPage(Actor page)
+   {
+     page.RemoveConstraints();
+     page.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
 
-    if( ( mEffectMode == InnerCubeEffect ) ||
-        ( mEffectMode == OuterCubeEffect ) ||
-        ( mEffectMode == SpiralEffect )    ||
-        ( mEffectMode == CarouselEffect) )
-    {
-      ApplyCustomEffectToPage(page);
-    }
-  }
+     switch( mEffectMode )
+     {
+       case PageCarouselEffect:
+       {
+         ScrollViewPageCarouselEffect effect = ScrollViewPageCarouselEffect::DownCast( mScrollViewEffect );
+         effect.ApplyToPage( page );
+         break;
+       }
 
-  void ApplyCustomEffectToPage(Actor page)
-  {
-    ScrollViewCustomEffect customEffect = ScrollViewCustomEffect::DownCast(mScrollViewEffect);
-    Vector2 vStageSize(Stage::GetCurrent().GetSize());
-    customEffect.ApplyToPage(page, Vector3(vStageSize.x, vStageSize.y, 1.0f));
-  }
+       case PageCubeEffect:
+       {
+         ScrollViewPageCubeEffect effect = ScrollViewPageCubeEffect::DownCast( mScrollViewEffect );
+         effect.ApplyToPage( page, ANGLE_SWING_3DEFFECT );
+         break;
+       }
+
+       case PageSpiralEffect:
+       {
+         ScrollViewPageSpiralEffect effect = ScrollViewPageSpiralEffect::DownCast( mScrollViewEffect );
+         effect.ApplyToPage( page, ANGLE_SWING_3DEFFECT );
+         break;
+       }
+
+       default:
+       {
+         break;
+       }
+     }
+   }
 
   /**
    * [Actor]
@@ -542,13 +495,24 @@ private:
    */
   void ApplyEffectToActor( Actor child, Actor page )
   {
-    if( mEffectMode == DepthEffect )
+    switch( mEffectMode )
     {
-      ApplyDepthEffectToActor( child );
-    }
-    else if(mEffectMode == CubeEffect )
-    {
-      ApplyCubeEffectToActor( child );
+      case DepthEffect:
+      {
+        ApplyDepthEffectToActor( child );
+        break;
+      }
+
+      case CubeEffect:
+      {
+        ApplyCubeEffectToActor( child );
+        break;
+      }
+
+      default:
+      {
+        break;
+      }
     }
   }
 
@@ -713,14 +677,13 @@ private:
    */
   enum EffectMode
   {
-    OuterCubeEffect,                                    ///< Outer Cube Effect
     DepthEffect,                                        ///< Depth Effect
     CubeEffect,                                         ///< Cube effect
-    InnerCubeEffect,                                    ///< Page Cube Effect
-    CarouselEffect,                                     ///< Page Carousel Effect
-    SpiralEffect,                                       ///< Page Spiral Effect
+    PageCarouselEffect,                                 ///< Page carousel effect
+    PageCubeEffect,                                     ///< Page cube effect
+    PageSpiralEffect,                                   ///< Page spiral effect
 
-    Total,
+    Total
   };
 
   EffectMode mEffectMode;                               ///< Current Effect mode
