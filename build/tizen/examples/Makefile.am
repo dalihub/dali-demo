@@ -29,6 +29,7 @@ bin_PROGRAMS = \
                new-window.example \
                page-turn-view.example \
                radial-menu.example \
+               refraction-effect.example \
                scroll-view.example \
                shadow-bone-lighting.example \
                dali-builder \
@@ -130,6 +131,11 @@ radial_menu_example_SOURCES = $(examples_src_dir)/radial-menu/radial-menu-exampl
 radial_menu_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 radial_menu_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 radial_menu_example_LDADD = $(EXAMPLE_LDADD)
+
+refraction_effect_example_SOURCES = $(examples_src_dir)/shader-effect/refraction-effect-example.cpp
+refraction_effect_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
+refraction_effect_example_DEPENDENCIES = $(EXAMPLE_DEPS)
+refraction_effect_example_LDADD = $(EXAMPLE_LDADD)
 
 scroll_view_example_SOURCES = $(examples_src_dir)/scroll-view/scroll-view-example.cpp
 scroll_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
