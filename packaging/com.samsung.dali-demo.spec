@@ -46,12 +46,6 @@ PREFIX="/usr"
 CXXFLAGS+=" -Wall -g -O2"
 LDFLAGS+=" -Wl,--rpath=$PREFIX/lib -Wl,--as-needed -fPIC"
 
-%if 0%{?sec_build_binary_debug_enable}
-export CFLAGS="$CFLAGS -DTIZEN_DEBUG_ENABLE"
-export CXXFLAGS="$CXXFLAGS -DTIZEN_DEBUG_ENABLE"
-export FFLAGS="$FFLAGS -DTIZEN_DEBUG_ENABLE"
-%endif
-
 %ifarch %{arm}
 EXTRA_CONFIGURE_OPTIONS=" --host=arm"
 CXXFLAGS+=" -D_ARCH_ARM_"
