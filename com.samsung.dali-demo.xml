@@ -49,6 +49,9 @@
 	<ui-application appid="radial-menu.example" exec="/usr/apps/com.samsung.dali-demo/bin/radial-menu.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Radial Menu</label>
 	</ui-application>
+	<ui-application appid="refraction-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/refraction-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Refraction effect</label>
+	</ui-application>
 	<ui-application appid="scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>
 	</ui-application>
