@@ -521,6 +521,14 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
     image.Add( stencil );
   }
 
+    TextLabel label = TextLabel::New();
+    label.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    label.SetProperty( TextLabel::PROPERTY_MULTI_LINE, true );
+    label.SetProperty( TextLabel::PROPERTY_TEXT, title );
+    label.SetColor( Color::WHITE );
+    content.Add( label );
+
   // Set the tile to be keyboard focusable
   tile.SetKeyboardFocusable(true);
 
