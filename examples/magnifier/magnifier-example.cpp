@@ -236,7 +236,7 @@ public:
     mMagnifier.SetSourceActor( mView.GetBackgroundLayer() );
     mMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width );  // Size of magnifier is in relation to stage width
     mMagnifier.SetMagnificationFactor( MAGNIFICATION_FACTOR );
-    mMagnifier.SetFrameVisibility(false);
+    mMagnifier.SetFrameVisibility(true);
     mMagnifier.SetScale(Vector3::ZERO);
     overlay.Add( mMagnifier );
 
