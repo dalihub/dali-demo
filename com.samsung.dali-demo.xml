@@ -76,10 +76,4 @@
 	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Logging</label>
 	</ui-application>
-	<ui-application appid="bloom-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/bloom-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Bloom View</label>
-	</ui-application>
-	<ui-application appid="gaussian-blur-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/gaussian-blur-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Gaussian Blur View</label>
-	</ui-application>
 </manifest>

@@ -37,9 +37,8 @@ bin_PROGRAMS = \
                image-scaling-irregular-grid.example \
                buttons.example \
                text-view.example \
-               logging.example \
-               bloom-view.example \
-               gaussian-blur-view.example
+               logging.example
+
 
 daliimagedir = $(appdatadir)/images/
 dalimodeldir = $(appdatadir)/models/
@@ -177,13 +176,3 @@ logging_example_SOURCES = $(examples_src_dir)/logging/logging-example.cpp
 logging_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
 logging_example_DEPENDENCIES = $(EXAMPLE_DEPS)
 logging_example_LDADD = $(EXAMPLE_LDADD)
-
-bloom_view_example_SOURCES = $(examples_src_dir)/bloom-view/bloom-view-example.cpp
-bloom_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
-bloom_view_example_DEPENDENCIES = $(EXAMPLE_DEPS)
-bloom_view_example_LDADD = $(EXAMPLE_LDADD)
-
-gaussian_blur_view_example_SOURCES = $(examples_src_dir)/gaussian-blur-view/gaussian-blur-view-example.cpp
-gaussian_blur_view_example_CXXFLAGS = $(EXAMPLE_CXXFLAGS)
-gaussian_blur_view_example_DEPENDENCIES = $(EXAMPLE_DEPS)
-gaussian_blur_view_example_LDADD = $(EXAMPLE_LDADD)
