@@ -63,7 +63,7 @@ const float EFFECT_SNAP_DURATION = 0.66f;                       ///< Scroll Snap
 const float EFFECT_FLICK_DURATION = 0.5f;                       ///< Scroll Flick Duration for Effects
 const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.5f, Math::PI * 0.5f, 0.0f);
 
-const int NUM_BACKGROUND_IMAGES = 20;
+const int NUM_BACKGROUND_IMAGES = 18;
 const float BACKGROUND_SWIPE_SCALE = 0.025f;
 const float BACKGROUND_SPREAD_SCALE = 1.5f;
 const float SCALE_MOD = 1000.0f * Math::PI * 2.0f;
@@ -137,89 +137,39 @@ const float IMAGE_BORDER_TOP = IMAGE_BORDER_LEFT;
 const float IMAGE_BORDER_BOTTOM = IMAGE_BORDER_LEFT;
 
 /**
- * TableViewVisibilityConstraint
+ * Constraint to return a position for a bubble based on the scroll value and vertical wrapping.
  */
-struct TableViewVisibilityConstraint
-{
-  bool operator()( const bool& current,
-              const PropertyInput& pagePositionProperty,
-              const PropertyInput& pageSizeProperty )
-  {
-    // Only the tableview in the current page should be visible.
-    const Vector3& pagePosition = pagePositionProperty.GetVector3();
-    const Vector3& pageSize = pageSizeProperty.GetVector3();
-    return fabsf( pagePosition.x ) < pageSize.x;
-  }
-};
-
-/**
- * Constraint to wrap an actor in y that is moving vertically
- */
-Vector3 ShapeMovementConstraint( const Vector3& current,
-                         const PropertyInput& shapeSizeProperty,
-                         const PropertyInput& parentSizeProperty )
-{
-  const Vector3& shapeSize = shapeSizeProperty.GetVector3();
-  const Vector3& parentSize = parentSizeProperty.GetVector3();
-
-  Vector3 pos( current );
-  if( pos.y + shapeSize.y * 0.5f < -parentSize.y * 0.5f )
-  {
-    pos.y += parentSize.y + shapeSize.y;
-  }
-
-  return pos;
-}
-
-/**
- * Constraint to return a position for the background based on the scroll value
- */
-struct AnimScrollConstraint
+struct AnimateBubbleConstraint
 {
 public:
-
-  AnimScrollConstraint( const Vector3& initialPos, float scale )
-      : mInitialPos( initialPos ),
-        mScale( scale )
+  AnimateBubbleConstraint( const Vector3& initialPos, float scale, float size )
+      : mInitialX( initialPos.x ),
+        mScale( scale ),
+        mShapeSize( size )
   {
-
   }
 
-  Vector3 operator()( const Vector3& current, const PropertyInput& scrollProperty )
+  Vector3 operator()( const Vector3& current, const PropertyInput& scrollProperty, const PropertyInput& parentSize )
   {
-    float scrollPos = scrollProperty.GetVector3().x;
+    Vector3 pos( current );
 
-    return mInitialPos + Vector3( -scrollPos * mScale, 0.0f, 0.0f );
+    // Wrap bubbles verically.
+    if( pos.y + mShapeSize * 0.5f < -parentSize.GetVector3().y * 0.5f )
+    {
+      pos.y += parentSize.GetVector3().y + mShapeSize;
+    }
+
+    // Bubbles X position moves parallax to horizontal
+    // panning by a scale factor unique to each bubble.
+    pos.x = mInitialX + ( scrollProperty.GetVector3().x * mScale );
+    return pos;
   }
 
 private:
-  Vector3 mInitialPos;
+  float mInitialX;
   float mScale;
+  float mShapeSize;
 };
-
-/**
- * Constraint to return a tracked world position added to the constant local position
- */
-struct TranslateLocalConstraint
-{
-public:
-
-  TranslateLocalConstraint( const Vector3& localPos )
-      : mLocalPos( localPos )
-  {
-  }
-
-  Vector3 operator()( const Vector3& current, const PropertyInput& pagePosProperty )
-  {
-    Vector3 worldPos = pagePosProperty.GetVector3();
-
-    return ( worldPos + mLocalPos );
-  }
-
-private:
-  Vector3 mLocalPos;
-};
-
 
 bool CompareByTitle( const Example& lhs, const Example& rhs )
 {
@@ -507,12 +457,6 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   tile.SetAnchorPoint( AnchorPoint::CENTER );
   tile.SetParentOrigin( ParentOrigin::CENTER );
 
-  Actor content = Actor::New();
-  content.SetAnchorPoint( AnchorPoint::CENTER );
-  content.SetParentOrigin( ParentOrigin::CENTER );
-  content.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
-  tile.Add(content);
-
   // create background image
   if( addBackground )
   {
@@ -526,8 +470,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
     image.SetZ( -1 );
     image.SetStyle( ImageActor::STYLE_NINE_PATCH );
     image.SetNinePatchBorder( Vector4( IMAGE_BORDER_LEFT, IMAGE_BORDER_TOP, IMAGE_BORDER_RIGHT, IMAGE_BORDER_BOTTOM ) );
-
-    content.Add( image );
+    tile.Add( image );
 
     // Add stencil
     ImageActor stencil = NewStencilImage();
@@ -548,7 +491,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   text.SetSize( 0.9f * parentSize.width, 0.9f * parentSize.height );
   text.SetStyleToCurrentText( GetTableTextStyle() );
   text.SetSnapshotModeEnabled( false );
-  content.Add( text );
+  tile.Add( text );
 
   // Set the tile to be keyboard focusable
   tile.SetKeyboardFocusable(true);
@@ -738,61 +681,25 @@ void DaliTableView::OnKeyEvent( const KeyEvent& event )
   }
 }
 
-Actor CreateBackgroundActor( const Vector2& size )
+void DaliTableView::SetupBackground( Actor bubbleContainer, Actor backgroundLayer, const Vector2& size )
 {
-  Actor layer = Actor::New();
-  layer.SetAnchorPoint( AnchorPoint::CENTER );
-  layer.SetParentOrigin( ParentOrigin::CENTER );
-  layer.SetSize( size );
-  return layer;
-}
-
-void DaliTableView::SetupBackground( Actor bubbleLayer, Actor backgroundLayer, const Vector2& size )
-{
-  // Create distance field shape
+  // Create distance field shape.
   BitmapImage distanceField;
   Size imageSize( 512, 512 );
   CreateShapeImage( CIRCLE, imageSize, distanceField );
 
-  // Create layers
-  Actor backgroundAnimLayer0 = CreateBackgroundActor( size );
-  Actor backgroundAnimLayer1 = CreateBackgroundActor( size );
-  Actor backgroundAnimLayer2 = CreateBackgroundActor( size );
+  // Create solid background colour.
+  ImageActor backgroundColourActor = Dali::Toolkit::CreateSolidColorActor( BACKGROUND_COLOR );
+  backgroundColourActor.SetAnchorPoint( AnchorPoint::CENTER );
+  backgroundColourActor.SetParentOrigin( ParentOrigin::CENTER );
+  backgroundColourActor.SetSize( size * BACKGROUND_SIZE_SCALE );
+  backgroundColourActor.SetZ( BACKGROUND_Z );
+  backgroundColourActor.SetPositionInheritanceMode( DONT_INHERIT_POSITION );
+  backgroundLayer.Add( backgroundColourActor );
 
-  // Add constraints
-  Constraint animConstraint0 = Constraint::New < Vector3 > ( Actor::POSITION,
-      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
-      AnimScrollConstraint( backgroundAnimLayer0.GetCurrentPosition(), 0.75f ) );
-  backgroundAnimLayer0.ApplyConstraint( animConstraint0 );
-
-  Constraint animConstraint1 = Constraint::New < Vector3 > ( Actor::POSITION,
-      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
-      AnimScrollConstraint( backgroundAnimLayer1.GetCurrentPosition(), 0.5f ) );
-  backgroundAnimLayer1.ApplyConstraint( animConstraint1 );
-
-  Constraint animConstraint2 = Constraint::New < Vector3 > ( Actor::POSITION,
-      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
-      AnimScrollConstraint( backgroundAnimLayer2.GetCurrentPosition(), 0.25f ) );
-  backgroundAnimLayer2.ApplyConstraint( animConstraint2 );
-
-  // Background
-  ImageActor layer = Dali::Toolkit::CreateSolidColorActor( BACKGROUND_COLOR );
-  layer.SetAnchorPoint( AnchorPoint::CENTER );
-  layer.SetParentOrigin( ParentOrigin::CENTER );
-  layer.SetSize( size * BACKGROUND_SIZE_SCALE );
-  layer.SetZ( BACKGROUND_Z );
-  layer.SetPositionInheritanceMode( DONT_INHERIT_POSITION );
-  backgroundLayer.Add( layer );
-
-  // Parent the layers
-  bubbleLayer.Add( backgroundAnimLayer0 );
-  bubbleLayer.Add( backgroundAnimLayer1 );
-  bubbleLayer.Add( backgroundAnimLayer2 );
-
-  // Add all the children
-  AddBackgroundActors( backgroundAnimLayer0, NUM_BACKGROUND_IMAGES / 3, distanceField, size );
-  AddBackgroundActors( backgroundAnimLayer1, NUM_BACKGROUND_IMAGES / 3, distanceField, size );
-  AddBackgroundActors( backgroundAnimLayer2, NUM_BACKGROUND_IMAGES / 3, distanceField, size );
+  // Add bubbles to the bubbleContainer.
+  // Note: The bubbleContainer is parented externally to this function.
+  AddBackgroundActors( bubbleContainer, NUM_BACKGROUND_IMAGES, distanceField, size );
 }
 
 void DaliTableView::AddBackgroundActors( Actor layer, int count, BitmapImage distanceField, const Dali::Vector2& size )
@@ -822,11 +729,12 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BitmapImage dis
         Random::Range( BUBBLE_MIN_Z, BUBBLE_MAX_Z ) );
     dfActor.SetPosition( actorPos );
 
-    Constraint movementConstraint = Constraint::New < Vector3 > ( Actor::POSITION,
-        LocalSource( Actor::SIZE ),
-        ParentSource( Actor::SIZE ),
-        ShapeMovementConstraint );
-    dfActor.ApplyConstraint( movementConstraint );
+    // Define bubble horizontal parallax and vertical wrapping
+    Constraint animConstraint = Constraint::New < Vector3 > ( Actor::POSITION,
+      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
+      Dali::ParentSource( Dali::Actor::SIZE ),
+      AnimateBubbleConstraint( actorPos, Random::Range( -0.85f, 0.35f ), randSize ) );
+    dfActor.ApplyConstraint( animConstraint );
 
     // Kickoff animation
     Animation animation = Animation::New( Random::Range( 40.0f, 200.0f ) );
