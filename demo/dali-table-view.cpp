@@ -53,10 +53,10 @@ const int MAX_PAGES = 256;                                      ///< Maximum pag
 const int EXAMPLES_PER_ROW = 3;
 const int ROWS_PER_PAGE = 3;
 const int EXAMPLES_PER_PAGE = EXAMPLES_PER_ROW * ROWS_PER_PAGE;
-const int BOTTOM_PADDING_HEIGHT = 40;
-const int LOGO_MARGIN = 50;
+const float LOGO_MARGIN_RATIO = 0.5f / 0.9f;
+const float BOTTOM_PADDING_RATIO = 0.4f / 0.9f;
 const Vector3 SCROLLVIEW_RELATIVE_SIZE(0.9f, 1.0f, 0.8f );     ///< ScrollView's relative size to its parent
-const Vector3 TABLE_RELATIVE_SIZE(0.9f, 1.0f, 0.8f );          ///< TableView's relative size to the entire stage. The Y value will be calculated.
+const Vector3 TABLE_RELATIVE_SIZE(0.9f, 0.9f, 0.8f );          ///< TableView's relative size to the entire stage. The Y value means sum of the logo and table relative heights.
 const float STENCIL_RELATIVE_SIZE = 1.0f;
 
 const float EFFECT_SNAP_DURATION = 0.66f;                       ///< Scroll Snap Duration for Effects
@@ -290,11 +290,13 @@ void DaliTableView::Initialize( Application& application )
 
   // Add logo
   mLogo = CreateLogo( LOGO_PATH );
-  const float logoHeight = mLogo.GetImage().GetHeight() + DP(LOGO_MARGIN);
+  const float paddingHeight = ( ( 1.f-TABLE_RELATIVE_SIZE.y ) * stageSize.y );
+  const float logoMargin = paddingHeight * LOGO_MARGIN_RATIO;
+  const float logoHeight = mLogo.GetImage().GetHeight() + logoMargin;
   mRootActor.SetFixedHeight( 1, logoHeight );
 
-  mButtonsPageRelativeSize = Vector3( TABLE_RELATIVE_SIZE.x, ( stageSize.height - toolbarHeight - logoHeight - DP( BOTTOM_PADDING_HEIGHT ) ) / stageSize.height, TABLE_RELATIVE_SIZE.z );
-
+  const float bottomMargin = paddingHeight * BOTTOM_PADDING_RATIO;
+  mButtonsPageRelativeSize = Vector3( TABLE_RELATIVE_SIZE.x, 1.f - ( toolbarHeight + logoHeight + bottomMargin) / stageSize.height, TABLE_RELATIVE_SIZE.z );
   mRootActor.SetFixedHeight( 2, mButtonsPageRelativeSize.y * stageSize.height );
 
   Alignment alignment = Alignment::New();
