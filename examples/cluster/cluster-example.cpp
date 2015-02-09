@@ -226,27 +226,6 @@ struct RescaleConstraint
 };
 
 /**
- * ClusterImageBorderSizeConstraint
- */
-struct ClusterImageBorderSizeConstraint
-{
-  ClusterImageBorderSizeConstraint()
-  : mSizeOffset(Vector3(CLUSTER_IMAGE_BORDER_INDENT - 1, CLUSTER_IMAGE_BORDER_INDENT - 1, 0.0f) * 2.0f)
-  {
-  }
-
-  Vector3 operator()(const Vector3&    current,
-                     const PropertyInput& referenceSizeProperty)
-  {
-    const Vector3& referenceSize = referenceSizeProperty.GetVector3();
-
-    return referenceSize + mSizeOffset;
-  }
-
-  Vector3 mSizeOffset;                        ///< The amount to offset the size from referenceSize
-};
-
-/**
  * ShearEffectConstraint
  *
  * Constrains ShearEffect's tilt to be a function of scrollview's
@@ -620,32 +599,29 @@ public:
     shadowActor.SetAnchorPoint(AnchorPoint::CENTER);
     shadowActor.SetPosition(Vector3(0.0f, 0.0f, -1.0f));
 
-    // Apply size constraint to the image shadow
-    shadowActor.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), RelativeToConstraint( ShadowProperty::SIZE_SCALE ) ) );
-    actor.Add(shadowActor);
+    // Apply size-relative mode to auto-size the image shadow
+    shadowActor.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+    shadowActor.SetSizeModeFactor( ShadowProperty::SIZE_SCALE );
+    actor.Add( shadowActor );
 
-    // Add a picture image actor to actor.
+    // Add a picture image actor to actor (with equal size to the parent).
     Image image = Image::New( imagePath, attribs );
-    ImageActor imageActor = ImageActor::New(image);
+    ImageActor imageActor = ImageActor::New( image );
     imageActor.SetParentOrigin( ParentOrigin::CENTER );
     imageActor.SetAnchorPoint( AnchorPoint::CENTER );
-    imageActor.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
-    actor.Add(imageActor);
+    imageActor.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    actor.Add( imageActor );
 
-    // Add a border image child actor
-    ImageActor borderActor = ImageActor::New(mClusterBorderImage);
+    // Add a border image child actor (with a fixed size offset from parent).
+    ImageActor borderActor = ImageActor::New( mClusterBorderImage );
     borderActor.SetParentOrigin( ParentOrigin::CENTER );
     borderActor.SetAnchorPoint( AnchorPoint::CENTER );
     borderActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
     borderActor.SetNinePatchBorder( CLUSTER_IMAGE_BORDER_ABSOLUTE );
-    borderActor.SetPosition(Vector3(0.0f, 0.0f, 1.0f));
-
-    // Apply size constraint to the image border
-    Constraint constraint = Constraint::New<Vector3>(Actor::SIZE,
-                                                     ParentSource(Actor::SIZE),
-                                                     ClusterImageBorderSizeConstraint());
-    borderActor.ApplyConstraint(constraint);
-    actor.Add(borderActor);
+    borderActor.SetPosition( Vector3( 0.0f, 0.0f, 1.0f ) );
+    borderActor.SetSizeMode( SIZE_FIXED_OFFSET_FROM_PARENT );
+    borderActor.SetSizeModeFactor( Vector3( CLUSTER_IMAGE_BORDER_INDENT - 1.0f, CLUSTER_IMAGE_BORDER_INDENT - 1.0f, 0.0f ) * 2.0f );
+    actor.Add( borderActor );
 
     return actor;
   }
