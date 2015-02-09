@@ -79,7 +79,7 @@ const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 
 const char* const PUSHBUTTON_PRESS_IMAGE = DALI_IMAGE_DIR "button-down.9.png";
 const char* const PUSHBUTTON_BUTTON_IMAGE = DALI_IMAGE_DIR "button-up.9.png";
-const char* const PUSHBUTTON_DIM_IMAGE = DALI_IMAGE_DIR "button-disabled.9.png";
+const char* const PUSHBUTTON_DISABLED_IMAGE = DALI_IMAGE_DIR "button-disabled.9.png";
 
 // Button IDs
 const char* const LOGGER_1_RADIO_ID = "LOGGER_1_RADIO";
@@ -214,9 +214,9 @@ class LoggingController: public ConnectionTracker
       radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( DP(radioX), DP(radioY) );
-      radioButton.SetActive( true );
+      radioButton.SetSelected( true );
 
-      radioButton.ToggledSignal().Connect( this, &LoggingController::LoggingRadioSelect );
+      radioButton.StateChangedSignal().Connect( this, &LoggingController::LoggingRadioSelect );
 
       radioButtonsGroup.Add( radioButton );
       mLogRadioButtons[0] = radioButton;
@@ -232,7 +232,7 @@ class LoggingController: public ConnectionTracker
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( DP(radioX), DP(radioY) );
 
-      radioButton.ToggledSignal().Connect( this, &LoggingController::LoggingRadioSelect );
+      radioButton.StateChangedSignal().Connect( this, &LoggingController::LoggingRadioSelect );
 
       radioButtonsGroup.Add( radioButton );
       mLogRadioButtons[1] = radioButton;
@@ -248,7 +248,7 @@ class LoggingController: public ConnectionTracker
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( DP(radioX), DP(radioY) );
 
-      radioButton.ToggledSignal().Connect( this, &LoggingController::LoggingRadioSelect );
+      radioButton.StateChangedSignal().Connect( this, &LoggingController::LoggingRadioSelect );
 
       radioButtonsGroup.Add( radioButton );
       mLogRadioButtons[2] = radioButton;
@@ -270,15 +270,15 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( CREATE_BUTTON_ID );
-      button.SetLabelText( CREATE_BUTTON_TEXT );
+      button.SetLabel( CREATE_BUTTON_TEXT );
       button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
       button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetPressedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDimmedImage( Dali::Image::New( PUSHBUTTON_DIM_IMAGE ) );
+      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -290,15 +290,15 @@ class LoggingController: public ConnectionTracker
 
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( DELETE_BUTTON_ID );
-      button.SetLabelText( DELETE_BUTTON_TEXT );
+      button.SetLabel( DELETE_BUTTON_TEXT );
       button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
       button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetPressedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDimmedImage( Dali::Image::New( PUSHBUTTON_DIM_IMAGE ) );
+      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -321,15 +321,15 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( START_BUTTON_ID );
-      button.SetLabelText( START_BUTTON_TEXT );
+      button.SetLabel( START_BUTTON_TEXT );
       button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
       button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetPressedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDimmedImage( Dali::Image::New( PUSHBUTTON_DIM_IMAGE ) );
+      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -341,15 +341,15 @@ class LoggingController: public ConnectionTracker
 
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( STOP_BUTTON_ID );
-      button.SetLabelText( STOP_BUTTON_TEXT );
+      button.SetLabel( STOP_BUTTON_TEXT );
       button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
       button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetPressedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDimmedImage( Dali::Image::New( PUSHBUTTON_DIM_IMAGE ) );
+      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -372,15 +372,15 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( ENABLE_BUTTON_ID );
-      button.SetLabelText( ENABLE_BUTTON_TEXT );
+      button.SetLabel( ENABLE_BUTTON_TEXT );
       button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
       button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetPressedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDimmedImage( Dali::Image::New( PUSHBUTTON_DIM_IMAGE ) );
+      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -392,15 +392,15 @@ class LoggingController: public ConnectionTracker
 
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( DISABLE_BUTTON_ID );
-      button.SetLabelText( DISABLE_BUTTON_TEXT );
+      button.SetLabel( DISABLE_BUTTON_TEXT );
       button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
       button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetPressedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDimmedImage( Dali::Image::New( PUSHBUTTON_DIM_IMAGE ) );
+      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -439,7 +439,7 @@ class LoggingController: public ConnectionTracker
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( DP(radioX), DP(radioY) );
 
-      radioButton.ToggledSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
+      radioButton.StateChangedSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
 
       frequencyRadioButtonsGroup.Add( radioButton );
       mFrequencyRadioButtons[0] = radioButton;
@@ -454,9 +454,9 @@ class LoggingController: public ConnectionTracker
       radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( DP(radioX), DP(radioY) );
-      radioButton.SetActive( true );
+      radioButton.SetSelected( true );
 
-      radioButton.ToggledSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
+      radioButton.StateChangedSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
 
       frequencyRadioButtonsGroup.Add( radioButton );
       mFrequencyRadioButtons[1] = radioButton;
@@ -472,7 +472,7 @@ class LoggingController: public ConnectionTracker
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( DP(radioX), DP(radioY) );
 
-      radioButton.ToggledSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
+      radioButton.StateChangedSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
 
       frequencyRadioButtonsGroup.Add( radioButton );
       mFrequencyRadioButtons[2] = radioButton;
@@ -494,15 +494,15 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( VSYNC_BUTTON_ID );
-      button.SetLabelText( VSYNC_BUTTON_TEXT );
+      button.SetLabel( VSYNC_BUTTON_TEXT );
       button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
       button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetPressedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDimmedImage( Dali::Image::New( PUSHBUTTON_DIM_IMAGE ) );
+      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -543,15 +543,15 @@ class LoggingController: public ConnectionTracker
     const unsigned int frequency = mLoggerStates[mCurrentLogger].frequency;
     if( frequency == HIGH_FREQUENCY )
     {
-      mFrequencyRadioButtons[0].SetActive( true );
+      mFrequencyRadioButtons[0].SetSelected( true );
     }
     else if( frequency == MEDIUM_FREQUENCY )
     {
-      mFrequencyRadioButtons[1].SetActive( true );
+      mFrequencyRadioButtons[1].SetSelected( true );
     }
     else if( frequency == LOW_FREQUENCY )
     {
-      mFrequencyRadioButtons[2].SetActive( true );
+      mFrequencyRadioButtons[2].SetSelected( true );
     }
   }
 

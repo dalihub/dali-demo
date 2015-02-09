@@ -94,6 +94,7 @@ public:
   static NoEffect New()
   {
     std::string vertexShader = MAKE_SHADER(
+        precision mediump float;\n
         uniform mediump vec4 uTextureRect;\n
         void main()\n
         {\n
@@ -102,6 +103,7 @@ public:
         }\n
     );
     std::string fragmentShader = MAKE_SHADER(
+        precision mediump float;\n
         void main()\n
         {\n
           gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
@@ -153,6 +155,7 @@ public:
   static RefractionEffect New()
   {
     std::string vertexShader = MAKE_SHADER(
+      precision mediump float;\n
       varying mediump vec2 vTextureOffset;\n
       void main()\n
       {\n
@@ -167,6 +170,7 @@ public:
     );
 
     std::string fragmentShader = MAKE_SHADER(
+      precision mediump float;\n
       uniform mediump float uEffectStrength;\n
       uniform mediump vec3 uLightPosition;\n
       uniform mediump vec2 uLightXYOffset;\n
@@ -205,7 +209,7 @@ public:
       {\n
         vec3 normal = normalize( vNormal);\n
 
-        vec3 lightPosition = uLightPosition + vec3(uLightXYOffset+uLightSpinOffset, 0.f);\n
+        vec3 lightPosition = uLightPosition + vec3(uLightXYOffset+uLightSpinOffset, 0.0);\n
         mediump vec3 vecToLight = normalize( (lightPosition - vVertex.xyz) * 0.01 );\n
         mediump float spotEffect = pow( max(0.05, vecToLight.z ) - 0.05, 8.0);\n
 
