@@ -61,8 +61,8 @@ const char* const PUSHBUTTON_PRESS_IMAGE = DALI_IMAGE_DIR "button-down.9.png";
 const char* const PUSHBUTTON_DISABLED_IMAGE = DALI_IMAGE_DIR "button-disabled.9.png";
 const char* const PUSHBUTTON_BUTTON_IMAGE = DALI_IMAGE_DIR "button-up.9.png";
 
-const char* const CHECKBOX_UNCHECKED_IMAGE = DALI_IMAGE_DIR "checkbox-unchecked.png";
-const char* const CHECKBOX_CHECKED_IMAGE = DALI_IMAGE_DIR "checkbox-checked.png";
+const char* const CHECKBOX_UNSELECTED_IMAGE = DALI_IMAGE_DIR "checkbox-unselected.png";
+const char* const CHECKBOX_SELECTED_IMAGE = DALI_IMAGE_DIR "checkbox-selected.png";
 
 const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 
@@ -251,7 +251,7 @@ class ButtonsController: public ConnectionTracker
       radioButton.SetPosition( 0, 0 );
       radioButton.SetSelected( true );
 
-      radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButtonToggle );
+      radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
 
       radioButtonsGroup1.Add( radioButton );
     }
@@ -264,7 +264,7 @@ class ButtonsController: public ConnectionTracker
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( 0, DP(50) );
 
-      radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButtonToggle );
+      radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
 
       radioButtonsGroup1.Add( radioButton );
     }
@@ -279,8 +279,8 @@ class ButtonsController: public ConnectionTracker
     checkBoxBackground.SetSize( DP(430), DP(GROUP3_HEIGHT) );
     mContentLayer.Add( checkBoxBackground );
 
-    Dali::Image unchecked = Dali::Image::New( CHECKBOX_UNCHECKED_IMAGE );
-    Dali::Image checked = Dali::Image::New( CHECKBOX_CHECKED_IMAGE );
+    Dali::Image unselected = Dali::Image::New( CHECKBOX_UNSELECTED_IMAGE );
+    Dali::Image selected = Dali::Image::New( CHECKBOX_SELECTED_IMAGE );
 
     int checkYPos = MARGIN_SIZE;
 
@@ -290,15 +290,15 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetPosition( DP(MARGIN_SIZE), DP(checkYPos) );
       checkBox.SetParentOrigin( ParentOrigin::TOP_LEFT );
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      checkBox.SetBackgroundImage( unchecked );
-      checkBox.SetCheckedImage( checked );
+      checkBox.SetBackgroundImage( unselected );
+      checkBox.SetSelectedImage( selected );
       checkBox.SetSize( DP(48), DP(48) );
-      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesToggled );
+      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
 
-    mCheckBox1State = Toolkit::TextView::New( "CheckBox1 is unchecked" );
+    mCheckBox1State = Toolkit::TextView::New( "CheckBox1 is unselected" );
 
     mCheckBox1State.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mCheckBox1State.SetPosition( DP(80), DP(checkYPos) );
@@ -312,16 +312,16 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetName( "checkbox2" );
       checkBox.SetPosition( DP(MARGIN_SIZE), DP(checkYPos) );
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      checkBox.SetBackgroundImage( unchecked );
-      checkBox.SetCheckedImage( checked );
+      checkBox.SetBackgroundImage( unselected );
+      checkBox.SetSelectedImage( selected );
       checkBox.SetSize( DP(48), DP(48) );
-      checkBox.SetChecked( true );
-      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesToggled );
+      checkBox.SetSelected( true );
+      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
 
-    mCheckBox2State = Toolkit::TextView::New( "CheckBox2 is checked" );
+    mCheckBox2State = Toolkit::TextView::New( "CheckBox2 is selected" );
     mCheckBox2State.SetParentOrigin( ParentOrigin::TOP_LEFT );
     mCheckBox2State.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mCheckBox2State.SetPosition( DP(80), DP(checkYPos) );
@@ -335,22 +335,22 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetName( "checkbox3" );
       checkBox.SetPosition( DP(MARGIN_SIZE), DP(checkYPos) );
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      checkBox.SetBackgroundImage( unchecked );
-      checkBox.SetCheckedImage( checked );
+      checkBox.SetBackgroundImage( unselected );
+      checkBox.SetSelectedImage( selected );
       checkBox.SetSize( DP(48), DP(48) );
-      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesToggled );
+      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
 
-    mCheckBox3State = Toolkit::TextView::New( "CheckBox3 is unchecked" );
+    mCheckBox3State = Toolkit::TextView::New( "CheckBox3 is unselected" );
 
     mCheckBox3State.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mCheckBox3State.SetPosition( DP(80), DP(checkYPos) );
 
     checkBoxBackground.Add( mCheckBox3State );
 
-    // Create toggle button
+    // Create togglabe button
     yPos += GROUP3_HEIGHT + MARGIN_SIZE;
 
     Actor toggleBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
@@ -361,18 +361,18 @@ class ButtonsController: public ConnectionTracker
     mContentLayer.Add( toggleBackground );
 
     Toolkit::PushButton toggleButton = Toolkit::PushButton::New();
-    toggleButton.SetToggleButton( true );
+    toggleButton.SetTogglableButton( true );
     toggleButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
     toggleButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     toggleButton.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
-    toggleButton.SetLabel( "Toggle OFF" );
+    toggleButton.SetLabel( "Unselected" );
     toggleButton.SetSize( DP(150), DP(BUTTON_HEIGHT) );
 
     toggleButton.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
     toggleButton.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
     toggleButton.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
-    toggleButton.StateChangedSignal().Connect( this, &ButtonsController::OnButtonToggled );
+    toggleButton.StateChangedSignal().Connect( this, &ButtonsController::OnButtonSelected );
 
     toggleBackground.Add( toggleButton );
   }
@@ -389,31 +389,31 @@ class ButtonsController: public ConnectionTracker
     }
   }
 
-  bool OnButtonToggled( Toolkit::Button button, bool state )
+  bool OnButtonSelected( Toolkit::Button button )
   {
     Toolkit::PushButton pushButton = Toolkit::PushButton::DownCast( button );
     if( pushButton )
     {
-      if( state )
+      if( button.IsSelected() )
       {
-        pushButton.SetLabel( "Toggle ON" );
+        pushButton.SetLabel( "Selected" );
       }
       else
       {
-        pushButton.SetLabel( "Toggle OFF" );
+        pushButton.SetLabel( "Unselected" );
       }
     }
 
     return true;
   }
 
-  bool EnableSelectButtonToggle( Toolkit::Button button, bool state )
+  bool EnableSelectButton( Toolkit::Button button )
   {
-    if( button.GetName() == "radio-select-enable" && state == true )
+    if( button.GetName() == "radio-select-enable" && button.IsSelected() == true )
     {
       mUpdateButton.SetDisabled( false );
     }
-    else if( button.GetName() == "radio-select-disable" && state == true )
+    else if( button.GetName() == "radio-select-disable" && button.IsSelected() == true )
     {
       mUpdateButton.SetDisabled( true );
     }
@@ -438,41 +438,41 @@ class ButtonsController: public ConnectionTracker
     return true;
   }
 
-  bool OnCheckBoxesToggled( Toolkit::Button button, bool state )
+  bool OnCheckBoxesSelected( Toolkit::Button button )
   {
     if( button.GetName() == "checkbox1" )
     {
-      if( state )
+      if( button.IsSelected() )
       {
-        mCheckBox1State.SetText("CheckBox1 is checked");
+        mCheckBox1State.SetText("CheckBox1 is selected");
       }
       else
       {
-        mCheckBox1State.SetText("CheckBox1 is unchecked");
+        mCheckBox1State.SetText("CheckBox1 is unselected");
       }
     }
 
     if( button.GetName() == "checkbox2" )
     {
-      if( state )
+      if( button.IsSelected() )
       {
-        mCheckBox2State.SetText("CheckBox2 is checked");
+        mCheckBox2State.SetText("CheckBox2 is selected");
       }
       else
       {
-        mCheckBox2State.SetText("CheckBox2 is unchecked");
+        mCheckBox2State.SetText("CheckBox2 is unselected");
       }
     }
 
     if( button.GetName() == "checkbox3" )
     {
-      if( state )
+      if( button.IsSelected() )
       {
-        mCheckBox3State.SetText("CheckBox3 is checked");
+        mCheckBox3State.SetText("CheckBox3 is selected");
       }
       else
       {
-        mCheckBox3State.SetText("CheckBox3 is unchecked");
+        mCheckBox3State.SetText("CheckBox3 is unselected");
       }
     }
 

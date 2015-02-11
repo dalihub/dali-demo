@@ -554,17 +554,17 @@ class LoggingController: public ConnectionTracker
     }
   }
 
-  bool LoggingRadioSelect( Toolkit::Button button, bool state )
+  bool LoggingRadioSelect( Toolkit::Button button )
   {
-    if( button.GetName() == LOGGER_1_RADIO_ID && state == true )
+    if( button.GetName() == LOGGER_1_RADIO_ID && button.IsSelected() == true )
     {
       mCurrentLogger = 0;
     }
-    else if( button.GetName() == LOGGER_2_RADIO_ID && state == true )
+    else if( button.GetName() == LOGGER_2_RADIO_ID && button.IsSelected() == true )
     {
       mCurrentLogger = 1;
     }
-    else if( button.GetName() == LOGGER_3_RADIO_ID && state == true )
+    else if( button.GetName() == LOGGER_3_RADIO_ID && button.IsSelected() == true )
     {
       mCurrentLogger = 2;
     }
@@ -592,9 +592,9 @@ class LoggingController: public ConnectionTracker
     }
   }
 
-  bool FrequencyRadioSelect( Toolkit::Button button, bool state )
+  bool FrequencyRadioSelect( Toolkit::Button button )
   {
-    if( button.GetName() == FREQUENCY_1_RADIO_ID && state == true )
+    if( button.GetName() == FREQUENCY_1_RADIO_ID && button.IsSelected() == true )
     {
       if( mPerformanceLoggers[mCurrentLogger] )
       {
@@ -605,7 +605,7 @@ class LoggingController: public ConnectionTracker
         mLoggerStates[mCurrentLogger].frequency = HIGH_FREQUENCY;
       }
     }
-    else if( button.GetName() == FREQUENCY_2_RADIO_ID && state == true )
+    else if( button.GetName() == FREQUENCY_2_RADIO_ID && button.IsSelected() == true )
     {
       if( mPerformanceLoggers[mCurrentLogger] )
       {
@@ -616,7 +616,7 @@ class LoggingController: public ConnectionTracker
         mLoggerStates[mCurrentLogger].frequency = MEDIUM_FREQUENCY;
       }
     }
-    else if( button.GetName() == FREQUENCY_3_RADIO_ID && state == true )
+    else if( button.GetName() == FREQUENCY_3_RADIO_ID && button.IsSelected() == true )
     {
       if( mPerformanceLoggers[mCurrentLogger] )
       {
