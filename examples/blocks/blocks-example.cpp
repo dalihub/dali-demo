@@ -423,7 +423,7 @@ private:
     mLevelContainer = Actor::New();
     mLevelContainer.SetAnchorPoint( AnchorPoint::CENTER );
     mLevelContainer.SetParentOrigin( ParentOrigin::CENTER );
-    mLevelContainer.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+    mLevelContainer.SetSizeMode( SIZE_EQUAL_TO_PARENT );
     mContentLayer.Add( mLevelContainer );
 
     mBrickCount = 0;

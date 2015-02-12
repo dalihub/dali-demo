@@ -298,7 +298,7 @@ private:
   Actor CreatePage()
   {
     Actor page = Actor::New();
-    page.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+    page.SetSizeMode( SIZE_EQUAL_TO_PARENT );
     page.SetParentOrigin( ParentOrigin::CENTER );
     page.SetAnchorPoint( AnchorPoint::CENTER );
 
@@ -450,7 +450,7 @@ private:
    void ApplyEffectToPage(Actor page)
    {
      page.RemoveConstraints();
-     page.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+     page.SetSizeMode( SIZE_EQUAL_TO_PARENT );
 
      switch( mEffectMode )
      {

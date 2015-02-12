@@ -99,8 +99,8 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   toolBar.SetBackground( toolBarBackground );
   toolBar.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
   toolBar.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
-  toolBar.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::SIZE, Dali::ParentSource( Dali::Actor::SIZE ), Dali::EqualToConstraint() ) );
   toolBar.SetSize( 0.0f, style.mToolBarHeight );
+  toolBar.SetSizeMode( Dali::SIZE_EQUAL_TO_PARENT );
   toolBarBackground.SetSortModifier(1.0f);
 
   // Add the tool bar to the too bar layer.
@@ -166,7 +166,7 @@ Dali::Layer CreateView( Dali::Application& application,
   Dali::Layer contentLayer = Dali::Layer::New();
   contentLayer.SetAnchorPoint( Dali::AnchorPoint::CENTER );
   contentLayer.SetParentOrigin( Dali::ParentOrigin::CENTER );
-  contentLayer.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::SIZE, Dali::ParentSource( Dali::Actor::SIZE ), Dali::EqualToConstraint() ) );
+  contentLayer.SetSizeMode( Dali::SIZE_EQUAL_TO_PARENT );
   view.AddContentLayer( contentLayer );
   contentLayer.LowerBelow( toolBarLayer );
 

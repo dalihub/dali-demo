@@ -233,7 +233,7 @@ public:
     mShadowView.SetName("Container");
     mShadowView.SetParentOrigin(ParentOrigin::CENTER);
     mShadowView.SetAnchorPoint(AnchorPoint::CENTER);
-    mShadowView.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+    mShadowView.SetSizeMode( SIZE_EQUAL_TO_PARENT );
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 

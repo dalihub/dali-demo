@@ -164,15 +164,6 @@ const Vector4           DEFAULT_TEXT_STYLE_COLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 const Vector3 INITIAL_OFFSCREEN_POSITION( 1000.0f, 0, -1000.0f );
 
-struct BorderSizeConstraintFunction
-{
-  Vector3 operator()(const Vector3&       current,
-                     const PropertyInput& parentSize)
-  {
-    return parentSize.GetVector3() + ITEM_BORDER_MARGIN_SIZE;
-  }
-};
-
 static Vector3 DepthLayoutItemSizeFunctionPortrait(unsigned int numberOfColumns, float layoutWidth)
 {
   float width = (layoutWidth / static_cast<float>(numberOfColumns + 1)) * DEPTH_LAYOUT_ITEM_SIZE_FACTOR_PORTRAIT;
@@ -897,9 +888,8 @@ public: // From ItemFactory
     borderActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
     borderActor.SetNinePatchBorder( Vector4( ITEM_IMAGE_BORDER_LEFT, ITEM_IMAGE_BORDER_TOP, ITEM_IMAGE_BORDER_RIGHT, ITEM_IMAGE_BORDER_BOTTOM ) );
     borderActor.SetColorMode( USE_OWN_MULTIPLY_PARENT_COLOR ); // darken with parent image-actor
-
-    Constraint constraint = Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), BorderSizeConstraintFunction() );
-    borderActor.ApplyConstraint(constraint);
+    borderActor.SetSizeMode( SIZE_FIXED_OFFSET_FROM_PARENT );
+    borderActor.SetSizeModeFactor( ITEM_BORDER_MARGIN_SIZE );
     actor.Add(borderActor);
     actor.SetKeyboardFocusable( true );
 

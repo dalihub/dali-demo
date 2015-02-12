@@ -199,33 +199,6 @@ struct CarouselEffectOrientationConstraint
 };
 
 /**
- * RescaleConstraint
- * Rescales the inputer scale by the ratio of the height:width of it's parent.
- */
-struct RescaleConstraint
-{
-  /**
-   * Constructor
-   * @param[in] value0 Constant multiplication operand (K).
-   */
-  RescaleConstraint()
-  {
-  }
-
-  /**
-   * @param[in] current The object's current property value
-   * @param[in] property0 The first property to multiplication operand
-   * @return The object's new property value
-   */
-  Vector3 operator()(const Vector3&    current,
-                     const PropertyInput& property0)
-  {
-    return current * Vector3( property0.GetVector3().y / property0.GetVector3().x, 1.0f, 1.0f );
-  }
-
-};
-
-/**
  * ShearEffectConstraint
  *
  * Constrains ShearEffect's tilt to be a function of scrollview's
@@ -514,12 +487,8 @@ public:
     mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
     mScrollView.SetParentOrigin(ParentOrigin::CENTER);
 
-    // Scale ScrollView to fit within parent (mContentLayer)
-    Constraint constraint = Constraint::New<Vector3>( Actor::SCALE,
-                                                    LocalSource( Actor::SIZE ),
-                                                    ParentSource( Actor::SIZE ),
-                                                    ScaleToFitConstraint() );
-    mScrollView.ApplyConstraint(constraint);
+    // Scale ScrollView to fit parent (mContentLayer)
+    mScrollView.SetSizeMode( SIZE_EQUAL_TO_PARENT );
 
     // Add the scroll view to the content layer
     mContentLayer.Add(mScrollView);
@@ -649,14 +618,7 @@ public:
     mScrollView.Add(pageView);
     pageView.SetParentOrigin(ParentOrigin::CENTER);
     pageView.SetPosition(Vector3(stageSize.width * column, 0.0f, 0.0f));
-    pageView.SetSize(stageSize);
-
-    // Resize pageView (which contains a Cluster)
-    Constraint constraintScale = Constraint::New<Vector3>( Actor::SCALE,
-                                                           ParentSource( Actor::SCALE ),
-                                                           RescaleConstraint() );
-    constraintScale.SetRemoveAction(Constraint::Discard);
-    pageView.ApplyConstraint(constraintScale);
+    pageView.SetSizeMode( SIZE_EQUAL_TO_PARENT );
 
     // Create cluster actors, add them to scroll view, and set the shear effect with the given center point.
     Cluster cluster = CreateClusterActor(clusterType, style);
