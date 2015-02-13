@@ -251,7 +251,7 @@ public:
     Vector2 stageSize = Stage::GetCurrent().GetSize();
 
     // Create a border image shared by all the item actors
-    mBorderImage = Image::New(ITEM_BORDER_IMAGE_PATH);
+    mBorderImage = ResourceImage::New(ITEM_BORDER_IMAGE_PATH);
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
@@ -266,14 +266,14 @@ public:
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
-    editButton.SetBackgroundImage( Image::New( EDIT_IMAGE ) );
+    editButton.SetBackgroundImage( ResourceImage::New( EDIT_IMAGE ) );
     editButton.ClickedSignal().Connect( this, &ItemViewExample::OnModeButtonClicked);
     editButton.SetLeaveRequired( true );
     mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create a layout toggle button. (right of toolbar)
     mLayoutButton = Toolkit::PushButton::New();
-    mLayoutButton.SetBackgroundImage( Image::New( SPIRAL_LAYOUT_IMAGE ) );
+    mLayoutButton.SetBackgroundImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE ) );
     mLayoutButton.ClickedSignal().Connect( this, &ItemViewExample::OnLayoutButtonClicked);
     mLayoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
@@ -284,8 +284,8 @@ public:
     mDeleteButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mDeleteButton.SetDrawMode( DrawMode::OVERLAY );
-    mDeleteButton.SetBackgroundImage( Image::New( TOOLBAR_IMAGE ) );
-    mDeleteButton.SetButtonImage( Image::New( DELETE_IMAGE ) );
+    mDeleteButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mDeleteButton.SetButtonImage( ResourceImage::New( DELETE_IMAGE ) );
     mDeleteButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mDeleteButton.ClickedSignal().Connect( this, &ItemViewExample::OnDeleteButtonClicked);
     mDeleteButton.SetLeaveRequired( true );
@@ -298,8 +298,8 @@ public:
     mInsertButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mInsertButton.SetDrawMode( DrawMode::OVERLAY );
-    mInsertButton.SetBackgroundImage( Image::New( TOOLBAR_IMAGE ) );
-    mInsertButton.SetButtonImage( Image::New( INSERT_IMAGE ) );
+    mInsertButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mInsertButton.SetButtonImage( ResourceImage::New( INSERT_IMAGE ) );
     mInsertButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mInsertButton.ClickedSignal().Connect( this, &ItemViewExample::OnInsertButtonClicked);
     mInsertButton.SetLeaveRequired( true );
@@ -312,8 +312,8 @@ public:
     mReplaceButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mReplaceButton.SetDrawMode( DrawMode::OVERLAY );
-    mReplaceButton.SetBackgroundImage( Image::New( TOOLBAR_IMAGE ) );
-    mReplaceButton.SetButtonImage( Image::New( REPLACE_IMAGE ) );
+    mReplaceButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mReplaceButton.SetButtonImage( ResourceImage::New( REPLACE_IMAGE ) );
     mReplaceButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mReplaceButton.ClickedSignal().Connect( this, &ItemViewExample::OnReplaceButtonClicked);
     mReplaceButton.SetLeaveRequired( true );
@@ -844,19 +844,19 @@ public:
       {
         case SPIRAL_LAYOUT:
         {
-          mLayoutButton.SetBackgroundImage( Image::New( SPIRAL_LAYOUT_IMAGE ) );
+          mLayoutButton.SetBackgroundImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE ) );
           break;
         }
 
         case GRID_LAYOUT:
         {
-          mLayoutButton.SetBackgroundImage( Image::New( GRID_LAYOUT_IMAGE ) );
+          mLayoutButton.SetBackgroundImage( ResourceImage::New( GRID_LAYOUT_IMAGE ) );
           break;
         }
 
         case DEPTH_LAYOUT:
         {
-          mLayoutButton.SetBackgroundImage( Image::New( DEPTH_LAYOUT_IMAGE ) );
+          mLayoutButton.SetBackgroundImage( ResourceImage::New( DEPTH_LAYOUT_IMAGE ) );
           break;
         }
 
@@ -885,7 +885,7 @@ public: // From ItemFactory
   virtual Actor NewItem(unsigned int itemId)
   {
     // Create an image actor for this item
-    Image image = Image::New( IMAGE_PATHS[itemId % NUM_IMAGES] );
+    Image image = ResourceImage::New( IMAGE_PATHS[itemId % NUM_IMAGES] );
     Actor actor = ImageActor::New(image);
     actor.SetPosition( INITIAL_OFFSCREEN_POSITION );
 
@@ -924,7 +924,7 @@ public: // From ItemFactory
     }
     actor.Add( checkbox );
 
-    ImageActor tick = ImageActor::New( Image::New(SELECTED_IMAGE) );
+    ImageActor tick = ImageActor::New( ResourceImage::New(SELECTED_IMAGE) );
     tick.SetColorMode( USE_OWN_COLOR );
     tick.SetName( "Tick" );
     tick.SetParentOrigin( ParentOrigin::TOP_RIGHT );

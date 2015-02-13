@@ -493,10 +493,10 @@ public:
                                             "" );
 
     // Create a effect toggle button. (right of toolbar)
-    mLayoutButtonImages[ NO_EFFECT ] = Image::New( LAYOUT_NONE_IMAGE );
-    mLayoutButtonImages[ WOBBLE_EFFECT ] = Image::New( LAYOUT_WOBBLE_IMAGE );
-    mLayoutButtonImages[ CAROUSEL_EFFECT ] = Image::New( LAYOUT_CAROUSEL_IMAGE );
-    mLayoutButtonImages[ SPHERE_EFFECT ] = Image::New( LAYOUT_SPHERE_IMAGE );
+    mLayoutButtonImages[ NO_EFFECT ] = ResourceImage::New( LAYOUT_NONE_IMAGE );
+    mLayoutButtonImages[ WOBBLE_EFFECT ] = ResourceImage::New( LAYOUT_WOBBLE_IMAGE );
+    mLayoutButtonImages[ CAROUSEL_EFFECT ] = ResourceImage::New( LAYOUT_CAROUSEL_IMAGE );
+    mLayoutButtonImages[ SPHERE_EFFECT ] = ResourceImage::New( LAYOUT_SPHERE_IMAGE );
 
     mLayoutButton = Toolkit::PushButton::New();
     mLayoutButton.ClickedSignal().Connect( this, &ClusterController::OnEffectTouched );
@@ -525,7 +525,7 @@ public:
     mContentLayer.Add(mScrollView);
 
     // Create the image border shared by all the cluster image actors
-    mClusterBorderImage = Image::New(CLUSTER_BORDER_IMAGE_PATH);
+    mClusterBorderImage = ResourceImage::New(CLUSTER_BORDER_IMAGE_PATH);
 
     AddCluster( PEOPLE,   ClusterStyleStandard::New(ClusterStyleStandard::ClusterStyle1) );
     AddCluster( TODAY,    ClusterStyleStandard::New(ClusterStyleStandard::ClusterStyle2) );
@@ -556,7 +556,7 @@ public:
     DALI_ASSERT_ALWAYS(paths);
 
     // Add a background image to the cluster
-    Image bg = Image::New( CLUSTER_BACKGROUND_IMAGE_PATH );
+    Image bg = ResourceImage::New( CLUSTER_BACKGROUND_IMAGE_PATH );
     ImageActor image = ImageActor::New(bg);
     clusterActor.SetBackgroundImage(image);
 
@@ -590,7 +590,7 @@ public:
     attribs.SetPixelFormat( Pixel::RGB888  );
 
     // Add a shadow image child actor
-    Image shadowImage = Image::New( CLUSTER_SHADOW_IMAGE_PATH, attribs );
+    Image shadowImage = ResourceImage::New( CLUSTER_SHADOW_IMAGE_PATH, attribs );
     ImageActor shadowActor = ImageActor::New(shadowImage);
 
     // Shadow is not exactly located on the center of the image, so it is moved to a little
@@ -605,7 +605,7 @@ public:
     actor.Add( shadowActor );
 
     // Add a picture image actor to actor (with equal size to the parent).
-    Image image = Image::New( imagePath, attribs );
+    Image image = ResourceImage::New( imagePath, attribs );
     ImageActor imageActor = ImageActor::New( image );
     imageActor.SetParentOrigin( ParentOrigin::CENTER );
     imageActor.SetAnchorPoint( AnchorPoint::CENTER );

@@ -286,9 +286,9 @@ class LoggingController: public ConnectionTracker
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
+      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
+      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -306,9 +306,9 @@ class LoggingController: public ConnectionTracker
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
+      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
+      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -337,9 +337,9 @@ class LoggingController: public ConnectionTracker
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
+      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
+      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -357,9 +357,9 @@ class LoggingController: public ConnectionTracker
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
+      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
+      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -388,9 +388,9 @@ class LoggingController: public ConnectionTracker
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
+      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
+      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -408,9 +408,9 @@ class LoggingController: public ConnectionTracker
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
+      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
+      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
@@ -520,9 +520,9 @@ class LoggingController: public ConnectionTracker
       button.SetPosition( buttonXDP, 0 );
       button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
 
-      button.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
+      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
+      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
 
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 

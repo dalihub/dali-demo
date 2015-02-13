@@ -93,7 +93,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   toolBarLayer.RaiseToTop();
 
   // Tool bar
-  Dali::Image image = Dali::Image::New( toolbarImagePath );
+  Dali::Image image = Dali::ResourceImage::New( toolbarImagePath );
   Dali::ImageActor toolBarBackground = Dali::ImageActor::New( image );
   toolBar = Dali::Toolkit::ToolBar::New();
   toolBar.SetBackground( toolBarBackground );
@@ -145,7 +145,7 @@ Dali::Layer CreateView( Dali::Application& application,
   // Set background image.
   if ( ! backgroundImagePath.empty() )
   {
-    Dali::Image backgroundImage = Dali::Image::New( backgroundImagePath );
+    Dali::Image backgroundImage = Dali::ResourceImage::New( backgroundImagePath );
     Dali::ImageActor backgroundImageActor = Dali::ImageActor::New( backgroundImage );
     view.SetBackground( backgroundImageActor );
   }

@@ -135,8 +135,8 @@ void RadialMenuExample::OnInit(Application& app)
                                       TOOLBAR_IMAGE,
                                       APPLICATION_TITLE );
 
-  mIconPlay = Image::New( PLAY_ICON );
-  mIconStop = Image::New( STOP_ICON );
+  mIconPlay = ResourceImage::New( PLAY_ICON );
+  mIconStop = ResourceImage::New( STOP_ICON );
   mPlayStopButton = Toolkit::PushButton::New();
   mPlayStopButton.SetBackgroundImage( mIconStop );
 
@@ -147,7 +147,7 @@ void RadialMenuExample::OnInit(Application& app)
                       Toolkit::Alignment::HorizontalRight,
                       DemoHelper::DEFAULT_PLAY_PADDING );
 
-  Vector2 imgSize = Image::GetImageSize(TEST_OUTER_RING_FILENAME);
+  Vector2 imgSize = ResourceImage::GetImageSize(TEST_OUTER_RING_FILENAME);
   Vector2 stageSize = stage.GetSize();
   float minStageDimension = std::min(stageSize.width, stageSize.height);
 
@@ -163,7 +163,7 @@ void RadialMenuExample::OnInit(Application& app)
   mRadialSweepView3.SetInitialActorAngle(Degree(-110));
   mRadialSweepView3.SetFinalActorAngle(Degree(0));
 
-  Image dial = Image::New( TEST_DIAL_FILENAME );
+  Image dial = ResourceImage::New( TEST_DIAL_FILENAME );
   mDialActor = ImageActor::New( dial );
   mDialActor.SetPositionInheritanceMode(USE_PARENT_POSITION);
   mDialActor.SetScale(scale);
@@ -238,13 +238,13 @@ RadialSweepView RadialMenuExample::CreateSweepView( std::string imageName,
                                                     Degree finalAngle)
 {
   // Create the image
-  Image image = Image::New(imageName);
+  Image image = ResourceImage::New(imageName);
   mImageActor = ImageActor::New(image);
   mImageActor.SetParentOrigin(ParentOrigin::CENTER);
   mImageActor.SetAnchorPoint(AnchorPoint::CENTER);
 
   // Create the stencil
-  Vector2 imageSize = Image::GetImageSize(imageName);
+  Vector2 imageSize = ResourceImage::GetImageSize(imageName);
   float diameter = std::max(imageSize.width, imageSize.height);
   RadialSweepView radialSweepView = RadialSweepView::New();
   radialSweepView.SetDiameter( diameter );

@@ -194,11 +194,11 @@ public:
                                             TOOLBAR_IMAGE,
                                             "" );
 
-    mEffectIcon[ DepthEffect ]     = Image::New( EFFECT_DEPTH_IMAGE );
-    mEffectIcon[ CubeEffect ]      = Image::New( EFFECT_INNER_CUBE_IMAGE );
-    mEffectIcon[ PageCarouselEffect ] = Image::New( EFFECT_CAROUSEL_IMAGE );
-    mEffectIcon[ PageCubeEffect ]     = Image::New( EFFECT_CAROUSEL_IMAGE );
-    mEffectIcon[ PageSpiralEffect ]   = Image::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIcon[ DepthEffect ]     = ResourceImage::New( EFFECT_DEPTH_IMAGE );
+    mEffectIcon[ CubeEffect ]      = ResourceImage::New( EFFECT_INNER_CUBE_IMAGE );
+    mEffectIcon[ PageCarouselEffect ] = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIcon[ PageCubeEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIcon[ PageSpiralEffect ]   = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
 
     // Create a effect change button. (right of toolbar)
     mEffectChangeButton = Toolkit::PushButton::New();
@@ -563,7 +563,7 @@ private:
 
     attributes.SetSize(width, height);
     attributes.SetScalingMode(ImageAttributes::ShrinkToFit);
-    Image img = Image::New(filename, attributes);
+    Image img = ResourceImage::New(filename, attributes);
     ImageActor actor = ImageActor::New(img);
     actor.SetName( filename );
     actor.SetParentOrigin(ParentOrigin::CENTER);

@@ -120,7 +120,7 @@ TextStyle GetTableTextStyle()
  */
 ImageActor CreateBackground( std::string imagePath )
 {
-  Image image = Image::New( imagePath );
+  Image image = ResourceImage::New( imagePath );
   ImageActor background = ImageActor::New( image );
 
   background.SetAnchorPoint( AnchorPoint::CENTER );
@@ -516,7 +516,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   // create background image
   if( addBackground )
   {
-    Image bg = Image::New( TILE_BACKGROUND );
+    Image bg = ResourceImage::New( TILE_BACKGROUND );
     ImageActor image = ImageActor::New( bg );
     image.SetAnchorPoint( AnchorPoint::CENTER );
     image.SetParentOrigin( ParentOrigin::CENTER );
@@ -562,7 +562,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
 
 ImageActor DaliTableView::NewStencilImage()
 {
-  Image alpha = Image::New( TILE_BACKGROUND_ALPHA );
+  Image alpha = ResourceImage::New( TILE_BACKGROUND_ALPHA );
 
   ImageActor stencilActor = ImageActor::New( alpha );
   stencilActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
@@ -908,7 +908,7 @@ void DaliTableView::GenerateCircle( const Size& size, std::vector< unsigned char
 
 ImageActor DaliTableView::CreateLogo( std::string imagePath )
 {
-  Image image = Image::New( imagePath );
+  Image image = ResourceImage::New( imagePath );
   ImageActor logo = ImageActor::New( image );
 
   logo.SetAnchorPoint( AnchorPoint::CENTER );

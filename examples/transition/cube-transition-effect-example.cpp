@@ -120,7 +120,7 @@ private:
    * Start the transition
    * @param[in] image The image content of the imageActor for transition
    */
-  void OnImageLoaded(Image image);
+  void OnImageLoaded(ResourceImage image);
   /**
    * Main key event handler
    */
@@ -209,9 +209,9 @@ void CubeTransitionApp::OnInit( Application& application )
   mContent = DemoHelper::CreateView( application, mView, mToolBar, "", TOOLBAR_IMAGE, "" );
 
   // Add an effect-changing button on the right of the tool bar.
-  mImageWave = Image::New( EFFECT_WAVE_IMAGE );
-  mImageCross = Image::New( EFFECT_CROSS_IMAGE );
-  mImageFold = Image::New( EFFECT_FOLD_IMAGE );
+  mImageWave = ResourceImage::New( EFFECT_WAVE_IMAGE );
+  mImageCross = ResourceImage::New( EFFECT_CROSS_IMAGE );
+  mImageFold = ResourceImage::New( EFFECT_FOLD_IMAGE );
   mEffectChangeButton = Toolkit::PushButton::New();
   mEffectChangeButton.SetBackgroundImage(mImageWave);
   mEffectChangeButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
@@ -222,8 +222,8 @@ void CubeTransitionApp::OnInit( Application& application )
   mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
   //Add an slideshow icon on the right of the title
-  mIconSlideshowStart = Image::New( SLIDE_SHOW_START_ICON );
-  mIconSlideshowStop = Image::New( SLIDE_SHOW_STOP_ICON );
+  mIconSlideshowStart = ResourceImage::New( SLIDE_SHOW_START_ICON );
+  mIconSlideshowStop = ResourceImage::New( SLIDE_SHOW_STOP_ICON );
   mSlideshowButton = Toolkit::PushButton::New();
   mSlideshowButton.SetBackgroundImage( mIconSlideshowStart );
   mSlideshowButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnSildeshowButtonClicked );
@@ -266,7 +266,7 @@ void CubeTransitionApp::OnInit( Application& application )
   // show the first image
   mImageConstraint = Constraint::New<Vector3>( Actor::SCALE, LocalSource( Actor::SIZE ), ParentSource( Actor::SIZE ), ScaleToFitKeepAspectRatioConstraint() );
 
-  mCurrentImage = ImageActor::New( Image::New( IMAGES[mIndex] ) );
+  mCurrentImage = ImageActor::New( ResourceImage::New( IMAGES[mIndex] ) );
   mCurrentImage.SetPositionInheritanceMode( USE_PARENT_POSITION );
   mCurrentImage.ApplyConstraint( mImageConstraint );
   mParent.Add( mCurrentImage );
@@ -308,23 +308,24 @@ void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
 
 void CubeTransitionApp::GoToNextImage()
 {
-  Image image = Image::New( IMAGES[ mIndex ] );
+  ResourceImage image = ResourceImage::New( IMAGES[ mIndex ] );
   mNextImage = ImageActor::New( image );
   mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION);
   mNextImage.ApplyConstraint( mImageConstraint );
   mCurrentEffect.SetTargetImage(mNextImage);
-  mIsImageLoading = true;
   if( image.GetLoadingState() == ResourceLoadingSucceeded )
   {
-      OnImageLoaded( image );
+    mIsImageLoading = false;
+    OnImageLoaded( image );
   }
   else
   {
+    mIsImageLoading = true;
     image.LoadingFinishedSignal().Connect( this, &CubeTransitionApp::OnImageLoaded );
   }
 }
 
-void CubeTransitionApp::OnImageLoaded(Image image)
+void CubeTransitionApp::OnImageLoaded(ResourceImage image)
 {
    mIsImageLoading = false;
    mCurrentEffect.StartTransition( mPanPosition, mPanDisplacement );

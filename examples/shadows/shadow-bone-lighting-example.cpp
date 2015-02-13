@@ -148,7 +148,7 @@ public:
                                         "" );
 
     // Add an effect-changing button on the right of the tool bar.
-    Image imageChangeEffect = Image::New( CHANGE_EFFECT_IMAGE );
+    Image imageChangeEffect = ResourceImage::New( CHANGE_EFFECT_IMAGE );
     Toolkit::PushButton effectChangeButton = Toolkit::PushButton::New();
     effectChangeButton.SetBackgroundImage(imageChangeEffect);
     effectChangeButton.ClickedSignal().Connect( this, &TestApp::OnEffectButtonClicked );
@@ -164,7 +164,7 @@ public:
     mTitleActor.SetStyleToCurrentText( DemoHelper::GetDefaultTextStyle() );
 
     //Add a reset button
-    Image resetImage = Image::New( RESET_ICON );
+    Image resetImage = ResourceImage::New( RESET_ICON );
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
     resetButton.SetBackgroundImage( resetImage );
     resetButton.ClickedSignal().Connect( this, &TestApp::OnResetPressed );
@@ -237,7 +237,7 @@ public:
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
-    Image brickWall = Image::New(DALI_IMAGE_DIR "brick-wall.jpg");
+    Image brickWall = ResourceImage::New(DALI_IMAGE_DIR "brick-wall.jpg");
     mShadowPlaneBg = ImageActor::New(brickWall);
     mShadowPlaneBg.SetParentOrigin(ParentOrigin::CENTER);
     mShadowPlaneBg.SetAnchorPoint(AnchorPoint::CENTER);

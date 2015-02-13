@@ -318,7 +318,7 @@ private:
 
     // Add a button to change background. (right of toolbar)
     mChangeTextureButton = Toolkit::PushButton::New();
-    mChangeTextureButton.SetBackgroundImage( Image::New( CHANGE_TEXTURE_ICON ) );
+    mChangeTextureButton.SetBackgroundImage( ResourceImage::New( CHANGE_TEXTURE_ICON ) );
     mChangeTextureButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeTexture );
     toolBar.AddControl( mChangeTextureButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -326,7 +326,7 @@ private:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change mesh pattern. ( left of bar )
     mChangeMeshButton = Toolkit::PushButton::New();
-    mChangeMeshButton.SetBackgroundImage( Image::New( CHANGE_MESH_ICON ) );
+    mChangeMeshButton.SetBackgroundImage( ResourceImage::New( CHANGE_MESH_ICON ) );
     mChangeMeshButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeMesh );
     toolBar.AddControl( mChangeMeshButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -338,7 +338,7 @@ private:
     mNoEffect = NoEffect::New(); // used in the other situations, basic render shader
     // Create the mesh from the obj file and add to stage
     mMaterial =  Material::New( "Material" ) ;
-    mMaterial.SetDiffuseTexture(Image::New(TEXTURE_IMAGES[mCurrentTextureId]));
+    mMaterial.SetDiffuseTexture(ResourceImage::New(TEXTURE_IMAGES[mCurrentTextureId]));
     CreateSurface( MESH_FILES[mCurrentMeshId] );
 
     // Connect the callback to the touch signal on the mesh actor
@@ -371,7 +371,7 @@ private:
   bool OnChangeTexture( Toolkit::Button button )
   {
     mCurrentTextureId = ( mCurrentTextureId + 1 ) % NUM_TEXTURE_IMAGES;
-    mMaterial.SetDiffuseTexture(Image::New(TEXTURE_IMAGES[mCurrentTextureId]));
+    mMaterial.SetDiffuseTexture(ResourceImage::New(TEXTURE_IMAGES[mCurrentTextureId]));
 
     return true;
   }

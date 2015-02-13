@@ -149,8 +149,8 @@ public:
                                             APPLICATION_TITLE );
 
     //Add an effects icon on the right of the title
-    mIconEffectsOff = Image::New( EFFECTS_OFF_ICON );
-    mIconEffectsOn = Image::New( EFFECTS_ON_ICON );
+    mIconEffectsOff = ResourceImage::New( EFFECTS_OFF_ICON );
+    mIconEffectsOn = ResourceImage::New( EFFECTS_ON_ICON );
     mActorEffectsButton = Toolkit::PushButton::New();
     mActorEffectsButton.SetBackgroundImage( mIconEffectsOff );
     mActorEffectsButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnEffectButtonClicked );
@@ -158,7 +158,7 @@ public:
 
     // Creates a mode button.
     // Create a effect toggle button. (right of toolbar)
-    Image imageLayout = Image::New( LAYOUT_IMAGE );
+    Image imageLayout = ResourceImage::New( LAYOUT_IMAGE );
     Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
     layoutButton.SetBackgroundImage(imageLayout);
     layoutButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnLayoutButtonClicked);
@@ -187,7 +187,7 @@ public:
     // Motion blurred actor
     //
 
-    Image image = Image::New( MOTION_BLUR_ACTOR_IMAGE1 );
+    Image image = ResourceImage::New( MOTION_BLUR_ACTOR_IMAGE1 );
     mMotionBlurImageActor = ImageActor::New(image);
     mMotionBlurImageActor.SetParentOrigin( ParentOrigin::CENTER );
     mMotionBlurImageActor.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
@@ -478,7 +478,7 @@ public:
       mCurrentImage = 0;
     }
 
-    Image blurImage = Image::New( MOTION_BLUR_ACTOR_IMAGES[mCurrentImage] );
+    Image blurImage = ResourceImage::New( MOTION_BLUR_ACTOR_IMAGES[mCurrentImage] );
     mMotionBlurImageActor.SetImage(blurImage);
   }
 
