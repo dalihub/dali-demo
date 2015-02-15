@@ -251,6 +251,9 @@ void DaliTableView::Initialize( Application& application )
 
   const Vector2 stageSize = Stage::GetCurrent().GetSize();
 
+  TextAbstraction::FontClient fontClient = TextAbstraction::FontClient::Get();
+  fontClient.SetDpi( 96, 96 );
+
   // Background
   mBackground = CreateBackground( mBackgroundImagePath );
   // set same size as parent actor
@@ -521,13 +524,13 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
     image.Add( stencil );
   }
 
-    TextLabel label = TextLabel::New();
-    label.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    label.SetProperty( TextLabel::PROPERTY_MULTI_LINE, true );
-    label.SetProperty( TextLabel::PROPERTY_TEXT, title );
-    label.SetColor( Color::WHITE );
-    content.Add( label );
+  TextLabel label = TextLabel::New();
+  label.SetParentOrigin( ParentOrigin::TOP_LEFT );
+  label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  label.SetProperty( TextLabel::PROPERTY_MULTI_LINE, true );
+  label.SetProperty( TextLabel::PROPERTY_TEXT, title );
+  label.SetColor( Color::BLACK );
+  content.Add( label );
 
   // Set the tile to be keyboard focusable
   tile.SetKeyboardFocusable(true);
