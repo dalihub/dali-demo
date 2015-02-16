@@ -532,6 +532,9 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   label.SetColor( Color::BLACK );
   content.Add( label );
 
+  // FIXME - This is a kludge because size negotiation is not finished
+  label.SetSize( parentSize );
+
   // Set the tile to be keyboard focusable
   tile.SetKeyboardFocusable(true);
 
