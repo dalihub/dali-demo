@@ -14,6 +14,7 @@ Requires(postun): /sbin/ldconfig
 Requires: dali
 Requires: dali-adaptor
 Requires: dali-toolkit
+BuildRequires:  cmake
 BuildRequires:  boost-devel
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(capi-appfw-application)
@@ -47,13 +48,10 @@ CXXFLAGS+=" -Wall -g -O2"
 LDFLAGS+=" -Wl,--rpath=$PREFIX/lib -Wl,--as-needed -fPIC"
 
 %ifarch %{arm}
-EXTRA_CONFIGURE_OPTIONS=" --host=arm"
 CXXFLAGS+=" -D_ARCH_ARM_"
 %endif
 
-libtoolize --force
-cd %{_builddir}/%{name}-%{version}/build/tizen && autoreconf --install
-cd %{_builddir}/%{name}-%{version}/build/tizen && CXXFLAGS=$CXXFLAGS LDFLAGS=$LDFLAGS DALI_APP_DIR=%{dali_app_ro_dir} ./configure --prefix=$PREFIX $EXTRA_CONFIGURE_OPTIONS
+cd %{_builddir}/%{name}-%{version}/build/tizen-cmake && cmake -DDALI_APP_DIR=%{dali_app_ro_dir} .
 
 make %{?jobs:-j%jobs}
 
