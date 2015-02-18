@@ -32,7 +32,7 @@
           "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
         }
       },
-      "pressed-state-actor": {
+      "selected-state-actor": {
         "type": "ImageActor",
         "image": {
           "filename": "{DALI_IMAGE_DIR}blocks-brick-2.png"
@@ -53,22 +53,22 @@
       "size": [0, 200, 0],
       "label-actor": {
         "type": "TextView",
-        "text": "Dimmed"
+        "text": "Disabled"
       },
-      "dimmed": true,
+      "disabled": true,
       "normal-state-actor": {
         "type": "ImageActor",
         "image": {
           "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
         }
       },
-      "pressed-state-actor": {
+      "selected-state-actor": {
         "type": "ImageActor",
         "image": {
           "filename": "{DALI_IMAGE_DIR}blocks-brick-2.png"
         }
       },
-      "dimmed-state-actor": {
+      "disabled-state-actor": {
         "type": "ImageActor",
         "image": {
           "filename": "{DALI_IMAGE_DIR}blocks-brick-3.png"
@@ -97,7 +97,7 @@
           "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
         }
       },
-      "pressed-state-actor": {
+      "selected-state-actor": {
         "type": "ImageActor",
         "style": "STYLE_NINE_PATCH",
         "border": [26, 24, 26, 23],
@@ -106,7 +106,7 @@
         }
       },
       "signals": [{
-        "name": "toggled",
+        "name": "selected",
         "action": "set",
         "actor": "toggle-button",
         "property": "label-actor",
