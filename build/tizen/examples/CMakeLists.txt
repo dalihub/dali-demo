@@ -109,3 +109,8 @@ SET(TEXT_LABEL_SRCS ${EXAMPLES_SRC_DIR}/text/text-label-example.cpp)
 ADD_EXECUTABLE(text-label.example ${TEXT_LABEL_SRCS})
 TARGET_LINK_LIBRARIES(text-label.example ${REQUIRED_PKGS_LDFLAGS})
 INSTALL(TARGETS text-label.example DESTINATION ${BINDIR})
+
+SET(TEXT_LABEL_MULTI_LANGUAGE_SRCS ${EXAMPLES_SRC_DIR}/text/text-label-multi-language-example.cpp ${EXAMPLES_SRC_DIR}/text/vertical-layout.cpp ${EXAMPLES_SRC_DIR}/text/vertical-layout-impl.cpp)
+ADD_EXECUTABLE(text-label-multi-language.example ${TEXT_LABEL_MULTI_LANGUAGE_SRCS})
+TARGET_LINK_LIBRARIES(text-label-multi-language.example ${REQUIRED_PKGS_LDFLAGS})
+INSTALL(TARGETS text-label-multi-language.example DESTINATION ${BINDIR})
