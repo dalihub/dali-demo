@@ -45,6 +45,7 @@
 #include <algorithm>
 #include <map>
 #include <dali-toolkit/dali-toolkit.h>
+#include <iostream>
 
 // INTERNAL INCLUDES
 #include "grid-flags.h"
