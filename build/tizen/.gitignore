@@ -3,3 +3,11 @@ CMakeFiles/
 cmake_install.cmake
 demo/dali-demo
 install_manifest.txt
+/demo/dali-demo
+/demo/dali-examples
+/demo/dali-performance
+/demo/performance.core
+/docs/dali.doxy
+/examples/*.demo
+/performance/dali-performance
+/performance/performance.*

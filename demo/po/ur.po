@@ -1,0 +1,50 @@
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "بلبلے"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "اینٹیں"
+
+msgid "DALI_DEMO_STR_TITLE_CLUSTER"
+msgstr "کلسٹر"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "کیوب منتقلی"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "حل منتقلی"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "چیزوں کی فہرست"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "مکبر"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "دھندلانے کی حرکت"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "کھینچھنے کی حرکت"
+
+msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
+msgstr "کتاب"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "ریڈیل مینو"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "رفراکشن"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "سکرول ویو"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "روشنی اور سائے"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "سکرپٹ"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "تصویر پیمائی"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "لیبل"

@@ -23,6 +23,7 @@ BuildRequires:  dali-toolkit-devel
 BuildRequires:  dali-adaptor-devel
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(egl)
+BuildRequires:  gettext-tools
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations

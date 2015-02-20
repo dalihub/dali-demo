@@ -1,0 +1,50 @@
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "气泡"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "块体"
+
+msgid "DALI_DEMO_STR_TITLE_CLUSTER"
+msgstr "叢集"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "方块 切换效果"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "冰消瓦解 切换效果"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "項目 檢視"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "放大鏡"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "动作 模糊"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "动作 拉伸"
+
+msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
+msgstr "页面"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "射线图"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "折光"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "捲動"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "阴影"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "指令檔"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "图像 制定級數"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "标签"

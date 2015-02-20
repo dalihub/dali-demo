@@ -1,0 +1,50 @@
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "Burbujas"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "Bloques"
+
+msgid "DALI_DEMO_STR_TITLE_CLUSTER"
+msgstr "Agrupación"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "Transición cubos"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "Transición disolver"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "Vista de elementos"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "Lupa"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "Desenfoque de movimiento"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "Movimiento con deformación"
+
+msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
+msgstr "Vista de páginas"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "Menú radial"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "Refracción"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "Vista de desplazamiento"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "Luces y sombras"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "Interfaz definida por Script"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "Modos de escalado de imagen"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "Etiqueta de texto"
