@@ -556,7 +556,6 @@ public:
     ImageAttributes attribs = ImageAttributes::New();
     attribs.SetSize(CLUSTER_IMAGE_THUMBNAIL_WIDTH, CLUSTER_IMAGE_THUMBNAIL_HEIGHT);
     attribs.SetScalingMode(Dali::ImageAttributes::ShrinkToFit);
-    attribs.SetPixelFormat( Pixel::RGB888  );
 
     // Add a shadow image child actor
     Image shadowImage = ResourceImage::New( CLUSTER_SHADOW_IMAGE_PATH, attribs );
