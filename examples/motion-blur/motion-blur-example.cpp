@@ -88,9 +88,25 @@ const Vector3 BUTTON_TITLE_LABEL_INSTRUCTIONS_POPUP_SIZE_CONSTRAINT( 1.0f, 1.0f,
 const float BUTTON_TITLE_LABEL_Y_OFFSET = 0.05f;
 
 const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to new orientation.
+
+/**
+ * @brief Load an image, scaled-down to no more than the dimensions passed in.
+ *
+ * Uses ImageAttributes::ShrinkToFit which ensures the resulting image is
+ * smaller than or equal to the specified dimensions while preserving its
+ * original aspect ratio.
+ */
+ResourceImage LoadImageFittedInBox( const char * const imagePath, uint32_t maxWidth, uint32_t maxHeight )
+{
+  // Load the image nicely scaled-down to fit within the specified max width and height:
+  ImageAttributes attributes;
+  attributes.SetSize( maxWidth, maxHeight);
+  attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
+  attributes.SetScalingMode( ImageAttributes::ShrinkToFit );
+  return ResourceImage::New( imagePath, attributes );
+}
+
 } // unnamed namespace
-
-
 
 
 //
@@ -187,10 +203,15 @@ public:
     // Motion blurred actor
     //
 
-    Image image = ResourceImage::New( MOTION_BLUR_ACTOR_IMAGE1 );
+    // Scale down actor to fit on very low resolution screens with space to interact:
+    Size stageSize = Stage::GetCurrent().GetSize();
+    mMotionBlurActorSize = Size( std::min( stageSize.x * 0.3f, MOTION_BLUR_ACTOR_WIDTH ), std::min( stageSize.y * 0.3f, MOTION_BLUR_ACTOR_HEIGHT ) );
+    mMotionBlurActorSize = Size( std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ), std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ) );
+
+    Image image = LoadImageFittedInBox( MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y );
     mMotionBlurImageActor = ImageActor::New(image);
     mMotionBlurImageActor.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
+    mMotionBlurImageActor.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
 
     mContentLayer.Add( mMotionBlurImageActor );
 
@@ -207,8 +228,8 @@ public:
 
     mMotionBlurImageActor2 = ImageActor::New(image);
     mMotionBlurImageActor2.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor2.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
-    mMotionBlurImageActor2.SetPosition(MOTION_BLUR_ACTOR_WIDTH * 1.1f, 0.0f);
+    mMotionBlurImageActor2.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
+    mMotionBlurImageActor2.SetPosition(mMotionBlurActorSize.x * 1.1f, 0.0f);
     mMotionBlurImageActor.Add( mMotionBlurImageActor2 );
 
     // Create shader used for doing motion blur
@@ -225,8 +246,8 @@ public:
 
     mMotionBlurImageActor3 = ImageActor::New(image);
     mMotionBlurImageActor3.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor3.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
-    mMotionBlurImageActor3.SetPosition(-MOTION_BLUR_ACTOR_WIDTH * 1.1f, 0.0f);
+    mMotionBlurImageActor3.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
+    mMotionBlurImageActor3.SetPosition(-mMotionBlurActorSize.x * 1.1f, 0.0f);
     mMotionBlurImageActor.Add( mMotionBlurImageActor3 );
 
     // Create shader used for doing motion blur
@@ -243,8 +264,8 @@ public:
 
     mMotionBlurImageActor4 = ImageActor::New(image);
     mMotionBlurImageActor4.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor4.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
-    mMotionBlurImageActor4.SetPosition(0.0f, MOTION_BLUR_ACTOR_HEIGHT * 1.1f);
+    mMotionBlurImageActor4.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
+    mMotionBlurImageActor4.SetPosition(0.0f, mMotionBlurActorSize.y * 1.1f);
     mMotionBlurImageActor.Add( mMotionBlurImageActor4 );
 
     // Create shader used for doing motion blur
@@ -261,8 +282,8 @@ public:
 
     mMotionBlurImageActor5 = ImageActor::New(image);
     mMotionBlurImageActor5.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor5.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
-    mMotionBlurImageActor5.SetPosition(0.0f, -MOTION_BLUR_ACTOR_HEIGHT * 1.1f);
+    mMotionBlurImageActor5.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
+    mMotionBlurImageActor5.SetPosition(0.0f, -mMotionBlurActorSize.y * 1.1f);
     mMotionBlurImageActor.Add( mMotionBlurImageActor5 );
 
     // Create shader used for doing motion blur
@@ -478,7 +499,7 @@ public:
       mCurrentImage = 0;
     }
 
-    Image blurImage = ResourceImage::New( MOTION_BLUR_ACTOR_IMAGES[mCurrentImage] );
+    Image blurImage = LoadImageFittedInBox( MOTION_BLUR_ACTOR_IMAGES[mCurrentImage], mMotionBlurActorSize.x, mMotionBlurActorSize.y );
     mMotionBlurImageActor.SetImage(blurImage);
   }
 
@@ -498,6 +519,7 @@ private:
   // Motion blur
   MotionBlurEffect mMotionBlurEffect;
   ImageActor mMotionBlurImageActor;
+  Size mMotionBlurActorSize;
 
 #ifdef MULTIPLE_MOTION_BLURRED_ACTORS
   MotionBlurEffect mMotionBlurEffect2;
