@@ -33,6 +33,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <dirent.h>
 #include <stdio.h>
+#include <iostream>
 
 //#include <boost/regex.hpp>
 #include "sys/stat.h"

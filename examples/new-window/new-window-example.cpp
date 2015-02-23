@@ -16,6 +16,8 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include "../shared/view.h"
+#include <cstdio>
+#include <iostream>
 
 using namespace Dali;
 using namespace Dali::Toolkit;

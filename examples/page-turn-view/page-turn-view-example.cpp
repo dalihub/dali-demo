@@ -15,11 +15,12 @@
  *
  */
 
+#include <dali/dali.h>
+#include <dali-toolkit/dali-toolkit.h>
 #include <assert.h>
 #include <cstdlib>
 #include <string.h>
-#include <dali/dali.h>
-#include <dali-toolkit/dali-toolkit.h>
+#include <iostream>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
