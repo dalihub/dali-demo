@@ -993,7 +993,7 @@ private:
     text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
     text.SetStyleToCurrentText( defaultTextStyle );
     text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::SIZE_WIDTH, Dali::ParentSource( Dali::Actor::SIZE_WIDTH ), Dali::EqualToConstraint() ) );
+    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::Property::SizeWidth, Dali::ParentSource( Dali::Actor::Property::SizeWidth ), Dali::EqualToConstraint() ) );
     text.SetZ( -0.9f );
     slider.Add( text );
 
@@ -1016,7 +1016,7 @@ private:
     text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
     text.SetStyleToCurrentText( defaultTextStyle );
     text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::SIZE_WIDTH, Dali::ParentSource( Dali::Actor::SIZE_WIDTH ), Dali::EqualToConstraint() ) );
+    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::Property::SizeWidth, Dali::ParentSource( Dali::Actor::Property::SizeWidth ), Dali::EqualToConstraint() ) );
     textContainer.Add( text );
 
     mMenu.Show();
