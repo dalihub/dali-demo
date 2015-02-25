@@ -421,7 +421,8 @@ private:
     mLevelContainer = Actor::New();
     mLevelContainer.SetAnchorPoint( AnchorPoint::CENTER );
     mLevelContainer.SetParentOrigin( ParentOrigin::CENTER );
-    mLevelContainer.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    mLevelContainer.SetRelayoutEnabled( true );
+    mLevelContainer.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     mContentLayer.Add( mLevelContainer );
 
     mBrickCount = 0;
@@ -593,6 +594,7 @@ private:
     ImageActor brick = ImageActor::New(img);
     brick.SetParentOrigin(ParentOrigin::TOP_LEFT);
     brick.SetAnchorPoint(AnchorPoint::CENTER);
+    brick.SetRelayoutEnabled( false );
     brick.SetSize( brickSize );
     brick.SetPosition( Vector3( position ) );
 
@@ -625,6 +627,7 @@ private:
     ImageActor actor = ImageActor::New(img);
     actor.SetParentOrigin(ParentOrigin::TOP_LEFT);
     actor.SetAnchorPoint(AnchorPoint::CENTER);
+    actor.SetRelayoutEnabled( false );
     return actor;
   }
 

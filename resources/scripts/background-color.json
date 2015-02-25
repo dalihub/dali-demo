@@ -29,6 +29,7 @@
     // A container with a yellow background
     {
       "type": "Control",
+      "relayout-enabled": false,
       "parent-origin": "CENTER",
       "anchor-point": "BOTTOM_CENTER",
       "background-color": [1, 1, 0, 1],
@@ -38,6 +39,7 @@
     // A container with an image
     {
       "type": "Control",
+      "relayout-enabled": false,
       "parent-origin": "CENTER",
       "anchor-point": "TOP_CENTER",
       "size": [400, 150, 1],
@@ -51,6 +53,7 @@
     // A container with the same image blended in with a blue background
     {
       "type": "Control",
+      "relayout-enabled": false,
       "parent-origin": "BOTTOM_CENTER",
       "anchor-point": "BOTTOM_CENTER",
       "size": [400, 150, 1],

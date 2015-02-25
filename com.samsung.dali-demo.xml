@@ -68,7 +68,7 @@
 		<label>Image Scaling Modes</label>
 	</ui-application>
 	<ui-application appid="buttons.example" exec="/usr/apps/com.samsung.dali-demo/bin/buttons.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Radio Buttons</label>
+		<label>Buttons</label>
 	</ui-application>
 	<ui-application appid="text-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text View</label>
@@ -84,5 +84,8 @@
 	</ui-application>
 	<ui-application appid="atlas.example" exec="/usr/apps/com.samsung.dali-demo/bin/atlas.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Atlas</label>
+	</ui-application>
+	<ui-application appid="size-negotiation.example" exec="/usr/apps/com.samsung.dali-demo/bin/size-negotiation.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Size Negotiation</label>
 	</ui-application>
 </manifest>
