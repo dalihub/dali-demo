@@ -685,7 +685,7 @@ void DaliTableView::OnKeyEvent( const KeyEvent& event )
 void DaliTableView::SetupBackground( Actor bubbleContainer, Actor backgroundLayer, const Vector2& size )
 {
   // Create distance field shape.
-  BitmapImage distanceField;
+  BufferImage distanceField;
   Size imageSize( 512, 512 );
   CreateShapeImage( CIRCLE, imageSize, distanceField );
 
@@ -703,7 +703,7 @@ void DaliTableView::SetupBackground( Actor bubbleContainer, Actor backgroundLaye
   AddBackgroundActors( bubbleContainer, NUM_BACKGROUND_IMAGES, distanceField, size );
 }
 
-void DaliTableView::AddBackgroundActors( Actor layer, int count, BitmapImage distanceField, const Dali::Vector2& size )
+void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage distanceField, const Dali::Vector2& size )
 {
   for( int i = 0; i < count; ++i )
   {
@@ -751,10 +751,10 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BitmapImage dis
   }
 }
 
-void DaliTableView::CreateShapeImage( ShapeType shapeType, const Size& size, BitmapImage& distanceFieldOut )
+void DaliTableView::CreateShapeImage( ShapeType shapeType, const Size& size, BufferImage& distanceFieldOut )
 {
   // this bitmap will hold the alpha map for the distance field shader
-  distanceFieldOut = BitmapImage::New( size.width, size.height, Pixel::A8 );
+  distanceFieldOut = BufferImage::New( size.width, size.height, Pixel::A8 );
 
   // Generate bit pattern
   std::vector< unsigned char > imageDataA8;

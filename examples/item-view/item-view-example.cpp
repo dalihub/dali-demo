@@ -342,7 +342,7 @@ public:
     SetLayoutImage();
 
     // Store one 1x1 white image for multiple items to share for backgrounds:
-    mWhiteImage = BitmapImage::WHITE();
+    mWhiteImage = BufferImage::WHITE();
   }
 
   Actor OnKeyboardPreFocusChange( Actor current, Actor proposed, Control::KeyboardFocusNavigationDirection direction )
@@ -1124,7 +1124,7 @@ private:
 
   unsigned int mAlphaFuncIndex;
   TextView mAlphaFunctionText;
-  BitmapImage mWhiteImage;
+  BufferImage mWhiteImage;
 };
 
 void RunTest(Application& app)
