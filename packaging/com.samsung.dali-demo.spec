@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    1.0.29
+Version:    1.0.30
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -52,7 +52,7 @@ LDFLAGS+=" -Wl,--rpath=$PREFIX/lib -Wl,--as-needed -fPIC"
 CXXFLAGS+=" -D_ARCH_ARM_"
 %endif
 
-cd %{_builddir}/%{name}-%{version}/build/tizen-cmake && cmake -DDALI_APP_DIR=%{dali_app_ro_dir} .
+cd %{_builddir}/%{name}-%{version}/build/tizen && cmake -DDALI_APP_DIR=%{dali_app_ro_dir} .
 
 make %{?jobs:-j%jobs}
 
@@ -63,9 +63,6 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 cd build/tizen
 %make_install DALI_APP_DIR=%{dali_app_ro_dir}
-
-mkdir -p %{buildroot}/%{dali_app_exe_dir}
-mv %{buildroot}/%{_bindir}/* %{buildroot}/%{dali_app_exe_dir}
 
 mkdir -p %{buildroot}%{dali_xml_file_dir}
 cp -f %{_builddir}/%{name}-%{version}/%{name}.xml %{buildroot}%{dali_xml_file_dir}

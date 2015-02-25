@@ -33,6 +33,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <dirent.h>
 #include <stdio.h>
+#include <iostream>
 
 //#include <boost/regex.hpp>
 #include "sys/stat.h"
@@ -507,7 +508,7 @@ public:
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
-    editButton.SetBackgroundImage( Image::New( EDIT_IMAGE ) );
+    editButton.SetBackgroundImage( ResourceImage::New( EDIT_IMAGE ) );
     editButton.ClickedSignal().Connect( this, &ExampleApp::OnToolSelectLayout);
     editButton.SetLeaveRequired( true );
     mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );

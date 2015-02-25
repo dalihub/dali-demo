@@ -20,6 +20,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <iostream>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -28,9 +29,6 @@ using namespace DemoHelper;
 
 namespace
 {
-const char* gModelFile = DALI_MODEL_DIR "AlbumCute.dae";
-const char* gBinaryModelFile = DALI_MODEL_DIR "AlbumCute.dali-bin";
-
 const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 
@@ -40,6 +38,10 @@ const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 //const char* APPLICATION_TITLE_ROTATE_SCENE( "Lighting: Rotate Scene" );
 const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
 const char* RESET_ICON( DALI_IMAGE_DIR "icon-reset.png" );
+
+const char* SCENE_IMAGE_1( DALI_IMAGE_DIR "gallery-small-10.jpg");
+const char* SCENE_IMAGE_2( DALI_IMAGE_DIR "gallery-small-42.jpg");
+const char* SCENE_IMAGE_3( DALI_IMAGE_DIR "gallery-small-48.jpg");
 
 const Quaternion JAUNTY_ROTATION(Math::PI/5.0f, Math::PI/5.0f, 0.0f); // Euler angles
 const float MIN_PINCH_SCALE( 0.3f );
@@ -56,7 +58,7 @@ const Vector2 DEFAULT_STAGE_SIZE( 480.0f, 800.0f );
 }
 
 /**
- * This example shows a fixed point light onto an animating model
+ * This example shows a fixed point light onto an animating set of images
  * casting a shadow onto a wall. The whole scene can be rotated.
  */
 
@@ -118,6 +120,21 @@ public:
     }
   };
 
+  struct RotationConstraint
+  {
+    RotationConstraint(float sign)
+    : mSign(sign)
+    {
+    }
+
+    Quaternion operator()( const Quaternion& current, const PropertyInput& property )
+    {
+      Degree angle(property.GetFloat());
+      return Quaternion( Radian(angle) * mSign, Vector3::YAXIS );
+    }
+
+    float mSign;
+  };
 
   /**
    * This method gets called once the main loop of application is up and running
@@ -128,11 +145,9 @@ public:
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &TestApp::OnKeyEvent);
 
-    mModel = Model::New(gBinaryModelFile);  // trigger model load
-    mModel.LoadingFinishedSignal().Connect(this, &TestApp::BinaryModelLoaded);
-
     CreateToolbarAndView(app);
     CreateShadowViewAndLights();
+    CreateScene();
   }
 
   void CreateToolbarAndView(Application& app)
@@ -148,7 +163,7 @@ public:
                                         "" );
 
     // Add an effect-changing button on the right of the tool bar.
-    Image imageChangeEffect = Image::New( CHANGE_EFFECT_IMAGE );
+    Image imageChangeEffect = ResourceImage::New( CHANGE_EFFECT_IMAGE );
     Toolkit::PushButton effectChangeButton = Toolkit::PushButton::New();
     effectChangeButton.SetBackgroundImage(imageChangeEffect);
     effectChangeButton.ClickedSignal().Connect( this, &TestApp::OnEffectButtonClicked );
@@ -158,7 +173,7 @@ public:
     // TODO
 
     //Add a reset button
-    Image resetImage = Image::New( RESET_ICON );
+    Image resetImage = ResourceImage::New( RESET_ICON );
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
     resetButton.SetBackgroundImage( resetImage );
     resetButton.ClickedSignal().Connect( this, &TestApp::OnResetPressed );
@@ -184,42 +199,7 @@ public:
     mTapGestureDetector.DetectedSignal().Connect(this, &TestApp::OnTap);
   }
 
-  /**
-   * This method gets called once the model is loaded by the resource manager
-   */
-  void BinaryModelLoaded(Model model)
-  {
-    if( model.GetLoadingState() == ResourceLoadingSucceeded )
-    {
-      std::cout << "Succeeded loading binary model" << std::endl;
 
-      ModelReady();
-    }
-    else
-    {
-      std::cout << "Failed loading binary model" << std::endl;
-
-      mModel = Model::New(gModelFile);
-      mModel.LoadingFinishedSignal().Connect(this, &TestApp::ModelLoaded);
-    }
-  }
-
-  void ModelLoaded(Model model)
-  {
-    if( model.GetLoadingState() == ResourceLoadingSucceeded )
-    {
-      std::cout << "Succeeded loading collada model" << std::endl;
-
-      model.Save(gBinaryModelFile);
-      ModelReady();
-    }
-    else
-    {
-      std::cout << "Failed loading collada model" << std::endl;
-
-      mApp.Quit();
-    }
-  }
 
   void CreateShadowViewAndLights()
   {
@@ -227,11 +207,11 @@ public:
     mShadowView.SetName("Container");
     mShadowView.SetParentOrigin(ParentOrigin::CENTER);
     mShadowView.SetAnchorPoint(AnchorPoint::CENTER);
-    mShadowView.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+    mShadowView.SetSizeMode( SIZE_EQUAL_TO_PARENT );
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
-    Image brickWall = Image::New(DALI_IMAGE_DIR "brick-wall.jpg");
+    Image brickWall = ResourceImage::New(DALI_IMAGE_DIR "brick-wall.jpg");
     mShadowPlaneBg = ImageActor::New(brickWall);
     mShadowPlaneBg.SetParentOrigin(ParentOrigin::CENTER);
     mShadowPlaneBg.SetAnchorPoint(AnchorPoint::CENTER);
@@ -249,7 +229,7 @@ public:
     mLightAnchor.SetRotation(CalculateWorldRotation(Radian(mLightLongitudinal), Radian(mLightAxisTilt)));
 
     // Work out a scaling factor as the initial light position was calculated for desktop
-    // Need to scale light position as model size is based on stage size (i.e. much bigger on device)
+    // Need to scale light position as scene actor size is based on stage size (i.e. much bigger on device)
     Vector2 stageSize( Stage::GetCurrent().GetSize() );
     float scaleFactor = stageSize.x / DEFAULT_STAGE_SIZE.x;
 
@@ -264,43 +244,50 @@ public:
     mShadowView.SetPointLight(mCastingLight);
   }
 
-  void ModelReady()
+  void CreateScene()
   {
-    mModelActor = ModelActorFactory::BuildActorTree(mModel, "");  // Gets root actor
+    mSceneActor = Actor::New();
+    mSceneActor.SetParentOrigin(ParentOrigin::CENTER);
 
-    if (mModelActor)
-    {
-      Vector2 stageSize(Stage::GetCurrent().GetSize());
-
-      mModelActor.SetSize(250.0f, 250.0f);
-      mModelActor.SetPosition(0.0f, 0.0f, 130.0f);
-
-      //Create a Key light
-      Light keylight = Light::New("KeyLight");
-      keylight.SetFallOff(Vector2(10000.0f, 10000.0f));
-      //keylight.SetSpecularColor(Vector3::ZERO);
-      mKeyLightActor = LightActor::New();
-      mKeyLightActor.SetParentOrigin(ParentOrigin::CENTER);
-      mKeyLightActor.SetName(keylight.GetName());
-
-      //Add all the actors to the stage
-      mCastingLight.Add(mKeyLightActor);
-      mKeyLightActor.SetLight(keylight);
-
-      mShadowView.Add(mModelActor);
+    // Create and add images to the scene actor:
+    mImageActor1 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_1) );
+    mImageActor2 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_2) );
+    mImageActor3 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_3) );
 
 
-      if (mModel.NumberOfAnimations())
-      {
-        mModelAnimation = ModelActorFactory::BuildAnimation(mModel, mModelActor, 0);
-        mModelAnimation.SetDuration(4.0f);
-        mModelAnimation.SetLooping(true);
-        mModelAnimation.Play();
-      }
+    mImageActor2.SetParentOrigin(ParentOrigin::CENTER);
 
-      //StartAnimation();
-    }
+    mImageActor1.SetParentOrigin(ParentOrigin::CENTER_LEFT);
+    mImageActor1.SetAnchorPoint(AnchorPoint::CENTER_RIGHT);
+
+    mImageActor3.SetParentOrigin(ParentOrigin::CENTER_RIGHT);
+    mImageActor3.SetAnchorPoint(AnchorPoint::CENTER_LEFT);
+
+    mSceneActor.Add(mImageActor2);
+    mImageActor2.Add(mImageActor1);
+    mImageActor2.Add(mImageActor3);
+
+    Property::Index angleIndex = mImageActor2.RegisterProperty("angle", Property::Value(30.0f));
+    Source angleSrc( mImageActor2, angleIndex );
+    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::ROTATION, angleSrc,
+                                                              RotationConstraint(-1.0f)));
+    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::ROTATION, angleSrc,
+                                                              RotationConstraint(+1.0f)));
+
+    mSceneAnimation = Animation::New(2.5f);
+
+    // Want to animate angle from 30 => -30 and back again smoothly.
+
+    mSceneAnimation.AnimateTo( Property( mImageActor2, angleIndex ), Property::Value(-30.0f), AlphaFunctions::Sin );
+
+    mSceneAnimation.SetLooping(true);
+    mSceneAnimation.Play();
+
+    mSceneActor.SetSize(250.0f, 250.0f);
+    mSceneActor.SetPosition(0.0f, 0.0f, 130.0f);
+    mShadowView.Add(mSceneActor);
   }
+
 
   Quaternion CalculateWorldRotation(Radian longitude, Radian axisTilt )
   {
@@ -311,17 +298,18 @@ public:
 
   void OnTap(Dali::Actor actor, const TapGesture& gesture)
   {
-    if( ! mPaused )
+    if( mSceneAnimation )
     {
-      //mAnimation.Pause();
-      mModelAnimation.Pause();
-      mPaused = true;
-    }
-    else
-    {
-      //mAnimation.Play();
-      mModelAnimation.Play();
-      mPaused = false;
+      if( ! mPaused )
+      {
+        mSceneAnimation.Pause();
+        mPaused = true;
+      }
+      else
+      {
+        mSceneAnimation.Play();
+        mPaused = false;
+      }
     }
   }
 
@@ -363,7 +351,7 @@ public:
             mObjectLongitudinal += gesture.displacement.x/4.0f;
             mObjectAxisTilt -= gesture.displacement.y/6.0f;
             mObjectAxisTilt = Clamp<float>(mObjectAxisTilt, -90.0f, 90.0f);
-            mModelActor.SetRotation(CalculateWorldRotation(Radian(mObjectLongitudinal), Radian(mObjectAxisTilt)));
+            mSceneActor.SetRotation(CalculateWorldRotation(Radian(mObjectLongitudinal), Radian(mObjectAxisTilt)));
             break;
           }
         }
@@ -392,13 +380,9 @@ public:
 
   void Terminate(Application& app)
   {
-    if( mModelActor )
+    if( mSceneActor )
     {
-      Stage::GetCurrent().Remove(mModelActor);
-    }
-    if( mKeyLightActor )
-    {
-      Stage::GetCurrent().Remove(mKeyLightActor);
+      Stage::GetCurrent().Remove(mSceneActor);
     }
     if( mView )
     {
@@ -427,6 +411,7 @@ public:
     // Reset translation
     mTranslation = Vector3::ZERO;
     mContents.SetPosition(mTranslation);
+
     // Align scene so that light anchor orientation is Z Axis
     mAxisTilt = -mLightAxisTilt;
     mLongitudinal = -mLightLongitudinal;
@@ -439,18 +424,18 @@ private:
   Application&              mApp;
   Toolkit::View             mView;
   Layer                     mContents;
-  Model                     mModel;
-  Actor                     mModelActor;
-  LightActor                mKeyLightActor;
+  Actor                     mSceneActor;
   Animation                 mAnimation;
-  Animation                 mModelAnimation;
+  Animation                 mSceneAnimation;
   bool                      mPaused;
   Toolkit::ShadowView       mShadowView;
   ImageActor                mShadowPlaneBg;
   ImageActor                mShadowPlane;
   Actor                     mCastingLight;
   Actor                     mLightAnchor;
-
+  ImageActor                mImageActor1;
+  ImageActor                mImageActor2;
+  ImageActor                mImageActor3;
   PanGestureDetector        mPanGestureDetector;
   PinchGestureDetector      mPinchGestureDetector;
   TapGestureDetector        mTapGestureDetector;
@@ -463,6 +448,9 @@ private:
   Degree                    mObjectAxisTilt;
   float                     mPinchScale;
   float                     mScaleAtPinchStart;
+
+  Property::Index           mAngle1Index;
+  Property::Index           mAngle3Index;
 
   enum PanState
   {

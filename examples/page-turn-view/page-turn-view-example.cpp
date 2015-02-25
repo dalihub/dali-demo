@@ -15,11 +15,12 @@
  *
  */
 
+#include <dali/dali.h>
+#include <dali-toolkit/dali-toolkit.h>
 #include <assert.h>
 #include <cstdlib>
 #include <string.h>
-#include <dali/dali.h>
-#include <dali-toolkit/dali-toolkit.h>
+#include <iostream>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -79,11 +80,11 @@ class PortraitPageFactory : public PageFactory
   {
     if( pageId == 0 )
     {
-      return ImageActor::New( Image::New( BOOK_COVER_PORTRAIT ) );
+      return ImageActor::New( ResourceImage::New( BOOK_COVER_PORTRAIT ) );
     }
     else
     {
-      return ImageActor::New( Image::New( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] ) );
+      return ImageActor::New( ResourceImage::New( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] ) );
     }
   }
 };
@@ -109,14 +110,14 @@ class LandscapePageFactory : public PageFactory
     ImageActor pageBack;
     if( pageId == 0 )
     {
-       pageFront = ImageActor::New( Image::New( BOOK_COVER_LANDSCAPE ) );
-       pageBack = ImageActor::New( Image::New( BOOK_COVER_BACK_LANDSCAPE ) );
+       pageFront = ImageActor::New( ResourceImage::New( BOOK_COVER_LANDSCAPE ) );
+       pageBack = ImageActor::New( ResourceImage::New( BOOK_COVER_BACK_LANDSCAPE ) );
     }
     else
     {
       unsigned int imageId = (pageId-1)*2;
-      pageFront = ImageActor::New( Image::New( PAGE_IMAGES_LANDSCAPE[ imageId % NUMBER_OF_LANDSCAPE_IMAGE ] ) );
-      pageBack = ImageActor::New( Image::New( PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ] ) );
+      pageFront = ImageActor::New( ResourceImage::New( PAGE_IMAGES_LANDSCAPE[ imageId % NUMBER_OF_LANDSCAPE_IMAGE ] ) );
+      pageBack = ImageActor::New( ResourceImage::New( PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ] ) );
     }
     pageFront.Add(pageBack);
     return pageFront;

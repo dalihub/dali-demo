@@ -423,7 +423,7 @@ private:
     mLevelContainer = Actor::New();
     mLevelContainer.SetAnchorPoint( AnchorPoint::CENTER );
     mLevelContainer.SetParentOrigin( ParentOrigin::CENTER );
-    mLevelContainer.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+    mLevelContainer.SetSizeMode( SIZE_EQUAL_TO_PARENT );
     mContentLayer.Add( mLevelContainer );
 
     mBrickCount = 0;
@@ -591,7 +591,7 @@ private:
     ImageAttributes attr;
     attr.SetSize( 128, 64 );
     attr.SetScalingMode( ImageAttributes::ScaleToFill );
-    Image img = Image::New(BRICK_IMAGE_PATH[type], attr);
+    Image img = ResourceImage::New(BRICK_IMAGE_PATH[type], attr);
     ImageActor brick = ImageActor::New(img);
     brick.SetParentOrigin(ParentOrigin::TOP_LEFT);
     brick.SetAnchorPoint(AnchorPoint::CENTER);
@@ -623,7 +623,7 @@ private:
    */
   ImageActor CreateImage(const std::string& filename)
   {
-    Image img = Image::New(filename);
+    Image img = ResourceImage::New(filename);
     ImageActor actor = ImageActor::New(img);
     actor.SetParentOrigin(ParentOrigin::TOP_LEFT);
     actor.SetAnchorPoint(AnchorPoint::CENTER);

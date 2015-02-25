@@ -25,7 +25,6 @@
       "rows": 4,
       "columns":4,
       "cell-padding": [10, 5],
-      "layout-animation-duration": 0.5,
       "layout-rows": {  // set the height of the rows
         "0": { "policy": "fixed", "value": 40 },
         "1": { "policy": "relative", "value": 0.33 },

@@ -61,8 +61,8 @@ const char* const PUSHBUTTON_PRESS_IMAGE = DALI_IMAGE_DIR "button-down.9.png";
 const char* const PUSHBUTTON_DISABLED_IMAGE = DALI_IMAGE_DIR "button-disabled.9.png";
 const char* const PUSHBUTTON_BUTTON_IMAGE = DALI_IMAGE_DIR "button-up.9.png";
 
-const char* const CHECKBOX_UNCHECKED_IMAGE = DALI_IMAGE_DIR "checkbox-unchecked.png";
-const char* const CHECKBOX_CHECKED_IMAGE = DALI_IMAGE_DIR "checkbox-checked.png";
+const char* const CHECKBOX_UNSELECTED_IMAGE = DALI_IMAGE_DIR "checkbox-unselected.png";
+const char* const CHECKBOX_SELECTED_IMAGE = DALI_IMAGE_DIR "checkbox-selected.png";
 
 const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 
@@ -142,7 +142,7 @@ class ButtonsController: public ConnectionTracker
 
     // Radio 1
     {
-      ImageActor imageActor = ImageActor::New( Image::New( SMALL_IMAGE_1 ) );
+      ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_1 ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
       mRadioButtonImage1 = Dali::Toolkit::RadioButton::New( imageActor );
       mRadioButtonImage1.SetParentOrigin( ParentOrigin::TOP_LEFT );
@@ -157,7 +157,7 @@ class ButtonsController: public ConnectionTracker
     {
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
-      ImageActor imageActor = ImageActor::New( Image::New( SMALL_IMAGE_2 ) );
+      ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_2 ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage2 = Dali::Toolkit::RadioButton::New( imageActor );
@@ -172,7 +172,7 @@ class ButtonsController: public ConnectionTracker
     {
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
-      ImageActor imageActor = ImageActor::New( Image::New( SMALL_IMAGE_3 ) );
+      ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_3 ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage3 = Dali::Toolkit::RadioButton::New( imageActor );
@@ -191,18 +191,18 @@ class ButtonsController: public ConnectionTracker
     mUpdateButton.SetLabel("Select");
     mUpdateButton.SetSize( DP(100), DP(BUTTON_HEIGHT) );
 
-    mUpdateButton.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-    mUpdateButton.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
-    mUpdateButton.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
+    mUpdateButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+    mUpdateButton.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
+    mUpdateButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
     mUpdateButton.ClickedSignal().Connect( this, &ButtonsController::OnButtonClicked );
 
     radioButtonsGroup2.Add(mUpdateButton);
 
     // ImageActor to display selected image
-    mBigImage1 = Image::New( BIG_IMAGE_1 );
-    mBigImage2 = Image::New( BIG_IMAGE_2 );
-    mBigImage3 = Image::New( BIG_IMAGE_3 );
+    mBigImage1 = ResourceImage::New( BIG_IMAGE_1 );
+    mBigImage2 = ResourceImage::New( BIG_IMAGE_2 );
+    mBigImage3 = ResourceImage::New( BIG_IMAGE_3 );
 
     mImage = ImageActor::New( mBigImage1 );
     mImage.SetParentOrigin( ParentOrigin::TOP_RIGHT );
@@ -234,7 +234,7 @@ class ButtonsController: public ConnectionTracker
       Toolkit::TableView tableView = Toolkit::TableView::New( 1, 2 );
       tableView.SetSize( DP(260), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
-      ImageActor imageActor = ImageActor::New( Image::New( ENABLED_IMAGE ) );
+      ImageActor imageActor = ImageActor::New( ResourceImage::New( ENABLED_IMAGE ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
       tableView.AddChild( imageActor, Toolkit::TableView::CellPosition( 0, 1 ) );
       tableView.SetFixedWidth( 1, DP(RADIO_LABEL_THUMBNAIL_SIZE) );
@@ -246,7 +246,7 @@ class ButtonsController: public ConnectionTracker
       radioButton.SetPosition( 0, 0 );
       radioButton.SetSelected( true );
 
-      radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButtonToggle );
+      radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
 
       radioButtonsGroup1.Add( radioButton );
     }
@@ -259,7 +259,7 @@ class ButtonsController: public ConnectionTracker
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( 0, DP(50) );
 
-      radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButtonToggle );
+      radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
 
       radioButtonsGroup1.Add( radioButton );
     }
@@ -274,8 +274,8 @@ class ButtonsController: public ConnectionTracker
     checkBoxBackground.SetSize( DP(430), DP(GROUP3_HEIGHT) );
     mContentLayer.Add( checkBoxBackground );
 
-    Dali::Image unchecked = Dali::Image::New( CHECKBOX_UNCHECKED_IMAGE );
-    Dali::Image checked = Dali::Image::New( CHECKBOX_CHECKED_IMAGE );
+    Dali::Image unselected = Dali::ResourceImage::New( CHECKBOX_UNSELECTED_IMAGE );
+    Dali::Image selected = Dali::ResourceImage::New( CHECKBOX_SELECTED_IMAGE );
 
     int checkYPos = MARGIN_SIZE;
 
@@ -285,10 +285,10 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetPosition( DP(MARGIN_SIZE), DP(checkYPos) );
       checkBox.SetParentOrigin( ParentOrigin::TOP_LEFT );
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      checkBox.SetBackgroundImage( unchecked );
-      checkBox.SetCheckedImage( checked );
+      checkBox.SetBackgroundImage( unselected );
+      checkBox.SetSelectedImage( selected );
       checkBox.SetSize( DP(48), DP(48) );
-      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesToggled );
+      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
@@ -300,11 +300,11 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetName( "checkbox2" );
       checkBox.SetPosition( DP(MARGIN_SIZE), DP(checkYPos) );
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      checkBox.SetBackgroundImage( unchecked );
-      checkBox.SetCheckedImage( checked );
+      checkBox.SetBackgroundImage( unselected );
+      checkBox.SetSelectedImage( selected );
       checkBox.SetSize( DP(48), DP(48) );
-      checkBox.SetChecked( true );
-      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesToggled );
+      checkBox.SetSelected( true );
+      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
@@ -316,15 +316,14 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetName( "checkbox3" );
       checkBox.SetPosition( DP(MARGIN_SIZE), DP(checkYPos) );
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      checkBox.SetBackgroundImage( unchecked );
-      checkBox.SetCheckedImage( checked );
+      checkBox.SetBackgroundImage( unselected );
+      checkBox.SetSelectedImage( selected );
       checkBox.SetSize( DP(48), DP(48) );
-      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesToggled );
+      checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
 
-    // Create toggle button
     yPos += GROUP3_HEIGHT + MARGIN_SIZE;
 
     Actor toggleBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
@@ -335,18 +334,18 @@ class ButtonsController: public ConnectionTracker
     mContentLayer.Add( toggleBackground );
 
     Toolkit::PushButton toggleButton = Toolkit::PushButton::New();
-    toggleButton.SetToggleButton( true );
+    toggleButton.SetTogglableButton( true );
     toggleButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
     toggleButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     toggleButton.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
-    toggleButton.SetLabel( "Toggle OFF" );
+    toggleButton.SetLabel( "Unselected" );
     toggleButton.SetSize( DP(150), DP(BUTTON_HEIGHT) );
 
-    toggleButton.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-    toggleButton.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
-    toggleButton.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
+    toggleButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+    toggleButton.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
+    toggleButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
-    toggleButton.StateChangedSignal().Connect( this, &ButtonsController::OnButtonToggled );
+    toggleButton.StateChangedSignal().Connect( this, &ButtonsController::OnButtonSelected );
 
     toggleBackground.Add( toggleButton );
   }
@@ -363,31 +362,31 @@ class ButtonsController: public ConnectionTracker
     }
   }
 
-  bool OnButtonToggled( Toolkit::Button button, bool state )
+  bool OnButtonSelected( Toolkit::Button button )
   {
     Toolkit::PushButton pushButton = Toolkit::PushButton::DownCast( button );
     if( pushButton )
     {
-      if( state )
+      if( button.IsSelected() )
       {
-        pushButton.SetLabel( "Toggle ON" );
+        pushButton.SetLabel( "Selected" );
       }
       else
       {
-        pushButton.SetLabel( "Toggle OFF" );
+        pushButton.SetLabel( "Unselected" );
       }
     }
 
     return true;
   }
 
-  bool EnableSelectButtonToggle( Toolkit::Button button, bool state )
+  bool EnableSelectButton( Toolkit::Button button )
   {
-    if( button.GetName() == "radio-select-enable" && state == true )
+    if( button.GetName() == "radio-select-enable" && button.IsSelected() == true )
     {
       mUpdateButton.SetDisabled( false );
     }
-    else if( button.GetName() == "radio-select-disable" && state == true )
+    else if( button.GetName() == "radio-select-disable" && button.IsSelected() == true )
     {
       mUpdateButton.SetDisabled( true );
     }
@@ -412,7 +411,7 @@ class ButtonsController: public ConnectionTracker
     return true;
   }
 
-  bool OnCheckBoxesToggled( Toolkit::Button button, bool state )
+  bool OnCheckBoxesSelected( Toolkit::Button button )
   {
     return true;
   }

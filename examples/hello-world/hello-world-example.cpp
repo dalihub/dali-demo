@@ -16,6 +16,7 @@
  */
 
 #include <dali/dali.h>
+#include <iostream>
 
 using namespace Dali;
 

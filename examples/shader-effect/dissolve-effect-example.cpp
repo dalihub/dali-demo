@@ -138,6 +138,7 @@ private:
   Toolkit::View                   mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
+  Actor                           mParent;
 
   ImageActor                      mCurrentImage;
   ImageActor                      mNextImage;
@@ -191,8 +192,8 @@ void DissolveEffectApp::OnInit( Application& application )
   mContent = DemoHelper::CreateView( application, mView,mToolBar, "", TOOLBAR_IMAGE, "" );
 
   // Add an effect-changing button on the right of the tool bar.
-  mIconHighP = Image::New( EFFECT_HIGHP_IMAGE );
-  mIconMediumP = Image::New( EFFECT_MEDIUMP_IMAGE );
+  mIconHighP = ResourceImage::New( EFFECT_HIGHP_IMAGE );
+  mIconMediumP = ResourceImage::New( EFFECT_MEDIUMP_IMAGE );
   mEffectChangeButton = Toolkit::PushButton::New();
   mEffectChangeButton.SetBackgroundImage(mIconHighP);
   mEffectChangeButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnEffectButtonClicked );
@@ -202,8 +203,8 @@ void DissolveEffectApp::OnInit( Application& application )
   // TODO
 
   // Add an slide-show button on the right of the title
-  mIconPlay = Image::New( PLAY_ICON );
-  mIconStop = Image::New( STOP_ICON );
+  mIconPlay = ResourceImage::New( PLAY_ICON );
+  mIconStop = ResourceImage::New( STOP_ICON );
   mPlayStopButton = Toolkit::PushButton::New();
   mPlayStopButton.SetBackgroundImage( mIconPlay );
   mPlayStopButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnSildeshowButtonClicked );
@@ -217,18 +218,24 @@ void DissolveEffectApp::OnInit( Application& application )
   mCurrentImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
   mNextImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
 
-
   mViewTimer = Timer::New( VIEWINGTIME );
   mViewTimer.TickSignal().Connect( this, &DissolveEffectApp::OnTimerTick );
   mTimerReady = true;
 
+  // Set size to stage size to avoid seeing a black border on transition
+  mParent = Actor::New();
+  mParent.SetSize( Stage::GetCurrent().GetSize() );
+  mParent.SetPositionInheritanceMode( USE_PARENT_POSITION );
+  mContent.Add( mParent );
+
   mSizeConstraint= Constraint::New<Vector3>( Actor::SCALE, LocalSource( Actor::SIZE ), ParentSource( Actor::SIZE ), ScaleToFitKeepAspectRatioConstraint() );
 
   // show the first image
-  mCurrentImage = ImageActor::New( Image::New( IMAGES[mIndex] ) );
+  mCurrentImage = ImageActor::New( ResourceImage::New( IMAGES[mIndex] ) );
   mCurrentImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
   mCurrentImage.ApplyConstraint( mSizeConstraint );
-  mContent.Add(mCurrentImage);
+  mParent.Add( mCurrentImage );
+
   mPanGestureDetector.Attach( mCurrentImage );
 }
 
@@ -252,12 +259,12 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
       mIndex = (mIndex + NUM_IMAGES -1)%NUM_IMAGES;
     }
 
-    Image image = Image::New( IMAGES[ mIndex ] );
+    Image image = ResourceImage::New( IMAGES[ mIndex ] );
     mNextImage = ImageActor::New( image );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
     mNextImage.ApplyConstraint( mSizeConstraint );
     mNextImage.SetZ(INITIAL_DEPTH);
-    mContent.Add(mNextImage);
+    mParent.Add( mNextImage );
     Vector2 size = Vector2( mCurrentImage.GetCurrentSize() );
     StartTransition( gesture.position / size, gesture.displacement * Vector2(1.0, size.x/size.y));
   }
@@ -325,7 +332,7 @@ bool DissolveEffectApp::OnSildeshowButtonClicked( Toolkit::Button button )
   if( mSlideshow )
   {
     mPlayStopButton.SetBackgroundImage( mIconStop );
-    mPanGestureDetector.Detach( mContent );
+    mPanGestureDetector.Detach( mParent );
     mViewTimer.Start();
     mTimerReady = false;
   }
@@ -333,7 +340,7 @@ bool DissolveEffectApp::OnSildeshowButtonClicked( Toolkit::Button button )
   {
     mPlayStopButton.SetBackgroundImage( mIconPlay );
     mTimerReady = true;
-    mPanGestureDetector.Attach( mContent );
+    mPanGestureDetector.Attach( mParent );
   }
   return true;
 }
@@ -342,7 +349,7 @@ void DissolveEffectApp::OnTransitionCompleted( Animation& source )
 {
   mCurrentImage.RemoveShaderEffect();
   mNextImage.RemoveShaderEffect();
-  mContent.Remove(mCurrentImage);
+  mParent.Remove( mCurrentImage );
   mPanGestureDetector.Detach( mCurrentImage );
   mCurrentImage = mNextImage;
   mPanGestureDetector.Attach( mCurrentImage );
@@ -361,13 +368,13 @@ bool DissolveEffectApp::OnTimerTick()
   if(mSlideshow)
   {
     mIndex = (mIndex + 1)%NUM_IMAGES;
-    Image image = Image::New( IMAGES[ mIndex ] );
+    Image image = ResourceImage::New( IMAGES[ mIndex ] );
     mNextImage = ImageActor::New( image );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
     mNextImage.ApplyConstraint( mSizeConstraint );
     mNextImage.SetZ(INITIAL_DEPTH);
-    mContent.Add(mNextImage);
-    switch(mCentralLineIndex%4)
+    mParent.Add( mNextImage );
+    switch( mCentralLineIndex%4 )
     {
       case 0:
       {

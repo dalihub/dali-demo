@@ -78,7 +78,7 @@
           "filename": "{DALI_IMAGE_DIR}button-background.png"
         }
       },
-      "pressed-state-actor": {
+      "selected-state-actor": {
         "type": "ImageActor",
         "style": "STYLE_NINE_PATCH",
         "border": [26, 24, 26, 23],

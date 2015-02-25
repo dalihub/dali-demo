@@ -45,6 +45,7 @@
 #include <algorithm>
 #include <map>
 #include <dali-toolkit/dali-toolkit.h>
+#include <iostream>
 
 // INTERNAL INCLUDES
 #include "grid-flags.h"
@@ -182,7 +183,7 @@ Image CreateImage(const std::string& filename, unsigned int width, unsigned int 
 
   attributes.SetSize( width, height );
   attributes.SetScalingMode( scalingMode );
-  Image image = Image::New( filename, attributes );
+  Image image = ResourceImage::New( filename, attributes );
   return image;
 }
 
@@ -307,7 +308,7 @@ public:
                                             "" );
 
     // Create an image scaling toggle button. (right of toolbar)
-    Image toggleScalingImage = Image::New( TOGGLE_SCALING_IMAGE );
+    Image toggleScalingImage = ResourceImage::New( TOGGLE_SCALING_IMAGE );
     Toolkit::PushButton toggleScalingButton = Toolkit::PushButton::New();
     toggleScalingButton.SetBackgroundImage( toggleScalingImage );
     toggleScalingButton.ClickedSignal().Connect( this, &ImageScalingIrregularGridController::OnToggleScalingTouched );
@@ -416,7 +417,7 @@ public:
     // coordinates in a frame defined by a parent actor:
 
     Actor gridActor = Actor::New();
-    gridActor.ApplyConstraint( Constraint::New<Vector3>( Actor::SIZE, ParentSource( Actor::SIZE ), EqualToConstraint() ) );
+    gridActor.SetSizeMode( SIZE_EQUAL_TO_PARENT );
     gridActor.SetParentOrigin( ParentOrigin::CENTER );
     gridActor.SetAnchorPoint( AnchorPoint::CENTER );
 
@@ -472,7 +473,7 @@ public:
 
         ImageActor imageActor = ImageActor::DownCast( actor );
         Image oldImage = imageActor.GetImage();
-        Image newImage = CreateImage( oldImage.GetFilename(), imageSize.width + 0.5f, imageSize.height + 0.5f, newMode );
+        Image newImage = CreateImage( ResourceImage::DownCast(oldImage).GetUrl(), imageSize.width + 0.5f, imageSize.height + 0.5f, newMode );
         imageActor.SetImage( newImage );
         mScalingModes[id] = newMode;
       }
@@ -514,7 +515,7 @@ public:
         const Vector2 imageSize = mSizes[gridImageActor.GetId()];
         ImageAttributes::ScalingMode newMode = NextMode( mScalingModes[gridImageActor.GetId()] );
         Image oldImage = gridImageActor.GetImage();
-        Image newImage = CreateImage( oldImage.GetFilename(), imageSize.width, imageSize.height, newMode );
+        Image newImage = CreateImage(ResourceImage::DownCast(oldImage).GetUrl(), imageSize.width, imageSize.height, newMode );
         gridImageActor.SetImage( newImage );
 
         mScalingModes[gridImageActor.GetId()] = newMode;

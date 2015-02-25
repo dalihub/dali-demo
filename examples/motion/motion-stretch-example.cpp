@@ -136,8 +136,8 @@ public:
                                             APPLICATION_TITLE );
 
     //Add an slideshow icon on the right of the title
-    mIconEffectsOff = Image::New( EFFECTS_OFF_ICON );
-    mIconEffectsOn = Image::New( EFFECTS_ON_ICON );
+    mIconEffectsOff = ResourceImage::New( EFFECTS_OFF_ICON );
+    mIconEffectsOn = ResourceImage::New( EFFECTS_ON_ICON );
     mActorEffectsButton = Toolkit::PushButton::New();
     mActorEffectsButton.SetBackgroundImage( mIconEffectsOff );
     mActorEffectsButton.ClickedSignal().Connect( this, &MotionStretchExampleApp::OnEffectButtonClicked );
@@ -145,7 +145,7 @@ public:
 
     // Creates a mode button.
     // Create a effect toggle button. (right of toolbar)
-    Image imageLayout = Image::New( LAYOUT_IMAGE );
+    Image imageLayout = ResourceImage::New( LAYOUT_IMAGE );
     Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
     layoutButton.SetBackgroundImage(imageLayout);
     layoutButton.ClickedSignal().Connect( this, &MotionStretchExampleApp::OnLayoutButtonClicked);
@@ -174,7 +174,7 @@ public:
     // Motion stretched actor
     //
 
-    Image image = Image::New( MOTION_STRETCH_ACTOR_IMAGE1 );
+    Image image = ResourceImage::New( MOTION_STRETCH_ACTOR_IMAGE1 );
     mMotionStretchImageActor = ImageActor::New(image);
     mMotionStretchImageActor.SetParentOrigin( ParentOrigin::CENTER );
     mMotionStretchImageActor.SetAnchorPoint( AnchorPoint::CENTER );
@@ -390,7 +390,7 @@ public:
       mCurrentImage = 0;
     }
 
-    Image stretchImage = Image::New( MOTION_STRETCH_ACTOR_IMAGES[mCurrentImage] );
+    Image stretchImage = ResourceImage::New( MOTION_STRETCH_ACTOR_IMAGES[mCurrentImage] );
     mMotionStretchImageActor.SetImage(stretchImage);
   }
 
