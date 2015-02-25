@@ -94,7 +94,7 @@ private:
 
     // Add a button to change background. (right of toolbar)
     mChangeBackgroundButton = Toolkit::PushButton::New();
-    mChangeBackgroundButton.SetBackgroundImage( Image::New( CHANGE_BACKGROUND_ICON ) );
+    mChangeBackgroundButton.SetBackgroundImage( ResourceImage::New( CHANGE_BACKGROUND_ICON ) );
     mChangeBackgroundButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
     toolBar.AddControl( mChangeBackgroundButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -102,7 +102,7 @@ private:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change bubble shape. ( left of bar )
     mChangeBubbleShapeButton = Toolkit::PushButton::New();
-    mChangeBubbleShapeButton.SetBackgroundImage( Image::New( CHANGE_BUBBLE_SHAPE_ICON ) );
+    mChangeBubbleShapeButton.SetBackgroundImage( ResourceImage::New( CHANGE_BUBBLE_SHAPE_ICON ) );
     mChangeBubbleShapeButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
     toolBar.AddControl( mChangeBubbleShapeButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -111,10 +111,10 @@ private:
 
     // Create and initialize the BubbleEmitter object
     mBubbleEmitter = Toolkit::BubbleEmitter::New( stageSize,
-                                                  Image::New( BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId] ),
+                                                  ResourceImage::New( BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId] ),
                                                   DEFAULT_NUMBER_OF_BUBBLES,
                                                   DEFAULT_BUBBLE_SIZE);
-    mBackgroundImage = Image::New( BACKGROUND_IMAGES[mCurrentBackgroundImageId] );
+    mBackgroundImage = ResourceImage::New( BACKGROUND_IMAGES[mCurrentBackgroundImageId] );
     mBubbleEmitter.SetBackground( mBackgroundImage, mHSVDelta );
 
     // Get the root actor of all bubbles, and add it to stage.
@@ -235,7 +235,7 @@ private:
   {
     if(button == mChangeBackgroundButton)
     {
-      mBackgroundImage = Image::New( BACKGROUND_IMAGES[ ++mCurrentBackgroundImageId % NUM_BACKGROUND_IMAGES  ] );
+      mBackgroundImage = ResourceImage::New( BACKGROUND_IMAGES[ ++mCurrentBackgroundImageId % NUM_BACKGROUND_IMAGES  ] );
 
       mBubbleEmitter.SetBackground( mBackgroundImage, mHSVDelta );
 
@@ -243,7 +243,7 @@ private:
     }
     else if( button == mChangeBubbleShapeButton )
     {
-      mBubbleEmitter.SetShapeImage( Image::New( BUBBLE_SHAPE_IMAGES[ ++mCurrentBubbleShapeImageId % NUM_BUBBLE_SHAPE_IMAGES ] ) );
+      mBubbleEmitter.SetShapeImage( ResourceImage::New( BUBBLE_SHAPE_IMAGES[ ++mCurrentBubbleShapeImageId % NUM_BUBBLE_SHAPE_IMAGES ] ) );
     }
     return true;
   }

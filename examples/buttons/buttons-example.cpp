@@ -142,7 +142,7 @@ class ButtonsController: public ConnectionTracker
 
     // Radio 1
     {
-      ImageActor imageActor = ImageActor::New( Image::New( SMALL_IMAGE_1 ) );
+      ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_1 ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
       mRadioButtonImage1 = Dali::Toolkit::RadioButton::New( imageActor );
       mRadioButtonImage1.SetParentOrigin( ParentOrigin::TOP_LEFT );
@@ -157,7 +157,7 @@ class ButtonsController: public ConnectionTracker
     {
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
-      ImageActor imageActor = ImageActor::New( Image::New( SMALL_IMAGE_2 ) );
+      ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_2 ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage2 = Dali::Toolkit::RadioButton::New( imageActor );
@@ -172,7 +172,7 @@ class ButtonsController: public ConnectionTracker
     {
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
-      ImageActor imageActor = ImageActor::New( Image::New( SMALL_IMAGE_3 ) );
+      ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_3 ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage3 = Dali::Toolkit::RadioButton::New( imageActor );
@@ -191,18 +191,18 @@ class ButtonsController: public ConnectionTracker
     mUpdateButton.SetLabel("Select");
     mUpdateButton.SetSize( DP(100), DP(BUTTON_HEIGHT) );
 
-    mUpdateButton.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-    mUpdateButton.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
-    mUpdateButton.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
+    mUpdateButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+    mUpdateButton.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
+    mUpdateButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
     mUpdateButton.ClickedSignal().Connect( this, &ButtonsController::OnButtonClicked );
 
     radioButtonsGroup2.Add(mUpdateButton);
 
     // ImageActor to display selected image
-    mBigImage1 = Image::New( BIG_IMAGE_1 );
-    mBigImage2 = Image::New( BIG_IMAGE_2 );
-    mBigImage3 = Image::New( BIG_IMAGE_3 );
+    mBigImage1 = ResourceImage::New( BIG_IMAGE_1 );
+    mBigImage2 = ResourceImage::New( BIG_IMAGE_2 );
+    mBigImage3 = ResourceImage::New( BIG_IMAGE_3 );
 
     mImage = ImageActor::New( mBigImage1 );
     mImage.SetParentOrigin( ParentOrigin::TOP_RIGHT );
@@ -239,7 +239,7 @@ class ButtonsController: public ConnectionTracker
       alignment.Add( textView );
       tableView.AddChild( alignment, Toolkit::TableView::CellPosition( 0, 0 ) );
 
-      ImageActor imageActor = ImageActor::New( Image::New( ENABLED_IMAGE ) );
+      ImageActor imageActor = ImageActor::New( ResourceImage::New( ENABLED_IMAGE ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
       tableView.AddChild( imageActor, Toolkit::TableView::CellPosition( 0, 1 ) );
       tableView.SetFixedWidth( 1, DP(RADIO_LABEL_THUMBNAIL_SIZE) );
@@ -279,8 +279,8 @@ class ButtonsController: public ConnectionTracker
     checkBoxBackground.SetSize( DP(430), DP(GROUP3_HEIGHT) );
     mContentLayer.Add( checkBoxBackground );
 
-    Dali::Image unselected = Dali::Image::New( CHECKBOX_UNSELECTED_IMAGE );
-    Dali::Image selected = Dali::Image::New( CHECKBOX_SELECTED_IMAGE );
+    Dali::Image unselected = Dali::ResourceImage::New( CHECKBOX_UNSELECTED_IMAGE );
+    Dali::Image selected = Dali::ResourceImage::New( CHECKBOX_SELECTED_IMAGE );
 
     int checkYPos = MARGIN_SIZE;
 
@@ -368,9 +368,9 @@ class ButtonsController: public ConnectionTracker
     toggleButton.SetLabel( "Unselected" );
     toggleButton.SetSize( DP(150), DP(BUTTON_HEIGHT) );
 
-    toggleButton.SetSelectedImage( Dali::Image::New( PUSHBUTTON_PRESS_IMAGE ) );
-    toggleButton.SetDisabledImage( Dali::Image::New( PUSHBUTTON_DISABLED_IMAGE ) );
-    toggleButton.SetButtonImage( Dali::Image::New( PUSHBUTTON_BUTTON_IMAGE ) );
+    toggleButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
+    toggleButton.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
+    toggleButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
     toggleButton.StateChangedSignal().Connect( this, &ButtonsController::OnButtonSelected );
 

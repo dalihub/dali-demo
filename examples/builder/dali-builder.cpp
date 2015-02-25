@@ -30,6 +30,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/public-api/builder/builder.h>
 #include <dali-toolkit/public-api/builder/tree-node.h>
+#include <iostream>
 #include <map>
 #include <string>
 #include <fstream>
