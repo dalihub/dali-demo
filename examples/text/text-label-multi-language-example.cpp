@@ -227,8 +227,11 @@ public:
   {
     Stage stage = Stage::GetCurrent();
 
+    stage.KeyEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnKeyEvent);
+
     mLayout = VerticalLayout::New();
-    mLayout.SetParentOrigin( ParentOrigin::CENTER );
+    mLayout.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    mLayout.SetAnchorPoint( AnchorPoint::TOP_LEFT );
 
     stage.Add( mLayout );
 
@@ -259,17 +262,19 @@ public:
     if( 1u == event.GetPointCount() )
     {
       const TouchPoint::State state = event.GetPoint(0u).state;
+
+      // Clamp to integer values; this is to reduce flicking due to pixel misalignment
+      const float localPoint = static_cast<float>( static_cast<int>( event.GetPoint( 0 ).local.y ) );
+
       if( TouchPoint::Down == state )
       {
-        mLastPoint = event.GetPoint( 0 ).local.y;
+        mLastPoint = localPoint;
         mAnimation = Animation::New( 0.25f );
-        mAnimation.FinishedSignal().Connect( this, &TextLabelMultiLanguageExample::AnimationCompleted );
       }
       else if( TouchPoint::Motion == state )
       {
         if( mAnimation )
         {
-          const float localPoint = event.GetPoint( 0 ).local.y;
           mAnimation.MoveBy( mLayout, Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
           mAnimation.Play();
           mLastPoint = localPoint;
@@ -280,9 +285,18 @@ public:
     return true;
   }
 
-  void AnimationCompleted(Animation& source)
+  /**
+   * Main key event handler
+   */
+  void OnKeyEvent(const KeyEvent& event)
   {
-    //mAnimation.Reset();
+    if(event.state == KeyEvent::Down)
+    {
+      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
   }
 
 private:

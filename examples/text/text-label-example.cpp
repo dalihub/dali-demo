@@ -53,6 +53,8 @@ public:
   {
     Stage stage = Stage::GetCurrent();
 
+    stage.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
+
     TextLabel label = TextLabel::New();
     label.SetParentOrigin( ParentOrigin::CENTER );
     stage.Add( label );
@@ -64,6 +66,20 @@ public:
     // TODO
     //Property::Value labelText = label.GetProperty( TextLabel::PROPERTY_TEXT );
     //std::cout << "Got text from label: " << labelText.Get< std::string >() << std::endl;
+  }
+
+  /**
+   * Main key event handler
+   */
+  void OnKeyEvent(const KeyEvent& event)
+  {
+    if(event.state == KeyEvent::Down)
+    {
+      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
   }
 
 private:
