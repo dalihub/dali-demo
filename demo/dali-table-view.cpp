@@ -201,9 +201,6 @@ void DaliTableView::Initialize( Application& application )
 
   const Vector2 stageSize = Stage::GetCurrent().GetSize();
 
-  TextAbstraction::FontClient fontClient = TextAbstraction::FontClient::Get();
-  fontClient.SetDpi( 96, 96 );
-
   // Background
   mBackground = CreateBackground( mBackgroundImagePath );
   // set same size as parent actor

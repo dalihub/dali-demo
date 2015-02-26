@@ -227,9 +227,6 @@ public:
   {
     Stage stage = Stage::GetCurrent();
 
-    TextAbstraction::FontClient fontClient = TextAbstraction::FontClient::Get();
-    fontClient.SetDpi( 96, 96 );
-
     mLayout = VerticalLayout::New();
     mLayout.SetParentOrigin( ParentOrigin::CENTER );
 

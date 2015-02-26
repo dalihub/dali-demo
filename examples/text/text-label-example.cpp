@@ -53,9 +53,6 @@ public:
   {
     Stage stage = Stage::GetCurrent();
 
-    TextAbstraction::FontClient fontClient = TextAbstraction::FontClient::Get();
-    fontClient.SetDpi( 96, 96 );
-
     TextLabel label = TextLabel::New();
     label.SetParentOrigin( ParentOrigin::CENTER );
     stage.Add( label );
