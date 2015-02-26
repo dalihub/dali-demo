@@ -21,7 +21,7 @@
 #include <string>
 #include <algorithm>
 #include <cstdlib> // rand
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>

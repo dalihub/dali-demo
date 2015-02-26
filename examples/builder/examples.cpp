@@ -40,7 +40,7 @@
 #include <ctime>
 
 #include <dali/integration-api/debug.h>
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #define TOKEN_STRING(x) #x
 

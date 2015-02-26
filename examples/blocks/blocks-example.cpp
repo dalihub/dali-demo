@@ -25,7 +25,7 @@
 #include <boost/function.hpp>
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include "../shared/view.h"
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;

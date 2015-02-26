@@ -18,7 +18,7 @@
 // EXTERNAL INCLUDES
 
 // INTERNAL INCLUDES
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #include <dali-toolkit/dali-toolkit.h>
 

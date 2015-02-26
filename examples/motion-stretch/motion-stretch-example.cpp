@@ -18,7 +18,7 @@
 #include <sstream>
 #include <iomanip>
 
-#include "../shared/view.h"
+#include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
@@ -35,35 +35,22 @@ namespace // unnamed namespace
 // Demo setup parameters
 //
 
-//#define MULTIPLE_MOTION_BLURRED_ACTORS
-#ifndef MULTIPLE_MOTION_BLURRED_ACTORS
+const float MOTION_STRETCH_ACTOR_WIDTH = 256;                                          // actor size on screen
+const float MOTION_STRETCH_ACTOR_HEIGHT = 256;                                         // ""
 
-const float MOTION_BLUR_ACTOR_WIDTH = 256;                                          // actor size on screen
-const float MOTION_BLUR_ACTOR_HEIGHT = 256;                                         // ""
+const int MOTION_STRETCH_NUM_ACTOR_IMAGES = 5;
+const char* MOTION_STRETCH_ACTOR_IMAGE1( DALI_IMAGE_DIR "image-with-border-1.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE2( DALI_IMAGE_DIR "image-with-border-2.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE3( DALI_IMAGE_DIR "image-with-border-3.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE4( DALI_IMAGE_DIR "image-with-border-4.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE5( DALI_IMAGE_DIR "image-with-border-5.jpg" );
 
-#else //#ifndef MULTIPLE_MOTION_BLURRED_ACTORS
-
-const float MOTION_BLUR_ACTOR_WIDTH = 150;                                          // actor size on screen
-const float MOTION_BLUR_ACTOR_HEIGHT = 112;                                         // ""
-
-#endif //#ifndef MULTIPLE_MOTION_BLURRED_ACTORS
-
-
-const unsigned int MOTION_BLUR_NUM_SAMPLES = 8;
-
-const int MOTION_BLUR_NUM_ACTOR_IMAGES = 5;
-const char* MOTION_BLUR_ACTOR_IMAGE1( DALI_IMAGE_DIR "image-with-border-1.jpg" );
-const char* MOTION_BLUR_ACTOR_IMAGE2( DALI_IMAGE_DIR "image-with-border-2.jpg" );
-const char* MOTION_BLUR_ACTOR_IMAGE3( DALI_IMAGE_DIR "image-with-border-3.jpg" );
-const char* MOTION_BLUR_ACTOR_IMAGE4( DALI_IMAGE_DIR "image-with-border-4.jpg" );
-const char* MOTION_BLUR_ACTOR_IMAGE5( DALI_IMAGE_DIR "image-with-border-1.jpg" );
-
-const char* MOTION_BLUR_ACTOR_IMAGES[] = {
-  MOTION_BLUR_ACTOR_IMAGE1,
-  MOTION_BLUR_ACTOR_IMAGE2,
-  MOTION_BLUR_ACTOR_IMAGE3,
-  MOTION_BLUR_ACTOR_IMAGE4,
-  MOTION_BLUR_ACTOR_IMAGE5,
+const char* MOTION_STRETCH_ACTOR_IMAGES[] = {
+  MOTION_STRETCH_ACTOR_IMAGE1,
+  MOTION_STRETCH_ACTOR_IMAGE2,
+  MOTION_STRETCH_ACTOR_IMAGE3,
+  MOTION_STRETCH_ACTOR_IMAGE4,
+  MOTION_STRETCH_ACTOR_IMAGE5,
 };
 
 const int NUM_ACTOR_ANIMATIONS = 4;
@@ -74,15 +61,16 @@ const char* BACKGROUND_IMAGE_PATH = DALI_IMAGE_DIR "background-default.png";
 
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
-const char* APPLICATION_TITLE( "Motion Blur" );
+const char* APPLICATION_TITLE( "Motion Stretch" );
 const char* EFFECTS_OFF_ICON( DALI_IMAGE_DIR "icon-effects-off.png" );
 const char* EFFECTS_ON_ICON( DALI_IMAGE_DIR "icon-effects-on.png" );
+
+// These values depend on the button background image
+const Vector4 BUTTON_IMAGE_BORDER( Vector4::ONE * 3.0f );
 
 const float UI_MARGIN = 4.0f;                              ///< Screen Margin for placement of UI buttons
 
 const Vector3 BUTTON_SIZE_CONSTRAINT( 0.24f, 0.09f, 1.0f );
-const Vector3 BUTTON_TITLE_LABEL_TAP_HERE_SIZE_CONSTRAINT( 0.55f, 0.06f, 1.0f );
-const Vector3 BUTTON_TITLE_LABEL_INSTRUCTIONS_POPUP_SIZE_CONSTRAINT( 1.0f, 1.0f, 1.0f );
 
 // move this button down a bit so it is visible on target and not covered up by toolbar
 const float BUTTON_TITLE_LABEL_Y_OFFSET = 0.05f;
@@ -94,7 +82,7 @@ const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to
 
 
 //
-class MotionBlurExampleApp : public ConnectionTracker
+class MotionStretchExampleApp : public ConnectionTracker
 {
 public:
 
@@ -114,17 +102,17 @@ public:
    * Constructor
    * @param application class, stored as reference
    */
-  MotionBlurExampleApp(Application &app)
+  MotionStretchExampleApp(Application &app)
   : mApplication(app),
     mActorEffectsEnabled(false),
     mCurrentActorAnimation(0),
     mCurrentImage(0)
   {
     // Connect to the Application's Init signal
-    app.InitSignal().Connect(this, &MotionBlurExampleApp::OnInit);
+    app.InitSignal().Connect(this, &MotionStretchExampleApp::OnInit);
   }
 
-  ~MotionBlurExampleApp()
+  ~MotionStretchExampleApp()
   {
     // Nothing to do here; everything gets deleted automatically
   }
@@ -136,8 +124,7 @@ public:
   {
     // The Init signal is received once (only) during the Application lifetime
 
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &MotionBlurExampleApp::OnKeyEvent);
-
+    Stage::GetCurrent().KeyEventSignal().Connect(this, &MotionStretchExampleApp::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
@@ -148,12 +135,12 @@ public:
                                             TOOLBAR_IMAGE,
                                             APPLICATION_TITLE );
 
-    //Add an effects icon on the right of the title
+    //Add an slideshow icon on the right of the title
     mIconEffectsOff = ResourceImage::New( EFFECTS_OFF_ICON );
     mIconEffectsOn = ResourceImage::New( EFFECTS_ON_ICON );
     mActorEffectsButton = Toolkit::PushButton::New();
     mActorEffectsButton.SetBackgroundImage( mIconEffectsOff );
-    mActorEffectsButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnEffectButtonClicked );
+    mActorEffectsButton.ClickedSignal().Connect( this, &MotionStretchExampleApp::OnEffectButtonClicked );
     mToolBar.AddControl( mActorEffectsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
     // Creates a mode button.
@@ -161,116 +148,42 @@ public:
     Image imageLayout = ResourceImage::New( LAYOUT_IMAGE );
     Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
     layoutButton.SetBackgroundImage(imageLayout);
-    layoutButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnLayoutButtonClicked);
+    layoutButton.ClickedSignal().Connect( this, &MotionStretchExampleApp::OnLayoutButtonClicked);
     layoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Input
     mTapGestureDetector = TapGestureDetector::New();
     mTapGestureDetector.Attach( mContentLayer );
-    mTapGestureDetector.DetectedSignal().Connect( this, &MotionBlurExampleApp::OnTap );
+    mTapGestureDetector.DetectedSignal().Connect( this, &MotionStretchExampleApp::OnTap );
 
+    // set initial orientation
     Dali::Window winHandle = app.GetWindow();
     winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT );
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
     winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
-    // set initial orientation
-    app.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
+    app.GetOrientation().ChangedSignal().Connect( this, &MotionStretchExampleApp::OnOrientationChanged );
     unsigned int degrees = app.GetOrientation().GetDegrees();
     Rotate( static_cast< DeviceOrientation >( degrees ) );
 
 
     ///////////////////////////////////////////////////////
     //
-    // Motion blurred actor
+    // Motion stretched actor
     //
 
-    Image image = ResourceImage::New( MOTION_BLUR_ACTOR_IMAGE1 );
-    mMotionBlurImageActor = ImageActor::New(image);
-    mMotionBlurImageActor.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
+    Image image = ResourceImage::New( MOTION_STRETCH_ACTOR_IMAGE1 );
+    mMotionStretchImageActor = ImageActor::New(image);
+    mMotionStretchImageActor.SetParentOrigin( ParentOrigin::CENTER );
+    mMotionStretchImageActor.SetAnchorPoint( AnchorPoint::CENTER );
+    mMotionStretchImageActor.SetSize(MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT);
 
-    mContentLayer.Add( mMotionBlurImageActor );
+    mContentLayer.Add( mMotionStretchImageActor );
 
-    // Create shader used for doing motion blur
-    mMotionBlurEffect = MotionBlurEffect::Apply(mMotionBlurImageActor);
-
-
-#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
-
-    ///////////////////////////////////////////////////////
-    //
-    // Motion blurred actor 2
-    //
-
-    mMotionBlurImageActor2 = ImageActor::New(image);
-    mMotionBlurImageActor2.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor2.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
-    mMotionBlurImageActor2.SetPosition(MOTION_BLUR_ACTOR_WIDTH * 1.1f, 0.0f);
-    mMotionBlurImageActor.Add( mMotionBlurImageActor2 );
-
-    // Create shader used for doing motion blur
-    mMotionBlurEffect2 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
-
-    // set actor shader to the blur one
-    mMotionBlurImageActor2.SetShaderEffect( mMotionBlurEffect2 );
-
-
-    ///////////////////////////////////////////////////////
-    //
-    // Motion blurred actor 3
-    //
-
-    mMotionBlurImageActor3 = ImageActor::New(image);
-    mMotionBlurImageActor3.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor3.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
-    mMotionBlurImageActor3.SetPosition(-MOTION_BLUR_ACTOR_WIDTH * 1.1f, 0.0f);
-    mMotionBlurImageActor.Add( mMotionBlurImageActor3 );
-
-    // Create shader used for doing motion blur
-    mMotionBlurEffect3 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
-
-    // set actor shader to the blur one
-    mMotionBlurImageActor3.SetShaderEffect( mMotionBlurEffect3 );
-
-
-    ///////////////////////////////////////////////////////
-    //
-    // Motion blurred actor 4
-    //
-
-    mMotionBlurImageActor4 = ImageActor::New(image);
-    mMotionBlurImageActor4.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor4.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
-    mMotionBlurImageActor4.SetPosition(0.0f, MOTION_BLUR_ACTOR_HEIGHT * 1.1f);
-    mMotionBlurImageActor.Add( mMotionBlurImageActor4 );
-
-    // Create shader used for doing motion blur
-    mMotionBlurEffect4 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
-
-    // set actor shader to the blur one
-    mMotionBlurImageActor4.SetShaderEffect( mMotionBlurEffect4 );
-
-
-    ///////////////////////////////////////////////////////
-    //
-    // Motion blurred actor 5
-    //
-
-    mMotionBlurImageActor5 = ImageActor::New(image);
-    mMotionBlurImageActor5.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageActor5.SetSize(MOTION_BLUR_ACTOR_WIDTH, MOTION_BLUR_ACTOR_HEIGHT);
-    mMotionBlurImageActor5.SetPosition(0.0f, -MOTION_BLUR_ACTOR_HEIGHT * 1.1f);
-    mMotionBlurImageActor.Add( mMotionBlurImageActor5 );
-
-    // Create shader used for doing motion blur
-    mMotionBlurEffect5 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
-
-    // set actor shader to the blur one
-    mMotionBlurImageActor5.SetShaderEffect( mMotionBlurEffect5 );
-#endif //#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
+    // Create shader used for doing motion stretch
+    mMotionStretchEffect = MotionStretchEffect::Apply(mMotionStretchImageActor);
   }
 
   //////////////////////////////////////////////////////////////
@@ -323,7 +236,6 @@ public:
     }
   }
 
-
   //////////////////////////////////////////////////////////////
   //
   // Actor Animation
@@ -347,9 +259,9 @@ public:
 
     float animDuration = 0.5f;
     mActorTapMovementAnimation = Animation::New( animDuration );
-    if ( mMotionBlurImageActor )
+    if ( mMotionStretchImageActor )
     {
-      mActorTapMovementAnimation.AnimateTo( Property(mMotionBlurImageActor, Actor::POSITION), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
+      mActorTapMovementAnimation.AnimateTo( Property(mMotionStretchImageActor, Actor::POSITION), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
     }
     mActorTapMovementAnimation.SetEndAction( Animation::Bake );
     mActorTapMovementAnimation.Play();
@@ -365,7 +277,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.RotateBy(mMotionBlurImageActor, Degree(720), Vector3::YAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(720), Vector3::YAXIS, AlphaFunctions::EaseInOut);
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -376,7 +288,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.RotateBy(mMotionBlurImageActor, Degree(720), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(720), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -387,8 +299,8 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.RotateBy(mMotionBlurImageActor, Degree(360), Vector3::YAXIS, AlphaFunctions::EaseInOut);
-          mActorAnimation.RotateBy(mMotionBlurImageActor, Degree(360), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(360), Vector3::YAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(360), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -399,7 +311,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.ScaleBy(mMotionBlurImageActor, Vector3(2.0f, 2.0f, 2.0f), AlphaFunctions::Bounce, 0.0f, 1.0f);
+          mActorAnimation.ScaleBy(mMotionStretchImageActor, Vector3(2.0f, 2.0f, 2.0f), AlphaFunctions::Bounce, 0.0f, 1.0f);
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -473,13 +385,13 @@ public:
   void ChangeImage()
   {
     mCurrentImage++;
-    if(MOTION_BLUR_NUM_ACTOR_IMAGES == mCurrentImage)
+    if(MOTION_STRETCH_NUM_ACTOR_IMAGES == mCurrentImage)
     {
       mCurrentImage = 0;
     }
 
-    Image blurImage = ResourceImage::New( MOTION_BLUR_ACTOR_IMAGES[mCurrentImage] );
-    mMotionBlurImageActor.SetImage(blurImage);
+    Image stretchImage = ResourceImage::New( MOTION_STRETCH_ACTOR_IMAGES[mCurrentImage] );
+    mMotionStretchImageActor.SetImage(stretchImage);
   }
 
 
@@ -490,31 +402,18 @@ private:
   TextView                   mTitleActor;             ///< The Toolbar's Title.
   Image                      mIconEffectsOff;
   Image                      mIconEffectsOn;
-
-  Layer                      mContentLayer;           ///< Content layer (contains actor for this blur demo)
+  Layer                      mContentLayer;           ///< Content layer (contains actor for this stretch demo)
 
   PushButton                 mActorEffectsButton;     ///< The actor effects toggling Button.
 
-  // Motion blur
-  MotionBlurEffect mMotionBlurEffect;
-  ImageActor mMotionBlurImageActor;
-
-#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
-  MotionBlurEffect mMotionBlurEffect2;
-  MotionBlurEffect mMotionBlurEffect3;
-  MotionBlurEffect mMotionBlurEffect4;
-  MotionBlurEffect mMotionBlurEffect5;
-
-  ImageActor mMotionBlurImageActor2;
-  ImageActor mMotionBlurImageActor3;
-  ImageActor mMotionBlurImageActor4;
-  ImageActor mMotionBlurImageActor5;
-#endif //#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
+  // Motion stretch
+  MotionStretchEffect mMotionStretchEffect;
+  ImageActor mMotionStretchImageActor;
 
   // animate actor to position where user taps screen
   Animation mActorTapMovementAnimation;
 
-  // show different animations to demonstrate blur effect working on an object only movement basis
+  // show different animations to demonstrate stretch effect working on an object only movement basis
   bool mActorEffectsEnabled;
   Animation mActorAnimation;
   int mCurrentActorAnimation;
@@ -527,12 +426,11 @@ private:
   DeviceOrientation mOrientation;               ///< Current Device orientation
   Animation mRotateAnimation;                   ///< Animation for rotating between landscape and portrait.
 
-  Popup mInstructionsPopup;                     ///< Info Popup
 };
 
 void RunTest(Application& app)
 {
-  MotionBlurExampleApp test(app);
+  MotionStretchExampleApp test(app);
 
   app.MainLoop();
 }

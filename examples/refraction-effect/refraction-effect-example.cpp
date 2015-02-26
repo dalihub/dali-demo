@@ -17,7 +17,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #include <fstream>
 #include <sstream>

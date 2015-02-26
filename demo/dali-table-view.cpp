@@ -17,12 +17,14 @@
 
 // CLASS HEADER
 #include "dali-table-view.h"
-#include "examples/shared/view.h"
 
 // EXTERNAL INCLUDES
 #include <algorithm>
 #include <sstream>
-#include<unistd.h>
+#include <unistd.h>
+
+// INTERNAL INCLUDES
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
