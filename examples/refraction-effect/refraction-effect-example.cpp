@@ -501,7 +501,6 @@ private:
     meshData.SetHasNormals(true);
     mMeshActor = MeshActor::New( Mesh::New( meshData ) );
     mMeshActor.SetParentOrigin(ParentOrigin::CENTER);
-    mMeshActor.SetAffectedByLighting( false );
     mMeshActor.SetShaderEffect( mNoEffect );
     mContent.Add( mMeshActor );
   }

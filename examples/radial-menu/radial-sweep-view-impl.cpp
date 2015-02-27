@@ -352,7 +352,6 @@ void RadialSweepViewImpl::CreateStencil( Degree initialSector )
   mMesh[0].SetPosition( Vector3(  0.0f,  0.0f, 0.0f ) ); // Center pt
 
   mStencilActor = MeshActor::New(mMesh);
-  mStencilActor.SetAffectedByLighting(false);
   mStencilActor.SetCullFace(CullNone); // Allow clockwise & anticlockwise faces
 
   mStartAngleIndex = mStencilActor.RegisterProperty("start-angle", Property::Value(0.0f));

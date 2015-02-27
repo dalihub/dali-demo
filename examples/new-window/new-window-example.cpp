@@ -195,7 +195,6 @@ void NewWindowController::CreateMeshActor()
   meshActor.SetScale( 100.0f );
   meshActor.SetParentOrigin( ParentOrigin::CENTER );
   meshActor.SetPosition(Vector3( -150.0f, 200.0f, 0.0f ));
-  meshActor.SetAffectedByLighting( false );
   meshActor.SetName("MeshActor");
   mContentLayer.Add( meshActor );
 
@@ -206,7 +205,6 @@ void NewWindowController::CreateMeshActor()
   meshActor2.SetScale( 100.0f );
   meshActor2.SetParentOrigin( ParentOrigin::CENTER );
   meshActor2.SetPosition(Vector3( -150.0f, 310.0f, 0.0f ));
-  meshActor2.SetAffectedByLighting( false );
   meshActor2.SetName("MeshActor");
   mContentLayer.Add( meshActor2 );
 }
