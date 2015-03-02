@@ -53,8 +53,8 @@
 		<label>Refraction effect</label>
 	</ui-application>
 	<ui-application appid="scripting.example" exec="/usr/apps/com.samsung.dali-demo/bin/scripting.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-    <label>Scroll View</label>
-  </ui-application>
+		<label>Scroll View</label>
+	</ui-application>
 	<ui-application appid="scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>
 	</ui-application>
@@ -67,8 +67,11 @@
 	<ui-application appid="builder.example" exec="/usr/apps/com.samsung.dali-demo/bin/builder.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Script Based UI</label>
 	</ui-application>
+	<ui-application appid="image-scaling-and-filtering.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-scaling-and-filtering.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Image Fitting and Sampling</label>
+	</ui-application>
 	<ui-application appid="image-scaling-irregular-grid.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-scaling-irregular-grid.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Image Scaling Modes</label>
+		<label>Image Scaling Grid</label>
 	</ui-application>
 	<ui-application appid="buttons.example" exec="/usr/apps/com.samsung.dali-demo/bin/buttons.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Buttons</label>

@@ -54,6 +54,16 @@ distributing this software or its derivatives.
     "scrollview":
     {
       "overshoot-effect-color":"B018"
+    },
+
+    "grouplabel":
+    {
+      "point-size":9
+    },
+
+    "buttonlabel":
+    {
+      "point-size":11
     }
   }
 }
