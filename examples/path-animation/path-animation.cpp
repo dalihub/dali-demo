@@ -71,8 +71,8 @@ public:
     Slider slider = Slider::New();
     slider.SetAnchorPoint( AnchorPoint::CENTER_LEFT);
     slider.SetParentOrigin( ParentOrigin::CENTER_RIGHT);
-    slider.SetProperty(Slider::LOWER_BOUND_PROPERTY, -1.0f );
-    slider.SetProperty(Slider::UPPER_BOUND_PROPERTY, 1.0f );
+    slider.SetProperty(Slider::Property::LOWER_BOUND, -1.0f );
+    slider.SetProperty(Slider::Property::UPPER_BOUND, 1.0f );
 
     Property::Array marks;
     float mark = -1.0f;
@@ -82,8 +82,8 @@ public:
       mark += 0.1f;
     }
 
-    slider.SetProperty(Slider::MARKS_PROPERTY, marks);
-    slider.SetProperty(Slider::SNAP_TO_MARKS_PROPERTY, true );
+    slider.SetProperty(Slider::Property::MARKS, marks);
+    slider.SetProperty(Slider::Property::SNAP_TO_MARKS, true );
     slider.SetSize(size);
     slider.SetScale( 0.5f );
     slider.ValueChangedSignal().Connect(this,callback);
