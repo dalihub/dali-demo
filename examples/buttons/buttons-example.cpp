@@ -292,18 +292,11 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       checkBox.SetBackgroundImage( unselected );
       checkBox.SetSelectedImage( selected );
-      checkBox.SetSize( DP(48), DP(48) );
+      checkBox.SetLabel( "CheckBox1 is unselected" );
       checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
-
-    mCheckBox1State = Toolkit::TextView::New( "CheckBox1 is unselected" );
-
-    mCheckBox1State.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mCheckBox1State.SetPosition( DP(80), DP(checkYPos) );
-
-    checkBoxBackground.Add( mCheckBox1State );
 
     checkYPos += 60;
 
@@ -314,19 +307,12 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       checkBox.SetBackgroundImage( unselected );
       checkBox.SetSelectedImage( selected );
-      checkBox.SetSize( DP(48), DP(48) );
+      checkBox.SetLabel( "CheckBox2 is selected" );
       checkBox.SetSelected( true );
       checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
-
-    mCheckBox2State = Toolkit::TextView::New( "CheckBox2 is selected" );
-    mCheckBox2State.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mCheckBox2State.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mCheckBox2State.SetPosition( DP(80), DP(checkYPos) );
-
-    checkBoxBackground.Add( mCheckBox2State );
 
     checkYPos += 60;
 
@@ -337,18 +323,11 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       checkBox.SetBackgroundImage( unselected );
       checkBox.SetSelectedImage( selected );
-      checkBox.SetSize( DP(48), DP(48) );
+      checkBox.SetLabel( "CheckBox3 is unselected" );
       checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
-
-    mCheckBox3State = Toolkit::TextView::New( "CheckBox3 is unselected" );
-
-    mCheckBox3State.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mCheckBox3State.SetPosition( DP(80), DP(checkYPos) );
-
-    checkBoxBackground.Add( mCheckBox3State );
 
     // Create togglabe button
     yPos += GROUP3_HEIGHT + MARGIN_SIZE;
@@ -444,11 +423,11 @@ class ButtonsController: public ConnectionTracker
     {
       if( button.IsSelected() )
       {
-        mCheckBox1State.SetText("CheckBox1 is selected");
+        button.SetLabel("CheckBox1 is selected");
       }
       else
       {
-        mCheckBox1State.SetText("CheckBox1 is unselected");
+        button.SetLabel("CheckBox1 is unselected");
       }
     }
 
@@ -456,11 +435,11 @@ class ButtonsController: public ConnectionTracker
     {
       if( button.IsSelected() )
       {
-        mCheckBox2State.SetText("CheckBox2 is selected");
+        button.SetLabel("CheckBox2 is selected");
       }
       else
       {
-        mCheckBox2State.SetText("CheckBox2 is unselected");
+        button.SetLabel("CheckBox2 is unselected");
       }
     }
 
@@ -468,11 +447,11 @@ class ButtonsController: public ConnectionTracker
     {
       if( button.IsSelected() )
       {
-        mCheckBox3State.SetText("CheckBox3 is selected");
+        button.SetLabel("CheckBox3 is selected");
       }
       else
       {
-        mCheckBox3State.SetText("CheckBox3 is unselected");
+        button.SetLabel("CheckBox3 is unselected");
       }
     }
 
@@ -496,10 +475,6 @@ class ButtonsController: public ConnectionTracker
   Image mBigImage2;
   Image mBigImage3;
   ImageActor mImage;
-
-  Toolkit::TextView mCheckBox1State;
-  Toolkit::TextView mCheckBox2State;
-  Toolkit::TextView mCheckBox3State;
 };
 
 void RunTest( Application& application )
