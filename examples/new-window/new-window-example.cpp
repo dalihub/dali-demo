@@ -182,7 +182,7 @@ void NewWindowController::Destroy( Application& app )
 bool NewWindowController::OnLoseContextButtonClicked( Toolkit::Button button )
 {
   // Add as an idle callback to avoid ProcessEvents being recursively called.
-  mApplication.AddIdle(NewWindowController::NewWindow);
+  mApplication.AddIdle( MakeCallback( NewWindowController::NewWindow ) );
   return true;
 }
 

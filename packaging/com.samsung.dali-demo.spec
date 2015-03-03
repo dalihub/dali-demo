@@ -15,7 +15,6 @@ Requires: dali
 Requires: dali-adaptor
 Requires: dali-toolkit
 BuildRequires:  cmake
-BuildRequires:  boost-devel
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-media-player)

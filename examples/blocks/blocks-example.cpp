@@ -21,8 +21,6 @@
 #include <map>
 #include <algorithm>
 
-#include <boost/any.hpp>
-#include <boost/function.hpp>
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include "shared/view.h"
