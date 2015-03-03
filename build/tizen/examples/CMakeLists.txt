@@ -105,7 +105,7 @@ ADD_EXECUTABLE(logging.example ${LOGGING_SRCS})
 TARGET_LINK_LIBRARIES(logging.example ${REQUIRED_PKGS_LDFLAGS})
 INSTALL(TARGETS logging.example DESTINATION ${BINDIR})
 
-SET(TEXT_LABEL_SRCS ${EXAMPLES_SRC_DIR}/text/text-label-example.cpp)
+SET(TEXT_LABEL_SRCS ${EXAMPLES_SRC_DIR}/text/text-label-example.cpp ${EXAMPLES_SRC_DIR}/text/center-layout.cpp ${EXAMPLES_SRC_DIR}/text/center-layout-impl.cpp)
 ADD_EXECUTABLE(text-label.example ${TEXT_LABEL_SRCS})
 TARGET_LINK_LIBRARIES(text-label.example ${REQUIRED_PKGS_LDFLAGS})
 INSTALL(TARGETS text-label.example DESTINATION ${BINDIR})

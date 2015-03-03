@@ -24,6 +24,9 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/text-abstraction/text-abstraction.h>
 
+// INTERNAL INCLUDES
+#include "center-layout.h"
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 
@@ -53,14 +56,20 @@ public:
   {
     Stage stage = Stage::GetCurrent();
 
+    stage.SetBackgroundColor( Color::BLUE );
     stage.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
+    Vector2 stageSize = stage.GetSize();
+
+    CenterLayout centerLayout = CenterLayout::New();
+    centerLayout.SetParentOrigin( ParentOrigin::CENTER );
+    centerLayout.SetSize( stageSize.width*0.6f, stageSize.width*0.6f );
+    stage.Add( centerLayout );
 
     TextLabel label = TextLabel::New();
-    label.SetParentOrigin( ParentOrigin::CENTER );
-    stage.Add( label );
+    label.SetBackgroundColor( Color::BLACK );
+    centerLayout.Add( label );
 
     label.SetProperty( TextLabel::PROPERTY_MULTI_LINE, true );
-
     label.SetProperty( TextLabel::PROPERTY_TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
 
     // TODO
