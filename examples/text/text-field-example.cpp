@@ -24,8 +24,18 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/text-abstraction/text-abstraction.h>
 
+// INTERNAL INCLUDES
+#include "edit-layout.h"
+
 using namespace Dali;
 using namespace Dali::Toolkit;
+
+namespace
+{
+
+const float BORDER_WIDTH = 4.0f;
+
+} // unnamed namespace
 
 /**
  * @brief The main class of the demo.
@@ -55,9 +65,18 @@ public:
 
     stage.KeyEventSignal().Connect(this, &TextFieldExample::OnKeyEvent);
 
+    Vector2 stageSize = stage.GetSize();
+
+    EditLayout layout = EditLayout::New();
+    layout.SetParentOrigin( ParentOrigin::CENTER );
+    layout.SetAnchorPoint( AnchorPoint::CENTER );
+    layout.SetSize( stageSize.width - BORDER_WIDTH*2.0f, stageSize.height*0.2f );
+    stage.Add( layout );
+
     TextField field = TextField::New();
     field.SetParentOrigin( ParentOrigin::CENTER );
-    stage.Add( field );
+    field.SetBackgroundColor( Color::BLACK );
+    layout.SetTopPanel( field );
 
     field.SetProperty( TextField::PROPERTY_TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
 

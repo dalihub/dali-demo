@@ -115,7 +115,7 @@ ADD_EXECUTABLE(text-label-multi-language.example ${TEXT_LABEL_MULTI_LANGUAGE_SRC
 TARGET_LINK_LIBRARIES(text-label-multi-language.example ${REQUIRED_PKGS_LDFLAGS})
 INSTALL(TARGETS text-label-multi-language.example DESTINATION ${BINDIR})
 
-SET(TEXT_FIELD_SRCS ${EXAMPLES_SRC_DIR}/text/text-field-example.cpp)
+SET(TEXT_FIELD_SRCS ${EXAMPLES_SRC_DIR}/text/text-field-example.cpp ${EXAMPLES_SRC_DIR}/text/edit-layout.cpp ${EXAMPLES_SRC_DIR}/text/edit-layout-impl.cpp)
 ADD_EXECUTABLE(text-field.example ${TEXT_FIELD_SRCS})
 TARGET_LINK_LIBRARIES(text-field.example ${REQUIRED_PKGS_LDFLAGS})
 INSTALL(TARGETS text-field.example DESTINATION ${BINDIR})
