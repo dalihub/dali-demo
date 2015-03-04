@@ -200,7 +200,7 @@ public:
     mPinchGestureDetector.Attach( mView );
     mPinchGestureDetector.DetectedSignal().Connect(this, &TestApp::OnPinch);
 
-    mTapGestureDetector = TapGestureDetector::New(1, 1);
+    mTapGestureDetector = TapGestureDetector::New();
     mTapGestureDetector.Attach( mView );
     mTapGestureDetector.DetectedSignal().Connect(this, &TestApp::OnTap);
   }
