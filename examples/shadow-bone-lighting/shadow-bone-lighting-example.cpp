@@ -16,7 +16,7 @@
  */
 
 // INTERNAL INCLUDES
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
@@ -286,9 +286,9 @@ public:
 
     Property::Index angleIndex = mImageActor2.RegisterProperty("angle", Property::Value(30.0f));
     Source angleSrc( mImageActor2, angleIndex );
-    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::ROTATION, angleSrc,
+    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::Rotation, angleSrc,
                                                               RotationConstraint(-1.0f)));
-    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::ROTATION, angleSrc,
+    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::Rotation, angleSrc,
                                                               RotationConstraint(+1.0f)));
 
     mSceneAnimation = Animation::New(2.5f);

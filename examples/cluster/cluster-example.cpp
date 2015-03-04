@@ -18,7 +18,7 @@
 #include <sstream>
 #include <iomanip>
 
-#include "../shared/view.h"
+#include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
@@ -707,7 +707,7 @@ public:
           Vector2 shearCenter( Vector2(position.x + size.width * shearAnchor.x, position.y + size.height * shearAnchor.y) );
           Property::Index centerProperty = shaderEffect.GetPropertyIndex(shaderEffect.GetCenterPropertyName());
           Constraint constraint = Constraint::New<Vector2>( centerProperty,
-                                                            Source(mView, Actor::SIZE),
+                                                            Source(mView, Actor::Property::Size),
                                                             ShearEffectCenterConstraint(stageSize, shearCenter) );
           shaderEffect.ApplyConstraint(constraint);
 
@@ -720,12 +720,12 @@ public:
 
           constraint = Constraint::New<float>( angleXAxisProperty,
                                                Source(mScrollView, scrollOvershootProperty),
-                                               Source(mView, Actor::ROTATION),
+                                               Source(mView, Actor::Property::Rotation),
                                                ShearEffectConstraint(stageSize, SHEAR_EFFECT_MAX_OVERSHOOT, Vector2::XAXIS) );
           shaderEffect.ApplyConstraint(constraint);
           constraint = Constraint::New<float>( angleYAxisProperty,
                                                Source(mScrollView, scrollOvershootProperty),
-                                               Source(mView, Actor::ROTATION),
+                                               Source(mView, Actor::Property::Rotation),
                                                ShearEffectConstraint(stageSize, SHEAR_EFFECT_MAX_OVERSHOOT, Vector2::YAXIS) );
           shaderEffect.ApplyConstraint(constraint);
 
@@ -752,7 +752,7 @@ public:
 
         Property::Index anglePerUnit = shaderEffect.GetPropertyIndex( shaderEffect.GetAnglePerUnitPropertyName() );
         shaderEffect.ApplyConstraint( Constraint::New<Vector2>( anglePerUnit,
-                                                                Source(mView, Actor::ROTATION),
+                                                                Source(mView, Actor::Property::Rotation),
                                                                 CarouselEffectOrientationConstraint( angleSweep ) ) );
 
         break;
@@ -779,7 +779,7 @@ public:
         // dont apply shader effect to scrollview as it might override internal shaders for bounce effect etc
         for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {
-          Constraint constraint = Constraint::New<float>(Actor::POSITION_Z, SphereEffectOffsetConstraint(SPHERE_EFFECT_POSITION_Z));
+          Constraint constraint = Constraint::New<float>(Actor::Property::PositionZ, SphereEffectOffsetConstraint(SPHERE_EFFECT_POSITION_Z));
           constraint.SetRemoveAction(Constraint::Discard);
           Cluster cluster = i->mCluster;
           SetShaderEffectRecursively( cluster, shaderEffect );

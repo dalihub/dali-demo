@@ -35,9 +35,7 @@
 #include <string>
 #include <fstream>
 #include <streambuf>
-#include <boost/scoped_ptr.hpp>
 
-//#include <boost/regex.hpp>
 #include "sys/stat.h"
 #include <ctime>
 

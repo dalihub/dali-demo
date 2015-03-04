@@ -49,7 +49,7 @@
 
 // INTERNAL INCLUDES
 #include "grid-flags.h"
-#include "../../shared/view.h"
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;

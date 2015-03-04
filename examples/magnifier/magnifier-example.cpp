@@ -18,7 +18,7 @@
 // EXTERNAL INCLUDES
 
 // INTERNAL INCLUDES
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #include <dali-toolkit/dali-toolkit.h>
 
@@ -240,11 +240,11 @@ public:
     overlay.Add( mMagnifier );
 
     // Apply constraint to animate the position of the magnifier.
-    Constraint constraint = Constraint::New<Vector3>(Actor::POSITION,
-                                                     LocalSource(Actor::SIZE),
-                                                     LocalSource(Actor::PARENT_ORIGIN),
-                                                     LocalSource(Actor::ANCHOR_POINT),
-                                                     ParentSource(Actor::SIZE),
+    Constraint constraint = Constraint::New<Vector3>(Actor::Property::Position,
+                                                     LocalSource(Actor::Property::Size),
+                                                     LocalSource(Actor::Property::ParentOrigin),
+                                                     LocalSource(Actor::Property::AnchorPoint),
+                                                     ParentSource(Actor::Property::Size),
                                                      ConfinementConstraint(ParentOrigin::CENTER, Vector2::ONE * MAGNIFIER_INDENT, Vector2::ONE * MAGNIFIER_INDENT));
     constraint.SetRemoveAction(Constraint::Discard);
     mMagnifier.ApplyConstraint( constraint );
@@ -260,15 +260,15 @@ public:
     ContinueAnimation();
 
     // Apply constraint to animate the position of the magnifier.
-    constraint = Constraint::New<Vector3>(Actor::POSITION,
-                                          LocalSource(Actor::SIZE),
+    constraint = Constraint::New<Vector3>(Actor::Property::Position,
+                                          LocalSource(Actor::Property::Size),
                                           LocalSource(mAnimationTimeProperty),
                                           MagnifierPathConstraint(mStageSize, mStageSize * 0.5f));
     mBouncingMagnifier.ApplyConstraint( constraint );
 
     // Apply constraint to animate the source of the magnifier.
     constraint = Constraint::New<Vector3>(mBouncingMagnifier.GetPropertyIndex( Toolkit::Magnifier::SOURCE_POSITION_PROPERTY_NAME ),
-                                          LocalSource(Actor::SIZE),
+                                          LocalSource(Actor::Property::Size),
                                           LocalSource(mAnimationTimeProperty),
                                           MagnifierPathConstraint(mStageSize));
     mBouncingMagnifier.ApplyConstraint( constraint );
@@ -355,7 +355,7 @@ public:
     if(!mMagnifierShown)
     {
       Animation animation = Animation::New(MAGNIFIER_DISPLAY_DURATION);
-      animation.AnimateTo(Property(mMagnifier, Actor::SCALE), Vector3::ONE, AlphaFunctions::EaseIn);
+      animation.AnimateTo(Property(mMagnifier, Actor::Property::Scale), Vector3::ONE, AlphaFunctions::EaseIn);
       animation.Play();
       mMagnifierShown = true;
     }
@@ -369,7 +369,7 @@ public:
     if(mMagnifierShown)
     {
       Animation animation = Animation::New(MAGNIFIER_DISPLAY_DURATION);
-      animation.AnimateTo(Property(mMagnifier, Actor::SCALE), Vector3::ZERO, AlphaFunctions::EaseOut);
+      animation.AnimateTo(Property(mMagnifier, Actor::Property::Scale), Vector3::ZERO, AlphaFunctions::EaseOut);
       animation.Play();
       mMagnifierShown = false;
     }

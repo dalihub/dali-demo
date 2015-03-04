@@ -21,7 +21,7 @@
 #include <string>
 #include <algorithm>
 #include <cstdlib> // rand
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
@@ -342,7 +342,7 @@ public:
     SetLayoutImage();
 
     // Store one 1x1 white image for multiple items to share for backgrounds:
-    mWhiteImage = BitmapImage::WHITE();
+    mWhiteImage = BufferImage::WHITE();
   }
 
   Actor OnKeyboardPreFocusChange( Actor current, Actor proposed, Control::KeyboardFocusNavigationDirection direction )
@@ -993,7 +993,7 @@ private:
     text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
     text.SetStyleToCurrentText( defaultTextStyle );
     text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::SIZE_WIDTH, Dali::ParentSource( Dali::Actor::SIZE_WIDTH ), Dali::EqualToConstraint() ) );
+    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::Property::SizeWidth, Dali::ParentSource( Dali::Actor::Property::SizeWidth ), Dali::EqualToConstraint() ) );
     text.SetZ( -0.9f );
     slider.Add( text );
 
@@ -1016,7 +1016,7 @@ private:
     text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
     text.SetStyleToCurrentText( defaultTextStyle );
     text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::SIZE_WIDTH, Dali::ParentSource( Dali::Actor::SIZE_WIDTH ), Dali::EqualToConstraint() ) );
+    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::Property::SizeWidth, Dali::ParentSource( Dali::Actor::Property::SizeWidth ), Dali::EqualToConstraint() ) );
     textContainer.Add( text );
 
     mMenu.Show();
@@ -1124,7 +1124,7 @@ private:
 
   unsigned int mAlphaFuncIndex;
   TextView mAlphaFunctionText;
-  BitmapImage mWhiteImage;
+  BufferImage mWhiteImage;
 };
 
 void RunTest(Application& app)

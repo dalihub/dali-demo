@@ -288,17 +288,16 @@ private: // Application callbacks & implementation
    * @param[in] distanceField The distance field bitmap to use
    * @param[in] size The size of the actor
    */
-  void AddBackgroundActors( Dali::Actor layer, int count, Dali::BitmapImage distanceField, const Dali::Vector2& size );
+  void AddBackgroundActors( Dali::Actor layer, int count, Dali::BufferImage distanceField, const Dali::Vector2& size );
 
   /**
    * Create a bitmap with the specified shape and also output a distance field
    *
    * @param[in] shapeType The shape to generate
    * @param[in] size The size of the bitmap to create
-   * @param[out] imageOut The return bitmap
    * @param[out] distanceFieldOut The return depth field alpha map
    */
-  void CreateShapeImage( ShapeType shapeType, const Dali::Size& size, Dali::BitmapImage& distanceFieldOut );
+  void CreateShapeImage( ShapeType shapeType, const Dali::Size& size, Dali::BufferImage& distanceFieldOut );
 
   /**
    * Generate a square bit pattern and depth field
