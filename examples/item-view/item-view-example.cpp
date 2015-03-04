@@ -21,7 +21,7 @@
 #include <string>
 #include <algorithm>
 #include <cstdlib> // rand
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
@@ -340,7 +340,7 @@ public:
     SetLayoutImage();
 
     // Store one 1x1 white image for multiple items to share for backgrounds:
-    mWhiteImage = BitmapImage::WHITE();
+    mWhiteImage = BufferImage::WHITE();
   }
 
   Actor OnKeyboardPreFocusChange( Actor current, Actor proposed, Control::KeyboardFocusNavigationDirection direction )
@@ -1066,7 +1066,7 @@ private:
   Toolkit::PushButton mReplaceButton;
 
   unsigned int mAlphaFuncIndex;
-  BitmapImage mWhiteImage;
+  BufferImage mWhiteImage;
 };
 
 void RunTest(Application& app)

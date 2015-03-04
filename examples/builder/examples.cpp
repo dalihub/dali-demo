@@ -30,17 +30,15 @@
 #include <fstream>
 #include <streambuf>
 #include <sstream>
-#include <boost/scoped_ptr.hpp>
 #include <dirent.h>
 #include <stdio.h>
 #include <iostream>
 
-//#include <boost/regex.hpp>
 #include "sys/stat.h"
 #include <ctime>
 
 #include <dali/integration-api/debug.h>
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #define TOKEN_STRING(x) #x
 

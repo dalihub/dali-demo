@@ -19,7 +19,7 @@
 #include <math.h>
 
 // INTERNAL INCLUDES
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
@@ -228,7 +228,7 @@ void DissolveEffectApp::OnInit( Application& application )
   mParent.SetPositionInheritanceMode( USE_PARENT_POSITION );
   mContent.Add( mParent );
 
-  mSizeConstraint= Constraint::New<Vector3>( Actor::SCALE, LocalSource( Actor::SIZE ), ParentSource( Actor::SIZE ), ScaleToFitKeepAspectRatioConstraint() );
+  mSizeConstraint= Constraint::New<Vector3>( Actor::Property::Scale, LocalSource( Actor::Property::Size ), ParentSource( Actor::Property::Size ), ScaleToFitKeepAspectRatioConstraint() );
 
   // show the first image
   mCurrentImage = ImageActor::New( ResourceImage::New( IMAGES[mIndex] ) );

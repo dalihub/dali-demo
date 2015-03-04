@@ -8,6 +8,5 @@ install_manifest.txt
 /demo/dali-performance
 /demo/performance.core
 /docs/dali.doxy
+/builder/dali-builder
 /examples/*.demo
-/performance/dali-performance
-/performance/performance.*

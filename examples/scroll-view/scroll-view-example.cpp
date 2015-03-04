@@ -19,7 +19,7 @@
 #include <sstream>
 
 // INTERNAL INCLUDES
-#include "../shared/view.h"
+#include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
@@ -210,7 +210,7 @@ public:
 
     // Hack to force screen refresh.
     Animation animation = Animation::New(1.0f);
-    animation.AnimateTo(Property(mContentLayer, Actor::POSITION), Vector3::ZERO );
+    animation.AnimateTo(Property(mContentLayer, Actor::Property::Position), Vector3::ZERO );
     animation.Play();
   }
 

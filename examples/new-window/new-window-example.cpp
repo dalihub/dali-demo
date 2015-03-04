@@ -15,7 +15,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include "../shared/view.h"
+#include "shared/view.h"
 #include <cstdio>
 #include <iostream>
 
@@ -26,7 +26,6 @@ class NewWindowController;
 
 namespace
 {
-const char * gModelFile = DALI_MODEL_DIR "AlbumCute.dali-bin";
 const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-2.jpg" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const LOSE_CONTEXT_IMAGE( DALI_IMAGE_DIR "icon-cluster-wobble.png" );
@@ -70,8 +69,6 @@ public:
   void CreateBubbles(Vector2 stageSize);
   void CreateBlending();
   void CreateText();
-  void CreateModel();
-  void OnModelLoaded(Model model);
   bool OnTrackTimerTick();
   bool OnExplodeTimerTick();
   void SetUpAnimation( Vector2 emitPosition, Vector2 direction );
@@ -82,17 +79,13 @@ public:
 
 private:
   Application                mApplication;
-  Animation                  mModelAnimation;
-  Actor                      mModelActor;
   Actor                      mCastingLight;
   ImageActor                 mImageActor;
   ImageActor                 mBlendActor;
   Image                      mEffectImage;
   Image                      mBaseImage;
-  LightActor                 mKeyLightActor;
   MeshActor                  mMeshActor;
   MeshActor                  mAnimatedMeshActor;
-  Model                      mModel;
 
   Toolkit::View              mView;                              ///< The View instance.
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
@@ -174,7 +167,6 @@ void NewWindowController::Create( Application& app )
   CreateMeshActor();
   CreateBlending();
   CreateText();
-  CreateModel();
 
   stage.ContextLostSignal().Connect(this, &NewWindowController::OnContextLost);
   stage.ContextRegainedSignal().Connect(this, &NewWindowController::OnContextRegained);
@@ -187,7 +179,7 @@ void NewWindowController::Destroy( Application& app )
 bool NewWindowController::OnLoseContextButtonClicked( Toolkit::Button button )
 {
   // Add as an idle callback to avoid ProcessEvents being recursively called.
-  mApplication.AddIdle(NewWindowController::NewWindow);
+  mApplication.AddIdle( MakeCallback( NewWindowController::NewWindow ) );
   return true;
 }
 
@@ -200,7 +192,6 @@ void NewWindowController::CreateMeshActor()
   meshActor.SetScale( 100.0f );
   meshActor.SetParentOrigin( ParentOrigin::CENTER );
   meshActor.SetPosition(Vector3( -150.0f, 200.0f, 0.0f ));
-  meshActor.SetAffectedByLighting( false );
   meshActor.SetName("MeshActor");
   mContentLayer.Add( meshActor );
 
@@ -211,7 +202,6 @@ void NewWindowController::CreateMeshActor()
   meshActor2.SetScale( 100.0f );
   meshActor2.SetParentOrigin( ParentOrigin::CENTER );
   meshActor2.SetPosition(Vector3( -150.0f, 310.0f, 0.0f ));
-  meshActor2.SetAffectedByLighting( false );
   meshActor2.SetName("MeshActor");
   mContentLayer.Add( meshActor2 );
 }
@@ -414,58 +404,6 @@ Mesh NewWindowController::CreateMesh(bool hasColor, Material material)
   // Create a mesh from the data
   Dali::Mesh mesh = Mesh::New( meshData );
   return mesh;
-}
-
-void NewWindowController::CreateModel()
-{
-  mModel = Model::New(gModelFile);
-  mModel.LoadingFinishedSignal().Connect(this, &NewWindowController::OnModelLoaded);
-
-  //Create a Key light
-  Light keylight = Light::New("KeyLight");
-  keylight.SetFallOff(Vector2(10000.0f, 10000.0f));
-
-  mCastingLight = Actor::New();
-  mCastingLight.SetParentOrigin(ParentOrigin::CENTER);
-  mCastingLight.SetAnchorPoint(AnchorPoint::CENTER);
-  mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) );
-  mContentLayer.Add( mCastingLight );
-
-  mKeyLightActor = LightActor::New();
-  mKeyLightActor.SetParentOrigin(ParentOrigin::CENTER);
-  mKeyLightActor.SetName(keylight.GetName());
-
-  //Add all the actors to the stage
-  mCastingLight.Add(mKeyLightActor);
-  mKeyLightActor.SetLight(keylight);
-}
-
-void NewWindowController::OnModelLoaded( Model model )
-{
-  if( model.GetLoadingState() == ResourceLoadingSucceeded )
-  {
-    std::cout << "Succeeded loading model" << std::endl;
-    mModelActor = ModelActorFactory::BuildActorTree(mModel, "");  // Gets root actor
-    mModelActor.SetSize(250.0f, 250.0f);
-    mModelActor.SetPosition(0.0f, 200.0f, 70.0f);
-    mModelActor.SetScale(0.5f);
-    mModelActor.SetRotation(Radian(Math::PI*0.25f), Vector3(1.0, 0.7, 0.0));
-
-    mContentLayer.Add( mModelActor );
-
-    if (mModel.NumberOfAnimations())
-    {
-      mModelAnimation = ModelActorFactory::BuildAnimation(mModel, mModelActor, 0);
-      mModelAnimation.SetDuration(4.0f);
-      mModelAnimation.SetLooping(true);
-      mModelAnimation.Play();
-    }
-  }
-  else
-  {
-    std::cout << "Failed loading model" << std::endl;
-    mApplication.Quit();
-  }
 }
 
 void NewWindowController::NewWindow(void)

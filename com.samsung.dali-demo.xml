@@ -80,4 +80,10 @@
 	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Logging</label>
 	</ui-application>
+	<ui-application appid="animated-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Animated shapes</label>
+	</ui-application>
+	<ui-application appid="path-animation.example" exec="/usr/apps/com.samsung.dali-demo/bin/path-animation.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Path Animation</label>
+	</ui-application>
 </manifest>

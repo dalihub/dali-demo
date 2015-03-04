@@ -7,7 +7,7 @@ T.O.C.
  2.   Building for Ubuntu desktop
  2.1. Minimum Requirements
  2.2. Building the Repository
-
+ 3.   Creating an example
 
 
 1. GBS Builds
@@ -45,4 +45,15 @@ Then run the following commands:
 
  cmake -DCMAKE_INSTALL_PREFIX=$DESKTOP_PREFIX .
  make install -j8
+
+
+
+3. Creating an example
+======================
+
+ - Make a directory in the "examples" directory. Only one example will be created per directory.
+ - The executable installed will have a ".example" appended to it, e.g. a "blocks" directory produces "blocks.example".
+ - Add all source files for the required example in this directory.
+ - Modify "com.samsung.dali-demo.xml" to include your example so that it can be launched on target.
+ - No changes are required to the make system as long as the above is followed, your example will be automatically built & installed.
 

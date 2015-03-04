@@ -17,7 +17,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include "../shared/view.h"
+#include "shared/view.h"
 
 #include <fstream>
 #include <sstream>
@@ -235,7 +235,7 @@ public:
     handle.SetUniform( "uEffectStrength", 0.f );
     handle.SetUniform( "uLightIntensity",  2.5f );
 
-    Property::Index index = handle.RegisterProperty( "uSpinAngle", 0.f );
+    Dali::Property::Index index = handle.RegisterProperty( "uSpinAngle", 0.f );
     Constraint constraint = Constraint::New<Vector2>( handle.GetPropertyIndex("uLightSpinOffset"),
                                                       LocalSource(index),
                                                       LightOffsetConstraint(stageSize.x*0.1f));
@@ -501,7 +501,6 @@ private:
     meshData.SetHasNormals(true);
     mMeshActor = MeshActor::New( Mesh::New( meshData ) );
     mMeshActor.SetParentOrigin(ParentOrigin::CENTER);
-    mMeshActor.SetAffectedByLighting( false );
     mMeshActor.SetShaderEffect( mNoEffect );
     mContent.Add( mMeshActor );
   }

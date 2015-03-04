@@ -17,12 +17,14 @@
 
 // CLASS HEADER
 #include "dali-table-view.h"
-#include "examples/shared/view.h"
 
 // EXTERNAL INCLUDES
 #include <algorithm>
 #include <sstream>
-#include<unistd.h>
+#include <unistd.h>
+
+// INTERNAL INCLUDES
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -246,7 +248,7 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.SetParentOrigin( ParentOrigin::CENTER );
   // Note: Currently, changing mScrollView to use SizeMode RELATIVE_TO_PARENT
   // will cause scroll ends to appear in the wrong position.
-  mScrollView.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::SIZE, Dali::ParentSource( Dali::Actor::SIZE ), Dali::RelativeToConstraint( SCROLLVIEW_RELATIVE_SIZE ) ) );
+  mScrollView.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::Property::Size, Dali::ParentSource( Dali::Actor::Property::Size ), Dali::RelativeToConstraint( SCROLLVIEW_RELATIVE_SIZE ) ) );
   mScrollView.SetAxisAutoLock( true );
   mScrollView.ScrollCompletedSignal().Connect( this, &DaliTableView::OnScrollComplete );
   mScrollView.ScrollStartedSignal().Connect( this, &DaliTableView::OnScrollStart );
@@ -667,7 +669,7 @@ void DaliTableView::OnKeyEvent( const KeyEvent& event )
 void DaliTableView::SetupBackground( Actor bubbleContainer, Actor backgroundLayer, const Vector2& size )
 {
   // Create distance field shape.
-  BitmapImage distanceField;
+  BufferImage distanceField;
   Size imageSize( 512, 512 );
   CreateShapeImage( CIRCLE, imageSize, distanceField );
 
@@ -685,7 +687,7 @@ void DaliTableView::SetupBackground( Actor bubbleContainer, Actor backgroundLaye
   AddBackgroundActors( bubbleContainer, NUM_BACKGROUND_IMAGES, distanceField, size );
 }
 
-void DaliTableView::AddBackgroundActors( Actor layer, int count, BitmapImage distanceField, const Dali::Vector2& size )
+void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage distanceField, const Dali::Vector2& size )
 {
   for( int i = 0; i < count; ++i )
   {
@@ -713,9 +715,9 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BitmapImage dis
     dfActor.SetPosition( actorPos );
 
     // Define bubble horizontal parallax and vertical wrapping
-    Constraint animConstraint = Constraint::New < Vector3 > ( Actor::POSITION,
+    Constraint animConstraint = Constraint::New < Vector3 > ( Actor::Property::Position,
       Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
-      Dali::ParentSource( Dali::Actor::SIZE ),
+      Dali::ParentSource( Dali::Actor::Property::Size ),
       AnimateBubbleConstraint( actorPos, Random::Range( -0.85f, 0.25f ), randSize ) );
     dfActor.ApplyConstraint( animConstraint );
 
@@ -726,17 +728,17 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BitmapImage dis
     Vector3 toPos( actorPos );
     toPos.y -= ( size.y + randSize );
     keyframes.Add( 1.0f, toPos );
-    animation.AnimateBetween( Property( dfActor, Actor::POSITION ), keyframes );
+    animation.AnimateBetween( Property( dfActor, Actor::Property::Position ), keyframes );
     animation.SetLooping( true );
     animation.Play();
     mBackgroundAnimations.push_back( animation );
   }
 }
 
-void DaliTableView::CreateShapeImage( ShapeType shapeType, const Size& size, BitmapImage& distanceFieldOut )
+void DaliTableView::CreateShapeImage( ShapeType shapeType, const Size& size, BufferImage& distanceFieldOut )
 {
   // this bitmap will hold the alpha map for the distance field shader
-  distanceFieldOut = BitmapImage::New( size.width, size.height, Pixel::A8 );
+  distanceFieldOut = BufferImage::New( size.width, size.height, Pixel::A8 );
 
   // Generate bit pattern
   std::vector< unsigned char > imageDataA8;

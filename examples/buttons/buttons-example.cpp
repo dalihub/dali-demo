@@ -15,7 +15,7 @@
  *
  */
 
-#include "../shared/view.h"
+#include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
@@ -287,7 +287,7 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       checkBox.SetBackgroundImage( unselected );
       checkBox.SetSelectedImage( selected );
-      checkBox.SetSize( DP(48), DP(48) );
+      checkBox.SetLabel( "CheckBox1 is unselected" );
       checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
@@ -302,7 +302,7 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       checkBox.SetBackgroundImage( unselected );
       checkBox.SetSelectedImage( selected );
-      checkBox.SetSize( DP(48), DP(48) );
+      checkBox.SetLabel( "CheckBox2 is selected" );
       checkBox.SetSelected( true );
       checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
@@ -318,12 +318,13 @@ class ButtonsController: public ConnectionTracker
       checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       checkBox.SetBackgroundImage( unselected );
       checkBox.SetSelectedImage( selected );
-      checkBox.SetSize( DP(48), DP(48) );
+      checkBox.SetLabel( "CheckBox3 is unselected" );
       checkBox.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( checkBox );
     }
 
+    // Create togglabe button
     yPos += GROUP3_HEIGHT + MARGIN_SIZE;
 
     Actor toggleBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
