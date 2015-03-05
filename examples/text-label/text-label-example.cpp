@@ -26,9 +26,19 @@
 
 // INTERNAL INCLUDES
 #include "center-layout.h"
+#include "shared/multi-language-strings.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace MultiLanguageStrings;
+
+namespace
+{
+  const unsigned int KEY_ZERO = 10;
+  const unsigned int KEY_ONE = 11;
+  const unsigned int KEY_M = 58;
+  const unsigned int KEY_L = 46;
+}
 
 /**
  * @brief The main class of the demo.
@@ -38,7 +48,8 @@ class TextLabelExample : public ConnectionTracker
 public:
 
   TextLabelExample( Application& application )
-  : mApplication( application )
+  : mApplication( application ),
+    mLanguageId( 0u )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &TextLabelExample::Create );
@@ -65,16 +76,15 @@ public:
     centerLayout.SetSize( stageSize.width*0.6f, stageSize.width*0.6f );
     stage.Add( centerLayout );
 
-    TextLabel label = TextLabel::New();
-    label.SetBackgroundColor( Color::BLACK );
-    centerLayout.Add( label );
+    mLabel = TextLabel::New();
+    mLabel.SetBackgroundColor( Color::BLACK );
+    centerLayout.Add( mLabel );
 
-    label.SetProperty( TextLabel::PROPERTY_MULTI_LINE, true );
-    label.SetProperty( TextLabel::PROPERTY_TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
+    mLabel.SetProperty( TextLabel::PROPERTY_MULTI_LINE, true );
+    mLabel.SetProperty( TextLabel::PROPERTY_TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
 
-    // TODO
-    //Property::Value labelText = label.GetProperty( TextLabel::PROPERTY_TEXT );
-    //std::cout << "Got text from label: " << labelText.Get< std::string >() << std::endl;
+    Property::Value labelText = mLabel.GetProperty( TextLabel::PROPERTY_TEXT );
+    std::cout << "Displaying text: \"" << labelText.Get< std::string >() << "\"" << std::endl;
   }
 
   /**
@@ -88,12 +98,45 @@ public:
       {
         mApplication.Quit();
       }
+      else if( event.IsCtrlModifier() )
+      {
+        switch( event.keyCode )
+        {
+          case KEY_ZERO: // fall through
+          case KEY_ONE:
+          {
+            mLabel.SetProperty( TextLabel::PROPERTY_RENDERING_BACKEND, event.keyCode - 10 );
+            break;
+          }
+          case KEY_M:
+          {
+            bool multiLine = mLabel.GetProperty<bool>( TextLabel::PROPERTY_MULTI_LINE );
+            mLabel.SetProperty( TextLabel::PROPERTY_MULTI_LINE, !multiLine );
+            break;
+          }
+          case KEY_L:
+          {
+            const Language& language = LANGUAGES[ mLanguageId ];
+
+            mLabel.SetProperty( TextLabel::PROPERTY_TEXT, language.text );
+
+            if( ++mLanguageId >= NUMBER_OF_LANGUAGES )
+            {
+              mLanguageId = 0u;
+            }
+          }
+        }
+      }
     }
   }
 
 private:
 
   Application& mApplication;
+
+  TextLabel mLabel;
+
+  unsigned int mLanguageId;
 };
 
 void RunTest( Application& application )
