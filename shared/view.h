@@ -86,7 +86,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   Dali::Layer toolBarLayer = Dali::Layer::New();
   toolBarLayer.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
   toolBarLayer.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
-  toolBarLayer.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::Property::Size, Dali::ParentSource( Dali::Actor::Property::Size ), Dali::SourceWidthFixedHeight( style.mToolBarHeight  ) ) );
+  toolBarLayer.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::Property::SIZE, Dali::ParentSource( Dali::Actor::Property::SIZE ), Dali::SourceWidthFixedHeight( style.mToolBarHeight  ) ) );
   toolBarLayer.SetSize( 0.0f, style.mToolBarHeight );
 
   // Raise tool bar layer to the top.
