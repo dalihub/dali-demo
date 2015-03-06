@@ -349,7 +349,7 @@ public:
     mActorTapMovementAnimation = Animation::New( animDuration );
     if ( mMotionBlurImageActor )
     {
-      mActorTapMovementAnimation.AnimateTo( Property(mMotionBlurImageActor, Actor::Property::Position), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
+      mActorTapMovementAnimation.AnimateTo( Property(mMotionBlurImageActor, Actor::Property::POSITION), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
     }
     mActorTapMovementAnimation.SetEndAction( Animation::Bake );
     mActorTapMovementAnimation.Play();

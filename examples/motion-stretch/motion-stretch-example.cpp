@@ -261,7 +261,7 @@ public:
     mActorTapMovementAnimation = Animation::New( animDuration );
     if ( mMotionStretchImageActor )
     {
-      mActorTapMovementAnimation.AnimateTo( Property(mMotionStretchImageActor, Actor::Property::Position), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
+      mActorTapMovementAnimation.AnimateTo( Property(mMotionStretchImageActor, Actor::Property::POSITION), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
     }
     mActorTapMovementAnimation.SetEndAction( Animation::Bake );
     mActorTapMovementAnimation.Play();

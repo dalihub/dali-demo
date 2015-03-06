@@ -269,9 +269,9 @@ public:
 
     Property::Index angleIndex = mImageActor2.RegisterProperty("angle", Property::Value(30.0f));
     Source angleSrc( mImageActor2, angleIndex );
-    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::Rotation, angleSrc,
+    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ROTATION, angleSrc,
                                                               RotationConstraint(-1.0f)));
-    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::Rotation, angleSrc,
+    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ROTATION, angleSrc,
                                                               RotationConstraint(+1.0f)));
 
     mSceneAnimation = Animation::New(2.5f);

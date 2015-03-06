@@ -210,7 +210,7 @@ public:
 
     // Hack to force screen refresh.
     Animation animation = Animation::New(1.0f);
-    animation.AnimateTo(Property(mContentLayer, Actor::Property::Position), Vector3::ZERO );
+    animation.AnimateTo(Property(mContentLayer, Actor::Property::POSITION), Vector3::ZERO );
     animation.Play();
   }
 

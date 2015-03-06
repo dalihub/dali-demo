@@ -80,10 +80,10 @@ public:
     mLabel.SetBackgroundColor( Color::BLACK );
     centerLayout.Add( mLabel );
 
-    mLabel.SetProperty( TextLabel::PROPERTY_MULTI_LINE, true );
-    mLabel.SetProperty( TextLabel::PROPERTY_TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
+    mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
+    mLabel.SetProperty( TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
 
-    Property::Value labelText = mLabel.GetProperty( TextLabel::PROPERTY_TEXT );
+    Property::Value labelText = mLabel.GetProperty( TextLabel::Property::TEXT );
     std::cout << "Displaying text: \"" << labelText.Get< std::string >() << "\"" << std::endl;
   }
 
@@ -105,20 +105,20 @@ public:
           case KEY_ZERO: // fall through
           case KEY_ONE:
           {
-            mLabel.SetProperty( TextLabel::PROPERTY_RENDERING_BACKEND, event.keyCode - 10 );
+            mLabel.SetProperty( TextLabel::Property::RENDERING_BACKEND, event.keyCode - 10 );
             break;
           }
           case KEY_M:
           {
-            bool multiLine = mLabel.GetProperty<bool>( TextLabel::PROPERTY_MULTI_LINE );
-            mLabel.SetProperty( TextLabel::PROPERTY_MULTI_LINE, !multiLine );
+            bool multiLine = mLabel.GetProperty<bool>( TextLabel::Property::MULTI_LINE );
+            mLabel.SetProperty( TextLabel::Property::MULTI_LINE, !multiLine );
             break;
           }
           case KEY_L:
           {
             const Language& language = LANGUAGES[ mLanguageId ];
 
-            mLabel.SetProperty( TextLabel::PROPERTY_TEXT, language.text );
+            mLabel.SetProperty( TextLabel::Property::TEXT, language.text );
 
             if( ++mLanguageId >= NUMBER_OF_LANGUAGES )
             {

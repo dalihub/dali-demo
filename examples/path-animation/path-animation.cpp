@@ -44,84 +44,61 @@ class PathController : public ConnectionTracker
 public:
 
   PathController( Application& application )
-  : mApplication( application )
-  {
+: mApplication( application )
+{
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &PathController::Create );
-  }
+}
 
   ~PathController()
   {
     // Nothing to do here.
   }
 
-  /**
-   * One-time setup in response to Application InitSignal.
-   */
-  void Create( Application& application )
+  /*
+   * Create a control composed of a label and an slider
+   * @param[in] label The text to be displayed ny the label
+   * @param[in] size The size of the slider
+   * @param[in] callback Pointer to the callback function to be called when user moves the slider
+  */
+  Actor CreateVectorComponentControl( const std::string& label, const Vector3& size, bool(PathController::*callback)(Slider,float) )
   {
-    // Get a handle to the stage:
-    Stage stage = Stage::GetCurrent();
-
-    // Connect to input event signals:
-    stage.KeyEventSignal().Connect(this, &PathController::OnKeyEvent);
-
-    // Create a default view with a default tool bar:
-    Toolkit::View view;                ///< The View instance.
-    Toolkit::ToolBar toolBar;          ///< The View's Toolbar.
-    mContentLayer = DemoHelper::CreateView( mApplication,
-                                            view,
-                                            toolBar,
-                                            BACKGROUND_IMAGE,
-                                            TOOLBAR_IMAGE,
-                                            "" );
-
-    mContentLayer.TouchedSignal().Connect(this, &PathController::OnTouchLayer);
-
-    //Path
-    mPath = Dali::Path::New();
-    mPath.AddPoint( Vector3( 10.0f, stage.GetSize().y*0.5f, 0.0f ));
-    mPath.AddPoint( Vector3( stage.GetSize().x*0.5f, stage.GetSize().y*0.3f, 0.0f ));
-    mPath.GenerateControlPoints(0.25f);
-    DrawPath( 200u );
-
-    //Actor
-    ImageAttributes attributes;
-    Image img = ResourceImage::New(ACTOR_IMAGE, attributes );
-    mActor = ImageActor::New( img );
-    mActor.SetPosition( Vector3( 10.0f, stage.GetSize().y*0.5f, 0.0f ) );
-    mActor.SetAnchorPoint( AnchorPoint::CENTER );
-    mActor.SetSize( 100, 50, 1 );
-    stage.Add( mActor );
-
-    mForward = Vector3::XAXIS;
-    CreateAnimation();
+    return Actor(); // TODO
   }
 
   /**
-   * Create an actor representing a control point of the curve
-   * @param[in] name Name of the actor
-   * @param[in] size Size of the containing actor
-   * @param[in] imageSize Size of the imageActor
-   * @param[in] color Color of the imageActor
+   * Crate all the GUI controls
    */
-  Actor CreateControlPoint(const std::string& name, const Vector3& size, const Vector3& imageSize, const Vector4& color )
+  void CreateControls()
   {
-    Actor actor = Actor::New();
-    actor.SetParentOrigin( ParentOrigin::TOP_LEFT);
-    actor.SetAnchorPoint( AnchorPoint::CENTER );
-    actor.SetSize( size );
-    actor.SetName( name );
-    actor.TouchedSignal().Connect(this, &PathController::OnTouchPoint);
+    Stage stage = Stage::GetCurrent();
 
-    ImageActor imageActor = Toolkit::CreateSolidColorActor(color);
-    imageActor.SetColor(Vector4(1.0f,0.0f,0.0f,1.0f));
-    imageActor.SetParentOrigin( ParentOrigin::CENTER);
-    imageActor.SetAnchorPoint( AnchorPoint::CENTER );
-    imageActor.SetSize( imageSize );
-    actor.Add(imageActor );
+    //TextInput
+    Dali::Layer controlsLayer = Dali::Layer::New();
+    controlsLayer.SetSize( stage.GetSize().x, stage.GetSize().y*0.3f, 0.0 );
+    controlsLayer.SetPosition( 0.0f, stage.GetSize().y*0.8f, 0.0f );
+    controlsLayer.SetAnchorPoint( AnchorPoint::TOP_LEFT);
+    controlsLayer.SetParentOrigin( ParentOrigin::TOP_LEFT);
+    controlsLayer.TouchedSignal().Connect(this, &PathController::OnTouchGuiLayer);
+    stage.Add( controlsLayer );
 
-    return actor;
+    Vector3 textInputSize( stage.GetSize().x, stage.GetSize().y*0.04f, 0.0f );
+    Actor control0 = CreateVectorComponentControl("x:", textInputSize, &PathController::OnSliderXValueChange );
+    control0.SetY( stage.GetSize().y*0.05f );
+    control0.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    controlsLayer.Add( control0 );
+
+    Actor control1 = CreateVectorComponentControl("y:", textInputSize, &PathController::OnSliderYValueChange );
+    control1.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    control1.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
+    control1.SetPosition(0.0f,stage.GetSize().y*0.01,0.0f);
+    control0.Add( control1 );
+
+    Actor control2 =CreateVectorComponentControl("z:", textInputSize, &PathController::OnSliderZValueChange );
+    control2.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    control2.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
+    control2.SetPosition(0.0f,stage.GetSize().y*0.01,0.0f);
+    control1.Add( control2 );
   }
 
   /**
@@ -191,120 +168,44 @@ public:
 
 
     //Create actors representing interpolation points
+    index = 0;
     for( size_t i(0); i<pointCount; ++i )
     {
-      if( !mKnot[i] )
+      if( !mControlPoint[index] )
       {
-        std::string name( "Knot");
-        name.push_back(i);
-        mKnot[i] = CreateControlPoint( name, Vector3(150.0f,150.0f,0.0f), Vector3(20.0f,20.0f,0.0f), Vector4(0.0f,0.0f,0.0f,1.0f) );
-        mContentLayer.Add(mKnot[i] );
+        mControlPoint[index] = Toolkit::CreateSolidColorActor(Vector4(1.0f,1.0f,1.0f,1.0f));
+        mControlPoint[index].SetParentOrigin( ParentOrigin::TOP_LEFT);
+        mControlPoint[index].SetAnchorPoint( AnchorPoint::CENTER );
+        mControlPoint[index].SetSize( 20.0f, 20.0f );
+        mContentLayer.Add(mControlPoint[index]);
       }
 
-      mKnot[i].SetPosition( mPath.GetPoint(i) );
+      std::string name( "Knot");
+      name.push_back(i);
+      mControlPoint[index].SetName( name );
+      mControlPoint[index].SetPosition( mPath.GetPoint(i) );
+      mControlPoint[index].SetColor( Vector4(0.0f,0.0f,0.0f,1.0f));
+      ++index;
     }
 
     //Create actors representing control points
     size_t controlPointCount=2*(pointCount-1);
     for( size_t i(0); i<controlPointCount; ++i )
     {
-      if( !mControlPoint[i])
+      if( !mControlPoint[index])
       {
-        std::string name( "ControlPoint");
-        name.push_back(i);
-        mControlPoint[i] = CreateControlPoint( name, Vector3(150.0f,150.0f,0.0f), Vector3(20.0f,20.0f,0.0f), Vector4(1.0f,0.0f,0.0f,1.0f) );
-        mContentLayer.Add(mControlPoint[i] );
+        mControlPoint[index] = Toolkit::CreateSolidColorActor(Vector4(1.0f,1.0f,1.0f,1.0f));
+        mControlPoint[index].SetParentOrigin( ParentOrigin::TOP_LEFT);
+        mControlPoint[index].SetAnchorPoint( AnchorPoint::CENTER );
+        mControlPoint[index].SetSize( 20.0f, 20.0f );
+        mContentLayer.Add(mControlPoint[index]);
       }
-
-      mControlPoint[i].SetPosition( mPath.GetControlPoint(i) );
-    }
-  }
-
-  bool OnTouchPoint(Actor actor, const TouchEvent& event)
-  {
-    if(event.GetPointCount()>0)
-    {
-      const TouchPoint& point = event.GetPoint(0);
-
-      if(point.state==TouchPoint::Down)
-      {
-        // Start dragging
-        mDragActor = actor;
-      }
-    }
-    return false;
-  }
-
-  bool OnTouchLayer(Actor actor, const TouchEvent& event)
-  {
-    if(event.GetPointCount()>0)
-    {
-      const TouchPoint& point = event.GetPoint(0);
-
-      if(point.state==TouchPoint::Up)
-      {
-        //Stop dragging
-        mDragActor.Reset();
-      }
-      else if(!mDragActor && point.state==TouchPoint::Down && mPath.GetPointCount()<10 )
-      {
-        // Add new point
-        const TouchPoint& point = event.GetPoint(0);
-        Vector3 newPoint = Vector3(point.screen.x, point.screen.y, 0.0f);
-
-        size_t pointCount = mPath.GetPointCount();
-        Vector3 lastPoint = mPath.GetPoint( pointCount-1);
-        mPath.AddPoint( newPoint );
-
-        Vector3 displacement = (newPoint-lastPoint)/8;
-
-        mPath.AddControlPoint( lastPoint + displacement );
-        mPath.AddControlPoint( newPoint - displacement);
-
-        DrawPath( 200u );
-        CreateAnimation();
-      }
-      else
-      {
-        if( mDragActor )
-        {
-          const TouchPoint& point = event.GetPoint(0);
-          Vector3 newPosition = Vector3(point.screen.x, point.screen.y, 0.0f);
-
-          std::string actorName(mDragActor.GetName());
-
-          if( actorName.compare(0, 4, "Knot") == 0)
-          {
-             int index = actorName[4];
-             mPath.GetPoint(index) = newPosition;
-          }
-          else
-          {
-            int index = actorName[12];
-            mPath.GetControlPoint(index) = newPosition;
-          }
-
-          DrawPath( 200u );
-          CreateAnimation();
-        }
-      }
-    }
-    return false;
-  }
-
- /**
-  * Main key event handler.
-  * Quit on escape key.
-  */
-  void OnKeyEvent(const KeyEvent& event)
-  {
-    if( event.state == KeyEvent::Down )
-    {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE ) ||
-          IsKey( event, Dali::DALI_KEY_BACK ) )
-      {
-        mApplication.Quit();
-      }
+      std::string name( "ControlPoint");
+      name.push_back(i);
+      mControlPoint[index].SetName( name );
+      mControlPoint[index].SetPosition( mPath.GetControlPoint(i) );
+      mControlPoint[index].SetColor( Vector4(1.0f,0.0f,0.0f,1.0f));
+      ++index;
     }
   }
 
@@ -329,6 +230,214 @@ public:
     mAnimation.Play();
   }
 
+  /**
+   * Get closest control point.void
+   * @param[in] point Point from where the distance is computed
+   * @return The closest actor if the distance is beyond 0.5cm or an uninitialized actor otherwise
+   */
+  Actor GetClosestActor(const Vector3& point)
+  {
+    size_t pointCount = mPath.GetPointCount();
+    size_t controlPointCount = 3*pointCount - 2;
+    Actor result;
+    float minDistance = 1.0/0.0;
+
+    for( size_t i(0); i<controlPointCount; ++i )
+    {
+      Vector3 v = mControlPoint[i].GetCurrentPosition() - point;
+      float distance = v.LengthSquared();
+      if( distance < minDistance )
+      {
+        result = mControlPoint[i];
+        minDistance = distance;
+      }
+    }
+
+    Vector2 dpi = Dali::Stage::GetCurrent().GetDpi();
+    float distanceTreshold = 0.2f * dpi.x * 0.2f * dpi.x;
+
+    if( minDistance < distanceTreshold )
+    {
+      return result;
+    }
+    else
+    {
+      return Actor();
+    }
+  }
+
+  /**
+   * Callback called when the background layer is touched
+   */
+  bool OnTouchLayer(Actor actor, const TouchEvent& event)
+  {
+    if(event.GetPointCount()>0)
+    {
+      const TouchPoint& point = event.GetPoint(0);
+
+      if(point.state==TouchPoint::Up)
+      {
+        //Stop dragging
+        mDragActor.Reset();
+      }
+      else if(point.state==TouchPoint::Down)
+      {
+        Vector3 touchPoint = Vector3(event.GetPoint(0).screen.x, event.GetPoint(0).screen.y, 0.0f);
+        if(!mDragActor )
+        {
+          mDragActor = GetClosestActor( touchPoint );
+          if( !mDragActor && mPath.GetPointCount() < 10 )
+          {
+            // Add new point
+            Vector3 lastPoint = mPath.GetPoint( mPath.GetPointCount()-1);
+            mPath.AddPoint( touchPoint );
+            Vector3 displacement = (touchPoint-lastPoint)/8;
+            mPath.AddControlPoint( lastPoint + displacement );
+            mPath.AddControlPoint( touchPoint - displacement);
+
+            DrawPath( 200u );
+            CreateAnimation();
+          }
+        }
+      }
+      else if( mDragActor && point.state==TouchPoint::Motion  )
+      {
+        Vector3 touchPoint = Vector3(event.GetPoint(0).screen.x, event.GetPoint(0).screen.y, 0.0f);
+        std::string actorName(mDragActor.GetName());
+        if( actorName.compare(0, 4, "Knot") == 0)
+        {
+          int index = actorName[4];
+          mPath.GetPoint(index) = touchPoint;
+        }
+        else
+        {
+          int index = actorName[12];
+          mPath.GetControlPoint(index) = touchPoint;
+        }
+
+        DrawPath( 200u );
+        CreateAnimation();
+      }
+    }
+
+    return true;
+  }
+
+  bool OnTouchGuiLayer(Actor actor, const TouchEvent& event)
+ {
+    mDragActor.Reset();
+    return false;
+ }
+  /**
+   * Callback called when user changes slider X
+   * @param[in] slider The slider that has generated the signal
+   * @param[in] value The new value
+   */
+  bool OnSliderXValueChange( Slider s, float value)
+  {
+    if( fabs( value ) - Math::MACHINE_EPSILON_1000 < 0.0f )
+    {
+      mForward.x = 0.0f;
+    }
+    else
+    {
+      mForward.x = value;
+    }
+
+    CreateAnimation();
+    return true;
+  }
+
+  bool OnSliderYValueChange( Slider s, float value)
+  {
+    if( fabs( value ) - Math::MACHINE_EPSILON_1000 < 0.0f )
+    {
+      mForward.y = 0.0f;
+    }
+    else
+    {
+      mForward.y = value;
+    }
+    CreateAnimation();
+    return true;
+  }
+
+  /**
+   * Create the path animation.
+   */
+  bool OnSliderZValueChange( Slider s, float value)
+  {
+    if( fabs( value ) - Math::MACHINE_EPSILON_1000 < 0.0f )
+    {
+      mForward.z = 0.0f;
+    }
+    else
+    {
+      mForward.z = value;
+    }
+
+    CreateAnimation();
+    return true;
+  }
+
+  /**
+   * Main key event handler.
+   * Quit on escape key.
+   */
+  void OnKeyEvent(const KeyEvent& event)
+  {
+    if( event.state == KeyEvent::Down )
+    {
+      if( IsKey( event, Dali::DALI_KEY_ESCAPE ) ||
+          IsKey( event, Dali::DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
+  }
+
+  /**
+   * One-time setup in response to Application InitSignal.
+   */
+  void Create( Application& application )
+  {
+    // Get a handle to the stage:
+    Stage stage = Stage::GetCurrent();
+
+    // Connect to input event signals:
+    stage.KeyEventSignal().Connect(this, &PathController::OnKeyEvent);
+
+    // Create a default view with a default tool bar:
+    Toolkit::View view;                ///< The View instance.
+    Toolkit::ToolBar toolBar;          ///< The View's Toolbar.
+    mContentLayer = DemoHelper::CreateView( mApplication,
+                                            view,
+                                            toolBar,
+                                            BACKGROUND_IMAGE,
+                                            TOOLBAR_IMAGE,
+                                            "" );
+
+    mContentLayer.TouchedSignal().Connect(this, &PathController::OnTouchLayer);
+
+    //Path
+    mPath = Dali::Path::New();
+    mPath.AddPoint( Vector3( 10.0f, stage.GetSize().y*0.5f, 0.0f ));
+    mPath.AddPoint( Vector3( stage.GetSize().x*0.5f, stage.GetSize().y*0.5f, 0.0f ));
+    mPath.GenerateControlPoints(0.25f);
+    DrawPath( 200u );
+
+    //Actor
+    ImageAttributes attributes;
+    Image img = ResourceImage::New(ACTOR_IMAGE, attributes );
+    mActor = ImageActor::New( img );
+    mActor.SetAnchorPoint( AnchorPoint::CENTER );
+    mActor.SetSize( 100, 50, 1 );
+    stage.Add( mActor );
+
+    CreateAnimation();
+    CreateControls();
+  }
+
 private:
   Application&  mApplication;
 
@@ -340,12 +449,13 @@ private:
   Animation  mAnimation;          ///< Path animation
 
   MeshActor  mMeshPath;           ///< Mesh actor for the path
-  MeshActor  mMeshHandlers;       ///< Mesh actor for the segments connecting points and control points
-  Actor mKnot[10];           ///< ImageActors for the interpolation points
-  Actor mControlPoint[18];   ///< ImageActors for the control points
+  MeshActor  mMeshHandlers;       ///< Mesh actor for the handlers of the path
+
+  Actor      mControlPoint[28];   ///< ImageActors represeting control points of the path
 
   Actor      mDragActor;          ///< Reference to the actor currently being dragged
 };
+
 
 void RunTest( Application& application )
 {

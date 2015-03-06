@@ -362,17 +362,17 @@ void RadialSweepViewImpl::CreateStencil( Degree initialSector )
 
   // Constrain the vertices of the square mesh to sweep out a sector as the
   // rotation angle is animated.
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(1, AnimatableVertex::Property::Position),
+  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(1, AnimatableVertex::Property::POSITION),
                                                   srcStart, srcStart, SquareFanConstraint(0)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(2, AnimatableVertex::Property::Position),
+  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(2, AnimatableVertex::Property::POSITION),
                                                   srcStart, srcRot, SquareFanConstraint(0)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(3, AnimatableVertex::Property::Position),
+  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(3, AnimatableVertex::Property::POSITION),
                                                   srcStart, srcRot, SquareFanConstraint(1)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(4, AnimatableVertex::Property::Position),
+  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(4, AnimatableVertex::Property::POSITION),
                                                   srcStart, srcRot, SquareFanConstraint(2)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(5, AnimatableVertex::Property::Position),
+  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(5, AnimatableVertex::Property::POSITION),
                                                   srcStart, srcRot, SquareFanConstraint(3)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(6, AnimatableVertex::Property::Position),
+  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(6, AnimatableVertex::Property::POSITION),
                                                   srcStart, srcRot, SquareFanConstraint(4)));
 
   mStencilActor.SetDrawMode( DrawMode::STENCIL );

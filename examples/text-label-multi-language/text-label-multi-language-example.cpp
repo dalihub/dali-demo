@@ -74,11 +74,11 @@ public:
       TextLabel label = TextLabel::New();
       label.SetParentOrigin( ParentOrigin::CENTER );
 
-      label.SetProperty( TextLabel::PROPERTY_MULTI_LINE, true );
+      label.SetProperty( TextLabel::Property::MULTI_LINE, true );
 
       const std::string text = language.languageName + " " + language.languageRomanName + " " + language.text;
 
-      label.SetProperty( TextLabel::PROPERTY_TEXT, text );
+      label.SetProperty( TextLabel::Property::TEXT, text );
       mLayout.AddLabel( label );
 
       mLayout.TouchedSignal().Connect( this, &TextLabelMultiLanguageExample::OnTouchEvent );

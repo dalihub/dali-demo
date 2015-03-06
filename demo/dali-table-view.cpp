@@ -248,7 +248,7 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.SetParentOrigin( ParentOrigin::CENTER );
   // Note: Currently, changing mScrollView to use SizeMode RELATIVE_TO_PARENT
   // will cause scroll ends to appear in the wrong position.
-  mScrollView.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::Property::Size, Dali::ParentSource( Dali::Actor::Property::Size ), Dali::RelativeToConstraint( SCROLLVIEW_RELATIVE_SIZE ) ) );
+  mScrollView.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::Property::SIZE, Dali::ParentSource( Dali::Actor::Property::SIZE ), Dali::RelativeToConstraint( SCROLLVIEW_RELATIVE_SIZE ) ) );
   mScrollView.SetAxisAutoLock( true );
   mScrollView.ScrollCompletedSignal().Connect( this, &DaliTableView::OnScrollComplete );
   mScrollView.ScrollStartedSignal().Connect( this, &DaliTableView::OnScrollStart );
@@ -470,8 +470,8 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   TextLabel label = TextLabel::New();
   label.SetParentOrigin( ParentOrigin::TOP_LEFT );
   label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-  label.SetProperty( TextLabel::PROPERTY_MULTI_LINE, true );
-  label.SetProperty( TextLabel::PROPERTY_TEXT, title );
+  label.SetProperty( TextLabel::Property::MULTI_LINE, true );
+  label.SetProperty( TextLabel::Property::TEXT, title );
   label.SetColor( Color::BLACK );
   tile.Add( label );
 
@@ -715,9 +715,9 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     dfActor.SetPosition( actorPos );
 
     // Define bubble horizontal parallax and vertical wrapping
-    Constraint animConstraint = Constraint::New < Vector3 > ( Actor::Property::Position,
+    Constraint animConstraint = Constraint::New < Vector3 > ( Actor::Property::POSITION,
       Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
-      Dali::ParentSource( Dali::Actor::Property::Size ),
+      Dali::ParentSource( Dali::Actor::Property::SIZE ),
       AnimateBubbleConstraint( actorPos, Random::Range( -0.85f, 0.25f ), randSize ) );
     dfActor.ApplyConstraint( animConstraint );
 
@@ -728,7 +728,7 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     Vector3 toPos( actorPos );
     toPos.y -= ( size.y + randSize );
     keyframes.Add( 1.0f, toPos );
-    animation.AnimateBetween( Property( dfActor, Actor::Property::Position ), keyframes );
+    animation.AnimateBetween( Property( dfActor, Actor::Property::POSITION ), keyframes );
     animation.SetLooping( true );
     animation.Play();
     mBackgroundAnimations.push_back( animation );
@@ -926,5 +926,3 @@ bool DaliTableView::OnTileHovered( Actor actor, const HoverEvent& event )
   KeyboardFocusManager::Get().SetCurrentFocusActor( actor );
   return true;
 }
-
-

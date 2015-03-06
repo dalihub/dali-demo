@@ -346,7 +346,7 @@ private:
     mPaddleImage.SetSize( mPaddleFullSize );
 
     mWobbleProperty = mPaddle.RegisterProperty(WOBBLE_PROPERTY_NAME, 0.0f);
-    Constraint wobbleConstraint = Constraint::New<Quaternion>( Actor::Property::Rotation,
+    Constraint wobbleConstraint = Constraint::New<Quaternion>( Actor::Property::ROTATION,
                                                     LocalSource(mWobbleProperty),
                                                     WobbleConstraint(10.0f));
     mPaddle.ApplyConstraint(wobbleConstraint);
@@ -359,16 +359,16 @@ private:
     const float margin(BALL_SIZE.width * stageSize.width * 0.5f);
 
     // Set up notifications for ball's collisions against walls.
-    PropertyNotification leftNotification = mBall.AddPropertyNotification( Actor::Property::PositionX, LessThanCondition(margin) );
+    PropertyNotification leftNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_X, LessThanCondition(margin) );
     leftNotification.NotifySignal().Connect( this, &ExampleController::OnHitLeftWall );
 
-    PropertyNotification rightNotification = mBall.AddPropertyNotification( Actor::Property::PositionX, GreaterThanCondition(stageSize.width - margin) );
+    PropertyNotification rightNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_X, GreaterThanCondition(stageSize.width - margin) );
     rightNotification.NotifySignal().Connect( this, &ExampleController::OnHitRightWall );
 
-    PropertyNotification topNotification = mBall.AddPropertyNotification( Actor::Property::PositionY, LessThanCondition(margin) );
+    PropertyNotification topNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_Y, LessThanCondition(margin) );
     topNotification.NotifySignal().Connect( this, &ExampleController::OnHitTopWall );
 
-    PropertyNotification bottomNotification = mBall.AddPropertyNotification( Actor::Property::PositionY, GreaterThanCondition(stageSize.height + margin) );
+    PropertyNotification bottomNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_Y, GreaterThanCondition(stageSize.height + margin) );
     bottomNotification.NotifySignal().Connect( this, &ExampleController::OnHitBottomWall );
 
     // Set up notification for ball colliding against paddle.
@@ -376,10 +376,10 @@ private:
     stage.Add(delegate);
     Property::Index property = delegate.RegisterProperty(COLLISION_PROPERTY_NAME, Vector3::ZERO);
     Constraint constraint = Constraint::New<Vector3>( property,
-                                                    Source(mBall, Actor::Property::Position),
-                                                    Source(mPaddle, Actor::Property::Position),
-                                                    Source(mBall, Actor::Property::Size),
-                                                    Source(mPaddle, Actor::Property::Size),
+                                                    Source(mBall, Actor::Property::POSITION),
+                                                    Source(mPaddle, Actor::Property::POSITION),
+                                                    Source(mBall, Actor::Property::SIZE),
+                                                    Source(mPaddle, Actor::Property::SIZE),
                                                     CollisionCircleRectangleConstraint( -Vector3(0.0f, mPaddleHitMargin.height * 0.575f, 0.0f),-Vector3(mPaddleHitMargin) ));
     delegate.ApplyConstraint(constraint);
 
@@ -599,10 +599,10 @@ private:
     // Add a constraint on the brick between it and the ball generating a collision-property
     Property::Index property = brick.RegisterProperty(COLLISION_PROPERTY_NAME, Vector3::ZERO);
     Constraint constraint = Constraint::New<Vector3>( property,
-                                                    Source(mBall, Actor::Property::Position),
-                                                    Source(brick, Actor::Property::Position),
-                                                    Source(mBall, Actor::Property::Size),
-                                                    Source(brick, Actor::Property::Size),
+                                                    Source(mBall, Actor::Property::POSITION),
+                                                    Source(brick, Actor::Property::POSITION),
+                                                    Source(mBall, Actor::Property::SIZE),
+                                                    Source(brick, Actor::Property::SIZE),
                                                     CollisionCircleRectangleConstraint(BRICK_COLLISION_MARGIN));
     brick.ApplyConstraint(constraint);
 
@@ -639,7 +639,7 @@ private:
     }
 
     mBallAnimation = Animation::New(MAX_ANIMATION_DURATION);
-    mBallAnimation.AnimateBy( Property( mBall, Actor::Property::Position ), mBallVelocity * MAX_ANIMATION_DURATION);
+    mBallAnimation.AnimateBy( Property( mBall, Actor::Property::POSITION ), mBallVelocity * MAX_ANIMATION_DURATION);
     mBallAnimation.Play();
   }
 
@@ -661,8 +661,8 @@ private:
 
         mDragActor = actor;
         mDragAnimation = Animation::New(0.25f);
-        mDragAnimation.AnimateTo( Property(mDragActor, Actor::Property::Scale), Vector3(1.1f, 1.1f, 1.0f), AlphaFunctions::EaseOut);
-        mDragAnimation.AnimateTo( Property(mPaddleHandle, Actor::Property::Color), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunctions::EaseOut);
+        mDragAnimation.AnimateTo( Property(mDragActor, Actor::Property::SCALE), Vector3(1.1f, 1.1f, 1.0f), AlphaFunctions::EaseOut);
+        mDragAnimation.AnimateTo( Property(mPaddleHandle, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunctions::EaseOut);
         mDragAnimation.Play();
       }
     }
@@ -687,8 +687,8 @@ private:
         if(point.state==TouchPoint::Up) // Stop dragging
         {
           mDragAnimation = Animation::New(0.25f);
-          mDragAnimation.AnimateTo( Property(mDragActor, Actor::Property::Scale), Vector3(1.0f, 1.0f, 1.0f), AlphaFunctions::EaseIn);
-          mDragAnimation.AnimateTo( Property(mPaddleHandle, Actor::Property::Color), Vector4(1.0f, 1.0f, 1.0f, 1.0f), AlphaFunctions::EaseOut);
+          mDragAnimation.AnimateTo( Property(mDragActor, Actor::Property::SCALE), Vector3(1.0f, 1.0f, 1.0f), AlphaFunctions::EaseIn);
+          mDragAnimation.AnimateTo( Property(mPaddleHandle, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 1.0f), AlphaFunctions::EaseOut);
           mDragAnimation.Play();
           mDragActor.Reset();
         }
@@ -745,8 +745,8 @@ private:
       mBallVelocity = Vector3::ZERO;
 
       Animation shrink = Animation::New(0.5f);
-      shrink.AnimateTo( Property(mPaddle, Actor::Property::SizeWidth), mPaddleFullSize.x * f + mPaddleHitMargin.x);
-      shrink.AnimateTo( Property(mPaddleImage, Actor::Property::SizeWidth), mPaddleFullSize.x * f );
+      shrink.AnimateTo( Property(mPaddle, Actor::Property::SIZE_WIDTH), mPaddleFullSize.x * f + mPaddleHitMargin.x);
+      shrink.AnimateTo( Property(mPaddleImage, Actor::Property::SIZE_WIDTH), mPaddleFullSize.x * f );
 
       shrink.FinishedSignal().Connect( this, &ExampleController::OnPaddleShrunk );
       shrink.Play();
@@ -763,7 +763,7 @@ private:
     mBall.SetPosition( mBallStartPosition );
     mBall.SetColor( Vector4(1.0f, 1.0f, 1.0f, 0.1f) );
     Animation appear = Animation::New(0.5f);
-    appear.AnimateTo( Property(mBall, Actor::Property::Color), Vector4(1.0f, 1.0f, 1.0f, 1.0f) );
+    appear.AnimateTo( Property(mBall, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 1.0f) );
     appear.Play();
 
     if(!mLives)
@@ -830,7 +830,7 @@ private:
 
     // fade brick (destroy)
     Animation destroyAnimation = Animation::New(0.5f);
-    destroyAnimation.AnimateTo( Property( brick, Actor::Property::ColorAlpha ), 0.0f, AlphaFunctions::EaseIn );
+    destroyAnimation.AnimateTo( Property( brick, Actor::Property::COLOR_ALPHA ), 0.0f, AlphaFunctions::EaseIn );
     destroyAnimation.Play();
     destroyAnimation.FinishedSignal().Connect( this, &ExampleController::OnBrickDestroyed );
     mDestroyAnimationMap[destroyAnimation] = brick;
