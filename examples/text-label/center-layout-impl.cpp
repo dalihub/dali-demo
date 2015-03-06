@@ -116,13 +116,17 @@ void CenterLayout::OnPan( Actor actor, const PanGesture& gesture )
   mLayoutSize.x += gesture.displacement.x * 2.0f;
   mLayoutSize.y += gesture.displacement.y * 2.0f;
 
-  // Avoid pixel mis-alignment issue
-  Vector2 clampedSize = Vector2( ConvertToEven(static_cast<int>(mLayoutSize.x)),
-                                 ConvertToEven(static_cast<int>(mLayoutSize.y)) );
+  if( mLayoutSize.x >= 2.0f &&
+      mLayoutSize.y >= 2.0f )
+  {
+    // Avoid pixel mis-alignment issue
+    Vector2 clampedSize = Vector2( ConvertToEven(static_cast<int>(mLayoutSize.x)),
+                                   ConvertToEven(static_cast<int>(mLayoutSize.y)) );
 
-  Self().SetSize( clampedSize );
+    Self().SetSize( clampedSize );
 
-  RelayoutRequest();
+    RelayoutRequest();
+  }
 }
 
 } // namespace Internal
