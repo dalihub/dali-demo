@@ -720,12 +720,12 @@ public:
 
           constraint = Constraint::New<float>( angleXAxisProperty,
                                                Source(mScrollView, scrollOvershootProperty),
-                                               Source(mView, Actor::Property::ROTATION),
+                                               Source(mView, Actor::Property::ORIENTATION),
                                                ShearEffectConstraint(stageSize, SHEAR_EFFECT_MAX_OVERSHOOT, Vector2::XAXIS) );
           shaderEffect.ApplyConstraint(constraint);
           constraint = Constraint::New<float>( angleYAxisProperty,
                                                Source(mScrollView, scrollOvershootProperty),
-                                               Source(mView, Actor::Property::ROTATION),
+                                               Source(mView, Actor::Property::ORIENTATION),
                                                ShearEffectConstraint(stageSize, SHEAR_EFFECT_MAX_OVERSHOOT, Vector2::YAXIS) );
           shaderEffect.ApplyConstraint(constraint);
 
@@ -752,7 +752,7 @@ public:
 
         Property::Index anglePerUnit = shaderEffect.GetPropertyIndex( shaderEffect.GetAnglePerUnitPropertyName() );
         shaderEffect.ApplyConstraint( Constraint::New<Vector2>( anglePerUnit,
-                                                                Source(mView, Actor::Property::ROTATION),
+                                                                Source(mView, Actor::Property::ORIENTATION),
                                                                 CarouselEffectOrientationConstraint( angleSweep ) ) );
 
         break;

@@ -189,7 +189,7 @@ public:
     mView.SetPosition(Vector3(0.0f, 0.0f, -50));
 
     mContents.SetPosition(mTranslation);
-    mContents.SetRotation(CalculateWorldRotation(Radian(mLongitudinal), Radian(mAxisTilt)));
+    mContents.SetOrientation(CalculateWorldRotation(Radian(mLongitudinal), Radian(mAxisTilt)));
     mContents.SetScale(mPinchScale, mPinchScale, mPinchScale);
 
     mPanGestureDetector = PanGestureDetector::New();
@@ -232,7 +232,7 @@ public:
     mLightAnchor = Actor::New();
     mLightAnchor.SetParentOrigin(ParentOrigin::CENTER);
     mLightAnchor.SetAnchorPoint(AnchorPoint::CENTER);
-    mLightAnchor.SetRotation(CalculateWorldRotation(Radian(mLightLongitudinal), Radian(mLightAxisTilt)));
+    mLightAnchor.SetOrientation(CalculateWorldRotation(Radian(mLightLongitudinal), Radian(mLightAxisTilt)));
 
     // Work out a scaling factor as the initial light position was calculated for desktop
     // Need to scale light position as scene actor size is based on stage size (i.e. much bigger on device)
@@ -286,9 +286,9 @@ public:
 
     Property::Index angleIndex = mImageActor2.RegisterProperty("angle", Property::Value(30.0f));
     Source angleSrc( mImageActor2, angleIndex );
-    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ROTATION, angleSrc,
+    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ORIENTATION, angleSrc,
                                                               RotationConstraint(-1.0f)));
-    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ROTATION, angleSrc,
+    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ORIENTATION, angleSrc,
                                                               RotationConstraint(+1.0f)));
 
     mSceneAnimation = Animation::New(2.5f);
@@ -343,7 +343,7 @@ public:
             mLightLongitudinal += gesture.displacement.x/4.0f;
             mLightAxisTilt -= gesture.displacement.y/6.0f;
             mLightAxisTilt = Clamp<float>(mLightAxisTilt, -90.0f, 90.0f);
-            mLightAnchor.SetRotation(CalculateWorldRotation(Radian(mLightLongitudinal), Radian(mLightAxisTilt)));
+            mLightAnchor.SetOrientation(CalculateWorldRotation(Radian(mLightLongitudinal), Radian(mLightAxisTilt)));
             break;
           }
 
@@ -359,7 +359,7 @@ public:
             mLongitudinal += gesture.displacement.x/4.0f;
             mAxisTilt -= gesture.displacement.y/6.0f;
             mAxisTilt = Clamp<float>(mAxisTilt, -90.0f, 90.0f);
-            mContents.SetRotation(CalculateWorldRotation(Radian(mLongitudinal), Radian(mAxisTilt)));
+            mContents.SetOrientation(CalculateWorldRotation(Radian(mLongitudinal), Radian(mAxisTilt)));
             break;
           }
 
@@ -368,7 +368,7 @@ public:
             mObjectLongitudinal += gesture.displacement.x/4.0f;
             mObjectAxisTilt -= gesture.displacement.y/6.0f;
             mObjectAxisTilt = Clamp<float>(mObjectAxisTilt, -90.0f, 90.0f);
-            mSceneActor.SetRotation(CalculateWorldRotation(Radian(mObjectLongitudinal), Radian(mObjectAxisTilt)));
+            mSceneActor.SetOrientation(CalculateWorldRotation(Radian(mObjectLongitudinal), Radian(mObjectAxisTilt)));
             break;
           }
         }
@@ -460,7 +460,7 @@ public:
     // Align scene so that light anchor orientation is Z Axis
     mAxisTilt = -mLightAxisTilt;
     mLongitudinal = -mLightLongitudinal;
-    mContents.SetRotation(CalculateWorldRotation(Radian(mLongitudinal), Radian(mAxisTilt)));
+    mContents.SetOrientation(CalculateWorldRotation(Radian(mLongitudinal), Radian(mAxisTilt)));
 
     return true;
   }

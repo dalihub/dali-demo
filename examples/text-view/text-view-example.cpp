@@ -150,7 +150,7 @@ public:
 
       Toolkit::TextView textView = Toolkit::TextView::New( tableString.text );
       textView.SetStyleToCurrentText( textStyle );
-      textView.SetRotation( Dali::Degree( tableString.orientation ), Vector3( 0.0f, 0.0f, 1.0f ) );
+      textView.SetOrientation( Dali::Degree( tableString.orientation ), Vector3( 0.0f, 0.0f, 1.0f ) );
 
       Toolkit::Alignment alignmentContainer = Toolkit::Alignment::New( tableString.horizontalAlignment, tableString.verticalAlignment );
       alignmentContainer.SetPadding( Toolkit::Alignment::Padding( tableString.padding, tableString.padding, tableString.padding, tableString.padding ) );

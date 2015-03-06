@@ -346,7 +346,7 @@ private:
     mPaddleImage.SetSize( mPaddleFullSize );
 
     mWobbleProperty = mPaddle.RegisterProperty(WOBBLE_PROPERTY_NAME, 0.0f);
-    Constraint wobbleConstraint = Constraint::New<Quaternion>( Actor::Property::ROTATION,
+    Constraint wobbleConstraint = Constraint::New<Quaternion>( Actor::Property::ORIENTATION,
                                                     LocalSource(mWobbleProperty),
                                                     WobbleConstraint(10.0f));
     mPaddle.ApplyConstraint(wobbleConstraint);

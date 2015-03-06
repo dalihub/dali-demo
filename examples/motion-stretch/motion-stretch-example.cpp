@@ -225,7 +225,7 @@ public:
       else
       {
         // set the rotation to match the orientation
-        mView.SetRotation( Degree( -orientation ), Vector3::ZAXIS );
+        mView.SetOrientation( Degree( -orientation ), Vector3::ZAXIS );
         mView.SetSize( targetSize );
       }
     }

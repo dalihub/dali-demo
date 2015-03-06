@@ -165,7 +165,7 @@ public:
   {
     if( gesture.state == Gesture::Continuing )
     {
-      actor.MoveBy( Vector3( gesture.displacement ) );
+      actor.TranslateBy( Vector3( gesture.displacement ) );
     }
   }
 

@@ -262,7 +262,7 @@ FrameBufferImage NewWindowController::CreateFrameBufferForImage(const char* imag
   cameraActor.SetNearClippingPlane(1.0f);
   cameraActor.SetAspectRatio(FBOSize.width / FBOSize.height);
   cameraActor.SetType(Dali::Camera::FREE_LOOK); // camera orientation based solely on actor
-  cameraActor.SetRotation(Quaternion(M_PI, Vector3::YAXIS));
+  cameraActor.SetOrientation(Quaternion(M_PI, Vector3::YAXIS));
   cameraActor.SetPosition(0.0f, 0.0f, ((FBOSize.height * 0.5f) / tanf(Math::PI * 0.125f)));
   stage.Add(cameraActor);
 
