@@ -72,7 +72,8 @@ public:
       const Language& language = LANGUAGES[index];
 
       TextLabel label = TextLabel::New();
-      label.SetParentOrigin( ParentOrigin::CENTER );
+      label.SetParentOrigin( ParentOrigin::TOP_CENTER );
+      label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
 
       label.SetProperty( TextLabel::Property::MULTI_LINE, true );
 

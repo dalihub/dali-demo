@@ -106,7 +106,10 @@ void CenterLayout::OnRelayout( const Vector2& size, ActorSizeContainer& containe
 
       float height = child.GetHeightForWidth( size.width );
 
-      container.push_back( ActorSizePair( child, Vector2( size.width, std::min(height, size.height) ) ) );
+      const Size childSize( size.width, std::min( height, size.height ) );
+      child.SetSize( childSize );
+
+      container.push_back( ActorSizePair( child, childSize ) );
     }
   }
 }
