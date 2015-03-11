@@ -76,7 +76,9 @@
 	<ui-application appid="text-label-multi-language.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-label-multi-language.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Multi-language Text Label</label>
 	</ui-application>
-
+	<ui-application appid="text-label-emojis.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-label-emojis.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Emojis Text Label</label>
+	</ui-application>
 	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Logging</label>
 	</ui-application>

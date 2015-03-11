@@ -49,6 +49,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("image-scaling-irregular-grid.example", DALI_DEMO_STR_TITLE_IMAGE_SCALING));
   demo.AddExample(Example("text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));
   demo.AddExample(Example("text-label-multi-language.example", DALI_DEMO_STR_TITLE_TEXT_LABEL)/*TODO - new string*/);
+  demo.AddExample(Example("text-label-emojis.example", "Emoji Text")/*TODO - new string*/);
   demo.AddExample(Example("animated-shapes.example", "Animated Shapes"));
   demo.AddExample(Example("path-animation.example", "Path Animation"));
   app.MainLoop();
