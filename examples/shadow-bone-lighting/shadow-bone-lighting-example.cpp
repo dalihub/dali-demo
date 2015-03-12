@@ -200,7 +200,7 @@ public:
     mPinchGestureDetector.Attach( mView );
     mPinchGestureDetector.DetectedSignal().Connect(this, &TestApp::OnPinch);
 
-    mTapGestureDetector = TapGestureDetector::New(1, 1);
+    mTapGestureDetector = TapGestureDetector::New();
     mTapGestureDetector.Attach( mView );
     mTapGestureDetector.DetectedSignal().Connect(this, &TestApp::OnTap);
   }
@@ -286,9 +286,9 @@ public:
 
     Property::Index angleIndex = mImageActor2.RegisterProperty("angle", Property::Value(30.0f));
     Source angleSrc( mImageActor2, angleIndex );
-    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::Rotation, angleSrc,
+    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ROTATION, angleSrc,
                                                               RotationConstraint(-1.0f)));
-    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::Rotation, angleSrc,
+    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ROTATION, angleSrc,
                                                               RotationConstraint(+1.0f)));
 
     mSceneAnimation = Animation::New(2.5f);

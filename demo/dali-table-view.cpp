@@ -181,11 +181,36 @@ bool CompareByTitle( const Example& lhs, const Example& rhs )
 } // namespace
 
 DaliTableView::DaliTableView( Application& application )
-    : mApplication( application ),
-        mScrolling( false ),
-        mBackgroundImagePath( DEFAULT_BACKGROUND_IMAGE_PATH ),
-        mSortAlphabetically( false ),
-        mBackgroundAnimsPlaying( false )
+: mApplication( application ),
+  mBackgroundLayer(),
+  mRootActor(),
+  mRotateAnimation(),
+  mBackground(),
+  mLogo(),
+  mPressedAnimation(),
+  mScrollViewLayer(),
+  mScrollView(),
+  mScrollViewEffect(),
+  mScrollRulerX(),
+  mScrollRulerY(),
+  mButtons(),
+  mPressedActor(),
+  mAnimationTimer(),
+  mLogoTapDetector(),
+  mVersionPopup(),
+  mButtonsPageRelativeSize(),
+  mPages(),
+  mTableViewImages(),
+  mBackgroundActors(),
+  mBackgroundAnimations(),
+  mExampleList(),
+  mExampleMap(),
+  mBackgroundImagePath( DEFAULT_BACKGROUND_IMAGE_PATH ),
+  mTotalPages(),
+  mScrolling( false ),
+  mSortAlphabetically( false ),
+  mBackgroundAnimsPlaying( false ),
+  mVersionPopupShown( false )
 {
   application.InitSignal().Connect( this, &DaliTableView::Initialize );
 }
@@ -247,6 +272,11 @@ void DaliTableView::Initialize( Application& application )
   const float logoHeight = mLogo.GetImage().GetHeight() + logoMargin;
   mRootActor.SetFixedHeight( 1, logoHeight );
 
+  // Show version in a popup when log is tapped
+  mLogoTapDetector = TapGestureDetector::New();
+  mLogoTapDetector.Attach( mLogo );
+  mLogoTapDetector.DetectedSignal().Connect( this, &DaliTableView::OnLogoTapped );
+
   const float bottomMargin = paddingHeight * BOTTOM_PADDING_RATIO;
   mButtonsPageRelativeSize = Vector3( TABLE_RELATIVE_SIZE.x, 1.f - ( toolbarHeight + logoHeight + bottomMargin) / stageSize.height, TABLE_RELATIVE_SIZE.z );
   mRootActor.SetFixedHeight( 2, mButtonsPageRelativeSize.y * stageSize.height );
@@ -262,7 +292,7 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.SetParentOrigin( ParentOrigin::CENTER );
   // Note: Currently, changing mScrollView to use SizeMode RELATIVE_TO_PARENT
   // will cause scroll ends to appear in the wrong position.
-  mScrollView.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::Property::Size, Dali::ParentSource( Dali::Actor::Property::Size ), Dali::RelativeToConstraint( SCROLLVIEW_RELATIVE_SIZE ) ) );
+  mScrollView.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::Property::SIZE, Dali::ParentSource( Dali::Actor::Property::SIZE ), Dali::RelativeToConstraint( SCROLLVIEW_RELATIVE_SIZE ) ) );
   mScrollView.SetAxisAutoLock( true );
   mScrollView.ScrollCompletedSignal().Connect( this, &DaliTableView::OnScrollComplete );
   mScrollView.ScrollStartedSignal().Connect( this, &DaliTableView::OnScrollStart );
@@ -679,7 +709,14 @@ void DaliTableView::OnKeyEvent( const KeyEvent& event )
   {
     if ( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
     {
-      mApplication.Quit();
+      if ( mVersionPopup && mVersionPopupShown )
+      {
+        HideVersionPopup();
+      }
+      else
+      {
+        mApplication.Quit();
+      }
     }
   }
 }
@@ -733,9 +770,9 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     dfActor.SetPosition( actorPos );
 
     // Define bubble horizontal parallax and vertical wrapping
-    Constraint animConstraint = Constraint::New < Vector3 > ( Actor::Property::Position,
+    Constraint animConstraint = Constraint::New < Vector3 > ( Actor::Property::POSITION,
       Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
-      Dali::ParentSource( Dali::Actor::Property::Size ),
+      Dali::ParentSource( Dali::Actor::Property::SIZE ),
       AnimateBubbleConstraint( actorPos, Random::Range( -0.85f, 0.25f ), randSize ) );
     dfActor.ApplyConstraint( animConstraint );
 
@@ -746,7 +783,7 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     Vector3 toPos( actorPos );
     toPos.y -= ( size.y + randSize );
     keyframes.Add( 1.0f, toPos );
-    animation.AnimateBetween( Property( dfActor, Actor::Property::Position ), keyframes );
+    animation.AnimateBetween( Property( dfActor, Actor::Property::POSITION ), keyframes );
     animation.SetLooping( true );
     animation.Play();
     mBackgroundAnimations.push_back( animation );
@@ -945,4 +982,45 @@ bool DaliTableView::OnTileHovered( Actor actor, const HoverEvent& event )
   return true;
 }
 
+void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap )
+{
+  if ( !mVersionPopupShown )
+  {
+    if ( !mVersionPopup )
+    {
+      std::ostringstream stream;
+      stream << "DALi Core: "    << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl << "(" << CORE_BUILD_DATE << ")" << std::endl << std::endl;
+      stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl << "(" << ADAPTOR_BUILD_DATE << ")" << std::endl << std::endl;
+      stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl << "(" << TOOLKIT_BUILD_DATE << ")";
 
+      mVersionPopup = Dali::Toolkit::Popup::New();
+      mVersionPopup.SetTitle( stream.str() );
+      mVersionPopup.SetParentOrigin( ParentOrigin::CENTER );
+      mVersionPopup.SetAnchorPoint( AnchorPoint::CENTER );
+      mVersionPopup.HideTail();
+      mVersionPopup.OutsideTouchedSignal().Connect( this, &DaliTableView::HideVersionPopup );
+      mVersionPopup.HiddenSignal().Connect( this, &DaliTableView::PopupHidden );
+
+      Dali::Stage::GetCurrent().Add( mVersionPopup );
+    }
+
+    mVersionPopup.Show();
+    mVersionPopupShown = true;
+  }
+}
+
+void DaliTableView::HideVersionPopup()
+{
+  if ( mVersionPopup )
+  {
+    mVersionPopup.Hide();
+  }
+}
+
+void DaliTableView::PopupHidden()
+{
+  if ( mVersionPopup )
+  {
+    mVersionPopupShown = false;
+  }
+}

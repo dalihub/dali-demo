@@ -971,11 +971,11 @@ private:
     mMenu.Add( tableView );
 
     Slider slider = Slider::New();
-    slider.SetProperty( Slider::LOWER_BOUND_PROPERTY, 0.0f );
-    slider.SetProperty( Slider::UPPER_BOUND_PROPERTY, 3.0f );
-    slider.SetProperty( Slider::VALUE_PROPERTY, mDurationSeconds );
-    slider.SetProperty( Slider::VALUE_PRECISION_PROPERTY, 2 );
-    slider.SetProperty( Slider::SHOW_POPUP_PROPERTY, true );
+    slider.SetProperty( Slider::Property::LOWER_BOUND, 0.0f );
+    slider.SetProperty( Slider::Property::UPPER_BOUND, 3.0f );
+    slider.SetProperty( Slider::Property::VALUE, mDurationSeconds );
+    slider.SetProperty( Slider::Property::VALUE_PRECISION, 2 );
+    slider.SetProperty( Slider::Property::SHOW_POPUP, true );
     slider.ValueChangedSignal().Connect( this, &ItemViewExample::SliderValueChange );
     tableView.AddChild( slider, TableView::CellPosition( 0, 0 ) );
     tableView.SetRelativeHeight( 0, 0.5f );
@@ -993,7 +993,7 @@ private:
     text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
     text.SetStyleToCurrentText( defaultTextStyle );
     text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::Property::SizeWidth, Dali::ParentSource( Dali::Actor::Property::SizeWidth ), Dali::EqualToConstraint() ) );
+    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::Property::SIZE_WIDTH, Dali::ParentSource( Dali::Actor::Property::SIZE_WIDTH ), Dali::EqualToConstraint() ) );
     text.SetZ( -0.9f );
     slider.Add( text );
 
@@ -1016,7 +1016,7 @@ private:
     text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
     text.SetStyleToCurrentText( defaultTextStyle );
     text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::Property::SizeWidth, Dali::ParentSource( Dali::Actor::Property::SizeWidth ), Dali::EqualToConstraint() ) );
+    text.ApplyConstraint( Dali::Constraint::New<float>( Dali::Actor::Property::SIZE_WIDTH, Dali::ParentSource( Dali::Actor::Property::SIZE_WIDTH ), Dali::EqualToConstraint() ) );
     textContainer.Add( text );
 
     mMenu.Show();
