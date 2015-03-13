@@ -27,13 +27,11 @@ using namespace Dali;
 namespace
 {
 const char* MATERIAL_SAMPLE( DALI_IMAGE_DIR "gallery-small-48.jpg" );
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char* APPLICATION_TITLE( "Mesh Example" );
 
 #define MAKE_SHADER(A)#A
 
 const char* VERTEX_SHADER = MAKE_SHADER(
-attribute mediump vec3    aPosition;
+attribute mediump vec2    aPosition;
 attribute highp   vec2    aTexCoord;
 varying   mediump vec2    vTexCoord;
 uniform   mediump mat4    uMvpMatrix;
@@ -41,7 +39,7 @@ uniform   mediump vec3    uSize;
 
 void main()
 {
-  mediump vec4 vertexPosition = vec4(aPosition, 1.0);
+  mediump vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);
   vertexPosition.xyz *= uSize;
   vertexPosition = uMvpMatrix * vertexPosition;
   vTexCoord = aTexCoord;
@@ -73,8 +71,7 @@ public:
    * @param[in] application The application instance
    */
   ExampleController( Application& application )
-  : mApplication( application ),
-    mView()
+  : mApplication( application )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &ExampleController::Create );
@@ -94,30 +91,19 @@ public:
    */
   void Create( Application& application )
   {
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
+    Stage stage = Stage::GetCurrent();
+    stage.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
-    mStageSize = Stage::GetCurrent().GetSize();
+    mStageSize = stage.GetSize();
 
     // The Init signal is received once (only) during the Application lifetime
 
     // Hide the indicator bar
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
-    // Creates a default view with a default tool bar.
-    // The view is added to the stage.
-    Toolkit::ToolBar toolBar;
-    mContent = DemoHelper::CreateView( application,
-                                       mView,
-                                       toolBar,
-                                       "",
-                                       TOOLBAR_IMAGE,
-                                       APPLICATION_TITLE );
-
-    mContent.TouchedSignal().Connect( this, &ExampleController::OnTouched );
 
     mImage = ResourceImage::New( MATERIAL_SAMPLE );
-    mSampler = Sampler::New("sTexture");
-    mSampler.SetImage(mImage);
+    mSampler = Sampler::New( mImage, "sTexture");
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
 
     mMaterial = Material::New( mShader );
@@ -129,7 +115,10 @@ public:
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
     mMeshActor.SetSize(400, 400);
-    mContent.Add( mMeshActor );
+    mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
+    stage.Add( mMeshActor );
+
+    stage.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));;
   }
 
   /**
@@ -141,38 +130,6 @@ public:
     // quit the application
     mApplication.Quit();
     return true;
-  }
-
-  /**
-   * Invoked whenever the content (screen) is touched
-   * @param[in] actor The actor that received the touch
-   * @param[in] event The touch-event information
-   */
-  bool OnTouched( Actor actor, const TouchEvent& event )
-  {
-    if(event.GetPointCount() > 0)
-    {
-      const TouchPoint& point = event.GetPoint(0);
-      switch(point.state)
-      {
-        case TouchPoint::Down:
-        case TouchPoint::Motion:
-        {
-          break;
-        }
-        case TouchPoint::Up:
-        case TouchPoint::Leave:
-        case TouchPoint::Interrupted:
-        {
-          break;
-        }
-        default:
-        {
-          break;
-        }
-      } // end switch
-    }
-    return false;
   }
 
   void OnKeyEvent(const KeyEvent& event)
@@ -189,8 +146,6 @@ public:
 private:
 
   Application&  mApplication;                             ///< Application instance
-  Toolkit::View mView;                                    ///< The view
-  Layer mContent;                                         ///< The content layer
   Vector3 mStageSize;                                     ///< The size of the stage
 
   Image    mImage;
