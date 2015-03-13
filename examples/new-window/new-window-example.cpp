@@ -449,7 +449,7 @@ void RunTest(Application& app)
   app.MainLoop(Configuration::APPLICATION_DOES_NOT_HANDLE_CONTEXT_LOSS);
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 //
 
 int main(int argc, char **argv)

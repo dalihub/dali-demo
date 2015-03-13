@@ -417,7 +417,7 @@ void CubeTransitionApp::OnKeyEvent(const KeyEvent& event)
   }
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 int main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
