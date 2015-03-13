@@ -360,38 +360,59 @@ private: // Application callbacks & implementation
    */
   void OnFocusedActorActivated( Dali::Actor activatedActor );
 
+  /**
+   * Called when the logo is tapped
+   *
+   * @param[in]  actor  The tapped actor
+   * @param[in]  tap    The tap information.
+   */
+  void OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap );
+
+  /**
+   * Hides the popup
+   */
+  void HideVersionPopup();
+
+  /**
+   * Called when the popup is completely hidden
+   */
+  void PopupHidden();
+
 private:
 
-  Dali::Application&              mApplication;         ///< Application instance.
-  Dali::Layer                     mBackgroundLayer;     ///< Background resides on a separate layer.
-  Dali::Toolkit::TableView        mRootActor;           ///< All content (excluding background is anchored to this Actor)
-  Dali::Animation                 mRotateAnimation;     ///< Animation to rotate and resize mRootActor.
-  Dali::ImageActor                mBackground;          ///< Background's static image.
-  Dali::ImageActor                mLogo;                ///< Logo's static image.
-  Dali::Animation                 mPressedAnimation;    ///< Button press scaling animation.
-  Dali::Layer                     mScrollViewLayer;     ///< ScrollView resides on a separate layer.
-  Dali::Toolkit::ScrollView       mScrollView;          ///< ScrollView container (for all Examples)
-  Dali::Toolkit::ScrollViewEffect mScrollViewEffect;    ///< Effect to be applied to the scroll view
-  bool                            mScrolling;           ///< Flag indicating whether view is currently being scrolled
-  Dali::Toolkit::RulerPtr         mScrollRulerX;        ///< ScrollView X (horizontal) ruler
-  Dali::Toolkit::RulerPtr         mScrollRulerY;        ///< ScrollView Y (vertical) ruler
-  Dali::Toolkit::TableView        mButtons;             ///< Navigation buttons
-  ExampleList                     mExampleList;         ///< List of examples.
-  ExampleMap                      mExampleMap;          ///< Map LUT for examples.
-  Dali::ActorContainer            mPages;               ///< List of pages.
-  Dali::Actor                     mPressedActor;        ///< The currently pressed actor.
-  int                             mTotalPages;          ///< Total pages within scrollview.
-  std::string                     mBackgroundImagePath; ///< The path to the background image.
-  bool                            mSortAlphabetically;  ///< Sort examples alphabetically.
+  Dali::Application&              mApplication;              ///< Application instance.
+  Dali::Layer                     mBackgroundLayer;          ///< Background resides on a separate layer.
+  Dali::Toolkit::TableView        mRootActor;                ///< All content (excluding background is anchored to this Actor)
+  Dali::Animation                 mRotateAnimation;          ///< Animation to rotate and resize mRootActor.
+  Dali::ImageActor                mBackground;               ///< Background's static image.
+  Dali::ImageActor                mLogo;                     ///< Logo's static image.
+  Dali::Animation                 mPressedAnimation;         ///< Button press scaling animation.
+  Dali::Layer                     mScrollViewLayer;          ///< ScrollView resides on a separate layer.
+  Dali::Toolkit::ScrollView       mScrollView;               ///< ScrollView container (for all Examples)
+  Dali::Toolkit::ScrollViewEffect mScrollViewEffect;         ///< Effect to be applied to the scroll view
+  Dali::Toolkit::RulerPtr         mScrollRulerX;             ///< ScrollView X (horizontal) ruler
+  Dali::Toolkit::RulerPtr         mScrollRulerY;             ///< ScrollView Y (vertical) ruler
+  Dali::Toolkit::TableView        mButtons;                  ///< Navigation buttons
+  Dali::Actor                     mPressedActor;             ///< The currently pressed actor.
+  Dali::Timer                     mAnimationTimer;           ///< Timer used to turn off animation after a specific time period
+  Dali::TapGestureDetector        mLogoTapDetector;          ///< To detect taps on the logo
+  Dali::Toolkit::Popup            mVersionPopup;             ///< Displays DALi library version information
+  Dali::Vector3                   mButtonsPageRelativeSize;  ///< Size of a buttons page relative to the stage size
 
-  Dali::ActorContainer            mTableViewImages;     ///< Offscreen render of tableview
-  Dali::ActorContainer            mBackgroundActors;    ///< List of background actors used in the effect
+  Dali::ActorContainer            mPages;                    ///< List of pages.
+  Dali::ActorContainer            mTableViewImages;          ///< Offscreen render of tableview
+  Dali::ActorContainer            mBackgroundActors;         ///< List of background actors used in the effect
+  AnimationList                   mBackgroundAnimations;     ///< List of background bubble animations
+  ExampleList                     mExampleList;              ///< List of examples.
+  ExampleMap                      mExampleMap;               ///< Map LUT for examples.
 
-  AnimationList                   mBackgroundAnimations;///< List of background bubble animations
-  Dali::Timer                     mAnimationTimer;      ///< Timer used to turn off animation after a specific time period
-  bool                            mBackgroundAnimsPlaying; ///< Are background animations playing
+  std::string                     mBackgroundImagePath;      ///< The path to the background image.
+  int                             mTotalPages;               ///< Total pages within scrollview.
 
-  Dali::Vector3                   mButtonsPageRelativeSize; ///< Size of a buttons page relative to the stage size
+  bool                            mScrolling:1;              ///< Flag indicating whether view is currently being scrolled
+  bool                            mSortAlphabetically:1;     ///< Sort examples alphabetically.
+  bool                            mBackgroundAnimsPlaying:1; ///< Are background animations playing
+  bool                            mVersionPopupShown:1;      ///< Whehter the version popup is shown or not
 };
 
 #endif // __DALI_DEMO_H__

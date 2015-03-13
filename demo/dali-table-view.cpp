@@ -168,11 +168,36 @@ bool CompareByTitle( const Example& lhs, const Example& rhs )
 } // namespace
 
 DaliTableView::DaliTableView( Application& application )
-    : mApplication( application ),
-        mScrolling( false ),
-        mBackgroundImagePath( DEFAULT_BACKGROUND_IMAGE_PATH ),
-        mSortAlphabetically( false ),
-        mBackgroundAnimsPlaying( false )
+: mApplication( application ),
+  mBackgroundLayer(),
+  mRootActor(),
+  mRotateAnimation(),
+  mBackground(),
+  mLogo(),
+  mPressedAnimation(),
+  mScrollViewLayer(),
+  mScrollView(),
+  mScrollViewEffect(),
+  mScrollRulerX(),
+  mScrollRulerY(),
+  mButtons(),
+  mPressedActor(),
+  mAnimationTimer(),
+  mLogoTapDetector(),
+  mVersionPopup(),
+  mButtonsPageRelativeSize(),
+  mPages(),
+  mTableViewImages(),
+  mBackgroundActors(),
+  mBackgroundAnimations(),
+  mExampleList(),
+  mExampleMap(),
+  mBackgroundImagePath( DEFAULT_BACKGROUND_IMAGE_PATH ),
+  mTotalPages(),
+  mScrolling( false ),
+  mSortAlphabetically( false ),
+  mBackgroundAnimsPlaying( false ),
+  mVersionPopupShown( false )
 {
   application.InitSignal().Connect( this, &DaliTableView::Initialize );
 }
@@ -232,6 +257,11 @@ void DaliTableView::Initialize( Application& application )
   const float logoMargin = paddingHeight * LOGO_MARGIN_RATIO;
   const float logoHeight = mLogo.GetImage().GetHeight() + logoMargin;
   mRootActor.SetFixedHeight( 1, logoHeight );
+
+  // Show version in a popup when log is tapped
+  mLogoTapDetector = TapGestureDetector::New();
+  mLogoTapDetector.Attach( mLogo );
+  mLogoTapDetector.DetectedSignal().Connect( this, &DaliTableView::OnLogoTapped );
 
   const float bottomMargin = paddingHeight * BOTTOM_PADDING_RATIO;
   mButtonsPageRelativeSize = Vector3( TABLE_RELATIVE_SIZE.x, 1.f - ( toolbarHeight + logoHeight + bottomMargin) / stageSize.height, TABLE_RELATIVE_SIZE.z );
@@ -661,7 +691,14 @@ void DaliTableView::OnKeyEvent( const KeyEvent& event )
   {
     if ( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
     {
-      mApplication.Quit();
+      if ( mVersionPopup && mVersionPopupShown )
+      {
+        HideVersionPopup();
+      }
+      else
+      {
+        mApplication.Quit();
+      }
     }
   }
 }
@@ -925,4 +962,47 @@ bool DaliTableView::OnTileHovered( Actor actor, const HoverEvent& event )
 {
   KeyboardFocusManager::Get().SetCurrentFocusActor( actor );
   return true;
+}
+
+void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap )
+{
+  if ( !mVersionPopupShown )
+  {
+    if ( !mVersionPopup )
+    {
+      std::ostringstream stream;
+      stream << "DALi Core: "    << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl << "(" << CORE_BUILD_DATE << ")" << std::endl << std::endl;
+      stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl << "(" << ADAPTOR_BUILD_DATE << ")" << std::endl << std::endl;
+      stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl << "(" << TOOLKIT_BUILD_DATE << ")";
+
+      mVersionPopup = Dali::Toolkit::Popup::New();
+      mVersionPopup.SetTitle( stream.str() );
+      mVersionPopup.SetParentOrigin( ParentOrigin::CENTER );
+      mVersionPopup.SetAnchorPoint( AnchorPoint::CENTER );
+      mVersionPopup.HideTail();
+      mVersionPopup.OutsideTouchedSignal().Connect( this, &DaliTableView::HideVersionPopup );
+      mVersionPopup.HiddenSignal().Connect( this, &DaliTableView::PopupHidden );
+
+      Dali::Stage::GetCurrent().Add( mVersionPopup );
+    }
+
+    mVersionPopup.Show();
+    mVersionPopupShown = true;
+  }
+}
+
+void DaliTableView::HideVersionPopup()
+{
+  if ( mVersionPopup )
+  {
+    mVersionPopup.Hide();
+  }
+}
+
+void DaliTableView::PopupHidden()
+{
+  if ( mVersionPopup )
+  {
+    mVersionPopupShown = false;
+  }
 }
