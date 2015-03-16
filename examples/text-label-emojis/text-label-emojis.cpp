@@ -73,7 +73,6 @@ public:
       label.SetParentOrigin( ParentOrigin::TOP_CENTER );
       label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
       label.SetProperty( TextLabel::Property::MULTI_LINE, true );
-      label.SetProperty( TextLabel::Property::RENDERING_BACKEND, 0 );
       label.SetProperty( TextLabel::Property::TEXT, text );
       mLayout.AddLabel( label );
       mLayout.TouchedSignal().Connect( this, &EmojiExample::OnTouchEvent );
