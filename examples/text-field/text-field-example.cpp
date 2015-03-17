@@ -78,11 +78,10 @@ public:
     field.SetBackgroundColor( Color::BLACK );
     layout.SetTopPanel( field );
 
-    field.SetProperty( TextField::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
+    field.SetProperty( TextField::Property::TEXT, "Hello" );
 
-    // TODO
-    //Property::Value fieldText = field.GetProperty( TextField::Property::TEXT );
-    //std::cout << "Got text from field: " << fieldText.Get< std::string >() << std::endl;
+    Property::Value fieldText = field.GetProperty( TextField::Property::TEXT );
+    std::cout << "Displaying text: " << fieldText.Get< std::string >() << std::endl;
   }
 
   /**

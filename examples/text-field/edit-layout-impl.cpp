@@ -94,6 +94,8 @@ void EditLayout::OnRelayout( const Vector2& size, ActorSizeContainer& container 
 
       float height = mTopPanel.GetHeightForWidth( panelWidth );
 
+      mTopPanel.SetSize( Vector2(panelWidth, height) );
+
       container.push_back( ActorSizePair( mTopPanel, Vector2(panelWidth, height) ) );
     }
   }
