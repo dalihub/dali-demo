@@ -270,7 +270,7 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
     mStencilActor.SetSize(mDiameter, mDiameter);
   }
 
-  mStencilActor.SetRotation( Degree(mInitialAngle), Vector3::ZAXIS );
+  mStencilActor.SetOrientation( Degree(mInitialAngle), Vector3::ZAXIS );
   mStencilActor.SetProperty( mRotationAngleIndex, static_cast<float>(mInitialSector) );
 
   if( mRotateActors )

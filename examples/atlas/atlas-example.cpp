@@ -165,7 +165,7 @@ public:
   {
     if( gesture.state == Gesture::Continuing )
     {
-      actor.MoveBy( Vector3( gesture.displacement ) );
+      actor.TranslateBy( Vector3( gesture.displacement ) );
     }
   }
 
@@ -221,7 +221,7 @@ void RunTest( Application& application )
   application.MainLoop(Configuration::APPLICATION_DOES_NOT_HANDLE_CONTEXT_LOSS);
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 //
 int main( int argc, char **argv )
 {

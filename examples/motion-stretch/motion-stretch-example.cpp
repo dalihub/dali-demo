@@ -225,7 +225,7 @@ public:
       else
       {
         // set the rotation to match the orientation
-        mView.SetRotation( Degree( -orientation ), Vector3::ZAXIS );
+        mView.SetOrientation( Degree( -orientation ), Vector3::ZAXIS );
         mView.SetSize( targetSize );
       }
     }
@@ -435,7 +435,7 @@ void RunTest(Application& app)
   app.MainLoop();
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 //
 int main(int argc, char **argv)
 {

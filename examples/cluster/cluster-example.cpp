@@ -524,7 +524,13 @@ public:
     const char **paths = IMAGE_GROUPS[clusterType];
     DALI_ASSERT_ALWAYS(paths);
 
-    // Add a background image to the cluster
+    // Add a background image to the cluster, limiting the loaded size by
+    // fitting it inside a quarter of the stage area with the conservative Box
+    // filter mode:
+    Dali::ImageAttributes backgroundAttributes;
+    backgroundAttributes.SetSize( Stage::GetCurrent().GetSize() * 0.5f );
+    backgroundAttributes.SetFilterMode( Dali::ImageAttributes::Box );
+    backgroundAttributes.SetScalingMode( Dali::ImageAttributes::ShrinkToFit );
     Image bg = ResourceImage::New( CLUSTER_BACKGROUND_IMAGE_PATH );
     ImageActor image = ImageActor::New(bg);
     clusterActor.SetBackgroundImage(image);
@@ -552,10 +558,12 @@ public:
     actor.SetParentOrigin( ParentOrigin::CENTER );
     actor.SetAnchorPoint( AnchorPoint::CENTER );
 
-    // Load the thumbnail
+    // Load the thumbnail at quarter of screen width or standard size if that is smaller:
     ImageAttributes attribs = ImageAttributes::New();
-    attribs.SetSize(CLUSTER_IMAGE_THUMBNAIL_WIDTH, CLUSTER_IMAGE_THUMBNAIL_HEIGHT);
-    attribs.SetScalingMode(Dali::ImageAttributes::ShrinkToFit);
+    Size stageQuarter = Stage::GetCurrent().GetSize() * 0.25f;
+    attribs.SetSize( std::min( stageQuarter.x, CLUSTER_IMAGE_THUMBNAIL_WIDTH), std::min( stageQuarter.y, CLUSTER_IMAGE_THUMBNAIL_HEIGHT ) );
+    attribs.SetFilterMode( Dali::ImageAttributes::BoxThenLinear );
+    attribs.SetScalingMode(Dali::ImageAttributes::ShrinkToFit );
 
     // Add a shadow image child actor
     Image shadowImage = ResourceImage::New( CLUSTER_SHADOW_IMAGE_PATH, attribs );
@@ -720,12 +728,12 @@ public:
 
           constraint = Constraint::New<float>( angleXAxisProperty,
                                                Source(mScrollView, scrollOvershootProperty),
-                                               Source(mView, Actor::Property::ROTATION),
+                                               Source(mView, Actor::Property::ORIENTATION),
                                                ShearEffectConstraint(stageSize, SHEAR_EFFECT_MAX_OVERSHOOT, Vector2::XAXIS) );
           shaderEffect.ApplyConstraint(constraint);
           constraint = Constraint::New<float>( angleYAxisProperty,
                                                Source(mScrollView, scrollOvershootProperty),
-                                               Source(mView, Actor::Property::ROTATION),
+                                               Source(mView, Actor::Property::ORIENTATION),
                                                ShearEffectConstraint(stageSize, SHEAR_EFFECT_MAX_OVERSHOOT, Vector2::YAXIS) );
           shaderEffect.ApplyConstraint(constraint);
 
@@ -752,7 +760,7 @@ public:
 
         Property::Index anglePerUnit = shaderEffect.GetPropertyIndex( shaderEffect.GetAnglePerUnitPropertyName() );
         shaderEffect.ApplyConstraint( Constraint::New<Vector2>( anglePerUnit,
-                                                                Source(mView, Actor::Property::ROTATION),
+                                                                Source(mView, Actor::Property::ORIENTATION),
                                                                 CarouselEffectOrientationConstraint( angleSweep ) ) );
 
         break;
@@ -865,7 +873,7 @@ void RunTest(Application& app)
   app.MainLoop();
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 //
 int main(int argc, char **argv)
 {

@@ -142,10 +142,14 @@ Dali::Layer CreateView( Dali::Application& application,
   // Add the view to the stage before setting the background.
   stage.Add( view );
 
-  // Set background image.
-  if ( ! backgroundImagePath.empty() )
+  // Set background image, loading it at screen resolution:
+  if ( !backgroundImagePath.empty() )
   {
-    Dali::Image backgroundImage = Dali::ResourceImage::New( backgroundImagePath );
+    Dali::ImageAttributes backgroundAttributes;
+    backgroundAttributes.SetSize( stage.GetSize() );
+    backgroundAttributes.SetFilterMode( Dali::ImageAttributes::BoxThenLinear );
+    backgroundAttributes.SetScalingMode( Dali::ImageAttributes::ScaleToFill );
+    Dali::Image backgroundImage = Dali::ResourceImage::New( backgroundImagePath, backgroundAttributes );
     Dali::ImageActor backgroundImageActor = Dali::ImageActor::New( backgroundImage );
     view.SetBackground( backgroundImageActor );
   }
