@@ -60,6 +60,39 @@ void main()
 }
 );
 
+Geometry CreateGeometry()
+{
+
+  // Create vertices
+  const float halfQuadSize = .5f;
+  struct TexturedQuadVertex { Vector2 position; Vector2 textureCoordinates; };
+  TexturedQuadVertex texturedQuadVertexData[4] = {
+    { Vector2(-halfQuadSize, -halfQuadSize), Vector2(0.f, 0.f) },
+    { Vector2( halfQuadSize, -halfQuadSize), Vector2(1.f, 0.f) },
+    { Vector2(-halfQuadSize,  halfQuadSize), Vector2(0.f, 1.f) },
+    { Vector2( halfQuadSize,  halfQuadSize), Vector2(1.f, 1.f) } };
+
+  Property::Map texturedQuadVertexFormat;
+  texturedQuadVertexFormat["aPosition"] = Property::VECTOR2;
+  texturedQuadVertexFormat["aVertexCoord"] = Property::VECTOR2;
+  PropertyBuffer texturedQuadVertices = PropertyBuffer::New( PropertyBuffer::STATIC, texturedQuadVertexFormat, 4 );
+  texturedQuadVertices.SetData(texturedQuadVertexData);
+
+  // Create indices
+  unsigned short indexData[6] = { 0, 3, 1, 0, 2, 3 };
+  Property::Map indexFormat;
+  indexFormat["indices"] = Property::UNSIGNED_INTEGER;
+  PropertyBuffer indices = PropertyBuffer::New( PropertyBuffer::STATIC, indexFormat, 3 );
+  indices.SetData(indexData);
+
+  // Create the geometry object
+  Geometry texturedQuadGeometry = Geometry::New();
+  texturedQuadGeometry.AddVertexBuffer( texturedQuadVertices );
+  texturedQuadGeometry.SetIndexBuffer( indices );
+
+  return texturedQuadGeometry;
+}
+
 } // anonymous namespace
 
 // This example shows how to use a simple mesh
@@ -104,13 +137,13 @@ public:
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
     mImage = ResourceImage::New( MATERIAL_SAMPLE );
-    mSampler = Sampler::New( mImage, "sTexture");
+    mSampler = Sampler::New(mImage, "sTexture");
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
 
     mMaterial = Material::New( mShader );
     mMaterial.AddSampler( mSampler );
 
-    mGeometry = Geometry::New(); // Don't need to set a vertex buffer - it's a quad by default.
+    mGeometry = CreateGeometry();
 
     mRenderer = Renderer::New( mGeometry, mMaterial );
 
