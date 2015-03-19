@@ -183,6 +183,7 @@ Image CreateImage(const std::string& filename, unsigned int width, unsigned int 
 
   attributes.SetSize( width, height );
   attributes.SetScalingMode( scalingMode );
+  attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
   Image image = ResourceImage::New( filename, attributes );
   return image;
 }
@@ -359,6 +360,9 @@ public:
     mContentLayer.Add( mScrollView );
     mScrollView.Add( imageField );
     mGridActor = imageField;
+
+    // Scroll to top of grid so first images loaded are on-screen:
+    mScrollView.ScrollTo( Vector3( 0, -1000000, 0 ) );
   }
 
   /**

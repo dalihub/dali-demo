@@ -315,7 +315,7 @@ private:
     {
       for(int column = 0;column<imageColumns;column++)
       {
-        ImageActor image = CreateImage( GetNextImagePath() );
+        ImageActor image = CreateImage( GetNextImagePath(), imageSize.x, imageSize.y );
 
         image.SetParentOrigin( ParentOrigin::CENTER );
         image.SetAnchorPoint( AnchorPoint::CENTER );
@@ -562,7 +562,8 @@ private:
     ImageAttributes attributes;
 
     attributes.SetSize(width, height);
-    attributes.SetScalingMode(ImageAttributes::ShrinkToFit);
+    attributes.SetScalingMode(ImageAttributes::ScaleToFill);
+    attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
     Image img = ResourceImage::New(filename, attributes);
     ImageActor actor = ImageActor::New(img);
     actor.SetName( filename );

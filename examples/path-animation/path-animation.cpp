@@ -222,7 +222,7 @@ public:
     {
       mAnimation.Pause();
       mAnimation.Clear();
-      mActor.SetRotation( Quaternion() );
+      mActor.SetOrientation( Quaternion() );
     }
 
     mAnimation.Animate( mActor, mPath, mForward );
