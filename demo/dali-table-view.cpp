@@ -87,15 +87,7 @@ const Vector2 POSITION_SWING_3DEFFECT( 0.55f, 0.4f );             ///< Position 
 const Vector3 ANCHOR_3DEFFECT_STYLE0( -105.0f, 30.0f, -240.0f ); ///< Rotation Anchor position for 3D Effect (Style 0)
 const Vector3 ANCHOR_3DEFFECT_STYLE1( 65.0f, -70.0f, -500.0f );  ///< Rotation Anchor position for 3D Effect (Style 1)
 
-//const std::string             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
-//const std::string             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
-//const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.7f, 0.7f, 0.7f, 1.0f);
-
-//const std::string             TABLE_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
-//const std::string             TABLE_TEXT_STYLE_FONT_STYLE("Regular");
-//const Dali::PointSize         TABLE_TEXT_STYLE_POINT_SIZE( 8.0f );
-//const Dali::TextStyle::Weight TABLE_TEXT_STYLE_WEIGHT(Dali::TextStyle::LIGHT);
-//const Dali::Vector4           TABLE_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
+const Dali::Vector4 TABLE_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
 Vector3 ScalePointSize(const Vector3& vec)
 {
@@ -498,15 +490,13 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   }
 
   TextLabel label = TextLabel::New();
-  label.SetParentOrigin( ParentOrigin::TOP_LEFT );
   label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  label.SetSize( parentSize );
   label.SetProperty( TextLabel::Property::MULTI_LINE, true );
   label.SetProperty( TextLabel::Property::TEXT, title );
-  label.SetColor( Color::BLACK );
+  label.SetProperty( TextLabel::Property::ALIGNMENT, "CENTER" );
+  label.SetColor( TABLE_TEXT_STYLE_COLOR );
   tile.Add( label );
-
-  // FIXME - This is a kludge because size negotiation is not finished
-  label.SetSize( parentSize );
 
   // Set the tile to be keyboard focusable
   tile.SetKeyboardFocusable(true);
