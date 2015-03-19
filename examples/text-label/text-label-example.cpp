@@ -36,8 +36,18 @@ namespace
 {
   const unsigned int KEY_ZERO = 10;
   const unsigned int KEY_ONE = 11;
+  const unsigned int KEY_A = 38;
   const unsigned int KEY_M = 58;
   const unsigned int KEY_L = 46;
+
+  const char* ALIGNMENT_STRING_TABLE[] =
+  {
+    "BEGIN",
+    "CENTER",
+    "END"
+  };
+
+  const unsigned int ALIGNMENT_STRING_COUNT = sizeof( ALIGNMENT_STRING_TABLE ) / sizeof( ALIGNMENT_STRING_TABLE[0u] );
 }
 
 /**
@@ -49,7 +59,8 @@ public:
 
   TextLabelExample( Application& application )
   : mApplication( application ),
-    mLanguageId( 0u )
+    mLanguageId( 0u ),
+    mAlignment( 0u )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &TextLabelExample::Create );
@@ -108,6 +119,16 @@ public:
             mLabel.SetProperty( TextLabel::Property::RENDERING_BACKEND, event.keyCode - 10 );
             break;
           }
+          case KEY_A:
+          {
+            if( ++mAlignment >= ALIGNMENT_STRING_COUNT )
+            {
+              mAlignment = 0u;
+            }
+
+            mLabel.SetProperty( TextLabel::Property::ALIGNMENT, ALIGNMENT_STRING_TABLE[ mAlignment ] );
+            break;
+          }
           case KEY_M:
           {
             bool multiLine = mLabel.GetProperty<bool>( TextLabel::Property::MULTI_LINE );
@@ -124,6 +145,7 @@ public:
             {
               mLanguageId = 0u;
             }
+            break;
           }
         }
       }
@@ -137,6 +159,7 @@ private:
   TextLabel mLabel;
 
   unsigned int mLanguageId;
+  unsigned int mAlignment;
 };
 
 void RunTest( Application& application )
