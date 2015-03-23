@@ -72,7 +72,7 @@ Vector3 VerticalLayout::GetNaturalSize()
       Vector3 labelSize = label.GetNaturalSize();
 
       size.width = ( labelSize.width > size.width ) ? labelSize.width : size.width;
-      size.height += labelSize.height;
+      size.height += labelSize.height + 50.0f/*FIXME*/;
     }
   }
 
@@ -90,7 +90,7 @@ float VerticalLayout::GetHeightForWidth( float width )
 
     if( label )
     {
-      height += label.GetHeightForWidth( width );
+      height += label.GetHeightForWidth( width ) + 50.0f/*FIXME*/;
     }
   }
 
@@ -121,7 +121,7 @@ void VerticalLayout::OnRelayout( const Vector2& size, ActorSizeContainer& contai
       label.SetPosition( position );
 
       childSize.height = label.GetHeightForWidth( size.width );
-      position.height += childSize.height;
+      position.height += childSize.height + 50.0f/*FIXME*/;
 
       label.SetSize( childSize );
     }
