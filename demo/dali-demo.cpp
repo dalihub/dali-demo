@@ -48,10 +48,10 @@ int main(int argc, char **argv)
   demo.AddExample(Example("builder.example", DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI));
   demo.AddExample(Example("image-scaling-irregular-grid.example", DALI_DEMO_STR_TITLE_IMAGE_SCALING));
   demo.AddExample(Example("text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));
-  demo.AddExample(Example("text-label-multi-language.example", DALI_DEMO_STR_TITLE_TEXT_LABEL)/*TODO - new string*/);
-  demo.AddExample(Example("text-label-emojis.example", "Emoji Text")/*TODO - new string*/);
-  demo.AddExample(Example("animated-shapes.example", "Animated Shapes"));
-  demo.AddExample(Example("path-animation.example", "Path Animation"));
+  demo.AddExample(Example("text-label-multi-language.example", DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE));
+  demo.AddExample(Example("text-label-emojis.example", DALI_DEMO_STR_TITLE_EMOJI_TEXT));
+  demo.AddExample(Example("animated-shapes.example", DALI_DEMO_STR_TITLE_ANIMATED_SHAPES));
+  demo.AddExample(Example("path-animation.example", DALI_DEMO_STR_TITLE_PATH_ANIMATION));
   app.MainLoop();
 
   return 0;

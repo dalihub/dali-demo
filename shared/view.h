@@ -45,7 +45,7 @@ const ViewStyle DEFAULT_VIEW_STYLE( 0.1f, 0.7f, 80.f, 4.f );
 
 const char*                   DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
 const char*                   DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
-const float                   DEFAULT_TEXT_STYLE_POINT_SIZE( 16.0f );
+const float                   DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
 const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
 const Dali::Toolkit::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
@@ -99,7 +99,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
     label.SetProperty( Dali::Toolkit::TextLabel::Property::ALIGNMENT, "CENTER" );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::FONT_FAMILY, DEFAULT_TEXT_STYLE_FONT_FAMILY );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::FONT_STYLE, DEFAULT_TEXT_STYLE_FONT_STYLE );
-    label.SetProperty( Dali::Toolkit::TextLabel::Property::POINT_SIZE, DEFAULT_TEXT_STYLE_POINT_SIZE );
+    label.SetProperty( Dali::Toolkit::TextLabel::Property::POINT_SIZE, ScalePointSize(DEFAULT_TEXT_STYLE_POINT_SIZE) );
     label.SetColor( DEFAULT_TEXT_STYLE_COLOR );
     toolBarLayer.Add( label );
   }
