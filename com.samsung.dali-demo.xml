@@ -85,6 +85,9 @@
 	<ui-application appid="text-field.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-field.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Label</label>
 	</ui-application>
+	<ui-application appid="text-message-field.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-message-field.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Label</label>
+	</ui-application>
 	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Logging</label>
 	</ui-application>

@@ -87,8 +87,10 @@ public:
     mContainer.Add( field );
 
     field.SetProperty( TextField::Property::TEXT, "Hello" );
+    field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, stageSize.width - BORDER_WIDTH*2, stageSize.height - BORDER_WIDTH*2 ) );
 
     Property::Value fieldText = field.GetProperty( TextField::Property::TEXT );
+
     std::cout << "Displaying text: " << fieldText.Get< std::string >() << std::endl;
   }
 
