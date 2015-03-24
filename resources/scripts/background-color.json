@@ -41,7 +41,7 @@
       "parent-origin": "CENTER",
       "anchor-point": "TOP_CENTER",
       "size": [400, 150, 1],
-      "background": {
+      "background-image": {
         "image": {
           "filename": "{DALI_IMAGE_DIR}button-background.png"
         }
@@ -55,7 +55,7 @@
       "anchor-point": "BOTTOM_CENTER",
       "size": [400, 150, 1],
       "background-color": [0, 0, 1, 1],
-      "background": {
+      "background-image": {
         "image": {
           "filename": "{DALI_IMAGE_DIR}button-background.png"
         }
