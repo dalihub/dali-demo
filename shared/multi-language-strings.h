@@ -172,7 +172,7 @@ namespace MultiLanguageStrings
       "Sayfaları yeniden düzenlemek için özelleştirilebilir kılavuzun görünüm tipini değiştirmeniz gerekir."
     },
     {
-      "اُردُو‎",
+      "اُردُو",
       "(Urdu)",
       "صفحات کو دوبارہ ترتیب دینے کے لئے، آپ کو منظر کی قسم کو ایک حسب ضرورت گرڈ میں تبدیل کرنا ہوگا۔"
     },
