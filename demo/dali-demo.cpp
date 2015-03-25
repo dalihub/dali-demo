@@ -15,6 +15,10 @@
  *
  */
 
+// EXTERNAL INCLUDES
+#include <dali/dali.h>
+
+// INTERNAL INCLUDES
 #include "dali-table-view.h"
 #include "shared/dali-demo-strings.h"
 
@@ -29,6 +33,7 @@ int main(int argc, char **argv)
 
   Application app = Application::New(&argc, &argv);
 
+  // Create the demo launcher
   DaliTableView demo(app);
 
   demo.AddExample(Example("bubble-effect.example", DALI_DEMO_STR_TITLE_BUBBLES));
@@ -52,6 +57,8 @@ int main(int argc, char **argv)
   demo.AddExample(Example("text-label-emojis.example", DALI_DEMO_STR_TITLE_EMOJI_TEXT));
   demo.AddExample(Example("animated-shapes.example", DALI_DEMO_STR_TITLE_ANIMATED_SHAPES));
   demo.AddExample(Example("path-animation.example", DALI_DEMO_STR_TITLE_PATH_ANIMATION));
+
+  // Start the event loop
   app.MainLoop();
 
   return 0;

@@ -95,11 +95,9 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
     label.SetAnchorPoint( Dali::AnchorPoint::TOP_LEFT );
     label.SetSize( stage.GetSize().width, style.mToolBarHeight );
     label.SetDrawMode( Dali::DrawMode::OVERLAY );
+    label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "toolbarlabel" );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::TEXT, title );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::ALIGNMENT, "CENTER" );
-    label.SetProperty( Dali::Toolkit::TextLabel::Property::FONT_FAMILY, DEFAULT_TEXT_STYLE_FONT_FAMILY );
-    label.SetProperty( Dali::Toolkit::TextLabel::Property::FONT_STYLE, DEFAULT_TEXT_STYLE_FONT_STYLE );
-    label.SetProperty( Dali::Toolkit::TextLabel::Property::POINT_SIZE, ScalePointSize(DEFAULT_TEXT_STYLE_POINT_SIZE) );
     label.SetColor( DEFAULT_TEXT_STYLE_COLOR );
     toolBarLayer.Add( label );
   }

@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <sstream>
 #include <unistd.h>
+#include <dali-toolkit/public-api/styling/style-manager.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -216,6 +217,10 @@ void DaliTableView::SortAlphabetically( bool sortAlphabetically )
 
 void DaliTableView::Initialize( Application& application )
 {
+  // Provide the stylesheet
+  StyleManager styleManager = StyleManager::Get();
+  styleManager.RequestThemeChange( DALI_DEMO_THEME_PATH );
+
   Stage::GetCurrent().KeyEventSignal().Connect( this, &DaliTableView::OnKeyEvent );
 
   const Vector2 stageSize = Stage::GetCurrent().GetSize();
@@ -492,6 +497,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   TextLabel label = TextLabel::New();
   label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
   label.SetSize( parentSize );
+  label.SetProperty( Control::Property::STYLE_NAME, "launcherlabel" );
   label.SetProperty( TextLabel::Property::MULTI_LINE, true );
   label.SetProperty( TextLabel::Property::TEXT, title );
   label.SetProperty( TextLabel::Property::ALIGNMENT, "CENTER" );
