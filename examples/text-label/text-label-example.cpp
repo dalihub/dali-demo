@@ -126,7 +126,7 @@ public:
               mAlignment = 0u;
             }
 
-            mLabel.SetProperty( TextLabel::Property::ALIGNMENT, ALIGNMENT_STRING_TABLE[ mAlignment ] );
+            mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_STRING_TABLE[ mAlignment ] );
             break;
           }
           case KEY_M:

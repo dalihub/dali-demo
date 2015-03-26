@@ -97,7 +97,8 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
     label.SetDrawMode( Dali::DrawMode::OVERLAY );
     label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "toolbarlabel" );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::TEXT, title );
-    label.SetProperty( Dali::Toolkit::TextLabel::Property::ALIGNMENT, "CENTER" );
+    label.SetProperty( Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+    label.SetProperty( Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     label.SetColor( DEFAULT_TEXT_STYLE_COLOR );
     toolBarLayer.Add( label );
   }
