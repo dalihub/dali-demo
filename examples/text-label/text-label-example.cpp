@@ -36,18 +36,31 @@ namespace
 {
   const unsigned int KEY_ZERO = 10;
   const unsigned int KEY_ONE = 11;
-  const unsigned int KEY_A = 38;
+  const unsigned int KEY_H = 43;
+  const unsigned int KEY_V = 55;
   const unsigned int KEY_M = 58;
   const unsigned int KEY_L = 46;
+  const unsigned int KEY_S = 39;
+  const unsigned int KEY_PLUS = 21;
+  const unsigned int KEY_MINUS = 20;
 
-  const char* ALIGNMENT_STRING_TABLE[] =
+  const char* H_ALIGNMENT_STRING_TABLE[] =
   {
     "BEGIN",
     "CENTER",
     "END"
   };
 
-  const unsigned int ALIGNMENT_STRING_COUNT = sizeof( ALIGNMENT_STRING_TABLE ) / sizeof( ALIGNMENT_STRING_TABLE[0u] );
+  const unsigned int H_ALIGNMENT_STRING_COUNT = sizeof( H_ALIGNMENT_STRING_TABLE ) / sizeof( H_ALIGNMENT_STRING_TABLE[0u] );
+
+  const char* V_ALIGNMENT_STRING_TABLE[] =
+  {
+    "TOP",
+    "CENTER",
+    "BOTTOM"
+  };
+
+  const unsigned int V_ALIGNMENT_STRING_COUNT = sizeof( V_ALIGNMENT_STRING_TABLE ) / sizeof( V_ALIGNMENT_STRING_TABLE[0u] );
 }
 
 /**
@@ -78,7 +91,7 @@ public:
   {
     Stage stage = Stage::GetCurrent();
 
-    stage.SetBackgroundColor( Color::BLUE );
+    stage.SetBackgroundColor( Color::BLACK );
     stage.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
     Vector2 stageSize = stage.GetSize();
 
@@ -88,11 +101,13 @@ public:
     stage.Add( centerLayout );
 
     mLabel = TextLabel::New();
-    mLabel.SetBackgroundColor( Color::BLACK );
+    mLabel.SetBackgroundColor( Vector4(0.3f,0.3f,0.6f,1.0f) );
     centerLayout.Add( mLabel );
 
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mLabel.SetProperty( TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
+    mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
+    mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
 
     Property::Value labelText = mLabel.GetProperty( TextLabel::Property::TEXT );
     std::cout << "Displaying text: \"" << labelText.Get< std::string >() << "\"" << std::endl;
@@ -119,14 +134,24 @@ public:
             mLabel.SetProperty( TextLabel::Property::RENDERING_BACKEND, event.keyCode - 10 );
             break;
           }
-          case KEY_A:
+          case KEY_H:
           {
-            if( ++mAlignment >= ALIGNMENT_STRING_COUNT )
+            if( ++mAlignment >= H_ALIGNMENT_STRING_COUNT )
             {
               mAlignment = 0u;
             }
 
-            mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_STRING_TABLE[ mAlignment ] );
+            mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, H_ALIGNMENT_STRING_TABLE[ mAlignment ] );
+            break;
+          }
+          case KEY_V:
+          {
+            if( ++mAlignment >= V_ALIGNMENT_STRING_COUNT )
+            {
+              mAlignment = 0u;
+            }
+
+            mLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, V_ALIGNMENT_STRING_TABLE[ mAlignment ] );
             break;
           }
           case KEY_M:
@@ -147,6 +172,29 @@ public:
             }
             break;
           }
+          case KEY_S:
+          {
+            if( Color::BLACK == mLabel.GetProperty<Vector4>( TextLabel::Property::SHADOW_COLOR ) )
+            {
+              mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::RED );
+            }
+            else
+            {
+              mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+            }
+            break;
+          }
+          case KEY_PLUS:
+          {
+            mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, mLabel.GetProperty<Vector2>( TextLabel::Property::SHADOW_OFFSET ) + Vector2( 1.0f, 1.0f ) );
+            break;
+          }
+          case KEY_MINUS:
+          {
+            mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, mLabel.GetProperty<Vector2>( TextLabel::Property::SHADOW_OFFSET ) - Vector2( 1.0f, 1.0f ) );
+            break;
+          }
+
         }
       }
     }
