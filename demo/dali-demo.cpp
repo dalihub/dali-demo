@@ -39,11 +39,15 @@ int main(int argc, char **argv)
   demo.AddExample(Example("refraction-effect.example", "Refraction"));
   demo.AddExample(Example("scroll-view.example", "Scroll View"));
   demo.AddExample(Example("shadow-bone-lighting.example", "Lights and shadows"));
-  demo.AddExample(Example("builder.example", "Script Based UI"));
+//  demo.AddExample(Example("builder.example", "Script Based UI"));
   demo.AddExample(Example("image-scaling-irregular-grid.example", "Image Scaling Modes"));
   demo.AddExample(Example("text-view.example", "Text View"));
   demo.AddExample(Example("animated-shapes.example", "Animated Shapes"));
   demo.AddExample(Example("path-animation.example", "Path Animation"));
+  demo.AddExample(Example("size-negotiation.example", "Size Negotiation"));
+
+  demo.SortAlphabetically( true );
+
   app.MainLoop();
 
   return 0;

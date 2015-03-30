@@ -213,7 +213,8 @@ public:
     mShadowView.SetName("Container");
     mShadowView.SetParentOrigin(ParentOrigin::CENTER);
     mShadowView.SetAnchorPoint(AnchorPoint::CENTER);
-    mShadowView.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    mShadowView.SetRelayoutEnabled( true );
+    mShadowView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 

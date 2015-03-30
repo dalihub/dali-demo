@@ -421,7 +421,8 @@ public:
     // coordinates in a frame defined by a parent actor:
 
     Actor gridActor = Actor::New();
-    gridActor.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    gridActor.SetRelayoutEnabled( true );
+    gridActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     gridActor.SetParentOrigin( ParentOrigin::CENTER );
     gridActor.SetAnchorPoint( AnchorPoint::CENTER );
 

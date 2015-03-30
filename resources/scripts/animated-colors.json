@@ -18,9 +18,11 @@
   "stage": [
     {
       "type": "Control",
+      "relayout-enabled": false,
       "actors": [
         {
           "type": "Control",
+	  "relayout-enabled": true,
           "actors": [],
           "name": "Control 8",
           "position": [
@@ -60,9 +62,11 @@
         },
         {
           "type": "Control",
+	  "relayout-enabled": false,
           "actors": [
             {
               "type": "Control",
+	      "relayout-enabled": false,
               "actors": [],
               "name": "Container 2",
               "position": [
@@ -102,9 +106,11 @@
             },
             {
               "type": "Control",
+	      "relayout-enabled": false,
               "actors": [
                 {
                   "type": "Control",
+		  "relayout-enabled": false,
                   "actors": [],
                   "name": "Container 4",
                   "position": [
@@ -181,9 +187,11 @@
             },
             {
               "type": "Control",
+	      "relayout-enabled": false,
               "actors": [
                 {
                   "type": "Control",
+		  "relayout-enabled": false,
                   "actors": [],
                   "name": "Container 5",
                   "position": [
@@ -223,9 +231,11 @@
                 },
                 {
                   "type": "Control",
+		  "relayout-enabled": false,
                   "actors": [
                     {
                       "type": "Control",
+		      "relayout-enabled": false,
                       "actors": [],
                       "name": "Container 7",
                       "position": [
@@ -302,9 +312,11 @@
                 },
                 {
                   "type": "Control",
+		  "relayout-enabled": false,
                   "actors": [
                     {
                       "type": "Control",
+		      "relayout-enabled": false,
                       "actors": [],
                       "name": "Container 8",
                       "position": [
@@ -344,9 +356,11 @@
                     },
                     {
                       "type": "Control",
+		      "relayout-enabled": false,
                       "actors": [
                         {
                           "type": "Control",
+			  "relayout-enabled": false,
                           "actors": [],
                           "name": "Container 10",
                           "position": [
@@ -534,9 +548,11 @@
         },
         {
           "type": "Control",
+	  "relayout-enabled": false,
           "actors": [
             {
               "type": "Control",
+	      "relayout-enabled": false,
               "actors": [],
               "name": "Control 4",
               "position": [
@@ -613,9 +629,11 @@
         },
         {
           "type": "Control",
+	  "relayout-enabled": false,
           "actors": [
             {
               "type": "Control",
+	      "relayout-enabled": false,
               "actors": [
                 {
                   "type": "Control",
@@ -695,6 +713,7 @@
             },
             {
               "type": "Control",
+	      "relayout-enabled": false,
               "actors": [],
               "name": "Container 11",
               "position": [
@@ -734,12 +753,15 @@
             },
             {
               "type": "Control",
+	      "relayout-enabled": false,
               "actors": [
                 {
                   "type": "Control",
+		  "relayout-enabled": false,
                   "actors": [
                     {
                       "type": "Control",
+		      "relayout-enabled": false,
                       "actors": [],
                       "name": "Container 15",
                       "position": [
@@ -816,6 +838,7 @@
                 },
                 {
                   "type": "Control",
+		  "relayout-enabled": false,
                   "actors": [],
                   "name": "Container 16",
                   "position": [
