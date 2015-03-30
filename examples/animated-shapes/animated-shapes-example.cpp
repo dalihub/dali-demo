@@ -52,6 +52,7 @@ public:
 
     //Create a view
     mView = Dali::Toolkit::View::New();
+    mView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     stage.Add( mView );
 
     //Set background image for the view

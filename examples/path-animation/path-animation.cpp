@@ -63,7 +63,7 @@ public:
   */
   Actor CreateVectorComponentControl( const std::string& label, const Vector3& size, bool(PathController::*callback)(Slider,float) )
   {
-    return Actor(); // TODO
+    return Actor();
   }
 
   /**
@@ -75,6 +75,7 @@ public:
 
     //TextInput
     Dali::Layer controlsLayer = Dali::Layer::New();
+    controlsLayer.SetRelayoutEnabled( false );
     controlsLayer.SetSize( stage.GetSize().x, stage.GetSize().y*0.3f, 0.0 );
     controlsLayer.SetPosition( 0.0f, stage.GetSize().y*0.8f, 0.0f );
     controlsLayer.SetAnchorPoint( AnchorPoint::TOP_LEFT);
@@ -174,6 +175,7 @@ public:
       if( !mControlPoint[index] )
       {
         mControlPoint[index] = Toolkit::CreateSolidColorActor(Vector4(1.0f,1.0f,1.0f,1.0f));
+        mControlPoint[index].SetRelayoutEnabled( false );
         mControlPoint[index].SetParentOrigin( ParentOrigin::TOP_LEFT);
         mControlPoint[index].SetAnchorPoint( AnchorPoint::CENTER );
         mControlPoint[index].SetSize( 20.0f, 20.0f );
@@ -195,6 +197,7 @@ public:
       if( !mControlPoint[index])
       {
         mControlPoint[index] = Toolkit::CreateSolidColorActor(Vector4(1.0f,1.0f,1.0f,1.0f));
+        mControlPoint[index].SetRelayoutEnabled( false );
         mControlPoint[index].SetParentOrigin( ParentOrigin::TOP_LEFT);
         mControlPoint[index].SetAnchorPoint( AnchorPoint::CENTER );
         mControlPoint[index].SetSize( 20.0f, 20.0f );
@@ -430,6 +433,7 @@ public:
     ImageAttributes attributes;
     Image img = ResourceImage::New(ACTOR_IMAGE, attributes );
     mActor = ImageActor::New( img );
+    mActor.SetRelayoutEnabled( false );
     mActor.SetAnchorPoint( AnchorPoint::CENTER );
     mActor.SetSize( 100, 50, 1 );
     stage.Add( mActor );

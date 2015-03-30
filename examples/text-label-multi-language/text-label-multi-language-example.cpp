@@ -21,7 +21,6 @@
  */
 
 // INTERNAL INCLUDES
-#include "vertical-layout.h"
 #include "shared/multi-language-strings.h"
 
 // EXTERNAL INCLUDES
@@ -61,33 +60,27 @@ public:
 
     stage.KeyEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnKeyEvent);
 
-    mLayout = VerticalLayout::New();
-    mLayout.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mLayout.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-
-    stage.Add( mLayout );
+    mTableView = Toolkit::TableView::New( NUMBER_OF_LANGUAGES, 1 );
+    mTableView.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+    mTableView.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+    mTableView.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    mTableView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mTableView.TouchedSignal().Connect( this, &TextLabelMultiLanguageExample::OnTouchEvent );
+    stage.Add( mTableView );
 
     for( unsigned int index = 0u; index < NUMBER_OF_LANGUAGES; ++index )
     {
       const Language& language = LANGUAGES[index];
 
       TextLabel label = TextLabel::New();
-      label.SetParentOrigin( ParentOrigin::TOP_CENTER );
-      label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-
       label.SetProperty( TextLabel::Property::MULTI_LINE, true );
 
       const std::string text = language.languageName + " " + language.languageRomanName + " " + language.text;
-
       label.SetProperty( TextLabel::Property::TEXT, text );
-      mLayout.AddLabel( label );
 
-      mLayout.TouchedSignal().Connect( this, &TextLabelMultiLanguageExample::OnTouchEvent );
+      mTableView.SetFitHeight( index );
+      mTableView.AddChild( label, Toolkit::TableView::CellPosition( index, 0 ) );
     }
-
-    const Vector2& size = Stage::GetCurrent().GetSize();
-    const float height = mLayout.GetHeightForWidth( size.width );
-    mLayout.SetSize( Size( size.width, height ) );
   }
 
   bool OnTouchEvent( Actor actor, const TouchEvent& event )
@@ -108,7 +101,7 @@ public:
       {
         if( mAnimation )
         {
-          mAnimation.MoveBy( mLayout, Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
+          mAnimation.MoveBy( mTableView, Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
           mAnimation.Play();
           mLastPoint = localPoint;
         }
@@ -135,7 +128,7 @@ public:
 private:
 
   Application&   mApplication;
-  VerticalLayout mLayout;
+  TableView      mTableView;
   Animation      mAnimation;
   float          mLastPoint;
 };

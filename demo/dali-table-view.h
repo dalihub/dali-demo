@@ -165,7 +165,7 @@ private: // Application callbacks & implementation
    *
    * @return The Actor for the created tile.
    */
-  Dali::Actor CreateTile( const std::string& name, const std::string& title, const Dali::Size& parentSize, bool addBackground );
+  Dali::Actor CreateTile( const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, bool addBackground );
 
   /**
    * Create a stencil image
@@ -276,9 +276,8 @@ private: // Application callbacks & implementation
    * Create a depth field background
    *
    * @param[in] bubbleLayer Add the graphics to this layer
-   * @param[in] backgroundLayer Add the background to this layer
    */
-  void SetupBackground(  Dali::Actor bubbleLayer, Dali::Actor backgroundLayer, const Dali::Vector2& size );
+  void SetupBackground( Dali::Actor bubbleLayer );
 
   /**
    * Create background actors for the given layer
@@ -286,9 +285,8 @@ private: // Application callbacks & implementation
    * @param[in] layer The layer to add the actors to
    * @param[in] count The number of actors to generate
    * @param[in] distanceField The distance field bitmap to use
-   * @param[in] size The size of the actor
    */
-  void AddBackgroundActors( Dali::Actor layer, int count, Dali::BufferImage distanceField, const Dali::Vector2& size );
+  void AddBackgroundActors( Dali::Actor layer, int count, Dali::BufferImage distanceField );
 
   /**
    * Create a bitmap with the specified shape and also output a distance field
@@ -378,6 +376,20 @@ private: // Application callbacks & implementation
    */
   void PopupHidden();
 
+ /*
+  * @brief Callback called when the buttons page actor is relaid out
+  *
+  * @param[in] actor The page actor
+  */
+ void OnButtonsPageRelayout( const Dali::Actor& actor );
+
+ /**
+  * @brief Callback called to set up background actors
+  *
+  * @param[in] actor The actor raising the callback
+  */
+ void InitialiseBackgroundActors( Dali::Actor actor );
+
 private:
 
   Dali::Application&              mApplication;              ///< Application instance.
@@ -385,7 +397,6 @@ private:
   Dali::Toolkit::TableView        mRootActor;                ///< All content (excluding background is anchored to this Actor)
   Dali::Animation                 mRotateAnimation;          ///< Animation to rotate and resize mRootActor.
   Dali::ImageActor                mBackground;               ///< Background's static image.
-  Dali::ImageActor                mLogo;                     ///< Logo's static image.
   Dali::Animation                 mPressedAnimation;         ///< Button press scaling animation.
   Dali::Layer                     mScrollViewLayer;          ///< ScrollView resides on a separate layer.
   Dali::Toolkit::ScrollView       mScrollView;               ///< ScrollView container (for all Examples)
@@ -413,6 +424,7 @@ private:
   bool                            mSortAlphabetically:1;     ///< Sort examples alphabetically.
   bool                            mBackgroundAnimsPlaying:1; ///< Are background animations playing
   bool                            mVersionPopupShown:1;      ///< Whehter the version popup is shown or not
+
 };
 
 #endif // __DALI_DEMO_H__

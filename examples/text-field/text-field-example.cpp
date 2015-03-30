@@ -24,14 +24,13 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/text-abstraction/text-abstraction.h>
 
-// INTERNAL INCLUDES
-#include "edit-layout.h"
-
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 namespace
 {
+
+const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "button-up.9.png";
 
 const float BORDER_WIDTH = 4.0f;
 
@@ -67,16 +66,17 @@ public:
 
     Vector2 stageSize = stage.GetSize();
 
-    EditLayout layout = EditLayout::New();
-    layout.SetParentOrigin( ParentOrigin::CENTER );
-    layout.SetAnchorPoint( AnchorPoint::CENTER );
-    layout.SetSize( stageSize.width - BORDER_WIDTH*2.0f, stageSize.height*0.2f );
-    stage.Add( layout );
+    mContainer = Control::New();
+    mContainer.SetName( "Container" );
+    mContainer.SetParentOrigin( ParentOrigin::CENTER );
+    mContainer.SetResizePolicy( FIXED, ALL_DIMENSIONS );
+    mContainer.SetPreferredSize( Vector2(stageSize.width*0.6f, stageSize.width*0.6f) );
+    mContainer.SetBackgroundImage( ResourceImage::New( BACKGROUND_IMAGE ) );
+    mContainer.GetChildAt(0).SetZ(-1.0f);
+    stage.Add( mContainer );
 
     TextField field = TextField::New();
-    field.SetParentOrigin( ParentOrigin::CENTER );
-    field.SetBackgroundColor( Color::BLACK );
-    layout.SetTopPanel( field );
+    mContainer.Add( field );
 
     field.SetProperty( TextField::Property::TEXT, "Hello" );
 
@@ -101,6 +101,8 @@ public:
 private:
 
   Application& mApplication;
+
+  Control mContainer;
 };
 
 void RunTest( Application& application )

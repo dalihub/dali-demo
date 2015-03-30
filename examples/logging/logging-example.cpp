@@ -265,7 +265,7 @@ class LoggingController: public ConnectionTracker
     mContentLayer.Add( createGroupBackground );
 
     int buttonXDP = DP(MARGIN_SIZE);
-    int buttonWidthDP = (createGroupBackground.GetSize().width - DP(MARGIN_SIZE) * 3) / 2;
+    int buttonWidthDP = (createGroupBackground.GetTargetSize().width - DP(MARGIN_SIZE) * 3) / 2;
 
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
@@ -316,7 +316,7 @@ class LoggingController: public ConnectionTracker
     mContentLayer.Add( timingGroupBackground );
 
     buttonXDP = DP(MARGIN_SIZE);
-    buttonWidthDP = (timingGroupBackground.GetSize().width - DP(MARGIN_SIZE) * 3) / 2;
+    buttonWidthDP = (timingGroupBackground.GetTargetSize().width - DP(MARGIN_SIZE) * 3) / 2;
 
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
@@ -367,7 +367,7 @@ class LoggingController: public ConnectionTracker
     mContentLayer.Add( enableGroupBackground );
 
     buttonXDP = DP(MARGIN_SIZE);
-    buttonWidthDP = (enableGroupBackground.GetSize().width - DP(MARGIN_SIZE) * 3) / 2;
+    buttonWidthDP = (enableGroupBackground.GetTargetSize().width - DP(MARGIN_SIZE) * 3) / 2;
 
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
@@ -489,7 +489,7 @@ class LoggingController: public ConnectionTracker
     mContentLayer.Add( vsyncGroupBackground );
 
     buttonXDP = DP(MARGIN_SIZE);
-    buttonWidthDP = vsyncGroupBackground.GetSize().width - DP(MARGIN_SIZE) * 2;
+    buttonWidthDP = vsyncGroupBackground.GetTargetSize().width - DP(MARGIN_SIZE) * 2;
 
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();

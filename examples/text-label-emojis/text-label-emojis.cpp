@@ -15,15 +15,13 @@
  *
  */
 
-// INTERNAL INCLUDES
-
-#include "vertical-layout.h"
-#include "emoji-strings.h"
-
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/text-abstraction/text-abstraction.h>
 #include <iostream>
+
+// INTERNAL INCLUDES
+#include "emoji-strings.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -57,32 +55,30 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-
-    mLayout = VerticalLayout::New();
-    mLayout.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mLayout.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     Stage stage = Stage::GetCurrent();
-    stage.Add( mLayout );
     stage.KeyEventSignal().Connect(this, &EmojiExample::OnKeyEvent);
+
+    mTableView = Toolkit::TableView::New( NUMBER_OF_EMOJIS, 1 );
+    mTableView.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+    mTableView.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+    mTableView.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    mTableView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mTableView.TouchedSignal().Connect( this, &EmojiExample::OnTouchEvent );
+    stage.Add( mTableView );
 
     for( unsigned int index = 0u; index < NUMBER_OF_EMOJIS; ++index )
     {
       const Emoji& emoji = EMOJIS[index];
       const std::string text = emoji.mUTF8 + " " + emoji.mDescription;
-      TextLabel label = TextLabel::New();
+
+      TextLabel label = TextLabel::New( text );
       label.SetParentOrigin( ParentOrigin::TOP_CENTER );
       label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
       label.SetProperty( TextLabel::Property::MULTI_LINE, true );
-      label.SetProperty( TextLabel::Property::TEXT, text );
-      mLayout.AddLabel( label );
-      mLayout.TouchedSignal().Connect( this, &EmojiExample::OnTouchEvent );
+
+      mTableView.SetFitHeight( index );
+      mTableView.AddChild( label, Toolkit::TableView::CellPosition( index, 0 ) );
     }
-
-    const Vector2& size = stage.GetSize();
-    const float height = mLayout.GetHeightForWidth( size.width );
-    mLayout.SetSize( Size( size.width, height ) );
-    mLayout.TouchedSignal().Connect( this, &EmojiExample::OnTouchEvent );
-
   }
 
   bool OnTouchEvent( Actor actor, const TouchEvent& event )
@@ -103,7 +99,7 @@ public:
       {
         if( mAnimation )
         {
-          mAnimation.MoveBy( mLayout, Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
+          mAnimation.MoveBy( mTableView, Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
           mAnimation.Play();
           mLastPoint = localPoint;
         }
@@ -130,7 +126,7 @@ public:
 
 private:
   Application&  mApplication;
-  VerticalLayout mLayout;
+  TableView      mTableView;
   Animation      mAnimation;
   float          mLastPoint;
 };

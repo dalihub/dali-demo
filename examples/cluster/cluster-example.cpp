@@ -477,6 +477,7 @@ public:
 
     // create and setup the scroll view...
     mScrollView = ScrollView::New();
+    mScrollView.SetRelayoutEnabled( false );
     mScrollView.SetSize(stageSize);
 
     // attach Wobble Effect to ScrollView
@@ -488,7 +489,8 @@ public:
     mScrollView.SetParentOrigin(ParentOrigin::CENTER);
 
     // Scale ScrollView to fit parent (mContentLayer)
-    mScrollView.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    mScrollView.SetRelayoutEnabled( true );
+    mScrollView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
     // Add the scroll view to the content layer
     mContentLayer.Add(mScrollView);
@@ -515,6 +517,7 @@ public:
     Cluster clusterActor = Cluster::New(style);
     clusterActor.SetParentOrigin(ParentOrigin::CENTER);
     clusterActor.SetAnchorPoint(AnchorPoint::CENTER);
+    clusterActor.SetRelayoutEnabled( false );
 
     Vector2 stageSize = Dali::Stage::GetCurrent().GetSize();
     float minStageDimension = std::min(stageSize.x, stageSize.y);
@@ -533,6 +536,7 @@ public:
     backgroundAttributes.SetScalingMode( Dali::ImageAttributes::ShrinkToFit );
     Image bg = ResourceImage::New( CLUSTER_BACKGROUND_IMAGE_PATH );
     ImageActor image = ImageActor::New(bg);
+    image.SetRelayoutEnabled( false );
     clusterActor.SetBackgroundImage(image);
 
     // Add actors (pictures) as the children of the cluster
@@ -576,6 +580,7 @@ public:
     shadowActor.SetPosition(Vector3(0.0f, 0.0f, -1.0f));
 
     // Apply size-relative mode to auto-size the image shadow
+    shadowActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     shadowActor.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
     shadowActor.SetSizeModeFactor( ShadowProperty::SIZE_SCALE );
     actor.Add( shadowActor );
@@ -585,7 +590,7 @@ public:
     ImageActor imageActor = ImageActor::New( image );
     imageActor.SetParentOrigin( ParentOrigin::CENTER );
     imageActor.SetAnchorPoint( AnchorPoint::CENTER );
-    imageActor.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    imageActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     actor.Add( imageActor );
 
     // Add a border image child actor (with a fixed size offset from parent).
@@ -595,6 +600,7 @@ public:
     borderActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
     borderActor.SetNinePatchBorder( CLUSTER_IMAGE_BORDER_ABSOLUTE );
     borderActor.SetPosition( Vector3( 0.0f, 0.0f, 1.0f ) );
+    borderActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     borderActor.SetSizeMode( SIZE_FIXED_OFFSET_FROM_PARENT );
     borderActor.SetSizeModeFactor( Vector3( CLUSTER_IMAGE_BORDER_INDENT - 1.0f, CLUSTER_IMAGE_BORDER_INDENT - 1.0f, 0.0f ) * 2.0f );
     actor.Add( borderActor );
@@ -625,7 +631,8 @@ public:
     mScrollView.Add(pageView);
     pageView.SetParentOrigin(ParentOrigin::CENTER);
     pageView.SetPosition(Vector3(stageSize.width * column, 0.0f, 0.0f));
-    pageView.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    pageView.SetRelayoutEnabled( true );
+    pageView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
     // Create cluster actors, add them to scroll view, and set the shear effect with the given center point.
     Cluster cluster = CreateClusterActor(clusterType, style);

@@ -283,6 +283,7 @@ void CubeTransitionApp::OnInit( Application& application )
   mCurrentImage = ImageActor::New( LoadStageFillingImage( IMAGES[mIndex] ) );
   mCurrentImage.SetPositionInheritanceMode( USE_PARENT_POSITION );
   mCurrentImage.ApplyConstraint( mImageConstraint );
+  mCurrentImage.SetRelayoutEnabled( false );
   mParent.Add( mCurrentImage );
 
   mCurrentEffect = mCubeWaveEffect;
@@ -322,6 +323,7 @@ void CubeTransitionApp::GoToNextImage()
 
   mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION);
   mNextImage.ApplyConstraint( mImageConstraint );
+  mNextImage.SetRelayoutEnabled( false );
   mCurrentEffect.SetTargetImage(mNextImage);
   if( image.GetLoadingState() == ResourceLoadingSucceeded )
   {

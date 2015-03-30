@@ -66,10 +66,12 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   Dali::Stage stage = Dali::Stage::GetCurrent();
 
   Dali::Layer toolBarLayer = Dali::Layer::New();
+  toolBarLayer.SetName( "TOOLBAR_LAYER" );
   toolBarLayer.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
   toolBarLayer.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
-  toolBarLayer.ApplyConstraint( Dali::Constraint::New<Dali::Vector3>( Dali::Actor::Property::SIZE, Dali::ParentSource( Dali::Actor::Property::SIZE ), Dali::SourceWidthFixedHeight( style.mToolBarHeight  ) ) );
-  toolBarLayer.SetSize( 0.0f, style.mToolBarHeight );
+  toolBarLayer.SetPreferredSize( Dali::Vector2( 0.0f, style.mToolBarHeight ) );
+  toolBarLayer.SetResizePolicy( Dali::FILL_TO_PARENT, Dali::WIDTH );
+  toolBarLayer.SetResizePolicy( Dali::FIXED, Dali::HEIGHT );
 
   // Raise tool bar layer to the top.
   toolBarLayer.RaiseToTop();
@@ -77,12 +79,14 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   // Tool bar
   Dali::Image image = Dali::ResourceImage::New( toolbarImagePath );
   Dali::ImageActor toolBarBackground = Dali::ImageActor::New( image );
+  toolBarBackground.SetName( "TOOLBAR_BACKGROUND" );
+  toolBarBackground.SetResizePolicy( Dali::FILL_TO_PARENT, Dali::ALL_DIMENSIONS );
   toolBar = Dali::Toolkit::ToolBar::New();
+  toolBar.SetName( "TOOLBAR" );
   toolBar.SetBackground( toolBarBackground );
   toolBar.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
   toolBar.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
-  toolBar.SetSize( 0.0f, style.mToolBarHeight );
-  toolBar.SetSizeMode( Dali::SIZE_EQUAL_TO_PARENT );
+  toolBar.SetResizePolicy( Dali::FILL_TO_PARENT, Dali::ALL_DIMENSIONS );
   toolBarBackground.SetSortModifier(1.0f);
 
   // Add the tool bar to the too bar layer.
@@ -118,6 +122,7 @@ Dali::Layer CreateView( Dali::Application& application,
 
   // Create default View.
   view = Dali::Toolkit::View::New();
+  view.SetResizePolicy( Dali::FILL_TO_PARENT, Dali::ALL_DIMENSIONS );
 
   // Add the view to the stage before setting the background.
   stage.Add( view );
@@ -144,13 +149,11 @@ Dali::Layer CreateView( Dali::Application& application,
   // Add tool bar layer to the view.
   view.AddContentLayer( toolBarLayer );
 
-
-
   // Create a content layer.
   Dali::Layer contentLayer = Dali::Layer::New();
   contentLayer.SetAnchorPoint( Dali::AnchorPoint::CENTER );
   contentLayer.SetParentOrigin( Dali::ParentOrigin::CENTER );
-  contentLayer.SetSizeMode( Dali::SIZE_EQUAL_TO_PARENT );
+  contentLayer.SetResizePolicy( Dali::FILL_TO_PARENT, Dali::ALL_DIMENSIONS );
   view.AddContentLayer( contentLayer );
   contentLayer.LowerBelow( toolBarLayer );
 

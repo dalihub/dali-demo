@@ -52,6 +52,9 @@
 	<ui-application appid="refraction-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/refraction-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Refraction effect</label>
 	</ui-application>
+	<ui-application appid="scripting.example" exec="/usr/apps/com.samsung.dali-demo/bin/scripting.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+    <label>Scroll View</label>
+  </ui-application>
 	<ui-application appid="scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>
 	</ui-application>
@@ -68,7 +71,7 @@
 		<label>Image Scaling Modes</label>
 	</ui-application>
 	<ui-application appid="buttons.example" exec="/usr/apps/com.samsung.dali-demo/bin/buttons.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Radio Buttons</label>
+		<label>Buttons</label>
 	</ui-application>
 	<ui-application appid="text-label.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-label.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Label</label>
@@ -93,5 +96,8 @@
 	</ui-application>
 	<ui-application appid="atlas.example" exec="/usr/apps/com.samsung.dali-demo/bin/atlas.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Atlas</label>
+	</ui-application>
+	<ui-application appid="size-negotiation.example" exec="/usr/apps/com.samsung.dali-demo/bin/size-negotiation.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Size Negotiation</label>
 	</ui-application>
 </manifest>

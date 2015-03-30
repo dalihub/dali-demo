@@ -44,9 +44,9 @@ public:
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
 
-    TextLabel textLabel = TextLabel::New();
+    TextLabel textLabel = TextLabel::New( "Hello World" );
     textLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    textLabel.SetProperty( TextLabel::Property::TEXT, "Hello World" );
+    textLabel.SetName( "hello-world-label" );
     stage.Add( textLabel );
 
     // Respond to a click anywhere on the stage
