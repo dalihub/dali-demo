@@ -189,8 +189,8 @@ void RadialMenuExample::StartAnimation()
   mRadialSweepView1.Activate(mAnimation, 0.0f, 3.0f);
   mRadialSweepView2.Activate(mAnimation, 1.5f, 3.0f);
   mRadialSweepView3.Activate(mAnimation, 3.0f, 3.0f);
-  mAnimation.OpacityTo(mDialActor, 1.0f, AlphaFunctions::EaseIn, 0.0f, 0.8f);
-  mAnimation.OpacityTo(mRadialSweepView1, 1.0f, AlphaFunctions::EaseIn, 0.0f, 0.5f);
+  mAnimation.AnimateTo( Property( mDialActor, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunctions::EaseIn, TimePeriod( 0.0f, 0.8f ) );
+  mAnimation.AnimateTo( Property( mRadialSweepView1, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunctions::EaseIn, TimePeriod( 0.0f, 0.5f ) );
   mAnimation.FinishedSignal().Connect( this, &RadialMenuExample::OnAnimationFinished );
 
   mAnimationState = PLAYING;

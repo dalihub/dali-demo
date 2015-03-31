@@ -303,7 +303,7 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
   mAnimation.AnimateTo( Property(mCurrentImageEffect, mCurrentImageEffect.GetDistortionPropertyName()), 1.0f, AlphaFunctions::Linear );
 
   mNextImage.SetOpacity(0.0f);
-  mAnimation.OpacityTo( mNextImage, 1.0, AlphaFunctions::Linear );
+  mAnimation.AnimateTo( Property( mNextImage, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunctions::Linear );
 
   if(mUseHighPrecision)
   {
@@ -314,7 +314,7 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
   }
   else
   {
-    mAnimation.MoveTo(mNextImage, Vector3(0.0f, 0.0f, 0.0f), AlphaFunctions::Linear);
+    mAnimation.AnimateTo( Property( mNextImage, Actor::Property::POSITION ), Vector3( 0.0f, 0.0f, 0.0f ), AlphaFunctions::Linear );
   }
 
   mAnimation.FinishedSignal().Connect( this, &DissolveEffectApp::OnTransitionCompleted );
