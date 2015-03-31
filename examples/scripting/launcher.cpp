@@ -26,6 +26,7 @@
 
 
 using namespace Dali;
+using namespace Dali::Toolkit;
 
 #define TOKEN_STRING(x) #x
 
@@ -55,8 +56,18 @@ Launcher::~Launcher()
 
 void Launcher::Create( Dali::Application& application )
 {
+  TextLabel textActor = TextLabel::New( "JSON & JavaScript Launcher..." );
+
+  // Reposition the actor
+  textActor.SetParentOrigin( ParentOrigin::TOP_LEFT );
+  textActor.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  textActor.SetPosition( 20, 0 );
+
   // Get a handle to the stage
   Stage stage = Stage::GetCurrent();
+
+  // Display the actor on the stage
+  stage.Add( textActor );
 
   // change the background color to purple
   Stage::GetCurrent().SetBackgroundColor( Vector4(0.2,0.2,0.4,1.0) );

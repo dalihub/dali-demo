@@ -825,7 +825,15 @@ public:
    */
   void SetTitle(const std::string& title)
   {
-    // TODO
+    if(!mTitleActor)
+    {
+      mTitleActor = DemoHelper::CreateToolBarLabel( "" );
+
+      // Add title to the tool bar.
+      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+    }
+
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
   /**
@@ -847,6 +855,7 @@ private:
   Application&               mApplication;                       ///< Application instance
   Toolkit::View              mView;                              ///< The View instance.
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
+  TextLabel                   mTitleActor;                        ///< The Toolbar's Title.
 
   Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)
 

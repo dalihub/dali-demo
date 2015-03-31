@@ -97,12 +97,12 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   {
     Dali::Toolkit::TextLabel label = Dali::Toolkit::TextLabel::New();
     label.SetAnchorPoint( Dali::AnchorPoint::TOP_LEFT );
-    label.SetSize( stage.GetSize().width, style.mToolBarHeight );
     label.SetDrawMode( Dali::DrawMode::OVERLAY );
     label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "toolbarlabel" );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::TEXT, title );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+    label.SetResizePolicy( Dali::FILL_TO_PARENT, Dali::HEIGHT );
     label.SetColor( DEFAULT_TEXT_STYLE_COLOR );
     toolBarLayer.Add( label );
   }
@@ -158,6 +158,19 @@ Dali::Layer CreateView( Dali::Application& application,
   contentLayer.LowerBelow( toolBarLayer );
 
   return contentLayer;
+}
+
+Dali::Toolkit::TextLabel CreateToolBarLabel( const std::string& text )
+{
+  Dali::Toolkit::TextLabel label = Dali::Toolkit::TextLabel::New( text );
+  label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "toolbarlabel" );
+  label.SetDrawMode( Dali::DrawMode::OVERLAY );
+  label.SetProperty( Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+  label.SetProperty( Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+  label.SetResizePolicy( Dali::FILL_TO_PARENT, Dali::HEIGHT );
+  label.SetColor( DEFAULT_TEXT_STYLE_COLOR );
+
+  return label;
 }
 
 } // DemoHelper

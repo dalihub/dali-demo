@@ -26,6 +26,8 @@
 
 using namespace Dali;
 
+using Dali::Toolkit::TextLabel;
+
 // LOCAL STUFF
 namespace
 {
@@ -173,6 +175,7 @@ private:
   Toolkit::View                   mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
+  Toolkit::TextLabel              mTitleActor;
   Actor                           mParent;
 
   Vector2                         mViewSize;
@@ -234,6 +237,10 @@ void CubeTransitionApp::OnInit( Application& application )
   mEffectChangeButton.SetBackgroundImage(mImageWave);
   mEffectChangeButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+
+  // Add title to the tool bar.
+  mTitleActor = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_WAVE );
+  mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
   //Add an slideshow icon on the right of the title
   mIconSlideshowStart = ResourceImage::New( SLIDE_SHOW_START_ICON );
@@ -351,17 +358,20 @@ bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
   if(mCurrentEffect == mCubeWaveEffect)
   {
     mCurrentEffect = mCubeCrossEffect;
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_CROSS) );
     mEffectChangeButton.SetBackgroundImage(mImageCross);
 
   }
   else if(mCurrentEffect == mCubeCrossEffect)
   {
     mCurrentEffect = mCubeFoldEffect;
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_FOLD) );
     mEffectChangeButton.SetBackgroundImage(mImageFold);
   }
   else
   {
     mCurrentEffect = mCubeWaveEffect;
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_WAVE) );
     mEffectChangeButton.SetBackgroundImage(mImageWave);
   }
 

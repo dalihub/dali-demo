@@ -537,7 +537,12 @@ public:
    */
   void SetTitle(const std::string& title)
   {
-    // TODO
+    if(!mTitleActor)
+    {
+      mTitleActor = TextLabel::New();
+      // Add title to the tool bar.
+      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+    }
   }
 
   /**
@@ -566,6 +571,7 @@ private:
   Layer mContentLayer;                ///< The content layer (contains non gui chrome actors)
   Toolkit::View mView;                ///< The View instance.
   Toolkit::ToolBar mToolBar;          ///< The View's Toolbar.
+  TextLabel mTitleActor;               ///< The Toolbar's Title.
   Actor mGridActor;                   ///< The container for the grid of images
   ScrollView mScrollView;             ///< ScrollView UI Component
   bool mScrolling;                    ///< ScrollView scrolling state (true = scrolling, false = stationary)

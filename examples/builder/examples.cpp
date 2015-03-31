@@ -241,7 +241,14 @@ public:
 
   void SetTitle(const std::string& title)
   {
-    // TODO
+    if(!mTitleActor)
+    {
+      mTitleActor = TextLabel::New();
+      // Add title to the tool bar.
+      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+    }
+
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
   bool OnToolSelectLayout( Toolkit::Button button )
@@ -386,7 +393,18 @@ public:
 
   Actor MenuItem(const std::string& text)
   {
-    return Actor();
+    int size = static_cast<int>(DemoHelper::ScalePointSize(6));
+
+    std::ostringstream fontString;
+    fontString << "<font size="<< size <<">"<<  ShortName( text ) << "</font>";
+
+    TextLabel label = TextLabel::New( fontString.str() );
+    label.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+
+    // Hook up tap detector
+    mTapDetector.Attach( label );
+
+    return label;
   }
 
   bool OnTimer()
@@ -579,6 +597,7 @@ private:
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;
+  TextLabel mTitleActor;             ///< The Toolbar's Title.
 
   Layer mBuilderLayer;
 

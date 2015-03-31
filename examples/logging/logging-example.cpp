@@ -196,6 +196,16 @@ class LoggingController: public ConnectionTracker
     radioGroupBackground.SetSize( stageSize.width - 2 * DP(MARGIN_SIZE), DP(LOGGER_RADIO_GROUP_HEIGHT) );
     mContentLayer.Add( radioGroupBackground );
 
+    // Label
+    {
+      Toolkit::TextLabel label = Toolkit::TextLabel::New( LOGGER_TEXT );
+      label.SetParentOrigin( ParentOrigin::TOP_LEFT );
+      label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+      label.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
+
+      radioGroupBackground.Add( label );
+    }
+
     // Radio group
     Actor radioButtonsGroup = Actor::New();
     radioButtonsGroup.SetParentOrigin( ParentOrigin::TOP_LEFT );
@@ -419,6 +429,16 @@ class LoggingController: public ConnectionTracker
     frequencyRadioGroupBackground.SetSize( stageSize.width - 2 * DP(MARGIN_SIZE), DP(groupHeight) );
     mContentLayer.Add( frequencyRadioGroupBackground );
 
+    // Label
+    {
+      Toolkit::TextLabel label = Toolkit::TextLabel::New( FREQUENCY_TEXT );
+      label.SetParentOrigin( ParentOrigin::TOP_LEFT );
+      label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+      label.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
+
+      frequencyRadioGroupBackground.Add( label );
+    }
+
     // Radio group
     Actor frequencyRadioButtonsGroup = Actor::New();
     frequencyRadioButtonsGroup.SetParentOrigin( ParentOrigin::TOP_LEFT );
@@ -514,7 +534,17 @@ class LoggingController: public ConnectionTracker
 
   void WriteConsole()
   {
-    // TODO
+    for( unsigned int i = 0; i < NUM_LOGGERS; ++i)
+    {
+      std::stringstream ss;
+      ss << (i + 1) << ") " << ((mPerformanceLoggers[i]) ? "Created" : "Deleted")
+         << ", " << ((mLoggerStates[i].isTiming) ? "Started" : "Stopped")
+         << ", " << ((mLoggerStates[i].isEnabled) ? "Enabled" : "Disabled");
+
+      Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( ss.str() );
+
+      mLogRadioButtons[i].SetLabel( textLabel );
+    }
   }
 
   bool LoggingRadioSelect( Toolkit::Button button )

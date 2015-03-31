@@ -34,6 +34,7 @@ namespace
 const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char* ACTOR_IMAGE( DALI_IMAGE_DIR "dali-logo.png" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char* APPLICATION_TITLE( "Path Animation Example" );
 }; //Unnamed namespace
 
 /**
@@ -63,7 +64,31 @@ public:
   */
   Actor CreateVectorComponentControl( const std::string& label, const Vector3& size, bool(PathController::*callback)(Slider,float) )
   {
-    return Actor();
+    TextLabel text = TextLabel::New(label);
+    text.SetColor( Vector4(0.0f,0.0f,0.0f,1.0f));
+
+    Slider slider = Slider::New();
+    slider.SetRelayoutEnabled( false );
+    slider.SetAnchorPoint( AnchorPoint::CENTER_LEFT);
+    slider.SetParentOrigin( ParentOrigin::CENTER_RIGHT);
+    slider.SetProperty(Slider::Property::LOWER_BOUND, -1.0f );
+    slider.SetProperty(Slider::Property::UPPER_BOUND, 1.0f );
+
+    Property::Array marks;
+    float mark = -1.0f;
+    for(unsigned short i(0); i<21; ++i )
+    {
+      marks.push_back( mark );
+      mark += 0.1f;
+    }
+
+    slider.SetProperty(Slider::Property::MARKS, marks);
+    slider.SetProperty(Slider::Property::SNAP_TO_MARKS, true );
+    slider.SetSize(size);
+    slider.SetScale( 0.5f );
+    slider.ValueChangedSignal().Connect(this,callback);
+    text.Add( slider );
+    return text;
   }
 
   /**
@@ -351,6 +376,11 @@ public:
     return true;
   }
 
+  /**
+   * Callback called when user changes slider Y
+   * @param[in] slider The slider that has generated the signal
+   * @param[in] value The new value
+   */
   bool OnSliderYValueChange( Slider s, float value)
   {
     if( fabs( value ) - Math::MACHINE_EPSILON_1000 < 0.0f )
@@ -366,7 +396,9 @@ public:
   }
 
   /**
-   * Create the path animation.
+   * Callback called when user changes slider Z
+   * @param[in] slider The slider that has generated the signal
+   * @param[in] value The new value
    */
   bool OnSliderZValueChange( Slider s, float value)
   {
@@ -421,6 +453,10 @@ public:
                                             "" );
 
     mContentLayer.TouchedSignal().Connect(this, &PathController::OnTouchLayer);
+
+    //Title
+    TextLabel title = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE );
+    toolBar.AddControl( title, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
 
     //Path
     mPath = Dali::Path::New();

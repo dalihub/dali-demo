@@ -26,6 +26,8 @@
 
 using namespace Dali;
 
+using Dali::Toolkit::TextLabel;
+
 // LOCAL STUFF
 namespace
 {
@@ -157,6 +159,7 @@ private:
   Toolkit::View                   mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
+  Toolkit::TextLabel              mTitleActor;
   Actor                           mParent;
 
   ImageActor                      mCurrentImage;
@@ -219,7 +222,8 @@ void DissolveEffectApp::OnInit( Application& application )
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
-  // TODO
+  mTitleActor = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_HIGHP );
+  mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
   // Add an slide-show button on the right of the title
   mIconPlay = ResourceImage::New( PLAY_ICON );
@@ -335,6 +339,7 @@ bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
   mCurrentImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
   if(mUseHighPrecision)
   {
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP) );
     mEffectChangeButton.SetBackgroundImage(mIconHighP);
   }
   else

@@ -238,6 +238,9 @@ class ButtonsController: public ConnectionTracker
       tableView.SetPreferredSize( Vector2( DP(260), 0.0f ) );
       tableView.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
 
+      Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( "Select enabled" );
+      tableView.AddChild( textLabel, Toolkit::TableView::CellPosition( 0, 0 ) );
+
       ImageActor imageActor = ImageActor::New( ResourceImage::New( ENABLED_IMAGE ) );
       imageActor.SetPreferredSize( Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
       imageActor.SetResizePolicy( FIXED, ALL_DIMENSIONS );
@@ -421,6 +424,42 @@ class ButtonsController: public ConnectionTracker
 
   bool OnCheckBoxesSelected( Toolkit::Button button )
   {
+    if( button.GetName() == "checkbox1" )
+    {
+      if( button.IsSelected() )
+      {
+        button.SetLabel("CheckBox1 is selected");
+      }
+      else
+      {
+        button.SetLabel("CheckBox1 is unselected");
+      }
+    }
+
+    if( button.GetName() == "checkbox2" )
+    {
+      if( button.IsSelected() )
+      {
+        button.SetLabel("CheckBox2 is selected");
+      }
+      else
+      {
+        button.SetLabel("CheckBox2 is unselected");
+      }
+    }
+
+    if( button.GetName() == "checkbox3" )
+    {
+      if( button.IsSelected() )
+      {
+        button.SetLabel("CheckBox3 is selected");
+      }
+      else
+      {
+        button.SetLabel("CheckBox3 is unselected");
+      }
+    }
+
     return true;
   }
 

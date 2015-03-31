@@ -109,9 +109,9 @@ AlphaFunction ALPHA_FUNCTIONS[] = { AlphaFunctions::Linear,
 
 const unsigned int NUM_ALPHA_FUNCTIONS = sizeof(ALPHA_FUNCTIONS) / sizeof(AlphaFunction);
 
-//const char* ALPHA_FUNCTIONS_TEXT[] = { "Linear",
-//                                       "EaseIn",
-//                                       "EaseOut" };
+const char* ALPHA_FUNCTIONS_TEXT[] = { "Linear",
+                                       "EaseIn",
+                                       "EaseOut" };
 
 const char* BACKGROUND_IMAGE( "" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
@@ -159,10 +159,6 @@ const float SELECTION_BORDER_WIDTH = 3.0f;
 const float BUTTON_BORDER = -10.0f;
 const float MENU_OPTION_HEIGHT(140.0f);
 const float LABEL_TEXT_SIZE_Y = 20.0f;
-
-//const char*             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
-//const char*             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
-//const Vector4           DEFAULT_TEXT_STYLE_COLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 const Vector3 INITIAL_OFFSCREEN_POSITION( 1000.0f, 0, -1000.0f );
 
@@ -972,7 +968,12 @@ private:
    */
   void SetTitle(const std::string& title)
   {
-    // TODO
+    if(!mTitleActor)
+    {
+      mTitleActor = TextLabel::New();
+      // Add title to the tool bar.
+      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+    }
   }
 
   void ShowMenu()
@@ -1001,6 +1002,36 @@ private:
     slider.ValueChangedSignal().Connect( this, &ItemViewExample::SliderValueChange );
     tableView.AddChild( slider, TableView::CellPosition( 0, 0 ) );
 
+    TextLabel text = TextLabel::New( "Duration" );
+    text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
+    text.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+    text.SetResizePolicy( FIXED, HEIGHT );
+    text.SetPreferredSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
+    slider.Add( text );
+
+    Actor textContainer = Actor::New();
+    textContainer.SetRelayoutEnabled( true );
+    textContainer.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    mAlphaFunctionText = TextLabel::New( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
+    mAlphaFunctionText.SetAnchorPoint( ParentOrigin::CENTER );
+    mAlphaFunctionText.SetParentOrigin( ParentOrigin::CENTER );
+    textContainer.Add( mAlphaFunctionText );
+    tableView.AddChild( textContainer, TableView::CellPosition( 1, 0 ) );
+
+    mTapDetector = TapGestureDetector::New();
+    mTapDetector.Attach(mAlphaFunctionText);
+    mTapDetector.DetectedSignal().Connect( this, &ItemViewExample::ChangeAlphaFunctionOnTap );
+
+    text = TextLabel::New( "Alpha Function" );
+    text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
+    text.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+    text.SetResizePolicy( FIXED, HEIGHT );
+    text.SetPreferredSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
+    textContainer.Add( text );
+
+    mMenu.MarkDirtyForRelayout();
     mMenu.Show();
     mMenuShown = true;
   }
@@ -1017,6 +1048,11 @@ private:
     if( NUM_ALPHA_FUNCTIONS <= ++mAlphaFuncIndex )
     {
       mAlphaFuncIndex = 0;
+    }
+
+    if( mAlphaFunctionText )
+    {
+      mAlphaFunctionText.SetProperty( TextLabel::Property::TEXT, std::string(ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex]) );
     }
 
     if( mItemView )
@@ -1080,6 +1116,7 @@ private:
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;
+  TextLabel mTitleActor;             ///< The Toolbar's Title.
 
   ItemView mItemView;
   Image mBorderImage;
@@ -1100,6 +1137,7 @@ private:
   Toolkit::PushButton mReplaceButton;
 
   unsigned int mAlphaFuncIndex;
+  TextLabel mAlphaFunctionText;
   BufferImage mWhiteImage;
 };
 

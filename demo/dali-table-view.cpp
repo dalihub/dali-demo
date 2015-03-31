@@ -530,6 +530,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   label.SetProperty( TextLabel::Property::TEXT, title );
   label.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
   label.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+  label.SetResizePolicy( FILL_TO_PARENT, HEIGHT );
   label.SetColor( TABLE_TEXT_STYLE_COLOR );
   content.Add( label );
 

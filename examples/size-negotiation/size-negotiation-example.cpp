@@ -21,6 +21,8 @@
 
 using namespace Dali;
 
+using Dali::Toolkit::TextLabel;
+
 // Define this so that it is interchangeable
 // "DP" stands for Device independent Pixels
 #define DP(x) DemoHelper::ScalePointSize(x)
@@ -169,8 +171,7 @@ public:
                                             TOOLBAR_IMAGE,
                                             std::string("") );
 
-    mTitleActor = Dali::Toolkit::TextLabel::New(); // FIXME
-    mTitleActor.SetName( "CUSTOM_TOOLBAR_TITLE" );
+    mTitleActor = DemoHelper::CreateToolBarLabel( "CUSTOM_TOOLBAR_TITLE" );
 
     SetTitle();
 
@@ -437,7 +438,15 @@ public:
     {
       mPopup = CreatePopup();
 
-      // FIXME - Add text
+      TextLabel text = TextLabel::New( CONTENT_TEXT );
+      text.SetName( "POPUP_CONTENT_TEXT" );
+      text.SetProperty( TextLabel::Property::MULTI_LINE, true );
+      text.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+      text.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+      text.SetResizePolicy( FILL_TO_PARENT, Dali::HEIGHT );
+      text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
+
+      mPopup.Add( text );
 
       // The popup is not yet on the stage so needs to be flaged as dirty
       mPopup.MarkDirtyForRelayout();
@@ -521,7 +530,13 @@ public:
       mPopup = CreatePopup();
       mPopup.SetTitle( "Popup!" );
 
-      // FIXME - Add text
+      Toolkit::TextLabel text = Toolkit::TextLabel::New( CONTENT_TEXT );
+      text.SetName( "POPUP_CONTENT_TEXT" );
+      text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+      text.SetDimensionDependency( HEIGHT, WIDTH );
+      text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
+
+      mPopup.Add( text );
 
       // The popup is not yet on the stage so needs to be flaged as dirty
       mPopup.MarkDirtyForRelayout();
@@ -533,7 +548,13 @@ public:
       mPopup = CreatePopup();
       mPopup.SetTitle( "Popup!" );
 
-      // FIXME - Add text
+      Toolkit::TextLabel text = Toolkit::TextLabel::New( CONTENT_TEXT );
+      text.SetName( "POPUP_CONTENT_TEXT" );
+      text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+      text.SetDimensionDependency( HEIGHT, WIDTH );
+      text.SetPadding( Padding( 10.0f, 10.0f, 20.0f, 0.0f ) );
+
+      mPopup.Add( text );
 
       Toolkit::PushButton cancelButton = Toolkit::PushButton::New();
       cancelButton.SetName( CANCEL_BUTTON_ID );
@@ -576,8 +597,9 @@ public:
 
       // Text
       {
-        Toolkit::TextLabel text = Toolkit::TextLabel::New();
-        // FIXME
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Do you really want to quit?" );
+        text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+        text.SetDimensionDependency( HEIGHT, WIDTH );
 
         content.AddChild( text, Toolkit::TableView::CellPosition( 0, 0 ) );
       }
@@ -612,7 +634,6 @@ public:
         root.AddChild( checkBox, Toolkit::TableView::CellPosition( 0, 0 ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Don't show again" );
-        // FIXME
         Actor textActor = text;
         textActor.SetPadding( Padding( 20.0f, 0.0f, 0.0f, 10.0f ) );
 
