@@ -564,12 +564,8 @@ private:
    */
   ImageActor CreateImage( const std::string& filename, unsigned int width = IMAGE_THUMBNAIL_WIDTH, unsigned int height = IMAGE_THUMBNAIL_HEIGHT )
   {
-    ImageAttributes attributes;
+    Image img = ResourceImage::New(filename, ImageDimensions( width, height ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
 
-    attributes.SetSize(width, height);
-    attributes.SetScalingMode(ImageAttributes::ScaleToFill);
-    attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
-    Image img = ResourceImage::New(filename, attributes);
     ImageActor actor = ImageActor::New(img);
     actor.SetRelayoutEnabled( false );
     actor.SetName( filename );

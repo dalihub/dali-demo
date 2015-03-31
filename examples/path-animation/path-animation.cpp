@@ -470,8 +470,7 @@ public:
     DrawPath( 200u );
 
     //Actor
-    ImageAttributes attributes;
-    Image img = ResourceImage::New(ACTOR_IMAGE, attributes );
+    Image img = ResourceImage::New(ACTOR_IMAGE);
     mActor = ImageActor::New( img );
     mActor.SetRelayoutEnabled( false );
     mActor.SetAnchorPoint( AnchorPoint::CENTER );

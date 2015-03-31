@@ -528,13 +528,9 @@ public:
     DALI_ASSERT_ALWAYS(paths);
 
     // Add a background image to the cluster, limiting the loaded size by
-    // fitting it inside a quarter of the stage area with the conservative Box
+    // fitting it inside a quarter of the stage area with the conservative BOX
     // filter mode:
-    Dali::ImageAttributes backgroundAttributes;
-    backgroundAttributes.SetSize( Stage::GetCurrent().GetSize() * 0.5f );
-    backgroundAttributes.SetFilterMode( Dali::ImageAttributes::Box );
-    backgroundAttributes.SetScalingMode( Dali::ImageAttributes::ShrinkToFit );
-    Image bg = ResourceImage::New( CLUSTER_BACKGROUND_IMAGE_PATH );
+    Image bg = ResourceImage::New( CLUSTER_BACKGROUND_IMAGE_PATH, Dali::ImageDimensions( stageSize.x * 0.5f, stageSize.y * 0.5f ), Dali::FittingMode::SHRINK_TO_FIT, Dali::SamplingMode::BOX );
     ImageActor image = ImageActor::New(bg);
     image.SetRelayoutEnabled( false );
     clusterActor.SetBackgroundImage(image);
@@ -563,14 +559,11 @@ public:
     actor.SetAnchorPoint( AnchorPoint::CENTER );
 
     // Load the thumbnail at quarter of screen width or standard size if that is smaller:
-    ImageAttributes attribs = ImageAttributes::New();
     Size stageQuarter = Stage::GetCurrent().GetSize() * 0.25f;
-    attribs.SetSize( std::min( stageQuarter.x, CLUSTER_IMAGE_THUMBNAIL_WIDTH), std::min( stageQuarter.y, CLUSTER_IMAGE_THUMBNAIL_HEIGHT ) );
-    attribs.SetFilterMode( Dali::ImageAttributes::BoxThenLinear );
-    attribs.SetScalingMode(Dali::ImageAttributes::ShrinkToFit );
+    const ImageDimensions requestedDims = ImageDimensions( std::min( stageQuarter.x, CLUSTER_IMAGE_THUMBNAIL_WIDTH ), std::min( stageQuarter.y, CLUSTER_IMAGE_THUMBNAIL_HEIGHT ) );
 
     // Add a shadow image child actor
-    Image shadowImage = ResourceImage::New( CLUSTER_SHADOW_IMAGE_PATH, attribs );
+    Image shadowImage = ResourceImage::New( CLUSTER_SHADOW_IMAGE_PATH, requestedDims, Dali::FittingMode::SHRINK_TO_FIT, Dali::SamplingMode::BOX );
     ImageActor shadowActor = ImageActor::New(shadowImage);
 
     // Shadow is not exactly located on the center of the image, so it is moved to a little
@@ -585,7 +578,7 @@ public:
     actor.Add( shadowActor );
 
     // Add a picture image actor to actor (with equal size to the parent).
-    Image image = ResourceImage::New( imagePath, attribs );
+    Image image = ResourceImage::New( imagePath, requestedDims, Dali::FittingMode::SHRINK_TO_FIT, Dali::SamplingMode::BOX );
     ImageActor imageActor = ImageActor::New( image );
     imageActor.SetParentOrigin( ParentOrigin::CENTER );
     imageActor.SetAnchorPoint( AnchorPoint::CENTER );
