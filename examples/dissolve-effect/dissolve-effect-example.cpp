@@ -71,6 +71,25 @@ const int VIEWINGTIME = 2000; // 2 seconds
 const float TRANSITION_DURATION = 2.5f; //2.5 second
 
 const float INITIAL_DEPTH = -10.0f;
+
+/**
+ * @brief Load an image, scaled-down to no more than the stage dimensions.
+ *
+ * Uses image scaling mode ImageAttributes::ScaleToFill to resize the image at
+ * load time to cover the entire stage with pixels with no borders,
+ * and filter mode ImageAttributes::BoxThenLinear to sample the image with
+ * maximum quality.
+ */
+ResourceImage LoadStageFillingImage( const char * const imagePath )
+{
+  Size stageSize = Stage::GetCurrent().GetSize();
+  ImageAttributes attributes;
+  attributes.SetSize( stageSize.x, stageSize.y );
+  attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
+  attributes.SetScalingMode( ImageAttributes::ScaleToFill );
+  return ResourceImage::New( imagePath, attributes );
+}
+
 } // namespace
 
 class DissolveEffectApp : public ConnectionTracker
@@ -232,10 +251,10 @@ void DissolveEffectApp::OnInit( Application& application )
   mParent.SetPositionInheritanceMode( USE_PARENT_POSITION );
   mContent.Add( mParent );
 
-  mSizeConstraint= Constraint::New<Vector3>( Actor::Property::Scale, LocalSource( Actor::Property::Size ), ParentSource( Actor::Property::Size ), ScaleToFitKeepAspectRatioConstraint() );
+  mSizeConstraint= Constraint::New<Vector3>( Actor::Property::SCALE, LocalSource( Actor::Property::SIZE ), ParentSource( Actor::Property::SIZE ), ScaleToFitKeepAspectRatioConstraint() );
 
   // show the first image
-  mCurrentImage = ImageActor::New( ResourceImage::New( IMAGES[mIndex] ) );
+  mCurrentImage = ImageActor::New( LoadStageFillingImage( IMAGES[mIndex] ) );
   mCurrentImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
   mCurrentImage.ApplyConstraint( mSizeConstraint );
   mParent.Add( mCurrentImage );
@@ -263,7 +282,7 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
       mIndex = (mIndex + NUM_IMAGES -1)%NUM_IMAGES;
     }
 
-    Image image = ResourceImage::New( IMAGES[ mIndex ] );
+    Image image = LoadStageFillingImage( IMAGES[ mIndex ] );
     mNextImage = ImageActor::New( image );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
     mNextImage.ApplyConstraint( mSizeConstraint );
@@ -375,7 +394,7 @@ bool DissolveEffectApp::OnTimerTick()
   if(mSlideshow)
   {
     mIndex = (mIndex + 1)%NUM_IMAGES;
-    Image image = ResourceImage::New( IMAGES[ mIndex ] );
+    Image image = LoadStageFillingImage( IMAGES[ mIndex ] );
     mNextImage = ImageActor::New( image );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
     mNextImage.ApplyConstraint( mSizeConstraint );
@@ -410,7 +429,7 @@ bool DissolveEffectApp::OnTimerTick()
   return false;   //return false to stop the timer
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 int main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );

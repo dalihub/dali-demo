@@ -75,14 +75,14 @@ const TableString TABLE_STRINGS[] = { { "HelveticaNue", "Regular",  8.0f,       
                                       { "HelveticaNue", "Regular",  12.0f,           Dali::TextStyle::REGULAR,    Vector4( 0.5f, 1.0f, 1.0f, 1.0f ),    "Hola",                       Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalCenter, 10.0f,    90.0f,        { 2, 0, 4, 2 } },
                                       { "HelveticaNue", "Regular",  18.0f,           Dali::TextStyle::BOLD,       Vector4( 0.5f, 1.0f, 0.5f, 1.0f ),    "Bonjour",                    Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalTop,    10.0f,    0.0f,         { 2, 2, 2, 4 } },
                                       { "HelveticaNue", "Regular",  12.0f,           Dali::TextStyle::REGULAR,    Vector4( 1.0f, 1.0f, 0.5f, 1.0f ),    "Ciao",                       Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalCenter, 10.0f,    0.0f,         { 2, 7, 2, 3 } },
-                                      { "HelveticaNue", "Regular",  26.0f,           Dali::TextStyle::EXTRABLACK, Vector4( 0.5f, 0.0f, 0.0f, 1.0f ),    "Hello",                      Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalCenter, 10.0f,    0.0f,         { 4, 2, 1, 6 } },
+                                      { "HelveticaNue", "Regular",  23.0f,           Dali::TextStyle::EXTRABLACK, Vector4( 0.5f, 0.0f, 0.0f, 1.0f ),    "안녕하세요",                                        Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalCenter, 20.0f,    0.0f,         { 4, 3, 1, 6 } },
                                       { "HelveticaNue", "Regular",  8.0f,            Dali::TextStyle::DEMIBOLD,   Vector4( 0.0f, 0.5f, 0.0f, 1.0f ),    "Top of the morning to you",  Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalCenter, 10.0f,    90.0f,        { 4, 10, 8, 2 } },
-                                      { "HelveticaNue", "Regular",  13.0f,           Dali::TextStyle::DEMIBOLD,   Vector4( 1.0f, 1.0f, 1.0f, 1.0f ),    "हैलो",                                                   Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalTop,    10.0f,    0.0f,         { 6, 1, 1, 3 } },
+                                      { "HelveticaNue", "Regular",  13.0f,           Dali::TextStyle::DEMIBOLD,   Vector4( 1.0f, 1.0f, 1.0f, 1.0f ),    "हैलो",                                                   Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalTop,          10.0f,    0.0f,         { 6, 1, 1, 3 } },
                                       { "HelveticaNue", "Regular",  8.0f,            Dali::TextStyle::DEMIBOLD,   Vector4( 1.0f, 1.0f, 0.0f, 1.0f ),    "สวัสดี",                       Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalTop,    10.0f,    90.0f,        { 6, 5, 2, 1 } },
                                       { "HelveticaNue", "Regular",  18.0f,           Dali::TextStyle::REGULAR,    Vector4( 0.0f, 1.0f, 1.0f, 1.0f ),    "你好",                        Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalBottom, 10.0f,    0.0f,         { 6, 6, 1, 3 } },
                                       { "HelveticaNue", "Regular",  34.0f,           Dali::TextStyle::REGULAR,    Vector4( 0.0f, 0.0f, 1.0f, 1.0f ),    "G'day",                      Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalCenter, 10.0f,    0.0f,         { 7, 0, 2, 10 } },
                                       { "HelveticaNue", "Regular",  16.0f,           Dali::TextStyle::EXTRABLACK, Vector4( 0.0f, 0.5f, 1.0f, 1.0f ),    "مرحبا",                      Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalTop,    10.0f,    0.0f,         { 9, 1, 2, 4 } },
-                                      { "HelveticaNue", "Regular",  10.0f,           Dali::TextStyle::EXTRABLACK, Vector4( 1.0f, 0.0f, 0.0f, 1.0f ),    "こんにちは",                                         Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalCenter, 10.0f,    0.0f,         { 10, 0, 2, 6 } },
+                                      { "HelveticaNue", "Regular",  10.0f,           Dali::TextStyle::EXTRABLACK, Vector4( 1.0f, 0.0f, 0.0f, 1.0f ),    "こんにちは",                                         Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalCenter,      10.0f,    0.0f,         { 10, 0, 2, 6 } },
                                       { "HelveticaNue", "Regular",  14.0f,           Dali::TextStyle::REGULAR,    Vector4( 0.0f, 1.0f, 0.0f, 1.0f ),    "aloha",                      Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::VerticalTop,    10.0f,    0.0f,         { 10, 6, 2, 4 } }
                                     };
 
@@ -132,7 +132,7 @@ public:
     textContainer.SetParentOrigin( ParentOrigin::TOP_LEFT );
     textContainer.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     textContainer.SetPosition( 0, TOOLBAR_HEIGHT );
-    textContainer.SetSize( stage.GetSize().width, stage.GetSize().height - TOOLBAR_HEIGHT );
+    textContainer.SetPreferredSize( Vector2( stage.GetSize().width, stage.GetSize().height - TOOLBAR_HEIGHT ) );
 
     mContentLayer.Add( textContainer );
 
@@ -150,11 +150,13 @@ public:
 
       Toolkit::TextView textView = Toolkit::TextView::New( tableString.text );
       textView.SetStyleToCurrentText( textStyle );
-      textView.SetRotation( Dali::Degree( tableString.orientation ), Vector3( 0.0f, 0.0f, 1.0f ) );
+      textView.SetOrientation( Dali::Degree( tableString.orientation ), Vector3( 0.0f, 0.0f, 1.0f ) );
+      textView.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
 
       Toolkit::Alignment alignmentContainer = Toolkit::Alignment::New( tableString.horizontalAlignment, tableString.verticalAlignment );
-      alignmentContainer.SetPadding( Toolkit::Alignment::Padding( tableString.padding, tableString.padding, tableString.padding, tableString.padding ) );
-      alignmentContainer.SetScaling( Toolkit::Alignment::ScaleToFill );
+      Actor alignmentContainerActor = alignmentContainer;
+      alignmentContainerActor.SetPadding( Padding( tableString.padding, tableString.padding, tableString.padding, tableString.padding ) );
+      alignmentContainer.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
       alignmentContainer.Add( textView );
 
       textContainer.AddChild( alignmentContainer, Toolkit::TableView::CellPosition( tableString.cellPosition.row, tableString.cellPosition.column, tableString.cellPosition.rowSpan, tableString.cellPosition.columnSpan ) );
@@ -189,7 +191,7 @@ void RunTest( Application& application )
   application.MainLoop();
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 //
 int main( int argc, char **argv )
 {

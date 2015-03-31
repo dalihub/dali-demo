@@ -210,7 +210,7 @@ public:
 
     // Hack to force screen refresh.
     Animation animation = Animation::New(1.0f);
-    animation.AnimateTo(Property(mContentLayer, Actor::Property::Position), Vector3::ZERO );
+    animation.AnimateTo(Property(mContentLayer, Actor::Property::POSITION), Vector3::ZERO );
     animation.Play();
   }
 
@@ -226,6 +226,7 @@ private:
     Vector2 stageSize = stage.GetSize();
 
     mScrollView = ScrollView::New();
+    mScrollView.SetRelayoutEnabled( false );
     mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
     mScrollView.SetParentOrigin(ParentOrigin::CENTER);
     mContentLayer.Add( mScrollView );
@@ -298,7 +299,8 @@ private:
   Actor CreatePage()
   {
     Actor page = Actor::New();
-    page.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    page.SetRelayoutEnabled( true );
+    page.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     page.SetParentOrigin( ParentOrigin::CENTER );
     page.SetAnchorPoint( AnchorPoint::CENTER );
 
@@ -315,7 +317,7 @@ private:
     {
       for(int column = 0;column<imageColumns;column++)
       {
-        ImageActor image = CreateImage( GetNextImagePath() );
+        ImageActor image = CreateImage( GetNextImagePath(), imageSize.x, imageSize.y );
 
         image.SetParentOrigin( ParentOrigin::CENTER );
         image.SetAnchorPoint( AnchorPoint::CENTER );
@@ -450,7 +452,8 @@ private:
    void ApplyEffectToPage(Actor page)
    {
      page.RemoveConstraints();
-     page.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+     page.SetRelayoutEnabled( true );
+     page.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
      switch( mEffectMode )
      {
@@ -562,9 +565,11 @@ private:
     ImageAttributes attributes;
 
     attributes.SetSize(width, height);
-    attributes.SetScalingMode(ImageAttributes::ShrinkToFit);
+    attributes.SetScalingMode(ImageAttributes::ScaleToFill);
+    attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
     Image img = ResourceImage::New(filename, attributes);
     ImageActor actor = ImageActor::New(img);
+    actor.SetRelayoutEnabled( false );
     actor.SetName( filename );
     actor.SetParentOrigin(ParentOrigin::CENTER);
     actor.SetAnchorPoint(AnchorPoint::CENTER);

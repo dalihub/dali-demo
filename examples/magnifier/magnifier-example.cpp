@@ -227,12 +227,14 @@ public:
 
     // Create magnifier (controlled by human touch)
     Layer overlay = Layer::New();
+    overlay.SetRelayoutEnabled( false );
     overlay.SetSensitive(false);
     overlay.SetParentOrigin( ParentOrigin::CENTER );
     overlay.SetSize(mStageSize);
     Stage::GetCurrent().Add(overlay);
 
     mMagnifier = Toolkit::Magnifier::New();
+    mMagnifier.SetRelayoutEnabled( false );
     mMagnifier.SetSourceActor( mView.GetBackgroundLayer() );
     mMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width );  // Size of magnifier is in relation to stage width
     mMagnifier.SetMagnificationFactor( MAGNIFICATION_FACTOR );
@@ -240,17 +242,18 @@ public:
     overlay.Add( mMagnifier );
 
     // Apply constraint to animate the position of the magnifier.
-    Constraint constraint = Constraint::New<Vector3>(Actor::Property::Position,
-                                                     LocalSource(Actor::Property::Size),
-                                                     LocalSource(Actor::Property::ParentOrigin),
-                                                     LocalSource(Actor::Property::AnchorPoint),
-                                                     ParentSource(Actor::Property::Size),
+    Constraint constraint = Constraint::New<Vector3>(Actor::Property::POSITION,
+                                                     LocalSource(Actor::Property::SIZE),
+                                                     LocalSource(Actor::Property::PARENT_ORIGIN),
+                                                     LocalSource(Actor::Property::ANCHOR_POINT),
+                                                     ParentSource(Actor::Property::SIZE),
                                                      ConfinementConstraint(ParentOrigin::CENTER, Vector2::ONE * MAGNIFIER_INDENT, Vector2::ONE * MAGNIFIER_INDENT));
     constraint.SetRemoveAction(Constraint::Discard);
     mMagnifier.ApplyConstraint( constraint );
 
     // Create bouncing magnifier automatically bounces around screen.
     mBouncingMagnifier = Toolkit::Magnifier::New();
+    mBouncingMagnifier.SetRelayoutEnabled( false );
     mBouncingMagnifier.SetSourceActor( mView.GetBackgroundLayer() );
     mBouncingMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width ); // Size of magnifier is in relation to stage width
     mBouncingMagnifier.SetMagnificationFactor( MAGNIFICATION_FACTOR );
@@ -260,15 +263,15 @@ public:
     ContinueAnimation();
 
     // Apply constraint to animate the position of the magnifier.
-    constraint = Constraint::New<Vector3>(Actor::Property::Position,
-                                          LocalSource(Actor::Property::Size),
+    constraint = Constraint::New<Vector3>(Actor::Property::POSITION,
+                                          LocalSource(Actor::Property::SIZE),
                                           LocalSource(mAnimationTimeProperty),
                                           MagnifierPathConstraint(mStageSize, mStageSize * 0.5f));
     mBouncingMagnifier.ApplyConstraint( constraint );
 
     // Apply constraint to animate the source of the magnifier.
     constraint = Constraint::New<Vector3>(mBouncingMagnifier.GetPropertyIndex( Toolkit::Magnifier::SOURCE_POSITION_PROPERTY_NAME ),
-                                          LocalSource(Actor::Property::Size),
+                                          LocalSource(Actor::Property::SIZE),
                                           LocalSource(mAnimationTimeProperty),
                                           MagnifierPathConstraint(mStageSize));
     mBouncingMagnifier.ApplyConstraint( constraint );
@@ -355,7 +358,7 @@ public:
     if(!mMagnifierShown)
     {
       Animation animation = Animation::New(MAGNIFIER_DISPLAY_DURATION);
-      animation.AnimateTo(Property(mMagnifier, Actor::Property::Scale), Vector3::ONE, AlphaFunctions::EaseIn);
+      animation.AnimateTo(Property(mMagnifier, Actor::Property::SCALE), Vector3::ONE, AlphaFunctions::EaseIn);
       animation.Play();
       mMagnifierShown = true;
     }
@@ -369,7 +372,7 @@ public:
     if(mMagnifierShown)
     {
       Animation animation = Animation::New(MAGNIFIER_DISPLAY_DURATION);
-      animation.AnimateTo(Property(mMagnifier, Actor::Property::Scale), Vector3::ZERO, AlphaFunctions::EaseOut);
+      animation.AnimateTo(Property(mMagnifier, Actor::Property::SCALE), Vector3::ZERO, AlphaFunctions::EaseOut);
       animation.Play();
       mMagnifierShown = false;
     }
@@ -422,7 +425,7 @@ void RunTest( Application& application )
   application.MainLoop();
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 //
 int main( int argc, char **argv )
 {

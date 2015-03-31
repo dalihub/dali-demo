@@ -225,7 +225,7 @@ public:
       else
       {
         // set the rotation to match the orientation
-        mView.SetRotation( Degree( -orientation ), Vector3::ZAXIS );
+        mView.SetOrientation( Degree( -orientation ), Vector3::ZAXIS );
         mView.SetSize( targetSize );
       }
     }
@@ -261,7 +261,7 @@ public:
     mActorTapMovementAnimation = Animation::New( animDuration );
     if ( mMotionStretchImageActor )
     {
-      mActorTapMovementAnimation.AnimateTo( Property(mMotionStretchImageActor, Actor::Property::Position), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
+      mActorTapMovementAnimation.AnimateTo( Property(mMotionStretchImageActor, Actor::Property::POSITION), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
     }
     mActorTapMovementAnimation.SetEndAction( Animation::Bake );
     mActorTapMovementAnimation.Play();
@@ -435,7 +435,7 @@ void RunTest(Application& app)
   app.MainLoop();
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 //
 int main(int argc, char **argv)
 {

@@ -127,14 +127,16 @@ class ButtonsController: public ConnectionTracker
     radioGroup2Background.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     radioGroup2Background.SetParentOrigin( ParentOrigin::TOP_LEFT );
     radioGroup2Background.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    radioGroup2Background.SetSize( DP(348), DP(GROUP2_HEIGHT) );
+    radioGroup2Background.SetRelayoutEnabled( true );
+    radioGroup2Background.SetPreferredSize( Vector2( DP(348), DP(GROUP2_HEIGHT) ) );
     mContentLayer.Add( radioGroup2Background );
 
     Actor radioButtonsGroup2 = Actor::New();
     radioButtonsGroup2.SetParentOrigin( ParentOrigin::TOP_LEFT );
     radioButtonsGroup2.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     radioButtonsGroup2.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
-    radioButtonsGroup2.SetSize( DP(100), DP(160) );
+    radioButtonsGroup2.SetRelayoutEnabled( true );
+    radioButtonsGroup2.SetPreferredSize( Vector2( DP(100), DP(160) ) );
 
     radioGroup2Background.Add( radioButtonsGroup2 );
 
@@ -143,7 +145,7 @@ class ButtonsController: public ConnectionTracker
     // Radio 1
     {
       ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_1 ) );
-      imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      imageActor.SetPreferredSize( Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
       mRadioButtonImage1 = Dali::Toolkit::RadioButton::New( imageActor );
       mRadioButtonImage1.SetParentOrigin( ParentOrigin::TOP_LEFT );
       mRadioButtonImage1.SetAnchorPoint( AnchorPoint::TOP_LEFT );
@@ -158,7 +160,7 @@ class ButtonsController: public ConnectionTracker
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
       ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_2 ) );
-      imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      imageActor.SetPreferredSize( Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
 
       mRadioButtonImage2 = Dali::Toolkit::RadioButton::New( imageActor );
       mRadioButtonImage2.SetParentOrigin( ParentOrigin::TOP_LEFT );
@@ -173,7 +175,7 @@ class ButtonsController: public ConnectionTracker
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
       ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_3 ) );
-      imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      imageActor.SetPreferredSize( Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
 
       mRadioButtonImage3 = Dali::Toolkit::RadioButton::New( imageActor );
       mRadioButtonImage3.SetParentOrigin( ParentOrigin::TOP_LEFT );
@@ -188,8 +190,8 @@ class ButtonsController: public ConnectionTracker
     mUpdateButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     mUpdateButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
     mUpdateButton.SetPosition( 0, DP(MARGIN_SIZE) );
-    mUpdateButton.SetLabel("Select");
-    mUpdateButton.SetSize( DP(100), DP(BUTTON_HEIGHT) );
+    mUpdateButton.SetLabel( "Select" );
+    mUpdateButton.SetPreferredSize( Vector2( DP(100), DP(BUTTON_HEIGHT) ) );
 
     mUpdateButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
     mUpdateButton.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
@@ -208,7 +210,7 @@ class ButtonsController: public ConnectionTracker
     mImage.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     mImage.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mImage.SetPosition( DP(MARGIN_SIZE), 0 );
-    mImage.SetSize( DP(218), DP(218) );
+    mImage.SetPreferredSize( Vector2( DP(218), DP(218) ) );
     radioButtonsGroup2.Add( mImage );
 
     // The enable/disable radio group
@@ -218,7 +220,8 @@ class ButtonsController: public ConnectionTracker
     radioGroup1Background.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     radioGroup1Background.SetParentOrigin( ParentOrigin::TOP_LEFT );
     radioGroup1Background.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    radioGroup1Background.SetSize( DP(348), DP(GROUP1_HEIGHT) );
+    radioGroup1Background.SetRelayoutEnabled( true );
+    radioGroup1Background.SetPreferredSize( Vector2( DP(348), DP(GROUP1_HEIGHT) ) );
     mContentLayer.Add( radioGroup1Background );
 
     // Radio group
@@ -232,17 +235,17 @@ class ButtonsController: public ConnectionTracker
     // First radio button
     {
       Toolkit::TableView tableView = Toolkit::TableView::New( 1, 2 );
-      tableView.SetSize( DP(260), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      tableView.SetPreferredSize( Vector2( DP(260), 0.0f ) );
+      tableView.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
 
       Toolkit::TextView textView = Toolkit::TextView::New( "Select enabled" );
-      Toolkit::Alignment alignment = Toolkit::Alignment::New( Toolkit::Alignment::HorizontalLeft );
-      alignment.Add( textView );
-      tableView.AddChild( alignment, Toolkit::TableView::CellPosition( 0, 0 ) );
+      tableView.AddChild( textView, Toolkit::TableView::CellPosition( 0, 0 ) );
 
       ImageActor imageActor = ImageActor::New( ResourceImage::New( ENABLED_IMAGE ) );
-      imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      imageActor.SetPreferredSize( Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
+      imageActor.SetResizePolicy( FIXED, ALL_DIMENSIONS );
+      imageActor.SetPadding( Padding( DP(20.0f), 0.0f, 0.0f, 0.0f ) );
       tableView.AddChild( imageActor, Toolkit::TableView::CellPosition( 0, 1 ) );
-      tableView.SetFixedWidth( 1, DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       Toolkit::RadioButton radioButton = Dali::Toolkit::RadioButton::New( tableView );
       radioButton.SetName( "radio-select-enable" );
@@ -276,7 +279,8 @@ class ButtonsController: public ConnectionTracker
     checkBoxBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     checkBoxBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
     checkBoxBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    checkBoxBackground.SetSize( DP(430), DP(GROUP3_HEIGHT) );
+    checkBoxBackground.SetRelayoutEnabled( true );
+    checkBoxBackground.SetPreferredSize( Vector2( DP(430), DP(GROUP3_HEIGHT) ) );
     mContentLayer.Add( checkBoxBackground );
 
     Dali::Image unselected = Dali::ResourceImage::New( CHECKBOX_UNSELECTED_IMAGE );
@@ -336,7 +340,8 @@ class ButtonsController: public ConnectionTracker
     toggleBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     toggleBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
     toggleBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    toggleBackground.SetSize( DP(150 + MARGIN_SIZE * 2), DP(GROUP4_HEIGHT) );
+    toggleBackground.SetRelayoutEnabled( true );
+    toggleBackground.SetPreferredSize( Vector2( DP(150 + MARGIN_SIZE * 2), DP(GROUP4_HEIGHT) ) );
     mContentLayer.Add( toggleBackground );
 
     Toolkit::PushButton toggleButton = Toolkit::PushButton::New();
@@ -345,7 +350,7 @@ class ButtonsController: public ConnectionTracker
     toggleButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     toggleButton.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
     toggleButton.SetLabel( "Unselected" );
-    toggleButton.SetSize( DP(150), DP(BUTTON_HEIGHT) );
+    toggleButton.SetPreferredSize( Vector2( DP(150), DP(BUTTON_HEIGHT) ) );
 
     toggleButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
     toggleButton.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
@@ -484,7 +489,7 @@ void RunTest( Application& application )
   application.MainLoop();
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 //
 int main( int argc, char **argv )
 {

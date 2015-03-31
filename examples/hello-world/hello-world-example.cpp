@@ -79,7 +79,7 @@ void RunTest( Application& application )
   application.MainLoop();
 }
 
-// Entry point for Linux & SLP applications
+// Entry point for Linux & Tizen applications
 //
 int main( int argc, char **argv )
 {
