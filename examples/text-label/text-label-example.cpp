@@ -127,7 +127,8 @@ public:
     mLabel = TextLabel::New( "A Quick Brown Fox Jumps Over The Lazy Dog" );
     mLabel.SetName( "TextLabel" );
     mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mLabel.SetResizePolicy( FILL_TO_PARENT, HEIGHT );
+    mLabel.SetDimensionDependency( HEIGHT, WIDTH );
+    mLabel.SetResizePolicy( FILL_TO_PARENT, WIDTH );
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
