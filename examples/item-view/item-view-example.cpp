@@ -970,10 +970,12 @@ private:
   {
     if(!mTitleActor)
     {
-      mTitleActor = TextLabel::New();
+      mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
       mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
     }
+
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
   void ShowMenu()
