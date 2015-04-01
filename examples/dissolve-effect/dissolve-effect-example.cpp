@@ -163,7 +163,6 @@ private:
   ImageActor                      mCurrentImage;
   ImageActor                      mNextImage;
   unsigned int                    mIndex;
-  Constraint                      mSizeConstraint;
 
   Toolkit::DissolveEffect         mCurrentImageEffect;
   Toolkit::DissolveEffect         mNextImageEffect;
@@ -251,12 +250,11 @@ void DissolveEffectApp::OnInit( Application& application )
   mParent.SetPositionInheritanceMode( USE_PARENT_POSITION );
   mContent.Add( mParent );
 
-  mSizeConstraint= Constraint::New<Vector3>( Actor::Property::SCALE, LocalSource( Actor::Property::SIZE ), ParentSource( Actor::Property::SIZE ), ScaleToFitKeepAspectRatioConstraint() );
-
   // show the first image
   mCurrentImage = ImageActor::New( LoadStageFillingImage( IMAGES[mIndex] ) );
   mCurrentImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
-  mCurrentImage.ApplyConstraint( mSizeConstraint );
+  mCurrentImage.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+  mCurrentImage.SetSizeScalePolicy( FIT_WITH_ASPECT_RATIO );
   mParent.Add( mCurrentImage );
 
   mPanGestureDetector.Attach( mCurrentImage );
@@ -285,7 +283,8 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     Image image = LoadStageFillingImage( IMAGES[ mIndex ] );
     mNextImage = ImageActor::New( image );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
-    mNextImage.ApplyConstraint( mSizeConstraint );
+    mNextImage.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    mNextImage.SetSizeScalePolicy( FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);
     mParent.Add( mNextImage );
     Vector2 size = Vector2( mCurrentImage.GetCurrentSize() );
@@ -397,7 +396,8 @@ bool DissolveEffectApp::OnTimerTick()
     Image image = LoadStageFillingImage( IMAGES[ mIndex ] );
     mNextImage = ImageActor::New( image );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
-    mNextImage.ApplyConstraint( mSizeConstraint );
+    mNextImage.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    mNextImage.SetSizeScalePolicy( FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);
     mParent.Add( mNextImage );
     switch( mCentralLineIndex%4 )
