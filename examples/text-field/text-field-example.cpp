@@ -76,6 +76,10 @@ public:
     stage.Add( mContainer );
 
     TextField field = TextField::New();
+    field.SetParentOrigin( ParentOrigin::CENTER );
+    field.SetResizePolicy( FIXED, ALL_DIMENSIONS );
+    field.SetPreferredSize( Vector2(stageSize.width*0.6f, stageSize.width*0.6f) );
+
     mContainer.Add( field );
 
     field.SetProperty( TextField::Property::TEXT, "Hello" );
