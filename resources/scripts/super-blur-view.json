@@ -67,7 +67,7 @@
       "position": [0, 0, 0],
       "size": [0, 100, 0],
       "label-actor": {
-        "type": "TextView",
+        "type": "TextLabel",
         "text": "Blur"
       },
       "normal-state-actor": {

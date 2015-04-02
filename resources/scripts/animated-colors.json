@@ -988,12 +988,12 @@
       ]
     },
     {
-      "type": "TextView",
+      "type": "TextLabel",
       "name": "text",
       "parent-origin": "CENTER",
       "anchor-point": "CENTER",
-      "text": "<font size='20'><b>START</b></font>",
-      "markup-enabled": true,
+      "text": "START",
+      "point-size": 20,
       "signals": [
         {
           "name": "tapped",

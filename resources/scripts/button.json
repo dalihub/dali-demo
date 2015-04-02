@@ -39,7 +39,7 @@
         }
       },
       "label-actor": {
-        "type": "TextView",
+        "type": "TextLabel",
         "text": "Normal"
       }
     },
@@ -52,7 +52,7 @@
       "position": [0, 0, 0],
       "size": [0, 200, 0],
       "label-actor": {
-        "type": "TextView",
+        "type": "TextLabel",
         "text": "Disabled"
       },
       "disabled": true,
@@ -85,7 +85,7 @@
       "position": [0, 0, 0],
       "size": [0, 200, 0],
       "label-actor": {
-        "type": "TextView",
+        "type": "TextLabel",
         "text": "Toggle"
       },
       "togglable": true,
@@ -111,7 +111,7 @@
         "actor": "toggle-button",
         "property": "label-actor",
         "value": {
-          "type": "TextView",
+          "type": "TextLabel",
           "text": "Using a 9-patch image"
         }
       }]

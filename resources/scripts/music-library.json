@@ -132,7 +132,7 @@
       "type": "Control",
       "actors": [
         {
-          "type": "TextView",
+          "type": "TextLabel",
           "actors": [],
           "name": "Time",
           "position": [
@@ -147,8 +147,8 @@
             1
           ],
           "sizeAspectRatio": false,
-          "markup-enabled": true,
-          "text": "<font size=10px color=#ffffff><b>12:30</b></font>"
+          "text": "12:30",
+          "point-size": 10
         }
       ],
       "name": "Indicators",

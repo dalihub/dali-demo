@@ -85,7 +85,7 @@
   // a tree of actors
   "stage": [{
     "name": "greeting",
-    "type": "TextView",
+    "type": "TextLabel",
     "text": "Touch me",
     "styles": ["basic-text"],
     "position": [0, -120, 0],
@@ -98,7 +98,7 @@
     }]
   }, {
     "name":"greeting2",
-    "type": "TextView",
+    "type": "TextLabel",
     "parent-origin": "CENTER",
     "anchor-point": "CENTER",
     "size": [200, 200, 1],
@@ -111,7 +111,7 @@
       "animation": "path-animation"
     }]
   }, {
-    "type": "TextView", // styles can be additive
+    "type": "TextLabel", // styles can be additive
     "parent-origin": "CENTER",
     "anchor-point": "CENTER",
     "size": [200, 200, 1],

@@ -59,7 +59,7 @@ std::string JSON_BROKEN("                                      \
   'stage':                                                     \
   [                                                            \
     {                                                          \
-      'type':'TextView',                                       \
+      'type':'TextLabel',                                      \
       'size': [50,50,1],                                       \
       'parent-origin': 'CENTER',                               \
       'text':'COULD NOT LOAD JSON FILE'                        \
