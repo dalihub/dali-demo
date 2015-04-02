@@ -132,7 +132,7 @@ public:
     textContainer.SetParentOrigin( ParentOrigin::TOP_LEFT );
     textContainer.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     textContainer.SetPosition( 0, TOOLBAR_HEIGHT );
-    textContainer.SetPreferredSize( Vector2( stage.GetSize().width, stage.GetSize().height - TOOLBAR_HEIGHT ) );
+    textContainer.SetSize( stage.GetSize().width, stage.GetSize().height - TOOLBAR_HEIGHT );
 
     mContentLayer.Add( textContainer );
 
