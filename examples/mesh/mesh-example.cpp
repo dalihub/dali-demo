@@ -36,6 +36,7 @@ attribute highp   vec2    aTexCoord;
 varying   mediump vec2    vTexCoord;
 uniform   mediump mat4    uMvpMatrix;
 uniform   mediump vec3    uSize;
+uniform   lowp    vec4    uFadeColor;
 
 void main()
 {
@@ -51,10 +52,11 @@ const char* FRAGMENT_SHADER = MAKE_SHADER(
 varying mediump vec2  vTexCoord;
 uniform lowp  vec4    uColor;
 uniform sampler2D     sTexture;
+uniform   lowp    vec4    uFadeColor;
 
 void main()
 {
-  gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;
+  gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor * uFadeColor;
 }
 );
 
@@ -101,7 +103,6 @@ public:
     // Hide the indicator bar
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
-
     mImage = ResourceImage::New( MATERIAL_SAMPLE );
     mSampler = Sampler::New( mImage, "sTexture");
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
@@ -110,13 +111,59 @@ public:
     mMaterial.AddSampler( mSampler );
 
     mGeometry = Geometry::New(); // Don't need to set a vertex buffer - it's a quad by default.
+
     mRenderer = Renderer::New( mGeometry, mMaterial );
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
     mMeshActor.SetSize(400, 400);
-    mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
+
+    Property::Index fadeColorIndex = mMeshActor.RegisterProperty( "fade-color", Color::GREEN );
+    mMeshActor.AddUniformMapping( fadeColorIndex, std::string("uFadeColor") );
+
+    fadeColorIndex = mRenderer.RegisterProperty( "fade-color", Color::MAGENTA );
+    mRenderer.AddUniformMapping( fadeColorIndex, std::string("uFadeColor" ) );
+    mRenderer.SetDepthIndex(0);
+
+    mMeshActor.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    mMeshActor.SetAnchorPoint( AnchorPoint::TOP_CENTER );
     stage.Add( mMeshActor );
+
+
+    mRenderer2 = Renderer::New( mGeometry, mMaterial );
+
+    mMeshActor2 = Actor::New();
+    mMeshActor2.AddRenderer( mRenderer2 );
+    mMeshActor2.SetSize(400, 400);
+
+    mMeshActor2.RegisterProperty( "a-n-other-property", Color::GREEN );
+    Property::Index fadeColorIndex2 = mMeshActor2.RegisterProperty( "another-fade-color", Color::GREEN );
+    mMeshActor2.AddUniformMapping( fadeColorIndex2, std::string("uFadeColor") );
+
+    mRenderer2.RegisterProperty( "a-n-other-property", Vector3::ZERO );
+    mRenderer2.RegisterProperty( "winning-formula", 8008.135f );
+    fadeColorIndex2 = mRenderer2.RegisterProperty( "another-fade-color", Color::GREEN );
+    mRenderer2.AddUniformMapping( fadeColorIndex2, std::string("uFadeColor" ) );
+    mRenderer2.SetDepthIndex(0);
+
+    mMeshActor2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    mMeshActor2.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    stage.Add( mMeshActor2 );
+
+
+    Animation  animation = Animation::New(5);
+    KeyFrames keyFrames = KeyFrames::New();
+    keyFrames.Add(0.0f, Vector4::ZERO);
+    keyFrames.Add(1.0f, Vector4( 1.0f, 0.0f, 1.0f, 1.0f ));
+
+    KeyFrames keyFrames2 = KeyFrames::New();
+    keyFrames2.Add(0.0f, Vector4::ZERO);
+    keyFrames2.Add(1.0f, Color::GREEN);
+
+    animation.AnimateBetween( Property( mRenderer, fadeColorIndex ), keyFrames, AlphaFunctions::Sin );
+    animation.AnimateBetween( Property( mRenderer2, fadeColorIndex2 ), keyFrames2, AlphaFunctions::Sin2x );
+    animation.SetLooping(true);
+    animation.Play();
 
     stage.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));;
   }
@@ -155,6 +202,8 @@ private:
   Geometry mGeometry;
   Renderer mRenderer;
   Actor    mMeshActor;
+  Renderer mRenderer2;
+  Actor    mMeshActor2;
 };
 
 void RunTest( Application& application )
