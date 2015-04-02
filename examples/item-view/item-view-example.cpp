@@ -279,10 +279,9 @@ public:
     mDeleteButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mDeleteButton.SetDrawMode( DrawMode::OVERLAY );
-    mDeleteButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
     mDeleteButton.SetButtonImage( ResourceImage::New( DELETE_IMAGE ) );
-    mDeleteButton.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mDeleteButton.SetPreferredSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mDeleteButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mDeleteButton.SetSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
     mDeleteButton.ClickedSignal().Connect( this, &ItemViewExample::OnDeleteButtonClicked);
     mDeleteButton.SetLeaveRequired( true );
     mDeleteButton.SetVisible( false );
@@ -294,10 +293,9 @@ public:
     mInsertButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mInsertButton.SetDrawMode( DrawMode::OVERLAY );
-    mInsertButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
     mInsertButton.SetButtonImage( ResourceImage::New( INSERT_IMAGE ) );
-    mInsertButton.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mInsertButton.SetPreferredSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mInsertButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mInsertButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mInsertButton.ClickedSignal().Connect( this, &ItemViewExample::OnInsertButtonClicked);
     mInsertButton.SetLeaveRequired( true );
     mInsertButton.SetVisible( false );
@@ -309,10 +307,9 @@ public:
     mReplaceButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mReplaceButton.SetDrawMode( DrawMode::OVERLAY );
-    mReplaceButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
     mReplaceButton.SetButtonImage( ResourceImage::New( REPLACE_IMAGE ) );
-    mReplaceButton.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mReplaceButton.SetPreferredSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mReplaceButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mReplaceButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mReplaceButton.ClickedSignal().Connect( this, &ItemViewExample::OnReplaceButtonClicked);
     mReplaceButton.SetLeaveRequired( true );
     mReplaceButton.SetVisible( false );
@@ -901,8 +898,7 @@ public: // From ItemFactory
     borderActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
     borderActor.SetNinePatchBorder( Vector4( ITEM_IMAGE_BORDER_LEFT, ITEM_IMAGE_BORDER_TOP, ITEM_IMAGE_BORDER_RIGHT, ITEM_IMAGE_BORDER_BOTTOM ) );
     borderActor.SetColorMode( USE_OWN_MULTIPLY_PARENT_COLOR ); // darken with parent image-actor
-    borderActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-    borderActor.SetSizeMode( SIZE_FIXED_OFFSET_FROM_PARENT );
+    borderActor.SetResizePolicy( SIZE_FIXED_OFFSET_FROM_PARENT, ALL_DIMENSIONS );
     borderActor.SetSizeModeFactor( ITEM_BORDER_MARGIN_SIZE );
     actor.Add(borderActor);
     actor.SetKeyboardFocusable( true );
@@ -995,8 +991,7 @@ private:
     mMenu = Toolkit::Popup::New();
     mMenu.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
     mMenu.SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
-    mMenu.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mMenu.SetPreferredSize( Vector2( popupWidth, MENU_OPTION_HEIGHT * 2 ) );
+    mMenu.SetSize( popupWidth, MENU_OPTION_HEIGHT * 2 );
     mMenu.OutsideTouchedSignal().Connect( this, &ItemViewExample::HideMenu );
 
     TableView tableView = TableView::New( 0, 0 );
@@ -1026,8 +1021,7 @@ private:
     text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
     text.SetStyleToCurrentText( defaultTextStyle );
     text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    text.SetResizePolicy( FIXED, HEIGHT );
-    text.SetPreferredSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
+    text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
     text.SetZ( -0.9f );
     slider.Add( text );
 
@@ -1051,8 +1045,7 @@ private:
     text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
     text.SetStyleToCurrentText( defaultTextStyle );
     text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    text.SetResizePolicy( FIXED, HEIGHT );
-    text.SetPreferredSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
+    text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
     textContainer.Add( text );
 
     mMenu.MarkDirtyForRelayout();

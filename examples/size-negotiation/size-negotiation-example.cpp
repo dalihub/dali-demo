@@ -251,7 +251,7 @@ public:
     mMenu.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mMenu.HideTail();
     mMenu.OutsideTouchedSignal().Connect( this, &SizeNegotiationController::HideMenu );
-    mMenu.SetPreferredSize( Vector2( popupWidth, 0.0f ) );
+    mMenu.SetSize( popupWidth, 0.0f );
     mMenu.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
 
     Toolkit::TableView tableView = Toolkit::TableView::New( 0, 0 );
@@ -327,7 +327,7 @@ public:
     popup.SetName( "POPUP" );
     popup.SetParentOrigin( ParentOrigin::CENTER );
     popup.SetAnchorPoint( AnchorPoint::CENTER );
-    popup.SetPreferredSize( Vector2( POPUP_WIDTH_DP, 0.0f ) );
+    popup.SetSize( POPUP_WIDTH_DP, 0.0f );
     popup.HideTail();
 
     popup.OutsideTouchedSignal().Connect( this, &SizeNegotiationController::OnPopupOutsideTouched );
@@ -445,7 +445,7 @@ public:
       text.SetWidthExceedPolicy( Toolkit::TextView::Split );
       text.SetLineJustification( Toolkit::TextView::Center );
       text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      text.SetDimensionDependency( HEIGHT, WIDTH );
+      text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
       text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( text );
@@ -461,7 +461,7 @@ public:
 
       ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
       image.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      image.SetDimensionDependency( HEIGHT, WIDTH );
+      image.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
       image.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( image );
@@ -475,8 +475,7 @@ public:
     {
       mPopup = CreatePopup();
 
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
       ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
@@ -493,8 +492,7 @@ public:
     {
       mPopup = CreatePopup();
 
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
       ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
@@ -512,8 +510,7 @@ public:
     {
       mPopup = CreatePopup();
 
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
       ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
@@ -539,7 +536,7 @@ public:
       text.SetWidthExceedPolicy( Toolkit::TextView::Split );
       text.SetLineJustification( Toolkit::TextView::Center );
       text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      text.SetDimensionDependency( HEIGHT, WIDTH );
+      text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
       text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( text );
@@ -561,7 +558,7 @@ public:
       text.SetWidthExceedPolicy( Toolkit::TextView::Split );
       text.SetLineJustification( Toolkit::TextView::Left );
       text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      text.SetDimensionDependency( HEIGHT, WIDTH );
+      text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
       text.SetPadding( Padding( 10.0f, 10.0f, 20.0f, 0.0f ) );
 
       mPopup.Add( text );
@@ -613,7 +610,7 @@ public:
         text.SetWidthExceedPolicy( Toolkit::TextView::Split );
         text.SetLineJustification( Toolkit::TextView::Left );
         text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        text.SetDimensionDependency( HEIGHT, WIDTH );
+        text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
 
         content.AddChild( text, Toolkit::TableView::CellPosition( 0, 0 ) );
       }
@@ -623,7 +620,7 @@ public:
         ImageActor image = ImageActor::New( ResourceImage::New( IMAGE1 ) );
         image.SetName( "COMPLEX_IMAGE" );
         image.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        image.SetDimensionDependency( HEIGHT, WIDTH );
+        image.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
         image.SetPadding( Padding( 20.0f, 0.0f, 0.0f, 0.0f ) );
         content.AddChild( image, Toolkit::TableView::CellPosition( 0, 1 ) );
       }
@@ -642,8 +639,7 @@ public:
         Toolkit::CheckBoxButton checkBox = Toolkit::CheckBoxButton::New();
         checkBox.SetBackgroundImage( unchecked );
         checkBox.SetSelectedImage( checked );
-        checkBox.SetPreferredSize( Vector2( 48, 48 ) );
-        checkBox.SetResizePolicy( FIXED, ALL_DIMENSIONS );
+        checkBox.SetSize( 48, 48 );
 
         root.AddChild( checkBox, Toolkit::TableView::CellPosition( 0, 0 ) );
 
@@ -689,8 +685,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_EMPTY_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
@@ -707,8 +702,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_1CELL_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
@@ -730,8 +724,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_3CELL_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
@@ -764,8 +757,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_3X3CELL_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
@@ -833,8 +825,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_FIXED1_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
@@ -880,8 +871,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_FIXED2_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
@@ -928,8 +918,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_FIT1_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
@@ -941,8 +930,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        backing.SetResizePolicy( FIXED, HEIGHT );
-        backing.SetPreferredSize( Vector2( 0.0f, 100.0f ) );
+        backing.SetSize( 0.0f, 100.0f );
 
         TextActor text = TextActor::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
@@ -965,8 +953,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        backing.SetResizePolicy( FIXED, HEIGHT );
-        backing.SetPreferredSize( Vector2( 0.0f, 100.0f ) );
+        backing.SetSize( 0.0f, 100.0f );
 
         TextActor text = TextActor::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
@@ -986,10 +973,8 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_FIT2_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
-
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
       table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
@@ -1009,8 +994,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        backing.SetResizePolicy( FIXED, HEIGHT );
-        backing.SetPreferredSize( Vector2( 0.0f, 200.0f ) );
+        backing.SetSize( 0.0f, 200.0f );
 
         TextActor text = TextActor::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
@@ -1041,8 +1025,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL1_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, WIDTH );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
       mPopup.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
 
@@ -1056,8 +1039,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        backing.SetResizePolicy( FIXED, HEIGHT );
-        backing.SetPreferredSize( Vector2( 0.0f, 100.0f ) );
+        backing.SetSize( 0.0f, 100.0f );
 
         TextActor text = TextActor::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
@@ -1069,8 +1051,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        backing.SetResizePolicy( FIXED, HEIGHT );
-        backing.SetPreferredSize( Vector2( 0.0f, 200.0f ) );
+        backing.SetSize( 0.0f, 200.0f );
 
         TextActor text = TextActor::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
@@ -1082,8 +1063,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        backing.SetResizePolicy( FIXED, HEIGHT );
-        backing.SetPreferredSize( Vector2( 0.0f, 300.0f ) );
+        backing.SetSize( 0.0f, 300.0f );
 
         TextActor text = TextActor::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
@@ -1103,8 +1083,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL2_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, WIDTH );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
       mPopup.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
 
@@ -1118,7 +1097,7 @@ public:
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         backing.SetResizePolicy( FIXED, HEIGHT );
-        backing.SetPreferredSize( Vector2( 0.0f, 100.0f ) );
+        backing.SetSize( 0.0f, 100.0f );
 
         TextActor text = TextActor::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
@@ -1130,8 +1109,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        backing.SetResizePolicy( FIXED, HEIGHT );
-        backing.SetPreferredSize( Vector2( 0.0f, 200.0f ) );
+        backing.SetSize( 0.0f, 200.0f );
 
         TextActor text = TextActor::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
@@ -1151,8 +1129,7 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL3_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      mPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, WIDTH );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
       mPopup.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
 
@@ -1176,8 +1153,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        backing.SetResizePolicy( FIXED, HEIGHT );
-        backing.SetPreferredSize( Vector2( 0.0f, 200.0f ) );
+        backing.SetSize( 0.0f, 200.0f );
 
         TextActor text = TextActor::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );

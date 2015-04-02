@@ -311,8 +311,7 @@ void DaliTableView::Initialize( Application& application )
   ImageActor backgroundColourActor = Dali::Toolkit::CreateSolidColorActor( BACKGROUND_COLOR );
   backgroundColourActor.SetAnchorPoint( AnchorPoint::CENTER );
   backgroundColourActor.SetParentOrigin( ParentOrigin::CENTER );
-  backgroundColourActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-  backgroundColourActor.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+  backgroundColourActor.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
   backgroundColourActor.SetSizeModeFactor( Vector3( 1.0f, 1.5f, 1.0f ) );
   backgroundColourActor.SetZ( BACKGROUND_Z );
   mScrollViewLayer.Add( backgroundColourActor );
@@ -514,8 +513,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   content.SetAnchorPoint( AnchorPoint::CENTER );
   content.SetParentOrigin( ParentOrigin::CENTER );
   content.SetRelayoutEnabled( true );
-  content.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-  content.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+  content.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
   content.SetSizeModeFactor( sizeMultiplier );
 
   // create background image
@@ -549,8 +547,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   text.SetTextAlignment( Toolkit::Alignment::Type( Alignment::HorizontalCenter | Alignment::VerticalCenter ) );
   text.SetZ( 1 );
   // make the text 90% of tile
-  text.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-  text.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+  text.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
   text.SetSizeModeFactor( Vector3( 0.9f, 0.9f, 0.0f ) );
   text.SetStyleToCurrentText( GetTableTextStyle() );
   text.SetSnapshotModeEnabled( false );
@@ -1029,8 +1026,7 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
       mVersionPopup = Dali::Toolkit::Popup::New();
       mVersionPopup.SetParentOrigin( ParentOrigin::CENTER );
       mVersionPopup.SetAnchorPoint( AnchorPoint::CENTER );
-      mVersionPopup.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      mVersionPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mVersionPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, WIDTH );
       mVersionPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
       mVersionPopup.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
       mVersionPopup.SetTitle( stream.str() );
