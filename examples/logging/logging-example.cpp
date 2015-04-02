@@ -156,6 +156,8 @@ class LoggingController: public ConnectionTracker
   {
     // The Init signal is received once (only) during the Application lifetime
 
+    DemoHelper::RequestThemeChange();
+
     mCurrentLogger = 0;
     mPerformanceLoggers.reserve( NUM_LOGGERS );
     mPerformanceLoggers.resize( NUM_LOGGERS );

@@ -59,6 +59,11 @@ distributing this software or its derivatives.
       "point-size":10
     },
 
+    "builderlabel":
+    {
+      "point-size":10
+    },
+
     "textfield":
     {
       "font-family":"SamsungSans",

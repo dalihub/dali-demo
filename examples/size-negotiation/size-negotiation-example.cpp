@@ -157,6 +157,8 @@ public:
   {
     // The Init signal is received once (only) during the Application lifetime
 
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Stage::GetCurrent();
 
     // Respond to key events

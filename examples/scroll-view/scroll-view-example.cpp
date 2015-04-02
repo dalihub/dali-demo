@@ -179,6 +179,8 @@ public:
    */
   void OnInit(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Dali::Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 

@@ -447,6 +447,8 @@ public:
    */
   void Create(Application& application)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ClusterController::OnKeyEvent);
 
     Vector2 stageSize = Stage::GetCurrent().GetSize();

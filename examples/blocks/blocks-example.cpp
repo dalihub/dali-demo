@@ -289,6 +289,8 @@ public:
    */
   void Create(Application& application)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
     // Creates a default view with a default tool bar.

@@ -436,6 +436,8 @@ public:
    */
   void Create( Application& application )
   {
+    DemoHelper::RequestThemeChange();
+
     // Get a handle to the stage:
     Stage stage = Stage::GetCurrent();
 

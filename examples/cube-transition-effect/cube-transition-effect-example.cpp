@@ -224,6 +224,8 @@ CubeTransitionApp::~CubeTransitionApp()
 
 void CubeTransitionApp::OnInit( Application& application )
 {
+  DemoHelper::RequestThemeChange();
+
   Stage::GetCurrent().KeyEventSignal().Connect(this, &CubeTransitionApp::OnKeyEvent);
 
   // Creates a default view with a default tool bar, the view is added to the stage.

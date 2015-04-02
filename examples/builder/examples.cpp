@@ -243,7 +243,7 @@ public:
   {
     if(!mTitleActor)
     {
-      mTitleActor = TextLabel::New();
+      mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
       mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
     }
@@ -393,12 +393,8 @@ public:
 
   Actor MenuItem(const std::string& text)
   {
-    int size = static_cast<int>(DemoHelper::ScalePointSize(6));
-
-    std::ostringstream fontString;
-    fontString << "<font size="<< size <<">"<<  ShortName( text ) << "</font>";
-
-    TextLabel label = TextLabel::New( fontString.str() );
+    TextLabel label = TextLabel::New( ShortName( text ) );
+    label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "builderlabel" );
     label.SetResizePolicy( FILL_TO_PARENT, WIDTH );
 
     // Hook up tap detector
@@ -508,6 +504,8 @@ public:
 
   void Create(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Stage::GetCurrent();
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleApp::OnKeyEvent);

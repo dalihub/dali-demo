@@ -95,6 +95,8 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Stage::GetCurrent();
     Vector2 stageSize = stage.GetSize();
 

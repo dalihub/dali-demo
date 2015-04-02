@@ -22,7 +22,6 @@
 #include <algorithm>
 #include <sstream>
 #include <unistd.h>
-#include <dali-toolkit/public-api/styling/style-manager.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -216,9 +215,7 @@ void DaliTableView::SortAlphabetically( bool sortAlphabetically )
 
 void DaliTableView::Initialize( Application& application )
 {
-  // Provide the stylesheet
-  StyleManager styleManager = StyleManager::Get();
-  styleManager.RequestThemeChange( DALI_DEMO_THEME_PATH );
+  DemoHelper::RequestThemeChange();
 
   Stage::GetCurrent().KeyEventSignal().Connect( this, &DaliTableView::OnKeyEvent );
 

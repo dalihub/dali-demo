@@ -25,7 +25,8 @@ distributing this software or its derivatives.
     "textlabel":
     {
       "font-family":"HelveticaNeue",
-      "font-style":"Regular"
+      "font-style":"Regular",
+      "point-size":18
     },
 
     "launcherlabel":
@@ -36,6 +37,11 @@ distributing this software or its derivatives.
     "toolbarlabel":
     {
       "point-size":18
+    },
+
+    "builderlabel":
+    {
+      "point-size":13
     },
 
     "textfield":

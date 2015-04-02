@@ -116,6 +116,8 @@ NewWindowController::NewWindowController( Application& application )
 
 void NewWindowController::Create( Application& app )
 {
+  DemoHelper::RequestThemeChange();
+
   Stage stage = Stage::GetCurrent();
   stage.SetBackgroundColor(Color::YELLOW);
 

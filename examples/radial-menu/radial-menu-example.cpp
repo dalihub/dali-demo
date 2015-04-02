@@ -121,6 +121,8 @@ RadialMenuExample::~RadialMenuExample()
 
 void RadialMenuExample::OnInit(Application& app)
 {
+  DemoHelper::RequestThemeChange();
+
   Stage stage = Dali::Stage::GetCurrent();
 
   // The Init signal is received once (only) during the Application lifetime

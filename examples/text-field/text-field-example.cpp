@@ -24,6 +24,9 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/text-abstraction/text-abstraction.h>
 
+// INTERNAL INCLUDES
+#include "shared/view.h"
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 
@@ -60,6 +63,8 @@ public:
    */
   void Create( Application& application )
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Stage::GetCurrent();
 
     stage.KeyEventSignal().Connect(this, &TextFieldExample::OnKeyEvent);

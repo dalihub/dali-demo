@@ -51,6 +51,13 @@ const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
 const Dali::Toolkit::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
 const Dali::Toolkit::Alignment::Padding DEFAULT_MODE_SWITCH_PADDING(8.0f, 8.0f, 8.0f, 8.0f);
 
+void RequestThemeChange()
+{
+  // Provide the stylesheet
+  Dali::Toolkit::StyleManager styleManager = Dali::Toolkit::StyleManager::Get();
+  styleManager.RequestThemeChange( DALI_DEMO_THEME_PATH );
+}
+
 float ScalePointSize(int pointSize)
 {
   Dali::Vector2 dpi = Dali::Stage::GetCurrent().GetDpi();

@@ -20,12 +20,13 @@
  * @brief Basic usage of TextLabel control
  */
 
-// INTERNAL INCLUDES
-#include "shared/multi-language-strings.h"
-
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/text-abstraction/text-abstraction.h>
+
+// INTERNAL INCLUDES
+#include "shared/multi-language-strings.h"
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -56,6 +57,8 @@ public:
    */
   void Create( Application& application )
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Stage::GetCurrent();
 
     stage.KeyEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnKeyEvent);

@@ -26,6 +26,7 @@
 
 // INTERNAL INCLUDES
 #include "shared/multi-language-strings.h"
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -95,6 +96,8 @@ public:
    */
   void Create( Application& application )
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Stage::GetCurrent();
 
     stage.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);

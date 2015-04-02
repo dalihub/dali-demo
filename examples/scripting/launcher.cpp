@@ -23,6 +23,8 @@
 #include <sys/stat.h>
 #include <dali/integration-api/debug.h>
 
+// INTERNAL INCLUDES
+#include "shared/view.h"
 
 
 using namespace Dali;
@@ -56,6 +58,8 @@ Launcher::~Launcher()
 
 void Launcher::Create( Dali::Application& application )
 {
+  DemoHelper::RequestThemeChange();
+
   TextLabel textActor = TextLabel::New( "JSON & JavaScript Launcher..." );
 
   // Reposition the actor

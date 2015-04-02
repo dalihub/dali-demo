@@ -291,6 +291,8 @@ public:
   {
     std::cout << "ImageScalingScaleToFillController::Create" << std::endl;
 
+    DemoHelper::RequestThemeChange();
+
     // Get a handle to the stage:
     Stage stage = Stage::GetCurrent();
 

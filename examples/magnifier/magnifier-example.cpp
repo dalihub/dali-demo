@@ -203,6 +203,8 @@ public:
    */
   void Create( Application& application )
   {
+    DemoHelper::RequestThemeChange();
+
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
     mStageSize = Stage::GetCurrent().GetSize();

@@ -141,6 +141,8 @@ public:
    */
   void Create(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     srand(0); // Want repeatable path
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &TestApp::OnKeyEvent);

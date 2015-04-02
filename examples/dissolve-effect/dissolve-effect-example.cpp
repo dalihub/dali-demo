@@ -208,6 +208,8 @@ DissolveEffectApp::~DissolveEffectApp()
 
 void DissolveEffectApp::OnInit( Application& application )
 {
+  DemoHelper::RequestThemeChange();
+
   Stage::GetCurrent().KeyEventSignal().Connect(this, &DissolveEffectApp::OnKeyEvent);
 
   // Creates a default view with a default tool bar, the view is added to the stage.
