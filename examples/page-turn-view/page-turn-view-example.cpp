@@ -78,14 +78,20 @@ class PortraitPageFactory : public PageFactory
    */
   virtual Actor NewPage( unsigned int pageId )
   {
+    ImageActor page;
+
     if( pageId == 0 )
     {
-      return ImageActor::New( ResourceImage::New( BOOK_COVER_PORTRAIT ) );
+      page = ImageActor::New( ResourceImage::New( BOOK_COVER_PORTRAIT ) );
     }
     else
     {
-      return ImageActor::New( ResourceImage::New( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] ) );
+      page = ImageActor::New( ResourceImage::New( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] ) );
     }
+
+    page.SetRelayoutEnabled( false );
+
+    return page;
   }
 };
 
@@ -120,6 +126,10 @@ class LandscapePageFactory : public PageFactory
       pageBack = ImageActor::New( ResourceImage::New( PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ] ) );
     }
     pageFront.Add(pageBack);
+
+    pageFront.SetRelayoutEnabled( false );
+    pageBack.SetRelayoutEnabled( false );
+
     return pageFront;
   }
 };
@@ -223,6 +233,7 @@ void PageTurnController::OnInit( Application& app )
 
   // Create default View.
   mView = View::New();
+  mView.SetRelayoutEnabled( false );
   stage.Add( mView );
 
   Dali::Window winHandle = app.GetWindow();
@@ -236,6 +247,7 @@ void PageTurnController::OnInit( Application& app )
   mView.OrientationAnimationStartedSignal().Connect( this, &PageTurnController::OnOrientationAnimationStarted );
 
   mPageTurnPortraitView = PageTurnPortraitView::New( mPortraitPageFactory, stageSize );
+  mPageTurnPortraitView.SetRelayoutEnabled( false );
   mPageTurnPortraitView.SetSpineShadowParameter( Vector2(70.f, 30.f) );
   mPageTurnPortraitView.PageTurnStartedSignal().Connect( this, &PageTurnController::OnPageStartedTurn );
   mPageTurnPortraitView.PageTurnFinishedSignal().Connect( this, &PageTurnController::OnPageFinishedTurn );
@@ -244,6 +256,7 @@ void PageTurnController::OnInit( Application& app )
   mPageTurnPortraitView.SetPositionInheritanceMode( USE_PARENT_POSITION );
 
   mPageTurnLandscapeView = PageTurnLandscapeView::New( mLandscapePageFactory, Vector2(stageSize.y*0.5f, stageSize.x) );
+  mPageTurnLandscapeView.SetRelayoutEnabled( false );
   mPageTurnLandscapeView.PageTurnStartedSignal().Connect( this, &PageTurnController::OnPageStartedTurn );
   mPageTurnLandscapeView.PageTurnFinishedSignal().Connect( this, &PageTurnController::OnPageFinishedTurn );
   mPageTurnLandscapeView.PagePanStartedSignal().Connect( this, &PageTurnController::OnPageStartedPan );

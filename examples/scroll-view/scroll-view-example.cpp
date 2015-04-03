@@ -141,7 +141,7 @@ const Vector3 ANCHOR_3DEFFECT_STYLE1(65.0f, -70.0f, -300.0f); ///< Rotation Anch
 const unsigned int IMAGE_THUMBNAIL_WIDTH  = 256;                            ///< Width of Thumbnail Image in texels
 const unsigned int IMAGE_THUMBNAIL_HEIGHT = 256;                            ///< Height of Thumbnail Image in texels
 
-const float SPIN_DURATION = 5.0f;                                           ///< Times to spin an Image by upon touching, each spin taking a second.
+const float SPIN_DURATION = 1.0f;                                           ///< Times to spin an Image by upon touching, each spin taking a second.
 
 const float EFFECT_SNAP_DURATION(0.66f);                                    ///< Scroll Snap Duration for Effects
 const float EFFECT_FLICK_DURATION(0.5f);                                    ///< Scroll Flick Duration for Effects
@@ -226,6 +226,7 @@ private:
     Vector2 stageSize = stage.GetSize();
 
     mScrollView = ScrollView::New();
+    mScrollView.SetRelayoutEnabled( false );
     mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
     mScrollView.SetParentOrigin(ParentOrigin::CENTER);
     mContentLayer.Add( mScrollView );
@@ -298,7 +299,8 @@ private:
   Actor CreatePage()
   {
     Actor page = Actor::New();
-    page.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    page.SetRelayoutEnabled( true );
+    page.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     page.SetParentOrigin( ParentOrigin::CENTER );
     page.SetAnchorPoint( AnchorPoint::CENTER );
 
@@ -450,7 +452,8 @@ private:
    void ApplyEffectToPage(Actor page)
    {
      page.RemoveConstraints();
-     page.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+     page.SetRelayoutEnabled( true );
+     page.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
      switch( mEffectMode )
      {
@@ -566,6 +569,7 @@ private:
     attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
     Image img = ResourceImage::New(filename, attributes);
     ImageActor actor = ImageActor::New(img);
+    actor.SetRelayoutEnabled( false );
     actor.SetName( filename );
     actor.SetParentOrigin(ParentOrigin::CENTER);
     actor.SetAnchorPoint(AnchorPoint::CENTER);
@@ -609,7 +613,7 @@ private:
       {
         // Spin the Image a few times.
         Animation animation = Animation::New(SPIN_DURATION);
-        animation.RotateBy( actor, Degree(360.0f * SPIN_DURATION), Vector3::XAXIS, AlphaFunctions::EaseOut);
+        animation.AnimateBy( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f * SPIN_DURATION) ), Vector3::XAXIS ), AlphaFunctions::EaseOut );
         animation.Play();
       }
     }

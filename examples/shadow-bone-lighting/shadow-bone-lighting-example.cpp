@@ -213,7 +213,8 @@ public:
     mShadowView.SetName("Container");
     mShadowView.SetParentOrigin(ParentOrigin::CENTER);
     mShadowView.SetAnchorPoint(AnchorPoint::CENTER);
-    mShadowView.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    mShadowView.SetRelayoutEnabled( true );
+    mShadowView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
@@ -271,6 +272,9 @@ public:
     mImageActor2 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_2) );
     mImageActor3 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_3) );
 
+    mImageActor1.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
+    mImageActor2.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
+    mImageActor3.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
 
     mImageActor2.SetParentOrigin(ParentOrigin::CENTER);
 

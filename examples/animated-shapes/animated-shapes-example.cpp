@@ -52,6 +52,7 @@ public:
 
     //Create a view
     mView = Dali::Toolkit::View::New();
+    mView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     stage.Add( mView );
 
     //Set background image for the view
@@ -161,7 +162,7 @@ public:
     k0.Add( 1.0f, Vector3( -radius,  0.0f, 0.0f) );
     animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(10)),k0,AlphaFunctions::EaseInOutSine );
 
-    animation.RotateBy(meshActor,Degree(90.0f), Vector3::ZAXIS );
+    animation.AnimateBy( Property( meshActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(90.0f) ), Vector3::ZAXIS ) );
     animation.SetLooping( true );
     animation.Play();
   }
@@ -342,7 +343,7 @@ public:
     k0.Add( 1.0f, Vector3( -radius*2.0,  0.0f, 0.0f) );
     animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(10)),k0,AlphaFunctions::EaseInOutSine );
 
-    animation.RotateBy(meshActor,Degree(-90.0f), Vector3::ZAXIS );
+    animation.AnimateBy( Property( meshActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(-90.0f) ), Vector3::ZAXIS ) );
     animation.SetLooping( true );
     animation.Play();
   }

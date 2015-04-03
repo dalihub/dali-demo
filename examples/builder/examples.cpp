@@ -290,6 +290,7 @@ public:
     mFiles.clear();
 
     mItemView = ItemView::New(*this);
+    mItemView.SetRelayoutEnabled( false );
     stage.Add( mItemView );
     mItemView.SetParentOrigin(ParentOrigin::CENTER);
     mItemView.SetAnchorPoint(AnchorPoint::CENTER);
@@ -396,6 +397,7 @@ public:
   Actor MenuItem(const std::string& text)
   {
     TextView t = TextView::New();
+    t.SetResizePolicy( FILL_TO_PARENT, WIDTH );
     t.SetMarkupProcessingEnabled(true);
 
     int size = static_cast<int>(DemoHelper::ScalePointSize(6));
@@ -480,6 +482,8 @@ public:
 
     builder.AddActors( layer );
 
+    // Force relayout on layer
+    layer.RelayoutRequestTree();
   }
 
 

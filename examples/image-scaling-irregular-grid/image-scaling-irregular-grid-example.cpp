@@ -421,7 +421,8 @@ public:
     // coordinates in a frame defined by a parent actor:
 
     Actor gridActor = Actor::New();
-    gridActor.SetSizeMode( SIZE_EQUAL_TO_PARENT );
+    gridActor.SetRelayoutEnabled( true );
+    gridActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
     gridActor.SetParentOrigin( ParentOrigin::CENTER );
     gridActor.SetAnchorPoint( AnchorPoint::CENTER );
 
@@ -467,7 +468,7 @@ public:
       {
         // Spin the image a few times:
         Animation animation = Animation::New(SPIN_DURATION);
-        animation.RotateBy( actor, Degree(360.0f * SPIN_DURATION), Vector3::XAXIS, AlphaFunctions::EaseOut);
+        animation.AnimateBy( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f * SPIN_DURATION) ), Vector3::XAXIS ), AlphaFunctions::EaseOut );
         animation.Play();
 
         // Change the scaling mode:
