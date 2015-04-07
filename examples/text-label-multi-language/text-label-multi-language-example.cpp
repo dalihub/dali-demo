@@ -104,7 +104,7 @@ public:
       {
         if( mAnimation )
         {
-          mAnimation.MoveBy( mTableView, Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
+          mAnimation.AnimateBy( Property(mTableView, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
           mAnimation.Play();
           mLastPoint = localPoint;
         }

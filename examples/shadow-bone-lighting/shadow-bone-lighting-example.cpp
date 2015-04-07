@@ -266,6 +266,9 @@ public:
     mImageActor2 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_2) );
     mImageActor3 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_3) );
 
+    mImageActor1.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
+    mImageActor2.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
+    mImageActor3.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
 
     mImageActor2.SetParentOrigin(ParentOrigin::CENTER);
 

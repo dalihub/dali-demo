@@ -220,8 +220,9 @@ public:
       {
         // has parent so we expect it to be on stage, start animation
         mRotateAnimation = Animation::New( ORIENTATION_DURATION );
-        mRotateAnimation.RotateTo( mView, Degree( -orientation ), Vector3::ZAXIS, AlphaFunctions::EaseOut );
-        mRotateAnimation.Resize( mView, targetSize.width, targetSize.height );
+        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( -orientation ) ), Vector3::ZAXIS ), AlphaFunctions::EaseOut );
+        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_WIDTH ), targetSize.width );
+        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_HEIGHT ), targetSize.height );
         mRotateAnimation.Play();
       }
       else
@@ -279,7 +280,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(720), Vector3::YAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunctions::EaseInOut );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -290,7 +291,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(720), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunctions::EaseInOut );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -301,8 +302,8 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(360), Vector3::YAXIS, AlphaFunctions::EaseInOut);
-          mActorAnimation.RotateBy(mMotionStretchImageActor, Degree(360), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunctions::EaseInOut );
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunctions::EaseInOut );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -313,7 +314,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.ScaleBy(mMotionStretchImageActor, Vector3(2.0f, 2.0f, 2.0f), AlphaFunctions::Bounce, 0.0f, 1.0f);
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::SCALE ), Vector3(2.0f, 2.0f, 2.0f), AlphaFunctions::Bounce, TimePeriod( 0.0f, 1.0f ) );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }

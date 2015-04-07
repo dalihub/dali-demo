@@ -108,7 +108,7 @@ public:
     mContainer.SetParentOrigin( ParentOrigin::CENTER );
     mContainer.SetResizePolicy( FIXED, ALL_DIMENSIONS );
     mLayoutSize = Vector2(stageSize.width*0.6f, stageSize.width*0.6f);
-    mContainer.SetPreferredSize( mLayoutSize );
+    mContainer.SetSize( mLayoutSize );
     mContainer.SetBackgroundImage( ResourceImage::New( BACKGROUND_IMAGE ) );
     mContainer.GetChildAt(0).SetZ(-1.0f);
     stage.Add( mContainer );
@@ -119,7 +119,7 @@ public:
     mGrabCorner.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
     mGrabCorner.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
     mGrabCorner.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mGrabCorner.SetPreferredSize( Vector2(stageSize.width*0.1f, stageSize.width*0.1f) );
+    mGrabCorner.SetSize( Vector2(stageSize.width*0.1f, stageSize.width*0.1f) );
     mGrabCorner.SetZ(1.0f);
     mContainer.Add( mGrabCorner );
 
@@ -130,8 +130,8 @@ public:
     mLabel = TextLabel::New( "A Quick Brown Fox Jumps Over The Lazy Dog" );
     mLabel.SetName( "TextLabel" );
     mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mLabel.SetDimensionDependency( HEIGHT, WIDTH );
     mLabel.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+    mLabel.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
@@ -154,7 +154,7 @@ public:
       Vector2 clampedSize = Vector2( ConvertToEven(static_cast<int>(mLayoutSize.x)),
                                      ConvertToEven(static_cast<int>(mLayoutSize.y)) );
 
-      mContainer.SetPreferredSize( clampedSize );
+      mContainer.SetSize( clampedSize );
     }
   }
 

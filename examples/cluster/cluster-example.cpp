@@ -582,8 +582,7 @@ public:
     shadowActor.SetPosition(Vector3(0.0f, 0.0f, -1.0f));
 
     // Apply size-relative mode to auto-size the image shadow
-    shadowActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-    shadowActor.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+    shadowActor.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
     shadowActor.SetSizeModeFactor( ShadowProperty::SIZE_SCALE );
     actor.Add( shadowActor );
 
@@ -602,8 +601,7 @@ public:
     borderActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
     borderActor.SetNinePatchBorder( CLUSTER_IMAGE_BORDER_ABSOLUTE );
     borderActor.SetPosition( Vector3( 0.0f, 0.0f, 1.0f ) );
-    borderActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-    borderActor.SetSizeMode( SIZE_FIXED_OFFSET_FROM_PARENT );
+    borderActor.SetResizePolicy( SIZE_FIXED_OFFSET_FROM_PARENT, ALL_DIMENSIONS );
     borderActor.SetSizeModeFactor( Vector3( CLUSTER_IMAGE_BORDER_INDENT - 1.0f, CLUSTER_IMAGE_BORDER_INDENT - 1.0f, 0.0f ) * 2.0f );
     actor.Add( borderActor );
 

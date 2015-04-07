@@ -75,15 +75,15 @@ public:
     mContainer.SetName( "Container" );
     mContainer.SetParentOrigin( ParentOrigin::CENTER );
     mContainer.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mContainer.SetPreferredSize( Vector2(stageSize.width*0.6f, stageSize.width*0.6f) );
+    mContainer.SetSize( Vector2(stageSize.width*0.6f, stageSize.width*0.6f) );
     mContainer.SetBackgroundImage( ResourceImage::New( BACKGROUND_IMAGE ) );
     mContainer.GetChildAt(0).SetZ(-1.0f);
     stage.Add( mContainer );
 
     TextField field = TextField::New();
     field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    field.SetDimensionDependency( HEIGHT, WIDTH );
     field.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+    field.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
 
     mContainer.Add( field );
 

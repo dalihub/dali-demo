@@ -470,7 +470,7 @@ public:
       {
         // Spin the image a few times:
         Animation animation = Animation::New(SPIN_DURATION);
-        animation.RotateBy( actor, Degree(360.0f * SPIN_DURATION), Vector3::XAXIS, AlphaFunctions::EaseOut);
+        animation.AnimateBy( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f * SPIN_DURATION) ), Vector3::XAXIS ), AlphaFunctions::EaseOut );
         animation.Play();
 
         // Change the scaling mode:

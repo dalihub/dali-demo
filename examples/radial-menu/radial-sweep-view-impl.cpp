@@ -280,13 +280,13 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
       Actor actor = mLayer.GetChildAt(i);
       if( actor != mStencilActor )
       {
-        anim.RotateTo( actor, mInitialActorAngle, Vector3::ZAXIS );
+        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mInitialActorAngle ) ), Vector3::ZAXIS ) );
       }
     }
   }
 
-  anim.AnimateTo( Property( mStencilActor, mRotationAngleIndex ), static_cast<float>(mFinalSector), mEasingFunction, TimePeriod( offsetTime, duration) );
-  anim.RotateTo( mStencilActor, mFinalAngle, Vector3::ZAXIS, mEasingFunction, offsetTime, duration );
+  anim.AnimateTo( Property( mStencilActor, mRotationAngleIndex ), static_cast<float>(mFinalSector), mEasingFunction, TimePeriod( offsetTime, duration ) );
+  anim.AnimateTo( Property( mStencilActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mFinalAngle ) ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
 
   if( mRotateActorsWithStencil )
   {
@@ -295,7 +295,7 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
       Actor actor = mLayer.GetChildAt(i);
       if( actor != mStencilActor )
       {
-        anim.RotateTo( actor, Degree(mFinalAngle - mInitialAngle), Vector3::ZAXIS, mEasingFunction, offsetTime, duration );
+        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mFinalAngle - mInitialAngle ) ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
       }
     }
   }
@@ -306,7 +306,7 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
       Actor actor = mLayer.GetChildAt(i);
       if( actor != mStencilActor )
       {
-        anim.RotateTo( actor, mFinalActorAngle, Vector3::ZAXIS, mEasingFunction, offsetTime, duration );
+        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mFinalActorAngle ) ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
       }
     }
   }
