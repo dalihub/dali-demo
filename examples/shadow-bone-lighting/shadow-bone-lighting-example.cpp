@@ -100,23 +100,10 @@ public:
     {
     }
 
-    Vector3 operator()( const Vector3& current, const PropertyInput& property )
+    void operator()( Vector3& current, const PropertyInputContainer& inputs )
     {
-      Vector3 position = property.GetVector3();
-      position.z += 1.0f;
-      return position;
-    }
-  };
-
-  struct QuaternionEqualToConstraint
-  {
-    QuaternionEqualToConstraint()
-    {
-    }
-
-    Quaternion operator()( const Quaternion& current, const PropertyInput& property )
-    {
-      return property.GetQuaternion();
+      current = inputs[0]->GetVector3();
+      current.z += 1.0f;
     }
   };
 
@@ -127,10 +114,10 @@ public:
     {
     }
 
-    Quaternion operator()( const Quaternion& current, const PropertyInput& property )
+    void operator()( Quaternion& current, const PropertyInputContainer& inputs )
     {
-      Degree angle(property.GetFloat());
-      return Quaternion( Radian(angle) * mSign, Vector3::YAXIS );
+      Degree angle( inputs[0]->GetFloat() );
+      current = Quaternion( Radian(angle) * mSign, Vector3::YAXIS );
     }
 
     float mSign;
@@ -290,10 +277,14 @@ public:
 
     Property::Index angleIndex = mImageActor2.RegisterProperty("angle", Property::Value(30.0f));
     Source angleSrc( mImageActor2, angleIndex );
-    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ORIENTATION, angleSrc,
-                                                              RotationConstraint(-1.0f)));
-    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ORIENTATION, angleSrc,
-                                                              RotationConstraint(+1.0f)));
+
+    Constraint constraint = Constraint::New<Quaternion>( mImageActor1, Actor::Property::ORIENTATION, RotationConstraint(-1.0f) );
+    constraint.AddSource( angleSrc );
+    constraint.Apply();
+
+    constraint = Constraint::New<Quaternion>( mImageActor3, Actor::Property::ORIENTATION, RotationConstraint(+1.0f) );
+    constraint.AddSource( angleSrc );
+    constraint.Apply();
 
     mSceneAnimation = Animation::New(2.5f);
 

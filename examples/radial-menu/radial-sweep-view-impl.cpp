@@ -26,9 +26,8 @@ namespace
  * Method to project a point on a circle of radius halfSide at given
  * angle onto a square of side 2 * halfSide
  */
-Vector3 CircleSquareProjection( Degree angle, float halfSide )
+void CircleSquareProjection( Vector3& position, Degree angle, float halfSide )
 {
-  Vector3 position(0.0f, 0.0f, 0.0f);
   Radian angleInRadians(angle);
 
   //  135  90   45
@@ -58,7 +57,8 @@ Vector3 CircleSquareProjection( Degree angle, float halfSide )
     position.x = halfSide;
     position.y = -halfSide * sinf(angleInRadians) / cosf(angleInRadians);
   }
-  return position;
+
+  position.z = 0.0f;
 }
 
 float HoldZeroFastEaseInOutHoldOne(float progress)
@@ -88,9 +88,9 @@ struct SquareFanConstraint
   {
   }
 
-  Vector3 operator()( const Vector3& current, const PropertyInput& start, const PropertyInput& rotation )
+  void operator()( Vector3& current, const PropertyInputContainer& inputs )
   {
-    float degree = fmodf((start.GetFloat() + rotation.GetFloat()), 360.0f);
+    float degree = fmodf((inputs[0]->GetFloat() + inputs[1]->GetFloat()), 360.0f);
     if(degree < 0.0f)
     {
       degree += 360.0f;
@@ -100,15 +100,17 @@ struct SquareFanConstraint
     float endAngle = (90.0f*mSideIndex)+45.0f;
     if(degree < startAngle)
     {
-      return Vector3::ZERO;
+      current = Vector3::ZERO;
     }
-    else if( degree >= endAngle )
+    else
     {
-      degree = endAngle;
+      if( degree >= endAngle )
+      {
+        degree = endAngle;
+      }
+      CircleSquareProjection( current, Degree(degree), 0.5f );
+      current.x = -current.x; // Inverting X makes the animation go anti clockwise from left center
     }
-    Vector3 pos = CircleSquareProjection(Degree(degree), 0.5f);
-    pos.x = -pos.x; // Inverting X makes the animation go anti clockwise from left center
-    return pos;
   }
 
   int mSideIndex;
@@ -362,18 +364,35 @@ void RadialSweepViewImpl::CreateStencil( Degree initialSector )
 
   // Constrain the vertices of the square mesh to sweep out a sector as the
   // rotation angle is animated.
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(1, AnimatableVertex::Property::POSITION),
-                                                  srcStart, srcStart, SquareFanConstraint(0)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(2, AnimatableVertex::Property::POSITION),
-                                                  srcStart, srcRot, SquareFanConstraint(0)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(3, AnimatableVertex::Property::POSITION),
-                                                  srcStart, srcRot, SquareFanConstraint(1)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(4, AnimatableVertex::Property::POSITION),
-                                                  srcStart, srcRot, SquareFanConstraint(2)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(5, AnimatableVertex::Property::POSITION),
-                                                  srcStart, srcRot, SquareFanConstraint(3)));
-  mMesh.ApplyConstraint(Constraint::New<Vector3>( mMesh.GetPropertyIndex(6, AnimatableVertex::Property::POSITION),
-                                                  srcStart, srcRot, SquareFanConstraint(4)));
+  Constraint constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(1, AnimatableVertex::Property::POSITION), SquareFanConstraint(0) );
+  constraint.AddSource( srcStart );
+  constraint.AddSource( srcStart );
+  constraint.Apply();
+
+  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(2, AnimatableVertex::Property::POSITION), SquareFanConstraint(0) );
+  constraint.AddSource( srcStart );
+  constraint.AddSource( srcRot );
+  constraint.Apply();
+
+  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(3, AnimatableVertex::Property::POSITION), SquareFanConstraint(1) );
+  constraint.AddSource( srcStart );
+  constraint.AddSource( srcRot );
+  constraint.Apply();
+
+  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(4, AnimatableVertex::Property::POSITION), SquareFanConstraint(2) );
+  constraint.AddSource( srcStart );
+  constraint.AddSource( srcRot );
+  constraint.Apply();
+
+  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(5, AnimatableVertex::Property::POSITION), SquareFanConstraint(3) );
+  constraint.AddSource( srcStart );
+  constraint.AddSource( srcRot );
+  constraint.Apply();
+
+  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(6, AnimatableVertex::Property::POSITION), SquareFanConstraint(4) );
+  constraint.AddSource( srcStart );
+  constraint.AddSource( srcRot );
+  constraint.Apply();
 
   mStencilActor.SetDrawMode( DrawMode::STENCIL );
   mStencilActor.SetPositionInheritanceMode(USE_PARENT_POSITION);

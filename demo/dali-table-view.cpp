@@ -151,20 +151,19 @@ public:
   {
   }
 
-  Vector3 operator()( const Vector3& current, const PropertyInput& scrollProperty, const PropertyInput& parentSize )
+  void operator()( Vector3& position, const PropertyInputContainer& inputs )
   {
-    Vector3 pos( current );
-    const float parentHeight = parentSize.GetVector3().height;
+    const Vector3& parentSize = inputs[1]->GetVector3();
 
-    // Wrap bubbles vertically
-    if( pos.y + mShapeSize * 0.5f < -parentHeight * 0.5f )
+    // Wrap bubbles verically.
+    if( position.y + mShapeSize * 0.5f < -parentSize.y * 0.5f )
     {
-      pos.y = parentHeight * 0.5f + mShapeSize * 0.5f;
+      position.y = parentSize.y * 0.5f + mShapeSize * 0.5f;
     }
 
-    // Bubbles X position moves parallax to horizontal panning by a scale factor unique to each bubble
-    pos.x = mInitialX + ( scrollProperty.GetVector3().x * mScale );
-    return pos;
+    // Bubbles X position moves parallax to horizontal
+    // panning by a scale factor unique to each bubble.
+    position.x = mInitialX + ( inputs[0]->GetVector3().x * mScale );
   }
 
 private:
@@ -780,11 +779,10 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
     child.SetPosition( childPos );
 
     // Define bubble horizontal parallax and vertical wrapping
-    Constraint animConstraint = Constraint::New < Vector3 > ( Actor::Property::POSITION,
-      Source( mScrollView, ScrollView::Property::SCROLL_POSITION ),
-      Dali::ParentSource( Dali::Actor::Property::SIZE ),
-      AnimateBubbleConstraint( childPos, Random::Range( -0.85f, 0.25f ), childSize.height ) );
-    child.ApplyConstraint( animConstraint );
+    Constraint animConstraint = Constraint::New < Vector3 > ( child, Actor::Property::POSITION, AnimateBubbleConstraint( childPos, Random::Range( -0.85f, 0.25f ), childSize.height ) );
+    animConstraint.AddSource( Source( mScrollView, ScrollView::Property::SCROLL_POSITION ) );
+    animConstraint.AddSource( Dali::ParentSource( Dali::Actor::Property::SIZE ) );
+    animConstraint.Apply();
 
     // Kickoff animation
     Animation animation = Animation::New( Random::Range( 40.0f, 80.0f ) );
