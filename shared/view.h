@@ -110,7 +110,10 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
     label.SetProperty( Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     label.SetResizePolicy( Dali::FILL_TO_PARENT, Dali::HEIGHT );
     label.SetColor( DEFAULT_TEXT_STYLE_COLOR );
-    toolBarLayer.Add( label );
+
+    // Add title to the tool bar.
+    const float padding( style.mToolBarPadding );
+    toolBar.AddControl( label, style.mToolBarTitlePercentage, Dali::Toolkit::Alignment::HorizontalCenter, Dali::Toolkit::Alignment::Padding( padding, padding, padding, padding ) );
   }
 
   return toolBarLayer;
