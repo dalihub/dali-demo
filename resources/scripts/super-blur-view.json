@@ -65,7 +65,7 @@
       "parent-origin": "BOTTOM_CENTER",
       "anchor-point": "BOTTOM_CENTER",
       "position": [0, 0, 0],
-      "size": [0, 100, 0],
+      "size": [200, 100, 0],
       "label-actor": {
         "type": "TextView",
         "text": "Blur"

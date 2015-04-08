@@ -341,18 +341,12 @@ public:
     {
       mPopup = CreatePopup();
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_TITLE_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetTitle( "Popup!" );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -369,9 +363,6 @@ public:
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
       mPopup.AddButton( okayButton );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -398,9 +389,6 @@ public:
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
       mPopup.AddButton( okayButton );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -429,9 +417,6 @@ public:
 
       mPopup.AddButton( okayButton );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_CONTENT_TEXT_ID )
@@ -450,9 +435,6 @@ public:
 
       mPopup.Add( text );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_CONTENT_IMAGE_ID )
@@ -465,9 +447,6 @@ public:
       image.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( image );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -482,9 +461,6 @@ public:
       image.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
       mPopup.Add( image );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -501,9 +477,6 @@ public:
 
       mPopup.Add( image );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_CONTENT_IMAGE_FILL_ID )
@@ -518,9 +491,6 @@ public:
       image.SetSizeScalePolicy( FILL_WITH_ASPECT_RATIO );
 
       mPopup.Add( image );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -540,9 +510,6 @@ public:
       text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( text );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -582,9 +549,6 @@ public:
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
       mPopup.AddButton( okayButton );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -651,7 +615,7 @@ public:
 
         root.AddChild( text, Toolkit::TableView::CellPosition( 0, 1 ) );
 
-        content.AddChild( root, Toolkit::TableView::CellPosition( 1, 0, 0, 2 ) );  // Column span 2
+        content.AddChild( root, Toolkit::TableView::CellPosition( 1, 0 ) );
       }
 
       mPopup.Add( content );
@@ -677,9 +641,6 @@ public:
 
       mPopup.AddButton( okayButton );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == TABLEVIEW_BUTTON_EMPTY_ID )
@@ -693,9 +654,6 @@ public:
       table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -715,9 +673,6 @@ public:
       table.Add( backing );
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -748,9 +703,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -817,9 +769,6 @@ public:
 
       mPopup.Add( table );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == TABLEVIEW_BUTTON_FIXED1_ID )
@@ -862,9 +811,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -909,9 +855,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -965,9 +908,6 @@ public:
 
       mPopup.Add( table );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == TABLEVIEW_BUTTON_FIT2_ID )
@@ -1016,9 +956,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -1075,9 +1012,6 @@ public:
 
       mPopup.Add( table );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL2_ID )
@@ -1121,9 +1055,6 @@ public:
 
       mPopup.Add( table );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL3_ID )
@@ -1164,9 +1095,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }

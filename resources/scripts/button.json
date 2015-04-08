@@ -25,7 +25,7 @@
       "parent-origin": "TOP_CENTER",
       "anchor-point": "TOP_CENTER",
       "position": [0, 0, 0],
-      "size": [0, 200, 0],
+      "size": [400, 200, 0],
       "normal-state-actor": {
         "type": "ImageActor",
         "image": {
@@ -50,7 +50,7 @@
       "parent-origin": "CENTER",
       "anchor-point": "CENTER",
       "position": [0, 0, 0],
-      "size": [0, 200, 0],
+      "size": [400, 200, 0],
       "label-actor": {
         "type": "TextView",
         "text": "Disabled"
@@ -83,7 +83,7 @@
       "parent-origin": "BOTTOM_CENTER",
       "anchor-point": "BOTTOM_CENTER",
       "position": [0, 0, 0],
-      "size": [0, 200, 0],
+      "size": [400, 200, 0],
       "label-actor": {
         "type": "TextView",
         "text": "Toggle"
