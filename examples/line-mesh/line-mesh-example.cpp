@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,76 +27,91 @@ using namespace Dali;
 namespace
 {
 const char* MATERIAL_SAMPLE( DALI_IMAGE_DIR "gallery-small-48.jpg" );
+const char* MATERIAL_SAMPLE2( DALI_IMAGE_DIR "gallery-medium-19.jpg" );
 
 #define MAKE_SHADER(A)#A
 
 const char* VERTEX_SHADER = MAKE_SHADER(
-attribute mediump vec2    aPosition;
-attribute highp   vec2    aTexCoord;
-varying   mediump vec2    vTexCoord;
+attribute mediump vec2    aPosition1;
+attribute mediump vec2    aPosition2;
 uniform   mediump mat4    uMvpMatrix;
 uniform   mediump vec3    uSize;
-uniform   lowp    vec4    uFadeColor;
+uniform   mediump float   uMorphAmount;
 
 void main()
 {
-  mediump vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);
+  mediump vec2 morphPosition = mix(aPosition1, aPosition2, uMorphAmount);
+  mediump vec4 vertexPosition = vec4(morphPosition, 0.0, 1.0);
   vertexPosition.xyz *= uSize;
   vertexPosition = uMvpMatrix * vertexPosition;
-  vTexCoord = aTexCoord;
   gl_Position = vertexPosition;
 }
 );
 
 const char* FRAGMENT_SHADER = MAKE_SHADER(
-varying mediump vec2  vTexCoord;
 uniform lowp  vec4    uColor;
 uniform sampler2D     sTexture;
-uniform   lowp    vec4    uFadeColor;
 
 void main()
 {
-  gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor * uFadeColor;
+  gl_FragColor = uColor;
 }
 );
 
 Geometry CreateGeometry()
 {
-
   // Create vertices
-  const float halfQuadSize = .5f;
-  struct TexturedQuadVertex { Vector2 position; Vector2 textureCoordinates; };
-  TexturedQuadVertex texturedQuadVertexData[4] = {
-    { Vector2(-halfQuadSize, -halfQuadSize), Vector2(0.f, 0.f) },
-    { Vector2( halfQuadSize, -halfQuadSize), Vector2(1.f, 0.f) },
-    { Vector2(-halfQuadSize,  halfQuadSize), Vector2(0.f, 1.f) },
-    { Vector2( halfQuadSize,  halfQuadSize), Vector2(1.f, 1.f) } };
+  struct Vertex { Vector2 position; };
+  Vertex pentagonVertexData[5] =
+    {
+      { Vector2(  0.0f,   1.00f) }, // 0
+      { Vector2( -0.95f,  0.31f) }, // 1
+      { Vector2( -0.59f, -0.81f) }, // 2
+      { Vector2(  0.59f, -0.81f) }, // 3
+      { Vector2(  0.95f,  0.31f) }, // 4
+    };
 
-  Property::Map texturedQuadVertexFormat;
-  texturedQuadVertexFormat["aPosition"] = Property::VECTOR2;
-  texturedQuadVertexFormat["aVertexCoord"] = Property::VECTOR2;
-  PropertyBuffer texturedQuadVertices = PropertyBuffer::New( PropertyBuffer::STATIC, texturedQuadVertexFormat, 4 );
-  texturedQuadVertices.SetData(texturedQuadVertexData);
+  Vertex pentacleVertexData[5] =
+    {
+      { Vector2(  0.0f,  -1.00f) }, //
+      { Vector2(  0.59f,  0.81f) }, //
+      { Vector2( -0.95f, -0.31f) }, //
+      { Vector2(  0.95f, -0.31f) }, //
+      { Vector2( -0.59f,  0.81f) }, //
+    };
+
+  Property::Map pentagonVertexFormat;
+  pentagonVertexFormat["aPosition1"] = Property::VECTOR2;
+  PropertyBuffer pentagonVertices = PropertyBuffer::New( PropertyBuffer::STATIC, pentagonVertexFormat, 5 );
+  pentagonVertices.SetData(pentagonVertexData);
+
+  Property::Map pentacleVertexFormat;
+  pentacleVertexFormat["aPosition2"] = Property::VECTOR2;
+  PropertyBuffer pentacleVertices = PropertyBuffer::New( PropertyBuffer::STATIC, pentacleVertexFormat, 5 );
+  pentacleVertices.SetData(pentacleVertexData);
 
   // Create indices
-  unsigned short indexData[6] = { 0, 3, 1, 0, 2, 3 };
+  unsigned short indexData[10] = { 0, 1, 1, 2, 2, 3, 3, 4, 4, 0 };
   Property::Map indexFormat;
   indexFormat["indices"] = Property::UNSIGNED_INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( PropertyBuffer::STATIC, indexFormat, 3 );
+  PropertyBuffer indices = PropertyBuffer::New( PropertyBuffer::STATIC, indexFormat, 5 );
   indices.SetData(indexData);
 
   // Create the geometry object
-  Geometry texturedQuadGeometry = Geometry::New();
-  texturedQuadGeometry.AddVertexBuffer( texturedQuadVertices );
-  texturedQuadGeometry.SetIndexBuffer( indices );
+  Geometry pentagonGeometry = Geometry::New();
+  pentagonGeometry.AddVertexBuffer( pentagonVertices );
+  pentagonGeometry.AddVertexBuffer( pentacleVertices );
+  pentagonGeometry.SetIndexBuffer( indices );
 
-  return texturedQuadGeometry;
+  pentagonGeometry.SetGeometryType( Geometry::LINES );
+
+  return pentagonGeometry;
 }
 
 } // anonymous namespace
 
-// This example shows how to use a simple mesh
-//
+// This example shows how to morph between 2 meshes with the same number of
+// vertices.
 class ExampleController : public ConnectionTracker
 {
 public:
@@ -149,52 +164,27 @@ public:
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
-    mMeshActor.SetSize(400, 400);
+    mMeshActor.SetSize(200, 200);
 
-    Property::Index fadeColorIndex = mMeshActor.RegisterProperty( "fade-color", Color::GREEN );
-    mMeshActor.AddUniformMapping( fadeColorIndex, std::string("uFadeColor") );
+    Property::Index morphAmountIndex = mMeshActor.RegisterProperty( "morph-amount", 0.0f );
+    mMeshActor.AddUniformMapping( morphAmountIndex, std::string("uMorphAmount") );
 
-    fadeColorIndex = mRenderer.RegisterProperty( "fade-color", Color::MAGENTA );
-    mRenderer.AddUniformMapping( fadeColorIndex, std::string("uFadeColor" ) );
     mRenderer.SetDepthIndex(0);
 
-    mMeshActor.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mMeshActor.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
+    mMeshActor.SetAnchorPoint( AnchorPoint::CENTER );
     stage.Add( mMeshActor );
 
-
-    mRenderer2 = Renderer::New( mGeometry, mMaterial );
-
-    mMeshActor2 = Actor::New();
-    mMeshActor2.AddRenderer( mRenderer2 );
-    mMeshActor2.SetSize(400, 400);
-
-    mMeshActor2.RegisterProperty( "a-n-other-property", Color::GREEN );
-    Property::Index fadeColorIndex2 = mMeshActor2.RegisterProperty( "another-fade-color", Color::GREEN );
-    mMeshActor2.AddUniformMapping( fadeColorIndex2, std::string("uFadeColor") );
-
-    mRenderer2.RegisterProperty( "a-n-other-property", Vector3::ZERO );
-    mRenderer2.RegisterProperty( "winning-formula", 8008.135f );
-    fadeColorIndex2 = mRenderer2.RegisterProperty( "another-fade-color", Color::GREEN );
-    mRenderer2.AddUniformMapping( fadeColorIndex2, std::string("uFadeColor" ) );
-    mRenderer2.SetDepthIndex(0);
-
-    mMeshActor2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mMeshActor2.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    stage.Add( mMeshActor2 );
-
+    mChangeImageTimer = Timer::New( 5000 );
+    mChangeImageTimer.TickSignal().Connect( this, &ExampleController::OnTimer );
+    mChangeImageTimer.Start();
 
     Animation  animation = Animation::New(5);
     KeyFrames keyFrames = KeyFrames::New();
-    keyFrames.Add(0.0f, Vector4::ZERO);
-    keyFrames.Add(1.0f, Vector4( 1.0f, 0.0f, 1.0f, 1.0f ));
+    keyFrames.Add(0.0f, 0.0f);
+    keyFrames.Add(1.0f, 1.0f);
 
-    KeyFrames keyFrames2 = KeyFrames::New();
-    keyFrames2.Add(0.0f, Vector4::ZERO);
-    keyFrames2.Add(1.0f, Color::GREEN);
-
-    animation.AnimateBetween( Property( mRenderer, fadeColorIndex ), keyFrames, AlphaFunctions::Sin );
-    animation.AnimateBetween( Property( mRenderer2, fadeColorIndex2 ), keyFrames2, AlphaFunctions::Sin2x );
+    animation.AnimateBetween( Property( mMeshActor, morphAmountIndex ), keyFrames, AlphaFunctions::Sin );
     animation.SetLooping(true);
     animation.Play();
 
@@ -210,6 +200,13 @@ public:
     // quit the application
     mApplication.Quit();
     return true;
+  }
+
+  bool OnTimer()
+  {
+    Image image = ResourceImage::New( MATERIAL_SAMPLE2 );
+    mSampler.SetImage( image );
+    return false;
   }
 
   void OnKeyEvent(const KeyEvent& event)
@@ -237,6 +234,7 @@ private:
   Actor    mMeshActor;
   Renderer mRenderer2;
   Actor    mMeshActor2;
+  Timer    mChangeImageTimer;
 };
 
 void RunTest( Application& application )
