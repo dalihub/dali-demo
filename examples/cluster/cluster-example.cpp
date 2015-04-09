@@ -445,6 +445,8 @@ public:
    */
   void Create(Application& application)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ClusterController::OnKeyEvent);
 
     Vector2 stageSize = Stage::GetCurrent().GetSize();
@@ -822,15 +824,13 @@ public:
   {
     if(!mTitleActor)
     {
-      mTitleActor = TextView::New();
+      mTitleActor = DemoHelper::CreateToolBarLabel( "" );
+
       // Add title to the tool bar.
       mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
     }
 
-    Font font = Font::New();
-    mTitleActor.SetText( title );
-    mTitleActor.SetSize( font.MeasureText( title ) );
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
   /**
@@ -852,7 +852,7 @@ private:
   Application&               mApplication;                       ///< Application instance
   Toolkit::View              mView;                              ///< The View instance.
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
-  TextView                   mTitleActor;                        ///< The Toolbar's Title.
+  TextLabel                   mTitleActor;                        ///< The Toolbar's Title.
 
   Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)
 

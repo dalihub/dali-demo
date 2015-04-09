@@ -160,12 +160,6 @@ const float BUTTON_BORDER = -10.0f;
 const float MENU_OPTION_HEIGHT(140.0f);
 const float LABEL_TEXT_SIZE_Y = 20.0f;
 
-const char*             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
-const char*             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
-const PointSize         DEFAULT_TEXT_STYLE_POINT_SIZE( 5.0f );
-const TextStyle::Weight DEFAULT_TEXT_STYLE_WEIGHT(Dali::TextStyle::MEDIUM);
-const Vector4           DEFAULT_TEXT_STYLE_COLOR(1.0f, 1.0f, 1.0f, 1.0f);
-
 const Vector3 INITIAL_OFFSCREEN_POSITION( 1000.0f, 0, -1000.0f );
 
 static Vector3 DepthLayoutItemSizeFunctionPortrait(unsigned int numberOfColumns, float layoutWidth)
@@ -240,6 +234,8 @@ public:
    */
   void OnInit(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Dali::Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
 
@@ -972,15 +968,12 @@ private:
   {
     if(!mTitleActor)
     {
-      mTitleActor = TextView::New();
+      mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
       mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
     }
 
-    Font font = Font::New();
-    mTitleActor.SetText( title );
-    mTitleActor.SetSize( font.MeasureText( title ) );
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
   void ShowMenu()
@@ -1008,30 +1001,20 @@ private:
     slider.ValueChangedSignal().Connect( this, &ItemViewExample::SliderValueChange );
     tableView.AddChild( slider, TableView::CellPosition( 0, 0 ) );
 
-    TextStyle defaultTextStyle;
-    defaultTextStyle.SetFontName(DEFAULT_TEXT_STYLE_FONT_FAMILY);
-    defaultTextStyle.SetFontStyle(DEFAULT_TEXT_STYLE_FONT_STYLE);
-    defaultTextStyle.SetFontPointSize(DEFAULT_TEXT_STYLE_POINT_SIZE);
-    defaultTextStyle.SetWeight(DEFAULT_TEXT_STYLE_WEIGHT);
-    defaultTextStyle.SetTextColor(DEFAULT_TEXT_STYLE_COLOR);
-
-    TextView text = TextView::New( "Duration" );
+    TextLabel text = TextLabel::New( "Duration" );
     text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
     text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
-    text.SetStyleToCurrentText( defaultTextStyle );
     text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    text.SetZ( -0.9f );
+    text.SetResizePolicy( FIXED, HEIGHT );
+    text.SetSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
     slider.Add( text );
 
     Actor textContainer = Actor::New();
     textContainer.SetRelayoutEnabled( true );
     textContainer.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-    mAlphaFunctionText = TextView::New( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
+    mAlphaFunctionText = TextLabel::New( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
     mAlphaFunctionText.SetAnchorPoint( ParentOrigin::CENTER );
     mAlphaFunctionText.SetParentOrigin( ParentOrigin::CENTER );
-    mAlphaFunctionText.SetTextAlignment( Toolkit::Alignment::VerticalCenter );
     textContainer.Add( mAlphaFunctionText );
     tableView.AddChild( textContainer, TableView::CellPosition( 1, 0 ) );
 
@@ -1039,11 +1022,9 @@ private:
     mTapDetector.Attach(mAlphaFunctionText);
     mTapDetector.DetectedSignal().Connect( this, &ItemViewExample::ChangeAlphaFunctionOnTap );
 
-    text = TextView::New( "Alpha Function" );
+    text = TextLabel::New( "Alpha Function" );
     text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
     text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
-    text.SetStyleToCurrentText( defaultTextStyle );
     text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
     text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
     textContainer.Add( text );
@@ -1069,7 +1050,7 @@ private:
 
     if( mAlphaFunctionText )
     {
-      mAlphaFunctionText.SetText( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
+      mAlphaFunctionText.SetProperty( TextLabel::Property::TEXT, std::string(ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex]) );
     }
 
     if( mItemView )
@@ -1133,7 +1114,7 @@ private:
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;
-  TextView mTitleActor;             ///< The Toolbar's Title.
+  TextLabel mTitleActor;             ///< The Toolbar's Title.
 
   ItemView mItemView;
   Image mBorderImage;
@@ -1154,7 +1135,7 @@ private:
   Toolkit::PushButton mReplaceButton;
 
   unsigned int mAlphaFuncIndex;
-  TextView mAlphaFunctionText;
+  TextLabel mAlphaFunctionText;
   BufferImage mWhiteImage;
 };
 

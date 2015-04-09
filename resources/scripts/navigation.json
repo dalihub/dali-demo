@@ -31,7 +31,7 @@
       "title": "title",
       "sub-title": "sub title",
       "actors": [{
-        "type": "TextView", // styles can be additive
+        "type": "TextLabel", // styles can be additive
         "parent-origin": [0.5, 0.5, 0],
         "anchor-point": [0.5, 0.5, 0],
         "size": [200, 200, 1],
@@ -47,13 +47,13 @@
       "type": "Page",
       "name": "page2",
       "actors": [{
-        "type": "TextView", // styles can be additive
+        "type": "TextLabel", // styles can be additive
         "parent-origin": [0.5, 0.5, 0.5],
         "anchor-point": [0.5, 0.5, 0.5],
         "size": [200, 200, 1],
         "text": "Hello World!"
       }, {
-        "type": "TextView", // styles can be additive
+        "type": "TextLabel", // styles can be additive
         "parent-origin": [0.0, 0.0, 0.5],
         "anchor-point": [0.0, 0.0, 0.5],
         "size": [200, 200, 1],
@@ -64,7 +64,7 @@
           "action": "pop"
         }]
       }, {
-        "type": "TextView", // styles can be additive
+        "type": "TextLabel", // styles can be additive
         "parent-origin": [1.0, 1.0, 0.5],
         "anchor-point": [1.0, 1.0, 0.5],
         "size": [200, 200, 1],

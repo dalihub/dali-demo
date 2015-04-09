@@ -509,7 +509,6 @@ private:
   Application&               mApplication;            ///< Application instance
   Toolkit::View              mView;
   Toolkit::ToolBar           mToolBar;
-  TextView                   mTitleActor;             ///< The Toolbar's Title.
   Image                      mIconEffectsOff;
   Image                      mIconEffectsOn;
 

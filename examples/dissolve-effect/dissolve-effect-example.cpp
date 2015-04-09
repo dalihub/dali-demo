@@ -26,6 +26,8 @@
 
 using namespace Dali;
 
+using Dali::Toolkit::TextLabel;
+
 // LOCAL STUFF
 namespace
 {
@@ -157,7 +159,7 @@ private:
   Toolkit::View                   mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
-  Toolkit::TextView               mTitleActor;
+  Toolkit::TextLabel              mTitleActor;
   Actor                           mParent;
 
   ImageActor                      mCurrentImage;
@@ -205,6 +207,8 @@ DissolveEffectApp::~DissolveEffectApp()
 
 void DissolveEffectApp::OnInit( Application& application )
 {
+  DemoHelper::RequestThemeChange();
+
   Stage::GetCurrent().KeyEventSignal().Connect(this, &DissolveEffectApp::OnKeyEvent);
 
   // Creates a default view with a default tool bar, the view is added to the stage.
@@ -219,9 +223,7 @@ void DissolveEffectApp::OnInit( Application& application )
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
-  mTitleActor = Toolkit::TextView::New();
-  mTitleActor.SetText( APPLICATION_TITLE_HIGHP );
-  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+  mTitleActor = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_HIGHP );
   mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
   // Add an slide-show button on the right of the title
@@ -340,15 +342,14 @@ bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
   mCurrentImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
   if(mUseHighPrecision)
   {
-    mTitleActor.SetText( APPLICATION_TITLE_HIGHP );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP) );
     mEffectChangeButton.SetBackgroundImage(mIconHighP);
   }
   else
   {
-    mTitleActor.SetText( APPLICATION_TITLE_MEDIUMP );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_MEDIUMP) );
     mEffectChangeButton.SetBackgroundImage(mIconMediumP);
   }
-  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 
   return true;
 }

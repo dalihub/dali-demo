@@ -1,0 +1,50 @@
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "방울"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "블록"
+
+msgid "DALI_DEMO_STR_TITLE_CLUSTER"
+msgstr "클러스터"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "입방체 전환"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "디졸브 전환"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "아이템 뷰"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "돋보기"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "모션 블러"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "늘이기"
+
+msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
+msgstr "책장 넘기기"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "레이디 얼 메뉴"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "굴절 효과"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "스크롤 뷰"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "빛과 그림자"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "스크립팅"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "이미지 확대"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "텍스트 라벨"

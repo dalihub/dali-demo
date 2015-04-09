@@ -128,6 +128,8 @@ public:
    */
   void Create(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     srand(0); // Want repeatable path
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &TestApp::OnKeyEvent);
@@ -157,13 +159,11 @@ public:
     toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Add title to the tool bar.
-    mTitleActor = Toolkit::TextView::New();
+    mTitleActor = DemoHelper::CreateToolBarLabel( "" );
     toolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
     // Set Title text
-    mTitleActor.SetText( APPLICATION_TITLE_PAN_SCENE );
-    mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_SCENE ) );
-    mTitleActor.SetStyleToCurrentText( DemoHelper::GetDefaultTextStyle() );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_SCENE) );
 
     //Add a reset button
     Image resetImage = ResourceImage::New( RESET_ICON );
@@ -232,14 +232,8 @@ public:
     mCastingLight.SetAnchorPoint(AnchorPoint::CENTER);
     mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
 
-    TextStyle style;
-    style.SetFontPointSize( PointSize(DemoHelper::ScalePointSize(20.0f)) );
-    style.SetFontName("Times New Roman");
-    style.SetFontStyle("Book");
-
-    TextActorParameters parameters( style, TextActorParameters::FONT_DETECTION_ON );
-    TextActor text = TextActor::New("Light", parameters);
-    text.SetColor(Color::BLUE);
+    TextLabel text = TextLabel::New( "Light" );
+    text.SetColor( Color::BLUE );
 
     mCastingLight.Add(text);
     mLightAnchor.Add(mCastingLight);
@@ -419,29 +413,23 @@ public:
     {
       case PAN_SCENE:
         mPanState = ROTATE_SCENE;
-        mTitleActor.SetText( APPLICATION_TITLE_ROTATE_SCENE );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_ROTATE_SCENE ) );
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_ROTATE_SCENE) );
         break;
       case ROTATE_SCENE:
         mPanState = PAN_LIGHT;
-        mTitleActor.SetText( APPLICATION_TITLE_PAN_LIGHT );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_LIGHT ) );
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT) );
         break;
       case PAN_LIGHT:
         mPanState = PAN_OBJECT;
-        mTitleActor.SetText( APPLICATION_TITLE_PAN_OBJECT );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_OBJECT ) );
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_OBJECT) );
         break;
       case PAN_OBJECT:
         mPanState = PAN_SCENE;
-        mTitleActor.SetText( APPLICATION_TITLE_PAN_SCENE );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_SCENE ) );
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_SCENE) );
         break;
       default:
         break;
     }
-
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 
     return true;
   }
@@ -492,7 +480,7 @@ private:
   Property::Index           mAngle1Index;
   Property::Index           mAngle3Index;
 
-  Toolkit::TextView         mTitleActor;
+  Toolkit::TextLabel         mTitleActor;
 
   enum PanState
   {

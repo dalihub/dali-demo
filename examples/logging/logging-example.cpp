@@ -156,6 +156,8 @@ class LoggingController: public ConnectionTracker
   {
     // The Init signal is received once (only) during the Application lifetime
 
+    DemoHelper::RequestThemeChange();
+
     mCurrentLogger = 0;
     mPerformanceLoggers.reserve( NUM_LOGGERS );
     mPerformanceLoggers.resize( NUM_LOGGERS );
@@ -198,7 +200,7 @@ class LoggingController: public ConnectionTracker
 
     // Label
     {
-      Toolkit::TextView label = Toolkit::TextView::New( LOGGER_TEXT );
+      Toolkit::TextLabel label = Toolkit::TextLabel::New( LOGGER_TEXT );
       label.SetParentOrigin( ParentOrigin::TOP_LEFT );
       label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       label.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
@@ -431,7 +433,7 @@ class LoggingController: public ConnectionTracker
 
     // Label
     {
-      Toolkit::TextView label = Toolkit::TextView::New( FREQUENCY_TEXT );
+      Toolkit::TextLabel label = Toolkit::TextLabel::New( FREQUENCY_TEXT );
       label.SetParentOrigin( ParentOrigin::TOP_LEFT );
       label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       label.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
@@ -541,16 +543,9 @@ class LoggingController: public ConnectionTracker
          << ", " << ((mLoggerStates[i].isTiming) ? "Started" : "Stopped")
          << ", " << ((mLoggerStates[i].isEnabled) ? "Enabled" : "Disabled");
 
-      Dali::TextStyle textStyle;
-      textStyle.SetFontName( "HelveticaNue" );
-      textStyle.SetFontStyle( "Regular" );
-      textStyle.SetFontPointSize( Dali::PointSize( DemoHelper::ScalePointSize( 7.0f ) ) );
-      textStyle.SetWeight( Dali::TextStyle::REGULAR );
+      Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( ss.str() );
 
-      Toolkit::TextView textView = Toolkit::TextView::New( ss.str() );
-      textView.SetStyleToCurrentText( textStyle );
-
-      mLogRadioButtons[i].SetLabel( textView );
+      mLogRadioButtons[i].SetLabel( textLabel );
     }
   }
 
