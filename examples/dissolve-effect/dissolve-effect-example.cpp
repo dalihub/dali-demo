@@ -347,6 +347,7 @@ bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
   }
   else
   {
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_MEDIUMP) );
     mEffectChangeButton.SetBackgroundImage(mIconMediumP);
   }
 
