@@ -288,8 +288,8 @@ void CubeTransitionApp::OnInit( Application& application )
   // show the first image
   mCurrentImage = ImageActor::New( LoadStageFillingImage( IMAGES[mIndex] ) );
   mCurrentImage.SetPositionInheritanceMode( USE_PARENT_POSITION );
-  mCurrentImage.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-  mCurrentImage.SetSizeScalePolicy( FIT_WITH_ASPECT_RATIO );
+  mCurrentImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  mCurrentImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mParent.Add( mCurrentImage );
 
   mCurrentEffect = mCubeWaveEffect;
@@ -328,8 +328,8 @@ void CubeTransitionApp::GoToNextImage()
   mNextImage = ImageActor::New( image );
 
   mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION);
-  mNextImage.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-  mNextImage.SetSizeScalePolicy( FIT_WITH_ASPECT_RATIO );
+  mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mNextImage.SetRelayoutEnabled( false );
   mCurrentEffect.SetTargetImage(mNextImage);
   if( image.GetLoadingState() == ResourceLoadingSucceeded )

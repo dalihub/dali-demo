@@ -395,7 +395,7 @@ public:
   {
     TextLabel label = TextLabel::New( ShortName( text ) );
     label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "builderlabel" );
-    label.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+    label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
 
     // Hook up tap detector
     mTapDetector.Attach( label );

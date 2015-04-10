@@ -64,8 +64,8 @@ public:
     stage.KeyEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnKeyEvent);
 
     mTableView = Toolkit::TableView::New( NUMBER_OF_LANGUAGES, 1 );
-    mTableView.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    mTableView.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+    mTableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    mTableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     mTableView.SetParentOrigin( ParentOrigin::TOP_LEFT );
     mTableView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mTableView.TouchedSignal().Connect( this, &TextLabelMultiLanguageExample::OnTouchEvent );

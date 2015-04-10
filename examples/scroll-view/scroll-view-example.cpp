@@ -302,7 +302,7 @@ private:
   {
     Actor page = Actor::New();
     page.SetRelayoutEnabled( true );
-    page.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     page.SetParentOrigin( ParentOrigin::CENTER );
     page.SetAnchorPoint( AnchorPoint::CENTER );
 
@@ -455,7 +455,7 @@ private:
    {
      page.RemoveConstraints();
      page.SetRelayoutEnabled( true );
-     page.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+     page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
      switch( mEffectMode )
      {

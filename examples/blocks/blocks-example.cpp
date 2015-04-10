@@ -359,7 +359,7 @@ private:
     mLevelContainer.SetAnchorPoint( AnchorPoint::CENTER );
     mLevelContainer.SetParentOrigin( ParentOrigin::CENTER );
     mLevelContainer.SetRelayoutEnabled( true );
-    mLevelContainer.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    mLevelContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mContentLayer.Add( mLevelContainer );
 
     mBrickCount = 0;

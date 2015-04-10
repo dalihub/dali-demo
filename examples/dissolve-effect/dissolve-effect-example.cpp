@@ -256,8 +256,8 @@ void DissolveEffectApp::OnInit( Application& application )
   mCurrentImage = ImageActor::New( LoadStageFillingImage( IMAGES[mIndex] ) );
   mCurrentImage.SetRelayoutEnabled( false );
   mCurrentImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
-  mCurrentImage.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-  mCurrentImage.SetSizeScalePolicy( FIT_WITH_ASPECT_RATIO );
+  mCurrentImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  mCurrentImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mParent.Add( mCurrentImage );
 
   mPanGestureDetector.Attach( mCurrentImage );
@@ -287,8 +287,8 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     mNextImage = ImageActor::New( image );
     mNextImage.SetRelayoutEnabled( false );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
-    mNextImage.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-    mNextImage.SetSizeScalePolicy( FIT_WITH_ASPECT_RATIO );
+    mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);
     mParent.Add( mNextImage );
     Vector2 size = Vector2( mCurrentImage.GetCurrentSize() );
@@ -399,8 +399,8 @@ bool DissolveEffectApp::OnTimerTick()
     Image image = LoadStageFillingImage( IMAGES[ mIndex ] );
     mNextImage = ImageActor::New( image );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
-    mNextImage.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-    mNextImage.SetSizeScalePolicy( FIT_WITH_ASPECT_RATIO );
+    mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);
     mParent.Add( mNextImage );
     switch( mCentralLineIndex%4 )

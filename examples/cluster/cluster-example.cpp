@@ -490,7 +490,7 @@ public:
 
     // Scale ScrollView to fit parent (mContentLayer)
     mScrollView.SetRelayoutEnabled( true );
-    mScrollView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    mScrollView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Add the scroll view to the content layer
     mContentLayer.Add(mScrollView);
@@ -580,7 +580,7 @@ public:
     shadowActor.SetPosition(Vector3(0.0f, 0.0f, -1.0f));
 
     // Apply size-relative mode to auto-size the image shadow
-    shadowActor.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+    shadowActor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     shadowActor.SetSizeModeFactor( ShadowProperty::SIZE_SCALE );
     actor.Add( shadowActor );
 
@@ -589,7 +589,7 @@ public:
     ImageActor imageActor = ImageActor::New( image );
     imageActor.SetParentOrigin( ParentOrigin::CENTER );
     imageActor.SetAnchorPoint( AnchorPoint::CENTER );
-    imageActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    imageActor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     actor.Add( imageActor );
 
     // Add a border image child actor (with a fixed size offset from parent).
@@ -599,7 +599,7 @@ public:
     borderActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
     borderActor.SetNinePatchBorder( CLUSTER_IMAGE_BORDER_ABSOLUTE );
     borderActor.SetPosition( Vector3( 0.0f, 0.0f, 1.0f ) );
-    borderActor.SetResizePolicy( SIZE_FIXED_OFFSET_FROM_PARENT, ALL_DIMENSIONS );
+    borderActor.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
     borderActor.SetSizeModeFactor( Vector3( CLUSTER_IMAGE_BORDER_INDENT - 1.0f, CLUSTER_IMAGE_BORDER_INDENT - 1.0f, 0.0f ) * 2.0f );
     actor.Add( borderActor );
 
@@ -630,7 +630,7 @@ public:
     pageView.SetParentOrigin(ParentOrigin::CENTER);
     pageView.SetPosition(Vector3(stageSize.width * column, 0.0f, 0.0f));
     pageView.SetRelayoutEnabled( true );
-    pageView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    pageView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Create cluster actors, add them to scroll view, and set the shear effect with the given center point.
     Cluster cluster = CreateClusterActor(clusterType, style);
