@@ -291,6 +291,8 @@ public:
   {
     std::cout << "ImageScalingScaleToFillController::Create" << std::endl;
 
+    DemoHelper::RequestThemeChange();
+
     // Get a handle to the stage:
     Stage stage = Stage::GetCurrent();
 
@@ -539,15 +541,12 @@ public:
   {
     if(!mTitleActor)
     {
-      mTitleActor = TextView::New();
+      mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
       mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
     }
 
-    Font font = Font::New();
-    mTitleActor.SetText( title );
-    mTitleActor.SetSize( font.MeasureText( title ) );
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
   /**
@@ -576,7 +575,7 @@ private:
   Layer mContentLayer;                ///< The content layer (contains non gui chrome actors)
   Toolkit::View mView;                ///< The View instance.
   Toolkit::ToolBar mToolBar;          ///< The View's Toolbar.
-  TextView mTitleActor;               ///< The Toolbar's Title.
+  TextLabel mTitleActor;               ///< The Toolbar's Title.
   Actor mGridActor;                   ///< The container for the grid of images
   ScrollView mScrollView;             ///< ScrollView UI Component
   bool mScrolling;                    ///< ScrollView scrolling state (true = scrolling, false = stationary)

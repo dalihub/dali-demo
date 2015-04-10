@@ -124,6 +124,8 @@ public:
   {
     // The Init signal is received once (only) during the Application lifetime
 
+    DemoHelper::RequestThemeChange();
+
     Stage::GetCurrent().KeyEventSignal().Connect(this, &MotionStretchExampleApp::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
@@ -400,7 +402,6 @@ private:
   Application&               mApplication;            ///< Application instance
   Toolkit::View              mView;
   Toolkit::ToolBar           mToolBar;
-  TextView                   mTitleActor;             ///< The Toolbar's Title.
   Image                      mIconEffectsOff;
   Image                      mIconEffectsOn;
   Layer                      mContentLayer;           ///< Content layer (contains actor for this stretch demo)

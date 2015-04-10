@@ -21,6 +21,8 @@
 
 using namespace Dali;
 
+using Dali::Toolkit::TextLabel;
+
 // Define this so that it is interchangeable
 // "DP" stands for Device independent Pixels
 #define DP(x) DemoHelper::ScalePointSize(x)
@@ -155,6 +157,8 @@ public:
   {
     // The Init signal is received once (only) during the Application lifetime
 
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Stage::GetCurrent();
 
     // Respond to key events
@@ -169,8 +173,7 @@ public:
                                             TOOLBAR_IMAGE,
                                             std::string("") );
 
-    mTitleActor = Dali::Toolkit::TextView::New();
-    mTitleActor.SetName( "CUSTOM_TOOLBAR_TITLE" );
+    mTitleActor = DemoHelper::CreateToolBarLabel( "CUSTOM_TOOLBAR_TITLE" );
 
     SetTitle();
 
@@ -231,8 +234,7 @@ public:
       }
     }
 
-    mTitleActor.SetText( std::string( TOOLBAR_TITLE ) + ": " + subTitle );
-    mTitleActor.SetStyleToCurrentText( DemoHelper::GetDefaultTextStyle() );
+    mTitleActor.SetProperty( Toolkit::TextLabel::Property::TEXT, std::string( std::string( TOOLBAR_TITLE ) + ": " + subTitle ) );
   }
 
   bool OnMenu( Toolkit::Button button )
@@ -341,18 +343,12 @@ public:
     {
       mPopup = CreatePopup();
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_TITLE_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetTitle( "Popup!" );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -369,9 +365,6 @@ public:
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
       mPopup.AddButton( okayButton );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -398,9 +391,6 @@ public:
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
       mPopup.AddButton( okayButton );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -429,29 +419,21 @@ public:
 
       mPopup.AddButton( okayButton );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_CONTENT_TEXT_ID )
     {
       mPopup = CreatePopup();
 
-      Toolkit::TextView text = Toolkit::TextView::New();
+      TextLabel text = TextLabel::New( CONTENT_TEXT );
       text.SetName( "POPUP_CONTENT_TEXT" );
-      text.SetText( CONTENT_TEXT );
-      text.SetMultilinePolicy( Toolkit::TextView::SplitByWord );
-      text.SetWidthExceedPolicy( Toolkit::TextView::Split );
-      text.SetLineJustification( Toolkit::TextView::Center );
-      text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
+      text.SetProperty( TextLabel::Property::MULTI_LINE, true );
+      text.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+      text.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+      text.SetResizePolicy( FILL_TO_PARENT, Dali::HEIGHT );
       text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( text );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -466,9 +448,6 @@ public:
 
       mPopup.Add( image );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_CONTENT_IMAGE_SCALE_ID )
@@ -482,9 +461,6 @@ public:
       image.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
       mPopup.Add( image );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -501,9 +477,6 @@ public:
 
       mPopup.Add( image );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_CONTENT_IMAGE_FILL_ID )
@@ -519,9 +492,6 @@ public:
 
       mPopup.Add( image );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_TITLE_CONTENT_TEXT_ID )
@@ -529,20 +499,13 @@ public:
       mPopup = CreatePopup();
       mPopup.SetTitle( "Popup!" );
 
-      Toolkit::TextView text = Toolkit::TextView::New();
+      Toolkit::TextLabel text = Toolkit::TextLabel::New( CONTENT_TEXT );
       text.SetName( "POPUP_CONTENT_TEXT" );
-      text.SetText( CONTENT_TEXT );
-      text.SetMultilinePolicy( Toolkit::TextView::SplitByWord );
-      text.SetWidthExceedPolicy( Toolkit::TextView::Split );
-      text.SetLineJustification( Toolkit::TextView::Center );
       text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
       text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
       text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( text );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -551,12 +514,8 @@ public:
       mPopup = CreatePopup();
       mPopup.SetTitle( "Popup!" );
 
-      Toolkit::TextView text = Toolkit::TextView::New();
+      Toolkit::TextLabel text = Toolkit::TextLabel::New( CONTENT_TEXT );
       text.SetName( "POPUP_CONTENT_TEXT" );
-      text.SetText( CONTENT_TEXT );
-      text.SetMultilinePolicy( Toolkit::TextView::SplitByWord );
-      text.SetWidthExceedPolicy( Toolkit::TextView::Split );
-      text.SetLineJustification( Toolkit::TextView::Left );
       text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
       text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
       text.SetPadding( Padding( 10.0f, 10.0f, 20.0f, 0.0f ) );
@@ -583,9 +542,6 @@ public:
 
       mPopup.AddButton( okayButton );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == POPUP_BUTTON_COMPLEX_ID )
@@ -604,11 +560,7 @@ public:
 
       // Text
       {
-        Toolkit::TextView text = Toolkit::TextView::New();
-        text.SetText( "Do you really want to quit?" );
-        text.SetMultilinePolicy( Toolkit::TextView::SplitByWord );
-        text.SetWidthExceedPolicy( Toolkit::TextView::Split );
-        text.SetLineJustification( Toolkit::TextView::Left );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Do you really want to quit?" );
         text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
 
@@ -643,15 +595,13 @@ public:
 
         root.AddChild( checkBox, Toolkit::TableView::CellPosition( 0, 0 ) );
 
-        Toolkit::TextView text = Toolkit::TextView::New();
-        text.SetText( "Don't show again" );
-        text.SetLineJustification( Toolkit::TextView::Left );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Don't show again" );
         Actor textActor = text;
         textActor.SetPadding( Padding( 20.0f, 0.0f, 0.0f, 10.0f ) );
 
         root.AddChild( text, Toolkit::TableView::CellPosition( 0, 1 ) );
 
-        content.AddChild( root, Toolkit::TableView::CellPosition( 1, 0, 0, 2 ) );  // Column span 2
+        content.AddChild( root, Toolkit::TableView::CellPosition( 1, 0 ) );
       }
 
       mPopup.Add( content );
@@ -677,9 +627,6 @@ public:
 
       mPopup.AddButton( okayButton );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == TABLEVIEW_BUTTON_EMPTY_ID )
@@ -693,9 +640,6 @@ public:
       table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -715,9 +659,6 @@ public:
       table.Add( backing );
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -748,9 +689,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -817,9 +755,6 @@ public:
 
       mPopup.Add( table );
 
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
-
       mPopup.Show();
     }
     else if( button.GetName() == TABLEVIEW_BUTTON_FIXED1_ID )
@@ -836,7 +771,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-        TextActor text = TextActor::New( "Fixed" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -845,7 +780,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-        TextActor text = TextActor::New( "Fill" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -854,7 +789,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-        TextActor text = TextActor::New( "Fill" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -862,9 +797,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -883,7 +815,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-        TextActor text = TextActor::New( "Fixed" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -892,7 +824,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-        TextActor text = TextActor::New( "Fill" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -901,7 +833,7 @@ public:
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-        TextActor text = TextActor::New( "Fixed" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -909,9 +841,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -932,7 +861,7 @@ public:
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         backing.SetSize( 0.0f, 100.0f );
 
-        TextActor text = TextActor::New( "Fit" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -943,7 +872,7 @@ public:
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
-        TextActor text = TextActor::New( "Fill" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -955,7 +884,7 @@ public:
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         backing.SetSize( 0.0f, 100.0f );
 
-        TextActor text = TextActor::New( "Fit" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -964,9 +893,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -984,7 +910,7 @@ public:
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
-        TextActor text = TextActor::New( "Fill" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -996,7 +922,7 @@ public:
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
-        TextActor text = TextActor::New( "Fit" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -1007,7 +933,7 @@ public:
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
-        TextActor text = TextActor::New( "Fill" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -1016,9 +942,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -1041,7 +964,7 @@ public:
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         backing.SetSize( 0.0f, 100.0f );
 
-        TextActor text = TextActor::New( "Fit" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -1053,7 +976,7 @@ public:
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
-        TextActor text = TextActor::New( "Fit" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -1065,7 +988,7 @@ public:
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         backing.SetSize( 0.0f, 300.0f );
 
-        TextActor text = TextActor::New( "Fit" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -1074,9 +997,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -1099,7 +1019,7 @@ public:
         backing.SetResizePolicy( FIXED, HEIGHT );
         backing.SetSize( 0.0f, 100.0f );
 
-        TextActor text = TextActor::New( "Fit" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -1111,7 +1031,7 @@ public:
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
-        TextActor text = TextActor::New( "Fit" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -1120,9 +1040,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -1143,7 +1060,7 @@ public:
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
 
-        TextActor text = TextActor::New( "Fixed" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -1155,7 +1072,7 @@ public:
         backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
-        TextActor text = TextActor::New( "Fit" );
+        Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -1164,9 +1081,6 @@ public:
       }
 
       mPopup.Add( table );
-
-      // The popup is not yet on the stage so needs to be flaged as dirty
-      mPopup.MarkDirtyForRelayout();
 
       mPopup.Show();
     }
@@ -1291,7 +1205,7 @@ private:
   Toolkit::ToolBar  mToolBar;                ///< The View's Toolbar.
   Layer             mContentLayer;           ///< Content layer
 
-  Toolkit::TextView mTitleActor;             ///< Title text
+  Toolkit::TextLabel mTitleActor;             ///< Title text
 
   Toolkit::Popup    mMenu;                   ///< The navigation menu
   bool              mMenuShown;              ///< If the navigation menu is currently being displayed or not

@@ -73,65 +73,6 @@ const int TOTAL_LEVELS(3);                                                  ///<
 // constraints ////////////////////////////////////////////////////////////////
 
 /**
- * CollisionConstraint generates a collision vector
- * between two actors a and b, assuming they're rectangular
- * based on their size.
- */
-struct CollisionConstraint
-{
-  /**
-   * Collision Constraint constructor
-   * The adjust (optional) parameter can be used to add a margin
-   * to the actors. A +ve size will result in larger collisions,
-   * while a -ve size will result in tighter collisions.
-   *
-   * @param[in] adjust (optional) Adjusts the rectangular size detection
-   */
-  CollisionConstraint(Vector3 adjust = Vector3::ZERO)
-  : mAdjust(adjust)
-  {
-  }
-
-  /**
-   * Generates collision vector indicating whether Actor's A and B
-   * have overlapped eachother, and the relative position of Actor B to A.
-   *
-   * @param[in] current The current collision-property (ignored)
-   * @param[in] propertyA Actor A's Position property.
-   * @param[in] propertyB Actor B's Position property.
-   * @param[in] propertySizeA Actor A's Size property.
-   * @param[in] propertySizeB Actor B's Size property.
-   * @return The collision vector is returned.
-   */
-  Vector3 operator()(const Vector3& current,
-                     const PropertyInput& propertyA,
-                     const PropertyInput& propertyB,
-                     const PropertyInput& propertySizeA,
-                     const PropertyInput& propertySizeB)
-  {
-    const Vector3& a = propertyA.GetVector3();
-    const Vector3& b = propertyB.GetVector3();
-    const Vector3& sizeA = propertySizeA.GetVector3();
-    const Vector3& sizeB = propertySizeB.GetVector3();
-    const Vector3 sizeComb = (sizeA + sizeB + mAdjust) * 0.5f;
-
-    // get collision relative to a.
-    Vector3 delta = b - a;
-
-    // Check if not overlapping Actors.
-    if( (fabsf(delta.x) > sizeComb.width) ||
-        (fabsf(delta.y) > sizeComb.height) )
-    {
-      delta = Vector3::ZERO; // not overlapping
-    }
-
-    return delta; // overlapping, return overlap vector relative to actor a.
-  }
-
-  const Vector3 mAdjust;            ///< Size Adjustment value
-};
-
-/**
  * CollisionCircleRectangleConstraint generates a collision vector
  * between two actors a (circle) and b (rectangle)
  */
@@ -157,23 +98,20 @@ struct CollisionCircleRectangleConstraint
    * Generates collision vector indicating whether Actor's A and B
    * have overlapped eachother, and the relative position of Actor B to A.
    *
-   * @param[in] current The current collision-property (ignored)
-   * @param[in] propertyA Actor A's Position property.
-   * @param[in] propertyB Actor B's Position property.
-   * @param[in] propertySizeA Actor A's Size property.
-   * @param[in] propertySizeB Actor B's Size property.
+   * @param[in,out] current The current collision-property
+   * @param[in] inputs Contains:
+   *                    Actor A's Position property.
+   *                    Actor B's Position property.
+   *                    Actor A's Size property.
+   *                    Actor B's Size property.
    * @return The collision vector is returned.
    */
-  Vector3 operator()(const Vector3& current,
-                     const PropertyInput& propertyA,
-                     const PropertyInput& propertyB,
-                     const PropertyInput& propertySizeA,
-                     const PropertyInput& propertySizeB)
+  void operator()( Vector3& current, const PropertyInputContainer& inputs )
   {
-    const Vector3& a = propertyA.GetVector3();
-    const Vector3 b = propertyB.GetVector3() + mAdjustPosition;
-    const Vector3& sizeA = propertySizeA.GetVector3();
-    const Vector3& sizeB = propertySizeB.GetVector3();
+    const Vector3& a = inputs[0]->GetVector3();
+    const Vector3 b = inputs[1]->GetVector3() + mAdjustPosition;
+    const Vector3& sizeA = inputs[2]->GetVector3();
+    const Vector3& sizeB = inputs[3]->GetVector3();
     const Vector3 sizeA2 = sizeA * 0.5f; // circle radius
     const Vector3 sizeB2 = (sizeB + mAdjustSize) * 0.5f; // rectangle half rectangle.
 
@@ -211,10 +149,12 @@ struct CollisionCircleRectangleConstraint
     if(delta.Length() < sizeA2.x)
     {
       delta.Normalize();
-      return delta;
+      current = delta;
     }
-
-    return Vector3::ZERO;
+    else
+    {
+      current = Vector3::ZERO;
+    }
   }
 
   const Vector3 mAdjustPosition;            ///< Position Adjustment value
@@ -243,20 +183,17 @@ struct WobbleConstraint
   }
 
   /**
-   * @param[in] current The current rotation property (ignored)
-   * @param[in] propertyWobble The wobble property (value from 0.0f to 1.0f)
+   * @param[in,out] current The current rotation property
+   * @param[in] inputs Contains the wobble property (value from 0.0f to 1.0f)
    * @return The rotation (quaternion) is generated.
    */
-  Quaternion operator()(const Quaternion& current,
-                     const PropertyInput& propertyWobble)
+  void operator()( Quaternion& current, const PropertyInputContainer& inputs )
   {
-    const float& wobble = propertyWobble.GetFloat();
+    const float& wobble = inputs[0]->GetFloat();
 
     float f = sinf(wobble * 10.0f) * (1.0f-wobble);
 
-    Quaternion q(mDeviation * f, Vector3::ZAXIS);
-
-    return q;
+    current = Quaternion(mDeviation * f, Vector3::ZAXIS);
   }
 
   const float mDeviation;           ///< Deviation factor in radians.
@@ -289,6 +226,8 @@ public:
    */
   void Create(Application& application)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
@@ -346,10 +285,9 @@ private:
     mPaddleImage.SetSize( mPaddleFullSize );
 
     mWobbleProperty = mPaddle.RegisterProperty(WOBBLE_PROPERTY_NAME, 0.0f);
-    Constraint wobbleConstraint = Constraint::New<Quaternion>( Actor::Property::ORIENTATION,
-                                                    LocalSource(mWobbleProperty),
-                                                    WobbleConstraint(10.0f));
-    mPaddle.ApplyConstraint(wobbleConstraint);
+    Constraint wobbleConstraint = Constraint::New<Quaternion>( mPaddle, Actor::Property::ORIENTATION, WobbleConstraint(10.0f));
+    wobbleConstraint.AddSource( LocalSource(mWobbleProperty) );
+    wobbleConstraint.Apply();
 
     mPaddle.SetPosition( stageSize * Vector3( PADDLE_START_POSITION ) );
     mContentLayer.Add(mPaddle);
@@ -375,13 +313,12 @@ private:
     Actor delegate = Actor::New();
     stage.Add(delegate);
     Property::Index property = delegate.RegisterProperty(COLLISION_PROPERTY_NAME, Vector3::ZERO);
-    Constraint constraint = Constraint::New<Vector3>( property,
-                                                    Source(mBall, Actor::Property::POSITION),
-                                                    Source(mPaddle, Actor::Property::POSITION),
-                                                    Source(mBall, Actor::Property::SIZE),
-                                                    Source(mPaddle, Actor::Property::SIZE),
-                                                    CollisionCircleRectangleConstraint( -Vector3(0.0f, mPaddleHitMargin.height * 0.575f, 0.0f),-Vector3(mPaddleHitMargin) ));
-    delegate.ApplyConstraint(constraint);
+    Constraint constraint = Constraint::New<Vector3>( delegate, property, CollisionCircleRectangleConstraint( -Vector3(0.0f, mPaddleHitMargin.height * 0.575f, 0.0f),-Vector3(mPaddleHitMargin) ) );
+    constraint.AddSource( Source(mBall, Actor::Property::POSITION) );
+    constraint.AddSource( Source(mPaddle, Actor::Property::POSITION) );
+    constraint.AddSource( Source(mBall, Actor::Property::SIZE) );
+    constraint.AddSource( Source(mPaddle, Actor::Property::SIZE) );
+    constraint.Apply();
 
     PropertyNotification paddleNotification = delegate.AddPropertyNotification( property, GreaterThanCondition(0.0f) );
     paddleNotification.NotifySignal().Connect( this, &ExampleController::OnHitPaddle );
@@ -600,13 +537,12 @@ private:
 
     // Add a constraint on the brick between it and the ball generating a collision-property
     Property::Index property = brick.RegisterProperty(COLLISION_PROPERTY_NAME, Vector3::ZERO);
-    Constraint constraint = Constraint::New<Vector3>( property,
-                                                    Source(mBall, Actor::Property::POSITION),
-                                                    Source(brick, Actor::Property::POSITION),
-                                                    Source(mBall, Actor::Property::SIZE),
-                                                    Source(brick, Actor::Property::SIZE),
-                                                    CollisionCircleRectangleConstraint(BRICK_COLLISION_MARGIN));
-    brick.ApplyConstraint(constraint);
+    Constraint constraint = Constraint::New<Vector3>( brick, property, CollisionCircleRectangleConstraint(BRICK_COLLISION_MARGIN) );
+    constraint.AddSource( Source(mBall, Actor::Property::POSITION) );
+    constraint.AddSource( Source(brick, Actor::Property::POSITION) );
+    constraint.AddSource( Source(mBall, Actor::Property::SIZE) );
+    constraint.AddSource( Source(brick, Actor::Property::SIZE) );
+    constraint.Apply();
 
     // Now add a notification on this collision-property
 

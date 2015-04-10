@@ -64,9 +64,10 @@ public:
   */
   Actor CreateVectorComponentControl( const std::string& label, const Vector3& size, bool(PathController::*callback)(Slider,float) )
   {
-    Dali::TextActor textActor = TextActor::New(label);
-    textActor.SetColor( Vector4(0.0f,0.0f,0.0f,1.0f));
-    textActor.SetSize(size.y,size.y,0.0f);
+    TextLabel text = TextLabel::New(label);
+    text.SetResizePolicy( USE_NATURAL_SIZE, WIDTH );
+    text.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+    text.SetColor( Vector4(0.0f,0.0f,0.0f,1.0f));
 
     Slider slider = Slider::New();
     slider.SetRelayoutEnabled( false );
@@ -88,8 +89,8 @@ public:
     slider.SetSize(size);
     slider.SetScale( 0.5f );
     slider.ValueChangedSignal().Connect(this,callback);
-    textActor.Add( slider );
-    return textActor;
+    text.Add( slider );
+    return text;
   }
 
   /**
@@ -437,6 +438,8 @@ public:
    */
   void Create( Application& application )
   {
+    DemoHelper::RequestThemeChange();
+
     // Get a handle to the stage:
     Stage stage = Stage::GetCurrent();
 
@@ -456,12 +459,8 @@ public:
     mContentLayer.TouchedSignal().Connect(this, &PathController::OnTouchLayer);
 
     //Title
-    TextView title = TextView::New();
+    TextLabel title = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE );
     toolBar.AddControl( title, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
-    Font font = Font::New();
-    title.SetText( APPLICATION_TITLE );
-    title.SetSize( font.MeasureText( APPLICATION_TITLE ) );
-    title.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 
     //Path
     mPath = Dali::Path::New();

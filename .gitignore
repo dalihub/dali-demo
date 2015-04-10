@@ -35,3 +35,4 @@ dali-builder
 *.creator.user
 /build/desktop
 /packaging/home*
+*.mo

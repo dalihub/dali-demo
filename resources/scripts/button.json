@@ -25,7 +25,7 @@
       "parent-origin": "TOP_CENTER",
       "anchor-point": "TOP_CENTER",
       "position": [0, 0, 0],
-      "size": [0, 200, 0],
+      "size": [400, 200, 0],
       "normal-state-actor": {
         "type": "ImageActor",
         "image": {
@@ -39,7 +39,7 @@
         }
       },
       "label-actor": {
-        "type": "TextView",
+        "type": "TextLabel",
         "text": "Normal"
       }
     },
@@ -50,9 +50,9 @@
       "parent-origin": "CENTER",
       "anchor-point": "CENTER",
       "position": [0, 0, 0],
-      "size": [0, 200, 0],
+      "size": [400, 200, 0],
       "label-actor": {
-        "type": "TextView",
+        "type": "TextLabel",
         "text": "Disabled"
       },
       "disabled": true,
@@ -83,9 +83,9 @@
       "parent-origin": "BOTTOM_CENTER",
       "anchor-point": "BOTTOM_CENTER",
       "position": [0, 0, 0],
-      "size": [0, 200, 0],
+      "size": [400, 200, 0],
       "label-actor": {
-        "type": "TextView",
+        "type": "TextLabel",
         "text": "Toggle"
       },
       "togglable": true,
@@ -111,7 +111,7 @@
         "actor": "toggle-button",
         "property": "label-actor",
         "value": {
-          "type": "TextView",
+          "type": "TextLabel",
           "text": "Using a 9-patch image"
         }
       }]

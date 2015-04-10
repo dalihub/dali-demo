@@ -80,7 +80,7 @@ public:
 private:
   Application                mApplication;
   Actor                      mCastingLight;
-  TextActor                  mTextActor;
+  TextLabel                  mTextActor;
   ImageActor                 mImageActor;
   ImageActor                 mBlendActor;
   Image                      mEffectImage;
@@ -90,7 +90,7 @@ private:
 
   Toolkit::View              mView;                              ///< The View instance.
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
-  TextView                   mTitleActor;                        ///< The Toolbar's Title.
+  TextLabel                   mTitleActor;                        ///< The Toolbar's Title.
   Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)
   Toolkit::PushButton        mLoseContextButton;
   Vector3                    mHSVDelta;
@@ -116,6 +116,8 @@ NewWindowController::NewWindowController( Application& application )
 
 void NewWindowController::Create( Application& app )
 {
+  DemoHelper::RequestThemeChange();
+
   Stage stage = Stage::GetCurrent();
   stage.SetBackgroundColor(Color::YELLOW);
 
@@ -379,7 +381,7 @@ void NewWindowController::CreateBlending()
 
 void NewWindowController::CreateText()
 {
-  mTextActor = TextActor::New("Some text");
+  mTextActor = TextLabel::New("Some text");
   mTextActor.SetParentOrigin(ParentOrigin::CENTER);
   mTextActor.SetColor(Color::RED);
   mTextActor.SetName("PushMe text");

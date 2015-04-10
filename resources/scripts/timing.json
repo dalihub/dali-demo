@@ -91,6 +91,8 @@
       "name": "ControlBack",
       "parent-origin": "CENTER",
       "anchor-point": "CENTER",
+      "width-resize-policy": "FILL_TO_PARENT",
+      "height-resize-policy": "FILL_TO_PARENT",
       "position": [
         0,
         0,

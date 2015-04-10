@@ -1,0 +1,50 @@
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "Bubbles"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "Blocks"
+
+msgid "DALI_DEMO_STR_TITLE_CLUSTER"
+msgstr "Cluster"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "Cube Transition"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "Dissolve Transition"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "Item View"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "Magnifier"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "Motion Blur"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "Motion Stretch"
+
+msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
+msgstr "Page Turn View"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "Radial Menu"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "Refraction"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "Scroll View"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "Lights and shadows"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "Script Based UI"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "Image Scaling Modes"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "Text Label"

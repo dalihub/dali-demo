@@ -108,6 +108,8 @@ class ButtonsController: public ConnectionTracker
   {
     // The Init signal is received once (only) during the Application lifetime
 
+    DemoHelper::RequestThemeChange();
+
     // Respond to key events
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ButtonsController::OnKeyEvent);
 
@@ -238,8 +240,8 @@ class ButtonsController: public ConnectionTracker
       tableView.SetSize( DP(260), 0.0f );
       tableView.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
 
-      Toolkit::TextView textView = Toolkit::TextView::New( "Select enabled" );
-      tableView.AddChild( textView, Toolkit::TableView::CellPosition( 0, 0 ) );
+      Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( "Select enabled" );
+      tableView.AddChild( textLabel, Toolkit::TableView::CellPosition( 0, 0 ) );
 
       ImageActor imageActor = ImageActor::New( ResourceImage::New( ENABLED_IMAGE ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );

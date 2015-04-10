@@ -22,6 +22,8 @@
 #include <string.h>
 #include <iostream>
 
+#include "shared/view.h"
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 
@@ -225,6 +227,8 @@ PageTurnController::~PageTurnController()
 void PageTurnController::OnInit( Application& app )
 {
   // The Init signal is received once ( only ) during the Application lifetime
+
+  DemoHelper::RequestThemeChange();
 
   Stage::GetCurrent().KeyEventSignal().Connect(this, &PageTurnController::OnKeyEvent);
 

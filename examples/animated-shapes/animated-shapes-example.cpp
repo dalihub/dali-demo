@@ -18,6 +18,8 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
+#include "shared/view.h"
+
 using namespace Dali;
 
 namespace
@@ -47,6 +49,8 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
+    DemoHelper::RequestThemeChange();
+
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
 
