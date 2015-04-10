@@ -233,6 +233,9 @@ public:
     mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
 
     TextLabel text = TextLabel::New( "Light" );
+    text.SetProperty( TextLabel::Property::POINT_SIZE, 20.0f );
+    text.SetResizePolicy( USE_NATURAL_SIZE, WIDTH );
+    text.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
     text.SetColor( Color::BLUE );
 
     mCastingLight.Add(text);
