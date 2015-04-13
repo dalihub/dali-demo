@@ -57,7 +57,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("text-label-emojis.example", DALI_DEMO_STR_TITLE_EMOJI_TEXT));
   demo.AddExample(Example("animated-shapes.example", DALI_DEMO_STR_TITLE_ANIMATED_SHAPES));
   demo.AddExample(Example("path-animation.example", DALI_DEMO_STR_TITLE_PATH_ANIMATION));
-  demo.AddExample(Example("size-negotiation.example", "Size Negotiation"));
+  demo.AddExample(Example("size-negotiation.example", DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE));
 
   demo.SortAlphabetically( true );
 

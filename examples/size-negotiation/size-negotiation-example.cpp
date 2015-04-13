@@ -40,7 +40,7 @@ namespace
 const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "background-gradient.jpg";
 const char* const TOOLBAR_IMAGE = DALI_IMAGE_DIR "top-bar.png";
 
-const char* const TOOLBAR_TITLE = "Size Negotiation";
+const char* const TOOLBAR_TITLE = "Negotiate Size";
 const int TOOLBAR_HEIGHT = 62;
 
 const char* MENU_ICON_IMAGE = DALI_IMAGE_DIR "icon-cluster-none.png";
