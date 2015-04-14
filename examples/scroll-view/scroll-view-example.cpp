@@ -228,7 +228,6 @@ private:
     Vector2 stageSize = stage.GetSize();
 
     mScrollView = ScrollView::New();
-    mScrollView.SetRelayoutEnabled( false );
     mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
     mScrollView.SetParentOrigin(ParentOrigin::CENTER);
     mContentLayer.Add( mScrollView );
@@ -301,7 +300,6 @@ private:
   Actor CreatePage()
   {
     Actor page = Actor::New();
-    page.SetRelayoutEnabled( true );
     page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     page.SetParentOrigin( ParentOrigin::CENTER );
     page.SetAnchorPoint( AnchorPoint::CENTER );
@@ -454,7 +452,6 @@ private:
    void ApplyEffectToPage(Actor page)
    {
      page.RemoveConstraints();
-     page.SetRelayoutEnabled( true );
      page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
      switch( mEffectMode )
@@ -571,7 +568,6 @@ private:
     attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
     Image img = ResourceImage::New(filename, attributes);
     ImageActor actor = ImageActor::New(img);
-    actor.SetRelayoutEnabled( false );
     actor.SetName( filename );
     actor.SetParentOrigin(ParentOrigin::CENTER);
     actor.SetAnchorPoint(AnchorPoint::CENTER);

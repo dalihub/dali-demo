@@ -214,8 +214,8 @@ class ButtonsController: public ConnectionTracker
     mBigImage3 = ResourceImage::New( BIG_IMAGE_3 );
 
     mImage = ImageActor::New( mBigImage1 );
-    mImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
-    mImage.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::WIDTH );
+    mImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     radioGroup2Background.AddChild( mImage, Toolkit::TableView::CellPosition( 0, 1, 2, 1 ) );
 
     // The enable/disable radio group
@@ -348,7 +348,6 @@ class ButtonsController: public ConnectionTracker
     }
 
     contentTable.Add( toggleBackground );
-
 
     Toolkit::PushButton toggleButton = Toolkit::PushButton::New();
     toggleButton.SetTogglableButton( true );

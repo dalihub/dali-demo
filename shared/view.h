@@ -76,8 +76,8 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   toolBarLayer.SetName( "TOOLBAR_LAYER" );
   toolBarLayer.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
   toolBarLayer.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
-  toolBarLayer.SetSize( 0.0f, style.mToolBarHeight );
   toolBarLayer.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::WIDTH );
+  toolBarLayer.SetSize( 0.0f, style.mToolBarHeight );
 
   // Raise tool bar layer to the top.
   toolBarLayer.RaiseToTop();

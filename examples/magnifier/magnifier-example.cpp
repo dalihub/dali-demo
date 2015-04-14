@@ -219,14 +219,12 @@ public:
 
     // Create magnifier (controlled by human touch)
     Layer overlay = Layer::New();
-    overlay.SetRelayoutEnabled( false );
     overlay.SetSensitive(false);
     overlay.SetParentOrigin( ParentOrigin::CENTER );
     overlay.SetSize(mStageSize);
     Stage::GetCurrent().Add(overlay);
 
     mMagnifier = Toolkit::Magnifier::New();
-    mMagnifier.SetRelayoutEnabled( false );
     mMagnifier.SetSourceActor( mView.GetBackgroundLayer() );
     mMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width );  // Size of magnifier is in relation to stage width
     mMagnifier.SetMagnificationFactor( MAGNIFICATION_FACTOR );
@@ -234,7 +232,7 @@ public:
     overlay.Add( mMagnifier );
 
     // Apply constraint to animate the position of the magnifier.
-    Constraint constraint = Constraint::New<Vector3>( mMagnifier, Actor::Property::POSITION, ConfinementConstraint(ParentOrigin::CENTER, Vector2::ONE * MAGNIFIER_INDENT, Vector2::ONE * MAGNIFIER_INDENT) );
+    Constraint constraint = Constraint::New<Vector3>( mMagnifier, Actor::Property::POSITION, ConfinementConstraint(Vector3( 0.5f, 0.5f, 0.0f ), Vector2::ONE * MAGNIFIER_INDENT, Vector2::ONE * MAGNIFIER_INDENT) );
     constraint.AddSource( LocalSource(Actor::Property::SIZE) );
     constraint.AddSource( LocalSource(Actor::Property::PARENT_ORIGIN) );
     constraint.AddSource( LocalSource(Actor::Property::ANCHOR_POINT) );
@@ -244,7 +242,6 @@ public:
 
     // Create bouncing magnifier automatically bounces around screen.
     mBouncingMagnifier = Toolkit::Magnifier::New();
-    mBouncingMagnifier.SetRelayoutEnabled( false );
     mBouncingMagnifier.SetSourceActor( mView.GetBackgroundLayer() );
     mBouncingMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width ); // Size of magnifier is in relation to stage width
     mBouncingMagnifier.SetMagnificationFactor( MAGNIFICATION_FACTOR );

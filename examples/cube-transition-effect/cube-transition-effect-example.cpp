@@ -330,7 +330,6 @@ void CubeTransitionApp::GoToNextImage()
   mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION);
   mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-  mNextImage.SetRelayoutEnabled( false );
   mCurrentEffect.SetTargetImage(mNextImage);
   if( image.GetLoadingState() == ResourceLoadingSucceeded )
   {

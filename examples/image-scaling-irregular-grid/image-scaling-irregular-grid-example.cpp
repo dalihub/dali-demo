@@ -423,7 +423,6 @@ public:
     // coordinates in a frame defined by a parent actor:
 
     Actor gridActor = Actor::New();
-    gridActor.SetRelayoutEnabled( true );
     gridActor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     gridActor.SetParentOrigin( ParentOrigin::CENTER );
     gridActor.SetAnchorPoint( AnchorPoint::CENTER );

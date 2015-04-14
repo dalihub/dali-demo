@@ -70,7 +70,6 @@ public:
     text.SetColor( Vector4(0.0f,0.0f,0.0f,1.0f));
 
     Slider slider = Slider::New();
-    slider.SetRelayoutEnabled( false );
     slider.SetAnchorPoint( AnchorPoint::CENTER_LEFT);
     slider.SetParentOrigin( ParentOrigin::CENTER_RIGHT);
     slider.SetProperty(Slider::Property::LOWER_BOUND, -1.0f );
@@ -102,8 +101,8 @@ public:
 
     //TextInput
     Dali::Layer controlsLayer = Dali::Layer::New();
-    controlsLayer.SetRelayoutEnabled( false );
-    controlsLayer.SetSize( stage.GetSize().x, stage.GetSize().y*0.3f, 0.0 );
+    controlsLayer.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    controlsLayer.SetSizeModeFactor( Vector3( 1.0f, 0.3f, 1.0f ) );
     controlsLayer.SetPosition( 0.0f, stage.GetSize().y*0.8f, 0.0f );
     controlsLayer.SetAnchorPoint( AnchorPoint::TOP_LEFT);
     controlsLayer.SetParentOrigin( ParentOrigin::TOP_LEFT);
@@ -202,7 +201,6 @@ public:
       if( !mControlPoint[index] )
       {
         mControlPoint[index] = Toolkit::CreateSolidColorActor(Vector4(1.0f,1.0f,1.0f,1.0f));
-        mControlPoint[index].SetRelayoutEnabled( false );
         mControlPoint[index].SetParentOrigin( ParentOrigin::TOP_LEFT);
         mControlPoint[index].SetAnchorPoint( AnchorPoint::CENTER );
         mControlPoint[index].SetSize( 20.0f, 20.0f );
@@ -224,7 +222,6 @@ public:
       if( !mControlPoint[index])
       {
         mControlPoint[index] = Toolkit::CreateSolidColorActor(Vector4(1.0f,1.0f,1.0f,1.0f));
-        mControlPoint[index].SetRelayoutEnabled( false );
         mControlPoint[index].SetParentOrigin( ParentOrigin::TOP_LEFT);
         mControlPoint[index].SetAnchorPoint( AnchorPoint::CENTER );
         mControlPoint[index].SetSize( 20.0f, 20.0f );
@@ -473,7 +470,6 @@ public:
     ImageAttributes attributes;
     Image img = ResourceImage::New(ACTOR_IMAGE, attributes );
     mActor = ImageActor::New( img );
-    mActor.SetRelayoutEnabled( false );
     mActor.SetAnchorPoint( AnchorPoint::CENTER );
     mActor.SetSize( 100, 50, 1 );
     stage.Add( mActor );
