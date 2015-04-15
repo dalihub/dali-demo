@@ -894,7 +894,7 @@ public: // From ItemFactory
     borderActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
     borderActor.SetNinePatchBorder( Vector4( ITEM_IMAGE_BORDER_LEFT, ITEM_IMAGE_BORDER_TOP, ITEM_IMAGE_BORDER_RIGHT, ITEM_IMAGE_BORDER_BOTTOM ) );
     borderActor.SetColorMode( USE_OWN_MULTIPLY_PARENT_COLOR ); // darken with parent image-actor
-    borderActor.SetResizePolicy( SIZE_FIXED_OFFSET_FROM_PARENT, ALL_DIMENSIONS );
+    borderActor.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
     borderActor.SetSizeModeFactor( ITEM_BORDER_MARGIN_SIZE );
     actor.Add(borderActor);
     actor.SetKeyboardFocusable( true );
@@ -988,7 +988,7 @@ private:
     mMenu.OutsideTouchedSignal().Connect( this, &ItemViewExample::HideMenu );
 
     TableView tableView = TableView::New( 0, 0 );
-    tableView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    tableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mMenu.Add( tableView );
 
     Slider slider = Slider::New();
@@ -997,21 +997,21 @@ private:
     slider.SetProperty( Slider::Property::VALUE, mDurationSeconds );
     slider.SetProperty( Slider::Property::VALUE_PRECISION, 2 );
     slider.SetProperty( Slider::Property::SHOW_POPUP, true );
-    slider.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    slider.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     slider.ValueChangedSignal().Connect( this, &ItemViewExample::SliderValueChange );
     tableView.AddChild( slider, TableView::CellPosition( 0, 0 ) );
 
     TextLabel text = TextLabel::New( "Duration" );
     text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
     text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    text.SetResizePolicy( FIXED, HEIGHT );
+    text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    text.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
     text.SetSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
     slider.Add( text );
 
     Actor textContainer = Actor::New();
     textContainer.SetRelayoutEnabled( true );
-    textContainer.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    textContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mAlphaFunctionText = TextLabel::New( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
     mAlphaFunctionText.SetAnchorPoint( ParentOrigin::CENTER );
     mAlphaFunctionText.SetParentOrigin( ParentOrigin::CENTER );
@@ -1025,7 +1025,7 @@ private:
     text = TextLabel::New( "Alpha Function" );
     text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
     text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+    text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
     textContainer.Add( text );
 

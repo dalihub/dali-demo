@@ -424,7 +424,7 @@ public:
 
     Actor gridActor = Actor::New();
     gridActor.SetRelayoutEnabled( true );
-    gridActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    gridActor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     gridActor.SetParentOrigin( ParentOrigin::CENTER );
     gridActor.SetAnchorPoint( AnchorPoint::CENTER );
 

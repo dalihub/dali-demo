@@ -21,21 +21,9 @@
 
 using namespace Dali;
 
-namespace
-{
-// Used to produce visually same dimensions on desktop and device builds
-float ScalePointSize( int pointSize )
-{
-  Dali::Vector2 dpi = Dali::Stage::GetCurrent().GetDpi();
-  float meanDpi = (dpi.height + dpi.width) * 0.5f;
-  return pointSize * meanDpi / 220.0f;
-}
-
-} // namespace
-
 // Define this so that it is interchangeable
 // "DP" stands for Device independent Pixels
-#define DP(x) ScalePointSize(x)
+#define DP(x) x
 
 
 namespace
@@ -67,7 +55,7 @@ const char* const CHECKBOX_SELECTED_IMAGE = DALI_IMAGE_DIR "checkbox-selected.pn
 const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 
 // Layout sizes
-const int RADIO_LABEL_THUMBNAIL_SIZE = 48;
+const int RADIO_LABEL_THUMBNAIL_SIZE = 60;
 const int RADIO_IMAGE_SPACING = 8;
 const int BUTTON_HEIGHT = 48;
 
@@ -122,25 +110,45 @@ class ButtonsController: public ConnectionTracker
                                             TOOLBAR_IMAGE,
                                             TOOLBAR_TITLE );
 
-    int yPos = TOP_MARGIN + MARGIN_SIZE;
+    Toolkit::TableView contentTable = Toolkit::TableView::New( 4, 1 );
+    contentTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    contentTable.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    contentTable.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    contentTable.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    contentTable.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE * 0.5f ) );
+//    contentTable.TouchedSignal().Connect( this, &ButtonsController::OnTouchEvent );
+
+    for( unsigned int i = 0; i < contentTable.GetRows(); ++i )
+    {
+      contentTable.SetFitHeight( i );
+    }
+
+    contentTable.SetPosition( 0.0f, TOP_MARGIN );
+
+    mContentLayer.Add( contentTable );
 
     // Image selector radio group
-    Actor radioGroup2Background = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    radioGroup2Background.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    radioGroup2Background.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    radioGroup2Background.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    radioGroup2Background.SetRelayoutEnabled( true );
-    radioGroup2Background.SetSize( DP(348), DP(GROUP2_HEIGHT) );
-    mContentLayer.Add( radioGroup2Background );
+    Toolkit::TableView radioGroup2Background = Toolkit::TableView::New( 2, 2 );
+    radioGroup2Background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    radioGroup2Background.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    radioGroup2Background.SetBackgroundColor( BACKGROUND_COLOUR );
+    radioGroup2Background.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
+    radioGroup2Background.SetFitHeight( 0 );
+    radioGroup2Background.SetFitHeight( 1 );
+    radioGroup2Background.SetFitWidth( 0 );
 
-    Actor radioButtonsGroup2 = Actor::New();
-    radioButtonsGroup2.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    radioButtonsGroup2.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    radioButtonsGroup2.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
-    radioButtonsGroup2.SetRelayoutEnabled( true );
-    radioButtonsGroup2.SetSize( DP(100), DP(160) );
+    contentTable.Add( radioGroup2Background );
 
-    radioGroup2Background.Add( radioButtonsGroup2 );
+    Toolkit::TableView radioButtonsGroup2 = Toolkit::TableView::New( 3, 1 );
+    radioButtonsGroup2.SetCellPadding( Size( 0.0f, MARGIN_SIZE * 0.5f ) );
+    radioButtonsGroup2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    for( unsigned int i = 0; i < radioButtonsGroup2.GetRows(); ++i )
+    {
+      radioButtonsGroup2.SetFitHeight( i );
+    }
+    radioButtonsGroup2.SetFitWidth( 0 );
+
+    radioGroup2Background.AddChild( radioButtonsGroup2, Toolkit::TableView::CellPosition( 0, 0 ) );
 
     int radioY = 0;
 
@@ -189,11 +197,8 @@ class ButtonsController: public ConnectionTracker
 
     // Create select button
     mUpdateButton = Toolkit::PushButton::New();
-    mUpdateButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mUpdateButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    mUpdateButton.SetPosition( 0, DP(MARGIN_SIZE) );
     mUpdateButton.SetLabel( "Select" );
-    mUpdateButton.SetSize( DP(100), DP(BUTTON_HEIGHT) );
+    mUpdateButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
     mUpdateButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
     mUpdateButton.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
@@ -201,7 +206,7 @@ class ButtonsController: public ConnectionTracker
 
     mUpdateButton.ClickedSignal().Connect( this, &ButtonsController::OnButtonClicked );
 
-    radioButtonsGroup2.Add(mUpdateButton);
+    radioGroup2Background.AddChild( mUpdateButton, Toolkit::TableView::CellPosition( 1, 0 ) );
 
     // ImageActor to display selected image
     mBigImage1 = ResourceImage::New( BIG_IMAGE_1 );
@@ -209,43 +214,48 @@ class ButtonsController: public ConnectionTracker
     mBigImage3 = ResourceImage::New( BIG_IMAGE_3 );
 
     mImage = ImageActor::New( mBigImage1 );
-    mImage.SetParentOrigin( ParentOrigin::TOP_RIGHT );
-    mImage.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mImage.SetPosition( DP(MARGIN_SIZE), 0 );
-    mImage.SetSize( DP(218), DP(218) );
-    radioButtonsGroup2.Add( mImage );
+    mImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+    mImage.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::WIDTH );
+    radioGroup2Background.AddChild( mImage, Toolkit::TableView::CellPosition( 0, 1, 2, 1 ) );
 
     // The enable/disable radio group
-    yPos += GROUP2_HEIGHT + MARGIN_SIZE;
+    Toolkit::TableView radioGroup1Background = Toolkit::TableView::New( 1, 1 );
+    radioGroup1Background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    radioGroup1Background.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    radioGroup1Background.SetBackgroundColor( BACKGROUND_COLOUR );
+    radioGroup1Background.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
+    radioGroup1Background.SetFitHeight( 0 );
 
-    Actor radioGroup1Background = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    radioGroup1Background.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    radioGroup1Background.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    radioGroup1Background.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    radioGroup1Background.SetRelayoutEnabled( true );
-    radioGroup1Background.SetSize( DP(348), DP(GROUP1_HEIGHT) );
-    mContentLayer.Add( radioGroup1Background );
+    contentTable.Add( radioGroup1Background );
 
     // Radio group
-    Actor radioButtonsGroup1 = Actor::New();
-    radioButtonsGroup1.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    radioButtonsGroup1.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    radioButtonsGroup1.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
+    Toolkit::TableView radioButtonsGroup1 = Toolkit::TableView::New( 2, 1 );
+    radioButtonsGroup1.SetCellPadding( Size( 0.0f, MARGIN_SIZE * 0.5f ) );
+    radioButtonsGroup1.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    for( unsigned int i = 0; i < radioButtonsGroup1.GetRows(); ++i )
+    {
+      radioButtonsGroup1.SetFitHeight( i );
+    }
+    radioButtonsGroup1.SetFitWidth( 0 );
 
     radioGroup1Background.Add( radioButtonsGroup1 );
 
     // First radio button
     {
       Toolkit::TableView tableView = Toolkit::TableView::New( 1, 2 );
-      tableView.SetSize( DP(260), 0.0f );
-      tableView.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+      tableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+      tableView.SetFitHeight( 0 );
+      tableView.SetFitWidth( 0 );
+      tableView.SetFitWidth( 1 );
 
       Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( "Select enabled" );
+      textLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH );
+      textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+      textLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
       tableView.AddChild( textLabel, Toolkit::TableView::CellPosition( 0, 0 ) );
 
       ImageActor imageActor = ImageActor::New( ResourceImage::New( ENABLED_IMAGE ) );
       imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
-      imageActor.SetResizePolicy( FIXED, ALL_DIMENSIONS );
       imageActor.SetPadding( Padding( DP(20.0f), 0.0f, 0.0f, 0.0f ) );
       tableView.AddChild( imageActor, Toolkit::TableView::CellPosition( 0, 1 ) );
 
@@ -275,27 +285,25 @@ class ButtonsController: public ConnectionTracker
     }
 
     // CheckBoxes
-    yPos += GROUP1_HEIGHT + MARGIN_SIZE;
+    Toolkit::TableView checkBoxBackground = Toolkit::TableView::New( 3, 1 );
+    checkBoxBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    checkBoxBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    checkBoxBackground.SetBackgroundColor( BACKGROUND_COLOUR );
+    checkBoxBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
 
-    Actor checkBoxBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    checkBoxBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    checkBoxBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    checkBoxBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    checkBoxBackground.SetRelayoutEnabled( true );
-    checkBoxBackground.SetSize( DP(430), DP(GROUP3_HEIGHT) );
-    mContentLayer.Add( checkBoxBackground );
+    for( unsigned int i = 0; i < checkBoxBackground.GetRows(); ++i )
+    {
+      checkBoxBackground.SetFitHeight( i );
+    }
+
+    contentTable.Add( checkBoxBackground );
 
     Dali::Image unselected = Dali::ResourceImage::New( CHECKBOX_UNSELECTED_IMAGE );
     Dali::Image selected = Dali::ResourceImage::New( CHECKBOX_SELECTED_IMAGE );
 
-    int checkYPos = MARGIN_SIZE;
-
     {
       Toolkit::CheckBoxButton checkBox = Toolkit::CheckBoxButton::New();
       checkBox.SetName( "checkbox1" );
-      checkBox.SetPosition( DP(MARGIN_SIZE), DP(checkYPos) );
-      checkBox.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       checkBox.SetBackgroundImage( unselected );
       checkBox.SetSelectedImage( selected );
       checkBox.SetLabel( "CheckBox1 is unselected" );
@@ -304,13 +312,9 @@ class ButtonsController: public ConnectionTracker
       checkBoxBackground.Add( checkBox );
     }
 
-    checkYPos += 60;
-
     {
       Toolkit::CheckBoxButton checkBox = Toolkit::CheckBoxButton::New();
       checkBox.SetName( "checkbox2" );
-      checkBox.SetPosition( DP(MARGIN_SIZE), DP(checkYPos) );
-      checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       checkBox.SetBackgroundImage( unselected );
       checkBox.SetSelectedImage( selected );
       checkBox.SetLabel( "CheckBox2 is selected" );
@@ -320,13 +324,9 @@ class ButtonsController: public ConnectionTracker
       checkBoxBackground.Add( checkBox );
     }
 
-    checkYPos += 60;
-
     {
       Toolkit::CheckBoxButton checkBox = Toolkit::CheckBoxButton::New();
       checkBox.SetName( "checkbox3" );
-      checkBox.SetPosition( DP(MARGIN_SIZE), DP(checkYPos) );
-      checkBox.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       checkBox.SetBackgroundImage( unselected );
       checkBox.SetSelectedImage( selected );
       checkBox.SetLabel( "CheckBox3 is unselected" );
@@ -336,23 +336,25 @@ class ButtonsController: public ConnectionTracker
     }
 
     // Create togglabe button
-    yPos += GROUP3_HEIGHT + MARGIN_SIZE;
+    Toolkit::TableView toggleBackground = Toolkit::TableView::New( 3, 1 );
+    toggleBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    toggleBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    toggleBackground.SetBackgroundColor( BACKGROUND_COLOUR );
+    toggleBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
 
-    Actor toggleBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    toggleBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    toggleBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    toggleBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    toggleBackground.SetRelayoutEnabled( true );
-    toggleBackground.SetSize( DP(150 + MARGIN_SIZE * 2), DP(GROUP4_HEIGHT) );
-    mContentLayer.Add( toggleBackground );
+    for( unsigned int i = 0; i < toggleBackground.GetRows(); ++i )
+    {
+      toggleBackground.SetFitHeight( i );
+    }
+
+    contentTable.Add( toggleBackground );
+
 
     Toolkit::PushButton toggleButton = Toolkit::PushButton::New();
     toggleButton.SetTogglableButton( true );
-    toggleButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    toggleButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    toggleButton.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
     toggleButton.SetLabel( "Unselected" );
-    toggleButton.SetSize( DP(150), DP(BUTTON_HEIGHT) );
+    toggleButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    toggleButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
 
     toggleButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
     toggleButton.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
@@ -465,6 +467,34 @@ class ButtonsController: public ConnectionTracker
     return true;
   }
 
+  bool OnTouchEvent( Actor actor, const TouchEvent& event )
+  {
+    if( 1u == event.GetPointCount() )
+    {
+      const TouchPoint::State state = event.GetPoint(0u).state;
+
+      // Clamp to integer values; this is to reduce flicking due to pixel misalignment
+      const float localPoint = static_cast<float>( static_cast<int>( event.GetPoint( 0 ).local.y ) );
+
+      if( TouchPoint::Down == state )
+      {
+        mLastPoint = localPoint;
+        mAnimation = Animation::New( 0.25f );
+      }
+      else if( TouchPoint::Motion == state )
+      {
+        if( mAnimation )
+        {
+          mAnimation.AnimateBy( Property(actor, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
+          mAnimation.Play();
+          mLastPoint = localPoint;
+        }
+      }
+    }
+
+    return true;
+  }
+
  private:
 
   Application&      mApplication;
@@ -477,6 +507,9 @@ class ButtonsController: public ConnectionTracker
   Toolkit::RadioButton mRadioButtonImage3;
 
   Toolkit::PushButton mUpdateButton;
+
+  Animation      mAnimation;
+  float          mLastPoint;
 
   Image mBigImage1;
   Image mBigImage2;

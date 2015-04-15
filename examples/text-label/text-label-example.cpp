@@ -38,6 +38,7 @@ namespace
 
   const unsigned int KEY_ZERO = 10;
   const unsigned int KEY_ONE = 11;
+  const unsigned int KEY_F = 41;
   const unsigned int KEY_H = 43;
   const unsigned int KEY_V = 55;
   const unsigned int KEY_M = 58;
@@ -106,11 +107,8 @@ public:
     mContainer = Control::New();
     mContainer.SetName( "Container" );
     mContainer.SetParentOrigin( ParentOrigin::CENTER );
-    mContainer.SetResizePolicy( FIXED, ALL_DIMENSIONS );
     mLayoutSize = Vector2(stageSize.width*0.6f, stageSize.width*0.6f);
     mContainer.SetSize( mLayoutSize );
-    mContainer.SetBackgroundImage( ResourceImage::New( BACKGROUND_IMAGE ) );
-    mContainer.GetChildAt(0).SetZ(-1.0f);
     stage.Add( mContainer );
 
     // Resize the center layout when the corner is grabbed
@@ -118,9 +116,9 @@ public:
     mGrabCorner.SetName( "GrabCorner" );
     mGrabCorner.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
     mGrabCorner.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
-    mGrabCorner.SetResizePolicy( FIXED, ALL_DIMENSIONS );
     mGrabCorner.SetSize( Vector2(stageSize.width*0.1f, stageSize.width*0.1f) );
     mGrabCorner.SetZ(1.0f);
+    mGrabCorner.SetBackgroundColor( Color::YELLOW );
     mContainer.Add( mGrabCorner );
 
     mPanGestureDetector = PanGestureDetector::New();
@@ -130,11 +128,12 @@ public:
     mLabel = TextLabel::New( "A Quick Brown Fox Jumps Over The Lazy Dog" );
     mLabel.SetName( "TextLabel" );
     mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mLabel.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    mLabel.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
+    mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+    mLabel.SetBackgroundColor( Vector4(0.3f,0.3f,0.6f,1.0f) );
     mContainer.Add( mLabel );
 
     Property::Value labelText = mLabel.GetProperty( TextLabel::Property::TEXT );
@@ -173,13 +172,26 @@ public:
       {
         switch( event.keyCode )
         {
+          // Select rendering back-end
           case KEY_ZERO: // fall through
           case KEY_ONE:
           {
             mLabel.SetProperty( TextLabel::Property::RENDERING_BACKEND, event.keyCode - 10 );
             break;
           }
-          case KEY_H:
+          case KEY_F: // Fill vertically
+          {
+            if( ResizePolicy::DIMENSION_DEPENDENCY == mLabel.GetResizePolicy(Dimension::HEIGHT) )
+            {
+              mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+            }
+            else
+            {
+              mLabel.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
+            }
+            break;
+          }
+          case KEY_H: // Horizontal alignment
           {
             if( ++mAlignment >= H_ALIGNMENT_STRING_COUNT )
             {
@@ -189,7 +201,7 @@ public:
             mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, H_ALIGNMENT_STRING_TABLE[ mAlignment ] );
             break;
           }
-          case KEY_V:
+          case KEY_V: // Vertical alignment
           {
             if( ++mAlignment >= V_ALIGNMENT_STRING_COUNT )
             {
@@ -199,13 +211,13 @@ public:
             mLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, V_ALIGNMENT_STRING_TABLE[ mAlignment ] );
             break;
           }
-          case KEY_M:
+          case KEY_M: // Multi-line
           {
             bool multiLine = mLabel.GetProperty<bool>( TextLabel::Property::MULTI_LINE );
             mLabel.SetProperty( TextLabel::Property::MULTI_LINE, !multiLine );
             break;
           }
-          case KEY_L:
+          case KEY_L: // Language
           {
             const Language& language = LANGUAGES[ mLanguageId ];
 
@@ -217,7 +229,7 @@ public:
             }
             break;
           }
-          case KEY_S:
+          case KEY_S: // Shadow color
           {
             if( Color::BLACK == mLabel.GetProperty<Vector4>( TextLabel::Property::SHADOW_COLOR ) )
             {
@@ -229,12 +241,12 @@ public:
             }
             break;
           }
-          case KEY_PLUS:
+          case KEY_PLUS: // Increase shadow offset
           {
             mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, mLabel.GetProperty<Vector2>( TextLabel::Property::SHADOW_OFFSET ) + Vector2( 1.0f, 1.0f ) );
             break;
           }
-          case KEY_MINUS:
+          case KEY_MINUS: // Decrease shadow offset
           {
             mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, mLabel.GetProperty<Vector2>( TextLabel::Property::SHADOW_OFFSET ) - Vector2( 1.0f, 1.0f ) );
             break;
@@ -252,7 +264,7 @@ private:
   TextLabel mLabel;
 
   Control mContainer;
-  Actor mGrabCorner;
+  Control mGrabCorner;
 
   PanGestureDetector mPanGestureDetector;
 

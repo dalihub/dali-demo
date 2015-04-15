@@ -59,8 +59,8 @@ public:
     stage.KeyEventSignal().Connect(this, &EmojiExample::OnKeyEvent);
 
     mTableView = Toolkit::TableView::New( NUMBER_OF_EMOJIS, 1 );
-    mTableView.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    mTableView.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+    mTableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    mTableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     mTableView.SetParentOrigin( ParentOrigin::TOP_LEFT );
     mTableView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mTableView.TouchedSignal().Connect( this, &EmojiExample::OnTouchEvent );

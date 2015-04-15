@@ -65,8 +65,8 @@ public:
   Actor CreateVectorComponentControl( const std::string& label, const Vector3& size, bool(PathController::*callback)(Slider,float) )
   {
     TextLabel text = TextLabel::New(label);
-    text.SetResizePolicy( USE_NATURAL_SIZE, WIDTH );
-    text.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+    text.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH );
+    text.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     text.SetColor( Vector4(0.0f,0.0f,0.0f,1.0f));
 
     Slider slider = Slider::New();

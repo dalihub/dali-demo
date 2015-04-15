@@ -74,7 +74,6 @@ public:
     mContainer = Control::New();
     mContainer.SetName( "Container" );
     mContainer.SetParentOrigin( ParentOrigin::CENTER );
-    mContainer.SetResizePolicy( FIXED, ALL_DIMENSIONS );
     mContainer.SetSize( Vector2(stageSize.width*0.6f, stageSize.width*0.6f) );
     mContainer.SetBackgroundImage( ResourceImage::New( BACKGROUND_IMAGE ) );
     mContainer.GetChildAt(0).SetZ(-1.0f);
@@ -82,8 +81,8 @@ public:
 
     TextField field = TextField::New();
     field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    field.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    field.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
+    field.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    field.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
 
     mContainer.Add( field );
 

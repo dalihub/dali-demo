@@ -167,7 +167,7 @@ void RadialMenuExample::OnInit(Application& app)
 
   Image dial = ResourceImage::New( TEST_DIAL_FILENAME );
   mDialActor = ImageActor::New( dial );
-  mDialActor.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
+  mDialActor.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   mDialActor.SetPositionInheritanceMode(USE_PARENT_POSITION);
   mDialActor.SetScale(scale);
   Layer dialLayer = Layer::New();
@@ -245,7 +245,7 @@ RadialSweepView RadialMenuExample::CreateSweepView( std::string imageName,
   mImageActor = ImageActor::New(image);
   mImageActor.SetParentOrigin(ParentOrigin::CENTER);
   mImageActor.SetAnchorPoint(AnchorPoint::CENTER);
-  mImageActor.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
+  mImageActor.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
   // Create the stencil
   Vector2 imageSize = ResourceImage::GetImageSize(imageName);

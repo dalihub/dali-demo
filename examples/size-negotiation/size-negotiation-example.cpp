@@ -40,7 +40,7 @@ namespace
 const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "background-gradient.jpg";
 const char* const TOOLBAR_IMAGE = DALI_IMAGE_DIR "top-bar.png";
 
-const char* const TOOLBAR_TITLE = "Size Negotiation";
+const char* const TOOLBAR_TITLE = "Negotiate Size";
 const int TOOLBAR_HEIGHT = 62;
 
 const char* MENU_ICON_IMAGE = DALI_IMAGE_DIR "icon-cluster-none.png";
@@ -190,7 +190,7 @@ public:
     mItemView = Toolkit::ItemView::New( *this );
     mItemView.SetParentOrigin( ParentOrigin::CENTER );
     mItemView.SetAnchorPoint( AnchorPoint::CENTER );
-    mItemView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    mItemView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Use a grid layout for tests
     Toolkit::GridLayoutPtr gridLayout = Toolkit::GridLayout::New();
@@ -254,11 +254,11 @@ public:
     mMenu.HideTail();
     mMenu.OutsideTouchedSignal().Connect( this, &SizeNegotiationController::HideMenu );
     mMenu.SetSize( popupWidth, 0.0f );
-    mMenu.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
+    mMenu.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
 
     Toolkit::TableView tableView = Toolkit::TableView::New( 0, 0 );
-    tableView.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    tableView.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+    tableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    tableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     mMenu.Add( tableView );
 
     for( unsigned int i = 0; i < MENU_ITEMS_COUNT; ++i )
@@ -430,7 +430,8 @@ public:
       text.SetProperty( TextLabel::Property::MULTI_LINE, true );
       text.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
       text.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
-      text.SetResizePolicy( FILL_TO_PARENT, Dali::HEIGHT );
+      text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      text.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
       text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( text );
@@ -442,8 +443,8 @@ public:
       mPopup = CreatePopup();
 
       ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
-      image.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      image.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
+      image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      image.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
       image.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( image );
@@ -454,11 +455,11 @@ public:
     {
       mPopup = CreatePopup();
 
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
       ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
-      image.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
       mPopup.Add( image );
 
@@ -468,12 +469,12 @@ public:
     {
       mPopup = CreatePopup();
 
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
       ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
-      image.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      image.SetSizeScalePolicy( FIT_WITH_ASPECT_RATIO );
+      image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+      image.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
 
       mPopup.Add( image );
 
@@ -483,12 +484,12 @@ public:
     {
       mPopup = CreatePopup();
 
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
       ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
-      image.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-      image.SetSizeScalePolicy( FILL_WITH_ASPECT_RATIO );
+      image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+      image.SetSizeScalePolicy( SizeScalePolicy::FILL_WITH_ASPECT_RATIO );
 
       mPopup.Add( image );
 
@@ -501,8 +502,9 @@ public:
 
       Toolkit::TextLabel text = Toolkit::TextLabel::New( CONTENT_TEXT );
       text.SetName( "POPUP_CONTENT_TEXT" );
-      text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
+      text.SetProperty( TextLabel::Property::MULTI_LINE, true );
+      text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      text.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
       text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
 
       mPopup.Add( text );
@@ -516,8 +518,9 @@ public:
 
       Toolkit::TextLabel text = Toolkit::TextLabel::New( CONTENT_TEXT );
       text.SetName( "POPUP_CONTENT_TEXT" );
-      text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
+      text.SetProperty( TextLabel::Property::MULTI_LINE, true );
+      text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      text.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
       text.SetPadding( Padding( 10.0f, 10.0f, 20.0f, 0.0f ) );
 
       mPopup.Add( text );
@@ -552,8 +555,8 @@ public:
       // Content
       Toolkit::TableView content = Toolkit::TableView::New( 2, 2 );
       content.SetName( "COMPLEX_TABLEVIEW" );
-      content.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      content.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+      content.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      content.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       content.SetFitHeight( 0 );
       content.SetFitHeight( 1 );
       content.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 0.0f ) );
@@ -561,8 +564,9 @@ public:
       // Text
       {
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Do you really want to quit?" );
-        text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        text.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
+        text.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+        text.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
 
         content.AddChild( text, Toolkit::TableView::CellPosition( 0, 0 ) );
       }
@@ -571,8 +575,8 @@ public:
       {
         ImageActor image = ImageActor::New( ResourceImage::New( IMAGE1 ) );
         image.SetName( "COMPLEX_IMAGE" );
-        image.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        image.SetResizePolicy( DIMENSION_DEPENDENCY, HEIGHT );
+        image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+        image.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
         image.SetPadding( Padding( 20.0f, 0.0f, 0.0f, 0.0f ) );
         content.AddChild( image, Toolkit::TableView::CellPosition( 0, 1 ) );
       }
@@ -580,8 +584,8 @@ public:
       // Text 2
       {
         Toolkit::TableView root = Toolkit::TableView::New( 1, 2 );
-        root.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        root.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+        root.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+        root.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
         root.SetFitHeight( 0 );
         root.SetFitWidth( 0 );
         root.SetPadding( Padding( 0.0f, 0.0f, 0.0f, 20.0f ) );
@@ -632,12 +636,12 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_EMPTY_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
       Toolkit::TableView table = Toolkit::TableView::New( 0, 0 );
-      table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
       mPopup.Add( table );
 
@@ -646,16 +650,16 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_1CELL_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
       Toolkit::TableView table = Toolkit::TableView::New( 0, 0 );
       table.SetName( "TABLEVIEW_BUTTON_1CELL_ID" );
-      table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
       Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-      backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       table.Add( backing );
 
       mPopup.Add( table );
@@ -665,26 +669,26 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_3CELL_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
       Toolkit::TableView table = Toolkit::TableView::New( 0, 0 );
-      table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.Add( backing );
       }
 
@@ -695,61 +699,61 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_3X3CELL_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 3 );
-      table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
       // Column 0
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 0, 0 ) );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 1, 0 ) );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 2, 0 ) );
       }
 
       // Column 1
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 1.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 0, 1 ) );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 1, 1 ) );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 0.0f, 1.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 2, 1 ) );
       }
 
       // Column 2
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 0, 2 ) );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.5f, 0.5f, 0.5f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 1, 2 ) );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.5f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 2, 2 ) );
       }
 
@@ -760,38 +764,44 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_FIXED1_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
-      table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       table.SetFixedHeight( 0, 50.0f );
 
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
         backing.Add( text );
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
         backing.Add( text );
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
         backing.Add( text );
         table.Add( backing );
       }
@@ -803,39 +813,51 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_FIXED2_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
-      table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       table.SetFixedHeight( 0, 50.0f );
       table.SetFixedHeight( 2, 50.0f );
 
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
         table.Add( backing );
       }
@@ -847,46 +869,58 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_FIT1_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
-      table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       table.SetFitHeight( 0 );
       table.SetFitHeight( 2 );
 
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 100.0f );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 100.0f );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
@@ -899,30 +933,38 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_FIT2_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, ALL_DIMENSIONS );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
-      table.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       table.SetFitHeight( 1 );
 
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
         backing.Add( text );
@@ -931,11 +973,15 @@ public:
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
@@ -948,49 +994,61 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL1_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, WIDTH );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
-      mPopup.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
+      mPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
-      table.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      table.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      table.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       table.SetFitHeight( 0 );
       table.SetFitHeight( 1 );
       table.SetFitHeight( 2 );
 
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 100.0f );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 300.0f );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
@@ -1003,37 +1061,45 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL2_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, WIDTH );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
-      mPopup.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
+      mPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
-      table.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      table.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      table.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       table.SetFitHeight( 0 );
       table.SetFitHeight( 1 );
 
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-        backing.SetResizePolicy( FIXED, HEIGHT );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+        backing.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
         backing.SetSize( 0.0f, 100.0f );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
@@ -1046,35 +1112,43 @@ public:
     else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL3_ID )
     {
       mPopup = CreatePopup();
-      mPopup.SetResizePolicy( SIZE_RELATIVE_TO_PARENT, WIDTH );
+      mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
-      mPopup.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
+      mPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
-      table.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      table.SetResizePolicy( USE_NATURAL_SIZE, HEIGHT );
+      table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      table.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       table.SetFixedHeight( 0, 20.0f );
       table.SetFitHeight( 1 );
 
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
       }
       {
         Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
-        backing.SetResizePolicy( FILL_TO_PARENT, WIDTH );
+        backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetAnchorPoint( AnchorPoint::CENTER );
         text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+        text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+        text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
         backing.Add( text );
 
         table.Add( backing );
@@ -1179,7 +1253,7 @@ public: // From ItemFactory
       Toolkit::PushButton popupButton = Toolkit::PushButton::New();
       popupButton.SetName( buttonDataArray[ itemId ].name );
       popupButton.SetLabel( buttonDataArray[ itemId ].text );
-      popupButton.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
+      popupButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
       popupButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
       popupButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );

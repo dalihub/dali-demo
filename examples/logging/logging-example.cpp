@@ -23,21 +23,9 @@
 
 using namespace Dali;
 
-namespace
-{
-// Used to produce visually same dimensions on desktop and device builds
-float ScalePointSize( int pointSize )
-{
-  Dali::Vector2 dpi = Dali::Stage::GetCurrent().GetDpi();
-  float meanDpi = (dpi.height + dpi.width) * 0.5f;
-  return pointSize * meanDpi / 220.0f;
-}
-
-} // namespace
-
 // Define this so that it is interchangeable
 // "DP" stands for Device independent Pixels
-#define DP(x) ScalePointSize(x)
+#define DP(x) x
 
 //enum ButtonType
 //{
@@ -186,17 +174,34 @@ class LoggingController: public ConnectionTracker
                                             TOOLBAR_IMAGE,
                                             TOOLBAR_TITLE );
 
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
+    Toolkit::TableView contentTable = Toolkit::TableView::New( 6, 1 );
+    contentTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    contentTable.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    contentTable.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    contentTable.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    contentTable.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE * 0.5f ) );
+//    contentTable.TouchedSignal().Connect( this, &LoggingController::OnTouchEvent );
 
-    int yPos = TOP_MARGIN + MARGIN_SIZE;
+    for( unsigned int i = 0; i < contentTable.GetRows(); ++i )
+    {
+      contentTable.SetFitHeight( i );
+    }
+
+    contentTable.SetPosition( 0.0f, TOP_MARGIN );
+
+    mContentLayer.Add( contentTable );
+
 
     // Logger selector radio group
-    Actor radioGroupBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    radioGroupBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    Toolkit::TableView radioGroupBackground = Toolkit::TableView::New( 2, 1 );
+    radioGroupBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    radioGroupBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    radioGroupBackground.SetBackgroundColor( BACKGROUND_COLOUR );
     radioGroupBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    radioGroupBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    radioGroupBackground.SetSize( stageSize.width - 2 * DP(MARGIN_SIZE), DP(LOGGER_RADIO_GROUP_HEIGHT) );
-    mContentLayer.Add( radioGroupBackground );
+    radioGroupBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    radioGroupBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE * 0.5f ) );
+
+    contentTable.Add( radioGroupBackground );
 
     // Label
     {
@@ -204,20 +209,27 @@ class LoggingController: public ConnectionTracker
       label.SetParentOrigin( ParentOrigin::TOP_LEFT );
       label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       label.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
+      label.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
       radioGroupBackground.Add( label );
+      radioGroupBackground.SetFitHeight( 0 );
     }
 
     // Radio group
-    Actor radioButtonsGroup = Actor::New();
-    radioButtonsGroup.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    radioButtonsGroup.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    radioButtonsGroup.SetPosition( DP(MARGIN_SIZE), 0 );
+    Toolkit::TableView radioButtonsGroup = Toolkit::TableView::New( 3, 1 );
+    radioButtonsGroup.SetCellPadding( Size( 0.0f, MARGIN_SIZE * 0.5f ) );
+    radioButtonsGroup.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    for( unsigned int i = 0; i < radioButtonsGroup.GetRows(); ++i )
+    {
+      radioButtonsGroup.SetFitHeight( i );
+    }
+    radioButtonsGroup.SetFitWidth( 0 );
 
     radioGroupBackground.Add( radioButtonsGroup );
+    radioGroupBackground.SetFitHeight( 1 );
 
     int radioX = 0;
-    int radioY = MARGIN_SIZE + 28;
+    int radioY = 0;
 
     // Radio 1
     {
@@ -267,26 +279,21 @@ class LoggingController: public ConnectionTracker
     }
 
     // Create/delete/disable group
-    yPos += LOGGER_RADIO_GROUP_HEIGHT + MARGIN_SIZE;
+    Toolkit::TableView createGroupBackground = Toolkit::TableView::New( 1, 2 );
+    createGroupBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    createGroupBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    createGroupBackground.SetBackgroundColor( BACKGROUND_COLOUR );
+    createGroupBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
+    createGroupBackground.SetFitHeight( 0 );
 
-    Actor createGroupBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    createGroupBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    createGroupBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    createGroupBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    createGroupBackground.SetSize( stageSize.width - 2 * DP(MARGIN_SIZE), DP(LOGGER_GROUP_HEIGHT) );
-    mContentLayer.Add( createGroupBackground );
-
-    int buttonXDP = DP(MARGIN_SIZE);
-    int buttonWidthDP = (createGroupBackground.GetTargetSize().width - DP(MARGIN_SIZE) * 3) / 2;
+    contentTable.Add( createGroupBackground );
 
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( CREATE_BUTTON_ID );
       button.SetLabel( CREATE_BUTTON_TEXT );
-      button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
-      button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
-      button.SetPosition( buttonXDP, 0 );
-      button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
+      button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
 
       button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
@@ -298,15 +305,11 @@ class LoggingController: public ConnectionTracker
     }
 
     {
-      buttonXDP += DP(MARGIN_SIZE) + buttonWidthDP;
-
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( DELETE_BUTTON_ID );
       button.SetLabel( DELETE_BUTTON_TEXT );
-      button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
-      button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
-      button.SetPosition( buttonXDP, 0 );
-      button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
+      button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
 
       button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
@@ -318,26 +321,22 @@ class LoggingController: public ConnectionTracker
     }
 
     // Start/stop group
-    yPos += LOGGER_GROUP_HEIGHT + MARGIN_SIZE;
 
-    Actor timingGroupBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    timingGroupBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    timingGroupBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    timingGroupBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    timingGroupBackground.SetSize( stageSize.width - 2 * DP(MARGIN_SIZE), DP(LOGGER_GROUP_HEIGHT) );
-    mContentLayer.Add( timingGroupBackground );
+    Toolkit::TableView timingGroupBackground = Toolkit::TableView::New( 1, 2 );
+    timingGroupBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    timingGroupBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    timingGroupBackground.SetBackgroundColor( BACKGROUND_COLOUR );
+    timingGroupBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
+    timingGroupBackground.SetFitHeight( 0 );
 
-    buttonXDP = DP(MARGIN_SIZE);
-    buttonWidthDP = (timingGroupBackground.GetTargetSize().width - DP(MARGIN_SIZE) * 3) / 2;
+    contentTable.Add( timingGroupBackground );
 
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( START_BUTTON_ID );
       button.SetLabel( START_BUTTON_TEXT );
-      button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
-      button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
-      button.SetPosition( buttonXDP, 0 );
-      button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
+      button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
 
       button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
@@ -349,15 +348,11 @@ class LoggingController: public ConnectionTracker
     }
 
     {
-      buttonXDP += DP(MARGIN_SIZE) + buttonWidthDP;
-
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( STOP_BUTTON_ID );
       button.SetLabel( STOP_BUTTON_TEXT );
-      button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
-      button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
-      button.SetPosition( buttonXDP, 0 );
-      button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
+      button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
 
       button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
@@ -369,26 +364,21 @@ class LoggingController: public ConnectionTracker
     }
 
     // Enable/disable group
-    yPos += LOGGER_GROUP_HEIGHT + MARGIN_SIZE;
+    Toolkit::TableView enableGroupBackground = Toolkit::TableView::New( 1, 2 );
+    enableGroupBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    enableGroupBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    enableGroupBackground.SetBackgroundColor( BACKGROUND_COLOUR );
+    enableGroupBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
+    enableGroupBackground.SetFitHeight( 0 );
 
-    Actor enableGroupBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    enableGroupBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    enableGroupBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    enableGroupBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    enableGroupBackground.SetSize( stageSize.width - 2 * DP(MARGIN_SIZE), DP(LOGGER_GROUP_HEIGHT) );
-    mContentLayer.Add( enableGroupBackground );
-
-    buttonXDP = DP(MARGIN_SIZE);
-    buttonWidthDP = (enableGroupBackground.GetTargetSize().width - DP(MARGIN_SIZE) * 3) / 2;
+    contentTable.Add( enableGroupBackground );
 
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( ENABLE_BUTTON_ID );
       button.SetLabel( ENABLE_BUTTON_TEXT );
-      button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
-      button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
-      button.SetPosition( buttonXDP, 0 );
-      button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
+      button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
 
       button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
@@ -400,15 +390,11 @@ class LoggingController: public ConnectionTracker
     }
 
     {
-      buttonXDP += DP(MARGIN_SIZE) + buttonWidthDP;
-
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( DISABLE_BUTTON_ID );
       button.SetLabel( DISABLE_BUTTON_TEXT );
-      button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
-      button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
-      button.SetPosition( buttonXDP, 0 );
-      button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
+      button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
 
       button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
@@ -419,47 +405,37 @@ class LoggingController: public ConnectionTracker
       enableGroupBackground.Add( button );
     }
 
-    yPos += LOGGER_GROUP_HEIGHT + MARGIN_SIZE;
-
     // Logger selector radio group
-    unsigned int groupHeight = LOGGER_GROUP_HEIGHT + 30;
+    Toolkit::TableView frequencyRadioGroupBackground = Toolkit::TableView::New( 2, 1 );
+    frequencyRadioGroupBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    frequencyRadioGroupBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    frequencyRadioGroupBackground.SetBackgroundColor( BACKGROUND_COLOUR );
+    frequencyRadioGroupBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE * 0.5f ) );
+    frequencyRadioGroupBackground.SetFitHeight( 0 );
+    frequencyRadioGroupBackground.SetFitHeight( 1 );
 
-    Actor frequencyRadioGroupBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    frequencyRadioGroupBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    frequencyRadioGroupBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    frequencyRadioGroupBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    frequencyRadioGroupBackground.SetSize( stageSize.width - 2 * DP(MARGIN_SIZE), DP(groupHeight) );
-    mContentLayer.Add( frequencyRadioGroupBackground );
+    contentTable.Add( frequencyRadioGroupBackground );
 
     // Label
     {
       Toolkit::TextLabel label = Toolkit::TextLabel::New( FREQUENCY_TEXT );
-      label.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      label.SetPosition( DP(MARGIN_SIZE), DP(MARGIN_SIZE) );
 
       frequencyRadioGroupBackground.Add( label );
     }
 
     // Radio group
-    Actor frequencyRadioButtonsGroup = Actor::New();
-    frequencyRadioButtonsGroup.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    frequencyRadioButtonsGroup.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    frequencyRadioButtonsGroup.SetPosition( DP(MARGIN_SIZE), DP(40) );
+    Toolkit::TableView frequencyRadioButtonsGroup = Toolkit::TableView::New( 1, 3 );
+    frequencyRadioButtonsGroup.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    frequencyRadioButtonsGroup.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    frequencyRadioButtonsGroup.SetFitHeight( 0 );
+    frequencyRadioButtonsGroup.SetPadding( Padding( 0.0f, 0.0f, MARGIN_SIZE, 0.0f ) );
 
     frequencyRadioGroupBackground.Add( frequencyRadioButtonsGroup );
-
-    radioX = 0;
-    radioY = 0;
-    const int frequencyRadioWidth = 100;
 
     // Radio 1
     {
       Toolkit::RadioButton radioButton = Toolkit::RadioButton::New( FREQUENCY_1_RADIO_TEXT );
       radioButton.SetName( FREQUENCY_1_RADIO_ID );
-      radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      radioButton.SetPosition( DP(radioX), DP(radioY) );
 
       radioButton.StateChangedSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
 
@@ -469,13 +445,9 @@ class LoggingController: public ConnectionTracker
 
     // Radio 2
     {
-      radioX += frequencyRadioWidth;
-
       Toolkit::RadioButton radioButton = Toolkit::RadioButton::New( FREQUENCY_2_RADIO_TEXT );
       radioButton.SetName( FREQUENCY_2_RADIO_ID );
-      radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      radioButton.SetPosition( DP(radioX), DP(radioY) );
+
       radioButton.SetSelected( true );
 
       radioButton.StateChangedSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
@@ -486,13 +458,8 @@ class LoggingController: public ConnectionTracker
 
     // Radio 3
     {
-      radioX += frequencyRadioWidth;
-
       Toolkit::RadioButton radioButton = Toolkit::RadioButton::New( FREQUENCY_3_RADIO_TEXT );
       radioButton.SetName( FREQUENCY_3_RADIO_ID );
-      radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      radioButton.SetPosition( DP(radioX), DP(radioY) );
 
       radioButton.StateChangedSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
 
@@ -501,26 +468,21 @@ class LoggingController: public ConnectionTracker
     }
 
     // Vsync group
-    yPos += groupHeight + MARGIN_SIZE;
+    Toolkit::TableView vsyncGroupBackground = Toolkit::TableView::New( 1, 1 );
+    vsyncGroupBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    vsyncGroupBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    vsyncGroupBackground.SetBackgroundColor( BACKGROUND_COLOUR );
+    vsyncGroupBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
+    vsyncGroupBackground.SetFitHeight( 0 );
 
-    Actor vsyncGroupBackground = Toolkit::CreateSolidColorActor( BACKGROUND_COLOUR );
-    vsyncGroupBackground.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    vsyncGroupBackground.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    vsyncGroupBackground.SetPosition( DP(MARGIN_SIZE), DP(yPos) );
-    vsyncGroupBackground.SetSize( stageSize.width - 2 * DP(MARGIN_SIZE), DP(LOGGER_GROUP_HEIGHT) );
-    mContentLayer.Add( vsyncGroupBackground );
-
-    buttonXDP = DP(MARGIN_SIZE);
-    buttonWidthDP = vsyncGroupBackground.GetTargetSize().width - DP(MARGIN_SIZE) * 2;
+    contentTable.Add( vsyncGroupBackground );
 
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( VSYNC_BUTTON_ID );
       button.SetLabel( VSYNC_BUTTON_TEXT );
-      button.SetParentOrigin( ParentOrigin::CENTER_LEFT );
-      button.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
-      button.SetPosition( buttonXDP, 0 );
-      button.SetSize( buttonWidthDP, DP(BUTTON_HEIGHT) );
+      button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
 
       button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
       button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
@@ -720,6 +682,34 @@ class LoggingController: public ConnectionTracker
     return true;
   }
 
+  bool OnTouchEvent( Actor actor, const TouchEvent& event )
+  {
+    if( 1u == event.GetPointCount() )
+    {
+      const TouchPoint::State state = event.GetPoint(0u).state;
+
+      // Clamp to integer values; this is to reduce flicking due to pixel misalignment
+      const float localPoint = static_cast<float>( static_cast<int>( event.GetPoint( 0 ).local.y ) );
+
+      if( TouchPoint::Down == state )
+      {
+        mLastPoint = localPoint;
+        mAnimation = Animation::New( 0.25f );
+      }
+      else if( TouchPoint::Motion == state )
+      {
+        if( mAnimation )
+        {
+          mAnimation.AnimateBy( Property(actor, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
+          mAnimation.Play();
+          mLastPoint = localPoint;
+        }
+      }
+    }
+
+    return true;
+  }
+
  private:
 
   struct LoggerState
@@ -735,6 +725,9 @@ class LoggingController: public ConnectionTracker
   Toolkit::View     mView;                   ///< The View instance.
   Toolkit::ToolBar  mToolBar;                ///< The View's Toolbar.
   Layer             mContentLayer;           ///< Content layer
+
+  Animation      mAnimation;
+  float          mLastPoint;
 
   typedef std::vector< std::string > Strings;
   Strings mPerformanceLoggerNames;

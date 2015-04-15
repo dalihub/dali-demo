@@ -201,7 +201,7 @@ public:
     mShadowView.SetParentOrigin(ParentOrigin::CENTER);
     mShadowView.SetAnchorPoint(AnchorPoint::CENTER);
     mShadowView.SetRelayoutEnabled( true );
-    mShadowView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    mShadowView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
@@ -233,6 +233,8 @@ public:
     mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
 
     TextLabel text = TextLabel::New( "Light" );
+    text.SetProperty( TextLabel::Property::POINT_SIZE, 20.0f );
+    text.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     text.SetColor( Color::BLUE );
 
     mCastingLight.Add(text);
@@ -253,9 +255,9 @@ public:
     mImageActor2 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_2) );
     mImageActor3 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_3) );
 
-    mImageActor1.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
-    mImageActor2.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
-    mImageActor3.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
+    mImageActor1.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    mImageActor2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    mImageActor3.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
     mImageActor2.SetParentOrigin(ParentOrigin::CENTER);
 
