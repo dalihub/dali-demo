@@ -26,10 +26,8 @@ namespace
  * Method to project a point on a circle of radius halfSide at given
  * angle onto a square of side 2 * halfSide
  */
-void CircleSquareProjection( Vector3& position, Degree angle, float halfSide )
+void CircleSquareProjection( Vector3& position, Radian angle, float halfSide )
 {
-  Radian angleInRadians(angle);
-
   //  135  90   45
   //     +--+--+
   //     | \|/ |
@@ -37,25 +35,25 @@ void CircleSquareProjection( Vector3& position, Degree angle, float halfSide )
   //     | /|\ |
   //     +--+--+
   //  225  270  315
-  if( angle >= 45.0f && angle < 135.0f )
+  if( angle >= Dali::ANGLE_45 && angle < Dali::ANGLE_135 )
   {
-    position.x = halfSide * cosf(angleInRadians) / sinf(angleInRadians);
+    position.x = halfSide * cosf(angle) / sinf(angle);
     position.y = -halfSide;
   }
-  else if( angle >= 135.0f && angle < 225.0f )
+  else if( angle >= Dali::ANGLE_135 && angle < Dali::ANGLE_225 )
   {
     position.x = -halfSide;
-    position.y = halfSide * sinf(angleInRadians) / cosf(angleInRadians);
+    position.y = halfSide * sinf(angle) / cosf(angle);
   }
-  else if( angle >= 225.0f && angle < 315.0f )
+  else if( angle >= Dali::ANGLE_225 && angle < Dali::ANGLE_315 )
   {
-    position.x = -halfSide * cosf(angleInRadians) / sinf(angleInRadians);
+    position.x = -halfSide * cosf(angle) / sinf(angle);
     position.y =  halfSide;
   }
   else
   {
     position.x = halfSide;
-    position.y = -halfSide * sinf(angleInRadians) / cosf(angleInRadians);
+    position.y = -halfSide * sinf(angle) / cosf(angle);
   }
 
   position.z = 0.0f;
@@ -273,7 +271,7 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
   }
 
   mStencilActor.SetOrientation( Degree(mInitialAngle), Vector3::ZAXIS );
-  mStencilActor.SetProperty( mRotationAngleIndex, static_cast<float>(mInitialSector) );
+  mStencilActor.SetProperty( mRotationAngleIndex, mInitialSector.degree );
 
   if( mRotateActors )
   {
@@ -282,13 +280,13 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
       Actor actor = mLayer.GetChildAt(i);
       if( actor != mStencilActor )
       {
-        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mInitialActorAngle ) ), Vector3::ZAXIS ) );
+        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( mInitialActorAngle ), Vector3::ZAXIS ) );
       }
     }
   }
 
-  anim.AnimateTo( Property( mStencilActor, mRotationAngleIndex ), static_cast<float>(mFinalSector), mEasingFunction, TimePeriod( offsetTime, duration ) );
-  anim.AnimateTo( Property( mStencilActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mFinalAngle ) ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
+  anim.AnimateTo( Property( mStencilActor, mRotationAngleIndex ), mFinalSector.degree, mEasingFunction, TimePeriod( offsetTime, duration ) );
+  anim.AnimateTo( Property( mStencilActor, Actor::Property::ORIENTATION ), Quaternion( Radian( mFinalAngle ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
 
   if( mRotateActorsWithStencil )
   {
@@ -297,7 +295,7 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
       Actor actor = mLayer.GetChildAt(i);
       if( actor != mStencilActor )
       {
-        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mFinalAngle - mInitialAngle ) ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
+        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mFinalAngle.degree - mInitialAngle.degree ) ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
       }
     }
   }
@@ -308,7 +306,7 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
       Actor actor = mLayer.GetChildAt(i);
       if( actor != mStencilActor )
       {
-        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mFinalActorAngle ) ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
+        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( mFinalActorAngle ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
       }
     }
   }
@@ -357,10 +355,10 @@ void RadialSweepViewImpl::CreateStencil( Degree initialSector )
   mStencilActor.SetCullFace(CullNone); // Allow clockwise & anticlockwise faces
 
   mStartAngleIndex = mStencilActor.RegisterProperty("start-angle", Property::Value(0.0f));
-  mRotationAngleIndex = mStencilActor.RegisterProperty("rotation-angle", Property::Value(initialSector));
+  mRotationAngleIndex = mStencilActor.RegisterProperty("rotation-angle", Property::Value(initialSector.degree));
 
   Source srcStart( mStencilActor, mStartAngleIndex );
-  Source srcRot( mStencilActor, mRotationAngleIndex );
+  Source srcRotation( mStencilActor, mRotationAngleIndex );
 
   // Constrain the vertices of the square mesh to sweep out a sector as the
   // rotation angle is animated.
@@ -371,27 +369,27 @@ void RadialSweepViewImpl::CreateStencil( Degree initialSector )
 
   constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(2, AnimatableVertex::Property::POSITION), SquareFanConstraint(0) );
   constraint.AddSource( srcStart );
-  constraint.AddSource( srcRot );
+  constraint.AddSource( srcRotation );
   constraint.Apply();
 
   constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(3, AnimatableVertex::Property::POSITION), SquareFanConstraint(1) );
   constraint.AddSource( srcStart );
-  constraint.AddSource( srcRot );
+  constraint.AddSource( srcRotation );
   constraint.Apply();
 
   constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(4, AnimatableVertex::Property::POSITION), SquareFanConstraint(2) );
   constraint.AddSource( srcStart );
-  constraint.AddSource( srcRot );
+  constraint.AddSource( srcRotation );
   constraint.Apply();
 
   constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(5, AnimatableVertex::Property::POSITION), SquareFanConstraint(3) );
   constraint.AddSource( srcStart );
-  constraint.AddSource( srcRot );
+  constraint.AddSource( srcRotation );
   constraint.Apply();
 
   constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(6, AnimatableVertex::Property::POSITION), SquareFanConstraint(4) );
   constraint.AddSource( srcStart );
-  constraint.AddSource( srcRot );
+  constraint.AddSource( srcRotation );
   constraint.Apply();
 
   mStencilActor.SetDrawMode( DrawMode::STENCIL );
