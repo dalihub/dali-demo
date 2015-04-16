@@ -324,17 +324,18 @@ void DaliTableView::Initialize( Application& application )
   // Remove constraints for inner cube effect
   ApplyCubeEffectToActors();
 
-  // Set initial orientation
-  unsigned int degrees = application.GetOrientation().GetDegrees();
-  Rotate( degrees );
-
   Dali::Window winHandle = application.GetWindow();
   winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT );
   winHandle.RemoveAvailableOrientation( Dali::Window::LANDSCAPE );
   winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE );
   winHandle.RemoveAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
+  // Set initial orientation
   Dali::Orientation orientation = winHandle.GetOrientation();
+
+  unsigned int degrees = winHandle.GetOrientation().GetDegrees();
+  Rotate( degrees );
+
   orientation.ChangedSignal().Connect( this, &DaliTableView::OrientationChanged );
 
   winHandle.ShowIndicator( Dali::Window::INVISIBLE );
