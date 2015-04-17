@@ -55,16 +55,14 @@ public:
     Stage stage = Stage::GetCurrent();
 
     //Create a view
-    mView = Dali::Toolkit::View::New();
+    mView = Dali::Toolkit::Control::New();
+    mView.SetAnchorPoint( Dali::AnchorPoint::CENTER );
+    mView.SetParentOrigin( Dali::ParentOrigin::CENTER );
     mView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     stage.Add( mView );
 
     //Set background image for the view
-    Image image = ResourceImage::New( BACKGROUND_IMAGE );
-
-
-    Dali::ImageActor backgroundImageActor = Dali::ImageActor::New( image );
-    mView.SetBackground( backgroundImageActor );
+    mView.SetBackgroundImage( ResourceImage::New( BACKGROUND_IMAGE ) );
 
     CreateTriangleMorph(Vector3( stage.GetSize().x*0.5f,stage.GetSize().y*0.15f,0.0f), 100.0f );
     CreateCircleMorph( Vector3( stage.GetSize().x*0.5f,stage.GetSize().y*0.85f,0.0f), 60.0f );
@@ -364,7 +362,7 @@ public:
 
 private:
   Application&                mApplication;
-  Toolkit::View               mView;
+  Toolkit::Control            mView;
 };
 
 void RunTest( Application& application )

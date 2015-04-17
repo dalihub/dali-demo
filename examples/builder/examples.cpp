@@ -587,7 +587,7 @@ private:
   GridLayoutPtr mGridLayout;
   ItemView mItemView;
 
-  Toolkit::View mView;
+  Toolkit::Control mView;
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;

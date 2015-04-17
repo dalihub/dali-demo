@@ -253,7 +253,7 @@ public:
                                              TOOLBAR_IMAGE,
                                              "" );
 
-    mView.OrientationAnimationStartedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
+    app.GetWindow().GetOrientation().ChangedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
@@ -414,7 +414,7 @@ public:
    * Orientation changed signal callback
    * @param orientation
    */
-  void OnOrientationChanged( View view, Animation& animation, const Orientation& orientation )
+  void OnOrientationChanged( Orientation orientation )
   {
     const unsigned int angle = orientation.GetDegrees();
 
@@ -1105,7 +1105,7 @@ private:
   Mode mMode;
   bool mMenuShown;
 
-  Toolkit::View mView;
+  Toolkit::Control mView;
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;

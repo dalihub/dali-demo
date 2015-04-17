@@ -22,7 +22,12 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
+#include "cluster.h"
+#include "cluster-style.h"
+
+
 using namespace Dali;
+using namespace Dali::Demo;
 using namespace Dali::Toolkit;
 using namespace DemoHelper;
 
@@ -449,8 +454,6 @@ public:
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ClusterController::OnKeyEvent);
 
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
-
     // The Init signal is received once (only) during the Application lifetime
 
     // Hide the indicator bar
@@ -477,7 +480,7 @@ public:
 
     // create and setup the scroll view...
     mScrollView = ScrollView::New();
-    mScrollView.SetSize(stageSize);
+    mScrollView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // attach Wobble Effect to ScrollView
     mScrollViewEffect = ScrollViewWobbleEffect::New();
@@ -842,9 +845,9 @@ public:
 private:
 
   Application&               mApplication;                       ///< Application instance
-  Toolkit::View              mView;                              ///< The View instance.
+  Toolkit::Control           mView;                              ///< The View instance.
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
-  TextLabel                   mTitleActor;                        ///< The Toolbar's Title.
+  TextLabel                  mTitleActor;                        ///< The Toolbar's Title.
 
   Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)
 

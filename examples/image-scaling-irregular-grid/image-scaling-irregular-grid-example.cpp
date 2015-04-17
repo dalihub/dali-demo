@@ -568,7 +568,7 @@ private:
   Application&  mApplication;
 
   Layer mContentLayer;                ///< The content layer (contains non gui chrome actors)
-  Toolkit::View mView;                ///< The View instance.
+  Toolkit::Control mView;             ///< The View instance.
   Toolkit::ToolBar mToolBar;          ///< The View's Toolbar.
   TextLabel mTitleActor;               ///< The Toolbar's Title.
   Actor mGridActor;                   ///< The container for the grid of images

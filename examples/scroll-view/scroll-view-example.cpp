@@ -659,7 +659,7 @@ private:
 private:
 
   Application& mApplication;                            ///< Application instance
-  Toolkit::View mView;                                  ///< The View instance.
+  Toolkit::Control mView;                               ///< The View instance.
   Toolkit::ToolBar mToolBar;                            ///< The View's Toolbar.
   TextLabel mTitleActor;                                ///< The Toolbar's Title.
   Layer mContentLayer;                                  ///< The content layer (contains game actors)

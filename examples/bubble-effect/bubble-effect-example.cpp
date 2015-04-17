@@ -101,7 +101,7 @@ private:
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
     Toolkit::ToolBar toolBar;
-    Toolkit::View    view;
+    Toolkit::Control    view;
     Layer content = DemoHelper::CreateView( app,
                                             view,
                                             toolBar,
@@ -141,8 +141,8 @@ private:
     content.Add( bubbleRoot );
 
     // Add the background image actor to stage
-    mBackgroundActor = ImageActor::New( mBackgroundImage );
-    view.SetBackground( mBackgroundActor );
+    view.SetBackgroundImage( mBackgroundImage );
+    mBackgroundActor = ImageActor::DownCast( view.GetBackgroundActor() );
 
     // Set up the timer to emit bubble regularly when the finger is touched down but not moved
     mTimerForBubbleEmission = Timer::New( mTimerInterval );

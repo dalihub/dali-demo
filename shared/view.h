@@ -120,7 +120,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
 }
 
 Dali::Layer CreateView( Dali::Application& application,
-                        Dali::Toolkit::View& view,
+                        Dali::Toolkit::Control& view,
                         Dali::Toolkit::ToolBar& toolBar,
                         const std::string& backgroundImagePath,
                         const std::string& toolbarImagePath,
@@ -130,7 +130,9 @@ Dali::Layer CreateView( Dali::Application& application,
   Dali::Stage stage = Dali::Stage::GetCurrent();
 
   // Create default View.
-  view = Dali::Toolkit::View::New();
+  view = Dali::Toolkit::Control::New();
+  view.SetAnchorPoint( Dali::AnchorPoint::CENTER );
+  view.SetParentOrigin( Dali::ParentOrigin::CENTER );
   view.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
 
   // Add the view to the stage before setting the background.
@@ -140,8 +142,7 @@ Dali::Layer CreateView( Dali::Application& application,
   if ( !backgroundImagePath.empty() )
   {
     Dali::Image backgroundImage = Dali::ResourceImage::New( backgroundImagePath, Dali::ImageDimensions( stage.GetSize().x, stage.GetSize().y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-    Dali::ImageActor backgroundImageActor = Dali::ImageActor::New( backgroundImage );
-    view.SetBackground( backgroundImageActor );
+    view.SetBackgroundImage( backgroundImage );
   }
 
   // FIXME
@@ -152,14 +153,14 @@ Dali::Layer CreateView( Dali::Application& application,
   Dali::Layer toolBarLayer = CreateToolbar( toolBar, toolbarImagePath, title, style );
 
   // Add tool bar layer to the view.
-  view.AddContentLayer( toolBarLayer );
+  view.Add( toolBarLayer );
 
   // Create a content layer.
   Dali::Layer contentLayer = Dali::Layer::New();
   contentLayer.SetAnchorPoint( Dali::AnchorPoint::CENTER );
   contentLayer.SetParentOrigin( Dali::ParentOrigin::CENTER );
   contentLayer.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
-  view.AddContentLayer( contentLayer );
+  view.Add( contentLayer );
   contentLayer.LowerBelow( toolBarLayer );
 
   return contentLayer;

@@ -497,7 +497,7 @@ class ButtonsController: public ConnectionTracker
  private:
 
   Application&      mApplication;
-  Toolkit::View     mView;                              ///< The View instance.
+  Toolkit::Control  mView;                              ///< The View instance.
   Toolkit::ToolBar  mToolBar;                           ///< The View's Toolbar.
   Layer             mContentLayer;                      ///< Content layer
 

@@ -207,7 +207,7 @@ private:
   Application&  mApplication;
   PanGestureDetector mPanGestureDetector;
 
-  Toolkit::View              mView;                              ///< The View instance.
+  Toolkit::Control           mView;                              ///< The View instance.
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
   Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)
   Toolkit::PushButton        mLoseContextButton;

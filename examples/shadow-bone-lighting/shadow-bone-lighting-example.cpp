@@ -444,7 +444,7 @@ public:
 
 private:
   Application&              mApp;
-  Toolkit::View             mView;
+  Toolkit::Control          mView;
   Layer                     mContents;
   Actor                     mSceneActor;
   Animation                 mAnimation;

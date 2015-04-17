@@ -400,7 +400,7 @@ public:
 
 private:
   Application&               mApplication;            ///< Application instance
-  Toolkit::View              mView;
+  Toolkit::Control           mView;
   Toolkit::ToolBar           mToolBar;
   Image                      mIconEffectsOff;
   Image                      mIconEffectsOn;

@@ -225,7 +225,7 @@ public:
     Stage::GetCurrent().Add(overlay);
 
     mMagnifier = Toolkit::Magnifier::New();
-    mMagnifier.SetSourceActor( mView.GetBackgroundLayer() );
+    mMagnifier.SetSourceActor( mView.GetChildAt( 0 ) );
     mMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width );  // Size of magnifier is in relation to stage width
     mMagnifier.SetMagnificationFactor( MAGNIFICATION_FACTOR );
     mMagnifier.SetScale(Vector3::ZERO);
@@ -242,7 +242,7 @@ public:
 
     // Create bouncing magnifier automatically bounces around screen.
     mBouncingMagnifier = Toolkit::Magnifier::New();
-    mBouncingMagnifier.SetSourceActor( mView.GetBackgroundLayer() );
+    mBouncingMagnifier.SetSourceActor( mView.GetChildAt( 0 ) );
     mBouncingMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width ); // Size of magnifier is in relation to stage width
     mBouncingMagnifier.SetMagnificationFactor( MAGNIFICATION_FACTOR );
     overlay.Add( mBouncingMagnifier );
@@ -393,7 +393,7 @@ public:
 private:
 
   Application&  mApplication;                             ///< Application instance
-  Toolkit::View mView;                                    ///< The view
+  Toolkit::Control mView;                                 ///< The view
   Layer mContent;                                         ///< The content layer
   Toolkit::Magnifier mMagnifier;                          ///< The manually controlled magnifier
   Toolkit::Magnifier mBouncingMagnifier;                  ///< The animating magnifier (swirly animation)

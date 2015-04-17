@@ -806,7 +806,7 @@ private:
 private:
 
   Application& mApplication;                            ///< Application instance
-  Toolkit::View mView;                                  ///< The View instance.
+  Toolkit::Control mView;                               ///< The View instance.
   Layer mContentLayer;                                  ///< The content layer (contains game actors)
   ImageActor mBall;                                     ///< The Moving ball image.
   Vector3 mBallStartPosition;                           ///< Ball Start position

@@ -91,7 +91,7 @@ private: // Member variables
   };
 
   Application     mApplication; ///< The application handle
-  Toolkit::View   mView;        ///< The toolbar view
+  Toolkit::Control mView;        ///< The toolbar view
   Layer           mContents;    ///< The toolbar contents pane
   ImageActor      mImageActor;  ///< Image actor shown by stencil mask
   Animation       mAnimation;
