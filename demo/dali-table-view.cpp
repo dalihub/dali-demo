@@ -123,21 +123,21 @@ const float IMAGE_BORDER_BOTTOM = IMAGE_BORDER_LEFT;
 struct AnimateBubbleConstraint
 {
 public:
-  AnimateBubbleConstraint( const Vector3& initialPos, float scale, float size )
+  AnimateBubbleConstraint( const Vector3& initialPos, float scale )
       : mInitialX( initialPos.x ),
-        mScale( scale ),
-        mShapeSize( size )
+        mScale( scale )
   {
   }
 
   void operator()( Vector3& position, const PropertyInputContainer& inputs )
   {
     const Vector3& parentSize = inputs[1]->GetVector3();
+    const Vector3& childSize = inputs[2]->GetVector3();
 
     // Wrap bubbles verically.
-    if( position.y + mShapeSize * 0.5f < -parentSize.y * 0.5f )
+    if( position.y + childSize.y * 0.5f < -parentSize.y * 0.5f )
     {
-      position.y = parentSize.y * 0.5f + mShapeSize * 0.5f;
+      position.y = parentSize.y * 0.5f + childSize.y * 0.5f;
     }
 
     // Bubbles X position moves parallax to horizontal
@@ -267,7 +267,6 @@ void DaliTableView::Initialize( Application& application )
 
   // scrollview occupying the majority of the screen
   mScrollView = ScrollView::New();
-  mScrollView.SetRelayoutEnabled( true );
 
   mScrollView.SetAnchorPoint( AnchorPoint::CENTER );
   mScrollView.SetParentOrigin( ParentOrigin::CENTER );
@@ -297,7 +296,6 @@ void DaliTableView::Initialize( Application& application )
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
   Actor bubbleContainer = Actor::New();
-  bubbleContainer.SetRelayoutEnabled( true );
   bubbleContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   bubbleContainer.SetAnchorPoint( AnchorPoint::CENTER );
   bubbleContainer.SetParentOrigin( ParentOrigin::CENTER );
@@ -492,7 +490,6 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   content.SetName( name );
   content.SetAnchorPoint( AnchorPoint::CENTER );
   content.SetParentOrigin( ParentOrigin::CENTER );
-  content.SetRelayoutEnabled( true );
   content.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   content.SetSizeModeFactor( sizeMultiplier );
 
@@ -746,19 +743,18 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
   {
     Actor child = actor.GetChildAt( i );
 
-    const Vector3 childSize = child.GetTargetSize();
-
     // Calculate a random position
     Vector3 childPos( Random::Range( -size.x * 0.5f * BACKGROUND_SPREAD_SCALE, size.x * 0.5f * BACKGROUND_SPREAD_SCALE ),
-                      Random::Range( -size.y * 0.5f - childSize.height, size.y * 0.5f + childSize.height ),
+                      Random::Range( -size.y, size.y ),
                       Random::Range( BUBBLE_MIN_Z, BUBBLE_MAX_Z ) );
 
     child.SetPosition( childPos );
 
     // Define bubble horizontal parallax and vertical wrapping
-    Constraint animConstraint = Constraint::New < Vector3 > ( child, Actor::Property::POSITION, AnimateBubbleConstraint( childPos, Random::Range( -0.85f, 0.25f ), childSize.height ) );
+    Constraint animConstraint = Constraint::New < Vector3 > ( child, Actor::Property::POSITION, AnimateBubbleConstraint( childPos, Random::Range( -0.85f, 0.25f ) ) );
     animConstraint.AddSource( Source( mScrollView, ScrollView::Property::SCROLL_POSITION ) );
     animConstraint.AddSource( Dali::ParentSource( Dali::Actor::Property::SIZE ) );
+    animConstraint.AddSource( Dali::LocalSource( Dali::Actor::Property::SIZE ) );
     animConstraint.Apply();
 
     // Kickoff animation
@@ -779,7 +775,6 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     Vector4 randColour( hue, hue * 0.5, 0.0f, Random::Range( 0.3f, 0.6f ));
 
     ImageActor dfActor = ImageActor::New( distanceField );
-    dfActor.SetRelayoutEnabled( false );
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
@@ -885,7 +880,7 @@ void DaliTableView::PauseAnimation()
     {
       Animation anim = *animIter;
 
-      anim.Pause();
+      anim.Stop();
     }
 
     mBackgroundAnimsPlaying = false;
@@ -1008,8 +1003,6 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
       mVersionPopup.HideTail();
       mVersionPopup.OutsideTouchedSignal().Connect( this, &DaliTableView::HideVersionPopup );
       mVersionPopup.HiddenSignal().Connect( this, &DaliTableView::PopupHidden );
-
-      mVersionPopup.MarkDirtyForRelayout();
     }
 
     mVersionPopup.Show();

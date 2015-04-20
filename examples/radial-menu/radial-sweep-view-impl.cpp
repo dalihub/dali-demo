@@ -131,7 +131,7 @@ RadialSweepView RadialSweepViewImpl::New( float duration, float diameter, Degree
 }
 
 RadialSweepViewImpl::RadialSweepViewImpl( float duration, float diameter, Degree initialAngle, Degree finalAngle, Degree initialSector, Degree finalSector )
-: Control( CONTROL_BEHAVIOUR_NONE ),
+: Control( ControlBehaviour( ACTOR_BEHAVIOUR_NONE ) ),
   mDuration(duration),
   mDiameter(diameter),
   mInitialAngle(initialAngle),
