@@ -297,21 +297,21 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
   mCurrentImageEffect.SetCentralLine(position,displacement);
   mCurrentImageEffect.SetDistortion(0.0f);
   mCurrentImage.SetShaderEffect(mCurrentImageEffect);
-  mAnimation.AnimateTo( Property(mCurrentImageEffect, mCurrentImageEffect.GetDistortionPropertyName()), 1.0f, AlphaFunctions::Linear );
+  mAnimation.AnimateTo( Property(mCurrentImageEffect, mCurrentImageEffect.GetDistortionPropertyName()), 1.0f, AlphaFunction::LINEAR );
 
   mNextImage.SetOpacity(0.0f);
-  mAnimation.AnimateTo( Property( mNextImage, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunctions::Linear );
+  mAnimation.AnimateTo( Property( mNextImage, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::LINEAR );
 
   if(mUseHighPrecision)
   {
     mNextImageEffect.SetCentralLine(position,-displacement);
     mNextImageEffect.SetDistortion(1.0f);
     mNextImage.SetShaderEffect(mNextImageEffect);
-    mAnimation.AnimateTo( Property(mNextImageEffect, mNextImageEffect.GetDistortionPropertyName()), 0.0f, AlphaFunctions::Linear );
+    mAnimation.AnimateTo( Property(mNextImageEffect, mNextImageEffect.GetDistortionPropertyName()), 0.0f, AlphaFunction::LINEAR );
   }
   else
   {
-    mAnimation.AnimateTo( Property( mNextImage, Actor::Property::POSITION ), Vector3( 0.0f, 0.0f, 0.0f ), AlphaFunctions::Linear );
+    mAnimation.AnimateTo( Property( mNextImage, Actor::Property::POSITION ), Vector3( 0.0f, 0.0f, 0.0f ), AlphaFunction::LINEAR );
   }
 
   mAnimation.FinishedSignal().Connect( this, &DissolveEffectApp::OnTransitionCompleted );

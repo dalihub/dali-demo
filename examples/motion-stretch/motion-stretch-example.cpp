@@ -220,7 +220,7 @@ public:
       {
         // has parent so we expect it to be on stage, start animation
         mRotateAnimation = Animation::New( ORIENTATION_DURATION );
-        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( -orientation ) ), Vector3::ZAXIS ), AlphaFunctions::EaseOut );
+        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( -orientation ) ), Vector3::ZAXIS ), AlphaFunction::EASE_OUT );
         mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_WIDTH ), targetSize.width );
         mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_HEIGHT ), targetSize.height );
         mRotateAnimation.Play();
@@ -264,7 +264,7 @@ public:
     mActorTapMovementAnimation = Animation::New( animDuration );
     if ( mMotionStretchImageActor )
     {
-      mActorTapMovementAnimation.AnimateTo( Property(mMotionStretchImageActor, Actor::Property::POSITION), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
+      mActorTapMovementAnimation.AnimateTo( Property(mMotionStretchImageActor, Actor::Property::POSITION), destPos, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(animDuration) );
     }
     mActorTapMovementAnimation.SetEndAction( Animation::Bake );
     mActorTapMovementAnimation.Play();
@@ -280,7 +280,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunctions::EaseInOut );
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunction::EASE_IN_OUT );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -291,7 +291,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunctions::EaseInOut );
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunction::EASE_IN_OUT );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -302,8 +302,8 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunctions::EaseInOut );
-          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunctions::EaseInOut );
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunction::EASE_IN_OUT );
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunction::EASE_IN_OUT );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -314,7 +314,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::SCALE ), Vector3(2.0f, 2.0f, 2.0f), AlphaFunctions::Bounce, TimePeriod( 0.0f, 1.0f ) );
+          mActorAnimation.AnimateBy( Property( mMotionStretchImageActor, Actor::Property::SCALE ), Vector3(2.0f, 2.0f, 2.0f), AlphaFunction::BOUNCE, TimePeriod( 0.0f, 1.0f ) );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }

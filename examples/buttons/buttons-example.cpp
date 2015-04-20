@@ -484,7 +484,7 @@ class ButtonsController: public ConnectionTracker
       {
         if( mAnimation )
         {
-          mAnimation.AnimateBy( Property(actor, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
+          mAnimation.AnimateBy( Property(actor, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunction::LINEAR );
           mAnimation.Play();
           mLastPoint = localPoint;
         }

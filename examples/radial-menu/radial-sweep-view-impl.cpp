@@ -67,11 +67,13 @@ float HoldZeroFastEaseInOutHoldOne(float progress)
   }
   else if(progress < 0.5f)
   {
-    return AlphaFunctions::EaseIn((progress-0.2) / 0.3f) * 0.5f;
+    progress = (progress-0.2) / 0.3f;
+    return  progress*progress*progress*0.5f;
   }
   else if(progress < 0.8f)
   {
-    return AlphaFunctions::EaseOut((progress - 0.5f) / 0.3f) * 0.5f + 0.5f;
+    progress = ((progress - 0.5f) / 0.3f) - 1.0f;
+    return (progress*progress*progress+1.0f) * 0.5f + 0.5f;
   }
   else
   {

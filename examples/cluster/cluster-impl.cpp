@@ -104,8 +104,8 @@ void Cluster::OnControlSizeSet( const Vector3& targetSize )
     {
       mClusterStyle.ApplyStyle( (*iter).mActor,
                                 (*iter).mPositionIndex,
-                                AlphaFunctions::EaseOut,
-                                0.f );
+                                AlphaFunction::EASE_OUT,
+                                TimePeriod(0.f) );
     }
   }
 
@@ -175,7 +175,7 @@ void Cluster::AddChildInfoAt( ChildInfo childInfo, unsigned int index )
     child.RemoveConstraints();
 
     // apply new constraints to the child
-    mClusterStyle.ApplyStyle(child, childInfo.mPositionIndex, AlphaFunctions::EaseOut, 0.0f);
+    mClusterStyle.ApplyStyle(child, childInfo.mPositionIndex, AlphaFunction::EASE_OUT, TimePeriod(0.0f));
   }
   else
   {
@@ -293,8 +293,8 @@ void Cluster::ExpandChild( unsigned int index )
                      position,
                      Vector3::ONE * scale,
                      Quaternion(rotate, Vector3::ZAXIS),
-                     AlphaFunctions::EaseOut,
-                     0.5f);
+                     AlphaFunction::EASE_OUT,
+                     TimePeriod(0.5f));
     }
   }
 }
@@ -312,8 +312,8 @@ void Cluster::CollapseChild( unsigned int index, bool front )
   if( index < mChildren.size() )
   {
     RestoreChild(index,
-                 AlphaFunctions::EaseOut,
-                 0.25f,
+                 AlphaFunction::EASE_OUT,
+                 TimePeriod(0.25f),
                  front);
   }
 }
@@ -323,8 +323,8 @@ void Cluster::CollapseAllChildren( bool front )
   for(unsigned int index = 0;index < mChildren.size(); index++)
   {
     RestoreChild(index,
-                 AlphaFunctions::EaseOut,
-                 0.25f,
+                 AlphaFunction::EASE_OUT,
+                 TimePeriod(0.25f),
                  front);
   }
 }
@@ -344,9 +344,9 @@ void Cluster::TransformChild( unsigned int index, const Vector3& position, const
 
       child.RemoveConstraints();
       Animation animation = Animation::New(period.delaySeconds + period.durationSeconds);
-      animation.AnimateTo( Property(child, Actor::Property::POSITION), position, AlphaFunctions::EaseOut, period);
-      animation.AnimateTo( Property(child, Actor::Property::SCALE), scale, AlphaFunctions::EaseOut, period);
-      animation.AnimateTo( Property(child, Actor::Property::ORIENTATION), rotation, AlphaFunctions::EaseOut, period);
+      animation.AnimateTo( Property(child, Actor::Property::POSITION), position, AlphaFunction::EASE_OUT, period);
+      animation.AnimateTo( Property(child, Actor::Property::SCALE), scale, AlphaFunction::EASE_OUT, period);
+      animation.AnimateTo( Property(child, Actor::Property::ORIENTATION), rotation, AlphaFunction::EASE_OUT, period);
       animation.Play();
     }
   }
@@ -435,8 +435,8 @@ void Cluster::SetStyle(Demo::ClusterStyle style)
     {
       mClusterStyle.ApplyStyle( (*iter).mActor,
                         (*iter).mPositionIndex,
-                        AlphaFunctions::EaseOut,
-                        CLUSTER_STYLE_CONSTRAINT_DURATION );
+                        AlphaFunction::EASE_OUT,
+                        TimePeriod(CLUSTER_STYLE_CONSTRAINT_DURATION) );
     }
   }
 
@@ -463,7 +463,7 @@ void Cluster::UpdateBackground(float duration)
 {
   if (mBackgroundImage)
   {
-    mClusterStyle.ApplyStyleToBackground(mBackgroundImage, AlphaFunctions::EaseOut, duration);
+    mClusterStyle.ApplyStyleToBackground(mBackgroundImage, AlphaFunction::EASE_OUT, TimePeriod(duration));
   }
 }
 
@@ -471,7 +471,7 @@ void Cluster::UpdateTitle(float duration)
 {
   if (mTitle)
   {
-    mClusterStyle.ApplyStyleToTitle(mTitle, AlphaFunctions::EaseOut, duration);
+    mClusterStyle.ApplyStyleToTitle(mTitle, AlphaFunction::EASE_OUT, TimePeriod(duration));
   }
 }
 
@@ -539,7 +539,7 @@ void Cluster::DoTransformAction(const PropertyValueContainer& attributes)
   // wrap index around -1 => size - 1
   index%= mChildren.size();
 
-  TransformChild(index, position, scale, rotation, AlphaFunctions::EaseOut, 0.5f);
+  TransformChild(index, position, scale, rotation, AlphaFunction::EASE_OUT, TimePeriod(0.5f));
 }
 
 void Cluster::OnControlChildRemove(Actor& child)
