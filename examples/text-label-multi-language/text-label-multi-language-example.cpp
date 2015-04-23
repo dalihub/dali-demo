@@ -62,6 +62,7 @@ public:
     Stage stage = Stage::GetCurrent();
 
     stage.KeyEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnKeyEvent);
+    stage.SetBackgroundColor( Color::WHITE );
 
     mTableView = Toolkit::TableView::New( NUMBER_OF_LANGUAGES, 1 );
     mTableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );

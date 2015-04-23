@@ -56,6 +56,7 @@ public:
   void Create( Application& application )
   {
     Stage stage = Stage::GetCurrent();
+    stage.SetBackgroundColor( Color::WHITE );
     stage.KeyEventSignal().Connect(this, &EmojiExample::OnKeyEvent);
 
     mTableView = Toolkit::TableView::New( NUMBER_OF_EMOJIS, 1 );

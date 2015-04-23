@@ -275,6 +275,7 @@ public:
   void EnterSelection()
   {
     Stage stage = Stage::GetCurrent();
+    stage.SetBackgroundColor( Color::WHITE );
 
     mTapDetector = TapGestureDetector::New();
     mTapDetector.DetectedSignal().Connect( this, &ExampleApp::OnTap );

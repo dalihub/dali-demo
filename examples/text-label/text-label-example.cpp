@@ -131,9 +131,10 @@ public:
     mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
+    mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLUE );
     mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
-    mLabel.SetBackgroundColor( Vector4(0.3f,0.3f,0.6f,1.0f) );
+    mLabel.SetBackgroundColor( Color::WHITE );
     mContainer.Add( mLabel );
 
     Property::Value labelText = mLabel.GetProperty( TextLabel::Property::TEXT );

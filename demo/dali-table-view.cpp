@@ -86,8 +86,6 @@ const Vector2 POSITION_SWING_3DEFFECT( 0.55f, 0.4f );             ///< Position 
 const Vector3 ANCHOR_3DEFFECT_STYLE0( -105.0f, 30.0f, -240.0f ); ///< Rotation Anchor position for 3D Effect (Style 0)
 const Vector3 ANCHOR_3DEFFECT_STYLE1( 65.0f, -70.0f, -500.0f );  ///< Rotation Anchor position for 3D Effect (Style 1)
 
-const Dali::Vector4 TABLE_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
-
 Vector3 ScalePointSize(const Vector3& vec)
 {
   return Vector3( DemoHelper::ScalePointSize( vec.x ), DemoHelper::ScalePointSize( vec.y ), DemoHelper::ScalePointSize( vec.z ) );
@@ -523,7 +521,6 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   label.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
   label.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
   label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
-  label.SetColor( TABLE_TEXT_STYLE_COLOR );
   content.Add( label );
 
   // Set the tile to be keyboard focusable
