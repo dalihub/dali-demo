@@ -92,18 +92,14 @@ const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to
 /**
  * @brief Load an image, scaled-down to no more than the dimensions passed in.
  *
- * Uses ImageAttributes::ShrinkToFit which ensures the resulting image is
+ * Uses SHRINK_TO_FIT which ensures the resulting image is
  * smaller than or equal to the specified dimensions while preserving its
  * original aspect ratio.
  */
 ResourceImage LoadImageFittedInBox( const char * const imagePath, uint32_t maxWidth, uint32_t maxHeight )
 {
   // Load the image nicely scaled-down to fit within the specified max width and height:
-  ImageAttributes attributes;
-  attributes.SetSize( maxWidth, maxHeight);
-  attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
-  attributes.SetScalingMode( ImageAttributes::ShrinkToFit );
-  return ResourceImage::New( imagePath, attributes );
+  return ResourceImage::New( imagePath, ImageDimensions( maxWidth, maxHeight ), FittingMode::SHRINK_TO_FIT, Dali::SamplingMode::BOX_THEN_LINEAR );
 }
 
 } // unnamed namespace
@@ -193,8 +189,8 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
     // set initial orientation
-    app.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
-    unsigned int degrees = app.GetOrientation().GetDegrees();
+    winHandle.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
+    unsigned int degrees = winHandle.GetOrientation().GetDegrees();
     Rotate( static_cast< DeviceOrientation >( degrees ) );
 
 

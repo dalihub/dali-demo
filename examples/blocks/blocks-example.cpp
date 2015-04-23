@@ -176,8 +176,8 @@ struct WobbleConstraint
    *
    * @param[in] deviation The max. deviation of wobble effect in degrees.
    */
-  WobbleConstraint(float deviation)
-  : mDeviation(Radian(Degree(deviation)))
+  WobbleConstraint( Degree deviation )
+  : mDeviation( deviation )
   {
 
   }
@@ -196,7 +196,7 @@ struct WobbleConstraint
     current = Quaternion(mDeviation * f, Vector3::ZAXIS);
   }
 
-  const float mDeviation;           ///< Deviation factor in radians.
+  Radian mDeviation;           ///< Deviation factor in radians.
 };
 
 } // unnamed namespace
@@ -285,7 +285,7 @@ private:
     mPaddleImage.SetSize( mPaddleFullSize );
 
     mWobbleProperty = mPaddle.RegisterProperty(WOBBLE_PROPERTY_NAME, 0.0f);
-    Constraint wobbleConstraint = Constraint::New<Quaternion>( mPaddle, Actor::Property::ORIENTATION, WobbleConstraint(10.0f));
+    Constraint wobbleConstraint = Constraint::New<Quaternion>( mPaddle, Actor::Property::ORIENTATION, WobbleConstraint(Degree( 10.0f )));
     wobbleConstraint.AddSource( LocalSource(mWobbleProperty) );
     wobbleConstraint.Apply();
 
@@ -358,8 +358,8 @@ private:
     mLevelContainer = Actor::New();
     mLevelContainer.SetAnchorPoint( AnchorPoint::CENTER );
     mLevelContainer.SetParentOrigin( ParentOrigin::CENTER );
-    mLevelContainer.SetRelayoutEnabled( true );
     mLevelContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+
     mContentLayer.Add( mLevelContainer );
 
     mBrickCount = 0;
@@ -524,14 +524,10 @@ private:
     Vector2 stageSize(Stage::GetCurrent().GetSize());
     const Vector2 brickSize(BRICK_SIZE * Vector2(stageSize.x, stageSize.x));
 
-    ImageAttributes attr;
-    attr.SetSize( 128, 64 );
-    attr.SetScalingMode( ImageAttributes::ScaleToFill );
-    Image img = ResourceImage::New(BRICK_IMAGE_PATH[type], attr);
+    Image img = ResourceImage::New( BRICK_IMAGE_PATH[type], Dali::ImageDimensions( 128, 64 ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
     ImageActor brick = ImageActor::New(img);
     brick.SetParentOrigin(ParentOrigin::TOP_LEFT);
     brick.SetAnchorPoint(AnchorPoint::CENTER);
-    brick.SetRelayoutEnabled( false );
     brick.SetSize( brickSize );
     brick.SetPosition( Vector3( position ) );
 
@@ -563,7 +559,6 @@ private:
     ImageActor actor = ImageActor::New(img);
     actor.SetParentOrigin(ParentOrigin::TOP_LEFT);
     actor.SetAnchorPoint(AnchorPoint::CENTER);
-    actor.SetRelayoutEnabled( false );
     return actor;
   }
 

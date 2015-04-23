@@ -91,19 +91,15 @@ const int VIEWINGTIME = 2000; // 2 seconds
 /**
  * @brief Load an image, scaled-down to no more than the stage dimensions.
  *
- * Uses image scaling mode ImageAttributes::ScaleToFill to resize the image at
+ * Uses image scaling mode SCALE_TO_FILL to resize the image at
  * load time to cover the entire stage with pixels with no borders,
- * and filter mode ImageAttributes::BoxThenLinear to sample the image with
+ * and filter mode BOX_THEN_LINEAR to sample the image with
  * maximum quality.
  */
 ResourceImage LoadStageFillingImage( const char * const imagePath )
 {
   Size stageSize = Stage::GetCurrent().GetSize();
-  ImageAttributes attributes;
-  attributes.SetSize( stageSize.x, stageSize.y );
-  attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
-  attributes.SetScalingMode( ImageAttributes::ScaleToFill );
-  return ResourceImage::New( imagePath, attributes );
+  return ResourceImage::New( imagePath, ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
 }
 
 } // namespace
@@ -330,7 +326,6 @@ void CubeTransitionApp::GoToNextImage()
   mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION);
   mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-  mNextImage.SetRelayoutEnabled( false );
   mCurrentEffect.SetTargetImage(mNextImage);
   if( image.GetLoadingState() == ResourceLoadingSucceeded )
   {

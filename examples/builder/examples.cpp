@@ -287,7 +287,6 @@ public:
     mFiles.clear();
 
     mItemView = ItemView::New(*this);
-    mItemView.SetRelayoutEnabled( false );
     stage.Add( mItemView );
     mItemView.SetParentOrigin(ParentOrigin::CENTER);
     mItemView.SetAnchorPoint(AnchorPoint::CENTER);
@@ -469,9 +468,6 @@ public:
     }
 
     builder.AddActors( layer );
-
-    // Force relayout on layer
-    layer.RelayoutRequestTree();
   }
 
 

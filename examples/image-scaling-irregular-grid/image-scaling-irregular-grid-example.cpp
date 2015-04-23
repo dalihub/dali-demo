@@ -27,7 +27,7 @@
  * The functions CreateImage and CreateImageActor below show how to build an
  * image using a scaling mode to have %Dali resize it during loading.
  *
- * This demo defaults to the ScaleToFill mode of ImageAttributes which makes
+ * This demo defaults to the SCALE_TO_FILL mode of ImageAttributes which makes
  * sure that every pixel in the loaded image is filled with a source colour
  * from the image's central region while losing the minimum number of pixels
  * from its periphery.
@@ -77,7 +77,7 @@ const unsigned GRID_CELL_PADDING = 4;
 /** The aspect ratio of cells in the image grid. */
 const float CELL_ASPECT_RATIO = 1.33333333333333333333f;
 
-const ImageAttributes::ScalingMode DEFAULT_SCALING_MODE = ImageAttributes::ScaleToFill;
+const Dali::FittingMode::Type DEFAULT_SCALING_MODE = Dali::FittingMode::SCALE_TO_FILL;
 
 /** The number of times to spin an image on touching, each spin taking a second.*/
 const float SPIN_DURATION = 1.0f;
@@ -172,19 +172,15 @@ const unsigned NUM_IMAGE_PATHS = sizeof(IMAGE_PATHS) / sizeof(IMAGE_PATHS[0]) - 
  * @param[in] filename The path of the image.
  * @param[in] width The width of the image in pixels.
  * @param[in] height The height of the image in pixels.
- * @param[in] scalingMode The mode to use when scaling the image to fit the desired dimensions.
+ * @param[in] fittingMode The mode to use when scaling the image to fit the desired dimensions.
  */
-Image CreateImage(const std::string& filename, unsigned int width, unsigned int height, ImageAttributes::ScalingMode scalingMode )
+Image CreateImage(const std::string& filename, unsigned int width, unsigned int height, Dali::FittingMode::Type fittingMode )
 {
 #ifdef DEBUG_PRINT_DIAGNOSTICS
-    fprintf( stderr, "CreateImage(%s, %u, %u, scalingMode=%u)\n", filename.c_str(), width, height, unsigned( scalingMode ) );
+    fprintf( stderr, "CreateImage(%s, %u, %u, fittingMode=%u)\n", filename.c_str(), width, height, unsigned( fittingMode ) );
 #endif
-  ImageAttributes attributes;
+  Image image = ResourceImage::New( filename, ImageDimensions( width, height ), fittingMode, Dali::SamplingMode::BOX_THEN_LINEAR );
 
-  attributes.SetSize( width, height );
-  attributes.SetScalingMode( scalingMode );
-  attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
-  Image image = ResourceImage::New( filename, attributes );
   return image;
 }
 
@@ -194,11 +190,11 @@ Image CreateImage(const std::string& filename, unsigned int width, unsigned int 
  * @param[in] filename The path of the image.
  * @param[in] width The width of the image in pixels.
  * @param[in] height The height of the image in pixels.
- * @param[in] scalingMode The mode to use when scaling the image to fit the desired dimensions.
+ * @param[in] fittingMode The mode to use when scaling the image to fit the desired dimensions.
  */
-ImageActor CreateImageActor(const std::string& filename, unsigned int width, unsigned int height, ImageAttributes::ScalingMode scalingMode )
+ImageActor CreateImageActor(const std::string& filename, unsigned int width, unsigned int height, Dali::FittingMode::Type fittingMode )
 {
-  Image img = CreateImage( filename, width, height, scalingMode );
+  Image img = CreateImage( filename, width, height, fittingMode );
   ImageActor actor = ImageActor::New( img );
   actor.SetName( filename );
   actor.SetParentOrigin(ParentOrigin::CENTER);
@@ -208,22 +204,22 @@ ImageActor CreateImageActor(const std::string& filename, unsigned int width, uns
 }
 
 /** Cycle the scaling mode options. */
-ImageAttributes::ScalingMode NextMode( const ImageAttributes::ScalingMode oldMode )
+Dali::FittingMode::Type NextMode( const Dali::FittingMode::Type oldMode )
 {
-  ImageAttributes::ScalingMode newMode = ImageAttributes::ShrinkToFit;
+  Dali::FittingMode::Type newMode = FittingMode::SHRINK_TO_FIT;
   switch ( oldMode )
   {
-    case ImageAttributes::ShrinkToFit:
-      newMode = ImageAttributes::ScaleToFill;
+    case FittingMode::SHRINK_TO_FIT:
+      newMode = FittingMode::SCALE_TO_FILL;
       break;
-    case ImageAttributes::ScaleToFill:
-      newMode = ImageAttributes::FitWidth;
+    case FittingMode::SCALE_TO_FILL:
+      newMode = FittingMode::FIT_WIDTH;
       break;
-    case ImageAttributes::FitWidth:
-      newMode = ImageAttributes::FitHeight;
+    case FittingMode::FIT_WIDTH:
+      newMode = FittingMode::FIT_HEIGHT;
       break;
-    case ImageAttributes::FitHeight:
-      newMode = ImageAttributes::ShrinkToFit;
+    case FittingMode::FIT_HEIGHT:
+      newMode = FittingMode::SHRINK_TO_FIT;
       break;
   }
   return newMode;
@@ -273,7 +269,7 @@ public:
   : mApplication( application ),
     mScrolling( false )
   {
-    std::cout << "ImageScalingScaleToFillController::ImageScalingScaleToFillController" << std::endl;
+    std::cout << "ImageScalingIrregularGridController::ImageScalingIrregularGridController" << std::endl;
 
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &ImageScalingIrregularGridController::Create );
@@ -289,7 +285,7 @@ public:
    */
   void Create( Application& application )
   {
-    std::cout << "ImageScalingScaleToFillController::Create" << std::endl;
+    std::cout << "ImageScalingIrregularGridController::Create" << std::endl;
 
     DemoHelper::RequestThemeChange();
 
@@ -326,13 +322,13 @@ public:
   /**
    * Build the main part of the application's view.
    */
-  void PopulateContentLayer( const ImageAttributes::ScalingMode scalingMode )
+  void PopulateContentLayer( const Dali::FittingMode::Type fittingMode )
   {
     Stage stage = Stage::GetCurrent();
     Vector2 stageSize = stage.GetSize();
 
     float fieldHeight;
-    Actor imageField = BuildImageField( stageSize.x, GRID_WIDTH, GRID_MAX_HEIGHT, scalingMode, fieldHeight );
+    Actor imageField = BuildImageField( stageSize.x, GRID_WIDTH, GRID_MAX_HEIGHT, fittingMode, fieldHeight );
 
     mScrollView = ScrollView::New();
 
@@ -375,7 +371,7 @@ public:
   Actor BuildImageField( const float fieldWidth,
                            const unsigned gridWidth,
                            const unsigned maxGridHeight,
-                           ImageAttributes::ScalingMode scalingMode,
+                           Dali::FittingMode::Type fittingMode,
                            float & outFieldHeight )
   {
     // Generate the list of image configurations to be fitted into the field:
@@ -423,7 +419,6 @@ public:
     // coordinates in a frame defined by a parent actor:
 
     Actor gridActor = Actor::New();
-    gridActor.SetRelayoutEnabled( true );
     gridActor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     gridActor.SetParentOrigin( ParentOrigin::CENTER );
     gridActor.SetAnchorPoint( AnchorPoint::CENTER );
@@ -443,11 +438,11 @@ public:
       const Vector2 imageRegionCorner = gridOrigin + cellSize * Vector2( imageSource.cellX, imageSource.cellY );
       const Vector2 imagePosition = imageRegionCorner + Vector2( GRID_CELL_PADDING , GRID_CELL_PADDING ) + imageSize * 0.5f;
 
-      ImageActor image = CreateImageActor( imageSource.configuration.path, imageSize.x, imageSize.y, scalingMode );
+      ImageActor image = CreateImageActor( imageSource.configuration.path, imageSize.x, imageSize.y, fittingMode );
       image.SetPosition( Vector3( imagePosition.x, imagePosition.y, 0 ) );
       image.SetSize( imageSize );
       image.TouchedSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
-      mScalingModes[image.GetId()] = scalingMode;
+      mFittingModes[image.GetId()] = fittingMode;
       mSizes[image.GetId()] = imageSize;
 
       gridActor.Add( image );
@@ -475,14 +470,14 @@ public:
 
         // Change the scaling mode:
         const unsigned id = actor.GetId();
-        ImageAttributes::ScalingMode newMode = NextMode( mScalingModes[id] );
+        Dali::FittingMode::Type newMode = NextMode( mFittingModes[id] );
         const Vector2 imageSize = mSizes[actor.GetId()];
 
         ImageActor imageActor = ImageActor::DownCast( actor );
         Image oldImage = imageActor.GetImage();
         Image newImage = CreateImage( ResourceImage::DownCast(oldImage).GetUrl(), imageSize.width + 0.5f, imageSize.height + 0.5f, newMode );
         imageActor.SetImage( newImage );
-        mScalingModes[id] = newMode;
+        mFittingModes[id] = newMode;
       }
     }
     return false;
@@ -520,14 +515,14 @@ public:
       {
         // Cycle the scaling mode options:
         const Vector2 imageSize = mSizes[gridImageActor.GetId()];
-        ImageAttributes::ScalingMode newMode = NextMode( mScalingModes[gridImageActor.GetId()] );
+        Dali::FittingMode::Type newMode = NextMode( mFittingModes[gridImageActor.GetId()] );
         Image oldImage = gridImageActor.GetImage();
         Image newImage = CreateImage(ResourceImage::DownCast(oldImage).GetUrl(), imageSize.width, imageSize.height, newMode );
         gridImageActor.SetImage( newImage );
 
-        mScalingModes[gridImageActor.GetId()] = newMode;
+        mFittingModes[gridImageActor.GetId()] = newMode;
 
-        SetTitle( std::string( newMode == ImageAttributes::ShrinkToFit ? "ShrinkToFit" : newMode == ImageAttributes::ScaleToFill ?  "ScaleToFill" : newMode == ImageAttributes::FitWidth ? "FitWidth" : "FitHeight" ) );
+        SetTitle( std::string( newMode == FittingMode::SHRINK_TO_FIT ? "SHRINK_TO_FIT" : newMode == FittingMode::SCALE_TO_FILL ?  "SCALE_TO_FILL" : newMode == FittingMode::FIT_WIDTH ? "FIT_WIDTH" : "FIT_HEIGHT" ) );
       }
     }
     return true;
@@ -579,7 +574,7 @@ private:
   Actor mGridActor;                   ///< The container for the grid of images
   ScrollView mScrollView;             ///< ScrollView UI Component
   bool mScrolling;                    ///< ScrollView scrolling state (true = scrolling, false = stationary)
-  std::map<unsigned, ImageAttributes::ScalingMode> mScalingModes; ///< Stores the current scaling mode of each image, keyed by image actor id.
+  std::map<unsigned, Dali::FittingMode::Type> mFittingModes; ///< Stores the current scaling mode of each image, keyed by image actor id.
   std::map<unsigned, Vector2> mSizes; ///< Stores the current size of each image, keyed by image actor id.
 };
 

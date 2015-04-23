@@ -222,8 +222,9 @@ FrameBufferImage NewWindowController::CreateMirrorImage(const char* imageName)
 ImageActor NewWindowController::CreateBlurredMirrorImage(const char* imageName)
 {
   FrameBufferImage fbo;
-  Image image = ResourceImage::New( imageName );
-  Vector2 FBOSize = ResourceImage::GetImageSize(imageName);
+  Image image = ResourceImage::New(imageName);
+  Uint16Pair intFboSize = ResourceImage::GetImageSize(imageName);
+  Vector2 FBOSize = Vector2( intFboSize.GetWidth(), intFboSize.GetHeight() );
   fbo = FrameBufferImage::New( FBOSize.width, FBOSize.height, Pixel::RGBA8888);
   GaussianBlurView gbv = GaussianBlurView::New(5, 2.0f, Pixel::RGBA8888, 0.5f, 0.5f, true);
   gbv.SetBackgroundColor(Color::TRANSPARENT);
@@ -241,7 +242,8 @@ ImageActor NewWindowController::CreateBlurredMirrorImage(const char* imageName)
 FrameBufferImage NewWindowController::CreateFrameBufferForImage(const char* imageName, Image image, ShaderEffect shaderEffect)
 {
   Stage stage = Stage::GetCurrent();
-  Vector2 FBOSize = ResourceImage::GetImageSize(imageName);
+  Uint16Pair intFboSize = ResourceImage::GetImageSize(imageName);
+  Vector2 FBOSize = Vector2(intFboSize.GetWidth(), intFboSize.GetHeight());
 
   FrameBufferImage framebuffer = FrameBufferImage::New(FBOSize.x, FBOSize.y );
 
@@ -264,7 +266,6 @@ FrameBufferImage NewWindowController::CreateFrameBufferForImage(const char* imag
   cameraActor.SetNearClippingPlane(1.0f);
   cameraActor.SetAspectRatio(FBOSize.width / FBOSize.height);
   cameraActor.SetType(Dali::Camera::FREE_LOOK); // camera orientation based solely on actor
-  cameraActor.SetOrientation(Quaternion(M_PI, Vector3::YAXIS));
   cameraActor.SetPosition(0.0f, 0.0f, ((FBOSize.height * 0.5f) / tanf(Math::PI * 0.125f)));
   stage.Add(cameraActor);
 

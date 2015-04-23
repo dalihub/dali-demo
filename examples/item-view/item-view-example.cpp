@@ -314,7 +314,6 @@ public:
     // Create the item view actor
     mImageAtlas = CreateImageAtlas();
     mItemView = ItemView::New(*this);
-    mItemView.SetRelayoutEnabled( false );
     mItemView.SetParentOrigin(ParentOrigin::CENTER);
     mItemView.SetAnchorPoint(AnchorPoint::CENTER);
 
@@ -905,7 +904,6 @@ public: // From ItemFactory
     // Add a checkbox child actor; invisible until edit-mode is enabled
 
     ImageActor checkbox = ImageActor::New( mWhiteImage );
-    checkbox.SetRelayoutEnabled( false );
     checkbox.SetName( "CheckBox" );
     checkbox.SetColor( Vector4(0.0f,0.0f,0.0f,0.6f) );
     checkbox.SetParentOrigin( ParentOrigin::TOP_RIGHT );
@@ -922,7 +920,6 @@ public: // From ItemFactory
     actor.Add( checkbox );
 
     ImageActor tick = ImageActor::New( ResourceImage::New(SELECTED_IMAGE) );
-    tick.SetRelayoutEnabled( false );
     tick.SetColorMode( USE_OWN_COLOR );
     tick.SetName( "Tick" );
     tick.SetParentOrigin( ParentOrigin::TOP_RIGHT );
@@ -1010,7 +1007,6 @@ private:
     slider.Add( text );
 
     Actor textContainer = Actor::New();
-    textContainer.SetRelayoutEnabled( true );
     textContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mAlphaFunctionText = TextLabel::New( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
     mAlphaFunctionText.SetAnchorPoint( ParentOrigin::CENTER );
@@ -1029,7 +1025,6 @@ private:
     text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
     textContainer.Add( text );
 
-    mMenu.MarkDirtyForRelayout();
     mMenu.Show();
     mMenuShown = true;
   }

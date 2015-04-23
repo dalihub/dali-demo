@@ -60,8 +60,7 @@ public:
     stage.Add( mView );
 
     //Set background image for the view
-    ImageAttributes attributes;
-    Image image = ResourceImage::New( BACKGROUND_IMAGE, attributes );
+    Image image = ResourceImage::New( BACKGROUND_IMAGE );
 
 
     Dali::ImageActor backgroundImageActor = Dali::ImageActor::New( image );

@@ -76,8 +76,8 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   toolBarLayer.SetName( "TOOLBAR_LAYER" );
   toolBarLayer.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
   toolBarLayer.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
-  toolBarLayer.SetSize( 0.0f, style.mToolBarHeight );
   toolBarLayer.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::WIDTH );
+  toolBarLayer.SetSize( 0.0f, style.mToolBarHeight );
 
   // Raise tool bar layer to the top.
   toolBarLayer.RaiseToTop();
@@ -139,11 +139,7 @@ Dali::Layer CreateView( Dali::Application& application,
   // Set background image, loading it at screen resolution:
   if ( !backgroundImagePath.empty() )
   {
-    Dali::ImageAttributes backgroundAttributes;
-    backgroundAttributes.SetSize( stage.GetSize() );
-    backgroundAttributes.SetFilterMode( Dali::ImageAttributes::BoxThenLinear );
-    backgroundAttributes.SetScalingMode( Dali::ImageAttributes::ScaleToFill );
-    Dali::Image backgroundImage = Dali::ResourceImage::New( backgroundImagePath, backgroundAttributes );
+    Dali::Image backgroundImage = Dali::ResourceImage::New( backgroundImagePath, Dali::ImageDimensions( stage.GetSize().x, stage.GetSize().y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
     Dali::ImageActor backgroundImageActor = Dali::ImageActor::New( backgroundImage );
     view.SetBackground( backgroundImageActor );
   }
