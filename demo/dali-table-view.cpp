@@ -479,8 +479,8 @@ void DaliTableView::Rotate( unsigned int degrees )
   }
 
   mRotateAnimation = Animation::New( ROTATE_ANIMATION_TIME );
-  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 - degrees ) ), Vector3::ZAXIS ), AlphaFunctions::EaseOut );
-  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::SIZE ), targetSize, AlphaFunctions::EaseOut );
+  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 - degrees ) ), Vector3::ZAXIS ), AlphaFunction::EASE_OUT );
+  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::SIZE ), targetSize, AlphaFunction::EASE_OUT );
   mRotateAnimation.Play();
 }
 
@@ -592,9 +592,9 @@ bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
 
       // scale the content actor within the Tile, as to not affect the placement within the Table.
       Actor content = actor.GetChildAt(0);
-      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3( 0.9f, 0.9f, 1.0f ), AlphaFunctions::EaseInOut,
+      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3( 0.9f, 0.9f, 1.0f ), AlphaFunction::EASE_IN_OUT,
                                  TimePeriod( 0.0f, BUTTON_PRESS_ANIMATION_TIME * 0.5f ) );
-      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3::ONE, AlphaFunctions::EaseInOut,
+      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3::ONE, AlphaFunction::EASE_IN_OUT,
                                  TimePeriod( BUTTON_PRESS_ANIMATION_TIME * 0.5f, BUTTON_PRESS_ANIMATION_TIME * 0.5f ) );
       mPressedAnimation.Play();
       mPressedAnimation.FinishedSignal().Connect( this, &DaliTableView::OnPressedAnimationFinished );
@@ -759,7 +759,7 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
 
     // Kickoff animation
     Animation animation = Animation::New( Random::Range( 40.0f, 80.0f ) );
-    animation.AnimateBy( Property( child, Actor::Property::POSITION ), Vector3( 0.0f, -1.0f, 0.0f ), AlphaFunctions::Linear );
+    animation.AnimateBy( Property( child, Actor::Property::POSITION ), Vector3( 0.0f, -1.0f, 0.0f ), AlphaFunction::LINEAR );
     animation.SetLooping( true );
     animation.Play();
     mBackgroundAnimations.push_back( animation );

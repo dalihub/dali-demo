@@ -57,17 +57,17 @@ unsigned int ClusterStyle::GetMaximumNumberOfChildren() const
 
 void ClusterStyle::ApplyStyle(Actor child, unsigned int index, AlphaFunction alpha, const TimePeriod& durationSeconds)
 {
-  GetImpl(*this).ApplyStyle(child, index, alpha, durationSeconds);
+  GetImpl(*this).ApplyStyle(child, index, alpha, TimePeriod(durationSeconds));
 }
 
 void ClusterStyle::ApplyStyleToBackground(Actor background, AlphaFunction alpha, const TimePeriod& durationSeconds)
 {
-  GetImpl(*this).ApplyStyleToBackground(background, alpha, durationSeconds);
+  GetImpl(*this).ApplyStyleToBackground(background, alpha, TimePeriod(durationSeconds));
 }
 
 void ClusterStyle::ApplyStyleToTitle(Actor title, AlphaFunction alpha, const TimePeriod& durationSeconds)
 {
-  GetImpl(*this).ApplyStyleToTitle(title, alpha, durationSeconds);
+  GetImpl(*this).ApplyStyleToTitle(title, alpha, TimePeriod(durationSeconds));
 }
 
 // ClusterStyleStandard ///////////////////////////////////////////////////////

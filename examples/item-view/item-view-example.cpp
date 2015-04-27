@@ -103,9 +103,9 @@ const unsigned int IMAGE_WIDTH = 256;
 const unsigned int IMAGE_HEIGHT = 256;
 const unsigned int NUM_IMAGE_PER_ROW_IN_ATLAS = 8;
 
-AlphaFunction ALPHA_FUNCTIONS[] = { AlphaFunctions::Linear,
-                                    AlphaFunctions::EaseIn,
-                                    AlphaFunctions::EaseOut };
+AlphaFunction ALPHA_FUNCTIONS[] = { AlphaFunction(AlphaFunction::LINEAR),
+                                    AlphaFunction(AlphaFunction::EASE_IN),
+                                    AlphaFunction(AlphaFunction::EASE_OUT) };
 
 const unsigned int NUM_ALPHA_FUNCTIONS = sizeof(ALPHA_FUNCTIONS) / sizeof(AlphaFunction);
 

@@ -194,8 +194,8 @@ void RadialMenuExample::StartAnimation()
   mRadialSweepView1.Activate(mAnimation, 0.0f, 3.0f);
   mRadialSweepView2.Activate(mAnimation, 1.5f, 3.0f);
   mRadialSweepView3.Activate(mAnimation, 3.0f, 3.0f);
-  mAnimation.AnimateTo( Property( mDialActor, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunctions::EaseIn, TimePeriod( 0.0f, 0.8f ) );
-  mAnimation.AnimateTo( Property( mRadialSweepView1, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunctions::EaseIn, TimePeriod( 0.0f, 0.5f ) );
+  mAnimation.AnimateTo( Property( mDialActor, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::EASE_IN, TimePeriod( 0.0f, 0.8f ) );
+  mAnimation.AnimateTo( Property( mRadialSweepView1, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::EASE_IN, TimePeriod( 0.0f, 0.5f ) );
   mAnimation.FinishedSignal().Connect( this, &RadialMenuExample::OnAnimationFinished );
 
   mAnimationState = PLAYING;
@@ -259,7 +259,7 @@ RadialSweepView RadialMenuExample::CreateSweepView( std::string imageName,
   radialSweepView.SetInitialSector( Degree(0.0f) );
   radialSweepView.SetFinalSector( Degree(359.999f) );
   radialSweepView.SetSize( Stage::GetCurrent().GetSize());
-  radialSweepView.SetEasingFunction( Dali::AlphaFunctions::EaseInOut );
+  radialSweepView.SetEasingFunction( Dali::AlphaFunction::EASE_IN_OUT );
   radialSweepView.SetPositionInheritanceMode(USE_PARENT_POSITION);
   mContents.Add(radialSweepView);
   radialSweepView.Add( mImageActor );

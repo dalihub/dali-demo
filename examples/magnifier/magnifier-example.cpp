@@ -344,7 +344,7 @@ public:
     if(!mMagnifierShown)
     {
       Animation animation = Animation::New(MAGNIFIER_DISPLAY_DURATION);
-      animation.AnimateTo(Property(mMagnifier, Actor::Property::SCALE), Vector3::ONE, AlphaFunctions::EaseIn);
+      animation.AnimateTo(Property(mMagnifier, Actor::Property::SCALE), Vector3::ONE, AlphaFunction::EASE_IN);
       animation.Play();
       mMagnifierShown = true;
     }
@@ -358,7 +358,7 @@ public:
     if(mMagnifierShown)
     {
       Animation animation = Animation::New(MAGNIFIER_DISPLAY_DURATION);
-      animation.AnimateTo(Property(mMagnifier, Actor::Property::SCALE), Vector3::ZERO, AlphaFunctions::EaseOut);
+      animation.AnimateTo(Property(mMagnifier, Actor::Property::SCALE), Vector3::ZERO, AlphaFunction::EASE_OUT);
       animation.Play();
       mMagnifierShown = false;
     }
