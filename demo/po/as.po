@@ -1,0 +1,50 @@
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "বেলুন"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "অৱৰুদ্ধ কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_CLUSTER"
+msgstr "থুপ"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "ঘনক পৰিৱৰ্তনীয় প্ৰভাৱ"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "পৰিৱৰ্তনীয় প্ৰভাৱ"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "আইটেম দর্শন"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "পৰিবৰ্দ্ধক"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "অস্পষ্ট"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "বিস্তাৰ"
+
+msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
+msgstr "পৃষ্ঠা লেআউট"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "ৰেডিয়েল নক্সা"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "প্ৰতিফলিত কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "স্ক্ৰ'ল কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "ছাঁয়া"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "লিপি"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "প্ৰতিচ্ছবি স্কেল কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "লেৱেল কৰক"

@@ -198,8 +198,8 @@ public:
     keyFrames2.Add(0.0f, Vector4::ZERO);
     keyFrames2.Add(1.0f, Color::GREEN);
 
-    animation.AnimateBetween( Property( mRenderer, fadeColorIndex ), keyFrames, AlphaFunctions::Sin );
-    animation.AnimateBetween( Property( mRenderer2, fadeColorIndex2 ), keyFrames2, AlphaFunctions::Sin2x );
+    animation.AnimateBetween( Property( mRenderer, fadeColorIndex ), keyFrames, AlphaFunction(AlphaFunction::EASE_OUT_SINE) );
+    animation.AnimateBetween( Property( mRenderer2, fadeColorIndex2 ), keyFrames2, AlphaFunction(AlphaFunction::EASE_IN_SINE) );
     animation.SetLooping(true);
     animation.Play();
 

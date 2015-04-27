@@ -22,6 +22,8 @@
 #include <string.h>
 #include <iostream>
 
+#include "shared/view.h"
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 
@@ -89,8 +91,6 @@ class PortraitPageFactory : public PageFactory
       page = ImageActor::New( ResourceImage::New( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] ) );
     }
 
-    page.SetRelayoutEnabled( false );
-
     return page;
   }
 };
@@ -127,9 +127,6 @@ class LandscapePageFactory : public PageFactory
     }
     pageFront.Add(pageBack);
 
-    pageFront.SetRelayoutEnabled( false );
-    pageBack.SetRelayoutEnabled( false );
-
     return pageFront;
   }
 };
@@ -155,11 +152,9 @@ private:
 
   /**
    * This method gets called when the screen is rotated, switch between portrait and landscape views
-   * param [in] view The view receiving the orientation change signal
-   * param [in] animation The Orientation Rotating animation
    * param [in] orientation The current screen orientation
    */
-  void OnOrientationAnimationStarted( View view, Animation& animation, const Orientation& orientation );
+  void OnOrientationAnimationStarted( Orientation orientation );
 
   /**
    * Main key event handler
@@ -199,7 +194,7 @@ private:
 private:
 
   Application&                mApplication;
-  View                        mView;
+  Actor                       mView;
 
   PageTurnView                mPageTurnPortraitView;
   PageTurnView                mPageTurnLandscapeView;
@@ -226,14 +221,18 @@ void PageTurnController::OnInit( Application& app )
 {
   // The Init signal is received once ( only ) during the Application lifetime
 
+  DemoHelper::RequestThemeChange();
+
   Stage::GetCurrent().KeyEventSignal().Connect(this, &PageTurnController::OnKeyEvent);
 
   Stage stage = Stage::GetCurrent();
   Vector2 stageSize =  stage.GetSize();
 
   // Create default View.
-  mView = View::New();
-  mView.SetRelayoutEnabled( false );
+  mView = Actor::New();
+  mView.SetAnchorPoint( Dali::AnchorPoint::CENTER );
+  mView.SetParentOrigin( Dali::ParentOrigin::CENTER );
+  mView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   stage.Add( mView );
 
   Dali::Window winHandle = app.GetWindow();
@@ -241,13 +240,11 @@ void PageTurnController::OnInit( Application& app )
   winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
   winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
   winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
-  // FIXME
-  //app.GetOrientation().ChangedSignal().Connect( &mView, &View::OrientationChanged );
+
   // view will response to orientation change to display portrait or landscape views
-  mView.OrientationAnimationStartedSignal().Connect( this, &PageTurnController::OnOrientationAnimationStarted );
+  app.GetWindow().GetOrientation().ChangedSignal().Connect( this, &PageTurnController::OnOrientationAnimationStarted );
 
   mPageTurnPortraitView = PageTurnPortraitView::New( mPortraitPageFactory, stageSize );
-  mPageTurnPortraitView.SetRelayoutEnabled( false );
   mPageTurnPortraitView.SetSpineShadowParameter( Vector2(70.f, 30.f) );
   mPageTurnPortraitView.PageTurnStartedSignal().Connect( this, &PageTurnController::OnPageStartedTurn );
   mPageTurnPortraitView.PageTurnFinishedSignal().Connect( this, &PageTurnController::OnPageFinishedTurn );
@@ -256,7 +253,6 @@ void PageTurnController::OnInit( Application& app )
   mPageTurnPortraitView.SetPositionInheritanceMode( USE_PARENT_POSITION );
 
   mPageTurnLandscapeView = PageTurnLandscapeView::New( mLandscapePageFactory, Vector2(stageSize.y*0.5f, stageSize.x) );
-  mPageTurnLandscapeView.SetRelayoutEnabled( false );
   mPageTurnLandscapeView.PageTurnStartedSignal().Connect( this, &PageTurnController::OnPageStartedTurn );
   mPageTurnLandscapeView.PageTurnFinishedSignal().Connect( this, &PageTurnController::OnPageFinishedTurn );
   mPageTurnLandscapeView.PagePanStartedSignal().Connect( this, &PageTurnController::OnPageStartedPan );
@@ -266,7 +262,7 @@ void PageTurnController::OnInit( Application& app )
   mView.Add(mPageTurnPortraitView);
 }
 
-void PageTurnController::OnOrientationAnimationStarted( View view, Animation& animation, const Orientation& orientation )
+void PageTurnController::OnOrientationAnimationStarted( Orientation orientation )
 {
   switch( orientation.GetDegrees() )
   {

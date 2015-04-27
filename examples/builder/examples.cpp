@@ -59,7 +59,7 @@ std::string JSON_BROKEN("                                      \
   'stage':                                                     \
   [                                                            \
     {                                                          \
-      'type':'TextView',                                       \
+      'type':'TextLabel',                                      \
       'size': [50,50,1],                                       \
       'parent-origin': 'CENTER',                               \
       'text':'COULD NOT LOAD JSON FILE'                        \
@@ -243,15 +243,12 @@ public:
   {
     if(!mTitleActor)
     {
-      mTitleActor = TextView::New();
+      mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
       mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
     }
 
-    Font font = Font::New();
-    mTitleActor.SetText( title );
-    mTitleActor.SetSize( font.MeasureText( title ) );
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
   bool OnToolSelectLayout( Toolkit::Button button )
@@ -290,7 +287,6 @@ public:
     mFiles.clear();
 
     mItemView = ItemView::New(*this);
-    mItemView.SetRelayoutEnabled( false );
     stage.Add( mItemView );
     mItemView.SetParentOrigin(ParentOrigin::CENTER);
     mItemView.SetAnchorPoint(AnchorPoint::CENTER);
@@ -396,23 +392,14 @@ public:
 
   Actor MenuItem(const std::string& text)
   {
-    TextView t = TextView::New();
-    t.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    t.SetMarkupProcessingEnabled(true);
-
-    int size = static_cast<int>(DemoHelper::ScalePointSize(6));
-
-    std::ostringstream fontString;
-    fontString << "<font size="<< size <<">"<<  ShortName( text ) << "</font>";
-
-    t.SetText( fontString.str() );
-
-    t.SetTextAlignment( Alignment::HorizontalLeft );
+    TextLabel label = TextLabel::New( ShortName( text ) );
+    label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "builderlabel" );
+    label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
 
     // Hook up tap detector
-    mTapDetector.Attach( t );
+    mTapDetector.Attach( label );
 
-    return t;
+    return label;
   }
 
   bool OnTimer()
@@ -481,9 +468,6 @@ public:
     }
 
     builder.AddActors( layer );
-
-    // Force relayout on layer
-    layer.RelayoutRequestTree();
   }
 
 
@@ -516,6 +500,8 @@ public:
 
   void Create(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Stage::GetCurrent();
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleApp::OnKeyEvent);
@@ -601,11 +587,11 @@ private:
   GridLayoutPtr mGridLayout;
   ItemView mItemView;
 
-  Toolkit::View mView;
+  Toolkit::Control mView;
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;
-  TextView mTitleActor;             ///< The Toolbar's Title.
+  TextLabel mTitleActor;             ///< The Toolbar's Title.
 
   Layer mBuilderLayer;
 

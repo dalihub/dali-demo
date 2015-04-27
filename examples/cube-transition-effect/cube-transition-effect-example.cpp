@@ -26,6 +26,8 @@
 
 using namespace Dali;
 
+using Dali::Toolkit::TextLabel;
+
 // LOCAL STUFF
 namespace
 {
@@ -89,19 +91,15 @@ const int VIEWINGTIME = 2000; // 2 seconds
 /**
  * @brief Load an image, scaled-down to no more than the stage dimensions.
  *
- * Uses image scaling mode ImageAttributes::ScaleToFill to resize the image at
+ * Uses image scaling mode SCALE_TO_FILL to resize the image at
  * load time to cover the entire stage with pixels with no borders,
- * and filter mode ImageAttributes::BoxThenLinear to sample the image with
+ * and filter mode BOX_THEN_LINEAR to sample the image with
  * maximum quality.
  */
 ResourceImage LoadStageFillingImage( const char * const imagePath )
 {
   Size stageSize = Stage::GetCurrent().GetSize();
-  ImageAttributes attributes;
-  attributes.SetSize( stageSize.x, stageSize.y );
-  attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
-  attributes.SetScalingMode( ImageAttributes::ScaleToFill );
-  return ResourceImage::New( imagePath, attributes );
+  return ResourceImage::New( imagePath, ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
 }
 
 } // namespace
@@ -170,10 +168,10 @@ private:
 
 private:
   Application&                    mApplication;
-  Toolkit::View                   mView;
+  Toolkit::Control                mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
-  Toolkit::TextView               mTitleActor;
+  Toolkit::TextLabel              mTitleActor;
   Actor                           mParent;
 
   Vector2                         mViewSize;
@@ -182,7 +180,6 @@ private:
   ImageActor                      mNextImage;
   unsigned int                    mIndex;
   bool                            mIsImageLoading;
-  Constraint                      mImageConstraint;
 
   PanGestureDetector              mPanGestureDetector;
 
@@ -222,6 +219,8 @@ CubeTransitionApp::~CubeTransitionApp()
 
 void CubeTransitionApp::OnInit( Application& application )
 {
+  DemoHelper::RequestThemeChange();
+
   Stage::GetCurrent().KeyEventSignal().Connect(this, &CubeTransitionApp::OnKeyEvent);
 
   // Creates a default view with a default tool bar, the view is added to the stage.
@@ -237,7 +236,7 @@ void CubeTransitionApp::OnInit( Application& application )
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
-  mTitleActor = Toolkit::TextView::New();
+  mTitleActor = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_WAVE );
   mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
   //Add an slideshow icon on the right of the title
@@ -283,21 +282,14 @@ void CubeTransitionApp::OnInit( Application& application )
   mViewTimer.TickSignal().Connect( this, &CubeTransitionApp::OnTimerTick );
 
   // show the first image
-  mImageConstraint = Constraint::New<Vector3>( Actor::Property::SCALE, LocalSource( Actor::Property::SIZE ), ParentSource( Actor::Property::SIZE ), ScaleToFitKeepAspectRatioConstraint() );
-
   mCurrentImage = ImageActor::New( LoadStageFillingImage( IMAGES[mIndex] ) );
   mCurrentImage.SetPositionInheritanceMode( USE_PARENT_POSITION );
-  mCurrentImage.ApplyConstraint( mImageConstraint );
-  mCurrentImage.SetRelayoutEnabled( false );
+  mCurrentImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  mCurrentImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mParent.Add( mCurrentImage );
 
   mCurrentEffect = mCubeWaveEffect;
   mCurrentEffect.SetCurrentImage( mCurrentImage );
-
-  // Set Title text
-  mTitleActor.SetText( APPLICATION_TITLE_WAVE );
-  mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_WAVE ) );
-  mTitleActor.SetStyleToCurrentText( DemoHelper::GetDefaultTextStyle() );
 }
 
 // signal handler, called when the pan gesture is detected
@@ -332,8 +324,8 @@ void CubeTransitionApp::GoToNextImage()
   mNextImage = ImageActor::New( image );
 
   mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION);
-  mNextImage.ApplyConstraint( mImageConstraint );
-  mNextImage.SetRelayoutEnabled( false );
+  mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mCurrentEffect.SetTargetImage(mNextImage);
   if( image.GetLoadingState() == ResourceLoadingSucceeded )
   {
@@ -361,26 +353,22 @@ bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
   if(mCurrentEffect == mCubeWaveEffect)
   {
     mCurrentEffect = mCubeCrossEffect;
-    mTitleActor.SetText( APPLICATION_TITLE_CROSS );
-    mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_CROSS ) );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_CROSS) );
     mEffectChangeButton.SetBackgroundImage(mImageCross);
 
   }
   else if(mCurrentEffect == mCubeCrossEffect)
   {
     mCurrentEffect = mCubeFoldEffect;
-    mTitleActor.SetText( APPLICATION_TITLE_FOLD );
-    mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_FOLD ) );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_FOLD) );
     mEffectChangeButton.SetBackgroundImage(mImageFold);
   }
   else
   {
     mCurrentEffect = mCubeWaveEffect;
-    mTitleActor.SetText( APPLICATION_TITLE_WAVE );
-    mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_WAVE ) );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_WAVE) );
     mEffectChangeButton.SetBackgroundImage(mImageWave);
   }
-  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 
   // Set the current image to cube transition effect
   // only need to set at beginning or change from another effect

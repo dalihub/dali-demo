@@ -26,6 +26,8 @@
 
 using namespace Dali;
 
+using Dali::Toolkit::TextLabel;
+
 // LOCAL STUFF
 namespace
 {
@@ -75,19 +77,15 @@ const float INITIAL_DEPTH = -10.0f;
 /**
  * @brief Load an image, scaled-down to no more than the stage dimensions.
  *
- * Uses image scaling mode ImageAttributes::ScaleToFill to resize the image at
+ * Uses image scaling mode SCALE_TO_FILL to resize the image at
  * load time to cover the entire stage with pixels with no borders,
- * and filter mode ImageAttributes::BoxThenLinear to sample the image with
+ * and filter mode BOX_THEN_LINEAR to sample the image with
  * maximum quality.
  */
 ResourceImage LoadStageFillingImage( const char * const imagePath )
 {
   Size stageSize = Stage::GetCurrent().GetSize();
-  ImageAttributes attributes;
-  attributes.SetSize( stageSize.x, stageSize.y );
-  attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
-  attributes.SetScalingMode( ImageAttributes::ScaleToFill );
-  return ResourceImage::New( imagePath, attributes );
+  return ResourceImage::New( imagePath, ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
 }
 
 } // namespace
@@ -154,16 +152,15 @@ private:
 
 private:
   Application&                    mApplication;
-  Toolkit::View                   mView;
+  Toolkit::Control                mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
-  Toolkit::TextView               mTitleActor;
+  Toolkit::TextLabel              mTitleActor;
   Actor                           mParent;
 
   ImageActor                      mCurrentImage;
   ImageActor                      mNextImage;
   unsigned int                    mIndex;
-  Constraint                      mSizeConstraint;
 
   Toolkit::DissolveEffect         mCurrentImageEffect;
   Toolkit::DissolveEffect         mNextImageEffect;
@@ -206,6 +203,8 @@ DissolveEffectApp::~DissolveEffectApp()
 
 void DissolveEffectApp::OnInit( Application& application )
 {
+  DemoHelper::RequestThemeChange();
+
   Stage::GetCurrent().KeyEventSignal().Connect(this, &DissolveEffectApp::OnKeyEvent);
 
   // Creates a default view with a default tool bar, the view is added to the stage.
@@ -220,9 +219,7 @@ void DissolveEffectApp::OnInit( Application& application )
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
-  mTitleActor = Toolkit::TextView::New();
-  mTitleActor.SetText( APPLICATION_TITLE_HIGHP );
-  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+  mTitleActor = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_HIGHP );
   mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
   // Add an slide-show button on the right of the title
@@ -251,12 +248,11 @@ void DissolveEffectApp::OnInit( Application& application )
   mParent.SetPositionInheritanceMode( USE_PARENT_POSITION );
   mContent.Add( mParent );
 
-  mSizeConstraint= Constraint::New<Vector3>( Actor::Property::SCALE, LocalSource( Actor::Property::SIZE ), ParentSource( Actor::Property::SIZE ), ScaleToFitKeepAspectRatioConstraint() );
-
   // show the first image
   mCurrentImage = ImageActor::New( LoadStageFillingImage( IMAGES[mIndex] ) );
   mCurrentImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
-  mCurrentImage.ApplyConstraint( mSizeConstraint );
+  mCurrentImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  mCurrentImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mParent.Add( mCurrentImage );
 
   mPanGestureDetector.Attach( mCurrentImage );
@@ -285,7 +281,8 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     Image image = LoadStageFillingImage( IMAGES[ mIndex ] );
     mNextImage = ImageActor::New( image );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
-    mNextImage.ApplyConstraint( mSizeConstraint );
+    mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);
     mParent.Add( mNextImage );
     Vector2 size = Vector2( mCurrentImage.GetCurrentSize() );
@@ -300,21 +297,21 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
   mCurrentImageEffect.SetCentralLine(position,displacement);
   mCurrentImageEffect.SetDistortion(0.0f);
   mCurrentImage.SetShaderEffect(mCurrentImageEffect);
-  mAnimation.AnimateTo( Property(mCurrentImageEffect, mCurrentImageEffect.GetDistortionPropertyName()), 1.0f, AlphaFunctions::Linear );
+  mAnimation.AnimateTo( Property(mCurrentImageEffect, mCurrentImageEffect.GetDistortionPropertyName()), 1.0f, AlphaFunction::LINEAR );
 
   mNextImage.SetOpacity(0.0f);
-  mAnimation.OpacityTo( mNextImage, 1.0, AlphaFunctions::Linear );
+  mAnimation.AnimateTo( Property( mNextImage, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::LINEAR );
 
   if(mUseHighPrecision)
   {
     mNextImageEffect.SetCentralLine(position,-displacement);
     mNextImageEffect.SetDistortion(1.0f);
     mNextImage.SetShaderEffect(mNextImageEffect);
-    mAnimation.AnimateTo( Property(mNextImageEffect, mNextImageEffect.GetDistortionPropertyName()), 0.0f, AlphaFunctions::Linear );
+    mAnimation.AnimateTo( Property(mNextImageEffect, mNextImageEffect.GetDistortionPropertyName()), 0.0f, AlphaFunction::LINEAR );
   }
   else
   {
-    mAnimation.MoveTo(mNextImage, Vector3(0.0f, 0.0f, 0.0f), AlphaFunctions::Linear);
+    mAnimation.AnimateTo( Property( mNextImage, Actor::Property::POSITION ), Vector3( 0.0f, 0.0f, 0.0f ), AlphaFunction::LINEAR );
   }
 
   mAnimation.FinishedSignal().Connect( this, &DissolveEffectApp::OnTransitionCompleted );
@@ -339,15 +336,14 @@ bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
   mCurrentImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
   if(mUseHighPrecision)
   {
-    mTitleActor.SetText( APPLICATION_TITLE_HIGHP );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP) );
     mEffectChangeButton.SetBackgroundImage(mIconHighP);
   }
   else
   {
-    mTitleActor.SetText( APPLICATION_TITLE_MEDIUMP );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_MEDIUMP) );
     mEffectChangeButton.SetBackgroundImage(mIconMediumP);
   }
-  mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 
   return true;
 }
@@ -397,7 +393,8 @@ bool DissolveEffectApp::OnTimerTick()
     Image image = LoadStageFillingImage( IMAGES[ mIndex ] );
     mNextImage = ImageActor::New( image );
     mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
-    mNextImage.ApplyConstraint( mSizeConstraint );
+    mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);
     mParent.Add( mNextImage );
     switch( mCentralLineIndex%4 )

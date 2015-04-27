@@ -103,9 +103,9 @@ const unsigned int IMAGE_WIDTH = 256;
 const unsigned int IMAGE_HEIGHT = 256;
 const unsigned int NUM_IMAGE_PER_ROW_IN_ATLAS = 8;
 
-AlphaFunction ALPHA_FUNCTIONS[] = { AlphaFunctions::Linear,
-                                    AlphaFunctions::EaseIn,
-                                    AlphaFunctions::EaseOut };
+AlphaFunction ALPHA_FUNCTIONS[] = { AlphaFunction(AlphaFunction::LINEAR),
+                                    AlphaFunction(AlphaFunction::EASE_IN),
+                                    AlphaFunction(AlphaFunction::EASE_OUT) };
 
 const unsigned int NUM_ALPHA_FUNCTIONS = sizeof(ALPHA_FUNCTIONS) / sizeof(AlphaFunction);
 
@@ -159,12 +159,6 @@ const float SELECTION_BORDER_WIDTH = 3.0f;
 const float BUTTON_BORDER = -10.0f;
 const float MENU_OPTION_HEIGHT(140.0f);
 const float LABEL_TEXT_SIZE_Y = 20.0f;
-
-const char*             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
-const char*             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
-const PointSize         DEFAULT_TEXT_STYLE_POINT_SIZE( 5.0f );
-const TextStyle::Weight DEFAULT_TEXT_STYLE_WEIGHT(Dali::TextStyle::MEDIUM);
-const Vector4           DEFAULT_TEXT_STYLE_COLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 const Vector3 INITIAL_OFFSCREEN_POSITION( 1000.0f, 0, -1000.0f );
 
@@ -240,6 +234,8 @@ public:
    */
   void OnInit(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Dali::Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
 
@@ -257,7 +253,7 @@ public:
                                              TOOLBAR_IMAGE,
                                              "" );
 
-    mView.OrientationAnimationStartedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
+    app.GetWindow().GetOrientation().ChangedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
@@ -279,10 +275,9 @@ public:
     mDeleteButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mDeleteButton.SetDrawMode( DrawMode::OVERLAY );
-    mDeleteButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
     mDeleteButton.SetButtonImage( ResourceImage::New( DELETE_IMAGE ) );
-    mDeleteButton.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mDeleteButton.SetPreferredSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mDeleteButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mDeleteButton.SetSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
     mDeleteButton.ClickedSignal().Connect( this, &ItemViewExample::OnDeleteButtonClicked);
     mDeleteButton.SetLeaveRequired( true );
     mDeleteButton.SetVisible( false );
@@ -294,10 +289,9 @@ public:
     mInsertButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mInsertButton.SetDrawMode( DrawMode::OVERLAY );
-    mInsertButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
     mInsertButton.SetButtonImage( ResourceImage::New( INSERT_IMAGE ) );
-    mInsertButton.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mInsertButton.SetPreferredSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mInsertButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mInsertButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mInsertButton.ClickedSignal().Connect( this, &ItemViewExample::OnInsertButtonClicked);
     mInsertButton.SetLeaveRequired( true );
     mInsertButton.SetVisible( false );
@@ -309,10 +303,9 @@ public:
     mReplaceButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mReplaceButton.SetDrawMode( DrawMode::OVERLAY );
-    mReplaceButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
     mReplaceButton.SetButtonImage( ResourceImage::New( REPLACE_IMAGE ) );
-    mReplaceButton.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mReplaceButton.SetPreferredSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mReplaceButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mReplaceButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mReplaceButton.ClickedSignal().Connect( this, &ItemViewExample::OnReplaceButtonClicked);
     mReplaceButton.SetLeaveRequired( true );
     mReplaceButton.SetVisible( false );
@@ -321,7 +314,6 @@ public:
     // Create the item view actor
     mImageAtlas = CreateImageAtlas();
     mItemView = ItemView::New(*this);
-    mItemView.SetRelayoutEnabled( false );
     mItemView.SetParentOrigin(ParentOrigin::CENTER);
     mItemView.SetAnchorPoint(AnchorPoint::CENTER);
 
@@ -422,7 +414,7 @@ public:
    * Orientation changed signal callback
    * @param orientation
    */
-  void OnOrientationChanged( View view, Animation& animation, const Orientation& orientation )
+  void OnOrientationChanged( Orientation orientation )
   {
     const unsigned int angle = orientation.GetDegrees();
 
@@ -901,8 +893,7 @@ public: // From ItemFactory
     borderActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
     borderActor.SetNinePatchBorder( Vector4( ITEM_IMAGE_BORDER_LEFT, ITEM_IMAGE_BORDER_TOP, ITEM_IMAGE_BORDER_RIGHT, ITEM_IMAGE_BORDER_BOTTOM ) );
     borderActor.SetColorMode( USE_OWN_MULTIPLY_PARENT_COLOR ); // darken with parent image-actor
-    borderActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-    borderActor.SetSizeMode( SIZE_FIXED_OFFSET_FROM_PARENT );
+    borderActor.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
     borderActor.SetSizeModeFactor( ITEM_BORDER_MARGIN_SIZE );
     actor.Add(borderActor);
     actor.SetKeyboardFocusable( true );
@@ -913,7 +904,6 @@ public: // From ItemFactory
     // Add a checkbox child actor; invisible until edit-mode is enabled
 
     ImageActor checkbox = ImageActor::New( mWhiteImage );
-    checkbox.SetRelayoutEnabled( false );
     checkbox.SetName( "CheckBox" );
     checkbox.SetColor( Vector4(0.0f,0.0f,0.0f,0.6f) );
     checkbox.SetParentOrigin( ParentOrigin::TOP_RIGHT );
@@ -930,7 +920,6 @@ public: // From ItemFactory
     actor.Add( checkbox );
 
     ImageActor tick = ImageActor::New( ResourceImage::New(SELECTED_IMAGE) );
-    tick.SetRelayoutEnabled( false );
     tick.SetColorMode( USE_OWN_COLOR );
     tick.SetName( "Tick" );
     tick.SetParentOrigin( ParentOrigin::TOP_RIGHT );
@@ -976,15 +965,12 @@ private:
   {
     if(!mTitleActor)
     {
-      mTitleActor = TextView::New();
+      mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
       mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
     }
 
-    Font font = Font::New();
-    mTitleActor.SetText( title );
-    mTitleActor.SetSize( font.MeasureText( title ) );
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
   void ShowMenu()
@@ -995,12 +981,11 @@ private:
     mMenu = Toolkit::Popup::New();
     mMenu.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
     mMenu.SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
-    mMenu.SetResizePolicy( FIXED, ALL_DIMENSIONS );
-    mMenu.SetPreferredSize( Vector2( popupWidth, MENU_OPTION_HEIGHT * 2 ) );
+    mMenu.SetSize( popupWidth, MENU_OPTION_HEIGHT * 2 );
     mMenu.OutsideTouchedSignal().Connect( this, &ItemViewExample::HideMenu );
 
     TableView tableView = TableView::New( 0, 0 );
-    tableView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    tableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mMenu.Add( tableView );
 
     Slider slider = Slider::New();
@@ -1009,35 +994,23 @@ private:
     slider.SetProperty( Slider::Property::VALUE, mDurationSeconds );
     slider.SetProperty( Slider::Property::VALUE_PRECISION, 2 );
     slider.SetProperty( Slider::Property::SHOW_POPUP, true );
-    slider.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    slider.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     slider.ValueChangedSignal().Connect( this, &ItemViewExample::SliderValueChange );
     tableView.AddChild( slider, TableView::CellPosition( 0, 0 ) );
 
-    TextStyle defaultTextStyle;
-    defaultTextStyle.SetFontName(DEFAULT_TEXT_STYLE_FONT_FAMILY);
-    defaultTextStyle.SetFontStyle(DEFAULT_TEXT_STYLE_FONT_STYLE);
-    defaultTextStyle.SetFontPointSize(DEFAULT_TEXT_STYLE_POINT_SIZE);
-    defaultTextStyle.SetWeight(DEFAULT_TEXT_STYLE_WEIGHT);
-    defaultTextStyle.SetTextColor(DEFAULT_TEXT_STYLE_COLOR);
-
-    TextView text = TextView::New( "Duration" );
+    TextLabel text = TextLabel::New( "Duration" );
     text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
     text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
-    text.SetStyleToCurrentText( defaultTextStyle );
-    text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    text.SetResizePolicy( FIXED, HEIGHT );
-    text.SetPreferredSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
-    text.SetZ( -0.9f );
+    text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    text.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
+    text.SetSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
     slider.Add( text );
 
     Actor textContainer = Actor::New();
-    textContainer.SetRelayoutEnabled( true );
-    textContainer.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-    mAlphaFunctionText = TextView::New( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
+    textContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mAlphaFunctionText = TextLabel::New( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
     mAlphaFunctionText.SetAnchorPoint( ParentOrigin::CENTER );
     mAlphaFunctionText.SetParentOrigin( ParentOrigin::CENTER );
-    mAlphaFunctionText.SetTextAlignment( Toolkit::Alignment::VerticalCenter );
     textContainer.Add( mAlphaFunctionText );
     tableView.AddChild( textContainer, TableView::CellPosition( 1, 0 ) );
 
@@ -1045,17 +1018,13 @@ private:
     mTapDetector.Attach(mAlphaFunctionText);
     mTapDetector.DetectedSignal().Connect( this, &ItemViewExample::ChangeAlphaFunctionOnTap );
 
-    text = TextView::New( "Alpha Function" );
+    text = TextLabel::New( "Alpha Function" );
     text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
     text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetTextAlignment( Dali::Toolkit::Alignment::HorizontalLeft );
-    text.SetStyleToCurrentText( defaultTextStyle );
-    text.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-    text.SetResizePolicy( FIXED, HEIGHT );
-    text.SetPreferredSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
+    text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
     textContainer.Add( text );
 
-    mMenu.MarkDirtyForRelayout();
     mMenu.Show();
     mMenuShown = true;
   }
@@ -1076,7 +1045,7 @@ private:
 
     if( mAlphaFunctionText )
     {
-      mAlphaFunctionText.SetText( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
+      mAlphaFunctionText.SetProperty( TextLabel::Property::TEXT, std::string(ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex]) );
     }
 
     if( mItemView )
@@ -1136,11 +1105,11 @@ private:
   Mode mMode;
   bool mMenuShown;
 
-  Toolkit::View mView;
+  Toolkit::Control mView;
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;
-  TextView mTitleActor;             ///< The Toolbar's Title.
+  TextLabel mTitleActor;             ///< The Toolbar's Title.
 
   ItemView mItemView;
   Image mBorderImage;
@@ -1161,7 +1130,7 @@ private:
   Toolkit::PushButton mReplaceButton;
 
   unsigned int mAlphaFuncIndex;
-  TextView mAlphaFunctionText;
+  TextLabel mAlphaFunctionText;
   BufferImage mWhiteImage;
 };
 

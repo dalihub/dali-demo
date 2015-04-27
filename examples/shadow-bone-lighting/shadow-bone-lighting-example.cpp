@@ -33,7 +33,7 @@ const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 
 const char* APPLICATION_TITLE_PAN_LIGHT( "Lighting: Pan Light" );
-const char* APPLICATION_TITLE_PAN_OBJECT( "Lighting: Pan Object" );
+const char* APPLICATION_TITLE_PAN_OBJECT( "Lighting: Rotate Object" );
 const char* APPLICATION_TITLE_PAN_SCENE( "Lighting: Pan Scene" );
 const char* APPLICATION_TITLE_ROTATE_SCENE( "Lighting: Rotate Scene" );
 const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
@@ -43,7 +43,6 @@ const char* SCENE_IMAGE_1( DALI_IMAGE_DIR "gallery-small-10.jpg");
 const char* SCENE_IMAGE_2( DALI_IMAGE_DIR "gallery-small-42.jpg");
 const char* SCENE_IMAGE_3( DALI_IMAGE_DIR "gallery-small-48.jpg");
 
-const Quaternion JAUNTY_ROTATION(Math::PI/5.0f, Math::PI/5.0f, 0.0f); // Euler angles
 const float MIN_PINCH_SCALE( 0.3f );
 const float MAX_PINCH_SCALE( 2.05f );
 
@@ -54,6 +53,11 @@ const Vector3 RIGHT_POINT( R3_2, 0.5f,  0.0f);
 const Vector3 FRONT_POINT( 0.0f, 0.0f, 20.0f);
 
 const Vector2 DEFAULT_STAGE_SIZE( 480.0f, 800.0f );
+
+const float X_ROTATION_DISPLACEMENT_FACTOR = 60.f;
+const float Y_ROTATION_DISPLACEMENT_FACTOR = 60.f;
+const float LIGHT_PAN_X_DISPLACEMENT_FACTOR = 180.f;
+const float LIGHT_PAN_Y_DISPLACEMENT_FACTOR = 180.f;
 
 }
 
@@ -74,12 +78,12 @@ public:
   : mApp(app),
     mPaused(false),
     mTranslation(Vector3::ZERO),
-    mLongitudinal(15.0f),
-    mAxisTilt(30.0f),
-    mLightLongitudinal(0.0f),
-    mLightAxisTilt(0.0f),
-    mObjectLongitudinal(0.0f),
-    mObjectAxisTilt(0.0f),
+    mSceneYRotation( Dali::ANGLE_30 * 0.5f ),
+    mSceneXRotation( Dali::ANGLE_30 ),
+    mLightYRotation(0.0f),
+    mLightXRotation(0.0f),
+    mObjectYRotation(0.0f),
+    mObjectXRotation(0.0f),
     mPinchScale(0.5f),
     mScaleAtPinchStart(0.5f),
     mPanState(PAN_SCENE)
@@ -94,31 +98,6 @@ public:
   }
 
 public:
-  struct PositionInFrontOf
-  {
-    PositionInFrontOf()
-    {
-    }
-
-    Vector3 operator()( const Vector3& current, const PropertyInput& property )
-    {
-      Vector3 position = property.GetVector3();
-      position.z += 1.0f;
-      return position;
-    }
-  };
-
-  struct QuaternionEqualToConstraint
-  {
-    QuaternionEqualToConstraint()
-    {
-    }
-
-    Quaternion operator()( const Quaternion& current, const PropertyInput& property )
-    {
-      return property.GetQuaternion();
-    }
-  };
 
   struct RotationConstraint
   {
@@ -127,10 +106,10 @@ public:
     {
     }
 
-    Quaternion operator()( const Quaternion& current, const PropertyInput& property )
+    void operator()( Quaternion& current, const PropertyInputContainer& inputs )
     {
-      Degree angle(property.GetFloat());
-      return Quaternion( Radian(angle) * mSign, Vector3::YAXIS );
+      Radian angle( inputs[0]->GetFloat() );
+      current = Quaternion( angle * mSign, Vector3::YAXIS );
     }
 
     float mSign;
@@ -141,6 +120,8 @@ public:
    */
   void Create(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     srand(0); // Want repeatable path
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &TestApp::OnKeyEvent);
@@ -170,13 +151,11 @@ public:
     toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Add title to the tool bar.
-    mTitleActor = Toolkit::TextView::New();
+    mTitleActor = DemoHelper::CreateToolBarLabel( "" );
     toolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
     // Set Title text
-    mTitleActor.SetText( APPLICATION_TITLE_PAN_SCENE );
-    mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_SCENE ) );
-    mTitleActor.SetStyleToCurrentText( DemoHelper::GetDefaultTextStyle() );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_SCENE) );
 
     //Add a reset button
     Image resetImage = ResourceImage::New( RESET_ICON );
@@ -189,7 +168,7 @@ public:
     mView.SetPosition(Vector3(0.0f, 0.0f, -50));
 
     mContents.SetPosition(mTranslation);
-    mContents.SetOrientation(CalculateWorldRotation(Radian(mLongitudinal), Radian(mAxisTilt)));
+    mContents.SetOrientation( CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
     mContents.SetScale(mPinchScale, mPinchScale, mPinchScale);
 
     mPanGestureDetector = PanGestureDetector::New();
@@ -213,8 +192,7 @@ public:
     mShadowView.SetName("Container");
     mShadowView.SetParentOrigin(ParentOrigin::CENTER);
     mShadowView.SetAnchorPoint(AnchorPoint::CENTER);
-    mShadowView.SetRelayoutEnabled( true );
-    mShadowView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    mShadowView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
@@ -233,7 +211,7 @@ public:
     mLightAnchor = Actor::New();
     mLightAnchor.SetParentOrigin(ParentOrigin::CENTER);
     mLightAnchor.SetAnchorPoint(AnchorPoint::CENTER);
-    mLightAnchor.SetOrientation(CalculateWorldRotation(Radian(mLightLongitudinal), Radian(mLightAxisTilt)));
+    mLightAnchor.SetOrientation( CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
 
     // Work out a scaling factor as the initial light position was calculated for desktop
     // Need to scale light position as scene actor size is based on stage size (i.e. much bigger on device)
@@ -245,14 +223,10 @@ public:
     mCastingLight.SetAnchorPoint(AnchorPoint::CENTER);
     mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
 
-    TextStyle style;
-    style.SetFontPointSize( PointSize(DemoHelper::ScalePointSize(20.0f)) );
-    style.SetFontName("Times New Roman");
-    style.SetFontStyle("Book");
-
-    TextActorParameters parameters( style, TextActorParameters::FONT_DETECTION_ON );
-    TextActor text = TextActor::New("Light", parameters);
-    text.SetColor(Color::BLUE);
+    TextLabel text = TextLabel::New( "Light" );
+    text.SetProperty( TextLabel::Property::POINT_SIZE, 20.0f );
+    text.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    text.SetColor( Color::BLUE );
 
     mCastingLight.Add(text);
     mLightAnchor.Add(mCastingLight);
@@ -272,6 +246,9 @@ public:
     mImageActor2 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_2) );
     mImageActor3 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_3) );
 
+    mImageActor1.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    mImageActor2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    mImageActor3.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
     mImageActor2.SetParentOrigin(ParentOrigin::CENTER);
 
@@ -285,18 +262,22 @@ public:
     mImageActor2.Add(mImageActor1);
     mImageActor2.Add(mImageActor3);
 
-    Property::Index angleIndex = mImageActor2.RegisterProperty("angle", Property::Value(30.0f));
+    Property::Index angleIndex = mImageActor2.RegisterProperty("angle", Property::Value( Dali::ANGLE_30 ) );
     Source angleSrc( mImageActor2, angleIndex );
-    mImageActor1.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ORIENTATION, angleSrc,
-                                                              RotationConstraint(-1.0f)));
-    mImageActor3.ApplyConstraint(Constraint::New<Quaternion>( Actor::Property::ORIENTATION, angleSrc,
-                                                              RotationConstraint(+1.0f)));
+
+    Constraint constraint = Constraint::New<Quaternion>( mImageActor1, Actor::Property::ORIENTATION, RotationConstraint(-1.0f) );
+    constraint.AddSource( angleSrc );
+    constraint.Apply();
+
+    constraint = Constraint::New<Quaternion>( mImageActor3, Actor::Property::ORIENTATION, RotationConstraint(+1.0f) );
+    constraint.AddSource( angleSrc );
+    constraint.Apply();
 
     mSceneAnimation = Animation::New(2.5f);
 
     // Want to animate angle from 30 => -30 and back again smoothly.
 
-    mSceneAnimation.AnimateTo( Property( mImageActor2, angleIndex ), Property::Value(-30.0f), AlphaFunctions::Sin );
+    mSceneAnimation.AnimateTo( Property( mImageActor2, angleIndex ), Property::Value(-Dali::ANGLE_30), AlphaFunction::SIN );
 
     mSceneAnimation.SetLooping(true);
     mSceneAnimation.Play();
@@ -307,10 +288,10 @@ public:
   }
 
 
-  Quaternion CalculateWorldRotation(Radian longitude, Radian axisTilt )
+  Quaternion CalculateWorldRotation( Radian XRotation, Radian YRotation )
   {
-    Quaternion q(longitude, Vector3::YAXIS);
-    Quaternion p(axisTilt, Vector3::XAXIS);
+    Quaternion p( XRotation, Vector3::XAXIS );
+    Quaternion q( YRotation, Vector3::YAXIS );
     return p*q;
   }
 
@@ -341,10 +322,11 @@ public:
         {
           case PAN_LIGHT:
           {
-            mLightLongitudinal += gesture.displacement.x/4.0f;
-            mLightAxisTilt -= gesture.displacement.y/6.0f;
-            mLightAxisTilt = Clamp<float>(mLightAxisTilt, -90.0f, 90.0f);
-            mLightAnchor.SetOrientation(CalculateWorldRotation(Radian(mLightLongitudinal), Radian(mLightAxisTilt)));
+            mLightXRotation = mLightXRotation - gesture.displacement.y / LIGHT_PAN_X_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mLightXRotation = Clamp(mLightXRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
+            mLightYRotation = mLightYRotation + gesture.displacement.x / LIGHT_PAN_Y_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mLightYRotation = Clamp(mLightYRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
+            mLightAnchor.SetOrientation( CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
             break;
           }
 
@@ -357,19 +339,19 @@ public:
 
           case ROTATE_SCENE:
           {
-            mLongitudinal += gesture.displacement.x/4.0f;
-            mAxisTilt -= gesture.displacement.y/6.0f;
-            mAxisTilt = Clamp<float>(mAxisTilt, -90.0f, 90.0f);
-            mContents.SetOrientation(CalculateWorldRotation(Radian(mLongitudinal), Radian(mAxisTilt)));
+            mSceneXRotation = mSceneXRotation - gesture.displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mSceneXRotation = Clamp( mSceneXRotation, -Dali::ANGLE_90, Dali::ANGLE_90 );
+            mSceneYRotation = mSceneYRotation + gesture.displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mSceneYRotation = Clamp( mSceneYRotation, -Dali::ANGLE_90, Dali::ANGLE_90 );
+            mContents.SetOrientation( CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
             break;
           }
 
-          case PAN_OBJECT:
+          case ROTATE_OBJECT:
           {
-            mObjectLongitudinal += gesture.displacement.x/4.0f;
-            mObjectAxisTilt -= gesture.displacement.y/6.0f;
-            mObjectAxisTilt = Clamp<float>(mObjectAxisTilt, -90.0f, 90.0f);
-            mSceneActor.SetOrientation(CalculateWorldRotation(Radian(mObjectLongitudinal), Radian(mObjectAxisTilt)));
+            mObjectXRotation = mObjectXRotation - gesture.displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mObjectYRotation = mObjectYRotation + gesture.displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mSceneActor.SetOrientation( CalculateWorldRotation( mObjectXRotation, mObjectYRotation ) );
             break;
           }
         }
@@ -425,29 +407,23 @@ public:
     {
       case PAN_SCENE:
         mPanState = ROTATE_SCENE;
-        mTitleActor.SetText( APPLICATION_TITLE_ROTATE_SCENE );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_ROTATE_SCENE ) );
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_ROTATE_SCENE) );
         break;
       case ROTATE_SCENE:
         mPanState = PAN_LIGHT;
-        mTitleActor.SetText( APPLICATION_TITLE_PAN_LIGHT );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_LIGHT ) );
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT) );
         break;
       case PAN_LIGHT:
-        mPanState = PAN_OBJECT;
-        mTitleActor.SetText( APPLICATION_TITLE_PAN_OBJECT );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_OBJECT ) );
+        mPanState = ROTATE_OBJECT;
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_OBJECT) );
         break;
-      case PAN_OBJECT:
+      case ROTATE_OBJECT:
         mPanState = PAN_SCENE;
-        mTitleActor.SetText( APPLICATION_TITLE_PAN_SCENE );
-        mTitleActor.SetSize( Font::New().MeasureText( APPLICATION_TITLE_PAN_SCENE ) );
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_SCENE) );
         break;
       default:
         break;
     }
-
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
 
     return true;
   }
@@ -459,16 +435,16 @@ public:
     mContents.SetPosition(mTranslation);
 
     // Align scene so that light anchor orientation is Z Axis
-    mAxisTilt = -mLightAxisTilt;
-    mLongitudinal = -mLightLongitudinal;
-    mContents.SetOrientation(CalculateWorldRotation(Radian(mLongitudinal), Radian(mAxisTilt)));
+    mSceneXRotation = -mLightXRotation;
+    mSceneYRotation = -mLightYRotation;
+    mContents.SetOrientation( CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
 
     return true;
   }
 
 private:
   Application&              mApp;
-  Toolkit::View             mView;
+  Toolkit::Control          mView;
   Layer                     mContents;
   Actor                     mSceneActor;
   Animation                 mAnimation;
@@ -486,26 +462,26 @@ private:
   PinchGestureDetector      mPinchGestureDetector;
   TapGestureDetector        mTapGestureDetector;
   Vector3                   mTranslation;
-  Degree                    mLongitudinal;
-  Degree                    mAxisTilt;
-  Degree                    mLightLongitudinal;
-  Degree                    mLightAxisTilt;
-  Degree                    mObjectLongitudinal;
-  Degree                    mObjectAxisTilt;
+  Radian                    mSceneYRotation;
+  Radian                    mSceneXRotation;
+  Radian                    mLightYRotation;
+  Radian                    mLightXRotation;
+  Radian                    mObjectYRotation;
+  Radian                    mObjectXRotation;
   float                     mPinchScale;
   float                     mScaleAtPinchStart;
 
   Property::Index           mAngle1Index;
   Property::Index           mAngle3Index;
 
-  Toolkit::TextView         mTitleActor;
+  Toolkit::TextLabel         mTitleActor;
 
   enum PanState
   {
     PAN_SCENE,
     ROTATE_SCENE,
     PAN_LIGHT,
-    PAN_OBJECT
+    ROTATE_OBJECT
   };
 
   PanState                  mPanState;

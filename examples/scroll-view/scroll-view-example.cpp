@@ -141,7 +141,7 @@ const Vector3 ANCHOR_3DEFFECT_STYLE1(65.0f, -70.0f, -300.0f); ///< Rotation Anch
 const unsigned int IMAGE_THUMBNAIL_WIDTH  = 256;                            ///< Width of Thumbnail Image in texels
 const unsigned int IMAGE_THUMBNAIL_HEIGHT = 256;                            ///< Height of Thumbnail Image in texels
 
-const float SPIN_DURATION = 5.0f;                                           ///< Times to spin an Image by upon touching, each spin taking a second.
+const float SPIN_DURATION = 1.0f;                                           ///< Times to spin an Image by upon touching, each spin taking a second.
 
 const float EFFECT_SNAP_DURATION(0.66f);                                    ///< Scroll Snap Duration for Effects
 const float EFFECT_FLICK_DURATION(0.5f);                                    ///< Scroll Flick Duration for Effects
@@ -179,6 +179,8 @@ public:
    */
   void OnInit(Application& app)
   {
+    DemoHelper::RequestThemeChange();
+
     Stage stage = Dali::Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
@@ -226,7 +228,6 @@ private:
     Vector2 stageSize = stage.GetSize();
 
     mScrollView = ScrollView::New();
-    mScrollView.SetRelayoutEnabled( false );
     mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
     mScrollView.SetParentOrigin(ParentOrigin::CENTER);
     mContentLayer.Add( mScrollView );
@@ -299,8 +300,7 @@ private:
   Actor CreatePage()
   {
     Actor page = Actor::New();
-    page.SetRelayoutEnabled( true );
-    page.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     page.SetParentOrigin( ParentOrigin::CENTER );
     page.SetAnchorPoint( AnchorPoint::CENTER );
 
@@ -353,8 +353,8 @@ private:
         mScrollViewEffect = ScrollViewDepthEffect::New();
         mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
         mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
-        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunction::EASE_OUT);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunction::EASE_OUT);
         mScrollView.RemoveConstraintsFromChildren();
         break;
       }
@@ -364,8 +364,8 @@ private:
         mScrollViewEffect = ScrollViewCubeEffect::New();
         mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
         mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOutBack);
-        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOutBack);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunction::EASE_OUT_BACK);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunction::EASE_OUT_BACK);
         mScrollView.RemoveConstraintsFromChildren();
         break;
       }
@@ -375,8 +375,8 @@ private:
         mScrollViewEffect = ScrollViewPageCarouselEffect::New();
         mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
         mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
-        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunction::EASE_OUT);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunction::EASE_OUT);
         mScrollView.RemoveConstraintsFromChildren();
         break;
       }
@@ -386,8 +386,8 @@ private:
         mScrollViewEffect = ScrollViewPageCubeEffect::New();
         mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
         mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
-        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunction::EASE_OUT);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunction::EASE_OUT);
         mScrollView.RemoveConstraintsFromChildren();
         break;
       }
@@ -397,8 +397,8 @@ private:
         mScrollViewEffect = ScrollViewPageSpiralEffect::New();
         mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
         mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-        mScrollView.SetScrollSnapAlphaFunction(AlphaFunctions::EaseOut);
-        mScrollView.SetScrollFlickAlphaFunction(AlphaFunctions::EaseOut);
+        mScrollView.SetScrollSnapAlphaFunction(AlphaFunction::EASE_OUT);
+        mScrollView.SetScrollFlickAlphaFunction(AlphaFunction::EASE_OUT);
         mScrollView.RemoveConstraintsFromChildren();
         break;
       }
@@ -452,8 +452,7 @@ private:
    void ApplyEffectToPage(Actor page)
    {
      page.RemoveConstraints();
-     page.SetRelayoutEnabled( true );
-     page.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+     page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
      switch( mEffectMode )
      {
@@ -562,14 +561,9 @@ private:
    */
   ImageActor CreateImage( const std::string& filename, unsigned int width = IMAGE_THUMBNAIL_WIDTH, unsigned int height = IMAGE_THUMBNAIL_HEIGHT )
   {
-    ImageAttributes attributes;
+    Image img = ResourceImage::New(filename, ImageDimensions( width, height ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
 
-    attributes.SetSize(width, height);
-    attributes.SetScalingMode(ImageAttributes::ScaleToFill);
-    attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
-    Image img = ResourceImage::New(filename, attributes);
     ImageActor actor = ImageActor::New(img);
-    actor.SetRelayoutEnabled( false );
     actor.SetName( filename );
     actor.SetParentOrigin(ParentOrigin::CENTER);
     actor.SetAnchorPoint(AnchorPoint::CENTER);
@@ -613,7 +607,7 @@ private:
       {
         // Spin the Image a few times.
         Animation animation = Animation::New(SPIN_DURATION);
-        animation.RotateBy( actor, Degree(360.0f * SPIN_DURATION), Vector3::XAXIS, AlphaFunctions::EaseOut);
+        animation.AnimateBy( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f * SPIN_DURATION) ), Vector3::XAXIS ), AlphaFunction::EASE_OUT );
         animation.Play();
       }
     }
@@ -640,15 +634,12 @@ private:
   {
     if(!mTitleActor)
     {
-      mTitleActor = TextView::New();
+      mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
       mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
     }
 
-    Font font = Font::New();
-    mTitleActor.SetText( title );
-    mTitleActor.SetSize( font.MeasureText( title ) );
-    mTitleActor.SetStyleToCurrentText(DemoHelper::GetDefaultTextStyle());
+    mTitleActor.SetProperty( Toolkit::TextLabel::Property::TEXT, title );
   }
 
   /**
@@ -668,9 +659,9 @@ private:
 private:
 
   Application& mApplication;                            ///< Application instance
-  Toolkit::View mView;                                  ///< The View instance.
+  Toolkit::Control mView;                               ///< The View instance.
   Toolkit::ToolBar mToolBar;                            ///< The View's Toolbar.
-  TextView mTitleActor;                                 ///< The Toolbar's Title.
+  TextLabel mTitleActor;                                ///< The Toolbar's Title.
   Layer mContentLayer;                                  ///< The content layer (contains game actors)
   ScrollView mScrollView;                               ///< ScrollView UI Component
   bool mScrolling;                                      ///< ScrollView scrolling state (true = scrolling, false = stationary)

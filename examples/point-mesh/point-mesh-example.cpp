@@ -185,7 +185,7 @@ public:
     keyFrames.Add(0.0f, Vector4::ZERO);
     keyFrames.Add(1.0f, Vector4( 1.0f, 0.0f, 1.0f, 1.0f ));
 
-    animation.RotateBy( mMeshActor, Degree(360), Vector3::ZAXIS );
+    animation.AnimateBy( Property(mMeshActor, Actor::Property::ORIENTATION), Quaternion(Degree(360), Vector3::ZAXIS) );
 
     animation.SetLooping(true);
     animation.Play();

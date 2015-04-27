@@ -92,18 +92,14 @@ const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to
 /**
  * @brief Load an image, scaled-down to no more than the dimensions passed in.
  *
- * Uses ImageAttributes::ShrinkToFit which ensures the resulting image is
+ * Uses SHRINK_TO_FIT which ensures the resulting image is
  * smaller than or equal to the specified dimensions while preserving its
  * original aspect ratio.
  */
 ResourceImage LoadImageFittedInBox( const char * const imagePath, uint32_t maxWidth, uint32_t maxHeight )
 {
   // Load the image nicely scaled-down to fit within the specified max width and height:
-  ImageAttributes attributes;
-  attributes.SetSize( maxWidth, maxHeight);
-  attributes.SetFilterMode( ImageAttributes::BoxThenLinear );
-  attributes.SetScalingMode( ImageAttributes::ShrinkToFit );
-  return ResourceImage::New( imagePath, attributes );
+  return ResourceImage::New( imagePath, ImageDimensions( maxWidth, maxHeight ), FittingMode::SHRINK_TO_FIT, Dali::SamplingMode::BOX_THEN_LINEAR );
 }
 
 } // unnamed namespace
@@ -193,8 +189,8 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
     // set initial orientation
-    app.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
-    unsigned int degrees = app.GetOrientation().GetDegrees();
+    winHandle.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
+    unsigned int degrees = winHandle.GetOrientation().GetDegrees();
     Rotate( static_cast< DeviceOrientation >( degrees ) );
 
 
@@ -326,8 +322,9 @@ public:
       {
         // has parent so we expect it to be on stage, start animation
         mRotateAnimation = Animation::New( ORIENTATION_DURATION );
-        mRotateAnimation.RotateTo( mView, Degree( -orientation ), Vector3::ZAXIS, AlphaFunctions::EaseOut );
-        mRotateAnimation.Resize( mView, targetSize.width, targetSize.height );
+        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( -orientation ) ), Vector3::ZAXIS ), AlphaFunction::EASE_OUT );
+        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_WIDTH ), targetSize.width );
+        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_HEIGHT ), targetSize.height );
         mRotateAnimation.Play();
       }
       else
@@ -370,7 +367,7 @@ public:
     mActorTapMovementAnimation = Animation::New( animDuration );
     if ( mMotionBlurImageActor )
     {
-      mActorTapMovementAnimation.AnimateTo( Property(mMotionBlurImageActor, Actor::Property::POSITION), destPos, AlphaFunctions::EaseInOutSine, TimePeriod(animDuration) );
+      mActorTapMovementAnimation.AnimateTo( Property(mMotionBlurImageActor, Actor::Property::POSITION), destPos, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(animDuration) );
     }
     mActorTapMovementAnimation.SetEndAction( Animation::Bake );
     mActorTapMovementAnimation.Play();
@@ -386,7 +383,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.RotateBy(mMotionBlurImageActor, Degree(720), Vector3::YAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.AnimateBy( Property( mMotionBlurImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunction::EASE_IN_OUT );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -397,7 +394,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.RotateBy(mMotionBlurImageActor, Degree(720), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.AnimateBy( Property( mMotionBlurImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunction::EASE_IN_OUT );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -408,8 +405,8 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.RotateBy(mMotionBlurImageActor, Degree(360), Vector3::YAXIS, AlphaFunctions::EaseInOut);
-          mActorAnimation.RotateBy(mMotionBlurImageActor, Degree(360), Vector3::ZAXIS, AlphaFunctions::EaseInOut);
+          mActorAnimation.AnimateBy( Property( mMotionBlurImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunction::EASE_IN_OUT );
+          mActorAnimation.AnimateBy( Property( mMotionBlurImageActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunction::EASE_IN_OUT );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -420,7 +417,7 @@ public:
         {
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.ScaleBy(mMotionBlurImageActor, Vector3(2.0f, 2.0f, 2.0f), AlphaFunctions::Bounce, 0.0f, 1.0f);
+          mActorAnimation.AnimateBy( Property( mMotionBlurImageActor, Actor::Property::SCALE ), Vector3(2.0f, 2.0f, 2.0f), AlphaFunction::BOUNCE, TimePeriod( 0.0f, 1.0f ) );
           mActorAnimation.SetEndAction( Animation::Bake );
           mActorAnimation.Play();
         }
@@ -506,9 +503,8 @@ public:
 
 private:
   Application&               mApplication;            ///< Application instance
-  Toolkit::View              mView;
+  Toolkit::Control           mView;
   Toolkit::ToolBar           mToolBar;
-  TextView                   mTitleActor;             ///< The Toolbar's Title.
   Image                      mIconEffectsOff;
   Image                      mIconEffectsOn;
 

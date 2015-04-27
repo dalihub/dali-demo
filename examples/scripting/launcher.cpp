@@ -23,9 +23,12 @@
 #include <sys/stat.h>
 #include <dali/integration-api/debug.h>
 
+// INTERNAL INCLUDES
+#include "shared/view.h"
 
 
 using namespace Dali;
+using namespace Dali::Toolkit;
 
 #define TOKEN_STRING(x) #x
 
@@ -55,7 +58,9 @@ Launcher::~Launcher()
 
 void Launcher::Create( Dali::Application& application )
 {
-  TextActor textActor = TextActor::New( "JSON & JavaScript Launcher..." );
+  DemoHelper::RequestThemeChange();
+
+  TextLabel textActor = TextLabel::New( "JSON & JavaScript Launcher..." );
 
   // Reposition the actor
   textActor.SetParentOrigin( ParentOrigin::TOP_LEFT );

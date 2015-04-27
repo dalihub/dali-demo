@@ -22,8 +22,6 @@
       "background-color": [0.5,0.5,0,1],
       "parent-origin": "CENTER",
       "size":[400,500,1],
-      "rows": 4,
-      "columns":4,
       "cell-padding": [10, 5],
       "layout-rows": {  // set the height of the rows
         "0": { "policy": "fixed", "value": 40 },
@@ -38,17 +36,21 @@
       "actors": [{
           "name":"gallery-1",
           "type":"ImageActor",
+          "width-resize-policy":"FILL_TO_PARENT",
+          "height-resize-policy":"FILL_TO_PARENT",
           "image": {
             "filename": "{DALI_IMAGE_DIR}gallery-large-1.jpg"
           },
           "custom-properties": { // properties registered dynamically
-            "cell-indices": [0,0],// property to specify the top-left cell this child occupies
+            "cell-indices": [0,0], // property to specify the top-left cell this child occupies
             "row-span":4, // property to specify how many rows this child occupies, if not set, default value is 1
-            "column-spam":1 // property to specify how many columns this child occupies, if nor set, defualt cvalue is 1
+            "column-span":1 // property to specify how many columns this child occupies, if nor set, defualt cvalue is 1
           }
         },{
           "name":"gallery-2",
           "type":"ImageActor",
+          "width-resize-policy":"FILL_TO_PARENT",
+          "height-resize-policy":"FILL_TO_PARENT",
           "image": {
             "filename": "{DALI_IMAGE_DIR}gallery-large-2.jpg"
           },
@@ -59,6 +61,8 @@
         }, {
           "name":"gallery-3",
           "type":"ImageActor",
+          "width-resize-policy":"FILL_TO_PARENT",
+          "height-resize-policy":"FILL_TO_PARENT",
           "image": {
             "filename": "{DALI_IMAGE_DIR}gallery-large-3.jpg"
           },
@@ -68,6 +72,8 @@
         }, {
           "name":"gallery-4",
           "type":"ImageActor",
+          "width-resize-policy":"FILL_TO_PARENT",
+          "height-resize-policy":"FILL_TO_PARENT",
           "image": {
             "filename": "{DALI_IMAGE_DIR}gallery-large-4.jpg"
           },

@@ -16,9 +16,9 @@
  */
 {
   "stage": [
-    // A TextView with a red background
+    // A TextLabel with a red background
     {
-      "type": "TextView",
+      "type": "TextLabel",
       "text": "Hello World",
       "parent-origin": "TOP_CENTER",
       "anchor-point": "TOP_CENTER",

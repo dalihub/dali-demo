@@ -86,17 +86,7 @@ const Vector2 POSITION_SWING_3DEFFECT( 0.55f, 0.4f );             ///< Position 
 const Vector3 ANCHOR_3DEFFECT_STYLE0( -105.0f, 30.0f, -240.0f ); ///< Rotation Anchor position for 3D Effect (Style 0)
 const Vector3 ANCHOR_3DEFFECT_STYLE1( 65.0f, -70.0f, -500.0f );  ///< Rotation Anchor position for 3D Effect (Style 1)
 
-const std::string             DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
-const std::string             DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
-const Dali::PointSize         DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
-const Dali::TextStyle::Weight DEFAULT_TEXT_STYLE_WEIGHT(Dali::TextStyle::REGULAR);
-const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.7f, 0.7f, 0.7f, 1.0f);
-
-const std::string             TABLE_TEXT_STYLE_FONT_FAMILY("HelveticaNeue");
-const std::string             TABLE_TEXT_STYLE_FONT_STYLE("Regular");
-const Dali::PointSize         TABLE_TEXT_STYLE_POINT_SIZE( 8.0f );
-const Dali::TextStyle::Weight TABLE_TEXT_STYLE_WEIGHT(Dali::TextStyle::LIGHT);
-const Dali::Vector4           TABLE_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
+const Dali::Vector4 TABLE_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
 Vector3 ScalePointSize(const Vector3& vec)
 {
@@ -104,17 +94,6 @@ Vector3 ScalePointSize(const Vector3& vec)
 }
 
 #define DP(x) DemoHelper::ScalePointSize(x)
-
-TextStyle GetTableTextStyle()
-{
-  TextStyle textStyle;
-  textStyle.SetFontName(TABLE_TEXT_STYLE_FONT_FAMILY);
-  textStyle.SetFontStyle(TABLE_TEXT_STYLE_FONT_STYLE);
-  textStyle.SetFontPointSize( Dali::PointSize(DemoHelper::ScalePointSize(TABLE_TEXT_STYLE_POINT_SIZE)));
-  textStyle.SetWeight(TABLE_TEXT_STYLE_WEIGHT);
-  textStyle.SetTextColor(TABLE_TEXT_STYLE_COLOR);
-  return textStyle;
-}
 
 /**
  * Creates the background image
@@ -127,7 +106,7 @@ ImageActor CreateBackground( std::string imagePath )
   background.SetAnchorPoint( AnchorPoint::CENTER );
   background.SetParentOrigin( ParentOrigin::CENTER );
   background.SetZ( -1.0f );
-  background.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+  background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
   return background;
 }
@@ -144,27 +123,26 @@ const float IMAGE_BORDER_BOTTOM = IMAGE_BORDER_LEFT;
 struct AnimateBubbleConstraint
 {
 public:
-  AnimateBubbleConstraint( const Vector3& initialPos, float scale, float size )
+  AnimateBubbleConstraint( const Vector3& initialPos, float scale )
       : mInitialX( initialPos.x ),
-        mScale( scale ),
-        mShapeSize( size )
+        mScale( scale )
   {
   }
 
-  Vector3 operator()( const Vector3& current, const PropertyInput& scrollProperty, const PropertyInput& parentSize )
+  void operator()( Vector3& position, const PropertyInputContainer& inputs )
   {
-    Vector3 pos( current );
-    const float parentHeight = parentSize.GetVector3().height;
+    const Vector3& parentSize = inputs[1]->GetVector3();
+    const Vector3& childSize = inputs[2]->GetVector3();
 
-    // Wrap bubbles vertically
-    if( pos.y + mShapeSize * 0.5f < -parentHeight * 0.5f )
+    // Wrap bubbles verically.
+    if( position.y + childSize.y * 0.5f < -parentSize.y * 0.5f )
     {
-      pos.y = parentHeight * 0.5f + mShapeSize * 0.5f;
+      position.y = parentSize.y * 0.5f + childSize.y * 0.5f;
     }
 
-    // Bubbles X position moves parallax to horizontal panning by a scale factor unique to each bubble
-    pos.x = mInitialX + ( scrollProperty.GetVector3().x * mScale );
-    return pos;
+    // Bubbles X position moves parallax to horizontal
+    // panning by a scale factor unique to each bubble.
+    position.x = mInitialX + ( inputs[0]->GetVector3().x * mScale );
   }
 
 private:
@@ -236,6 +214,8 @@ void DaliTableView::SortAlphabetically( bool sortAlphabetically )
 
 void DaliTableView::Initialize( Application& application )
 {
+  DemoHelper::RequestThemeChange();
+
   Stage::GetCurrent().KeyEventSignal().Connect( this, &DaliTableView::OnKeyEvent );
 
   const Vector2 stageSize = Stage::GetCurrent().GetSize();
@@ -248,7 +228,7 @@ void DaliTableView::Initialize( Application& application )
   mRootActor = TableView::New( 4, 1 );
   mRootActor.SetAnchorPoint( AnchorPoint::CENTER );
   mRootActor.SetParentOrigin( ParentOrigin::CENTER );
-  mRootActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+  mRootActor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   Stage::GetCurrent().Add( mRootActor );
 
   // Toolbar at top
@@ -256,8 +236,7 @@ void DaliTableView::Initialize( Application& application )
   Dali::Layer toolBarLayer = DemoHelper::CreateToolbar(toolbar,
                                                        DEFAULT_TOOLBAR_IMAGE_PATH,
                                                        DEFAULT_TOOLBAR_TEXT,
-                                                       DemoHelper::DEFAULT_VIEW_STYLE,
-                                                       DemoHelper::GetDefaultTextStyle());
+                                                       DemoHelper::DEFAULT_VIEW_STYLE);
 
   mRootActor.AddChild( toolBarLayer, TableView::CellPosition( 0, 0 ) );
   mRootActor.SetFitHeight( 0 );
@@ -265,7 +244,7 @@ void DaliTableView::Initialize( Application& application )
   // Add logo
   Dali::ImageActor logo = CreateLogo( LOGO_PATH );
   logo.SetName( "LOGO_IMAGE" );
-  logo.SetResizePolicy( USE_NATURAL_SIZE, ALL_DIMENSIONS );
+  logo.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   const float paddingHeight = ( ( 1.f-TABLE_RELATIVE_SIZE.y ) * stageSize.y );
   const float logoMargin = paddingHeight * LOGO_MARGIN_RATIO;
 
@@ -279,8 +258,8 @@ void DaliTableView::Initialize( Application& application )
   Alignment alignment = Alignment::New();
   alignment.SetName( "LOGO_ALIGNMENT" );
   alignment.Add( logo );
-  alignment.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-  alignment.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
+  alignment.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+  alignment.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
   Actor alignmentActor = alignment;
   alignmentActor.SetPadding( Padding( 0.0f, 0.0f, logoMargin, logoMargin ));
   mRootActor.AddChild( alignment, TableView::CellPosition( 1, 0 ) );
@@ -288,11 +267,10 @@ void DaliTableView::Initialize( Application& application )
 
   // scrollview occupying the majority of the screen
   mScrollView = ScrollView::New();
-  mScrollView.SetRelayoutEnabled( true );
 
   mScrollView.SetAnchorPoint( AnchorPoint::CENTER );
   mScrollView.SetParentOrigin( ParentOrigin::CENTER );
-  mScrollView.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+  mScrollView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   const float buttonsPageMargin = ( 1.0f - TABLE_RELATIVE_SIZE.x ) * 0.5f * stageSize.width;
   mScrollView.SetPadding( Padding( buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f ) );
 
@@ -305,22 +283,20 @@ void DaliTableView::Initialize( Application& application )
   mScrollViewLayer.SetAnchorPoint( AnchorPoint::CENTER );
   mScrollViewLayer.SetParentOrigin( ParentOrigin::CENTER );
   mScrollViewLayer.SetDrawMode( DrawMode::OVERLAY );
-  mScrollViewLayer.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+  mScrollViewLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
   // Create solid background colour.
   ImageActor backgroundColourActor = Dali::Toolkit::CreateSolidColorActor( BACKGROUND_COLOR );
   backgroundColourActor.SetAnchorPoint( AnchorPoint::CENTER );
   backgroundColourActor.SetParentOrigin( ParentOrigin::CENTER );
-  backgroundColourActor.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-  backgroundColourActor.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+  backgroundColourActor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   backgroundColourActor.SetSizeModeFactor( Vector3( 1.0f, 1.5f, 1.0f ) );
   backgroundColourActor.SetZ( BACKGROUND_Z );
   mScrollViewLayer.Add( backgroundColourActor );
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
   Actor bubbleContainer = Actor::New();
-  bubbleContainer.SetRelayoutEnabled( true );
-  bubbleContainer.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+  bubbleContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   bubbleContainer.SetAnchorPoint( AnchorPoint::CENTER );
   bubbleContainer.SetParentOrigin( ParentOrigin::CENTER );
   mScrollViewLayer.Add( bubbleContainer );
@@ -328,7 +304,7 @@ void DaliTableView::Initialize( Application& application )
   SetupBackground( bubbleContainer );
 
   Alignment buttonsAlignment = Alignment::New();
-  buttonsAlignment.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+  buttonsAlignment.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   buttonsAlignment.Add( mScrollViewLayer );
 
   mScrollViewLayer.Add( mScrollView );
@@ -346,17 +322,18 @@ void DaliTableView::Initialize( Application& application )
   // Remove constraints for inner cube effect
   ApplyCubeEffectToActors();
 
-  // Set initial orientation
-  unsigned int degrees = application.GetOrientation().GetDegrees();
-  Rotate( degrees );
-
   Dali::Window winHandle = application.GetWindow();
   winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT );
   winHandle.RemoveAvailableOrientation( Dali::Window::LANDSCAPE );
   winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE );
   winHandle.RemoveAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
+  // Set initial orientation
   Dali::Orientation orientation = winHandle.GetOrientation();
+
+  unsigned int degrees = winHandle.GetOrientation().GetDegrees();
+  Rotate( degrees );
+
   orientation.ChangedSignal().Connect( this, &DaliTableView::OrientationChanged );
 
   winHandle.ShowIndicator( Dali::Window::INVISIBLE );
@@ -417,7 +394,7 @@ void DaliTableView::Populate()
       TableView page = TableView::New( 3, 3 );
       page.SetAnchorPoint( AnchorPoint::CENTER );
       page.SetParentOrigin( ParentOrigin::CENTER );
-      page.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+      page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mScrollView.Add( page );
 
       // Calculate the number of images going across (columns) within a page, according to the screen resolution and dpi.
@@ -502,8 +479,8 @@ void DaliTableView::Rotate( unsigned int degrees )
   }
 
   mRotateAnimation = Animation::New( ROTATE_ANIMATION_TIME );
-  mRotateAnimation.RotateTo( mRootActor, Degree( 360 - degrees ), Vector3::ZAXIS, AlphaFunctions::EaseOut );
-  mRotateAnimation.Resize( mRootActor, targetSize, AlphaFunctions::EaseOut );
+  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 - degrees ) ), Vector3::ZAXIS ), AlphaFunction::EASE_OUT );
+  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::SIZE ), targetSize, AlphaFunction::EASE_OUT );
   mRotateAnimation.Play();
 }
 
@@ -513,9 +490,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   content.SetName( name );
   content.SetAnchorPoint( AnchorPoint::CENTER );
   content.SetParentOrigin( ParentOrigin::CENTER );
-  content.SetRelayoutEnabled( true );
-  content.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-  content.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+  content.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   content.SetSizeModeFactor( sizeMultiplier );
 
   // create background image
@@ -526,7 +501,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
     image.SetAnchorPoint( AnchorPoint::CENTER );
     image.SetParentOrigin( ParentOrigin::CENTER );
     // make the image 100% of tile
-    image.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // move image back to get text appear in front
     image.SetZ( -1 );
@@ -536,25 +511,20 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
 
     // Add stencil
     ImageActor stencil = NewStencilImage();
-    stencil.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
+    stencil.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     image.Add( stencil );
   }
 
-  TextView text = TextView::New( title );
-  text.SetAnchorPoint( AnchorPoint::CENTER );
-  text.SetParentOrigin( ParentOrigin::CENTER );
-  text.SetWidthExceedPolicy( Toolkit::TextView::ShrinkToFit );
-  text.SetMultilinePolicy( Toolkit::TextView::SplitByWord );
-  text.SetLineJustification( Toolkit::TextView::Center );
-  text.SetTextAlignment( Toolkit::Alignment::Type( Alignment::HorizontalCenter | Alignment::VerticalCenter ) );
-  text.SetZ( 1 );
-  // make the text 90% of tile
-  text.SetResizePolicy( FILL_TO_PARENT, ALL_DIMENSIONS );
-  text.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
-  text.SetSizeModeFactor( Vector3( 0.9f, 0.9f, 0.0f ) );
-  text.SetStyleToCurrentText( GetTableTextStyle() );
-  text.SetSnapshotModeEnabled( false );
-  content.Add( text );
+  TextLabel label = TextLabel::New();
+  label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  label.SetProperty( Control::Property::STYLE_NAME, "launcherlabel" );
+  label.SetProperty( TextLabel::Property::MULTI_LINE, true );
+  label.SetProperty( TextLabel::Property::TEXT, title );
+  label.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+  label.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+  label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+  label.SetColor( TABLE_TEXT_STYLE_COLOR );
+  content.Add( label );
 
   // Set the tile to be keyboard focusable
   content.SetKeyboardFocusable(true);
@@ -622,10 +592,10 @@ bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
 
       // scale the content actor within the Tile, as to not affect the placement within the Table.
       Actor content = actor.GetChildAt(0);
-      mPressedAnimation.ScaleTo( content, Vector3( 0.9f, 0.9f, 1.0f ), AlphaFunctions::EaseInOut, 0.0f,
-                                 BUTTON_PRESS_ANIMATION_TIME * 0.5f );
-      mPressedAnimation.ScaleTo( content, Vector3::ONE, AlphaFunctions::EaseInOut, BUTTON_PRESS_ANIMATION_TIME * 0.5f,
-                                 BUTTON_PRESS_ANIMATION_TIME * 0.5f );
+      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3( 0.9f, 0.9f, 1.0f ), AlphaFunction::EASE_IN_OUT,
+                                 TimePeriod( 0.0f, BUTTON_PRESS_ANIMATION_TIME * 0.5f ) );
+      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3::ONE, AlphaFunction::EASE_IN_OUT,
+                                 TimePeriod( BUTTON_PRESS_ANIMATION_TIME * 0.5f, BUTTON_PRESS_ANIMATION_TIME * 0.5f ) );
       mPressedAnimation.Play();
       mPressedAnimation.FinishedSignal().Connect( this, &DaliTableView::OnPressedAnimationFinished );
     }
@@ -773,25 +743,23 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
   {
     Actor child = actor.GetChildAt( i );
 
-    const Vector3 childSize = child.GetTargetSize();
-
     // Calculate a random position
     Vector3 childPos( Random::Range( -size.x * 0.5f * BACKGROUND_SPREAD_SCALE, size.x * 0.5f * BACKGROUND_SPREAD_SCALE ),
-                      Random::Range( -size.y * 0.5f - childSize.height, size.y * 0.5f + childSize.height ),
+                      Random::Range( -size.y, size.y ),
                       Random::Range( BUBBLE_MIN_Z, BUBBLE_MAX_Z ) );
 
     child.SetPosition( childPos );
 
     // Define bubble horizontal parallax and vertical wrapping
-    Constraint animConstraint = Constraint::New < Vector3 > ( Actor::Property::POSITION,
-      Source( mScrollView, mScrollView.GetPropertyIndex( ScrollView::SCROLL_POSITION_PROPERTY_NAME ) ),
-      Dali::ParentSource( Dali::Actor::Property::SIZE ),
-      AnimateBubbleConstraint( childPos, Random::Range( -0.85f, 0.25f ), childSize.height ) );
-    child.ApplyConstraint( animConstraint );
+    Constraint animConstraint = Constraint::New < Vector3 > ( child, Actor::Property::POSITION, AnimateBubbleConstraint( childPos, Random::Range( -0.85f, 0.25f ) ) );
+    animConstraint.AddSource( Source( mScrollView, ScrollView::Property::SCROLL_POSITION ) );
+    animConstraint.AddSource( Dali::ParentSource( Dali::Actor::Property::SIZE ) );
+    animConstraint.AddSource( Dali::LocalSource( Dali::Actor::Property::SIZE ) );
+    animConstraint.Apply();
 
     // Kickoff animation
     Animation animation = Animation::New( Random::Range( 40.0f, 80.0f ) );
-    animation.MoveBy( child, Vector3( 0.0f, -1.0f, 0.0f ), AlphaFunctions::Linear );
+    animation.AnimateBy( Property( child, Actor::Property::POSITION ), Vector3( 0.0f, -1.0f, 0.0f ), AlphaFunction::LINEAR );
     animation.SetLooping( true );
     animation.Play();
     mBackgroundAnimations.push_back( animation );
@@ -807,7 +775,6 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     Vector4 randColour( hue, hue * 0.5, 0.0f, Random::Range( 0.3f, 0.6f ));
 
     ImageActor dfActor = ImageActor::New( distanceField );
-    dfActor.SetRelayoutEnabled( false );
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
@@ -913,7 +880,7 @@ void DaliTableView::PauseAnimation()
     {
       Animation anim = *animIter;
 
-      anim.Pause();
+      anim.Stop();
     }
 
     mBackgroundAnimsPlaying = false;
@@ -1029,16 +996,13 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
       mVersionPopup = Dali::Toolkit::Popup::New();
       mVersionPopup.SetParentOrigin( ParentOrigin::CENTER );
       mVersionPopup.SetAnchorPoint( AnchorPoint::CENTER );
-      mVersionPopup.SetResizePolicy( FILL_TO_PARENT, WIDTH );
-      mVersionPopup.SetSizeMode( SIZE_RELATIVE_TO_PARENT );
+      mVersionPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
       mVersionPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
-      mVersionPopup.SetResizePolicy( FIT_TO_CHILDREN, HEIGHT );
+      mVersionPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
       mVersionPopup.SetTitle( stream.str() );
       mVersionPopup.HideTail();
       mVersionPopup.OutsideTouchedSignal().Connect( this, &DaliTableView::HideVersionPopup );
       mVersionPopup.HiddenSignal().Connect( this, &DaliTableView::PopupHidden );
-
-      mVersionPopup.MarkDirtyForRelayout();
     }
 
     mVersionPopup.Show();

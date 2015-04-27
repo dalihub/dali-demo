@@ -15,10 +15,10 @@
  *
  */
 
-#include <dali/dali.h>
-#include <iostream>
+#include <dali-toolkit/dali-toolkit.h>
 
 using namespace Dali;
+using Dali::Toolkit::TextLabel;
 
 // This example shows how to create and display Hello World! using a simple TextActor
 //
@@ -29,8 +29,6 @@ public:
   HelloWorldController( Application& application )
   : mApplication( application )
   {
-    std::cout << "HelloWorldController::HelloWorldController" << std::endl;
-
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &HelloWorldController::Create );
   }
@@ -43,19 +41,13 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    std::cout << "HelloWorldController::Create" << std::endl;
-
-    // Initialize the actor
-    TextActor textActor = TextActor::New( "Hello World" );
-
-    // Reposition the actor
-    textActor.SetParentOrigin( ParentOrigin::CENTER );
-
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
 
-    // Display the actor on the stage
-    stage.Add( textActor );
+    TextLabel textLabel = TextLabel::New( "Hello World" );
+    textLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    textLabel.SetName( "hello-world-label" );
+    stage.Add( textLabel );
 
     // Respond to a click anywhere on the stage
     stage.GetRootLayer().TouchedSignal().Connect( this, &HelloWorldController::OnTouch );

@@ -91,6 +91,8 @@
       "name": "ControlBack",
       "parent-origin": "CENTER",
       "anchor-point": "CENTER",
+      "width-resize-policy": "FILL_TO_PARENT",
+      "height-resize-policy": "FILL_TO_PARENT",
       "position": [
         0,
         0,
@@ -111,12 +113,12 @@
       ]
     },
     {
-      "type": "TextView",
-      "text": "<font size='20' color='#fea011'><b>Touch</b></font>",
-      "markup-enabled": true,
+      "type": "TextLabel",
+      "text": "Touch",
       "name": "Instruction",
       "parent-origin": "BOTTOM_CENTER",
       "anchor-point": "BOTTOM_CENTER",
+      "text-color": [1, 0, 0, 1],
       "position": [
         0,
         0,

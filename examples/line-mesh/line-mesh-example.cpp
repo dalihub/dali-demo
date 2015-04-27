@@ -184,7 +184,7 @@ public:
     keyFrames.Add(0.0f, 0.0f);
     keyFrames.Add(1.0f, 1.0f);
 
-    animation.AnimateBetween( Property( mMeshActor, morphAmountIndex ), keyFrames, AlphaFunctions::Sin );
+    animation.AnimateBetween( Property( mMeshActor, morphAmountIndex ), keyFrames, AlphaFunction(AlphaFunction::SIN) );
     animation.SetLooping(true);
     animation.Play();
 
