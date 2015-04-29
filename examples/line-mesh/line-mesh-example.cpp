@@ -91,10 +91,10 @@ Geometry CreateGeometry()
   pentacleVertices.SetData(pentacleVertexData);
 
   // Create indices
-  unsigned short indexData[10] = { 0, 1, 1, 2, 2, 3, 3, 4, 4, 0 };
+  unsigned int indexData[10] = { 0, 1, 1, 2, 2, 3, 3, 4, 4, 0 };
   Property::Map indexFormat;
   indexFormat["indices"] = Property::UNSIGNED_INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( PropertyBuffer::STATIC, indexFormat, 5 );
+  PropertyBuffer indices = PropertyBuffer::New( PropertyBuffer::STATIC, indexFormat, sizeof(indexData)/sizeof(indexData[0]) );
   indices.SetData(indexData);
 
   // Create the geometry object

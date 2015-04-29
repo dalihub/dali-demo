@@ -79,10 +79,10 @@ Geometry CreateGeometry()
   texturedQuadVertices.SetData(texturedQuadVertexData);
 
   // Create indices
-  unsigned short indexData[6] = { 0, 3, 1, 0, 2, 3 };
+  unsigned int indexData[6] = { 0, 3, 1, 0, 2, 3 };
   Property::Map indexFormat;
   indexFormat["indices"] = Property::UNSIGNED_INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( PropertyBuffer::STATIC, indexFormat, 3 );
+  PropertyBuffer indices = PropertyBuffer::New( PropertyBuffer::STATIC, indexFormat, sizeof(indexData)/sizeof(indexData[0]) );
   indices.SetData(indexData);
 
   // Create the geometry object
