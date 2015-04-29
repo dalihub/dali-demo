@@ -484,7 +484,7 @@ class ButtonsController: public ConnectionTracker
       {
         if( mAnimation )
         {
-          mAnimation.AnimateBy( Property(actor, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
+          mAnimation.AnimateBy( Property(actor, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunction::LINEAR );
           mAnimation.Play();
           mLastPoint = localPoint;
         }
@@ -497,7 +497,7 @@ class ButtonsController: public ConnectionTracker
  private:
 
   Application&      mApplication;
-  Toolkit::View     mView;                              ///< The View instance.
+  Toolkit::Control  mView;                              ///< The View instance.
   Toolkit::ToolBar  mToolBar;                           ///< The View's Toolbar.
   Layer             mContentLayer;                      ///< Content layer
 

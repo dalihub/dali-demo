@@ -103,9 +103,9 @@ const unsigned int IMAGE_WIDTH = 256;
 const unsigned int IMAGE_HEIGHT = 256;
 const unsigned int NUM_IMAGE_PER_ROW_IN_ATLAS = 8;
 
-AlphaFunction ALPHA_FUNCTIONS[] = { AlphaFunctions::Linear,
-                                    AlphaFunctions::EaseIn,
-                                    AlphaFunctions::EaseOut };
+AlphaFunction ALPHA_FUNCTIONS[] = { AlphaFunction(AlphaFunction::LINEAR),
+                                    AlphaFunction(AlphaFunction::EASE_IN),
+                                    AlphaFunction(AlphaFunction::EASE_OUT) };
 
 const unsigned int NUM_ALPHA_FUNCTIONS = sizeof(ALPHA_FUNCTIONS) / sizeof(AlphaFunction);
 
@@ -253,7 +253,7 @@ public:
                                              TOOLBAR_IMAGE,
                                              "" );
 
-    mView.OrientationAnimationStartedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
+    app.GetWindow().GetOrientation().ChangedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
@@ -414,7 +414,7 @@ public:
    * Orientation changed signal callback
    * @param orientation
    */
-  void OnOrientationChanged( View view, Animation& animation, const Orientation& orientation )
+  void OnOrientationChanged( Orientation orientation )
   {
     const unsigned int angle = orientation.GetDegrees();
 
@@ -1105,7 +1105,7 @@ private:
   Mode mMode;
   bool mMenuShown;
 
-  Toolkit::View mView;
+  Toolkit::Control mView;
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;

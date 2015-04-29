@@ -325,7 +325,7 @@ private:
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
     Toolkit::ToolBar toolBar;
-    Toolkit::View    view;
+    Toolkit::Control    view;
     mContent = DemoHelper::CreateView( application,
         view,
         toolBar,

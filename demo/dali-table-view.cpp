@@ -86,8 +86,6 @@ const Vector2 POSITION_SWING_3DEFFECT( 0.55f, 0.4f );             ///< Position 
 const Vector3 ANCHOR_3DEFFECT_STYLE0( -105.0f, 30.0f, -240.0f ); ///< Rotation Anchor position for 3D Effect (Style 0)
 const Vector3 ANCHOR_3DEFFECT_STYLE1( 65.0f, -70.0f, -500.0f );  ///< Rotation Anchor position for 3D Effect (Style 1)
 
-const Dali::Vector4 TABLE_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
-
 Vector3 ScalePointSize(const Vector3& vec)
 {
   return Vector3( DemoHelper::ScalePointSize( vec.x ), DemoHelper::ScalePointSize( vec.y ), DemoHelper::ScalePointSize( vec.z ) );
@@ -479,8 +477,8 @@ void DaliTableView::Rotate( unsigned int degrees )
   }
 
   mRotateAnimation = Animation::New( ROTATE_ANIMATION_TIME );
-  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 - degrees ) ), Vector3::ZAXIS ), AlphaFunctions::EaseOut );
-  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::SIZE ), targetSize, AlphaFunctions::EaseOut );
+  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 - degrees ) ), Vector3::ZAXIS ), AlphaFunction::EASE_OUT );
+  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::SIZE ), targetSize, AlphaFunction::EASE_OUT );
   mRotateAnimation.Play();
 }
 
@@ -523,7 +521,6 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   label.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
   label.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
   label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
-  label.SetColor( TABLE_TEXT_STYLE_COLOR );
   content.Add( label );
 
   // Set the tile to be keyboard focusable
@@ -592,9 +589,9 @@ bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
 
       // scale the content actor within the Tile, as to not affect the placement within the Table.
       Actor content = actor.GetChildAt(0);
-      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3( 0.9f, 0.9f, 1.0f ), AlphaFunctions::EaseInOut,
+      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3( 0.9f, 0.9f, 1.0f ), AlphaFunction::EASE_IN_OUT,
                                  TimePeriod( 0.0f, BUTTON_PRESS_ANIMATION_TIME * 0.5f ) );
-      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3::ONE, AlphaFunctions::EaseInOut,
+      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3::ONE, AlphaFunction::EASE_IN_OUT,
                                  TimePeriod( BUTTON_PRESS_ANIMATION_TIME * 0.5f, BUTTON_PRESS_ANIMATION_TIME * 0.5f ) );
       mPressedAnimation.Play();
       mPressedAnimation.FinishedSignal().Connect( this, &DaliTableView::OnPressedAnimationFinished );
@@ -759,7 +756,7 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
 
     // Kickoff animation
     Animation animation = Animation::New( Random::Range( 40.0f, 80.0f ) );
-    animation.AnimateBy( Property( child, Actor::Property::POSITION ), Vector3( 0.0f, -1.0f, 0.0f ), AlphaFunctions::Linear );
+    animation.AnimateBy( Property( child, Actor::Property::POSITION ), Vector3( 0.0f, -1.0f, 0.0f ), AlphaFunction::LINEAR );
     animation.SetLooping( true );
     animation.Play();
     mBackgroundAnimations.push_back( animation );

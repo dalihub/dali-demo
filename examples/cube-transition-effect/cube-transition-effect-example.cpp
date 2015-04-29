@@ -168,7 +168,7 @@ private:
 
 private:
   Application&                    mApplication;
-  Toolkit::View                   mView;
+  Toolkit::Control                mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
   Toolkit::TextLabel              mTitleActor;

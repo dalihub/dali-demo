@@ -46,7 +46,6 @@ const ViewStyle DEFAULT_VIEW_STYLE( 0.1f, 0.7f, 80.f, 4.f );
 const char*                   DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
 const char*                   DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
 const float                   DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
-const Dali::Vector4           DEFAULT_TEXT_STYLE_COLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
 const Dali::Toolkit::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
 const Dali::Toolkit::Alignment::Padding DEFAULT_MODE_SWITCH_PADDING(8.0f, 8.0f, 8.0f, 8.0f);
@@ -109,7 +108,6 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
     label.SetProperty( Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     label.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT );
-    label.SetColor( DEFAULT_TEXT_STYLE_COLOR );
 
     // Add title to the tool bar.
     const float padding( style.mToolBarPadding );
@@ -120,7 +118,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
 }
 
 Dali::Layer CreateView( Dali::Application& application,
-                        Dali::Toolkit::View& view,
+                        Dali::Toolkit::Control& view,
                         Dali::Toolkit::ToolBar& toolBar,
                         const std::string& backgroundImagePath,
                         const std::string& toolbarImagePath,
@@ -130,7 +128,9 @@ Dali::Layer CreateView( Dali::Application& application,
   Dali::Stage stage = Dali::Stage::GetCurrent();
 
   // Create default View.
-  view = Dali::Toolkit::View::New();
+  view = Dali::Toolkit::Control::New();
+  view.SetAnchorPoint( Dali::AnchorPoint::CENTER );
+  view.SetParentOrigin( Dali::ParentOrigin::CENTER );
   view.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
 
   // Add the view to the stage before setting the background.
@@ -140,8 +140,7 @@ Dali::Layer CreateView( Dali::Application& application,
   if ( !backgroundImagePath.empty() )
   {
     Dali::Image backgroundImage = Dali::ResourceImage::New( backgroundImagePath, Dali::ImageDimensions( stage.GetSize().x, stage.GetSize().y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-    Dali::ImageActor backgroundImageActor = Dali::ImageActor::New( backgroundImage );
-    view.SetBackground( backgroundImageActor );
+    view.SetBackgroundImage( backgroundImage );
   }
 
   // FIXME
@@ -152,14 +151,14 @@ Dali::Layer CreateView( Dali::Application& application,
   Dali::Layer toolBarLayer = CreateToolbar( toolBar, toolbarImagePath, title, style );
 
   // Add tool bar layer to the view.
-  view.AddContentLayer( toolBarLayer );
+  view.Add( toolBarLayer );
 
   // Create a content layer.
   Dali::Layer contentLayer = Dali::Layer::New();
   contentLayer.SetAnchorPoint( Dali::AnchorPoint::CENTER );
   contentLayer.SetParentOrigin( Dali::ParentOrigin::CENTER );
   contentLayer.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
-  view.AddContentLayer( contentLayer );
+  view.Add( contentLayer );
   contentLayer.LowerBelow( toolBarLayer );
 
   return contentLayer;
@@ -173,7 +172,6 @@ Dali::Toolkit::TextLabel CreateToolBarLabel( const std::string& text )
   label.SetProperty( Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
   label.SetProperty( Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
   label.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT );
-  label.SetColor( DEFAULT_TEXT_STYLE_COLOR );
 
   return label;
 }

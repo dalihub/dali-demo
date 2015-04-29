@@ -88,7 +88,7 @@ private:
   MeshActor                  mMeshActor;
   MeshActor                  mAnimatedMeshActor;
 
-  Toolkit::View              mView;                              ///< The View instance.
+  Toolkit::Control           mView;                              ///< The View instance.
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
   TextLabel                   mTitleActor;                        ///< The Toolbar's Title.
   Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)

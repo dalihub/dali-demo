@@ -465,7 +465,7 @@ public:
       {
         // Spin the image a few times:
         Animation animation = Animation::New(SPIN_DURATION);
-        animation.AnimateBy( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f * SPIN_DURATION) ), Vector3::XAXIS ), AlphaFunctions::EaseOut );
+        animation.AnimateBy( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f * SPIN_DURATION) ), Vector3::XAXIS ), AlphaFunction::EASE_OUT );
         animation.Play();
 
         // Change the scaling mode:
@@ -568,7 +568,7 @@ private:
   Application&  mApplication;
 
   Layer mContentLayer;                ///< The content layer (contains non gui chrome actors)
-  Toolkit::View mView;                ///< The View instance.
+  Toolkit::Control mView;             ///< The View instance.
   Toolkit::ToolBar mToolBar;          ///< The View's Toolbar.
   TextLabel mTitleActor;               ///< The Toolbar's Title.
   Actor mGridActor;                   ///< The container for the grid of images

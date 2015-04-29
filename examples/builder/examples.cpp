@@ -275,6 +275,7 @@ public:
   void EnterSelection()
   {
     Stage stage = Stage::GetCurrent();
+    stage.SetBackgroundColor( Color::WHITE );
 
     mTapDetector = TapGestureDetector::New();
     mTapDetector.DetectedSignal().Connect( this, &ExampleApp::OnTap );
@@ -587,7 +588,7 @@ private:
   GridLayoutPtr mGridLayout;
   ItemView mItemView;
 
-  Toolkit::View mView;
+  Toolkit::Control mView;
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;

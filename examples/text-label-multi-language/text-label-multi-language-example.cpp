@@ -62,6 +62,7 @@ public:
     Stage stage = Stage::GetCurrent();
 
     stage.KeyEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnKeyEvent);
+    stage.SetBackgroundColor( Color::WHITE );
 
     mTableView = Toolkit::TableView::New( NUMBER_OF_LANGUAGES, 1 );
     mTableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
@@ -104,7 +105,7 @@ public:
       {
         if( mAnimation )
         {
-          mAnimation.AnimateBy( Property(mTableView, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
+          mAnimation.AnimateBy( Property(mTableView, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunction::LINEAR );
           mAnimation.Play();
           mLastPoint = localPoint;
         }

@@ -55,16 +55,14 @@ public:
     Stage stage = Stage::GetCurrent();
 
     //Create a view
-    mView = Dali::Toolkit::View::New();
+    mView = Dali::Toolkit::Control::New();
+    mView.SetAnchorPoint( Dali::AnchorPoint::CENTER );
+    mView.SetParentOrigin( Dali::ParentOrigin::CENTER );
     mView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     stage.Add( mView );
 
     //Set background image for the view
-    Image image = ResourceImage::New( BACKGROUND_IMAGE );
-
-
-    Dali::ImageActor backgroundImageActor = Dali::ImageActor::New( image );
-    mView.SetBackground( backgroundImageActor );
+    mView.SetBackgroundImage( ResourceImage::New( BACKGROUND_IMAGE ) );
 
     CreateTriangleMorph(Vector3( stage.GetSize().x*0.5f,stage.GetSize().y*0.15f,0.0f), 100.0f );
     CreateCircleMorph( Vector3( stage.GetSize().x*0.5f,stage.GetSize().y*0.85f,0.0f), 60.0f );
@@ -145,25 +143,25 @@ public:
     k0.Add( 0.0f, Vector3( 0.0f,-radius, 0.0f) );
     k0.Add( 0.5f, Vector3(0.0f, -radius*4.0f, 0.0f));
     k0.Add( 1.0f, Vector3( 0.0f,-radius, 0.0f) );
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(1)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(1)),k0,AlphaFunction::EASE_IN_OUT );
 
     k0 = KeyFrames::New();
     k0.Add( 0.0f, Vector3( radius, 0.0f, 0.0f) );
     k0.Add( 0.5f, Vector3(radius*4.0f,0.0f, 0.0f));
     k0.Add( 1.0f, Vector3( radius,0.0f, 0.0f));
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(4)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(4)),k0,AlphaFunction::EASE_IN_OUT );
 
     k0 = KeyFrames::New();
     k0.Add( 0.0f, Vector3(0.0f,radius, 0.0f) );
     k0.Add( 0.5f, Vector3(0.0f,radius*4.0f, 0.0f));
     k0.Add( 1.0f, Vector3(0.0f,radius, 0.0f) );
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(7)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(7)),k0,AlphaFunction::EASE_IN_OUT );
 
     k0 = KeyFrames::New();
     k0.Add( 0.0f, Vector3( -radius,  0.0f, 0.0f) );
     k0.Add( 0.5f, Vector3(-radius*4.0f,0.0f, 0.0f));
     k0.Add( 1.0f, Vector3( -radius,  0.0f, 0.0f) );
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(10)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(10)),k0,AlphaFunction::EASE_IN_OUT );
 
     animation.AnimateBy( Property( meshActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(90.0f) ), Vector3::ZAXIS ) );
     animation.SetLooping( true );
@@ -246,19 +244,19 @@ public:
     k0.Add( 0.0f,v3  );
     k0.Add( 0.5f, v3 + Vector3(-200.0f,-200.0f,0.0f));
     k0.Add( 1.0f, v3 );
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(1)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(1)),k0,AlphaFunction::EASE_IN_OUT );
 
     k0 = KeyFrames::New();
     k0.Add( 0.0f,v4  );
     k0.Add( 0.5f, v4 + Vector3(200.0f,-200.0f,0.0f));
     k0.Add( 1.0f, v4 );
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(4)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(4)),k0,AlphaFunction::EASE_IN_OUT );
 
     k0 = KeyFrames::New();
     k0.Add( 0.0f,v5  );
     k0.Add( 0.5f, v5 + Vector3(0.0,200.0f,0.0f));
     k0.Add( 1.0f, v5 );
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(7)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(7)),k0,AlphaFunction::EASE_IN_OUT );
     animation.SetLooping( true );
     animation.Play();
   }
@@ -326,25 +324,25 @@ public:
     k0.Add( 0.0f, Vector3( 0.0f,-radius*2.0, 0.0f) );
     k0.Add( 0.5f, Vector3(-radius*2.0, -radius*3.0f, 0.0f));
     k0.Add( 1.0f, Vector3( 0.0f,-radius*2.0, 0.0f) );
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(1)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(1)),k0,AlphaFunction::EASE_IN_OUT );
 
     k0 = KeyFrames::New();
     k0.Add( 0.0f, Vector3( radius*2.0, 0.0f, 0.0f) );
     k0.Add( 0.5f, Vector3(radius*3.0f,-radius*2.0, 0.0f));
     k0.Add( 1.0f, Vector3( radius*2.0,0.0f, 0.0f));
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(4)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(4)),k0,AlphaFunction::EASE_IN_OUT );
 
     k0 = KeyFrames::New();
     k0.Add( 0.0f, Vector3(0.0f,radius*2.0, 0.0f) );
     k0.Add( 0.5f, Vector3(radius*2.0,radius*3.0f, 0.0f));
     k0.Add( 1.0f, Vector3(0.0f,radius*2.0, 0.0f) );
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(7)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(7)),k0,AlphaFunction::EASE_IN_OUT );
 
     k0 = KeyFrames::New();
     k0.Add( 0.0f, Vector3( -radius*2.0,  0.0f, 0.0f) );
     k0.Add( 0.5f, Vector3(-radius*3.0f,radius*2.0, 0.0f));
     k0.Add( 1.0f, Vector3( -radius*2.0,  0.0f, 0.0f) );
-    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(10)),k0,AlphaFunctions::EaseInOutSine );
+    animation.AnimateBetween( Property(shader, shader.GetPointPropertyName(10)),k0,AlphaFunction::EASE_IN_OUT );
 
     animation.AnimateBy( Property( meshActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(-90.0f) ), Vector3::ZAXIS ) );
     animation.SetLooping( true );
@@ -364,7 +362,7 @@ public:
 
 private:
   Application&                mApplication;
-  Toolkit::View               mView;
+  Toolkit::Control            mView;
 };
 
 void RunTest( Application& application )

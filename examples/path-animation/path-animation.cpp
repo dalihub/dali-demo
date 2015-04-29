@@ -444,7 +444,7 @@ public:
     stage.KeyEventSignal().Connect(this, &PathController::OnKeyEvent);
 
     // Create a default view with a default tool bar:
-    Toolkit::View view;                ///< The View instance.
+    Toolkit::Control view;              ///< The View instance.
     Toolkit::ToolBar toolBar;          ///< The View's Toolbar.
     mContentLayer = DemoHelper::CreateView( mApplication,
                                             view,

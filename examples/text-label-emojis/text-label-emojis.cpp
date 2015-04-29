@@ -56,6 +56,7 @@ public:
   void Create( Application& application )
   {
     Stage stage = Stage::GetCurrent();
+    stage.SetBackgroundColor( Color::WHITE );
     stage.KeyEventSignal().Connect(this, &EmojiExample::OnKeyEvent);
 
     mTableView = Toolkit::TableView::New( NUMBER_OF_EMOJIS, 1 );
@@ -99,7 +100,7 @@ public:
       {
         if( mAnimation )
         {
-          mAnimation.AnimateBy( Property(mTableView, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunctions::Linear );
+          mAnimation.AnimateBy( Property(mTableView, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunction::LINEAR );
           mAnimation.Play();
           mLastPoint = localPoint;
         }
