@@ -93,6 +93,14 @@ Geometry CreateGeometry()
   return texturedQuadGeometry;
 }
 
+/**
+ * Sinusoidal curve starting at zero with 2 cycles
+ */
+float AlphaFunctionSineX2(float progress)
+{
+  return 0.5f - cosf(progress * 4.0f * Math::PI) * 0.5f;
+}
+
 } // anonymous namespace
 
 // This example shows how to use a simple mesh
@@ -126,29 +134,28 @@ public:
    */
   void Create( Application& application )
   {
+    // The Init signal is received once (only) during the Application lifetime
+
     Stage stage = Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
     mStageSize = stage.GetSize();
 
-    // The Init signal is received once (only) during the Application lifetime
-
     // Hide the indicator bar
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
-    mImage = ResourceImage::New( MATERIAL_SAMPLE );
+    mImage = ResourceImage::New( MATERIAL_SAMPLE, ResourceImage::ON_DEMAND, Image::NEVER );
     mSampler1 = Sampler::New(mImage, "sTexture");
 
     Image image = ResourceImage::New( MATERIAL_SAMPLE2 );
     mSampler2 = Sampler::New(image, "sTexture");
 
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
-
     mMaterial1 = Material::New( mShader );
     mMaterial1.AddSampler( mSampler1 );
 
     mMaterial2 = Material::New( mShader );
-    mMaterial2.AddSampler( mSampler2);
+    mMaterial2.AddSampler( mSampler2 );
 
     mGeometry = CreateGeometry();
 
@@ -181,7 +188,7 @@ public:
 
     mRenderer2.RegisterProperty( "a-n-other-property", Vector3::ZERO );
     mRenderer2.RegisterProperty( "a-coefficient", 0.008f );
-    fadeColorIndex2 = mRenderer2.RegisterProperty( "another-fade-color", Color::GREEN );
+    fadeColorIndex2 = mRenderer2.RegisterProperty( "another-fade-color", Color::BLUE );
     mRenderer2.AddUniformMapping( fadeColorIndex2, std::string("uFadeColor" ) );
     mRenderer2.SetDepthIndex(0);
 
@@ -192,18 +199,48 @@ public:
     Animation  animation = Animation::New(5);
     KeyFrames keyFrames = KeyFrames::New();
     keyFrames.Add(0.0f, Vector4::ZERO);
-    keyFrames.Add(1.0f, Vector4( 1.0f, 0.0f, 1.0f, 1.0f ));
+    keyFrames.Add(1.0f, Vector4( Color::GREEN ));
 
     KeyFrames keyFrames2 = KeyFrames::New();
     keyFrames2.Add(0.0f, Vector4::ZERO);
-    keyFrames2.Add(1.0f, Color::GREEN);
+    keyFrames2.Add(1.0f, Color::MAGENTA);
 
-    animation.AnimateBetween( Property( mRenderer, fadeColorIndex ), keyFrames, AlphaFunction(AlphaFunction::EASE_OUT_SINE) );
-    animation.AnimateBetween( Property( mRenderer2, fadeColorIndex2 ), keyFrames2, AlphaFunction(AlphaFunction::EASE_IN_SINE) );
+    animation.AnimateBetween( Property( mRenderer, fadeColorIndex ), keyFrames, AlphaFunction(AlphaFunction::SIN) );
+    animation.AnimateBetween( Property( mRenderer2, fadeColorIndex2 ), keyFrames2, AlphaFunction(AlphaFunctionSineX2) );
     animation.SetLooping(true);
     animation.Play();
 
     stage.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));;
+  }
+
+  BufferImage CreateBufferImage()
+  {
+    BufferImage image = BufferImage::New( 200, 200, Pixel::RGB888 );
+    PixelBuffer* pixelBuffer = image.GetBuffer();
+    unsigned int stride = image.GetBufferStride();
+    for( unsigned int x=0; x<200; x++ )
+    {
+      for( unsigned int y=0; y<200; y++ )
+      {
+        PixelBuffer* pixel = pixelBuffer + y*stride + x*3;
+        if( ((int)(x/20.0f))%2 + ((int)(y/20.0f)%2) == 1 )
+        {
+          pixel[0]=255;
+          pixel[1]=0;
+          pixel[2]=0;
+          pixel[3]=255;
+        }
+        else
+        {
+          pixel[0]=0;
+          pixel[1]=0;
+          pixel[2]=255;
+          pixel[3]=255;
+        }
+      }
+    }
+    image.Update();
+    return image;
   }
 
   /**

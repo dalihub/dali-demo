@@ -37,6 +37,7 @@ attribute highp   float   aHue;
 varying   mediump vec2    vTexCoord;
 uniform   mediump mat4    uMvpMatrix;
 uniform   mediump vec3    uSize;
+uniform   mediump float   uPointSize;
 uniform   lowp    vec4    uFadeColor;
 varying   mediump vec3    vVertexColor;
 varying   mediump float   vHue;
@@ -51,11 +52,11 @@ vec3 hsv2rgb(vec3 c)
 void main()
 {
   mediump vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);
-  vertexPosition.xyz *= uSize;
+  vertexPosition.xyz *= (uSize-uPointSize);
   vertexPosition = uMvpMatrix * vertexPosition;
-  vVertexColor = hsv2rgb( vec3( aHue, 0.6, 0.7 ) );
+  vVertexColor = hsv2rgb( vec3( aHue, 0.7, 1.0 ) );
   vHue = aHue;
-  gl_PointSize = 80.0;
+  gl_PointSize = uPointSize;
   gl_Position = vertexPosition;
 }
 );
@@ -85,10 +86,11 @@ Geometry CreateGeometry()
   Vertex polyhedraVertexData[numSides];
   float angle=0;
   float sectorAngle = 2.0f * Math::PI / (float) numSides;
+
   for(unsigned int i=0; i<numSides; ++i)
   {
-    polyhedraVertexData[i].position.x = sinf(angle);
-    polyhedraVertexData[i].position.y = cosf(angle);
+    polyhedraVertexData[i].position.x = sinf(angle)*0.5f;
+    polyhedraVertexData[i].position.y = cosf(angle)*0.5f;
     polyhedraVertexData[i].hue = angle / ( 2.0f * Math::PI);
     angle += sectorAngle;
   }
@@ -167,13 +169,15 @@ public:
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
-    mMeshActor.SetSize(200, 200);
+    mMeshActor.SetSize(400, 400);
 
     Property::Index fadeColorIndex = mMeshActor.RegisterProperty( "fade-color", Color::GREEN );
     mMeshActor.AddUniformMapping( fadeColorIndex, std::string("uFadeColor") );
 
     fadeColorIndex = mRenderer.RegisterProperty( "fade-color", Color::MAGENTA );
+    Property::Index pointSizeIndex = mRenderer.RegisterProperty( "point-size", 80.0f );
     mRenderer.AddUniformMapping( fadeColorIndex, std::string("uFadeColor" ) );
+    mRenderer.AddUniformMapping( pointSizeIndex, std::string("uPointSize" ) );
     mRenderer.SetDepthIndex(0);
 
     mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
