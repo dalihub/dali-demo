@@ -1,0 +1,65 @@
+{
+  "stage": [
+    {
+      "type": "ImageActor",
+      "name": "Image1",
+      "position": [
+        0.40461349487305,
+        0.9150390625,
+        0.0
+      ],
+      "parent-origin": [0.5, 0.5, 0.5],
+      "size": [200, 200, 0],
+      "effect": "Ripple2D",
+      "image": {
+        "filename": "{DALI_IMAGE_DIR}gallery-medium-25.jpg",
+        "width": 200,
+        "height": 80,
+        "load-policy": "IMMEDIATE",
+        "release-policy": "NEVER"
+      },
+      "signals": [
+        {
+          "name": "on-stage",
+          "action": "play",
+          "animation": "Animation_1"
+        }
+      ]
+    }
+  ],
+  "paths": {},
+  "animations": {
+    "Animation_1": {
+      "loop":true,
+      "properties": [
+        {
+          "actor": "Image1",
+          "property": "uTime",
+          "value": 10.0,
+          "alpha-function": "LINEAR",
+          "time-period": {
+            "delay": 0,
+            "duration": 10.0
+          },
+          "gui-builder-timeline-color": "#8dc0da"
+        }
+      ]
+    }
+  },
+  "shader-effects": {
+    "Ripple2D": {
+      "program": {
+        "vertexPrefix": "",
+        "vertex": "void main(void)\n{\n  gl_Position = uProjection * uModelView * vec4(aPosition, 1.0);\n  vTexCoord = aTexCoord;\n}\n\n",
+        "fragmentPrefix": "",
+        "fragment": "precision mediump float;\nuniform float uAmplitude; // 0.02; (< 1)\nuniform float uTime;\nvoid main()\n{\n  highp vec2 textureSize = sTextureRect.zw - sTextureRect.xy;\n  highp vec2 pos = -1.0 + 2.0 * vTexCoord.st/textureSize;\n  highp float len = length(pos);\n  highp vec2 texCoord = vTexCoord.st/textureSize + pos/len * sin( len * 12.0 - uTime * 4.0 ) * uAmplitude; \n  gl_FragColor = texture2D(sTexture, texCoord) * uColor;\n}\n\n\n",
+        "geometry-type": "GEOMETRY_TYPE_IMAGE"
+      },
+      "geometry-hints": "HINT_NONE",
+      "grid-density": 0,
+      "loop": true,
+      "uAmplitude": 0.02,
+      "uTime": 0.0
+    }
+  }
+}
