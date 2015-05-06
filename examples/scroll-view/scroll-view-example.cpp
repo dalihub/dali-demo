@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,8 @@ const char* EFFECT_MODE_NAME[] = {
     "Cube",
     "PageCarousel",
     "PageCube",
-    "PageSpiral"
+    "PageSpiral",
+    "PageWave"
 };
 
 const char * const IMAGE_PATHS[] = {
@@ -201,6 +202,7 @@ public:
     mEffectIcon[ PageCarouselEffect ] = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
     mEffectIcon[ PageCubeEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
     mEffectIcon[ PageSpiralEffect ]   = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIcon[ PageWaveEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
 
     // Create a effect change button. (right of toolbar)
     mEffectChangeButton = Toolkit::PushButton::New();
@@ -274,11 +276,11 @@ private:
 
     // apply new Effect to ScrollView
     ApplyEffectToScrollView();
-
+    unsigned int pageCount(0);
     for( std::vector< Actor >::iterator pageIter = mPages.begin(); pageIter != mPages.end(); ++pageIter)
     {
       Actor page = *pageIter;
-      ApplyEffectToPage( page );
+      ApplyEffectToPage( page, pageCount++ );
 
       unsigned int numChildren = (*pageIter).GetChildCount();
       for(unsigned int i=0; i<numChildren; ++i)
@@ -346,6 +348,11 @@ private:
     Stage stage = Stage::GetCurrent();
     Vector2 stageSize = stage.GetSize();
 
+    RulerPtr rulerX = CreateRuler(snap ? stageSize.width : 0.0f);
+    RulerPtr rulerY = new DefaultRuler;
+    rulerX->SetDomain(RulerDomain(0.0f, stageSize.x * PAGE_COLUMNS, !wrap));
+    rulerY->Disable();
+
     switch( mEffectMode )
     {
       case DepthEffect:
@@ -371,35 +378,95 @@ private:
       }
 
       case PageCarouselEffect:
-      {
-        mScrollViewEffect = ScrollViewPageCarouselEffect::New();
-        mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
-        mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-        mScrollView.SetScrollSnapAlphaFunction(AlphaFunction::EASE_OUT);
-        mScrollView.SetScrollFlickAlphaFunction(AlphaFunction::EASE_OUT);
-        mScrollView.RemoveConstraintsFromChildren();
-        break;
-      }
-
       case PageCubeEffect:
-      {
-        mScrollViewEffect = ScrollViewPageCubeEffect::New();
-        mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
-        mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
-        mScrollView.SetScrollSnapAlphaFunction(AlphaFunction::EASE_OUT);
-        mScrollView.SetScrollFlickAlphaFunction(AlphaFunction::EASE_OUT);
-        mScrollView.RemoveConstraintsFromChildren();
-        break;
-      }
-
       case PageSpiralEffect:
+      case PageWaveEffect:
       {
-        mScrollViewEffect = ScrollViewPageSpiralEffect::New();
+        Dali::Path path = Dali::Path::New();
+        Dali::Property::Array points;
+        points.resize(3);
+        Dali::Property::Array controlPoints;
+        controlPoints.resize(4);
+        Vector3 forward;
+        if( mEffectMode == PageCarouselEffect)
+        {
+
+          points[0] = Vector3( stageSize.x*0.75, 0.0f,  -stageSize.x*0.75f);
+          points[1] = Vector3( 0.0f, 0.0f, 0.0f );
+          points[2] = Vector3( -stageSize.x*0.75f, 0.0f,  -stageSize.x*0.75f);
+          path.SetProperty( Path::Property::POINTS, points );
+
+          controlPoints[0] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
+          controlPoints[1] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
+          controlPoints[2] = Vector3(-stageSize.x*0.5f, 0.0f, 0.0f );
+          controlPoints[3] = Vector3(-stageSize.x*0.5f, 0.0f, 0.0f );
+          path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
+
+          forward = Vector3::ZERO;
+        }
+        else if( mEffectMode == PageCubeEffect)
+        {
+          points[0] = Vector3( stageSize.x*0.5, 0.0f,  stageSize.x*0.5f);
+          points[1] = Vector3( 0.0f, 0.0f, 0.0f );
+          points[2] = Vector3( -stageSize.x*0.5f, 0.0f, stageSize.x*0.5f);
+          path.SetProperty( Path::Property::POINTS, points );
+
+          controlPoints[0] = Vector3( stageSize.x*0.5f, 0.0f, stageSize.x*0.3f );
+          controlPoints[1] = Vector3( stageSize.x*0.3f, 0.0f, 0.0f );
+          controlPoints[2] = Vector3(-stageSize.x*0.3f, 0.0f, 0.0f );
+          controlPoints[3] = Vector3(-stageSize.x*0.5f, 0.0f,  stageSize.x*0.3f );
+          path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
+
+          forward = Vector3(-1.0f,0.0f,0.0f);
+        }
+        else if( mEffectMode == PageSpiralEffect)
+        {
+          points[0] = Vector3( stageSize.x*0.5, 0.0f,  -stageSize.x*0.5f);
+          points[1] = Vector3( 0.0f, 0.0f, 0.0f );
+          points[2] = Vector3( -stageSize.x*0.5f, 0.0f, -stageSize.x*0.5f);
+          path.SetProperty( Path::Property::POINTS, points );
+
+          controlPoints[0] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
+          controlPoints[1] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
+          controlPoints[2] = Vector3(-stageSize.x*0.5f, 0.0f, 0.0f );
+          controlPoints[3] = Vector3(-stageSize.x*0.5f, 0.0f, 0.0f );
+          path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
+
+          forward = Vector3(-1.0f,0.0f,0.0f);
+        }
+        else if( mEffectMode == PageWaveEffect)
+        {
+          points[0] = Vector3( stageSize.x, 0.0f,  -stageSize.x);
+          points[1] = Vector3( 0.0f, 0.0f, 0.0f );
+          points[2] = Vector3( -stageSize.x, 0.0f, -stageSize.x);
+          path.SetProperty( Path::Property::POINTS, points );
+
+          controlPoints[0] = Vector3( 0.0f, 0.0f, -stageSize.x );
+          controlPoints[1] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
+          controlPoints[2] = Vector3( -stageSize.x*0.5f, 0.0f, 0.0f);
+          controlPoints[3] = Vector3(0.0f, 0.0f,-stageSize.x  );
+          path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
+
+          forward = Vector3(-1.0f,0.0f,0.0f);
+        }
+
+        mScrollViewEffect = ScrollViewPagePathEffect::New(path, forward,Toolkit::ScrollView::Property::SCROLL_FINAL_X, Vector3(stageSize.x,stageSize.y,0.0f),PAGE_COLUMNS);
         mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
         mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
         mScrollView.SetScrollSnapAlphaFunction(AlphaFunction::EASE_OUT);
         mScrollView.SetScrollFlickAlphaFunction(AlphaFunction::EASE_OUT);
         mScrollView.RemoveConstraintsFromChildren();
+
+        rulerX = CreateRuler(snap ? stageSize.width * 0.5f : 0.0f);
+        if( wrap )
+        {
+          rulerX->SetDomain(RulerDomain(0.0f, stageSize.x * 0.5f * PAGE_COLUMNS, !wrap));
+        }
+        else
+        {
+          rulerX->SetDomain(RulerDomain(0.0f, stageSize.x*0.5f* (PAGE_COLUMNS+1), !wrap));
+        }
+
         break;
       }
 
@@ -409,20 +476,17 @@ private:
       }
     }
 
+    unsigned int currentPage = mScrollView.GetCurrentPage();
     if( mScrollViewEffect )
     {
       mScrollView.ApplyEffect(mScrollViewEffect);
     }
 
     mScrollView.SetWrapMode(wrap);
-
-    RulerPtr rulerX = CreateRuler(snap ? stageSize.width : 0.0f);
-    RulerPtr rulerY = new DefaultRuler;
-    rulerX->SetDomain(RulerDomain(0.0f, stageSize.x * PAGE_COLUMNS, !wrap));
-    rulerY->Disable();
-
     mScrollView.SetRulerX( rulerX );
     mScrollView.SetRulerY( rulerY );
+
+    mScrollView.ScrollTo( currentPage, 0.0f );
   }
 
   /**
@@ -449,7 +513,7 @@ private:
     *
     * @param[in] page The page Actor to apply effect to.
     */
-   void ApplyEffectToPage(Actor page)
+   void ApplyEffectToPage(Actor page, unsigned int pageOrder )
    {
      page.RemoveConstraints();
      page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -457,23 +521,12 @@ private:
      switch( mEffectMode )
      {
        case PageCarouselEffect:
-       {
-         ScrollViewPageCarouselEffect effect = ScrollViewPageCarouselEffect::DownCast( mScrollViewEffect );
-         effect.ApplyToPage( page );
-         break;
-       }
-
        case PageCubeEffect:
-       {
-         ScrollViewPageCubeEffect effect = ScrollViewPageCubeEffect::DownCast( mScrollViewEffect );
-         effect.ApplyToPage( page, ANGLE_SWING_3DEFFECT );
-         break;
-       }
-
        case PageSpiralEffect:
+       case PageWaveEffect:
        {
-         ScrollViewPageSpiralEffect effect = ScrollViewPageSpiralEffect::DownCast( mScrollViewEffect );
-         effect.ApplyToPage( page, ANGLE_SWING_3DEFFECT );
+         ScrollViewPagePathEffect effect = ScrollViewPagePathEffect::DownCast( mScrollViewEffect );
+         effect.ApplyToPage( page, pageOrder );
          break;
        }
 
@@ -678,6 +731,7 @@ private:
     PageCarouselEffect,                                 ///< Page carousel effect
     PageCubeEffect,                                     ///< Page cube effect
     PageSpiralEffect,                                   ///< Page spiral effect
+    PageWaveEffect,                                     ///< Page wave effect
 
     Total
   };
