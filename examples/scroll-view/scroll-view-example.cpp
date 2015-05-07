@@ -630,7 +630,7 @@ private:
    * note this state (mScrolling = true)
    * @param[in] position Current Scroll Position
    */
-  void OnScrollStarted( const Vector3& position )
+  void OnScrollStarted( const Vector2& position )
   {
     mScrolling = true;
   }
@@ -640,7 +640,7 @@ private:
    * note this state (mScrolling = false)
    * @param[in] position Current Scroll Position
    */
-  void OnScrollCompleted( const Vector3& position )
+  void OnScrollCompleted( const Vector2& position )
   {
     mScrolling = false;
   }

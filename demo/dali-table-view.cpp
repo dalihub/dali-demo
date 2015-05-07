@@ -140,7 +140,7 @@ public:
 
     // Bubbles X position moves parallax to horizontal
     // panning by a scale factor unique to each bubble.
-    position.x = mInitialX + ( inputs[0]->GetVector3().x * mScale );
+    position.x = mInitialX + ( inputs[0]->GetVector2().x * mScale );
   }
 
 private:
@@ -637,14 +637,14 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
   }
 }
 
-void DaliTableView::OnScrollStart( const Dali::Vector3& position )
+void DaliTableView::OnScrollStart( const Dali::Vector2& position )
 {
   mScrolling = true;
 
   PlayAnimation();
 }
 
-void DaliTableView::OnScrollComplete( const Dali::Vector3& position )
+void DaliTableView::OnScrollComplete( const Dali::Vector2& position )
 {
   mScrolling = false;
 

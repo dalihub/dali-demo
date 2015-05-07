@@ -691,8 +691,8 @@ public:
 
     // Apply new shader-effects.
     // Move Y to origin incase we came from an effect where user could free pan in y axis.
-    const Vector3 currentScrollPosition(mScrollView.GetCurrentScrollPosition());
-    mScrollView.ScrollTo(Vector3(currentScrollPosition.x, 0.0f, 0.0f));
+    const Vector2 currentScrollPosition(mScrollView.GetCurrentScrollPosition());
+    mScrollView.ScrollTo(Vector2(currentScrollPosition.x, 0.0f));
 
     switch(type)
     {

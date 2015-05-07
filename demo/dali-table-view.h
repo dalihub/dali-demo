@@ -217,14 +217,14 @@ private: // Application callbacks & implementation
    *
    * @param[in] position The current position of the scroll contents.
    */
-  void OnScrollStart(const Dali::Vector3& position);
+  void OnScrollStart(const Dali::Vector2& position);
 
   /**
    * Signal emitted when scrolling has completed.
    *
    * @param[in] position The current position of the scroll contents.
    */
-  void OnScrollComplete(const Dali::Vector3& position);
+  void OnScrollComplete(const Dali::Vector2& position);
 
   /**
    * Signal emitted when any Sensitive Actor has been touched
