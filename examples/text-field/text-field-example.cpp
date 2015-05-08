@@ -121,6 +121,7 @@ public:
     mField.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mField.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
     mField.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
+    mField.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
     mField.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, stageSize.width - BORDER_WIDTH*2, stageSize.height - BORDER_WIDTH*2 ) );
 
     container.Add( mField );
