@@ -17,7 +17,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/public-api/text-abstraction/text-abstraction.h>
 #include <iostream>
 
 // INTERNAL INCLUDES
