@@ -384,9 +384,9 @@ private:
       {
         Dali::Path path = Dali::Path::New();
         Dali::Property::Array points;
-        points.resize(3);
+        points.Resize(3);
         Dali::Property::Array controlPoints;
-        controlPoints.resize(4);
+        controlPoints.Resize(4);
         Vector3 forward;
         if( mEffectMode == PageCarouselEffect)
         {

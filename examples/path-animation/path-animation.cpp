@@ -79,7 +79,7 @@ public:
     float mark = -1.0f;
     for(unsigned short i(0); i<21; ++i )
     {
-      marks.push_back( mark );
+      marks.PushBack( mark );
       mark += 0.1f;
     }
 
