@@ -275,7 +275,7 @@ private:
     // apply new Effect to ScrollView
     ApplyEffectToScrollView();
 
-    for(ActorIter pageIter = mPages.begin(); pageIter != mPages.end(); ++pageIter)
+    for( std::vector< Actor >::iterator pageIter = mPages.begin(); pageIter != mPages.end(); ++pageIter)
     {
       Actor page = *pageIter;
       ApplyEffectToPage( page );
@@ -666,7 +666,7 @@ private:
   ScrollView mScrollView;                               ///< ScrollView UI Component
   bool mScrolling;                                      ///< ScrollView scrolling state (true = scrolling, false = stationary)
   ScrollViewEffect mScrollViewEffect;                   ///< ScrollView Effect instance.
-  ActorContainer mPages;                                ///< Keeps track of all the pages for applying effects.
+  std::vector< Actor > mPages;                          ///< Keeps track of all the pages for applying effects.
 
   /**
    * Enumeration of different effects this scrollview can operate under.

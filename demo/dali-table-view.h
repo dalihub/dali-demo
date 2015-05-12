@@ -410,9 +410,9 @@ private:
   Dali::Toolkit::Popup            mVersionPopup;             ///< Displays DALi library version information
   Dali::Vector3                   mButtonsPageRelativeSize;  ///< Size of a buttons page relative to the stage size
 
-  Dali::ActorContainer            mPages;                    ///< List of pages.
-  Dali::ActorContainer            mTableViewImages;          ///< Offscreen render of tableview
-  Dali::ActorContainer            mBackgroundActors;         ///< List of background actors used in the effect
+  std::vector< Dali::Actor >      mPages;                    ///< List of pages.
+  std::vector< Dali::Actor >      mTableViewImages;          ///< Offscreen render of tableview
+  std::vector< Dali::Actor >      mBackgroundActors;         ///< List of background actors used in the effect
   AnimationList                   mBackgroundAnimations;     ///< List of background bubble animations
   ExampleList                     mExampleList;              ///< List of examples.
   ExampleMap                      mExampleMap;               ///< Map LUT for examples.

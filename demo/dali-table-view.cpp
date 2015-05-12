@@ -348,7 +348,7 @@ void DaliTableView::Initialize( Application& application )
 
 void DaliTableView::ApplyCubeEffectToActors()
 {
-  for( ActorIter pageIter = mPages.begin(); pageIter != mPages.end(); ++pageIter )
+  for( std::vector< Actor >::iterator pageIter = mPages.begin(); pageIter != mPages.end(); ++pageIter )
   {
     Actor page = *pageIter;
 
