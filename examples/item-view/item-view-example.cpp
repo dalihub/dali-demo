@@ -103,16 +103,6 @@ const unsigned int IMAGE_WIDTH = 256;
 const unsigned int IMAGE_HEIGHT = 256;
 const unsigned int NUM_IMAGE_PER_ROW_IN_ATLAS = 8;
 
-AlphaFunction ALPHA_FUNCTIONS[] = { AlphaFunction(AlphaFunction::LINEAR),
-                                    AlphaFunction(AlphaFunction::EASE_IN),
-                                    AlphaFunction(AlphaFunction::EASE_OUT) };
-
-const unsigned int NUM_ALPHA_FUNCTIONS = sizeof(ALPHA_FUNCTIONS) / sizeof(AlphaFunction);
-
-const char* ALPHA_FUNCTIONS_TEXT[] = { "Linear",
-                                       "EaseIn",
-                                       "EaseOut" };
-
 const char* BACKGROUND_IMAGE( "" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* EDIT_IMAGE( DALI_IMAGE_DIR "icon-edit.png" );
@@ -138,20 +128,10 @@ const float ITEM_IMAGE_BORDER_RIGHT  = 13.0f;
 const float ITEM_IMAGE_BORDER_TOP    = 13.0f;
 const float ITEM_IMAGE_BORDER_BOTTOM = 13.0f;
 
-const unsigned int DEPTH_LAYOUT_ROWS_PORTRAIT = 26;
-const unsigned int DEPTH_LAYOUT_ROWS_LANDSCAPE = 16;
-const float DEPTH_LAYOUT_TILT_ANGLE_PORTRAIT = 25.0f;
-const float DEPTH_LAYOUT_TILT_ANGLE_LANDSCAPE = 21.0f;
-const float DEPTH_LAYOUT_ROW_SPACING_FACTOR = 0.1f;
 const float DEPTH_LAYOUT_ITEM_SIZE_FACTOR_PORTRAIT = 1.0f;
 const float DEPTH_LAYOUT_ITEM_SIZE_FACTOR_LANDSCAPE = 0.8f;
-const float DEPTH_LAYOUT_BOTTOM_MARGIN_FACTOR_PORTRAIT = 0.2f;
-const float DEPTH_LAYOUT_BOTTOM_MARGIN_FACTOR_LANDSCAPE = 0.1f;
+const float DEPTH_LAYOUT_COLUMNS = 3.0f;
 
-const float SPIRAL_LAYOUT_REVOLUTION_NUMBER_PORTRAIT = 4.5f;
-const float SPIRAL_LAYOUT_REVOLUTION_NUMBER_LANDSCAPE = 2.5f;
-
-const float DEPTH_LAYOUT_HEIGHT_SCALE = 20.0f;
 const float MIN_SWIPE_DISTANCE = 15.0f;
 const float MIN_SWIPE_SPEED = 5.0f;
 
@@ -162,33 +142,23 @@ const float LABEL_TEXT_SIZE_Y = 20.0f;
 
 const Vector3 INITIAL_OFFSCREEN_POSITION( 1000.0f, 0, -1000.0f );
 
-static Vector3 DepthLayoutItemSizeFunctionPortrait(unsigned int numberOfColumns, float layoutWidth)
+static Vector3 DepthLayoutItemSizeFunctionPortrait( float layoutWidth )
 {
-  float width = (layoutWidth / static_cast<float>(numberOfColumns + 1)) * DEPTH_LAYOUT_ITEM_SIZE_FACTOR_PORTRAIT;
+  float width = ( layoutWidth / ( DEPTH_LAYOUT_COLUMNS + 1.0f ) ) * DEPTH_LAYOUT_ITEM_SIZE_FACTOR_PORTRAIT;
 
   // 1x1 aspect ratio
   return Vector3(width, width, width);
 }
 
-static Vector3 DepthLayoutItemSizeFunctionLandscape(unsigned int numberOfColumns, float layoutWidth)
+static Vector3 DepthLayoutItemSizeFunctionLandscape( float layoutWidth )
 {
-  float width = (layoutWidth / static_cast<float>(numberOfColumns + 1)) * DEPTH_LAYOUT_ITEM_SIZE_FACTOR_LANDSCAPE;
+  float width = ( layoutWidth / ( DEPTH_LAYOUT_COLUMNS + 1.0f ) ) * DEPTH_LAYOUT_ITEM_SIZE_FACTOR_LANDSCAPE;
 
   // 1x1 aspect ratio
   return Vector3(width, width, width);
 }
 
-static float DepthLayoutBottomMarginFunctionPortrait(float layoutHeight)
-{
-  return layoutHeight * DEPTH_LAYOUT_BOTTOM_MARGIN_FACTOR_PORTRAIT;
-}
-
-static float DepthLayoutBottomMarginFunctionLandscape(float layoutHeight)
-{
-  return layoutHeight * DEPTH_LAYOUT_BOTTOM_MARGIN_FACTOR_LANDSCAPE;
-}
-
-}
+} // unnamed namespace
 
 /**
  * This example shows how to use ItemView UI control.
@@ -219,11 +189,9 @@ public:
   ItemViewExample( Application& application )
   : mApplication( application ),
     mMode( MODE_NORMAL ),
-    mMenuShown( false ),
     mOrientation( 0 ),
     mCurrentLayout( SPIRAL_LAYOUT ),
-    mDurationSeconds( 1.0f ),
-    mAlphaFuncIndex( 0u )
+    mDurationSeconds( 0.25f )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &ItemViewExample::OnInit);
@@ -321,9 +289,9 @@ public:
     stage.Add( mItemView );
 
     // Create the layouts
-    mSpiralLayout = SpiralLayout::New();
-    mDepthLayout = DepthLayout::New();
-    mGridLayout = GridLayout::New();
+    mSpiralLayout = DefaultItemLayout::New( DefaultItemLayout::SPIRAL );
+    mDepthLayout = DefaultItemLayout::New( DefaultItemLayout::DEPTH );
+    mGridLayout = DefaultItemLayout::New( DefaultItemLayout::GRID );
 
     // Add the layouts to item view
     mItemView.AddLayout(*mSpiralLayout);
@@ -334,7 +302,7 @@ public:
     mItemView.SetMinimumSwipeSpeed(MIN_SWIPE_SPEED);
 
     // Activate the spiral layout
-    UseLayout(mCurrentLayout, 0.0f);
+    SetLayout( mCurrentLayout );
     mItemView.SetKeyboardFocusable( true );
     KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &ItemViewExample::OnKeyboardPreFocusChange );
 
@@ -357,49 +325,45 @@ public:
   }
 
   /**
+   * Animate to a different layout
+   */
+  void ChangeLayout()
+  {
+    Animation animation = Animation::New( mDurationSeconds );
+    animation.FinishedSignal().Connect( this, &ItemViewExample::AnimationFinished );
+    animation.AnimateTo( Property( mItemView, Actor::Property::COLOR_ALPHA ), 0.0f );
+    animation.Play();
+  }
+
+  void AnimationFinished( Animation& )
+  {
+    SetLayout( mCurrentLayout );
+
+    Animation animation = Animation::New( mDurationSeconds );
+    animation.AnimateTo( Property( mItemView, Actor::Property::COLOR_ALPHA ), 1.0f );
+    animation.Play();
+  }
+
+  /**
    * Switch to a different item view layout
    */
-  void UseLayout(int layoutId, float duration)
+  void SetLayout( int layoutId )
   {
     // Set the new orientation to the layout
     mItemView.GetLayout(layoutId)->SetOrientation(static_cast<ControlOrientation::Type>(mOrientation / 90));
 
     Vector2 stageSize = Stage::GetCurrent().GetSize();
 
-    if(layoutId == SPIRAL_LAYOUT)
-    {
-      mSpiralLayout->SetRevolutionDistance(stageSize.height / Stage::GetCurrent().GetDpi().y * 45.0f);
-    }
-
-    if(layoutId == GRID_LAYOUT)
-    {
-      // Set up the grid layout according to the new orientation
-      float layoutWidth = Toolkit::IsHorizontal(mGridLayout->GetOrientation()) ? stageSize.height : stageSize.width;
-      float gridItemSize = (layoutWidth / mGridLayout->GetNumberOfColumns()) * 0.5f;
-      mGridLayout->SetScrollSpeedFactor(mGridLayout->GetNumberOfColumns() / gridItemSize);
-
-      float toolbarHeight = mToolBar.GetCurrentSize().y;
-      mGridLayout->SetTopMargin(toolbarHeight + mGridLayout->GetRowSpacing());
-    }
-
     if(layoutId == DEPTH_LAYOUT)
     {
       // Set up the depth layout according to the new orientation
       if(Toolkit::IsVertical(mDepthLayout->GetOrientation()))
       {
-        mDepthLayout->SetRowSpacing(stageSize.height * DEPTH_LAYOUT_ROW_SPACING_FACTOR);
-        mDepthLayout->SetNumberOfRows(DEPTH_LAYOUT_ROWS_PORTRAIT);
-        mDepthLayout->SetTiltAngle( Degree( DEPTH_LAYOUT_TILT_ANGLE_PORTRAIT - mDepthLayout->GetNumberOfColumns() ) );
-        mDepthLayout->SetItemSizeFunction(DepthLayoutItemSizeFunctionPortrait);
-        mDepthLayout->SetBottomMarginFunction(DepthLayoutBottomMarginFunctionPortrait);
+        mDepthLayout->SetItemSize( DepthLayoutItemSizeFunctionPortrait( stageSize.width ) );
       }
       else
       {
-        mDepthLayout->SetRowSpacing(stageSize.width * DEPTH_LAYOUT_ROW_SPACING_FACTOR);
-        mDepthLayout->SetNumberOfRows(DEPTH_LAYOUT_ROWS_LANDSCAPE);
-        mDepthLayout->SetTiltAngle( Degree( DEPTH_LAYOUT_TILT_ANGLE_LANDSCAPE - mDepthLayout->GetNumberOfColumns() ) );
-        mDepthLayout->SetItemSizeFunction(DepthLayoutItemSizeFunctionLandscape);
-        mDepthLayout->SetBottomMarginFunction(DepthLayoutBottomMarginFunctionLandscape);
+        mDepthLayout->SetItemSize( DepthLayoutItemSizeFunctionLandscape( stageSize.height ) );
       }
     }
 
@@ -407,7 +371,7 @@ public:
     mItemView.SetAnchoring(layoutId == DEPTH_LAYOUT);
 
     // Activate the layout
-    mItemView.ActivateLayout(layoutId, Vector3(stageSize.x, stageSize.y, stageSize.x), duration);
+    mItemView.ActivateLayout( layoutId, Vector3(stageSize.x, stageSize.y, stageSize.x), 0.0f );
   }
 
   /**
@@ -424,7 +388,7 @@ public:
       // Remember orientation
       mOrientation = angle;
 
-      UseLayout(mCurrentLayout, mDurationSeconds);
+      SetLayout( mCurrentLayout );
     }
   }
 
@@ -433,7 +397,7 @@ public:
     // Switch to the next layout
     mCurrentLayout = (mCurrentLayout + 1) % mItemView.GetLayoutCount();
 
-    UseLayout(mCurrentLayout, mDurationSeconds);
+    ChangeLayout();
 
     SetLayoutTitle();
     SetLayoutImage();
@@ -973,100 +937,6 @@ private:
     mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
-  void ShowMenu()
-  {
-    Stage stage = Stage::GetCurrent();
-    const float popupWidth = stage.GetSize().x * 0.75f;
-
-    mMenu = Toolkit::Popup::New();
-    mMenu.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
-    mMenu.SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
-    mMenu.SetSize( popupWidth, MENU_OPTION_HEIGHT * 2 );
-    mMenu.OutsideTouchedSignal().Connect( this, &ItemViewExample::HideMenu );
-
-    TableView tableView = TableView::New( 0, 0 );
-    tableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mMenu.Add( tableView );
-
-    Slider slider = Slider::New();
-    slider.SetProperty( Slider::Property::LOWER_BOUND, 0.0f );
-    slider.SetProperty( Slider::Property::UPPER_BOUND, 3.0f );
-    slider.SetProperty( Slider::Property::VALUE, mDurationSeconds );
-    slider.SetProperty( Slider::Property::VALUE_PRECISION, 2 );
-    slider.SetProperty( Slider::Property::SHOW_POPUP, true );
-    slider.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    slider.ValueChangedSignal().Connect( this, &ItemViewExample::SliderValueChange );
-    tableView.AddChild( slider, TableView::CellPosition( 0, 0 ) );
-
-    TextLabel text = TextLabel::New( "Duration" );
-    text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
-    text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    text.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
-    text.SetSize( Vector2( 0.0f, LABEL_TEXT_SIZE_Y ) );
-    slider.Add( text );
-
-    Actor textContainer = Actor::New();
-    textContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mAlphaFunctionText = TextLabel::New( ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex] );
-    mAlphaFunctionText.SetAnchorPoint( ParentOrigin::CENTER );
-    mAlphaFunctionText.SetParentOrigin( ParentOrigin::CENTER );
-    textContainer.Add( mAlphaFunctionText );
-    tableView.AddChild( textContainer, TableView::CellPosition( 1, 0 ) );
-
-    mTapDetector = TapGestureDetector::New();
-    mTapDetector.Attach(mAlphaFunctionText);
-    mTapDetector.DetectedSignal().Connect( this, &ItemViewExample::ChangeAlphaFunctionOnTap );
-
-    text = TextLabel::New( "Alpha Function" );
-    text.SetAnchorPoint( ParentOrigin::TOP_LEFT );
-    text.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    text.SetSize( 0.0f, LABEL_TEXT_SIZE_Y );
-    textContainer.Add( text );
-
-    mMenu.Show();
-    mMenuShown = true;
-  }
-
-  bool SliderValueChange( Toolkit::Slider slider, float value )
-  {
-    mDurationSeconds = value;
-
-    return true;
-  }
-
-  void ChangeAlphaFunctionOnTap( Actor actor, const TapGesture& tap )
-  {
-    if( NUM_ALPHA_FUNCTIONS <= ++mAlphaFuncIndex )
-    {
-      mAlphaFuncIndex = 0;
-    }
-
-    if( mAlphaFunctionText )
-    {
-      mAlphaFunctionText.SetProperty( TextLabel::Property::TEXT, std::string(ALPHA_FUNCTIONS_TEXT[mAlphaFuncIndex]) );
-    }
-
-    if( mItemView )
-    {
-      mItemView.GetActiveLayout()->SetAlphaFunction( ALPHA_FUNCTIONS[mAlphaFuncIndex] );
-    }
-  }
-
-  void HideMenu()
-  {
-    mTapDetector.Reset();
-
-    if( mMenu )
-    {
-      mMenu.Hide();
-      mMenu.Reset();
-    }
-
-    mMenuShown = false;
-  }
-
   /**
    * Main key event handler
    */
@@ -1074,27 +944,9 @@ private:
   {
     if(event.state == KeyEvent::Down)
     {
-      if( IsKey( event, DALI_KEY_MENU ) )
+      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
       {
-        if( mMenuShown )
-        {
-          HideMenu();
-        }
-        else
-        {
-          ShowMenu();
-        }
-      }
-      else if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
-      {
-        if( mMenuShown )
-        {
-          HideMenu();
-        }
-        else
-        {
-          mApplication.Quit();
-        }
+        mApplication.Quit();
       }
     }
   }
@@ -1103,7 +955,6 @@ private:
 
   Application& mApplication;
   Mode mMode;
-  bool mMenuShown;
 
   Toolkit::Control mView;
   unsigned int mOrientation;
@@ -1117,11 +968,9 @@ private:
   unsigned int mCurrentLayout;
   float mDurationSeconds;
 
-  SpiralLayoutPtr mSpiralLayout;
-  DepthLayoutPtr mDepthLayout;
-  GridLayoutPtr mGridLayout;
-
-  Toolkit::Popup mMenu;
+  ItemLayoutPtr mSpiralLayout;
+  ItemLayoutPtr mDepthLayout;
+  ItemLayoutPtr mGridLayout;
 
   TapGestureDetector mTapDetector;
   Toolkit::PushButton mLayoutButton;
@@ -1129,8 +978,6 @@ private:
   Toolkit::PushButton mInsertButton;
   Toolkit::PushButton mReplaceButton;
 
-  unsigned int mAlphaFuncIndex;
-  TextLabel mAlphaFunctionText;
   BufferImage mWhiteImage;
 };
 

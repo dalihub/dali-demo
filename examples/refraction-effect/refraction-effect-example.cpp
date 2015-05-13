@@ -21,6 +21,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <limits>
 
 using namespace Dali;
 
