@@ -293,8 +293,6 @@ public:
 
     mItemView.AddLayout( *mLayout );
 
-    Vector3 size(stage.GetSize());
-    mItemView.ActivateLayout(0, size, 0.0f/*immediate*/);
     mItemView.SetKeyboardFocusable( true );
 
     mFiles.clear();
@@ -362,9 +360,9 @@ public:
 
     SetTitle("Select");
 
-    // Itemview renderes the previous items unless its scrolled. Not sure why at the moment so we force a scroll
-    mItemView.ScrollToItem(0, 0);
-
+    // Activate the layout
+    Vector3 size(stage.GetSize());
+    mItemView.ActivateLayout(0, size, 0.0f/*immediate*/);
   }
 
   void ExitSelection()
