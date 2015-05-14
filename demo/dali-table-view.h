@@ -245,17 +245,12 @@ private: // Application callbacks & implementation
   /**
    * Apply the cube effect to all the page actors
    */
-  void ApplyCubeEffectToActors();
+  void ApplyCubeEffectToPages();
 
   /**
    * Setup the inner cube effect
    */
   void SetupInnerPageCubeEffect();
-
-  /**
-   * Apply the cube effect to an actor
-   */
-  void ApplyCubeEffectToActor( Dali::Actor actor );
 
   /**
    * Apply a shader effect to a table tile

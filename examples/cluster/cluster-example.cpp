@@ -38,7 +38,7 @@ const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "Clusters" );
 const char * const LAYOUT_NONE_IMAGE( DALI_IMAGE_DIR "icon-cluster-none.png" );
-const char * const LAYOUT_WOBBLE_IMAGE( DALI_IMAGE_DIR "icon-cluster-wobble.png" );
+const char * const LAYOUT_MOTION_BLUR_IMAGE( DALI_IMAGE_DIR "icon-cluster-wobble.png" );
 const char * const LAYOUT_CAROUSEL_IMAGE( DALI_IMAGE_DIR "icon-cluster-carousel.png" );
 const char * const LAYOUT_SPHERE_IMAGE( DALI_IMAGE_DIR "icon-cluster-sphere.png" );
 
@@ -134,9 +134,6 @@ const float CLUSTER_GROUP_DELAY_BOTTOM = 0.0f;              ///< Delay for botto
 const float CLUSTER_COLUMN_INDENT = 0.1f;                   ///< Left Indentation in screen coordinates.
 const float CLUSTER_ROW_INDENT = 0.13f;                     ///< Top Indentation in screen coordinates.
 
-const Vector3 SHEAR_EFFECT_ANCHOR_POINT(0.5f, 1.0f, 0.5f);  ///< Anchor Point used for the shear effect (extends outside of Cluster)
-const float SHEAR_EFFECT_MAX_OVERSHOOT = 30.0f;             ///< Max Overshoot for shear effect (in degrees).
-
 const float UI_MARGIN = 10.0f;                              ///< Screen Margin for placement of UI buttons
 
 const float CAROUSEL_EFFECT_RADIUS = 500.0f;                ///< In Carousel Effect mode: Radius of carousel (Z peak depth)
@@ -152,7 +149,7 @@ const float SPHERE_EFFECT_VERTICAL_DOMAIN = 0.15f;          ///< In Sphere Effec
 enum ExampleEffectType
 {
   NO_EFFECT,
-  WOBBLE_EFFECT,
+  MOTION_BLUR_EFFECT,
   CAROUSEL_EFFECT,
   SPHERE_EFFECT,
   TOTAL_EFFECTS
@@ -161,10 +158,10 @@ enum ExampleEffectType
 /**
  * List of effect type names that appear on the Effect button.
  */
-const char* EXAMPLE_EFFECT_LABEL[] = { "NONE",
-                                       "WOBBLE",
-                                       "CAROUSEL",
-                                       "SPHERE",
+const char* EXAMPLE_EFFECT_LABEL[] = { "None",
+                                       "Motion Blur",
+                                       "Carousel",
+                                       "Sphere",
                                      };
 
 /**
@@ -202,96 +199,6 @@ struct CarouselEffectOrientationConstraint
 
   Vector2 mAngleSweep;
 
-};
-
-/**
- * ShearEffectConstraint
- *
- * Constrains ShearEffect's tilt to be a function of scrollview's
- * horizontal overshoot amount.
- */
-struct ShearEffectConstraint
-{
-  /**
-   * @param[in] stageSize The stage size (not subject to orientation)
-   * @param[in] maxOvershoot Maximum amount overshoot can affect shear.
-   * @param[in] componentMask Whether constraint should take the X shear
-   * or the Y shear component.
-   */
-  ShearEffectConstraint(Vector2 stageSize, float maxOvershoot, Vector2 componentMask)
-  : mStageSize(stageSize),
-    mMaxOvershoot(maxOvershoot),
-    mComponentMask(componentMask)
-  {
-  }
-
-  /**
-   * @param[in,out] current The current shear effect Angle.
-   * @param[in] inputs Contains the overshoot property from ScrollView and the orientation of the view e.g. Portrait, Landscape.
-   * @return angle to provide ShearShaderEffect
-   */
-  void operator()( float& current, const PropertyInputContainer& inputs )
-  {
-    float f = inputs[0]->GetVector3().x;
-
-    float mag = fabsf(f);
-    float halfWidth = mStageSize.x * 0.5f;
-
-    // inverse exponential tail-off
-    float overshoot = 1.0f - halfWidth / (halfWidth + mag);
-    if (f > 0.0f)
-    {
-      overshoot = -overshoot;
-    }
-
-    // Channel this shear value into either the X or Y axis depending on
-    // the component mask passed in.
-    Vector3 axis;
-    Radian angle;
-    inputs[1]->GetQuaternion().ToAxisAngle( axis, angle );
-    Vector2 direction( cosf(angle), sinf(angle) );
-    float yield = direction.x * mComponentMask.x + direction.y * mComponentMask.y;
-
-    current = overshoot * mMaxOvershoot * yield;
-  }
-
-  Vector2 mStageSize;
-  float mMaxOvershoot;
-  Vector2 mComponentMask;
-};
-
-/**
- * ShearEffectCenterConstraint
- *
- * Sets ShearEffect's center to be a function of the
- * screen orientation (portrait or landscape).
- */
-struct ShearEffectCenterConstraint
-{
-  /**
-   * @param[in] stageSize The stage size (not subject to orientation)
-   * @param[in] center Shear Center position based on initial orientation.
-   */
-  ShearEffectCenterConstraint(Vector2 stageSize, Vector2 center)
-  : mStageSize(stageSize),
-    mCenter(center)
-  {
-  }
-
-  /**
-   * @param[in,out] current The current center
-   * @param[in] inputs Contains the current view size
-   * @return vector to provide ShearShaderEffect
-   */
-  void operator()( Vector2& current, const PropertyInputContainer& inputs )
-  {
-    float f = inputs[0]->GetVector3().width / mStageSize.width;
-    current.x = f * mCenter.x;
-    current.y = mCenter.y;
-  }
-
-  Vector2 mStageSize;
-  Vector2 mCenter;
 };
 
 /**
@@ -470,7 +377,7 @@ public:
 
     // Create a effect toggle button. (right of toolbar)
     mLayoutButtonImages[ NO_EFFECT ] = ResourceImage::New( LAYOUT_NONE_IMAGE );
-    mLayoutButtonImages[ WOBBLE_EFFECT ] = ResourceImage::New( LAYOUT_WOBBLE_IMAGE );
+    mLayoutButtonImages[ MOTION_BLUR_EFFECT ] = ResourceImage::New( LAYOUT_MOTION_BLUR_IMAGE );
     mLayoutButtonImages[ CAROUSEL_EFFECT ] = ResourceImage::New( LAYOUT_CAROUSEL_IMAGE );
     mLayoutButtonImages[ SPHERE_EFFECT ] = ResourceImage::New( LAYOUT_SPHERE_IMAGE );
 
@@ -481,10 +388,6 @@ public:
     // create and setup the scroll view...
     mScrollView = ScrollView::New();
     mScrollView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-
-    // attach Wobble Effect to ScrollView
-    mScrollViewEffect = ScrollViewWobbleEffect::New();
-    mScrollView.ApplyEffect(mScrollViewEffect);
 
     // anchor the scroll view from its center point to the middle of its parent
     mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
@@ -506,7 +409,7 @@ public:
     AddCluster( MUSIC,    ClusterStyleStandard::New(ClusterStyleStandard::ClusterStyle2) );
     AddCluster( MAGAZINE, ClusterStyleStandard::New(ClusterStyleStandard::ClusterStyle3) );
 
-    SetEffect(WOBBLE_EFFECT);
+    SetEffect(MOTION_BLUR_EFFECT);
   }
 
   /**
@@ -627,7 +530,7 @@ public:
     pageView.SetPosition(Vector3(stageSize.width * column, 0.0f, 0.0f));
     pageView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
-    // Create cluster actors, add them to scroll view, and set the shear effect with the given center point.
+    // Create cluster actors and add them to scroll view
     Vector3 clusterSize;
     Cluster cluster = CreateClusterActor( clusterType, style, clusterSize );
     cluster.SetParentOrigin(ParentOrigin::TOP_LEFT);
@@ -639,6 +542,39 @@ public:
     mClusterInfo.push_back( ClusterInfo( cluster, mClusterCount, clusterPosition, clusterSize ) );
 
     mClusterCount++;
+  }
+
+  /**
+   * Sets motion blur effect to a cluster and all its children
+   *
+   * @param[in] actor Cluster control to which the effect will be applied
+   */
+  void SetMotionBlurEffect( Actor actor )
+  {
+    // only do something if the actor and effect are valid
+    if( actor )
+    {
+      // first remove from this actor
+      RenderableActor renderable = RenderableActor::DownCast( actor );
+      if( renderable )
+      {
+        MotionBlurEffect shaderEffect = MotionBlurEffect::New();
+        shaderEffect.SetSpeedScalingFactor(0.1f);
+
+        Dali::Property::Index uModelProperty = shaderEffect.GetPropertyIndex( "uModelLastFrame" );
+        Constraint constraint = Constraint::New<Matrix>( shaderEffect, uModelProperty, EqualToConstraint() );
+        constraint.AddSource( Source( actor , Actor::Property::WORLD_MATRIX ) );
+        constraint.Apply();
+        renderable.SetShaderEffect( shaderEffect );
+      }
+      // then all children recursively
+      const unsigned int count = actor.GetChildCount();
+      for( unsigned int index = 0; index < count; ++index )
+      {
+        Actor child( actor.GetChildAt( index ) );
+        SetMotionBlurEffect( child );
+      }
+    }
   }
 
   /**
@@ -701,42 +637,11 @@ public:
         break;
       }
 
-      case WOBBLE_EFFECT:
+      case MOTION_BLUR_EFFECT:
       {
         for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {
-          Cluster cluster = i->mCluster;
-          Vector3 position = i->mPosition;
-          Vector3 size = i->mSize;
-
-          ShearEffect shaderEffect = ShearEffect::New();
-          Vector3 shearAnchor = SHEAR_EFFECT_ANCHOR_POINT;
-
-          Vector2 shearCenter( Vector2(position.x + size.width * shearAnchor.x, position.y + size.height * shearAnchor.y) );
-          Property::Index centerProperty = shaderEffect.GetPropertyIndex(shaderEffect.GetCenterPropertyName());
-          Constraint constraint = Constraint::New<Vector2>( shaderEffect, centerProperty, ShearEffectCenterConstraint(stageSize, shearCenter) );
-          constraint.AddSource( Source(mView, Actor::Property::SIZE) );
-
-          constraint.Apply();
-
-          SetShaderEffectRecursively( cluster,shaderEffect );
-
-          // Apply Constraint to Shader Effect
-          Property::Index scrollOvershootProperty = /*targetGroup*/mScrollView.GetPropertyIndex(ScrollViewWobbleEffect::EFFECT_OVERSHOOT);
-          Property::Index angleXAxisProperty = shaderEffect.GetPropertyIndex(shaderEffect.GetAngleXAxisPropertyName());
-          Property::Index angleYAxisProperty = shaderEffect.GetPropertyIndex(shaderEffect.GetAngleYAxisPropertyName());
-
-          constraint = Constraint::New<float>( shaderEffect, angleXAxisProperty, ShearEffectConstraint(stageSize, SHEAR_EFFECT_MAX_OVERSHOOT, Vector2::XAXIS) );
-          constraint.AddSource( Source(mScrollView, scrollOvershootProperty) );
-          constraint.AddSource( Source(mView, Actor::Property::ORIENTATION) );
-          constraint.Apply();
-
-          constraint = Constraint::New<float>( shaderEffect, angleYAxisProperty, ShearEffectConstraint(stageSize, SHEAR_EFFECT_MAX_OVERSHOOT, Vector2::YAXIS ) );
-          constraint.AddSource( Source(mScrollView, scrollOvershootProperty) );
-          constraint.AddSource( Source(mView, Actor::Property::ORIENTATION) );
-          constraint.Apply();
-
-
+          SetMotionBlurEffect( i->mCluster );
         }
         break;
       }
@@ -852,7 +757,6 @@ private:
   Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)
 
   ScrollView                 mScrollView;                        ///< The ScrollView container for all clusters
-  ScrollViewWobbleEffect     mScrollViewEffect;                  ///< ScrollView Wobble effect
   Image                      mClusterBorderImage;                ///< The border frame that appears on each image
 
   std::vector<ClusterInfo>   mClusterInfo;                       ///< Keeps track of each cluster's information.
