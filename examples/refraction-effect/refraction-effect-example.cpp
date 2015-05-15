@@ -17,6 +17,10 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/mesh-actor.h>
+#include <dali/devel-api/modeling/material.h>
+#include <dali/devel-api/geometry/mesh.h>
+
 #include "shared/view.h"
 
 #include <fstream>

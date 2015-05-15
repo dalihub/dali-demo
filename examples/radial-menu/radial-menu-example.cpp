@@ -17,6 +17,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/mesh-actor.h>
 #include "shared/view.h"
 #include "radial-sweep-view.h"
 #include "radial-sweep-view-impl.h"

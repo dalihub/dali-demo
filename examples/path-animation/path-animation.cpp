@@ -21,6 +21,10 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/mesh-actor.h>
+#include <dali/devel-api/geometry/mesh.h>
+#include <dali/devel-api/geometry/mesh-factory.h>
+
 
 // INTERNAL INCLUDES
 #include "shared/view.h"

@@ -16,6 +16,8 @@
  */
 
 #include <dali/dali.h>
+#include <dali/devel-api/images/atlas.h>
+
 #include "shared/view.h"
 #include <iostream>
 #include <cstdio>

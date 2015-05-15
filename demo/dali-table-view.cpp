@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <sstream>
 #include <unistd.h>
+#include <dali/devel-api/images/distance-field.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"

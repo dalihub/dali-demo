@@ -25,6 +25,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/images/atlas.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
