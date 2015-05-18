@@ -203,8 +203,6 @@ public:
    */
   void OnInit(Application& app)
   {
-    DemoHelper::RequestThemeChange();
-
     Stage stage = Dali::Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
 
@@ -991,7 +989,7 @@ void RunTest(Application& app)
 
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

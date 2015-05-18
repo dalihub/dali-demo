@@ -227,8 +227,6 @@ void PageTurnController::OnInit( Application& app )
 {
   // The Init signal is received once ( only ) during the Application lifetime
 
-  DemoHelper::RequestThemeChange();
-
   Stage::GetCurrent().KeyEventSignal().Connect(this, &PageTurnController::OnKeyEvent);
 
   Stage stage = Stage::GetCurrent();
@@ -348,7 +346,7 @@ void PageTurnController::OnPageFinishedPan( PageTurnView pageTurnView )
 // Entry point for applications
 int main( int argc, char **argv )
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
   PageTurnController test ( app );
 
   app.MainLoop();

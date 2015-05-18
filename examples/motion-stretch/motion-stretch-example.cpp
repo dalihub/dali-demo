@@ -125,8 +125,6 @@ public:
   {
     // The Init signal is received once (only) during the Application lifetime
 
-    DemoHelper::RequestThemeChange();
-
     Stage::GetCurrent().KeyEventSignal().Connect(this, &MotionStretchExampleApp::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
@@ -442,7 +440,7 @@ void RunTest(Application& app)
 //
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

@@ -145,8 +145,6 @@ class LoggingController: public ConnectionTracker
   {
     // The Init signal is received once (only) during the Application lifetime
 
-    DemoHelper::RequestThemeChange();
-
     mCurrentLogger = 0;
     mPerformanceLoggers.reserve( NUM_LOGGERS );
     mPerformanceLoggers.resize( NUM_LOGGERS );
@@ -756,7 +754,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( application );
 

@@ -171,9 +171,6 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Apply the default theme:
-    DemoHelper::RequestThemeChange();
-
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
 
@@ -732,7 +729,7 @@ void RunTest( Application& application )
 // Entry point for Linux & Tizen applications
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( application );
 

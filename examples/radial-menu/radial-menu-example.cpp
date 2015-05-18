@@ -122,8 +122,6 @@ RadialMenuExample::~RadialMenuExample()
 
 void RadialMenuExample::OnInit(Application& app)
 {
-  DemoHelper::RequestThemeChange();
-
   Stage stage = Dali::Stage::GetCurrent();
 
   // The Init signal is received once (only) during the Application lifetime
@@ -291,7 +289,7 @@ void RunTest(Application app)
 // Entry point for Linux & Tizen applications
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

@@ -97,8 +97,6 @@ class ButtonsController: public ConnectionTracker
   {
     // The Init signal is received once (only) during the Application lifetime
 
-    DemoHelper::RequestThemeChange();
-
     // Respond to key events
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ButtonsController::OnKeyEvent);
 
@@ -528,7 +526,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( application );
 
