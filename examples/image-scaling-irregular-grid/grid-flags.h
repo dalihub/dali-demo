@@ -17,6 +17,7 @@
  *
  */
 #include <algorithm>
+#include <cassert>
 #include <dali/dali.h>
 
 /** Controls the output of application logging. */

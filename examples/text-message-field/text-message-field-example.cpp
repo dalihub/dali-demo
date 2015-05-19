@@ -22,7 +22,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/public-api/text-abstraction/text-abstraction.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;

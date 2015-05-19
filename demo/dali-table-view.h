@@ -217,14 +217,14 @@ private: // Application callbacks & implementation
    *
    * @param[in] position The current position of the scroll contents.
    */
-  void OnScrollStart(const Dali::Vector3& position);
+  void OnScrollStart(const Dali::Vector2& position);
 
   /**
    * Signal emitted when scrolling has completed.
    *
    * @param[in] position The current position of the scroll contents.
    */
-  void OnScrollComplete(const Dali::Vector3& position);
+  void OnScrollComplete(const Dali::Vector2& position);
 
   /**
    * Signal emitted when any Sensitive Actor has been touched
@@ -245,17 +245,12 @@ private: // Application callbacks & implementation
   /**
    * Apply the cube effect to all the page actors
    */
-  void ApplyCubeEffectToActors();
+  void ApplyCubeEffectToPages();
 
   /**
    * Setup the inner cube effect
    */
   void SetupInnerPageCubeEffect();
-
-  /**
-   * Apply the cube effect to an actor
-   */
-  void ApplyCubeEffectToActor( Dali::Actor actor );
 
   /**
    * Apply a shader effect to a table tile
@@ -410,9 +405,9 @@ private:
   Dali::Toolkit::Popup            mVersionPopup;             ///< Displays DALi library version information
   Dali::Vector3                   mButtonsPageRelativeSize;  ///< Size of a buttons page relative to the stage size
 
-  Dali::ActorContainer            mPages;                    ///< List of pages.
-  Dali::ActorContainer            mTableViewImages;          ///< Offscreen render of tableview
-  Dali::ActorContainer            mBackgroundActors;         ///< List of background actors used in the effect
+  std::vector< Dali::Actor >      mPages;                    ///< List of pages.
+  std::vector< Dali::Actor >      mTableViewImages;          ///< Offscreen render of tableview
+  std::vector< Dali::Actor >      mBackgroundActors;         ///< List of background actors used in the effect
   AnimationList                   mBackgroundAnimations;     ///< List of background bubble animations
   ExampleList                     mExampleList;              ///< List of examples.
   ExampleMap                      mExampleMap;               ///< Map LUT for examples.

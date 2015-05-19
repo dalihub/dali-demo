@@ -335,13 +335,11 @@ public:
     mScrollView.ScrollStartedSignal().Connect( this, &ImageScalingIrregularGridController::OnScrollStarted );
     mScrollView.ScrollCompletedSignal().Connect( this, &ImageScalingIrregularGridController::OnScrollCompleted );
 
-    mScrollView.EnableScrollComponent( Scrollable::VerticalScrollBar );
-    mScrollView.EnableScrollComponent( Scrollable::HorizontalScrollBar );
-
     mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
     mScrollView.SetParentOrigin(ParentOrigin::CENTER);
 
-    mScrollView.SetSize( stageSize );//Vector2( stageSize.width, fieldHeight ) );//stageSize );
+    mScrollView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+
     mScrollView.SetAxisAutoLock( true );
     mScrollView.SetAxisAutoLockGradient( 1.0f );
 
@@ -351,7 +349,7 @@ public:
     rulerX->SetDomain( RulerDomain( stageSize.width * -0.125f, stageSize.width * 1.125f ) ); //< Scroll slightly left/right of image field.
     mScrollView.SetRulerX ( rulerX );
 
-    RulerPtr rulerY = new DefaultRuler(); //stageSize.height ); //< Snap in multiples of a screen / stage height
+    RulerPtr rulerY = new DefaultRuler(); //< Snap in multiples of a screen / stage height
     rulerY->SetDomain( RulerDomain( - fieldHeight * 0.5f + stageSize.height * 0.5f - GRID_CELL_PADDING, fieldHeight * 0.5f + stageSize.height * 0.5f + GRID_CELL_PADDING ) );
     mScrollView.SetRulerY ( rulerY );
 
@@ -359,8 +357,31 @@ public:
     mScrollView.Add( imageField );
     mGridActor = imageField;
 
+    // Create the scroll bar
+    mScrollBarVertical = ScrollBar::New(Toolkit::ScrollBar::Vertical);
+    mScrollBarVertical.SetParentOrigin(ParentOrigin::TOP_RIGHT);
+    mScrollBarVertical.SetAnchorPoint(AnchorPoint::TOP_RIGHT);
+    mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
+    mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
+    mScrollView.Add(mScrollBarVertical);
+
+    mScrollBarHorizontal = ScrollBar::New(Toolkit::ScrollBar::Horizontal);
+    mScrollBarHorizontal.SetParentOrigin(ParentOrigin::BOTTOM_LEFT);
+    mScrollBarHorizontal.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    mScrollBarHorizontal.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
+    mScrollBarHorizontal.SetOrientation(Quaternion(Radian( 1.5f * Math::PI ), Vector3::ZAXIS));
+    mScrollView.Add(mScrollBarHorizontal);
+
+    mScrollView.OnRelayoutSignal().Connect( this, &ImageScalingIrregularGridController::OnScrollViewRelayout );
+
     // Scroll to top of grid so first images loaded are on-screen:
-    mScrollView.ScrollTo( Vector3( 0, -1000000, 0 ) );
+    mScrollView.ScrollTo( Vector2( 0, -1000000 ) );
+  }
+
+  void OnScrollViewRelayout(Actor actor)
+  {
+    // Make the height of the horizontal scroll bar to be the same as the width of scroll view.
+    mScrollBarHorizontal.SetSize(Vector2(0.0f, mScrollView.GetRelayoutSize( Dimension::WIDTH) ));
   }
 
   /**
@@ -549,7 +570,7 @@ public:
    * note this state (mScrolling = true)
    * @param[in] position Current Scroll Position
    */
-  void OnScrollStarted( const Vector3& position )
+  void OnScrollStarted( const Vector2& position )
   {
     mScrolling = true;
   }
@@ -559,7 +580,7 @@ public:
    * note this state (mScrolling = false).
    * @param[in] position Current Scroll Position
    */
-  void OnScrollCompleted( const Vector3& position )
+  void OnScrollCompleted( const Vector2& position )
   {
     mScrolling = false;
   }
@@ -573,6 +594,8 @@ private:
   TextLabel mTitleActor;               ///< The Toolbar's Title.
   Actor mGridActor;                   ///< The container for the grid of images
   ScrollView mScrollView;             ///< ScrollView UI Component
+  ScrollBar mScrollBarVertical;
+  ScrollBar mScrollBarHorizontal;
   bool mScrolling;                    ///< ScrollView scrolling state (true = scrolling, false = stationary)
   std::map<unsigned, Dali::FittingMode::Type> mFittingModes; ///< Stores the current scaling mode of each image, keyed by image actor id.
   std::map<unsigned, Vector2> mSizes; ///< Stores the current size of each image, keyed by image actor id.

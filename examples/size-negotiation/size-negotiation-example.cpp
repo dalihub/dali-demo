@@ -193,17 +193,13 @@ public:
     mItemView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Use a grid layout for tests
-    Toolkit::GridLayoutPtr gridLayout = Toolkit::GridLayout::New();
-    gridLayout->SetNumberOfColumns( 2 );
-    gridLayout->SetTopMargin( DP(TOOLBAR_HEIGHT) + DP(20.0f) );
-    gridLayout->SetBottomMargin( DP(100.0f) );
-    gridLayout->SetRowSpacing( DP(20.0f) );
-    mItemView.AddLayout( *gridLayout );
-
     Vector2 stageSize = stage.GetSize();
-    float layoutWidth = Toolkit::IsHorizontal( gridLayout->GetOrientation() ) ? stageSize.height : stageSize.width;
-    float gridItemSize = ( layoutWidth / gridLayout->GetNumberOfColumns() ) * 0.5f;
-    gridLayout->SetScrollSpeedFactor( gridLayout->GetNumberOfColumns() / gridItemSize * 0.5f );
+    Toolkit::ItemLayoutPtr gridLayout = Toolkit::DefaultItemLayout::New( Toolkit::DefaultItemLayout::LIST );
+    Vector3 itemSize;
+    gridLayout->GetItemSize( 0, Vector3( stageSize ), itemSize );
+    itemSize.height = stageSize.y / 10;
+    gridLayout->SetItemSize( itemSize );
+    mItemView.AddLayout( *gridLayout );
 
     mItemView.ActivateLayout( 0, Vector3(stageSize.x, stageSize.y, stageSize.x), 0.0f );
 

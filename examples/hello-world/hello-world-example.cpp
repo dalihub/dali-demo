@@ -43,6 +43,7 @@ public:
   {
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
+    stage.SetBackgroundColor( Color::WHITE );
 
     TextLabel textLabel = TextLabel::New( "Hello World" );
     textLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
