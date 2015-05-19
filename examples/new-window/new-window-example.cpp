@@ -18,6 +18,9 @@
 #include <dali/devel-api/actors/mesh-actor.h>
 #include <dali/devel-api/modeling/material.h>
 #include <dali/devel-api/geometry/mesh.h>
+#include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
+#include <dali-toolkit/devel-api/shader-effects/bubble-effect/color-adjuster.h>
+
 
 #include "shared/view.h"
 #include <cstdio>

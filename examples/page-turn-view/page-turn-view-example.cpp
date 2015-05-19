@@ -17,6 +17,12 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/shader-effects/page-turn-effect.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-factory.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-landscape-view.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-portrait-view.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-view.h>
+
 #include <assert.h>
 #include <cstdlib>
 #include <string.h>

@@ -19,6 +19,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/mesh-actor.h>
 #include <dali/devel-api/geometry/mesh.h>
+#include <dali-toolkit/devel-api/shader-effects/quadratic-bezier.h>
 
 #include "shared/view.h"
 

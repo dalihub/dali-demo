@@ -20,6 +20,8 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/shadow-view/shadow-view.h>
+
 #include <iostream>
 
 using namespace Dali;

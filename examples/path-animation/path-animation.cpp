@@ -24,6 +24,8 @@
 #include <dali/devel-api/actors/mesh-actor.h>
 #include <dali/devel-api/geometry/mesh.h>
 #include <dali/devel-api/geometry/mesh-factory.h>
+#include <dali-toolkit/devel-api/controls/slider/slider.h>
+
 
 
 // INTERNAL INCLUDES
@@ -66,7 +68,7 @@ public:
    * @param[in] size The size of the slider
    * @param[in] callback Pointer to the callback function to be called when user moves the slider
   */
-  Actor CreateVectorComponentControl( const std::string& label, const Vector3& size, bool(PathController::*callback)(Slider,float) )
+  Actor CreateVectorComponentControl( const std::string& label, const Vector3& size, bool(PathController::*callback)(Dali::Toolkit::Slider,float) )
   {
     TextLabel text = TextLabel::New(label);
     text.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH );

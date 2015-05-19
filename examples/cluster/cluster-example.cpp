@@ -21,6 +21,9 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/shader-effects/motion-blur-effect.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/devel-api/shader-effects/carousel-effect.h>
 
 #include "cluster.h"
 #include "cluster-style.h"

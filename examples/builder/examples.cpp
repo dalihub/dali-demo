@@ -22,9 +22,10 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/public-api/builder/builder.h>
-#include <dali-toolkit/public-api/builder/tree-node.h>
-#include <dali-toolkit/public-api/builder/json-parser.h>
+#include <dali-toolkit/devel-api/builder/builder.h>
+#include <dali-toolkit/devel-api/builder/tree-node.h>
+#include <dali-toolkit/devel-api/builder/json-parser.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <map>
 #include <string>
 #include <fstream>

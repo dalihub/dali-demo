@@ -21,6 +21,7 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/shader-effects/motion-stretch-effect.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;

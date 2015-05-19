@@ -18,7 +18,8 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <devel-api/adaptor-framework/performance-logger.h>
+#include <dali/devel-api/adaptor-framework/performance-logger.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <sstream>
 
 using namespace Dali;

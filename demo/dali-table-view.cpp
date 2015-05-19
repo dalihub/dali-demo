@@ -23,6 +23,8 @@
 #include <sstream>
 #include <unistd.h>
 #include <dali/devel-api/images/distance-field.h>
+#include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
+#include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"

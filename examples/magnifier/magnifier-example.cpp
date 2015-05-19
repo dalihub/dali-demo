@@ -21,7 +21,7 @@
 #include "shared/view.h"
 
 #include <dali-toolkit/dali-toolkit.h>
-
+#include <dali-toolkit/devel-api/controls/magnifier/magnifier.h>
 using namespace Dali;
 
 namespace
