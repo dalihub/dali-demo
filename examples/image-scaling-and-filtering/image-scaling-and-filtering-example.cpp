@@ -18,7 +18,6 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
-#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include "shared/view.h"
 #include <iostream>
 
