@@ -191,8 +191,8 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
     // set initial orientation
-    winHandle.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
-    unsigned int degrees = winHandle.GetOrientation().GetDegrees();
+   // winHandle.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
+    unsigned int degrees = 0;
     Rotate( static_cast< DeviceOrientation >( degrees ) );
 
 

@@ -220,7 +220,7 @@ public:
                                              TOOLBAR_IMAGE,
                                              "" );
 
-    app.GetWindow().GetOrientation().ChangedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
+    //app.GetWindow().GetOrientation().ChangedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
