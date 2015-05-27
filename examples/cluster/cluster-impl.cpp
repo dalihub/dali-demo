@@ -92,7 +92,7 @@ void Cluster::OnInitialize()
 {
 }
 
-void Cluster::OnControlSizeSet( const Vector3& targetSize )
+void Cluster::OnSizeSet( const Vector3& targetSize )
 {
   mClusterSize = targetSize;
   GetImpl(mClusterStyle).SetClusterSize(targetSize);
