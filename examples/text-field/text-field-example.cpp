@@ -22,7 +22,9 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <iostream>
+#include <dali/public-api/events/touch-point.h>
 
 // INTERNAL INCLUDES
 #include "shared/multi-language-strings.h"
@@ -35,38 +37,11 @@ using namespace MultiLanguageStrings;
 namespace
 {
 
-  const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "button-up.9.png";
+  const char* const FOLDER_ICON_IMAGE = DALI_IMAGE_DIR "folder_appicon_empty_bg.png";
 
   const float BORDER_WIDTH = 4.0f;
 
-  const unsigned int KEY_ZERO = 10;
-  const unsigned int KEY_ONE = 11;
-  const unsigned int KEY_F = 41;
-  const unsigned int KEY_H = 43;
-  const unsigned int KEY_V = 55;
-  const unsigned int KEY_M = 58;
-  const unsigned int KEY_L = 46;
-  const unsigned int KEY_S = 39;
-  const unsigned int KEY_PLUS = 21;
-  const unsigned int KEY_MINUS = 20;
-
-  const char* H_ALIGNMENT_STRING_TABLE[] =
-  {
-    "BEGIN",
-    "CENTER",
-    "END"
-  };
-
-  const unsigned int H_ALIGNMENT_STRING_COUNT = sizeof( H_ALIGNMENT_STRING_TABLE ) / sizeof( H_ALIGNMENT_STRING_TABLE[0u] );
-
-  const char* V_ALIGNMENT_STRING_TABLE[] =
-  {
-    "TOP",
-    "CENTER",
-    "BOTTOM"
-  };
-
-  const unsigned int V_ALIGNMENT_STRING_COUNT = sizeof( V_ALIGNMENT_STRING_TABLE ) / sizeof( V_ALIGNMENT_STRING_TABLE[0u] );
+  const Vector3 POPUP_SIZE_FACTOR_TO_PARENT = Vector3( 0.0, 0.25, 0.0 );
 
 } // unnamed namespace
 
@@ -78,9 +53,7 @@ class TextFieldExample : public ConnectionTracker
 public:
 
   TextFieldExample( Application& application )
-  : mApplication( application ),
-    mLanguageId( 0u ),
-    mAlignment( 0u )
+  : mApplication( application )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &TextFieldExample::Create );
@@ -98,40 +71,119 @@ public:
   {
     Stage stage = Stage::GetCurrent();
 
-    mTapGestureDetector = TapGestureDetector::New();
-    mTapGestureDetector.Attach( stage.GetRootLayer() );
-    mTapGestureDetector.DetectedSignal().Connect( this, &TextFieldExample::OnTap );
-
+    stage.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
     stage.KeyEventSignal().Connect(this, &TextFieldExample::OnKeyEvent);
 
-    Vector2 stageSize = stage.GetSize();
-
-    Control container = Control::New();
-    container.SetName( "Container" );
-    container.SetParentOrigin( ParentOrigin::CENTER );
-    container.SetSize( Vector2(stageSize.width*0.6f, stageSize.width*0.6f) );
-    container.SetBackgroundColor( Color::WHITE );
-    container.GetChildAt(0).SetZ(-1.0f);
-    stage.Add( container );
-
-    mField = TextField::New();
-    mField.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mField.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    mField.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
-    mField.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
-    mField.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
-    mField.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, stageSize.width - BORDER_WIDTH*2, stageSize.height - BORDER_WIDTH*2 ) );
-
-    container.Add( mField );
-
-    Property::Value fieldText = mField.GetProperty( TextField::Property::TEXT );
-
-    std::cout << "Displaying text: " << fieldText.Get< std::string >() << std::endl;
+    mButton = CreateFolderButton();
+    mButton.ClickedSignal().Connect( this, &TextFieldExample::OnButtonClicked );
+    stage.Add( mButton );
   }
 
-  void OnTap( Actor actor, const TapGesture& tapGesture )
+  PushButton CreateFolderButton()
   {
-    mField.ClearKeyInputFocus();
+    PushButton button = PushButton::New();
+    ResourceImage image = ResourceImage::New( FOLDER_ICON_IMAGE );
+    ImageActor folderButton = ImageActor::New( image );
+    folderButton.SetColor( Color::WHITE );
+    button.SetButtonImage( folderButton );
+    button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
+    button.SetSize( image.GetWidth(), image.GetHeight() );
+
+    return button;
+  }
+
+  bool OnButtonClicked( Toolkit::Button button )
+  {
+    Stage stage = Stage::GetCurrent();
+    Vector2 stageSize = stage.GetSize();
+
+    // Launch a pop-up containing TextField
+    mField = CreateTextField( stageSize, mButtonLabel );
+    mPopup = CreatePopup( stageSize.width * 0.8f );
+    mPopup.Add( mField );
+    mPopup.OutsideTouchedSignal().Connect( this, &TextFieldExample::OnPopupOutsideTouched );
+    mPopup.Show();
+
+    return true;
+  }
+
+  TextField CreateTextField( const Vector2& stageSize, const std::string& text )
+  {
+    TextField field = TextField::New();
+    field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    field.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    field.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
+    field.SetProperty( TextField::Property::TEXT, text );
+    field.SetProperty( TextField::Property::TEXT_COLOR, Vector4( 0.0f, 1.0f, 1.0f, 1.0f ) ); // CYAN
+    field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
+    field.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
+    field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, stageSize.width - BORDER_WIDTH*2, stageSize.height - BORDER_WIDTH*2 ) );
+
+    return field;
+  }
+
+  Popup CreatePopup( float width )
+  {
+    Popup popup = Popup::New();
+    popup.SetParentOrigin( ParentOrigin::CENTER );
+    popup.SetAnchorPoint( AnchorPoint::CENTER );
+    popup.SetSize( width, 0.0f );
+    popup.HideTail();
+    popup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
+    popup.SetSizeModeFactor( POPUP_SIZE_FACTOR_TO_PARENT );
+    popup.TouchedSignal().Connect( this, &TextFieldExample::OnPopupTouched );
+
+    return popup;
+  }
+
+  void OnPopupOutsideTouched()
+  {
+    // Update the folder text
+    if( mButton && mField )
+    {
+      Property::Value text = mField.GetProperty( TextField::Property::TEXT );
+      mButtonLabel = text.Get< std::string >();
+      mButton.SetLabel( mButtonLabel );
+    }
+
+    // Hide & discard the pop-up
+    if( mPopup )
+    {
+      mPopup.Hide();
+    }
+    mField.Reset();
+    mPopup.Reset();
+  }
+
+  bool OnPopupTouched( Actor actor, const TouchEvent& event )
+  {
+    // End edit mode for TextField if parent Popup touched.
+    if(event.GetPointCount() > 0)
+    {
+      const TouchPoint& point = event.GetPoint(0);
+      switch(point.state)
+      {
+        case TouchPoint::Down:
+        {
+          // Update the folder text and lose focus for Key events
+          if( mButton && mField )
+          {
+            Property::Value text = mField.GetProperty( TextField::Property::TEXT );
+            mButtonLabel = text.Get< std::string >();
+            mButton.SetLabel( mButtonLabel );
+            mField.ClearKeyInputFocus();
+          }
+          break;
+        }
+        default:
+        {
+          break;
+        }
+      } // end switch
+    }
+
+    return true;
   }
 
   /**
@@ -145,73 +197,6 @@ public:
       {
         mApplication.Quit();
       }
-      else if( event.IsCtrlModifier() )
-      {
-        switch( event.keyCode )
-        {
-          // Select rendering back-end
-          case KEY_ZERO: // fall through
-          case KEY_ONE:
-          {
-            mField.SetProperty( TextField::Property::RENDERING_BACKEND, event.keyCode - 10 );
-            break;
-          }
-          case KEY_H: // Horizontal alignment
-          {
-            if( ++mAlignment >= H_ALIGNMENT_STRING_COUNT )
-            {
-              mAlignment = 0u;
-            }
-
-            mField.SetProperty( TextField::Property::HORIZONTAL_ALIGNMENT, H_ALIGNMENT_STRING_TABLE[ mAlignment ] );
-            break;
-          }
-          case KEY_V: // Vertical alignment
-          {
-            if( ++mAlignment >= V_ALIGNMENT_STRING_COUNT )
-            {
-              mAlignment = 0u;
-            }
-
-            mField.SetProperty( TextField::Property::VERTICAL_ALIGNMENT, V_ALIGNMENT_STRING_TABLE[ mAlignment ] );
-            break;
-          }
-          case KEY_L: // Language
-          {
-            const Language& language = LANGUAGES[ mLanguageId ];
-
-            mField.SetProperty( TextField::Property::TEXT, language.text );
-
-            if( ++mLanguageId >= NUMBER_OF_LANGUAGES )
-            {
-              mLanguageId = 0u;
-            }
-            break;
-          }
-          case KEY_S: // Shadow color
-          {
-            if( Color::BLACK == mField.GetProperty<Vector4>( TextField::Property::SHADOW_COLOR ) )
-            {
-              mField.SetProperty( TextField::Property::SHADOW_COLOR, Color::RED );
-            }
-            else
-            {
-              mField.SetProperty( TextField::Property::SHADOW_COLOR, Color::BLACK );
-            }
-            break;
-          }
-          case KEY_PLUS: // Increase shadow offset
-          {
-            mField.SetProperty( TextField::Property::SHADOW_OFFSET, mField.GetProperty<Vector2>( TextField::Property::SHADOW_OFFSET ) + Vector2( 1.0f, 1.0f ) );
-            break;
-          }
-          case KEY_MINUS: // Decrease shadow offset
-          {
-            mField.SetProperty( TextField::Property::SHADOW_OFFSET, mField.GetProperty<Vector2>( TextField::Property::SHADOW_OFFSET ) - Vector2( 1.0f, 1.0f ) );
-            break;
-          }
-        }
-      }
     }
   }
 
@@ -219,12 +204,13 @@ private:
 
   Application& mApplication;
 
+  // This button launches a pop-up containing TextField
+  PushButton mButton;
+  std::string mButtonLabel;
+
+  // Pop-up contents
   TextField mField;
-
-  TapGestureDetector mTapGestureDetector;
-
-  unsigned int mLanguageId;
-  unsigned int mAlignment;
+  Popup mPopup;
 };
 
 void RunTest( Application& application )
