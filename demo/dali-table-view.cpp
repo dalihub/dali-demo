@@ -890,7 +890,7 @@ void DaliTableView::PlayAnimation()
   mAnimationTimer.SetInterval( BACKGROUND_ANIMATION_DURATION );
 }
 
-Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocusNavigationDirection direction )
+Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction )
 {
   Actor nextFocusActor = proposed;
 
@@ -905,11 +905,11 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
     // in the given direction. We should work out which page to scroll to next.
     int currentPage = mScrollView.GetCurrentPage();
     int newPage = currentPage;
-    if( direction == Dali::Toolkit::Control::Left )
+    if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
     {
       newPage--;
     }
-    else if( direction == Dali::Toolkit::Control::Right )
+    else if( direction == Dali::Toolkit::Control::KeyboardFocus::RIGHT )
     {
       newPage++;
     }
@@ -917,10 +917,10 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
     newPage = std::max(0, std::min(static_cast<int>(mScrollRulerX->GetTotalPages() - 1), newPage));
     if( newPage == currentPage )
     {
-      if( direction == Dali::Toolkit::Control::Left )
+      if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
       {
         newPage = mScrollRulerX->GetTotalPages() - 1;
-      } else if( direction == Dali::Toolkit::Control::Right )
+      } else if( direction == Dali::Toolkit::Control::KeyboardFocus::RIGHT )
       {
         newPage = 0;
       }
@@ -929,7 +929,7 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
     // Scroll to the page in the given direction
     mScrollView.ScrollTo(newPage);
 
-    if( direction == Dali::Toolkit::Control::Left )
+    if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
     {
       // Work out the cell position for the last tile
       int remainingExamples = mExampleList.size() - newPage * EXAMPLES_PER_PAGE;
