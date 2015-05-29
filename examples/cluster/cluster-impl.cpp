@@ -23,7 +23,9 @@
 #include <cstring> // for strcmp
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/object/type-registry.h>
+#include <dali/public-api/object/property-array.h>
 #include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/scripting/scripting.h>
 #include <dali/integration-api/debug.h>
 
 // INTERNAL INCLUDES
@@ -475,17 +477,21 @@ void Cluster::UpdateTitle(float duration)
   }
 }
 
-void Cluster::DoExpandAction(const PropertyValueContainer& attributes)
+void Cluster::DoExpandAction(const Property::Map& attributes)
 {
-  if(attributes.size() >= 1)
-  {
-    for(PropertyValueConstIter iter = attributes.begin(); iter != attributes.end(); ++iter)
-    {
-      const Property::Value& value = *iter;
+  Property::Value* value = attributes.Find( "indices" );
 
-      DALI_ASSERT_ALWAYS(value.GetType() == Property::FLOAT);
-      unsigned int index = value.Get<float>();
-      ExpandChild( index );
+  if( value )
+  {
+    if( value->GetType() == Property::ARRAY )
+    {
+      Property::Array array = value->Get<Property::Array>();
+      for( size_t i = 0; i < array.Size(); i++ )
+      {
+        Property::Value& item = array[i];
+        DALI_ASSERT_ALWAYS(item.GetType() == Property::INTEGER);
+        ExpandChild( item.Get<int>() );
+      }
     }
   }
   else
@@ -494,17 +500,21 @@ void Cluster::DoExpandAction(const PropertyValueContainer& attributes)
   }
 }
 
-void Cluster::DoCollapseAction(const PropertyValueContainer& attributes)
+void Cluster::DoCollapseAction(const Property::Map& attributes)
 {
-  if(attributes.size() >= 1)
-  {
-    for(PropertyValueConstIter iter = attributes.begin(); iter != attributes.end(); ++iter)
-    {
-      const Property::Value& value = *iter;
+  Property::Value* value = attributes.Find( "indices" );
 
-      DALI_ASSERT_ALWAYS(value.GetType() == Property::FLOAT);
-      unsigned int index = value.Get<float>();
-      CollapseChild( index, false );
+  if( value )
+  {
+    if( value->GetType() == Property::ARRAY )
+    {
+      Property::Array array = value->Get<Property::Array>();
+      for( size_t i = 0; i < array.Size(); i++ )
+      {
+        Property::Value& item = array[i];
+        DALI_ASSERT_ALWAYS(item.GetType() == Property::INTEGER);
+        CollapseChild( item.Get<int>(), false );
+      }
     }
   }
   else
@@ -513,27 +523,33 @@ void Cluster::DoCollapseAction(const PropertyValueContainer& attributes)
   }
 }
 
-void Cluster::DoTransformAction(const PropertyValueContainer& attributes)
-{
-  DALI_ASSERT_ALWAYS(attributes.size() >= 2);
 
-  DALI_ASSERT_ALWAYS(attributes[0].GetType() == Property::FLOAT);
-  unsigned int index = attributes[0].Get<float>();
+void Cluster::DoTransformAction(const Property::Map& attributes)
+{
+  typedef Dali::StringValuePair StringValuePair;
+
+  int index = 0;
   Vector3 position;
   Vector3 scale(Vector3::ONE);
   Quaternion rotation( Dali::ANGLE_0, Vector3::ZAXIS );
 
-  DALI_ASSERT_ALWAYS(attributes[1].GetType() == Property::VECTOR3);
-  attributes[1].Get(position);
-
-  if(attributes.size()>2)
+  for(size_t i = 0; i < attributes.Count(); i++)
   {
-    attributes[2].Get(scale);
-  }
+    StringValuePair& stringValue = attributes.GetPair(i);
+    Property::Type type = stringValue.second.GetType();
 
-  if(attributes.size()>3)
-  {
-    attributes[3].Get(rotation);
+    if( Property::VECTOR3 == type && "position" == stringValue.first )
+    {
+      stringValue.second.Get(position);
+    }
+    else if( Property::VECTOR3 == type && "scale" == stringValue.first )
+    {
+      stringValue.second.Get(scale);
+    }
+    else if( "rotation" == stringValue.first )
+    {
+      (void)Scripting::SetRotation(stringValue.second, rotation);
+    }
   }
 
   // wrap index around -1 => size - 1
@@ -547,7 +563,7 @@ void Cluster::OnControlChildRemove(Actor& child)
   child.RemoveConstraints();
 }
 
-bool Cluster::DoAction(BaseObject* object, const std::string& actionName, const PropertyValueContainer& attributes)
+bool Cluster::DoAction(BaseObject* object, const std::string& actionName, const Property::Map& attributes)
 {
   bool ret = false;
 

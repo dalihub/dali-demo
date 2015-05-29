@@ -212,7 +212,7 @@ private:
    * @param[in] attributes list of indices of actors to expand.
    * (if no attributes specifies, then all actors expand)
    */
-  void DoExpandAction(const PropertyValueContainer& attributes);
+  void DoExpandAction(const Property::Map& attributes);
 
   /**
    * Action: Collapse
@@ -221,7 +221,7 @@ private:
    * @param[in] attributes list of indices of actors to collapse.
    * (if no attributes specifies, then all actors collapse)
    */
-  void DoCollapseAction(const PropertyValueContainer& attributes);
+  void DoCollapseAction(const Property::Map& attributes);
 
   /**
    * Action: Transform
@@ -230,7 +230,7 @@ private:
    *
    * @param[in] attributes index and transform values.
    */
-  void DoTransformAction(const PropertyValueContainer& attributes);
+  void DoTransformAction(const Property::Map& attributes);
 
 private: // From Control
   /**
@@ -248,7 +248,7 @@ public:
    * @param[in] attributes The attributes with which to perfrom this action.
    * @return true if action has been accepted by this control
    */
-  static bool DoAction(BaseObject* object, const std::string& actionName, const PropertyValueContainer& attributes);
+  static bool DoAction(BaseObject* object, const std::string& actionName, const Property::Map& attributes);
 
 private: // From Control
 
