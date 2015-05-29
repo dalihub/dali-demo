@@ -937,7 +937,7 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
       int colPos = remainingExamples >= EXAMPLES_PER_PAGE ? EXAMPLES_PER_ROW - 1 : ( remainingExamples % EXAMPLES_PER_PAGE - rowPos * EXAMPLES_PER_ROW - 1 );
 
       // Move the focus to the last tile in the new page.
-      nextFocusActor = mPages[newPage].GetChildAt(colPos * EXAMPLES_PER_ROW + rowPos);
+      nextFocusActor = mPages[newPage].GetChildAt(rowPos * EXAMPLES_PER_ROW + colPos);
     }
     else
     {
