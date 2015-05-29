@@ -21,7 +21,7 @@
 #include "shared/view.h"
 
 #include <dali-toolkit/dali-toolkit.h>
-
+#include <dali-toolkit/devel-api/controls/magnifier/magnifier.h>
 using namespace Dali;
 
 namespace
@@ -193,8 +193,6 @@ public:
    */
   void Create( Application& application )
   {
-    DemoHelper::RequestThemeChange();
-
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
     mStageSize = Stage::GetCurrent().GetSize();
@@ -415,7 +413,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( application );
 

@@ -21,6 +21,7 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/shader-effects/motion-stretch-effect.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -124,8 +125,6 @@ public:
   {
     // The Init signal is received once (only) during the Application lifetime
 
-    DemoHelper::RequestThemeChange();
-
     Stage::GetCurrent().KeyEventSignal().Connect(this, &MotionStretchExampleApp::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
@@ -166,8 +165,8 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
-    winHandle.GetOrientation().ChangedSignal().Connect( this, &MotionStretchExampleApp::OnOrientationChanged );
-    unsigned int degrees = winHandle.GetOrientation().GetDegrees();
+   // winHandle.GetOrientation().ChangedSignal().Connect( this, &MotionStretchExampleApp::OnOrientationChanged );
+    unsigned int degrees = 0;
     Rotate( static_cast< DeviceOrientation >( degrees ) );
 
 
@@ -441,7 +440,7 @@ void RunTest(Application& app)
 //
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

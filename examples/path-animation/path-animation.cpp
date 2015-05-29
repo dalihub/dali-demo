@@ -21,6 +21,12 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/mesh-actor.h>
+#include <dali/devel-api/geometry/mesh.h>
+#include <dali/devel-api/geometry/mesh-factory.h>
+#include <dali-toolkit/devel-api/controls/slider/slider.h>
+
+
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -62,7 +68,7 @@ public:
    * @param[in] size The size of the slider
    * @param[in] callback Pointer to the callback function to be called when user moves the slider
   */
-  Actor CreateVectorComponentControl( const std::string& label, const Vector3& size, bool(PathController::*callback)(Slider,float) )
+  Actor CreateVectorComponentControl( const std::string& label, const Vector3& size, bool(PathController::*callback)(Dali::Toolkit::Slider,float) )
   {
     TextLabel text = TextLabel::New(label);
     text.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH );
@@ -79,7 +85,7 @@ public:
     float mark = -1.0f;
     for(unsigned short i(0); i<21; ++i )
     {
-      marks.push_back( mark );
+      marks.PushBack( mark );
       mark += 0.1f;
     }
 
@@ -435,8 +441,6 @@ public:
    */
   void Create( Application& application )
   {
-    DemoHelper::RequestThemeChange();
-
     // Get a handle to the stage:
     Stage stage = Stage::GetCurrent();
 
@@ -506,7 +510,7 @@ void RunTest( Application& application )
 /** Entry point for Linux & Tizen applications */
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( application );
 

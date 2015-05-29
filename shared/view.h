@@ -19,6 +19,9 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/tool-bar/tool-bar.h>
+#include <dali-toolkit/devel-api/styling/style-manager.h>
+
 
 namespace DemoHelper
 {
@@ -50,13 +53,6 @@ const float                   DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
 const Dali::Toolkit::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
 const Dali::Toolkit::Alignment::Padding DEFAULT_MODE_SWITCH_PADDING(8.0f, 8.0f, 8.0f, 8.0f);
 
-void RequestThemeChange()
-{
-  // Provide the stylesheet
-  Dali::Toolkit::StyleManager styleManager = Dali::Toolkit::StyleManager::Get();
-  styleManager.RequestThemeChange( DALI_DEMO_THEME_PATH );
-}
-
 float ScalePointSize(int pointSize)
 {
   Dali::Vector2 dpi = Dali::Stage::GetCurrent().GetDpi();
@@ -83,16 +79,12 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
 
   // Tool bar
   Dali::Image image = Dali::ResourceImage::New( toolbarImagePath );
-  Dali::ImageActor toolBarBackground = Dali::ImageActor::New( image );
-  toolBarBackground.SetName( "TOOLBAR_BACKGROUND" );
-  toolBarBackground.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
   toolBar = Dali::Toolkit::ToolBar::New();
   toolBar.SetName( "TOOLBAR" );
-  toolBar.SetBackground( toolBarBackground );
+  toolBar.SetBackgroundImage( image );
   toolBar.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
   toolBar.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
   toolBar.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
-  toolBarBackground.SetSortModifier(1.0f);
 
   // Add the tool bar to the too bar layer.
   toolBarLayer.Add( toolBar );

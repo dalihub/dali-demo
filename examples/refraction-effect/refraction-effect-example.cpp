@@ -17,10 +17,15 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/mesh-actor.h>
+#include <dali/devel-api/modeling/material.h>
+#include <dali/devel-api/geometry/mesh.h>
+
 #include "shared/view.h"
 
 #include <fstream>
 #include <sstream>
+#include <limits>
 
 using namespace Dali;
 
@@ -315,8 +320,6 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application& application)
   {
-    DemoHelper::RequestThemeChange();
-
     Stage stage = Stage::GetCurrent();
     mStageHalfSize = stage.GetSize() * 0.5f;
 
@@ -653,7 +656,7 @@ RunTest(Application& app)
 int
 main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

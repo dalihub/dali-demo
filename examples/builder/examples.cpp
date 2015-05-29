@@ -20,11 +20,12 @@
 //
 //------------------------------------------------------------------------------
 
-#include "dali.h"
+#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/public-api/builder/builder.h>
-#include <dali-toolkit/public-api/builder/tree-node.h>
-#include <dali-toolkit/public-api/builder/json-parser.h>
+#include <dali-toolkit/devel-api/builder/builder.h>
+#include <dali-toolkit/devel-api/builder/tree-node.h>
+#include <dali-toolkit/devel-api/builder/json-parser.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <map>
 #include <string>
 #include <fstream>
@@ -36,6 +37,7 @@
 
 #include "sys/stat.h"
 #include <ctime>
+#include <cstring>
 
 #include <dali/integration-api/debug.h>
 #include "shared/view.h"
@@ -139,11 +141,6 @@ const std::string ShortName( const std::string& name )
   {
     return name;
   }
-}
-
-static Vector3 SetItemSize(unsigned int numberOfColumns, float layoutWidth, float sideMargin, float columnSpacing)
-{
-  return Vector3(layoutWidth, 50, 1);
 }
 
 //------------------------------------------------------------------------------
@@ -291,17 +288,12 @@ public:
     stage.Add( mItemView );
     mItemView.SetParentOrigin(ParentOrigin::CENTER);
     mItemView.SetAnchorPoint(AnchorPoint::CENTER);
-    mGridLayout = GridLayout::New();
-    mGridLayout->SetNumberOfColumns(1);
+    mLayout = DefaultItemLayout::New( DefaultItemLayout::LIST );
 
-    mGridLayout->SetItemSizeFunction(SetItemSize);
+    mLayout->SetItemSize( Vector3( stage.GetSize().width, 50, 1 ) );
 
-    mGridLayout->SetTopMargin(DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight);
+    mItemView.AddLayout( *mLayout );
 
-    mItemView.AddLayout(*mGridLayout);
-
-    Vector3 size(stage.GetSize());
-    mItemView.ActivateLayout(0, size, 0.0f/*immediate*/);
     mItemView.SetKeyboardFocusable( true );
 
     mFiles.clear();
@@ -369,9 +361,9 @@ public:
 
     SetTitle("Select");
 
-    // Itemview renderes the previous items unless its scrolled. Not sure why at the moment so we force a scroll
-    mItemView.ScrollToItem(0, 0);
-
+    // Activate the layout
+    Vector3 size(stage.GetSize());
+    mItemView.ActivateLayout(0, size, 0.0f/*immediate*/);
   }
 
   void ExitSelection()
@@ -501,8 +493,6 @@ public:
 
   void Create(Application& app)
   {
-    DemoHelper::RequestThemeChange();
-
     Stage stage = Stage::GetCurrent();
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleApp::OnKeyEvent);
@@ -585,7 +575,7 @@ public:
 private:
   Application& mApp;
 
-  GridLayoutPtr mGridLayout;
+  ItemLayoutPtr mLayout;
   ItemView mItemView;
 
   Toolkit::Control mView;
@@ -626,7 +616,7 @@ int main(int argc, char **argv)
     }
   }
 
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   ExampleApp dali_app(app);
 

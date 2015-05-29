@@ -226,8 +226,6 @@ public:
    */
   void Create(Application& application)
   {
-    DemoHelper::RequestThemeChange();
-
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
@@ -841,7 +839,7 @@ void RunTest(Application& app)
 
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

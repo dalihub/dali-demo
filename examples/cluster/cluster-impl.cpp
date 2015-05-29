@@ -23,7 +23,7 @@
 #include <cstring> // for strcmp
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/object/type-registry.h>
-#include <dali/public-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/integration-api/debug.h>
 
 // INTERNAL INCLUDES
@@ -92,7 +92,7 @@ void Cluster::OnInitialize()
 {
 }
 
-void Cluster::OnControlSizeSet( const Vector3& targetSize )
+void Cluster::OnSizeSet( const Vector3& targetSize )
 {
   mClusterSize = targetSize;
   GetImpl(mClusterStyle).SetClusterSize(targetSize);

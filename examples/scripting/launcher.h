@@ -21,6 +21,8 @@
 // EXTERNAL INCLUDES
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/scripting/script.h>
+#include <dali-toolkit/devel-api/builder/builder.h>
 
 /**
  * Example app that can load both JSON and JavaScript files from command line

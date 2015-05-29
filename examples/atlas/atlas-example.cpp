@@ -16,6 +16,8 @@
  */
 
 #include <dali/dali.h>
+#include <dali/devel-api/images/atlas.h>
+
 #include "shared/view.h"
 #include <iostream>
 #include <cstdio>
@@ -224,7 +226,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  gApplication = Application::New( &argc, &argv );
+  gApplication = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( gApplication );
 

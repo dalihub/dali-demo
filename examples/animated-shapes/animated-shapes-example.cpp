@@ -17,6 +17,9 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/mesh-actor.h>
+#include <dali/devel-api/geometry/mesh.h>
+#include <dali-toolkit/devel-api/shader-effects/quadratic-bezier.h>
 
 #include "shared/view.h"
 
@@ -49,8 +52,6 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    DemoHelper::RequestThemeChange();
-
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
 
@@ -373,7 +374,7 @@ void RunTest( Application& application )
 
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
   RunTest( application );
 
   return 0;

@@ -17,6 +17,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/mesh-actor.h>
 #include "shared/view.h"
 #include "radial-sweep-view.h"
 #include "radial-sweep-view-impl.h"
@@ -121,8 +122,6 @@ RadialMenuExample::~RadialMenuExample()
 
 void RadialMenuExample::OnInit(Application& app)
 {
-  DemoHelper::RequestThemeChange();
-
   Stage stage = Dali::Stage::GetCurrent();
 
   // The Init signal is received once (only) during the Application lifetime
@@ -290,7 +289,7 @@ void RunTest(Application app)
 // Entry point for Linux & Tizen applications
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

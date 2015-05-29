@@ -23,6 +23,11 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/transition-effects/cube-transition-effect.h>
+#include <dali-toolkit/devel-api/transition-effects/cube-transition-cross-effect.h>
+#include <dali-toolkit/devel-api/transition-effects/cube-transition-fold-effect.h>
+#include <dali-toolkit/devel-api/transition-effects/cube-transition-wave-effect.h>
+
 
 using namespace Dali;
 
@@ -219,8 +224,6 @@ CubeTransitionApp::~CubeTransitionApp()
 
 void CubeTransitionApp::OnInit( Application& application )
 {
-  DemoHelper::RequestThemeChange();
-
   Stage::GetCurrent().KeyEventSignal().Connect(this, &CubeTransitionApp::OnKeyEvent);
 
   // Creates a default view with a default tool bar, the view is added to the stage.
@@ -430,7 +433,7 @@ void CubeTransitionApp::OnKeyEvent(const KeyEvent& event)
 // Entry point for Linux & Tizen applications
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
   CubeTransitionApp test( application );
   application.MainLoop();
 

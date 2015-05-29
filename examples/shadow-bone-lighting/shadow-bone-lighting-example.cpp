@@ -20,6 +20,8 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/shadow-view/shadow-view.h>
+
 #include <iostream>
 
 using namespace Dali;
@@ -120,8 +122,6 @@ public:
    */
   void Create(Application& app)
   {
-    DemoHelper::RequestThemeChange();
-
     srand(0); // Want repeatable path
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &TestApp::OnKeyEvent);
@@ -501,7 +501,7 @@ RunTest(Application& app)
 int
 main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

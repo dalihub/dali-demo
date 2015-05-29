@@ -19,6 +19,10 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/mesh-actor.h>
+#include <dali/devel-api/modeling/material.h>
+#include <dali/devel-api/geometry/animatable-mesh.h>
+
 #include "radial-sweep-view.h"
 
 

@@ -18,6 +18,10 @@
 #include "radial-sweep-view.h"
 #include "radial-sweep-view-impl.h"
 
+// EXTERNAL INCLUDES
+#include <dali/devel-api/actors/mesh-actor.h>
+
+
 using namespace Dali;
 
 RadialSweepView::RadialSweepView()

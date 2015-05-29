@@ -17,6 +17,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
 #include "shared/view.h"
 
 using namespace Dali;
@@ -91,8 +92,6 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application& app)
   {
-    DemoHelper::RequestThemeChange();
-
     Stage stage = Stage::GetCurrent();
     Vector2 stageSize = stage.GetSize();
 
@@ -101,9 +100,8 @@ private:
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
     Toolkit::ToolBar toolBar;
-    Toolkit::Control    view;
     Layer content = DemoHelper::CreateView( app,
-                                            view,
+                                            mBackground,
                                             toolBar,
                                             "",
                                             TOOLBAR_IMAGE,
@@ -141,15 +139,14 @@ private:
     content.Add( bubbleRoot );
 
     // Add the background image actor to stage
-    view.SetBackgroundImage( mBackgroundImage );
-    mBackgroundActor = ImageActor::DownCast( view.GetBackgroundActor() );
+    mBackground.SetBackgroundImage( mBackgroundImage );
 
     // Set up the timer to emit bubble regularly when the finger is touched down but not moved
     mTimerForBubbleEmission = Timer::New( mTimerInterval );
     mTimerForBubbleEmission.TickSignal().Connect(this, &BubbleEffectExample::OnTimerTick);
 
     // Connect the callback to the touch signal on the background
-    mBackgroundActor.TouchedSignal().Connect( this, &BubbleEffectExample::OnTouch );
+    mBackground.TouchedSignal().Connect( this, &BubbleEffectExample::OnTouch );
   }
 
 
@@ -256,7 +253,7 @@ private:
 
       mBubbleEmitter.SetBackground( mBackgroundImage, mHSVDelta );
 
-      mBackgroundActor.SetImage( mBackgroundImage );
+      mBackground.SetBackgroundImage( mBackgroundImage );
     }
     else if( button == mChangeBubbleShapeButton )
     {
@@ -283,7 +280,7 @@ private:
 
   Application&               mApp;
   Image                      mBackgroundImage;
-  ImageActor                 mBackgroundActor;
+  Dali::Toolkit::Control     mBackground;
 
   Toolkit::BubbleEmitter     mBubbleEmitter;
   Vector3                    mHSVDelta;
@@ -319,7 +316,7 @@ RunTest(Application& app)
 int
 main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 
