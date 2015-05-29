@@ -914,12 +914,12 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
       newPage++;
     }
 
-    newPage = std::max(0, std::min(static_cast<int>(mScrollRulerX->GetTotalPages() - 1), newPage));
+    newPage = std::max(0, std::min(mTotalPages - 1, newPage));
     if( newPage == currentPage )
     {
       if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
       {
-        newPage = mScrollRulerX->GetTotalPages() - 1;
+        newPage = mTotalPages - 1;
       } else if( direction == Dali::Toolkit::Control::KeyboardFocus::RIGHT )
       {
         newPage = 0;
