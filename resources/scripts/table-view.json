@@ -21,6 +21,7 @@
       "type":"TableView",
       "background-color": [0.5,0.5,0,1],
       "parent-origin": "CENTER",
+      "draw-mode": "OVERLAY",
       "size":[400,500,1],
       "cell-padding": [10, 5],
       "layout-rows": {  // set the height of the rows

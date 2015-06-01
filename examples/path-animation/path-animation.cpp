@@ -140,8 +140,6 @@ public:
    */
   void DrawPath( unsigned int resolution )
   {
-    Stage stage = Dali::Stage::GetCurrent();
-
     //Create path mesh actor
     Dali::MeshData meshData = MeshFactory::NewPath( mPath, resolution );
     Dali::Material material = Material::New("LineMaterial");
@@ -150,12 +148,12 @@ public:
     Dali::Mesh mesh = Dali::Mesh::New( meshData );
     if( mMeshPath )
     {
-      stage.Remove( mMeshPath );
+      mContentLayer.Remove( mMeshPath );
     }
     mMeshPath = Dali::MeshActor::New( mesh );
     mMeshPath.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mMeshPath.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    stage.Add( mMeshPath );
+    mContentLayer.Add( mMeshPath );
 
 
     ////Create mesh connecting interpolation points and control points
@@ -192,12 +190,12 @@ public:
     mesh = Dali::Mesh::New( meshData );
     if( mMeshHandlers )
     {
-      stage.Remove( mMeshHandlers );
+      mContentLayer.Remove( mMeshHandlers );
     }
     mMeshHandlers = Dali::MeshActor::New( mesh );
     mMeshHandlers.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mMeshHandlers.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    stage.Add( mMeshHandlers );
+    mContentLayer.Add( mMeshHandlers );
 
 
     //Create actors representing interpolation points
@@ -456,6 +454,7 @@ public:
                                             BACKGROUND_IMAGE,
                                             TOOLBAR_IMAGE,
                                             "" );
+    mContentLayer.SetDrawMode( DrawMode::OVERLAY );
 
     mContentLayer.TouchedSignal().Connect(this, &PathController::OnTouchLayer);
 
@@ -475,7 +474,7 @@ public:
     mActor = ImageActor::New( img );
     mActor.SetAnchorPoint( AnchorPoint::CENTER );
     mActor.SetSize( 100, 50, 1 );
-    stage.Add( mActor );
+    mContentLayer.Add( mActor );
 
     CreateAnimation();
     CreateControls();
