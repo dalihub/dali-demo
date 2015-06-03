@@ -82,19 +82,19 @@ Geometry CreateGeometry()
 
   Property::Map pentagonVertexFormat;
   pentagonVertexFormat["aPosition1"] = Property::VECTOR2;
-  PropertyBuffer pentagonVertices = PropertyBuffer::New( PropertyBuffer::STATIC, pentagonVertexFormat, 5 );
+  PropertyBuffer pentagonVertices = PropertyBuffer::New( pentagonVertexFormat, 5 );
   pentagonVertices.SetData(pentagonVertexData);
 
   Property::Map pentacleVertexFormat;
   pentacleVertexFormat["aPosition2"] = Property::VECTOR2;
-  PropertyBuffer pentacleVertices = PropertyBuffer::New( PropertyBuffer::STATIC, pentacleVertexFormat, 5 );
+  PropertyBuffer pentacleVertices = PropertyBuffer::New( pentacleVertexFormat, 5 );
   pentacleVertices.SetData(pentacleVertexData);
 
   // Create indices
   unsigned int indexData[10] = { 0, 1, 1, 2, 2, 3, 3, 4, 4, 0 };
   Property::Map indexFormat;
   indexFormat["indices"] = Property::UNSIGNED_INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( PropertyBuffer::STATIC, indexFormat, sizeof(indexData)/sizeof(indexData[0]) );
+  PropertyBuffer indices = PropertyBuffer::New( indexFormat, sizeof(indexData)/sizeof(indexData[0]) );
   indices.SetData(indexData);
 
   // Create the geometry object

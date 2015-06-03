@@ -456,7 +456,7 @@ private:
     vertexFormat["aPosition"] = Property::VECTOR3;
     vertexFormat["aNormal"] = Property::VECTOR3;
     vertexFormat["aTexCoord"] = Property::VECTOR2;
-    PropertyBuffer surfaceVertices = PropertyBuffer::New( PropertyBuffer::STATIC, vertexFormat, vertices.size() );
+    PropertyBuffer surfaceVertices = PropertyBuffer::New( vertexFormat, vertices.size() );
     surfaceVertices.SetData( &vertices[0] );
 
     Geometry surface = Geometry::New();

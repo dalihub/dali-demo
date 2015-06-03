@@ -75,14 +75,14 @@ Geometry CreateGeometry()
   Property::Map texturedQuadVertexFormat;
   texturedQuadVertexFormat["aPosition"] = Property::VECTOR2;
   texturedQuadVertexFormat["aTexCoord"] = Property::VECTOR2;
-  PropertyBuffer texturedQuadVertices = PropertyBuffer::New( PropertyBuffer::STATIC, texturedQuadVertexFormat, 4 );
+  PropertyBuffer texturedQuadVertices = PropertyBuffer::New( texturedQuadVertexFormat, 4 );
   texturedQuadVertices.SetData(texturedQuadVertexData);
 
   // Create indices
   unsigned int indexData[6] = { 0, 3, 1, 0, 2, 3 };
   Property::Map indexFormat;
   indexFormat["indices"] = Property::UNSIGNED_INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( PropertyBuffer::STATIC, indexFormat, sizeof(indexData)/sizeof(indexData[0]) );
+  PropertyBuffer indices = PropertyBuffer::New( indexFormat, sizeof(indexData)/sizeof(indexData[0]) );
   indices.SetData(indexData);
 
   // Create the geometry object
