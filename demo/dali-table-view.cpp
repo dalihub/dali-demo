@@ -528,7 +528,7 @@ ImageActor DaliTableView::NewStencilImage()
   stencilActor.SetAnchorPoint( AnchorPoint::CENTER );
   stencilActor.SetDrawMode( DrawMode::STENCIL );
 
-  Dali::ShaderEffect shaderEffect = AlphaDiscardEffect::New();
+  Dali::ShaderEffect shaderEffect = CreateAlphaDiscardEffect();
   stencilActor.SetShaderEffect( shaderEffect );
 
   return stencilActor;
@@ -766,11 +766,11 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
-    Toolkit::DistanceFieldEffect effect = Toolkit::DistanceFieldEffect::New();
+    ShaderEffect effect = Toolkit::CreateDistanceFieldEffect();
     dfActor.SetShaderEffect( effect );
     dfActor.SetColor( randColour );
-    effect.SetOutlineParams( Vector2( 0.55f, 0.00f ) );
-    effect.SetSmoothingEdge( 0.5f );
+    effect.SetUniform("uOutlineParams", Vector2( 0.55f, 0.00f ) );
+    effect.SetUniform("uSmoothing", 0.5f );
     layer.Add( dfActor );
   }
 

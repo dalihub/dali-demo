@@ -212,7 +212,12 @@ public:
     mContentLayer.Add( mMotionBlurImageActor );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect = MotionBlurEffect::Apply(mMotionBlurImageActor);
+    mMotionBlurEffect = Toolkit::CreateMotionBlurEffect();
+    Dali::Property::Index uModelProperty = mMotionBlurEffect.GetPropertyIndex( "uModelLastFrame" );
+    Constraint constraint = Constraint::New<Matrix>( mMotionBlurEffect, uModelProperty, EqualToConstraint() );
+    constraint.AddSource( Source( mMotionBlurImageActor , Actor::Property::WORLD_MATRIX ) );
+    constraint.Apply();
+    mMotionBlurImageActor.SetShaderEffect( mMotionBlurEffect );
 
 
 #ifdef MULTIPLE_MOTION_BLURRED_ACTORS
@@ -229,7 +234,7 @@ public:
     mMotionBlurImageActor.Add( mMotionBlurImageActor2 );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect2 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
+    mMotionBlurEffect2 = CreateMotionBlurEffect(MOTION_BLUR_NUM_SAMPLES);
 
     // set actor shader to the blur one
     mMotionBlurImageActor2.SetShaderEffect( mMotionBlurEffect2 );
@@ -247,7 +252,7 @@ public:
     mMotionBlurImageActor.Add( mMotionBlurImageActor3 );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect3 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
+    mMotionBlurEffect3 = CreateMotionBlurEffect(MOTION_BLUR_NUM_SAMPLES);
 
     // set actor shader to the blur one
     mMotionBlurImageActor3.SetShaderEffect( mMotionBlurEffect3 );
@@ -265,7 +270,7 @@ public:
     mMotionBlurImageActor.Add( mMotionBlurImageActor4 );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect4 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
+    mMotionBlurEffect4 = CreateMotionBlurEffect(MOTION_BLUR_NUM_SAMPLES);
 
     // set actor shader to the blur one
     mMotionBlurImageActor4.SetShaderEffect( mMotionBlurEffect4 );
@@ -283,7 +288,7 @@ public:
     mMotionBlurImageActor.Add( mMotionBlurImageActor5 );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect5 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
+    mMotionBlurEffect5 = CreateMotionBlurEffect(MOTION_BLUR_NUM_SAMPLES);
 
     // set actor shader to the blur one
     mMotionBlurImageActor5.SetShaderEffect( mMotionBlurEffect5 );
@@ -513,15 +518,15 @@ private:
   PushButton                 mActorEffectsButton;     ///< The actor effects toggling Button.
 
   // Motion blur
-  MotionBlurEffect mMotionBlurEffect;
+  ShaderEffect mMotionBlurEffect;
   ImageActor mMotionBlurImageActor;
   Size mMotionBlurActorSize;
 
 #ifdef MULTIPLE_MOTION_BLURRED_ACTORS
-  MotionBlurEffect mMotionBlurEffect2;
-  MotionBlurEffect mMotionBlurEffect3;
-  MotionBlurEffect mMotionBlurEffect4;
-  MotionBlurEffect mMotionBlurEffect5;
+  ShaderEffect mMotionBlurEffect2;
+  ShaderEffect mMotionBlurEffect3;
+  ShaderEffect mMotionBlurEffect4;
+  ShaderEffect mMotionBlurEffect5;
 
   ImageActor mMotionBlurImageActor2;
   ImageActor mMotionBlurImageActor3;
