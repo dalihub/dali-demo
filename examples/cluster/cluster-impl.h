@@ -253,15 +253,15 @@ public:
 private: // From Control
 
   /**
-   * @copydoc Control::OnInitialize()
+   * @copydoc Demo::Control::OnInitialize()
    */
   virtual void OnInitialize();
 
   /**
    *
-   * @copydoc CustomActorImpl::OnSizeSet( const Vector3& targetSize )
+   * @copydoc Demo::Control::OnControlSizeSet( const Vector3& targetSize )
    */
-  virtual void OnSizeSet( const Vector3& targetSize );
+  virtual void OnControlSizeSet( const Vector3& targetSize );
 
 protected:
 

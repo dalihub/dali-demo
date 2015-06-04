@@ -79,12 +79,16 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
 
   // Tool bar
   Dali::Image image = Dali::ResourceImage::New( toolbarImagePath );
+  Dali::ImageActor toolBarBackground = Dali::ImageActor::New( image );
+  toolBarBackground.SetName( "TOOLBAR_BACKGROUND" );
+  toolBarBackground.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
   toolBar = Dali::Toolkit::ToolBar::New();
   toolBar.SetName( "TOOLBAR" );
-  toolBar.SetBackgroundImage( image );
+  toolBar.SetBackground( toolBarBackground );
   toolBar.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
   toolBar.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
   toolBar.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
+  toolBarBackground.SetSortModifier(1.0f);
 
   // Add the tool bar to the too bar layer.
   toolBarLayer.Add( toolBar );
