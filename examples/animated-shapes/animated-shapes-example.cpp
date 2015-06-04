@@ -55,11 +55,12 @@ public:
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
 
-    //Create a view
+    // Create a view
     mView = Dali::Toolkit::Control::New();
     mView.SetAnchorPoint( Dali::AnchorPoint::CENTER );
     mView.SetParentOrigin( Dali::ParentOrigin::CENTER );
     mView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mView.SetDrawMode( DrawMode::OVERLAY );
     stage.Add( mView );
 
     //Set background image for the view

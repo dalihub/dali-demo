@@ -313,7 +313,7 @@ public:
     mWhiteImage = BufferImage::WHITE();
   }
 
-  Actor OnKeyboardPreFocusChange( Actor current, Actor proposed, Control::KeyboardFocusNavigationDirection direction )
+  Actor OnKeyboardPreFocusChange( Actor current, Actor proposed, Control::KeyboardFocus::Direction direction )
   {
     if ( !current && !proposed  )
     {
