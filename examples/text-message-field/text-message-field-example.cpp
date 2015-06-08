@@ -158,7 +158,7 @@ void RunTest( Application& application )
 /** Entry point for Linux & Tizen applications */
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( application );
 

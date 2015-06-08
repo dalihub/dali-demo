@@ -22,9 +22,10 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/public-api/builder/builder.h>
-#include <dali-toolkit/public-api/builder/tree-node.h>
-#include <dali-toolkit/public-api/builder/json-parser.h>
+#include <dali-toolkit/devel-api/builder/builder.h>
+#include <dali-toolkit/devel-api/builder/tree-node.h>
+#include <dali-toolkit/devel-api/builder/json-parser.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <map>
 #include <string>
 #include <fstream>
@@ -492,8 +493,6 @@ public:
 
   void Create(Application& app)
   {
-    DemoHelper::RequestThemeChange();
-
     Stage stage = Stage::GetCurrent();
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleApp::OnKeyEvent);
@@ -617,7 +616,7 @@ int main(int argc, char **argv)
     }
   }
 
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   ExampleApp dali_app(app);
 

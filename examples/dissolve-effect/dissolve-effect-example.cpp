@@ -23,6 +23,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/shader-effects/dissolve-effect.h>
 
 using namespace Dali;
 
@@ -203,8 +204,6 @@ DissolveEffectApp::~DissolveEffectApp()
 
 void DissolveEffectApp::OnInit( Application& application )
 {
-  DemoHelper::RequestThemeChange();
-
   Stage::GetCurrent().KeyEventSignal().Connect(this, &DissolveEffectApp::OnKeyEvent);
 
   // Creates a default view with a default tool bar, the view is added to the stage.
@@ -429,7 +428,7 @@ bool DissolveEffectApp::OnTimerTick()
 // Entry point for Linux & Tizen applications
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
   DissolveEffectApp test( application );
   application.MainLoop();
 

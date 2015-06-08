@@ -34,7 +34,7 @@ using namespace MultiLanguageStrings;
 
 namespace
 {
-  const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "button-up.9.png";
+  const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "grab-handle.png";
 
   const unsigned int KEY_ZERO = 10;
   const unsigned int KEY_ONE = 11;
@@ -97,8 +97,6 @@ public:
    */
   void Create( Application& application )
   {
-    DemoHelper::RequestThemeChange();
-
     Stage stage = Stage::GetCurrent();
 
     stage.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
@@ -109,16 +107,16 @@ public:
     mContainer.SetParentOrigin( ParentOrigin::CENTER );
     mLayoutSize = Vector2(stageSize.width*0.6f, stageSize.width*0.6f);
     mContainer.SetSize( mLayoutSize );
+    mContainer.SetDrawMode( DrawMode::OVERLAY );
     stage.Add( mContainer );
 
     // Resize the center layout when the corner is grabbed
     mGrabCorner = Control::New();
     mGrabCorner.SetName( "GrabCorner" );
-    mGrabCorner.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
+    mGrabCorner.SetAnchorPoint( AnchorPoint::TOP_CENTER );
     mGrabCorner.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
-    mGrabCorner.SetSize( Vector2(stageSize.width*0.1f, stageSize.width*0.1f) );
-    mGrabCorner.SetZ(1.0f);
-    mGrabCorner.SetBackgroundColor( Color::YELLOW );
+    mGrabCorner.SetBackgroundImage( ResourceImage::New( BACKGROUND_IMAGE ) );
+    mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     mContainer.Add( mGrabCorner );
 
     mPanGestureDetector = PanGestureDetector::New();
@@ -285,7 +283,7 @@ void RunTest( Application& application )
 /** Entry point for Linux & Tizen applications */
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( application );
 

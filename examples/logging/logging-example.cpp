@@ -18,7 +18,7 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <devel-api/adaptor-framework/performance-logger.h>
+#include <dali/devel-api/adaptor-framework/performance-logger.h>
 #include <sstream>
 
 using namespace Dali;
@@ -143,8 +143,6 @@ class LoggingController: public ConnectionTracker
   void Create( Application& application )
   {
     // The Init signal is received once (only) during the Application lifetime
-
-    DemoHelper::RequestThemeChange();
 
     mCurrentLogger = 0;
     mPerformanceLoggers.reserve( NUM_LOGGERS );
@@ -755,7 +753,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( application );
 

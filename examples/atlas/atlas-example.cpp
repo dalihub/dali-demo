@@ -226,7 +226,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  gApplication = Application::New( &argc, &argv );
+  gApplication = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
 
   RunTest( gApplication );
 

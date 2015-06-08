@@ -48,7 +48,6 @@ Launcher::Launcher( Dali::Application application, std::string layoutFileName, s
   mJSONFileName(layoutFileName ),
   mJavaScriptFileName( scriptFileName )
 {
-
   mApplication.InitSignal().Connect( this, &Launcher::Create );
 }
 
@@ -58,8 +57,6 @@ Launcher::~Launcher()
 
 void Launcher::Create( Dali::Application& application )
 {
-  DemoHelper::RequestThemeChange();
-
   TextLabel textActor = TextLabel::New( "JSON & JavaScript Launcher..." );
 
   // Reposition the actor

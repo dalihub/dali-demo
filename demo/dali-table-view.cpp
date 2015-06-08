@@ -23,6 +23,8 @@
 #include <sstream>
 #include <unistd.h>
 #include <dali/devel-api/images/distance-field.h>
+#include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
+#include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -202,8 +204,6 @@ void DaliTableView::SortAlphabetically( bool sortAlphabetically )
 
 void DaliTableView::Initialize( Application& application )
 {
-  DemoHelper::RequestThemeChange();
-
   Stage::GetCurrent().KeyEventSignal().Connect( this, &DaliTableView::OnKeyEvent );
 
   const Vector2 stageSize = Stage::GetCurrent().GetSize();
@@ -317,12 +317,10 @@ void DaliTableView::Initialize( Application& application )
   winHandle.RemoveAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
   // Set initial orientation
-  Dali::Orientation orientation = winHandle.GetOrientation();
-
-  unsigned int degrees = winHandle.GetOrientation().GetDegrees();
+  unsigned int degrees = 0;
   Rotate( degrees );
 
-  orientation.ChangedSignal().Connect( this, &DaliTableView::OrientationChanged );
+  //orientation.ChangedSignal().Connect( this, &DaliTableView::OrientationChanged );
 
   winHandle.ShowIndicator( Dali::Window::INVISIBLE );
 
@@ -389,12 +387,12 @@ void DaliTableView::Populate()
           const Example& example = ( *iter );
 
           Actor tile = CreateTile( example.name, example.title, Vector3( tileParentMultiplier, tileParentMultiplier, 1.0f ), true );
-          FocusManager focusManager = FocusManager::Get();
-          focusManager.SetFocusOrder( tile, ++exampleCount );
-          focusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::FocusManager::ACCESSIBILITY_LABEL,
+          AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
+          accessibilityFocusManager.SetFocusOrder( tile, ++exampleCount );
+          accessibilityFocusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityFocusManager::ACCESSIBILITY_LABEL,
                                                   example.title );
-          focusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::FocusManager::ACCESSIBILITY_TRAIT, "Tile" );
-          focusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::FocusManager::ACCESSIBILITY_HINT,
+          accessibilityFocusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityFocusManager::ACCESSIBILITY_TRAIT, "Tile" );
+          accessibilityFocusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityFocusManager::ACCESSIBILITY_HINT,
                                                   "You can run this example" );
 
           tile.SetPadding( Padding( margin, margin, margin, margin ) );
@@ -553,7 +551,7 @@ bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
     std::string name = actor.GetName();
     ExampleMapConstIter iter = mExampleMap.find( name );
 
-    FocusManager focusManager = FocusManager::Get();
+    AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
 
     if( iter != mExampleMap.end() )
     {
@@ -596,11 +594,11 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
       if( name == BUTTON_QUIT )
       {
         // Move focus to the OK button
-        FocusManager focusManager = FocusManager::Get();
+        AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
 
         // Enable the group mode and wrap mode
-        focusManager.SetGroupMode( true );
-        focusManager.SetWrapMode( true );
+        accessibilityFocusManager.SetGroupMode( true );
+        accessibilityFocusManager.SetWrapMode( true );
       }
     }
     else
@@ -632,8 +630,8 @@ void DaliTableView::OnScrollComplete( const Dali::Vector2& position )
   mScrolling = false;
 
   // move focus to 1st item of new page
-  FocusManager focusManager = FocusManager::Get();
-  focusManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
+  AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
+  accessibilityFocusManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
 }
 
 bool DaliTableView::OnScrollTouched( Actor actor, const TouchEvent& event )
@@ -892,7 +890,7 @@ void DaliTableView::PlayAnimation()
   mAnimationTimer.SetInterval( BACKGROUND_ANIMATION_DURATION );
 }
 
-Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocusNavigationDirection direction )
+Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction )
 {
   Actor nextFocusActor = proposed;
 
@@ -907,22 +905,22 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
     // in the given direction. We should work out which page to scroll to next.
     int currentPage = mScrollView.GetCurrentPage();
     int newPage = currentPage;
-    if( direction == Dali::Toolkit::Control::Left )
+    if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
     {
       newPage--;
     }
-    else if( direction == Dali::Toolkit::Control::Right )
+    else if( direction == Dali::Toolkit::Control::KeyboardFocus::RIGHT )
     {
       newPage++;
     }
 
-    newPage = std::max(0, std::min(static_cast<int>(mScrollRulerX->GetTotalPages() - 1), newPage));
+    newPage = std::max(0, std::min(mTotalPages - 1, newPage));
     if( newPage == currentPage )
     {
-      if( direction == Dali::Toolkit::Control::Left )
+      if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
       {
-        newPage = mScrollRulerX->GetTotalPages() - 1;
-      } else if( direction == Dali::Toolkit::Control::Right )
+        newPage = mTotalPages - 1;
+      } else if( direction == Dali::Toolkit::Control::KeyboardFocus::RIGHT )
       {
         newPage = 0;
       }
@@ -931,7 +929,7 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
     // Scroll to the page in the given direction
     mScrollView.ScrollTo(newPage);
 
-    if( direction == Dali::Toolkit::Control::Left )
+    if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
     {
       // Work out the cell position for the last tile
       int remainingExamples = mExampleList.size() - newPage * EXAMPLES_PER_PAGE;
@@ -939,7 +937,7 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
       int colPos = remainingExamples >= EXAMPLES_PER_PAGE ? EXAMPLES_PER_ROW - 1 : ( remainingExamples % EXAMPLES_PER_PAGE - rowPos * EXAMPLES_PER_ROW - 1 );
 
       // Move the focus to the last tile in the new page.
-      nextFocusActor = mPages[newPage].GetChildAt(colPos * EXAMPLES_PER_ROW + rowPos);
+      nextFocusActor = mPages[newPage].GetChildAt(rowPos * EXAMPLES_PER_ROW + colPos);
     }
     else
     {

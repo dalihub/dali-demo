@@ -18,12 +18,10 @@
   "stage": [
     {
       "type": "Control",
-      "relayout-enabled": false,
+      "draw-mode": "OVERLAY",
       "actors": [
         {
           "type": "Control",
-	  "relayout-enabled": true,
-          "actors": [],
           "name": "Control 8",
           "position": [
             0,
@@ -62,12 +60,9 @@
         },
         {
           "type": "Control",
-	  "relayout-enabled": false,
           "actors": [
             {
               "type": "Control",
-	      "relayout-enabled": false,
-              "actors": [],
               "name": "Container 2",
               "position": [
                 0,
@@ -106,12 +101,9 @@
             },
             {
               "type": "Control",
-	      "relayout-enabled": false,
               "actors": [
                 {
                   "type": "Control",
-		  "relayout-enabled": false,
-                  "actors": [],
                   "name": "Container 4",
                   "position": [
                     0,
@@ -187,12 +179,9 @@
             },
             {
               "type": "Control",
-	      "relayout-enabled": false,
               "actors": [
                 {
                   "type": "Control",
-		  "relayout-enabled": false,
-                  "actors": [],
                   "name": "Container 5",
                   "position": [
                     0,
@@ -231,12 +220,9 @@
                 },
                 {
                   "type": "Control",
-		  "relayout-enabled": false,
                   "actors": [
                     {
                       "type": "Control",
-		      "relayout-enabled": false,
-                      "actors": [],
                       "name": "Container 7",
                       "position": [
                         0,
@@ -312,12 +298,9 @@
                 },
                 {
                   "type": "Control",
-		  "relayout-enabled": false,
                   "actors": [
                     {
                       "type": "Control",
-		      "relayout-enabled": false,
-                      "actors": [],
                       "name": "Container 8",
                       "position": [
                         0,
@@ -356,12 +339,9 @@
                     },
                     {
                       "type": "Control",
-		      "relayout-enabled": false,
                       "actors": [
                         {
                           "type": "Control",
-			  "relayout-enabled": false,
-                          "actors": [],
                           "name": "Container 10",
                           "position": [
                             0,
@@ -548,12 +528,9 @@
         },
         {
           "type": "Control",
-	  "relayout-enabled": false,
           "actors": [
             {
               "type": "Control",
-	      "relayout-enabled": false,
-              "actors": [],
               "name": "Control 4",
               "position": [
                 0,
@@ -629,15 +606,12 @@
         },
         {
           "type": "Control",
-	  "relayout-enabled": false,
           "actors": [
             {
               "type": "Control",
-	      "relayout-enabled": false,
               "actors": [
                 {
                   "type": "Control",
-                  "actors": [],
                   "name": "Container 13",
                   "position": [
                     0,
@@ -713,8 +687,6 @@
             },
             {
               "type": "Control",
-	      "relayout-enabled": false,
-              "actors": [],
               "name": "Container 11",
               "position": [
                 0,
@@ -753,16 +725,12 @@
             },
             {
               "type": "Control",
-	      "relayout-enabled": false,
               "actors": [
                 {
                   "type": "Control",
-		  "relayout-enabled": false,
                   "actors": [
                     {
                       "type": "Control",
-		      "relayout-enabled": false,
-                      "actors": [],
                       "name": "Container 15",
                       "position": [
                         0,
@@ -838,8 +806,6 @@
                 },
                 {
                   "type": "Control",
-		  "relayout-enabled": false,
-                  "actors": [],
                   "name": "Container 16",
                   "position": [
                     0,
@@ -949,7 +915,27 @@
             0.3411764705882353,
             1
           ]
+        },
+            {
+      "type": "TextLabel",
+      "name": "text",
+      "parent-origin": "CENTER",
+      "anchor-point": "CENTER",
+      "text": "START",
+      "point-size": 20,
+      "signals": [
+        {
+          "name": "tapped",
+          "action": "play",
+          "animation": "Animation_1"
+        },
+        {
+          "name": "tapped",
+          "action": "play",
+          "animation": "HideText"
         }
+      ]
+    }
       ],
       "name": "Container 1",
       "position": [
@@ -985,26 +971,6 @@
         0.9215686274509803,
         0.32941176470588235,
         1
-      ]
-    },
-    {
-      "type": "TextLabel",
-      "name": "text",
-      "parent-origin": "CENTER",
-      "anchor-point": "CENTER",
-      "text": "START",
-      "point-size": 20,
-      "signals": [
-        {
-          "name": "tapped",
-          "action": "play",
-          "animation": "Animation_1"
-        },
-        {
-          "name": "tapped",
-          "action": "play",
-          "animation": "HideText"
-        }
       ]
     }
   ],

@@ -17,6 +17,11 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-factory.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-landscape-view.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-portrait-view.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-view.h>
+
 #include <assert.h>
 #include <cstdlib>
 #include <string.h>
@@ -221,8 +226,6 @@ void PageTurnController::OnInit( Application& app )
 {
   // The Init signal is received once ( only ) during the Application lifetime
 
-  DemoHelper::RequestThemeChange();
-
   Stage::GetCurrent().KeyEventSignal().Connect(this, &PageTurnController::OnKeyEvent);
 
   Stage stage = Stage::GetCurrent();
@@ -242,7 +245,7 @@ void PageTurnController::OnInit( Application& app )
   winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
   // view will response to orientation change to display portrait or landscape views
-  app.GetWindow().GetOrientation().ChangedSignal().Connect( this, &PageTurnController::OnOrientationAnimationStarted );
+  //app.GetWindow().GetOrientation().ChangedSignal().Connect( this, &PageTurnController::OnOrientationAnimationStarted );
 
   mPageTurnPortraitView = PageTurnPortraitView::New( mPortraitPageFactory, stageSize );
   mPageTurnPortraitView.SetSpineShadowParameter( Vector2(70.f, 30.f) );
@@ -342,7 +345,7 @@ void PageTurnController::OnPageFinishedPan( PageTurnView pageTurnView )
 // Entry point for applications
 int main( int argc, char **argv )
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
   PageTurnController test ( app );
 
   app.MainLoop();

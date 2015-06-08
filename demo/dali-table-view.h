@@ -22,6 +22,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 
 class Example;
 
@@ -344,7 +345,7 @@ private: // Application callbacks & implementation
    * @param[in] direction The direction to move the focus
    * @return The actor to move the keyboard focus to.
    */
-  Dali::Actor OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocusNavigationDirection direction );
+  Dali::Actor OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction );
 
   /**
    * Callback when the keyboard focused actor is activated.

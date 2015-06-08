@@ -21,6 +21,9 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/shader-effects/motion-blur-effect.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/devel-api/shader-effects/carousel-effect.h>
 
 #include "cluster.h"
 #include "cluster-style.h"
@@ -357,8 +360,6 @@ public:
    */
   void Create(Application& application)
   {
-    DemoHelper::RequestThemeChange();
-
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ClusterController::OnKeyEvent);
 
     // The Init signal is received once (only) during the Application lifetime
@@ -779,7 +780,7 @@ void RunTest(Application& app)
 //
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

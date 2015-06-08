@@ -21,6 +21,8 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/shader-effects/motion-blur-effect.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -189,8 +191,8 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
     // set initial orientation
-    winHandle.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
-    unsigned int degrees = winHandle.GetOrientation().GetDegrees();
+   // winHandle.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
+    unsigned int degrees = 0;
     Rotate( static_cast< DeviceOrientation >( degrees ) );
 
 
@@ -564,7 +566,7 @@ void RunTest(Application& app)
 //
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   RunTest(app);
 

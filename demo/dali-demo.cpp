@@ -31,7 +31,7 @@ int main(int argc, char **argv)
   textdomain(DALI_DEMO_DOMAIN_LOCAL);
   setlocale(LC_ALL, DALI_LANG);
 
-  Application app = Application::New(&argc, &argv);
+  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
 
   // Create the demo launcher
   DaliTableView demo(app);
@@ -53,6 +53,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("builder.example", DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI));
   demo.AddExample(Example("image-scaling-and-filtering.example", DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING));
   demo.AddExample(Example("image-scaling-irregular-grid.example", DALI_DEMO_STR_TITLE_IMAGE_SCALING));
+  demo.AddExample(Example("text-field.example", DALI_DEMO_STR_TITLE_TEXT_FIELD));
   demo.AddExample(Example("text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));
   demo.AddExample(Example("text-label-multi-language.example", DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE));
   demo.AddExample(Example("text-label-emojis.example", DALI_DEMO_STR_TITLE_EMOJI_TEXT));
