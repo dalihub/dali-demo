@@ -21,7 +21,6 @@ BuildRequires:  pkgconfig(capi-media-player)
 BuildRequires:  dali-toolkit-devel
 BuildRequires:  dali-adaptor-devel
 BuildRequires:  pkgconfig(dlog)
-BuildRequires:  pkgconfig(egl)
 BuildRequires:  gettext-tools
 
 %description
