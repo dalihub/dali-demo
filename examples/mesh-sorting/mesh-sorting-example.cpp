@@ -189,8 +189,7 @@ public:
 
       meshActor.SetOpacity( i%2?0.7f:1.0f );
 
-      Property::Index index=meshActor.RegisterProperty("hue", i/(float)NUMBER_OF_SAMPLES);
-      meshActor.AddUniformMapping( index, "uHue" );
+      meshActor.RegisterProperty("uHue", i/(float)NUMBER_OF_SAMPLES);
 
       meshActor.TouchedSignal().Connect(this, &ExampleController::OnTouched);
       std::ostringstream oss;

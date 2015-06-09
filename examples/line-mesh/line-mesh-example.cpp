@@ -166,8 +166,7 @@ public:
     mMeshActor.AddRenderer( mRenderer );
     mMeshActor.SetSize(200, 200);
 
-    Property::Index morphAmountIndex = mMeshActor.RegisterProperty( "morph-amount", 0.0f );
-    mMeshActor.AddUniformMapping( morphAmountIndex, std::string("uMorphAmount") );
+    Property::Index morphAmountIndex = mMeshActor.RegisterProperty( "uMorphAmount", 0.0f );
 
     mRenderer.SetDepthIndex(0);
 

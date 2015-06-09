@@ -357,10 +357,8 @@ void RadialSweepViewImpl::CreateStencil( Radian initialSector )
   mStencilActor.SetSize(1.f, 1.f);
 
   // register properties
-  mStartAngleIndex = mStencilActor.RegisterProperty("start-angle", 0.f);
-  mStencilActor.AddUniformMapping( mStartAngleIndex, "uStartAngle " );
-  mRotationAngleIndex = mStencilActor.RegisterProperty("rotation-angle", initialSector.radian);
-  mStencilActor.AddUniformMapping( mRotationAngleIndex, "uRotationAngle" );
+  mStartAngleIndex = mStencilActor.RegisterProperty("uStartAngle", 0.f);
+  mRotationAngleIndex = mStencilActor.RegisterProperty("uRotationAngle", initialSector.radian);
 
   mStencilActor.SetDrawMode( DrawMode::STENCIL );
   mStencilActor.SetPositionInheritanceMode(USE_PARENT_POSITION);

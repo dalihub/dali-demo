@@ -292,23 +292,18 @@ private:
     mShaderRefraction = Shader::New( VERTEX_SHADER_REFRACTION, FRAGMENT_SHADER_REFRACTION );
 
     // register uniforms
-    mLightXYOffsetIndex = mMeshActor.RegisterProperty( "light-XY-offset", Vector2::ZERO );
-    mMeshActor.AddUniformMapping( mLightXYOffsetIndex, "uLightXYOffset" );
+    mLightXYOffsetIndex = mMeshActor.RegisterProperty( "uLightXYOffset", Vector2::ZERO );
 
-    mLightIntensityIndex = mMeshActor.RegisterProperty( "light-intensity", 2.5f );
-    mMeshActor.AddUniformMapping( mLightIntensityIndex, "uLightIntensity" );
+    mLightIntensityIndex = mMeshActor.RegisterProperty( "uLightIntensity", 2.5f );
 
-    mEffectStrengthIndex = mMeshActor.RegisterProperty( "effect-strength",  0.f );
-    mMeshActor.AddUniformMapping( mEffectStrengthIndex, "uEffectStrength" );
+    mEffectStrengthIndex = mMeshActor.RegisterProperty( "uEffectStrength",  0.f );
 
     Vector3 lightPosition( -stageSize.x*0.5f, -stageSize.y*0.5f, stageSize.x*0.5f ); // top_left
-    Property::Index lightPositionIndex = mMeshActor.RegisterProperty( "light-position", lightPosition );
-    mMeshActor.AddUniformMapping( lightPositionIndex,  "uLightPosition");
+    mMeshActor.RegisterProperty( "uLightPosition", lightPosition );
 
-    Property::Index lightSpinOffsetIndex = mMeshActor.RegisterProperty( "light-spin-offset", Vector2::ZERO );
-    mMeshActor.AddUniformMapping( lightSpinOffsetIndex, "uLightSpinOffset" );
+    Property::Index lightSpinOffsetIndex = mMeshActor.RegisterProperty( "uLightSpinOffset", Vector2::ZERO );
 
-    mSpinAngleIndex = mMeshActor.RegisterProperty("spin-angle", 0.f );
+    mSpinAngleIndex = mMeshActor.RegisterProperty("uSpinAngle", 0.f );
     Constraint constraint = Constraint::New<Vector2>( mMeshActor, lightSpinOffsetIndex, LightOffsetConstraint(stageSize.x*0.1f) );
     constraint.AddSource( LocalSource(mSpinAngleIndex) );
     constraint.Apply();

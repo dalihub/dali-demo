@@ -165,11 +165,9 @@ public:
     mMeshActor.AddRenderer( mRenderer );
     mMeshActor.SetSize(400, 400);
 
-    Property::Index fadeColorIndex = mMeshActor.RegisterProperty( "fade-color", Color::GREEN );
-    mMeshActor.AddUniformMapping( fadeColorIndex, std::string("uFadeColor") );
+    Property::Index fadeColorIndex = mMeshActor.RegisterProperty( "uFadeColor", Color::GREEN );
 
-    fadeColorIndex = mRenderer.RegisterProperty( "fade-color", Color::MAGENTA );
-    mRenderer.AddUniformMapping( fadeColorIndex, std::string("uFadeColor" ) );
+    fadeColorIndex = mRenderer.RegisterProperty( "uFadeColor", Color::MAGENTA );
     mRenderer.SetDepthIndex(0);
 
     mMeshActor.SetParentOrigin( ParentOrigin::TOP_CENTER );
@@ -183,13 +181,11 @@ public:
     mMeshActor2.SetSize(400, 400);
 
     mMeshActor2.RegisterProperty( "a-n-other-property", Color::GREEN );
-    Property::Index fadeColorIndex2 = mMeshActor2.RegisterProperty( "another-fade-color", Color::GREEN );
-    mMeshActor2.AddUniformMapping( fadeColorIndex2, std::string("uFadeColor") );
+    Property::Index fadeColorIndex2 = mMeshActor2.RegisterProperty( "uFadeColor", Color::GREEN );
 
     mRenderer2.RegisterProperty( "a-n-other-property", Vector3::ZERO );
     mRenderer2.RegisterProperty( "a-coefficient", 0.008f );
-    fadeColorIndex2 = mRenderer2.RegisterProperty( "another-fade-color", Color::BLUE );
-    mRenderer2.AddUniformMapping( fadeColorIndex2, std::string("uFadeColor" ) );
+    fadeColorIndex2 = mRenderer2.RegisterProperty( "uFadeColor", Color::BLUE );
     mRenderer2.SetDepthIndex(0);
 
     mMeshActor2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );

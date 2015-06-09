@@ -171,13 +171,10 @@ public:
     mMeshActor.AddRenderer( mRenderer );
     mMeshActor.SetSize(400, 400);
 
-    Property::Index fadeColorIndex = mMeshActor.RegisterProperty( "fade-color", Color::GREEN );
-    mMeshActor.AddUniformMapping( fadeColorIndex, std::string("uFadeColor") );
+    mMeshActor.RegisterProperty( "uFadeColor", Color::GREEN );
 
-    fadeColorIndex = mRenderer.RegisterProperty( "fade-color", Color::MAGENTA );
-    Property::Index pointSizeIndex = mRenderer.RegisterProperty( "point-size", 80.0f );
-    mRenderer.AddUniformMapping( fadeColorIndex, std::string("uFadeColor" ) );
-    mRenderer.AddUniformMapping( pointSizeIndex, std::string("uPointSize" ) );
+    mRenderer.RegisterProperty( "uFadeColor", Color::MAGENTA );
+    mRenderer.RegisterProperty( "uPointSize", 80.0f );
     mRenderer.SetDepthIndex(0);
 
     mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
