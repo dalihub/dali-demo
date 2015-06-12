@@ -540,15 +540,15 @@ void Cluster::DoTransformAction(const Property::Map& attributes)
 
     if( Property::VECTOR3 == type && "position" == stringValue.first )
     {
-      stringValue.second.Get(position);
+      stringValue.second.Get( position );
     }
     else if( Property::VECTOR3 == type && "scale" == stringValue.first )
     {
-      stringValue.second.Get(scale);
+      stringValue.second.Get( scale );
     }
     else if( "rotation" == stringValue.first )
     {
-      (void)Scripting::SetRotation(stringValue.second, rotation);
+      stringValue.second.Get( rotation );
     }
   }
 
