@@ -268,9 +268,11 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.TouchedSignal().Connect( this, &DaliTableView::OnScrollTouched );
 
   mScrollViewLayer = Layer::New();
+
+  // Disable the depth test for performance
+  mScrollViewLayer.SetDepthTestDisabled( true );
   mScrollViewLayer.SetAnchorPoint( AnchorPoint::CENTER );
   mScrollViewLayer.SetParentOrigin( ParentOrigin::CENTER );
-  mScrollViewLayer.SetDrawMode( DrawMode::OVERLAY );
   mScrollViewLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
   // Create solid background colour.
@@ -279,7 +281,9 @@ void DaliTableView::Initialize( Application& application )
   backgroundColourActor.SetParentOrigin( ParentOrigin::CENTER );
   backgroundColourActor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   backgroundColourActor.SetSizeModeFactor( Vector3( 1.0f, 1.5f, 1.0f ) );
-  backgroundColourActor.SetZ( BACKGROUND_Z );
+
+  // Force the filled background right to the back
+  backgroundColourActor.SetDepthIndex( DemoHelper::BACKGROUND_DEPTH_INDEX );
   mScrollViewLayer.Add( backgroundColourActor );
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
@@ -763,6 +767,9 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     ImageActor dfActor = ImageActor::New( distanceField );
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
+
+    // Force the bubbles just in front of the solid background
+    dfActor.SetDepthIndex( DemoHelper::BACKGROUND_DEPTH_INDEX + 1 );
 
     ShaderEffect effect = Toolkit::CreateDistanceFieldEffect();
     dfActor.SetShaderEffect( effect );
