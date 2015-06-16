@@ -387,12 +387,12 @@ void DaliTableView::Populate()
           const Example& example = ( *iter );
 
           Actor tile = CreateTile( example.name, example.title, Vector3( tileParentMultiplier, tileParentMultiplier, 1.0f ), true );
-          AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
-          accessibilityFocusManager.SetFocusOrder( tile, ++exampleCount );
-          accessibilityFocusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityFocusManager::ACCESSIBILITY_LABEL,
+          AccessibilityManager accessibilityManager = AccessibilityManager::Get();
+          accessibilityManager.SetFocusOrder( tile, ++exampleCount );
+          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_LABEL,
                                                   example.title );
-          accessibilityFocusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityFocusManager::ACCESSIBILITY_TRAIT, "Tile" );
-          accessibilityFocusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityFocusManager::ACCESSIBILITY_HINT,
+          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_TRAIT, "Tile" );
+          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_HINT,
                                                   "You can run this example" );
 
           tile.SetPadding( Padding( margin, margin, margin, margin ) );
@@ -551,7 +551,7 @@ bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
     std::string name = actor.GetName();
     ExampleMapConstIter iter = mExampleMap.find( name );
 
-    AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
+    AccessibilityManager accessibilityManager = AccessibilityManager::Get();
 
     if( iter != mExampleMap.end() )
     {
@@ -594,11 +594,11 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
       if( name == BUTTON_QUIT )
       {
         // Move focus to the OK button
-        AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
+        AccessibilityManager accessibilityManager = AccessibilityManager::Get();
 
         // Enable the group mode and wrap mode
-        accessibilityFocusManager.SetGroupMode( true );
-        accessibilityFocusManager.SetWrapMode( true );
+        accessibilityManager.SetGroupMode( true );
+        accessibilityManager.SetWrapMode( true );
       }
     }
     else
@@ -630,8 +630,8 @@ void DaliTableView::OnScrollComplete( const Dali::Vector2& position )
   mScrolling = false;
 
   // move focus to 1st item of new page
-  AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
-  accessibilityFocusManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
+  AccessibilityManager accessibilityManager = AccessibilityManager::Get();
+  accessibilityManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
 }
 
 bool DaliTableView::OnScrollTouched( Actor actor, const TouchEvent& event )
