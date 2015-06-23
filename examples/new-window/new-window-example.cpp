@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
+// EXTERNAL INCLUDES
+#include <dali/devel-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
 
-#include "shared/view.h"
 #include <cstdio>
 #include <iostream>
+
+// INTERNAL INCLUDES
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;

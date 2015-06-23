@@ -17,6 +17,7 @@
 
 #include "radial-sweep-view-impl.h"
 
+#include <dali/devel-api/rendering/renderer.h>
 #include <sstream>
 
 using namespace Dali;

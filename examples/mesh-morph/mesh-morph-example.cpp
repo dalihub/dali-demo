@@ -16,11 +16,11 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/rendering/renderer.h>
+#include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
-
-#include <dali-toolkit/dali-toolkit.h>
 
 using namespace Dali;
 

@@ -15,13 +15,17 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali/dali.h>
+#include <dali/devel-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include "shared/view.h"
 
 #include <fstream>
 #include <sstream>
 #include <limits>
+
+// INTERNAL INCLUDES
+#include "shared/view.h"
 
 using namespace Dali;
 
