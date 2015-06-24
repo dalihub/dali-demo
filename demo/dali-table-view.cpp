@@ -283,7 +283,7 @@ void DaliTableView::Initialize( Application& application )
   backgroundColourActor.SetSizeModeFactor( Vector3( 1.0f, 1.5f, 1.0f ) );
 
   // Force the filled background right to the back
-  backgroundColourActor.SetDepthIndex( DemoHelper::BACKGROUND_DEPTH_INDEX );
+  backgroundColourActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX );
   mScrollViewLayer.Add( backgroundColourActor );
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
@@ -769,7 +769,7 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
     // Force the bubbles just in front of the solid background
-    dfActor.SetDepthIndex( DemoHelper::BACKGROUND_DEPTH_INDEX + 1 );
+    dfActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX + 1 );
 
     ShaderEffect effect = Toolkit::CreateDistanceFieldEffect();
     dfActor.SetShaderEffect( effect );
