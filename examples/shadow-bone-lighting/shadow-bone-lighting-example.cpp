@@ -167,6 +167,7 @@ public:
     // Setup
     mView.SetPosition(Vector3(0.0f, 0.0f, -50));
 
+    mContents.SetBehavior(Layer::LAYER_3D);
     mContents.SetPosition(mTranslation);
     mContents.SetOrientation( CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
     mContents.SetScale(mPinchScale, mPinchScale, mPinchScale);

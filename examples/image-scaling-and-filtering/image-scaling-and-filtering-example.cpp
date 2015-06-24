@@ -211,16 +211,19 @@ public:
     mDesiredBox.SetParentOrigin( ParentOrigin::CENTER );
     mDesiredBox.SetAnchorPoint( AnchorPoint::CENTER );
     mDesiredBox.SetPosition( 0, 0, -1 );
+    mDesiredBox.SetSortModifier(4.f);
 
     mHeightBox.SetSize( stage.GetSize().width,  (stage.GetSize() * mImageStageScale).height );
     mHeightBox.SetParentOrigin( ParentOrigin::CENTER );
     mHeightBox.SetAnchorPoint( AnchorPoint::CENTER );
     mHeightBox.SetPosition( 0, 0, -1 );
+    mHeightBox.SetSortModifier(3.f);
 
     mWidthBox.SetSize( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height );
     mWidthBox.SetParentOrigin( ParentOrigin::CENTER );
     mWidthBox.SetAnchorPoint( AnchorPoint::CENTER );
     mWidthBox.SetPosition( 0, 0, -1 );
+    mWidthBox.SetSortModifier(2.f);
 
     // Make a grab-handle for resizing the image:
     mGrabCorner = Toolkit::PushButton::New();
@@ -233,9 +236,14 @@ public:
     mGrabCorner.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
     mGrabCorner.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
     mGrabCorner.SetSize( Vector2( stage.GetSize().width*0.08f, stage.GetSize().width*0.08f ) );
-    mGrabCorner.SetZ( 1.0f );
     mGrabCorner.SetOpacity( 0.6f );
-    mDesiredBox.Add( mGrabCorner );
+
+    Layer grabCornerLayer = Layer::New();
+    grabCornerLayer.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
+    grabCornerLayer.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
+
+    grabCornerLayer.Add( mGrabCorner );
+    mDesiredBox.Add( grabCornerLayer );
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.Attach( mGrabCorner );
     mPanGestureDetector.DetectedSignal().Connect( this, &ImageScalingAndFilteringController::OnPan );
@@ -246,6 +254,7 @@ public:
     // Reposition the actor
     mImageActor.SetParentOrigin( ParentOrigin::CENTER );
     mImageActor.SetAnchorPoint( AnchorPoint::CENTER );
+    mImageActor.SetSortModifier(5.f);
 
     // Display the actor on the stage
     stage.Add( mImageActor );
@@ -700,9 +709,9 @@ private:
 
 private:
   Application&  mApplication;
-  Actor mDesiredBox; //< Background rectangle to show requested image size.
-  Actor mHeightBox;  //< Background horizontal stripe to show requested image height.
-  Actor mWidthBox;   //< Background vertical stripe to show requested image width.
+  ImageActor mDesiredBox; //< Background rectangle to show requested image size.
+  ImageActor mHeightBox;  //< Background horizontal stripe to show requested image height.
+  ImageActor mWidthBox;   //< Background vertical stripe to show requested image width.
   Toolkit::PushButton mFittingModeButton;
   Toolkit::PushButton mSamplingModeButton;
   Toolkit::Popup mPopup;
