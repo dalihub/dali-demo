@@ -2,7 +2,7 @@
 #define DALI_DEMO_RADIAL_SWEEP_VIEW_IMPL_H
 
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/devel-api/actors/mesh-actor.h>
-#include <dali/devel-api/modeling/material.h>
-#include <dali/devel-api/geometry/animatable-mesh.h>
-
 #include "radial-sweep-view.h"
 
 
@@ -36,37 +32,37 @@ public:
 
   static RadialSweepView New( float duration,
                               float diameter,
-                              Dali::Degree initialAngle,
-                              Dali::Degree finalAngle,
-                              Dali::Degree initialSector,
-                              Dali::Degree finalSector );
+                              Dali::Radian initialAngle,
+                              Dali::Radian finalAngle,
+                              Dali::Radian initialSector,
+                              Dali::Radian finalSector );
 
   RadialSweepViewImpl( float duration,
                        float diameter,
-                       Dali::Degree initialAngle,
-                       Dali::Degree finalAngle,
-                       Dali::Degree initialSector,
-                       Dali::Degree finalSector );
+                       Dali::Radian initialAngle,
+                       Dali::Radian finalAngle,
+                       Dali::Radian initialSector,
+                       Dali::Radian finalSector );
 
   void SetDuration(float duration);
   void SetEasingFunction( Dali::AlphaFunction easingFunction );
 
   void SetDiameter(float diameter);
-  void SetInitialAngle( Dali::Degree initialAngle);
-  void SetFinalAngle( Dali::Degree finalAngle);
-  void SetInitialSector( Dali::Degree initialSector);
-  void SetFinalSector( Dali::Degree finalSector);
-  void SetInitialActorAngle( Dali::Degree initialAngle );
-  void SetFinalActorAngle( Dali::Degree finalAngle );
+  void SetInitialAngle( Dali::Radian initialAngle);
+  void SetFinalAngle( Dali::Radian finalAngle);
+  void SetInitialSector( Dali::Radian initialSector);
+  void SetFinalSector( Dali::Radian finalSector);
+  void SetInitialActorAngle( Dali::Radian initialAngle );
+  void SetFinalActorAngle( Dali::Radian finalAngle );
 
   float GetDuration( );
   float GetDiameter( );
-  Dali::Degree GetInitialAngle( );
-  Dali::Degree GetFinalAngle( );
-  Dali::Degree GetInitialSector( );
-  Dali::Degree GetFinalSector( );
-  Dali::Degree GetInitialActorAngle( );
-  Dali::Degree GetFinalActorAngle( );
+  Dali::Radian GetInitialAngle( );
+  Dali::Radian GetFinalAngle( );
+  Dali::Radian GetInitialSector( );
+  Dali::Radian GetFinalSector( );
+  Dali::Radian GetInitialActorAngle( );
+  Dali::Radian GetFinalActorAngle( );
 
   void RotateActorsWithStencil(bool rotate);
 
@@ -81,23 +77,21 @@ private:
   /**
    * Create the stencil mask
    */
-  void CreateStencil(Dali::Degree initialSector );
+  void CreateStencil(Dali::Radian initialSector );
 
 private:
   Dali::Layer           mLayer;
   Dali::Animation       mAnim;
   float                 mDuration;
   float                 mDiameter;
-  Dali::Degree          mInitialAngle;
-  Dali::Degree          mFinalAngle;
-  Dali::Degree          mInitialSector;
-  Dali::Degree          mFinalSector;
-  Dali::Degree          mInitialActorAngle;
-  Dali::Degree          mFinalActorAngle;
+  Dali::Radian          mInitialAngle;
+  Dali::Radian          mFinalAngle;
+  Dali::Radian          mInitialSector;
+  Dali::Radian          mFinalSector;
+  Dali::Radian          mInitialActorAngle;
+  Dali::Radian          mFinalActorAngle;
   Dali::AlphaFunction   mEasingFunction;
-  Dali::MeshActor       mStencilActor;       ///< Stencil actor which generates mask
-  Dali::Material        mMaterial;           ///< Material for drawing mesh actor
-  Dali::AnimatableMesh  mMesh;               ///< Animatable mesh
+  Dali::Actor           mStencilActor;       ///< Stencil actor which generates mask
   Dali::Property::Index mStartAngleIndex;    ///< Index of start-angle property
   Dali::Property::Index mRotationAngleIndex; ///< Index of rotation-angle property
   bool                  mRotateActorsWithStencil:1;

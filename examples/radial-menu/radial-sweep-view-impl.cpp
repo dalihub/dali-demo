@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,47 +17,56 @@
 
 #include "radial-sweep-view-impl.h"
 
+#include <dali/devel-api/rendering/renderer.h>
+#include <sstream>
+
 using namespace Dali;
 
 namespace
 {
 
-/**
- * Method to project a point on a circle of radius halfSide at given
- * angle onto a square of side 2 * halfSide
- */
-void CircleSquareProjection( Vector3& position, Radian angle, float halfSide )
-{
-  //  135  90   45
-  //     +--+--+
-  //     | \|/ |
-  // 180 +--+--+ 0
-  //     | /|\ |
-  //     +--+--+
-  //  225  270  315
-  if( angle >= Dali::ANGLE_45 && angle < Dali::ANGLE_135 )
-  {
-    position.x = halfSide * cosf(angle) / sinf(angle);
-    position.y = -halfSide;
-  }
-  else if( angle >= Dali::ANGLE_135 && angle < Dali::ANGLE_225 )
-  {
-    position.x = -halfSide;
-    position.y = halfSide * sinf(angle) / cosf(angle);
-  }
-  else if( angle >= Dali::ANGLE_225 && angle < Dali::ANGLE_315 )
-  {
-    position.x = -halfSide * cosf(angle) / sinf(angle);
-    position.y =  halfSide;
-  }
-  else
-  {
-    position.x = halfSide;
-    position.y = -halfSide * sinf(angle) / cosf(angle);
-  }
+const char* VERTEX_SHADER_PREFIX( "#define MATH_PI_2 1.570796\n#define MATH_PI_4 0.785398\n" );
 
-  position.z = 0.0f;
+const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
+attribute mediump float   aAngleIndex;\n
+attribute mediump vec2    aPosition1;\n
+attribute mediump vec2    aPosition2;\n
+uniform   mediump mat4    uMvpMatrix;\n
+uniform   mediump float   uStartAngle;\n
+uniform   mediump float   uRotationAngle;\n
+\n
+void main()\n
+{\n
+  float currentAngle = uStartAngle + uRotationAngle;\n
+  float angleInterval1 =  MATH_PI_4 * aAngleIndex;\n
+  vec4 vertexPosition = vec4(0.0, 0.0, 0.0, 1.0);\n
+  if( currentAngle >=  angleInterval1)\n
+  {\n
+    float angleInterval2 =  angleInterval1 + MATH_PI_2;\n
+    float angle = currentAngle < angleInterval2 ? currentAngle : angleInterval2;\n
+    float delta;\n
+    if( mod( aAngleIndex+4.0, 4.0) < 2.0  )\n
+    {\n
+      delta = 0.5 - 0.5*cos(angle) / sin(angle);\n
+    }\n
+    else\n
+    {\n
+      delta = 0.5 + 0.5*sin(angle) / cos(angle);\n
+    }\n
+    vertexPosition.xy = mix( aPosition1, aPosition2, delta );\n
+  }\n
+  gl_Position = uMvpMatrix * vertexPosition;\n
 }
+);
+
+const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
+uniform lowp  vec4    uColor;\n
+\n
+void main()\n
+{\n
+  gl_FragColor = uColor;\n
+}\n
+);
 
 float HoldZeroFastEaseInOutHoldOne(float progress)
 {
@@ -81,58 +90,23 @@ float HoldZeroFastEaseInOutHoldOne(float progress)
   }
 }
 
-struct SquareFanConstraint
-{
-  SquareFanConstraint(int sideIndex)
-  : mSideIndex(sideIndex)
-  {
-  }
-
-  void operator()( Vector3& current, const PropertyInputContainer& inputs )
-  {
-    float degree = fmodf((inputs[0]->GetFloat() + inputs[1]->GetFloat()), 360.0f);
-    if(degree < 0.0f)
-    {
-      degree += 360.0f;
-    }
-
-    float startAngle = (90.0f*mSideIndex)-45.0f;
-    float endAngle = (90.0f*mSideIndex)+45.0f;
-    if(degree < startAngle)
-    {
-      current = Vector3::ZERO;
-    }
-    else
-    {
-      if( degree >= endAngle )
-      {
-        degree = endAngle;
-      }
-      CircleSquareProjection( current, Degree(degree), 0.5f );
-      current.x = -current.x; // Inverting X makes the animation go anti clockwise from left center
-    }
-  }
-
-  int mSideIndex;
-};
-
 } // anonymous namespace
 
 
 RadialSweepView RadialSweepViewImpl::New( )
 {
-  return New( 2.0f, 100.0f, Degree(0.0f), Degree(0.0f), Degree(0.0f), Degree(359.999f) );
+  return New( 2.0f, 100.0f, ANGLE_0, ANGLE_0, ANGLE_0, ANGLE_360 );
 }
 
 
-RadialSweepView RadialSweepViewImpl::New( float duration, float diameter, Degree initialAngle, Degree finalAngle, Degree initialSector, Degree finalSector )
+RadialSweepView RadialSweepViewImpl::New( float duration, float diameter, Radian initialAngle, Radian finalAngle, Radian initialSector, Radian finalSector )
 {
   RadialSweepViewImpl* impl= new RadialSweepViewImpl(duration, diameter, initialAngle, finalAngle, initialSector, finalSector);
   RadialSweepView handle = RadialSweepView(*impl);
   return handle;
 }
 
-RadialSweepViewImpl::RadialSweepViewImpl( float duration, float diameter, Degree initialAngle, Degree finalAngle, Degree initialSector, Degree finalSector )
+RadialSweepViewImpl::RadialSweepViewImpl( float duration, float diameter, Radian initialAngle, Radian finalAngle, Radian initialSector, Radian finalSector )
 : Control( ControlBehaviour( ACTOR_BEHAVIOUR_NONE ) ),
   mDuration(duration),
   mDiameter(diameter),
@@ -165,33 +139,33 @@ void RadialSweepViewImpl::SetDiameter(float diameter)
   mDiameter = diameter;
 }
 
-void RadialSweepViewImpl::SetInitialAngle( Dali::Degree initialAngle)
+void RadialSweepViewImpl::SetInitialAngle( Dali::Radian initialAngle)
 {
   mInitialAngle = initialAngle;
 }
 
-void RadialSweepViewImpl::SetFinalAngle( Dali::Degree finalAngle)
+void RadialSweepViewImpl::SetFinalAngle( Dali::Radian finalAngle)
 {
   mFinalAngle = finalAngle;
 }
 
-void RadialSweepViewImpl::SetInitialSector( Dali::Degree initialSector)
+void RadialSweepViewImpl::SetInitialSector( Dali::Radian initialSector)
 {
   mInitialSector = initialSector;
 }
 
-void RadialSweepViewImpl::SetFinalSector( Dali::Degree finalSector)
+void RadialSweepViewImpl::SetFinalSector( Dali::Radian finalSector)
 {
   mFinalSector = finalSector;
 }
 
-void RadialSweepViewImpl::SetInitialActorAngle( Dali::Degree initialAngle )
+void RadialSweepViewImpl::SetInitialActorAngle( Dali::Radian initialAngle )
 {
   mInitialActorAngle = initialAngle;
   mRotateActors = true;
 }
 
-void RadialSweepViewImpl::SetFinalActorAngle( Dali::Degree finalAngle )
+void RadialSweepViewImpl::SetFinalActorAngle( Dali::Radian finalAngle )
 {
   mFinalActorAngle = finalAngle;
   mRotateActors = true;
@@ -207,32 +181,32 @@ float RadialSweepViewImpl::GetDiameter( )
   return mDiameter;
 }
 
-Dali::Degree RadialSweepViewImpl::GetInitialAngle( )
+Dali::Radian RadialSweepViewImpl::GetInitialAngle( )
 {
   return mInitialAngle;
 }
 
-Dali::Degree RadialSweepViewImpl::GetFinalAngle( )
+Dali::Radian RadialSweepViewImpl::GetFinalAngle( )
 {
   return mFinalAngle;
 }
 
-Dali::Degree RadialSweepViewImpl::GetInitialSector( )
+Dali::Radian RadialSweepViewImpl::GetInitialSector( )
 {
   return mInitialSector;
 }
 
-Dali::Degree RadialSweepViewImpl::GetFinalSector( )
+Dali::Radian RadialSweepViewImpl::GetFinalSector( )
 {
   return mFinalSector;
 }
 
-Dali::Degree RadialSweepViewImpl::GetInitialActorAngle( )
+Dali::Radian RadialSweepViewImpl::GetInitialActorAngle( )
 {
   return mInitialActorAngle;
 }
 
-Dali::Degree RadialSweepViewImpl::GetFinalActorAngle(  )
+Dali::Radian RadialSweepViewImpl::GetFinalActorAngle(  )
 {
   return mFinalActorAngle;
 }
@@ -269,11 +243,11 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
   {
     CreateStencil( mInitialSector );
     mLayer.Add( mStencilActor );
-    mStencilActor.SetSize(mDiameter, mDiameter);
+    mStencilActor.SetScale(mDiameter);
   }
 
-  mStencilActor.SetOrientation( Degree(mInitialAngle), Vector3::ZAXIS );
-  mStencilActor.SetProperty( mRotationAngleIndex, mInitialSector.degree );
+  mStencilActor.SetOrientation( mInitialAngle, Vector3::ZAXIS );
+  mStencilActor.SetProperty( mRotationAngleIndex, mInitialSector.radian );
 
   if( mRotateActors )
   {
@@ -287,7 +261,7 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
     }
   }
 
-  anim.AnimateTo( Property( mStencilActor, mRotationAngleIndex ), mFinalSector.degree, mEasingFunction, TimePeriod( offsetTime, duration ) );
+  anim.AnimateTo( Property( mStencilActor, mRotationAngleIndex ), mFinalSector.radian, mEasingFunction, TimePeriod( offsetTime, duration ) );
   anim.AnimateTo( Property( mStencilActor, Actor::Property::ORIENTATION ), Quaternion( Radian( mFinalAngle ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
 
   if( mRotateActorsWithStencil )
@@ -297,7 +271,7 @@ void RadialSweepViewImpl::Activate( Animation anim, float offsetTime, float dura
       Actor actor = mLayer.GetChildAt(i);
       if( actor != mStencilActor )
       {
-        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( mFinalAngle.degree - mInitialAngle.degree ) ), Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
+        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Radian( mFinalAngle.radian - mInitialAngle.radian ) , Vector3::ZAXIS ), mEasingFunction, TimePeriod( offsetTime, duration ) );
       }
     }
   }
@@ -334,65 +308,58 @@ void RadialSweepViewImpl::Deactivate()
   // mMaterial.Reset();
 }
 
-void RadialSweepViewImpl::CreateStencil( Degree initialSector )
+void RadialSweepViewImpl::CreateStencil( Radian initialSector )
 {
-  mMaterial = Material::New("Material");
-  mMaterial.SetDiffuseColor(Color::WHITE);
-  mMaterial.SetAmbientColor(Vector4(0.0, 0.1, 0.1, 1.0));
+  // Create the stencil mesh geometry
+  //     3-----2
+  //     | \ / |
+  //     |  0--1 , 6
+  //     | / \ |
+  //     4-----5
 
-  // Generate a square mesh with a point at the center:
+  struct VertexPosition { float angleIndex; Vector2 position1; Vector2 position2; };
+  VertexPosition vertexData[7] = { // With X coordinate inverted to make the animation go anti clockwise from left center
+      { 9.f,  Vector2( 0.f, 0.f ),     Vector2( 0.f, 0.f )     }, // center point, keep static
+      { 0.f,  Vector2( -0.5f, 0.f ),   Vector2( -0.5f, 0.f )   }, // vertex 1, 0 degree, keep static
+      { -1.f, Vector2( -0.5f, 0.5f ),  Vector2( -0.5f, -0.5f ) }, // -45 ~ 45 degrees  ( 0 ~ 45)
+      { 1.f,  Vector2( -0.5f, -0.5f ), Vector2( 0.5f, -0.5f )  }, // 45 ~ 135 degrees
+      { 3.f,  Vector2( 0.5f, -0.5f ),  Vector2( 0.5f, 0.5f )   }, // 135 ~ 225 degrees
+      { 5.f,  Vector2( 0.5f, 0.5f ),   Vector2( -0.5f, 0.5f )  }, // 225 ~ 315 degrees
+      { 7.f,  Vector2( -0.5f, 0.5f ),  Vector2( -0.5f, -0.5f ) }  // 315 ~ 405 degrees ( 315 ~ 359.999 )
+  };
+  Property::Map vertexFormat;
+  vertexFormat["aAngleIndex"] = Property::FLOAT;
+  vertexFormat["aPosition1"] = Property::VECTOR2;
+  vertexFormat["aPosition2"] = Property::VECTOR2;
+  PropertyBuffer vertices = PropertyBuffer::New( vertexFormat, 7u );
+  vertices.SetData( vertexData );
 
-  AnimatableMesh::Faces faces;
-  // Create triangles joining up the verts
-  faces.push_back(0); faces.push_back(1); faces.push_back(2);
-  faces.push_back(0); faces.push_back(2); faces.push_back(3);
-  faces.push_back(0); faces.push_back(3); faces.push_back(4);
-  faces.push_back(0); faces.push_back(4); faces.push_back(5);
-  faces.push_back(0); faces.push_back(5); faces.push_back(6);
+  unsigned int indexData[15] = { 0,1,2,0,2,3,0,3,4,0,4,5,0,5,6 };
+  Property::Map indexFormat;
+  indexFormat["indices"] = Property::UNSIGNED_INTEGER;
+  PropertyBuffer indices = PropertyBuffer::New( indexFormat, 15u );
+  indices.SetData( indexData );
 
-  mMesh = AnimatableMesh::New(7, faces, mMaterial);
-  mMesh[0].SetPosition( Vector3(  0.0f,  0.0f, 0.0f ) ); // Center pt
+  Geometry meshGeometry = Geometry::New();
+  meshGeometry.AddVertexBuffer( vertices );
+  meshGeometry.SetIndexBuffer( indices );
 
-  mStencilActor = MeshActor::New(mMesh);
-  mStencilActor.SetCullFace(CullNone); // Allow clockwise & anticlockwise faces
+  // Create material
+  std::ostringstream vertexShaderStringStream;
+  vertexShaderStringStream<<VERTEX_SHADER_PREFIX<<VERTEX_SHADER;
+  Shader shader = Shader::New( vertexShaderStringStream.str(), FRAGMENT_SHADER );
+  Material material = Material::New( shader );
 
-  mStartAngleIndex = mStencilActor.RegisterProperty("start-angle", Property::Value(0.0f));
-  mRotationAngleIndex = mStencilActor.RegisterProperty("rotation-angle", Property::Value(initialSector.degree));
+  // Create renderer
+  Renderer renderer = Renderer::New( meshGeometry, material );
 
-  Source srcStart( mStencilActor, mStartAngleIndex );
-  Source srcRotation( mStencilActor, mRotationAngleIndex );
+  mStencilActor = Actor::New();
+  mStencilActor.AddRenderer( renderer );
+  mStencilActor.SetSize(1.f, 1.f);
 
-  // Constrain the vertices of the square mesh to sweep out a sector as the
-  // rotation angle is animated.
-  Constraint constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(1, AnimatableVertex::Property::POSITION), SquareFanConstraint(0) );
-  constraint.AddSource( srcStart );
-  constraint.AddSource( srcStart );
-  constraint.Apply();
-
-  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(2, AnimatableVertex::Property::POSITION), SquareFanConstraint(0) );
-  constraint.AddSource( srcStart );
-  constraint.AddSource( srcRotation );
-  constraint.Apply();
-
-  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(3, AnimatableVertex::Property::POSITION), SquareFanConstraint(1) );
-  constraint.AddSource( srcStart );
-  constraint.AddSource( srcRotation );
-  constraint.Apply();
-
-  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(4, AnimatableVertex::Property::POSITION), SquareFanConstraint(2) );
-  constraint.AddSource( srcStart );
-  constraint.AddSource( srcRotation );
-  constraint.Apply();
-
-  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(5, AnimatableVertex::Property::POSITION), SquareFanConstraint(3) );
-  constraint.AddSource( srcStart );
-  constraint.AddSource( srcRotation );
-  constraint.Apply();
-
-  constraint = Constraint::New<Vector3>( mMesh, mMesh.GetPropertyIndex(6, AnimatableVertex::Property::POSITION), SquareFanConstraint(4) );
-  constraint.AddSource( srcStart );
-  constraint.AddSource( srcRotation );
-  constraint.Apply();
+  // register properties
+  mStartAngleIndex = mStencilActor.RegisterProperty("uStartAngle", 0.f);
+  mRotationAngleIndex = mStencilActor.RegisterProperty("uRotationAngle", initialSector.radian);
 
   mStencilActor.SetDrawMode( DrawMode::STENCIL );
   mStencilActor.SetPositionInheritanceMode(USE_PARENT_POSITION);

@@ -268,9 +268,11 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.TouchedSignal().Connect( this, &DaliTableView::OnScrollTouched );
 
   mScrollViewLayer = Layer::New();
+
+  // Disable the depth test for performance
+  mScrollViewLayer.SetDepthTestDisabled( true );
   mScrollViewLayer.SetAnchorPoint( AnchorPoint::CENTER );
   mScrollViewLayer.SetParentOrigin( ParentOrigin::CENTER );
-  mScrollViewLayer.SetDrawMode( DrawMode::OVERLAY );
   mScrollViewLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
   // Create solid background colour.
@@ -279,7 +281,9 @@ void DaliTableView::Initialize( Application& application )
   backgroundColourActor.SetParentOrigin( ParentOrigin::CENTER );
   backgroundColourActor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   backgroundColourActor.SetSizeModeFactor( Vector3( 1.0f, 1.5f, 1.0f ) );
-  backgroundColourActor.SetZ( BACKGROUND_Z );
+
+  // Force the filled background right to the back
+  backgroundColourActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX );
   mScrollViewLayer.Add( backgroundColourActor );
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
@@ -526,7 +530,7 @@ ImageActor DaliTableView::NewStencilImage()
   stencilActor.SetAnchorPoint( AnchorPoint::CENTER );
   stencilActor.SetDrawMode( DrawMode::STENCIL );
 
-  Dali::ShaderEffect shaderEffect = AlphaDiscardEffect::New();
+  Dali::ShaderEffect shaderEffect = CreateAlphaDiscardEffect();
   stencilActor.SetShaderEffect( shaderEffect );
 
   return stencilActor;
@@ -764,11 +768,14 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
-    Toolkit::DistanceFieldEffect effect = Toolkit::DistanceFieldEffect::New();
+    // Force the bubbles just in front of the solid background
+    dfActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX + 1 );
+
+    ShaderEffect effect = Toolkit::CreateDistanceFieldEffect();
     dfActor.SetShaderEffect( effect );
     dfActor.SetColor( randColour );
-    effect.SetOutlineParams( Vector2( 0.55f, 0.00f ) );
-    effect.SetSmoothingEdge( 0.5f );
+    effect.SetUniform("uOutlineParams", Vector2( 0.55f, 0.00f ) );
+    effect.SetUniform("uSmoothing", 0.5f );
     layer.Add( dfActor );
   }
 

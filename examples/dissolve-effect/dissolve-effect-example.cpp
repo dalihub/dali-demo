@@ -163,8 +163,8 @@ private:
   ImageActor                      mNextImage;
   unsigned int                    mIndex;
 
-  Toolkit::DissolveEffect         mCurrentImageEffect;
-  Toolkit::DissolveEffect         mNextImageEffect;
+  ShaderEffect                    mCurrentImageEffect;
+  ShaderEffect                    mNextImageEffect;
   bool                            mUseHighPrecision;
   Animation                       mAnimation;
 
@@ -234,8 +234,8 @@ void DissolveEffectApp::OnInit( Application& application )
   mPanGestureDetector.DetectedSignal().Connect( this, &DissolveEffectApp::OnPanGesture );
 
   // create the dissolve effect object
-  mCurrentImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
-  mNextImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
+  mCurrentImageEffect = Toolkit::CreateDissolveEffect(mUseHighPrecision);
+  mNextImageEffect = Toolkit::CreateDissolveEffect(mUseHighPrecision);
 
   mViewTimer = Timer::New( VIEWINGTIME );
   mViewTimer.TickSignal().Connect( this, &DissolveEffectApp::OnTimerTick );
@@ -293,20 +293,20 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
 {
   mAnimation = Animation::New(TRANSITION_DURATION);
 
-  mCurrentImageEffect.SetCentralLine(position,displacement);
-  mCurrentImageEffect.SetDistortion(0.0f);
+  Dali::Toolkit::DissolveEffectSetCentralLine( mCurrentImageEffect, position, displacement );
+  mCurrentImageEffect.SetUniform("uPercentage", 0.0f);
   mCurrentImage.SetShaderEffect(mCurrentImageEffect);
-  mAnimation.AnimateTo( Property(mCurrentImageEffect, mCurrentImageEffect.GetDistortionPropertyName()), 1.0f, AlphaFunction::LINEAR );
+  mAnimation.AnimateTo( Property(mCurrentImageEffect, "uPercentage"), 1.0f, AlphaFunction::LINEAR );
 
   mNextImage.SetOpacity(0.0f);
   mAnimation.AnimateTo( Property( mNextImage, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::LINEAR );
 
   if(mUseHighPrecision)
   {
-    mNextImageEffect.SetCentralLine(position,-displacement);
-    mNextImageEffect.SetDistortion(1.0f);
+    Dali::Toolkit::DissolveEffectSetCentralLine( mNextImageEffect, position, displacement );
+    mNextImageEffect.SetUniform("uPercentage", 1.0f);
     mNextImage.SetShaderEffect(mNextImageEffect);
-    mAnimation.AnimateTo( Property(mNextImageEffect, mNextImageEffect.GetDistortionPropertyName()), 0.0f, AlphaFunction::LINEAR );
+    mAnimation.AnimateTo( Property(mNextImageEffect, "uPercentage"), 0.0f, AlphaFunction::LINEAR );
   }
   else
   {
@@ -332,7 +332,7 @@ void DissolveEffectApp::OnKeyEvent(const KeyEvent& event)
 bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
 {
   mUseHighPrecision = !mUseHighPrecision;
-  mCurrentImageEffect = Toolkit::DissolveEffect::New(mUseHighPrecision);
+  mCurrentImageEffect = Dali::Toolkit::CreateDissolveEffect(mUseHighPrecision);
   if(mUseHighPrecision)
   {
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP) );

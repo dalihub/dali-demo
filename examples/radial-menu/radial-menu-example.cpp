@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/devel-api/actors/mesh-actor.h>
 #include "shared/view.h"
 #include "radial-sweep-view.h"
 #include "radial-sweep-view-impl.h"
@@ -70,10 +69,19 @@ private:
    */
   RadialSweepView CreateSweepView( std::string imageName, Degree initial, Degree final );
 
+  /**
+   * Start the sweep animation on the menu
+   */
   void StartAnimation();
 
+  /**
+   * Play or pause the animation when the button is clicked
+   */
   bool OnButtonClicked( Toolkit::Button button );
 
+  /**
+   * Update the state flag and change the button icon when the animation is finished
+   */
   void OnAnimationFinished( Animation& source );
 
   /**
@@ -149,16 +157,15 @@ void RadialMenuExample::OnInit(Application& app)
                       DemoHelper::DEFAULT_PLAY_PADDING );
 
 
-  const Uint16Pair intImgSize = ResourceImage::GetImageSize(TEST_OUTER_RING_FILENAME);
+  const ImageDimensions intImgSize = ResourceImage::GetImageSize(TEST_OUTER_RING_FILENAME);
   Vector2 imgSize = Vector2( intImgSize.GetWidth(), intImgSize.GetHeight() );
   Vector2 stageSize = stage.GetSize();
-  float minStageDimension = std::min(stageSize.width, stageSize.height);
-
-  if(stageSize.height <= stageSize.width)
+  float scale = stageSize.width / imgSize.width;
+  float availableHeight = stageSize.height - DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight * 2.0f;
+  if(availableHeight <= stageSize.width)
   {
-    minStageDimension -= DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight * 2.0f;
+    scale = availableHeight / imgSize.width;
   }
-  float scale = minStageDimension / imgSize.width;
 
   mRadialSweepView1 = CreateSweepView( TEST_OUTER_RING_FILENAME, Degree(-90.0f), Degree(-90.0f));
   mRadialSweepView2 = CreateSweepView( TEST_INNER_RING_FILENAME, Degree(90.0f),  Degree(0.0f));
@@ -208,6 +215,7 @@ bool RadialMenuExample::OnButtonClicked( Toolkit::Button button )
     case PLAYING:
     {
       mAnimation.Pause();
+      mAnimationState = PAUSED;
       mPlayStopButton.SetBackgroundImage( mIconPlay );
     }
     break;
@@ -215,6 +223,7 @@ bool RadialMenuExample::OnButtonClicked( Toolkit::Button button )
     case PAUSED:
     {
       mAnimation.Play();
+      mAnimationState = PLAYING;
       mPlayStopButton.SetBackgroundImage( mIconStop );
     }
     break;
@@ -249,7 +258,7 @@ RadialSweepView RadialMenuExample::CreateSweepView( std::string imageName,
   mImageActor.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
   // Create the stencil
-  const Uint16Pair imageSize = ResourceImage::GetImageSize(imageName);
+  const ImageDimensions imageSize = ResourceImage::GetImageSize(imageName);
   float diameter = std::max(imageSize.GetWidth(), imageSize.GetHeight());
   RadialSweepView radialSweepView = RadialSweepView::New();
   radialSweepView.SetDiameter( diameter );

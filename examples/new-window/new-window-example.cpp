@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
+// EXTERNAL INCLUDES
+#include <dali/devel-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/devel-api/actors/mesh-actor.h>
-#include <dali/devel-api/modeling/material.h>
-#include <dali/devel-api/geometry/mesh.h>
 #include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
-#include <dali-toolkit/devel-api/shader-effects/bubble-effect/color-adjuster.h>
 
-
-#include "shared/view.h"
 #include <cstdio>
 #include <iostream>
+
+// INTERNAL INCLUDES
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -38,23 +37,76 @@ const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const LOSE_CONTEXT_IMAGE( DALI_IMAGE_DIR "icon-cluster-wobble.png" );
 const char * const BASE_IMAGE( DALI_IMAGE_DIR "gallery-large-14.jpg" );
 const char * const EFFECT_IMAGE( DALI_IMAGE_DIR "gallery-large-18.jpg" );
+const char * const LOGO_IMAGE(DALI_IMAGE_DIR "dali-logo.png");
 
 const float EXPLOSION_DURATION(1.2f);
-const unsigned int EMIT_INTERVAL_IN_MS(80);
+const unsigned int EMIT_INTERVAL_IN_MS(40);
 const float TRACK_DURATION_IN_MS(970);
 
 Application gApplication;
 NewWindowController* gNewWindowController(NULL);
 
-const char*const FRAG_SHADER=
-  "uniform mediump float alpha;\n"
-  "\n"
-  "void main()\n"
-  "{\n"
-  "  mediump vec4 fragColor = texture2D(sTexture, vTexCoord);\n"
-  "  mediump vec4 fxColor   = texture2D(sEffect, vTexCoord);\n"
-  "  gl_FragColor   = mix(fragColor,fxColor, alpha);\n"
-  "}\n";
+#define MAKE_SHADER(A)#A
+
+const char* VERTEX_COLOR_MESH = MAKE_SHADER(
+attribute mediump vec3  aPosition;\n
+attribute lowp    vec3  aColor;\n
+uniform   mediump mat4  uMvpMatrix;\n
+uniform   mediump vec3  uSize;\n
+varying   lowp    vec3  vColor;\n
+\n
+void main()\n
+{\n
+  gl_Position = uMvpMatrix * vec4( aPosition*uSize, 1.0 );\n
+  vColor = aColor;\n
+}\n
+);
+
+const char* FRAGMENT_COLOR_MESH = MAKE_SHADER(
+uniform lowp vec4  uColor;\n
+varying lowp vec3  vColor;\n
+\n
+void main()\n
+{\n
+  gl_FragColor = vec4(vColor,1.0)*uColor;
+}\n
+);
+
+const char* VERTEX_TEXTURE_MESH = MAKE_SHADER(
+attribute mediump vec3  aPosition;\n
+attribute highp   vec2  aTexCoord;\n
+uniform   mediump mat4  uMvpMatrix;\n
+uniform   mediump vec3  uSize;\n
+varying   mediump vec2  vTexCoord;\n
+\n
+void main()\n
+{\n
+  gl_Position = uMvpMatrix * vec4( aPosition*uSize, 1.0 );\n
+  vTexCoord = aTexCoord;\n
+}\n
+);
+
+const char* FRAGMENT_TEXTURE_MESH = MAKE_SHADER(
+varying mediump vec2  vTexCoord;\n
+uniform lowp    vec4  uColor;\n
+uniform sampler2D     sTexture;\n
+\n
+void main()\n
+{\n
+  gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;
+}\n
+);
+
+const char* FRAGMENT_BLEND_SHADER = MAKE_SHADER(
+uniform mediump float alpha;\n
+\n
+void main()\n
+{\n
+  mediump vec4 fragColor = texture2D(sTexture, vTexCoord);\n
+  mediump vec4 fxColor   = texture2D(sEffect, vTexCoord);\n
+  gl_FragColor = mix(fragColor,fxColor, alpha);\n
+}\n
+);
 
 }; // anonymous namespace
 
@@ -65,48 +117,39 @@ public:
   NewWindowController( Application& app );
   void Create( Application& app );
   void Destroy( Application& app );
-  void OnKeyEvent(const KeyEvent& event);
-  bool OnLoseContextButtonClicked( Toolkit::Button button );
-  static void NewWindow(void);
 
-  void OnContextLost();
-  void OnContextRegained();
-  void CreateMeshActor();
-  Mesh CreateMesh(bool, Material);
-  void CreateBubbles(Vector2 stageSize);
-  void CreateBlending();
-  void CreateText();
-  bool OnTrackTimerTick();
-  bool OnExplodeTimerTick();
-  void SetUpAnimation( Vector2 emitPosition, Vector2 direction );
-  FrameBufferImage CreateMirrorImage(const char* imageName);
+  void AddBubbles(const Vector2& stageSize);
+  void AddMeshActor();
+  void AddBlendingImageActor();
+  void AddTextLabel();
+
   ImageActor CreateBlurredMirrorImage(const char* imageName);
   FrameBufferImage CreateFrameBufferForImage(const char* imageName, Image image, ShaderEffect shaderEffect);
+  void SetUpBubbleEmission( const Vector2& emitPosition, const Vector2& direction );
+  Geometry CreateMeshGeometry();
+  ShaderEffect CreateColorModifierer( const Vector3& rgbDelta );
 
+  static void NewWindow(void);
+
+  bool OnTrackTimerTick();
+  void OnKeyEvent(const KeyEvent& event);
+  bool OnLoseContextButtonClicked( Toolkit::Button button );
+  void OnContextLost();
+  void OnContextRegained();
 
 private:
   Application                mApplication;
-  Actor                      mCastingLight;
   TextLabel                  mTextActor;
-  ImageActor                 mImageActor;
-  ImageActor                 mBlendActor;
-  Image                      mEffectImage;
-  Image                      mBaseImage;
-  MeshActor                  mMeshActor;
-  MeshActor                  mAnimatedMeshActor;
 
   Toolkit::Control           mView;                              ///< The View instance.
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
-  TextLabel                   mTitleActor;                        ///< The Toolbar's Title.
+  TextLabel                  mTitleActor;                        ///< The Toolbar's Title.
   Layer                      mContentLayer;                      ///< Content layer (scrolling cluster content)
   Toolkit::PushButton        mLoseContextButton;
-  Vector3                    mHSVDelta;
+
   Toolkit::BubbleEmitter     mEmitter;
-
   Timer                      mEmitTrackTimer;
-  Timer                      mExplodeTimer;
   bool                       mNeedNewAnimation;
-
   unsigned int               mAnimateComponentCount;
   Animation                  mEmitAnimation;
 };
@@ -114,7 +157,6 @@ private:
 
 NewWindowController::NewWindowController( Application& application )
 : mApplication(application),
-  mHSVDelta(0.5f, 0.0f, 0.5f),
   mNeedNewAnimation(true)
 {
   mApplication.InitSignal().Connect(this, &NewWindowController::Create);
@@ -136,9 +178,16 @@ void NewWindowController::Create( Application& app )
   mContentLayer = DemoHelper::CreateView( app,
                                           mView,
                                           mToolBar,
-                                          BACKGROUND_IMAGE,
+                                          "",
                                           TOOLBAR_IMAGE,
                                           "Context recovery" );
+
+  Size stageSize = stage.GetSize();
+  Image backgroundImage = ResourceImage::New( BACKGROUND_IMAGE, Dali::ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
+  ImageActor backgroundActor = ImageActor::New( backgroundImage );
+  backgroundActor.SetParentOrigin( ParentOrigin::CENTER );
+  backgroundActor.SetZ(-2.f);
+  mContentLayer.Add(backgroundActor);
 
   // Point the default render task at the view
   RenderTaskList taskList = stage.GetRenderTaskList();
@@ -153,29 +202,28 @@ void NewWindowController::Create( Application& app )
   mLoseContextButton.ClickedSignal().Connect( this, &NewWindowController::OnLoseContextButtonClicked );
   mToolBar.AddControl( mLoseContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
-
   Actor logoLayoutActor = Actor::New();
   logoLayoutActor.SetParentOrigin(ParentOrigin::CENTER);
   logoLayoutActor.SetPosition(0.0f, -200.0f, 0.0f);
   logoLayoutActor.SetScale(0.5f);
   mContentLayer.Add(logoLayoutActor);
 
-  Image image = ResourceImage::New(DALI_IMAGE_DIR "dali-logo.png");
-  mImageActor = ImageActor::New(image);
-  mImageActor.SetName("dali-logo");
-  mImageActor.SetParentOrigin(ParentOrigin::CENTER);
-  mImageActor.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
-  logoLayoutActor.Add(mImageActor);
+  Image image = ResourceImage::New(LOGO_IMAGE);
+  ImageActor imageActor = ImageActor::New(image);
+  imageActor.SetName("dali-logo");
+  imageActor.SetParentOrigin(ParentOrigin::CENTER);
+  imageActor.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
+  logoLayoutActor.Add(imageActor);
 
-  ImageActor mirrorImageActor = CreateBlurredMirrorImage(DALI_IMAGE_DIR "dali-logo.png");
+  ImageActor mirrorImageActor = CreateBlurredMirrorImage(LOGO_IMAGE);
   mirrorImageActor.SetParentOrigin(ParentOrigin::CENTER);
   mirrorImageActor.SetAnchorPoint(AnchorPoint::TOP_CENTER);
   logoLayoutActor.Add(mirrorImageActor);
 
-  CreateBubbles(stage.GetSize());
-  CreateMeshActor();
-  CreateBlending();
-  CreateText();
+  AddBubbles(stage.GetSize());
+  AddMeshActor();
+  AddBlendingImageActor();
+  AddTextLabel();
 
   stage.ContextLostSignal().Connect(this, &NewWindowController::OnContextLost);
   stage.ContextRegainedSignal().Connect(this, &NewWindowController::OnContextRegained);
@@ -186,51 +234,109 @@ void NewWindowController::Destroy( Application& app )
   UnparentAndReset(mTextActor);
 }
 
-bool NewWindowController::OnLoseContextButtonClicked( Toolkit::Button button )
+void NewWindowController::AddBubbles(const Vector2& stageSize)
 {
-  // Add as an idle callback to avoid ProcessEvents being recursively called.
-  mApplication.AddIdle( MakeCallback( NewWindowController::NewWindow ) );
-  return true;
+  mEmitter = Toolkit::BubbleEmitter::New( stageSize,
+                                          ResourceImage::New( DALI_IMAGE_DIR "bubble-ball.png" ),
+                                          200, Vector2( 5.0f, 5.0f ) );
+
+  Image background = ResourceImage::New(BACKGROUND_IMAGE);
+  mEmitter.SetBackground( background, Vector3(0.5f, 0.f,0.5f) );
+  mEmitter.SetBubbleDensity( 9.f );
+  Actor bubbleRoot = mEmitter.GetRootActor();
+  mContentLayer.Add( bubbleRoot );
+  bubbleRoot.SetParentOrigin(ParentOrigin::CENTER);
+  bubbleRoot.SetZ(0.1f);
+
+  mEmitTrackTimer = Timer::New( EMIT_INTERVAL_IN_MS );
+  mEmitTrackTimer.TickSignal().Connect(this, &NewWindowController::OnTrackTimerTick);
+  mEmitTrackTimer.Start();
 }
 
-void NewWindowController::CreateMeshActor()
+void NewWindowController::AddMeshActor()
 {
-  mEffectImage = ResourceImage::New(EFFECT_IMAGE);
+  Geometry meshGeometry = CreateMeshGeometry();
 
-  Material baseMaterial = Material::New( "Material1" );
-  Dali::MeshActor meshActor = MeshActor::New( CreateMesh(true, baseMaterial) );
-  meshActor.SetScale( 100.0f );
-  meshActor.SetParentOrigin( ParentOrigin::CENTER );
-  meshActor.SetPosition(Vector3( -150.0f, 200.0f, 0.0f ));
-  meshActor.SetName("MeshActor");
-  mContentLayer.Add( meshActor );
+  // Create a coloured mesh
+  Shader shaderColorMesh = Shader::New( VERTEX_COLOR_MESH, FRAGMENT_COLOR_MESH );
+  Material colorMeshmaterial = Material::New( shaderColorMesh );
+  Renderer colorMeshRenderer = Renderer::New( meshGeometry, colorMeshmaterial );
 
-  Material orchidMaterial = Material::New( "Material2" );
-  orchidMaterial.SetDiffuseTexture(mEffectImage);
+  Actor colorMeshActor = Actor::New();
+  colorMeshActor.AddRenderer( colorMeshRenderer );
+  colorMeshActor.SetSize( 175.f,175.f );
+  colorMeshActor.SetParentOrigin( ParentOrigin::CENTER );
+  colorMeshActor.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+  colorMeshActor.SetPosition(Vector3(0.0f, 50.0f, 0.0f));
+  colorMeshActor.SetOrientation( Degree(75.f), Vector3::XAXIS );
+  colorMeshActor.SetName("ColorMeshActor");
+  mContentLayer.Add( colorMeshActor );
 
-  Dali::MeshActor meshActor2 = MeshActor::New( CreateMesh(false, orchidMaterial) );
-  meshActor2.SetScale( 100.0f );
-  meshActor2.SetParentOrigin( ParentOrigin::CENTER );
-  meshActor2.SetPosition(Vector3( -150.0f, 310.0f, 0.0f ));
-  meshActor2.SetName("MeshActor");
-  mContentLayer.Add( meshActor2 );
+ // Create a textured mesh
+  Image effectImage = ResourceImage::New(EFFECT_IMAGE);
+  Sampler sampler = Sampler::New(effectImage, "sTexture");
+
+  Shader shaderTextureMesh = Shader::New( VERTEX_TEXTURE_MESH, FRAGMENT_TEXTURE_MESH );
+  Material textureMeshMaterial = Material::New( shaderTextureMesh );
+  textureMeshMaterial.AddSampler( sampler );
+  Renderer textureMeshRenderer = Renderer::New( meshGeometry, textureMeshMaterial );
+
+  Actor textureMeshActor = Actor::New();
+  textureMeshActor.AddRenderer( textureMeshRenderer );
+  textureMeshActor.SetSize( 175.f,175.f );
+  textureMeshActor.SetParentOrigin( ParentOrigin::CENTER );
+  textureMeshActor.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+  textureMeshActor.SetPosition(Vector3(0.0f, 200.0f, 0.0f));
+  textureMeshActor.SetOrientation( Degree(75.f), Vector3::XAXIS );
+  textureMeshActor.SetName("TextureMeshActor");
+  mContentLayer.Add( textureMeshActor );
 }
 
-FrameBufferImage NewWindowController::CreateMirrorImage(const char* imageName)
+void NewWindowController::AddBlendingImageActor()
 {
-  FrameBufferImage fbo;
-  Image image = ResourceImage::New(imageName);
-  fbo = CreateFrameBufferForImage(imageName, image, ShaderEffect());
-  return fbo;
+  ShaderEffect colorModifier = CreateColorModifierer(Vector3( 0.5f, 0.5f, 0.5f ));
+  Image effectImage = ResourceImage::New(EFFECT_IMAGE);
+  FrameBufferImage fb2 = CreateFrameBufferForImage( EFFECT_IMAGE, effectImage, colorModifier );
+
+  ImageActor tmpActor = ImageActor::New(fb2);
+  mContentLayer.Add(tmpActor);
+  tmpActor.SetParentOrigin(ParentOrigin::CENTER_RIGHT);
+  tmpActor.SetAnchorPoint(AnchorPoint::TOP_RIGHT);
+  tmpActor.SetPosition(Vector3(0.0f, 150.0f, 0.0f));
+  tmpActor.SetScale(0.25f);
+
+  // create blending shader effect
+  ShaderEffect blendShader = ShaderEffect::New( "", FRAGMENT_BLEND_SHADER );
+  blendShader.SetEffectImage( fb2 );
+  blendShader.SetUniform("alpha", 0.5f);
+
+  Image baseImage = ResourceImage::New(BASE_IMAGE);
+  ImageActor blendActor = ImageActor::New( baseImage );
+  blendActor.SetParentOrigin(ParentOrigin::CENTER_RIGHT);
+  blendActor.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
+  blendActor.SetPosition(Vector3(0.0f, 100.0f, 0.0f));
+  blendActor.SetSize(140, 140);
+  blendActor.SetShaderEffect( blendShader );
+  mContentLayer.Add(blendActor);
+}
+
+void NewWindowController::AddTextLabel()
+{
+  mTextActor = TextLabel::New("Some text");
+  mTextActor.SetParentOrigin(ParentOrigin::CENTER);
+  mTextActor.SetColor(Color::RED);
+  mTextActor.SetName("PushMe text");
+  mContentLayer.Add( mTextActor );
 }
 
 ImageActor NewWindowController::CreateBlurredMirrorImage(const char* imageName)
 {
-  FrameBufferImage fbo;
   Image image = ResourceImage::New(imageName);
+
   Uint16Pair intFboSize = ResourceImage::GetImageSize(imageName);
   Vector2 FBOSize = Vector2( intFboSize.GetWidth(), intFboSize.GetHeight() );
-  fbo = FrameBufferImage::New( FBOSize.width, FBOSize.height, Pixel::RGBA8888);
+  FrameBufferImage fbo = FrameBufferImage::New( FBOSize.width, FBOSize.height, Pixel::RGBA8888);
+
   GaussianBlurView gbv = GaussianBlurView::New(5, 2.0f, Pixel::RGBA8888, 0.5f, 0.5f, true);
   gbv.SetBackgroundColor(Color::TRANSPARENT);
   gbv.SetUserImageAndOutputRenderTarget( image, fbo );
@@ -285,38 +391,7 @@ FrameBufferImage NewWindowController::CreateFrameBufferForImage(const char* imag
   return framebuffer;
 }
 
-void NewWindowController::CreateBubbles(Vector2 stageSize)
-{
-  mEmitter = Toolkit::BubbleEmitter::New( stageSize,
-                                          ResourceImage::New( DALI_IMAGE_DIR "bubble-ball.png" ),
-                                          1000, Vector2( 5.0f, 5.0f ) );
-
-  Image background = ResourceImage::New(BACKGROUND_IMAGE);
-  mEmitter.SetBackground( background, mHSVDelta );
-  Actor bubbleRoot = mEmitter.GetRootActor();
-  mContentLayer.Add( bubbleRoot );
-  bubbleRoot.SetParentOrigin(ParentOrigin::CENTER);
-  bubbleRoot.SetZ(0.1f);
-
-  mEmitTrackTimer = Timer::New( EMIT_INTERVAL_IN_MS );
-  mEmitTrackTimer.TickSignal().Connect(this, &NewWindowController::OnTrackTimerTick);
-  mEmitTrackTimer.Start();
-
-  //mExplodeTimer = Timer::New( Random::Range(4000.f, 8000.f) );
-  //mExplodeTimer.TickSignal().Connect(this, &NewWindowController::OnExplodeTimerTick);
-  //mExplodeTimer.Start();
-}
-
-bool NewWindowController::OnExplodeTimerTick()
-{
-  mEmitter.StartExplosion( EXPLOSION_DURATION, 5.0f );
-
-  mExplodeTimer = Timer::New( Random::Range(4.f, 8.f) );
-  mExplodeTimer.TickSignal().Connect(this, &NewWindowController::OnExplodeTimerTick);
-  return false;
-}
-
-void NewWindowController::SetUpAnimation( Vector2 emitPosition, Vector2 direction )
+void NewWindowController::SetUpBubbleEmission( const Vector2& emitPosition, const Vector2& direction)
 {
   if( mNeedNewAnimation )
   {
@@ -326,15 +401,95 @@ void NewWindowController::SetUpAnimation( Vector2 emitPosition, Vector2 directio
     mAnimateComponentCount = 0;
   }
 
-  mEmitter.EmitBubble( mEmitAnimation, emitPosition, direction, Vector2(1, 1) );
+  mEmitter.EmitBubble( mEmitAnimation, emitPosition, direction, Vector2(10,10) );
 
   mAnimateComponentCount++;
 
-  if( mAnimateComponentCount % 20 ==0 )
+  if( mAnimateComponentCount % 6 ==0 )
   {
     mEmitAnimation.Play();
     mNeedNewAnimation = true;
   }
+}
+
+Geometry NewWindowController::CreateMeshGeometry()
+{
+  // Create vertices and specify their color
+  struct Vertex
+  {
+    Vector3 position;
+    Vector2 textureCoordinates;
+    Vector3 color;
+  };
+
+  Vertex vertexData[5] = {
+    { Vector3(  0.0f,  0.0f, 0.5f ), Vector2(0.5f, 0.5f), Vector3(1.0f, 1.0f, 1.0f) },
+    { Vector3( -0.5f, -0.5f, 0.0f ), Vector2(0.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f) },
+    { Vector3(  0.5f, -0.5f, 0.0f ), Vector2(1.0f, 0.0f), Vector3(1.0f, 1.0f, 0.0f) },
+    { Vector3( -0.5f,  0.5f, 0.0f ), Vector2(0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) },
+    { Vector3(  0.5f,  0.5f, 0.0f ), Vector2(1.0f, 1.0f), Vector3(0.0f, 0.0f, 1.0f) }  };
+
+  Property::Map vertexFormat;
+  vertexFormat["aPosition"] = Property::VECTOR3;
+  vertexFormat["aTexCoord"] = Property::VECTOR2;
+  vertexFormat["aColor"] = Property::VECTOR3;
+  PropertyBuffer vertices = PropertyBuffer::New( vertexFormat, 5 );
+  vertices.SetData( vertexData );
+
+  // Specify all the faces
+  unsigned int indexData[12] = { 0,1,3,0,2,4,0,3,4,0,2,1 };
+  Property::Map indexFormat;
+  indexFormat["indices"] = Property::UNSIGNED_INTEGER;
+  PropertyBuffer indices = PropertyBuffer::New( indexFormat, 12 );
+  indices.SetData( indexData );
+
+  // Create the geometry object
+  Geometry geometry = Geometry::New();
+  geometry.AddVertexBuffer( vertices );
+  geometry.SetIndexBuffer( indices );
+
+  return geometry;
+}
+
+ShaderEffect NewWindowController::CreateColorModifierer( const Vector3& rgbDelta )
+{
+ std::string fragmentShader = MAKE_SHADER(
+   precision highp float;\n
+   uniform vec3 uRGBDelta;\n
+   uniform float uIgnoreAlpha;\n
+   float rand(vec2 co) \n
+   {\n
+     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453); \n}
+   \n
+   void main() {\n
+     vec4 color = texture2D(sTexture, vTexCoord); \n
+     // modify the hsv Value
+     color.rgb += uRGBDelta * rand(vTexCoord); \n
+     // if the new vale exceeds one, then decrease it
+     color.rgb -= max(color.rgb*2.0 - vec3(2.0), 0.0);\n
+     // if the new vale drops below zero, then increase it
+     color.rgb -= min(color.rgb*2.0, 0.0);\n
+     gl_FragColor = color; \n
+   }\n
+ );
+
+ ShaderEffect shaderEffect = ShaderEffect::New("", fragmentShader);
+ shaderEffect.SetUniform( "uRGBDelta", rgbDelta );
+
+ return shaderEffect;
+}
+
+void NewWindowController::NewWindow(void)
+{
+  PositionSize posSize(0, 0, 720, 1280);
+  gApplication.ReplaceWindow(posSize, "NewWindow"); // Generates a new window
+}
+
+bool NewWindowController::OnLoseContextButtonClicked( Toolkit::Button button )
+{
+  // Add as an idle callback to avoid ProcessEvents being recursively called.
+  mApplication.AddIdle( MakeCallback( NewWindowController::NewWindow ) );
+  return true;
 }
 
 bool NewWindowController::OnTrackTimerTick()
@@ -351,80 +506,11 @@ bool NewWindowController::OnTrackTimerTick()
   Vector2 direction = aimPos-position;
   Vector2 stageSize = Stage::GetCurrent().GetSize();
 
-  for(int i=0; i<20; i++)
-  {
-    SetUpAnimation( stageSize*0.5f+position, direction );
-  }
+  SetUpBubbleEmission( stageSize*0.5f+position, direction );
+  SetUpBubbleEmission( stageSize*0.5f+position*0.75f, direction );
+  SetUpBubbleEmission( stageSize*0.5f+position*0.7f, direction );
 
   return true;
-}
-
-
-void NewWindowController::CreateBlending()
-{
-  Toolkit::ColorAdjuster colorAdjuster = ColorAdjuster::New(mHSVDelta);
-  FrameBufferImage fb2 = CreateFrameBufferForImage( EFFECT_IMAGE, mEffectImage, colorAdjuster );
-
-  ImageActor tmpActor = ImageActor::New(fb2);
-  mContentLayer.Add(tmpActor);
-  tmpActor.SetParentOrigin(ParentOrigin::BOTTOM_RIGHT);
-  tmpActor.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
-  tmpActor.SetScale(0.25f);
-
-  // create blending shader effect
-  ShaderEffect blendShader = ShaderEffect::New( "", FRAG_SHADER );
-  blendShader.SetEffectImage( fb2 );
-  blendShader.SetUniform("alpha", 0.5f);
-
-  mBaseImage = ResourceImage::New(BASE_IMAGE);
-  mBlendActor = ImageActor::New( mBaseImage );
-  mBlendActor.SetParentOrigin(ParentOrigin::CENTER);
-  mBlendActor.SetPosition(Vector3(150.0f, 200.0f, 0.0f));
-  mBlendActor.SetSize(140, 140);
-  mBlendActor.SetShaderEffect( blendShader );
-  mContentLayer.Add(mBlendActor);
-}
-
-void NewWindowController::CreateText()
-{
-  mTextActor = TextLabel::New("Some text");
-  mTextActor.SetParentOrigin(ParentOrigin::CENTER);
-  mTextActor.SetColor(Color::RED);
-  mTextActor.SetName("PushMe text");
-  mContentLayer.Add( mTextActor );
-}
-
-Mesh NewWindowController::CreateMesh(bool hasColor, Material material)
-{
-  // Create vertices and specify their color
-  MeshData::VertexContainer vertices(4);
-  vertices[ 0 ] = MeshData::Vertex( Vector3( -0.5f, -0.5f, 0.0f ), Vector2(0.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f) );
-  vertices[ 1 ] = MeshData::Vertex( Vector3(  0.5f, -0.5f, 0.0f ), Vector2(1.0f, 0.0f), Vector3(1.0f, 1.0f, 0.0f) );
-  vertices[ 2 ] = MeshData::Vertex( Vector3( -0.5f,  0.5f, 0.0f ), Vector2(0.0f, 1.0f), Vector3(0.0f,1.0f,0.0f) );
-  vertices[ 3 ] = MeshData::Vertex( Vector3(  0.5f,  0.5f, 0.0f ), Vector2(1.0f, 1.0f), Vector3(0.0f,0.0f,1.0f) );
-
-  // Specify all the faces
-  MeshData::FaceIndices faces;
-  faces.reserve( 6 ); // 2 triangles in Quad
-  faces.push_back( 0 ); faces.push_back( 3 ); faces.push_back( 1 );
-  faces.push_back( 0 ); faces.push_back( 2 ); faces.push_back( 3 );
-
-  // Create the mesh data from the vertices and faces
-  MeshData meshData;
-  meshData.SetHasColor( hasColor );
-  meshData.SetMaterial( material );
-  meshData.SetVertices( vertices );
-  meshData.SetFaceIndices( faces );
-
-  // Create a mesh from the data
-  Dali::Mesh mesh = Mesh::New( meshData );
-  return mesh;
-}
-
-void NewWindowController::NewWindow(void)
-{
-  PositionSize posSize(0, 0, 720, 1280);
-  gApplication.ReplaceWindow(posSize, "NewWindow"); // Generates a new window
 }
 
 void NewWindowController::OnKeyEvent(const KeyEvent& event)
@@ -448,9 +534,6 @@ void NewWindowController::OnContextRegained()
   printf("Stage reporting context regain\n");
 }
 
-
-
-
 void RunTest(Application& app)
 {
   gNewWindowController = new NewWindowController(app);
@@ -459,7 +542,6 @@ void RunTest(Application& app)
 
 // Entry point for Linux & Tizen applications
 //
-
 int main(int argc, char **argv)
 {
   gApplication = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
