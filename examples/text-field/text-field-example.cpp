@@ -86,6 +86,7 @@ public:
     ImageActor folderButton = ImageActor::New( image );
     folderButton.SetColor( Color::WHITE );
     button.SetButtonImage( folderButton );
+    button.SetSelectedImage( Actor() );
     button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     button.SetSize( image.GetWidth(), image.GetHeight() );

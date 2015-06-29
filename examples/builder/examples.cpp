@@ -53,6 +53,7 @@ namespace
 const char* BACKGROUND_IMAGE( "" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* EDIT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
+const char* EDIT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
 
 std::string USER_DIRECTORY;
 
@@ -512,7 +513,8 @@ public:
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
-    editButton.SetBackgroundImage( ResourceImage::New( EDIT_IMAGE ) );
+    editButton.SetButtonImage( ResourceImage::New( EDIT_IMAGE ) );
+    editButton.SetSelectedImage( ResourceImage::New( EDIT_IMAGE_SELECTED ) );
     editButton.ClickedSignal().Connect( this, &ExampleApp::OnToolSelectLayout);
     editButton.SetLeaveRequired( true );
     mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );

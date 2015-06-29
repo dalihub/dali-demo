@@ -37,9 +37,13 @@ const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE_HIGHP( "Dissolve Effect(highp)" );
 const char * const APPLICATION_TITLE_MEDIUMP( "Dissolve Effect(mediump)" );
 const char * const EFFECT_HIGHP_IMAGE( DALI_IMAGE_DIR "icon-highp.png" );
+const char * const EFFECT_HIGHP_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-highp-selected.png" );
 const char * const EFFECT_MEDIUMP_IMAGE( DALI_IMAGE_DIR "icon-mediump.png" );
+const char * const EFFECT_MEDIUMP_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-mediump-selected.png" );
 const char * const PLAY_ICON( DALI_IMAGE_DIR "icon-play.png" );
+const char * const PLAY_ICON_SELECTED( DALI_IMAGE_DIR "icon-play-selected.png" );
 const char * const STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
+const char * const STOP_ICON_SELECTED( DALI_IMAGE_DIR "icon-stop-selected.png" );
 
 const char* IMAGES[] =
 {
@@ -177,11 +181,15 @@ private:
   unsigned int                    mCentralLineIndex;
 
   Image                           mIconPlay;
+  Image                           mIconPlaySelected;
   Image                           mIconStop;
+  Image                           mIconStopSelected;
   Toolkit::PushButton             mPlayStopButton;
 
   Image                           mIconHighP;
+  Image                           mIconHighPSelected;
   Image                           mIconMediumP;
+  Image                           mIconMediumPSelected;
   Toolkit::PushButton             mEffectChangeButton;
 };
 
@@ -211,9 +219,12 @@ void DissolveEffectApp::OnInit( Application& application )
 
   // Add an effect-changing button on the right of the tool bar.
   mIconHighP = ResourceImage::New( EFFECT_HIGHP_IMAGE );
+  mIconHighPSelected = ResourceImage::New( EFFECT_HIGHP_IMAGE_SELECTED );
   mIconMediumP = ResourceImage::New( EFFECT_MEDIUMP_IMAGE );
+  mIconMediumPSelected = ResourceImage::New( EFFECT_MEDIUMP_IMAGE_SELECTED );
   mEffectChangeButton = Toolkit::PushButton::New();
-  mEffectChangeButton.SetBackgroundImage(mIconHighP);
+  mEffectChangeButton.SetButtonImage( mIconHighP );
+  mEffectChangeButton.SetSelectedImage( mIconHighPSelected );
   mEffectChangeButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnEffectButtonClicked );
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
@@ -223,9 +234,12 @@ void DissolveEffectApp::OnInit( Application& application )
 
   // Add an slide-show button on the right of the title
   mIconPlay = ResourceImage::New( PLAY_ICON );
+  mIconPlaySelected = ResourceImage::New( PLAY_ICON_SELECTED );
   mIconStop = ResourceImage::New( STOP_ICON );
+  mIconStopSelected = ResourceImage::New( STOP_ICON_SELECTED );
   mPlayStopButton = Toolkit::PushButton::New();
-  mPlayStopButton.SetBackgroundImage( mIconPlay );
+  mPlayStopButton.SetButtonImage( mIconPlay );
+  mPlayStopButton.SetSelectedImage( mIconPlaySelected );
   mPlayStopButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnSildeshowButtonClicked );
   mToolBar.AddControl( mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
@@ -336,12 +350,14 @@ bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
   if(mUseHighPrecision)
   {
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP) );
-    mEffectChangeButton.SetBackgroundImage(mIconHighP);
+    mEffectChangeButton.SetButtonImage( mIconHighP );
+    mEffectChangeButton.SetSelectedImage( mIconHighPSelected );
   }
   else
   {
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_MEDIUMP) );
-    mEffectChangeButton.SetBackgroundImage(mIconMediumP);
+    mEffectChangeButton.SetButtonImage( mIconMediumP );
+    mEffectChangeButton.SetSelectedImage( mIconMediumPSelected );
   }
 
   return true;
@@ -352,14 +368,16 @@ bool DissolveEffectApp::OnSildeshowButtonClicked( Toolkit::Button button )
   mSlideshow = !mSlideshow;
   if( mSlideshow )
   {
-    mPlayStopButton.SetBackgroundImage( mIconStop );
+    mPlayStopButton.SetButtonImage( mIconStop );
+    mPlayStopButton.SetSelectedImage( mIconStopSelected );
     mPanGestureDetector.Detach( mParent );
     mViewTimer.Start();
     mTimerReady = false;
   }
   else
   {
-    mPlayStopButton.SetBackgroundImage( mIconPlay );
+    mPlayStopButton.SetButtonImage( mIconPlay );
+    mPlayStopButton.SetSelectedImage( mIconPlaySelected );
     mTimerReady = true;
     mPanGestureDetector.Attach( mParent );
   }

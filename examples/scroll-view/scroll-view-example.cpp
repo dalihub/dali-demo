@@ -32,6 +32,7 @@ const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "ScrollView" );
 const char * const EFFECT_CAROUSEL_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-carousel.png" );
+const char * const EFFECT_CAROUSEL_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-scroll-view-carousel-selected.png" );
 
 const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
 
@@ -173,9 +174,13 @@ public:
                                             "" );
 
     mEffectIcon[ PageCarouselEffect ] = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIconSelected[ PageCarouselEffect ] = ResourceImage::New( EFFECT_CAROUSEL_IMAGE_SELECTED );
     mEffectIcon[ PageCubeEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIconSelected[ PageCubeEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE_SELECTED );
     mEffectIcon[ PageSpiralEffect ]   = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIconSelected[ PageSpiralEffect ]   = ResourceImage::New( EFFECT_CAROUSEL_IMAGE_SELECTED );
     mEffectIcon[ PageWaveEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
+    mEffectIconSelected[ PageWaveEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE_SELECTED );
 
     // Create a effect change button. (right of toolbar)
     mEffectChangeButton = Toolkit::PushButton::New();
@@ -239,7 +244,8 @@ private:
     ss << APPLICATION_TITLE << ": " << EFFECT_MODE_NAME[mEffectMode];
     SetTitle(ss.str());
 
-    mEffectChangeButton.SetBackgroundImage( mEffectIcon[ mEffectMode ] );
+    mEffectChangeButton.SetButtonImage( mEffectIcon[ mEffectMode ] );
+    mEffectChangeButton.SetSelectedImage( mEffectIconSelected[ mEffectMode ] );
 
     // remove old Effect if exists.
     if(mScrollViewEffect)
@@ -577,6 +583,7 @@ private:
   EffectMode mEffectMode;                               ///< Current Effect mode
 
   Image mEffectIcon[Total];                             ///< Icons for the effect button
+  Image mEffectIconSelected[Total];                     ///< Icons for the effect button when its selected
   Toolkit::PushButton mEffectChangeButton;              ///< Effect Change Button
 };
 

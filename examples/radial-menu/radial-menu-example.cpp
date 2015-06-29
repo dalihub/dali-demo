@@ -33,7 +33,9 @@ const char* TEST_DIAL_FILENAME = DALI_IMAGE_DIR "layer4.png"; // Image to be mas
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" ); // Background for toolbar
 const char* APPLICATION_TITLE( "Radial Menu" );
 const char * const PLAY_ICON( DALI_IMAGE_DIR "icon-play.png" );
+const char * const PLAY_ICON_SELECTED( DALI_IMAGE_DIR "icon-play-selected.png" );
 const char * const STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
+const char * const STOP_ICON_SELECTED( DALI_IMAGE_DIR "icon-stop-selected.png" );
 }
 
 
@@ -107,7 +109,9 @@ private: // Member variables
   AnimState       mAnimationState;
 
   Image               mIconPlay;
+  Image               mIconPlaySelected;
   Image               mIconStop;
+  Image               mIconStopSelected;
   Toolkit::PushButton mPlayStopButton;
   ImageActor      mDialActor;
   RadialSweepView mRadialSweepView1;
@@ -145,9 +149,12 @@ void RadialMenuExample::OnInit(Application& app)
                                       APPLICATION_TITLE );
 
   mIconPlay = ResourceImage::New( PLAY_ICON );
+  mIconPlaySelected = ResourceImage::New( PLAY_ICON_SELECTED );
   mIconStop = ResourceImage::New( STOP_ICON );
+  mIconStopSelected = ResourceImage::New( STOP_ICON_SELECTED );
   mPlayStopButton = Toolkit::PushButton::New();
-  mPlayStopButton.SetBackgroundImage( mIconStop );
+  mPlayStopButton.SetButtonImage( mIconStop );
+  mPlayStopButton.SetSelectedImage( mIconStopSelected );
 
   mPlayStopButton.ClickedSignal().Connect( this, &RadialMenuExample::OnButtonClicked );
 
@@ -216,7 +223,8 @@ bool RadialMenuExample::OnButtonClicked( Toolkit::Button button )
     {
       mAnimation.Pause();
       mAnimationState = PAUSED;
-      mPlayStopButton.SetBackgroundImage( mIconPlay );
+      mPlayStopButton.SetButtonImage( mIconPlay );
+      mPlayStopButton.SetSelectedImage( mIconPlaySelected );
     }
     break;
 
@@ -224,13 +232,15 @@ bool RadialMenuExample::OnButtonClicked( Toolkit::Button button )
     {
       mAnimation.Play();
       mAnimationState = PLAYING;
-      mPlayStopButton.SetBackgroundImage( mIconStop );
+      mPlayStopButton.SetButtonImage( mIconStop );
+      mPlayStopButton.SetSelectedImage( mIconStopSelected );
     }
     break;
 
     case STOPPED:
     {
-      mPlayStopButton.SetBackgroundImage( mIconStop );
+      mPlayStopButton.SetButtonImage( mIconStop );
+      mPlayStopButton.SetSelectedImage( mIconStopSelected );
       mRadialSweepView1.Deactivate();
       mRadialSweepView2.Deactivate();
       mRadialSweepView3.Deactivate();
@@ -243,7 +253,8 @@ bool RadialMenuExample::OnButtonClicked( Toolkit::Button button )
 void RadialMenuExample::OnAnimationFinished( Animation& source )
 {
   mAnimationState = STOPPED;
-  mPlayStopButton.SetBackgroundImage( mIconPlay );
+  mPlayStopButton.SetButtonImage( mIconPlay );
+  mPlayStopButton.SetSelectedImage( mIconPlaySelected );
 }
 
 RadialSweepView RadialMenuExample::CreateSweepView( std::string imageName,

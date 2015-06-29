@@ -27,7 +27,9 @@ namespace
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "Bubble Effect" );
 const char * const CHANGE_BACKGROUND_ICON( DALI_IMAGE_DIR "icon-change.png" );
+const char * const CHANGE_BACKGROUND_ICON_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
 const char * const CHANGE_BUBBLE_SHAPE_ICON( DALI_IMAGE_DIR "icon-replace.png" );
+const char * const CHANGE_BUBBLE_SHAPE_ICON_SELECTED( DALI_IMAGE_DIR "icon-replace-selected.png" );
 
 const char* BACKGROUND_IMAGES[]=
 {
@@ -109,7 +111,8 @@ private:
 
     // Add a button to change background. (right of toolbar)
     mChangeBackgroundButton = Toolkit::PushButton::New();
-    mChangeBackgroundButton.SetBackgroundImage( ResourceImage::New( CHANGE_BACKGROUND_ICON ) );
+    mChangeBackgroundButton.SetButtonImage( ResourceImage::New( CHANGE_BACKGROUND_ICON ) );
+    mChangeBackgroundButton.SetSelectedImage( ResourceImage::New( CHANGE_BACKGROUND_ICON_SELECTED ) );
     mChangeBackgroundButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
     toolBar.AddControl( mChangeBackgroundButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -117,7 +120,8 @@ private:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change bubble shape. ( left of bar )
     mChangeBubbleShapeButton = Toolkit::PushButton::New();
-    mChangeBubbleShapeButton.SetBackgroundImage( ResourceImage::New( CHANGE_BUBBLE_SHAPE_ICON ) );
+    mChangeBubbleShapeButton.SetButtonImage( ResourceImage::New( CHANGE_BUBBLE_SHAPE_ICON ) );
+    mChangeBubbleShapeButton.SetSelectedImage( ResourceImage::New( CHANGE_BUBBLE_SHAPE_ICON_SELECTED ) );
     mChangeBubbleShapeButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
     toolBar.AddControl( mChangeBubbleShapeButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
