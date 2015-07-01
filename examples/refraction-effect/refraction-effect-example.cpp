@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,17 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali/dali.h>
+#include <dali/devel-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/devel-api/actors/mesh-actor.h>
-#include <dali/devel-api/modeling/material.h>
-#include <dali/devel-api/geometry/mesh.h>
-
-#include "shared/view.h"
 
 #include <fstream>
 #include <sstream>
 #include <limits>
+
+// INTERNAL INCLUDES
+#include "shared/view.h"
 
 using namespace Dali;
 
@@ -51,8 +51,6 @@ const char* TEXTURE_IMAGES[]=
   DALI_IMAGE_DIR "background-4.jpg"
 };
 const unsigned int NUM_TEXTURE_IMAGES( sizeof( TEXTURE_IMAGES ) / sizeof( TEXTURE_IMAGES[0] ) );
-
-#define MAKE_SHADER(A)#A
 
 struct LightOffsetConstraint
 {
@@ -86,214 +84,134 @@ ResourceImage LoadStageFillingImage( const char * const imagePath )
   return ResourceImage::New( imagePath, ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
 }
 
-} // namespace
+/**
+ * structure of the vertex in the mesh
+ */
+struct Vertex
+{
+  Vector3 position;
+  Vector3 normal;
+  Vector2 textureCoord;
+
+  Vertex()
+  {}
+
+  Vertex( const Vector3& position, const Vector3& normal, const Vector2& textureCoord )
+  : position( position ), normal( normal ), textureCoord( textureCoord )
+  {}
+};
 
 /************************************************************************************************
- *** This shader is used when the MeshActor is not touched***
+ *** The shader source is used when the MeshActor is not touched***
  ************************************************************************************************/
-class NoEffect : public ShaderEffect
-{
-public:
-  /**
-   * Create an empty handle.
-   */
-  NoEffect()
-  {
-  }
+const char* VERTEX_SHADER_FLAT = DALI_COMPOSE_SHADER(
+attribute mediump vec3    aPosition;\n
+attribute mediump vec3    aNormal;\n
+attribute highp   vec2    aTexCoord;\n
+uniform   mediump mat4    uMvpMatrix;\n
+varying   mediump vec2    vTexCoord;\n
+void main()\n
+{\n
+  gl_Position = uMvpMatrix * vec4( aPosition.xy, 0.0, 1.0 );\n
+  vTexCoord = aTexCoord.xy;\n
+}\n
+);
 
-  /**
-   * Virtual destructor
-   */
-  virtual ~NoEffect()
-  {
-  }
+const char* FRAGMENT_SHADER_FLAT = DALI_COMPOSE_SHADER(
+uniform lowp    vec4  uColor;\n
+uniform sampler2D     sTexture;\n
+varying mediump vec2  vTexCoord;\n
+void main()\n
+{\n
+  gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
+}\n
+);
 
-  /**
-   * Create a NoEffect object.
-   * @return A handle to a newly allocated NoEffect
-   */
-  static NoEffect New()
-  {
-    std::string vertexShader = MAKE_SHADER(
-        precision mediump float;\n
-        uniform mediump vec4 uTextureRect;\n
-        void main()\n
-        {\n
-          gl_Position = uMvpMatrix * vec4( aPosition.xy, 0.0, 1.0 );\n
-          vTexCoord = aTexCoord.xy;\n
-        }\n
-    );
-    std::string fragmentShader = MAKE_SHADER(
-        precision mediump float;\n
-        void main()\n
-        {\n
-          gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
-        }\n
-    );
-    ShaderEffect shaderEffect = ShaderEffect::New( vertexShader, fragmentShader,
-                                                   GeometryType( GEOMETRY_TYPE_TEXTURED_MESH),
-                                                   ShaderEffect::GeometryHints( ShaderEffect::HINT_NONE ) );
-    NoEffect handle( shaderEffect );
-    return handle;
-  }
+/************************************************************
+ ** Custom refraction effect shader***************************
+ ************************************************************/
+const char* VERTEX_SHADER_REFRACTION = DALI_COMPOSE_SHADER(
+attribute mediump vec3    aPosition;\n
+attribute mediump vec3    aNormal;\n
+attribute highp   vec2    aTexCoord;\n
+uniform   mediump mat4    uMvpMatrix;\n
+varying   mediump vec4    vVertex;\n
+varying   mediump vec3    vNormal;\n
+varying   mediump vec2    vTexCoord;\n
+varying   mediump vec2    vTextureOffset;\n
+void main()\n
+{\n
+  gl_Position = uMvpMatrix * vec4( aPosition.xy, 0.0, 1.0 );\n
+  vTexCoord = aTexCoord.xy;\n
 
-private:
-  /**
-   * Helper for New()
-   */
-  NoEffect( ShaderEffect handle )
-  : ShaderEffect( handle )
-  {
-  }
-};
+  vNormal = aNormal;\n
+  vVertex = vec4( aPosition, 1.0 );\n
+  float length = max(0.01, length(aNormal.xy)) * 40.0;\n
+  vTextureOffset = aNormal.xy / length;\n
+}\n
+);
 
-/************************************************************/
-/* Custom refraction effect shader******************************/
-/************************************************************/
+const char* FRAGMENT_SHADER_REFRACTION = DALI_COMPOSE_SHADER(
+precision mediump float;\n
+uniform   mediump float  uEffectStrength;\n
+uniform   mediump vec3   uLightPosition;\n
+uniform   mediump vec2   uLightXYOffset;\n
+uniform   mediump vec2   uLightSpinOffset;\n
+uniform   mediump float  uLightIntensity;\n
+uniform   lowp    vec4   uColor;\n
+uniform   sampler2D      sTexture;\n
+varying   mediump vec4   vVertex;\n
+varying   mediump vec3   vNormal;\n
+varying   mediump vec2   vTexCoord;\n
+varying   mediump vec2   vTextureOffset;\n
 
-class RefractionEffect : public ShaderEffect
-{
-public:
+vec3 rgb2hsl(vec3 rgb)\n
+{\n
+  float epsilon = 1.0e-10;\n
+  vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);\n
+  vec4 P = mix(vec4(rgb.bg, K.wz), vec4(rgb.gb, K.xy), step(rgb.b, rgb.g));\n
+  vec4 Q = mix(vec4(P.xyw, rgb.r), vec4(rgb.r, P.yzx), step(P.x, rgb.r));\n
+  \n
+  // RGB -> HCV
+  float value = Q.x;\n
+  float chroma = Q.x - min(Q.w, Q.y);\n
+  float hue = abs(Q.z + (Q.w-Q.y) / (6.0*chroma+epsilon));\n
+  // HCV -> HSL
+  float lightness = value - chroma*0.5;\n
+  return vec3( hue, chroma/max( 1.0-abs(lightness*2.0-1.0), 1.0e-1 ), lightness );\n
+}\n
 
-  /**
-   * Create an empty RefractionEffect handle.
-   */
-  RefractionEffect()
-  {
-  }
+vec3 hsl2rgb( vec3 hsl )\n
+{\n
+  // pure hue->RGB
+  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n
+  vec3 p = abs(fract(hsl.xxx + K.xyz) * 6.0 - K.www);\n
+  vec3 RGB = clamp(p - K.xxx, 0.0, 1.0);\n
+  \n
+  float chroma = ( 1.0 - abs( hsl.z*2.0-1.0 ) ) * hsl.y;\n
+  return ( RGB - 0.5 ) * chroma + hsl.z;\n
+}\n
 
-  /**
-   * Virtual destructor
-   */
-  virtual ~RefractionEffect()
-  {
-  }
+void main()\n
+{\n
+  vec3 normal = normalize( vNormal);\n
 
-  /**
-   * Create a RefractionEffect object.
-   * @return A handle to a newly allocated RefractionEffect
-   */
-  static RefractionEffect New()
-  {
-    std::string vertexShader = MAKE_SHADER(
-      precision mediump float;\n
-      varying mediump vec2 vTextureOffset;\n
-      void main()\n
-      {\n
-        gl_Position = uMvpMatrix * vec4( aPosition.xy, 0.0, 1.0 );\n
-        vTexCoord = aTexCoord.xy;\n
+  vec3 lightPosition = uLightPosition + vec3(uLightXYOffset+uLightSpinOffset, 0.0);\n
+  mediump vec3 vecToLight = normalize( (lightPosition - vVertex.xyz) * 0.01 );\n
+  mediump float spotEffect = pow( max(0.05, vecToLight.z ) - 0.05, 8.0);\n
 
-        vNormal = aNormal;\n
-        vVertex = vec4( aPosition, 1.0 );\n
-        float length = max(0.01, length(aNormal.xy)) * 40.0;\n
-        vTextureOffset = aNormal.xy / length;\n
-      }\n
-    );
+  spotEffect = spotEffect * uEffectStrength;\n
+  mediump float lightDiffuse = ( ( dot( vecToLight, normal )-0.75 ) *uLightIntensity  ) * spotEffect;\n
 
-    std::string fragmentShader = MAKE_SHADER(
-      precision mediump float;\n
-      uniform mediump float uEffectStrength;\n
-      uniform mediump vec3 uLightPosition;\n
-      uniform mediump vec2 uLightXYOffset;\n
-      uniform mediump vec2 uLightSpinOffset;\n
-      uniform mediump float uLightIntensity;\n
-      varying mediump vec2 vTextureOffset;\n
+  lowp vec4 color = texture2D( sTexture, vTexCoord + vTextureOffset * spotEffect );\n
+  vec3 lightedColor =  hsl2rgb( rgb2hsl(color.rgb) + vec3(0.0,0.0,lightDiffuse) );\n
 
-      vec3 rgb2hsl(vec3 rgb)\n
-      {\n
-        float epsilon = 1.0e-10;\n
-        vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);\n
-        vec4 P = mix(vec4(rgb.bg, K.wz), vec4(rgb.gb, K.xy), step(rgb.b, rgb.g));\n
-        vec4 Q = mix(vec4(P.xyw, rgb.r), vec4(rgb.r, P.yzx), step(P.x, rgb.r));\n
-        \n
-        // RGB -> HCV
-        float value = Q.x;\n
-        float chroma = Q.x - min(Q.w, Q.y);\n
-        float hue = abs(Q.z + (Q.w-Q.y) / (6.0*chroma+epsilon));\n
-        // HCV -> HSL
-        float lightness = value - chroma*0.5;\n
-        return vec3( hue, chroma/max( 1.0-abs(lightness*2.0-1.0), 1.0e-1 ), lightness );\n
-      }\n
+  gl_FragColor = vec4( lightedColor, color.a ) * uColor;\n
+}\n
+);
 
-      vec3 hsl2rgb( vec3 hsl )
-      {
-        // pure hue->RGB
-        vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n
-        vec3 p = abs(fract(hsl.xxx + K.xyz) * 6.0 - K.www);\n
-        vec3 RGB = clamp(p - K.xxx, 0.0, 1.0);\n
-        \n
-        float chroma = ( 1.0 - abs( hsl.z*2.0-1.0 ) ) * hsl.y;\n
-        return ( RGB - 0.5 ) * chroma + hsl.z;
-      }
+} // namespace
 
-      void main()\n
-      {\n
-        vec3 normal = normalize( vNormal);\n
-
-        vec3 lightPosition = uLightPosition + vec3(uLightXYOffset+uLightSpinOffset, 0.0);\n
-        mediump vec3 vecToLight = normalize( (lightPosition - vVertex.xyz) * 0.01 );\n
-        mediump float spotEffect = pow( max(0.05, vecToLight.z ) - 0.05, 8.0);\n
-
-        spotEffect = spotEffect * uEffectStrength;\n
-        mediump float lightDiffuse = ( ( dot( vecToLight, normal )-0.75 ) *uLightIntensity  ) * spotEffect;\n
-
-        lowp vec4 color = texture2D( sTexture, vTexCoord + vTextureOffset * spotEffect );\n
-        vec3 lightedColor =  hsl2rgb( rgb2hsl(color.rgb) + vec3(0.0,0.0,lightDiffuse) );\n
-
-        gl_FragColor = vec4( lightedColor, color.a ) * uColor;\n
-      }\n
-    );
-
-    ShaderEffect shaderEffect = ShaderEffect::New( vertexShader, fragmentShader,
-                                                   GeometryType( GEOMETRY_TYPE_TEXTURED_MESH),
-                                                   ShaderEffect::GeometryHints( ShaderEffect::HINT_BLENDING ) );
-    RefractionEffect handle( shaderEffect );
-
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
-    handle.SetLightPosition( Vector2(stageSize.x, 0.f) );
-    handle.SetUniform( "uLightXYOffset",  Vector2::ZERO );
-    handle.SetUniform( "uLightSpinOffset",  Vector2::ZERO );
-    handle.SetUniform( "uEffectStrength", 0.f );
-    handle.SetUniform( "uLightIntensity",  2.5f );
-
-    Dali::Property::Index index = handle.RegisterProperty( "uSpinAngle", 0.f );
-    Constraint constraint = Constraint::New<Vector2>( handle, handle.GetPropertyIndex("uLightSpinOffset"), LightOffsetConstraint(stageSize.x*0.1f) );
-    constraint.AddSource( LocalSource(index) );
-    constraint.Apply();
-
-    return handle;
-  }
-
-  void SetLightPosition( const Vector2& position )
-  {
-    Vector2 stageHalfSize = Stage::GetCurrent().GetSize() * 0.5f;
-    SetUniform( "uLightPosition", Vector3( position.x - stageHalfSize.x, position.y - stageHalfSize.y, stageHalfSize.x ) );
-  }
-
-  void SetLightXYOffset( const Vector2& offset )
-  {
-    SetUniform( "uLightXYOffset",  offset );
-  }
-
-  void SetEffectStrength( float strength )
-  {
-    SetUniform( "uEffectStrength", strength );
-  }
-
-  void SetLightIntensity( float intensity )
-  {
-    SetUniform( "uLightIntensity", intensity );
-  }
-
-private:
-  /**
-   * Helper for New()
-   */
-  RefractionEffect( ShaderEffect handle )
-  : ShaderEffect( handle )
-  {
-  }
-};
 
 /*************************************************/
 /*Demo using RefractionEffect*****************/
@@ -303,7 +221,6 @@ class RefractionEffectExample : public ConnectionTracker
 public:
   RefractionEffectExample( Application &application )
   : mApplication( application ),
-    mIsDown( false ),
     mCurrentTextureId( 1 ),
     mCurrentMeshId( 0 )
   {
@@ -321,7 +238,7 @@ private:
   void Create(Application& application)
   {
     Stage stage = Stage::GetCurrent();
-    mStageHalfSize = stage.GetSize() * 0.5f;
+    Vector2 stageSize = stage.GetSize();
 
     stage.KeyEventSignal().Connect(this, &RefractionEffectExample::OnKeyEvent);
 
@@ -353,23 +270,58 @@ private:
                         Toolkit::Alignment::HorizontalLeft,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
-    // creates the shader effects applied on the mesh actor
-    mRefractionEffect = RefractionEffect::New(); // used when the finger is touching the screen
-    mNoEffect = NoEffect::New(); // used in the other situations, basic render shader
-    // Create the mesh from the obj file and add to stage
-    mMaterial =  Material::New( "Material" ) ;
-    mMaterial.SetDiffuseTexture( LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] ) );
-    CreateSurface( MESH_FILES[mCurrentMeshId] );
+
+
+    // shader used when the screen is not touched, render a flat surface
+    mShaderFlat = Shader::New( VERTEX_SHADER_FLAT, FRAGMENT_SHADER_FLAT );
+    mGeometry = CreateGeometry( MESH_FILES[mCurrentMeshId] );
+
+    Image texture = LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] );
+    mSampler = Sampler::New( texture, "sTexture" );
+    mMaterial = Material::New( mShaderFlat );
+    mMaterial.AddSampler( mSampler );
+
+    mRenderer = Renderer::New( mGeometry, mMaterial );
+
+    mMeshActor = Actor::New();
+    mMeshActor.AddRenderer( mRenderer );
+    mMeshActor.SetSize( stageSize );
+    mMeshActor.SetParentOrigin(ParentOrigin::CENTER);
+    mContent.Add( mMeshActor );
 
     // Connect the callback to the touch signal on the mesh actor
     mContent.TouchedSignal().Connect( this, &RefractionEffectExample::OnTouch );
 
+    // shader used when the finger is touching the screen. render refraction effect
+    mShaderRefraction = Shader::New( VERTEX_SHADER_REFRACTION, FRAGMENT_SHADER_REFRACTION );
+
+    // register uniforms
+    mLightXYOffsetIndex = mMeshActor.RegisterProperty( "uLightXYOffset", Vector2::ZERO );
+
+    mLightIntensityIndex = mMeshActor.RegisterProperty( "uLightIntensity", 2.5f );
+
+    mEffectStrengthIndex = mMeshActor.RegisterProperty( "uEffectStrength",  0.f );
+
+    Vector3 lightPosition( -stageSize.x*0.5f, -stageSize.y*0.5f, stageSize.x*0.5f ); // top_left
+    mMeshActor.RegisterProperty( "uLightPosition", lightPosition );
+
+    Property::Index lightSpinOffsetIndex = mMeshActor.RegisterProperty( "uLightSpinOffset", Vector2::ZERO );
+
+    mSpinAngleIndex = mMeshActor.RegisterProperty("uSpinAngle", 0.f );
+    Constraint constraint = Constraint::New<Vector2>( mMeshActor, lightSpinOffsetIndex, LightOffsetConstraint(stageSize.x*0.1f) );
+    constraint.AddSource( LocalSource(mSpinAngleIndex) );
+    constraint.Apply();
+
     // the animation which spin the light around the finger touch position
-    mLightPosition = Vector2( mStageHalfSize.x*2.f, 0.f);
     mLightAnimation = Animation::New(2.f);
-    mLightAnimation.AnimateTo( Property( mRefractionEffect, "uSpinAngle" ), Math::PI*2.f );
+    mLightAnimation.AnimateTo( Property( mMeshActor, mSpinAngleIndex ), Math::PI*2.f );
     mLightAnimation.SetLooping( true );
     mLightAnimation.Pause();
+  }
+
+  void SetLightXYOffset( const Vector2& offset )
+  {
+    mMeshActor.SetProperty( mLightXYOffsetIndex,  offset );
   }
 
   /**
@@ -377,13 +329,9 @@ private:
    */
   bool OnChangeMesh( Toolkit::Button button  )
   {
-    if( mMeshActor )
-    {
-      UnparentAndReset( mMeshActor );
-    }
-
     mCurrentMeshId = ( mCurrentMeshId + 1 ) % NUM_MESH_FILES;
-    CreateSurface( MESH_FILES[mCurrentMeshId] );
+    mGeometry = CreateGeometry( MESH_FILES[mCurrentMeshId] );
+    mRenderer.SetGeometry( mGeometry );
 
     return true;
   }
@@ -391,21 +339,21 @@ private:
   bool OnChangeTexture( Toolkit::Button button )
   {
     mCurrentTextureId = ( mCurrentTextureId + 1 ) % NUM_TEXTURE_IMAGES;
-    mMaterial.SetDiffuseTexture( LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] ) );
-
+    Image texture = LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] );
+    mSampler.SetImage( texture );
     return true;
   }
 
   bool OnTouch( Actor actor , const TouchEvent& event )
   {
     const TouchPoint &point = event.GetPoint(0);
-
     switch(point.state)
     {
       case TouchPoint::Down:
       {
-        mIsDown = true;
-        mDownPosition = point.screen;
+        mMaterial.SetShader( mShaderRefraction );
+
+        SetLightXYOffset( point.screen );
 
         mLightAnimation.Play();
 
@@ -414,42 +362,32 @@ private:
           mStrenghAnimation.Clear();
         }
 
-        mRefractionEffect.SetLightXYOffset( point.screen - mLightPosition );
-        mMeshActor.SetShaderEffect( mRefractionEffect );
         mStrenghAnimation= Animation::New(0.5f);
-        mStrenghAnimation.AnimateTo( Property( mRefractionEffect, "uEffectStrength" ), 1.f );
+        mStrenghAnimation.AnimateTo( Property( mMeshActor, mEffectStrengthIndex ), 1.f );
         mStrenghAnimation.Play();
 
         break;
       }
       case TouchPoint::Motion:
       {
-        if(mIsDown)
-        {
-          // make the light position following the finger movement
-          mRefractionEffect.SetLightXYOffset( point.screen - mLightPosition );
-        }
+        // make the light position following the finger movement
+        SetLightXYOffset( point.screen );
         break;
       }
       case TouchPoint::Up:
       case TouchPoint::Leave:
       case TouchPoint::Interrupted:
       {
-        if(mIsDown)
+        mLightAnimation.Pause();
+
+        if( mStrenghAnimation )
         {
-          mLightAnimation.Pause();
-
-          if( mStrenghAnimation )
-          {
-            mStrenghAnimation.Clear();
-          }
-          mStrenghAnimation = Animation::New(0.5f);
-          mStrenghAnimation.AnimateTo( Property( mRefractionEffect, "uEffectStrength" ), 0.f );
-          mStrenghAnimation.FinishedSignal().Connect( this, &RefractionEffectExample::OnTouchFinished );
-          mStrenghAnimation.Play();
+          mStrenghAnimation.Clear();
         }
-
-        mIsDown = false;
+        mStrenghAnimation = Animation::New(0.5f);
+        mStrenghAnimation.AnimateTo( Property( mMeshActor, mEffectStrengthIndex ), 0.f );
+        mStrenghAnimation.FinishedSignal().Connect( this, &RefractionEffectExample::OnTouchFinished );
+        mStrenghAnimation.Play();
         break;
       }
       case TouchPoint::Stationary:
@@ -459,24 +397,21 @@ private:
         break;
       }
     }
+
     return true;
   }
 
   void OnTouchFinished( Animation& source )
   {
-    mMeshActor.SetShaderEffect( mNoEffect );
-    mRefractionEffect.SetLightXYOffset( Vector2::ZERO );
+    mMaterial.SetShader( mShaderFlat );
+    SetLightXYOffset( Vector2::ZERO );
   }
 
-  void CreateSurface( const std::string& objFileName )
+  Geometry CreateGeometry(const std::string& objFileName)
   {
-    MeshData::VertexContainer    vertices;
-    MeshData::FaceIndices        faces;
-    MeshData                     meshData;
-
-    std::vector<float> boundingBox;
     std::vector<Vector3> vertexPositions;
-    std::vector<int> faceIndices;
+    Vector<unsigned int> faceIndices;
+    Vector<float> boundingBox;
     // read the vertice and faces from the .obj file, and record the bounding box
     ReadObjFile( objFileName, boundingBox, vertexPositions, faceIndices );
 
@@ -486,53 +421,55 @@ private:
 
     // re-organize the mesh, the vertices are duplicated, each vertex only belongs to one triangle.
     // Without sharing vertex between triangle, so we can manipulate the texture offset on each triangle conveniently.
-    for( std::size_t i=0; i<faceIndices.size(); i=i+3 )
+    std::vector<Vertex> vertices;
+
+    std::size_t size = faceIndices.Size();
+    vertices.reserve( size );
+
+    for( std::size_t i=0; i<size; i=i+3 )
     {
       Vector3 edge1 = vertexPositions[ faceIndices[i+2] ] - vertexPositions[ faceIndices[i] ];
       Vector3 edge2 = vertexPositions[ faceIndices[i+1] ] - vertexPositions[ faceIndices[i] ];
       Vector3 normal = edge1.Cross(edge2);
       normal.Normalize();
 
+      // make sure all the faces are front-facing
       if( normal.z > 0 )
       {
-        faces.push_back( i );
-        faces.push_back( i+1 );
-        faces.push_back( i+2 );
+        vertices.push_back( Vertex( vertexPositions[ faceIndices[i] ], normal, textureCoordinates[ faceIndices[i] ] ) );
+        vertices.push_back( Vertex( vertexPositions[ faceIndices[i+1] ], normal, textureCoordinates[ faceIndices[i+1] ] ) );
+        vertices.push_back( Vertex( vertexPositions[ faceIndices[i+2] ], normal, textureCoordinates[ faceIndices[i+2] ] ) );
       }
       else
       {
         normal *= -1.f;
-        faces.push_back( i );
-        faces.push_back( i+2 );
-        faces.push_back( i+1 );
+        vertices.push_back( Vertex( vertexPositions[ faceIndices[i] ], normal, textureCoordinates[ faceIndices[i] ] ) );
+        vertices.push_back( Vertex( vertexPositions[ faceIndices[i+2] ], normal, textureCoordinates[ faceIndices[i+2] ] ) );
+        vertices.push_back( Vertex( vertexPositions[ faceIndices[i+1] ], normal, textureCoordinates[ faceIndices[i+1] ] ) );
       }
-
-      vertices.push_back( MeshData::Vertex( vertexPositions[ faceIndices[i] ], textureCoordinates[ faceIndices[i] ], normal ) );
-      vertices.push_back( MeshData::Vertex( vertexPositions[ faceIndices[i+1] ], textureCoordinates[ faceIndices[i+1] ], normal ) );
-      vertices.push_back( MeshData::Vertex( vertexPositions[ faceIndices[i+2] ], textureCoordinates[ faceIndices[i+2] ], normal ) );
-
     }
 
-    // Now ready to construct the mesh actor
-    meshData.SetMaterial( mMaterial );
-    meshData.SetVertices( vertices );
-    meshData.SetFaceIndices( faces );
-    meshData.SetHasTextureCoords(true);
-    meshData.SetHasNormals(true);
-    mMeshActor = MeshActor::New( Mesh::New( meshData ) );
-    mMeshActor.SetParentOrigin(ParentOrigin::CENTER);
-    mMeshActor.SetShaderEffect( mNoEffect );
-    mContent.Add( mMeshActor );
+    Property::Map vertexFormat;
+    vertexFormat["aPosition"] = Property::VECTOR3;
+    vertexFormat["aNormal"] = Property::VECTOR3;
+    vertexFormat["aTexCoord"] = Property::VECTOR2;
+    PropertyBuffer surfaceVertices = PropertyBuffer::New( vertexFormat, vertices.size() );
+    surfaceVertices.SetData( &vertices[0] );
+
+    Geometry surface = Geometry::New();
+    surface.AddVertexBuffer( surfaceVertices );
+
+    return surface;
   }
 
   void ReadObjFile( const std::string& objFileName,
-      std::vector<float>& boundingBox,
+      Vector<float>& boundingBox,
       std::vector<Vector3>& vertexPositions,
-      std::vector<int>& faceIndices)
+      Vector<unsigned int>& faceIndices)
   {
     std::ifstream ifs( objFileName.c_str(), std::ios::in );
 
-    boundingBox.resize( 6 );
+    boundingBox.Resize( 6 );
     boundingBox[0]=boundingBox[2]=boundingBox[4] = std::numeric_limits<float>::max();
     boundingBox[1]=boundingBox[3]=boundingBox[5] = -std::numeric_limits<float>::max();
 
@@ -568,20 +505,20 @@ private:
         }
 
         std::istringstream iss(line.substr(2), std::istringstream::in);
-        int indices[ numOfInt ];
+        unsigned int indices[ numOfInt ];
         unsigned int i=0;
         while( iss >> indices[i++] && i < numOfInt);
         unsigned int step = (i+1) / 3;
-        faceIndices.push_back( indices[0]-1 );
-        faceIndices.push_back( indices[step]-1 );
-        faceIndices.push_back( indices[2*step]-1 );
+        faceIndices.PushBack( indices[0]-1 );
+        faceIndices.PushBack( indices[step]-1 );
+        faceIndices.PushBack( indices[2*step]-1 );
       }
     }
 
     ifs.close();
   }
 
-  void ShapeResizeAndTexureCoordinateCalculation( const std::vector<float>& boundingBox,
+  void ShapeResizeAndTexureCoordinateCalculation( const Vector<float>& boundingBox,
       std::vector<Vector3>& vertexPositions,
       std::vector<Vector2>& textureCoordinates)
   {
@@ -592,12 +529,13 @@ private:
     Vector3 scale( stageSize.x / bBoxSize.x, stageSize.y / bBoxSize.y, 1.f );
     scale.z = (scale.x + scale.y)/2.f;
 
+    textureCoordinates.reserve(vertexPositions.size());
+
     for( std::vector<Vector3>::iterator iter = vertexPositions.begin(); iter != vertexPositions.end(); iter++ )
     {
       Vector3 newPosition(  (*iter) - bBoxMinCorner ) ;
 
-      Vector2 textureCoord( newPosition.x / bBoxSize.x, newPosition.y / bBoxSize.y );
-      textureCoordinates.push_back( textureCoord );
+     textureCoordinates.push_back( Vector2( newPosition.x / bBoxSize.x, newPosition.y / bBoxSize.y ) );
 
       newPosition -= bBoxSize * 0.5f;
       (*iter) = newPosition * scale;
@@ -623,18 +561,22 @@ private:
   Application&   mApplication;
   Layer          mContent;
 
-  bool           mIsDown;
-  Vector2        mDownPosition;
-  Vector2        mLightPosition;
-  Vector2        mStageHalfSize;
-
+  Sampler        mSampler;
   Material       mMaterial;
-  MeshActor      mMeshActor;
+  Geometry       mGeometry;
+  Renderer       mRenderer;
+  Actor          mMeshActor;
 
-  RefractionEffect  mRefractionEffect;
-  NoEffect          mNoEffect;
-  Animation         mLightAnimation;
-  Animation         mStrenghAnimation;
+  Shader         mShaderFlat;
+  Shader         mShaderRefraction;
+
+  Animation      mLightAnimation;
+  Animation      mStrenghAnimation;
+
+  Property::Index mLightXYOffsetIndex;
+  Property::Index mSpinAngleIndex;
+  Property::Index mLightIntensityIndex;
+  Property::Index mEffectStrengthIndex;
 
   Toolkit::PushButton        mChangeTextureButton;
   Toolkit::PushButton        mChangeMeshButton;

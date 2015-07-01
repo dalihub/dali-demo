@@ -42,9 +42,9 @@ const unsigned int NUM_BACKGROUND_IMAGES( sizeof( BACKGROUND_IMAGES ) / sizeof( 
 const char* BUBBLE_SHAPE_IMAGES[] =
 {
   DALI_IMAGE_DIR "bubble-ball.png",
+  DALI_IMAGE_DIR "icon-effect-cross.png",
   DALI_IMAGE_DIR "icon-item-view-layout-spiral.png",
-  DALI_IMAGE_DIR "icon-replace.png",
-  DALI_IMAGE_DIR "icon-effect-cross.png"
+  DALI_IMAGE_DIR "icon-replace.png"
 };
 const unsigned int NUM_BUBBLE_SHAPE_IMAGES( sizeof( BUBBLE_SHAPE_IMAGES ) / sizeof( BUBBLE_SHAPE_IMAGES[0] ) );
 
@@ -74,10 +74,10 @@ public:
   BubbleEffectExample(Application &app)
   : mApp(app),
     mHSVDelta( Vector3( 0.f, 0.f, 0.5f ) ),
-    mNeedNewAnimation( true ),
     mTimerInterval( 16 ),
     mCurrentBackgroundImageId( 0 ),
-    mCurrentBubbleShapeImageId( 0 )
+    mCurrentBubbleShapeImageId( 0 ),
+    mNeedNewAnimation( true )
   {
     // Connect to the Application's Init signal
     app.InitSignal().Connect(this, &BubbleEffectExample::Create);
@@ -154,7 +154,7 @@ private:
  * Emit bubbles
  *****************/
 
-  // Set up the animation of emitting bubbles, to be efficient, every animation controls multiple bubbles ( 4 here )
+  // Set up the animation of emitting bubbles, to be efficient, every animation controls multiple emission ( 4 here )
   void SetUpAnimation( Vector2 emitPosition, Vector2 direction )
   {
     if( mNeedNewAnimation )
@@ -232,6 +232,9 @@ private:
       case TouchPoint::Interrupted:
       {
         mTimerForBubbleEmission.Stop();
+        mEmitAnimation.Play();
+        mNeedNewAnimation = true;
+        mAnimateComponentCount = 0;
         break;
       }
       case TouchPoint::Stationary:
@@ -283,23 +286,22 @@ private:
   Dali::Toolkit::Control     mBackground;
 
   Toolkit::BubbleEmitter     mBubbleEmitter;
-  Vector3                    mHSVDelta;
-
   Animation                  mEmitAnimation;
-  unsigned int               mAnimateComponentCount;
-  bool                       mNeedNewAnimation;
-
+  Toolkit::PushButton        mChangeBackgroundButton;
+  Toolkit::PushButton        mChangeBubbleShapeButton;
   Timer                      mTimerForBubbleEmission;
-  unsigned int               mNonMovementCount;
-  unsigned int               mTimerInterval;
 
+  Vector3                    mHSVDelta;
   Vector2                    mCurrentTouchPosition;
   Vector2                    mEmitPosition;
 
-  Toolkit::PushButton        mChangeBackgroundButton;
-  Toolkit::PushButton        mChangeBubbleShapeButton;
+  unsigned int               mAnimateComponentCount;
+  unsigned int               mNonMovementCount;
+  unsigned int               mTimerInterval;
   unsigned int               mCurrentBackgroundImageId;
   unsigned int               mCurrentBubbleShapeImageId;
+
+  bool                       mNeedNewAnimation;
 };
 
 /*****************************************************************************/

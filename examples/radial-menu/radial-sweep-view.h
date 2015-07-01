@@ -2,7 +2,7 @@
 #define DALI_DEMO_RADIAL_SWEEP_VIEW_H
 
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ class RadialSweepView : public Dali::Toolkit::Control
 public:
   /**
    * Create a new RadialSweepView with default parameters (2 second animation,
-   * no rotation, sweeping out a full cicle).
+   * no rotation, sweeping out a full circle).
    */
   static RadialSweepView New( );
 
@@ -43,7 +43,7 @@ public:
    * @param[in] finalAngle The final angle of the anticlockwise line of the sweep sector
    * @param[in] initialSector The angle of the starting sector
    * @param[in] finalSector The angle of the sector at the end of the animation.
-   * Note, to cover the entire circle, use a value of 359.9999f, not zero or 360.
+   * Note, to cover the entire circle, use a value of 359.9999 degrees, not zero or 360 degrees.
    *
    *            initial sector
    *             \   |  .
@@ -54,10 +54,10 @@ public:
    */
   static RadialSweepView New( float duration,
                               float diameter,
-                              Dali::Degree initialAngle,
-                              Dali::Degree finalAngle,
-                              Dali::Degree initialSector,
-                              Dali::Degree finalSector );
+                              Dali::Radian initialAngle,
+                              Dali::Radian finalAngle,
+                              Dali::Radian initialSector,
+                              Dali::Radian finalSector );
 
   void SetDuration(float duration);
 
@@ -65,33 +65,33 @@ public:
 
   void SetDiameter(float diameter);
 
-  void SetInitialAngle( Dali::Degree initialAngle);
+  void SetInitialAngle( Dali::Radian initialAngle);
 
-  void SetFinalAngle( Dali::Degree finalAngle);
+  void SetFinalAngle( Dali::Radian finalAngle);
 
-  void SetInitialSector( Dali::Degree initialSector);
+  void SetInitialSector( Dali::Radian initialSector);
 
-  void SetFinalSector( Dali::Degree finalSector);
+  void SetFinalSector( Dali::Radian finalSector);
 
-  void SetInitialActorAngle( Dali::Degree initialAngle );
+  void SetInitialActorAngle( Dali::Radian initialAngle );
 
-  void SetFinalActorAngle( Dali::Degree finalAngle );
+  void SetFinalActorAngle( Dali::Radian finalAngle );
 
   float GetDuration( );
 
   float GetDiameter( );
 
-  Dali::Degree GetInitialAngle( );
+  Dali::Radian GetInitialAngle( );
 
-  Dali::Degree GetFinalAngle( );
+  Dali::Radian GetFinalAngle( );
 
-  Dali::Degree GetInitialSector( );
+  Dali::Radian GetInitialSector( );
 
-  Dali::Degree GetFinalSector( );
+  Dali::Radian GetFinalSector( );
 
-  Dali::Degree GetInitialActorAngle( );
+  Dali::Radian GetInitialActorAngle( );
 
-  Dali::Degree GetFinalActorAngle( );
+  Dali::Radian GetFinalActorAngle( );
 
   /**
    * @param[in] rotate True if the actors should rotate with the stencil

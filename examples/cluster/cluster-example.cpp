@@ -376,6 +376,8 @@ public:
                                             TOOLBAR_IMAGE,
                                             "" );
 
+    mContentLayer.SetProperty(Layer::Property::BEHAVIOR, "Dali::Layer::LAYER_3D");
+
     // Create a effect toggle button. (right of toolbar)
     mLayoutButtonImages[ NO_EFFECT ] = ResourceImage::New( LAYOUT_NONE_IMAGE );
     mLayoutButtonImages[ MOTION_BLUR_EFFECT ] = ResourceImage::New( LAYOUT_MOTION_BLUR_IMAGE );
@@ -552,21 +554,22 @@ public:
    */
   void SetMotionBlurEffect( Actor actor )
   {
+
     // only do something if the actor and effect are valid
     if( actor )
     {
       // first remove from this actor
-      RenderableActor renderable = RenderableActor::DownCast( actor );
-      if( renderable )
+      ImageActor imageActor = ImageActor::DownCast( actor );
+      if( imageActor )
       {
-        MotionBlurEffect shaderEffect = MotionBlurEffect::New();
-        shaderEffect.SetSpeedScalingFactor(0.1f);
+        ShaderEffect shaderEffect = Toolkit::CreateMotionBlurEffect();
+        shaderEffect.SetUniform("uSpeedScalingFactor",0.1f);
 
         Dali::Property::Index uModelProperty = shaderEffect.GetPropertyIndex( "uModelLastFrame" );
         Constraint constraint = Constraint::New<Matrix>( shaderEffect, uModelProperty, EqualToConstraint() );
-        constraint.AddSource( Source( actor , Actor::Property::WORLD_MATRIX ) );
+        constraint.AddSource( Source( imageActor , Actor::Property::WORLD_MATRIX ) );
         constraint.Apply();
-        renderable.SetShaderEffect( shaderEffect );
+        imageActor.SetShaderEffect( shaderEffect );
       }
       // then all children recursively
       const unsigned int count = actor.GetChildCount();
@@ -650,8 +653,8 @@ public:
       case CAROUSEL_EFFECT:
       {
         // Apply Carousel Shader Effect to scrollView
-        CarouselEffect shaderEffect = CarouselEffect::New();
-        shaderEffect.SetRadius( -CAROUSEL_EFFECT_RADIUS );
+        ShaderEffect shaderEffect = Toolkit::CreateCarouselEffect();
+        shaderEffect.SetUniform( "uRadius", -CAROUSEL_EFFECT_RADIUS );
         // dont apply shader effect to scrollview as it might override internal shaders for bounce effect etc
         for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {
@@ -663,7 +666,7 @@ public:
         const Vector2 angleSweep( CAROUSEL_EFFECT_ANGLE_SWEEP / stageSize.width,
                                   CAROUSEL_EFFECT_ANGLE_SWEEP / stageSize.width );
 
-        Property::Index anglePerUnit = shaderEffect.GetPropertyIndex( shaderEffect.GetAnglePerUnitPropertyName() );
+        Property::Index anglePerUnit = shaderEffect.GetPropertyIndex( "uAnglePerUnit" );
         Constraint constraint = Constraint::New<Vector2>( shaderEffect, anglePerUnit, CarouselEffectOrientationConstraint( angleSweep ) );
         constraint.AddSource( Source(mView, Actor::Property::ORIENTATION) );
         constraint.Apply();
@@ -685,10 +688,10 @@ public:
         mScrollView.SetRulerY(rulerY);
 
         // Apply Carousel Shader Effect to scrollView (Spherical style)
-        CarouselEffect shaderEffect = CarouselEffect::New();
+        ShaderEffect shaderEffect = Toolkit::CreateCarouselEffect();
 
-        shaderEffect.SetRadius( SPHERE_EFFECT_RADIUS );
-        shaderEffect.SetAnglePerUnit( Vector2( SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y, SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y ) );
+        shaderEffect.SetUniform( "uRadius", SPHERE_EFFECT_RADIUS );
+        shaderEffect.SetUniform( "uAnglePerUnit", Vector2( SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y, SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y ) );
         // dont apply shader effect to scrollview as it might override internal shaders for bounce effect etc
         for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {

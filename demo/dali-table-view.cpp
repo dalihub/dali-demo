@@ -268,9 +268,11 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.TouchedSignal().Connect( this, &DaliTableView::OnScrollTouched );
 
   mScrollViewLayer = Layer::New();
+
+  // Disable the depth test for performance
+  mScrollViewLayer.SetDepthTestDisabled( true );
   mScrollViewLayer.SetAnchorPoint( AnchorPoint::CENTER );
   mScrollViewLayer.SetParentOrigin( ParentOrigin::CENTER );
-  mScrollViewLayer.SetDrawMode( DrawMode::OVERLAY );
   mScrollViewLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
   // Create solid background colour.
@@ -279,7 +281,9 @@ void DaliTableView::Initialize( Application& application )
   backgroundColourActor.SetParentOrigin( ParentOrigin::CENTER );
   backgroundColourActor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   backgroundColourActor.SetSizeModeFactor( Vector3( 1.0f, 1.5f, 1.0f ) );
-  backgroundColourActor.SetZ( BACKGROUND_Z );
+
+  // Force the filled background right to the back
+  backgroundColourActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX );
   mScrollViewLayer.Add( backgroundColourActor );
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
@@ -331,7 +335,8 @@ void DaliTableView::Initialize( Application& application )
   mBackgroundAnimsPlaying = true;
 
   KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &DaliTableView::OnKeyboardPreFocusChange );
-  KeyboardFocusManager::Get().FocusedActorActivatedSignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
+  KeyboardFocusManager::Get().FocusedActorEnterKeySignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
+  AccessibilityManager::Get().FocusedActorActivatedSignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
 }
 
 void DaliTableView::ApplyCubeEffectToPages()
@@ -387,12 +392,12 @@ void DaliTableView::Populate()
           const Example& example = ( *iter );
 
           Actor tile = CreateTile( example.name, example.title, Vector3( tileParentMultiplier, tileParentMultiplier, 1.0f ), true );
-          AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
-          accessibilityFocusManager.SetFocusOrder( tile, ++exampleCount );
-          accessibilityFocusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityFocusManager::ACCESSIBILITY_LABEL,
+          AccessibilityManager accessibilityManager = AccessibilityManager::Get();
+          accessibilityManager.SetFocusOrder( tile, ++exampleCount );
+          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_LABEL,
                                                   example.title );
-          accessibilityFocusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityFocusManager::ACCESSIBILITY_TRAIT, "Tile" );
-          accessibilityFocusManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityFocusManager::ACCESSIBILITY_HINT,
+          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_TRAIT, "Tile" );
+          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_HINT,
                                                   "You can run this example" );
 
           tile.SetPadding( Padding( margin, margin, margin, margin ) );
@@ -526,7 +531,7 @@ ImageActor DaliTableView::NewStencilImage()
   stencilActor.SetAnchorPoint( AnchorPoint::CENTER );
   stencilActor.SetDrawMode( DrawMode::STENCIL );
 
-  Dali::ShaderEffect shaderEffect = AlphaDiscardEffect::New();
+  Dali::ShaderEffect shaderEffect = CreateAlphaDiscardEffect();
   stencilActor.SetShaderEffect( shaderEffect );
 
   return stencilActor;
@@ -551,7 +556,7 @@ bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
     std::string name = actor.GetName();
     ExampleMapConstIter iter = mExampleMap.find( name );
 
-    AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
+    AccessibilityManager accessibilityManager = AccessibilityManager::Get();
 
     if( iter != mExampleMap.end() )
     {
@@ -594,11 +599,11 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
       if( name == BUTTON_QUIT )
       {
         // Move focus to the OK button
-        AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
+        AccessibilityManager accessibilityManager = AccessibilityManager::Get();
 
         // Enable the group mode and wrap mode
-        accessibilityFocusManager.SetGroupMode( true );
-        accessibilityFocusManager.SetWrapMode( true );
+        accessibilityManager.SetGroupMode( true );
+        accessibilityManager.SetWrapMode( true );
       }
     }
     else
@@ -630,8 +635,8 @@ void DaliTableView::OnScrollComplete( const Dali::Vector2& position )
   mScrolling = false;
 
   // move focus to 1st item of new page
-  AccessibilityFocusManager accessibilityFocusManager = AccessibilityFocusManager::Get();
-  accessibilityFocusManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
+  AccessibilityManager accessibilityManager = AccessibilityManager::Get();
+  accessibilityManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
 }
 
 bool DaliTableView::OnScrollTouched( Actor actor, const TouchEvent& event )
@@ -764,11 +769,14 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
-    Toolkit::DistanceFieldEffect effect = Toolkit::DistanceFieldEffect::New();
+    // Force the bubbles just in front of the solid background
+    dfActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX + 1 );
+
+    ShaderEffect effect = Toolkit::CreateDistanceFieldEffect();
     dfActor.SetShaderEffect( effect );
     dfActor.SetColor( randColour );
-    effect.SetOutlineParams( Vector2( 0.55f, 0.00f ) );
-    effect.SetSmoothingEdge( 0.5f );
+    effect.SetUniform("uOutlineParams", Vector2( 0.55f, 0.00f ) );
+    effect.SetUniform("uSmoothing", 0.5f );
     layer.Add( dfActor );
   }
 

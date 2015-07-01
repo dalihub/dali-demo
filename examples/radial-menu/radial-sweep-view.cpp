@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,6 @@
 
 #include "radial-sweep-view.h"
 #include "radial-sweep-view-impl.h"
-
-// EXTERNAL INCLUDES
-#include <dali/devel-api/actors/mesh-actor.h>
-
 
 using namespace Dali;
 
@@ -58,10 +54,10 @@ RadialSweepView RadialSweepView::New( )
 
 RadialSweepView RadialSweepView::New( float duration,
                                       float diameter,
-                                      Degree initialAngle,
-                                      Degree finalAngle,
-                                      Degree initialSector,
-                                      Degree finalSector )
+                                      Radian initialAngle,
+                                      Radian finalAngle,
+                                      Radian initialSector,
+                                      Radian finalSector )
 {
   return RadialSweepViewImpl::New(duration, diameter, initialAngle, finalAngle, initialSector, finalSector );
 }
@@ -92,32 +88,32 @@ void RadialSweepView::SetDiameter(float diameter)
   GetImpl(*this).SetDiameter(diameter);
 }
 
-void RadialSweepView::SetInitialAngle( Dali::Degree initialAngle)
+void RadialSweepView::SetInitialAngle( Dali::Radian initialAngle)
 {
   GetImpl(*this).SetInitialAngle(initialAngle);
 }
 
-void RadialSweepView::SetFinalAngle( Dali::Degree finalAngle)
+void RadialSweepView::SetFinalAngle( Dali::Radian finalAngle)
 {
   GetImpl(*this).SetFinalAngle(finalAngle);
 }
 
-void RadialSweepView::SetInitialSector( Dali::Degree initialSector)
+void RadialSweepView::SetInitialSector( Dali::Radian initialSector)
 {
   GetImpl(*this).SetInitialSector(initialSector);
 }
 
-void RadialSweepView::SetFinalSector( Dali::Degree finalSector)
+void RadialSweepView::SetFinalSector( Dali::Radian finalSector)
 {
   GetImpl(*this).SetFinalSector(finalSector);
 }
 
-void RadialSweepView::SetInitialActorAngle( Dali::Degree initialAngle )
+void RadialSweepView::SetInitialActorAngle( Dali::Radian initialAngle )
 {
   GetImpl(*this).SetInitialActorAngle(initialAngle);
 }
 
-void RadialSweepView::SetFinalActorAngle( Dali::Degree finalAngle )
+void RadialSweepView::SetFinalActorAngle( Dali::Radian finalAngle )
 {
   GetImpl(*this).SetFinalActorAngle(finalAngle);
 }
@@ -132,32 +128,32 @@ float RadialSweepView::GetDiameter( )
   return GetImpl(*this).GetDiameter();
 }
 
-Dali::Degree RadialSweepView::GetInitialAngle( )
+Dali::Radian RadialSweepView::GetInitialAngle( )
 {
   return GetImpl(*this).GetInitialAngle();
 }
 
-Dali::Degree RadialSweepView::GetFinalAngle( )
+Dali::Radian RadialSweepView::GetFinalAngle( )
 {
   return GetImpl(*this).GetFinalAngle();
 }
 
-Dali::Degree RadialSweepView::GetInitialSector( )
+Dali::Radian RadialSweepView::GetInitialSector( )
 {
   return GetImpl(*this).GetInitialSector();
 }
 
-Dali::Degree RadialSweepView::GetFinalSector( )
+Dali::Radian RadialSweepView::GetFinalSector( )
 {
   return GetImpl(*this).GetFinalSector();
 }
 
-Dali::Degree RadialSweepView::GetInitialActorAngle( )
+Dali::Radian RadialSweepView::GetInitialActorAngle( )
 {
   return GetImpl(*this).GetInitialActorAngle();
 }
 
-Dali::Degree RadialSweepView::GetFinalActorAngle( )
+Dali::Radian RadialSweepView::GetFinalActorAngle( )
 {
   return GetImpl(*this).GetFinalActorAngle();
 }
