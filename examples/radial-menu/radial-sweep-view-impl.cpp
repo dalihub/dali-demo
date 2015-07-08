@@ -336,7 +336,7 @@ void RadialSweepViewImpl::CreateStencil( Radian initialSector )
 
   unsigned int indexData[15] = { 0,1,2,0,2,3,0,3,4,0,4,5,0,5,6 };
   Property::Map indexFormat;
-  indexFormat["indices"] = Property::UNSIGNED_INTEGER;
+  indexFormat["indices"] = Property::INTEGER;
   PropertyBuffer indices = PropertyBuffer::New( indexFormat, 15u );
   indices.SetData( indexData );
 

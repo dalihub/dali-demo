@@ -441,7 +441,7 @@ Geometry NewWindowController::CreateMeshGeometry()
   // Specify all the faces
   unsigned int indexData[12] = { 0,1,3,0,2,4,0,3,4,0,2,1 };
   Property::Map indexFormat;
-  indexFormat["indices"] = Property::UNSIGNED_INTEGER;
+  indexFormat["indices"] = Property::INTEGER;
   PropertyBuffer indices = PropertyBuffer::New( indexFormat, 12 );
   indices.SetData( indexData );
 
