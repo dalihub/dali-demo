@@ -76,9 +76,12 @@ const char* BACKGROUND_IMAGE_PATH = DALI_IMAGE_DIR "background-default.png";
 
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
+const char* LAYOUT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
 const char* APPLICATION_TITLE( "Motion Blur" );
 const char* EFFECTS_OFF_ICON( DALI_IMAGE_DIR "icon-effects-off.png" );
+const char* EFFECTS_OFF_ICON_SELECTED( DALI_IMAGE_DIR "icon-effects-off-selected.png" );
 const char* EFFECTS_ON_ICON( DALI_IMAGE_DIR "icon-effects-on.png" );
+const char* EFFECTS_ON_ICON_SELECTED( DALI_IMAGE_DIR "icon-effects-on-selected.png" );
 
 const float UI_MARGIN = 4.0f;                              ///< Screen Margin for placement of UI buttons
 
@@ -164,17 +167,22 @@ public:
 
     //Add an effects icon on the right of the title
     mIconEffectsOff = ResourceImage::New( EFFECTS_OFF_ICON );
+    mIconEffectsOffSelected = ResourceImage::New( EFFECTS_OFF_ICON_SELECTED );
     mIconEffectsOn = ResourceImage::New( EFFECTS_ON_ICON );
+    mIconEffectsOnSelected = ResourceImage::New( EFFECTS_ON_ICON_SELECTED );
     mActorEffectsButton = Toolkit::PushButton::New();
-    mActorEffectsButton.SetBackgroundImage( mIconEffectsOff );
+    mActorEffectsButton.SetButtonImage( mIconEffectsOff );
+    mActorEffectsButton.SetSelectedImage( mIconEffectsOffSelected );
     mActorEffectsButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnEffectButtonClicked );
     mToolBar.AddControl( mActorEffectsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
     // Creates a mode button.
     // Create a effect toggle button. (right of toolbar)
     Image imageLayout = ResourceImage::New( LAYOUT_IMAGE );
+    Image imageLayoutSelected = ResourceImage::New( LAYOUT_IMAGE_SELECTED );
     Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
-    layoutButton.SetBackgroundImage(imageLayout);
+    layoutButton.SetButtonImage( imageLayout );
+    layoutButton.SetSelectedImage( imageLayoutSelected );
     layoutButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnLayoutButtonClicked);
     layoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -447,12 +455,14 @@ public:
     if(!mActorEffectsEnabled)
     {
       mActorEffectsEnabled = true;
-      mActorEffectsButton.SetBackgroundImage( mIconEffectsOn );
+      mActorEffectsButton.SetButtonImage( mIconEffectsOn );
+      mActorEffectsButton.SetSelectedImage( mIconEffectsOnSelected );
     }
     else
     {
       mActorEffectsEnabled = false;
-      mActorEffectsButton.SetBackgroundImage( mIconEffectsOff );
+      mActorEffectsButton.SetButtonImage( mIconEffectsOff );
+      mActorEffectsButton.SetSelectedImage( mIconEffectsOffSelected );
     }
   }
 
@@ -513,7 +523,9 @@ private:
   Toolkit::Control           mView;
   Toolkit::ToolBar           mToolBar;
   Image                      mIconEffectsOff;
+  Image                      mIconEffectsOffSelected;
   Image                      mIconEffectsOn;
+  Image                      mIconEffectsOnSelected;
 
   Layer                      mContentLayer;           ///< Content layer (contains actor for this blur demo)
 

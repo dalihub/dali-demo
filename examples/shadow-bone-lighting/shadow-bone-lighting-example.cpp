@@ -39,7 +39,9 @@ const char* APPLICATION_TITLE_PAN_OBJECT( "Lighting: Rotate Object" );
 const char* APPLICATION_TITLE_PAN_SCENE( "Lighting: Pan Scene" );
 const char* APPLICATION_TITLE_ROTATE_SCENE( "Lighting: Rotate Scene" );
 const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
+const char* CHANGE_EFFECT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
 const char* RESET_ICON( DALI_IMAGE_DIR "icon-reset.png" );
+const char* RESET_ICON_SELECTED( DALI_IMAGE_DIR "icon-reset-selected.png" );
 
 const char* SCENE_IMAGE_1( DALI_IMAGE_DIR "gallery-small-10.jpg");
 const char* SCENE_IMAGE_2( DALI_IMAGE_DIR "gallery-small-42.jpg");
@@ -145,8 +147,10 @@ public:
 
     // Add an effect-changing button on the right of the tool bar.
     Image imageChangeEffect = ResourceImage::New( CHANGE_EFFECT_IMAGE );
+    Image imageChangeEffectSelected = ResourceImage::New( CHANGE_EFFECT_IMAGE_SELECTED );
     Toolkit::PushButton effectChangeButton = Toolkit::PushButton::New();
-    effectChangeButton.SetBackgroundImage(imageChangeEffect);
+    effectChangeButton.SetButtonImage( imageChangeEffect );
+    effectChangeButton.SetSelectedImage( imageChangeEffectSelected );
     effectChangeButton.ClickedSignal().Connect( this, &TestApp::OnEffectButtonClicked );
     toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
@@ -159,8 +163,10 @@ public:
 
     //Add a reset button
     Image resetImage = ResourceImage::New( RESET_ICON );
+    Image resetImageSelected = ResourceImage::New( RESET_ICON_SELECTED );
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
-    resetButton.SetBackgroundImage( resetImage );
+    resetButton.SetButtonImage( resetImage );
+    resetButton.SetSelectedImage( resetImageSelected );
     resetButton.ClickedSignal().Connect( this, &TestApp::OnResetPressed );
     toolBar.AddControl( resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 

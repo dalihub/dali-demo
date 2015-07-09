@@ -65,10 +65,6 @@ const int BUTTON_HEIGHT = LOGGER_GROUP_HEIGHT - MARGIN_SIZE * 2;
 
 const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 
-const char* const PUSHBUTTON_PRESS_IMAGE = DALI_IMAGE_DIR "button-down.9.png";
-const char* const PUSHBUTTON_BUTTON_IMAGE = DALI_IMAGE_DIR "button-up.9.png";
-const char* const PUSHBUTTON_DISABLED_IMAGE = DALI_IMAGE_DIR "button-disabled.9.png";
-
 // Button IDs
 const char* const LOGGER_1_RADIO_ID = "LOGGER_1_RADIO";
 const char* const LOGGER_2_RADIO_ID = "LOGGER_2_RADIO";
@@ -292,11 +288,6 @@ class LoggingController: public ConnectionTracker
       button.SetLabel( CREATE_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-
-      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
-
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
       createGroupBackground.Add( button );
@@ -308,11 +299,6 @@ class LoggingController: public ConnectionTracker
       button.SetLabel( DELETE_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-
-      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
-
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
       createGroupBackground.Add( button );
@@ -335,11 +321,6 @@ class LoggingController: public ConnectionTracker
       button.SetLabel( START_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-
-      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
-
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
       timingGroupBackground.Add( button );
@@ -351,11 +332,6 @@ class LoggingController: public ConnectionTracker
       button.SetLabel( STOP_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-
-      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
-
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
       timingGroupBackground.Add( button );
@@ -377,11 +353,6 @@ class LoggingController: public ConnectionTracker
       button.SetLabel( ENABLE_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-
-      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
-
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
       enableGroupBackground.Add( button );
@@ -393,11 +364,6 @@ class LoggingController: public ConnectionTracker
       button.SetLabel( DISABLE_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-
-      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
-
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
       enableGroupBackground.Add( button );
@@ -481,11 +447,6 @@ class LoggingController: public ConnectionTracker
       button.SetLabel( VSYNC_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-
-      button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
-      button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
-
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
 
       vsyncGroupBackground.Add( button );

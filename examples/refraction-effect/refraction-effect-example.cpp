@@ -34,7 +34,9 @@ namespace
 const char * const APPLICATION_TITLE( "Refraction Effect" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const CHANGE_TEXTURE_ICON( DALI_IMAGE_DIR "icon-change.png" );
+const char * const CHANGE_TEXTURE_ICON_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
 const char * const CHANGE_MESH_ICON( DALI_IMAGE_DIR "icon-replace.png" );
+const char * const CHANGE_MESH_ICON_SELECTED( DALI_IMAGE_DIR "icon-replace-selected.png" );
 
 const char* MESH_FILES[] =
 {
@@ -255,7 +257,8 @@ private:
 
     // Add a button to change background. (right of toolbar)
     mChangeTextureButton = Toolkit::PushButton::New();
-    mChangeTextureButton.SetBackgroundImage( ResourceImage::New( CHANGE_TEXTURE_ICON ) );
+    mChangeTextureButton.SetButtonImage( ResourceImage::New( CHANGE_TEXTURE_ICON ) );
+    mChangeTextureButton.SetSelectedImage( ResourceImage::New( CHANGE_TEXTURE_ICON_SELECTED ) );
     mChangeTextureButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeTexture );
     toolBar.AddControl( mChangeTextureButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -263,7 +266,8 @@ private:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change mesh pattern. ( left of bar )
     mChangeMeshButton = Toolkit::PushButton::New();
-    mChangeMeshButton.SetBackgroundImage( ResourceImage::New( CHANGE_MESH_ICON ) );
+    mChangeMeshButton.SetButtonImage( ResourceImage::New( CHANGE_MESH_ICON ) );
+    mChangeMeshButton.SetSelectedImage( ResourceImage::New( CHANGE_MESH_ICON_SELECTED ) );
     mChangeMeshButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeMesh );
     toolBar.AddControl( mChangeMeshButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,

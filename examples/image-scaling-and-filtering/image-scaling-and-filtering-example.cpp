@@ -36,10 +36,6 @@ const char* const NEXT_BUTTON_ID = "NEXT_BUTTON";
 const char* const PREVIOUS_BUTTON_ID = "PREVIOUS_BUTTON";
 const char * const DALI_ICON_PLAY = DALI_IMAGE_DIR "icon-play.png";
 
-const char* const PUSHBUTTON_PRESS_IMAGE = DALI_IMAGE_DIR "button-down.9.png";
-const char* const PUSHBUTTON_BUTTON_IMAGE = DALI_IMAGE_DIR "button-up.9.png";
-const char* const PUSHBUTTON_DISABLED_IMAGE = DALI_IMAGE_DIR "button-disabled.9.png";
-
 const char* const FITTING_BUTTON_ID = "FITTING_BUTTON";
 const char* const SAMPLING_BUTTON_ID = "SAMPLING_BUTTON";
 const char* const FITTING_BUTTON_TEXT = "Fitting";
@@ -229,9 +225,6 @@ public:
     mGrabCorner = Toolkit::PushButton::New();
     mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH );
     mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-    mGrabCorner.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-    mGrabCorner.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
-    mGrabCorner.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
     mGrabCorner.SetName( "GrabCorner" );
     mGrabCorner.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
     mGrabCorner.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
@@ -382,9 +375,6 @@ public:
     button.SetLabel( label );
     button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-    button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-    button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
-    button.SetDisabledImage( Dali::ResourceImage::New( PUSHBUTTON_DISABLED_IMAGE ) );
     button.ClickedSignal().Connect( this, &ImageScalingAndFilteringController::OnButtonClicked );
     return button;
   }
@@ -412,8 +402,6 @@ public:
     Toolkit::PushButton button = Toolkit::PushButton::New();
     button.SetName( id );
     button.SetLabel( id );
-    button.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-    button.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
     Toolkit::TextLabel textLabel = Toolkit::TextLabel::DownCast( button.GetLabel() );
     textLabel.SetProperty( TextLabel::Property::POINT_SIZE, 12.0f );
 

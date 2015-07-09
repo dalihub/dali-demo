@@ -107,12 +107,19 @@ const unsigned int NUM_IMAGE_PER_ROW_IN_ATLAS = 8;
 const char* BACKGROUND_IMAGE( "" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* EDIT_IMAGE( DALI_IMAGE_DIR "icon-edit.png" );
+const char* EDIT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-edit-selected.png" );
 const char* SPIRAL_LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-item-view-layout-spiral.png" );
+const char* SPIRAL_LAYOUT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-item-view-layout-spiral-selected.png" );
 const char* GRID_LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-item-view-layout-grid.png" );
+const char* GRID_LAYOUT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-item-view-layout-grid-selected.png" );
 const char* DEPTH_LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-item-view-layout-depth.png" );
+const char* DEPTH_LAYOUT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-item-view-layout-depth-selected.png" );
 const char* DELETE_IMAGE( DALI_IMAGE_DIR "icon-delete.png" );
+const char* DELETE_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-delete-selected.png" );
 const char* REPLACE_IMAGE( DALI_IMAGE_DIR "icon-replace.png" );
+const char* REPLACE_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-replace-selected.png" );
 const char* INSERT_IMAGE( DALI_IMAGE_DIR "icon-insert.png" );
+const char* INSERT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-insert-selected.png" );
 const char* SELECTED_IMAGE( DALI_IMAGE_DIR "item-select-check.png" );
 const char* APPLICATION_TITLE( "ItemView" );
 
@@ -224,14 +231,16 @@ public:
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
-    editButton.SetBackgroundImage( ResourceImage::New( EDIT_IMAGE ) );
+    editButton.SetButtonImage( ResourceImage::New( EDIT_IMAGE ) );
+    editButton.SetSelectedImage( ResourceImage::New( EDIT_IMAGE_SELECTED ) );
     editButton.ClickedSignal().Connect( this, &ItemViewExample::OnModeButtonClicked);
     editButton.SetLeaveRequired( true );
     mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create a layout toggle button. (right of toolbar)
     mLayoutButton = Toolkit::PushButton::New();
-    mLayoutButton.SetBackgroundImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE ) );
+    mLayoutButton.SetButtonImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE ) );
+    mLayoutButton.SetSelectedImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE_SELECTED ) );
     mLayoutButton.ClickedSignal().Connect( this, &ItemViewExample::OnLayoutButtonClicked);
     mLayoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
@@ -243,6 +252,7 @@ public:
     mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mDeleteButton.SetDrawMode( DrawMode::OVERLAY );
     mDeleteButton.SetButtonImage( ResourceImage::New( DELETE_IMAGE ) );
+    mDeleteButton.SetSelectedImage( ResourceImage::New( DELETE_IMAGE_SELECTED ) );
     mDeleteButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
     mDeleteButton.SetSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
     mDeleteButton.ClickedSignal().Connect( this, &ItemViewExample::OnDeleteButtonClicked);
@@ -257,6 +267,7 @@ public:
     mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mInsertButton.SetDrawMode( DrawMode::OVERLAY );
     mInsertButton.SetButtonImage( ResourceImage::New( INSERT_IMAGE ) );
+    mInsertButton.SetSelectedImage( ResourceImage::New( INSERT_IMAGE_SELECTED ) );
     mInsertButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
     mInsertButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mInsertButton.ClickedSignal().Connect( this, &ItemViewExample::OnInsertButtonClicked);
@@ -271,6 +282,7 @@ public:
     mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mReplaceButton.SetDrawMode( DrawMode::OVERLAY );
     mReplaceButton.SetButtonImage( ResourceImage::New( REPLACE_IMAGE ) );
+    mReplaceButton.SetSelectedImage( ResourceImage::New( REPLACE_IMAGE_SELECTED ) );
     mReplaceButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
     mReplaceButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mReplaceButton.ClickedSignal().Connect( this, &ItemViewExample::OnReplaceButtonClicked);
@@ -799,19 +811,22 @@ public:
       {
         case SPIRAL_LAYOUT:
         {
-          mLayoutButton.SetBackgroundImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE ) );
+          mLayoutButton.SetButtonImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE ) );
+          mLayoutButton.SetSelectedImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE_SELECTED ) );
           break;
         }
 
         case GRID_LAYOUT:
         {
-          mLayoutButton.SetBackgroundImage( ResourceImage::New( GRID_LAYOUT_IMAGE ) );
+          mLayoutButton.SetButtonImage( ResourceImage::New( GRID_LAYOUT_IMAGE ) );
+          mLayoutButton.SetSelectedImage( ResourceImage::New( GRID_LAYOUT_IMAGE_SELECTED ) );
           break;
         }
 
         case DEPTH_LAYOUT:
         {
-          mLayoutButton.SetBackgroundImage( ResourceImage::New( DEPTH_LAYOUT_IMAGE ) );
+          mLayoutButton.SetButtonImage( ResourceImage::New( DEPTH_LAYOUT_IMAGE ) );
+          mLayoutButton.SetSelectedImage( ResourceImage::New( DEPTH_LAYOUT_IMAGE_SELECTED ) );
           break;
         }
 
