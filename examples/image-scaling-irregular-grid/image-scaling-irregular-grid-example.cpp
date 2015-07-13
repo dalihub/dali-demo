@@ -24,7 +24,7 @@
  * reduce the image to save memory, improve performance, and potentially display
  * a better small version of the image than if the default size were loaded.
  *
- * The functions CreateImage and CreateImageActor below show how to build an
+ * The functions CreateImage and CreateImageView below show how to build an
  * image using a scaling mode to have %Dali resize it during loading.
  *
  * This demo defaults to the SCALE_TO_FILL mode of ImageAttributes which makes
@@ -38,7 +38,7 @@
  * grid  using the button in the top-right of the toolbar.
  * A single image can be cycled by clicking the image directly.
  *
- * @see CreateImage CreateImageActor
+ * @see CreateImage CreateImageView
  */
 
 // EXTERNAL INCLUDES
@@ -186,17 +186,17 @@ Image CreateImage(const std::string& filename, unsigned int width, unsigned int 
 }
 
 /**
- * Creates an ImageActor
+ * Creates an ImageView
  *
  * @param[in] filename The path of the image.
  * @param[in] width The width of the image in pixels.
  * @param[in] height The height of the image in pixels.
  * @param[in] fittingMode The mode to use when scaling the image to fit the desired dimensions.
  */
-ImageActor CreateImageActor(const std::string& filename, unsigned int width, unsigned int height, Dali::FittingMode::Type fittingMode )
+ImageView CreateImageView(const std::string& filename, unsigned int width, unsigned int height, Dali::FittingMode::Type fittingMode )
 {
   Image img = CreateImage( filename, width, height, fittingMode );
-  ImageActor actor = ImageActor::New( img );
+  ImageView actor = ImageView::New( img );
   actor.SetName( filename );
   actor.SetParentOrigin(ParentOrigin::CENTER);
   actor.SetAnchorPoint(AnchorPoint::CENTER);
@@ -460,7 +460,7 @@ public:
       const Vector2 imageRegionCorner = gridOrigin + cellSize * Vector2( imageSource.cellX, imageSource.cellY );
       const Vector2 imagePosition = imageRegionCorner + Vector2( GRID_CELL_PADDING , GRID_CELL_PADDING ) + imageSize * 0.5f;
 
-      ImageActor image = CreateImageActor( imageSource.configuration.path, imageSize.x, imageSize.y, fittingMode );
+      ImageView image = CreateImageView( imageSource.configuration.path, imageSize.x, imageSize.y, fittingMode );
       image.SetPosition( Vector3( imagePosition.x, imagePosition.y, 0 ) );
       image.SetSize( imageSize );
       image.TouchedSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
@@ -495,10 +495,10 @@ public:
         Dali::FittingMode::Type newMode = NextMode( mFittingModes[id] );
         const Vector2 imageSize = mSizes[actor.GetId()];
 
-        ImageActor imageActor = ImageActor::DownCast( actor );
-        Image oldImage = imageActor.GetImage();
+        ImageView imageView = ImageView::DownCast( actor );
+        Image oldImage = imageView.GetImage();
         Image newImage = CreateImage( ResourceImage::DownCast(oldImage).GetUrl(), imageSize.width + 0.5f, imageSize.height + 0.5f, newMode );
-        imageActor.SetImage( newImage );
+        imageView.SetImage( newImage );
         mFittingModes[id] = newMode;
       }
     }
@@ -532,17 +532,17 @@ public:
 
     for( unsigned i = 0; i < numChildren; ++i )
     {
-      ImageActor gridImageActor = ImageActor::DownCast( mGridActor.GetChildAt( i ) );
-      if( gridImageActor )
+      ImageView gridImageView = ImageView::DownCast( mGridActor.GetChildAt( i ) );
+      if( gridImageView )
       {
         // Cycle the scaling mode options:
-        const Vector2 imageSize = mSizes[gridImageActor.GetId()];
-        Dali::FittingMode::Type newMode = NextMode( mFittingModes[gridImageActor.GetId()] );
-        Image oldImage = gridImageActor.GetImage();
+        const Vector2 imageSize = mSizes[gridImageView.GetId()];
+        Dali::FittingMode::Type newMode = NextMode( mFittingModes[gridImageView.GetId()] );
+        Image oldImage = gridImageView.GetImage();
         Image newImage = CreateImage(ResourceImage::DownCast(oldImage).GetUrl(), imageSize.width, imageSize.height, newMode );
-        gridImageActor.SetImage( newImage );
+        gridImageView.SetImage( newImage );
 
-        mFittingModes[gridImageActor.GetId()] = newMode;
+        mFittingModes[gridImageView.GetId()] = newMode;
 
         SetTitle( std::string( newMode == FittingMode::SHRINK_TO_FIT ? "SHRINK_TO_FIT" : newMode == FittingMode::SCALE_TO_FILL ?  "SCALE_TO_FILL" : newMode == FittingMode::FIT_WIDTH ? "FIT_WIDTH" : "FIT_HEIGHT" ) );
       }

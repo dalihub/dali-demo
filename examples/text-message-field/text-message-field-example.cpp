@@ -77,8 +77,7 @@ public:
     const Size mTargetActorSize( mStageSize.width, DESKTOP_SIZE.height );
 
     // Create Desktop
-    ResourceImage backgroundImage = ResourceImage::New( DESKTOP_IMAGE );
-    ImageActor desktop = ImageActor::New( backgroundImage );
+    ImageView desktop = ImageView::New( DESKTOP_IMAGE );
     desktop.SetName("desktopActor");
     desktop.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     desktop.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );

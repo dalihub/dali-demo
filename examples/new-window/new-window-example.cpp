@@ -124,7 +124,7 @@ public:
   void AddBlendingImageActor();
   void AddTextLabel();
 
-  ImageActor CreateBlurredMirrorImage(const char* imageName);
+  ImageView CreateBlurredMirrorImage(const char* imageName);
   FrameBufferImage CreateFrameBufferForImage(const char* imageName, Image image, ShaderEffect shaderEffect);
   void SetUpBubbleEmission( const Vector2& emitPosition, const Vector2& direction );
   Geometry CreateMeshGeometry();
@@ -211,16 +211,16 @@ void NewWindowController::Create( Application& app )
   mContentLayer.Add(logoLayoutActor);
 
   Image image = ResourceImage::New(LOGO_IMAGE);
-  ImageActor imageActor = ImageActor::New(image);
-  imageActor.SetName("dali-logo");
-  imageActor.SetParentOrigin(ParentOrigin::CENTER);
-  imageActor.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
-  logoLayoutActor.Add(imageActor);
+  ImageView imageView = ImageView::New(image);
+  imageView.SetName("dali-logo");
+  imageView.SetParentOrigin(ParentOrigin::CENTER);
+  imageView.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
+  logoLayoutActor.Add(imageView);
 
-  ImageActor mirrorImageActor = CreateBlurredMirrorImage(LOGO_IMAGE);
-  mirrorImageActor.SetParentOrigin(ParentOrigin::CENTER);
-  mirrorImageActor.SetAnchorPoint(AnchorPoint::TOP_CENTER);
-  logoLayoutActor.Add(mirrorImageActor);
+  ImageView mirrorImageView = CreateBlurredMirrorImage(LOGO_IMAGE);
+  mirrorImageView.SetParentOrigin(ParentOrigin::CENTER);
+  mirrorImageView.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+  logoLayoutActor.Add(mirrorImageView);
 
   AddBubbles(stage.GetSize());
   AddMeshActor();
@@ -300,7 +300,7 @@ void NewWindowController::AddBlendingImageActor()
   Image effectImage = ResourceImage::New(EFFECT_IMAGE);
   FrameBufferImage fb2 = CreateFrameBufferForImage( EFFECT_IMAGE, effectImage, colorModifier );
 
-  ImageActor tmpActor = ImageActor::New(fb2);
+  ImageView tmpActor = ImageView::New(fb2);
   mContentLayer.Add(tmpActor);
   tmpActor.SetParentOrigin(ParentOrigin::CENTER_RIGHT);
   tmpActor.SetAnchorPoint(AnchorPoint::TOP_RIGHT);
@@ -331,7 +331,7 @@ void NewWindowController::AddTextLabel()
   mContentLayer.Add( mTextActor );
 }
 
-ImageActor NewWindowController::CreateBlurredMirrorImage(const char* imageName)
+ImageView NewWindowController::CreateBlurredMirrorImage(const char* imageName)
 {
   Image image = ResourceImage::New(imageName);
 
@@ -346,7 +346,7 @@ ImageActor NewWindowController::CreateBlurredMirrorImage(const char* imageName)
   Stage::GetCurrent().Add(gbv);
   gbv.ActivateOnce();
 
-  ImageActor blurredActor = ImageActor::New(fbo);
+  ImageView blurredActor = ImageView::New(fbo);
   blurredActor.SetSize(FBOSize);
   blurredActor.SetScale(1.0f, -1.0f, 1.0f);
   return blurredActor;

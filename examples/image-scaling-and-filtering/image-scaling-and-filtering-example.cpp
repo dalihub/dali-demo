@@ -171,7 +171,7 @@ public:
 
     // Background image:
     ResourceImage backgroundImage = ResourceImage::New( BACKGROUND_IMAGE, ImageDimensions( stage.GetSize().width, stage.GetSize().height ), FittingMode::SCALE_TO_FILL, SamplingMode::BOX_THEN_LINEAR );
-    ImageActor background = ImageActor::New( backgroundImage );
+    Toolkit::ImageView background = Toolkit::ImageView::New( backgroundImage );
     background.SetZ( -2.0f );
     background.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     background.SetSize( stage.GetSize() );
@@ -192,34 +192,34 @@ public:
     widthPixel[1] = 0x4f;
     widthPixel[2] = 0x4f;
 
-    mHeightBox = ImageActor::New( heightBackground );
+    mHeightBox = Toolkit::ImageView::New( heightBackground );
     mHeightBox.SetOpacity( 0.2f );
     stage.Add( mHeightBox );
 
-    mWidthBox = ImageActor::New( widthBackground );
+    mWidthBox = Toolkit::ImageView::New( widthBackground );
     mWidthBox.SetOpacity( 0.2f );
     stage.Add( mWidthBox );
 
-    mDesiredBox = ImageActor::New( desiredBackground );
+    mDesiredBox = Toolkit::ImageView::New( desiredBackground );
     stage.Add( mDesiredBox );
 
     mDesiredBox.SetSize( stage.GetSize() * mImageStageScale );
     mDesiredBox.SetParentOrigin( ParentOrigin::CENTER );
     mDesiredBox.SetAnchorPoint( AnchorPoint::CENTER );
     mDesiredBox.SetPosition( 0, 0, -1 );
-    mDesiredBox.SetSortModifier(4.f);
+    //mDesiredBox.SetSortModifier(4.f);
 
     mHeightBox.SetSize( stage.GetSize().width,  (stage.GetSize() * mImageStageScale).height );
     mHeightBox.SetParentOrigin( ParentOrigin::CENTER );
     mHeightBox.SetAnchorPoint( AnchorPoint::CENTER );
     mHeightBox.SetPosition( 0, 0, -1 );
-    mHeightBox.SetSortModifier(3.f);
+    //mHeightBox.SetSortModifier(3.f);
 
     mWidthBox.SetSize( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height );
     mWidthBox.SetParentOrigin( ParentOrigin::CENTER );
     mWidthBox.SetAnchorPoint( AnchorPoint::CENTER );
     mWidthBox.SetPosition( 0, 0, -1 );
-    mWidthBox.SetSortModifier(2.f);
+    //mWidthBox.SetSortModifier(2.f);
 
     // Make a grab-handle for resizing the image:
     mGrabCorner = Toolkit::PushButton::New();
@@ -284,7 +284,7 @@ public:
     // Back and next image buttons in corners of stage:
     unsigned int playWidth = std::min( stage.GetSize().x * (1 / 5.0f), 58.0f );
     Image playImage = ResourceImage::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ), FittingMode::SHRINK_TO_FIT, SamplingMode::BOX_THEN_LINEAR );
-    Actor imagePrevious = ImageActor::New( playImage );
+    Toolkit::ImageView imagePrevious = Toolkit::ImageView::New( playImage );
 
     // Last image button:
     imagePrevious.SetAnchorPoint( AnchorPoint::TOP_LEFT );
@@ -297,7 +297,7 @@ public:
     imagePrevious.TouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Next image button:
-    Actor imageNext = ImageActor::New( playImage );
+    Toolkit::ImageView imageNext = Toolkit::ImageView::New( playImage );
     imageNext.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
     imageNext.SetY( playWidth * 0.5f );
     imageNext.SetX( stage.GetSize().x - playWidth * 0.5f );
@@ -697,9 +697,9 @@ private:
 
 private:
   Application&  mApplication;
-  ImageActor mDesiredBox; //< Background rectangle to show requested image size.
-  ImageActor mHeightBox;  //< Background horizontal stripe to show requested image height.
-  ImageActor mWidthBox;   //< Background vertical stripe to show requested image width.
+  Toolkit::ImageView mDesiredBox; //< Background rectangle to show requested image size.
+  Toolkit::ImageView mHeightBox;  //< Background horizontal stripe to show requested image height.
+  Toolkit::ImageView mWidthBox;   //< Background vertical stripe to show requested image width.
   Toolkit::PushButton mFittingModeButton;
   Toolkit::PushButton mSamplingModeButton;
   Toolkit::Popup mPopup;

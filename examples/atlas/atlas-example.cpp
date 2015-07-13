@@ -90,7 +90,7 @@ public:
     mAtlas.Upload( DALI_IMAGE_DIR "icon-item-view-layout-spiral.png", 250, 130 );
     UploadBufferImages();
 
-    ImageActor imageActor1 = ImageActor::New( mAtlas );
+    Toolkit::ImageView imageActor1 = Toolkit::ImageView::New( mAtlas );
     imageActor1.SetY(-170.f);
     imageActor1.SetParentOrigin(ParentOrigin::CENTER);
     mContentLayer.Add( imageActor1 );
@@ -109,19 +109,20 @@ public:
     atlas2.Upload( DALI_IMAGE_DIR "gallery-small-7.jpg", 268, 268 );
 
 
-    ImageActor imageActor2 = ImageActor::New( atlas2 );
-    imageActor2.SetY(200.f);
-    imageActor2.SetZ(-1.f);
-    imageActor2.SetParentOrigin(ParentOrigin::CENTER);
-    mContentLayer.Add( imageActor2 );
+    Toolkit::ImageView imageView = Toolkit::ImageView::New( DALI_IMAGE_DIR "gallery-small-1.jpg" );
+
+    imageView.SetY(200.f);
+    imageView.SetZ(-1.f);
+    imageView.SetParentOrigin(ParentOrigin::CENTER);
+    mContentLayer.Add( imageView );
 
     mPanGestureDetector = PanGestureDetector::New();
-    mPanGestureDetector.DetectedSignal().Connect(this, &AtlasController::OnPanGesture);
-    mPanGestureDetector.Attach(imageActor1);
-    mPanGestureDetector.Attach(imageActor2);
+    mPanGestureDetector.DetectedSignal().Connect( this, &AtlasController::OnPanGesture );
+    mPanGestureDetector.Attach( imageActor1 );
+    mPanGestureDetector.Attach( imageView );
 
-    stage.ContextLostSignal().Connect(this, &AtlasController::OnContextLost);
-    stage.ContextRegainedSignal().Connect(this, &AtlasController::OnContextRegained);
+    stage.ContextLostSignal().Connect( this, &AtlasController::OnContextLost );
+    stage.ContextRegainedSignal().Connect( this, &AtlasController::OnContextRegained );
   }
 
   void UploadBufferImages()
