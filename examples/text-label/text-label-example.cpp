@@ -107,7 +107,7 @@ public:
     mContainer.SetParentOrigin( ParentOrigin::CENTER );
     mLayoutSize = Vector2(stageSize.width*0.6f, stageSize.width*0.6f);
     mContainer.SetSize( mLayoutSize );
-    mContainer.SetDrawMode( DrawMode::OVERLAY );
+    mContainer.SetDrawMode( DrawMode::OVERLAY_2D );
     stage.Add( mContainer );
 
     // Resize the center layout when the corner is grabbed
