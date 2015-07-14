@@ -298,6 +298,7 @@ public:
 
     // Display item view on the stage
     stage.Add( mItemView );
+    stage.GetRootLayer().SetBehavior( Layer::LAYER_3D );
 
     // Create the layouts
     mSpiralLayout = DefaultItemLayout::New( DefaultItemLayout::SPIRAL );

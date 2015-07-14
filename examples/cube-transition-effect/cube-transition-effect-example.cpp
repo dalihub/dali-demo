@@ -238,6 +238,7 @@ void CubeTransitionApp::OnInit( Application& application )
 
   // Creates a default view with a default tool bar, the view is added to the stage.
   mContent = DemoHelper::CreateView( application, mView, mToolBar, "", TOOLBAR_IMAGE, "" );
+  mContent.SetBehavior( Layer::LAYER_3D );
 
   // Add an effect-changing button on the right of the tool bar.
   mImageWave = ResourceImage::New( EFFECT_WAVE_IMAGE );
