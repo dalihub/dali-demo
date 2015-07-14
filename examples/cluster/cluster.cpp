@@ -127,11 +127,6 @@ void Cluster::RestoreChild( unsigned int index, AlphaFunction alpha, const TimeP
   GetImpl(*this).RestoreChild( index, alpha, period, front );
 }
 
-void Cluster::SetBackgroundImage( Actor image )
-{
-  GetImpl(*this).SetBackgroundImage(image);
-}
-
 void Cluster::SetTitle( Actor text )
 {
   GetImpl(*this).SetTitle(text);

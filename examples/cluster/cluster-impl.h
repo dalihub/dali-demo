@@ -156,11 +156,6 @@ public:
   void RestoreChild( unsigned int index, AlphaFunction alpha, const TimePeriod& period, bool front );
 
   /**
-   * @copydoc Demo::Cluster::SetBackgroundImage
-   */
-  void SetBackgroundImage( Actor image );
-
-  /**
    * @copydoc Demo::Cluster::SetTitle
    */
   void SetTitle( Actor text );
