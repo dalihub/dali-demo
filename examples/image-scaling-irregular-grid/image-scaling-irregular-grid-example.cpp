@@ -306,11 +306,9 @@ public:
                                             "" );
 
     // Create an image scaling toggle button. (right of toolbar)
-    Image toggleScalingImage = ResourceImage::New( TOGGLE_SCALING_IMAGE );
-    Image toggleScalingImageSelected = ResourceImage::New( TOGGLE_SCALING_IMAGE_SELECTED );
     Toolkit::PushButton toggleScalingButton = Toolkit::PushButton::New();
-    toggleScalingButton.SetButtonImage( toggleScalingImage );
-    toggleScalingButton.SetSelectedImage( toggleScalingImageSelected );
+    toggleScalingButton.SetUnselectedImage( TOGGLE_SCALING_IMAGE );
+    toggleScalingButton.SetSelectedImage( TOGGLE_SCALING_IMAGE_SELECTED );
     toggleScalingButton.ClickedSignal().Connect( this, &ImageScalingIrregularGridController::OnToggleScalingTouched );
     mToolBar.AddControl( toggleScalingButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 

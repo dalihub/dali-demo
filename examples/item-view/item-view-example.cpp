@@ -231,16 +231,16 @@ public:
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
-    editButton.SetButtonImage( ResourceImage::New( EDIT_IMAGE ) );
-    editButton.SetSelectedImage( ResourceImage::New( EDIT_IMAGE_SELECTED ) );
+    editButton.SetUnselectedImage( EDIT_IMAGE );
+    editButton.SetSelectedImage( EDIT_IMAGE_SELECTED );
     editButton.ClickedSignal().Connect( this, &ItemViewExample::OnModeButtonClicked);
     editButton.SetLeaveRequired( true );
     mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create a layout toggle button. (right of toolbar)
     mLayoutButton = Toolkit::PushButton::New();
-    mLayoutButton.SetButtonImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE ) );
-    mLayoutButton.SetSelectedImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE_SELECTED ) );
+    mLayoutButton.SetUnselectedImage( SPIRAL_LAYOUT_IMAGE );
+    mLayoutButton.SetSelectedImage(SPIRAL_LAYOUT_IMAGE_SELECTED );
     mLayoutButton.ClickedSignal().Connect( this, &ItemViewExample::OnLayoutButtonClicked);
     mLayoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
@@ -251,9 +251,9 @@ public:
     mDeleteButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mDeleteButton.SetDrawMode( DrawMode::OVERLAY_2D );
-    mDeleteButton.SetButtonImage( ResourceImage::New( DELETE_IMAGE ) );
-    mDeleteButton.SetSelectedImage( ResourceImage::New( DELETE_IMAGE_SELECTED ) );
-    mDeleteButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mDeleteButton.SetUnselectedImage( DELETE_IMAGE );
+    mDeleteButton.SetSelectedImage( DELETE_IMAGE_SELECTED );
+    mDeleteButton.SetBackgroundImage( TOOLBAR_IMAGE );
     mDeleteButton.SetSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
     mDeleteButton.ClickedSignal().Connect( this, &ItemViewExample::OnDeleteButtonClicked);
     mDeleteButton.SetLeaveRequired( true );
@@ -266,9 +266,9 @@ public:
     mInsertButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mInsertButton.SetDrawMode( DrawMode::OVERLAY_2D );
-    mInsertButton.SetButtonImage( ResourceImage::New( INSERT_IMAGE ) );
-    mInsertButton.SetSelectedImage( ResourceImage::New( INSERT_IMAGE_SELECTED ) );
-    mInsertButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mInsertButton.SetUnselectedImage( INSERT_IMAGE );
+    mInsertButton.SetSelectedImage( INSERT_IMAGE_SELECTED );
+    mInsertButton.SetBackgroundImage( TOOLBAR_IMAGE );
     mInsertButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mInsertButton.ClickedSignal().Connect( this, &ItemViewExample::OnInsertButtonClicked);
     mInsertButton.SetLeaveRequired( true );
@@ -281,9 +281,9 @@ public:
     mReplaceButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mReplaceButton.SetDrawMode( DrawMode::OVERLAY_2D );
-    mReplaceButton.SetButtonImage( ResourceImage::New( REPLACE_IMAGE ) );
-    mReplaceButton.SetSelectedImage( ResourceImage::New( REPLACE_IMAGE_SELECTED ) );
-    mReplaceButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
+    mReplaceButton.SetUnselectedImage( REPLACE_IMAGE );
+    mReplaceButton.SetSelectedImage( REPLACE_IMAGE_SELECTED );
+    mReplaceButton.SetBackgroundImage( TOOLBAR_IMAGE );
     mReplaceButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mReplaceButton.ClickedSignal().Connect( this, &ItemViewExample::OnReplaceButtonClicked);
     mReplaceButton.SetLeaveRequired( true );
@@ -812,22 +812,22 @@ public:
       {
         case SPIRAL_LAYOUT:
         {
-          mLayoutButton.SetButtonImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE ) );
-          mLayoutButton.SetSelectedImage( ResourceImage::New( SPIRAL_LAYOUT_IMAGE_SELECTED ) );
+          mLayoutButton.SetUnselectedImage( SPIRAL_LAYOUT_IMAGE );
+          mLayoutButton.SetSelectedImage( SPIRAL_LAYOUT_IMAGE_SELECTED );
           break;
         }
 
         case GRID_LAYOUT:
         {
-          mLayoutButton.SetButtonImage( ResourceImage::New( GRID_LAYOUT_IMAGE ) );
-          mLayoutButton.SetSelectedImage( ResourceImage::New( GRID_LAYOUT_IMAGE_SELECTED ) );
+          mLayoutButton.SetUnselectedImage( GRID_LAYOUT_IMAGE );
+          mLayoutButton.SetSelectedImage( GRID_LAYOUT_IMAGE_SELECTED );
           break;
         }
 
         case DEPTH_LAYOUT:
         {
-          mLayoutButton.SetButtonImage( ResourceImage::New( DEPTH_LAYOUT_IMAGE ) );
-          mLayoutButton.SetSelectedImage( ResourceImage::New( DEPTH_LAYOUT_IMAGE_SELECTED ) );
+          mLayoutButton.SetUnselectedImage( DEPTH_LAYOUT_IMAGE );
+          mLayoutButton.SetSelectedImage( DEPTH_LAYOUT_IMAGE_SELECTED );
           break;
         }
 

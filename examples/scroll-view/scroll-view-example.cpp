@@ -173,14 +173,14 @@ public:
                                             TOOLBAR_IMAGE,
                                             "" );
 
-    mEffectIcon[ PageCarouselEffect ] = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
-    mEffectIconSelected[ PageCarouselEffect ] = ResourceImage::New( EFFECT_CAROUSEL_IMAGE_SELECTED );
-    mEffectIcon[ PageCubeEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
-    mEffectIconSelected[ PageCubeEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE_SELECTED );
-    mEffectIcon[ PageSpiralEffect ]   = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
-    mEffectIconSelected[ PageSpiralEffect ]   = ResourceImage::New( EFFECT_CAROUSEL_IMAGE_SELECTED );
-    mEffectIcon[ PageWaveEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE );
-    mEffectIconSelected[ PageWaveEffect ]     = ResourceImage::New( EFFECT_CAROUSEL_IMAGE_SELECTED );
+    mEffectIcon[ PageCarouselEffect ] = EFFECT_CAROUSEL_IMAGE;
+    mEffectIconSelected[ PageCarouselEffect ] = EFFECT_CAROUSEL_IMAGE_SELECTED;
+    mEffectIcon[ PageCubeEffect ]     = EFFECT_CAROUSEL_IMAGE;
+    mEffectIconSelected[ PageCubeEffect ]     = EFFECT_CAROUSEL_IMAGE_SELECTED;
+    mEffectIcon[ PageSpiralEffect ]   = EFFECT_CAROUSEL_IMAGE;
+    mEffectIconSelected[ PageSpiralEffect ]   = EFFECT_CAROUSEL_IMAGE_SELECTED;
+    mEffectIcon[ PageWaveEffect ]     = EFFECT_CAROUSEL_IMAGE;
+    mEffectIconSelected[ PageWaveEffect ]     = EFFECT_CAROUSEL_IMAGE_SELECTED;
 
     // Create a effect change button. (right of toolbar)
     mEffectChangeButton = Toolkit::PushButton::New();
@@ -244,7 +244,7 @@ private:
     ss << APPLICATION_TITLE << ": " << EFFECT_MODE_NAME[mEffectMode];
     SetTitle(ss.str());
 
-    mEffectChangeButton.SetButtonImage( mEffectIcon[ mEffectMode ] );
+    mEffectChangeButton.SetUnselectedImage( mEffectIcon[ mEffectMode ] );
     mEffectChangeButton.SetSelectedImage( mEffectIconSelected[ mEffectMode ] );
 
     // remove old Effect if exists.
@@ -582,8 +582,8 @@ private:
 
   EffectMode mEffectMode;                               ///< Current Effect mode
 
-  Image mEffectIcon[Total];                             ///< Icons for the effect button
-  Image mEffectIconSelected[Total];                     ///< Icons for the effect button when its selected
+  std::string mEffectIcon[Total];                       ///< Icons for the effect button
+  std::string mEffectIconSelected[Total];               ///< Icons for the effect button when its selected
   Toolkit::PushButton mEffectChangeButton;              ///< Effect Change Button
 };
 

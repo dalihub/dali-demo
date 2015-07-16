@@ -140,23 +140,17 @@ public:
                                             APPLICATION_TITLE );
 
     //Add an slideshow icon on the right of the title
-    mIconEffectsOff = ResourceImage::New( EFFECTS_OFF_ICON );
-    mIconEffectsOffSelected = ResourceImage::New( EFFECTS_OFF_ICON_SELECTED );
-    mIconEffectsOn = ResourceImage::New( EFFECTS_ON_ICON );
-    mIconEffectsOnSelected = ResourceImage::New( EFFECTS_ON_ICON_SELECTED );
     mActorEffectsButton = Toolkit::PushButton::New();
-    mActorEffectsButton.SetButtonImage( mIconEffectsOff );
-    mActorEffectsButton.SetSelectedImage( mIconEffectsOffSelected );
+    mActorEffectsButton.SetUnselectedImage( EFFECTS_OFF_ICON );
+    mActorEffectsButton.SetSelectedImage( EFFECTS_OFF_ICON_SELECTED );
     mActorEffectsButton.ClickedSignal().Connect( this, &MotionStretchExampleApp::OnEffectButtonClicked );
     mToolBar.AddControl( mActorEffectsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
     // Creates a mode button.
     // Create a effect toggle button. (right of toolbar)
-    Image imageLayout = ResourceImage::New( LAYOUT_IMAGE );
-    Image imageLayoutSelected = ResourceImage::New( LAYOUT_IMAGE_SELECTED );
     Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
-    layoutButton.SetButtonImage( imageLayout );
-    layoutButton.SetSelectedImage( imageLayoutSelected );
+    layoutButton.SetUnselectedImage( LAYOUT_IMAGE );
+    layoutButton.SetSelectedImage( LAYOUT_IMAGE_SELECTED );
     layoutButton.ClickedSignal().Connect( this, &MotionStretchExampleApp::OnLayoutButtonClicked);
     layoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -349,14 +343,14 @@ public:
     if(!mActorEffectsEnabled)
     {
       mActorEffectsEnabled = true;
-      mActorEffectsButton.SetButtonImage( mIconEffectsOn );
-      mActorEffectsButton.SetSelectedImage( mIconEffectsOnSelected );
+      mActorEffectsButton.SetUnselectedImage( EFFECTS_ON_ICON );
+      mActorEffectsButton.SetSelectedImage( EFFECTS_ON_ICON_SELECTED );
     }
     else
     {
       mActorEffectsEnabled = false;
-      mActorEffectsButton.SetButtonImage( mIconEffectsOff );
-      mActorEffectsButton.SetSelectedImage( mIconEffectsOffSelected );
+      mActorEffectsButton.SetUnselectedImage( EFFECTS_OFF_ICON );
+      mActorEffectsButton.SetSelectedImage( EFFECTS_OFF_ICON_SELECTED );
     }
   }
 
@@ -416,10 +410,6 @@ private:
   Application&               mApplication;            ///< Application instance
   Toolkit::Control           mView;
   Toolkit::ToolBar           mToolBar;
-  Image                      mIconEffectsOff;
-  Image                      mIconEffectsOffSelected;
-  Image                      mIconEffectsOn;
-  Image                      mIconEffectsOnSelected;
   Layer                      mContentLayer;           ///< Content layer (contains actor for this stretch demo)
 
   PushButton                 mActorEffectsButton;     ///< The actor effects toggling Button.

@@ -199,8 +199,8 @@ void NewWindowController::Create( Application& app )
   }
 
   mLoseContextButton = Toolkit::PushButton::New();
-  mLoseContextButton.SetButtonImage( ResourceImage::New( LOSE_CONTEXT_IMAGE ) );
-  mLoseContextButton.SetSelectedImage( ResourceImage::New( LOSE_CONTEXT_IMAGE_SELECTED ) );
+  mLoseContextButton.SetUnselectedImage( LOSE_CONTEXT_IMAGE );
+  mLoseContextButton.SetSelectedImage( LOSE_CONTEXT_IMAGE_SELECTED );
   mLoseContextButton.ClickedSignal().Connect( this, &NewWindowController::OnLoseContextButtonClicked );
   mToolBar.AddControl( mLoseContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
