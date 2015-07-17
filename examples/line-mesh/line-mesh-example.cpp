@@ -93,7 +93,7 @@ Geometry CreateGeometry()
   // Create indices
   unsigned int indexData[10] = { 0, 1, 1, 2, 2, 3, 3, 4, 4, 0 };
   Property::Map indexFormat;
-  indexFormat["indices"] = Property::UNSIGNED_INTEGER;
+  indexFormat["indices"] = Property::INTEGER;
   PropertyBuffer indices = PropertyBuffer::New( indexFormat, sizeof(indexData)/sizeof(indexData[0]) );
   indices.SetData(indexData);
 

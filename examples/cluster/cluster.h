@@ -206,12 +206,6 @@ public:
   void RestoreChild( unsigned int index, AlphaFunction alpha, const TimePeriod& period, bool front = false );
 
   /**
-   * Sets the background image.
-   * @param[in] image The background image.
-   */
-  void SetBackgroundImage( Actor image );
-
-  /**
    * Sets the title.
    *
    * @param[in] text Title text.

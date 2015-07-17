@@ -250,7 +250,7 @@ public:
     mDeleteButton.SetParentOrigin(ParentOrigin::BOTTOM_RIGHT);
     mDeleteButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
-    mDeleteButton.SetDrawMode( DrawMode::OVERLAY );
+    mDeleteButton.SetDrawMode( DrawMode::OVERLAY_2D );
     mDeleteButton.SetButtonImage( ResourceImage::New( DELETE_IMAGE ) );
     mDeleteButton.SetSelectedImage( ResourceImage::New( DELETE_IMAGE_SELECTED ) );
     mDeleteButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
@@ -265,7 +265,7 @@ public:
     mInsertButton.SetParentOrigin(ParentOrigin::BOTTOM_RIGHT);
     mInsertButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
-    mInsertButton.SetDrawMode( DrawMode::OVERLAY );
+    mInsertButton.SetDrawMode( DrawMode::OVERLAY_2D );
     mInsertButton.SetButtonImage( ResourceImage::New( INSERT_IMAGE ) );
     mInsertButton.SetSelectedImage( ResourceImage::New( INSERT_IMAGE_SELECTED ) );
     mInsertButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
@@ -280,7 +280,7 @@ public:
     mReplaceButton.SetParentOrigin(ParentOrigin::BOTTOM_RIGHT);
     mReplaceButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
-    mReplaceButton.SetDrawMode( DrawMode::OVERLAY );
+    mReplaceButton.SetDrawMode( DrawMode::OVERLAY_2D );
     mReplaceButton.SetButtonImage( ResourceImage::New( REPLACE_IMAGE ) );
     mReplaceButton.SetSelectedImage( ResourceImage::New( REPLACE_IMAGE_SELECTED ) );
     mReplaceButton.SetBackgroundImage( ResourceImage::New( TOOLBAR_IMAGE ) );
@@ -298,6 +298,7 @@ public:
 
     // Display item view on the stage
     stage.Add( mItemView );
+    stage.GetRootLayer().SetBehavior( Layer::LAYER_3D );
 
     // Create the layouts
     mSpiralLayout = DefaultItemLayout::New( DefaultItemLayout::SPIRAL );

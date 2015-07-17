@@ -456,8 +456,8 @@ public:
     // fitting it inside a quarter of the stage area with the conservative BOX
     // filter mode:
     Image bg = ResourceImage::New( CLUSTER_BACKGROUND_IMAGE_PATH, Dali::ImageDimensions( stageSize.x * 0.5f, stageSize.y * 0.5f ), Dali::FittingMode::SHRINK_TO_FIT, Dali::SamplingMode::BOX );
-    ImageActor image = ImageActor::New(bg);
-    clusterActor.SetBackgroundImage(image);
+    Control clusterControl = Control::DownCast( clusterActor );
+    clusterControl.SetBackgroundImage( bg );
 
     // Add actors (pictures) as the children of the cluster
     for (unsigned int i = 0; (i < style.GetMaximumNumberOfChildren()) && (*paths); i++, paths++)
