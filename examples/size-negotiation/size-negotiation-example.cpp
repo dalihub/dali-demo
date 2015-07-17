@@ -428,7 +428,7 @@ public:
     {
       mPopup = CreatePopup();
 
-      ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE2 );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       image.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
       image.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
@@ -444,7 +444,7 @@ public:
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
-      ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE2 );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
       mPopup.Add( image );
@@ -458,7 +458,7 @@ public:
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
-      ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE2 );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       image.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
 
@@ -473,7 +473,7 @@ public:
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
-      ImageActor image = ImageActor::New( ResourceImage::New( IMAGE2 ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE2 );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       image.SetSizeScalePolicy( SizeScalePolicy::FILL_WITH_ASPECT_RATIO );
 
@@ -555,7 +555,7 @@ public:
 
       // Image
       {
-        ImageActor image = ImageActor::New( ResourceImage::New( IMAGE1 ) );
+        Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE1 );
         image.SetName( "COMPLEX_IMAGE" );
         image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         image.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );

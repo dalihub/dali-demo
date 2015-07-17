@@ -104,7 +104,7 @@ private: // Member variables
   Application     mApplication; ///< The application handle
   Toolkit::Control mView;        ///< The toolbar view
   Layer           mContents;    ///< The toolbar contents pane
-  ImageActor      mImageActor;  ///< Image actor shown by stencil mask
+  ImageView       mImageView;  ///< Image view shown by stencil mask
   Animation       mAnimation;
   AnimState       mAnimationState;
 
@@ -113,7 +113,7 @@ private: // Member variables
   Image               mIconStop;
   Image               mIconStopSelected;
   Toolkit::PushButton mPlayStopButton;
-  ImageActor      mDialActor;
+  ImageView       mDialView;
   RadialSweepView mRadialSweepView1;
   RadialSweepView mRadialSweepView2;
   RadialSweepView mRadialSweepView3;
@@ -181,13 +181,13 @@ void RadialMenuExample::OnInit(Application& app)
   mRadialSweepView3.SetFinalActorAngle(Degree(0));
 
   Image dial = ResourceImage::New( TEST_DIAL_FILENAME );
-  mDialActor = ImageActor::New( dial );
-  mDialActor.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-  mDialActor.SetPositionInheritanceMode(USE_PARENT_POSITION);
-  mDialActor.SetScale(scale);
+  mDialView = ImageView::New( dial );
+  mDialView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+  mDialView.SetPositionInheritanceMode(USE_PARENT_POSITION);
+  mDialView.SetScale(scale);
   Layer dialLayer = Layer::New();
 
-  dialLayer.Add(mDialActor);
+  dialLayer.Add( mDialView );
   dialLayer.SetPositionInheritanceMode(USE_PARENT_POSITION);
   dialLayer.SetSize(stage.GetSize());
   mContents.Add(dialLayer);
@@ -201,13 +201,13 @@ void RadialMenuExample::OnInit(Application& app)
 
 void RadialMenuExample::StartAnimation()
 {
-  mDialActor.SetOpacity(0.0f);
+  mDialView.SetOpacity(0.0f);
   mRadialSweepView1.SetOpacity(0.0f);
   mAnimation = Animation::New(6.0f);
   mRadialSweepView1.Activate(mAnimation, 0.0f, 3.0f);
   mRadialSweepView2.Activate(mAnimation, 1.5f, 3.0f);
   mRadialSweepView3.Activate(mAnimation, 3.0f, 3.0f);
-  mAnimation.AnimateTo( Property( mDialActor, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::EASE_IN, TimePeriod( 0.0f, 0.8f ) );
+  mAnimation.AnimateTo( Property( mDialView, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::EASE_IN, TimePeriod( 0.0f, 0.8f ) );
   mAnimation.AnimateTo( Property( mRadialSweepView1, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::EASE_IN, TimePeriod( 0.0f, 0.5f ) );
   mAnimation.FinishedSignal().Connect( this, &RadialMenuExample::OnAnimationFinished );
 
@@ -263,10 +263,10 @@ RadialSweepView RadialMenuExample::CreateSweepView( std::string imageName,
 {
   // Create the image
   Image image = ResourceImage::New(imageName);
-  mImageActor = ImageActor::New(image);
-  mImageActor.SetParentOrigin(ParentOrigin::CENTER);
-  mImageActor.SetAnchorPoint(AnchorPoint::CENTER);
-  mImageActor.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+  mImageView = ImageView::New(image);
+  mImageView.SetParentOrigin(ParentOrigin::CENTER);
+  mImageView.SetAnchorPoint(AnchorPoint::CENTER);
+  mImageView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
   // Create the stencil
   const ImageDimensions imageSize = ResourceImage::GetImageSize(imageName);
@@ -281,8 +281,8 @@ RadialSweepView RadialMenuExample::CreateSweepView( std::string imageName,
   radialSweepView.SetEasingFunction( Dali::AlphaFunction::EASE_IN_OUT );
   radialSweepView.SetPositionInheritanceMode(USE_PARENT_POSITION);
   mContents.Add(radialSweepView);
-  radialSweepView.Add( mImageActor );
-  mImageActor.SetPositionInheritanceMode(USE_PARENT_POSITION);
+  radialSweepView.Add( mImageView );
+  mImageView.SetPositionInheritanceMode(USE_PARENT_POSITION);
 
   return radialSweepView;
 }

@@ -88,10 +88,10 @@ const float BUBBLE_MAX_Z = 0.0f;
 /**
  * Creates the background image
  */
-ImageActor CreateBackground( std::string imagePath )
+ImageView CreateBackground( std::string imagePath )
 {
   Image image = ResourceImage::New( imagePath );
-  ImageActor background = ImageActor::New( image );
+  ImageView background = ImageView::New( image );
   background.SetName( "BACKGROUND" );
   background.SetAnchorPoint( AnchorPoint::CENTER );
   background.SetParentOrigin( ParentOrigin::CENTER );
@@ -153,7 +153,6 @@ DaliTableView::DaliTableView( Application& application )
   mBackgroundLayer(),
   mRootActor(),
   mRotateAnimation(),
-  mBackground(),
   mPressedAnimation(),
   mScrollViewLayer(),
   mScrollView(),
@@ -209,7 +208,7 @@ void DaliTableView::Initialize( Application& application )
   const Vector2 stageSize = Stage::GetCurrent().GetSize();
 
   // Background
-  Actor background = CreateBackground( mBackgroundImagePath );
+  ImageView background = CreateBackground( mBackgroundImagePath );
   Stage::GetCurrent().Add( background );
 
   // Render entire content as overlays, as is all on same 2D plane.
@@ -230,7 +229,7 @@ void DaliTableView::Initialize( Application& application )
   mRootActor.SetFitHeight( 0 );
 
   // Add logo
-  Dali::ImageActor logo = CreateLogo( LOGO_PATH );
+  ImageView logo = CreateLogo( LOGO_PATH );
   logo.SetName( "LOGO_IMAGE" );
   logo.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   const float paddingHeight = ( ( 1.f-TABLE_RELATIVE_SIZE.y ) * stageSize.y );
@@ -848,10 +847,10 @@ void DaliTableView::GenerateCircle( const Size& size, std::vector< unsigned char
   }
 }
 
-ImageActor DaliTableView::CreateLogo( std::string imagePath )
+ImageView DaliTableView::CreateLogo( std::string imagePath )
 {
   Image image = ResourceImage::New( imagePath );
-  ImageActor logo = ImageActor::New( image );
+  ImageView logo = ImageView::New( image );
 
   logo.SetAnchorPoint( AnchorPoint::CENTER );
   logo.SetParentOrigin( ParentOrigin::CENTER );
