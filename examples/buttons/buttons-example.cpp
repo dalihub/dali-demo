@@ -213,12 +213,12 @@ class ButtonsController: public ConnectionTracker
 
     radioGroup2Background.AddChild( mUpdateButton, Toolkit::TableView::CellPosition( 1, 0 ) );
 
-    // ImageActor to display selected image
+    // ImageView to display selected image
     mBigImage1 = ResourceImage::New( BIG_IMAGE_1 );
     mBigImage2 = ResourceImage::New( BIG_IMAGE_2 );
     mBigImage3 = ResourceImage::New( BIG_IMAGE_3 );
 
-    mImage = ImageActor::New( mBigImage1 );
+    mImage = Toolkit::ImageView::New( mBigImage1 );
     mImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     radioGroup2Background.AddChild( mImage, Toolkit::TableView::CellPosition( 0, 1, 2, 1 ) );
@@ -532,7 +532,7 @@ class ButtonsController: public ConnectionTracker
   Image mBigImage1;
   Image mBigImage2;
   Image mBigImage3;
-  ImageActor mImage;
+  Toolkit::ImageView mImage;
 };
 
 void RunTest( Application& application )
