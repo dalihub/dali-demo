@@ -201,20 +201,10 @@ private:
   bool                            mSlideshow;
   Timer                           mViewTimer;
   Toolkit::PushButton             mSlideshowButton;
-  Image                           mIconSlideshowStart;
-  Image                           mIconSlideshowStartSelected;
-  Image                           mIconSlideshowStop;
-  Image                           mIconSlideshowStopSelected;
 
   Vector2                         mPanPosition;
   Vector2                         mPanDisplacement;
 
-  Image                           mImageWave;
-  Image                           mImageWaveSelected;
-  Image                           mImageCross;
-  Image                           mImageCrossSelected;
-  Image                           mImageFold;
-  Image                           mImageFoldSelected;
   Toolkit::PushButton             mEffectChangeButton;
 };
 
@@ -241,15 +231,9 @@ void CubeTransitionApp::OnInit( Application& application )
   mContent.SetBehavior( Layer::LAYER_3D );
 
   // Add an effect-changing button on the right of the tool bar.
-  mImageWave = ResourceImage::New( EFFECT_WAVE_IMAGE );
-  mImageWaveSelected = ResourceImage::New( EFFECT_WAVE_IMAGE_SELECTED );
-  mImageCross = ResourceImage::New( EFFECT_CROSS_IMAGE );
-  mImageCrossSelected = ResourceImage::New( EFFECT_CROSS_IMAGE_SELECTED );
-  mImageFold = ResourceImage::New( EFFECT_FOLD_IMAGE );
-  mImageFoldSelected = ResourceImage::New( EFFECT_FOLD_IMAGE_SELECTED );
   mEffectChangeButton = Toolkit::PushButton::New();
-  mEffectChangeButton.SetButtonImage( mImageWave );
-  mEffectChangeButton.SetSelectedImage( mImageWaveSelected );
+  mEffectChangeButton.SetUnselectedImage( EFFECT_WAVE_IMAGE );
+  mEffectChangeButton.SetSelectedImage( EFFECT_WAVE_IMAGE_SELECTED );
   mEffectChangeButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
@@ -258,13 +242,9 @@ void CubeTransitionApp::OnInit( Application& application )
   mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
   //Add an slideshow icon on the right of the title
-  mIconSlideshowStart = ResourceImage::New( SLIDE_SHOW_START_ICON );
-  mIconSlideshowStartSelected = ResourceImage::New( SLIDE_SHOW_START_ICON_SELECTED );
-  mIconSlideshowStop = ResourceImage::New( SLIDE_SHOW_STOP_ICON );
-  mIconSlideshowStopSelected = ResourceImage::New( SLIDE_SHOW_STOP_ICON_SELECTED );
   mSlideshowButton = Toolkit::PushButton::New();
-  mSlideshowButton.SetButtonImage( mIconSlideshowStart );
-  mSlideshowButton.SetSelectedImage( mIconSlideshowStartSelected );
+  mSlideshowButton.SetUnselectedImage( SLIDE_SHOW_START_ICON );
+  mSlideshowButton.SetSelectedImage( SLIDE_SHOW_START_ICON_SELECTED );
   mSlideshowButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnSildeshowButtonClicked );
   mToolBar.AddControl( mSlideshowButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
@@ -375,23 +355,23 @@ bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
   {
     mCurrentEffect = mCubeCrossEffect;
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_CROSS) );
-    mEffectChangeButton.SetButtonImage( mImageCross );
-    mEffectChangeButton.SetSelectedImage( mImageCrossSelected );
+    mEffectChangeButton.SetUnselectedImage( EFFECT_CROSS_IMAGE );
+    mEffectChangeButton.SetSelectedImage( EFFECT_CROSS_IMAGE_SELECTED );
 
   }
   else if(mCurrentEffect == mCubeCrossEffect)
   {
     mCurrentEffect = mCubeFoldEffect;
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_FOLD) );
-    mEffectChangeButton.SetButtonImage( mImageFold );
-    mEffectChangeButton.SetSelectedImage( mImageFoldSelected );
+    mEffectChangeButton.SetUnselectedImage( EFFECT_FOLD_IMAGE );
+    mEffectChangeButton.SetSelectedImage( EFFECT_FOLD_IMAGE_SELECTED );
   }
   else
   {
     mCurrentEffect = mCubeWaveEffect;
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_WAVE) );
-    mEffectChangeButton.SetButtonImage( mImageWave );
-    mEffectChangeButton.SetSelectedImage( mImageWaveSelected );
+    mEffectChangeButton.SetUnselectedImage( EFFECT_WAVE_IMAGE );
+    mEffectChangeButton.SetSelectedImage( EFFECT_WAVE_IMAGE_SELECTED );
   }
 
   // Set the current image to cube transition effect
@@ -406,8 +386,8 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   if( mSlideshow )
   {
     mPanGestureDetector.Detach( mParent );
-    mSlideshowButton.SetButtonImage( mIconSlideshowStop );
-    mSlideshowButton.SetSelectedImage( mIconSlideshowStopSelected );
+    mSlideshowButton.SetUnselectedImage( SLIDE_SHOW_STOP_ICON );
+    mSlideshowButton.SetSelectedImage( SLIDE_SHOW_STOP_ICON_SELECTED );
     mPanPosition = Vector2( mViewSize.width, mViewSize.height*0.5f );
     mPanDisplacement = Vector2( -10.f, 0.f );
     mViewTimer.Start();
@@ -415,8 +395,8 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   else
   {
     mPanGestureDetector.Attach( mParent );
-    mSlideshowButton.SetButtonImage( mIconSlideshowStart );
-    mSlideshowButton.SetSelectedImage( mIconSlideshowStartSelected );
+    mSlideshowButton.SetUnselectedImage( SLIDE_SHOW_START_ICON );
+    mSlideshowButton.SetSelectedImage( SLIDE_SHOW_START_ICON_SELECTED );
     mViewTimer.Stop();
   }
   return true;

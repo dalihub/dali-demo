@@ -70,22 +70,8 @@
         "type": "TextLabel",
         "text": "Blur"
       },
-      "normal-state-actor": {
-        "type": "ImageActor",
-        "style": "STYLE_NINE_PATCH",
-        "border": [26, 24, 26, 23],
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}button-background.png"
-        }
-      },
-      "selected-state-actor": {
-        "type": "ImageActor",
-        "style": "STYLE_NINE_PATCH",
-        "border": [26, 24, 26, 23],
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}button-background.png"
-        }
-      },
+      "unselected-state-actor": "{DALI_IMAGE_DIR}button-background.png",
+      "selected-state-actor": "{DALI_IMAGE_DIR}button-background.png",
       "signals": [{
         "name": "pressed",
         "action": "play",

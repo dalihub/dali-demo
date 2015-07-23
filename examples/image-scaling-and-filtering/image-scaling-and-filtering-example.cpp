@@ -171,7 +171,7 @@ public:
 
     // Background image:
     ResourceImage backgroundImage = ResourceImage::New( BACKGROUND_IMAGE, ImageDimensions( stage.GetSize().width, stage.GetSize().height ), FittingMode::SCALE_TO_FILL, SamplingMode::BOX_THEN_LINEAR );
-    ImageActor background = ImageActor::New( backgroundImage );
+    Toolkit::ImageView background = Toolkit::ImageView::New( backgroundImage );
     background.SetZ( -2.0f );
     background.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     background.SetSize( stage.GetSize() );
@@ -192,34 +192,34 @@ public:
     widthPixel[1] = 0x4f;
     widthPixel[2] = 0x4f;
 
-    mHeightBox = ImageActor::New( heightBackground );
+    mHeightBox = Toolkit::ImageView::New( heightBackground );
     mHeightBox.SetOpacity( 0.2f );
     stage.Add( mHeightBox );
 
-    mWidthBox = ImageActor::New( widthBackground );
+    mWidthBox = Toolkit::ImageView::New( widthBackground );
     mWidthBox.SetOpacity( 0.2f );
     stage.Add( mWidthBox );
 
-    mDesiredBox = ImageActor::New( desiredBackground );
+    mDesiredBox = Toolkit::ImageView::New( desiredBackground );
     stage.Add( mDesiredBox );
 
     mDesiredBox.SetSize( stage.GetSize() * mImageStageScale );
     mDesiredBox.SetParentOrigin( ParentOrigin::CENTER );
     mDesiredBox.SetAnchorPoint( AnchorPoint::CENTER );
     mDesiredBox.SetPosition( 0, 0, -1 );
-    mDesiredBox.SetSortModifier(4.f);
+    //mDesiredBox.SetSortModifier(4.f);
 
     mHeightBox.SetSize( stage.GetSize().width,  (stage.GetSize() * mImageStageScale).height );
     mHeightBox.SetParentOrigin( ParentOrigin::CENTER );
     mHeightBox.SetAnchorPoint( AnchorPoint::CENTER );
     mHeightBox.SetPosition( 0, 0, -1 );
-    mHeightBox.SetSortModifier(3.f);
+    //mHeightBox.SetSortModifier(3.f);
 
     mWidthBox.SetSize( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height );
     mWidthBox.SetParentOrigin( ParentOrigin::CENTER );
     mWidthBox.SetAnchorPoint( AnchorPoint::CENTER );
     mWidthBox.SetPosition( 0, 0, -1 );
-    mWidthBox.SetSortModifier(2.f);
+    //mWidthBox.SetSortModifier(2.f);
 
     // Make a grab-handle for resizing the image:
     mGrabCorner = Toolkit::PushButton::New();
@@ -284,7 +284,7 @@ public:
     // Back and next image buttons in corners of stage:
     unsigned int playWidth = std::min( stage.GetSize().x * (1 / 5.0f), 58.0f );
     Image playImage = ResourceImage::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ), FittingMode::SHRINK_TO_FIT, SamplingMode::BOX_THEN_LINEAR );
-    Actor imagePrevious = ImageActor::New( playImage );
+    Toolkit::ImageView imagePrevious = Toolkit::ImageView::New( playImage );
 
     // Last image button:
     imagePrevious.SetAnchorPoint( AnchorPoint::TOP_LEFT );
@@ -297,7 +297,7 @@ public:
     imagePrevious.TouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Next image button:
-    Actor imageNext = ImageActor::New( playImage );
+    Toolkit::ImageView imageNext = Toolkit::ImageView::New( playImage );
     imageNext.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
     imageNext.SetY( playWidth * 0.5f );
     imageNext.SetX( stage.GetSize().x - playWidth * 0.5f );
@@ -337,7 +337,6 @@ public:
       fittingModeGroup.Add( label );
 
       Toolkit::PushButton button = CreateButton( FITTING_BUTTON_ID, StringFromScalingMode( mFittingMode ) );
-      button.GetLabel().SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_BUTTON_TEXT );
       fittingModeGroup.Add( button );
       mFittingModeButton = button;
 
@@ -359,7 +358,6 @@ public:
       samplingModeGroup.Add( label );
 
       Toolkit::PushButton button = CreateButton( SAMPLING_BUTTON_ID, StringFromFilterMode( mSamplingMode ) );
-      button.GetLabel().SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_BUTTON_TEXT );
       samplingModeGroup.Add( button );
       mSamplingModeButton = button;
 
@@ -372,7 +370,7 @@ public:
     Toolkit::PushButton button = Toolkit::PushButton::New();
     button.SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_BUTTON_TEXT );
     button.SetName( id );
-    button.SetLabel( label );
+    button.SetLabelText( label );
     button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     button.ClickedSignal().Connect( this, &ImageScalingAndFilteringController::OnButtonClicked );
@@ -401,9 +399,7 @@ public:
   {
     Toolkit::PushButton button = Toolkit::PushButton::New();
     button.SetName( id );
-    button.SetLabel( id );
-    Toolkit::TextLabel textLabel = Toolkit::TextLabel::DownCast( button.GetLabel() );
-    textLabel.SetProperty( TextLabel::Property::POINT_SIZE, 12.0f );
+    button.SetLabelText( id );
 
     button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     button.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
@@ -492,8 +488,7 @@ public:
     if( button.GetName() == modeName )
     {
       mFittingMode = mode;
-      mFittingModeButton.SetLabel( modeName );
-      mFittingModeButton.GetLabel().SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_BUTTON_TEXT );
+      mFittingModeButton.SetLabelText( modeName );
       ResizeImage();
       mPopup.Hide();
       mPopup.Reset();
@@ -508,8 +503,7 @@ public:
     if( button.GetName() == modeName )
     {
       mSamplingMode = mode;
-      mSamplingModeButton.SetLabel( modeName );
-      mSamplingModeButton.GetLabel().SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_BUTTON_TEXT );
+      mSamplingModeButton.SetLabelText( modeName );
       ResizeImage();
       mPopup.Hide();
       mPopup.Reset();
@@ -657,15 +651,13 @@ public:
       else if ( event.keyPressedName == "f" )
       {
         mSamplingMode = NextFilterMode( mSamplingMode );
-        mSamplingModeButton.SetLabel( StringFromFilterMode( mSamplingMode ) );
-        mSamplingModeButton.GetLabel().SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_BUTTON_TEXT );
+        mSamplingModeButton.SetLabelText( StringFromFilterMode( mSamplingMode ) );
       }
       // Cycle filter and scaling modes:
       else if ( event.keyPressedName == "s" )
       {
         mFittingMode = NextScalingMode( mFittingMode );
-        mFittingModeButton.SetLabel( StringFromScalingMode( mFittingMode ) );
-        mFittingModeButton.GetLabel().SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_BUTTON_TEXT );
+        mFittingModeButton.SetLabelText( StringFromScalingMode( mFittingMode ) );
       }
       else
       {
@@ -697,9 +689,9 @@ private:
 
 private:
   Application&  mApplication;
-  ImageActor mDesiredBox; //< Background rectangle to show requested image size.
-  ImageActor mHeightBox;  //< Background horizontal stripe to show requested image height.
-  ImageActor mWidthBox;   //< Background vertical stripe to show requested image width.
+  Toolkit::ImageView mDesiredBox; //< Background rectangle to show requested image size.
+  Toolkit::ImageView mHeightBox;  //< Background horizontal stripe to show requested image height.
+  Toolkit::ImageView mWidthBox;   //< Background vertical stripe to show requested image width.
   Toolkit::PushButton mFittingModeButton;
   Toolkit::PushButton mSamplingModeButton;
   Toolkit::Popup mPopup;

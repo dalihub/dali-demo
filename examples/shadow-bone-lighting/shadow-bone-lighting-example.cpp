@@ -146,11 +146,9 @@ public:
                                         "" );
 
     // Add an effect-changing button on the right of the tool bar.
-    Image imageChangeEffect = ResourceImage::New( CHANGE_EFFECT_IMAGE );
-    Image imageChangeEffectSelected = ResourceImage::New( CHANGE_EFFECT_IMAGE_SELECTED );
     Toolkit::PushButton effectChangeButton = Toolkit::PushButton::New();
-    effectChangeButton.SetButtonImage( imageChangeEffect );
-    effectChangeButton.SetSelectedImage( imageChangeEffectSelected );
+    effectChangeButton.SetUnselectedImage( CHANGE_EFFECT_IMAGE );
+    effectChangeButton.SetSelectedImage( CHANGE_EFFECT_IMAGE_SELECTED );
     effectChangeButton.ClickedSignal().Connect( this, &TestApp::OnEffectButtonClicked );
     toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
@@ -162,11 +160,9 @@ public:
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_SCENE) );
 
     //Add a reset button
-    Image resetImage = ResourceImage::New( RESET_ICON );
-    Image resetImageSelected = ResourceImage::New( RESET_ICON_SELECTED );
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
-    resetButton.SetButtonImage( resetImage );
-    resetButton.SetSelectedImage( resetImageSelected );
+    resetButton.SetUnselectedImage( RESET_ICON );
+    resetButton.SetSelectedImage( RESET_ICON_SELECTED );
     resetButton.ClickedSignal().Connect( this, &TestApp::OnResetPressed );
     toolBar.AddControl( resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 

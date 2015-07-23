@@ -513,8 +513,8 @@ public:
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
-    editButton.SetButtonImage( ResourceImage::New( EDIT_IMAGE ) );
-    editButton.SetSelectedImage( ResourceImage::New( EDIT_IMAGE_SELECTED ) );
+    editButton.SetUnselectedImage( EDIT_IMAGE );
+    editButton.SetSelectedImage( EDIT_IMAGE_SELECTED );
     editButton.ClickedSignal().Connect( this, &ExampleApp::OnToolSelectLayout);
     editButton.SetLeaveRequired( true );
     mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );

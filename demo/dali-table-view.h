@@ -318,7 +318,7 @@ private: // Application callbacks & implementation
    *
    * @return The created image actor
    */
-  Dali::ImageActor CreateLogo( std::string imagePath );
+  Dali::Toolkit::ImageView CreateLogo( std::string imagePath );
 
   /**
    * Timer handler for ending background animation
@@ -392,7 +392,6 @@ private:
   Dali::Layer                     mBackgroundLayer;          ///< Background resides on a separate layer.
   Dali::Toolkit::TableView        mRootActor;                ///< All content (excluding background is anchored to this Actor)
   Dali::Animation                 mRotateAnimation;          ///< Animation to rotate and resize mRootActor.
-  Dali::ImageActor                mBackground;               ///< Background's static image.
   Dali::Animation                 mPressedAnimation;         ///< Button press scaling animation.
   Dali::Layer                     mScrollViewLayer;          ///< ScrollView resides on a separate layer.
   Dali::Toolkit::ScrollView       mScrollView;               ///< ScrollView container (for all Examples)

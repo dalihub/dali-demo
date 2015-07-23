@@ -285,7 +285,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( CREATE_BUTTON_ID );
-      button.SetLabel( CREATE_BUTTON_TEXT );
+      button.SetLabelText( CREATE_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -296,7 +296,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( DELETE_BUTTON_ID );
-      button.SetLabel( DELETE_BUTTON_TEXT );
+      button.SetLabelText( DELETE_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -318,7 +318,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( START_BUTTON_ID );
-      button.SetLabel( START_BUTTON_TEXT );
+      button.SetLabelText( START_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -329,7 +329,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( STOP_BUTTON_ID );
-      button.SetLabel( STOP_BUTTON_TEXT );
+      button.SetLabelText( STOP_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -350,7 +350,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( ENABLE_BUTTON_ID );
-      button.SetLabel( ENABLE_BUTTON_TEXT );
+      button.SetLabelText( ENABLE_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -361,7 +361,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( DISABLE_BUTTON_ID );
-      button.SetLabel( DISABLE_BUTTON_TEXT );
+      button.SetLabelText( DISABLE_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -444,7 +444,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( VSYNC_BUTTON_ID );
-      button.SetLabel( VSYNC_BUTTON_TEXT );
+      button.SetLabelText( VSYNC_BUTTON_TEXT );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -464,9 +464,7 @@ class LoggingController: public ConnectionTracker
          << ", " << ((mLoggerStates[i].isTiming) ? "Started" : "Stopped")
          << ", " << ((mLoggerStates[i].isEnabled) ? "Enabled" : "Disabled");
 
-      Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( ss.str() );
-
-      mLogRadioButtons[i].SetLabel( textLabel );
+      mLogRadioButtons[i].SetLabelText( ss.str() );
     }
   }
 

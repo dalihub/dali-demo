@@ -26,18 +26,8 @@
       "anchor-point": "TOP_CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
-      "normal-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
-        }
-      },
-      "selected-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-2.png"
-        }
-      },
+      "unselected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-2.png",
       "label-actor": {
         "type": "TextLabel",
         "text": "Normal"
@@ -56,24 +46,9 @@
         "text": "Disabled"
       },
       "disabled": true,
-      "normal-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
-        }
-      },
-      "selected-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-2.png"
-        }
-      },
-      "disabled-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-3.png"
-        }
-      }
+      "unselected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-2.png",
+      "disabled-state-actor": "{DALI_IMAGE_DIR}blocks-brick-3.png"
     },
 
     // Third Button
@@ -89,22 +64,8 @@
         "text": "Toggle"
       },
       "togglable": true,
-      "normal-state-actor": {
-        "type": "ImageActor",
-        "style": "STYLE_NINE_PATCH",
-        "border": [26, 24, 26, 23],
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
-        }
-      },
-      "selected-state-actor": {
-        "type": "ImageActor",
-        "style": "STYLE_NINE_PATCH",
-        "border": [26, 24, 26, 23],
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-paddle.png"
-        }
-      },
+      "unselected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selected-state-actor": "{DALI_IMAGE_DIR}blocks-paddle.png",
       "signals": [{
         "name": "selected",
         "action": "set",

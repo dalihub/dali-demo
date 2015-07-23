@@ -523,7 +523,7 @@ private:
     const Vector2 brickSize(BRICK_SIZE * Vector2(stageSize.x, stageSize.x));
 
     Image img = ResourceImage::New( BRICK_IMAGE_PATH[type], Dali::ImageDimensions( 128, 64 ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-    ImageActor brick = ImageActor::New(img);
+    ImageView brick = ImageView::New(img);
     brick.SetParentOrigin(ParentOrigin::TOP_LEFT);
     brick.SetAnchorPoint(AnchorPoint::CENTER);
     brick.SetSize( brickSize );
@@ -551,10 +551,9 @@ private:
    *
    * @param[in] filename the path of the image.
    */
-  ImageActor CreateImage(const std::string& filename)
+  ImageView CreateImage(const std::string& filename)
   {
-    Image img = ResourceImage::New(filename);
-    ImageActor actor = ImageActor::New(img);
+    ImageView actor = ImageView::New(filename);
     actor.SetParentOrigin(ParentOrigin::TOP_LEFT);
     actor.SetAnchorPoint(AnchorPoint::CENTER);
     return actor;
@@ -806,13 +805,13 @@ private:
   Application& mApplication;                            ///< Application instance
   Toolkit::Control mView;                               ///< The View instance.
   Layer mContentLayer;                                  ///< The content layer (contains game actors)
-  ImageActor mBall;                                     ///< The Moving ball image.
+  ImageView mBall;                                      ///< The Moving ball image.
   Vector3 mBallStartPosition;                           ///< Ball Start position
   Vector3 mBallVelocity;                                ///< Ball's current direction.
   Animation mBallAnimation;                             ///< Ball's animation
   Actor mPaddle;                                        ///< The paddle including hit area.
-  ImageActor mPaddleImage;                              ///< The paddle's image.
-  ImageActor mPaddleHandle;                             ///< The paddle's handle (where the user touches)
+  ImageView mPaddleImage;                               ///< The paddle's image.
+  ImageView mPaddleHandle;                              ///< The paddle's handle (where the user touches)
   Vector2 mPaddleHitMargin;                             ///< The paddle hit margin.
   Animation mWobbleAnimation;                           ///< Paddle's animation when hit (wobbles)
   Property::Index mWobbleProperty;                      ///< The wobble property (generated from animation)

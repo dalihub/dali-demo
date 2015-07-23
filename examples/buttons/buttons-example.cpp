@@ -49,6 +49,7 @@ const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 
 // Layout sizes
 const int RADIO_LABEL_THUMBNAIL_SIZE = 60;
+const int RADIO_LABEL_THUMBNAIL_SIZE_SMALL = 40;
 const int RADIO_IMAGE_SPACING = 8;
 const int BUTTON_HEIGHT = 48;
 
@@ -141,54 +142,71 @@ class ButtonsController: public ConnectionTracker
 
     radioGroup2Background.AddChild( radioButtonsGroup2, Toolkit::TableView::CellPosition( 0, 0 ) );
 
+    // TableView to lay out 3x Radio buttons on the left, and 3x Image thumbnails on the right.
+    Toolkit::TableView imageSelectTableView = Toolkit::TableView::New( 3, 2 );
+    imageSelectTableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    imageSelectTableView.SetFitHeight( 0 );
+    imageSelectTableView.SetFitHeight( 1 );
+    imageSelectTableView.SetFitHeight( 2 );
+    imageSelectTableView.SetFitWidth( 0 );
+    imageSelectTableView.SetFitWidth( 1 );
+    imageSelectTableView.SetCellPadding( Vector2( 6.0f, 0.0f ) );
+
+    radioButtonsGroup2.Add( imageSelectTableView );
+
     int radioY = 0;
 
     // Radio 1
     {
-      ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_1 ) );
-      imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
-      mRadioButtonImage1 = Dali::Toolkit::RadioButton::New( imageActor );
+      ImageActor image = ImageActor::New( ResourceImage::New( SMALL_IMAGE_1 ) );
+      image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+
+      mRadioButtonImage1 = Dali::Toolkit::RadioButton::New( "1" );
       mRadioButtonImage1.SetParentOrigin( ParentOrigin::TOP_LEFT );
       mRadioButtonImage1.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       mRadioButtonImage1.SetPosition( 0, DP(radioY) );
       mRadioButtonImage1.SetSelected( true );
 
-      radioButtonsGroup2.Add( mRadioButtonImage1 );
+      imageSelectTableView.AddChild( mRadioButtonImage1, Toolkit::TableView::CellPosition( 0, 0 ) );
+      imageSelectTableView.AddChild( image, Toolkit::TableView::CellPosition( 0, 1 ) );
     }
 
     // Radio 2
     {
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
-      ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_2 ) );
-      imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      ImageActor image = ImageActor::New( ResourceImage::New( SMALL_IMAGE_2 ) );
+      image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
-      mRadioButtonImage2 = Dali::Toolkit::RadioButton::New( imageActor );
+      mRadioButtonImage2 = Dali::Toolkit::RadioButton::New( "2" );
       mRadioButtonImage2.SetParentOrigin( ParentOrigin::TOP_LEFT );
       mRadioButtonImage2.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       mRadioButtonImage2.SetPosition( 0, DP(radioY) );
 
-      radioButtonsGroup2.Add( mRadioButtonImage2 );
+      imageSelectTableView.AddChild( mRadioButtonImage2, Toolkit::TableView::CellPosition( 1, 0 ) );
+      imageSelectTableView.AddChild( image, Toolkit::TableView::CellPosition( 1, 1 ) );
     }
 
     // Radio 3
     {
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
-      ImageActor imageActor = ImageActor::New( ResourceImage::New( SMALL_IMAGE_3 ) );
-      imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      ImageActor image = ImageActor::New( ResourceImage::New( SMALL_IMAGE_3 ) );
+      image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
-      mRadioButtonImage3 = Dali::Toolkit::RadioButton::New( imageActor );
+      mRadioButtonImage3 = Dali::Toolkit::RadioButton::New( "3" );
       mRadioButtonImage3.SetParentOrigin( ParentOrigin::TOP_LEFT );
       mRadioButtonImage3.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       mRadioButtonImage3.SetPosition( 0, DP(radioY) );
 
-      radioButtonsGroup2.Add( mRadioButtonImage3 );
+      imageSelectTableView.AddChild( mRadioButtonImage3, Toolkit::TableView::CellPosition( 2, 0 ) );
+      imageSelectTableView.AddChild( image, Toolkit::TableView::CellPosition( 2, 1 ) );
     }
 
     // Create select button
     mUpdateButton = Toolkit::PushButton::New();
-    mUpdateButton.SetLabel( "Select" );
+    mUpdateButton.SetLabelText( "Select" );
+    mUpdateButton.SetName( "select-button" );
     mUpdateButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
     mUpdateButton.ClickedSignal().Connect( this, &ButtonsController::OnButtonClicked );
@@ -227,26 +245,29 @@ class ButtonsController: public ConnectionTracker
 
     radioGroup1Background.Add( radioButtonsGroup1 );
 
+    // TableView to lay out 2x Radio buttons on the left, and 1x Tick image on the right.
+    Toolkit::TableView tableView = Toolkit::TableView::New( 2, 2 );
+    tableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    tableView.SetFitHeight( 0 );
+    tableView.SetFitHeight( 1 );
+    tableView.SetFitWidth( 0 );
+    tableView.SetFitWidth( 1 );
+
+    Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( "Select enabled" );
+    textLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH );
+    textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+    textLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
+
+    ImageActor imageActor = ImageActor::New( ResourceImage::New( ENABLED_IMAGE ) );
+    imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+    imageActor.SetPadding( Padding( DP(20.0f), 0.0f, 0.0f, 0.0f ) );
+    tableView.AddChild( imageActor, Toolkit::TableView::CellPosition( 0, 1 ) );
+
+    radioButtonsGroup1.Add( tableView );
+
     // First radio button
     {
-      Toolkit::TableView tableView = Toolkit::TableView::New( 1, 2 );
-      tableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-      tableView.SetFitHeight( 0 );
-      tableView.SetFitWidth( 0 );
-      tableView.SetFitWidth( 1 );
-
-      Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( "Select enabled" );
-      textLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH );
-      textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
-      textLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
-      tableView.AddChild( textLabel, Toolkit::TableView::CellPosition( 0, 0 ) );
-
-      ImageActor imageActor = ImageActor::New( ResourceImage::New( ENABLED_IMAGE ) );
-      imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
-      imageActor.SetPadding( Padding( DP(20.0f), 0.0f, 0.0f, 0.0f ) );
-      tableView.AddChild( imageActor, Toolkit::TableView::CellPosition( 0, 1 ) );
-
-      Toolkit::RadioButton radioButton = Dali::Toolkit::RadioButton::New( tableView );
+      Toolkit::RadioButton radioButton = Dali::Toolkit::RadioButton::New( "Select enabled" );
       radioButton.SetName( "radio-select-enable" );
       radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
@@ -255,7 +276,7 @@ class ButtonsController: public ConnectionTracker
 
       radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
 
-      radioButtonsGroup1.Add( radioButton );
+      tableView.AddChild( radioButton, Toolkit::TableView::CellPosition( 0, 0 ) );
     }
 
     // Second radio button
@@ -268,7 +289,7 @@ class ButtonsController: public ConnectionTracker
 
       radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
 
-      radioButtonsGroup1.Add( radioButton );
+      tableView.AddChild( radioButton, Toolkit::TableView::CellPosition( 1, 0 ) );
     }
 
     // CheckBoxes
@@ -276,7 +297,7 @@ class ButtonsController: public ConnectionTracker
     checkBoxBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     checkBoxBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     checkBoxBackground.SetBackgroundColor( BACKGROUND_COLOUR );
-    checkBoxBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
+    checkBoxBackground.SetCellPadding( Size( MARGIN_SIZE / 2.0f, MARGIN_SIZE / 2.0f ) );
 
     for( unsigned int i = 0; i < checkBoxBackground.GetRows(); ++i )
     {
@@ -288,7 +309,7 @@ class ButtonsController: public ConnectionTracker
     {
       mCheckboxButton1 = Toolkit::CheckBoxButton::New();
       mCheckboxButton1.SetName( "checkbox1" );
-      mCheckboxButton1.SetLabel( "CheckBox1 is unselected" );
+      mCheckboxButton1.SetLabelText( "CheckBox1 is unselected" );
       mCheckboxButton1.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( mCheckboxButton1 );
@@ -297,7 +318,7 @@ class ButtonsController: public ConnectionTracker
     {
       mCheckboxButton2 = Toolkit::CheckBoxButton::New();
       mCheckboxButton2.SetName( "checkbox2" );
-      mCheckboxButton2.SetLabel( "CheckBox2 is selected" );
+      mCheckboxButton2.SetLabelText( "CheckBox2 is selected" );
       mCheckboxButton2.SetSelected( true );
       mCheckboxButton2.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
@@ -307,7 +328,7 @@ class ButtonsController: public ConnectionTracker
     {
       mCheckboxButton3 = Toolkit::CheckBoxButton::New();
       mCheckboxButton3.SetName( "checkbox3" );
-      mCheckboxButton3.SetLabel( "CheckBox3 is unselected" );
+      mCheckboxButton3.SetLabelText( "CheckBox3 is unselected" );
       mCheckboxButton3.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
 
       checkBoxBackground.Add( mCheckboxButton3 );
@@ -329,7 +350,7 @@ class ButtonsController: public ConnectionTracker
 
     mToggleButton = Toolkit::PushButton::New();
     mToggleButton.SetTogglableButton( true );
-    mToggleButton.SetLabel( "Unselected" );
+    mToggleButton.SetLabelText( "Unselected" );
     mToggleButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mToggleButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     mToggleButton.StateChangedSignal().Connect( this, &ButtonsController::OnButtonSelected );
@@ -356,11 +377,11 @@ class ButtonsController: public ConnectionTracker
     {
       if( button.IsSelected() )
       {
-        pushButton.SetLabel( "Selected" );
+        pushButton.SetLabelText( "Selected" );
       }
       else
       {
-        pushButton.SetLabel( "Unselected" );
+        pushButton.SetLabelText( "Unselected" );
       }
     }
 
@@ -424,11 +445,11 @@ class ButtonsController: public ConnectionTracker
     {
       if( button.IsSelected() )
       {
-        button.SetLabel("CheckBox1 is selected");
+        button.SetLabelText("CheckBox1 is selected");
       }
       else
       {
-        button.SetLabel("CheckBox1 is unselected");
+        button.SetLabelText("CheckBox1 is unselected");
       }
     }
 
@@ -436,11 +457,11 @@ class ButtonsController: public ConnectionTracker
     {
       if( button.IsSelected() )
       {
-        button.SetLabel("CheckBox2 is selected");
+        button.SetLabelText("CheckBox2 is selected");
       }
       else
       {
-        button.SetLabel("CheckBox2 is unselected");
+        button.SetLabelText("CheckBox2 is unselected");
       }
     }
 
@@ -448,11 +469,11 @@ class ButtonsController: public ConnectionTracker
     {
       if( button.IsSelected() )
       {
-        button.SetLabel("CheckBox3 is selected");
+        button.SetLabelText("CheckBox3 is selected");
       }
       else
       {
-        button.SetLabel("CheckBox3 is unselected");
+        button.SetLabelText("CheckBox3 is unselected");
       }
     }
 
