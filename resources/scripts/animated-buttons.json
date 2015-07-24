@@ -79,9 +79,9 @@
       "sizeAspectRatio": false,
       "visible": true,
       "color": [
-        1,
-        1,
-        1,
+        0,
+        0,
+        0,
         1
       ],
       "image": {
@@ -111,9 +111,9 @@
       "sizeAspectRatio": false,
       "visible": true,
       "color": [
-        1,
-        1,
-        1,
+        0,
+        0,
+        0,
         1
       ],
       "image": {
@@ -147,9 +147,9 @@
       ],
       "sizeAspectRatio": false,
       "color": [
-        1,
-        1,
-        1,
+        0,
+        0,
+        0,
         1
       ],
       "image": {
@@ -195,7 +195,7 @@
     },
     {
       "type": "Control",
-      "name": "Left Black",
+      "name": "Left Crop",
       "relayout-enabled": false,
       "position": [
         144.5,
@@ -209,9 +209,9 @@
       ],
       "sizeAspectRatio": false,
       "background-color": [
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
         1
       ],
       "color": [
@@ -224,7 +224,7 @@
     },
     {
       "type": "Control",
-      "name": "Right Black",
+      "name": "Right Crop",
       "relayout-enabled": false,
       "position": [
         629.5,
@@ -238,9 +238,9 @@
       ],
       "sizeAspectRatio": false,
       "background-color": [
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
         1
       ],
       "color": [
@@ -427,7 +427,7 @@
           "timelineColor": "#b0e8f9"
         },
         {
-          "actor": "Left Black",
+          "actor": "Left Crop",
           "property": "position",
           "value": [
             144.5,
@@ -457,7 +457,7 @@
           "timelineColor": "#a2cfea"
         },
         {
-          "actor": "Right Black",
+          "actor": "Right Crop",
           "property": "position",
           "value": [
             629.5,
@@ -627,7 +627,7 @@
           "timelineColor": "#b0e8f9"
         },
         {
-          "actor": "Left Black",
+          "actor": "Left Crop",
           "property": "position",
           "value": [
             -95,
@@ -657,7 +657,7 @@
           "timelineColor": "#a2cfea"
         },
         {
-          "actor": "Right Black",
+          "actor": "Right Crop",
           "property": "position",
           "value": [
             383,

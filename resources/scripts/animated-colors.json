@@ -18,7 +18,6 @@
   "stage": [
     {
       "type": "Control",
-      "draw-mode": "OVERLAY_2D",
       "actors": [
         {
           "type": "Control",
