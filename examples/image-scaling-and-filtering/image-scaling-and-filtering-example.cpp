@@ -207,19 +207,16 @@ public:
     mDesiredBox.SetParentOrigin( ParentOrigin::CENTER );
     mDesiredBox.SetAnchorPoint( AnchorPoint::CENTER );
     mDesiredBox.SetPosition( 0, 0, -1 );
-    //mDesiredBox.SetSortModifier(4.f);
 
     mHeightBox.SetSize( stage.GetSize().width,  (stage.GetSize() * mImageStageScale).height );
     mHeightBox.SetParentOrigin( ParentOrigin::CENTER );
     mHeightBox.SetAnchorPoint( AnchorPoint::CENTER );
     mHeightBox.SetPosition( 0, 0, -1 );
-    //mHeightBox.SetSortModifier(3.f);
 
     mWidthBox.SetSize( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height );
     mWidthBox.SetParentOrigin( ParentOrigin::CENTER );
     mWidthBox.SetAnchorPoint( AnchorPoint::CENTER );
     mWidthBox.SetPosition( 0, 0, -1 );
-    //mWidthBox.SetSortModifier(2.f);
 
     // Make a grab-handle for resizing the image:
     mGrabCorner = Toolkit::PushButton::New();
