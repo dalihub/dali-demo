@@ -26,12 +26,9 @@
       "anchor-point": "TOP_CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
-      "unselected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-1.png",
-      "selected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-2.png",
-      "label-actor": {
-        "type": "TextLabel",
-        "text": "Normal"
-      }
+      "unselected-state-image": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selected-state-image": "{DALI_IMAGE_DIR}blocks-brick-2.png",
+      "label-text": "Normal"
     },
 
     // Second Button
@@ -41,14 +38,11 @@
       "anchor-point": "CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
-      "label-actor": {
-        "type": "TextLabel",
-        "text": "Disabled"
-      },
       "disabled": true,
-      "unselected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-1.png",
-      "selected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-2.png",
-      "disabled-state-actor": "{DALI_IMAGE_DIR}blocks-brick-3.png"
+      "unselected-state-image": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selected-state-image": "{DALI_IMAGE_DIR}blocks-brick-2.png",
+      "disabled-state-image": "{DALI_IMAGE_DIR}blocks-brick-3.png",
+      "label-text": "Disabled"
     },
 
     // Third Button
@@ -59,13 +53,10 @@
       "anchor-point": "BOTTOM_CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
-      "label-actor": {
-        "type": "TextLabel",
-        "text": "Toggle"
-      },
       "togglable": true,
-      "unselected-state-actor": "{DALI_IMAGE_DIR}blocks-brick-1.png",
-      "selected-state-actor": "{DALI_IMAGE_DIR}blocks-paddle.png",
+      "unselected-state-image": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selected-state-image": "{DALI_IMAGE_DIR}blocks-brick-3.png",
+      "label-text": "Toggle",
       "signals": [{
         "name": "selected",
         "action": "set",
