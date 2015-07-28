@@ -367,11 +367,6 @@ private: // Application callbacks & implementation
    */
   void HideVersionPopup();
 
-  /**
-   * Called when the popup is completely hidden
-   */
-  void PopupHidden();
-
  /*
   * @brief Callback called when the buttons page actor is relaid out
   *
@@ -418,7 +413,6 @@ private:
   bool                            mScrolling:1;              ///< Flag indicating whether view is currently being scrolled
   bool                            mSortAlphabetically:1;     ///< Sort examples alphabetically.
   bool                            mBackgroundAnimsPlaying:1; ///< Are background animations playing
-  bool                            mVersionPopupShown:1;      ///< Whehter the version popup is shown or not
 
 };
 

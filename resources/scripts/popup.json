@@ -1,0 +1,316 @@
+{
+  "constants": {
+    "CONFIG_SCRIPT_LOG_LEVEL": "Verbose"
+  },
+  "stage": [
+    {
+      "type": "ConfirmationPopup",
+      "name": "confirmation-popup",
+      "parent-origin": [0.5, 0.55, 0.5],
+      "anchor-point": "CENTER",
+      "width-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "height-resize-policy": "USE_NATURAL_SIZE",
+      "size-mode-factor": [0.65, 1.0, 1.0],
+      "tail-visibility": false,
+      "tail-position": [0, 0, 0],
+      "display-change-animation-duration": 1.0,
+      "contextual-mode": "NON_CONTEXTUAL",
+      "animation-mode": "ZOOM",
+      "control-ok": "control-ok",
+      "control-cancel": "control-cancel",
+      "connect-signal-ok-selected": "clicked",
+      "connect-signal-cancel-selected": "clicked",
+      "title": {
+        "type": "TextLabel",
+        "text": "Title text",
+        "text-color": [1, 1, 1, 1]
+      },
+      "content": {
+        "type": "TextLabel",
+        "text": "Content text",
+        "padding": [20, 20, 20, 0],
+        "text-color": [1, 1, 1, 1]
+      },
+      "footer": {
+        "type": "Control",
+        "size": [0, 80, 0],
+        "width-resize-policy": "FILL_TO_PARENT",
+        "height-resize-policy": "FIXED",
+        "parent-origin": "CENTER",
+        "anchor-point": "CENTER",
+        "actors": [
+          {
+            "type": "PushButton",
+            "name": "control-ok",
+            "parent-origin": "CENTER_LEFT",
+            "anchor-point": "CENTER_LEFT",
+            "position": [20, 0, 0],
+            "label-text": "OK"
+          },
+          {
+            "type": "PushButton",
+            "name": "control-cancel",
+            "parent-origin": "CENTER_RIGHT",
+            "anchor-point": "CENTER_RIGHT",
+            "position": [-20, 0, 0],
+            "label-text": "Cancel"
+          }
+        ]
+      },
+      "signals": [
+        {
+          "name": "control-signal-ok",
+          "action": "set",
+          "actor": "selection-label",
+          "property": "text",
+          "value": "User pressed: OK Button"
+        },
+        {
+          "name": "control-signal-ok",
+          "action": "set",
+          "actor": "confirmation-popup",
+          "property": "display-state",
+          "value": "HIDDEN"
+        },
+        {
+          "name": "control-signal-cancel",
+          "action": "set",
+          "actor": "selection-label",
+          "property": "text",
+          "value": "User pressed: Cancel Button"
+        },
+        {
+          "name": "control-signal-cancel",
+          "action": "set",
+          "actor": "confirmation-popup",
+          "property": "display-state",
+          "value": "HIDDEN"
+        },
+        {
+          "name": "touched-outside",
+          "action": "set",
+          "actor": "confirmation-popup",
+          "property": "display-state",
+          "value": "HIDDEN"
+        },
+        {
+          "name": "touched-outside",
+          "action": "set",
+          "actor": "selection-label",
+          "property": "text",
+          "value": "No button pressed, backing touched"
+        }
+      ]
+    },
+    {
+      "type": "ConfirmationPopup",
+      "name": "custom-animation-popup",
+      "parent-origin": [0.5, 0.55, 0.5],
+      "anchor-point": "CENTER",
+      "width-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "height-resize-policy": "USE_NATURAL_SIZE",
+      "size-mode-factor": [0.65, 1.0, 1.0],
+      "tail-visible": false,
+      "tail-position": [0, 0, 0],
+      "display-change-animation-duration": 1.0,
+      "contextual-mode": "NON_CONTEXTUAL",
+      "control-ok": "control-ok",
+      "control-cancel": "control-cancel",
+      "connect-signal-ok-selected": "clicked",
+      "connect-signal-cancel-selected": "clicked",
+      "animation-mode": "CUSTOM",
+      "entry-animation": {
+        "actor": "custom-animation-popup",
+        "property": "position",
+        "value": [
+          0,
+          0,
+          0
+        ],
+        "alpha-function": "EASE_OUT",
+        "time-period": {
+          "delay": 0.0,
+          "duration": 1.0
+        }
+      },
+      "exit-animation": {
+        "actor": "custom-animation-popup",
+        "property": "position",
+        "value": [
+          -450,
+          -225,
+          0
+        ],
+        "alpha-function": "EASE_IN",
+        "time-period": {
+          "delay": 0.0,
+          "duration": 1.0
+        }
+      },
+      "title": {
+        "type": "TextLabel",
+        "text": "Title text",
+        "text-color": [1, 1, 1, 1]
+      },
+      "content": {
+        "type": "TextLabel",
+        "text": "Content text",
+        "padding": [20, 20, 20, 0],
+        "text-color": [1, 1, 1, 1]
+      },
+      "footer": {
+        "type": "Control",
+        "size": [0, 80, 0],
+        "width-resize-policy": "FILL_TO_PARENT",
+        "height-resize-policy": "FIXED",
+        "parent-origin": "CENTER",
+        "anchor-point": "CENTER",
+        "actors": [
+          {
+            "type": "PushButton",
+            "name": "control-ok",
+            "parent-origin": "CENTER_LEFT",
+            "anchor-point": "CENTER_LEFT",
+            "position": [20, 0, 0],
+            "label-text": "OK"
+          },
+          {
+            "type": "PushButton",
+            "name": "control-cancel",
+            "parent-origin": "CENTER_RIGHT",
+            "anchor-point": "CENTER_RIGHT",
+            "position": [-20, 0, 0],
+            "label-text": "Cancel"
+          }
+        ]
+      },
+      "signals": [
+        {
+          "name": "control-signal-ok",
+          "action": "set",
+          "actor": "selection-label",
+          "property": "text",
+          "value": "User pressed: OK Button"
+        },
+        {
+          "name": "control-signal-ok",
+          "action": "set",
+          "actor": "custom-animation-popup",
+          "property": "display-state",
+          "value": "HIDDEN"
+        },
+        {
+          "name": "control-signal-cancel",
+          "action": "set",
+          "actor": "selection-label",
+          "property": "text",
+          "value": "User pressed: Cancel Button"
+        },
+        {
+          "name": "control-signal-cancel",
+          "action": "set",
+          "actor": "custom-animation-popup",
+          "property": "display-state",
+          "value": "HIDDEN"
+        },
+        {
+          "name": "touched-outside",
+          "action": "set",
+          "actor": "custom-animation-popup",
+          "property": "display-state",
+          "value": "HIDDEN"
+        },
+        {
+          "name": "touched-outside",
+          "action": "set",
+          "actor": "selection-label",
+          "property": "text",
+          "value": "No button pressed, backing touched"
+        }
+      ]
+    },
+    {
+      "type": "popup-toast",
+      "name": "toast",
+      "width-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "height-resize-policy": "USE_NATURAL_SIZE",
+      "size-mode-factor": [0.85, 0, 0],
+      "title": {
+        "type": "TextLabel",
+        "width-resize-policy": "FILL_TO_PARENT",
+        "height-resize-policy": "USE_NATURAL_SIZE",
+        "parent-origin": "CENTER",
+        "anchor-point": "CENTER",
+        "text": "This is a toast popup. \nIt will auto-hide itself.",
+        "text-color": [1, 1, 1, 1],
+        "multi-line": true,
+        "horizontal-alignment": "CENTER",
+        "vertical-alignment": "CENTER",
+        "padding": [20.0, 20.0, 20.0, 20.0]
+      }
+    },
+    {
+      "type": "PushButton",
+      "name": "popup-trigger-button",
+      "parent-origin": [0.1, 0.1, 0.5],
+      "anchor-point": "TOP_LEFT",
+      "width-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "height-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "size-mode-factor": [0.38, 0.14, 1.0],
+      "label-text": "Popup",
+      "signals": [{
+        "name": "clicked",
+        "action": "set",
+        "actor": "confirmation-popup",
+        "property": "display-state",
+        "value": "SHOWN"
+      }]
+    },
+    {
+      "type": "PushButton",
+      "name": "animated-popup-trigger-button",
+      "parent-origin": [0.9, 0.1, 0.5],
+      "anchor-point": "TOP_RIGHT",
+      "width-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "height-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "size-mode-factor": [0.38, 0.14, 1.0],
+      "label-text": "Animated",
+      "signals": [{
+        "name": "clicked",
+        "action": "set",
+        "actor": "custom-animation-popup",
+        "property": "display-state",
+        "value": "SHOWN"
+      }]
+    },
+    {
+      "type": "PushButton",
+      "name": "toast-trigger-button",
+      "parent-origin": [0.5, 1.0, 0.5],
+      "anchor-point": "BOTTOM_CENTER",
+      "width-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "height-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "size-mode-factor": [0.5, 0.14, 1.0],
+      "label-text": "Push for Toast",
+      "signals": [{
+        "name": "clicked",
+        "action": "set",
+        "actor": "toast",
+        "property": "display-state",
+        "value": "SHOWN"
+      }]
+    },
+    {
+      "type": "TextLabel",
+      "name": "selection-label",
+      "parent-origin": [0.5, 0.22, 0.5],
+      "anchor-point": "TOP_CENTER",
+      "width-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "height-resize-policy": "SIZE_RELATIVE_TO_PARENT",
+      "size-mode-factor": [0.9, 0.14, 1.0],
+      "text": "No selection made",
+      "horizontal-alignment": "CENTER",
+      "vertical-alignment": "CENTER"
+    }
+  ]
+}
