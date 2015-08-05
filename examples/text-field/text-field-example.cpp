@@ -114,12 +114,12 @@ public:
   TextField CreateTextField( const Vector2& stageSize, const std::string& text )
   {
     TextField field = TextField::New();
+    field.SetName("text-field");
     field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     field.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     field.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
     field.SetProperty( TextField::Property::TEXT, text );
     field.SetProperty( TextField::Property::TEXT_COLOR, Vector4( 0.0f, 1.0f, 1.0f, 1.0f ) ); // CYAN
-    field.SetProperty( TextField::Property::PRIMARY_CURSOR_COLOR, Color::WHITE );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
     field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, stageSize.width - BORDER_WIDTH*2, stageSize.height - BORDER_WIDTH*2 ) );
@@ -226,7 +226,8 @@ void RunTest( Application& application )
 /** Entry point for Linux & Tizen applications */
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  // DALI_DEMO_THEME_PATH not passed to Application so TextField example uses default Toolkit style sheet.
+  Application application = Application::New( &argc, &argv );
 
   RunTest( application );
 
