@@ -106,6 +106,7 @@ public:
     mPopup = CreatePopup( stageSize.width * 0.8f );
     mPopup.Add( mField );
     mPopup.OutsideTouchedSignal().Connect( this, &TextFieldExample::OnPopupOutsideTouched );
+    stage.Add( mPopup );
     mPopup.SetDisplayState( Popup::SHOWN );
 
     return true;
