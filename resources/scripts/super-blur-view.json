@@ -70,8 +70,8 @@
         "type": "TextLabel",
         "text": "Blur"
       },
-      "unselected-state-actor": "{DALI_IMAGE_DIR}button-background.png",
-      "selected-state-actor": "{DALI_IMAGE_DIR}button-background.png",
+      "unselected-state-image": "{DALI_IMAGE_DIR}button-background.png",
+      "selected-state-image": "{DALI_IMAGE_DIR}button-background.png",
       "signals": [{
         "name": "pressed",
         "action": "play",
