@@ -384,7 +384,6 @@ public:
     popup.SetParentOrigin( ParentOrigin::CENTER );
     popup.SetAnchorPoint( AnchorPoint::CENTER );
     popup.SetSize( POPUP_WIDTH_DP, 0.0f );
-    popup.HideTail();
 
     popup.OutsideTouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnPopupOutsideTouched );
 
@@ -419,7 +418,6 @@ public:
       Toolkit::TableView fittingModes = Toolkit::TableView::New( 4, 1 );
       fittingModes.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       fittingModes.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-      fittingModes.SetBackgroundColor( BACKGROUND_COLOUR );
       fittingModes.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE * 0.5 ) );
       fittingModes.SetFitHeight( 0 );
       fittingModes.SetFitHeight( 1 );
@@ -431,8 +429,9 @@ public:
       CreatePopupButton( fittingModes, StringFromScalingMode( FittingMode::FIT_WIDTH ) );
       CreatePopupButton( fittingModes, StringFromScalingMode( FittingMode::FIT_HEIGHT ) );
 
-      mPopup.Add( fittingModes );
-      mPopup.Show();
+      mPopup.SetContent( fittingModes );
+      Stage::GetCurrent().Add( mPopup );
+      mPopup.SetDisplayState( Toolkit::Popup::SHOWN );
     }
     else if( button.GetName() == SAMPLING_BUTTON_ID )
     {
@@ -442,7 +441,6 @@ public:
       Toolkit::TableView samplingModes = Toolkit::TableView::New( 6, 1 );
       samplingModes.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       samplingModes.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-      samplingModes.SetBackgroundColor( BACKGROUND_COLOUR );
       samplingModes.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE * 0.5 ) );
       samplingModes.SetFitHeight( 0 );
       samplingModes.SetFitHeight( 1 );
@@ -458,8 +456,9 @@ public:
       CreatePopupButton( samplingModes, StringFromFilterMode( SamplingMode::BOX_THEN_LINEAR ) );
       CreatePopupButton( samplingModes, StringFromFilterMode( SamplingMode::NO_FILTER ) );
 
-      mPopup.Add( samplingModes );
-      mPopup.Show();
+      mPopup.SetContent( samplingModes );
+      Stage::GetCurrent().Add( mPopup );
+      mPopup.SetDisplayState( Toolkit::Popup::SHOWN );
     }
     else if( CheckFittingModeButton( button, FittingMode::SCALE_TO_FILL) ||
              CheckFittingModeButton( button, FittingMode::SHRINK_TO_FIT) ||
@@ -487,7 +486,7 @@ public:
       mFittingMode = mode;
       mFittingModeButton.SetLabelText( modeName );
       ResizeImage();
-      mPopup.Hide();
+      mPopup.SetDisplayState( Toolkit::Popup::HIDDEN );
       mPopup.Reset();
       return true;
     }
@@ -502,7 +501,7 @@ public:
       mSamplingMode = mode;
       mSamplingModeButton.SetLabelText( modeName );
       ResizeImage();
-      mPopup.Hide();
+      mPopup.SetDisplayState( Toolkit::Popup::HIDDEN );
       mPopup.Reset();
       return true;
     }
@@ -513,7 +512,7 @@ public:
   {
     if( mPopup )
     {
-      mPopup.Hide();
+      mPopup.SetDisplayState( Toolkit::Popup::HIDDEN );
       mPopup.Reset();
     }
   }
@@ -600,7 +599,7 @@ public:
       {
         if( mPopup && mPopup.IsVisible() )
         {
-          mPopup.Hide();
+          mPopup.SetDisplayState( Toolkit::Popup::HIDDEN );
           mPopup.Reset();
         }
         else

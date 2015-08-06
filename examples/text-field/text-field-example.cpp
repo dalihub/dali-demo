@@ -106,7 +106,7 @@ public:
     mPopup = CreatePopup( stageSize.width * 0.8f );
     mPopup.Add( mField );
     mPopup.OutsideTouchedSignal().Connect( this, &TextFieldExample::OnPopupOutsideTouched );
-    mPopup.Show();
+    mPopup.SetDisplayState( Popup::SHOWN );
 
     return true;
   }
@@ -114,12 +114,12 @@ public:
   TextField CreateTextField( const Vector2& stageSize, const std::string& text )
   {
     TextField field = TextField::New();
+    field.SetName("text-field");
     field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     field.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     field.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
     field.SetProperty( TextField::Property::TEXT, text );
     field.SetProperty( TextField::Property::TEXT_COLOR, Vector4( 0.0f, 1.0f, 1.0f, 1.0f ) ); // CYAN
-    field.SetProperty( TextField::Property::PRIMARY_CURSOR_COLOR, Color::WHITE );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
     field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, stageSize.width - BORDER_WIDTH*2, stageSize.height - BORDER_WIDTH*2 ) );
@@ -133,7 +133,6 @@ public:
     popup.SetParentOrigin( ParentOrigin::CENTER );
     popup.SetAnchorPoint( AnchorPoint::CENTER );
     popup.SetSize( width, 0.0f );
-    popup.HideTail();
     popup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
     popup.SetSizeModeFactor( POPUP_SIZE_FACTOR_TO_PARENT );
     popup.TouchedSignal().Connect( this, &TextFieldExample::OnPopupTouched );
@@ -154,7 +153,7 @@ public:
     // Hide & discard the pop-up
     if( mPopup )
     {
-      mPopup.Hide();
+      mPopup.SetDisplayState( Popup::HIDDEN );
     }
     mField.Reset();
   }
@@ -226,7 +225,8 @@ void RunTest( Application& application )
 /** Entry point for Linux & Tizen applications */
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  // DALI_DEMO_THEME_PATH not passed to Application so TextField example uses default Toolkit style sheet.
+  Application application = Application::New( &argc, &argv );
 
   RunTest( application );
 
