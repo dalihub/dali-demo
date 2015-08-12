@@ -212,6 +212,7 @@ public:
   {
     Stage stage = Dali::Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
+    stage.GetRootLayer().SetBehavior(Layer::LAYER_3D);
 
     Vector2 stageSize = Stage::GetCurrent().GetSize();
 
@@ -890,6 +891,7 @@ public: // From ItemFactory
     checkbox.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
     checkbox.SetPosition( -SELECTION_BORDER_WIDTH, SELECTION_BORDER_WIDTH );
     checkbox.SetZ( 1.0f );
+    checkbox.SetSortModifier( -50.0f );
     if( MODE_REMOVE_MANY  != mMode &&
         MODE_INSERT_MANY  != mMode &&
         MODE_REPLACE_MANY != mMode )
@@ -905,6 +907,7 @@ public: // From ItemFactory
     tick.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
     tick.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
     tick.SetZ( 1.0f );
+    tick.SetSortModifier( -50.0f );
     tick.SetVisible( false );
     checkbox.Add( tick );
 
