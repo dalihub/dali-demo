@@ -86,6 +86,7 @@ public:
     ImageActor folderButton = ImageActor::New( image );
     folderButton.SetColor( Color::WHITE );
     button.SetButtonImage( folderButton );
+    button.SetSelectedImage( Actor() );
     button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     button.SetSize( image.GetWidth(), image.GetHeight() );
@@ -97,6 +98,9 @@ public:
   {
     Stage stage = Stage::GetCurrent();
     Vector2 stageSize = stage.GetSize();
+
+    // Remove previously hidden pop-up
+    UnparentAndReset(mPopup);
 
     // Launch a pop-up containing TextField
     mField = CreateTextField( stageSize, mButtonLabel );
@@ -116,6 +120,7 @@ public:
     field.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
     field.SetProperty( TextField::Property::TEXT, text );
     field.SetProperty( TextField::Property::TEXT_COLOR, Vector4( 0.0f, 1.0f, 1.0f, 1.0f ) ); // CYAN
+    field.SetProperty( TextField::Property::PRIMARY_CURSOR_COLOR, Color::WHITE );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
     field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, stageSize.width - BORDER_WIDTH*2, stageSize.height - BORDER_WIDTH*2 ) );
@@ -153,7 +158,6 @@ public:
       mPopup.Hide();
     }
     mField.Reset();
-    mPopup.Reset();
   }
 
   bool OnPopupTouched( Actor actor, const TouchEvent& event )

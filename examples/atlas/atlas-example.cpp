@@ -31,6 +31,7 @@ namespace
 const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-gradient.jpg" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const LOSE_CONTEXT_IMAGE( DALI_IMAGE_DIR "icon-cluster-wobble.png" );
+const char * const LOSE_CONTEXT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-cluster-wobble-selected.png" );
 
 Application gApplication;
 AtlasController* gAtlasController(NULL);
@@ -71,7 +72,8 @@ public:
         "Atlas" );
 
     mLoseContextButton = Toolkit::PushButton::New();
-    mLoseContextButton.SetBackgroundImage( ResourceImage::New( LOSE_CONTEXT_IMAGE ) );
+    mLoseContextButton.SetButtonImage( ResourceImage::New( LOSE_CONTEXT_IMAGE ) );
+    mLoseContextButton.SetSelectedImage( ResourceImage::New( LOSE_CONTEXT_IMAGE_SELECTED ) );
     mLoseContextButton.ClickedSignal().Connect( this, &AtlasController::OnLoseContextButtonClicked );
     mToolBar.AddControl( mLoseContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 

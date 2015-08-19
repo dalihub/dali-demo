@@ -45,9 +45,7 @@ const char* const TOOLBAR_TITLE = "Negotiate Size";
 const int TOOLBAR_HEIGHT = 62;
 
 const char* MENU_ICON_IMAGE = DALI_IMAGE_DIR "icon-cluster-none.png";
-
-const char* const PUSHBUTTON_BUTTON_IMAGE = DALI_IMAGE_DIR "button-up.9.png";
-const char* const PUSHBUTTON_PRESS_IMAGE = DALI_IMAGE_DIR "button-down.9.png";
+const char* MENU_ICON_IMAGE_SELECTED = DALI_IMAGE_DIR "icon-cluster-none-selected.png";
 
 const char* const POPUPS_MENU_ID = "POPUPS_MENU";
 const char* const TABLEVIEW_MENU_ID = "TABLEVIEW_MENU";
@@ -178,7 +176,8 @@ public:
 
     // Create menu button
     Toolkit::PushButton viewButton = Toolkit::PushButton::New();
-    viewButton.SetBackgroundImage( ResourceImage::New( MENU_ICON_IMAGE ) );
+    viewButton.SetButtonImage( ResourceImage::New( MENU_ICON_IMAGE ) );
+    viewButton.SetSelectedImage( ResourceImage::New( MENU_ICON_IMAGE_SELECTED ) );
     viewButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnMenu );
     mToolBar.AddControl( viewButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
@@ -261,6 +260,8 @@ public:
       Toolkit::PushButton menuButton = Toolkit::PushButton::New();
       menuButton.SetName( MENU_ITEMS[ i ].name );
       menuButton.SetLabel( MENU_ITEMS[ i ].text );
+      menuButton.SetButtonImage( Actor() );
+      menuButton.SetSelectedImage( Actor() );
       menuButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnMenuSelect );
 
       tableView.Add( menuButton );
@@ -354,8 +355,6 @@ public:
       Toolkit::PushButton okayButton = Toolkit::PushButton::New();
       okayButton.SetName( OKAY_BUTTON_ID );
       okayButton.SetLabel( "OK!" );
-      okayButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      okayButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
@@ -370,8 +369,6 @@ public:
       Toolkit::PushButton cancelButton = Toolkit::PushButton::New();
       cancelButton.SetName( CANCEL_BUTTON_ID );
       cancelButton.SetLabel( "Cancel" );
-      cancelButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      cancelButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       cancelButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
@@ -380,8 +377,6 @@ public:
       Toolkit::PushButton okayButton = Toolkit::PushButton::New();
       okayButton.SetName( OKAY_BUTTON_ID );
       okayButton.SetLabel( "OK!" );
-      okayButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      okayButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
@@ -397,8 +392,6 @@ public:
       Toolkit::PushButton cancelButton = Toolkit::PushButton::New();
       cancelButton.SetName( CANCEL_BUTTON_ID );
       cancelButton.SetLabel( "Cancel" );
-      cancelButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      cancelButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       cancelButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
@@ -407,8 +400,6 @@ public:
       Toolkit::PushButton okayButton = Toolkit::PushButton::New();
       okayButton.SetName( OKAY_BUTTON_ID );
       okayButton.SetLabel( "OK!" );
-      okayButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      okayButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
@@ -523,8 +514,6 @@ public:
       Toolkit::PushButton cancelButton = Toolkit::PushButton::New();
       cancelButton.SetName( CANCEL_BUTTON_ID );
       cancelButton.SetLabel( "Cancel" );
-      cancelButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      cancelButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       cancelButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
@@ -533,8 +522,6 @@ public:
       Toolkit::PushButton okayButton = Toolkit::PushButton::New();
       okayButton.SetName( OKAY_BUTTON_ID );
       okayButton.SetLabel( "OK!" );
-      okayButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      okayButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
@@ -585,11 +572,7 @@ public:
         root.SetFitWidth( 0 );
         root.SetPadding( Padding( 0.0f, 0.0f, 0.0f, 20.0f ) );
 
-        Dali::Image unchecked = Dali::ResourceImage::New( CHECKBOX_UNCHECKED_IMAGE );
-        Dali::Image checked = Dali::ResourceImage::New( CHECKBOX_CHECKED_IMAGE );
         Toolkit::CheckBoxButton checkBox = Toolkit::CheckBoxButton::New();
-        checkBox.SetBackgroundImage( unchecked );
-        checkBox.SetSelectedImage( checked );
         checkBox.SetSize( 48, 48 );
 
         root.AddChild( checkBox, Toolkit::TableView::CellPosition( 0, 0 ) );
@@ -609,8 +592,6 @@ public:
       Toolkit::PushButton cancelButton = Toolkit::PushButton::New();
       cancelButton.SetName( CANCEL_BUTTON_ID );
       cancelButton.SetLabel( "Cancel" );
-      cancelButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      cancelButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       cancelButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
@@ -619,8 +600,6 @@ public:
       Toolkit::PushButton okayButton = Toolkit::PushButton::New();
       okayButton.SetName( OKAY_BUTTON_ID );
       okayButton.SetLabel( "OK!" );
-      okayButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      okayButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       okayButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 
@@ -1249,9 +1228,6 @@ public: // From ItemFactory
       popupButton.SetName( buttonDataArray[ itemId ].name );
       popupButton.SetLabel( buttonDataArray[ itemId ].text );
       popupButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-
-      popupButton.SetSelectedImage( Dali::ResourceImage::New( PUSHBUTTON_PRESS_IMAGE ) );
-      popupButton.SetButtonImage( Dali::ResourceImage::New( PUSHBUTTON_BUTTON_IMAGE ) );
 
       popupButton.ClickedSignal().Connect( this, &SizeNegotiationController::OnButtonClicked );
 

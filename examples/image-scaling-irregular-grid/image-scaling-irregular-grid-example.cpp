@@ -65,6 +65,7 @@ const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-gradient.jpg" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "Image Scaling Modes" );
 const char* TOGGLE_SCALING_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
+const char* TOGGLE_SCALING_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
 
 /** The width of the grid in whole grid cells. */
 const unsigned GRID_WIDTH = 9;
@@ -306,8 +307,10 @@ public:
 
     // Create an image scaling toggle button. (right of toolbar)
     Image toggleScalingImage = ResourceImage::New( TOGGLE_SCALING_IMAGE );
+    Image toggleScalingImageSelected = ResourceImage::New( TOGGLE_SCALING_IMAGE_SELECTED );
     Toolkit::PushButton toggleScalingButton = Toolkit::PushButton::New();
-    toggleScalingButton.SetBackgroundImage( toggleScalingImage );
+    toggleScalingButton.SetButtonImage( toggleScalingImage );
+    toggleScalingButton.SetSelectedImage( toggleScalingImageSelected );
     toggleScalingButton.ClickedSignal().Connect( this, &ImageScalingIrregularGridController::OnToggleScalingTouched );
     mToolBar.AddControl( toggleScalingButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 

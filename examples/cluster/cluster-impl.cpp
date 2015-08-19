@@ -374,23 +374,6 @@ void Cluster::RestoreChild( unsigned int index, AlphaFunction alpha, const TimeP
   }
 }
 
-void Cluster::SetBackgroundImage( Actor image )
-{
-  // Replaces the background image.
-  if(mBackgroundImage && mBackgroundImage.GetParent())
-  {
-    mBackgroundImage.GetParent().Remove(mBackgroundImage);
-  }
-
-  mBackgroundImage = image;
-  Self().Add(mBackgroundImage);
-
-  mBackgroundImage.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-  mBackgroundImage.SetParentOrigin( ParentOrigin::TOP_LEFT );
-
-  UpdateBackground(0.0f);
-}
-
 void Cluster::SetTitle( Actor text )
 {
   // Replaces the title actor.

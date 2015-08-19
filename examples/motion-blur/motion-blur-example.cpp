@@ -76,9 +76,12 @@ const char* BACKGROUND_IMAGE_PATH = DALI_IMAGE_DIR "background-default.png";
 
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
+const char* LAYOUT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
 const char* APPLICATION_TITLE( "Motion Blur" );
 const char* EFFECTS_OFF_ICON( DALI_IMAGE_DIR "icon-effects-off.png" );
+const char* EFFECTS_OFF_ICON_SELECTED( DALI_IMAGE_DIR "icon-effects-off-selected.png" );
 const char* EFFECTS_ON_ICON( DALI_IMAGE_DIR "icon-effects-on.png" );
+const char* EFFECTS_ON_ICON_SELECTED( DALI_IMAGE_DIR "icon-effects-on-selected.png" );
 
 const float UI_MARGIN = 4.0f;                              ///< Screen Margin for placement of UI buttons
 
@@ -164,17 +167,22 @@ public:
 
     //Add an effects icon on the right of the title
     mIconEffectsOff = ResourceImage::New( EFFECTS_OFF_ICON );
+    mIconEffectsOffSelected = ResourceImage::New( EFFECTS_OFF_ICON_SELECTED );
     mIconEffectsOn = ResourceImage::New( EFFECTS_ON_ICON );
+    mIconEffectsOnSelected = ResourceImage::New( EFFECTS_ON_ICON_SELECTED );
     mActorEffectsButton = Toolkit::PushButton::New();
-    mActorEffectsButton.SetBackgroundImage( mIconEffectsOff );
+    mActorEffectsButton.SetButtonImage( mIconEffectsOff );
+    mActorEffectsButton.SetSelectedImage( mIconEffectsOffSelected );
     mActorEffectsButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnEffectButtonClicked );
     mToolBar.AddControl( mActorEffectsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
     // Creates a mode button.
     // Create a effect toggle button. (right of toolbar)
     Image imageLayout = ResourceImage::New( LAYOUT_IMAGE );
+    Image imageLayoutSelected = ResourceImage::New( LAYOUT_IMAGE_SELECTED );
     Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
-    layoutButton.SetBackgroundImage(imageLayout);
+    layoutButton.SetButtonImage( imageLayout );
+    layoutButton.SetSelectedImage( imageLayoutSelected );
     layoutButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnLayoutButtonClicked);
     layoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -214,7 +222,12 @@ public:
     mContentLayer.Add( mMotionBlurImageActor );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect = MotionBlurEffect::Apply(mMotionBlurImageActor);
+    mMotionBlurEffect = Toolkit::CreateMotionBlurEffect();
+    Dali::Property::Index uModelProperty = mMotionBlurEffect.GetPropertyIndex( "uModelLastFrame" );
+    Constraint constraint = Constraint::New<Matrix>( mMotionBlurEffect, uModelProperty, EqualToConstraint() );
+    constraint.AddSource( Source( mMotionBlurImageActor , Actor::Property::WORLD_MATRIX ) );
+    constraint.Apply();
+    mMotionBlurImageActor.SetShaderEffect( mMotionBlurEffect );
 
 
 #ifdef MULTIPLE_MOTION_BLURRED_ACTORS
@@ -231,7 +244,7 @@ public:
     mMotionBlurImageActor.Add( mMotionBlurImageActor2 );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect2 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
+    mMotionBlurEffect2 = CreateMotionBlurEffect(MOTION_BLUR_NUM_SAMPLES);
 
     // set actor shader to the blur one
     mMotionBlurImageActor2.SetShaderEffect( mMotionBlurEffect2 );
@@ -249,7 +262,7 @@ public:
     mMotionBlurImageActor.Add( mMotionBlurImageActor3 );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect3 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
+    mMotionBlurEffect3 = CreateMotionBlurEffect(MOTION_BLUR_NUM_SAMPLES);
 
     // set actor shader to the blur one
     mMotionBlurImageActor3.SetShaderEffect( mMotionBlurEffect3 );
@@ -267,7 +280,7 @@ public:
     mMotionBlurImageActor.Add( mMotionBlurImageActor4 );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect4 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
+    mMotionBlurEffect4 = CreateMotionBlurEffect(MOTION_BLUR_NUM_SAMPLES);
 
     // set actor shader to the blur one
     mMotionBlurImageActor4.SetShaderEffect( mMotionBlurEffect4 );
@@ -285,7 +298,7 @@ public:
     mMotionBlurImageActor.Add( mMotionBlurImageActor5 );
 
     // Create shader used for doing motion blur
-    mMotionBlurEffect5 = MotionBlurEffect::New(MOTION_BLUR_NUM_SAMPLES);
+    mMotionBlurEffect5 = CreateMotionBlurEffect(MOTION_BLUR_NUM_SAMPLES);
 
     // set actor shader to the blur one
     mMotionBlurImageActor5.SetShaderEffect( mMotionBlurEffect5 );
@@ -442,12 +455,14 @@ public:
     if(!mActorEffectsEnabled)
     {
       mActorEffectsEnabled = true;
-      mActorEffectsButton.SetBackgroundImage( mIconEffectsOn );
+      mActorEffectsButton.SetButtonImage( mIconEffectsOn );
+      mActorEffectsButton.SetSelectedImage( mIconEffectsOnSelected );
     }
     else
     {
       mActorEffectsEnabled = false;
-      mActorEffectsButton.SetBackgroundImage( mIconEffectsOff );
+      mActorEffectsButton.SetButtonImage( mIconEffectsOff );
+      mActorEffectsButton.SetSelectedImage( mIconEffectsOffSelected );
     }
   }
 
@@ -508,22 +523,24 @@ private:
   Toolkit::Control           mView;
   Toolkit::ToolBar           mToolBar;
   Image                      mIconEffectsOff;
+  Image                      mIconEffectsOffSelected;
   Image                      mIconEffectsOn;
+  Image                      mIconEffectsOnSelected;
 
   Layer                      mContentLayer;           ///< Content layer (contains actor for this blur demo)
 
   PushButton                 mActorEffectsButton;     ///< The actor effects toggling Button.
 
   // Motion blur
-  MotionBlurEffect mMotionBlurEffect;
+  ShaderEffect mMotionBlurEffect;
   ImageActor mMotionBlurImageActor;
   Size mMotionBlurActorSize;
 
 #ifdef MULTIPLE_MOTION_BLURRED_ACTORS
-  MotionBlurEffect mMotionBlurEffect2;
-  MotionBlurEffect mMotionBlurEffect3;
-  MotionBlurEffect mMotionBlurEffect4;
-  MotionBlurEffect mMotionBlurEffect5;
+  ShaderEffect mMotionBlurEffect2;
+  ShaderEffect mMotionBlurEffect3;
+  ShaderEffect mMotionBlurEffect4;
+  ShaderEffect mMotionBlurEffect5;
 
   ImageActor mMotionBlurImageActor2;
   ImageActor mMotionBlurImageActor3;

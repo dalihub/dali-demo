@@ -41,9 +41,13 @@ const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
 const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "Clusters" );
 const char * const LAYOUT_NONE_IMAGE( DALI_IMAGE_DIR "icon-cluster-none.png" );
+const char * const LAYOUT_NONE_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-cluster-none-selected.png" );
 const char * const LAYOUT_MOTION_BLUR_IMAGE( DALI_IMAGE_DIR "icon-cluster-wobble.png" );
+const char * const LAYOUT_MOTION_BLUR_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-cluster-wobble-selected.png" );
 const char * const LAYOUT_CAROUSEL_IMAGE( DALI_IMAGE_DIR "icon-cluster-carousel.png" );
+const char * const LAYOUT_CAROUSEL_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-cluster-carousel-selected.png" );
 const char * const LAYOUT_SPHERE_IMAGE( DALI_IMAGE_DIR "icon-cluster-sphere.png" );
+const char * const LAYOUT_SPHERE_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-cluster-sphere-selected.png" );
 
 enum ClusterType
 {
@@ -151,11 +155,11 @@ const float SPHERE_EFFECT_VERTICAL_DOMAIN = 0.15f;          ///< In Sphere Effec
  */
 enum ExampleEffectType
 {
-  NO_EFFECT,
+  NO_EFFECT = 0,
   MOTION_BLUR_EFFECT,
   CAROUSEL_EFFECT,
   SPHERE_EFFECT,
-  TOTAL_EFFECTS
+  TOTAL_EFFECTS,
 };
 
 /**
@@ -319,6 +323,13 @@ struct ShrinkConstraint
   }
 };
 
+struct ButtonImages
+{
+  Image mButtonImage;
+  Image mSelectedImage;
+};
+
+
 } // unnamed namespace
 
 /**
@@ -376,11 +387,17 @@ public:
                                             TOOLBAR_IMAGE,
                                             "" );
 
+    mContentLayer.SetProperty(Layer::Property::BEHAVIOR, "Dali::Layer::LAYER_3D");
+
     // Create a effect toggle button. (right of toolbar)
-    mLayoutButtonImages[ NO_EFFECT ] = ResourceImage::New( LAYOUT_NONE_IMAGE );
-    mLayoutButtonImages[ MOTION_BLUR_EFFECT ] = ResourceImage::New( LAYOUT_MOTION_BLUR_IMAGE );
-    mLayoutButtonImages[ CAROUSEL_EFFECT ] = ResourceImage::New( LAYOUT_CAROUSEL_IMAGE );
-    mLayoutButtonImages[ SPHERE_EFFECT ] = ResourceImage::New( LAYOUT_SPHERE_IMAGE );
+    mLayoutButtonImages[ NO_EFFECT ].mButtonImage = ResourceImage::New( LAYOUT_NONE_IMAGE );
+    mLayoutButtonImages[ NO_EFFECT ].mSelectedImage = ResourceImage::New( LAYOUT_NONE_IMAGE_SELECTED );
+    mLayoutButtonImages[ MOTION_BLUR_EFFECT ].mButtonImage = ResourceImage::New( LAYOUT_MOTION_BLUR_IMAGE );
+    mLayoutButtonImages[ MOTION_BLUR_EFFECT ].mSelectedImage = ResourceImage::New( LAYOUT_MOTION_BLUR_IMAGE_SELECTED );
+    mLayoutButtonImages[ CAROUSEL_EFFECT ].mButtonImage = ResourceImage::New( LAYOUT_CAROUSEL_IMAGE );
+    mLayoutButtonImages[ CAROUSEL_EFFECT ].mSelectedImage = ResourceImage::New( LAYOUT_CAROUSEL_IMAGE_SELECTED );
+    mLayoutButtonImages[ SPHERE_EFFECT ].mButtonImage = ResourceImage::New( LAYOUT_SPHERE_IMAGE );
+    mLayoutButtonImages[ SPHERE_EFFECT ].mSelectedImage = ResourceImage::New( LAYOUT_SPHERE_IMAGE_SELECTED );
 
     mLayoutButton = Toolkit::PushButton::New();
     mLayoutButton.ClickedSignal().Connect( this, &ClusterController::OnEffectTouched );
@@ -439,8 +456,8 @@ public:
     // fitting it inside a quarter of the stage area with the conservative BOX
     // filter mode:
     Image bg = ResourceImage::New( CLUSTER_BACKGROUND_IMAGE_PATH, Dali::ImageDimensions( stageSize.x * 0.5f, stageSize.y * 0.5f ), Dali::FittingMode::SHRINK_TO_FIT, Dali::SamplingMode::BOX );
-    ImageActor image = ImageActor::New(bg);
-    clusterActor.SetBackgroundImage(image);
+    Control clusterControl = Control::DownCast( clusterActor );
+    clusterControl.SetBackgroundImage( bg );
 
     // Add actors (pictures) as the children of the cluster
     for (unsigned int i = 0; (i < style.GetMaximumNumberOfChildren()) && (*paths); i++, paths++)
@@ -552,21 +569,22 @@ public:
    */
   void SetMotionBlurEffect( Actor actor )
   {
+
     // only do something if the actor and effect are valid
     if( actor )
     {
       // first remove from this actor
-      RenderableActor renderable = RenderableActor::DownCast( actor );
-      if( renderable )
+      ImageActor imageActor = ImageActor::DownCast( actor );
+      if( imageActor )
       {
-        MotionBlurEffect shaderEffect = MotionBlurEffect::New();
-        shaderEffect.SetSpeedScalingFactor(0.1f);
+        ShaderEffect shaderEffect = Toolkit::CreateMotionBlurEffect();
+        shaderEffect.SetUniform("uSpeedScalingFactor",0.1f);
 
         Dali::Property::Index uModelProperty = shaderEffect.GetPropertyIndex( "uModelLastFrame" );
         Constraint constraint = Constraint::New<Matrix>( shaderEffect, uModelProperty, EqualToConstraint() );
-        constraint.AddSource( Source( actor , Actor::Property::WORLD_MATRIX ) );
+        constraint.AddSource( Source( imageActor , Actor::Property::WORLD_MATRIX ) );
         constraint.Apply();
-        renderable.SetShaderEffect( shaderEffect );
+        imageActor.SetShaderEffect( shaderEffect );
       }
       // then all children recursively
       const unsigned int count = actor.GetChildCount();
@@ -613,7 +631,8 @@ public:
     // Remove all shader-effects from mScrollView and it's children (the clusters)
     mScrollView.SetPosition(Vector3::ZERO);
 
-    mLayoutButton.SetBackgroundImage( mLayoutButtonImages[ type ] );
+    mLayoutButton.SetButtonImage( mLayoutButtonImages[ type ].mButtonImage );
+    mLayoutButton.SetSelectedImage( mLayoutButtonImages[ type ].mSelectedImage );
 
     for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
     {
@@ -650,8 +669,8 @@ public:
       case CAROUSEL_EFFECT:
       {
         // Apply Carousel Shader Effect to scrollView
-        CarouselEffect shaderEffect = CarouselEffect::New();
-        shaderEffect.SetRadius( -CAROUSEL_EFFECT_RADIUS );
+        ShaderEffect shaderEffect = Toolkit::CreateCarouselEffect();
+        shaderEffect.SetUniform( "uRadius", -CAROUSEL_EFFECT_RADIUS );
         // dont apply shader effect to scrollview as it might override internal shaders for bounce effect etc
         for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {
@@ -663,7 +682,7 @@ public:
         const Vector2 angleSweep( CAROUSEL_EFFECT_ANGLE_SWEEP / stageSize.width,
                                   CAROUSEL_EFFECT_ANGLE_SWEEP / stageSize.width );
 
-        Property::Index anglePerUnit = shaderEffect.GetPropertyIndex( shaderEffect.GetAnglePerUnitPropertyName() );
+        Property::Index anglePerUnit = shaderEffect.GetPropertyIndex( "uAnglePerUnit" );
         Constraint constraint = Constraint::New<Vector2>( shaderEffect, anglePerUnit, CarouselEffectOrientationConstraint( angleSweep ) );
         constraint.AddSource( Source(mView, Actor::Property::ORIENTATION) );
         constraint.Apply();
@@ -685,10 +704,10 @@ public:
         mScrollView.SetRulerY(rulerY);
 
         // Apply Carousel Shader Effect to scrollView (Spherical style)
-        CarouselEffect shaderEffect = CarouselEffect::New();
+        ShaderEffect shaderEffect = Toolkit::CreateCarouselEffect();
 
-        shaderEffect.SetRadius( SPHERE_EFFECT_RADIUS );
-        shaderEffect.SetAnglePerUnit( Vector2( SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y, SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y ) );
+        shaderEffect.SetUniform( "uRadius", SPHERE_EFFECT_RADIUS );
+        shaderEffect.SetUniform( "uAnglePerUnit", Vector2( SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y, SPHERE_EFFECT_ANGLE_SWEEP / stageSize.y ) );
         // dont apply shader effect to scrollview as it might override internal shaders for bounce effect etc
         for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
         {
@@ -765,23 +784,16 @@ private:
   ExampleEffectType          mExampleEffect;                     ///< Current example effect.
 
   Toolkit::PushButton        mLayoutButton;                      ///< The layout button
-  Image                      mLayoutButtonImages[TOTAL_EFFECTS]; ///< Image when no layout
+  ButtonImages               mLayoutButtonImages[TOTAL_EFFECTS]; ///< Image when no layout
 };
-
-void RunTest(Application& app)
-{
-  ClusterController test(app);
-
-  app.MainLoop();
-}
 
 // Entry point for Linux & Tizen applications
 //
 int main(int argc, char **argv)
 {
   Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
-
-  RunTest(app);
+  ClusterController test(app);
+  app.MainLoop();
 
   return 0;
 }

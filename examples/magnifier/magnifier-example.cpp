@@ -225,7 +225,7 @@ public:
     mMagnifier = Toolkit::Magnifier::New();
     mMagnifier.SetSourceActor( mView.GetChildAt( 0 ) );
     mMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width );  // Size of magnifier is in relation to stage width
-    mMagnifier.SetMagnificationFactor( MAGNIFICATION_FACTOR );
+    mMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
     mMagnifier.SetScale(Vector3::ZERO);
     overlay.Add( mMagnifier );
 
@@ -242,7 +242,7 @@ public:
     mBouncingMagnifier = Toolkit::Magnifier::New();
     mBouncingMagnifier.SetSourceActor( mView.GetChildAt( 0 ) );
     mBouncingMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width ); // Size of magnifier is in relation to stage width
-    mBouncingMagnifier.SetMagnificationFactor( MAGNIFICATION_FACTOR );
+    mBouncingMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
     overlay.Add( mBouncingMagnifier );
 
     mAnimationTimeProperty = mBouncingMagnifier.RegisterProperty("animation-time", 0.0f);
@@ -255,7 +255,7 @@ public:
     constraint.Apply();
 
     // Apply constraint to animate the source of the magnifier.
-    constraint = Constraint::New<Vector3>( mBouncingMagnifier, mBouncingMagnifier.GetPropertyIndex( Toolkit::Magnifier::SOURCE_POSITION_PROPERTY_NAME ), MagnifierPathConstraint(mStageSize) );
+    constraint = Constraint::New<Vector3>( mBouncingMagnifier, Toolkit::Magnifier::Property::SOURCE_POSITION, MagnifierPathConstraint(mStageSize) );
     constraint.AddSource( LocalSource(Actor::Property::SIZE) );
     constraint.AddSource( LocalSource(mAnimationTimeProperty) );
     constraint.Apply();
@@ -368,7 +368,7 @@ public:
    */
   void SetMagnifierPosition(const Vector3 position)
   {
-    mMagnifier.SetSourcePosition( position );
+    mMagnifier.SetProperty( Toolkit::Magnifier::Property::SOURCE_POSITION, position );
 
     // position magnifier glass such that bottom edge is touching/near top of finger.
     Vector3 glassPosition(position);
