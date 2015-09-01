@@ -40,10 +40,13 @@
 	<ui-application appid="magnifier.example" exec="/usr/apps/com.samsung.dali-demo/bin/magnifier.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Magnifier</label>
 	</ui-application>
-	<ui-application appid="motion-blur.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-blur.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Motion Blur</label>
-	</ui-application>
-	<ui-application appid="motion-stretch.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-stretch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+  <ui-application appid="motion-blur.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-blur.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+    <label>Motion Blur</label>
+  </ui-application>
+  <ui-application appid="model3d-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/model3d-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+    <label>Model 3D Viewer</label>
+  </ui-application>
+  	<ui-application appid="motion-stretch.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-stretch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Motion Stretch</label>
 	</ui-application>
 	<ui-application appid="radial-menu.example" exec="/usr/apps/com.samsung.dali-demo/bin/radial-menu.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">

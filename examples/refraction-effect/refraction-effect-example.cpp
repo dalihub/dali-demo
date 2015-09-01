@@ -257,8 +257,8 @@ private:
 
     // Add a button to change background. (right of toolbar)
     mChangeTextureButton = Toolkit::PushButton::New();
-    mChangeTextureButton.SetButtonImage( ResourceImage::New( CHANGE_TEXTURE_ICON ) );
-    mChangeTextureButton.SetSelectedImage( ResourceImage::New( CHANGE_TEXTURE_ICON_SELECTED ) );
+    mChangeTextureButton.SetUnselectedImage( CHANGE_TEXTURE_ICON );
+    mChangeTextureButton.SetSelectedImage( CHANGE_TEXTURE_ICON_SELECTED );
     mChangeTextureButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeTexture );
     toolBar.AddControl( mChangeTextureButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -266,8 +266,8 @@ private:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change mesh pattern. ( left of bar )
     mChangeMeshButton = Toolkit::PushButton::New();
-    mChangeMeshButton.SetButtonImage( ResourceImage::New( CHANGE_MESH_ICON ) );
-    mChangeMeshButton.SetSelectedImage( ResourceImage::New( CHANGE_MESH_ICON_SELECTED ) );
+    mChangeMeshButton.SetUnselectedImage( CHANGE_MESH_ICON );
+    mChangeMeshButton.SetSelectedImage( CHANGE_MESH_ICON_SELECTED );
     mChangeMeshButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeMesh );
     toolBar.AddControl( mChangeMeshButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,

@@ -38,6 +38,7 @@ namespace
 {
 
   const char* const FOLDER_ICON_IMAGE = DALI_IMAGE_DIR "folder_appicon_empty_bg.png";
+  const char* const FOLDER_OPEN_ICON_IMAGE = DALI_IMAGE_DIR "folder_appicon_empty_open_bg.png";
 
   const float BORDER_WIDTH = 4.0f;
 
@@ -82,14 +83,12 @@ public:
   PushButton CreateFolderButton()
   {
     PushButton button = PushButton::New();
-    ResourceImage image = ResourceImage::New( FOLDER_ICON_IMAGE );
-    ImageActor folderButton = ImageActor::New( image );
-    folderButton.SetColor( Color::WHITE );
-    button.SetButtonImage( folderButton );
-    button.SetSelectedImage( Actor() );
+    button.SetUnselectedImage( FOLDER_ICON_IMAGE );
+    button.SetSelectedImage( FOLDER_OPEN_ICON_IMAGE );
     button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    button.SetSize( image.GetWidth(), image.GetHeight() );
+    ResourceImage imageClosed = ResourceImage::New( FOLDER_ICON_IMAGE );
+    button.SetSize( imageClosed.GetWidth(), imageClosed.GetHeight() );
 
     return button;
   }
@@ -107,7 +106,8 @@ public:
     mPopup = CreatePopup( stageSize.width * 0.8f );
     mPopup.Add( mField );
     mPopup.OutsideTouchedSignal().Connect( this, &TextFieldExample::OnPopupOutsideTouched );
-    mPopup.Show();
+    stage.Add( mPopup );
+    mPopup.SetDisplayState( Popup::SHOWN );
 
     return true;
   }
@@ -115,12 +115,12 @@ public:
   TextField CreateTextField( const Vector2& stageSize, const std::string& text )
   {
     TextField field = TextField::New();
+    field.SetName("text-field");
     field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     field.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     field.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
     field.SetProperty( TextField::Property::TEXT, text );
     field.SetProperty( TextField::Property::TEXT_COLOR, Vector4( 0.0f, 1.0f, 1.0f, 1.0f ) ); // CYAN
-    field.SetProperty( TextField::Property::PRIMARY_CURSOR_COLOR, Color::WHITE );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
     field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, stageSize.width - BORDER_WIDTH*2, stageSize.height - BORDER_WIDTH*2 ) );
@@ -134,7 +134,6 @@ public:
     popup.SetParentOrigin( ParentOrigin::CENTER );
     popup.SetAnchorPoint( AnchorPoint::CENTER );
     popup.SetSize( width, 0.0f );
-    popup.HideTail();
     popup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
     popup.SetSizeModeFactor( POPUP_SIZE_FACTOR_TO_PARENT );
     popup.TouchedSignal().Connect( this, &TextFieldExample::OnPopupTouched );
@@ -149,13 +148,13 @@ public:
     {
       Property::Value text = mField.GetProperty( TextField::Property::TEXT );
       mButtonLabel = text.Get< std::string >();
-      mButton.SetLabel( mButtonLabel );
+      mButton.SetLabelText( mButtonLabel );
     }
 
     // Hide & discard the pop-up
     if( mPopup )
     {
-      mPopup.Hide();
+      mPopup.SetDisplayState( Popup::HIDDEN );
     }
     mField.Reset();
   }
@@ -175,7 +174,7 @@ public:
           {
             Property::Value text = mField.GetProperty( TextField::Property::TEXT );
             mButtonLabel = text.Get< std::string >();
-            mButton.SetLabel( mButtonLabel );
+            mButton.SetLabelText( mButtonLabel );
             mField.ClearKeyInputFocus();
           }
           break;
@@ -227,7 +226,8 @@ void RunTest( Application& application )
 /** Entry point for Linux & Tizen applications */
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  // DALI_DEMO_THEME_PATH not passed to Application so TextField example uses default Toolkit style sheet.
+  Application application = Application::New( &argc, &argv );
 
   RunTest( application );
 

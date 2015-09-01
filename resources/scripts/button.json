@@ -26,22 +26,9 @@
       "anchor-point": "TOP_CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
-      "normal-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
-        }
-      },
-      "selected-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-2.png"
-        }
-      },
-      "label-actor": {
-        "type": "TextLabel",
-        "text": "Normal"
-      }
+      "unselected-state-image": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selected-state-image": "{DALI_IMAGE_DIR}blocks-brick-2.png",
+      "label-text": "Normal"
     },
 
     // Second Button
@@ -51,29 +38,11 @@
       "anchor-point": "CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
-      "label-actor": {
-        "type": "TextLabel",
-        "text": "Disabled"
-      },
       "disabled": true,
-      "normal-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
-        }
-      },
-      "selected-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-2.png"
-        }
-      },
-      "disabled-state-actor": {
-        "type": "ImageActor",
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-3.png"
-        }
-      }
+      "unselected-state-image": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selected-state-image": "{DALI_IMAGE_DIR}blocks-brick-2.png",
+      "disabled-state-image": "{DALI_IMAGE_DIR}blocks-brick-3.png",
+      "label-text": "Disabled"
     },
 
     // Third Button
@@ -84,27 +53,10 @@
       "anchor-point": "BOTTOM_CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
-      "label-actor": {
-        "type": "TextLabel",
-        "text": "Toggle"
-      },
       "togglable": true,
-      "normal-state-actor": {
-        "type": "ImageActor",
-        "style": "STYLE_NINE_PATCH",
-        "border": [26, 24, 26, 23],
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-brick-1.png"
-        }
-      },
-      "selected-state-actor": {
-        "type": "ImageActor",
-        "style": "STYLE_NINE_PATCH",
-        "border": [26, 24, 26, 23],
-        "image": {
-          "filename": "{DALI_IMAGE_DIR}blocks-paddle.png"
-        }
-      },
+      "unselected-state-image": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selected-state-image": "{DALI_IMAGE_DIR}blocks-brick-3.png",
+      "label-text": "Toggle",
       "signals": [{
         "name": "selected",
         "action": "set",

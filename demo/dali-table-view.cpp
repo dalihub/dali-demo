@@ -88,10 +88,10 @@ const float BUBBLE_MAX_Z = 0.0f;
 /**
  * Creates the background image
  */
-ImageActor CreateBackground( std::string imagePath )
+ImageView CreateBackground( std::string imagePath )
 {
   Image image = ResourceImage::New( imagePath );
-  ImageActor background = ImageActor::New( image );
+  ImageView background = ImageView::New( image );
   background.SetName( "BACKGROUND" );
   background.SetAnchorPoint( AnchorPoint::CENTER );
   background.SetParentOrigin( ParentOrigin::CENTER );
@@ -153,7 +153,6 @@ DaliTableView::DaliTableView( Application& application )
   mBackgroundLayer(),
   mRootActor(),
   mRotateAnimation(),
-  mBackground(),
   mPressedAnimation(),
   mScrollViewLayer(),
   mScrollView(),
@@ -176,8 +175,7 @@ DaliTableView::DaliTableView( Application& application )
   mTotalPages(),
   mScrolling( false ),
   mSortAlphabetically( false ),
-  mBackgroundAnimsPlaying( false ),
-  mVersionPopupShown( false )
+  mBackgroundAnimsPlaying( false )
 {
   application.InitSignal().Connect( this, &DaliTableView::Initialize );
 }
@@ -209,7 +207,7 @@ void DaliTableView::Initialize( Application& application )
   const Vector2 stageSize = Stage::GetCurrent().GetSize();
 
   // Background
-  Actor background = CreateBackground( mBackgroundImagePath );
+  ImageView background = CreateBackground( mBackgroundImagePath );
   Stage::GetCurrent().Add( background );
 
   // Render entire content as overlays, as is all on same 2D plane.
@@ -230,7 +228,7 @@ void DaliTableView::Initialize( Application& application )
   mRootActor.SetFitHeight( 0 );
 
   // Add logo
-  Dali::ImageActor logo = CreateLogo( LOGO_PATH );
+  ImageView logo = CreateLogo( LOGO_PATH );
   logo.SetName( "LOGO_IMAGE" );
   logo.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   const float paddingHeight = ( ( 1.f-TABLE_RELATIVE_SIZE.y ) * stageSize.y );
@@ -698,9 +696,11 @@ void DaliTableView::OnKeyEvent( const KeyEvent& event )
   {
     if ( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
     {
-      if ( mVersionPopup && mVersionPopupShown )
+      // If there's a Popup, Hide it if it's contributing to the display in any way (EG. transitioning in or out).
+      // Otherwise quit.
+      if ( mVersionPopup && ( mVersionPopup.GetDisplayState() != Toolkit::Popup::HIDDEN ) )
       {
-        HideVersionPopup();
+        mVersionPopup.SetDisplayState( Popup::HIDDEN );
       }
       else
       {
@@ -848,10 +848,10 @@ void DaliTableView::GenerateCircle( const Size& size, std::vector< unsigned char
   }
 }
 
-ImageActor DaliTableView::CreateLogo( std::string imagePath )
+ImageView DaliTableView::CreateLogo( std::string imagePath )
 {
   Image image = ResourceImage::New( imagePath );
-  ImageActor logo = ImageActor::New( image );
+  ImageView logo = ImageView::New( image );
 
   logo.SetAnchorPoint( AnchorPoint::CENTER );
   logo.SetParentOrigin( ParentOrigin::CENTER );
@@ -978,44 +978,48 @@ bool DaliTableView::OnTileHovered( Actor actor, const HoverEvent& event )
 
 void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap )
 {
-  if ( !mVersionPopupShown )
+  // Only show if currently fully hidden. If transitioning-out, the transition will not be interrupted.
+  if ( !mVersionPopup || ( mVersionPopup.GetDisplayState() == Toolkit::Popup::HIDDEN ) )
   {
     if ( !mVersionPopup )
     {
       std::ostringstream stream;
-      stream << "DALi Core: "    << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl << "(" << CORE_BUILD_DATE << ")" << std::endl << std::endl;
-      stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl << "(" << ADAPTOR_BUILD_DATE << ")" << std::endl << std::endl;
-      stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl << "(" << TOOLKIT_BUILD_DATE << ")";
+      stream << "DALi Core: "    << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl << "(" << CORE_BUILD_DATE << ")\n";
+      stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl << "(" << ADAPTOR_BUILD_DATE << ")\n";
+      stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl << "(" << TOOLKIT_BUILD_DATE << ")\n";
 
       mVersionPopup = Dali::Toolkit::Popup::New();
-      mVersionPopup.SetParentOrigin( ParentOrigin::CENTER );
-      mVersionPopup.SetAnchorPoint( AnchorPoint::CENTER );
+
+      Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( "Version information" );
+      titleActor.SetName( "title-actor" );
+      titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+
+      Toolkit::TextLabel contentActor = Toolkit::TextLabel::New( stream.str() );
+      contentActor.SetName( "content-actor" );
+      contentActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
+      contentActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+      contentActor.SetPadding( Padding( 0.0f, 0.0f, 20.0f, 0.0f ) );
+
+      mVersionPopup.SetTitle( titleActor );
+      mVersionPopup.SetContent( contentActor );
+
       mVersionPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
       mVersionPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
       mVersionPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
-      mVersionPopup.SetTitle( stream.str() );
-      mVersionPopup.HideTail();
+
       mVersionPopup.OutsideTouchedSignal().Connect( this, &DaliTableView::HideVersionPopup );
-      mVersionPopup.HiddenSignal().Connect( this, &DaliTableView::PopupHidden );
+      Stage::GetCurrent().Add( mVersionPopup );
     }
 
-    mVersionPopup.Show();
-    mVersionPopupShown = true;
+    mVersionPopup.SetDisplayState( Popup::SHOWN );
   }
 }
 
 void DaliTableView::HideVersionPopup()
 {
-  if ( mVersionPopup )
+  // Only hide if currently fully shown. If transitioning-in, the transition will not be interrupted.
+  if ( mVersionPopup && ( mVersionPopup.GetDisplayState() == Toolkit::Popup::SHOWN ) )
   {
-    mVersionPopup.Hide();
-  }
-}
-
-void DaliTableView::PopupHidden()
-{
-  if ( mVersionPopup )
-  {
-    mVersionPopupShown = false;
+    mVersionPopup.SetDisplayState( Popup::HIDDEN );
   }
 }

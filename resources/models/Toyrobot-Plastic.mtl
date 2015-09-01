@@ -1,0 +1,11 @@
+newmtl lambert3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Toyrobot-Plastic_lambert3SG_color.png
+bump Toyrobot-Plastic_lambert3SG_nmap.png -bm 1
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Toyrobot-Plastic_lambert3SG_gloss.png
+Ns 100.00

@@ -180,16 +180,8 @@ private:
   bool                            mTimerReady;
   unsigned int                    mCentralLineIndex;
 
-  Image                           mIconPlay;
-  Image                           mIconPlaySelected;
-  Image                           mIconStop;
-  Image                           mIconStopSelected;
   Toolkit::PushButton             mPlayStopButton;
 
-  Image                           mIconHighP;
-  Image                           mIconHighPSelected;
-  Image                           mIconMediumP;
-  Image                           mIconMediumPSelected;
   Toolkit::PushButton             mEffectChangeButton;
 };
 
@@ -218,13 +210,9 @@ void DissolveEffectApp::OnInit( Application& application )
   mContent = DemoHelper::CreateView( application, mView,mToolBar, "", TOOLBAR_IMAGE, "" );
 
   // Add an effect-changing button on the right of the tool bar.
-  mIconHighP = ResourceImage::New( EFFECT_HIGHP_IMAGE );
-  mIconHighPSelected = ResourceImage::New( EFFECT_HIGHP_IMAGE_SELECTED );
-  mIconMediumP = ResourceImage::New( EFFECT_MEDIUMP_IMAGE );
-  mIconMediumPSelected = ResourceImage::New( EFFECT_MEDIUMP_IMAGE_SELECTED );
   mEffectChangeButton = Toolkit::PushButton::New();
-  mEffectChangeButton.SetButtonImage( mIconHighP );
-  mEffectChangeButton.SetSelectedImage( mIconHighPSelected );
+  mEffectChangeButton.SetUnselectedImage( EFFECT_HIGHP_IMAGE );
+  mEffectChangeButton.SetSelectedImage( EFFECT_HIGHP_IMAGE_SELECTED );
   mEffectChangeButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnEffectButtonClicked );
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
@@ -233,13 +221,9 @@ void DissolveEffectApp::OnInit( Application& application )
   mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
   // Add an slide-show button on the right of the title
-  mIconPlay = ResourceImage::New( PLAY_ICON );
-  mIconPlaySelected = ResourceImage::New( PLAY_ICON_SELECTED );
-  mIconStop = ResourceImage::New( STOP_ICON );
-  mIconStopSelected = ResourceImage::New( STOP_ICON_SELECTED );
   mPlayStopButton = Toolkit::PushButton::New();
-  mPlayStopButton.SetButtonImage( mIconPlay );
-  mPlayStopButton.SetSelectedImage( mIconPlaySelected );
+  mPlayStopButton.SetUnselectedImage( PLAY_ICON );
+  mPlayStopButton.SetSelectedImage( PLAY_ICON_SELECTED );
   mPlayStopButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnSildeshowButtonClicked );
   mToolBar.AddControl( mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
@@ -350,14 +334,14 @@ bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
   if(mUseHighPrecision)
   {
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP) );
-    mEffectChangeButton.SetButtonImage( mIconHighP );
-    mEffectChangeButton.SetSelectedImage( mIconHighPSelected );
+    mEffectChangeButton.SetUnselectedImage( EFFECT_HIGHP_IMAGE );
+    mEffectChangeButton.SetSelectedImage( EFFECT_HIGHP_IMAGE_SELECTED );
   }
   else
   {
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_MEDIUMP) );
-    mEffectChangeButton.SetButtonImage( mIconMediumP );
-    mEffectChangeButton.SetSelectedImage( mIconMediumPSelected );
+    mEffectChangeButton.SetUnselectedImage( EFFECT_MEDIUMP_IMAGE );
+    mEffectChangeButton.SetSelectedImage( EFFECT_MEDIUMP_IMAGE_SELECTED );
   }
 
   return true;
@@ -368,16 +352,16 @@ bool DissolveEffectApp::OnSildeshowButtonClicked( Toolkit::Button button )
   mSlideshow = !mSlideshow;
   if( mSlideshow )
   {
-    mPlayStopButton.SetButtonImage( mIconStop );
-    mPlayStopButton.SetSelectedImage( mIconStopSelected );
+    mPlayStopButton.SetUnselectedImage( STOP_ICON );
+    mPlayStopButton.SetSelectedImage( STOP_ICON_SELECTED );
     mPanGestureDetector.Detach( mParent );
     mViewTimer.Start();
     mTimerReady = false;
   }
   else
   {
-    mPlayStopButton.SetButtonImage( mIconPlay );
-    mPlayStopButton.SetSelectedImage( mIconPlaySelected );
+    mPlayStopButton.SetUnselectedImage( PLAY_ICON );
+    mPlayStopButton.SetSelectedImage( PLAY_ICON_SELECTED );
     mTimerReady = true;
     mPanGestureDetector.Attach( mParent );
   }

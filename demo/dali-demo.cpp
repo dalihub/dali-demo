@@ -43,6 +43,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("dissolve-effect.example", DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION));
   demo.AddExample(Example("item-view.example", DALI_DEMO_STR_TITLE_ITEM_VIEW));
   demo.AddExample(Example("magnifier.example", DALI_DEMO_STR_TITLE_MAGNIFIER));
+  demo.AddExample(Example("model3d-view.example", DALI_DEMO_STR_TITLE_MODEL_3D_VIEWER));
   demo.AddExample(Example("motion-blur.example", DALI_DEMO_STR_TITLE_MOTION_BLUR));
   demo.AddExample(Example("motion-stretch.example", DALI_DEMO_STR_TITLE_MOTION_STRETCH));
   demo.AddExample(Example("page-turn-view.example", DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW));
@@ -58,6 +59,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("text-label-multi-language.example", DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE));
   demo.AddExample(Example("text-label-emojis.example", DALI_DEMO_STR_TITLE_EMOJI_TEXT));
   demo.AddExample(Example("size-negotiation.example", DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE));
+  demo.AddExample(Example("popup.example", DALI_DEMO_STR_TITLE_POPUP));
   demo.AddExample(Example("buttons.example", DALI_DEMO_STR_TITLE_BUTTONS));
   demo.AddExample(Example("logging.example", DALI_DEMO_STR_TITLE_LOGGING));
   demo.AddExample(Example("mesh-morph.example", DALI_DEMO_STR_TITLE_MESH_MORPH));

@@ -325,8 +325,8 @@ struct ShrinkConstraint
 
 struct ButtonImages
 {
-  Image mButtonImage;
-  Image mSelectedImage;
+  std::string mButtonImage;
+  std::string mSelectedImage;
 };
 
 
@@ -390,14 +390,14 @@ public:
     mContentLayer.SetProperty(Layer::Property::BEHAVIOR, "Dali::Layer::LAYER_3D");
 
     // Create a effect toggle button. (right of toolbar)
-    mLayoutButtonImages[ NO_EFFECT ].mButtonImage = ResourceImage::New( LAYOUT_NONE_IMAGE );
-    mLayoutButtonImages[ NO_EFFECT ].mSelectedImage = ResourceImage::New( LAYOUT_NONE_IMAGE_SELECTED );
-    mLayoutButtonImages[ MOTION_BLUR_EFFECT ].mButtonImage = ResourceImage::New( LAYOUT_MOTION_BLUR_IMAGE );
-    mLayoutButtonImages[ MOTION_BLUR_EFFECT ].mSelectedImage = ResourceImage::New( LAYOUT_MOTION_BLUR_IMAGE_SELECTED );
-    mLayoutButtonImages[ CAROUSEL_EFFECT ].mButtonImage = ResourceImage::New( LAYOUT_CAROUSEL_IMAGE );
-    mLayoutButtonImages[ CAROUSEL_EFFECT ].mSelectedImage = ResourceImage::New( LAYOUT_CAROUSEL_IMAGE_SELECTED );
-    mLayoutButtonImages[ SPHERE_EFFECT ].mButtonImage = ResourceImage::New( LAYOUT_SPHERE_IMAGE );
-    mLayoutButtonImages[ SPHERE_EFFECT ].mSelectedImage = ResourceImage::New( LAYOUT_SPHERE_IMAGE_SELECTED );
+    mLayoutButtonImages[ NO_EFFECT ].mButtonImage = LAYOUT_NONE_IMAGE;
+    mLayoutButtonImages[ NO_EFFECT ].mSelectedImage = LAYOUT_NONE_IMAGE_SELECTED;
+    mLayoutButtonImages[ MOTION_BLUR_EFFECT ].mButtonImage = LAYOUT_MOTION_BLUR_IMAGE;
+    mLayoutButtonImages[ MOTION_BLUR_EFFECT ].mSelectedImage = LAYOUT_MOTION_BLUR_IMAGE_SELECTED;
+    mLayoutButtonImages[ CAROUSEL_EFFECT ].mButtonImage = LAYOUT_CAROUSEL_IMAGE;
+    mLayoutButtonImages[ CAROUSEL_EFFECT ].mSelectedImage = LAYOUT_CAROUSEL_IMAGE_SELECTED;
+    mLayoutButtonImages[ SPHERE_EFFECT ].mButtonImage = LAYOUT_SPHERE_IMAGE;
+    mLayoutButtonImages[ SPHERE_EFFECT ].mSelectedImage = LAYOUT_SPHERE_IMAGE_SELECTED;
 
     mLayoutButton = Toolkit::PushButton::New();
     mLayoutButton.ClickedSignal().Connect( this, &ClusterController::OnEffectTouched );
@@ -631,7 +631,7 @@ public:
     // Remove all shader-effects from mScrollView and it's children (the clusters)
     mScrollView.SetPosition(Vector3::ZERO);
 
-    mLayoutButton.SetButtonImage( mLayoutButtonImages[ type ].mButtonImage );
+    mLayoutButton.SetUnselectedImage( mLayoutButtonImages[ type ].mButtonImage );
     mLayoutButton.SetSelectedImage( mLayoutButtonImages[ type ].mSelectedImage );
 
     for( std::vector<ClusterInfo>::iterator i = mClusterInfo.begin(); i != mClusterInfo.end(); ++i )
