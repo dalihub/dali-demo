@@ -2,7 +2,7 @@
   "stage": [
     {
       "type": "Control",
-      "background-color": [ 1, 1, 1, 1 ],
+      "background": {"color": [ 1, 1, 1, 1 ]},
       "parent-origin": "TOP_LEFT",
       "anchor-point": "TOP_LEFT",
       "draw-mode": "STENCIL",
@@ -79,12 +79,7 @@
         1
       ],
       "sizeAspectRatio": false,
-      "background-color": [
-        1,
-        1,
-        1,
-        1
-      ],
+      "background": {"color": [ 1, 1, 1, 1 ]},
       "color": [
         1,
         1,
@@ -327,12 +322,12 @@
         1
       ],
       "sizeAspectRatio": false,
-      "background-color": [
+      "background": {"color": [
         0.788235294117647,
         0.7647058823529411,
         0.7647058823529411,
         1
-      ],
+      ] },
       "color": [
         0.788235294117647,
         0.7647058823529411,

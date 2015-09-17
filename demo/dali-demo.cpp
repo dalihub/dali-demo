@@ -38,7 +38,6 @@ int main(int argc, char **argv)
 
   demo.AddExample(Example("bubble-effect.example", DALI_DEMO_STR_TITLE_BUBBLES));
   demo.AddExample(Example("blocks.example", DALI_DEMO_STR_TITLE_BLOCKS));
-  demo.AddExample(Example("cluster.example", DALI_DEMO_STR_TITLE_CLUSTER));
   demo.AddExample(Example("cube-transition-effect.example", DALI_DEMO_STR_TITLE_CUBE_TRANSITION));
   demo.AddExample(Example("dissolve-effect.example", DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION));
   demo.AddExample(Example("item-view.example", DALI_DEMO_STR_TITLE_ITEM_VIEW));

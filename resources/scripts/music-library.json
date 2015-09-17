@@ -2,7 +2,7 @@
   "stage": [
     {
       "type": "Control",
-      "background-color": [ 1, 1, 1, 1 ],
+      "background": {"color": [ 1, 1, 1, 1 ]},
       "parent-origin": "TOP_LEFT",
       "anchor-point": "TOP_LEFT",
       "draw-mode": "STENCIL",
@@ -121,12 +121,12 @@
         1
       ],
       "sizeAspectRatio": false,
-      "background-color": [
+      "background":{"color": [
         0,
         0,
         0,
         1
-      ]
+      ]}
     },
     {
       "type": "Control",
@@ -164,12 +164,12 @@
         1
       ],
       "sizeAspectRatio": false,
-      "background-color": [
+      "background":{ "color": [
             0.33725490196078434,
             0.7568627450980392,
             0.6509803921568628,
             1
-      ],
+      ]},
       "color": [
             0.33725490196078434,
             0.7568627450980392,
@@ -218,12 +218,12 @@
         1
       ],
       "sizeAspectRatio": false,
-      "background-color": [
+      "background": {"color": [
         1,
         1,
         1,
         1
-      ],
+      ]},
       "color": [
         1,
         1,
@@ -274,12 +274,12 @@
         1
       ],
       "sizeAspectRatio": false,
-      "background-color": [
+      "background":{ "color": [
         0.18823529411764706,
         0.3411764705882353,
         0.403921568627451,
         1
-      ]
+      ]}
     },
     {
       "type": "ImageActor",

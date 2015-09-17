@@ -9,7 +9,7 @@
       "size": [ 100, 100, 1 ],
       "scale": [ 0.1, 0.1, 1 ],
       "color-alpha": 0,
-      "background-color": [ 0.95, 0.65, 0.1, 1 ]
+      "background":{ "color": [ 0.95, 0.65, 0.1, 1 ] }
     }
   },
   "stage": [
@@ -103,12 +103,12 @@
         0,
         -1
       ],
-      "background-color": [
+      "background": {"color": [
         1,
         1,
         1,
         1
-      ],
+      ]},
       "signals": [
         {
           "name": "tapped",
