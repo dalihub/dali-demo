@@ -4,7 +4,7 @@
     "selection-type":
     {
       "type": "Control",
-      "background-color": [ 1, 0.5, 0, 0.6 ],
+      "background": {"color": [ 1, 0.5, 0, 0.6 ]},
       "color-alpha": 0.05,
       "parent-origin": "CENTER",
       "anchor-point": "CENTER",
@@ -37,7 +37,7 @@
     {
       "type": "Control",
       "name": "stencil",
-      "background-color": [ 1, 1, 1, 1 ],
+      "background": {"color": [ 1, 1, 1, 1 ]},
       "parent-origin": "CENTER",
       "anchor-point": "CENTER",
       "draw-mode": "STENCIL",

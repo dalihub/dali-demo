@@ -25,9 +25,6 @@
 	<ui-application appid="bubble-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/bubble-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Bubble Effect</label>
 	</ui-application>
-	<ui-application appid="cluster.example" exec="/usr/apps/com.samsung.dali-demo/bin/cluster.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Cluster example</label>
-	</ui-application>
 	<ui-application appid="cube-transition-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/cube-transition-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Cube transition effect</label>
 	</ui-application>
