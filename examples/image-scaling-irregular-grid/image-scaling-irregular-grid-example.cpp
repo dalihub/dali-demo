@@ -463,6 +463,7 @@ public:
       image.SetSize( imageSize );
       image.TouchedSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
       mFittingModes[image.GetId()] = fittingMode;
+      mResourceUrls[image.GetId()] = imageSource.configuration.path;
       mSizes[image.GetId()] = imageSize;
 
       gridActor.Add( image );
@@ -493,10 +494,13 @@ public:
         Dali::FittingMode::Type newMode = NextMode( mFittingModes[id] );
         const Vector2 imageSize = mSizes[actor.GetId()];
 
+        const std::string& url = mResourceUrls[id];
+        Image newImage = CreateImage( url, imageSize.width + 0.5f, imageSize.height + 0.5f, newMode );
         ImageView imageView = ImageView::DownCast( actor );
-        Image oldImage = imageView.GetImage();
-        Image newImage = CreateImage( ResourceImage::DownCast(oldImage).GetUrl(), imageSize.width + 0.5f, imageSize.height + 0.5f, newMode );
-        imageView.SetImage( newImage );
+        if(imageView)
+        {
+          imageView.SetImage( newImage );
+        }
         mFittingModes[id] = newMode;
       }
     }
@@ -597,6 +601,7 @@ private:
   ScrollBar mScrollBarHorizontal;
   bool mScrolling;                    ///< ScrollView scrolling state (true = scrolling, false = stationary)
   std::map<unsigned, Dali::FittingMode::Type> mFittingModes; ///< Stores the current scaling mode of each image, keyed by image actor id.
+  std::map<unsigned, std::string> mResourceUrls; ///< Stores the url of each image, keyed by image actor id.
   std::map<unsigned, Vector2> mSizes; ///< Stores the current size of each image, keyed by image actor id.
 };
 
