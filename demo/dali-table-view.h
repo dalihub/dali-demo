@@ -99,15 +99,6 @@ public:
   void AddExample(Example example);
 
   /**
-   * Sets the background image PATH.
-   *
-   * @param[in] imagePath The file path to the image to use as the background.
-   *
-   * @note Should be called before the Application MainLoop is started.
-   */
-  void SetBackgroundPath( std::string imagePath );
-
-  /**
    * Sorts the example list alphabetically by Title if parameter is true.
    *
    * @param[in] sortAlphabetically If true, example list is sorted alphabetically.
@@ -407,7 +398,6 @@ private:
   ExampleList                     mExampleList;              ///< List of examples.
   ExampleMap                      mExampleMap;               ///< Map LUT for examples.
 
-  std::string                     mBackgroundImagePath;      ///< The path to the background image.
   int                             mTotalPages;               ///< Total pages within scrollview.
 
   bool                            mScrolling:1;              ///< Flag indicating whether view is currently being scrolled

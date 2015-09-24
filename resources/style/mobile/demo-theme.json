@@ -66,7 +66,7 @@ distributing this software or its derivatives.
     {
       "point-size":10
     },
-    
+
     "scrollview":
     {
       "overshoot-effect-color":"B018"
@@ -80,6 +80,19 @@ distributing this software or its derivatives.
     "buttonlabel":
     {
       "point-size":8
+    },
+
+    "launcherbackground":
+    {
+      "background":
+      {
+        "renderer-type": "gradient-renderer",
+        "gradient-center": [360, 640],
+        "gradient-radius": 1468,
+        "gradient-units": "user-space",
+        "gradient-stop-color": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]],
+        "gradient-stop-offset":[0.0,1.0]
+      }
     }
   }
 }

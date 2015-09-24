@@ -59,6 +59,19 @@ distributing this software or its derivatives.
     "buttonlabel":
     {
       "point-size":11
+    },
+
+    "launcherbackground":
+    {
+      "background":
+      {
+        "renderer-type": "gradient-renderer",
+        "gradient-center": [240, 400],
+        "gradient-radius": 932,
+        "gradient-units": "user-space",
+        "gradient-stop-color": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]],
+        "gradient-stop-offset":[0.0,1.0]
+      }
     }
   }
 }
