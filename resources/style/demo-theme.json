@@ -22,13 +22,15 @@ distributing this software or its derivatives.
 {
   "styles":
   {
+    "textlabel-Rosemary":
+    {
+      "font-family":"Rosemary"
+    },
     "textlabel":
     {
-      "font-family":"HelveticaNeue",
       "font-style":"Regular",
       "point-size":18
     },
-
     "launcherlabel":
     {
       "point-size":18
