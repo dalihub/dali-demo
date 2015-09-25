@@ -109,4 +109,7 @@
 	<ui-application appid="size-negotiation.example" exec="/usr/apps/com.samsung.dali-demo/bin/size-negotiation.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Size Negotiation</label>
 	</ui-application>
+	<ui-application appid="benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Benchmark</label>
+	</ui-application>
 </manifest>
