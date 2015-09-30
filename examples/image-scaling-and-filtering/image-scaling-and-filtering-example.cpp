@@ -194,14 +194,14 @@ public:
 
     mHeightBox = Toolkit::ImageView::New( heightBackground );
     mHeightBox.SetOpacity( 0.2f );
-    stage.Add( mHeightBox );
+    background.Add( mHeightBox );
 
     mWidthBox = Toolkit::ImageView::New( widthBackground );
     mWidthBox.SetOpacity( 0.2f );
-    stage.Add( mWidthBox );
+    background.Add( mWidthBox );
 
     mDesiredBox = Toolkit::ImageView::New( desiredBackground );
-    stage.Add( mDesiredBox );
+    background.Add( mDesiredBox );
 
     mDesiredBox.SetSize( stage.GetSize() * mImageStageScale );
     mDesiredBox.SetParentOrigin( ParentOrigin::CENTER );
@@ -247,7 +247,7 @@ public:
     mImageActor.SetSortModifier(5.f);
 
     // Display the actor on the stage
-    stage.Add( mImageActor );
+    background.Add( mImageActor );
 
     mImageActor.SetSize( stage.GetSize() * mImageStageScale );
 
