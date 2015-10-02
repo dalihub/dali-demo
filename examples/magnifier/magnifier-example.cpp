@@ -223,7 +223,7 @@ public:
     Stage::GetCurrent().Add(overlay);
 
     mMagnifier = Toolkit::Magnifier::New();
-    mMagnifier.SetSourceActor( mView.GetChildAt( 0 ) );
+    mMagnifier.SetSourceActor( mView );
     mMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width );  // Size of magnifier is in relation to stage width
     mMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
     mMagnifier.SetScale(Vector3::ZERO);
@@ -240,7 +240,7 @@ public:
 
     // Create bouncing magnifier automatically bounces around screen.
     mBouncingMagnifier = Toolkit::Magnifier::New();
-    mBouncingMagnifier.SetSourceActor( mView.GetChildAt( 0 ) );
+    mBouncingMagnifier.SetSourceActor( mView );
     mBouncingMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width ); // Size of magnifier is in relation to stage width
     mBouncingMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
     overlay.Add( mBouncingMagnifier );
