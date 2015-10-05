@@ -538,13 +538,14 @@ public:
       if( gridImageView )
       {
         // Cycle the scaling mode options:
-        const Vector2 imageSize = mSizes[gridImageView.GetId()];
-        Dali::FittingMode::Type newMode = NextMode( mFittingModes[gridImageView.GetId()] );
-        Image oldImage = gridImageView.GetImage();
-        Image newImage = CreateImage(ResourceImage::DownCast(oldImage).GetUrl(), imageSize.width, imageSize.height, newMode );
+        unsigned int id = gridImageView.GetId();
+
+        const Vector2 imageSize = mSizes[ id ];
+        Dali::FittingMode::Type newMode = NextMode( mFittingModes[ id ] );
+        Image newImage = CreateImage( mResourceUrls[ id ], imageSize.width, imageSize.height, newMode );
         gridImageView.SetImage( newImage );
 
-        mFittingModes[gridImageView.GetId()] = newMode;
+        mFittingModes[ id ] = newMode;
 
         SetTitle( std::string( newMode == FittingMode::SHRINK_TO_FIT ? "SHRINK_TO_FIT" : newMode == FittingMode::SCALE_TO_FILL ?  "SCALE_TO_FILL" : newMode == FittingMode::FIT_WIDTH ? "FIT_WIDTH" : "FIT_HEIGHT" ) );
       }
