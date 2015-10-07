@@ -169,9 +169,8 @@ public:
     for( unsigned i=0; i<NUMBER_OF_SAMPLES; ++i)
     {
       Image image = ResourceImage::New( MATERIAL_SAMPLES[i] );
-      Sampler sampler = Sampler::New(image, "sTexture");
       Material material = Material::New( mShader );
-      material.AddSampler( sampler );
+      material.AddTexture(image, "sTexture");
       if( i==0 ) { firstMat = material; }
 
       Renderer renderer = Renderer::New( mGeometry, material );

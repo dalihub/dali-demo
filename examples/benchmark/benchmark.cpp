@@ -225,9 +225,8 @@ Renderer CreateRenderer( unsigned int index )
 
     const char* imagePath = !gNinePatch ? IMAGE_PATH[index] : NINEPATCH_IMAGE_PATH[index];
     Image image = ResourceImage::New(imagePath);
-    Sampler textureSampler = Sampler::New( image, "sTexture" );
     Material material = Material::New( shader );
-    material.AddSampler(textureSampler);
+    material.AddTexture( image, "sTexture" );
     material.SetBlendMode( BlendingMode::OFF );
     renderers[index] = Renderer::New( QuadMesh(), material );
   }

@@ -276,11 +276,9 @@ void NewWindowController::AddMeshActor()
 
  // Create a textured mesh
   Image effectImage = ResourceImage::New(EFFECT_IMAGE);
-  Sampler sampler = Sampler::New(effectImage, "sTexture");
-
   Shader shaderTextureMesh = Shader::New( VERTEX_TEXTURE_MESH, FRAGMENT_TEXTURE_MESH );
   Material textureMeshMaterial = Material::New( shaderTextureMesh );
-  textureMeshMaterial.AddSampler( sampler );
+  textureMeshMaterial.AddTexture(effectImage, "sTexture");
   Renderer textureMeshRenderer = Renderer::New( meshGeometry, textureMeshMaterial );
 
   Actor textureMeshActor = Actor::New();
