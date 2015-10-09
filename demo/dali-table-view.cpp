@@ -67,7 +67,14 @@ const float EFFECT_SNAP_DURATION = 0.66f;                       ///< Scroll Snap
 const float EFFECT_FLICK_DURATION = 0.5f;                       ///< Scroll Flick Duration for Effects
 const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.5f, Math::PI * 0.5f, 0.0f);
 
-
+const Vector4 BUBBLE_COLOR[] =
+{
+  Vector4( 0.3255f, 0.3412f, 0.6353f, 0.38f ),
+  Vector4( 0.3647f, 0.7569f, 0.8157f, 0.38f ),
+  Vector4( 0.3804f, 0.7412f, 0.6510f, 0.38f ),
+  Vector4( 1.f, 1.f, 1.f, 0.2f )
+};
+const int NUMBER_OF_BUBBLE_COLOR( sizeof(BUBBLE_COLOR) / sizeof(BUBBLE_COLOR[0]) );
 
 const int NUM_BACKGROUND_IMAGES = 18;
 const float BACKGROUND_SWIPE_SCALE = 0.025f;
@@ -79,7 +86,7 @@ const float SCALE_SPEED_SIN = 0.1f;
 const unsigned int BACKGROUND_ANIMATION_DURATION = 15000; // 15 secs
 
 const float BACKGROUND_Z = -1.0f;
-const Vector4 BACKGROUND_COLOR( 1.0f, 1.0f, 1.0f, 1.0f );
+const Vector4 BACKGROUND_COLOR( 0.3569f, 0.5451f, 0.7294f, 1.0f );
 
 const float BUBBLE_MIN_Z = -1.0;
 const float BUBBLE_MAX_Z = 0.0f;
@@ -755,9 +762,6 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
   for( int i = 0; i < count; ++i )
   {
     float randSize = Random::Range( 10.0f, 400.0f );
-    float hue = Random::Range( 0.3f, 1.0f );
-    Vector4 randColour( hue, hue * 0.5, 0.0f, Random::Range( 0.3f, 0.6f ));
-
     ImageActor dfActor = ImageActor::New( distanceField );
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
@@ -767,7 +771,7 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
 
     ShaderEffect effect = Toolkit::CreateDistanceFieldEffect();
     dfActor.SetShaderEffect( effect );
-    dfActor.SetColor( randColour );
+    dfActor.SetColor( BUBBLE_COLOR[ i%NUMBER_OF_BUBBLE_COLOR ] );
     effect.SetUniform("uOutlineParams", Vector2( 0.55f, 0.00f ) );
     effect.SetUniform("uSmoothing", 0.5f );
     layer.Add( dfActor );
