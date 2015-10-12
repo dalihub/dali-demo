@@ -39,8 +39,8 @@ namespace
 
 const std::string LOGO_PATH( DALI_IMAGE_DIR "Logo-for-demo.png" );
 const std::string DEFAULT_TOOLBAR_IMAGE_PATH( DALI_IMAGE_DIR "top-bar.png" );
-const std::string TILE_BACKGROUND(DALI_IMAGE_DIR "item-background.png");
-const std::string TILE_BACKGROUND_ALPHA(DALI_IMAGE_DIR "item-background-alpha.png");
+const std::string TILE_BACKGROUND(DALI_IMAGE_DIR "item-background.9.png");
+const std::string TILE_BACKGROUND_ALPHA(DALI_IMAGE_DIR "item-background-alpha.9.png");
 
 const char * const DEFAULT_TOOLBAR_TEXT( "TOUCH TO LAUNCH EXAMPLE" );
 
@@ -78,7 +78,6 @@ const float SCALE_SPEED_SIN = 0.1f;
 
 const unsigned int BACKGROUND_ANIMATION_DURATION = 15000; // 15 secs
 
-const float BACKGROUND_Z = -1.0f;
 const Vector4 BACKGROUND_COLOR( 0.3569f, 0.5451f, 0.7294f, 1.0f );
 
 const float BUBBLE_MIN_Z = -1.0;
@@ -99,12 +98,6 @@ Control CreateBackground( std::string stylename )
 
   return background;
 }
-
-// These values depend on the tile image
-const float IMAGE_BORDER_LEFT = 11.0f;
-const float IMAGE_BORDER_RIGHT = IMAGE_BORDER_LEFT;
-const float IMAGE_BORDER_TOP = IMAGE_BORDER_LEFT;
-const float IMAGE_BORDER_BOTTOM = IMAGE_BORDER_LEFT;
 
 /**
  * Constraint to return a position for a bubble based on the scroll value and vertical wrapping
@@ -261,14 +254,13 @@ void DaliTableView::Initialize( Application& application )
   mScrollViewLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
   // Create solid background colour.
-  ImageActor backgroundColourActor = Dali::Toolkit::CreateSolidColorActor( BACKGROUND_COLOR );
+  Control backgroundColourActor = Control::New();
+  backgroundColourActor.SetBackgroundColor( BACKGROUND_COLOR );
   backgroundColourActor.SetAnchorPoint( AnchorPoint::CENTER );
   backgroundColourActor.SetParentOrigin( ParentOrigin::CENTER );
   backgroundColourActor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   backgroundColourActor.SetSizeModeFactor( Vector3( 1.0f, 1.5f, 1.0f ) );
 
-  // Force the filled background right to the back
-  backgroundColourActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX );
   mScrollViewLayer.Add( backgroundColourActor );
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
@@ -276,7 +268,7 @@ void DaliTableView::Initialize( Application& application )
   bubbleContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   bubbleContainer.SetAnchorPoint( AnchorPoint::CENTER );
   bubbleContainer.SetParentOrigin( ParentOrigin::CENTER );
-  mScrollViewLayer.Add( bubbleContainer );
+  backgroundColourActor.Add( bubbleContainer );
 
   SetupBackground( bubbleContainer );
 
@@ -465,17 +457,12 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   // create background image
   if( addBackground )
   {
-    Image bg = ResourceImage::New( TILE_BACKGROUND );
-    ImageActor image = ImageActor::New( bg );
+    ImageView image = ImageView::New( TILE_BACKGROUND );
     image.SetAnchorPoint( AnchorPoint::CENTER );
     image.SetParentOrigin( ParentOrigin::CENTER );
     // make the image 100% of tile
     image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
-    // move image back to get text appear in front
-    image.SetZ( -1 );
-    image.SetStyle( ImageActor::STYLE_NINE_PATCH );
-    image.SetNinePatchBorder( Vector4( IMAGE_BORDER_LEFT, IMAGE_BORDER_TOP, IMAGE_BORDER_RIGHT, IMAGE_BORDER_BOTTOM ) );
     content.Add( image );
 
     // Add stencil
@@ -509,8 +496,6 @@ ImageActor DaliTableView::NewStencilImage()
   Image alpha = ResourceImage::New( TILE_BACKGROUND_ALPHA );
 
   ImageActor stencilActor = ImageActor::New( alpha );
-  stencilActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
-  stencilActor.SetNinePatchBorder( Vector4( IMAGE_BORDER_LEFT, IMAGE_BORDER_TOP, IMAGE_BORDER_RIGHT, IMAGE_BORDER_BOTTOM ) );
 
   stencilActor.SetParentOrigin( ParentOrigin::CENTER );
   stencilActor.SetAnchorPoint( AnchorPoint::CENTER );
@@ -732,18 +717,13 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
   for( int i = 0; i < count; ++i )
   {
     float randSize = Random::Range( 10.0f, 400.0f );
-    ImageActor dfActor = ImageActor::New( distanceField );
+    ImageView dfActor = ImageView::New( distanceField );
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
-    // Force the bubbles just in front of the solid background
-    dfActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX + 1 );
-
-    ShaderEffect effect = Toolkit::CreateDistanceFieldEffect();
-    dfActor.SetShaderEffect( effect );
+    Dali::Property::Map effect = Toolkit::CreateDistanceFieldEffect();
+    dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, effect );
     dfActor.SetColor( BUBBLE_COLOR[ i%NUMBER_OF_BUBBLE_COLOR ] );
-    effect.SetUniform("uOutlineParams", Vector2( 0.55f, 0.00f ) );
-    effect.SetUniform("uSmoothing", 0.5f );
     layer.Add( dfActor );
   }
 
