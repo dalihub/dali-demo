@@ -2,7 +2,7 @@
 #define __DALI_DEMO_H__
 
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@
  *
  */
 
-#include <map>
-
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
@@ -27,19 +25,8 @@
 class Example;
 
 typedef std::vector<Example> ExampleList;
-typedef std::map<std::string,Example> ExampleMap;
 typedef ExampleList::iterator ExampleListIter;
 typedef ExampleList::const_iterator ExampleListConstIter;
-typedef ExampleMap::iterator ExampleMapIter;
-typedef ExampleMap::const_iterator ExampleMapConstIter;
-
-typedef std::vector<Dali::Toolkit::TableView> TableViewList;
-typedef TableViewList::iterator TableViewListIter;
-typedef TableViewList::const_iterator TableViewListConstIter;
-
-typedef std::vector<Dali::ImageActor> ImageActorList;
-typedef ImageActorList::iterator ImageActorListIter;
-typedef ImageActorList::const_iterator ImageActorListConstIter;
 
 typedef std::vector<Dali::Animation> AnimationList;
 typedef AnimationList::iterator AnimationListIter;
@@ -384,19 +371,14 @@ private:
   Dali::Toolkit::ScrollViewEffect mScrollViewEffect;         ///< Effect to be applied to the scroll view
   Dali::Toolkit::RulerPtr         mScrollRulerX;             ///< ScrollView X (horizontal) ruler
   Dali::Toolkit::RulerPtr         mScrollRulerY;             ///< ScrollView Y (vertical) ruler
-  Dali::Toolkit::TableView        mButtons;                  ///< Navigation buttons
   Dali::Actor                     mPressedActor;             ///< The currently pressed actor.
   Dali::Timer                     mAnimationTimer;           ///< Timer used to turn off animation after a specific time period
   Dali::TapGestureDetector        mLogoTapDetector;          ///< To detect taps on the logo
   Dali::Toolkit::Popup            mVersionPopup;             ///< Displays DALi library version information
-  Dali::Vector3                   mButtonsPageRelativeSize;  ///< Size of a buttons page relative to the stage size
 
   std::vector< Dali::Actor >      mPages;                    ///< List of pages.
-  std::vector< Dali::Actor >      mTableViewImages;          ///< Offscreen render of tableview
-  std::vector< Dali::Actor >      mBackgroundActors;         ///< List of background actors used in the effect
   AnimationList                   mBackgroundAnimations;     ///< List of background bubble animations
   ExampleList                     mExampleList;              ///< List of examples.
-  ExampleMap                      mExampleMap;               ///< Map LUT for examples.
 
   int                             mTotalPages;               ///< Total pages within scrollview.
 
