@@ -339,8 +339,7 @@ public:
 
     for( size_t i(0); i<actorCount; ++i )
     {
-      Image image = ResourceImage::New(ImagePath(i));
-      mImageView[i] = ImageView::New(image);
+      mImageView[i] = ImageView::New(ImagePath(i));
       mImageView[i].SetSize(Vector3(0.0f,0.0f,0.0f));
       mImageView[i].SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
       stage.Add(mImageView[i]);
