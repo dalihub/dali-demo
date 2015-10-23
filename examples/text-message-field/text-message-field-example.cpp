@@ -86,7 +86,14 @@ public:
     rootActor.Add( desktop ); // Add desktop (content) to offscreen actor
 
     // Create Photo Box A
-    ImageActor photoBoxA = CreateSolidColorActor( Vector4(0,0,0,0), true, Color::WHITE, 1 );
+    Control photoBoxA = Control::New();
+
+    Dali::Property::Map border;
+    border.Insert( "renderer-type", "border-renderer" );
+    border.Insert( "border-color", Color::WHITE );
+    border.Insert( "border-size", 1.f );
+    photoBoxA.SetProperty( Control::Property::BACKGROUND, border );
+
     photoBoxA.SetName("photoBoxA");
     photoBoxA.SetAnchorPoint( AnchorPoint::CENTER );
     photoBoxA.SetParentOrigin( ParentOrigin::CENTER );
@@ -101,7 +108,6 @@ public:
     field.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     field.SetPadding( Padding( 1.0f, 1.0f, 1.0f, 1.0f ) );
     field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    field.SetZ( 1.0f );
     field.SetProperty( TextField::Property::TEXT, "Enter Title name"  );
     field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( SCREEN_BORDER, SCREEN_BORDER, mStageSize.width - SCREEN_BORDER*2, mStageSize.height - SCREEN_BORDER*2 ) );
     photoBoxA.Add( field );

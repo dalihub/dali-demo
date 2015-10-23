@@ -225,9 +225,8 @@ Renderer CreateRenderer( unsigned int index )
 
     const char* imagePath = !gNinePatch ? IMAGE_PATH[index] : NINEPATCH_IMAGE_PATH[index];
     Image image = ResourceImage::New(imagePath);
-    Sampler textureSampler = Sampler::New( image, "sTexture" );
     Material material = Material::New( shader );
-    material.AddSampler(textureSampler);
+    material.AddTexture( image, "sTexture" );
     material.SetBlendMode( BlendingMode::OFF );
     renderers[index] = Renderer::New( QuadMesh(), material );
   }
@@ -339,8 +338,7 @@ public:
 
     for( size_t i(0); i<actorCount; ++i )
     {
-      Image image = ResourceImage::New(ImagePath(i));
-      mImageView[i] = ImageView::New(image);
+      mImageView[i] = ImageView::New(ImagePath(i));
       mImageView[i].SetSize(Vector3(0.0f,0.0f,0.0f));
       mImageView[i].SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
       stage.Add(mImageView[i]);

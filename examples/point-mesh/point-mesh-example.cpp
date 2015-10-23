@@ -154,14 +154,12 @@ public:
 
     mImage = ResourceImage::New( MATERIAL_SAMPLE );
     Image image = ResourceImage::New( MATERIAL_SAMPLE2 );
-    mSampler1 = Sampler::New(mImage, "sTexture1");
-    mSampler2 = Sampler::New(image, "sTexture2");
 
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
 
     mMaterial = Material::New( mShader );
-    mMaterial.AddSampler( mSampler1 );
-    mMaterial.AddSampler( mSampler2 );
+    mMaterial.AddTexture(mImage, "sTexture1");
+    mMaterial.AddTexture(image, "sTexture2");
 
     mGeometry = CreateGeometry();
 
@@ -222,8 +220,6 @@ private:
   Vector3 mStageSize;                                     ///< The size of the stage
 
   Image    mImage;
-  Sampler  mSampler1;
-  Sampler  mSampler2;
   Shader   mShader;
   Material mMaterial;
   Geometry mGeometry;

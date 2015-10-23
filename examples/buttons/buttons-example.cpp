@@ -158,7 +158,7 @@ class ButtonsController: public ConnectionTracker
 
     // Radio 1
     {
-      ImageActor image = ImageActor::New( ResourceImage::New( SMALL_IMAGE_1 ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( ResourceImage::New( SMALL_IMAGE_1 ) );
       image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage1 = Dali::Toolkit::RadioButton::New( "1" );
@@ -175,7 +175,7 @@ class ButtonsController: public ConnectionTracker
     {
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
-      ImageActor image = ImageActor::New( ResourceImage::New( SMALL_IMAGE_2 ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( ResourceImage::New( SMALL_IMAGE_2 ) );
       image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage2 = Dali::Toolkit::RadioButton::New( "2" );
@@ -191,7 +191,7 @@ class ButtonsController: public ConnectionTracker
     {
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
-      ImageActor image = ImageActor::New( ResourceImage::New( SMALL_IMAGE_3 ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( ResourceImage::New( SMALL_IMAGE_3 ) );
       image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage3 = Dali::Toolkit::RadioButton::New( "3" );
@@ -258,10 +258,10 @@ class ButtonsController: public ConnectionTracker
     textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
     textLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
 
-    ImageActor imageActor = ImageActor::New( ResourceImage::New( ENABLED_IMAGE ) );
-    imageActor.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
-    imageActor.SetPadding( Padding( DP(20.0f), 0.0f, 0.0f, 0.0f ) );
-    tableView.AddChild( imageActor, Toolkit::TableView::CellPosition( 0, 1 ) );
+    Toolkit::ImageView image = Toolkit::ImageView::New( ResourceImage::New( ENABLED_IMAGE ) );
+    image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+    image.SetPadding( Padding( DP(20.0f), 0.0f, 0.0f, 0.0f ) );
+    tableView.AddChild( image, Toolkit::TableView::CellPosition( 0, 1 ) );
 
     radioButtonsGroup1.Add( tableView );
 

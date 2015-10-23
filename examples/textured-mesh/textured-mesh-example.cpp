@@ -144,18 +144,15 @@ public:
     // Hide the indicator bar
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
-    mImage = ResourceImage::New( MATERIAL_SAMPLE, ResourceImage::ON_DEMAND, Image::NEVER );
-    mSampler1 = Sampler::New(mImage, "sTexture");
-
+    mImage = ResourceImage::New( MATERIAL_SAMPLE );
     Image image = ResourceImage::New( MATERIAL_SAMPLE2 );
-    mSampler2 = Sampler::New(image, "sTexture");
 
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
     mMaterial1 = Material::New( mShader );
-    mMaterial1.AddSampler( mSampler1 );
+    mMaterial1.AddTexture(mImage, "sTexture");
 
     mMaterial2 = Material::New( mShader );
-    mMaterial2.AddSampler( mSampler2 );
+    mMaterial2.AddTexture(image, "sTexture");
 
     mGeometry = CreateGeometry();
 
@@ -264,8 +261,6 @@ private:
   Vector3 mStageSize;                                     ///< The size of the stage
 
   Image    mImage;
-  Sampler  mSampler1;
-  Sampler  mSampler2;
   Shader   mShader;
   Material mMaterial1;
   Material mMaterial2;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,17 +37,10 @@ using namespace Dali::Toolkit;
 namespace
 {
 
-const std::string BUTTON_BACKWARD( "Backward" );
-const std::string BUTTON_FORWARD( "Forward" );
-const std::string BUTTON_QUIT( "Quit" );
-const std::string BUTTON_OK( "Ok" );
-const std::string BUTTON_CANCEL( "Cancel" );
-
 const std::string LOGO_PATH( DALI_IMAGE_DIR "Logo-for-demo.png" );
 const std::string DEFAULT_TOOLBAR_IMAGE_PATH( DALI_IMAGE_DIR "top-bar.png" );
-const std::string BUTTON_BACKGROUND(DALI_IMAGE_DIR "button-background.png");
-const std::string TILE_BACKGROUND(DALI_IMAGE_DIR "item-background.png");
-const std::string TILE_BACKGROUND_ALPHA(DALI_IMAGE_DIR "item-background-alpha.png");
+const std::string TILE_BACKGROUND(DALI_IMAGE_DIR "item-background.9.png");
+const std::string TILE_BACKGROUND_ALPHA(DALI_IMAGE_DIR "item-background-alpha.9.png");
 
 const char * const DEFAULT_TOOLBAR_TEXT( "TOUCH TO LAUNCH EXAMPLE" );
 
@@ -85,7 +78,6 @@ const float SCALE_SPEED_SIN = 0.1f;
 
 const unsigned int BACKGROUND_ANIMATION_DURATION = 15000; // 15 secs
 
-const float BACKGROUND_Z = -1.0f;
 const Vector4 BACKGROUND_COLOR( 0.3569f, 0.5451f, 0.7294f, 1.0f );
 
 const float BUBBLE_MIN_Z = -1.0;
@@ -106,12 +98,6 @@ Control CreateBackground( std::string stylename )
 
   return background;
 }
-
-// These values depend on the tile image
-const float IMAGE_BORDER_LEFT = 11.0f;
-const float IMAGE_BORDER_RIGHT = IMAGE_BORDER_LEFT;
-const float IMAGE_BORDER_TOP = IMAGE_BORDER_LEFT;
-const float IMAGE_BORDER_BOTTOM = IMAGE_BORDER_LEFT;
 
 /**
  * Constraint to return a position for a bubble based on the scroll value and vertical wrapping
@@ -165,18 +151,13 @@ DaliTableView::DaliTableView( Application& application )
   mScrollViewEffect(),
   mScrollRulerX(),
   mScrollRulerY(),
-  mButtons(),
   mPressedActor(),
   mAnimationTimer(),
   mLogoTapDetector(),
   mVersionPopup(),
-  mButtonsPageRelativeSize(),
   mPages(),
-  mTableViewImages(),
-  mBackgroundActors(),
   mBackgroundAnimations(),
   mExampleList(),
-  mExampleMap(),
   mTotalPages(),
   mScrolling( false ),
   mSortAlphabetically( false ),
@@ -192,7 +173,6 @@ DaliTableView::~DaliTableView()
 void DaliTableView::AddExample( Example example )
 {
   mExampleList.push_back( example );
-  mExampleMap[ example.name ] = example;
 }
 
 void DaliTableView::SortAlphabetically( bool sortAlphabetically )
@@ -274,14 +254,13 @@ void DaliTableView::Initialize( Application& application )
   mScrollViewLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
   // Create solid background colour.
-  ImageActor backgroundColourActor = Dali::Toolkit::CreateSolidColorActor( BACKGROUND_COLOR );
+  Control backgroundColourActor = Control::New();
+  backgroundColourActor.SetBackgroundColor( BACKGROUND_COLOR );
   backgroundColourActor.SetAnchorPoint( AnchorPoint::CENTER );
   backgroundColourActor.SetParentOrigin( ParentOrigin::CENTER );
   backgroundColourActor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   backgroundColourActor.SetSizeModeFactor( Vector3( 1.0f, 1.5f, 1.0f ) );
 
-  // Force the filled background right to the back
-  backgroundColourActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX );
   mScrollViewLayer.Add( backgroundColourActor );
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
@@ -289,7 +268,7 @@ void DaliTableView::Initialize( Application& application )
   bubbleContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   bubbleContainer.SetAnchorPoint( AnchorPoint::CENTER );
   bubbleContainer.SetParentOrigin( ParentOrigin::CENTER );
-  mScrollViewLayer.Add( bubbleContainer );
+  backgroundColourActor.Add( bubbleContainer );
 
   SetupBackground( bubbleContainer );
 
@@ -372,8 +351,8 @@ void DaliTableView::Populate()
 
     for( int t = 0; t < mTotalPages; t++ )
     {
-      // Create Table. (contains up to 9 Examples)
-      TableView page = TableView::New( 3, 3 );
+      // Create Table
+      TableView page = TableView::New( ROWS_PER_PAGE, EXAMPLES_PER_ROW );
       page.SetAnchorPoint( AnchorPoint::CENTER );
       page.SetParentOrigin( ParentOrigin::CENTER );
       page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -478,17 +457,12 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   // create background image
   if( addBackground )
   {
-    Image bg = ResourceImage::New( TILE_BACKGROUND );
-    ImageActor image = ImageActor::New( bg );
+    ImageView image = ImageView::New( TILE_BACKGROUND );
     image.SetAnchorPoint( AnchorPoint::CENTER );
     image.SetParentOrigin( ParentOrigin::CENTER );
     // make the image 100% of tile
     image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
-    // move image back to get text appear in front
-    image.SetZ( -1 );
-    image.SetStyle( ImageActor::STYLE_NINE_PATCH );
-    image.SetNinePatchBorder( Vector4( IMAGE_BORDER_LEFT, IMAGE_BORDER_TOP, IMAGE_BORDER_RIGHT, IMAGE_BORDER_BOTTOM ) );
     content.Add( image );
 
     // Add stencil
@@ -522,8 +496,6 @@ ImageActor DaliTableView::NewStencilImage()
   Image alpha = ResourceImage::New( TILE_BACKGROUND_ALPHA );
 
   ImageActor stencilActor = ImageActor::New( alpha );
-  stencilActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
-  stencilActor.SetNinePatchBorder( Vector4( IMAGE_BORDER_LEFT, IMAGE_BORDER_TOP, IMAGE_BORDER_RIGHT, IMAGE_BORDER_BOTTOM ) );
 
   stencilActor.SetParentOrigin( ParentOrigin::CENTER );
   stencilActor.SetAnchorPoint( AnchorPoint::CENTER );
@@ -551,18 +523,19 @@ bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
   if( ( TouchPoint::Up == point.state ) &&
       ( mPressedActor == actor ) )
   {
-    std::string name = actor.GetName();
-    ExampleMapConstIter iter = mExampleMap.find( name );
-
-    AccessibilityManager accessibilityManager = AccessibilityManager::Get();
-
-    if( iter != mExampleMap.end() )
+    // ignore Example button presses when scrolling or button animating.
+    if( ( !mScrolling ) && ( !mPressedAnimation ) )
     {
-      // ignore Example button presses when scrolling or button animating.
-      if( ( !mScrolling ) && ( !mPressedAnimation ) )
+      std::string name = actor.GetName();
+      const ExampleListIter end = mExampleList.end();
+      for( ExampleListIter iter = mExampleList.begin(); iter != end; ++iter )
       {
-        // do nothing, until pressed animation finished.
-        consumed = true;
+        if( (*iter).name == name )
+        {
+          // do nothing, until pressed animation finished.
+          consumed = true;
+          break;
+        }
       }
     }
 
@@ -590,32 +563,14 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
   if( mPressedActor )
   {
     std::string name = mPressedActor.GetName();
-    ExampleMapConstIter iter = mExampleMap.find( name );
 
-    if( iter == mExampleMap.end() )
+    std::stringstream stream;
+    stream << DALI_EXAMPLE_BIN << name.c_str();
+    pid_t pid = fork();
+    if( pid == 0)
     {
-      if( name == BUTTON_QUIT )
-      {
-        // Move focus to the OK button
-        AccessibilityManager accessibilityManager = AccessibilityManager::Get();
-
-        // Enable the group mode and wrap mode
-        accessibilityManager.SetGroupMode( true );
-        accessibilityManager.SetWrapMode( true );
-      }
-    }
-    else
-    {
-      const Example& example( iter->second );
-
-      std::stringstream stream;
-      stream << DALI_EXAMPLE_BIN << example.name.c_str();
-      pid_t pid = fork();
-      if( pid == 0)
-      {
-        execlp( stream.str().c_str(), example.name.c_str(), NULL );
-        DALI_ASSERT_ALWAYS(false && "exec failed!");
-      }
+      execlp( stream.str().c_str(), name.c_str(), NULL );
+      DALI_ASSERT_ALWAYS(false && "exec failed!");
     }
     mPressedActor.Reset();
   }
@@ -762,18 +717,13 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
   for( int i = 0; i < count; ++i )
   {
     float randSize = Random::Range( 10.0f, 400.0f );
-    ImageActor dfActor = ImageActor::New( distanceField );
+    ImageView dfActor = ImageView::New( distanceField );
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
-    // Force the bubbles just in front of the solid background
-    dfActor.SetSortModifier( DemoHelper::BACKGROUND_DEPTH_INDEX + 1 );
-
-    ShaderEffect effect = Toolkit::CreateDistanceFieldEffect();
-    dfActor.SetShaderEffect( effect );
+    Dali::Property::Map effect = Toolkit::CreateDistanceFieldEffect();
+    dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, effect );
     dfActor.SetColor( BUBBLE_COLOR[ i%NUMBER_OF_BUBBLE_COLOR ] );
-    effect.SetUniform("uOutlineParams", Vector2( 0.55f, 0.00f ) );
-    effect.SetUniform("uSmoothing", 0.5f );
     layer.Add( dfActor );
   }
 

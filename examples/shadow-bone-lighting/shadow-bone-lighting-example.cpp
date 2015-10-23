@@ -245,9 +245,9 @@ public:
     mSceneActor.SetParentOrigin(ParentOrigin::CENTER);
 
     // Create and add images to the scene actor:
-    mImageActor1 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_1) );
-    mImageActor2 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_2) );
-    mImageActor3 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_3) );
+    mImageActor1 = ImageView::New( SCENE_IMAGE_1 );
+    mImageActor2 = ImageView::New( SCENE_IMAGE_2 );
+    mImageActor3 = ImageView::New( SCENE_IMAGE_3 );
 
     mImageActor1.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     mImageActor2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
@@ -458,9 +458,9 @@ private:
   ImageActor                mShadowPlane;
   Actor                     mCastingLight;
   Actor                     mLightAnchor;
-  ImageActor                mImageActor1;
-  ImageActor                mImageActor2;
-  ImageActor                mImageActor3;
+  ImageView                 mImageActor1;
+  ImageView                 mImageActor2;
+  ImageView                 mImageActor3;
   PanGestureDetector        mPanGestureDetector;
   PinchGestureDetector      mPinchGestureDetector;
   TapGestureDetector        mTapGestureDetector;

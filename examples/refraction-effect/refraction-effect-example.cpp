@@ -281,9 +281,8 @@ private:
     mGeometry = CreateGeometry( MESH_FILES[mCurrentMeshId] );
 
     Image texture = LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] );
-    mSampler = Sampler::New( texture, "sTexture" );
     mMaterial = Material::New( mShaderFlat );
-    mMaterial.AddSampler( mSampler );
+    mMaterial.AddTexture( texture, "sTexture" );
 
     mRenderer = Renderer::New( mGeometry, mMaterial );
 
@@ -344,7 +343,7 @@ private:
   {
     mCurrentTextureId = ( mCurrentTextureId + 1 ) % NUM_TEXTURE_IMAGES;
     Image texture = LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] );
-    mSampler.SetImage( texture );
+    mMaterial.SetTextureImage( 0, texture );
     return true;
   }
 
@@ -564,8 +563,6 @@ private:
 
   Application&   mApplication;
   Layer          mContent;
-
-  Sampler        mSampler;
   Material       mMaterial;
   Geometry       mGeometry;
   Renderer       mRenderer;
