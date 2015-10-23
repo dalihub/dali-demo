@@ -249,7 +249,7 @@ Actor CreateMeshActor( unsigned int index)
 // -p NumberOfPages (Modifies the nimber of pages )
 // --use-imageview ( Use ImageView instead of ImageActor )
 // --use-mesh ( Use new renderer API (as ImageView) but shares renderers between actors when possible )
-// --use-nine-patch ( Use nine patch images )
+// --nine-patch ( Use nine patch images )
 
 //
 class Benchmark : public ConnectionTracker
