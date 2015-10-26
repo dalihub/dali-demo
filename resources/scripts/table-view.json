@@ -42,7 +42,9 @@
   "stage": [{
       "name":"simple-table",
       "type":"TableView",
-      "background-color": [0.5,0.5,0,1],
+      "background":{
+        "color": [0.5,0.5,0,1]
+        },
       "parent-origin": "CENTER",
       "size":[400,400,1],
       "rows": 4,

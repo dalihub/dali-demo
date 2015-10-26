@@ -26,6 +26,7 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/images/atlas.h>
+#include <dali/devel-api/rendering/cull-face.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -291,6 +292,9 @@ public:
     mReplaceButton.SetVisible( false );
     stage.Add( mReplaceButton );
 
+    // Store one 1x1 white image for multiple items to share for backgrounds:
+    mWhiteImage = BufferImage::WHITE();
+
     // Create the item view actor
     mImageAtlas = CreateImageAtlas();
     mItemView = ItemView::New(*this);
@@ -322,9 +326,6 @@ public:
     // Set the title and icon to the current layout
     SetLayoutTitle();
     SetLayoutImage();
-
-    // Store one 1x1 white image for multiple items to share for backgrounds:
-    mWhiteImage = BufferImage::WHITE();
   }
 
   Actor OnKeyboardPreFocusChange( Actor current, Actor proposed, Control::KeyboardFocus::Direction direction )
@@ -891,7 +892,8 @@ public: // From ItemFactory
     checkbox.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
     checkbox.SetPosition( -SELECTION_BORDER_WIDTH, SELECTION_BORDER_WIDTH );
     checkbox.SetZ( 1.0f );
-    checkbox.SetSortModifier( -50.0f );
+    SetCullFace(checkbox, Dali::CullBack);
+    checkbox.SetSortModifier( 150.0f );
     if( MODE_REMOVE_MANY  != mMode &&
         MODE_INSERT_MANY  != mMode &&
         MODE_REPLACE_MANY != mMode )
@@ -907,8 +909,9 @@ public: // From ItemFactory
     tick.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
     tick.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
     tick.SetZ( 1.0f );
-    tick.SetSortModifier( -50.0f );
+    tick.SetSortModifier( 150.0f );
     tick.SetVisible( false );
+    SetCullFace(tick, Dali::CullBack);
     checkbox.Add( tick );
 
     // Connect new items for various editing modes

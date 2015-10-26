@@ -709,7 +709,7 @@ public:
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
-      ImageActor image = ImageActor::New( ResourceImage::New( IMAGE ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
       mPopup.Add( image );
@@ -722,7 +722,7 @@ public:
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
-      ImageActor image = ImageActor::New( ResourceImage::New( IMAGE ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       image.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
 
@@ -736,7 +736,7 @@ public:
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
-      ImageActor image = ImageActor::New( ResourceImage::New( IMAGE ) );
+      Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       image.SetSizeScalePolicy( SizeScalePolicy::FILL_WITH_ASPECT_RATIO );
 

@@ -144,18 +144,15 @@ public:
     // Hide the indicator bar
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
-    mImage = ResourceImage::New( MATERIAL_SAMPLE, ResourceImage::ON_DEMAND, Image::NEVER );
-    mSampler1 = Sampler::New(mImage, "sTexture");
-
+    mImage = ResourceImage::New( MATERIAL_SAMPLE );
     Image image = ResourceImage::New( MATERIAL_SAMPLE2 );
-    mSampler2 = Sampler::New(image, "sTexture");
 
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
     mMaterial1 = Material::New( mShader );
-    mMaterial1.AddSampler( mSampler1 );
+    mMaterial1.AddTexture(mImage, "sTexture");
 
     mMaterial2 = Material::New( mShader );
-    mMaterial2.AddSampler( mSampler2 );
+    mMaterial2.AddTexture(image, "sTexture");
 
     mGeometry = CreateGeometry();
 
@@ -165,9 +162,7 @@ public:
     mMeshActor.AddRenderer( mRenderer );
     mMeshActor.SetSize(400, 400);
 
-    Property::Index fadeColorIndex = mMeshActor.RegisterProperty( "uFadeColor", Color::GREEN );
-
-    fadeColorIndex = mRenderer.RegisterProperty( "uFadeColor", Color::MAGENTA );
+    Property::Index fadeColorIndex = mRenderer.RegisterProperty( "uFadeColor", Color::MAGENTA );
     mRenderer.SetDepthIndex(0);
 
     mMeshActor.SetParentOrigin( ParentOrigin::TOP_CENTER );
@@ -181,11 +176,10 @@ public:
     mMeshActor2.SetSize(400, 400);
 
     mMeshActor2.RegisterProperty( "a-n-other-property", Color::GREEN );
-    Property::Index fadeColorIndex2 = mMeshActor2.RegisterProperty( "uFadeColor", Color::GREEN );
 
     mRenderer2.RegisterProperty( "a-n-other-property", Vector3::ZERO );
     mRenderer2.RegisterProperty( "a-coefficient", 0.008f );
-    fadeColorIndex2 = mRenderer2.RegisterProperty( "uFadeColor", Color::BLUE );
+    Property::Index fadeColorIndex2 = mRenderer2.RegisterProperty( "uFadeColor", Color::BLUE );
     mRenderer2.SetDepthIndex(0);
 
     mMeshActor2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
@@ -267,8 +261,6 @@ private:
   Vector3 mStageSize;                                     ///< The size of the stage
 
   Image    mImage;
-  Sampler  mSampler1;
-  Sampler  mSampler2;
   Shader   mShader;
   Material mMaterial1;
   Material mMaterial2;

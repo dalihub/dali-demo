@@ -199,8 +199,7 @@ public:
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
-    Image brickWall = ResourceImage::New(DALI_IMAGE_DIR "brick-wall.jpg");
-    mShadowPlaneBg = ImageActor::New(brickWall);
+    mShadowPlaneBg = ImageView::New( DALI_IMAGE_DIR "brick-wall.jpg" );
     mShadowPlaneBg.SetParentOrigin(ParentOrigin::CENTER);
     mShadowPlaneBg.SetAnchorPoint(AnchorPoint::CENTER);
     mShadowPlaneBg.SetName("Plane");
@@ -208,7 +207,7 @@ public:
     mContents.Add(mShadowPlaneBg);
     mShadowPlaneBg.SetPosition(Vector3(50.0f, 50.0f, -200.0f));
 
-    mShadowView.SetShadowPlane(mShadowPlaneBg);
+    mShadowView.SetShadowPlaneBackground(mShadowPlaneBg);
     mShadowView.Activate();
 
     mLightAnchor = Actor::New();
@@ -245,9 +244,9 @@ public:
     mSceneActor.SetParentOrigin(ParentOrigin::CENTER);
 
     // Create and add images to the scene actor:
-    mImageActor1 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_1) );
-    mImageActor2 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_2) );
-    mImageActor3 = ImageActor::New( ResourceImage::New(SCENE_IMAGE_3) );
+    mImageActor1 = ImageView::New( SCENE_IMAGE_1 );
+    mImageActor2 = ImageView::New( SCENE_IMAGE_2 );
+    mImageActor3 = ImageView::New( SCENE_IMAGE_3 );
 
     mImageActor1.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     mImageActor2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
@@ -454,13 +453,13 @@ private:
   Animation                 mSceneAnimation;
   bool                      mPaused;
   Toolkit::ShadowView       mShadowView;
-  ImageActor                mShadowPlaneBg;
-  ImageActor                mShadowPlane;
+  ImageView                 mShadowPlaneBg;
+  ImageView                 mShadowPlane;
   Actor                     mCastingLight;
   Actor                     mLightAnchor;
-  ImageActor                mImageActor1;
-  ImageActor                mImageActor2;
-  ImageActor                mImageActor3;
+  ImageView                 mImageActor1;
+  ImageView                 mImageActor2;
+  ImageView                 mImageActor3;
   PanGestureDetector        mPanGestureDetector;
   PinchGestureDetector      mPinchGestureDetector;
   TapGestureDetector        mTapGestureDetector;

@@ -25,9 +25,6 @@
 	<ui-application appid="bubble-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/bubble-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Bubble Effect</label>
 	</ui-application>
-	<ui-application appid="cluster.example" exec="/usr/apps/com.samsung.dali-demo/bin/cluster.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Cluster example</label>
-	</ui-application>
 	<ui-application appid="cube-transition-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/cube-transition-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Cube transition effect</label>
 	</ui-application>
@@ -91,6 +88,9 @@
 	<ui-application appid="text-field.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-field.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Field</label>
 	</ui-application>
+  <ui-application appid="text-fonts.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-fonts.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+    <label>Text Fonts</label>
+  </ui-application>
 	<ui-application appid="text-message-field.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-message-field.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Label</label>
 	</ui-application>
@@ -108,5 +108,11 @@
 	</ui-application>
 	<ui-application appid="size-negotiation.example" exec="/usr/apps/com.samsung.dali-demo/bin/size-negotiation.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Size Negotiation</label>
+	</ui-application>
+	<ui-application appid="benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Benchmark</label>
+	</ui-application>
+	<ui-application appid="gradients.example" exec="/usr/apps/com.samsung.dali-demo/bin/gradients.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Color Gradient</label>
 	</ui-application>
 </manifest>
