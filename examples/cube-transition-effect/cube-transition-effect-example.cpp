@@ -167,9 +167,9 @@ private:
   /**
    * Callback function of cube transition completed signal
    * @param[in] effect The cube effect used for the transition
-   * @param[in] imageActor The target imageActor of the completed transition
+   * @param[in] image The target Image of the completed transition
    */
-  void OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, ImageActor imageActor);
+  void OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, Image image );
   /**
    * Callback function of timer tick
    * The timer is used to count the image display duration in slideshow,
@@ -181,13 +181,12 @@ private:
   Toolkit::Control                mView;
   Toolkit::ToolBar                mToolBar;
   Layer                           mContent;
-  Toolkit::TextLabel              mTitleActor;
-  Actor                           mParent;
+  Toolkit::TextLabel              mTitle;
 
   Vector2                         mViewSize;
 
-  ImageActor                      mCurrentImage;
-  ImageActor                      mNextImage;
+  ResourceImage                   mCurrentImage;
+  ResourceImage                   mNextImage;
   unsigned int                    mIndex;
   bool                            mIsImageLoading;
 
@@ -238,8 +237,8 @@ void CubeTransitionApp::OnInit( Application& application )
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
-  mTitleActor = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_WAVE );
-  mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
+  mTitle = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_WAVE );
+  mToolBar.AddControl( mTitle, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
   //Add an slideshow icon on the right of the title
   mSlideshowButton = Toolkit::PushButton::New();
@@ -251,53 +250,55 @@ void CubeTransitionApp::OnInit( Application& application )
   // Set size to stage size to avoid seeing a black border on transition
   mViewSize = Stage::GetCurrent().GetSize();
 
-  mParent = Actor::New();
-  mParent.SetSize( mViewSize );
-  mParent.SetPositionInheritanceMode( USE_PARENT_POSITION );
-  mContent.Add( mParent );
-
-  // use pan gesture to detect the cursor or finger movement
-  mPanGestureDetector = PanGestureDetector::New();
-  mPanGestureDetector.DetectedSignal().Connect( this, &CubeTransitionApp::OnPanGesture );
-  mPanGestureDetector.Attach( mParent );
+  // show the first image
+  mCurrentImage = LoadStageFillingImage( IMAGES[mIndex] );
 
   //use small cubes
-  mCubeWaveEffect = Toolkit::CubeTransitionWaveEffect::New(NUM_ROWS_WAVE, NUM_COLUMNS_WAVE, mViewSize);
+  mCubeWaveEffect = Toolkit::CubeTransitionWaveEffect::New( NUM_ROWS_WAVE, NUM_COLUMNS_WAVE );
   mCubeWaveEffect.SetTransitionDuration( ANIMATION_DURATION_WAVE );
   mCubeWaveEffect.SetCubeDisplacement( CUBE_DISPLACEMENT_WAVE );
   mCubeWaveEffect.TransitionCompletedSignal().Connect(this, &CubeTransitionApp::OnTransitionCompleted);
-  mParent.Add(mCubeWaveEffect.GetRoot());
+
+  mCubeWaveEffect.SetSize( mViewSize );
+  mCubeWaveEffect.SetPositionInheritanceMode( USE_PARENT_POSITION );
+  mCubeWaveEffect.SetCurrentImage( mCurrentImage );
+
   // use big cubes
-  mCubeCrossEffect = Toolkit::CubeTransitionCrossEffect::New(NUM_ROWS_CROSS, NUM_COLUMNS_CROSS, mViewSize);
-  mCubeCrossEffect.SetTransitionDuration( ANIMATION_DURATION_CROSS);
+  mCubeCrossEffect = Toolkit::CubeTransitionCrossEffect::New(NUM_ROWS_CROSS, NUM_COLUMNS_CROSS );
+  mCubeCrossEffect.SetTransitionDuration( ANIMATION_DURATION_CROSS );
   mCubeCrossEffect.SetCubeDisplacement( CUBE_DISPLACEMENT_CROSS );
   mCubeCrossEffect.TransitionCompletedSignal().Connect(this, &CubeTransitionApp::OnTransitionCompleted);
-  mParent.Add(mCubeCrossEffect.GetRoot());
 
-  mCubeFoldEffect = Toolkit::CubeTransitionFoldEffect::New(NUM_ROWS_FOLD, NUM_COLUMNS_FOLD, mViewSize);
-  mCubeFoldEffect.SetTransitionDuration( ANIMATION_DURATION_FOLD);
+  mCubeCrossEffect.SetSize( mViewSize );
+  mCubeCrossEffect.SetPositionInheritanceMode( USE_PARENT_POSITION );
+  mCubeCrossEffect.SetCurrentImage( mCurrentImage );
+
+  mCubeFoldEffect = Toolkit::CubeTransitionFoldEffect::New( NUM_ROWS_FOLD, NUM_COLUMNS_FOLD );
+  mCubeFoldEffect.SetTransitionDuration( ANIMATION_DURATION_FOLD );
   mCubeFoldEffect.TransitionCompletedSignal().Connect(this, &CubeTransitionApp::OnTransitionCompleted);
-  mParent.Add(mCubeFoldEffect.GetRoot());
+
+  mCubeFoldEffect.SetSize( mViewSize );
+  mCubeFoldEffect.SetPositionInheritanceMode( USE_PARENT_POSITION );
+  mCubeFoldEffect.SetCurrentImage( mCurrentImage );
 
   mViewTimer = Timer::New( VIEWINGTIME );
   mViewTimer.TickSignal().Connect( this, &CubeTransitionApp::OnTimerTick );
 
-  // show the first image
-  mCurrentImage = ImageActor::New( LoadStageFillingImage( IMAGES[mIndex] ) );
-  mCurrentImage.SetPositionInheritanceMode( USE_PARENT_POSITION );
-  mCurrentImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  mCurrentImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-  mParent.Add( mCurrentImage );
 
   mCurrentEffect = mCubeWaveEffect;
-  mCurrentEffect.SetCurrentImage( mCurrentImage );
+  mContent.Add( mCurrentEffect );
+
+  // use pan gesture to detect the cursor or finger movement
+  mPanGestureDetector = PanGestureDetector::New();
+  mPanGestureDetector.DetectedSignal().Connect( this, &CubeTransitionApp::OnPanGesture );
+  mPanGestureDetector.Attach( mContent );
 }
 
 // signal handler, called when the pan gesture is detected
 void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
 {
   // does not response when the transition has not finished
-  if( mIsImageLoading || mCubeWaveEffect.IsTransiting() || mCubeCrossEffect.IsTransiting() || mCubeFoldEffect.IsTransiting() || mSlideshow )
+  if( mIsImageLoading || mCubeWaveEffect.IsTransitioning() || mCubeCrossEffect.IsTransitioning() || mCubeFoldEffect.IsTransitioning() || mSlideshow )
   {
     return;
   }
@@ -321,22 +322,17 @@ void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
 
 void CubeTransitionApp::GoToNextImage()
 {
-  ResourceImage image = LoadStageFillingImage( IMAGES[ mIndex ] );
-  mNextImage = ImageActor::New( image );
-
-  mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION);
-  mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-  mCurrentEffect.SetTargetImage(mNextImage);
-  if( image.GetLoadingState() == ResourceLoadingSucceeded )
+  mNextImage = LoadStageFillingImage( IMAGES[ mIndex ] );
+  mCurrentEffect.SetTargetImage( mNextImage );
+  if( mNextImage.GetLoadingState() == ResourceLoadingSucceeded )
   {
     mIsImageLoading = false;
-    OnImageLoaded( image );
+    OnImageLoaded( mNextImage );
   }
   else
   {
     mIsImageLoading = true;
-    image.LoadingFinishedSignal().Connect( this, &CubeTransitionApp::OnImageLoaded );
+    mNextImage.LoadingFinishedSignal().Connect( this, &CubeTransitionApp::OnImageLoaded );
   }
 }
 
@@ -344,17 +340,16 @@ void CubeTransitionApp::OnImageLoaded(ResourceImage image)
 {
    mIsImageLoading = false;
    mCurrentEffect.StartTransition( mPanPosition, mPanDisplacement );
-   mParent.Remove(mCurrentImage);
-   mParent.Add(mNextImage);
    mCurrentImage = mNextImage;
 }
 
 bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
 {
+  mContent.Remove( mCurrentEffect );
   if(mCurrentEffect == mCubeWaveEffect)
   {
     mCurrentEffect = mCubeCrossEffect;
-    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_CROSS) );
+    mTitle.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_CROSS) );
     mEffectChangeButton.SetUnselectedImage( EFFECT_CROSS_IMAGE );
     mEffectChangeButton.SetSelectedImage( EFFECT_CROSS_IMAGE_SELECTED );
 
@@ -362,21 +357,22 @@ bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
   else if(mCurrentEffect == mCubeCrossEffect)
   {
     mCurrentEffect = mCubeFoldEffect;
-    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_FOLD) );
+    mTitle.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_FOLD) );
     mEffectChangeButton.SetUnselectedImage( EFFECT_FOLD_IMAGE );
     mEffectChangeButton.SetSelectedImage( EFFECT_FOLD_IMAGE_SELECTED );
   }
   else
   {
     mCurrentEffect = mCubeWaveEffect;
-    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_WAVE) );
+    mTitle.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_WAVE) );
     mEffectChangeButton.SetUnselectedImage( EFFECT_WAVE_IMAGE );
     mEffectChangeButton.SetSelectedImage( EFFECT_WAVE_IMAGE_SELECTED );
   }
+  mContent.Add( mCurrentEffect );
 
   // Set the current image to cube transition effect
   // only need to set at beginning or change from another effect
-  mCurrentEffect.SetCurrentImage(mCurrentImage);
+  mCurrentEffect.SetCurrentImage( mCurrentImage );
   return true;
 }
 
@@ -385,7 +381,7 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   mSlideshow = !mSlideshow;
   if( mSlideshow )
   {
-    mPanGestureDetector.Detach( mParent );
+    mPanGestureDetector.Detach( mContent );
     mSlideshowButton.SetUnselectedImage( SLIDE_SHOW_STOP_ICON );
     mSlideshowButton.SetSelectedImage( SLIDE_SHOW_STOP_ICON_SELECTED );
     mPanPosition = Vector2( mViewSize.width, mViewSize.height*0.5f );
@@ -394,7 +390,7 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   }
   else
   {
-    mPanGestureDetector.Attach( mParent );
+    mPanGestureDetector.Attach( mContent );
     mSlideshowButton.SetUnselectedImage( SLIDE_SHOW_START_ICON );
     mSlideshowButton.SetSelectedImage( SLIDE_SHOW_START_ICON_SELECTED );
     mViewTimer.Stop();
@@ -402,7 +398,7 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   return true;
 }
 
-void CubeTransitionApp::OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, ImageActor imageActor)
+void CubeTransitionApp::OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, Image image )
 {
   if( mSlideshow )
   {

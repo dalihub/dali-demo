@@ -94,6 +94,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TEXTURED_MESH             "Mesh Texture"
 #define DALI_DEMO_STR_TITLE_LINE_MESH                 "Mesh Line"
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT            "Color Gradient"
+#define DALI_DEMO_STR_TITLE_IMAGE_VIEW                "Image View"
 
 #endif
 
