@@ -245,7 +245,7 @@ public:
     mBouncingMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
     overlay.Add( mBouncingMagnifier );
 
-    mAnimationTimeProperty = mBouncingMagnifier.RegisterProperty("animation-time", 0.0f);
+    mAnimationTimeProperty = mBouncingMagnifier.RegisterProperty("animationTime",  0.0f);
     ContinueAnimation();
 
     // Apply constraint to animate the position of the magnifier.

@@ -40,82 +40,82 @@
   */
 
   "stage": [{
-      "name":"simple-table",
+      "name":"simpleTable",
       "type":"TableView",
       "background":{
         "color": [0.5,0.5,0,1]
         },
-      "parent-origin": "CENTER",
+      "parentOrigin": "CENTER",
       "size":[400,400,1],
       "rows": 4,
       "columns": 4,
-      "cell-padding": [10, 5],
-      "layout-rows": {  // set the height of the rows
+      "cellPadding": [10, 5],
+      "layoutRows": {  // set the height of the rows
         "0": { "policy": "fixed", "value": 40 },
         "1": { "policy": "relative", "value": 0.33 },
         "2": { "policy": "fit", "value": 0 }
       },
-      "layout-columns": { // set the widths of the columns
+      "layoutColumns": { // set the widths of the columns
         "0": { "policy": "fit", "value": 0 },
         "2": { "policy": "relative", "value": 0.2 },
         "3": { "policy": "fixed", "value": 30 }
       },
       "actors": [{
-          "name":"gallery-1",
+          "name":"gallery1",
           "type":"ImageActor",
-          "height-resize-policy":"FILL_TO_PARENT",
+          "heightResizePolicy":"FILL_TO_PARENT",
           "image": {
             "filename": "{DALI_IMAGE_DIR}gallery-small-1.jpg"
           },
-          "custom-properties": { // properties registered dynamically
-            "cell-index": [0,0], // property to specify the top-left cell this child occupies
-            "row-span":4, // property to specify how many rows this child occupies, if not set, default value is 1
-            "column-span":1 // property to specify how many columns this child occupies, if nor set, defualt cvalue is 1
+          "customProperties": { // properties registered dynamically
+            "cellIndex": [0,0], // property to specify the top-left cell this child occupies
+            "rowSpan":4, // property to specify how many rows this child occupies, if not set, default value is 1
+            "columnSpan":1 // property to specify how many columns this child occupies, if nor set, defualt cvalue is 1
           }
         },{
-          "name":"gallery-2",
+          "name":"gallery2",
           "type":"ImageActor",
-          "height-resize-policy":"FILL_TO_PARENT",
+          "heightResizePolicy":"FILL_TO_PARENT",
           "image": {
             "filename": "{DALI_IMAGE_DIR}gallery-small-2.jpg"
           },
-          "custom-properties": { // properties registered dynamically
-            "cell-index": [0,1],
-            "cell-horizontal-alignment": "right" // property to specify how to align horizontally inside the cells, if not set, default value is 'left'
+          "customProperties": { // properties registered dynamically
+            "cellIndex": [0,1],
+            "cellHorizontalAlignment": "right" // property to specify how to align horizontally inside the cells, if not set, default value is 'left'
           }
         },{
-          "name":"gallery-3",
+          "name":"gallery3",
           "type":"ImageActor",
           "image": {
             "filename": "{DALI_IMAGE_DIR}gallery-small-3.jpg"
           },
-          "custom-properties": {
-            "cell-index":[1,1],
-            "row-span":3,
-            "cell-horizontal-alignment": "left",// property to specify how to align horizontally inside the cells, if not set, default value is 'left'
-            "cell-vertical-alignment": "center" // property to specify how to align vertically inside the cells, if not set, default value is 'top'
+          "customProperties": {
+            "cellIndex":[1,1],
+            "rowSpan":3,
+            "cellHorizontalAlignment": "left",// property to specify how to align horizontally inside the cells, if not set, default value is 'left'
+            "cellVerticalAlignment": "center" // property to specify how to align vertically inside the cells, if not set, default value is 'top'
           }
         }, {
-          "name":"gallery-4",
+          "name":"gallery4",
           "type":"ImageActor",
-          "width-resize-policy":"FILL_TO_PARENT",
+          "widthResizePolicy":"FILL_TO_PARENT",
           "image": {
             "filename": "{DALI_IMAGE_DIR}gallery-small-4.jpg"
           },
-          "custom-properties": {
-            "cell-index":[2,2]
+          "customProperties": {
+            "cellIndex":[2,2]
           }
         }, {
-          "name":"gallery-5",
+          "name":"gallery5",
           "type":"ImageActor",
-          "width-resize-policy":"FILL_TO_PARENT",
-          "height-resize-policy":"FILL_TO_PARENT",
+          "widthResizePolicy":"FILL_TO_PARENT",
+          "heightResizePolicy":"FILL_TO_PARENT",
           "image": {
             "filename": "{DALI_IMAGE_DIR}gallery-small-5.jpg"
           },
-          "custom-properties": {
-            "cell-index":[3,2],
-            "column-span": 2
+          "customProperties": {
+            "cellIndex":[3,2],
+            "columnSpan": 2
           }
         }]
     }]

@@ -1,24 +1,24 @@
 {
   "templates":
   {
-    "color-control":
+    "colorControl":
     {
       "type": "Control",
-      "parent-origin": "CENTER",
-      "anchor-point": "CENTER",
+      "parentOrigin": "CENTER",
+      "anchorPoint": "CENTER",
       "size": [ 100, 100, 1 ],
       "scale": [ 0.1, 0.1, 1 ],
-      "color-alpha": 0,
+      "colorAlpha": 0,
       "background":{ "color": [ 0.95, 0.65, 0.1, 1 ] }
     }
   },
   "stage": [
     {
     "type": "Actor",
-    "parent-origin": "CENTER",
-    "anchor-point": "CENTER",
+    "parentOrigin": "CENTER",
+    "anchorPoint": "CENTER",
     "actors": [{
-      "type": "color-control",
+      "type": "colorControl",
       "name": "Container 1",
       "position": [
         -165,
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "type": "color-control",
+      "type": "colorControl",
       "name": "Container 2",
       "position": [
         -55,
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "type": "color-control",
+      "type": "colorControl",
       "name": "Container 3",
       "position": [
         55,
@@ -45,7 +45,7 @@
       ]
     },
     {
-      "type": "color-control",
+      "type": "colorControl",
       "name": "Container 4",
       "position": [
         165,
@@ -54,7 +54,7 @@
       ]
     },
     {
-      "type": "color-control",
+      "type": "colorControl",
       "name": "Container 5",
       "position": [
         -165,
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "type": "color-control",
+      "type": "colorControl",
       "name": "Container 6",
       "position": [
         -55,
@@ -72,7 +72,7 @@
       ]
     },
     {
-      "type": "color-control",
+      "type": "colorControl",
       "name": "Container 7",
       "position": [
         55,
@@ -81,7 +81,7 @@
       ]
     },
     {
-      "type": "color-control",
+      "type": "colorControl",
       "name": "Container 8",
       "position": [
         165,
@@ -94,10 +94,10 @@
       "type": "Control",
       "actors": [],
       "name": "ControlBack",
-      "parent-origin": "CENTER",
-      "anchor-point": "CENTER",
-      "width-resize-policy": "FILL_TO_PARENT",
-      "height-resize-policy": "FILL_TO_PARENT",
+      "parentOrigin": "CENTER",
+      "anchorPoint": "CENTER",
+      "widthResizePolicy": "FILL_TO_PARENT",
+      "heightResizePolicy": "FILL_TO_PARENT",
       "position": [
         0,
         0,
@@ -121,9 +121,9 @@
       "type": "TextLabel",
       "text": "Touch",
       "name": "Instruction",
-      "parent-origin": "BOTTOM_CENTER",
-      "anchor-point": "BOTTOM_CENTER",
-      "text-color": [1, 0, 0, 1],
+      "parentOrigin": "BOTTOM_CENTER",
+      "anchorPoint": "BOTTOM_CENTER",
+      "textColor": [1, 0, 0, 1],
       "position": [
         0,
         0,
@@ -142,8 +142,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.35,
             "duration": 0.15
           },
@@ -157,8 +157,8 @@
             0.10000000000000003,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.449,
             "duration": 0.15
           },
@@ -166,10 +166,10 @@
         },
         {
           "actor": "Container 1",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.3,
             "duration": 0.05
           },
@@ -177,10 +177,10 @@
         },
         {
           "actor": "Container 1",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.599,
             "duration": 0.051
           },
@@ -194,8 +194,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.4,
             "duration": 0.15
           },
@@ -209,8 +209,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.5,
             "duration": 0.15
           },
@@ -218,10 +218,10 @@
         },
         {
           "actor": "Container 2",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.35,
             "duration": 0.05
           },
@@ -229,10 +229,10 @@
         },
         {
           "actor": "Container 2",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.65,
             "duration": 0.05
           },
@@ -246,8 +246,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.45,
             "duration": 0.15
           },
@@ -261,8 +261,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.55,
             "duration": 0.15
           },
@@ -270,10 +270,10 @@
         },
         {
           "actor": "Container 3",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.4,
             "duration": 0.05
           },
@@ -281,10 +281,10 @@
         },
         {
           "actor": "Container 3",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.7,
             "duration": 0.05
           },
@@ -298,8 +298,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.5,
             "duration": 0.15
           },
@@ -313,8 +313,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.6,
             "duration": 0.15
           },
@@ -322,10 +322,10 @@
         },
         {
           "actor": "Container 4",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.45,
             "duration": 0.05
           },
@@ -333,10 +333,10 @@
         },
         {
           "actor": "Container 4",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.75,
             "duration": 0.05
           },
@@ -350,8 +350,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.45,
             "duration": 0.15
           },
@@ -365,8 +365,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.65,
             "duration": 0.15
           },
@@ -374,10 +374,10 @@
         },
         {
           "actor": "Container 5",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.4,
             "duration": 0.05
           },
@@ -385,10 +385,10 @@
         },
         {
           "actor": "Container 5",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.8,
             "duration": 0.05
           },
@@ -402,8 +402,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.5,
             "duration": 0.15
           },
@@ -417,8 +417,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.7,
             "duration": 0.15
           },
@@ -426,10 +426,10 @@
         },
         {
           "actor": "Container 6",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.45,
             "duration": 0.05
           },
@@ -437,10 +437,10 @@
         },
         {
           "actor": "Container 6",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.85,
             "duration": 0.05
           },
@@ -454,8 +454,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.55,
             "duration": 0.15
           },
@@ -469,8 +469,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.75,
             "duration": 0.15
           },
@@ -478,10 +478,10 @@
         },
         {
           "actor": "Container 7",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.5,
             "duration": 0.05
           },
@@ -489,10 +489,10 @@
         },
         {
           "actor": "Container 7",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.9,
             "duration": 0.05
           },
@@ -506,8 +506,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.6,
             "duration": 0.15
           },
@@ -521,8 +521,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.8,
             "duration": 0.15
           },
@@ -530,10 +530,10 @@
         },
         {
           "actor": "Container 8",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.55,
             "duration": 0.05
           },
@@ -541,10 +541,10 @@
         },
         {
           "actor": "Container 8",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.95,
             "duration": 0.05
           },

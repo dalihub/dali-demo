@@ -938,11 +938,11 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
       mVersionPopup = Dali::Toolkit::Popup::New();
 
       Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( "Version information" );
-      titleActor.SetName( "title-actor" );
+      titleActor.SetName( "titleActor" );
       titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
 
       Toolkit::TextLabel contentActor = Toolkit::TextLabel::New( stream.str() );
-      contentActor.SetName( "content-actor" );
+      contentActor.SetName( "contentActor" );
       contentActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
       contentActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
       contentActor.SetPadding( Padding( 0.0f, 0.0f, 20.0f, 0.0f ) );

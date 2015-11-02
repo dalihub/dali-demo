@@ -95,7 +95,7 @@ public:
     mModel3dView = Model3dView::New( MODEL_FILE[0], MATERIAL_FILE[0], IMAGE_PATH );
     mModel3dView.SetParentOrigin( ParentOrigin::CENTER );
     mModel3dView.SetAnchorPoint( AnchorPoint::CENTER );
-    mModel3dView.SetName( "model3d-view-control" );
+    mModel3dView.SetName( "model3dViewControl" );
     mModel3dView.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mModel3dView.SetSize(screenSize);
 

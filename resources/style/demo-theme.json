@@ -24,53 +24,53 @@ distributing this software or its derivatives.
   {
     "textlabel-Rosemary":
     {
-      "font-family":"Rosemary"
+      "fontFamily":"Rosemary"
     },
     "textlabel":
     {
-      "font-style":"Regular",
-      "point-size":18
+      "fontStyle":"Regular",
+      "pointSize":18
     },
     "launcherlabel":
     {
-      "point-size":18
+      "pointSize":18
     },
 
     "toolbarlabel":
     {
-      "point-size":18
+      "pointSize":18
     },
 
     "builderlabel":
     {
-      "point-size":13
+      "pointSize":13
     },
 
     "scrollview":
     {
-      "overshoot-effect-color":"B018"
+      "overshootEffectColor":"B018"
     },
 
     "grouplabel":
     {
-      "point-size":9
+      "pointSize":9
     },
 
     "buttonlabel":
     {
-      "point-size":11
+      "pointSize":11
     },
 
     "launcherbackground":
     {
       "background":
       {
-        "renderer-type": "gradient-renderer",
-        "gradient-center": [240, 400],
-        "gradient-radius": 932,
-        "gradient-units": "user-space",
-        "gradient-stop-color": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]],
-        "gradient-stop-offset":[0.0,1.0]
+        "rendererType": "gradientRenderer",
+        "gradientCenter": [240, 400],
+        "gradientRadius": 932,
+        "gradientUnits": "userSpace",
+        "gradientStopColor": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]],
+        "gradientStopOffset":[0.0,1.0]
       }
     }
   }

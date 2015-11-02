@@ -1,10 +1,10 @@
 {
   "templates":
   {
-    "circle-control":
+    "circleControl":
     {
       "type": "ImageActor",
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         70,
         70,
@@ -20,7 +20,7 @@
         "filename": "{DALI_IMAGE_DIR}circle.png"
       }
     },
-    "rectangle-control":
+    "rectangleControl":
     {
       "type": "Control",
       "size": [
@@ -29,7 +29,7 @@
         1
       ],
       "background": {"color": [0.95, 0.41, 0.18, 1] },
-      "color-alpha": 0
+      "colorAlpha": 0
     }
   },
   "stage": [
@@ -42,7 +42,7 @@
         105,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         20,
         20,
@@ -50,10 +50,10 @@
       ],
       "sizeAspectRatio": false,
       "background": { "color": [0.85, 0.75, 0.45, 1] },
-      "color-alpha": 0
+      "colorAlpha": 0
     },
     {
-      "type": "circle-control",
+      "type": "circleControl",
       "name": "Circle1",
       "position": [
         84,
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "type": "circle-control",
+      "type": "circleControl",
       "name": "Circle2",
       "position": [
         151,
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "type": "circle-control",
+      "type": "circleControl",
       "name": "Circle3",
       "position": [
         285,
@@ -87,7 +87,7 @@
       ]
     },
     {
-      "type": "circle-control",
+      "type": "circleControl",
       "name": "Circle4",
       "position": [
         218,
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "type": "rectangle-control",
+      "type": "rectangleControl",
       "name": "Rect1",
       "position": [
         50,
@@ -105,7 +105,7 @@
       ]
     },
     {
-      "type": "rectangle-control",
+      "type": "rectangleControl",
       "name": "Rect2",
       "position": [
         120,
@@ -114,7 +114,7 @@
       ]
     },
     {
-      "type": "rectangle-control",
+      "type": "rectangleControl",
       "name": "Rect3",
       "position": [
         190,
@@ -123,7 +123,7 @@
       ]
     },
     {
-      "type": "rectangle-control",
+      "type": "rectangleControl",
       "name": "Rect4",
       "position": [
         260,
@@ -143,8 +143,8 @@
             198,
             -1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -158,8 +158,8 @@
             190,
             -1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.05
           },
@@ -173,8 +173,8 @@
             170,
             -1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.05,
             "duration": 0.05
           },
@@ -188,8 +188,8 @@
             150,
             -1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.1,
             "duration": 0.051
           },
@@ -203,8 +203,8 @@
             125,
             -1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.151,
             "duration": 0.049
           },
@@ -218,8 +218,8 @@
             100,
             -1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.2,
             "duration": 0.051
           },
@@ -233,8 +233,8 @@
             70,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -248,8 +248,8 @@
             20,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.151,
             "duration": 0.1
           },
@@ -263,8 +263,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -278,8 +278,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.325
           },
@@ -293,8 +293,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -308,8 +308,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.049,
             "duration": 0.301
           },
@@ -323,8 +323,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -338,8 +338,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.1,
             "duration": 0.272
           },
@@ -353,8 +353,8 @@
             20,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -368,8 +368,8 @@
             210,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.227,
             "duration": 0.122
           },
@@ -377,10 +377,10 @@
         },
         {
           "actor": "topContainer",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -388,10 +388,10 @@
         },
         {
           "actor": "topContainer",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.101,
             "duration": 0.249
           },
@@ -405,8 +405,8 @@
             280,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.1,
             "duration": 0.075
           },
@@ -420,8 +420,8 @@
             260,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.175,
             "duration": 0.075
           },
@@ -435,8 +435,8 @@
             250,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.25,
             "duration": 0.075
           },
@@ -444,10 +444,10 @@
         },
         {
           "actor": "Rect1",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -455,10 +455,10 @@
         },
         {
           "actor": "Rect1",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.325
           },
@@ -472,8 +472,8 @@
             280,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.148,
             "duration": 0.077
           },
@@ -487,8 +487,8 @@
             260,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.225,
             "duration": 0.075
           },
@@ -502,8 +502,8 @@
             250,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.3,
             "duration": 0.072
           },
@@ -511,10 +511,10 @@
         },
         {
           "actor": "Rect2",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -522,10 +522,10 @@
         },
         {
           "actor": "Rect2",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.05,
             "duration": 0.322
           },
@@ -539,8 +539,8 @@
             280,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.2,
             "duration": 0.074
           },
@@ -554,8 +554,8 @@
             260,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.274,
             "duration": 0.073
           },
@@ -569,8 +569,8 @@
             250,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.347,
             "duration": 0.078
           },
@@ -578,10 +578,10 @@
         },
         {
           "actor": "Rect3",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -589,10 +589,10 @@
         },
         {
           "actor": "Rect3",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.099,
             "duration": 0.326
           },
@@ -606,8 +606,8 @@
             280,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.251,
             "duration": 0.075
           },
@@ -621,8 +621,8 @@
             260,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.326,
             "duration": 0.074
           },
@@ -636,8 +636,8 @@
             250,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.4,
             "duration": 0.075
           },
@@ -645,10 +645,10 @@
         },
         {
           "actor": "Rect4",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.025
           },
@@ -656,10 +656,10 @@
         },
         {
           "actor": "Rect4",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 1,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.148,
             "duration": 0.327
           },

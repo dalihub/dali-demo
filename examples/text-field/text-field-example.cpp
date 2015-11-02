@@ -115,7 +115,7 @@ public:
   TextField CreateTextField( const Vector2& stageSize, const std::string& text )
   {
     TextField field = TextField::New();
-    field.SetName("text-field");
+    field.SetName("textField");
     field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     field.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     field.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );

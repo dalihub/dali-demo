@@ -47,7 +47,7 @@ public:
 
     TextLabel textLabel = TextLabel::New( "Hello World" );
     textLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    textLabel.SetName( "hello-world-label" );
+    textLabel.SetName( "helloWorldLabel" );
     stage.Add( textLabel );
 
     // Respond to a click anywhere on the stage

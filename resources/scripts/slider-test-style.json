@@ -23,17 +23,17 @@
 {
   "styles": {
     "slider": {
-      "anchor-point": [0.5, 0.0, 0.0],
-      "parent-origin": [0.5, 0.0, 0.0],
+      "anchorPoint": [0.5, 0.0, 0.0],
+      "parentOrigin": [0.5, 0.0, 0.0],
       "position": [0, 300, 0],
       "size": [480, 72, 1],
-      "lower-bound": 0,
-      "upper-bound": 10,
-      "show-popup": true,
-      "show-value": true,
-      "value-precision": 2,
+      "lowerBound": 0,
+      "upperBound": 10,
+      "showPopup": true,
+      "showValue": true,
+      "valuePrecision": 2,
       "value": 0.0,
-      "popup-text-color": [0.0, 1.0, 1.0, 1.0]
+      "popupTextColor": [0.0, 1.0, 1.0, 1.0]
     }
   }
 }
