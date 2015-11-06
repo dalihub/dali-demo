@@ -3,9 +3,9 @@
     {
       "type": "Control",
       "background": {"color": [ 1, 1, 1, 1 ]},
-      "parent-origin": "TOP_LEFT",
-      "anchor-point": "TOP_LEFT",
-      "draw-mode": "STENCIL",
+      "parentOrigin": "TOP_LEFT",
+      "anchorPoint": "TOP_LEFT",
+      "drawMode": "STENCIL",
       "size": [ 360, 630, 0 ]
     },
     {
@@ -17,7 +17,7 @@
         317,
         -1
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         360,
         640,
@@ -28,8 +28,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-main.png",
         "width": 361,
         "height": 640,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       },
       "signals": [
         {
@@ -48,7 +48,7 @@
         139,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         360,
         282,
@@ -59,8 +59,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-background.png",
         "width": 360,
         "height": 282,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -72,7 +72,7 @@
         824.0520479877184,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         393.04,
         378.08,
@@ -96,7 +96,7 @@
         402.004657366638,
         1
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         53,
         52,
@@ -107,8 +107,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-image.png",
         "width": 53,
         "height": 52,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -120,14 +120,14 @@
         405,
         1
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         152.89,
         24.33,
         1
       ],
       "sizeAspectRatio": false,
-      "markup-enabled": true,
+      "markupEnabled": true,
       "color": [
         0.2,
         0.2,
@@ -147,7 +147,7 @@
         611.5127067356418,
         1
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         80,
         71,
@@ -158,8 +158,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-add.png",
         "width": 80,
         "height": 71,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -171,7 +171,7 @@
         677.5051724136168,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         360,
         77,
@@ -182,8 +182,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-messenger.png",
         "width": 360,
         "height": 77,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -195,7 +195,7 @@
         704.5075140543304,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         360,
         79,
@@ -206,8 +206,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-email.png",
         "width": 360,
         "height": 79,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -219,7 +219,7 @@
         727.0088875903122,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         360,
         80,
@@ -230,8 +230,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-mobile.png",
         "width": 360,
         "height": 80,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -243,7 +243,7 @@
         749.5101801844454,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         360,
         75,
@@ -254,8 +254,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-home.png",
         "width": 360,
         "height": 75,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -267,7 +267,7 @@
         50.289953613295076,
         1
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         25,
         20.55,
@@ -278,8 +278,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-circle.png",
         "width": 100,
         "height": 100,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -291,7 +291,7 @@
         817.499887599389,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         360,
         77,
@@ -302,8 +302,8 @@
         "filename": "{DALI_IMAGE_DIR}contacts-plain.png",
         "width": 360,
         "height": 77,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -315,7 +315,7 @@
         401.485,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         693.96,
         84.97,
@@ -347,8 +347,8 @@
             609.5059654033565,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.503,
             "duration": 0.005
           },
@@ -362,8 +362,8 @@
             20,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.071,
             "duration": 0.005
           },
@@ -377,8 +377,8 @@
             71,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.498,
             "duration": 0.3
           },
@@ -392,8 +392,8 @@
             611.5150431968526,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.498,
             "duration": 0.005
           },
@@ -407,8 +407,8 @@
             239.01,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.22,
             "duration": 0.396
           },
@@ -422,8 +422,8 @@
             402,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.437,
             "duration": 0.396
           },
@@ -437,8 +437,8 @@
             242,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.22,
             "duration": 0.395
           },
@@ -453,8 +453,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.22,
             "duration": 0.395
           },
@@ -468,8 +468,8 @@
             35.33,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.22,
             "duration": 0.395
           },
@@ -483,8 +483,8 @@
             405,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.435,
             "duration": 0.395
           },
@@ -499,8 +499,8 @@
             0.2,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.435,
             "duration": 0.395
           },
@@ -514,8 +514,8 @@
             24.33,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.435,
             "duration": 0.395
           },
@@ -529,8 +529,8 @@
             138.98,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.222,
             "duration": 0.391
           },
@@ -544,8 +544,8 @@
             138.98,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.435,
             "duration": 0.391
           },
@@ -559,8 +559,8 @@
             320.50795521899136,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.346,
             "duration": 0.372
           },
@@ -574,8 +574,8 @@
             677.51,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.34,
             "duration": 0.372
           },
@@ -589,8 +589,8 @@
             395.5,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.432,
             "duration": 0.39
           },
@@ -604,8 +604,8 @@
             704.5,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.218,
             "duration": 0.39
           },
@@ -619,8 +619,8 @@
             470.01,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.543,
             "duration": 0.385
           },
@@ -634,8 +634,8 @@
             727.01,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.11,
             "duration": 0.385
           },
@@ -649,8 +649,8 @@
             541.5,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.635,
             "duration": 0.406
           },
@@ -664,8 +664,8 @@
             749.5,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 3.993,
             "duration": 0.406
           },
@@ -679,8 +679,8 @@
             608.5139116202711,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.726,
             "duration": 0.435
           },
@@ -694,8 +694,8 @@
             817.51,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 3.865,
             "duration": 0.435
           },
@@ -709,8 +709,8 @@
             48.280475138643396,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.66,
             "duration": 0.005
           },
@@ -724,8 +724,8 @@
             48.280475138643396,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.851,
             "duration": 0.008
           },
@@ -739,8 +739,8 @@
             80,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 2.665,
             "duration": 1.187
           },
@@ -754,8 +754,8 @@
             470.05397482417106,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 1.031,
             "duration": 0.561
           },
@@ -769,8 +769,8 @@
             467.042499801712,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 4.342,
             "duration": 0.005
           },
@@ -784,8 +784,8 @@
             402.425,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.904
           },

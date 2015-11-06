@@ -24,74 +24,74 @@ distributing this software or its derivatives.
   {
     "textlabel-Rosemary":
     {
-    "font-family":"Rosemary"
+    "fontFamily":"Rosemary"
     },
     "textlabel":
     {
-      "font-style":"Regular",
-      "point-size":18
+      "fontStyle":"Regular",
+      "pointSize":18
     },
-    "textlabel-font-size-0":
+    "textlabelFontSize0":
     {
-      "point-size":8
+      "pointSize":8
     },
-    "textlabel-font-size-1":
+    "textlabelFontSize1":
     {
-      "point-size":10
+      "pointSize":10
     },
-    "textlabel-font-size-2":
+    "textlabelFontSize2":
     {
-      "point-size":15
+      "pointSize":15
     },
-    "textlabel-font-size-3":
+    "textlabelFontSize3":
     {
-      "point-size":19
+      "pointSize":19
     },
-    "textlabel-font-size-4":
+    "textlabelFontSize4":
     {
-      "point-size":25
+      "pointSize":25
     },
 
     "launcherlabel":
     {
-      "point-size":8
+      "pointSize":8
     },
 
     "toolbarlabel":
     {
-      "point-size":10
+      "pointSize":10
     },
 
     "builderlabel":
     {
-      "point-size":10
+      "pointSize":10
     },
 
     "scrollview":
     {
-      "overshoot-effect-color":"B018"
+      "overshootEffectColor":"B018"
     },
 
     "grouplabel":
     {
-      "point-size":6
+      "pointSize":6
     },
 
     "buttonlabel":
     {
-      "point-size":8
+      "pointSize":8
     },
 
     "launcherbackground":
     {
       "background":
       {
-        "renderer-type": "gradient-renderer",
-        "gradient-center": [360, 640],
-        "gradient-radius": 1468,
-        "gradient-units": "user-space",
-        "gradient-stop-color": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]],
-        "gradient-stop-offset":[0.0,1.0]
+        "rendererType": "gradientRenderer",
+        "gradientCenter": [360, 640],
+        "gradientRadius": 1468,
+        "gradientUnits": "userSpace",
+        "gradientStopColor": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]],
+        "gradientStopOffset":[0.0,1.0]
       }
     }
   }

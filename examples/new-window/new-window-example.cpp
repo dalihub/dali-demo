@@ -211,7 +211,7 @@ void NewWindowController::Create( Application& app )
 
   Image image = ResourceImage::New(LOGO_IMAGE);
   ImageView imageView = ImageView::New(image);
-  imageView.SetName("dali-logo");
+  imageView.SetName("daliLogo");
   imageView.SetParentOrigin(ParentOrigin::CENTER);
   imageView.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
   logoLayoutActor.Add(imageView);
@@ -477,7 +477,7 @@ Dali::Property::Map NewWindowController::CreateColorModifierer()
 
  Property::Map map;
  Property::Map customShader;
- customShader[ "fragment-shader" ] = fragmentShader;
+ customShader[ "fragmentShader" ] = fragmentShader;
  map[ "shader" ] = customShader;
 
  return map;

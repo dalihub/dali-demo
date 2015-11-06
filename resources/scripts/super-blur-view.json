@@ -22,10 +22,10 @@
     "blur": {
       "duration": 1,
       "properties": [{
-        "actor": "super-blur",
-        "property": "blur-strength",
+        "actor": "superBlur",
+        "property": "blurStrength",
         "value": 1,
-        "time-period": {
+        "timePeriod": {
           "delay": 0,
           "duration": 1
         }
@@ -34,10 +34,10 @@
     "clear": {
       "duration": 1,
       "properties": [{
-        "actor": "super-blur",
-        "property": "blur-strength",
+        "actor": "superBlur",
+        "property": "blurStrength",
         "value": 0,
-        "time-period": {
+        "timePeriod": {
           "delay": 0,
           "duration": 1
         }
@@ -48,9 +48,9 @@
     // SuperBlurView
     {
       "type": "SuperBlurView",
-      "name": "super-blur",
-      "parent-origin": "TOP_CENTER",
-      "anchor-point": "TOP_CENTER",
+      "name": "superBlur",
+      "parentOrigin": "TOP_CENTER",
+      "anchorPoint": "TOP_CENTER",
       "position": [0, 10, 0],
       "size": [460, 600, 0],
       "image": {
@@ -61,17 +61,17 @@
     // Button to blur/clear
     {
       "type": "PushButton",
-      "name": "toggle-button",
-      "parent-origin": "BOTTOM_CENTER",
-      "anchor-point": "BOTTOM_CENTER",
+      "name": "toggleButton",
+      "parentOrigin": "BOTTOM_CENTER",
+      "anchorPoint": "BOTTOM_CENTER",
       "position": [0, 0, 0],
       "size": [200, 100, 0],
-      "label-actor": {
+      "labelActor": {
         "type": "TextLabel",
         "text": "Blur"
       },
-      "unselected-state-image": "{DALI_IMAGE_DIR}button-background.png",
-      "selected-state-image": "{DALI_IMAGE_DIR}button-background.png",
+      "unselectedStateImage": "{DALI_IMAGE_DIR}button-background.png",
+      "selectedStateImage": "{DALI_IMAGE_DIR}button-background.png",
       "signals": [{
         "name": "pressed",
         "action": "play",

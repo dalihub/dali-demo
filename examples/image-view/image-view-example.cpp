@@ -141,6 +141,8 @@ class ImageViewController: public ConnectionTracker
     buttonsTable.AddChild( button3, Toolkit::TableView::CellPosition( 2, 0 ) );
 
     mContentLayer.Add(buttonsTable);
+
+    Stage::GetCurrent().KeyEventSignal().Connect(this, &ImageViewController::OnKeyEvent);
   }
 
 private:
@@ -218,6 +220,20 @@ private:
     }
 
     return true;
+  }
+
+  /**
+   * Main key event handler
+   */
+  void OnKeyEvent(const KeyEvent& event)
+  {
+    if(event.state == KeyEvent::Down)
+    {
+      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
   }
 
 private:
