@@ -570,7 +570,7 @@ public:
     }
     const float scale = pinch.scale;
 
-    if( scale != mLastPinchScale )
+    if( ! Equals( scale, mLastPinchScale ) )
     {
       if ( scale < mLastPinchScale )
       {
