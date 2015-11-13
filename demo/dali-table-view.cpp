@@ -106,8 +106,8 @@ struct AnimateBubbleConstraint
 {
 public:
   AnimateBubbleConstraint( const Vector3& initialPos, float scale )
-      : mInitialX( initialPos.x ),
-        mScale( scale )
+  : mInitialX( initialPos.x ),
+    mScale( scale )
   {
   }
 
@@ -130,7 +130,6 @@ public:
 private:
   float mInitialX;
   float mScale;
-  float mShapeSize;
 };
 
 bool CompareByTitle( const Example& lhs, const Example& rhs )

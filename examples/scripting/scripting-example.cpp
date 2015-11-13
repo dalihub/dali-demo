@@ -48,9 +48,7 @@ int main( int argc, char* argv[] )
   {
     std::string arg( argv[i] );
 
-    size_t idx = std::string::npos;
-
-    idx = arg.find( ".json" );
+    size_t idx = arg.find( ".json" );
     if( idx != std::string::npos )
     {
       jSONFileName = arg;

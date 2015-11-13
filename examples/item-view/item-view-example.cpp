@@ -16,17 +16,10 @@
  */
 
 #include <sstream>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <cstdlib> // rand
 #include "shared/view.h"
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/devel-api/images/atlas.h>
-#include <dali/devel-api/rendering/cull-face.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -101,10 +94,6 @@ const char* IMAGE_PATHS[] = {
 
 const unsigned int NUM_IMAGES = sizeof(IMAGE_PATHS) / sizeof(char*);
 
-const unsigned int IMAGE_WIDTH = 256;
-const unsigned int IMAGE_HEIGHT = 256;
-const unsigned int NUM_IMAGE_PER_ROW_IN_ATLAS = 8;
-
 const char* BACKGROUND_IMAGE( "" );
 const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
 const char* EDIT_IMAGE( DALI_IMAGE_DIR "icon-edit.png" );
@@ -128,14 +117,7 @@ const char* SPIRAL_LABEL("Spiral");
 const char* GRID_LABEL("Grid");
 const char* DEPTH_LABEL("Depth");
 
-const char* ITEM_BORDER_IMAGE_PATH( DALI_IMAGE_DIR "frame-128x128.png" );
-const Vector3 ITEM_BORDER_MARGIN_SIZE(24, 24, 0);
-
-// These values depend on the border image
-const float ITEM_IMAGE_BORDER_LEFT   = 13.0f;
-const float ITEM_IMAGE_BORDER_RIGHT  = 13.0f;
-const float ITEM_IMAGE_BORDER_TOP    = 13.0f;
-const float ITEM_IMAGE_BORDER_BOTTOM = 13.0f;
+const float ITEM_BORDER_SIZE = 2.0f;
 
 const float DEPTH_LAYOUT_ITEM_SIZE_FACTOR_PORTRAIT = 1.0f;
 const float DEPTH_LAYOUT_ITEM_SIZE_FACTOR_LANDSCAPE = 0.8f;
@@ -217,11 +199,9 @@ public:
 
     Vector2 stageSize = Stage::GetCurrent().GetSize();
 
-    // Create a border image shared by all the item actors
-    mBorderImage = ResourceImage::New(ITEM_BORDER_IMAGE_PATH);
-
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
+
     Layer contents = DemoHelper::CreateView( mApplication,
                                              mView,
                                              mToolBar,
@@ -292,11 +272,7 @@ public:
     mReplaceButton.SetVisible( false );
     stage.Add( mReplaceButton );
 
-    // Store one 1x1 white image for multiple items to share for backgrounds:
-    mWhiteImage = BufferImage::WHITE();
-
     // Create the item view actor
-    mImageAtlas = CreateImageAtlas();
     mItemView = ItemView::New(*this);
     mItemView.SetParentOrigin(ParentOrigin::CENTER);
     mItemView.SetAnchorPoint(AnchorPoint::CENTER);
@@ -363,6 +339,22 @@ public:
    */
   void SetLayout( int layoutId )
   {
+    Stage stage = Dali::Stage::GetCurrent();
+    switch( mCurrentLayout )
+    {
+      case SPIRAL_LAYOUT:
+      case DEPTH_LAYOUT:
+      {
+        stage.GetRootLayer().SetBehavior(Layer::LAYER_3D);
+        break;
+      }
+      case GRID_LAYOUT:
+      {
+        stage.GetRootLayer().SetBehavior(Layer::LAYER_2D);
+        break;
+      }
+    }
+
     // Set the new orientation to the layout
     mItemView.GetLayout(layoutId)->SetOrientation(static_cast<ControlOrientation::Type>(mOrientation / 90));
 
@@ -857,61 +849,63 @@ public: // From ItemFactory
    */
   virtual Actor NewItem(unsigned int itemId)
   {
-    // Create an image actor for this item
-    unsigned int imageId = itemId % NUM_IMAGES;
-    ImageActor::PixelArea pixelArea( (imageId%NUM_IMAGE_PER_ROW_IN_ATLAS)*IMAGE_WIDTH,
-                                     (imageId/NUM_IMAGE_PER_ROW_IN_ATLAS)*IMAGE_HEIGHT,
-                                      IMAGE_WIDTH,
-                                      IMAGE_HEIGHT );
-    Actor actor = ImageActor::New(mImageAtlas, pixelArea);
+    // Create an image view for this item
+    ImageView actor = ImageView::New( IMAGE_PATHS[ itemId % NUM_IMAGES ] );
+    actor.SetZ( 0.0f );
     actor.SetPosition( INITIAL_OFFSCREEN_POSITION );
 
     // Add a border image child actor
-    ImageActor borderActor = ImageActor::New(mBorderImage);
+    ImageView borderActor = ImageView::New();
     borderActor.SetParentOrigin( ParentOrigin::CENTER );
     borderActor.SetAnchorPoint( AnchorPoint::CENTER );
-    borderActor.SetPosition( 0.f, 0.f, 1.f );
-    borderActor.SetStyle( ImageActor::STYLE_NINE_PATCH );
-    borderActor.SetNinePatchBorder( Vector4( ITEM_IMAGE_BORDER_LEFT, ITEM_IMAGE_BORDER_TOP, ITEM_IMAGE_BORDER_RIGHT, ITEM_IMAGE_BORDER_BOTTOM ) );
-    borderActor.SetColorMode( USE_OWN_MULTIPLY_PARENT_COLOR ); // darken with parent image-actor
     borderActor.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
-    borderActor.SetSizeModeFactor( ITEM_BORDER_MARGIN_SIZE );
+    borderActor.SetSizeModeFactor( Vector3( 2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f ) );
+    borderActor.SetColorMode( USE_PARENT_COLOR );
+
+    Property::Map borderProperty;
+    borderProperty.Insert( "rendererType", "borderRenderer" );
+    borderProperty.Insert( "borderColor", Color::WHITE );
+    borderProperty.Insert( "borderSize", ITEM_BORDER_SIZE );
+    borderActor.SetProperty( ImageView::Property::IMAGE, borderProperty );
+
     actor.Add(borderActor);
+
     actor.SetKeyboardFocusable( true );
 
     Vector3 spiralItemSize;
     static_cast<ItemLayout&>(*mSpiralLayout).GetItemSize( 0u, Vector3( Stage::GetCurrent().GetSize() ), spiralItemSize );
 
     // Add a checkbox child actor; invisible until edit-mode is enabled
-
-    ImageActor checkbox = ImageActor::New( mWhiteImage );
+    ImageView checkbox = ImageView::New();
     checkbox.SetName( "CheckBox" );
-    checkbox.SetColor( Vector4(0.0f,0.0f,0.0f,0.6f) );
+    checkbox.SetColorMode( USE_PARENT_COLOR );
     checkbox.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     checkbox.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
     checkbox.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
     checkbox.SetPosition( -SELECTION_BORDER_WIDTH, SELECTION_BORDER_WIDTH );
-    checkbox.SetZ( 1.0f );
-    SetCullFace(checkbox, Dali::CullBack);
-    checkbox.SetSortModifier( 150.0f );
+    checkbox.SetZ( 0.1f );
+
+    Property::Map solidColorProperty;
+    solidColorProperty.Insert( "rendererType", "colorRenderer" );
+    solidColorProperty.Insert( "blendColor", Vector4(0.f, 0.f, 0.f, 0.6f) );
+    checkbox.SetProperty( ImageView::Property::IMAGE, solidColorProperty );
+
     if( MODE_REMOVE_MANY  != mMode &&
         MODE_INSERT_MANY  != mMode &&
         MODE_REPLACE_MANY != mMode )
     {
       checkbox.SetVisible( false );
     }
-    actor.Add( checkbox );
+    borderActor.Add( checkbox );
 
-    ImageActor tick = ImageActor::New( ResourceImage::New(SELECTED_IMAGE) );
-    tick.SetColorMode( USE_OWN_COLOR );
+    ImageView tick = ImageView::New( SELECTED_IMAGE );
     tick.SetName( "Tick" );
+    tick.SetColorMode( USE_PARENT_COLOR );
     tick.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     tick.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
     tick.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
-    tick.SetZ( 1.0f );
-    tick.SetSortModifier( 150.0f );
+    tick.SetZ( 0.2f );
     tick.SetVisible( false );
-    SetCullFace(tick, Dali::CullBack);
     checkbox.Add( tick );
 
     // Connect new items for various editing modes
@@ -924,23 +918,6 @@ public: // From ItemFactory
   }
 
 private:
-
-  /**
-   * Create an Atlas to tile the images inside.
-   */
-  Atlas CreateImageAtlas()
-  {
-    const unsigned int atlas_width = IMAGE_WIDTH*NUM_IMAGE_PER_ROW_IN_ATLAS;
-    const unsigned int atlas_height = IMAGE_HEIGHT*ceil( static_cast<float>(NUM_IMAGES)/ static_cast<float>(NUM_IMAGE_PER_ROW_IN_ATLAS));
-    Atlas atlas = Atlas::New(atlas_width, atlas_height, Pixel::RGB888);
-
-    for( unsigned int i = 0; i < NUM_IMAGES; i++ )
-    {
-      atlas.Upload( IMAGE_PATHS[i], (i%NUM_IMAGE_PER_ROW_IN_ATLAS)*IMAGE_WIDTH, (i/NUM_IMAGE_PER_ROW_IN_ATLAS)*IMAGE_HEIGHT );
-    }
-
-    return atlas;
-  }
 
   /**
    * Sets/Updates the title of the View
@@ -984,8 +961,6 @@ private:
   TextLabel mTitleActor;             ///< The Toolbar's Title.
 
   ItemView mItemView;
-  Image mBorderImage;
-  Atlas mImageAtlas;
   unsigned int mCurrentLayout;
   float mDurationSeconds;
 
@@ -998,8 +973,6 @@ private:
   Toolkit::PushButton mDeleteButton;
   Toolkit::PushButton mInsertButton;
   Toolkit::PushButton mReplaceButton;
-
-  BufferImage mWhiteImage;
 };
 
 void RunTest(Application& app)
