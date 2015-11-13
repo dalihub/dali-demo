@@ -465,7 +465,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
     content.Add( image );
 
     // Add stencil
-    ImageActor stencil = NewStencilImage();
+    Toolkit::ImageView stencil = NewStencilImage();
     stencil.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     image.Add( stencil );
   }
@@ -490,20 +490,18 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   return content;
 }
 
-ImageActor DaliTableView::NewStencilImage()
+Toolkit::ImageView DaliTableView::NewStencilImage()
 {
-  Image alpha = ResourceImage::New( TILE_BACKGROUND_ALPHA );
+  Toolkit::ImageView stencil = ImageView::New( TILE_BACKGROUND_ALPHA );
 
-  ImageActor stencilActor = ImageActor::New( alpha );
+  stencil.SetParentOrigin( ParentOrigin::CENTER );
+  stencil.SetAnchorPoint( AnchorPoint::CENTER );
+  stencil.SetDrawMode( DrawMode::STENCIL );
 
-  stencilActor.SetParentOrigin( ParentOrigin::CENTER );
-  stencilActor.SetAnchorPoint( AnchorPoint::CENTER );
-  stencilActor.SetDrawMode( DrawMode::STENCIL );
+  Property::Map shaderEffect = CreateAlphaDiscardEffect();
+  stencil.SetProperty( Toolkit::ImageView::Property::IMAGE, shaderEffect );
 
-  Dali::ShaderEffect shaderEffect = CreateAlphaDiscardEffect();
-  stencilActor.SetShaderEffect( shaderEffect );
-
-  return stencilActor;
+  return stencil;
 }
 
 bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )

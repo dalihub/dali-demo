@@ -151,7 +151,7 @@ private: // Application callbacks & implementation
    *
    * @return The stencil image
    */
-  Dali::ImageActor NewStencilImage();
+  Dali::Toolkit::ImageView NewStencilImage();
 
   // Signal handlers
 
