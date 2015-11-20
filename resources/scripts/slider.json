@@ -89,13 +89,11 @@
     "valuePrescision": 0,
     "value": 100.0,
     "hitRegion": [0, 48],
-    "backingRegion": [0, 10],
+    "backingRegion": [0, 30],
     "handleRegion": [48, 48],
-    "backingImageName": "{DALI_IMAGE_DIR}circle_point_32x32.png",
-    "handleImageName": "{DALI_IMAGE_DIR}circle_point_shadow_32x32.png",
-    "progressImageName": "{DALI_IMAGE_DIR}circle_point.png",
-    "backingScale9Border": [16, 0, 16, 0],
-    "progressScale9Border": [16, 0, 16, 0]
+    "backingImageName": "{DALI_IMAGE_DIR}button-up-14.9.png",
+    "handleImageName": "{DALI_IMAGE_DIR}blocks-ball.png",
+    "progressImageName": "{DALI_IMAGE_DIR}button-down.9.png"
   }, {
     "type": "Slider",
     "parentOrigin": "TOP_CENTER",
