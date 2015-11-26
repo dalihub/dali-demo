@@ -34,9 +34,15 @@
 	<ui-application appid="item-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/item-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Item View</label>
 	</ui-application>
-	<ui-application appid="magnifier.example" exec="/usr/apps/com.samsung.dali-demo/bin/magnifier.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Magnifier</label>
-	</ui-application>
+  <ui-application appid="magnifier.example" exec="/usr/apps/com.samsung.dali-demo/bin/magnifier.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+    <label>Magnifier</label>
+  </ui-application>
+  <ui-application appid="metaball-explosion.example" exec="/usr/apps/com.samsung.dali-demo/bin/metaball-explosion.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+    <label>Metaball Explosion</label>
+  </ui-application>
+  <ui-application appid="metaball-refrac.example" exec="/usr/apps/com.samsung.dali-demo/bin/metaball-refrac.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+    <label>Metaball Refractions</label>
+  </ui-application>
   <ui-application appid="motion-blur.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-blur.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
     <label>Motion Blur</label>
   </ui-application>
