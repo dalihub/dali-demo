@@ -142,15 +142,29 @@ public:
   // Resize the text-label with pan gesture
   void OnPan( Actor actor, const PanGesture& gesture )
   {
+    // Reset mLayoutSize when the pan starts
+    if( gesture.state == Gesture::Started )
+    {
+      if( mLayoutSize.x < 2.0f )
+      {
+        mLayoutSize.x = 2.0f;
+      }
+
+      if( mLayoutSize.y < 2.0f )
+      {
+        mLayoutSize.y = 2.0f;
+      }
+    }
+
     mLayoutSize.x += gesture.displacement.x * 2.0f;
     mLayoutSize.y += gesture.displacement.y * 2.0f;
 
-    if( mLayoutSize.x >= 2.0f &&
+    if( mLayoutSize.x >= 2.0f ||
         mLayoutSize.y >= 2.0f )
     {
       // Avoid pixel mis-alignment issue
-      Vector2 clampedSize = Vector2( ConvertToEven(static_cast<int>(mLayoutSize.x)),
-                                     ConvertToEven(static_cast<int>(mLayoutSize.y)) );
+      Vector2 clampedSize = Vector2( std::max( ConvertToEven( static_cast<int>( mLayoutSize.x )), 2 ),
+                                     std::max( ConvertToEven( static_cast<int>( mLayoutSize.y )), 2 ) );
 
       mContainer.SetSize( clampedSize );
     }
