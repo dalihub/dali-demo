@@ -19,6 +19,7 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
 using namespace Dali;
 
@@ -111,8 +112,12 @@ public:
     // The Init signal is received once (only) during the Application lifetime
     Stage stage = Stage::GetCurrent();
 
-    // Respond to key events
-    stage.KeyEventSignal().Connect(this, &PopupExample::OnKeyEvent);
+    // Respond to key events if not handled
+    Toolkit::KeyInputFocusManager keyInputFocusManager = Toolkit::KeyInputFocusManager::Get();
+    if( keyInputFocusManager )
+    {
+      keyInputFocusManager.UnhandledKeyEventSignal().Connect( this, &PopupExample::OnKeyEvent );
+    }
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
@@ -471,7 +476,7 @@ public:
     else if( button.GetName() == POPUP_BUTTON_TOAST_ID )
     {
       // Create a toast popup via the type registry (as it is a named-type).
-      TypeInfo typeInfo = TypeRegistry::Get().GetTypeInfo( "popupToast" );
+      TypeInfo typeInfo = TypeRegistry::Get().GetTypeInfo( "PopupToast" );
       if( typeInfo )
       {
         BaseHandle baseHandle = typeInfo.CreateInstance();
