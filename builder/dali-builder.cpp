@@ -193,6 +193,7 @@ private:
   void ReloadJsonFile(Builder& builder, Layer& layer)
   {
     Stage stage = Stage::GetCurrent();
+    stage.SetBackgroundColor( Color::WHITE );
 
     builder = Builder::New();
     builder.QuitSignal().Connect( this, &ExampleApp::OnBuilderQuit );
