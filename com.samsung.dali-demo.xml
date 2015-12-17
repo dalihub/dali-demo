@@ -142,4 +142,7 @@
 	<ui-application appid="tilt.example" exec="/usr/apps/com.samsung.dali-demo/bin/tilt.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Tilt sensor</label>
 	</ui-application>
+	<ui-application appid="effectse-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/effects-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Effects View</label>
+	</ui-application>
 </manifest>

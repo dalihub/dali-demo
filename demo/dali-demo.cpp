@@ -74,6 +74,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("image-view-svg.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG));
   demo.AddExample(Example("super-blur-bloom.example", DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM));
   demo.AddExample(Example("tilt.example", DALI_DEMO_STR_TITLE_TILT_SENSOR));
+  demo.AddExample(Example("effects-view.example", DALI_DEMO_STR_TITLE_EFFECTS_VIEW));
 
   demo.SortAlphabetically( true );
 
