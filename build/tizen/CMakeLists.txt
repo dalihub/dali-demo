@@ -68,7 +68,8 @@ ENDFOREACH(flag)
 
 INSTALL(FILES ${LOCAL_STYLE_DIR}/demo-theme.json DESTINATION ${STYLE_DIR})
 
-SET(PKG_LIST dali
+SET(PKG_LIST dali-core
+             dali-adaptor
              dali-toolkit)
 
 INCLUDE(FindPkgConfig)

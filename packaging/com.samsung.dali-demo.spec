@@ -11,17 +11,18 @@ Source0:    %{name}-%{version}.tar.gz
 
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
-Requires: dali
-Requires: dali-adaptor
-Requires: dali-toolkit
+
 BuildRequires:  cmake
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-media-player)
-BuildRequires:  dali-toolkit-devel
-BuildRequires:  dali-adaptor-devel
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  gettext-tools
+BuildRequires:  pkgconfig(dali-core)
+BuildRequires:  pkgconfig(dali-toolkit)
+
+# DALi C++ applications always run on dali-adaptor.
+BuildRequires:  pkgconfig(dali-adaptor)
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations
