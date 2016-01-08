@@ -26,13 +26,6 @@
 namespace DemoHelper
 {
 
-enum ControlDepthIndexRanges
-{
-    BACKGROUND_DEPTH_INDEX    = -10000000,
-    CONTENT_DEPTH_INDEX       =  0,
-    DECORATION_DEPTH_INDEX    =  10000000
-};
-
 /**
  * Provide a style for the view and its tool bar.
  */
