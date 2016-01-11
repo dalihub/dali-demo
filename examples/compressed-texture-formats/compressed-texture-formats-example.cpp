@@ -20,9 +20,9 @@
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
 
-const char* IMAGE_FILENAME_ETC         = DALI_IMAGE_DIR "tx-etc1.ktx";
-const char* IMAGE_FILENAME_ASTC_LINEAR = DALI_IMAGE_DIR "tx-astc-4x4-linear.ktx";
-const char* IMAGE_FILENAME_ASTC_SRGB   = DALI_IMAGE_DIR "tx-astc-4x4-srgb.ktx";
+const char* IMAGE_FILENAME_ETC         =        DALI_IMAGE_DIR "tx-etc1.ktx";
+const char* IMAGE_FILENAME_ASTC_LINEAR =        DALI_IMAGE_DIR "tx-astc-4x4-linear.ktx";
+const char* IMAGE_FILENAME_ASTC_LINEAR_NATIVE = DALI_IMAGE_DIR "tx-astc-4x4-linear-native.astc";
 
 /**
  * @brief This example shows 3 images, each of a different compressed texture type.
@@ -57,28 +57,35 @@ public:
     table.SetAnchorPoint( AnchorPoint::CENTER );
     table.SetParentOrigin( ParentOrigin::CENTER );
     table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    table.SetFitHeight( 0u );
-    table.SetFitHeight( 1u );
-    table.SetFitHeight( 2u );
     table.SetRelativeWidth( 0u, 0.5f );
     table.SetRelativeWidth( 1u, 0.5f );
+    table.SetRelativeHeight( 0u, 1.0f / 3.0f );
+    table.SetRelativeHeight( 1u, 1.0f / 3.0f );
+    table.SetRelativeHeight( 2u, 1.0f / 3.0f );
+
 
     // Add text labels.
-    TextLabel textLabel = TextLabel::New( "ETC1:" );
+    TextLabel textLabel = TextLabel::New( "ETC1 (KTX):" );
     textLabel.SetAnchorPoint( AnchorPoint::CENTER );
     textLabel.SetParentOrigin( ParentOrigin::CENTER );
+    textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    textLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     table.AddChild( textLabel, Toolkit::TableView::CellPosition( 0u, 0u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 0u, 0u ), HorizontalAlignment::LEFT, VerticalAlignment::CENTER );
 
-    textLabel = TextLabel::New( "ASTC 4x4 linear:" );
+    textLabel = TextLabel::New( "ASTC (KTX) 4x4 linear:" );
     textLabel.SetAnchorPoint( AnchorPoint::CENTER );
     textLabel.SetParentOrigin( ParentOrigin::CENTER );
+    textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    textLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     table.AddChild( textLabel, Toolkit::TableView::CellPosition( 1u, 0u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 1u, 0u ), HorizontalAlignment::LEFT, VerticalAlignment::CENTER );
 
-    textLabel = TextLabel::New( "ASTC 4x4 sRGB:" );
+    textLabel = TextLabel::New( "ASTC (Native) 4x4 linear:" );
     textLabel.SetAnchorPoint( AnchorPoint::CENTER );
     textLabel.SetParentOrigin( ParentOrigin::CENTER );
+    textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    textLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     table.AddChild( textLabel, Toolkit::TableView::CellPosition( 2u, 0u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 2u, 0u ), HorizontalAlignment::LEFT, VerticalAlignment::CENTER );
 
@@ -93,7 +100,7 @@ public:
     imageView.SetParentOrigin( ParentOrigin::CENTER );
     table.AddChild( imageView, Toolkit::TableView::CellPosition( 1u, 1u ) );
 
-    imageView = Toolkit::ImageView::New( ResourceImage::New( IMAGE_FILENAME_ASTC_SRGB ) );
+    imageView = Toolkit::ImageView::New( ResourceImage::New( IMAGE_FILENAME_ASTC_LINEAR_NATIVE ) );
     imageView.SetAnchorPoint( AnchorPoint::CENTER );
     imageView.SetParentOrigin( ParentOrigin::CENTER );
     table.AddChild( imageView, Toolkit::TableView::CellPosition( 2u, 1u ) );
