@@ -130,4 +130,7 @@
 	<ui-application appid="image-view-pixel-area.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-pixel-area.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>ImageView Pixel Area</label>
 	</ui-application>
+	<ui-application appid="image-view-alpha-blending.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-alpha-blending.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>ImageView Alpha Blending</label>
+	</ui-application>
 </manifest>

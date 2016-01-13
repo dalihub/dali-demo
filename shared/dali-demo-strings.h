@@ -99,6 +99,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT            "Color Gradient"
 #define DALI_DEMO_STR_TITLE_IMAGE_VIEW                "Image View"
 #define DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA     "Image View Pixel Area"
+#define DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING "Image View Alpha Blending"
 #define DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM          "Super Blur and Bloom"
 
 #endif
