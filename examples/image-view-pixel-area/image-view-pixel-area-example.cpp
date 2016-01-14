@@ -21,9 +21,9 @@ using namespace Dali;
 
 namespace
 {
-const char* IMAGE_PATH[] = { DALI_IMAGE_DIR "gallery-large-7.jpg",
-                             DALI_IMAGE_DIR "gallery-large-12.jpg",
-                             DALI_IMAGE_DIR "gallery-large-18.jpg" };
+const char* IMAGE_PATH[] = { DEMO_IMAGE_DIR "gallery-large-7.jpg",
+                             DEMO_IMAGE_DIR "gallery-large-12.jpg",
+                             DEMO_IMAGE_DIR "gallery-large-18.jpg" };
 
 const unsigned int NUM_IMAGES = sizeof(IMAGE_PATH) / sizeof(char*);
 }

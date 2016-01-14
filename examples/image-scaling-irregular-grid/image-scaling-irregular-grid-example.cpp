@@ -61,11 +61,11 @@ namespace
 /** Controls the output of application logging. */
 //#define DEBUG_PRINT_DIAGNOSTICS;
 
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-gradient.jpg" );
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-gradient.jpg" );
+const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "Image Scaling Modes" );
-const char* TOGGLE_SCALING_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
-const char* TOGGLE_SCALING_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
+const char* TOGGLE_SCALING_IMAGE( DEMO_IMAGE_DIR "icon-change.png" );
+const char* TOGGLE_SCALING_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
 
 /** The width of the grid in whole grid cells. */
 const unsigned GRID_WIDTH = 9;
@@ -104,64 +104,64 @@ const unsigned NUM_IMAGE_SIZES = sizeof(IMAGE_SIZES) / sizeof(IMAGE_SIZES[0]);
  *  show the scaling. */
 const char* IMAGE_PATHS[] = {
 
-  DALI_IMAGE_DIR "dali-logo.png",
-  DALI_IMAGE_DIR "com.samsung.dali-demo.ico",
-  DALI_IMAGE_DIR "square_primitive_shapes.bmp",
-  DALI_IMAGE_DIR "gallery-large-14.wbmp",
+  DEMO_IMAGE_DIR "dali-logo.png",
+  DEMO_IMAGE_DIR "com.samsung.dali-demo.ico",
+  DEMO_IMAGE_DIR "square_primitive_shapes.bmp",
+  DEMO_IMAGE_DIR "gallery-large-14.wbmp",
 
   // Images that show aspect ratio changes clearly in primitive shapes:
 
-  DALI_IMAGE_DIR "portrait_screen_primitive_shapes.gif",
-  DALI_IMAGE_DIR "landscape_screen_primitive_shapes.gif",
+  DEMO_IMAGE_DIR "portrait_screen_primitive_shapes.gif",
+  DEMO_IMAGE_DIR "landscape_screen_primitive_shapes.gif",
 
   // Images from other demos that are tall, wide or just large:
 
-  DALI_IMAGE_DIR "gallery-large-1.jpg",
-  DALI_IMAGE_DIR "gallery-large-2.jpg",
-  DALI_IMAGE_DIR "gallery-large-3.jpg",
-  DALI_IMAGE_DIR "gallery-large-4.jpg",
-  DALI_IMAGE_DIR "gallery-large-5.jpg",
-  DALI_IMAGE_DIR "gallery-large-6.jpg",
-  DALI_IMAGE_DIR "gallery-large-7.jpg",
-  DALI_IMAGE_DIR "gallery-large-8.jpg",
-  DALI_IMAGE_DIR "gallery-large-9.jpg",
-  DALI_IMAGE_DIR "gallery-large-10.jpg",
-  DALI_IMAGE_DIR "gallery-large-11.jpg",
-  DALI_IMAGE_DIR "gallery-large-12.jpg",
-  DALI_IMAGE_DIR "gallery-large-13.jpg",
-  DALI_IMAGE_DIR "gallery-large-14.jpg",
-  DALI_IMAGE_DIR "gallery-large-15.jpg",
-  DALI_IMAGE_DIR "gallery-large-16.jpg",
-  DALI_IMAGE_DIR "gallery-large-17.jpg",
-  DALI_IMAGE_DIR "gallery-large-18.jpg",
-  DALI_IMAGE_DIR "gallery-large-19.jpg",
-  DALI_IMAGE_DIR "gallery-large-20.jpg",
-  DALI_IMAGE_DIR "gallery-large-21.jpg",
+  DEMO_IMAGE_DIR "gallery-large-1.jpg",
+  DEMO_IMAGE_DIR "gallery-large-2.jpg",
+  DEMO_IMAGE_DIR "gallery-large-3.jpg",
+  DEMO_IMAGE_DIR "gallery-large-4.jpg",
+  DEMO_IMAGE_DIR "gallery-large-5.jpg",
+  DEMO_IMAGE_DIR "gallery-large-6.jpg",
+  DEMO_IMAGE_DIR "gallery-large-7.jpg",
+  DEMO_IMAGE_DIR "gallery-large-8.jpg",
+  DEMO_IMAGE_DIR "gallery-large-9.jpg",
+  DEMO_IMAGE_DIR "gallery-large-10.jpg",
+  DEMO_IMAGE_DIR "gallery-large-11.jpg",
+  DEMO_IMAGE_DIR "gallery-large-12.jpg",
+  DEMO_IMAGE_DIR "gallery-large-13.jpg",
+  DEMO_IMAGE_DIR "gallery-large-14.jpg",
+  DEMO_IMAGE_DIR "gallery-large-15.jpg",
+  DEMO_IMAGE_DIR "gallery-large-16.jpg",
+  DEMO_IMAGE_DIR "gallery-large-17.jpg",
+  DEMO_IMAGE_DIR "gallery-large-18.jpg",
+  DEMO_IMAGE_DIR "gallery-large-19.jpg",
+  DEMO_IMAGE_DIR "gallery-large-20.jpg",
+  DEMO_IMAGE_DIR "gallery-large-21.jpg",
 
-  DALI_IMAGE_DIR "background-1.jpg",
-  DALI_IMAGE_DIR "background-2.jpg",
-  DALI_IMAGE_DIR "background-3.jpg",
-  DALI_IMAGE_DIR "background-4.jpg",
-  DALI_IMAGE_DIR "background-5.jpg",
-  DALI_IMAGE_DIR "background-blocks.jpg",
-  DALI_IMAGE_DIR "background-magnifier.jpg",
+  DEMO_IMAGE_DIR "background-1.jpg",
+  DEMO_IMAGE_DIR "background-2.jpg",
+  DEMO_IMAGE_DIR "background-3.jpg",
+  DEMO_IMAGE_DIR "background-4.jpg",
+  DEMO_IMAGE_DIR "background-5.jpg",
+  DEMO_IMAGE_DIR "background-blocks.jpg",
+  DEMO_IMAGE_DIR "background-magnifier.jpg",
 
-  DALI_IMAGE_DIR "background-1.jpg",
-  DALI_IMAGE_DIR "background-2.jpg",
-  DALI_IMAGE_DIR "background-3.jpg",
-  DALI_IMAGE_DIR "background-4.jpg",
-  DALI_IMAGE_DIR "background-5.jpg",
-  DALI_IMAGE_DIR "background-blocks.jpg",
-  DALI_IMAGE_DIR "background-magnifier.jpg",
+  DEMO_IMAGE_DIR "background-1.jpg",
+  DEMO_IMAGE_DIR "background-2.jpg",
+  DEMO_IMAGE_DIR "background-3.jpg",
+  DEMO_IMAGE_DIR "background-4.jpg",
+  DEMO_IMAGE_DIR "background-5.jpg",
+  DEMO_IMAGE_DIR "background-blocks.jpg",
+  DEMO_IMAGE_DIR "background-magnifier.jpg",
 
-  DALI_IMAGE_DIR "book-landscape-cover-back.jpg",
-  DALI_IMAGE_DIR "book-landscape-cover.jpg",
-  DALI_IMAGE_DIR "book-landscape-p1.jpg",
-  DALI_IMAGE_DIR "book-landscape-p2.jpg",
+  DEMO_IMAGE_DIR "book-landscape-cover-back.jpg",
+  DEMO_IMAGE_DIR "book-landscape-cover.jpg",
+  DEMO_IMAGE_DIR "book-landscape-p1.jpg",
+  DEMO_IMAGE_DIR "book-landscape-p2.jpg",
 
-  DALI_IMAGE_DIR "book-portrait-cover.jpg",
-  DALI_IMAGE_DIR "book-portrait-p1.jpg",
-  DALI_IMAGE_DIR "book-portrait-p2.jpg",
+  DEMO_IMAGE_DIR "book-portrait-cover.jpg",
+  DEMO_IMAGE_DIR "book-portrait-p1.jpg",
+  DEMO_IMAGE_DIR "book-portrait-p2.jpg",
   NULL
 };
 const unsigned NUM_IMAGE_PATHS = sizeof(IMAGE_PATHS) / sizeof(IMAGE_PATHS[0]) - 1u;
@@ -616,7 +616,7 @@ void RunTest( Application& application )
 /** Entry point for Linux & Tizen applications */
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 
   RunTest( application );
 

@@ -31,21 +31,21 @@ using namespace DemoHelper;
 
 namespace
 {
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-default.png" );
+const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 
 const char* APPLICATION_TITLE_PAN_LIGHT( "Lighting: Pan Light" );
 const char* APPLICATION_TITLE_PAN_OBJECT( "Lighting: Rotate Object" );
 const char* APPLICATION_TITLE_PAN_SCENE( "Lighting: Pan Scene" );
 const char* APPLICATION_TITLE_ROTATE_SCENE( "Lighting: Rotate Scene" );
-const char* CHANGE_EFFECT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
-const char* CHANGE_EFFECT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
-const char* RESET_ICON( DALI_IMAGE_DIR "icon-reset.png" );
-const char* RESET_ICON_SELECTED( DALI_IMAGE_DIR "icon-reset-selected.png" );
+const char* CHANGE_EFFECT_IMAGE( DEMO_IMAGE_DIR "icon-change.png" );
+const char* CHANGE_EFFECT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
+const char* RESET_ICON( DEMO_IMAGE_DIR "icon-reset.png" );
+const char* RESET_ICON_SELECTED( DEMO_IMAGE_DIR "icon-reset-selected.png" );
 
-const char* SCENE_IMAGE_1( DALI_IMAGE_DIR "gallery-small-10.jpg");
-const char* SCENE_IMAGE_2( DALI_IMAGE_DIR "gallery-small-42.jpg");
-const char* SCENE_IMAGE_3( DALI_IMAGE_DIR "gallery-small-48.jpg");
+const char* SCENE_IMAGE_1( DEMO_IMAGE_DIR "gallery-small-10.jpg");
+const char* SCENE_IMAGE_2( DEMO_IMAGE_DIR "gallery-small-42.jpg");
+const char* SCENE_IMAGE_3( DEMO_IMAGE_DIR "gallery-small-48.jpg");
 
 const float MIN_PINCH_SCALE( 0.3f );
 const float MAX_PINCH_SCALE( 2.05f );
@@ -199,7 +199,7 @@ public:
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
-    mShadowPlaneBg = ImageView::New( DALI_IMAGE_DIR "brick-wall.jpg" );
+    mShadowPlaneBg = ImageView::New( DEMO_IMAGE_DIR "brick-wall.jpg" );
     mShadowPlaneBg.SetParentOrigin(ParentOrigin::CENTER);
     mShadowPlaneBg.SetAnchorPoint(AnchorPoint::CENTER);
     mShadowPlaneBg.SetName("Plane");
@@ -503,7 +503,7 @@ RunTest(Application& app)
 int
 main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 
   RunTest(app);
 

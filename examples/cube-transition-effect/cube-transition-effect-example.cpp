@@ -37,44 +37,44 @@ using Dali::Toolkit::TextLabel;
 namespace
 {
 
-const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE_WAVE( "Cube Transition: Wave" );
 const char * const APPLICATION_TITLE_CROSS( "Cube Transition: Cross" );
 const char * const APPLICATION_TITLE_FOLD( "Cube Transition: Fold" );
-const char * const EFFECT_WAVE_IMAGE( DALI_IMAGE_DIR "icon-effect-wave.png" );
-const char * const EFFECT_WAVE_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-effect-wave-selected.png" );
-const char * const EFFECT_CROSS_IMAGE( DALI_IMAGE_DIR "icon-effect-cross.png" );
-const char * const EFFECT_CROSS_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-effect-cross-selected.png" );
-const char * const EFFECT_FOLD_IMAGE( DALI_IMAGE_DIR "icon-effect-fold.png" );
-const char * const EFFECT_FOLD_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-effect-fold-selected.png" );
-const char * const SLIDE_SHOW_START_ICON( DALI_IMAGE_DIR "icon-play.png" );
-const char * const SLIDE_SHOW_START_ICON_SELECTED( DALI_IMAGE_DIR "icon-play-selected.png" );
-const char * const SLIDE_SHOW_STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
-const char * const SLIDE_SHOW_STOP_ICON_SELECTED( DALI_IMAGE_DIR "icon-stop-selected.png" );
+const char * const EFFECT_WAVE_IMAGE( DEMO_IMAGE_DIR "icon-effect-wave.png" );
+const char * const EFFECT_WAVE_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-effect-wave-selected.png" );
+const char * const EFFECT_CROSS_IMAGE( DEMO_IMAGE_DIR "icon-effect-cross.png" );
+const char * const EFFECT_CROSS_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-effect-cross-selected.png" );
+const char * const EFFECT_FOLD_IMAGE( DEMO_IMAGE_DIR "icon-effect-fold.png" );
+const char * const EFFECT_FOLD_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-effect-fold-selected.png" );
+const char * const SLIDE_SHOW_START_ICON( DEMO_IMAGE_DIR "icon-play.png" );
+const char * const SLIDE_SHOW_START_ICON_SELECTED( DEMO_IMAGE_DIR "icon-play-selected.png" );
+const char * const SLIDE_SHOW_STOP_ICON( DEMO_IMAGE_DIR "icon-stop.png" );
+const char * const SLIDE_SHOW_STOP_ICON_SELECTED( DEMO_IMAGE_DIR "icon-stop-selected.png" );
 
 const char* IMAGES[] =
 {
-  DALI_IMAGE_DIR "gallery-large-1.jpg",
-  DALI_IMAGE_DIR "gallery-large-2.jpg",
-  DALI_IMAGE_DIR "gallery-large-3.jpg",
-  DALI_IMAGE_DIR "gallery-large-4.jpg",
-  DALI_IMAGE_DIR "gallery-large-5.jpg",
-  DALI_IMAGE_DIR "gallery-large-6.jpg",
-  DALI_IMAGE_DIR "gallery-large-7.jpg",
-  DALI_IMAGE_DIR "gallery-large-8.jpg",
-  DALI_IMAGE_DIR "gallery-large-9.jpg",
-  DALI_IMAGE_DIR "gallery-large-10.jpg",
-  DALI_IMAGE_DIR "gallery-large-11.jpg",
-  DALI_IMAGE_DIR "gallery-large-12.jpg",
-  DALI_IMAGE_DIR "gallery-large-13.jpg",
-  DALI_IMAGE_DIR "gallery-large-14.jpg",
-  DALI_IMAGE_DIR "gallery-large-15.jpg",
-  DALI_IMAGE_DIR "gallery-large-16.jpg",
-  DALI_IMAGE_DIR "gallery-large-17.jpg",
-  DALI_IMAGE_DIR "gallery-large-18.jpg",
-  DALI_IMAGE_DIR "gallery-large-19.jpg",
-  DALI_IMAGE_DIR "gallery-large-20.jpg",
-  DALI_IMAGE_DIR "gallery-large-21.jpg",
+  DEMO_IMAGE_DIR "gallery-large-1.jpg",
+  DEMO_IMAGE_DIR "gallery-large-2.jpg",
+  DEMO_IMAGE_DIR "gallery-large-3.jpg",
+  DEMO_IMAGE_DIR "gallery-large-4.jpg",
+  DEMO_IMAGE_DIR "gallery-large-5.jpg",
+  DEMO_IMAGE_DIR "gallery-large-6.jpg",
+  DEMO_IMAGE_DIR "gallery-large-7.jpg",
+  DEMO_IMAGE_DIR "gallery-large-8.jpg",
+  DEMO_IMAGE_DIR "gallery-large-9.jpg",
+  DEMO_IMAGE_DIR "gallery-large-10.jpg",
+  DEMO_IMAGE_DIR "gallery-large-11.jpg",
+  DEMO_IMAGE_DIR "gallery-large-12.jpg",
+  DEMO_IMAGE_DIR "gallery-large-13.jpg",
+  DEMO_IMAGE_DIR "gallery-large-14.jpg",
+  DEMO_IMAGE_DIR "gallery-large-15.jpg",
+  DEMO_IMAGE_DIR "gallery-large-16.jpg",
+  DEMO_IMAGE_DIR "gallery-large-17.jpg",
+  DEMO_IMAGE_DIR "gallery-large-18.jpg",
+  DEMO_IMAGE_DIR "gallery-large-19.jpg",
+  DEMO_IMAGE_DIR "gallery-large-20.jpg",
+  DEMO_IMAGE_DIR "gallery-large-21.jpg",
 };
 const int NUM_IMAGES( sizeof(IMAGES) / sizeof(IMAGES[0]) );
 
@@ -432,7 +432,7 @@ void CubeTransitionApp::OnKeyEvent(const KeyEvent& event)
 // Entry point for Linux & Tizen applications
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
   CubeTransitionApp test( application );
   application.MainLoop();
 

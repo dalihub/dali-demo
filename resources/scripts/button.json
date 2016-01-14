@@ -26,8 +26,8 @@
       "anchorPoint": "TOP_CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
-      "unselectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-1.png",
-      "selectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-2.png",
+      "unselectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-1.png",
+      "selectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-2.png",
       "labelText": "Normal"
     },
 
@@ -39,9 +39,9 @@
       "position": [0, 0, 0],
       "size": [400, 200, 0],
       "disabled": true,
-      "unselectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-1.png",
-      "selectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-2.png",
-      "disabledStateImage": "{DALI_IMAGE_DIR}blocks-brick-3.png",
+      "unselectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-1.png",
+      "selectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-2.png",
+      "disabledStateImage": "{DEMO_IMAGE_DIR}blocks-brick-3.png",
       "labelText": "Disabled"
     },
 
@@ -54,8 +54,8 @@
       "position": [0, 0, 0],
       "size": [400, 200, 0],
       "togglable": true,
-      "unselectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-1.png",
-      "selectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-3.png",
+      "unselectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-1.png",
+      "selectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-3.png",
       "labelText": "Toggle",
       "signals": [{
         "name": "selected",

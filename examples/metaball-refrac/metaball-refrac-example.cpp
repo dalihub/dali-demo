@@ -27,8 +27,8 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-2.jpg" );
-const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char * const BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-2.jpg" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 
 const float GRAVITY_X(0);
 const float GRAVITY_Y(-0.09);
@@ -230,7 +230,7 @@ private:
 
 //-----------------------------------------------------------------------------------------------
 //
-//	IMPLEMENTATION
+//  IMPLEMENTATION
 //
 //----------------
 
@@ -875,4 +875,3 @@ int main( int argc, char **argv )
 
   return 0;
 }
-

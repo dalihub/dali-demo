@@ -53,7 +53,7 @@
       "position": [ 0, 0, -1 ],
       "size": [ 450, 795, 1 ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}animation-list.png"
+        "filename": "{DEMO_IMAGE_DIR}animation-list.png"
       }
     },
     {
@@ -120,35 +120,35 @@
       "type": "imageType",
       "name": "picture1",
       "image": {
-        "filename": "{DALI_IMAGE_DIR}animation-picture-1.png"
+        "filename": "{DEMO_IMAGE_DIR}animation-picture-1.png"
       }
     },
     {
       "type": "imageType",
       "name": "picture2",
       "image": {
-        "filename": "{DALI_IMAGE_DIR}animation-picture-2.png"
+        "filename": "{DEMO_IMAGE_DIR}animation-picture-2.png"
       }
     },
     {
       "type": "imageType",
       "name": "picture3",
       "image": {
-        "filename": "{DALI_IMAGE_DIR}animation-picture-3.png"
+        "filename": "{DEMO_IMAGE_DIR}animation-picture-3.png"
       }
     },
     {
       "type": "imageType",
       "name": "picture4",
       "image": {
-        "filename": "{DALI_IMAGE_DIR}animation-picture-4.png"
+        "filename": "{DEMO_IMAGE_DIR}animation-picture-4.png"
       }
     },
     {
       "type": "imageType",
       "name": "picture5",
       "image": {
-        "filename": "{DALI_IMAGE_DIR}animation-picture-5.png"
+        "filename": "{DEMO_IMAGE_DIR}animation-picture-5.png"
       }
     }
   ],

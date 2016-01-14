@@ -37,10 +37,10 @@ using namespace Dali::Toolkit;
 namespace
 {
 
-const std::string LOGO_PATH( DALI_IMAGE_DIR "Logo-for-demo.png" );
-const std::string DEFAULT_TOOLBAR_IMAGE_PATH( DALI_IMAGE_DIR "top-bar.png" );
-const std::string TILE_BACKGROUND(DALI_IMAGE_DIR "item-background.9.png");
-const std::string TILE_BACKGROUND_ALPHA(DALI_IMAGE_DIR "item-background-alpha.9.png");
+const std::string LOGO_PATH( DEMO_IMAGE_DIR "Logo-for-demo.png" );
+const std::string DEFAULT_TOOLBAR_IMAGE_PATH( DEMO_IMAGE_DIR "top-bar.png" );
+const std::string TILE_BACKGROUND(DEMO_IMAGE_DIR "item-background.9.png");
+const std::string TILE_BACKGROUND_ALPHA(DEMO_IMAGE_DIR "item-background-alpha.9.png");
 
 const char * const DEFAULT_TOOLBAR_TEXT( "TOUCH TO LAUNCH EXAMPLE" );
 
@@ -562,7 +562,7 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
     std::string name = mPressedActor.GetName();
 
     std::stringstream stream;
-    stream << DALI_EXAMPLE_BIN << name.c_str();
+    stream << DEMO_EXAMPLE_BIN << name.c_str();
     pid_t pid = fork();
     if( pid == 0)
     {

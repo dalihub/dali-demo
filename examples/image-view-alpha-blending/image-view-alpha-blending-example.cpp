@@ -47,7 +47,7 @@ private:
     Vector4 green1 = Vector4( 0.f, 0.25f, 0.f, 0.25f );
     BufferImage redGreen0 = CreateBufferImage( Color::RED, green0 );
     BufferImage redGreen1 = CreateBufferImage( Color::RED, green1 );
-    ResourceImage testImage = ResourceImage::New( DALI_IMAGE_DIR "gallery-large-20.jpg" );
+    ResourceImage testImage = ResourceImage::New( DEMO_IMAGE_DIR "gallery-large-20.jpg" );
     float imageSize = 512.f;
 
     Toolkit::ImageView imageView0 = Toolkit::ImageView::New( testImage );

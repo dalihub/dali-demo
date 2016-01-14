@@ -32,13 +32,13 @@ class NewWindowController;
 
 namespace
 {
-const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-2.jpg" );
-const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char * const LOSE_CONTEXT_IMAGE( DALI_IMAGE_DIR "icon-cluster-wobble.png" );
-const char * const LOSE_CONTEXT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-cluster-wobble-selected.png" );
-const char * const BASE_IMAGE( DALI_IMAGE_DIR "gallery-large-14.jpg" );
-const char * const EFFECT_IMAGE( DALI_IMAGE_DIR "gallery-large-18.jpg" );
-const char * const LOGO_IMAGE(DALI_IMAGE_DIR "dali-logo.png");
+const char * const BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-2.jpg" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
+const char * const LOSE_CONTEXT_IMAGE( DEMO_IMAGE_DIR "icon-cluster-wobble.png" );
+const char * const LOSE_CONTEXT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-cluster-wobble-selected.png" );
+const char * const BASE_IMAGE( DEMO_IMAGE_DIR "gallery-large-14.jpg" );
+const char * const EFFECT_IMAGE( DEMO_IMAGE_DIR "gallery-large-18.jpg" );
+const char * const LOGO_IMAGE(DEMO_IMAGE_DIR "dali-logo.png");
 
 const float EXPLOSION_DURATION(1.2f);
 const unsigned int EMIT_INTERVAL_IN_MS(40);
@@ -241,7 +241,7 @@ void NewWindowController::Destroy( Application& app )
 void NewWindowController::AddBubbles( Actor& parentActor, const Vector2& stageSize)
 {
   mEmitter = Toolkit::BubbleEmitter::New( stageSize,
-                                          ResourceImage::New( DALI_IMAGE_DIR "bubble-ball.png" ),
+                                          ResourceImage::New( DEMO_IMAGE_DIR "bubble-ball.png" ),
                                           200, Vector2( 5.0f, 5.0f ) );
 
   Image background = ResourceImage::New(BACKGROUND_IMAGE);
@@ -563,7 +563,7 @@ void RunTest(Application& app)
 //
 int main(int argc, char **argv)
 {
-  gApplication = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  gApplication = Application::New(&argc, &argv, DEMO_THEME_PATH);
   RunTest(gApplication);
 
   return 0;

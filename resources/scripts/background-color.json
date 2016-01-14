@@ -51,7 +51,7 @@
       "anchorPoint": "TOP_CENTER",
       "size": [400, 150, 1],
       "background": {
-        "filename": "{DALI_IMAGE_DIR}button-background.png"
+        "filename": "{DEMO_IMAGE_DIR}button-background.png"
       }
     },
 
@@ -63,7 +63,7 @@
       "anchorPoint": "BOTTOM_CENTER",
       "size": [400, 150, 1],
       "background": {
-        "filename": "{DALI_IMAGE_DIR}button-background.png"
+        "filename": "{DEMO_IMAGE_DIR}button-background.png"
       }
     }
   ]

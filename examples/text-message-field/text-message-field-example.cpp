@@ -28,7 +28,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-  const char* DESKTOP_IMAGE( DALI_IMAGE_DIR "woodEffect.jpg" );
+  const char* DESKTOP_IMAGE( DEMO_IMAGE_DIR "woodEffect.jpg" );
   const Vector2 DESKTOP_SIZE( Vector2( 1440, 1600 ) );
   const Vector2 PHOTOBOX_SIZE( Vector2(330.0f, 80.0f ) );
   const float MAX_OFFSCREEN_RENDERING_SIZE = 2048.f;
@@ -163,7 +163,7 @@ void RunTest( Application& application )
 /** Entry point for Linux & Tizen applications */
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 
   RunTest( application );
 

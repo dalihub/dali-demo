@@ -79,9 +79,9 @@ void Launcher::Create( Dali::Application& application )
     mBuilder = Toolkit::Builder::New();
 
     Property::Map defaultDirs;
-    defaultDirs[ TOKEN_STRING(DALI_IMAGE_DIR) ]  = DALI_IMAGE_DIR;
-    defaultDirs[ TOKEN_STRING(DALI_MODEL_DIR) ]  = DALI_MODEL_DIR;
-    defaultDirs[ TOKEN_STRING(DALI_SCRIPT_DIR) ] = DALI_SCRIPT_DIR;
+    defaultDirs[ TOKEN_STRING(DEMO_IMAGE_DIR) ]  = DEMO_IMAGE_DIR;
+    defaultDirs[ TOKEN_STRING(DEMO_MODEL_DIR) ]  = DEMO_MODEL_DIR;
+    defaultDirs[ TOKEN_STRING(DEMO_SCRIPT_DIR) ] = DEMO_SCRIPT_DIR;
     mBuilder.AddConstants( defaultDirs );
 
     std::string json_data(GetFileContents( mJSONFileName ));

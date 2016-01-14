@@ -29,21 +29,21 @@ using namespace Dali;
 namespace
 {
 
-const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "background-gradient.jpg";
-const char* const TOOLBAR_IMAGE = DALI_IMAGE_DIR "top-bar.png";
+const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "background-gradient.jpg";
+const char* const TOOLBAR_IMAGE = DEMO_IMAGE_DIR "top-bar.png";
 
 const char* const TOOLBAR_TITLE = "Buttons";
 
-const char* const SMALL_IMAGE_1 = DALI_IMAGE_DIR "gallery-small-14.jpg";
-const char* const BIG_IMAGE_1 = DALI_IMAGE_DIR "gallery-large-4.jpg";
+const char* const SMALL_IMAGE_1 = DEMO_IMAGE_DIR "gallery-small-14.jpg";
+const char* const BIG_IMAGE_1   = DEMO_IMAGE_DIR "gallery-large-4.jpg";
 
-const char* const SMALL_IMAGE_2 = DALI_IMAGE_DIR "gallery-small-20.jpg";
-const char* const BIG_IMAGE_2 = DALI_IMAGE_DIR "gallery-large-11.jpg";
+const char* const SMALL_IMAGE_2 = DEMO_IMAGE_DIR "gallery-small-20.jpg";
+const char* const BIG_IMAGE_2   = DEMO_IMAGE_DIR "gallery-large-11.jpg";
 
-const char* const SMALL_IMAGE_3 = DALI_IMAGE_DIR "gallery-small-25.jpg";
-const char* const BIG_IMAGE_3 = DALI_IMAGE_DIR "gallery-large-13.jpg";
+const char* const SMALL_IMAGE_3 = DEMO_IMAGE_DIR "gallery-small-25.jpg";
+const char* const BIG_IMAGE_3   = DEMO_IMAGE_DIR "gallery-large-13.jpg";
 
-const char* const ENABLED_IMAGE = DALI_IMAGE_DIR "item-select-check.png";
+const char* const ENABLED_IMAGE = DEMO_IMAGE_DIR "item-select-check.png";
 
 const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 
@@ -546,7 +546,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 
   RunTest( application );
 

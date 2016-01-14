@@ -27,11 +27,11 @@ using namespace Dali;
 int main(int argc, char **argv)
 {
   // Configure gettext for internalization
-  bindtextdomain(DALI_DEMO_DOMAIN_LOCAL, DALI_LOCALE_DIR);
+  bindtextdomain(DALI_DEMO_DOMAIN_LOCAL, DEMO_LOCALE_DIR);
   textdomain(DALI_DEMO_DOMAIN_LOCAL);
-  setlocale(LC_ALL, DALI_LANG);
+  setlocale(LC_ALL, DEMO_LANG);
 
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 
   // Create the demo launcher
   DaliTableView demo(app);

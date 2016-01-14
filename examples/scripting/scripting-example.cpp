@@ -86,7 +86,7 @@ int main( int argc, char* argv[] )
   }
 
 
-  Launcher daliApplication( Dali::Application::New( &argc, &argv, DALI_DEMO_THEME_PATH ), jSONFileName, javaScriptFileName );
+  Launcher daliApplication( Dali::Application::New( &argc, &argv, DEMO_THEME_PATH ), jSONFileName, javaScriptFileName );
 
   daliApplication.MainLoop();
 

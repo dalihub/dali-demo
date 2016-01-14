@@ -32,25 +32,25 @@ using namespace Dali;
 namespace
 {
 const char * const APPLICATION_TITLE( "Refraction Effect" );
-const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char * const CHANGE_TEXTURE_ICON( DALI_IMAGE_DIR "icon-change.png" );
-const char * const CHANGE_TEXTURE_ICON_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
-const char * const CHANGE_MESH_ICON( DALI_IMAGE_DIR "icon-replace.png" );
-const char * const CHANGE_MESH_ICON_SELECTED( DALI_IMAGE_DIR "icon-replace-selected.png" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
+const char * const CHANGE_TEXTURE_ICON( DEMO_IMAGE_DIR "icon-change.png" );
+const char * const CHANGE_TEXTURE_ICON_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
+const char * const CHANGE_MESH_ICON( DEMO_IMAGE_DIR "icon-replace.png" );
+const char * const CHANGE_MESH_ICON_SELECTED( DEMO_IMAGE_DIR "icon-replace-selected.png" );
 
 const char* MESH_FILES[] =
 {
- DALI_MODEL_DIR "surface_pattern_v01.obj",
- DALI_MODEL_DIR "surface_pattern_v02.obj"
+ DEMO_MODEL_DIR "surface_pattern_v01.obj",
+ DEMO_MODEL_DIR "surface_pattern_v02.obj"
 };
 const unsigned int NUM_MESH_FILES( sizeof( MESH_FILES ) / sizeof( MESH_FILES[0] ) );
 
 const char* TEXTURE_IMAGES[]=
 {
-  DALI_IMAGE_DIR "background-1.jpg",
-  DALI_IMAGE_DIR "background-2.jpg",
-  DALI_IMAGE_DIR "background-3.jpg",
-  DALI_IMAGE_DIR "background-4.jpg"
+  DEMO_IMAGE_DIR "background-1.jpg",
+  DEMO_IMAGE_DIR "background-2.jpg",
+  DEMO_IMAGE_DIR "background-3.jpg",
+  DEMO_IMAGE_DIR "background-4.jpg"
 };
 const unsigned int NUM_TEXTURE_IMAGES( sizeof( TEXTURE_IMAGES ) / sizeof( TEXTURE_IMAGES[0] ) );
 
@@ -599,7 +599,7 @@ RunTest(Application& app)
 int
 main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 
   RunTest(app);
 

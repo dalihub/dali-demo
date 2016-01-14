@@ -4,25 +4,13 @@
       "type": "ImageActor",
       "name": "On",
       "relayoutEnabled": false,
-      "position": [
-        374,
-        215,
-        0
-      ],
-      "size": [
-        144,
-        144,
-	1
-      ],
+      "position": [ 374, 215, 0 ],
+      "size": [ 144, 144, 1 ],
       "sizeAspectRatio": false,
-      "color": [
-        1,
-        1,
-        1,
-        1
+      "color": [ 1, 1, 1, 1
       ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}spot_button_on.png",
+        "filename": "{DEMO_IMAGE_DIR}spot_button_on.png",
         "width": 144,
         "height": 144,
         "loadPolicy": "IMMEDIATE",
@@ -35,25 +23,12 @@
       "type": "ImageActor",
       "name": "Off",
       "relayoutEnabled": false,
-      "position": [
-        129,
-        215,
-        0
-      ],
-      "size": [
-        144,
-        144,
-	1
-      ],
+      "position": [ 129, 215, 0 ],
+      "size": [ 144, 144, 1 ],
       "sizeAspectRatio": false,
-      "color": [
-        1,
-        1,
-        1,
-        1
-      ],
+      "color": [ 1, 1, 1, 1 ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}spot_button_off.png",
+        "filename": "{DEMO_IMAGE_DIR}spot_button_off.png",
         "width": 144,
         "height": 144,
         "loadPolicy": "IMMEDIATE",
@@ -66,26 +41,13 @@
       "type": "ImageActor",
       "name": "Right",
       "relayoutEnabled": false,
-      "position": [
-        418.5,
-        214.5,
-        0
-      ],
-      "size": [
-        85,
-        161,
-	1
-      ],
+      "position": [ 418.5, 214.5, 0 ],
+      "size": [ 85, 161, 1 ],
       "sizeAspectRatio": false,
       "visible": true,
-      "color": [
-        0,
-        0,
-        0,
-        1
-      ],
+      "color": [ 0, 0, 0, 1 ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}curve-right.png",
+        "filename": "{DEMO_IMAGE_DIR}curve-right.png",
         "width": 85,
         "height": 161,
         "loadPolicy": "IMMEDIATE",
@@ -98,26 +60,13 @@
       "type": "ImageActor",
       "name": "Left",
       "relayoutEnabled": false,
-      "position": [
-        331,
-        214.5,
-        0
-      ],
-      "size": [
-        88,
-        161,
-	1
-      ],
+      "position": [ 331, 214.5, 0 ],
+      "size": [ 88, 161, 1 ],
       "sizeAspectRatio": false,
       "visible": true,
-      "color": [
-        0,
-        0,
-        0,
-        1
-      ],
+      "color": [ 0, 0, 0, 1 ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}curve-left.png",
+        "filename": "{DEMO_IMAGE_DIR}curve-left.png",
         "width": 87,
         "height": 161,
         "loadPolicy": "IMMEDIATE",
@@ -130,30 +79,13 @@
       "type": "ImageActor",
       "name": "Middle",
       "relayoutEnabled": false,
-      "position": [
-        375.5,
-        214.5,
-        0
-      ],
-      "anchorPoint": [
-        0,
-        0.5,
-        0.5
-      ],
-      "size": [
-        1,
-        161,
-	1
-      ],
+      "position": [ 375.5, 214.5, 0 ],
+      "anchorPoint": [ 0, 0.5, 0.5 ],
+      "size": [ 1, 161, 1 ],
       "sizeAspectRatio": false,
-      "color": [
-        0,
-        0,
-        0,
-        1
-      ],
+      "color": [ 0, 0, 0, 1 ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}curve-middle.png",
+        "filename": "{DEMO_IMAGE_DIR}curve-middle.png",
         "width": 13,
         "height": 161,
         "loadPolicy": "IMMEDIATE",
@@ -166,25 +98,12 @@
       "type": "ImageActor",
       "name": "Jelly",
       "relayoutEnabled": false,
-      "position": [
-        374,
-        215,
-        0
-      ],
-      "size": [
-        144,
-        144,
-	1
-      ],
+      "position": [ 374, 215, 0 ],
+      "size": [ 144, 144, 1 ],
       "sizeAspectRatio": false,
-      "color": [
-        1,
-        1,
-        1,
-        1
-      ],
+      "color": [ 1, 1, 1, 1 ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}spot_jelly_on.png",
+        "filename": "{DEMO_IMAGE_DIR}spot_jelly_on.png",
         "width": 144,
         "height": 144,
         "loadPolicy": "IMMEDIATE",
@@ -197,73 +116,34 @@
       "type": "Control",
       "name": "Left Crop",
       "relayoutEnabled": false,
-      "position": [
-        144.5,
-        218.5,
-        0.5
-      ],
-      "size": [
-        275,
-        243,
-	1
-      ],
+      "position": [ 144.5, 218.5, 0.5 ],
+      "size": [ 275, 243, 1 ],
       "sizeAspectRatio": false,
       "background": {"color": [ 1, 1, 1, 1 ]},
-      "color": [
-        1,
-        1,
-        1,
-        1
-      ],
+      "color": [ 1, 1, 1, 1 ],
       "actors": []
     },
     {
       "type": "Control",
       "name": "Right Crop",
       "relayoutEnabled": false,
-      "position": [
-        629.5,
-        218.5,
-        0.5
-      ],
-      "size": [
-        335,
-        243,
-	1
-      ],
+      "position": [ 629.5, 218.5, 0.5 ],
+      "size": [ 335, 243, 1 ],
       "sizeAspectRatio": false,
       "background": {"color": [ 1, 1, 1, 1 ]},
-      "color": [
-        1,
-        1,
-        1,
-        1
-      ],
+      "color": [ 1, 1, 1, 1 ],
       "actors": []
     },
     {
       "type": "ImageActor",
       "name": "JellyOff",
       "relayoutEnabled": false,
-      "position": [
-        121,
-        -117,
-        0
-      ],
-      "size": [
-        144,
-        144,
-	1
-      ],
+      "position": [ 121, -117, 0 ],
+      "size": [ 144, 144, 1 ],
       "sizeAspectRatio": false,
-      "color": [
-        1,
-        1,
-        1,
-        1
-      ],
+      "color": [ 1, 1, 1, 1 ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}spot_jelly_off.png",
+        "filename": "{DEMO_IMAGE_DIR}spot_jelly_off.png",
         "width": 144,
         "height": 144,
         "loadPolicy": "IMMEDIATE",
@@ -281,23 +161,10 @@
         217.33333333333331,
         0
       ],
-      "size": [
-        196,
-        184,
-	1
-      ],
+      "size": [ 196, 184, 1 ],
       "sizeAspectRatio": false,
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "color": [
-        1,
-        1,
-        1,
-        1
-      ],
+      "scale": [ 1, 1, 1 ],
+      "color": [ 1, 1, 1, 1 ],
       "actors": [],
       "signals": [
         {
@@ -311,23 +178,10 @@
       "type": "Control",
       "name": "Control Off",
       "relayoutEnabled": false,
-      "position": [
-        123.5,
-        -117,
-        0
-      ],
-      "size": [
-        193,
-        182,
-	1
-      ],
+      "position": [ 123.5, -117, 0 ],
+      "size": [ 193, 182, 1 ],
       "sizeAspectRatio": false,
-      "color": [
-        1,
-        1,
-        1,
-        1
-      ],
+      "color": [ 1, 1, 1, 1 ],
       "actors": [],
       "signals": [
         {
@@ -344,11 +198,7 @@
         {
           "actor": "Left",
           "property": "position",
-          "value": [
-            331,
-            214.5,
-            0
-          ],
+          "value": [ 331, 214.5, 0 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 3.106,
@@ -359,11 +209,7 @@
         {
           "actor": "Middle",
           "property": "position",
-          "value": [
-            375.5,
-            214.5,
-            0
-          ],
+          "value": [ 375.5, 214.5, 0 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 3.106,
@@ -374,11 +220,7 @@
         {
           "actor": "Middle",
           "property": "size",
-          "value": [
-            250,
-            161,
-            1
-          ],
+          "value": [ 250, 161, 1 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 0,
@@ -389,11 +231,7 @@
         {
           "actor": "Middle",
           "property": "size",
-          "value": [
-            1,
-            161,
-            1
-          ],
+          "value": [ 1, 161, 1 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 3.127,
@@ -404,11 +242,7 @@
         {
           "actor": "JellyOff",
           "property": "position",
-          "value": [
-            374,
-            215,
-            0
-          ],
+          "value": [ 374, 215, 0 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 1.486,
@@ -419,11 +253,7 @@
         {
           "actor": "Left Crop",
           "property": "position",
-          "value": [
-            144.5,
-            218.5,
-            0.5
-          ],
+          "value": [ 144.5, 218.5, 0.5 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 3.106,
@@ -434,11 +264,7 @@
         {
           "actor": "Right",
           "property": "position",
-          "value": [
-            418.5,
-            214.5,
-            0
-          ],
+          "value": [ 418.5, 214.5, 0 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 0,
@@ -449,11 +275,7 @@
         {
           "actor": "Right Crop",
           "property": "position",
-          "value": [
-            629.5,
-            218.5,
-            0.5
-          ],
+          "value": [ 629.5, 218.5, 0.5 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 0,
@@ -479,11 +301,7 @@
         {
           "actor": "Jelly",
           "property": "position",
-          "value": [
-            121,
-            -117,
-            0
-          ],
+          "value": [ 121, -117, 0 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0,
@@ -494,11 +312,7 @@
         {
           "actor": "Jelly",
           "property": "position",
-          "value": [
-            374,
-            215,
-            0
-          ],
+          "value": [ 374, 215, 0 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 2.765,
@@ -509,11 +323,7 @@
         {
           "actor": "JellyOff",
           "property": "position",
-          "value": [
-            121,
-            -117,
-            0
-          ],
+          "value": [ 121, -117, 0 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 2.765,
@@ -524,11 +334,7 @@
         {
           "actor": "Control Off",
           "property": "position",
-          "value": [
-            123.5,
-            -117,
-            0
-          ],
+          "value": [ 123.5, -117, 0 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0,
@@ -544,11 +350,7 @@
         {
           "actor": "Left",
           "property": "position",
-          "value": [
-            86,
-            214.5,
-            0
-          ],
+          "value": [ 86, 214.5, 0 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 0,
@@ -559,11 +361,7 @@
         {
           "actor": "Middle",
           "property": "position",
-          "value": [
-            130,
-            214.5,
-            0
-          ],
+          "value": [ 130, 214.5, 0 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 0,
@@ -574,11 +372,7 @@
         {
           "actor": "Middle",
           "property": "size",
-          "value": [
-            250,
-            161,
-            1
-          ],
+          "value": [ 250, 161, 1 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 0,
@@ -589,11 +383,7 @@
         {
           "actor": "Middle",
           "property": "size",
-          "value": [
-            1,
-            161,
-            1
-          ],
+          "value": [ 1, 161, 1 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 3.127,
@@ -604,11 +394,7 @@
         {
           "actor": "Jelly",
           "property": "position",
-          "value": [
-            130,
-            215,
-            0
-          ],
+          "value": [ 130, 215, 0 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 1.486,
@@ -619,11 +405,7 @@
         {
           "actor": "Left Crop",
           "property": "position",
-          "value": [
-            -95,
-            219,
-            0
-          ],
+          "value": [ -95, 219, 0 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 0,
@@ -634,11 +416,7 @@
         {
           "actor": "Right",
           "property": "position",
-          "value": [
-            172,
-            214.5,
-            0.5
-          ],
+          "value": [ 172, 214.5, 0.5 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 3.106,
@@ -649,11 +427,7 @@
         {
           "actor": "Right Crop",
           "property": "position",
-          "value": [
-            383,
-            218.5,
-            0.5
-          ],
+          "value": [ 383, 218.5, 0.5 ],
           "alphaFunction": "EASE_OUT",
           "timePeriod": {
             "delay": 3.106,
@@ -664,11 +438,7 @@
         {
           "actor": "Control On",
           "property": "position",
-          "value": [
-            371.26,
-            -131,
-            0
-          ],
+          "value": [ 371.26, -131, 0 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0,
@@ -679,11 +449,7 @@
         {
           "actor": "JellyOff",
           "property": "position",
-          "value": [
-            130,
-            215,
-            0
-          ],
+          "value": [ 130, 215, 0 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 2.765,
@@ -694,11 +460,7 @@
         {
           "actor": "Jelly",
           "property": "position",
-          "value": [
-            121,
-            -117,
-            0
-          ],
+          "value": [ 121, -117, 0 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 2.765,
@@ -709,11 +471,7 @@
         {
           "actor": "Control Off",
           "property": "position",
-          "value": [
-            123.5,
-            215,
-            0
-          ],
+          "value": [ 123.5, 215, 0 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 2.765,
