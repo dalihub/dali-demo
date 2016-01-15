@@ -30,6 +30,10 @@ namespace
 const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-gradient.jpg" );
 const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 
+const char* BORDER_IMAGE( DALI_IMAGE_DIR "border-4px.9.png" );
+const int BORDER_WIDTH = ( 11.0f + 4.0f ); // Shadow size = 11, border size = 4.
+const char* RESIZE_HANDLE_IMAGE( DALI_IMAGE_DIR "resize-handle.png" );
+
 const int MARGIN_SIZE = 10;
 
 const char* const NEXT_BUTTON_ID = "NEXT_BUTTON";
@@ -45,28 +49,28 @@ const char* const STYLE_LABEL_TEXT  = "grouplabel";
 const char* const STYLE_BUTTON_TEXT = "buttonlabel";
 
 
-
 const char* IMAGE_PATHS[] =
 {
-  // Worst case for aliasing in downscaling, 2k x 2k 1 bit per pixel dithered
-  // black and white image:
-  DALI_IMAGE_DIR "gallery-large-14.wbmp",
   // Variety of sizes, shapes and formats:
-  DALI_IMAGE_DIR "animation-list.png",
+  DALI_IMAGE_DIR "dali-logo.png",
   DALI_IMAGE_DIR "layer1.png",
   DALI_IMAGE_DIR "layer2.png",
+  DALI_IMAGE_DIR "animation-list.png",
   DALI_IMAGE_DIR "music-libray-main-screen.png",
   DALI_IMAGE_DIR "music-libray-record-cover.png",
   DALI_IMAGE_DIR "contacts-background.png",
   DALI_IMAGE_DIR "portrait_screen_primitive_shapes.gif",
   DALI_IMAGE_DIR "landscape_screen_primitive_shapes.gif",
   DALI_IMAGE_DIR "square_primitive_shapes.bmp",
-  DALI_IMAGE_DIR "dali-logo.png",
-  DALI_IMAGE_DIR "com.samsung.dali-demo.ico",
   DALI_IMAGE_DIR "gallery-large-14.jpg",
   DALI_IMAGE_DIR "book-landscape-cover.jpg",
   DALI_IMAGE_DIR "book-portrait-p1.jpg",
   DALI_IMAGE_DIR "book-landscape-cover-back.jpg",
+
+  // Worst case for aliasing in downscaling, 2k x 2k 1 bit per pixel dithered
+  // black and white image:
+  DALI_IMAGE_DIR "gallery-large-14.wbmp",
+
   DALI_IMAGE_DIR "background-1.jpg",
   DALI_IMAGE_DIR "background-blocks.jpg",
   DALI_IMAGE_DIR "background-magnifier.jpg",
@@ -151,8 +155,10 @@ public:
   : mApplication( application ),
     mImageStageScale( 0.5f, 0.5f ),
     mCurrentPath( 0 ),
-    mFittingMode( FittingMode::SCALE_TO_FILL ),
-    mSamplingMode( SamplingMode::BOX_THEN_LINEAR)
+    mFittingMode( FittingMode::FIT_WIDTH ),
+    mSamplingMode( SamplingMode::BOX_THEN_LINEAR),
+    mImageLoading( false ),
+    mQueuedImageLoad( false )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &ImageScalingAndFilteringController::Create );
@@ -171,21 +177,18 @@ public:
 
     // Background image:
     Dali::Property::Map backgroundImage;
-    backgroundImage.Insert( "renderer-type", "image-renderer" );
-    backgroundImage.Insert( "image-url", BACKGROUND_IMAGE );
-    backgroundImage.Insert( "image-desired-width", stage.GetSize().width );
-    backgroundImage.Insert( "image-desired-height", stage.GetSize().height );
-    backgroundImage.Insert( "image-fitting-mode", "scale-to-fill" );
-    backgroundImage.Insert( "image-sampling-mode", "box-then-nearest" );
+    backgroundImage.Insert( "rendererType",  "imageRenderer" );
+    backgroundImage.Insert( "imageUrl",  BACKGROUND_IMAGE );
+    backgroundImage.Insert( "imageDesiredWidth",   stage.GetSize().width );
+    backgroundImage.Insert( "imageDesiredHeight",   stage.GetSize().height );
+    backgroundImage.Insert( "imageFittingMode",   "scaleToFill" );
+    backgroundImage.Insert( "imageSamplingMode",   "boxThenNearest" );
 
     Toolkit::ImageView background = Toolkit::ImageView::New();
     background.SetProperty( Toolkit::ImageView::Property::IMAGE, backgroundImage );
     background.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     background.SetSize( stage.GetSize() );
     stage.Add( background );
-
-    // Make grey pixels for the desired box, the desired height the desired width:
-    BufferImage desiredBackground = BufferImage::WHITE();
 
     BufferImage heightBackground = BufferImage::WHITE();
     PixelBuffer* const heightPixel = heightBackground.GetBuffer();
@@ -207,7 +210,7 @@ public:
     mWidthBox.SetOpacity( 0.2f );
     background.Add( mWidthBox );
 
-    mDesiredBox = Toolkit::ImageView::New( desiredBackground );
+    mDesiredBox = Toolkit::ImageView::New( BORDER_IMAGE );
     background.Add( mDesiredBox );
 
     mDesiredBox.SetSize( stage.GetSize() * mImageStageScale );
@@ -239,26 +242,23 @@ public:
     mPinchDetector.Attach( mImageView );
     mPinchDetector.DetectedSignal().Connect( this, &ImageScalingAndFilteringController::OnPinch );
 
-    // Make a grab-handle for resizing the image:
-    mGrabCorner = Toolkit::PushButton::New();
-    mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH );
-    mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    mGrabCorner = Toolkit::ImageView::New( RESIZE_HANDLE_IMAGE );
+    mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     mGrabCorner.SetName( "GrabCorner" );
     mGrabCorner.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
     mGrabCorner.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
-    mGrabCorner.SetSize( Vector2( stage.GetSize().width*0.08f, stage.GetSize().width*0.08f ) );
+    mGrabCorner.SetPosition( -BORDER_WIDTH, -BORDER_WIDTH );
     mGrabCorner.SetOpacity( 0.6f );
 
     Layer grabCornerLayer = Layer::New();
     grabCornerLayer.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
     grabCornerLayer.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
-
     grabCornerLayer.Add( mGrabCorner );
-    mImageView.Add( grabCornerLayer );
+    mDesiredBox.Add( grabCornerLayer );
+
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.Attach( mGrabCorner );
     mPanGestureDetector.DetectedSignal().Connect( this, &ImageScalingAndFilteringController::OnPan );
-
 
     // Tie-in input event handlers:
     stage.KeyEventSignal().Connect( this, &ImageScalingAndFilteringController::OnKeyEvent );
@@ -394,7 +394,6 @@ public:
     return popup;
   }
 
-  //void CreatePopupButton( Toolkit::Popup popup, const char* id )
   Toolkit::PushButton CreatePopupButton( Actor parent, const char* id )
   {
     Toolkit::PushButton button = Toolkit::PushButton::New();
@@ -523,9 +522,17 @@ public:
 
   void OnImageLoaded( ResourceImage image )
   {
-      DALI_ASSERT_DEBUG( image == mNextImage );
-      mImageView.SetImage( image );
-      mImageView.SetSize( Size( image.GetWidth(), image.GetHeight() ) );
+    DALI_ASSERT_DEBUG( image == mNextImage );
+    mImageView.SetImage( image );
+    mImageView.SetSize( Size( image.GetWidth(), image.GetHeight() ) );
+    mImageLoading = false;
+
+    // We have finished loading, if a resize had occured during the load, trigger another load now.
+    if( mQueuedImageLoad )
+    {
+      mQueuedImageLoad = false;
+      LoadImage();
+    }
   }
 
   bool OnControlTouched( Actor actor, const TouchEvent& event )
@@ -570,7 +577,7 @@ public:
     }
     const float scale = pinch.scale;
 
-    if( scale != mLastPinchScale )
+    if( ! Equals( scale, mLastPinchScale ) )
     {
       if ( scale < mLastPinchScale )
       {
@@ -590,8 +597,10 @@ public:
   void OnPan( Actor actor, const PanGesture& gesture )
   {
     Stage stage = Stage::GetCurrent();
-    mImageStageScale.x = std::max( 0.05f, std::min( 1.0f, mImageStageScale.x + (gesture.displacement.x * 2.0f / stage.GetSize().width ) ) );
-    mImageStageScale.y = std::max( 0.05f, std::min( 1.0f, mImageStageScale.y + (gesture.displacement.y * 2.0f / stage.GetSize().height ) ) );
+    // 1.0f and 0.75f are the maximum size caps of the resized image, as a factor of stage-size.
+    mImageStageScale.x = std::max( 0.05f, std::min( 0.95f,  mImageStageScale.x + ( gesture.displacement.x * 2.0f / stage.GetSize().width ) ) );
+    mImageStageScale.y = std::max( 0.05f, std::min( 0.70f, mImageStageScale.y + ( gesture.displacement.y * 2.0f / stage.GetSize().height ) ) );
+
     ResizeImage();
   }
 
@@ -669,21 +678,53 @@ public:
   }
 
 private:
-  void ResizeImage()
-  {
-    const char * const path = IMAGE_PATHS[mCurrentPath];
 
+  void LoadImage()
+  {
+    mImageLoading = true;
+
+    const char * const path = IMAGE_PATHS[ mCurrentPath ];
     Stage stage = Stage::GetCurrent();
     Size imageSize = stage.GetSize() * mImageStageScale;
     const ImageDimensions imageSizeInt = ImageDimensions::FromFloatArray( &imageSize.x );
 
     ResourceImage image = ResourceImage::New( path, imageSizeInt, mFittingMode, mSamplingMode );
-    image.LoadingFinishedSignal().Connect( this, &ImageScalingAndFilteringController::OnImageLoaded );
+
+    // If the image was cached, the load has already occured, bypass hooking the signal.
+    if( image.GetLoadingState() )
+    {
+      OnImageLoaded( image );
+    }
+    else
+    {
+      image.LoadingFinishedSignal().Connect( this, &ImageScalingAndFilteringController::OnImageLoaded );
+    }
 
     mNextImage = image;
+  }
 
-    mDesiredBox.SetSize( stage.GetSize() * mImageStageScale );
-    mHeightBox.SetSize( stage.GetSize().width,  (stage.GetSize() * mImageStageScale).height );
+  void ResizeImage()
+  {
+
+    Stage stage = Stage::GetCurrent();
+    Size imageSize = stage.GetSize() * mImageStageScale;
+
+    // If an image is already loading, queue another load when it has finished.
+    // This way we get continuous updates instead of constantly re-requesting loads.
+    if( mImageLoading )
+    {
+      mQueuedImageLoad = true;
+    }
+    else
+    {
+      LoadImage();
+    }
+
+    // Border size needs to be modified to take into account the width of the frame.
+    Vector2 borderScale( ( imageSize + Vector2( BORDER_WIDTH * 2.0f, BORDER_WIDTH * 2.0f ) ) / stage.GetSize() );
+    mDesiredBox.SetSize( stage.GetSize() * borderScale );
+
+    mHeightBox.SetSize( stage.GetSize().width, (stage.GetSize() * mImageStageScale).height );
     mWidthBox.SetSize( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height );
   }
 
@@ -697,7 +738,7 @@ private:
   Toolkit::Popup mPopup;
   PinchGestureDetector mPinchDetector;
   float mLastPinchScale;
-  Toolkit::PushButton  mGrabCorner;
+  Toolkit::ImageView mGrabCorner;
   PanGestureDetector mPanGestureDetector;
   Toolkit::ImageView mImageView;
   ResourceImage mNextImage; //< Currently-loading image
@@ -705,6 +746,9 @@ private:
   int mCurrentPath;
   FittingMode::Type mFittingMode;
   SamplingMode::Type mSamplingMode;
+  bool mImageLoading;
+  bool mQueuedImageLoad;
+
 };
 
 void RunTest( Application& application )

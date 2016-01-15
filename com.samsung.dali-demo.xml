@@ -37,13 +37,19 @@
 	<ui-application appid="magnifier.example" exec="/usr/apps/com.samsung.dali-demo/bin/magnifier.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Magnifier</label>
 	</ui-application>
-  <ui-application appid="motion-blur.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-blur.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-    <label>Motion Blur</label>
-  </ui-application>
-  <ui-application appid="model3d-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/model3d-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-    <label>Model 3D Viewer</label>
-  </ui-application>
-  	<ui-application appid="motion-stretch.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-stretch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+	<ui-application appid="metaball-explosion.example" exec="/usr/apps/com.samsung.dali-demo/bin/metaball-explosion.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Metaball Explosion</label>
+	</ui-application>
+	<ui-application appid="metaball-refrac.example" exec="/usr/apps/com.samsung.dali-demo/bin/metaball-refrac.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Metaball Refractions</label>
+	</ui-application>
+	<ui-application appid="motion-blur.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-blur.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Motion Blur</label>
+	</ui-application>
+	<ui-application appid="model3d-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/model3d-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Model 3D Viewer</label>
+	</ui-application>
+	<ui-application appid="motion-stretch.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-stretch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Motion Stretch</label>
 	</ui-application>
 	<ui-application appid="radial-menu.example" exec="/usr/apps/com.samsung.dali-demo/bin/radial-menu.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
@@ -88,9 +94,9 @@
 	<ui-application appid="text-field.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-field.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Field</label>
 	</ui-application>
-  <ui-application appid="text-fonts.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-fonts.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-    <label>Text Fonts</label>
-  </ui-application>
+	<ui-application appid="text-fonts.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-fonts.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Fonts</label>
+	</ui-application>
 	<ui-application appid="text-message-field.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-message-field.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Label</label>
 	</ui-application>
@@ -114,5 +120,11 @@
 	</ui-application>
 	<ui-application appid="gradients.example" exec="/usr/apps/com.samsung.dali-demo/bin/gradients.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Color Gradient</label>
+	</ui-application>
+	<ui-application appid="super-blur-bloom.example" exec="/usr/apps/com.samsung.dali-demo/bin/super-blur-bloom.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Super Blur and Bloom</label>
+	</ui-application>
+	<ui-application appid="image-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Image View</label>
 	</ui-application>
 </manifest>

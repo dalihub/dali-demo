@@ -79,21 +79,21 @@ public:
 
 // ---- Gradient for background
 
-    mGradientMap.Insert("renderer-type", "gradient-renderer");
+    mGradientMap.Insert("rendererType",  "gradientRenderer");
     Property::Array stopOffsets;
     stopOffsets.PushBack( 0.0f );
     stopOffsets.PushBack( 0.3f );
     stopOffsets.PushBack( 0.6f );
     stopOffsets.PushBack( 0.8f );
     stopOffsets.PushBack( 1.f );
-    mGradientMap.Insert("gradient-stop-offset", stopOffsets);
+    mGradientMap.Insert("gradientStopOffset",   stopOffsets);
     Property::Array stopColors;
     stopColors.PushBack( Vector4( 129.f, 198.f, 193.f, 255.f )/255.f );
     stopColors.PushBack( Vector4( 196.f, 198.f, 71.f, 122.f )/255.f );
     stopColors.PushBack( Vector4( 214.f, 37.f, 139.f, 191.f )/255.f );
     stopColors.PushBack( Vector4( 129.f, 198.f, 193.f, 150.f )/255.f );
     stopColors.PushBack( Color::YELLOW );
-    mGradientMap.Insert("gradient-stop-color", stopColors);
+    mGradientMap.Insert("gradientStopColor",   stopColors);
 
     OnChangeIconClicked( changeButton );
   }
@@ -106,30 +106,30 @@ public:
     {
       case 0: // linear gradient with units as objectBoundingBox
       {
-        gradientMap.Insert("gradient-start-position", Vector2( 0.5f, 0.5f ));
-        gradientMap.Insert("gradient-end-position",  Vector2( -0.5f, -0.5f ));
+        gradientMap.Insert("gradientStartPosition",   Vector2( 0.5f, 0.5f ));
+        gradientMap.Insert("gradientEndPosition",    Vector2( -0.5f, -0.5f ));
         break;
       }
       case 1: // linear gradient with units as userSpaceOnUse
       {
         Vector2 halfStageSize = Stage::GetCurrent().GetSize()*0.5f;
-        gradientMap.Insert("gradient-start-position", halfStageSize);
-        gradientMap.Insert("gradient-end-position",  -halfStageSize );
-        gradientMap.Insert("gradient-units", "user-space");
+        gradientMap.Insert("gradientStartPosition",   halfStageSize);
+        gradientMap.Insert("gradientEndPosition",    -halfStageSize );
+        gradientMap.Insert("gradientUnits",  "userSpace");
         break;
       }
       case 2: // radial gradient with units as objectBoundingBox
       {
-        gradientMap.Insert("gradient-center", Vector2(0.5f, 0.5f));
-        gradientMap.Insert("gradient-radius", 1.414f);
+        gradientMap.Insert("gradientCenter",  Vector2(0.5f, 0.5f));
+        gradientMap.Insert("gradientRadius",  1.414f);
         break;
       }
       default: // radial gradient with units as userSpaceOnUse
       {
         Vector2 stageSize = Stage::GetCurrent().GetSize();
-        gradientMap.Insert("gradient-center", stageSize*0.5f);
-        gradientMap.Insert("gradient-radius", stageSize.Length());
-        gradientMap.Insert("gradient-units", "user-space");
+        gradientMap.Insert("gradientCenter",  stageSize*0.5f);
+        gradientMap.Insert("gradientRadius",  stageSize.Length());
+        gradientMap.Insert("gradientUnits",  "userSpace");
         break;
       }
     }

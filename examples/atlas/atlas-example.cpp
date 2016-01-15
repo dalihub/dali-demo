@@ -77,8 +77,8 @@ public:
     mLoseContextButton.ClickedSignal().Connect( this, &AtlasController::OnLoseContextButtonClicked );
     mToolBar.AddControl( mLoseContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
-    mAtlas = Atlas::New( 400,300, Pixel::RGBA8888);
-    mAtlas.Clear(Vector4(0.f,0.5f,0.5f,0.5f));
+    mAtlas = Atlas::New( 400,700, Pixel::RGBA8888);
+    mAtlas.Clear(Vector4(0.f,0.5f,0.5f,0.25f));
     mAtlas.Upload( DALI_IMAGE_DIR "icon-change.png", 50, 30 );
     mAtlas.Upload( DALI_IMAGE_DIR "icon-cluster-carousel.png", 100, 30 );
     mAtlas.Upload( DALI_IMAGE_DIR "icon-effects-on.png", 150, 30 );
@@ -88,37 +88,28 @@ public:
     mAtlas.Upload( DALI_IMAGE_DIR "icon-item-view-layout-depth.png", 150, 130 );
     mAtlas.Upload( DALI_IMAGE_DIR "icon-item-view-layout-grid.png", 200, 130 );
     mAtlas.Upload( DALI_IMAGE_DIR "icon-item-view-layout-spiral.png", 250, 130 );
+
     UploadBufferImages();
+    UploadPixelData();
 
-    Toolkit::ImageView imageActor1 = Toolkit::ImageView::New( mAtlas );
-    imageActor1.SetY(-170.f);
-    imageActor1.SetParentOrigin(ParentOrigin::CENTER);
-    mContentLayer.Add( imageActor1 );
-
-    Atlas atlas2 = Atlas::New( 400,400, Pixel::RGB888);
-    atlas2.Clear( Color::RED );
-    atlas2.Upload( DALI_IMAGE_DIR "gallery-small-1.jpg", 4, 4 );
-    atlas2.Clear( Color::BLUE );
-    atlas2.Upload( DALI_IMAGE_DIR "gallery-small-2.jpg", 136, 4 );
-    atlas2.Upload( DALI_IMAGE_DIR "gallery-small-3.jpg", 268, 4 );
-    atlas2.Upload( DALI_IMAGE_DIR "gallery-small-4.jpg", 4, 136 );
-    atlas2.Upload( DALI_IMAGE_DIR "gallery-small-5.jpg", 136, 136 );
-    atlas2.Upload( DALI_IMAGE_DIR "gallery-small-6.jpg", 268, 135 );
-    atlas2.Upload( DALI_IMAGE_DIR "gallery-small-7.jpg", 4, 268 );
-    atlas2.Upload( DALI_IMAGE_DIR "gallery-small-7.jpg", 136, 268 );
-    atlas2.Upload( DALI_IMAGE_DIR "gallery-small-7.jpg", 268, 268 );
+    mAtlas.Upload( DALI_IMAGE_DIR "gallery-small-1.jpg", 4, 304 );
+    mAtlas.Upload( DALI_IMAGE_DIR "gallery-small-2.jpg", 136, 304 );
+    mAtlas.Upload( DALI_IMAGE_DIR "gallery-small-3.jpg", 268, 304 );
+    mAtlas.Upload( DALI_IMAGE_DIR "gallery-small-4.jpg", 4, 436 );
+    mAtlas.Upload( DALI_IMAGE_DIR "gallery-small-5.jpg", 136, 436 );
+    mAtlas.Upload( DALI_IMAGE_DIR "gallery-small-6.jpg", 268, 436 );
+    mAtlas.Upload( DALI_IMAGE_DIR "gallery-small-7.jpg", 4, 568 );
+    mAtlas.Upload( DALI_IMAGE_DIR "gallery-small-7.jpg", 136, 568 );
+    mAtlas.Upload( DALI_IMAGE_DIR "gallery-small-7.jpg", 268, 568 );
 
 
-    Toolkit::ImageView imageView = Toolkit::ImageView::New( DALI_IMAGE_DIR "gallery-small-1.jpg" );
+    Toolkit::ImageView imageView = Toolkit::ImageView::New( mAtlas );
 
-    imageView.SetY(200.f);
-    imageView.SetZ(-1.f);
     imageView.SetParentOrigin(ParentOrigin::CENTER);
     mContentLayer.Add( imageView );
 
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.DetectedSignal().Connect( this, &AtlasController::OnPanGesture );
-    mPanGestureDetector.Attach( imageActor1 );
     mPanGestureDetector.Attach( imageView );
 
     stage.ContextLostSignal().Connect( this, &AtlasController::OnContextLost );
@@ -136,10 +127,13 @@ public:
     mAtlas.Upload( CreateBufferImage( Vector4(0.5f, 0.5f, 0.f, 0.5f  ), 80, 30 ), 240, 210 );
     mAtlas.Upload( CreateBufferImage( Vector4(0.25f, 0.25f, 0.f, 0.5f  ), 80, 20 ), 280, 210 );
     mAtlas.Upload( CreateBufferImage( Vector4(0.1f, 0.1f, 0.f, 0.5f  ), 80, 10 ), 320, 210 );
-    BufferImage redBlock = CreateBufferImage( Color::RED, 40, 40 );
-    mAtlas.Upload(redBlock, 320, 30);
-    mAtlas.Upload(redBlock, 320, 80);
-    mAtlas.Upload(redBlock, 320, 130);
+  }
+
+  void UploadPixelData()
+  {
+    mAtlas.Upload( CreatePixelData( Vector3(1.f, 1.f, 0.f ), 40, 40 ), 320, 30 );
+    mAtlas.Upload( CreatePixelData( Vector3(0.f, 1.f, 1.f ), 40, 40 ), 320, 80 );
+    mAtlas.Upload( CreatePixelData( Vector3(1.f, 0.f, 1.f ), 40, 40 ), 320, 130 );
   }
 
   static void NewWindow(void)
@@ -183,6 +177,7 @@ public:
   {
     printf("Stage reporting context regain\n");
     UploadBufferImages();
+    UploadPixelData();
   }
 
 private:
@@ -202,9 +197,21 @@ private:
       pixbuf[i*4+3] = 0xFF * color.a;
     }
 
-    imageData.Update();
-
     return imageData;
+  }
+
+  PixelDataPtr CreatePixelData( const Vector3& color, const unsigned int width, const unsigned int height )
+  {
+    unsigned int size = width*height;
+    unsigned char* pixels = new unsigned char [size*3u];
+    for( unsigned int i = 0; i < size; i++ )
+    {
+      pixels[i*3u] = 0xFF * color.x;
+      pixels[i*3u+1u] = 0xFF * color.y;
+      pixels[i*3u+2u] = 0xFF * color.z;
+    }
+
+    return PixelData::New( pixels, width, height, Pixel::RGB888, PixelData::DELETE_ARRAY );
   }
 
 

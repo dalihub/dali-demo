@@ -206,7 +206,7 @@ class ButtonsController: public ConnectionTracker
     // Create select button
     mUpdateButton = Toolkit::PushButton::New();
     mUpdateButton.SetLabelText( "Select" );
-    mUpdateButton.SetName( "select-button" );
+    mUpdateButton.SetName( "selectButton" );
     mUpdateButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
     mUpdateButton.ClickedSignal().Connect( this, &ButtonsController::OnButtonClicked );
@@ -268,7 +268,7 @@ class ButtonsController: public ConnectionTracker
     // First radio button
     {
       Toolkit::RadioButton radioButton = Dali::Toolkit::RadioButton::New( "Select enabled" );
-      radioButton.SetName( "radio-select-enable" );
+      radioButton.SetName( "radioSelectEnable" );
       radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( 0, 0 );
@@ -282,7 +282,7 @@ class ButtonsController: public ConnectionTracker
     // Second radio button
     {
       Toolkit::RadioButton radioButton = Dali::Toolkit::RadioButton::New( "Select disabled" );
-      radioButton.SetName( "radio-select-disable" );
+      radioButton.SetName( "radioSelectDisable" );
       radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( 0, DP(50) );
@@ -390,7 +390,7 @@ class ButtonsController: public ConnectionTracker
 
   bool EnableSelectButton( Toolkit::Button button )
   {
-    if( button.GetName() == "radio-select-enable" && button.IsSelected() == true )
+    if( button.GetName() == "radioSelectEnable" && button.IsSelected() == true )
     {
       mUpdateButton.SetDisabled( false );
 
@@ -404,7 +404,7 @@ class ButtonsController: public ConnectionTracker
 
       mToggleButton.SetDisabled( false );
     }
-    else if( button.GetName() == "radio-select-disable" && button.IsSelected() == true )
+    else if( button.GetName() == "radioSelectDisable" && button.IsSelected() == true )
     {
       mUpdateButton.SetDisabled( true );
 

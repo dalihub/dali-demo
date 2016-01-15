@@ -207,7 +207,7 @@ Geometry& QuadMesh()
 }
 
 bool gUseMesh(false);
-bool gUseImageView(false);
+bool gUseImageActor(false);
 bool gNinePatch(false);
 unsigned int gRowsPerPage(25);
 unsigned int gColumnsPerPage( 25 );
@@ -243,13 +243,13 @@ Actor CreateMeshActor( unsigned int index)
 
 }
 // Test application to compare performance between ImageActor and ImageView
-// By default, the application consist of 10 pages of 25x25 ImageActors, this can be modified using the following command line arguments:
+// By default, the application consist of 10 pages of 25x25 Image views, this can be modified using the following command line arguments:
 // -r NumberOfRows  (Modifies the number of rows per page)
 // -c NumberOfColumns (Modifies the number of columns per page)
 // -p NumberOfPages (Modifies the nimber of pages )
-// --use-imageview ( Use ImageView instead of ImageActor )
+// --use-image-actor ( Use ImageActor instead of ImageView )
 // --use-mesh ( Use new renderer API (as ImageView) but shares renderers between actors when possible )
-// --use-nine-patch ( Use nine patch images )
+// --nine-patch ( Use nine patch images )
 
 //
 class Benchmark : public ConnectionTracker
@@ -290,13 +290,13 @@ public:
     {
       CreateMeshActors();
     }
-    else if( gUseImageView )
+    else if( gUseImageActor )
     {
-      CreateImageViews();
+      CreateImageActors();
     }
     else
     {
-      CreateImageActors();
+      CreateImageViews();
     }
 
     ShowAnimation();
@@ -406,21 +406,21 @@ public:
           duration = durationPerActor;
           delay = delayBetweenActors * count;
         }
-        if( gUseImageView )
-        {
-          mImageView[count].SetPosition( initialPosition );
-          mImageView[count].SetSize( Vector3(0.0f,0.0f,0.0f) );
-          mImageView[count].SetOrientation( Quaternion( Radian(0.0f),Vector3::XAXIS));
-          mShow.AnimateTo( Property( mImageView[count], Actor::Property::POSITION), Vector3(xpos+mSize.x*0.5f, ypos+mSize.y*0.5f, 0.0f), AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ));
-          mShow.AnimateTo( Property( mImageView[count], Actor::Property::SIZE), mSize, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ));
-        }
-        else
+        if( gUseImageActor || gUseMesh )
         {
           mActor[count].SetPosition( initialPosition );
           mActor[count].SetSize( Vector3(0.0f,0.0f,0.0f) );
           mActor[count].SetOrientation( Quaternion( Radian(0.0f),Vector3::XAXIS));
           mShow.AnimateTo( Property( mActor[count], Actor::Property::POSITION), Vector3(xpos+mSize.x*0.5f, ypos+mSize.y*0.5f, 0.0f), AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ));
           mShow.AnimateTo( Property( mActor[count], Actor::Property::SIZE), mSize, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ));
+        }
+        else
+        {
+          mImageView[count].SetPosition( initialPosition );
+          mImageView[count].SetSize( Vector3(0.0f,0.0f,0.0f) );
+          mImageView[count].SetOrientation( Quaternion( Radian(0.0f),Vector3::XAXIS));
+          mShow.AnimateTo( Property( mImageView[count], Actor::Property::POSITION), Vector3(xpos+mSize.x*0.5f, ypos+mSize.y*0.5f, 0.0f), AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ));
+          mShow.AnimateTo( Property( mImageView[count], Actor::Property::SIZE), mSize, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ));
         }
         ++count;
       }
@@ -438,19 +438,19 @@ public:
     size_t actorCount( mRowsPerPage*mColumnsPerPage*mPageCount);
     for( size_t i(0); i<actorCount; ++i )
     {
-      if( gUseImageView )
-      {
-        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(0.0f,3.0f));
-        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(3.0f,3.0f));
-        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(6.0f,2.0f));
-        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3( 12.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(8.0f,2.0f));
-      }
-      else
+      if( gUseImageActor || gUseMesh )
       {
         mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(0.0f,3.0f));
         mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(3.0f,3.0f));
         mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(6.0f,2.0f));
         mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3( 12.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(8.0f,2.0f));
+      }
+      else
+      {
+        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(0.0f,3.0f));
+        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(3.0f,3.0f));
+        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(6.0f,2.0f));
+        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3( 12.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(8.0f,2.0f));
       }
     }
     mScroll.Play();
@@ -465,6 +465,7 @@ public:
 
     unsigned int totalColumns = mColumnsPerPage * mPageCount;
 
+    float finalZ = Dali::Stage::GetCurrent().GetRenderTaskList().GetTask(0).GetCameraActor().GetCurrentWorldPosition().z;
     float totalDuration( 5.0f);
     float durationPerActor( 0.5f );
     float delayBetweenActors = ( totalDuration - durationPerActor) / (mRowsPerPage*mColumnsPerPage);
@@ -480,15 +481,15 @@ public:
           delay = delayBetweenActors * count;
         }
 
-        if( gUseImageView )
+        if( gUseImageActor || gUseMesh )
         {
-          mHide.AnimateTo( Property( mImageView[count], Actor::Property::ORIENTATION),  Quaternion( Radian( Degree( 70.0f ) ), Vector3::XAXIS ), AlphaFunction::EASE_OUT, TimePeriod( delay, duration ));
-          mHide.AnimateBy( Property( mImageView[count], Actor::Property::POSITION_Z), 1000.0f, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay +delayBetweenActors*actorsPerPage + duration, duration ));
+          mHide.AnimateTo( Property( mActor[count], Actor::Property::ORIENTATION),  Quaternion( Radian( Degree( 70.0f ) ), Vector3::XAXIS ), AlphaFunction::EASE_OUT, TimePeriod( delay, duration ));
+          mHide.AnimateBy( Property( mActor[count], Actor::Property::POSITION_Z), finalZ, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay +delayBetweenActors*actorsPerPage + duration, duration ));
         }
         else
         {
-          mHide.AnimateTo( Property( mActor[count], Actor::Property::ORIENTATION),  Quaternion( Radian( Degree( 70.0f ) ), Vector3::XAXIS ), AlphaFunction::EASE_OUT, TimePeriod( delay, duration ));
-          mHide.AnimateBy( Property( mActor[count], Actor::Property::POSITION_Z), 1000.0f, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay +delayBetweenActors*actorsPerPage + duration, duration ));
+          mHide.AnimateTo( Property( mImageView[count], Actor::Property::ORIENTATION),  Quaternion( Radian( Degree( 70.0f ) ), Vector3::XAXIS ), AlphaFunction::EASE_OUT, TimePeriod( delay, duration ));
+          mHide.AnimateBy( Property( mImageView[count], Actor::Property::POSITION_Z), finalZ, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay +delayBetweenActors*actorsPerPage + duration, duration ));
         }
         ++count;
       }
@@ -534,9 +535,9 @@ int main( int argc, char **argv )
     {
       gUseMesh = true;
     }
-    else if( arg.compare("--use-imageview") == 0)
+    else if( arg.compare("--use-image-actor") == 0)
     {
-      gUseImageView = true;
+      gUseImageActor = true;
     }
     else if( arg.compare("--nine-patch" ) == 0)
     {

@@ -64,7 +64,7 @@ std::string JSON_BROKEN("                                      \
     {                                                          \
       'type':'TextLabel',                                      \
       'size': [50,50,1],                                       \
-      'parent-origin': 'CENTER',                               \
+      'parentOrigin': 'CENTER',                                \
       'text':'COULD NOT LOAD JSON FILE'                        \
     }                                                          \
   ]                                                            \

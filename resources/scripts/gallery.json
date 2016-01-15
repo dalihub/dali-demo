@@ -1,26 +1,26 @@
 {
   "templates":
   {
-    "selection-type":
+    "selectionType":
     {
       "type": "Control",
       "background": {"color": [ 1, 0.5, 0, 0.6 ]},
-      "color-alpha": 0.05,
-      "parent-origin": "CENTER",
-      "anchor-point": "CENTER",
+      "colorAlpha": 0.05,
+      "parentOrigin": "CENTER",
+      "anchorPoint": "CENTER",
       "size": [ 450, 90, 1 ]
     },
-    "image-type":
+    "imageType":
     {
       "type": "ImageActor",
       "position": [ 450, 0, 1 ],
-      "parent-origin": "CENTER",
-      "anchor-point": "CENTER",
+      "parentOrigin": "CENTER",
+      "anchorPoint": "CENTER",
       "size": [ 450, 795, 1 ],
       "actors": [
         {
           "type": "Control",
-          "position-inheritance": "USE_PARENT_POSITION",
+          "positionInheritance": "USE_PARENT_POSITION",
           "size": [ 450, 795, 1 ],
           "signals": [
             {
@@ -38,18 +38,18 @@
       "type": "Control",
       "name": "stencil",
       "background": {"color": [ 1, 1, 1, 1 ]},
-      "parent-origin": "CENTER",
-      "anchor-point": "CENTER",
-      "draw-mode": "STENCIL",
+      "parentOrigin": "CENTER",
+      "anchorPoint": "CENTER",
+      "drawMode": "STENCIL",
       "size": [ 450, 795, 0 ],
-      "position-z": 0.1
+      "positionZ": 0.1
     },
     {
       "type": "ImageActor",
       "actors": [],
       "name": "list",
-      "parent-origin": "CENTER",
-      "anchor-point": "CENTER",
+      "parentOrigin": "CENTER",
+      "anchorPoint": "CENTER",
       "position": [ 0, 0, -1 ],
       "size": [ 450, 795, 1 ],
       "image": {
@@ -57,9 +57,9 @@
       }
     },
     {
-      "type": "selection-type",
-      "name": "selection-1",
-      "position-y": -105,
+      "type": "selectionType",
+      "name": "selection1",
+      "positionY": -105,
       "signals": [
         {
           "name": "tapped",
@@ -69,9 +69,9 @@
       ]
     },
     {
-      "type": "selection-type",
-      "name": "selection-2",
-      "position-y": -15,
+      "type": "selectionType",
+      "name": "selection2",
+      "positionY": -15,
       "signals": [
         {
           "name": "tapped",
@@ -81,9 +81,9 @@
       ]
     },
     {
-      "type": "selection-type",
-      "name": "selection-3",
-      "position-y": 75,
+      "type": "selectionType",
+      "name": "selection3",
+      "positionY": 75,
       "signals": [
         {
           "name": "tapped",
@@ -93,9 +93,9 @@
       ]
     },
     {
-      "type": "selection-type",
-      "name": "selection-4",
-      "position-y": 165,
+      "type": "selectionType",
+      "name": "selection4",
+      "positionY": 165,
       "signals": [
         {
           "name": "tapped",
@@ -105,9 +105,9 @@
       ]
     },
     {
-      "type": "selection-type",
-      "name": "selection-5",
-      "position-y": 255,
+      "type": "selectionType",
+      "name": "selection5",
+      "positionY": 255,
       "signals": [
         {
           "name": "tapped",
@@ -117,36 +117,36 @@
       ]
     },
     {
-      "type": "image-type",
-      "name": "picture-1",
+      "type": "imageType",
+      "name": "picture1",
       "image": {
         "filename": "{DALI_IMAGE_DIR}animation-picture-1.png"
       }
     },
     {
-      "type": "image-type",
-      "name": "picture-2",
+      "type": "imageType",
+      "name": "picture2",
       "image": {
         "filename": "{DALI_IMAGE_DIR}animation-picture-2.png"
       }
     },
     {
-      "type": "image-type",
-      "name": "picture-3",
+      "type": "imageType",
+      "name": "picture3",
       "image": {
         "filename": "{DALI_IMAGE_DIR}animation-picture-3.png"
       }
     },
     {
-      "type": "image-type",
-      "name": "picture-4",
+      "type": "imageType",
+      "name": "picture4",
       "image": {
         "filename": "{DALI_IMAGE_DIR}animation-picture-4.png"
       }
     },
     {
-      "type": "image-type",
-      "name": "picture-5",
+      "type": "imageType",
+      "name": "picture5",
       "image": {
         "filename": "{DALI_IMAGE_DIR}animation-picture-5.png"
       }
@@ -156,22 +156,22 @@
     "Animation_1": {
       "properties": [
         {
-          "actor": "selection-1",
-          "property": "color-alpha",
+          "actor": "selection1",
+          "property": "colorAlpha",
           "value": 0.5,
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.5
           },
           "timelineColor": "#83bcc5"
         },
         {
-          "actor": "picture-1",
-          "property": "position-x",
+          "actor": "picture1",
+          "property": "positionX",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.25,
             "duration": 0.25
           },
@@ -182,22 +182,22 @@
     "Animation_2": {
       "properties": [
         {
-          "actor": "selection-2",
-          "property": "color-alpha",
+          "actor": "selection2",
+          "property": "colorAlpha",
           "value": 0.5,
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.5
           },
           "timelineColor": "#83bcc5"
         },
         {
-          "actor": "picture-2",
-          "property": "position-x",
+          "actor": "picture2",
+          "property": "positionX",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.25,
             "duration": 0.25
           },
@@ -208,22 +208,22 @@
     "Animation_3": {
       "properties": [
         {
-          "actor": "selection-3",
-          "property": "color-alpha",
+          "actor": "selection3",
+          "property": "colorAlpha",
           "value": 0.5,
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.5
           },
           "timelineColor": "#83bcc5"
         },
         {
-          "actor": "picture-3",
-          "property": "position-x",
+          "actor": "picture3",
+          "property": "positionX",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.25,
             "duration": 0.25
           },
@@ -234,22 +234,22 @@
     "Animation_4": {
       "properties": [
         {
-          "actor": "selection-4",
-          "property": "color-alpha",
+          "actor": "selection4",
+          "property": "colorAlpha",
           "value": 0.5,
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.5
           },
           "timelineColor": "#83bcc5"
         },
         {
-          "actor": "picture-4",
-          "property": "position-x",
+          "actor": "picture4",
+          "property": "positionX",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.25,
             "duration": 0.25
           },
@@ -260,22 +260,22 @@
     "Animation_5": {
       "properties": [
         {
-          "actor": "selection-5",
-          "property": "color-alpha",
+          "actor": "selection5",
+          "property": "colorAlpha",
           "value": 0.5,
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.5
           },
           "timelineColor": "#83bcc5"
         },
         {
-          "actor": "picture-5",
-          "property": "position-x",
+          "actor": "picture5",
+          "property": "positionX",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.25,
             "duration": 0.25
           },
@@ -286,55 +286,55 @@
     "BackAnimation": {
       "properties": [
         {
-          "actor": "picture-1",
-          "property": "position-x",
+          "actor": "picture1",
+          "property": "positionX",
           "value": 450,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.25
           },
           "timelineColor": "#83bcc5"
         },
         {
-          "actor": "picture-2",
-          "property": "position-x",
+          "actor": "picture2",
+          "property": "positionX",
           "value": 450,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.25
           },
           "timelineColor": "#83bcc5"
         },
         {
-          "actor": "picture-3",
-          "property": "position-x",
+          "actor": "picture3",
+          "property": "positionX",
           "value": 450,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.25
           },
           "timelineColor": "#83bcc5"
         },
         {
-          "actor": "picture-4",
-          "property": "position-x",
+          "actor": "picture4",
+          "property": "positionX",
           "value": 450,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.25
           },
           "timelineColor": "#83bcc5"
         },
         {
-          "actor": "picture-5",
-          "property": "position-x",
+          "actor": "picture5",
+          "property": "positionX",
           "value": 450,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.25
           },

@@ -22,46 +22,46 @@
     // First Button
     {
       "type": "PushButton",
-      "parent-origin": "TOP_CENTER",
-      "anchor-point": "TOP_CENTER",
+      "parentOrigin": "TOP_CENTER",
+      "anchorPoint": "TOP_CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
-      "unselected-state-image": "{DALI_IMAGE_DIR}blocks-brick-1.png",
-      "selected-state-image": "{DALI_IMAGE_DIR}blocks-brick-2.png",
-      "label-text": "Normal"
+      "unselectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-2.png",
+      "labelText": "Normal"
     },
 
     // Second Button
     {
       "type": "PushButton",
-      "parent-origin": "CENTER",
-      "anchor-point": "CENTER",
+      "parentOrigin": "CENTER",
+      "anchorPoint": "CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
       "disabled": true,
-      "unselected-state-image": "{DALI_IMAGE_DIR}blocks-brick-1.png",
-      "selected-state-image": "{DALI_IMAGE_DIR}blocks-brick-2.png",
-      "disabled-state-image": "{DALI_IMAGE_DIR}blocks-brick-3.png",
-      "label-text": "Disabled"
+      "unselectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-2.png",
+      "disabledStateImage": "{DALI_IMAGE_DIR}blocks-brick-3.png",
+      "labelText": "Disabled"
     },
 
     // Third Button
     {
       "type": "PushButton",
-      "name": "toggle-button",
-      "parent-origin": "BOTTOM_CENTER",
-      "anchor-point": "BOTTOM_CENTER",
+      "name": "toggleButton",
+      "parentOrigin": "BOTTOM_CENTER",
+      "anchorPoint": "BOTTOM_CENTER",
       "position": [0, 0, 0],
       "size": [400, 200, 0],
       "togglable": true,
-      "unselected-state-image": "{DALI_IMAGE_DIR}blocks-brick-1.png",
-      "selected-state-image": "{DALI_IMAGE_DIR}blocks-brick-3.png",
-      "label-text": "Toggle",
+      "unselectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-1.png",
+      "selectedStateImage": "{DALI_IMAGE_DIR}blocks-brick-3.png",
+      "labelText": "Toggle",
       "signals": [{
         "name": "selected",
         "action": "set",
-        "actor": "toggle-button",
-        "property": "label-actor",
+        "actor": "toggleButton",
+        "property": "labelActor",
         "value": {
           "type": "TextLabel",
           "text": "Using a 9-patch image"

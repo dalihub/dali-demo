@@ -56,7 +56,7 @@ std::string JSON_BROKEN("                                      \
     {                                                          \
       'type':'TextActor',                                      \
       'size': [50,50,1],                                       \
-      'parent-origin': 'CENTER',                               \
+      'parentOrigin': 'CENTER',                                \
       'text':'COULD NOT LOAD JSON FILE'                        \
     }                                                          \
   ]                                                            \
@@ -193,6 +193,7 @@ private:
   void ReloadJsonFile(Builder& builder, Layer& layer)
   {
     Stage stage = Stage::GetCurrent();
+    stage.SetBackgroundColor( Color::WHITE );
 
     builder = Builder::New();
     builder.QuitSignal().Connect( this, &ExampleApp::OnBuilderQuit );
@@ -299,6 +300,10 @@ int main(int argc, char **argv)
   Application dali_app = Application::New(&argc, &argv);
 
   ExampleApp app(dali_app);
+
+  std::cout << "DALi Core: \t" << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << " (" << CORE_BUILD_DATE << ")" << std::endl;
+  std::cout << "DALi Adaptor: \t" << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << " (" << ADAPTOR_BUILD_DATE << ")\n";
+  std::cout << "DALi Toolkit: \t" << Toolkit::TOOLKIT_MAJOR_VERSION << "." << Toolkit::TOOLKIT_MINOR_VERSION << "." << Toolkit::TOOLKIT_MICRO_VERSION << " (" << Toolkit::TOOLKIT_BUILD_DATE << ")\n";
 
 
   if(argc > 1)

@@ -27,13 +27,13 @@
             0,
             0
           ],
-          "inherit-position": true,
-          "parent-origin": [
+          "inheritPosition": true,
+          "parentOrigin": [
             0,
             0.5,
             0.5
           ],
-          "anchor-point": [
+          "anchorPoint": [
             1,
             0.5,
             0.5
@@ -63,13 +63,13 @@
                 0,
                 0
               ],
-              "inherit-position": true,
-              "parent-origin": [
+              "inheritPosition": true,
+              "parentOrigin": [
                 0,
                 0.5,
                 0.5
               ],
-              "anchor-point": [
+              "anchorPoint": [
                 1,
                 0.5,
                 0.5
@@ -99,13 +99,13 @@
                     0,
                     0
                   ],
-                  "inherit-position": true,
-                  "parent-origin": [
+                  "inheritPosition": true,
+                  "parentOrigin": [
                     1,
                     0.5,
                     0.5
                   ],
-                  "anchor-point": [
+                  "anchorPoint": [
                     0,
                     0.5,
                     0.5
@@ -131,13 +131,13 @@
                 0,
                 0
               ],
-              "inherit-position": true,
-              "parent-origin": [
+              "inheritPosition": true,
+              "parentOrigin": [
                 1,
                 0.5,
                 0.5
               ],
-              "anchor-point": [
+              "anchorPoint": [
                 0,
                 0.5,
                 0.5
@@ -167,13 +167,13 @@
                     0,
                     0
                   ],
-                  "inherit-position": true,
-                  "parent-origin": [
+                  "inheritPosition": true,
+                  "parentOrigin": [
                     0,
                     0.5,
                     0.5
                   ],
-                  "anchor-point": [
+                  "anchorPoint": [
                     1,
                     0.5,
                     0.5
@@ -203,13 +203,13 @@
                         0,
                         0
                       ],
-                      "inherit-position": true,
-                      "parent-origin": [
+                      "inheritPosition": true,
+                      "parentOrigin": [
                         1,
                         0.5,
                         0.5
                       ],
-                      "anchor-point": [
+                      "anchorPoint": [
                         0,
                         0.5,
                         0.5
@@ -235,13 +235,13 @@
                     0,
                     0
                   ],
-                  "inherit-position": true,
-                  "parent-origin": [
+                  "inheritPosition": true,
+                  "parentOrigin": [
                     1,
                     0.5,
                     0.5
                   ],
-                  "anchor-point": [
+                  "anchorPoint": [
                     0,
                     0.5,
                     0.5
@@ -271,13 +271,13 @@
                         0,
                         0
                       ],
-                      "inherit-position": true,
-                      "parent-origin": [
+                      "inheritPosition": true,
+                      "parentOrigin": [
                         0,
                         0.5,
                         0.5
                       ],
-                      "anchor-point": [
+                      "anchorPoint": [
                         1,
                         0.5,
                         0.5
@@ -307,13 +307,13 @@
                             0,
                             0
                           ],
-                          "inherit-position": true,
-                          "parent-origin": [
+                          "inheritPosition": true,
+                          "parentOrigin": [
                             1,
                             0.5,
                             0.5
                           ],
-                          "anchor-point": [
+                          "anchorPoint": [
                             0,
                             0.5,
                             0.5
@@ -339,13 +339,13 @@
                         0,
                         0
                       ],
-                      "inherit-position": true,
-                      "parent-origin": [
+                      "inheritPosition": true,
+                      "parentOrigin": [
                         1,
                         0.5,
                         0.5
                       ],
-                      "anchor-point": [
+                      "anchorPoint": [
                         0,
                         0.5,
                         0.5
@@ -371,13 +371,13 @@
                     0,
                     0
                   ],
-                  "inherit-position": true,
-                  "parent-origin": [
+                  "inheritPosition": true,
+                  "parentOrigin": [
                     0.5,
                     1,
                     0.5
                   ],
-                  "anchor-point": [
+                  "anchorPoint": [
                     0.5,
                     0,
                     0.5
@@ -403,13 +403,13 @@
                 0,
                 0
               ],
-              "inherit-position": true,
-              "parent-origin": [
+              "inheritPosition": true,
+              "parentOrigin": [
                 0.5,
                 1,
                 0.5
               ],
-              "anchor-point": [
+              "anchorPoint": [
                 0.5,
                 0,
                 0.5
@@ -435,13 +435,13 @@
             0,
             0
           ],
-          "inherit-position": true,
-          "parent-origin": [
+          "inheritPosition": true,
+          "parentOrigin": [
             0.5,
             1,
             0.5
           ],
-          "anchor-point": [
+          "anchorPoint": [
             0.5,
             0,
             0.5
@@ -471,13 +471,13 @@
                 0,
                 0
               ],
-              "inherit-position": true,
-              "parent-origin": [
+              "inheritPosition": true,
+              "parentOrigin": [
                 1,
                 0.5,
                 0.5
               ],
-              "anchor-point": [
+              "anchorPoint": [
                 0,
                 0.5,
                 0.5
@@ -503,13 +503,13 @@
             0,
             0
           ],
-          "inherit-position": true,
-          "parent-origin": [
+          "inheritPosition": true,
+          "parentOrigin": [
             1,
             0.5,
             0.5
           ],
-          "anchor-point": [
+          "anchorPoint": [
             0,
             0.5,
             0.5
@@ -542,13 +542,13 @@
                     0,
                     0
                   ],
-                  "inherit-position": true,
-                  "parent-origin": [
+                  "inheritPosition": true,
+                  "parentOrigin": [
                     1,
                     0.5,
                     0.5
                   ],
-                  "anchor-point": [
+                  "anchorPoint": [
                     0,
                     0.5,
                     0.5
@@ -574,13 +574,13 @@
                 0,
                 0
               ],
-              "inherit-position": true,
-              "parent-origin": [
+              "inheritPosition": true,
+              "parentOrigin": [
                 1,
                 0.5,
                 0.5
               ],
-              "anchor-point": [
+              "anchorPoint": [
                 0,
                 0.5,
                 0.5
@@ -607,13 +607,13 @@
                 0,
                 0
               ],
-              "inherit-position": true,
-              "parent-origin": [
+              "inheritPosition": true,
+              "parentOrigin": [
                 0,
                 0.5,
                 0.5
               ],
-              "anchor-point": [
+              "anchorPoint": [
                 1,
                 0.5,
                 0.5
@@ -646,13 +646,13 @@
                         0,
                         0
                       ],
-                      "inherit-position": true,
-                      "parent-origin": [
+                      "inheritPosition": true,
+                      "parentOrigin": [
                         1,
                         0.5,
                         0.5
                       ],
-                      "anchor-point": [
+                      "anchorPoint": [
                         0,
                         0.5,
                         0.5
@@ -678,13 +678,13 @@
                     0,
                     0
                   ],
-                  "inherit-position": true,
-                  "parent-origin": [
+                  "inheritPosition": true,
+                  "parentOrigin": [
                     1,
                     0.5,
                     0.5
                   ],
-                  "anchor-point": [
+                  "anchorPoint": [
                     0,
                     0.5,
                     0.5
@@ -711,13 +711,13 @@
                     0,
                     0
                   ],
-                  "inherit-position": true,
-                  "parent-origin": [
+                  "inheritPosition": true,
+                  "parentOrigin": [
                     0,
                     0.5,
                     0.5
                   ],
-                  "anchor-point": [
+                  "anchorPoint": [
                     1,
                     0.5,
                     0.5
@@ -743,13 +743,13 @@
                 0,
                 0
               ],
-              "inherit-position": true,
-              "parent-origin": [
+              "inheritPosition": true,
+              "parentOrigin": [
                 0.5,
                 0,
                 0.5
               ],
-              "anchor-point": [
+              "anchorPoint": [
                 0.5,
                 1,
                 0.5
@@ -775,13 +775,13 @@
             0,
             0
           ],
-          "inherit-position": true,
-          "parent-origin": [
+          "inheritPosition": true,
+          "parentOrigin": [
             0.5,
             0,
             0.5
           ],
-          "anchor-point": [
+          "anchorPoint": [
             0.5,
             1,
             0.5
@@ -803,10 +803,10 @@
             {
       "type": "TextLabel",
       "name": "text",
-      "parent-origin": "CENTER",
-      "anchor-point": "CENTER",
+      "parentOrigin": "CENTER",
+      "anchorPoint": "CENTER",
       "text": "START",
-      "point-size": 20,
+      "pointSize": 20,
       "signals": [
         {
           "name": "tapped",
@@ -827,13 +827,13 @@
         0,
         0
       ],
-      "inherit-position": true,
-      "parent-origin": [
+      "inheritPosition": true,
+      "parentOrigin": [
         0.5,
         0.5,
         0.5
       ],
-      "anchor-point": [
+      "anchorPoint": [
         1,
         1,
         0.5
@@ -865,8 +865,8 @@
             0,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.2
           },
@@ -886,8 +886,8 @@
             0.32941176470588235,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -902,8 +902,8 @@
             0.9098039215686274,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -918,8 +918,8 @@
             0.4235294117647059,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -934,8 +934,8 @@
             0.027450980392156862,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -950,8 +950,8 @@
             0.8627450980392157,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -966,8 +966,8 @@
             0.1803921568627451,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -982,8 +982,8 @@
             0.5333333333333333,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -998,8 +998,8 @@
             0,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1014,8 +1014,8 @@
             1,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1030,8 +1030,8 @@
             0.06666666666666667,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1046,8 +1046,8 @@
             0,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1062,8 +1062,8 @@
             0.788235294117647,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1078,8 +1078,8 @@
             0.7294117647058823,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0.001,
             "duration": 2
           },
@@ -1094,8 +1094,8 @@
             1,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1110,8 +1110,8 @@
             0,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1126,8 +1126,8 @@
             0.5607843137254902,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1142,8 +1142,8 @@
             1,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1158,8 +1158,8 @@
             0,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0.001,
             "duration": 2
           },
@@ -1174,8 +1174,8 @@
             0.24313725490196078,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1190,8 +1190,8 @@
             0.43137254901960786,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1206,8 +1206,8 @@
             0,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1222,8 +1222,8 @@
             1,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1238,8 +1238,8 @@
             0.6784313725490196,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },
@@ -1254,8 +1254,8 @@
             0.4196078431372549,
             1
           ],
-          "alpha-function": "SIN",
-          "time-period": {
+          "alphaFunction": "SIN",
+          "timePeriod": {
             "delay": 0,
             "duration": 2
           },

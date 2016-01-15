@@ -3,9 +3,9 @@
     {
       "type": "Control",
       "background": {"color": [ 1, 1, 1, 1 ]},
-      "parent-origin": "TOP_LEFT",
-      "anchor-point": "TOP_LEFT",
-      "draw-mode": "STENCIL",
+      "parentOrigin": "TOP_LEFT",
+      "anchorPoint": "TOP_LEFT",
+      "drawMode": "STENCIL",
       "size": [ 400, 720, 0 ]
     },
     {
@@ -17,7 +17,7 @@
         355,
         -1
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         400,
         630,
@@ -28,8 +28,8 @@
         "filename": "{DALI_IMAGE_DIR}music-libray-main-screen.png",
         "width": 545,
         "height": 860,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -44,7 +44,7 @@
             25,
             1
           ],
-          "inherit-position": true,
+          "inheritPosition": true,
           "size": [
             30,
             30,
@@ -55,8 +55,8 @@
             "filename": "{DALI_IMAGE_DIR}music-libray-circle.png",
             "width": 128,
             "height": 128,
-            "load-policy": "IMMEDIATE",
-            "release-policy": "NEVER"
+            "loadPolicy": "IMMEDIATE",
+            "releasePolicy": "NEVER"
           }
         },
         {
@@ -68,7 +68,7 @@
             25,
             1
           ],
-          "inherit-position": true,
+          "inheritPosition": true,
           "size": [
             28.030303030303028,
             30,
@@ -79,8 +79,8 @@
             "filename": "{DALI_IMAGE_DIR}music-libray-triangle.png",
             "width": 185,
             "height": 198,
-            "load-policy": "IMMEDIATE",
-            "release-policy": "NEVER"
+            "loadPolicy": "IMMEDIATE",
+            "releasePolicy": "NEVER"
           }
         },
         {
@@ -92,7 +92,7 @@
             25,
             1
           ],
-          "inherit-position": true,
+          "inheritPosition": true,
           "size": [
             30,
             30,
@@ -103,8 +103,8 @@
             "filename": "{DALI_IMAGE_DIR}music-libray-rectangle.png",
             "width": 128,
             "height": 128,
-            "load-policy": "IMMEDIATE",
-            "release-policy": "NEVER"
+            "loadPolicy": "IMMEDIATE",
+            "releasePolicy": "NEVER"
           }
         }
       ],
@@ -114,7 +114,7 @@
         695,
         1
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         400,
         50,
@@ -140,7 +140,7 @@
             20,
             0
           ],
-          "inherit-position": true,
+          "inheritPosition": true,
           "size": [
             50,
             20,
@@ -148,7 +148,7 @@
           ],
           "sizeAspectRatio": false,
           "text": "12:30",
-          "point-size": 10
+          "pointSize": 10
         }
       ],
       "name": "Indicators",
@@ -157,7 +157,7 @@
         20,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         400,
         40,
@@ -186,7 +186,7 @@
         288,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         200,
         35,
@@ -198,8 +198,8 @@
         "filename": "{DALI_IMAGE_DIR}music-libray-foxtrot-oscar.png",
         "width": 545,
         "height": 95,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -211,7 +211,7 @@
         288,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         200,
         35,
@@ -240,7 +240,7 @@
         266,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         200,
         80,
@@ -254,8 +254,8 @@
         "filename": "{DALI_IMAGE_DIR}music-libray-the-solars.png",
         "width": 545,
         "height": 218,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -267,7 +267,7 @@
         266,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         200,
         80,
@@ -288,7 +288,7 @@
           "type": "Control",
           "name": "Tapped Record",
           "actors": [],
-          "position-inheritance":"USE_PARENT_POSITION",
+          "positionInheritance":"USE_PARENT_POSITION",
           "signals": [
             {
               "name": "tapped",
@@ -309,7 +309,7 @@
         206,
         0
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         200,
         200,
@@ -320,8 +320,8 @@
         "filename": "{DALI_IMAGE_DIR}music-libray-record-cover.png",
         "width": 545,
         "height": 502,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -333,7 +333,7 @@
         70,
         2
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         30,
         30,
@@ -344,8 +344,8 @@
         "filename": "{DALI_IMAGE_DIR}music-libray-arrow.png",
         "width": 128,
         "height": 128,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -357,7 +357,7 @@
         70,
         2
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         30,
         30,
@@ -368,8 +368,8 @@
         "filename": "{DALI_IMAGE_DIR}music-libray-star.png",
         "width": 121,
         "height": 128,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -381,7 +381,7 @@
         440,
         3
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         50,
         50,
@@ -397,8 +397,8 @@
         "filename": "{DALI_IMAGE_DIR}music-libray-pause.png",
         "width": 128,
         "height": 128,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     },
     {
@@ -410,7 +410,7 @@
         70,
         2
       ],
-      "inherit-position": true,
+      "inheritPosition": true,
       "size": [
         30,
         30,
@@ -421,8 +421,8 @@
         "filename": "{DALI_IMAGE_DIR}music-libray-menu.png",
         "width": 32,
         "height": 32,
-        "load-policy": "IMMEDIATE",
-        "release-policy": "NEVER"
+        "loadPolicy": "IMMEDIATE",
+        "releasePolicy": "NEVER"
       }
     }
   ],
@@ -431,10 +431,10 @@
       "properties": [
         {
           "actor": "Tapped Record",
-          "property": "color-alpha",
+          "property": "colorAlpha",
           "value": 0,
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.1
           },
@@ -448,8 +448,8 @@
             240,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -463,8 +463,8 @@
             2,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -479,8 +479,8 @@
             0.6509803921568628,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.3,
             "duration": 0.2
           },
@@ -494,8 +494,8 @@
             360,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -509,8 +509,8 @@
             520,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.3,
             "duration": 0.2
           },
@@ -524,8 +524,8 @@
             2,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -539,8 +539,8 @@
             360,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -554,8 +554,8 @@
             520,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.3,
             "duration": 0.2
           },
@@ -569,8 +569,8 @@
             2,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -585,8 +585,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.5,
             "duration": 0.2
           },
@@ -600,8 +600,8 @@
             288,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -615,8 +615,8 @@
             635,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.3,
             "duration": 0.2
           },
@@ -630,8 +630,8 @@
             2,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -645,8 +645,8 @@
             288,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -660,8 +660,8 @@
             635,
             0
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.3,
             "duration": 0.2
           },
@@ -675,8 +675,8 @@
             2,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0,
             "duration": 0.3
           },
@@ -691,8 +691,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.5,
             "duration": 0.2
           },
@@ -706,8 +706,8 @@
             70,
             2
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.3,
             "duration": 0.2
           },
@@ -721,8 +721,8 @@
             70,
             2
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.299,
             "duration": 0.2
           },
@@ -736,8 +736,8 @@
             70,
             2
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.3,
             "duration": 0.2
           },
@@ -751,8 +751,8 @@
             440,
             3
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.599,
             "duration": 0.1
           },
@@ -766,8 +766,8 @@
             0.1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.6,
             "duration": 0.1
           },
@@ -781,8 +781,8 @@
             1,
             1
           ],
-          "alpha-function": "LINEAR",
-          "time-period": {
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
             "delay": 0.7,
             "duration": 0.3
           },

@@ -106,8 +106,8 @@ struct AnimateBubbleConstraint
 {
 public:
   AnimateBubbleConstraint( const Vector3& initialPos, float scale )
-      : mInitialX( initialPos.x ),
-        mScale( scale )
+  : mInitialX( initialPos.x ),
+    mScale( scale )
   {
   }
 
@@ -130,7 +130,6 @@ public:
 private:
   float mInitialX;
   float mScale;
-  float mShapeSize;
 };
 
 bool CompareByTitle( const Example& lhs, const Example& rhs )
@@ -466,7 +465,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
     content.Add( image );
 
     // Add stencil
-    ImageActor stencil = NewStencilImage();
+    Toolkit::ImageView stencil = NewStencilImage();
     stencil.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     image.Add( stencil );
   }
@@ -491,20 +490,18 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   return content;
 }
 
-ImageActor DaliTableView::NewStencilImage()
+Toolkit::ImageView DaliTableView::NewStencilImage()
 {
-  Image alpha = ResourceImage::New( TILE_BACKGROUND_ALPHA );
+  Toolkit::ImageView stencil = ImageView::New( TILE_BACKGROUND_ALPHA );
 
-  ImageActor stencilActor = ImageActor::New( alpha );
+  stencil.SetParentOrigin( ParentOrigin::CENTER );
+  stencil.SetAnchorPoint( AnchorPoint::CENTER );
+  stencil.SetDrawMode( DrawMode::STENCIL );
 
-  stencilActor.SetParentOrigin( ParentOrigin::CENTER );
-  stencilActor.SetAnchorPoint( AnchorPoint::CENTER );
-  stencilActor.SetDrawMode( DrawMode::STENCIL );
+  Property::Map shaderEffect = CreateAlphaDiscardEffect();
+  stencil.SetProperty( Toolkit::ImageView::Property::IMAGE, shaderEffect );
 
-  Dali::ShaderEffect shaderEffect = CreateAlphaDiscardEffect();
-  stencilActor.SetShaderEffect( shaderEffect );
-
-  return stencilActor;
+  return stencil;
 }
 
 bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
@@ -938,11 +935,11 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
       mVersionPopup = Dali::Toolkit::Popup::New();
 
       Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( "Version information" );
-      titleActor.SetName( "title-actor" );
+      titleActor.SetName( "titleActor" );
       titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
 
       Toolkit::TextLabel contentActor = Toolkit::TextLabel::New( stream.str() );
-      contentActor.SetName( "content-actor" );
+      contentActor.SetName( "contentActor" );
       contentActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
       contentActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
       contentActor.SetPadding( Padding( 0.0f, 0.0f, 20.0f, 0.0f ) );

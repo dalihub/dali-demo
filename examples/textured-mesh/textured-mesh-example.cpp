@@ -175,10 +175,10 @@ public:
     mMeshActor2.AddRenderer( mRenderer2 );
     mMeshActor2.SetSize(400, 400);
 
-    mMeshActor2.RegisterProperty( "a-n-other-property", Color::GREEN );
+    mMeshActor2.RegisterProperty( "anotherProperty",    Color::GREEN );
 
-    mRenderer2.RegisterProperty( "a-n-other-property", Vector3::ZERO );
-    mRenderer2.RegisterProperty( "a-coefficient", 0.008f );
+    mRenderer2.RegisterProperty( "anotherProperty",    Vector3::ZERO );
+    mRenderer2.RegisterProperty( "aCoefficient",  0.008f );
     Property::Index fadeColorIndex2 = mRenderer2.RegisterProperty( "uFadeColor", Color::BLUE );
     mRenderer2.SetDepthIndex(0);
 
@@ -200,7 +200,7 @@ public:
     animation.SetLooping(true);
     animation.Play();
 
-    stage.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));;
+    stage.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));
   }
 
   BufferImage CreateBufferImage()

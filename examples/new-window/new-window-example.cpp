@@ -99,6 +99,9 @@ void main()\n
 );
 
 const char* FRAGMENT_BLEND_SHADER = MAKE_SHADER(
+varying mediump vec2  vTexCoord;\n
+uniform sampler2D sTexture;\n
+uniform sampler2D sEffect;\n
 uniform mediump float alpha;\n
 \n
 void main()\n
@@ -211,7 +214,7 @@ void NewWindowController::Create( Application& app )
 
   Image image = ResourceImage::New(LOGO_IMAGE);
   ImageView imageView = ImageView::New(image);
-  imageView.SetName("dali-logo");
+  imageView.SetName("daliLogo");
   imageView.SetParentOrigin(ParentOrigin::CENTER);
   imageView.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
   logoLayoutActor.Add(imageView);
@@ -265,13 +268,12 @@ void NewWindowController::AddMeshActor( Actor& parentActor )
 
   Actor colorMeshActor = Actor::New();
   colorMeshActor.AddRenderer( colorMeshRenderer );
-  colorMeshActor.SetSize( 175.f,175.f );
+  colorMeshActor.SetSize( 175.f,175.f, 175.f );
   colorMeshActor.SetParentOrigin( ParentOrigin::CENTER );
   colorMeshActor.SetAnchorPoint(AnchorPoint::TOP_CENTER);
   colorMeshActor.SetPosition(Vector3(0.0f, 50.0f, 0.0f));
   colorMeshActor.SetOrientation( Degree(75.f), Vector3::XAXIS );
   colorMeshActor.SetName("ColorMeshActor");
-  parentActor.Add( colorMeshActor );
 
  // Create a textured mesh
   Image effectImage = ResourceImage::New(EFFECT_IMAGE);
@@ -282,13 +284,21 @@ void NewWindowController::AddMeshActor( Actor& parentActor )
 
   Actor textureMeshActor = Actor::New();
   textureMeshActor.AddRenderer( textureMeshRenderer );
-  textureMeshActor.SetSize( 175.f,175.f );
+  textureMeshActor.SetSize( 175.f,175.f, 175.f );
   textureMeshActor.SetParentOrigin( ParentOrigin::CENTER );
   textureMeshActor.SetAnchorPoint(AnchorPoint::TOP_CENTER);
   textureMeshActor.SetPosition(Vector3(0.0f, 200.0f, 0.0f));
   textureMeshActor.SetOrientation( Degree(75.f), Vector3::XAXIS );
   textureMeshActor.SetName("TextureMeshActor");
-  parentActor.Add( textureMeshActor );
+
+  Layer layer3d = Layer::New();
+  layer3d.SetParentOrigin( ParentOrigin::CENTER );
+  layer3d.SetAnchorPoint( AnchorPoint::CENTER );
+  layer3d.SetBehavior(Layer::LAYER_3D);
+
+  layer3d.Add( colorMeshActor );
+  layer3d.Add( textureMeshActor );
+  parentActor.Add(layer3d);
 }
 
 void NewWindowController::AddBlendingImageActor( Actor& parentActor )
@@ -305,18 +315,23 @@ void NewWindowController::AddBlendingImageActor( Actor& parentActor )
   tmpActor.SetScale(0.25f);
 
   // create blending shader effect
-  ShaderEffect blendShader = ShaderEffect::New( "", FRAGMENT_BLEND_SHADER );
-  blendShader.SetEffectImage( fb2 );
-  blendShader.SetUniform("alpha", 0.5f);
+  Property::Map customShader;
+  customShader[ "fragmentShader" ] = FRAGMENT_BLEND_SHADER;
+  Property::Map map;
+  map[ "shader" ] = customShader;
 
   Image baseImage = ResourceImage::New(BASE_IMAGE);
-  ImageActor blendActor = ImageActor::New( baseImage );
+  ImageView blendActor = ImageView::New( baseImage );
+  blendActor.SetProperty( ImageView::Property::IMAGE, map );
+  blendActor.RegisterProperty( "alpha", 0.5f );
+
   blendActor.SetParentOrigin(ParentOrigin::CENTER_RIGHT);
   blendActor.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
   blendActor.SetPosition(Vector3(0.0f, 100.0f, 0.0f));
   blendActor.SetSize(140, 140);
-  blendActor.SetShaderEffect( blendShader );
   parentActor.Add(blendActor);
+
+  blendActor.GetRendererAt(0u).GetMaterial().AddTexture(fb2, "sEffect");
 }
 
 void NewWindowController::AddTextLabel( Actor& parentActor )
@@ -477,7 +492,7 @@ Dali::Property::Map NewWindowController::CreateColorModifierer()
 
  Property::Map map;
  Property::Map customShader;
- customShader[ "fragment-shader" ] = fragmentShader;
+ customShader[ "fragmentShader" ] = fragmentShader;
  map[ "shader" ] = customShader;
 
  return map;

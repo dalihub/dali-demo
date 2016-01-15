@@ -61,6 +61,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TEXTURED_MESH dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TEXTURED_MESH")
 #define DALI_DEMO_STR_TITLE_LINE_MESH dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_LINE_MESH")
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_COLOR_GRADIENT")
+#define DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_SUPER_BLUR_BLOOM")
 
 #else // !INTERNATIONALIZATION_ENABLED
 
@@ -91,9 +92,13 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_LOGGING                   "Logging"
 #define DALI_DEMO_STR_TITLE_MESH_MORPH                "Mesh Morph"
 #define DALI_DEMO_STR_TITLE_MESH_SORTING              "Mesh Sorting"
+#define DALI_DEMO_STR_TITLE_METABALL_EXPLOSION        "Metaball Explosion"
+#define DALI_DEMO_STR_TITLE_METABALL_REFRAC           "Metaball Refractions"
 #define DALI_DEMO_STR_TITLE_TEXTURED_MESH             "Mesh Texture"
 #define DALI_DEMO_STR_TITLE_LINE_MESH                 "Mesh Line"
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT            "Color Gradient"
+#define DALI_DEMO_STR_TITLE_IMAGE_VIEW                "Image View"
+#define DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM          "Super Blur and Bloom"
 
 #endif
 

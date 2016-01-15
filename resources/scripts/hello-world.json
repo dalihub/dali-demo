@@ -19,6 +19,6 @@
   "stage": [{
     "type": "TextLabel",
     "text": "Hello World",
-    "parent-origin": "CENTER"
+    "parentOrigin": "CENTER"
   }]
 }

@@ -17,11 +17,11 @@
 {
   // library of styles
   "styles": {
-    "red-theme": {
+    "redTheme": {
       "color": [1, 0, 0, 1]
     },
-    "basic-text": {
-      "parent-origin": "CENTER"
+    "basicText": {
+      "parentOrigin": "CENTER"
     }
   },
   "paths":
@@ -40,8 +40,8 @@
         "actor": "greeting", // referenced actors must exist on stage
         "property": "position",
         "value": [300, 300, -1000],
-        "alpha-function": "EASE_IN_OUT",
-        "time-period": {
+        "alphaFunction": "EASE_IN_OUT",
+        "timePeriod": {
           "delay": 0,
           "duration": 3
         }
@@ -49,7 +49,7 @@
         "actor": "greeting", // referenced actors must exist on stage
         "property": "scale",
         "value": [5, 5, 1],
-        "time-period": {
+        "timePeriod": {
           "delay": 2,
           "duration": 3
         }
@@ -61,21 +61,21 @@
         "actor": "image", // referenced actors must exist on stage
         "property": "orientation",
         "value": [0, 0, -45],
-        "alpha-function": "EASE_IN_OUT",
-        "time-period": {
+        "alphaFunction": "EASE_IN_OUT",
+        "timePeriod": {
           "delay": 0,
           "duration": 3
         }
       }]
     },
-    "path-animation": {
+    "pathAnimation": {
       "duration": 3.0,
       "properties": [{
         "actor": "greeting2", // referenced actors must exist on stage
         "path":"path0",
         "forward":[1,0,0],
-        "alpha-function": "EASE_IN_OUT",
-        "time-period": {
+        "alphaFunction": "EASE_IN_OUT",
+        "timePeriod": {
           "delay": 0,
           "duration": 3
         }
@@ -87,7 +87,7 @@
     "name": "greeting",
     "type": "TextLabel",
     "text": "Touch me",
-    "styles": ["basic-text"],
+    "styles": ["basicText"],
     "position": [0, -120, 0],
     "size": [200, 200, 1],
     "orientation": [0, 0, 30],
@@ -99,8 +99,8 @@
   }, {
     "name":"greeting2",
     "type": "TextLabel",
-    "parent-origin": "CENTER",
-    "anchor-point": "CENTER",
+    "parentOrigin": "CENTER",
+    "anchorPoint": "CENTER",
     "size": [200, 200, 1],
     "orientation": [0, 0, 39],
     "position": [-150, -50, 0],
@@ -108,12 +108,12 @@
     "signals": [{
       "name": "touched",
       "action": "play",
-      "animation": "path-animation"
+      "animation": "pathAnimation"
     }]
   }, {
     "type": "TextLabel", // styles can be additive
-    "parent-origin": "CENTER",
-    "anchor-point": "CENTER",
+    "parentOrigin": "CENTER",
+    "anchorPoint": "CENTER",
     "size": [200, 200, 1],
     "text": "or the image.."
   }, {
@@ -122,7 +122,7 @@
     "image": {
       "filename": "{DALI_IMAGE_DIR}gallery-large-21.jpg"
     },
-    "relayout-enabled": false,
+    "relayoutEnabled": false,
     "position": [0, 200, 0],
     "size": [200, 200, 1],
     "signals": [{
@@ -130,6 +130,6 @@
       "action": "play",
       "animation": "rotate"
     }],
-    "position-inheritance": "DONT_INHERIT_POSITION"
+    "positionInheritance": "DONT_INHERIT_POSITION"
   }]
 }

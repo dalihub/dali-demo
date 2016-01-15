@@ -19,6 +19,7 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
 using namespace Dali;
 
@@ -56,8 +57,8 @@ const char* const POPUP_BUTTON_FIXED_SIZE_ID = "POPUP_BUTTON_FIXED_SIZE_ID";
 const char* const POPUP_BUTTON_COMPLEX_ID = "POPUP_BUTTON_COMPLEX";
 
 // Names to give Popup PushButton controls.
-const char* const POPUP_CONTROL_OK_NAME = "control-ok";
-const char* const POPUP_CONTROL_CANCEL_NAME = "control-cancel";
+const char* const POPUP_CONTROL_OK_NAME = "controlOk";
+const char* const POPUP_CONTROL_CANCEL_NAME = "controlCancel";
 
 const char* const CONTENT_TEXT = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const char* const IMAGE1 = DALI_IMAGE_DIR "gallery-medium-5.jpg";
@@ -111,8 +112,12 @@ public:
     // The Init signal is received once (only) during the Application lifetime
     Stage stage = Stage::GetCurrent();
 
-    // Respond to key events
-    stage.KeyEventSignal().Connect(this, &PopupExample::OnKeyEvent);
+    // Respond to key events if not handled
+    Toolkit::KeyInputFocusManager keyInputFocusManager = Toolkit::KeyInputFocusManager::Get();
+    if( keyInputFocusManager )
+    {
+      keyInputFocusManager.UnhandledKeyEventSignal().Connect( this, &PopupExample::OnKeyEvent );
+    }
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
@@ -352,7 +357,7 @@ public:
     {
       // Start with a control area image.
       Toolkit::ImageView footer = Toolkit::ImageView::New( DEFAULT_CONTROL_AREA_IMAGE_PATH );
-      footer.SetName( "control-area-image" );
+      footer.SetName( "controlAreaImage" );
       // Set up the container's layout.
       footer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       footer.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
@@ -407,7 +412,7 @@ public:
   Actor CreateTitle( std::string title )
   {
     Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( title );
-    titleActor.SetName( "title-actor" );
+    titleActor.SetName( "titleActor" );
     titleActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
     titleActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
@@ -471,7 +476,7 @@ public:
     else if( button.GetName() == POPUP_BUTTON_TOAST_ID )
     {
       // Create a toast popup via the type registry (as it is a named-type).
-      TypeInfo typeInfo = TypeRegistry::Get().GetTypeInfo( "popup-toast" );
+      TypeInfo typeInfo = TypeRegistry::Get().GetTypeInfo( "PopupToast" );
       if( typeInfo )
       {
         BaseHandle baseHandle = typeInfo.CreateInstance();

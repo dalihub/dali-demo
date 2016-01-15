@@ -309,7 +309,6 @@ private:
    */
   void ApplyEffectToScrollView()
   {
-    bool wrap(true);
     bool snap(true);
 
     Stage stage = Stage::GetCurrent();
@@ -317,7 +316,7 @@ private:
 
     RulerPtr rulerX = CreateRuler(snap ? stageSize.width : 0.0f);
     RulerPtr rulerY = new DefaultRuler;
-    rulerX->SetDomain(RulerDomain(0.0f, stageSize.x * PAGE_COLUMNS, !wrap));
+    rulerX->SetDomain(RulerDomain(0.0f, stageSize.x * PAGE_COLUMNS, false));
     rulerY->Disable();
 
     Dali::Path path = Dali::Path::New();
@@ -396,14 +395,7 @@ private:
     mScrollView.RemoveConstraintsFromChildren();
 
     rulerX = CreateRuler(snap ? stageSize.width * 0.5f : 0.0f);
-    if( wrap )
-    {
-      rulerX->SetDomain(RulerDomain(0.0f, stageSize.x * 0.5f * PAGE_COLUMNS, !wrap));
-    }
-    else
-    {
-      rulerX->SetDomain(RulerDomain(0.0f, stageSize.x*0.5f* (PAGE_COLUMNS+1), !wrap));
-    }
+    rulerX->SetDomain( RulerDomain( 0.0f, stageSize.x * 0.5f * PAGE_COLUMNS, false ) );
 
     unsigned int currentPage = mScrollView.GetCurrentPage();
     if( mScrollViewEffect )
@@ -411,7 +403,7 @@ private:
       mScrollView.ApplyEffect(mScrollViewEffect);
     }
 
-    mScrollView.SetWrapMode(wrap);
+    mScrollView.SetWrapMode( true );
     mScrollView.SetRulerX( rulerX );
     mScrollView.SetRulerY( rulerY );
 
