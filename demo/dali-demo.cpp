@@ -69,6 +69,7 @@ int main(int argc, char **argv)
   demo.AddExample(Example("line-mesh.example", DALI_DEMO_STR_TITLE_LINE_MESH));
   demo.AddExample(Example("gradients.example", DALI_DEMO_STR_TITLE_COLOR_GRADIENT));
   demo.AddExample(Example("image-view.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW));
+  demo.AddExample(Example("image-view-pixel-area.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA));
   demo.AddExample(Example("super-blur-bloom.example", DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM));
 
   demo.SortAlphabetically( true );
