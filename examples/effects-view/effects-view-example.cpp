@@ -253,7 +253,7 @@ static void RunTest( Application& application )
 
 /*****************************************************************************/
 
-int main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application application = Application::New(&argc, &argv, DEMO_THEME_PATH);
 

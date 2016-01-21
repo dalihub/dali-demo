@@ -118,7 +118,7 @@ void RunTest( Application& application )
 
 // Entry point for Linux & Tizen applications
 //
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
 

@@ -579,7 +579,7 @@ private:
   Toolkit::PushButton mEffectChangeButton;              ///< Effect Change Button
 };
 
-int main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
   ExampleController test(app);

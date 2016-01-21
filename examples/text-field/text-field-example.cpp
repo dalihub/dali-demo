@@ -224,7 +224,7 @@ void RunTest( Application& application )
 }
 
 /** Entry point for Linux & Tizen applications */
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   // DALI_DEMO_THEME_PATH not passed to Application so TextField example uses default Toolkit style sheet.
   Application application = Application::New( &argc, &argv );

@@ -64,7 +64,7 @@ of the capability of the toolkit.
 %build
 PREFIX="/usr"
 CXXFLAGS+=" -Wall -g -O2"
-LDFLAGS+=" -Wl,--rpath=$PREFIX/lib -Wl,--as-needed -fPIC"
+LDFLAGS+=" -Wl,--rpath=$PREFIX/lib -Wl,--as-needed"
 
 %ifarch %{arm}
 CXXFLAGS+=" -D_ARCH_ARM_"

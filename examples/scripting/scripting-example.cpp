@@ -38,7 +38,7 @@ bool CheckIfFileExists( const std::string& filename )
 }
 
 }
-int main( int argc, char* argv[] )
+int DALI_EXPORT_API main( int argc, char* argv[] )
 {
   // pull out the JSON file and JavaScript file from the command line arguments
   std::string javaScriptFileName;
