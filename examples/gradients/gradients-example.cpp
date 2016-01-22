@@ -27,9 +27,9 @@ namespace
 {
 const char * const APPLICATION_TITLE( "Color Gradients" );
 
-const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char * const CHANGE_ICON( DALI_IMAGE_DIR "icon-change.png" );
-const char * const CHANGE_ICON_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
+const char * const CHANGE_ICON( DEMO_IMAGE_DIR "icon-change.png" );
+const char * const CHANGE_ICON_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
 }
 
 // This example shows how to render color gradients

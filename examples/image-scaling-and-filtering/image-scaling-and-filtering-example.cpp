@@ -27,18 +27,18 @@ using Toolkit::TextLabel;
 namespace
 {
 
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-gradient.jpg" );
+const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-gradient.jpg" );
 const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 
-const char* BORDER_IMAGE( DALI_IMAGE_DIR "border-4px.9.png" );
+const char* BORDER_IMAGE( DEMO_IMAGE_DIR "border-4px.9.png" );
 const int BORDER_WIDTH = ( 11.0f + 4.0f ); // Shadow size = 11, border size = 4.
-const char* RESIZE_HANDLE_IMAGE( DALI_IMAGE_DIR "resize-handle.png" );
+const char* RESIZE_HANDLE_IMAGE( DEMO_IMAGE_DIR "resize-handle.png" );
 
 const int MARGIN_SIZE = 10;
 
 const char* const NEXT_BUTTON_ID = "NEXT_BUTTON";
 const char* const PREVIOUS_BUTTON_ID = "PREVIOUS_BUTTON";
-const char * const DALI_ICON_PLAY = DALI_IMAGE_DIR "icon-play.png";
+const char * const DALI_ICON_PLAY = DEMO_IMAGE_DIR "icon-play.png";
 
 const char* const FITTING_BUTTON_ID = "FITTING_BUTTON";
 const char* const SAMPLING_BUTTON_ID = "SAMPLING_BUTTON";
@@ -52,29 +52,29 @@ const char* const STYLE_BUTTON_TEXT = "buttonlabel";
 const char* IMAGE_PATHS[] =
 {
   // Variety of sizes, shapes and formats:
-  DALI_IMAGE_DIR "dali-logo.png",
-  DALI_IMAGE_DIR "layer1.png",
-  DALI_IMAGE_DIR "layer2.png",
-  DALI_IMAGE_DIR "animation-list.png",
-  DALI_IMAGE_DIR "music-libray-main-screen.png",
-  DALI_IMAGE_DIR "music-libray-record-cover.png",
-  DALI_IMAGE_DIR "contacts-background.png",
-  DALI_IMAGE_DIR "portrait_screen_primitive_shapes.gif",
-  DALI_IMAGE_DIR "landscape_screen_primitive_shapes.gif",
-  DALI_IMAGE_DIR "square_primitive_shapes.bmp",
-  DALI_IMAGE_DIR "gallery-large-14.jpg",
-  DALI_IMAGE_DIR "book-landscape-cover.jpg",
-  DALI_IMAGE_DIR "book-portrait-p1.jpg",
-  DALI_IMAGE_DIR "book-landscape-cover-back.jpg",
+  DEMO_IMAGE_DIR "dali-logo.png",
+  DEMO_IMAGE_DIR "layer1.png",
+  DEMO_IMAGE_DIR "layer2.png",
+  DEMO_IMAGE_DIR "animation-list.png",
+  DEMO_IMAGE_DIR "music-libray-main-screen.png",
+  DEMO_IMAGE_DIR "music-libray-record-cover.png",
+  DEMO_IMAGE_DIR "contacts-background.png",
+  DEMO_IMAGE_DIR "portrait_screen_primitive_shapes.gif",
+  DEMO_IMAGE_DIR "landscape_screen_primitive_shapes.gif",
+  DEMO_IMAGE_DIR "square_primitive_shapes.bmp",
+  DEMO_IMAGE_DIR "gallery-large-14.jpg",
+  DEMO_IMAGE_DIR "book-landscape-cover.jpg",
+  DEMO_IMAGE_DIR "book-portrait-p1.jpg",
+  DEMO_IMAGE_DIR "book-landscape-cover-back.jpg",
 
   // Worst case for aliasing in downscaling, 2k x 2k 1 bit per pixel dithered
   // black and white image:
-  DALI_IMAGE_DIR "gallery-large-14.wbmp",
+  DEMO_IMAGE_DIR "gallery-large-14.wbmp",
 
-  DALI_IMAGE_DIR "background-1.jpg",
-  DALI_IMAGE_DIR "background-blocks.jpg",
-  DALI_IMAGE_DIR "background-magnifier.jpg",
-  DALI_IMAGE_DIR "gallery-large-14.jpg",
+  DEMO_IMAGE_DIR "background-1.jpg",
+  DEMO_IMAGE_DIR "background-blocks.jpg",
+  DEMO_IMAGE_DIR "background-magnifier.jpg",
+  DEMO_IMAGE_DIR "gallery-large-14.jpg",
   NULL
 };
 const int NUM_IMAGE_PATHS = sizeof(IMAGE_PATHS) / sizeof(IMAGE_PATHS[0]) - 1u;
@@ -761,7 +761,7 @@ void RunTest( Application& application )
 // Entry point for Linux & Tizen applications
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 
   RunTest( application );
 

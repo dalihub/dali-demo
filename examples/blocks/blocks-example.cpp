@@ -31,17 +31,17 @@ using namespace DemoHelper;
 
 namespace
 {
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-blocks.jpg" );
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-blocks.jpg" );
+const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "DALi Blocks" );
-const char* BALL_IMAGE = DALI_IMAGE_DIR "blocks-ball.png";
-const char* PADDLE_IMAGE = DALI_IMAGE_DIR "blocks-paddle.png";
-const char* PADDLE_HANDLE_IMAGE = DALI_IMAGE_DIR "blocks-paddle-handle.png";
+const char* BALL_IMAGE = DEMO_IMAGE_DIR "blocks-ball.png";
+const char* PADDLE_IMAGE = DEMO_IMAGE_DIR "blocks-paddle.png";
+const char* PADDLE_HANDLE_IMAGE = DEMO_IMAGE_DIR "blocks-paddle-handle.png";
 
-const char* BRICK_IMAGE_PATH[] =    { DALI_IMAGE_DIR "blocks-brick-1.png",
-                                      DALI_IMAGE_DIR "blocks-brick-2.png",
-                                      DALI_IMAGE_DIR "blocks-brick-3.png",
-                                      DALI_IMAGE_DIR "blocks-brick-4.png" };
+const char* BRICK_IMAGE_PATH[] =    { DEMO_IMAGE_DIR "blocks-brick-1.png",
+                                      DEMO_IMAGE_DIR "blocks-brick-2.png",
+                                      DEMO_IMAGE_DIR "blocks-brick-3.png",
+                                      DEMO_IMAGE_DIR "blocks-brick-4.png" };
 
 const int TOTAL_BRICKS(4);                                                  ///< Total bricks in game.
 const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
@@ -838,7 +838,7 @@ void RunTest(Application& app)
 
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 
   RunTest(app);
 

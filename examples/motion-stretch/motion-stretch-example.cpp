@@ -40,11 +40,11 @@ const float MOTION_STRETCH_ACTOR_WIDTH = 256;                                   
 const float MOTION_STRETCH_ACTOR_HEIGHT = 256;                                         // ""
 
 const int MOTION_STRETCH_NUM_ACTOR_IMAGES = 5;
-const char* MOTION_STRETCH_ACTOR_IMAGE1( DALI_IMAGE_DIR "image-with-border-1.jpg" );
-const char* MOTION_STRETCH_ACTOR_IMAGE2( DALI_IMAGE_DIR "image-with-border-2.jpg" );
-const char* MOTION_STRETCH_ACTOR_IMAGE3( DALI_IMAGE_DIR "image-with-border-3.jpg" );
-const char* MOTION_STRETCH_ACTOR_IMAGE4( DALI_IMAGE_DIR "image-with-border-4.jpg" );
-const char* MOTION_STRETCH_ACTOR_IMAGE5( DALI_IMAGE_DIR "image-with-border-5.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE1( DEMO_IMAGE_DIR "image-with-border-1.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE2( DEMO_IMAGE_DIR "image-with-border-2.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE3( DEMO_IMAGE_DIR "image-with-border-3.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE4( DEMO_IMAGE_DIR "image-with-border-4.jpg" );
+const char* MOTION_STRETCH_ACTOR_IMAGE5( DEMO_IMAGE_DIR "image-with-border-5.jpg" );
 
 const char* MOTION_STRETCH_ACTOR_IMAGES[] = {
   MOTION_STRETCH_ACTOR_IMAGE1,
@@ -58,16 +58,16 @@ const int NUM_ACTOR_ANIMATIONS = 4;
 const int NUM_CAMERA_ANIMATIONS = 2;
 
 
-const char* BACKGROUND_IMAGE_PATH = DALI_IMAGE_DIR "background-default.png";
+const char* BACKGROUND_IMAGE_PATH = DEMO_IMAGE_DIR "background-default.png";
 
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char* LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
-const char* LAYOUT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
+const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
+const char* LAYOUT_IMAGE( DEMO_IMAGE_DIR "icon-change.png" );
+const char* LAYOUT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
 const char* APPLICATION_TITLE( "Motion Stretch" );
-const char* EFFECTS_OFF_ICON( DALI_IMAGE_DIR "icon-effects-off.png" );
-const char* EFFECTS_OFF_ICON_SELECTED( DALI_IMAGE_DIR "icon-effects-off-selected.png" );
-const char* EFFECTS_ON_ICON( DALI_IMAGE_DIR "icon-effects-on.png" );
-const char* EFFECTS_ON_ICON_SELECTED( DALI_IMAGE_DIR "icon-effects-on-selected.png" );
+const char* EFFECTS_OFF_ICON( DEMO_IMAGE_DIR "icon-effects-off.png" );
+const char* EFFECTS_OFF_ICON_SELECTED( DEMO_IMAGE_DIR "icon-effects-off-selected.png" );
+const char* EFFECTS_ON_ICON( DEMO_IMAGE_DIR "icon-effects-on.png" );
+const char* EFFECTS_ON_ICON_SELECTED( DEMO_IMAGE_DIR "icon-effects-on-selected.png" );
 
 // These values depend on the button background image
 const Vector4 BUTTON_IMAGE_BORDER( Vector4::ONE * 3.0f );
@@ -443,7 +443,7 @@ void RunTest(Application& app)
 //
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 
   RunTest(app);
 

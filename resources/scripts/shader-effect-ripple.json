@@ -13,7 +13,7 @@
       "heightResizePolicy":"DIMENSION_DEPENDENCY",
       "effect": "Ripple2D",
       "image": {
-        "filename": "{DALI_IMAGE_DIR}gallery-medium-25.jpg",
+        "filename": "{DEMO_IMAGE_DIR}gallery-medium-25.jpg",
         "width": 400,
         "height": 400,
         "loadPolicy": "IMMEDIATE",

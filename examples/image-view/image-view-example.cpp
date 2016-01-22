@@ -25,22 +25,22 @@ using namespace Dali;
 namespace
 {
 
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-gradient.jpg" );
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-gradient.jpg" );
+const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "Image view" );
 
 const char* IMAGE_PATH[] = {
-    DALI_IMAGE_DIR "blocks-ball.png",
-    DALI_IMAGE_DIR "gallery-small-23.jpg",
-    DALI_IMAGE_DIR "selection-popup-bg.2.9.png",
-    DALI_IMAGE_DIR "heartsframe.9.png",
+    DEMO_IMAGE_DIR "blocks-ball.png",
+    DEMO_IMAGE_DIR "gallery-small-23.jpg",
+    DEMO_IMAGE_DIR "selection-popup-bg.2.9.png",
+    DEMO_IMAGE_DIR "heartsframe.9.png",
 };
 
 const char* RESOURCE_IMAGE_PATH[] = {
-    DALI_IMAGE_DIR "contacts-image.png",
-    DALI_IMAGE_DIR "gallery-small-27.jpg",
-    DALI_IMAGE_DIR "selection-popup-bg.8.9.png",
-    DALI_IMAGE_DIR "heartsframe.9.png",
+    DEMO_IMAGE_DIR "contacts-image.png",
+    DEMO_IMAGE_DIR "gallery-small-27.jpg",
+    DEMO_IMAGE_DIR "selection-popup-bg.8.9.png",
+    DEMO_IMAGE_DIR "heartsframe.9.png",
 };
 
 const unsigned int NUM_IMAGES = sizeof(IMAGE_PATH) / sizeof(char*);
@@ -265,7 +265,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 
   RunTest( application );
 

@@ -20,9 +20,9 @@
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
 
-const char* IMAGE_FILENAME_ETC         =        DALI_IMAGE_DIR "tx-etc1.ktx";
-const char* IMAGE_FILENAME_ASTC_LINEAR =        DALI_IMAGE_DIR "tx-astc-4x4-linear.ktx";
-const char* IMAGE_FILENAME_ASTC_LINEAR_NATIVE = DALI_IMAGE_DIR "tx-astc-4x4-linear-native.astc";
+const char* IMAGE_FILENAME_ETC         =        DEMO_IMAGE_DIR "tx-etc1.ktx";
+const char* IMAGE_FILENAME_ASTC_LINEAR =        DEMO_IMAGE_DIR "tx-astc-4x4-linear.ktx";
+const char* IMAGE_FILENAME_ASTC_LINEAR_NATIVE = DEMO_IMAGE_DIR "tx-astc-4x4-linear-native.astc";
 
 /**
  * @brief This example shows 3 images, each of a different compressed texture type.

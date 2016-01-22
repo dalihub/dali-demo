@@ -51,9 +51,9 @@ namespace
 {
 
 const char* BACKGROUND_IMAGE( "" );
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char* EDIT_IMAGE( DALI_IMAGE_DIR "icon-change.png" );
-const char* EDIT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
+const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
+const char* EDIT_IMAGE( DEMO_IMAGE_DIR "icon-change.png" );
+const char* EDIT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
 
 std::string USER_DIRECTORY;
 
@@ -306,7 +306,7 @@ public:
     }
     else
     {
-      DirectoryFilesByType( DALI_SCRIPT_DIR, "json", files );
+      DirectoryFilesByType( DEMO_SCRIPT_DIR, "json", files );
     }
 
     std::sort(files.begin(), files.end());
@@ -414,9 +414,9 @@ public:
     builder.QuitSignal().Connect( this, &ExampleApp::OnBuilderQuit );
 
     Property::Map defaultDirs;
-    defaultDirs[ TOKEN_STRING(DALI_IMAGE_DIR) ]  = DALI_IMAGE_DIR;
-    defaultDirs[ TOKEN_STRING(DALI_MODEL_DIR) ]  = DALI_MODEL_DIR;
-    defaultDirs[ TOKEN_STRING(DALI_SCRIPT_DIR) ] = DALI_SCRIPT_DIR;
+    defaultDirs[ TOKEN_STRING(DEMO_IMAGE_DIR) ]  = DEMO_IMAGE_DIR;
+    defaultDirs[ TOKEN_STRING(DEMO_MODEL_DIR) ]  = DEMO_MODEL_DIR;
+    defaultDirs[ TOKEN_STRING(DEMO_SCRIPT_DIR) ] = DEMO_SCRIPT_DIR;
 
     builder.AddConstants( defaultDirs );
 
@@ -618,7 +618,7 @@ int main(int argc, char **argv)
     }
   }
 
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 
   ExampleApp dali_app(app);
 

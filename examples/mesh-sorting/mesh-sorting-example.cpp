@@ -32,12 +32,12 @@ namespace
 
 const char* MATERIAL_SAMPLES[] =
 {
-  DALI_IMAGE_DIR "people-medium-1.jpg",
-  DALI_IMAGE_DIR "people-medium-4.jpg",
-  DALI_IMAGE_DIR "people-medium-11.jpg",
-  DALI_IMAGE_DIR "people-small-16.jpg",
-  DALI_IMAGE_DIR "people-medium-15.jpg",
-  DALI_IMAGE_DIR "people-medium-6.jpg",
+  DEMO_IMAGE_DIR "people-medium-1.jpg",
+  DEMO_IMAGE_DIR "people-medium-4.jpg",
+  DEMO_IMAGE_DIR "people-medium-11.jpg",
+  DEMO_IMAGE_DIR "people-small-16.jpg",
+  DEMO_IMAGE_DIR "people-medium-15.jpg",
+  DEMO_IMAGE_DIR "people-medium-6.jpg",
 };
 const unsigned int NUMBER_OF_SAMPLES(sizeof(MATERIAL_SAMPLES)/sizeof(const char*));
 

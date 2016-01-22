@@ -120,7 +120,7 @@
     "name": "image",
     "type": "ImageActor",
     "image": {
-      "filename": "{DALI_IMAGE_DIR}gallery-large-21.jpg"
+      "filename": "{DEMO_IMAGE_DIR}gallery-large-21.jpg"
     },
     "relayoutEnabled": false,
     "position": [0, 200, 0],

@@ -44,8 +44,8 @@ using namespace Dali;
 namespace
 {
 
-const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "background-gradient.jpg";
-const char* const TOOLBAR_IMAGE = DALI_IMAGE_DIR "top-bar.png";
+const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "background-gradient.jpg";
+const char* const TOOLBAR_IMAGE = DEMO_IMAGE_DIR "top-bar.png";
 
 const char* const TOOLBAR_TITLE = "Logging";
 //const int TOOLBAR_HEIGHT = 62;
@@ -712,7 +712,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 
   RunTest( application );
 

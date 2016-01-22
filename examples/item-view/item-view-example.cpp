@@ -37,80 +37,80 @@ enum AllImagesLayouts
 };
 
 const char* IMAGE_PATHS[] = {
-    DALI_IMAGE_DIR "gallery-medium-1.jpg",
-    DALI_IMAGE_DIR "gallery-medium-2.jpg",
-    DALI_IMAGE_DIR "gallery-medium-3.jpg",
-    DALI_IMAGE_DIR "gallery-medium-4.jpg",
-    DALI_IMAGE_DIR "gallery-medium-5.jpg",
-    DALI_IMAGE_DIR "gallery-medium-6.jpg",
-    DALI_IMAGE_DIR "gallery-medium-7.jpg",
-    DALI_IMAGE_DIR "gallery-medium-8.jpg",
-    DALI_IMAGE_DIR "gallery-medium-9.jpg",
-    DALI_IMAGE_DIR "gallery-medium-10.jpg",
-    DALI_IMAGE_DIR "gallery-medium-11.jpg",
-    DALI_IMAGE_DIR "gallery-medium-12.jpg",
-    DALI_IMAGE_DIR "gallery-medium-13.jpg",
-    DALI_IMAGE_DIR "gallery-medium-14.jpg",
-    DALI_IMAGE_DIR "gallery-medium-15.jpg",
-    DALI_IMAGE_DIR "gallery-medium-16.jpg",
-    DALI_IMAGE_DIR "gallery-medium-17.jpg",
-    DALI_IMAGE_DIR "gallery-medium-18.jpg",
-    DALI_IMAGE_DIR "gallery-medium-19.jpg",
-    DALI_IMAGE_DIR "gallery-medium-20.jpg",
-    DALI_IMAGE_DIR "gallery-medium-21.jpg",
-    DALI_IMAGE_DIR "gallery-medium-22.jpg",
-    DALI_IMAGE_DIR "gallery-medium-23.jpg",
-    DALI_IMAGE_DIR "gallery-medium-24.jpg",
-    DALI_IMAGE_DIR "gallery-medium-25.jpg",
-    DALI_IMAGE_DIR "gallery-medium-26.jpg",
-    DALI_IMAGE_DIR "gallery-medium-27.jpg",
-    DALI_IMAGE_DIR "gallery-medium-28.jpg",
-    DALI_IMAGE_DIR "gallery-medium-29.jpg",
-    DALI_IMAGE_DIR "gallery-medium-30.jpg",
-    DALI_IMAGE_DIR "gallery-medium-31.jpg",
-    DALI_IMAGE_DIR "gallery-medium-32.jpg",
-    DALI_IMAGE_DIR "gallery-medium-33.jpg",
-    DALI_IMAGE_DIR "gallery-medium-34.jpg",
-    DALI_IMAGE_DIR "gallery-medium-35.jpg",
-    DALI_IMAGE_DIR "gallery-medium-36.jpg",
-    DALI_IMAGE_DIR "gallery-medium-37.jpg",
-    DALI_IMAGE_DIR "gallery-medium-38.jpg",
-    DALI_IMAGE_DIR "gallery-medium-39.jpg",
-    DALI_IMAGE_DIR "gallery-medium-40.jpg",
-    DALI_IMAGE_DIR "gallery-medium-41.jpg",
-    DALI_IMAGE_DIR "gallery-medium-42.jpg",
-    DALI_IMAGE_DIR "gallery-medium-43.jpg",
-    DALI_IMAGE_DIR "gallery-medium-44.jpg",
-    DALI_IMAGE_DIR "gallery-medium-45.jpg",
-    DALI_IMAGE_DIR "gallery-medium-46.jpg",
-    DALI_IMAGE_DIR "gallery-medium-47.jpg",
-    DALI_IMAGE_DIR "gallery-medium-48.jpg",
-    DALI_IMAGE_DIR "gallery-medium-49.jpg",
-    DALI_IMAGE_DIR "gallery-medium-50.jpg",
-    DALI_IMAGE_DIR "gallery-medium-51.jpg",
-    DALI_IMAGE_DIR "gallery-medium-52.jpg",
-    DALI_IMAGE_DIR "gallery-medium-53.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-1.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-2.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-3.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-4.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-5.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-6.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-7.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-8.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-9.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-10.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-11.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-12.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-13.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-14.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-15.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-16.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-17.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-18.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-19.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-20.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-21.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-22.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-23.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-24.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-25.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-26.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-27.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-28.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-29.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-30.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-31.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-32.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-33.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-34.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-35.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-36.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-37.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-38.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-39.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-40.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-41.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-42.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-43.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-44.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-45.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-46.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-47.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-48.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-49.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-50.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-51.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-52.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-53.jpg",
 };
 
 const unsigned int NUM_IMAGES = sizeof(IMAGE_PATHS) / sizeof(char*);
 
 const char* BACKGROUND_IMAGE( "" );
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
-const char* EDIT_IMAGE( DALI_IMAGE_DIR "icon-edit.png" );
-const char* EDIT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-edit-selected.png" );
-const char* SPIRAL_LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-item-view-layout-spiral.png" );
-const char* SPIRAL_LAYOUT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-item-view-layout-spiral-selected.png" );
-const char* GRID_LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-item-view-layout-grid.png" );
-const char* GRID_LAYOUT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-item-view-layout-grid-selected.png" );
-const char* DEPTH_LAYOUT_IMAGE( DALI_IMAGE_DIR "icon-item-view-layout-depth.png" );
-const char* DEPTH_LAYOUT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-item-view-layout-depth-selected.png" );
-const char* DELETE_IMAGE( DALI_IMAGE_DIR "icon-delete.png" );
-const char* DELETE_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-delete-selected.png" );
-const char* REPLACE_IMAGE( DALI_IMAGE_DIR "icon-replace.png" );
-const char* REPLACE_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-replace-selected.png" );
-const char* INSERT_IMAGE( DALI_IMAGE_DIR "icon-insert.png" );
-const char* INSERT_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-insert-selected.png" );
-const char* SELECTED_IMAGE( DALI_IMAGE_DIR "item-select-check.png" );
+const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
+const char* EDIT_IMAGE( DEMO_IMAGE_DIR "icon-edit.png" );
+const char* EDIT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-edit-selected.png" );
+const char* SPIRAL_LAYOUT_IMAGE( DEMO_IMAGE_DIR "icon-item-view-layout-spiral.png" );
+const char* SPIRAL_LAYOUT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-item-view-layout-spiral-selected.png" );
+const char* GRID_LAYOUT_IMAGE( DEMO_IMAGE_DIR "icon-item-view-layout-grid.png" );
+const char* GRID_LAYOUT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-item-view-layout-grid-selected.png" );
+const char* DEPTH_LAYOUT_IMAGE( DEMO_IMAGE_DIR "icon-item-view-layout-depth.png" );
+const char* DEPTH_LAYOUT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-item-view-layout-depth-selected.png" );
+const char* DELETE_IMAGE( DEMO_IMAGE_DIR "icon-delete.png" );
+const char* DELETE_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-delete-selected.png" );
+const char* REPLACE_IMAGE( DEMO_IMAGE_DIR "icon-replace.png" );
+const char* REPLACE_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-replace-selected.png" );
+const char* INSERT_IMAGE( DEMO_IMAGE_DIR "icon-insert.png" );
+const char* INSERT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-insert-selected.png" );
+const char* SELECTED_IMAGE( DEMO_IMAGE_DIR "item-select-check.png" );
 const char* APPLICATION_TITLE( "ItemView" );
 
 const char* SPIRAL_LABEL("Spiral");
@@ -984,7 +984,7 @@ void RunTest(Application& app)
 
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 
   RunTest(app);
 

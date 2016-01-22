@@ -5,29 +5,16 @@
     {
       "type": "ImageActor",
       "inheritPosition": true,
-      "size": [
-        70,
-        70,
-        1
-      ],
-      "color": [
-        0.85,
-        0.75,
-        0.45,
-        1
-      ],
+      "size": [ 70, 70, 1 ],
+      "color": [ 0.85, 0.75, 0.45, 1 ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}circle.png"
+        "filename": "{DEMO_IMAGE_DIR}circle.png"
       }
     },
     "rectangleControl":
     {
       "type": "Control",
-      "size": [
-        60,
-        60,
-        1
-      ],
+      "size": [ 60, 60, 1 ],
       "background": {"color": [0.95, 0.41, 0.18, 1] },
       "colorAlpha": 0
     }
@@ -37,17 +24,9 @@
       "type": "Control",
       "actors": [],
       "name": "topContainer",
-      "position": [
-        180,
-        105,
-        0
-      ],
+      "position": [ 180, 105, 0 ],
       "inheritPosition": true,
-      "size": [
-        20,
-        20,
-        1
-      ],
+      "size": [ 20, 20, 1 ],
       "sizeAspectRatio": false,
       "background": { "color": [0.85, 0.75, 0.45, 1] },
       "colorAlpha": 0
@@ -55,11 +34,7 @@
     {
       "type": "circleControl",
       "name": "Circle1",
-      "position": [
-        84,
-        198,
-        -1
-      ],
+      "position": [ 84, 198, -1 ],
       "signals": [
         {
           "name": "touched",
@@ -71,65 +46,37 @@
     {
       "type": "circleControl",
       "name": "Circle2",
-      "position": [
-        151,
-        198,
-        -1
-      ]
+      "position": [ 151, 198, -1 ]
     },
     {
       "type": "circleControl",
       "name": "Circle3",
-      "position": [
-        285,
-        198,
-        -1
-      ]
+      "position": [ 285, 198, -1 ]
     },
     {
       "type": "circleControl",
       "name": "Circle4",
-      "position": [
-        218,
-        198,
-        -1
-      ]
+      "position": [ 218, 198, -1 ]
     },
     {
       "type": "rectangleControl",
       "name": "Rect1",
-      "position": [
-        50,
-        292,
-        0
-      ]
+      "position": [ 50, 292, 0 ]
     },
     {
       "type": "rectangleControl",
       "name": "Rect2",
-      "position": [
-        120,
-        292,
-        0
-      ]
+      "position": [ 120, 292, 0 ]
     },
     {
       "type": "rectangleControl",
       "name": "Rect3",
-      "position": [
-        190,
-        292,
-        0
-      ]
+      "position": [ 190, 292, 0 ]
     },
     {
       "type": "rectangleControl",
       "name": "Rect4",
-      "position": [
-        260,
-        292,
-        0
-      ]
+      "position": [ 260, 292, 0 ]
     }
   ],
   "animations": {
@@ -138,11 +85,7 @@
         {
           "actor": "Circle1",
           "property": "position",
-          "value": [
-            84,
-            198,
-            -1
-          ],
+          "value": [ 84, 198, -1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0,
@@ -153,11 +96,7 @@
         {
           "actor": "Circle1",
           "property": "position",
-          "value": [
-            130,
-            190,
-            -1
-          ],
+          "value": [ 130, 190, -1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0,
@@ -168,11 +107,7 @@
         {
           "actor": "Circle1",
           "property": "position",
-          "value": [
-            150,
-            170,
-            -1
-          ],
+          "value": [ 150, 170, -1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0.05,
@@ -183,11 +118,7 @@
         {
           "actor": "Circle1",
           "property": "position",
-          "value": [
-            160,
-            150,
-            -1
-          ],
+          "value": [ 160, 150, -1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0.1,
@@ -198,11 +129,7 @@
         {
           "actor": "Circle1",
           "property": "position",
-          "value": [
-            170,
-            125,
-            -1
-          ],
+          "value": [ 170, 125, -1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0.151,
@@ -213,11 +140,7 @@
         {
           "actor": "Circle1",
           "property": "position",
-          "value": [
-            180,
-            100,
-            -1
-          ],
+          "value": [ 180, 100, -1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0.2,
@@ -228,11 +151,7 @@
         {
           "actor": "Circle1",
           "property": "size",
-          "value": [
-            70,
-            70,
-            1
-          ],
+          "value": [ 70, 70, 1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0,
@@ -243,11 +162,7 @@
         {
           "actor": "Circle1",
           "property": "size",
-          "value": [
-            20,
-            20,
-            1
-          ],
+          "value": [ 20, 20, 1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0.151,
@@ -258,11 +173,7 @@
         {
           "actor": "Circle2",
           "property": "scale",
-          "value": [
-            1,
-            1,
-            1
-          ],
+          "value": [ 1, 1, 1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0,
@@ -273,11 +184,7 @@
         {
           "actor": "Circle2",
           "property": "scale",
-          "value": [
-            0.1,
-            0.1,
-            1
-          ],
+          "value": [ 0.1, 0.1, 1 ],
           "alphaFunction": "LINEAR",
           "timePeriod": {
             "delay": 0,

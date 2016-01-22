@@ -25,20 +25,20 @@ namespace
 const int MODEL_NUMBER(3);
 
 const char * const MODEL_FILE[] = {
-    DALI_MODEL_DIR "Dino.obj",
-    DALI_MODEL_DIR "ToyRobot-Metal.obj",
-    DALI_MODEL_DIR "Toyrobot-Plastic.obj"
+    DEMO_MODEL_DIR "Dino.obj",
+    DEMO_MODEL_DIR "ToyRobot-Metal.obj",
+    DEMO_MODEL_DIR "Toyrobot-Plastic.obj"
 };
 
 const char * const MATERIAL_FILE[] = {
-    DALI_MODEL_DIR "Dino.mtl",
-    DALI_MODEL_DIR "ToyRobot-Metal.mtl",
-    DALI_MODEL_DIR "Toyrobot-Plastic.mtl"
+    DEMO_MODEL_DIR "Dino.mtl",
+    DEMO_MODEL_DIR "ToyRobot-Metal.mtl",
+    DEMO_MODEL_DIR "Toyrobot-Plastic.mtl"
 };
 
-const char * const IMAGE_PATH( DALI_IMAGE_DIR "" );
+const char * const IMAGE_PATH( DEMO_IMAGE_DIR "" );
 
-const char * BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-1.jpg");
+const char * BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-1.jpg");
 
 }
 

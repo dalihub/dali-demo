@@ -26,16 +26,16 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const char* TEST_OUTER_RING_FILENAME = DALI_IMAGE_DIR "layer2.png"; // Image to be masked
-const char* TEST_INNER_RING_FILENAME = DALI_IMAGE_DIR "layer1.png"; // Image to be masked
-const char* TEST_MENU_FILENAME = DALI_IMAGE_DIR "layer3.png"; // Image to be masked
-const char* TEST_DIAL_FILENAME = DALI_IMAGE_DIR "layer4.png"; // Image to be masked
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" ); // Background for toolbar
+const char* TEST_OUTER_RING_FILENAME = DEMO_IMAGE_DIR "layer2.png"; // Image to be masked
+const char* TEST_INNER_RING_FILENAME = DEMO_IMAGE_DIR "layer1.png"; // Image to be masked
+const char* TEST_MENU_FILENAME = DEMO_IMAGE_DIR "layer3.png"; // Image to be masked
+const char* TEST_DIAL_FILENAME = DEMO_IMAGE_DIR "layer4.png"; // Image to be masked
+const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" ); // Background for toolbar
 const char* APPLICATION_TITLE( "Radial Menu" );
-const char * const PLAY_ICON( DALI_IMAGE_DIR "icon-play.png" );
-const char * const PLAY_ICON_SELECTED( DALI_IMAGE_DIR "icon-play-selected.png" );
-const char * const STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
-const char * const STOP_ICON_SELECTED( DALI_IMAGE_DIR "icon-stop-selected.png" );
+const char * const PLAY_ICON( DEMO_IMAGE_DIR "icon-play.png" );
+const char * const PLAY_ICON_SELECTED( DEMO_IMAGE_DIR "icon-play-selected.png" );
+const char * const STOP_ICON( DEMO_IMAGE_DIR "icon-stop.png" );
+const char * const STOP_ICON_SELECTED( DEMO_IMAGE_DIR "icon-stop-selected.png" );
 }
 
 
@@ -301,7 +301,7 @@ void RunTest(Application app)
 // Entry point for Linux & Tizen applications
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 
   RunTest(app);
 

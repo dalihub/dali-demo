@@ -33,41 +33,41 @@ using Dali::Toolkit::TextLabel;
 namespace
 {
 
-const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE_HIGHP( "Dissolve Effect(highp)" );
 const char * const APPLICATION_TITLE_MEDIUMP( "Dissolve Effect(mediump)" );
-const char * const EFFECT_HIGHP_IMAGE( DALI_IMAGE_DIR "icon-highp.png" );
-const char * const EFFECT_HIGHP_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-highp-selected.png" );
-const char * const EFFECT_MEDIUMP_IMAGE( DALI_IMAGE_DIR "icon-mediump.png" );
-const char * const EFFECT_MEDIUMP_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-mediump-selected.png" );
-const char * const PLAY_ICON( DALI_IMAGE_DIR "icon-play.png" );
-const char * const PLAY_ICON_SELECTED( DALI_IMAGE_DIR "icon-play-selected.png" );
-const char * const STOP_ICON( DALI_IMAGE_DIR "icon-stop.png" );
-const char * const STOP_ICON_SELECTED( DALI_IMAGE_DIR "icon-stop-selected.png" );
+const char * const EFFECT_HIGHP_IMAGE( DEMO_IMAGE_DIR "icon-highp.png" );
+const char * const EFFECT_HIGHP_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-highp-selected.png" );
+const char * const EFFECT_MEDIUMP_IMAGE( DEMO_IMAGE_DIR "icon-mediump.png" );
+const char * const EFFECT_MEDIUMP_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-mediump-selected.png" );
+const char * const PLAY_ICON( DEMO_IMAGE_DIR "icon-play.png" );
+const char * const PLAY_ICON_SELECTED( DEMO_IMAGE_DIR "icon-play-selected.png" );
+const char * const STOP_ICON( DEMO_IMAGE_DIR "icon-stop.png" );
+const char * const STOP_ICON_SELECTED( DEMO_IMAGE_DIR "icon-stop-selected.png" );
 
 const char* IMAGES[] =
 {
-  DALI_IMAGE_DIR "gallery-large-1.jpg",
-  DALI_IMAGE_DIR "gallery-large-2.jpg",
-  DALI_IMAGE_DIR "gallery-large-3.jpg",
-  DALI_IMAGE_DIR "gallery-large-4.jpg",
-  DALI_IMAGE_DIR "gallery-large-5.jpg",
-  DALI_IMAGE_DIR "gallery-large-6.jpg",
-  DALI_IMAGE_DIR "gallery-large-7.jpg",
-  DALI_IMAGE_DIR "gallery-large-8.jpg",
-  DALI_IMAGE_DIR "gallery-large-9.jpg",
-  DALI_IMAGE_DIR "gallery-large-10.jpg",
-  DALI_IMAGE_DIR "gallery-large-11.jpg",
-  DALI_IMAGE_DIR "gallery-large-12.jpg",
-  DALI_IMAGE_DIR "gallery-large-13.jpg",
-  DALI_IMAGE_DIR "gallery-large-14.jpg",
-  DALI_IMAGE_DIR "gallery-large-15.jpg",
-  DALI_IMAGE_DIR "gallery-large-16.jpg",
-  DALI_IMAGE_DIR "gallery-large-17.jpg",
-  DALI_IMAGE_DIR "gallery-large-18.jpg",
-  DALI_IMAGE_DIR "gallery-large-19.jpg",
-  DALI_IMAGE_DIR "gallery-large-20.jpg",
-  DALI_IMAGE_DIR "gallery-large-21.jpg",
+  DEMO_IMAGE_DIR "gallery-large-1.jpg",
+  DEMO_IMAGE_DIR "gallery-large-2.jpg",
+  DEMO_IMAGE_DIR "gallery-large-3.jpg",
+  DEMO_IMAGE_DIR "gallery-large-4.jpg",
+  DEMO_IMAGE_DIR "gallery-large-5.jpg",
+  DEMO_IMAGE_DIR "gallery-large-6.jpg",
+  DEMO_IMAGE_DIR "gallery-large-7.jpg",
+  DEMO_IMAGE_DIR "gallery-large-8.jpg",
+  DEMO_IMAGE_DIR "gallery-large-9.jpg",
+  DEMO_IMAGE_DIR "gallery-large-10.jpg",
+  DEMO_IMAGE_DIR "gallery-large-11.jpg",
+  DEMO_IMAGE_DIR "gallery-large-12.jpg",
+  DEMO_IMAGE_DIR "gallery-large-13.jpg",
+  DEMO_IMAGE_DIR "gallery-large-14.jpg",
+  DEMO_IMAGE_DIR "gallery-large-15.jpg",
+  DEMO_IMAGE_DIR "gallery-large-16.jpg",
+  DEMO_IMAGE_DIR "gallery-large-17.jpg",
+  DEMO_IMAGE_DIR "gallery-large-18.jpg",
+  DEMO_IMAGE_DIR "gallery-large-19.jpg",
+  DEMO_IMAGE_DIR "gallery-large-20.jpg",
+  DEMO_IMAGE_DIR "gallery-large-21.jpg",
 };
 
 const int NUM_IMAGES( sizeof(IMAGES) / sizeof(IMAGES[0]) );
@@ -443,7 +443,7 @@ bool DissolveEffectApp::OnTimerTick()
 // Entry point for Linux & Tizen applications
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
   DissolveEffectApp test( application );
   application.MainLoop();
 

@@ -36,3 +36,4 @@ dali-builder
 /build/desktop
 /packaging/home*
 *.mo
+demo-theme.json

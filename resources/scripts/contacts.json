@@ -25,7 +25,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-main.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-main.png",
         "width": 361,
         "height": 640,
         "loadPolicy": "IMMEDIATE",
@@ -56,7 +56,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-background.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-background.png",
         "width": 360,
         "height": 282,
         "loadPolicy": "IMMEDIATE",
@@ -104,7 +104,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-image.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-image.png",
         "width": 53,
         "height": 52,
         "loadPolicy": "IMMEDIATE",
@@ -135,7 +135,7 @@
         1
       ],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-text.png"
+        "filename": "{DEMO_IMAGE_DIR}contacts-text.png"
       }
     },
     {
@@ -155,7 +155,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-add.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-add.png",
         "width": 80,
         "height": 71,
         "loadPolicy": "IMMEDIATE",
@@ -179,7 +179,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-messenger.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-messenger.png",
         "width": 360,
         "height": 77,
         "loadPolicy": "IMMEDIATE",
@@ -203,7 +203,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-email.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-email.png",
         "width": 360,
         "height": 79,
         "loadPolicy": "IMMEDIATE",
@@ -227,7 +227,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-mobile.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-mobile.png",
         "width": 360,
         "height": 80,
         "loadPolicy": "IMMEDIATE",
@@ -251,7 +251,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-home.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-home.png",
         "width": 360,
         "height": 75,
         "loadPolicy": "IMMEDIATE",
@@ -275,7 +275,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-circle.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-circle.png",
         "width": 100,
         "height": 100,
         "loadPolicy": "IMMEDIATE",
@@ -299,7 +299,7 @@
       ],
       "sizeAspectRatio": false,
       "image": {
-        "filename": "{DALI_IMAGE_DIR}contacts-plain.png",
+        "filename": "{DEMO_IMAGE_DIR}contacts-plain.png",
         "width": 360,
         "height": 77,
         "loadPolicy": "IMMEDIATE",

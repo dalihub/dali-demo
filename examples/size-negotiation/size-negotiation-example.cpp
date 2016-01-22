@@ -33,9 +33,9 @@ struct ButtonItem
 namespace
 {
 
-const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "background-gradient.jpg";
-const char* const TOOLBAR_IMAGE = DALI_IMAGE_DIR "top-bar.png";
-const char* const IMAGE = DALI_IMAGE_DIR "background-magnifier.jpg";
+const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "background-gradient.jpg";
+const char* const TOOLBAR_IMAGE = DEMO_IMAGE_DIR "top-bar.png";
+const char* const IMAGE = DEMO_IMAGE_DIR "background-magnifier.jpg";
 
 const char* const TOOLBAR_TITLE = "Negotiate Size";
 
@@ -815,7 +815,7 @@ void RunTest( Application& application )
 // Entry point for Linux & SLP applications
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 
   RunTest( application );
 
