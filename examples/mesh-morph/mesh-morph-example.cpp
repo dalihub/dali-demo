@@ -304,7 +304,7 @@ public:
 
     Property::Index morphDeltaIndex = mMeshActor.RegisterProperty( "uDelta", 0.f );
 
-    mRenderer.SetDepthIndex(0);
+    mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
 
     mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
     mMeshActor.SetAnchorPoint( AnchorPoint::CENTER );

@@ -180,7 +180,7 @@ public:
       meshActor.SetSize(175, 175);
       meshActor.RegisterProperty("index", (int)i);
 
-      renderer.SetDepthIndex(0);
+      renderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
       // Test with actor alpha
       meshActor.SetParentOrigin( ParentOrigin::CENTER );
       meshActor.SetAnchorPoint( AnchorPoint::CENTER );
@@ -240,7 +240,7 @@ public:
       mDepthIndices[index] = newDepthIndex;
 
       Renderer renderer = actor.GetRendererAt(0);
-      renderer.SetDepthIndex(newDepthIndex);
+      renderer.SetProperty( Renderer::Property::DEPTH_INDEX, newDepthIndex);
 
       PrintDepths();
     }

@@ -227,8 +227,8 @@ Renderer CreateRenderer( unsigned int index )
     Image image = ResourceImage::New(imagePath);
     Material material = Material::New( shader );
     material.AddTexture( image, "sTexture" );
-    material.SetBlendMode( BlendingMode::OFF );
     renderers[index] = Renderer::New( QuadMesh(), material );
+    renderers[index].SetProperty( Renderer::Property::BLENDING_MODE, BlendingMode::OFF );
   }
   return renderers[index];
 }

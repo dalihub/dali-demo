@@ -173,7 +173,7 @@ public:
 
     mRenderer.RegisterProperty( "uFadeColor", Color::MAGENTA );
     mRenderer.RegisterProperty( "uPointSize", 80.0f );
-    mRenderer.SetDepthIndex(0);
+    mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
 
     mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
     mMeshActor.SetAnchorPoint( AnchorPoint::CENTER );
