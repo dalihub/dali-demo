@@ -450,8 +450,6 @@ void MetaballRefracController::CreateMetaballActors()
   Shader shader = Shader::New( METABALL_VERTEX_SHADER, METABALL_FRAG_SHADER );
 
   Material material = Material::New( shader );
-  material.SetBlendMode(BlendingMode::ON );
-  material.SetBlendFunc(BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE);
 
   Geometry metaballGeom = CreateGeometry();
 
@@ -472,6 +470,8 @@ void MetaballRefracController::CreateMetaballActors()
     mMetaballs[i].actor.SetParentOrigin( ParentOrigin::CENTER );
 
     Renderer renderer = Renderer::New( metaballGeom, material );
+    renderer.SetProperty( Renderer::Property::BLENDING_MODE, BlendingMode::ON );
+    renderer.SetBlendFunc(BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE);
     mMetaballs[i].actor.AddRenderer( renderer );
 
     mMetaballs[i].positionIndex = mMetaballs[i].actor.RegisterProperty( "uPositionMetaball", mMetaballs[i].position );

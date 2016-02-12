@@ -866,6 +866,7 @@ public: // From ItemFactory
     borderProperty.Insert( "rendererType", "borderRenderer" );
     borderProperty.Insert( "borderColor", Color::WHITE );
     borderProperty.Insert( "borderSize", ITEM_BORDER_SIZE );
+    borderProperty.Insert( "antiAliasing", true );
     borderActor.SetProperty( ImageView::Property::IMAGE, borderProperty );
 
     actor.Add(borderActor);
