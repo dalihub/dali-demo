@@ -82,7 +82,7 @@
     {
       "background":
       {
-        "rendererType": "gradientRenderer",
+        "rendererType": "gradient",
         "gradientCenter": [360, 640],
         "gradientRadius": 1468,
         "gradientUnits": "userSpace",

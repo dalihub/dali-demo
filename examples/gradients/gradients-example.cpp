@@ -79,7 +79,7 @@ public:
 
 // ---- Gradient for background
 
-    mGradientMap.Insert("rendererType",  "gradientRenderer");
+    mGradientMap.Insert("rendererType",  "gradient");
     Property::Array stopOffsets;
     stopOffsets.PushBack( 0.0f );
     stopOffsets.PushBack( 0.3f );
