@@ -175,12 +175,12 @@ void RadialMenuExample::OnInit(Application& app)
   Image dial = ResourceImage::New( TEST_DIAL_FILENAME );
   mDialView = ImageView::New( dial );
   mDialView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-  mDialView.SetPositionInheritanceMode(USE_PARENT_POSITION);
+  mDialView.SetParentOrigin( ParentOrigin::CENTER );
   mDialView.SetScale(scale);
   Layer dialLayer = Layer::New();
 
   dialLayer.Add( mDialView );
-  dialLayer.SetPositionInheritanceMode(USE_PARENT_POSITION);
+  dialLayer.SetParentOrigin( ParentOrigin::CENTER );
   dialLayer.SetSize(stage.GetSize());
   mContents.Add(dialLayer);
 
@@ -271,10 +271,10 @@ RadialSweepView RadialMenuExample::CreateSweepView( std::string imageName,
   radialSweepView.SetFinalSector( Degree(359.999f) );
   radialSweepView.SetSize( Stage::GetCurrent().GetSize());
   radialSweepView.SetEasingFunction( Dali::AlphaFunction::EASE_IN_OUT );
-  radialSweepView.SetPositionInheritanceMode(USE_PARENT_POSITION);
+  radialSweepView.SetParentOrigin( ParentOrigin::CENTER );
   mContents.Add(radialSweepView);
   radialSweepView.Add( mImageView );
-  mImageView.SetPositionInheritanceMode(USE_PARENT_POSITION);
+  mImageView.SetParentOrigin( ParentOrigin::CENTER );
 
   return radialSweepView;
 }
