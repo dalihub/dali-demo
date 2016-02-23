@@ -15,7 +15,8 @@ demo_image_files = \
     $(demo_src_dir)/images/*.gif \
     $(demo_src_dir)/images/*.bmp \
     $(demo_src_dir)/images/*.ico \
-    $(demo_src_dir)/images/*.wbmp
+    $(demo_src_dir)/images/*.wbmp \
+    $(demo_src_dir)/images/*.svg
 
 demo_model_files = \
     $(demo_src_dir)/models/*
