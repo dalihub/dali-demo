@@ -54,7 +54,7 @@
       "position": [0, 10, 0],
       "size": [460, 600, 0],
       "image": {
-        "filename": "{DALI_IMAGE_DIR}background-4.jpg"
+        "filename": "{DEMO_IMAGE_DIR}background-4.jpg"
       }
     },
 
@@ -70,8 +70,8 @@
         "type": "TextLabel",
         "text": "Blur"
       },
-      "unselectedStateImage": "{DALI_IMAGE_DIR}button-background.png",
-      "selectedStateImage": "{DALI_IMAGE_DIR}button-background.png",
+      "unselectedStateImage": "{DEMO_IMAGE_DIR}button-background.png",
+      "selectedStateImage": "{DEMO_IMAGE_DIR}button-background.png",
       "signals": [{
         "name": "pressed",
         "action": "play",

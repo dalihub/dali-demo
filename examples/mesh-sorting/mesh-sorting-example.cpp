@@ -32,12 +32,12 @@ namespace
 
 const char* MATERIAL_SAMPLES[] =
 {
-  DALI_IMAGE_DIR "people-medium-1.jpg",
-  DALI_IMAGE_DIR "people-medium-4.jpg",
-  DALI_IMAGE_DIR "people-medium-11.jpg",
-  DALI_IMAGE_DIR "people-small-16.jpg",
-  DALI_IMAGE_DIR "people-medium-15.jpg",
-  DALI_IMAGE_DIR "people-medium-6.jpg",
+  DEMO_IMAGE_DIR "people-medium-1.jpg",
+  DEMO_IMAGE_DIR "people-medium-4.jpg",
+  DEMO_IMAGE_DIR "people-medium-11.jpg",
+  DEMO_IMAGE_DIR "people-small-16.jpg",
+  DEMO_IMAGE_DIR "people-medium-15.jpg",
+  DEMO_IMAGE_DIR "people-medium-6.jpg",
 };
 const unsigned int NUMBER_OF_SAMPLES(sizeof(MATERIAL_SAMPLES)/sizeof(const char*));
 
@@ -180,7 +180,7 @@ public:
       meshActor.SetSize(175, 175);
       meshActor.RegisterProperty("index", (int)i);
 
-      renderer.SetDepthIndex(0);
+      renderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
       // Test with actor alpha
       meshActor.SetParentOrigin( ParentOrigin::CENTER );
       meshActor.SetAnchorPoint( AnchorPoint::CENTER );
@@ -240,7 +240,7 @@ public:
       mDepthIndices[index] = newDepthIndex;
 
       Renderer renderer = actor.GetRendererAt(0);
-      renderer.SetDepthIndex(newDepthIndex);
+      renderer.SetProperty( Renderer::Property::DEPTH_INDEX, newDepthIndex);
 
       PrintDepths();
     }

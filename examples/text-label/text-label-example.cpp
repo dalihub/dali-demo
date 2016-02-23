@@ -34,7 +34,7 @@ using namespace MultiLanguageStrings;
 
 namespace
 {
-  const char* const BACKGROUND_IMAGE = DALI_IMAGE_DIR "grab-handle.png";
+  const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "grab-handle.png";
 
   const unsigned int KEY_ZERO = 10;
   const unsigned int KEY_ONE = 11;
@@ -297,7 +297,7 @@ void RunTest( Application& application )
 /** Entry point for Linux & Tizen applications */
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 
   RunTest( application );
 

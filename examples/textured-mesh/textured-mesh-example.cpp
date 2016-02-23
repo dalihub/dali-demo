@@ -26,8 +26,8 @@ using namespace Dali;
 
 namespace
 {
-const char* MATERIAL_SAMPLE( DALI_IMAGE_DIR "gallery-small-48.jpg" );
-const char* MATERIAL_SAMPLE2( DALI_IMAGE_DIR "gallery-medium-19.jpg" );
+const char* MATERIAL_SAMPLE( DEMO_IMAGE_DIR "gallery-small-48.jpg" );
+const char* MATERIAL_SAMPLE2( DEMO_IMAGE_DIR "gallery-medium-19.jpg" );
 
 #define MAKE_SHADER(A)#A
 
@@ -163,7 +163,7 @@ public:
     mMeshActor.SetSize(400, 400);
 
     Property::Index fadeColorIndex = mRenderer.RegisterProperty( "uFadeColor", Color::MAGENTA );
-    mRenderer.SetDepthIndex(0);
+    mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
 
     mMeshActor.SetParentOrigin( ParentOrigin::TOP_CENTER );
     mMeshActor.SetAnchorPoint( AnchorPoint::TOP_CENTER );
@@ -180,7 +180,7 @@ public:
     mRenderer2.RegisterProperty( "anotherProperty",    Vector3::ZERO );
     mRenderer2.RegisterProperty( "aCoefficient",  0.008f );
     Property::Index fadeColorIndex2 = mRenderer2.RegisterProperty( "uFadeColor", Color::BLUE );
-    mRenderer2.SetDepthIndex(0);
+    mRenderer2.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
 
     mMeshActor2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     mMeshActor2.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );

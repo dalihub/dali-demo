@@ -24,29 +24,29 @@ using namespace Dali;
 
 namespace
 {
-const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "Bubble Effect" );
-const char * const CHANGE_BACKGROUND_ICON( DALI_IMAGE_DIR "icon-change.png" );
-const char * const CHANGE_BACKGROUND_ICON_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
-const char * const CHANGE_BUBBLE_SHAPE_ICON( DALI_IMAGE_DIR "icon-replace.png" );
-const char * const CHANGE_BUBBLE_SHAPE_ICON_SELECTED( DALI_IMAGE_DIR "icon-replace-selected.png" );
+const char * const CHANGE_BACKGROUND_ICON( DEMO_IMAGE_DIR "icon-change.png" );
+const char * const CHANGE_BACKGROUND_ICON_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
+const char * const CHANGE_BUBBLE_SHAPE_ICON( DEMO_IMAGE_DIR "icon-replace.png" );
+const char * const CHANGE_BUBBLE_SHAPE_ICON_SELECTED( DEMO_IMAGE_DIR "icon-replace-selected.png" );
 
 const char* BACKGROUND_IMAGES[]=
 {
-  DALI_IMAGE_DIR "background-1.jpg",
-  DALI_IMAGE_DIR "background-2.jpg",
-  DALI_IMAGE_DIR "background-3.jpg",
-  DALI_IMAGE_DIR "background-4.jpg",
-  DALI_IMAGE_DIR "background-5.jpg",
+  DEMO_IMAGE_DIR "background-1.jpg",
+  DEMO_IMAGE_DIR "background-2.jpg",
+  DEMO_IMAGE_DIR "background-3.jpg",
+  DEMO_IMAGE_DIR "background-4.jpg",
+  DEMO_IMAGE_DIR "background-5.jpg",
 };
 const unsigned int NUM_BACKGROUND_IMAGES( sizeof( BACKGROUND_IMAGES ) / sizeof( BACKGROUND_IMAGES[0] ) );
 
 const char* BUBBLE_SHAPE_IMAGES[] =
 {
-  DALI_IMAGE_DIR "bubble-ball.png",
-  DALI_IMAGE_DIR "icon-effect-cross.png",
-  DALI_IMAGE_DIR "icon-item-view-layout-spiral.png",
-  DALI_IMAGE_DIR "icon-replace.png"
+  DEMO_IMAGE_DIR "bubble-ball.png",
+  DEMO_IMAGE_DIR "icon-effect-cross.png",
+  DEMO_IMAGE_DIR "icon-item-view-layout-spiral.png",
+  DEMO_IMAGE_DIR "icon-replace.png"
 };
 const unsigned int NUM_BUBBLE_SHAPE_IMAGES( sizeof( BUBBLE_SHAPE_IMAGES ) / sizeof( BUBBLE_SHAPE_IMAGES[0] ) );
 
@@ -322,12 +322,9 @@ RunTest(Application& app)
 int
 main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 
   RunTest(app);
 
   return 0;
 }
-
-
-

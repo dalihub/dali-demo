@@ -31,37 +31,37 @@ using namespace Dali::Toolkit;
 // LOCAL STUFF
 namespace
 {
-const char* const CHANGE_IMAGE_ICON(DALI_IMAGE_DIR "icon-change.png");
-const char* const CHANGE_IMAGE_ICON_SELECTED( DALI_IMAGE_DIR "icon-change-selected.png" );
+const char* const CHANGE_IMAGE_ICON(DEMO_IMAGE_DIR "icon-change.png");
+const char* const CHANGE_IMAGE_ICON_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
 
 // The content amount of one page between portrait and landscape view are different
 // set a ratio to modify the current page number when the rotation is changed
 const float PAGE_NUMBER_CORRESPONDING_RATIO(1.25f);
 
-const char* BOOK_COVER_PORTRAIT = ( DALI_IMAGE_DIR "book-portrait-cover.jpg" );
-const char* BOOK_COVER_LANDSCAPE = ( DALI_IMAGE_DIR "book-landscape-cover.jpg" );
-const char* BOOK_COVER_BACK_LANDSCAPE = ( DALI_IMAGE_DIR "book-landscape-cover-back.jpg" );
+const char* BOOK_COVER_PORTRAIT = ( DEMO_IMAGE_DIR "book-portrait-cover.jpg" );
+const char* BOOK_COVER_LANDSCAPE = ( DEMO_IMAGE_DIR "book-landscape-cover.jpg" );
+const char* BOOK_COVER_BACK_LANDSCAPE = ( DEMO_IMAGE_DIR "book-landscape-cover-back.jpg" );
 
 const char* PAGE_IMAGES_PORTRAIT[] =
 {
-  DALI_IMAGE_DIR "book-portrait-p1.jpg",
-  DALI_IMAGE_DIR "book-portrait-p2.jpg",
-  DALI_IMAGE_DIR "book-portrait-p3.jpg",
-  DALI_IMAGE_DIR "book-portrait-p4.jpg",
-  DALI_IMAGE_DIR "book-portrait-p5.jpg"
+  DEMO_IMAGE_DIR "book-portrait-p1.jpg",
+  DEMO_IMAGE_DIR "book-portrait-p2.jpg",
+  DEMO_IMAGE_DIR "book-portrait-p3.jpg",
+  DEMO_IMAGE_DIR "book-portrait-p4.jpg",
+  DEMO_IMAGE_DIR "book-portrait-p5.jpg"
 };
 const unsigned int NUMBER_OF_PORTRAIT_IMAGE( sizeof(PAGE_IMAGES_PORTRAIT) / sizeof(PAGE_IMAGES_PORTRAIT[0]) );
 
 const char* PAGE_IMAGES_LANDSCAPE[] =
 {
-  DALI_IMAGE_DIR "book-landscape-p1.jpg",
-  DALI_IMAGE_DIR "book-landscape-p2.jpg",
-  DALI_IMAGE_DIR "book-landscape-p3.jpg",
-  DALI_IMAGE_DIR "book-landscape-p4.jpg",
-  DALI_IMAGE_DIR "book-landscape-p5.jpg",
-  DALI_IMAGE_DIR "book-landscape-p6.jpg",
-  DALI_IMAGE_DIR "book-landscape-p7.jpg",
-  DALI_IMAGE_DIR "book-landscape-p8.jpg"
+  DEMO_IMAGE_DIR "book-landscape-p1.jpg",
+  DEMO_IMAGE_DIR "book-landscape-p2.jpg",
+  DEMO_IMAGE_DIR "book-landscape-p3.jpg",
+  DEMO_IMAGE_DIR "book-landscape-p4.jpg",
+  DEMO_IMAGE_DIR "book-landscape-p5.jpg",
+  DEMO_IMAGE_DIR "book-landscape-p6.jpg",
+  DEMO_IMAGE_DIR "book-landscape-p7.jpg",
+  DEMO_IMAGE_DIR "book-landscape-p8.jpg"
 };
 const unsigned int NUMBER_OF_LANDSCAPE_IMAGE( sizeof(PAGE_IMAGES_LANDSCAPE) / sizeof(PAGE_IMAGES_LANDSCAPE[0]) );
 
@@ -347,11 +347,10 @@ void PageTurnController::OnPageFinishedPan( PageTurnView pageTurnView )
 // Entry point for applications
 int main( int argc, char **argv )
 {
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
   PageTurnController test ( app );
 
   app.MainLoop();
 
   return 0;
 }
-

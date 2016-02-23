@@ -26,8 +26,8 @@ using namespace Dali;
 
 namespace
 {
-const char* MATERIAL_SAMPLE( DALI_IMAGE_DIR "gallery-small-48.jpg" );
-const char* MATERIAL_SAMPLE2( DALI_IMAGE_DIR "gallery-medium-19.jpg" );
+const char* MATERIAL_SAMPLE( DEMO_IMAGE_DIR "gallery-small-48.jpg" );
+const char* MATERIAL_SAMPLE2( DEMO_IMAGE_DIR "gallery-medium-19.jpg" );
 
 #define MAKE_SHADER(A)#A
 
@@ -167,7 +167,7 @@ public:
 
     Property::Index morphAmountIndex = mMeshActor.RegisterProperty( "uMorphAmount", 0.0f );
 
-    mRenderer.SetDepthIndex(0);
+    mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
 
     mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
     mMeshActor.SetAnchorPoint( AnchorPoint::CENTER );

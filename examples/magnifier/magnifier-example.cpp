@@ -26,8 +26,8 @@ using namespace Dali;
 
 namespace
 {
-const char* BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-magnifier.jpg" );
-const char* TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-magnifier.jpg" );
+const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "Magnifier Example" );
 const Vector3 MAGNIFIER_SIZE(0.25f, 0.25f, 0.0f);       ///< Magnifier sides should be 25% of the width of the stage
 const float ANIMATION_DURATION(60.0f);                  ///< Run animation for a minute before repeating.
@@ -413,7 +413,7 @@ void RunTest( Application& application )
 //
 int main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DALI_DEMO_THEME_PATH );
+  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 
   RunTest( application );
 

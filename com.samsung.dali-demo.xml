@@ -127,4 +127,13 @@
 	<ui-application appid="image-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Image View</label>
 	</ui-application>
+	<ui-application appid="image-view-pixel-area.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-pixel-area.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>ImageView Pixel Area</label>
+	</ui-application>
+	<ui-application appid="image-view-alpha-blending.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-alpha-blending.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>ImageView Alpha Blending</label>
+	</ui-application>
+	<ui-application appid="homescreen-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/homescreen-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Homescreen Benchmark</label>
+	</ui-application>
 </manifest>

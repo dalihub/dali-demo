@@ -28,11 +28,11 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const char * const BACKGROUND_IMAGE( DALI_IMAGE_DIR "background-default.png" );
-const char * const TOOLBAR_IMAGE( DALI_IMAGE_DIR "top-bar.png" );
+const char * const BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-default.png" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "ScrollView" );
-const char * const EFFECT_CAROUSEL_IMAGE( DALI_IMAGE_DIR "icon-scroll-view-carousel.png" );
-const char * const EFFECT_CAROUSEL_IMAGE_SELECTED( DALI_IMAGE_DIR "icon-scroll-view-carousel-selected.png" );
+const char * const EFFECT_CAROUSEL_IMAGE( DEMO_IMAGE_DIR "icon-scroll-view-carousel.png" );
+const char * const EFFECT_CAROUSEL_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-scroll-view-carousel-selected.png" );
 
 const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
 
@@ -44,59 +44,59 @@ const char* EFFECT_MODE_NAME[] = {
 };
 
 const char * const IMAGE_PATHS[] = {
-    DALI_IMAGE_DIR "gallery-medium-1.jpg",
-    DALI_IMAGE_DIR "gallery-medium-2.jpg",
-    DALI_IMAGE_DIR "gallery-medium-3.jpg",
-    DALI_IMAGE_DIR "gallery-medium-4.jpg",
-    DALI_IMAGE_DIR "gallery-medium-5.jpg",
-    DALI_IMAGE_DIR "gallery-medium-6.jpg",
-    DALI_IMAGE_DIR "gallery-medium-7.jpg",
-    DALI_IMAGE_DIR "gallery-medium-8.jpg",
-    DALI_IMAGE_DIR "gallery-medium-9.jpg",
-    DALI_IMAGE_DIR "gallery-medium-10.jpg",
-    DALI_IMAGE_DIR "gallery-medium-11.jpg",
-    DALI_IMAGE_DIR "gallery-medium-12.jpg",
-    DALI_IMAGE_DIR "gallery-medium-13.jpg",
-    DALI_IMAGE_DIR "gallery-medium-14.jpg",
-    DALI_IMAGE_DIR "gallery-medium-15.jpg",
-    DALI_IMAGE_DIR "gallery-medium-16.jpg",
-    DALI_IMAGE_DIR "gallery-medium-17.jpg",
-    DALI_IMAGE_DIR "gallery-medium-18.jpg",
-    DALI_IMAGE_DIR "gallery-medium-19.jpg",
-    DALI_IMAGE_DIR "gallery-medium-20.jpg",
-    DALI_IMAGE_DIR "gallery-medium-21.jpg",
-    DALI_IMAGE_DIR "gallery-medium-22.jpg",
-    DALI_IMAGE_DIR "gallery-medium-23.jpg",
-    DALI_IMAGE_DIR "gallery-medium-24.jpg",
-    DALI_IMAGE_DIR "gallery-medium-25.jpg",
-    DALI_IMAGE_DIR "gallery-medium-26.jpg",
-    DALI_IMAGE_DIR "gallery-medium-27.jpg",
-    DALI_IMAGE_DIR "gallery-medium-28.jpg",
-    DALI_IMAGE_DIR "gallery-medium-29.jpg",
-    DALI_IMAGE_DIR "gallery-medium-30.jpg",
-    DALI_IMAGE_DIR "gallery-medium-31.jpg",
-    DALI_IMAGE_DIR "gallery-medium-32.jpg",
-    DALI_IMAGE_DIR "gallery-medium-33.jpg",
-    DALI_IMAGE_DIR "gallery-medium-34.jpg",
-    DALI_IMAGE_DIR "gallery-medium-35.jpg",
-    DALI_IMAGE_DIR "gallery-medium-36.jpg",
-    DALI_IMAGE_DIR "gallery-medium-37.jpg",
-    DALI_IMAGE_DIR "gallery-medium-38.jpg",
-    DALI_IMAGE_DIR "gallery-medium-39.jpg",
-    DALI_IMAGE_DIR "gallery-medium-40.jpg",
-    DALI_IMAGE_DIR "gallery-medium-41.jpg",
-    DALI_IMAGE_DIR "gallery-medium-42.jpg",
-    DALI_IMAGE_DIR "gallery-medium-43.jpg",
-    DALI_IMAGE_DIR "gallery-medium-44.jpg",
-    DALI_IMAGE_DIR "gallery-medium-45.jpg",
-    DALI_IMAGE_DIR "gallery-medium-46.jpg",
-    DALI_IMAGE_DIR "gallery-medium-47.jpg",
-    DALI_IMAGE_DIR "gallery-medium-48.jpg",
-    DALI_IMAGE_DIR "gallery-medium-49.jpg",
-    DALI_IMAGE_DIR "gallery-medium-50.jpg",
-    DALI_IMAGE_DIR "gallery-medium-51.jpg",
-    DALI_IMAGE_DIR "gallery-medium-52.jpg",
-    DALI_IMAGE_DIR "gallery-medium-53.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-1.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-2.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-3.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-4.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-5.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-6.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-7.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-8.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-9.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-10.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-11.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-12.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-13.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-14.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-15.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-16.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-17.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-18.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-19.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-20.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-21.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-22.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-23.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-24.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-25.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-26.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-27.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-28.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-29.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-30.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-31.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-32.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-33.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-34.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-35.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-36.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-37.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-38.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-39.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-40.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-41.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-42.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-43.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-44.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-45.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-46.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-47.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-48.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-49.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-50.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-51.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-52.jpg",
+    DEMO_IMAGE_DIR "gallery-medium-53.jpg",
 
     NULL
 };
@@ -581,7 +581,7 @@ private:
 
 int main(int argc, char **argv)
 {
-  Application app = Application::New(&argc, &argv, DALI_DEMO_THEME_PATH);
+  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
   ExampleController test(app);
   app.MainLoop();
   return 0;

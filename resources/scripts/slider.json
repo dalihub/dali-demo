@@ -91,9 +91,9 @@
     "hitRegion": [0, 48],
     "backingRegion": [0, 30],
     "handleRegion": [48, 48],
-    "backingImageName": "{DALI_IMAGE_DIR}button-up-14.9.png",
-    "handleImageName": "{DALI_IMAGE_DIR}blocks-ball.png",
-    "progressImageName": "{DALI_IMAGE_DIR}button-down.9.png"
+    "backingImageName": "{DEMO_IMAGE_DIR}button-up-14.9.png",
+    "handleImageName": "{DEMO_IMAGE_DIR}blocks-ball.png",
+    "progressImageName": "{DEMO_IMAGE_DIR}button-down.9.png"
   }, {
     "type": "Slider",
     "parentOrigin": "TOP_CENTER",
