@@ -14,11 +14,12 @@ IF(DEFINED DALI_APP_DIR)
 ELSE()
         SET(APP_DATA_DIR ${PREFIX}/share/com.samsung.dali-demo)
         SET(BINDIR ${PREFIX}/bin)
+
+        # Directory for compiled Emscripten artifacts along with Emscripten examples and demos.
+        SET(EMSCRIPTEN_ENV_DIR ${APP_DATA_DIR}/../emscripten/)
+        SET(EMSCRIPTEN_EXAMPLE_DIR ${ROOT_SRC_DIR}/emscripten-examples/)
 ENDIF()
 
-# Directory for compiled Emscripten artifacts along with Emscripten examples and demos.
-SET(EMSCRIPTEN_ENV_DIR ${PREFIX}/share/emscripten)
-SET(EMSCRIPTEN_EXAMPLE_DIR ${ROOT_SRC_DIR}/emscripten-examples/)
 
 SET(RESOURCE_DIR ${ROOT_SRC_DIR}/resources)
 SET(LOCAL_IMAGES_DIR ${RESOURCE_DIR}/images)
@@ -98,6 +99,9 @@ ADD_SUBDIRECTORY(demo)
 ADD_SUBDIRECTORY(examples)
 ADD_SUBDIRECTORY(builder)
 
-CONFIGURE_FILE( ${EMSCRIPTEN_EXAMPLE_DIR}/dali-toy.js ${EMSCRIPTEN_ENV_DIR} )
-CONFIGURE_FILE( ${EMSCRIPTEN_EXAMPLE_DIR}/dali-toy.html ${EMSCRIPTEN_ENV_DIR} )
-CONFIGURE_FILE( ${EMSCRIPTEN_EXAMPLE_DIR}/dali-doc-demo.html ${EMSCRIPTEN_ENV_DIR} )
+IF(NOT DEFINED DALI_APP_DIR)
+        FILE( MAKE_DIRECTORY ${EMSCRIPTEN_ENV_DIR} )
+        CONFIGURE_FILE( ${EMSCRIPTEN_EXAMPLE_DIR}/dali-toy.js ${EMSCRIPTEN_ENV_DIR}/ )
+        CONFIGURE_FILE( ${EMSCRIPTEN_EXAMPLE_DIR}/dali-toy.html ${EMSCRIPTEN_ENV_DIR}/ )
+        CONFIGURE_FILE( ${EMSCRIPTEN_EXAMPLE_DIR}/dali-doc-demo.html ${EMSCRIPTEN_ENV_DIR}/ )
+ENDIF()
