@@ -177,7 +177,7 @@ public:
 
     // Background image:
     Dali::Property::Map backgroundImage;
-    backgroundImage.Insert( "rendererType",  "imageRenderer" );
+    backgroundImage.Insert( "rendererType",  "image" );
     backgroundImage.Insert( "imageUrl",  BACKGROUND_IMAGE );
     backgroundImage.Insert( "imageDesiredWidth",   stage.GetSize().width );
     backgroundImage.Insert( "imageDesiredHeight",   stage.GetSize().height );

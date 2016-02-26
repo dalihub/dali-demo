@@ -89,7 +89,7 @@ public:
     Control photoBoxA = Control::New();
 
     Dali::Property::Map border;
-    border.Insert( "rendererType",  "borderRenderer" );
+    border.Insert( "rendererType",  "border" );
     border.Insert( "borderColor",  Color::WHITE );
     border.Insert( "borderSize",  1.f );
     photoBoxA.SetProperty( Control::Property::BACKGROUND, border );
