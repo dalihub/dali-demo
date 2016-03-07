@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="com.samsung.dali-demo" version="0.0.1" install-location="internal-only">
+<manifest xmlns="http://tizen.org/ns/packages" package="com.samsung.dali-demo" version="0.0.1" api-version="2.4" install-location="internal-only">
 <!-- NOTE THAT ALL LEADING WHITESPACE IN THIS FILE MUST BE TABS, NOT SPACES. APPS WITH LEADING SPACES WILL SILENTLY FAIL TO RUN ON A TARGET DEVICE. -->
 
 	<label>Dali Demo</label>
