@@ -104,6 +104,9 @@ extern "C"
 
 #endif
 
+#define DALI_DEMO_STR_TITLE_TILT_SENSOR "Tilt Sensor"
+
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus
