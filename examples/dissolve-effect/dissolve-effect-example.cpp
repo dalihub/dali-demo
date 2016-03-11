@@ -255,12 +255,12 @@ void DissolveEffectApp::OnInit( Application& application )
   // Set size to stage size to avoid seeing a black border on transition
   mParent = Actor::New();
   mParent.SetSize( Stage::GetCurrent().GetSize() );
-  mParent.SetPositionInheritanceMode( USE_PARENT_POSITION );
+  mParent.SetParentOrigin( ParentOrigin::CENTER );
   mContent.Add( mParent );
 
   // show the first image
   mCurrentImage = Toolkit::ImageView::New( LoadStageFillingImage( IMAGES[mIndex] ) );
-  mCurrentImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
+  mCurrentImage.SetParentOrigin( ParentOrigin::CENTER );
   mCurrentImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   mCurrentImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mParent.Add( mCurrentImage );
@@ -293,7 +293,7 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
 
     Image image = LoadStageFillingImage( IMAGES[ mIndex ] );
     mNextImage = Toolkit::ImageView::New( image );
-    mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
+    mNextImage.SetParentOrigin( ParentOrigin::CENTER );
     mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);
@@ -406,7 +406,7 @@ bool DissolveEffectApp::OnTimerTick()
     mIndex = (mIndex + 1)%NUM_IMAGES;
     Image image = LoadStageFillingImage( IMAGES[ mIndex ] );
     mNextImage = Toolkit::ImageView::New( image );
-    mNextImage.SetPositionInheritanceMode(USE_PARENT_POSITION_PLUS_LOCAL_POSITION);
+    mNextImage.SetParentOrigin( ParentOrigin::CENTER );
     mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);
