@@ -275,12 +275,9 @@ private:
     renderer.SetTextures( textureSet );
 
     // Setup the renderer properties:
-    // We are writing to the color buffer & culling back faces.
-    renderer.SetProperty( Renderer::Property::WRITE_TO_COLOR_BUFFER, true );
+    // We are writing to the color buffer & culling back faces (no stencil is used for the main cube).
+    renderer.SetProperty( Renderer::Property::RENDER_MODE, RenderMode::COLOR );
     renderer.SetProperty( Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK );
-
-    // No stencil is used for the main cube.
-    renderer.SetProperty( Renderer::Property::STENCIL_MODE, StencilMode::OFF );
 
     // We do need to write to the depth buffer as other objects need to appear underneath this cube.
     renderer.SetProperty( Renderer::Property::DEPTH_WRITE_MODE, DepthWriteMode::ON );
@@ -316,12 +313,9 @@ private:
     renderer.SetTextures( planeTextureSet );
 
     // Setup the renderer properties:
-    // We are writing to the color buffer & culling back faces (as we are NOT doing depth write).
-    renderer.SetProperty( Renderer::Property::WRITE_TO_COLOR_BUFFER, true );
+    // We are writing to the color buffer & culling back faces as we are NOT doing depth write (no stencil is used for the floor).
+    renderer.SetProperty( Renderer::Property::RENDER_MODE, RenderMode::COLOR );
     renderer.SetProperty( Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK );
-
-    // No stencil is used for the floor.
-    renderer.SetProperty( Renderer::Property::STENCIL_MODE, StencilMode::OFF );
 
     // We do not write to the depth buffer as its not needed.
     renderer.SetProperty( Renderer::Property::DEPTH_WRITE_MODE, DepthWriteMode::OFF );
@@ -360,11 +354,9 @@ private:
     Renderer renderer = CreateRenderer( planeGeometry, size, false, Vector4::ONE );
 
     // Setup the renderer properties:
-    // The stencil plane is only for stencilling, so disable writing to color buffer.
-    renderer.SetProperty( Renderer::Property::WRITE_TO_COLOR_BUFFER, false );
+    // The stencil plane is only for stencilling.
+    renderer.SetProperty( Renderer::Property::RENDER_MODE, RenderMode::STENCIL );
 
-    // Enable stencil. Draw to the stencil buffer (only).
-    renderer.SetProperty( Renderer::Property::STENCIL_MODE, StencilMode::ON );
     renderer.SetProperty( Renderer::Property::STENCIL_FUNCTION, StencilFunction::ALWAYS );
     renderer.SetProperty( Renderer::Property::STENCIL_FUNCTION_REFERENCE, 1 );
     renderer.SetProperty( Renderer::Property::STENCIL_FUNCTION_MASK, 0xFF );
@@ -410,8 +402,9 @@ private:
     renderer.SetTextures( textureSet );
 
     // Setup the renderer properties:
-    // Write to color buffer so reflection is visible
-    renderer.SetProperty( Renderer::Property::WRITE_TO_COLOR_BUFFER, true );
+    // Write to color buffer so reflection is visible.
+    // Also enable the stencil buffer, as we will be testing against it to only draw to areas within the stencil.
+    renderer.SetProperty( Renderer::Property::RENDER_MODE, RenderMode::COLOR_STENCIL );
     // We cull to skip drawing the back faces.
     renderer.SetProperty( Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK );
 
@@ -422,7 +415,6 @@ private:
     renderer.SetProperty( Renderer::Property::BLEND_FACTOR_DEST_RGB, BlendFactor::ONE );
 
     // Enable stencil. Here we only draw to areas within the stencil.
-    renderer.SetProperty( Renderer::Property::STENCIL_MODE, StencilMode::ON );
     renderer.SetProperty( Renderer::Property::STENCIL_FUNCTION, StencilFunction::EQUAL );
     renderer.SetProperty( Renderer::Property::STENCIL_FUNCTION_REFERENCE, 1 );
     renderer.SetProperty( Renderer::Property::STENCIL_FUNCTION_MASK, 0xff );
