@@ -136,4 +136,7 @@
 	<ui-application appid="homescreen-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/homescreen-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Homescreen Benchmark</label>
 	</ui-application>
+	<ui-application appid="tilt.example" exec="/usr/apps/com.samsung.dali-demo/bin/tilt.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Tilt sensor</label>
+	</ui-application>
 </manifest>
