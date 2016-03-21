@@ -218,18 +218,18 @@ Geometry CreateGeometry()
 
   Property::Map initialPositionVertexFormat;
   initialPositionVertexFormat["aInitPos"] = Property::VECTOR2;
-  PropertyBuffer initialPositionVertices = PropertyBuffer::New( initialPositionVertexFormat, numberOfVertices );
-  initialPositionVertices.SetData(quad);
+  PropertyBuffer initialPositionVertices = PropertyBuffer::New( initialPositionVertexFormat );
+  initialPositionVertices.SetData( quad, numberOfVertices );
 
   Property::Map finalPositionVertexFormat;
   finalPositionVertexFormat["aFinalPos"] = Property::VECTOR2;
-  PropertyBuffer finalPositionVertices = PropertyBuffer::New( finalPositionVertexFormat, numberOfVertices );
-  finalPositionVertices.SetData(cat);
+  PropertyBuffer finalPositionVertices = PropertyBuffer::New( finalPositionVertexFormat );
+  finalPositionVertices.SetData( cat, numberOfVertices );
 
   Property::Map colorVertexFormat;
   colorVertexFormat["aColor"] = Property::VECTOR3;
-  PropertyBuffer colorVertices = PropertyBuffer::New( colorVertexFormat, numberOfVertices );
-  colorVertices.SetData(colors);
+  PropertyBuffer colorVertices = PropertyBuffer::New( colorVertexFormat );
+  colorVertices.SetData( colors, numberOfVertices );
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
