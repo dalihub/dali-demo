@@ -223,7 +223,7 @@ void RadialSweepViewImpl::Add(Actor actor)
     mLayer = Layer::New();
     Self().Add(mLayer);
     mLayer.SetSize( Stage::GetCurrent().GetSize() );
-    mLayer.SetPositionInheritanceMode(USE_PARENT_POSITION);
+    mLayer.SetParentOrigin( ParentOrigin::CENTER );
   }
 
   mLayer.Add(actor);
@@ -362,5 +362,5 @@ void RadialSweepViewImpl::CreateStencil( Radian initialSector )
   mRotationAngleIndex = mStencilActor.RegisterProperty("uRotationAngle", initialSector.radian);
 
   mStencilActor.SetDrawMode( DrawMode::STENCIL );
-  mStencilActor.SetPositionInheritanceMode(USE_PARENT_POSITION);
+  mStencilActor.SetParentOrigin( ParentOrigin::CENTER );
 }

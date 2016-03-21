@@ -116,11 +116,10 @@ public:
     const Vector3& parentSize = inputs[1]->GetVector3();
     const Vector3& childSize = inputs[2]->GetVector3();
 
-    // Wrap bubbles verically.
-    if( position.y + childSize.y * 0.5f < -parentSize.y * 0.5f )
-    {
-      position.y = parentSize.y * 0.5f + childSize.y * 0.5f;
-    }
+    // Wrap bubbles vertically.
+    float range = parentSize.y + childSize.y;
+    // This performs a float mod (we don't use fmod as we want the arithmetic modulus as opposed to the remainder).
+    position.y -= range * ( floor( position.y / range ) + 0.5f );
 
     // Bubbles X position moves parallax to horizontal
     // panning by a scale factor unique to each bubble.
@@ -698,11 +697,12 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
     animConstraint.AddSource( Source( mScrollView, ScrollView::Property::SCROLL_POSITION ) );
     animConstraint.AddSource( Dali::ParentSource( Dali::Actor::Property::SIZE ) );
     animConstraint.AddSource( Dali::LocalSource( Dali::Actor::Property::SIZE ) );
+    animConstraint.SetRemoveAction( Constraint::Discard );
     animConstraint.Apply();
 
     // Kickoff animation
-    Animation animation = Animation::New( Random::Range( 40.0f, 80.0f ) );
-    animation.AnimateBy( Property( child, Actor::Property::POSITION ), Vector3( 0.0f, -1.0f, 0.0f ), AlphaFunction::LINEAR );
+    Animation animation = Animation::New( Random::Range( 30.0f, 160.0f ) );
+    animation.AnimateBy( Property( child, Actor::Property::POSITION ), Vector3( 0.0f, -2000.0f, 0.0f ), AlphaFunction::LINEAR );
     animation.SetLooping( true );
     animation.Play();
     mBackgroundAnimations.push_back( animation );
