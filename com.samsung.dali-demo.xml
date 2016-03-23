@@ -148,4 +148,7 @@
 	<ui-application appid="native-image-source.example" exec="/usr/apps/com.samsung.dali-demo/bin/native-image-source.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Native Image Source</label>
 	</ui-application>
+	<ui-application appid="flex-container.example" exec="/usr/apps/com.samsung.dali-demo/bin/flex-container.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Flex Container</label>
+	</ui-application>
 </manifest>
