@@ -139,4 +139,7 @@
 	<ui-application appid="tilt.example" exec="/usr/apps/com.samsung.dali-demo/bin/tilt.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Tilt sensor</label>
 	</ui-application>
+	<ui-application appid="perf-scroll.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-scroll.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>perf scroll</label>
+	</ui-application>
 </manifest>
