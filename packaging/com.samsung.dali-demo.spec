@@ -20,6 +20,7 @@ BuildRequires:  pkgconfig(dlog)
 BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(dali-core)
 BuildRequires:  pkgconfig(dali-toolkit)
+BuildRequires:  pkgconfig(libtzplatform-config)
 
 # DALi C++ applications always run on dali-adaptor.
 BuildRequires:  pkgconfig(dali-adaptor)
@@ -33,11 +34,12 @@ of the capability of the toolkit.
 ##############################
 %prep
 %setup -q
-%define dali_app_ro_dir       /usr/apps/com.samsung.dali-demo/
+%define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo/
 %define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
-%define dali_xml_file_dir     /usr/share/packages/
-%define dali_icon_dir         /usr/share/icons/
-%define smack_rule_dir        /etc/smack/accesses2.d/
+%define dali_xml_file_dir     %TZ_SYS_RO_PACKAGES
+%define dali_icon_dir         %TZ_SYS_RO_ICONS
+%define smack_rule_dir        /etc/smack/accesses2.d/%TZ_SYS_RO_PACKAGES
+
 %define locale_dir            %{dali_app_ro_dir}/res/locale
 %define local_style_dir       ../../resources/style/mobile
 
