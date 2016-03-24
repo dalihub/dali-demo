@@ -380,20 +380,20 @@ Geometry MetaballExplosionController::CreateGeometry()
   //Vertices
   Property::Map positionVertexFormat;
   positionVertexFormat["aPosition"] = Property::VECTOR2;
-  PropertyBuffer positionVertices = PropertyBuffer::New( positionVertexFormat, numberOfVertices );
-  positionVertices.SetData(vertices);
+  PropertyBuffer positionVertices = PropertyBuffer::New( positionVertexFormat );
+  positionVertices.SetData( vertices, numberOfVertices );
 
   //Textures
   Property::Map textureVertexFormat;
   textureVertexFormat["aTexture"] = Property::VECTOR2;
-  PropertyBuffer textureVertices = PropertyBuffer::New( textureVertexFormat, numberOfVertices );
-  textureVertices.SetData(textures);
+  PropertyBuffer textureVertices = PropertyBuffer::New( textureVertexFormat );
+  textureVertices.SetData( textures, numberOfVertices );
 
   //Indices
   Property::Map indicesVertexFormat;
   indicesVertexFormat["aIndices"] = Property::INTEGER;
-  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat, 6 );
-  indicesToVertices.SetData(indices);
+  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat );
+  indicesToVertices.SetData( indices, 6 );
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
@@ -438,20 +438,20 @@ Geometry MetaballExplosionController::CreateGeometryComposition()
   //Vertices
   Property::Map positionVertexFormat;
   positionVertexFormat["aPosition"] = Property::VECTOR2;
-  PropertyBuffer positionVertices = PropertyBuffer::New( positionVertexFormat, numberOfVertices );
-  positionVertices.SetData(vertices);
+  PropertyBuffer positionVertices = PropertyBuffer::New( positionVertexFormat );
+  positionVertices.SetData( vertices, numberOfVertices );
 
   //Textures
   Property::Map textureVertexFormat;
   textureVertexFormat["aTexture"] = Property::VECTOR2;
-  PropertyBuffer textureVertices = PropertyBuffer::New( textureVertexFormat, numberOfVertices );
-  textureVertices.SetData(textures);
+  PropertyBuffer textureVertices = PropertyBuffer::New( textureVertexFormat );
+  textureVertices.SetData( textures, numberOfVertices );
 
   //Indices
   Property::Map indicesVertexFormat;
   indicesVertexFormat["aIndices"] = Property::INTEGER;
-  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat, 6 );
-  indicesToVertices.SetData(indices);
+  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat );
+  indicesToVertices.SetData( indices, 6 );
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
