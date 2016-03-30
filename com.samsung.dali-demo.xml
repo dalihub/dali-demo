@@ -147,5 +147,7 @@
 	</ui-application>
 	<ui-application appid="native-image-source.example" exec="/usr/apps/com.samsung.dali-demo/bin/native-image-source.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Native Image Source</label>
+	<ui-application appid="perf-scroll.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-scroll.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>perf-scroll</label>
 	</ui-application>
 </manifest>
