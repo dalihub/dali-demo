@@ -83,11 +83,10 @@
       "background":
       {
         "rendererType": "gradient",
-        "gradientCenter": [360, 640],
-        "gradientRadius": 1468,
-        "gradientUnits": "userSpace",
-        "gradientStopColor": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]],
-        "gradientStopOffset":[0.0,1.0]
+        "center": [360, 640],
+        "radius": 1468,
+        "units": "userSpace",
+        "stopColor": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]]
       }
     }
   }
