@@ -38,7 +38,7 @@ of the capability of the toolkit.
 %define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
 %define dali_xml_file_dir     %TZ_SYS_RO_PACKAGES
 %define dali_icon_dir         %TZ_SYS_RO_ICONS
-%define smack_rule_dir        /etc/smack/accesses2.d/
+%define smack_rule_dir        /etc/smack/accesses2.d/%TZ_SYS_RO_PACKAGES
 
 %define locale_dir            %{dali_app_ro_dir}/res/locale
 %define local_style_dir       ../../resources/style/mobile
