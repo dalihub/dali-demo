@@ -446,15 +446,15 @@ Geometry NewWindowController::CreateMeshGeometry()
   vertexFormat["aPosition"] = Property::VECTOR3;
   vertexFormat["aTexCoord"] = Property::VECTOR2;
   vertexFormat["aColor"] = Property::VECTOR3;
-  PropertyBuffer vertices = PropertyBuffer::New( vertexFormat, 5 );
-  vertices.SetData( vertexData );
+  PropertyBuffer vertices = PropertyBuffer::New( vertexFormat );
+  vertices.SetData( vertexData, 5 );
 
   // Specify all the faces
   unsigned int indexData[12] = { 0,1,3,0,2,4,0,3,4,0,2,1 };
   Property::Map indexFormat;
   indexFormat["indices"] = Property::INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( indexFormat, 12 );
-  indices.SetData( indexData );
+  PropertyBuffer indices = PropertyBuffer::New( indexFormat );
+  indices.SetData( indexData, 12 );
 
   // Create the geometry object
   Geometry geometry = Geometry::New();

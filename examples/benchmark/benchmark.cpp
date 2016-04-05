@@ -195,8 +195,8 @@ Geometry& QuadMesh()
     vertexFormat["aTexCoord"] = Property::VECTOR2;
 
     //Create a vertex buffer for vertex positions and texture coordinates
-    vertexBuffer = PropertyBuffer::New( vertexFormat, 4u );
-    vertexBuffer.SetData( gQuadWithTexture );
+    vertexBuffer = PropertyBuffer::New( vertexFormat );
+    vertexBuffer.SetData( gQuadWithTexture, 4u );
 
     //Create the geometry
     mesh = Geometry::New();

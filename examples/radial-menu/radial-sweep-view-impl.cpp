@@ -331,14 +331,14 @@ void RadialSweepViewImpl::CreateStencil( Radian initialSector )
   vertexFormat["aAngleIndex"] = Property::FLOAT;
   vertexFormat["aPosition1"] = Property::VECTOR2;
   vertexFormat["aPosition2"] = Property::VECTOR2;
-  PropertyBuffer vertices = PropertyBuffer::New( vertexFormat, 7u );
-  vertices.SetData( vertexData );
+  PropertyBuffer vertices = PropertyBuffer::New( vertexFormat );
+  vertices.SetData( vertexData, 7u );
 
   unsigned int indexData[15] = { 0,1,2,0,2,3,0,3,4,0,4,5,0,5,6 };
   Property::Map indexFormat;
   indexFormat["indices"] = Property::INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( indexFormat, 15u );
-  indices.SetData( indexData );
+  PropertyBuffer indices = PropertyBuffer::New( indexFormat );
+  indices.SetData( indexData, 15u );
 
   Geometry meshGeometry = Geometry::New();
   meshGeometry.AddVertexBuffer( vertices );

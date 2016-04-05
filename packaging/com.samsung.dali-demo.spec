@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    1.1.26
+Version:    1.1.28
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -21,6 +21,11 @@ BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(dali-core)
 BuildRequires:  pkgconfig(dali-toolkit)
 
+#need libtzplatform-config for directory if tizen version is 3.x
+%if "%{tizen_version_major}" == "3"
+BuildRequires:  pkgconfig(libtzplatform-config)
+%endif
+
 # DALi C++ applications always run on dali-adaptor.
 BuildRequires:  pkgconfig(dali-adaptor)
 
@@ -33,10 +38,22 @@ of the capability of the toolkit.
 ##############################
 %prep
 %setup -q
+
+
+#Use TZ_PATH when tizen version is 3.x
+%if "%{tizen_version_major}" == "2"
 %define dali_app_ro_dir       /usr/apps/com.samsung.dali-demo/
-%define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
 %define dali_xml_file_dir     /usr/share/packages/
 %define dali_icon_dir         /usr/share/icons/
+%endif
+
+%if "%{tizen_version_major}" == "3"
+%define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo/
+%define dali_xml_file_dir     %TZ_SYS_RO_PACKAGES
+%define dali_icon_dir         %TZ_SYS_RO_ICONS
+%endif
+
+%define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
 %define smack_rule_dir        /etc/smack/accesses2.d/
 %define locale_dir            %{dali_app_ro_dir}/res/locale
 %define local_style_dir       ../../resources/style/mobile
