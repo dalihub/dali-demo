@@ -479,9 +479,8 @@ public:
   {
     ReloadJsonFile( name, mBuilder, mBuilderLayer );
 
-    // do this here as GetCurrentSize()
-    mBuilderLayer.SetParentOrigin(ParentOrigin::CENTER);
-    mBuilderLayer.SetAnchorPoint(AnchorPoint::CENTER);
+    mBuilderLayer.SetParentOrigin(ParentOrigin::BOTTOM_CENTER);
+    mBuilderLayer.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
     Dali::Vector3 size = Stage::GetCurrent().GetRootLayer().GetCurrentSize();
     size.y -= DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight;
     mBuilderLayer.SetSize( size );
