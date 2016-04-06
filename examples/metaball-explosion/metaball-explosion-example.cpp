@@ -474,9 +474,10 @@ void MetaballExplosionController::CreateMetaballActors()
   //Create the shader for the metaballs
   Shader shader = Shader::New( METABALL_VERTEX_SHADER, METABALL_FRAG_SHADER );
 
-  Material material = Material::New( shader );
   Geometry metaballGeom = CreateGeometry();
-
+  Renderer renderer = Renderer::New( metaballGeom, shader );
+  renderer.SetProperty( Renderer::Property::BLENDING_MODE, BlendingMode::ON );
+  renderer.SetBlendFunc(BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE);
   //Initialization of each of the metaballs
   for( int i = 0; i < METABALL_NUMBER; i++ )
   {
@@ -487,11 +488,6 @@ void MetaballExplosionController::CreateMetaballActors()
     mMetaballs[i].actor.SetName("Metaball");
     mMetaballs[i].actor.SetScale( 1.0f );
     mMetaballs[i].actor.SetParentOrigin( ParentOrigin::CENTER );
-
-    Renderer renderer = Renderer::New( metaballGeom, material );
-    renderer.SetProperty( Renderer::Property::BLENDING_MODE, BlendingMode::ON );
-    renderer.SetBlendFunc(BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE);
-
     mMetaballs[i].actor.AddRenderer( renderer );
 
     mMetaballs[i].positionIndex = mMetaballs[i].actor.RegisterProperty( "uPositionMetaball", mMetaballs[i].position );
@@ -557,17 +553,17 @@ void MetaballExplosionController::AddRefractionImage()
 
   //Create new shader
   Shader shader = Shader::New( METABALL_VERTEX_SHADER, REFRACTION_FRAG_SHADER );
-  //Create new material
-  Material material = Material::New( shader );
 
-  //Add Textures
-  material.AddTexture(mBackImage, "sTexture");
-  material.AddTexture(fbo, "sEffect");
+  //Create new texture set
+  TextureSet textureSet = TextureSet::New();
+  textureSet.SetImage( 0u, mBackImage );
+  textureSet.SetImage( 1u, fbo );
 
   //Create geometry
   Geometry metaballGeom = CreateGeometryComposition();
 
-  Renderer mRenderer = Renderer::New( metaballGeom, material );
+  Renderer mRenderer = Renderer::New( metaballGeom, shader );
+  mRenderer.SetTextures( textureSet );
 
   mCompositionActor = Actor::New( );
   mCompositionActor.SetParentOrigin(ParentOrigin::CENTER);

@@ -281,10 +281,11 @@ private:
     mGeometry = CreateGeometry( MESH_FILES[mCurrentMeshId] );
 
     Image texture = LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] );
-    mMaterial = Material::New( mShaderFlat );
-    mMaterial.AddTexture( texture, "sTexture" );
+    mTextureSet = TextureSet::New();
+    mTextureSet.SetImage( 0u, texture );
 
-    mRenderer = Renderer::New( mGeometry, mMaterial );
+    mRenderer = Renderer::New( mGeometry, mShaderFlat );
+    mRenderer.SetTextures( mTextureSet );
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
@@ -343,7 +344,7 @@ private:
   {
     mCurrentTextureId = ( mCurrentTextureId + 1 ) % NUM_TEXTURE_IMAGES;
     Image texture = LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] );
-    mMaterial.SetTextureImage( 0, texture );
+    mTextureSet.SetImage( 0u, texture );
     return true;
   }
 
@@ -354,7 +355,7 @@ private:
     {
       case TouchPoint::Down:
       {
-        mMaterial.SetShader( mShaderRefraction );
+        mRenderer.SetShader( mShaderRefraction );
 
         SetLightXYOffset( point.screen );
 
@@ -406,7 +407,7 @@ private:
 
   void OnTouchFinished( Animation& source )
   {
-    mMaterial.SetShader( mShaderFlat );
+    mRenderer.SetShader( mShaderFlat );
     SetLightXYOffset( Vector2::ZERO );
   }
 
@@ -563,7 +564,7 @@ private:
 
   Application&   mApplication;
   Layer          mContent;
-  Material       mMaterial;
+  TextureSet     mTextureSet;
   Geometry       mGeometry;
   Renderer       mRenderer;
   Actor          mMeshActor;

@@ -292,11 +292,8 @@ public:
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
-
-    mMaterial = Material::New( mShader );
     mGeometry = CreateGeometry();
-
-    mRenderer = Renderer::New( mGeometry, mMaterial );
+    mRenderer = Renderer::New( mGeometry, mShader );
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
@@ -346,7 +343,6 @@ private:
   Vector3 mStageSize;                                     ///< The size of the stage
 
   Shader   mShader;
-  Material mMaterial;
   Geometry mGeometry;
   Renderer mRenderer;
   Actor    mMeshActor;

@@ -30,7 +30,7 @@ using namespace Dali;
 namespace
 {
 
-const char* MATERIAL_SAMPLES[] =
+const char* IMAGES[] =
 {
   DEMO_IMAGE_DIR "people-medium-1.jpg",
   DEMO_IMAGE_DIR "people-medium-4.jpg",
@@ -39,7 +39,7 @@ const char* MATERIAL_SAMPLES[] =
   DEMO_IMAGE_DIR "people-medium-15.jpg",
   DEMO_IMAGE_DIR "people-medium-6.jpg",
 };
-const unsigned int NUMBER_OF_SAMPLES(sizeof(MATERIAL_SAMPLES)/sizeof(const char*));
+const unsigned int NUMBER_OF_SAMPLES(sizeof(IMAGES)/sizeof(const char*));
 
 
 #define MAKE_SHADER(A)#A
@@ -164,16 +164,17 @@ public:
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
     mGeometry = CreateGeometry();
 
-    Material firstMat;
+    TextureSet firstTextureSet;
 
     for( unsigned i=0; i<NUMBER_OF_SAMPLES; ++i)
     {
-      Image image = ResourceImage::New( MATERIAL_SAMPLES[i] );
-      Material material = Material::New( mShader );
-      material.AddTexture(image, "sTexture");
-      if( i==0 ) { firstMat = material; }
+      Image image = ResourceImage::New( IMAGES[i] );
+      TextureSet textureSet = TextureSet::New();
+      textureSet.SetImage( 0u, image );
+      if( i==0 ) { firstTextureSet = textureSet; }
 
-      Renderer renderer = Renderer::New( mGeometry, material );
+      Renderer renderer = Renderer::New( mGeometry, mShader );
+      renderer.SetTextures( textureSet );
       Actor meshActor = Actor::New();
       mActors[i] = meshActor;
       meshActor.AddRenderer( renderer );
@@ -197,7 +198,7 @@ public:
       stage.Add( meshActor );
     }
 
-    mActors[NUMBER_OF_SAMPLES-2].GetRendererAt(0).SetMaterial( firstMat );
+    mActors[NUMBER_OF_SAMPLES-2].GetRendererAt(0).SetTextures( firstTextureSet );
 
     stage.GetRootLayer().TouchedSignal().Connect(this, &ExampleController::OnStageTouched);
   }

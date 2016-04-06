@@ -263,8 +263,7 @@ void NewWindowController::AddMeshActor( Actor& parentActor )
 
   // Create a coloured mesh
   Shader shaderColorMesh = Shader::New( VERTEX_COLOR_MESH, FRAGMENT_COLOR_MESH );
-  Material colorMeshmaterial = Material::New( shaderColorMesh );
-  Renderer colorMeshRenderer = Renderer::New( meshGeometry, colorMeshmaterial );
+  Renderer colorMeshRenderer = Renderer::New( meshGeometry, shaderColorMesh );
 
   Actor colorMeshActor = Actor::New();
   colorMeshActor.AddRenderer( colorMeshRenderer );
@@ -278,9 +277,10 @@ void NewWindowController::AddMeshActor( Actor& parentActor )
  // Create a textured mesh
   Image effectImage = ResourceImage::New(EFFECT_IMAGE);
   Shader shaderTextureMesh = Shader::New( VERTEX_TEXTURE_MESH, FRAGMENT_TEXTURE_MESH );
-  Material textureMeshMaterial = Material::New( shaderTextureMesh );
-  textureMeshMaterial.AddTexture(effectImage, "sTexture");
-  Renderer textureMeshRenderer = Renderer::New( meshGeometry, textureMeshMaterial );
+  TextureSet textureSet = TextureSet::New();
+  textureSet.SetImage( 0u, effectImage );
+  Renderer textureMeshRenderer = Renderer::New( meshGeometry, shaderTextureMesh );
+  textureMeshRenderer.SetTextures( textureSet );
 
   Actor textureMeshActor = Actor::New();
   textureMeshActor.AddRenderer( textureMeshRenderer );
@@ -331,7 +331,7 @@ void NewWindowController::AddBlendingImageActor( Actor& parentActor )
   blendActor.SetSize(140, 140);
   parentActor.Add(blendActor);
 
-  blendActor.GetRendererAt(0u).GetMaterial().AddTexture(fb2, "sEffect");
+  blendActor.GetRendererAt(0u).GetTextures().SetImage( 1u, fb2 );
 }
 
 void NewWindowController::AddTextLabel( Actor& parentActor )

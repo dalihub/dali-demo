@@ -152,18 +152,19 @@ public:
     // Hide the indicator bar
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
-    mImage = ResourceImage::New( MATERIAL_SAMPLE );
-    Image image = ResourceImage::New( MATERIAL_SAMPLE2 );
+    Image image0 = ResourceImage::New( MATERIAL_SAMPLE );
+    Image image1 = ResourceImage::New( MATERIAL_SAMPLE2 );
 
-    mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
+    Shader shader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
 
-    mMaterial = Material::New( mShader );
-    mMaterial.AddTexture(mImage, "sTexture1");
-    mMaterial.AddTexture(image, "sTexture2");
+    TextureSet textureSet = TextureSet::New();
+    textureSet.SetImage( 0u, image0 );
+    textureSet.SetImage( 1u, image1 );
 
-    mGeometry = CreateGeometry();
+    Geometry geometry = CreateGeometry();
 
-    mRenderer = Renderer::New( mGeometry, mMaterial );
+    mRenderer = Renderer::New( geometry, shader );
+    mRenderer.SetTextures( textureSet );
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
@@ -219,10 +220,6 @@ private:
   Application&  mApplication;                             ///< Application instance
   Vector3 mStageSize;                                     ///< The size of the stage
 
-  Image    mImage;
-  Shader   mShader;
-  Material mMaterial;
-  Geometry mGeometry;
   Renderer mRenderer;
   Actor    mMeshActor;
   Renderer mRenderer2;
