@@ -18,7 +18,8 @@
   // a tree of actors
   "stage": [{
     "type": "Control",
-    "size": [400,600,1],
+    "widthResizePolicy":"FILL_TO_PARENT",
+    "heightResizePolicy":"FILL_TO_PARENT",
     "parentOrigin": "CENTER",
     "anchorPoint": "CENTER",
     "background": {
