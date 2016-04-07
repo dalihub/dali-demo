@@ -16,37 +16,38 @@
  */
 {
   "stage": [
-    // A TextLabel with a red background
+    // A TextLabel with a color background
     {
       "type": "TextLabel",
       "drawMode": "OVERLAY_2D",
       "text": "Hello World",
-      "parentOrigin": "TOP_CENTER",
-      "anchorPoint": "TOP_CENTER",
+      "parentOrigin": "TOP_LEFT",
+      "anchorPoint": "TOP_LEFT",
       "pointSize": 20,
       "horizontalAlignment": "CENTER",
       "verticalAlignment": "CENTER",
       "widthResizePolicy":"FILL_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
-      "sizeModeFactor": [1,0.25,1],
+      "sizeModeFactor": [ 1.0, 0.33, 1 ],
       "background":{
         "rendererType": "color",
-        "blendColor": [1, 0, 0, 1]
+        "blendColor": [ 0.8, 0, 0.2, 1 ]
        }
     },
 
-    // A control with a yellow background
+    // A control with a border
     {
       "type": "Control",
       "relayoutEnabled": false,
-      "parentOrigin": "CENTER",
-      "anchorPoint": "BOTTOM_CENTER",
-      "widthResizePolicy":"FILL_TO_PARENT",
+      "parentOrigin": "CENTER_LEFT",
+      "anchorPoint": "CENTER_LEFT",
+      "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
-      "sizeModeFactor": [1,0.25,1],
-      "background":{
-        "rendererType": "color",
-        "blendColor": [1, 1, 0, 1]
+      "sizeModeFactor": [ 0.5, 0.33, 1],
+      "background": {
+        "rendererType" : "border",
+        "borderColor" : [ 0.5, 0.5, 0.5, 1 ],
+        "borderSize" : 15.0
       }
     },
 
@@ -54,14 +55,29 @@
     {
       "type": "Control",
       "relayoutEnabled": false,
-      "parentOrigin": "CENTER",
-      "anchorPoint": "TOP_CENTER",
-      "widthResizePolicy":"FILL_TO_PARENT",
+      "parentOrigin": "CENTER_RIGHT",
+      "anchorPoint": "CENTER_RIGHT",
+      "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
-      "sizeModeFactor": [1,0.25,1],
+      "sizeModeFactor": [ 0.5, 0.33, 1 ],
       "background": {
         "rendererType": "image",
-        "imageUrl": "{DEMO_IMAGE_DIR}button-background.png"
+        "imageUrl": "{DEMO_IMAGE_DIR}gallery-large-9.jpg"
+      }
+    },
+
+    // A control with a yellow background
+    {
+      "type": "Control",
+      "relayoutEnabled": false,
+      "parentOrigin": "BOTTOM_LEFT",
+      "anchorPoint": "BOTTOM_LEFT",
+      "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
+      "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
+      "sizeModeFactor": [ 0.5, 0.33, 1 ],
+      "background":{
+        "rendererType": "color",
+        "blendColor": [ 1, 1, 0, 1 ]
       }
     },
 
@@ -69,24 +85,24 @@
     {
       "type": "Control",
       "relayoutEnabled": false,
-      "parentOrigin": "BOTTOM_CENTER",
-      "anchorPoint": "BOTTOM_CENTER",
-      "widthResizePolicy":"FILL_TO_PARENT",
+      "parentOrigin": "BOTTOM_RIGHT",
+      "anchorPoint": "BOTTOM_RIGHT",
+      "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
-      "sizeModeFactor": [1,0.25,1],
+      "sizeModeFactor": [ 0.5, 0.33, 1.0 ],
       "background": {
-        "rendererType": "gradient",
-        "center": [ 0.5, 0.5 ],
-        "radius": 1.414,
-        "stopOffset": [ 0.0, 0.3, 0.6, 0.8, 1.0 ],
-        "stopColor": [
-            [ 0.5,  0.78, 0.76, 1.0  ],
-            [ 0.77, 0.78, 0.28, 0.48 ],
-            [ 0.84, 0.15, 0.55, 0.75 ],
-            [ 0.5,  0.78, 0.76, 0.59 ],
-            [ 1.0,  1.0,  0.0,  1.0  ]
-        ]
-      }
+        "rendererType" : "gradient",
+        "startPosition" : [ -0.5, -0.5 ],
+        "endPosition": [ 0.5, 0.5 ],
+        "stopColor" : [
+          [ 1.0, 0.0, 0.0, 1.0 ],
+          [ 1.0, 0.25, 0.0, 1.0 ],
+          [ 1.0, 0.5, 0.0, 1.0 ],
+          [ 1.0, 0.75, 0.0, 1.0 ],
+          [ 1.0, 1.0, 0.0, 1.0 ]
+        ],
+        "stopOffset" : [ 0, 0.25, 0.5, 0.75, 1.0 ]
+       }
     }
   ]
 }
