@@ -26,13 +26,28 @@
       "pointSize": 20,
       "horizontalAlignment": "CENTER",
       "verticalAlignment": "CENTER",
-      "widthResizePolicy":"FILL_TO_PARENT",
+      "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
-      "sizeModeFactor": [ 1.0, 0.33, 1 ],
+      "sizeModeFactor": [ 0.5, 0.333333333333, 1 ],
       "background":{
         "rendererType": "color",
         "blendColor": [ 0.8, 0, 0.2, 1 ]
        }
+    },
+
+    // A control with an SVG image
+    {
+      "type": "Control",
+      "relayoutEnabled": false,
+      "parentOrigin": "TOP_RIGHT",
+      "anchorPoint": "TOP_RIGHT",
+      "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
+      "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
+      "sizeModeFactor": [ 0.5, 0.333333333333, 1 ],
+      "background": {
+        "rendererType": "svg",
+        "imageUrl": "{DEMO_IMAGE_DIR}Kid1.svg"
+      }
     },
 
     // A control with a border
@@ -43,7 +58,7 @@
       "anchorPoint": "CENTER_LEFT",
       "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
-      "sizeModeFactor": [ 0.5, 0.33, 1],
+      "sizeModeFactor": [ 0.5, 0.333333333333, 1 ],
       "background": {
         "rendererType" : "border",
         "borderColor" : [ 0.5, 0.5, 0.5, 1 ],
@@ -51,7 +66,7 @@
       }
     },
 
-    // A control with an image
+    // A control with a JPG image
     {
       "type": "Control",
       "relayoutEnabled": false,
@@ -59,7 +74,7 @@
       "anchorPoint": "CENTER_RIGHT",
       "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
-      "sizeModeFactor": [ 0.5, 0.33, 1 ],
+      "sizeModeFactor": [ 0.5, 0.333333333333, 1 ],
       "background": {
         "rendererType": "image",
         "imageUrl": "{DEMO_IMAGE_DIR}gallery-large-9.jpg"
@@ -74,7 +89,7 @@
       "anchorPoint": "BOTTOM_LEFT",
       "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
-      "sizeModeFactor": [ 0.5, 0.33, 1 ],
+      "sizeModeFactor": [ 0.5, 0.333333333333, 1 ],
       "background":{
         "rendererType": "color",
         "blendColor": [ 1, 1, 0, 1 ]
@@ -89,7 +104,7 @@
       "anchorPoint": "BOTTOM_RIGHT",
       "widthResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
-      "sizeModeFactor": [ 0.5, 0.33, 1.0 ],
+      "sizeModeFactor": [ 0.5, 0.333333333333, 1 ],
       "background": {
         "rendererType" : "gradient",
         "startPosition" : [ -0.5, -0.5 ],
