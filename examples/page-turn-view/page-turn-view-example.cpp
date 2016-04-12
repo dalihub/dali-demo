@@ -17,6 +17,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/image-atlas/image-atlas.h>
 
 #include <assert.h>
 #include <cstdlib>
@@ -78,21 +79,21 @@ class PortraitPageFactory : public PageFactory
     return 10*NUMBER_OF_PORTRAIT_IMAGE + 1;
   }
   /**
-   * Create an image actor to represent a page.
+   * Create an image to represent a page.
    * @param[in] pageId The ID of the page to create.
-   * @return An image actor, or an uninitialized pointer if the ID is out of range.
+   * @return An image, or an uninitialized pointer if the ID is out of range.
    */
-  virtual Actor NewPage( unsigned int pageId )
+  virtual Image NewPage( unsigned int pageId )
   {
-    ImageActor page;
+    Image page;
 
     if( pageId == 0 )
     {
-      page = ImageActor::New( ResourceImage::New( BOOK_COVER_PORTRAIT ) );
+      page = ResourceImage::New( BOOK_COVER_PORTRAIT );
     }
     else
     {
-      page = ImageActor::New( ResourceImage::New( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] ) );
+      page = ResourceImage::New( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] );
     }
 
     return page;
@@ -101,6 +102,7 @@ class PortraitPageFactory : public PageFactory
 
 class LandscapePageFactory : public PageFactory
 {
+
   /**
    * Query the number of pages available from the factory.
    * The maximum available page has an ID of GetNumberOfPages()-1.
@@ -110,29 +112,35 @@ class LandscapePageFactory : public PageFactory
     return 10*NUMBER_OF_LANDSCAPE_IMAGE / 2 + 1;
   }
   /**
-   * Create an image actor to represent a page.
+   * Create an image to represent a page.
    * @param[in] pageId The ID of the page to create.
-   * @return An image actor, or an uninitialized pointer if the ID is out of range.
+   * @return An image, or an uninitialized pointer if the ID is out of range.
    */
-  virtual Actor NewPage( unsigned int pageId )
+  virtual Image NewPage( unsigned int pageId )
   {
-    ImageActor pageFront;
-    ImageActor pageBack;
+    if( mImageSize.GetWidth() == 0u || mImageSize.GetHeight() == 0u )
+    {
+      mImageSize = ResourceImage::GetImageSize(BOOK_COVER_LANDSCAPE);
+    }
+
+    ImageAtlas atlas = ImageAtlas::New( mImageSize.GetWidth()*2u, mImageSize.GetHeight(), Pixel::RGB888 );
+    Vector4 textureRect;
     if( pageId == 0 )
     {
-       pageFront = ImageActor::New( ResourceImage::New( BOOK_COVER_LANDSCAPE ) );
-       pageBack = ImageActor::New( ResourceImage::New( BOOK_COVER_BACK_LANDSCAPE ) );
+      atlas.Upload( textureRect, BOOK_COVER_LANDSCAPE, mImageSize );
+      atlas.Upload( textureRect, BOOK_COVER_BACK_LANDSCAPE, mImageSize );
     }
     else
     {
       unsigned int imageId = (pageId-1)*2;
-      pageFront = ImageActor::New( ResourceImage::New( PAGE_IMAGES_LANDSCAPE[ imageId % NUMBER_OF_LANDSCAPE_IMAGE ] ) );
-      pageBack = ImageActor::New( ResourceImage::New( PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ] ) );
+      atlas.Upload( textureRect, PAGE_IMAGES_LANDSCAPE[ imageId % NUMBER_OF_LANDSCAPE_IMAGE ], mImageSize );
+      atlas.Upload( textureRect, PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ], mImageSize );
     }
-    pageFront.Add(pageBack);
 
-    return pageFront;
+    return atlas.GetAtlas();
   }
+
+  ImageDimensions mImageSize;
 };
 
 /**
