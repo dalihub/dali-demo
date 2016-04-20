@@ -24,7 +24,7 @@
 
 using namespace Dali;
 
-int main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char **argv)
 {
   // Configure gettext for internalization
   bindtextdomain(DALI_DEMO_DOMAIN_LOCAL, DEMO_LOCALE_DIR);
