@@ -322,8 +322,6 @@ Geometry MetaballRefracController::CreateGeometry()
     { Vector3(0.0f, 0.0f, 1.0f) }
   };
 
-  int indices[] = { 0, 3, 1, 0, 2, 3 };
-
   unsigned int numberOfVertices = sizeof(vertices)/sizeof(VertexPosition);
 
   //Vertices
@@ -345,11 +343,7 @@ Geometry MetaballRefracController::CreateGeometry()
   normalVertices.SetData( normals, numberOfVertices );
 
   //Indices
-  Property::Map indicesVertexFormat;
-  indicesVertexFormat["aIndices"] = Property::INTEGER;
-  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat );
-  indicesToVertices.SetData( indices, 6 );
-
+  unsigned short indices[] = { 0, 3, 1, 0, 2, 3 };
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
@@ -357,7 +351,7 @@ Geometry MetaballRefracController::CreateGeometry()
   texturedQuadGeometry.AddVertexBuffer( textureVertices );
   texturedQuadGeometry.AddVertexBuffer( normalVertices );
 
-  texturedQuadGeometry.SetIndexBuffer ( indicesToVertices );
+  texturedQuadGeometry.SetIndexBuffer ( &indices[0], 6 );
 
   return texturedQuadGeometry;
 }
@@ -398,8 +392,6 @@ Geometry MetaballRefracController::CreateGeometryComposition()
     { Vector3(0.0f, 0.0f, 1.0f) }
   };
 
-  int indices[] = { 0, 3, 1, 0, 2, 3 };
-
   unsigned int numberOfVertices = sizeof(vertices)/sizeof(VertexPosition);
 
   //Vertices
@@ -421,10 +413,7 @@ Geometry MetaballRefracController::CreateGeometryComposition()
   normalVertices.SetData( normals, numberOfVertices );
 
   //Indices
-  Property::Map indicesVertexFormat;
-  indicesVertexFormat["aIndices"] = Property::INTEGER;
-  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat );
-  indicesToVertices.SetData( indices, 6 );
+  unsigned short indices[] = { 0, 3, 1, 0, 2, 3 };
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
@@ -432,7 +421,7 @@ Geometry MetaballRefracController::CreateGeometryComposition()
   texturedQuadGeometry.AddVertexBuffer( textureVertices );
   texturedQuadGeometry.AddVertexBuffer( normalVertices );
 
-  texturedQuadGeometry.SetIndexBuffer ( indicesToVertices );
+  texturedQuadGeometry.SetIndexBuffer ( &indices[0], sizeof( indices )/ sizeof( indices[0] ) );
 
   return texturedQuadGeometry;
 }

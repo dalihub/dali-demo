@@ -450,16 +450,12 @@ Geometry NewWindowController::CreateMeshGeometry()
   vertices.SetData( vertexData, 5 );
 
   // Specify all the faces
-  unsigned int indexData[12] = { 0,1,3,0,2,4,0,3,4,0,2,1 };
-  Property::Map indexFormat;
-  indexFormat["indices"] = Property::INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( indexFormat );
-  indices.SetData( indexData, 12 );
+  unsigned short indexData[12] = { 0,1,3,0,2,4,0,3,4,0,2,1 };
 
   // Create the geometry object
   Geometry geometry = Geometry::New();
   geometry.AddVertexBuffer( vertices );
-  geometry.SetIndexBuffer( indices );
+  geometry.SetIndexBuffer( &indexData[0], 12 );
 
   return geometry;
 }

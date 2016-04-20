@@ -373,8 +373,6 @@ Geometry MetaballExplosionController::CreateGeometry()
     { Vector2(1.0f, 1.0f * aspect) }
   };
 
-  int indices[] = { 0, 3, 1, 0, 2, 3 };
-
   unsigned int numberOfVertices = sizeof(vertices)/sizeof(VertexPosition);
 
   //Vertices
@@ -390,17 +388,14 @@ Geometry MetaballExplosionController::CreateGeometry()
   textureVertices.SetData( textures, numberOfVertices );
 
   //Indices
-  Property::Map indicesVertexFormat;
-  indicesVertexFormat["aIndices"] = Property::INTEGER;
-  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat );
-  indicesToVertices.SetData( indices, 6 );
+  unsigned short indices[] = { 0, 3, 1, 0, 2, 3 };
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
   texturedQuadGeometry.AddVertexBuffer( positionVertices );
   texturedQuadGeometry.AddVertexBuffer( textureVertices );
 
-  texturedQuadGeometry.SetIndexBuffer ( indicesToVertices );
+  texturedQuadGeometry.SetIndexBuffer ( &indices[0], sizeof( indices )/ sizeof( indices[0] ) );
 
   return texturedQuadGeometry;
 }
@@ -431,8 +426,6 @@ Geometry MetaballExplosionController::CreateGeometryComposition()
     { Vector2(1.0f, 1.0f) }
   };
 
-  int indices[] = { 0, 3, 1, 0, 2, 3 };
-
   unsigned int numberOfVertices = sizeof(vertices)/sizeof(VertexPosition);
 
   //Vertices
@@ -448,17 +441,14 @@ Geometry MetaballExplosionController::CreateGeometryComposition()
   textureVertices.SetData( textures, numberOfVertices );
 
   //Indices
-  Property::Map indicesVertexFormat;
-  indicesVertexFormat["aIndices"] = Property::INTEGER;
-  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat );
-  indicesToVertices.SetData( indices, 6 );
+  unsigned short indices[] = { 0, 3, 1, 0, 2, 3 };
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
   texturedQuadGeometry.AddVertexBuffer( positionVertices );
   texturedQuadGeometry.AddVertexBuffer( textureVertices );
 
-  texturedQuadGeometry.SetIndexBuffer ( indicesToVertices );
+  texturedQuadGeometry.SetIndexBuffer ( &indices[0], sizeof( indices )/ sizeof( indices[0] ) );
 
   return texturedQuadGeometry;
 }

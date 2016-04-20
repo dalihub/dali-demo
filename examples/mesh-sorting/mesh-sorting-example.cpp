@@ -102,16 +102,12 @@ Geometry CreateGeometry()
   texturedQuadVertices.SetData( texturedQuadVertexData, 4 );
 
   // Create indices
-  unsigned int indexData[6] = { 0, 3, 1, 0, 2, 3 };
-  Property::Map indexFormat;
-  indexFormat["indices"] = Property::INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( indexFormat );
-  indices.SetData( indexData, 6 );
+  unsigned short indexData[6] = { 0, 3, 1, 0, 2, 3 };
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
   texturedQuadGeometry.AddVertexBuffer( texturedQuadVertices );
-  texturedQuadGeometry.SetIndexBuffer( indices );
+  texturedQuadGeometry.SetIndexBuffer( &indexData[0], sizeof(indexData)/sizeof(unsigned short) );
 
   return texturedQuadGeometry;
 }

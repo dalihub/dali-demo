@@ -62,43 +62,11 @@ void main()
 }
 );
 
-PropertyBuffer CreateIndexBuffer( Geometry::GeometryType geometryType )
-{
-  // Create indices
-  const unsigned int indexDataLines[]    =    { 0, 1, 1, 2, 2, 3, 3, 4, 4, 0 };
-  const unsigned int indexDataLoops[]    =    { 0, 1, 2, 3, 4 };
-  const unsigned int indexDataStrips[]   =    { 0, 1, 2, 3, 4, 0 };
-
-  // Create index buffer if doesn't exist
-  Property::Map indexFormat;
-  indexFormat["indices"] = Property::INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( indexFormat );
-
-  // Update buffer
-  switch( geometryType )
-  {
-    case Geometry::LINES:
-    {
-      indices.SetData( indexDataLines, sizeof(indexDataLines)/sizeof(indexDataLines[0]) );
-      break;
-    }
-    case Geometry::LINE_LOOP:
-    {
-      indices.SetData( indexDataLoops, sizeof(indexDataLoops)/sizeof(indexDataLoops[0]) );
-      break;
-    }
-    case Geometry::LINE_STRIP:
-    {
-      indices.SetData( indexDataStrips, sizeof(indexDataStrips)/sizeof(indexDataStrips[0]) );
-      break;
-    }
-    default: // this will never happen, but compilers yells
-    {
-    }
-  }
-
-  return indices;
-}
+const unsigned short indexLines[] = { 0, 1, 1, 2, 2, 3, 3, 4, 4, 0 };
+const unsigned short indexLoop[] =  { 0, 1, 2, 3, 4 };
+const unsigned short indexStrip[] = { 0, 1, 2, 3, 4, 0 };
+const unsigned short* indices[3] = { &indexLines[0], &indexLoop[0], &indexStrip[0] };
+const unsigned int indicesSize[3] = { sizeof(indexLines)/sizeof(indexLines[0]), sizeof(indexLoop)/sizeof(indexLoop[0]), sizeof(indexStrip)/sizeof(indexStrip[0])};
 
 Geometry CreateGeometry()
 {
@@ -127,13 +95,11 @@ Geometry CreateGeometry()
   PropertyBuffer pentagonVertices = PropertyBuffer::New( pentagonVertexFormat );
   pentagonVertices.SetData(pentagonVertexData, 5);
 
-  // Create indices
-  PropertyBuffer indices = CreateIndexBuffer( Geometry::LINES );
 
   // Create the geometry object
   Geometry pentagonGeometry = Geometry::New();
   pentagonGeometry.AddVertexBuffer( pentagonVertices );
-  pentagonGeometry.SetIndexBuffer( indices );
+  pentagonGeometry.SetIndexBuffer( indices[0], indicesSize[0] );
   pentagonGeometry.SetGeometryType( Geometry::LINES );
   return pentagonGeometry;
 }
@@ -316,8 +282,7 @@ public:
       index = 2;
     }
 
-    PropertyBuffer indices = CreateIndexBuffer( geomTypes[ index ] );
-    mGeometry.SetIndexBuffer( indices );
+    mGeometry.SetIndexBuffer( indices[index], indicesSize[index] );
     mGeometry.SetGeometryType( geomTypes[ index ] );
 
     return true;
