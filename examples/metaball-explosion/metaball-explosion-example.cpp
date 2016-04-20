@@ -38,7 +38,7 @@ const float GRAVITY_X(0);
 const float GRAVITY_Y(-0.09);
 }
 
-#define METABALL_NUMBER 12
+#define METABALL_NUMBER 6
 
 
 const char*const METABALL_VERTEX_SHADER = DALI_COMPOSE_SHADER (
@@ -481,7 +481,7 @@ void MetaballExplosionController::CreateMetaballActors()
   for( int i = 0; i < METABALL_NUMBER; i++ )
   {
     mMetaballs[i].position = Vector2(0.0f, 0.0f);
-    mMetaballs[i].radius = mMetaballs[i].initRadius = randomNumber(0.025f,0.035f);
+    mMetaballs[i].radius = mMetaballs[i].initRadius = randomNumber(0.05f,0.07f);
 
     mMetaballs[i].actor = Actor::New( );
     mMetaballs[i].actor.SetName("Metaball");

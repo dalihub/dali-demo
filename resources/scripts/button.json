@@ -15,9 +15,6 @@
  *
  */
 {
-  "constants": {
-    "CONFIG_SCRIPT_LOG_LEVEL": "Verbose"
-  },
   "stage": [
     // First Button
     {
@@ -25,9 +22,9 @@
       "parentOrigin": "TOP_CENTER",
       "anchorPoint": "TOP_CENTER",
       "position": [0, 0, 0],
-      "size": [400, 200, 0],
-      "unselectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-1.png",
-      "selectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-2.png",
+      "widthResizePolicy":"FILL_TO_PARENT",
+      "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
+      "sizeModeFactor": [1,0.25,1],
       "labelText": "Normal"
     },
 
@@ -37,11 +34,10 @@
       "parentOrigin": "CENTER",
       "anchorPoint": "CENTER",
       "position": [0, 0, 0],
-      "size": [400, 200, 0],
+      "widthResizePolicy":"FILL_TO_PARENT",
+      "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
+      "sizeModeFactor": [1,0.25,1],
       "disabled": true,
-      "unselectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-1.png",
-      "selectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-2.png",
-      "disabledStateImage": "{DEMO_IMAGE_DIR}blocks-brick-3.png",
       "labelText": "Disabled"
     },
 
@@ -52,21 +48,13 @@
       "parentOrigin": "BOTTOM_CENTER",
       "anchorPoint": "BOTTOM_CENTER",
       "position": [0, 0, 0],
-      "size": [400, 200, 0],
+      "widthResizePolicy":"FILL_TO_PARENT",
+      "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
+      "sizeModeFactor": [1,0.25,1],
       "togglable": true,
-      "unselectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-1.png",
-      "selectedStateImage": "{DEMO_IMAGE_DIR}blocks-brick-3.png",
-      "labelText": "Toggle",
-      "signals": [{
-        "name": "selected",
-        "action": "set",
-        "actor": "toggleButton",
-        "property": "labelActor",
-        "value": {
-          "type": "TextLabel",
-          "text": "Using a 9-patch image"
-        }
-      }]
+      "unselectedStateImage": "{DEMO_IMAGE_DIR}button-up-6.9.png",
+      "selectedStateImage": "{DEMO_IMAGE_DIR}button-up-8.9.png",
+      "labelText": "Toggle With Custom Images"
     }
   ]
 }

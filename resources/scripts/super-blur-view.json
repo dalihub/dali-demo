@@ -51,8 +51,7 @@
       "name": "superBlur",
       "parentOrigin": "TOP_CENTER",
       "anchorPoint": "TOP_CENTER",
-      "position": [0, 10, 0],
-      "size": [460, 600, 0],
+      "size": [800, 1280, 0],
       "image": {
         "filename": "{DEMO_IMAGE_DIR}background-4.jpg"
       }
@@ -66,12 +65,7 @@
       "anchorPoint": "BOTTOM_CENTER",
       "position": [0, 0, 0],
       "size": [200, 100, 0],
-      "labelActor": {
-        "type": "TextLabel",
-        "text": "Blur"
-      },
-      "unselectedStateImage": "{DEMO_IMAGE_DIR}button-background.png",
-      "selectedStateImage": "{DEMO_IMAGE_DIR}button-background.png",
+      "labelText": "Blur",
       "signals": [{
         "name": "pressed",
         "action": "play",

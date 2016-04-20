@@ -43,7 +43,8 @@
       "name":"simpleTable",
       "type":"TableView",
       "background":{
-        "color": [0.5,0.5,0,1]
+        "rendererType": "color",
+        "blendColor": [0.5,0.5,0,1]
         },
       "parentOrigin": "CENTER",
       "size":[400,400,1],

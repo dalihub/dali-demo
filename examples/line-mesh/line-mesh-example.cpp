@@ -26,8 +26,6 @@ using namespace Dali;
 
 namespace
 {
-const char* MATERIAL_SAMPLE( DEMO_IMAGE_DIR "gallery-small-48.jpg" );
-const char* MATERIAL_SAMPLE2( DEMO_IMAGE_DIR "gallery-medium-19.jpg" );
 
 #define MAKE_SHADER(A)#A
 
@@ -154,8 +152,6 @@ public:
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
 
     mMaterial = Material::New( mShader );
-    mImage = ResourceImage::New( MATERIAL_SAMPLE );
-    mMaterial.AddTexture(mImage, "sTexture");
 
     mGeometry = CreateGeometry();
 
@@ -172,10 +168,6 @@ public:
     mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
     mMeshActor.SetAnchorPoint( AnchorPoint::CENTER );
     stage.Add( mMeshActor );
-
-    mChangeImageTimer = Timer::New( 5000 );
-    mChangeImageTimer.TickSignal().Connect( this, &ExampleController::OnTimer );
-    mChangeImageTimer.Start();
 
     Animation  animation = Animation::New(5);
     KeyFrames keyFrames = KeyFrames::New();
@@ -200,14 +192,6 @@ public:
     return true;
   }
 
-  bool OnTimer()
-  {
-    Image image = ResourceImage::New( MATERIAL_SAMPLE2 );
-
-    mMaterial.SetTextureImage(0,image);
-    return false;
-  }
-
   void OnKeyEvent(const KeyEvent& event)
   {
     if(event.state == KeyEvent::Down)
@@ -224,15 +208,11 @@ private:
   Application&  mApplication;                             ///< Application instance
   Vector3 mStageSize;                                     ///< The size of the stage
 
-  Image    mImage;
   Shader   mShader;
   Material mMaterial;
   Geometry mGeometry;
   Renderer mRenderer;
   Actor    mMeshActor;
-  Renderer mRenderer2;
-  Actor    mMeshActor2;
-  Timer    mChangeImageTimer;
 };
 
 void RunTest( Application& application )

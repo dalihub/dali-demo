@@ -133,7 +133,7 @@
 	<ui-application appid="image-view-alpha-blending.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-alpha-blending.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>ImageView Alpha Blending</label>
 	</ui-application>
-    <ui-application appid="image-view-svg.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-svg.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+	<ui-application appid="image-view-svg.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-svg.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>ImageView SVG</label>
 	</ui-application>
 	<ui-application appid="homescreen-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/homescreen-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
@@ -141,5 +141,11 @@
 	</ui-application>
 	<ui-application appid="tilt.example" exec="/usr/apps/com.samsung.dali-demo/bin/tilt.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Tilt sensor</label>
+	</ui-application>
+	<ui-application appid="effectse-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/effects-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Effects View</label>
+	</ui-application>
+	<ui-application appid="native-image-source.example" exec="/usr/apps/com.samsung.dali-demo/bin/native-image-source.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Native Image Source</label>
 	</ui-application>
 </manifest>
