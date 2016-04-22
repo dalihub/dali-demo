@@ -142,10 +142,16 @@
 	<ui-application appid="tilt.example" exec="/usr/apps/com.samsung.dali-demo/bin/tilt.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Tilt sensor</label>
 	</ui-application>
-	<ui-application appid="effectse-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/effects-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+	<ui-application appid="effects-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/effects-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Effects View</label>
 	</ui-application>
 	<ui-application appid="native-image-source.example" exec="/usr/apps/com.samsung.dali-demo/bin/native-image-source.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Native Image Source</label>
+	</ui-application>
+	<ui-application appid="perf-scroll.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-scroll.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>perf-scroll</label>
+	</ui-application>
+	<ui-application appid="flex-container.example" exec="/usr/apps/com.samsung.dali-demo/bin/flex-container.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Flex Container</label>
 	</ui-application>
 </manifest>

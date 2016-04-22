@@ -677,7 +677,7 @@ void RunTest( Application& application, const HomescreenBenchmark::Config& confi
 
 // Entry point for Linux & Tizen applications
 //
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   // default settings
   HomescreenBenchmark::Config config;
