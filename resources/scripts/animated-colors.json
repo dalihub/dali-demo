@@ -43,7 +43,7 @@
           "sizeAspectRatio": false,
           "background": {
             "rendererType": "color",
-            "blendColor": [1,1,1,1]
+            "mixColor": [1,1,1,1]
           },
           "color": [
             0.5686274509803921,
@@ -79,7 +79,7 @@
               "sizeAspectRatio": false,
               "background": {
                 "rendererType": "color",
-                "blendColor": [1,1,1,1]
+                "mixColor": [1,1,1,1]
               },
               "color": [
                 0.17647058823529413,
@@ -115,7 +115,7 @@
                   "sizeAspectRatio": false,
                   "background": {
                     "rendererType": "color",
-                    "blendColor": [1,1,1,1]
+                    "mixColor": [1,1,1,1]
                   },
                   "color": [
                     0.7411764705882353,
@@ -147,7 +147,7 @@
               "sizeAspectRatio": false,
               "background": {
                 "rendererType": "color",
-                "blendColor": [1,1,1,1]
+                "mixColor": [1,1,1,1]
               },
               "color": [
                 0.23137254901960785,
@@ -183,7 +183,7 @@
                   "sizeAspectRatio": false,
                   "background": {
                     "rendererType": "color",
-                    "blendColor": [1,1,1,1]
+                    "mixColor": [1,1,1,1]
                   },
                   "color": [
                     0.17647058823529413,
@@ -219,7 +219,7 @@
                       "sizeAspectRatio": false,
                       "background": {
                         "rendererType": "color",
-                        "blendColor": [1,1,1,1]
+                        "mixColor": [1,1,1,1]
                       },
                       "color": [
                         0.396078431372549,
@@ -251,7 +251,7 @@
                   "sizeAspectRatio": false,
                   "background": {
                     "rendererType": "color",
-                    "blendColor": [1,1,1,1]
+                    "mixColor": [1,1,1,1]
                   },
                   "color": [
                     0,
@@ -287,7 +287,7 @@
                       "sizeAspectRatio": false,
                       "background": {
                         "rendererType": "color",
-                        "blendColor": [1,1,1,1]
+                        "mixColor": [1,1,1,1]
                       },
                       "color": [
                         0.20784313725490197,
@@ -323,7 +323,7 @@
                           "sizeAspectRatio": false,
                           "background": {
                             "rendererType": "color",
-                            "blendColor": [1,1,1,1]
+                            "mixColor": [1,1,1,1]
                           },
                           "color": [
                             0.4196078431372549,
@@ -355,7 +355,7 @@
                       "sizeAspectRatio": false,
                       "background": {
                         "rendererType": "color",
-                        "blendColor": [1,1,1,1]
+                        "mixColor": [1,1,1,1]
                       },
                       "color": [
                         0.47843137254901963,
@@ -387,7 +387,7 @@
                   "sizeAspectRatio": false,
                   "background": {
                     "rendererType": "color",
-                    "blendColor": [1,1,1,1]
+                    "mixColor": [1,1,1,1]
                   },
                   "color": [
                     0.4470588235294118,
@@ -419,7 +419,7 @@
               "sizeAspectRatio": false,
               "background": {
                 "rendererType": "color",
-                "blendColor": [1,1,1,1]
+                "mixColor": [1,1,1,1]
               },
               "color": [
                 1,
@@ -451,7 +451,7 @@
           "sizeAspectRatio": false,
           "background": {
             "rendererType": "color",
-            "blendColor": [1,1,1,1]
+            "mixColor": [1,1,1,1]
           },
           "color": [
             0.43137254901960786,
@@ -487,7 +487,7 @@
               "sizeAspectRatio": false,
               "background": {
                 "rendererType": "color",
-                "blendColor": [1,1,1,1]
+                "mixColor": [1,1,1,1]
               },
               "color": [
                 0.8196078431372549,
@@ -519,7 +519,7 @@
           "sizeAspectRatio": false,
           "background": {
             "rendererType": "color",
-            "blendColor": [1,1,1,1]
+            "mixColor": [1,1,1,1]
           },
           "color": [
             0.6313725490196078,
@@ -558,7 +558,7 @@
                   "sizeAspectRatio": false,
                   "background": {
                     "rendererType": "color",
-                    "blendColor": [1,1,1,1]
+                    "mixColor": [1,1,1,1]
                   },
                   "color": [
                     0.9176470588235294,
@@ -590,7 +590,7 @@
               "sizeAspectRatio": false,
               "background": {
                 "rendererType": "color",
-                "blendColor": [1,1,1,1]
+                "mixColor": [1,1,1,1]
               },
               "color": [
                 0.24313725490196078,
@@ -623,7 +623,7 @@
               "sizeAspectRatio": false,
               "background": {
                 "rendererType": "color",
-                "blendColor": [1,1,1,1]
+                "mixColor": [1,1,1,1]
               },
               "color": [
                 0,
@@ -662,7 +662,7 @@
                       "sizeAspectRatio": false,
                       "background": {
                         "rendererType": "color",
-                        "blendColor": [1,1,1,1]
+                        "mixColor": [1,1,1,1]
                       },
                       "color": [
                         1,
@@ -694,7 +694,7 @@
                   "sizeAspectRatio": false,
                   "background": {
                     "rendererType": "color",
-                    "blendColor": [1,1,1,1]
+                    "mixColor": [1,1,1,1]
                   },
                   "color": [
                     0,
@@ -727,7 +727,7 @@
                   "sizeAspectRatio": false,
                   "background": {
                     "rendererType": "color",
-                    "blendColor": [1,1,1,1]
+                    "mixColor": [1,1,1,1]
                   },
                   "color": [
                     1,
@@ -759,7 +759,7 @@
               "sizeAspectRatio": false,
               "background": {
                 "rendererType": "color",
-                "blendColor": [1,1,1,1]
+                "mixColor": [1,1,1,1]
               },
               "color": [
                 0.01568627450980392,
@@ -791,7 +791,7 @@
           "sizeAspectRatio": false,
           "background": {
             "rendererType": "color",
-            "blendColor": [1,1,1,1]
+            "mixColor": [1,1,1,1]
           },
           "color": [
             0.2784313725490196,
@@ -824,7 +824,7 @@
       "sizeAspectRatio": false,
       "background": {
         "rendererType": "color",
-        "blendColor": [1,1,1,1]
+        "mixColor": [1,1,1,1]
       },
       "color": [
         0.1568627450980392,

@@ -3304,7 +3304,7 @@ dali.Builder.prototype.material = function(name, d) {
   //                    blend: "AUTO",
   //                    blendFunc : {srcFactorRGBA, destFactorRGBA},
   //                    blendEquation : "",
-  //                    blendColor : [1,0,0,1] } )
+  //                    mixColor : [1,0,0,1] } )
   //
   "use strict";
   var value; // check required things

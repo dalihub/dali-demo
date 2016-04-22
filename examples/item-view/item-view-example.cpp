@@ -868,7 +868,7 @@ public: // From ItemFactory
 
     Property::Map solidColorProperty;
     solidColorProperty.Insert( "rendererType", "color" );
-    solidColorProperty.Insert( "blendColor", Vector4(0.f, 0.f, 0.f, 0.6f) );
+    solidColorProperty.Insert( "mixColor", Vector4(0.f, 0.f, 0.f, 0.6f) );
     checkbox.SetProperty( ImageView::Property::IMAGE, solidColorProperty );
 
     if( MODE_REMOVE_MANY  != mMode &&
