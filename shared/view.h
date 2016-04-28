@@ -20,7 +20,6 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/tool-bar/tool-bar.h>
-#include <dali-toolkit/devel-api/styling/style-manager.h>
 
 
 namespace DemoHelper

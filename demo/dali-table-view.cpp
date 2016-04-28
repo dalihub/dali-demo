@@ -299,8 +299,6 @@ void DaliTableView::Initialize( Application& application )
   unsigned int degrees = 0;
   Rotate( degrees );
 
-  //orientation.ChangedSignal().Connect( this, &DaliTableView::OrientationChanged );
-
   winHandle.ShowIndicator( Dali::Window::INVISIBLE );
 
   // Background animation
@@ -413,11 +411,6 @@ void DaliTableView::Populate()
   mScrollRulerY->Disable();
   mScrollView.SetRulerX( mScrollRulerX );
   mScrollView.SetRulerY( mScrollRulerY );
-}
-
-void DaliTableView::OrientationChanged( Orientation orientation )
-{
-  // TODO: Implement if orientation change required
 }
 
 void DaliTableView::Rotate( unsigned int degrees )
