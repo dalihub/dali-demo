@@ -330,15 +330,11 @@ void RadialSweepViewImpl::CreateStencil( Radian initialSector )
   PropertyBuffer vertices = PropertyBuffer::New( vertexFormat );
   vertices.SetData( vertexData, 7u );
 
-  unsigned int indexData[15] = { 0,1,2,0,2,3,0,3,4,0,4,5,0,5,6 };
-  Property::Map indexFormat;
-  indexFormat["indices"] = Property::INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( indexFormat );
-  indices.SetData( indexData, 15u );
+  unsigned short indexData[15] = { 0,1,2,0,2,3,0,3,4,0,4,5,0,5,6 };
 
   Geometry meshGeometry = Geometry::New();
   meshGeometry.AddVertexBuffer( vertices );
-  meshGeometry.SetIndexBuffer( indices );
+  meshGeometry.SetIndexBuffer( &indexData[0], sizeof( indexData )/sizeof(indexData[0]) );
 
   // Create shader
   std::ostringstream vertexShaderStringStream;

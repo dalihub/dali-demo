@@ -1,7 +1,7 @@
 {
   "stage": [
     {
-      "type": "ImageActor",
+      "type": "ImageView",
       "name": "Image1",
       "position": [
         0.40461349487305,
@@ -11,13 +11,17 @@
       "parentOrigin": [0.5, 0.5, 0.5],
       "widthResizePolicy":"FILL_TO_PARENT",
       "heightResizePolicy":"DIMENSION_DEPENDENCY",
-      "effect": "Ripple2D",
       "image": {
-        "filename": "{DEMO_IMAGE_DIR}gallery-medium-25.jpg",
-        "width": 400,
-        "height": 400,
-        "loadPolicy": "IMMEDIATE",
-        "releasePolicy": "NEVER"
+        "url": "{DEMO_IMAGE_DIR}gallery-medium-25.jpg",
+        "desiredWidth": 400,
+        "desiredHeight": 400,
+        "shader": {
+          "fragmentShader": "precision mediump float;\nuniform sampler2D sTexture;\nuniform vec4 uColor;\nuniform float uAmplitude;\nuniform float uTime;\nvarying vec2 vTexCoord;\nvoid main()\n{\n  highp vec2 pos = -1.0 + 2.0 * vTexCoord;\n  highp float len = length(pos);\n  highp vec2 texCoord = vTexCoord + pos/len * sin( len * 12.0 - uTime * 4.0 ) * uAmplitude;\n  gl_FragColor = texture2D(sTexture, texCoord) * uColor;}\n\n"
+          }
+      },
+      "animatableProperties": {
+        "uAmplitude": 0.02,
+        "uTime": 0.0
       },
       "signals": [
         {
@@ -28,7 +32,6 @@
       ]
     }
   ],
-  "paths": {},
   "animations": {
     "Animation_1": {
       "loop":true,
@@ -45,22 +48,6 @@
           "guiBuilderTimelineColor": "#8dc0da"
         }
       ]
-    }
-  },
-  "shaderEffects": {
-    "Ripple2D": {
-      "program": {
-        "vertexPrefix": "",
-        "vertex": "void main(void)\n{\n  gl_Position = uMvpMatrix * vec4(aPosition, 1.0);\n  vTexCoord = mix( sTextureRect.xy, sTextureRect.zw, aTexCoord );\n}\n\n",
-        "fragmentPrefix": "",
-        "fragment": "precision mediump float;\nuniform float uAmplitude; // 0.02; (< 1)\nuniform float uTime;\nvoid main()\n{\n  highp vec2 textureSize = sTextureRect.zw - sTextureRect.xy;\n  highp vec2 pos = -1.0 + 2.0 * vTexCoord.st/textureSize;\n  highp float len = length(pos);\n  highp vec2 texCoord = vTexCoord.st/textureSize + pos/len * sin( len * 12.0 - uTime * 4.0 ) * uAmplitude; \n  gl_FragColor = texture2D(sTexture, texCoord) * uColor;\n}\n\n\n",
-        "geometryType": "GEOMETRY_TYPE_IMAGE"
-      },
-      "geometryHints": "HINT_NONE",
-      "gridDensity": 0,
-      "loop": true,
-      "uAmplitude": 0.02,
-      "uTime": 0.0
     }
   }
 }

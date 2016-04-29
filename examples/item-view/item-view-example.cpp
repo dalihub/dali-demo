@@ -209,8 +209,6 @@ public:
                                              TOOLBAR_IMAGE,
                                              "" );
 
-    //app.GetWindow().GetOrientation().ChangedSignal().Connect( this, &ItemViewExample::OnOrientationChanged );
-
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
     editButton.SetUnselectedImage( EDIT_IMAGE );
@@ -378,24 +376,6 @@ public:
 
     // Activate the layout
     mItemView.ActivateLayout( layoutId, Vector3(stageSize.x, stageSize.y, stageSize.x), 0.0f );
-  }
-
-  /**
-   * Orientation changed signal callback
-   * @param orientation
-   */
-  void OnOrientationChanged( Orientation orientation )
-  {
-    const unsigned int angle = orientation.GetDegrees();
-
-    // If orientation really changed
-    if( mOrientation != angle )
-    {
-      // Remember orientation
-      mOrientation = angle;
-
-      SetLayout( mCurrentLayout );
-    }
   }
 
   bool OnLayoutButtonClicked( Toolkit::Button button )
