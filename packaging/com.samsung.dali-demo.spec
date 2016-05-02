@@ -133,6 +133,7 @@ exit 0
 %{dali_app_exe_dir}/*.example
 %{dali_app_exe_dir}/dali-builder
 %{dali_app_ro_dir}/images/*
+%{dali_app_ro_dir}/videos/*
 %{dali_app_ro_dir}/models/*
 %{dali_app_ro_dir}/scripts/*
 %{dali_app_ro_dir}/style/*
