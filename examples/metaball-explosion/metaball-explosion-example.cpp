@@ -373,8 +373,6 @@ Geometry MetaballExplosionController::CreateGeometry()
     { Vector2(1.0f, 1.0f * aspect) }
   };
 
-  int indices[] = { 0, 3, 1, 0, 2, 3 };
-
   unsigned int numberOfVertices = sizeof(vertices)/sizeof(VertexPosition);
 
   //Vertices
@@ -390,17 +388,14 @@ Geometry MetaballExplosionController::CreateGeometry()
   textureVertices.SetData( textures, numberOfVertices );
 
   //Indices
-  Property::Map indicesVertexFormat;
-  indicesVertexFormat["aIndices"] = Property::INTEGER;
-  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat );
-  indicesToVertices.SetData( indices, 6 );
+  unsigned short indices[] = { 0, 3, 1, 0, 2, 3 };
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
   texturedQuadGeometry.AddVertexBuffer( positionVertices );
   texturedQuadGeometry.AddVertexBuffer( textureVertices );
 
-  texturedQuadGeometry.SetIndexBuffer ( indicesToVertices );
+  texturedQuadGeometry.SetIndexBuffer ( &indices[0], sizeof( indices )/ sizeof( indices[0] ) );
 
   return texturedQuadGeometry;
 }
@@ -431,8 +426,6 @@ Geometry MetaballExplosionController::CreateGeometryComposition()
     { Vector2(1.0f, 1.0f) }
   };
 
-  int indices[] = { 0, 3, 1, 0, 2, 3 };
-
   unsigned int numberOfVertices = sizeof(vertices)/sizeof(VertexPosition);
 
   //Vertices
@@ -448,17 +441,14 @@ Geometry MetaballExplosionController::CreateGeometryComposition()
   textureVertices.SetData( textures, numberOfVertices );
 
   //Indices
-  Property::Map indicesVertexFormat;
-  indicesVertexFormat["aIndices"] = Property::INTEGER;
-  PropertyBuffer indicesToVertices = PropertyBuffer::New( indicesVertexFormat );
-  indicesToVertices.SetData( indices, 6 );
+  unsigned short indices[] = { 0, 3, 1, 0, 2, 3 };
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
   texturedQuadGeometry.AddVertexBuffer( positionVertices );
   texturedQuadGeometry.AddVertexBuffer( textureVertices );
 
-  texturedQuadGeometry.SetIndexBuffer ( indicesToVertices );
+  texturedQuadGeometry.SetIndexBuffer ( &indices[0], sizeof( indices )/ sizeof( indices[0] ) );
 
   return texturedQuadGeometry;
 }
@@ -474,9 +464,10 @@ void MetaballExplosionController::CreateMetaballActors()
   //Create the shader for the metaballs
   Shader shader = Shader::New( METABALL_VERTEX_SHADER, METABALL_FRAG_SHADER );
 
-  Material material = Material::New( shader );
   Geometry metaballGeom = CreateGeometry();
-
+  Renderer renderer = Renderer::New( metaballGeom, shader );
+  renderer.SetProperty( Renderer::Property::BLENDING_MODE, BlendingMode::ON );
+  renderer.SetBlendFunc(BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE);
   //Initialization of each of the metaballs
   for( int i = 0; i < METABALL_NUMBER; i++ )
   {
@@ -487,11 +478,6 @@ void MetaballExplosionController::CreateMetaballActors()
     mMetaballs[i].actor.SetName("Metaball");
     mMetaballs[i].actor.SetScale( 1.0f );
     mMetaballs[i].actor.SetParentOrigin( ParentOrigin::CENTER );
-
-    Renderer renderer = Renderer::New( metaballGeom, material );
-    renderer.SetProperty( Renderer::Property::BLENDING_MODE, BlendingMode::ON );
-    renderer.SetBlendFunc(BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE);
-
     mMetaballs[i].actor.AddRenderer( renderer );
 
     mMetaballs[i].positionIndex = mMetaballs[i].actor.RegisterProperty( "uPositionMetaball", mMetaballs[i].position );
@@ -557,17 +543,17 @@ void MetaballExplosionController::AddRefractionImage()
 
   //Create new shader
   Shader shader = Shader::New( METABALL_VERTEX_SHADER, REFRACTION_FRAG_SHADER );
-  //Create new material
-  Material material = Material::New( shader );
 
-  //Add Textures
-  material.AddTexture(mBackImage, "sTexture");
-  material.AddTexture(fbo, "sEffect");
+  //Create new texture set
+  TextureSet textureSet = TextureSet::New();
+  textureSet.SetImage( 0u, mBackImage );
+  textureSet.SetImage( 1u, fbo );
 
   //Create geometry
   Geometry metaballGeom = CreateGeometryComposition();
 
-  Renderer mRenderer = Renderer::New( metaballGeom, material );
+  Renderer mRenderer = Renderer::New( metaballGeom, shader );
+  mRenderer.SetTextures( textureSet );
 
   mCompositionActor = Actor::New( );
   mCompositionActor.SetParentOrigin(ParentOrigin::CENTER);
@@ -753,7 +739,7 @@ void RunTest( Application& application )
 
 // Entry point for Linux & Tizen applications
 //
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
 

@@ -263,8 +263,7 @@ void NewWindowController::AddMeshActor( Actor& parentActor )
 
   // Create a coloured mesh
   Shader shaderColorMesh = Shader::New( VERTEX_COLOR_MESH, FRAGMENT_COLOR_MESH );
-  Material colorMeshmaterial = Material::New( shaderColorMesh );
-  Renderer colorMeshRenderer = Renderer::New( meshGeometry, colorMeshmaterial );
+  Renderer colorMeshRenderer = Renderer::New( meshGeometry, shaderColorMesh );
 
   Actor colorMeshActor = Actor::New();
   colorMeshActor.AddRenderer( colorMeshRenderer );
@@ -278,9 +277,10 @@ void NewWindowController::AddMeshActor( Actor& parentActor )
  // Create a textured mesh
   Image effectImage = ResourceImage::New(EFFECT_IMAGE);
   Shader shaderTextureMesh = Shader::New( VERTEX_TEXTURE_MESH, FRAGMENT_TEXTURE_MESH );
-  Material textureMeshMaterial = Material::New( shaderTextureMesh );
-  textureMeshMaterial.AddTexture(effectImage, "sTexture");
-  Renderer textureMeshRenderer = Renderer::New( meshGeometry, textureMeshMaterial );
+  TextureSet textureSet = TextureSet::New();
+  textureSet.SetImage( 0u, effectImage );
+  Renderer textureMeshRenderer = Renderer::New( meshGeometry, shaderTextureMesh );
+  textureMeshRenderer.SetTextures( textureSet );
 
   Actor textureMeshActor = Actor::New();
   textureMeshActor.AddRenderer( textureMeshRenderer );
@@ -331,7 +331,7 @@ void NewWindowController::AddBlendingImageActor( Actor& parentActor )
   blendActor.SetSize(140, 140);
   parentActor.Add(blendActor);
 
-  blendActor.GetRendererAt(0u).GetMaterial().AddTexture(fb2, "sEffect");
+  blendActor.GetRendererAt(0u).GetTextures().SetImage( 1u, fb2 );
 }
 
 void NewWindowController::AddTextLabel( Actor& parentActor )
@@ -450,16 +450,12 @@ Geometry NewWindowController::CreateMeshGeometry()
   vertices.SetData( vertexData, 5 );
 
   // Specify all the faces
-  unsigned int indexData[12] = { 0,1,3,0,2,4,0,3,4,0,2,1 };
-  Property::Map indexFormat;
-  indexFormat["indices"] = Property::INTEGER;
-  PropertyBuffer indices = PropertyBuffer::New( indexFormat );
-  indices.SetData( indexData, 12 );
+  unsigned short indexData[12] = { 0,1,3,0,2,4,0,3,4,0,2,1 };
 
   // Create the geometry object
   Geometry geometry = Geometry::New();
   geometry.AddVertexBuffer( vertices );
-  geometry.SetIndexBuffer( indices );
+  geometry.SetIndexBuffer( &indexData[0], 12 );
 
   return geometry;
 }
@@ -561,7 +557,7 @@ void RunTest(Application& app)
 
 // Entry point for Linux & Tizen applications
 //
-int main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char **argv)
 {
   gApplication = Application::New(&argc, &argv, DEMO_THEME_PATH);
   RunTest(gApplication);

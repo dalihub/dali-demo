@@ -63,34 +63,34 @@
       },
       "actors": [{
           "name":"gallery1",
-          "type":"ImageActor",
+          "type":"ImageView",
           "heightResizePolicy":"FILL_TO_PARENT",
           "image": {
-            "filename": "{DEMO_IMAGE_DIR}gallery-small-1.jpg"
+            "url": "{DEMO_IMAGE_DIR}gallery-small-1.jpg"
           },
-          "customProperties": { // properties registered dynamically
+          "properties": { // properties registered dynamically
             "cellIndex": [0,0], // property to specify the top-left cell this child occupies
             "rowSpan":4, // property to specify how many rows this child occupies, if not set, default value is 1
             "columnSpan":1 // property to specify how many columns this child occupies, if nor set, defualt cvalue is 1
           }
         },{
           "name":"gallery2",
-          "type":"ImageActor",
+          "type":"ImageView",
           "heightResizePolicy":"FILL_TO_PARENT",
           "image": {
-            "filename": "{DEMO_IMAGE_DIR}gallery-small-2.jpg"
+            "url": "{DEMO_IMAGE_DIR}gallery-small-2.jpg"
           },
-          "customProperties": { // properties registered dynamically
+          "properties": { // properties registered dynamically
             "cellIndex": [0,1],
             "cellHorizontalAlignment": "right" // property to specify how to align horizontally inside the cells, if not set, default value is 'left'
           }
         },{
           "name":"gallery3",
-          "type":"ImageActor",
+          "type":"ImageView",
           "image": {
-            "filename": "{DEMO_IMAGE_DIR}gallery-small-3.jpg"
+            "url": "{DEMO_IMAGE_DIR}gallery-small-3.jpg"
           },
-          "customProperties": {
+          "properties": {
             "cellIndex":[1,1],
             "rowSpan":3,
             "cellHorizontalAlignment": "left",// property to specify how to align horizontally inside the cells, if not set, default value is 'left'
@@ -98,23 +98,23 @@
           }
         }, {
           "name":"gallery4",
-          "type":"ImageActor",
+          "type":"ImageView",
           "widthResizePolicy":"FILL_TO_PARENT",
           "image": {
-            "filename": "{DEMO_IMAGE_DIR}gallery-small-4.jpg"
+            "url": "{DEMO_IMAGE_DIR}gallery-small-4.jpg"
           },
-          "customProperties": {
+          "properties": {
             "cellIndex":[2,2]
           }
         }, {
           "name":"gallery5",
-          "type":"ImageActor",
+          "type":"ImageView",
           "widthResizePolicy":"FILL_TO_PARENT",
           "heightResizePolicy":"FILL_TO_PARENT",
           "image": {
-            "filename": "{DEMO_IMAGE_DIR}gallery-small-5.jpg"
+            "url": "{DEMO_IMAGE_DIR}gallery-small-5.jpg"
           },
-          "customProperties": {
+          "properties": {
             "cellIndex":[3,2],
             "columnSpan": 2
           }

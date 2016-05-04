@@ -193,7 +193,6 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
 
     // set initial orientation
-   // winHandle.GetOrientation().ChangedSignal().Connect( this, &MotionBlurExampleApp::OnOrientationChanged );
     unsigned int degrees = 0;
     Rotate( static_cast< DeviceOrientation >( degrees ) );
 
@@ -287,18 +286,6 @@ public:
     Toolkit::SetMotionBlurProperties( mMotionBlurImageView5, MOTION_BLUR_NUM_SAMPLES );
     mMotionBlurImageView5.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionBlurEffect );
 #endif //#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
-  }
-
-  //////////////////////////////////////////////////////////////
-  //
-  // Device Orientation Support
-  //
-  //
-
-  void OnOrientationChanged( Orientation orientation )
-  {
-    unsigned int degrees = orientation.GetDegrees();
-    Rotate( static_cast< DeviceOrientation >( degrees ) );
   }
 
   void Rotate( DeviceOrientation orientation )
@@ -558,7 +545,7 @@ void RunTest(Application& app)
 
 // Entry point for Linux & Tizen applications
 //
-int main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 

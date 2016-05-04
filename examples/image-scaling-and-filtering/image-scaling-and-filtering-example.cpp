@@ -178,11 +178,11 @@ public:
     // Background image:
     Dali::Property::Map backgroundImage;
     backgroundImage.Insert( "rendererType",  "image" );
-    backgroundImage.Insert( "imageUrl",  BACKGROUND_IMAGE );
-    backgroundImage.Insert( "imageDesiredWidth",   stage.GetSize().width );
-    backgroundImage.Insert( "imageDesiredHeight",   stage.GetSize().height );
-    backgroundImage.Insert( "imageFittingMode",   "scaleToFill" );
-    backgroundImage.Insert( "imageSamplingMode",   "boxThenNearest" );
+    backgroundImage.Insert( "url",  BACKGROUND_IMAGE );
+    backgroundImage.Insert( "desiredWidth",   stage.GetSize().width );
+    backgroundImage.Insert( "desiredHeight",   stage.GetSize().height );
+    backgroundImage.Insert( "fittingMode",   "SCALE_TO_FILL" );
+    backgroundImage.Insert( "samplingMode",   "BOX_THEN_NEAREST" );
 
     Toolkit::ImageView background = Toolkit::ImageView::New();
     background.SetProperty( Toolkit::ImageView::Property::IMAGE, backgroundImage );
@@ -759,7 +759,7 @@ void RunTest( Application& application )
 }
 
 // Entry point for Linux & Tizen applications
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
 

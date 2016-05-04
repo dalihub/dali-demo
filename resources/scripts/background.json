@@ -45,8 +45,8 @@
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "sizeModeFactor": [ 0.5, 0.333333333333, 1 ],
       "background": {
-        "rendererType": "svg",
-        "imageUrl": "{DEMO_IMAGE_DIR}Kid1.svg"
+        "rendererType": "image",
+        "url": "{DEMO_IMAGE_DIR}Kid1.svg"
       }
     },
 
@@ -77,7 +77,7 @@
       "sizeModeFactor": [ 0.5, 0.333333333333, 1 ],
       "background": {
         "rendererType": "image",
-        "imageUrl": "{DEMO_IMAGE_DIR}gallery-large-9.jpg"
+        "url": "{DEMO_IMAGE_DIR}gallery-large-9.jpg"
       }
     },
 

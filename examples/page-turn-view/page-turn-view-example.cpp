@@ -353,7 +353,7 @@ void PageTurnController::OnPageFinishedPan( PageTurnView pageTurnView )
 }
 
 // Entry point for applications
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
   PageTurnController test ( app );
