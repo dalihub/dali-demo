@@ -20,7 +20,6 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/flex-container/flex-container.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
