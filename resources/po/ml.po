@@ -106,6 +106,9 @@ msgstr "സ്ക്രിപ്റ്റ്"
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "സ്ക്രോള്ചെയ്യുക കാഴ്ച"
 
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "ശൈലി"
+
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr "മങ്ങൽ പൂക്കൽ"
 

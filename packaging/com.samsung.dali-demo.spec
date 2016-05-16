@@ -138,6 +138,7 @@ exit 0
 %{dali_app_ro_dir}/models/*
 %{dali_app_ro_dir}/scripts/*
 %{dali_app_ro_dir}/style/*
+%{dali_app_ro_dir}/style/images/*
 %{dali_xml_file_dir}/%{name}.xml
 %{dali_icon_dir}/*
 %{locale_dir}/*
