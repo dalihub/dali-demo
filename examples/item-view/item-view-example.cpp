@@ -133,6 +133,8 @@ const float LABEL_TEXT_SIZE_Y = 20.0f;
 
 const Vector3 INITIAL_OFFSCREEN_POSITION( 1000.0f, 0, -1000.0f );
 
+const float SCROLL_TO_ITEM_ANIMATION_TIME = 5.f;
+
 static Vector3 DepthLayoutItemSizeFunctionPortrait( float layoutWidth )
 {
   float width = ( layoutWidth / ( DEPTH_LAYOUT_COLUMNS + 1.0f ) ) * DEPTH_LAYOUT_ITEM_SIZE_FACTOR_PORTRAIT;
@@ -300,6 +302,10 @@ public:
     // Set the title and icon to the current layout
     SetLayoutTitle();
     SetLayoutImage();
+
+    mLongPressDetector = LongPressGestureDetector::New();
+    mLongPressDetector.Attach( mItemView );
+    mLongPressDetector.DetectedSignal().Connect( this, &ItemViewExample::OnLongPress );
   }
 
   Actor OnKeyboardPreFocusChange( Actor current, Actor proposed, Control::KeyboardFocus::Direction direction )
@@ -537,6 +543,35 @@ public:
     if( tick )
     {
       tick.SetVisible( !tick.IsVisible() );
+    }
+  }
+
+  void OnLongPress( Actor actor, const LongPressGesture& gesture )
+  {
+    switch( gesture.state )
+    {
+      case Gesture::Started:
+      {
+        const Size& size = Stage::GetCurrent().GetSize();
+
+        ItemRange range( 0u, 0u );
+        mItemView.GetItemsRange( range );
+
+        const unsigned int item = ( gesture.screenPoint.y < 0.5f * size.height ) ? range.begin : range.end;
+        mItemView.ScrollToItem( item, SCROLL_TO_ITEM_ANIMATION_TIME );
+
+        break;
+      }
+      case Gesture::Finished:
+      {
+        Property::Map attributes;
+        mItemView.DoAction( "stopScrolling", attributes );
+        break;
+      }
+      default:
+      {
+        break;
+      }
     }
   }
 
@@ -868,7 +903,7 @@ public: // From ItemFactory
 
     Property::Map solidColorProperty;
     solidColorProperty.Insert( "rendererType", "color" );
-    solidColorProperty.Insert( "blendColor", Vector4(0.f, 0.f, 0.f, 0.6f) );
+    solidColorProperty.Insert( "mixColor", Vector4(0.f, 0.f, 0.f, 0.6f) );
     checkbox.SetProperty( ImageView::Property::IMAGE, solidColorProperty );
 
     if( MODE_REMOVE_MANY  != mMode &&
@@ -954,6 +989,8 @@ private:
   Toolkit::PushButton mDeleteButton;
   Toolkit::PushButton mInsertButton;
   Toolkit::PushButton mReplaceButton;
+
+  LongPressGestureDetector mLongPressDetector;
 };
 
 void RunTest(Application& app)

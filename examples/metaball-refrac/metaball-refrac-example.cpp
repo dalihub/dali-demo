@@ -439,8 +439,11 @@ void MetaballRefracController::CreateMetaballActors()
   Shader shader = Shader::New( METABALL_VERTEX_SHADER, METABALL_FRAG_SHADER );
   Geometry metaballGeom = CreateGeometry();
   Renderer renderer = Renderer::New( metaballGeom, shader );
-  renderer.SetProperty( Renderer::Property::BLENDING_MODE, BlendingMode::ON );
-  renderer.SetBlendFunc(BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE, BlendingFactor::ONE);
+  renderer.SetProperty( Renderer::Property::BLEND_MODE, BlendMode::ON );
+  renderer.SetProperty( Renderer::Property::BLEND_FACTOR_SRC_RGB,    BlendFactor::ONE );
+  renderer.SetProperty( Renderer::Property::BLEND_FACTOR_DEST_RGB,   BlendFactor::ONE );
+  renderer.SetProperty( Renderer::Property::BLEND_FACTOR_SRC_ALPHA,  BlendFactor::ONE );
+  renderer.SetProperty( Renderer::Property::BLEND_FACTOR_DEST_ALPHA, BlendFactor::ONE  );
 
   //Each metaball has a different radius
   mMetaballs[0].radius = mMetaballs[0].initRadius = 0.0145f;

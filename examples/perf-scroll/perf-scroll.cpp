@@ -231,8 +231,7 @@ Renderer CreateRenderer( unsigned int index )
     textureSet.SetImage( 0u, image );
     renderers[index] = Renderer::New( QuadMesh(), shader );
     renderers[index].SetTextures( textureSet );
-    renderers[index].SetProperty( Renderer::Property::BLENDING_MODE, BlendingMode::OFF );
-
+    renderers[index].SetProperty( Renderer::Property::BLEND_MODE, BlendMode::OFF );
   }
   return renderers[index];
 }
