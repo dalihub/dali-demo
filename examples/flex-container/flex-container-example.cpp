@@ -200,8 +200,8 @@ public:
 
     // Add a text label to the container for showing the recently updated flexbox property value
     mFlexPropertyLabel = TextLabel::New( FLEX_DIRECTION[mCurrentFlexDirection] );
-    mFlexPropertyLabel.RegisterProperty("flexMargin", Vector4(10.0f, 10.0f, 10.0f, 10.0f), Property::READ_WRITE);
-    mFlexPropertyLabel.RegisterProperty("flex", 0.05f, Property::READ_WRITE); // 5 pecent of the container size in the main axis
+    mFlexPropertyLabel.SetProperty(FlexContainer::ChildProperty::FLEX_MARGIN, Vector4(10.0f, 10.0f, 10.0f, 10.0f));
+    mFlexPropertyLabel.SetProperty(FlexContainer::ChildProperty::FLEX, 0.05f); // 5 pecent of the container size in the main axis
     mFlexPropertyLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     mFlexPropertyLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     mFlexContainer.Add( mFlexPropertyLabel );
@@ -211,9 +211,9 @@ public:
     mFlexItemContainer.SetParentOrigin(ParentOrigin::TOP_LEFT);
     mFlexItemContainer.SetAnchorPoint(AnchorPoint::TOP_LEFT);
     mFlexItemContainer.SetBackgroundColor( Color::YELLOW );
-    mFlexItemContainer.RegisterProperty("flex", 0.95f, Property::READ_WRITE); // 95 pecent of the container size in the main axis
     mFlexItemContainer.SetProperty(FlexContainer::Property::FLEX_DIRECTION, mCurrentFlexDirection);
     mFlexItemContainer.SetProperty(FlexContainer::Property::FLEX_WRAP, mCurrentFlexWrap);
+    mFlexItemContainer.SetProperty(FlexContainer::ChildProperty::FLEX, 0.95f); // 95 pecent of the container size in the main axis
     mFlexContainer.Add(mFlexItemContainer);
 
     // Create flex items and add them to the container
