@@ -73,10 +73,12 @@
     "showValue": true,
     "valuePrecision": 0,
     "value": 50.0,
-    "popupTextColor": [1, 0, 0, 1],
-    "hitRegion": [0, 48],
-    "backingRegion": [0, 10],
-    "handleRegion": [48, 48]
+    "trackVisual": {
+      "size": [0, 10]
+    },
+    "handleVisual": {
+      "size": [48, 48]
+    }
   }, {
     "type": "Slider",
     "parentOrigin": "TOP_CENTER",
@@ -88,12 +90,17 @@
     "showValue": true,
     "valuePrescision": 0,
     "value": 100.0,
-    "hitRegion": [0, 48],
-    "backingRegion": [0, 30],
-    "handleRegion": [48, 48],
-    "backingImageName": "{DEMO_IMAGE_DIR}button-up-14.9.png",
-    "handleImageName": "{DEMO_IMAGE_DIR}blocks-ball.png",
-    "progressImageName": "{DEMO_IMAGE_DIR}button-down.9.png"
+    "trackVisual": {
+      "url": "{DEMO_IMAGE_DIR}button-up-14.9.png",
+      "size": [0, 30]
+    },
+    "handleVisual": {
+      "url": "{DEMO_IMAGE_DIR}blocks-ball.png",
+      "size": [48, 48]
+    },
+    "progressVisual": {
+      "url": "{DEMO_IMAGE_DIR}button-down.9.png"
+    }
   }, {
     "type": "Slider",
     "parentOrigin": "TOP_CENTER",
@@ -105,10 +112,12 @@
     "showValue": true,
     "valuePrecision": 0,
     "value": 50.0,
-    "hitRegion": [0, 48],
-    "backingRegion": [0, 10],
-    "handleRegion": [48, 48],
-    "enabled": false
+    "trackVisual": {
+      "size": [0, 10]
+    },
+    "handleVisual": {
+      "size": [48, 48]
+    }
   }, {
     "type": "Slider",
     "parentOrigin": "TOP_CENTER",
@@ -120,10 +129,12 @@
     "showValue": true,
     "valuePrecision": 0,
     "value": 50.0,
-    "hitRegion": [0, 48],
-    "backingRegion": [0, 10],
-    "handleRegion": [48, 48],
-    "enabled": false,
-    "disableColor": [1, 0, 0, 1]
+    "trackVisual": {
+      "size": [0, 10]
+    },
+    "handleVisual": {
+      "size": [48, 48]
+    },
+    "disabledColor": [1, 0, 0, 1]
   }]
 }
