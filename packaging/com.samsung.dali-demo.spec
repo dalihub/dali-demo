@@ -70,7 +70,14 @@ LDFLAGS+=" -Wl,--rpath=$PREFIX/lib -Wl,--as-needed"
 CXXFLAGS+=" -D_ARCH_ARM_"
 %endif
 
-cd %{_builddir}/%{name}-%{version}/build/tizen && cmake -DDALI_APP_DIR=%{dali_app_ro_dir} -DLOCALE_DIR=%{locale_dir} -DLOCAL_STYLE_DIR=%{local_style_dir} .
+cd %{_builddir}/%{name}-%{version}/build/tizen
+
+cmake -DDALI_APP_DIR=%{dali_app_ro_dir} \
+      -DLOCALE_DIR=%{locale_dir} \
+%if 0%{?enable_debug}
+      -DCMAKE_BUILD_TYPE=Debug \
+%endif
+      -DLOCAL_STYLE_DIR=%{local_style_dir} .
 
 make %{?jobs:-j%jobs}
 
