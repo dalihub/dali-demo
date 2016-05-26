@@ -200,7 +200,7 @@ private:
     return imageData;
   }
 
-  PixelDataPtr CreatePixelData( const Vector3& color, const unsigned int width, const unsigned int height )
+  PixelData CreatePixelData( const Vector3& color, const unsigned int width, const unsigned int height )
   {
     unsigned int size = width*height;
     unsigned char* pixels = new unsigned char [size*3u];
