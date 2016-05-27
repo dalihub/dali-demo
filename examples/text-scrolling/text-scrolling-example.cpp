@@ -128,7 +128,11 @@ public:
     const Size mTargetActorSize( mStageSize.width, DESKTOP_SIZE.height );
 
     // Create Desktop
-    ImageView desktop = ImageView::New( DESKTOP_IMAGE );
+    ImageView desktop = ImageView::New();
+    Property::Map imageMap;
+    imageMap[ "url" ] = DESKTOP_IMAGE;
+    imageMap[ "synchronousLoading" ] = true;
+    desktop.SetProperty( ImageView::Property::IMAGE, imageMap );
     desktop.SetName("desktopActor");
     desktop.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     desktop.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
