@@ -192,7 +192,7 @@ public:
   /**
    * Touch event function
    */
-  bool OnTouch( Actor actor, const TouchEvent& touch );
+  bool OnTouch( Actor actor, const TouchData& touch );
 
   /**
    * Key event function
@@ -344,7 +344,7 @@ void MetaballExplosionController::Create( Application& app )
   mTimerDispersion.TickSignal().Connect(this, &MetaballExplosionController::OnTimerDispersionTick);
 
   // Connect the callback to the touch signal on the mesh actor
-  stage.GetRootLayer().TouchedSignal().Connect( this, &MetaballExplosionController::OnTouch );
+  stage.GetRootLayer().TouchSignal().Connect( this, &MetaballExplosionController::OnTouch );
 }
 
 Geometry MetaballExplosionController::CreateGeometry()
@@ -681,31 +681,32 @@ void MetaballExplosionController::SetPositionToMetaballs(Vector2 & metaballCente
   mCompositionActor.SetProperty( mPositionIndex, metaballCenter );
 }
 
-bool MetaballExplosionController::OnTouch( Actor actor, const TouchEvent& touch )
+bool MetaballExplosionController::OnTouch( Actor actor, const TouchData& touch )
 {
-  const TouchPoint &point = touch.GetPoint(0);
   float aspectR = mScreenSize.y / mScreenSize.x;
 
-  switch( point.state )
+  switch( touch.GetState( 0 ) )
   {
-    case TouchPoint::Down:
+    case PointState::DOWN:
     {
       ResetMetaballs(true);
 
-      Vector2 metaballCenter = Vector2((point.screen.x / mScreenSize.x) - 0.5, (aspectR * (mScreenSize.y - point.screen.y) / mScreenSize.y) - 0.5) * 2.0;
+      const Vector2 screen = touch.GetScreenPosition( 0 );
+      Vector2 metaballCenter = Vector2((screen.x / mScreenSize.x) - 0.5, (aspectR * (mScreenSize.y - screen.y) / mScreenSize.y) - 0.5) * 2.0;
       SetPositionToMetaballs(metaballCenter);
 
       break;
     }
-    case TouchPoint::Motion:
+    case PointState::MOTION:
     {
-      Vector2 metaballCenter = Vector2((point.screen.x / mScreenSize.x) - 0.5, (aspectR * (mScreenSize.y - point.screen.y) / mScreenSize.y) - 0.5) * 2.0;
+      const Vector2 screen = touch.GetScreenPosition( 0 );
+      Vector2 metaballCenter = Vector2((screen.x / mScreenSize.x) - 0.5, (aspectR * (mScreenSize.y - screen.y) / mScreenSize.y) - 0.5) * 2.0;
       SetPositionToMetaballs(metaballCenter);
       break;
     }
-    case TouchPoint::Up:
-    case TouchPoint::Leave:
-    case TouchPoint::Interrupted:
+    case PointState::UP:
+    case PointState::LEAVE:
+    case PointState::INTERRUPTED:
     {
       mTimerDispersion.Start();
       break;

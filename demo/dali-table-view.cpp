@@ -241,7 +241,7 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.SetAxisAutoLock( true );
   mScrollView.ScrollCompletedSignal().Connect( this, &DaliTableView::OnScrollComplete );
   mScrollView.ScrollStartedSignal().Connect( this, &DaliTableView::OnScrollStart );
-  mScrollView.TouchedSignal().Connect( this, &DaliTableView::OnScrollTouched );
+  mScrollView.TouchSignal().Connect( this, &DaliTableView::OnScrollTouched );
 
   mScrollViewLayer = Layer::New();
 
@@ -476,7 +476,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   content.SetKeyboardFocusable(true);
 
   // connect to the touch events
-  content.TouchedSignal().Connect( this, &DaliTableView::OnTilePressed );
+  content.TouchSignal().Connect( this, &DaliTableView::OnTilePressed );
   content.HoveredSignal().Connect( this, &DaliTableView::OnTileHovered );
 
   return content;
@@ -496,12 +496,16 @@ Toolkit::ImageView DaliTableView::NewStencilImage()
   return stencil;
 }
 
-bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
+bool DaliTableView::OnTilePressed( Actor actor, const TouchData& event )
+{
+  return DoTilePress( actor, event.GetState( 0 ) );
+}
+
+bool DaliTableView::DoTilePress( Actor actor, PointState::Type pointState )
 {
   bool consumed = false;
 
-  const TouchPoint& point = event.GetPoint( 0 );
-  if( TouchPoint::Down == point.state )
+  if( PointState::DOWN == pointState )
   {
     mPressedActor = actor;
     consumed = true;
@@ -509,7 +513,7 @@ bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
 
   // A button press is only valid if the Down & Up events
   // both occurred within the button.
-  if( ( TouchPoint::Up == point.state ) &&
+  if( ( PointState::UP == pointState ) &&
       ( mPressedActor == actor ) )
   {
     // ignore Example button presses when scrolling or button animating.
@@ -581,10 +585,9 @@ void DaliTableView::OnScrollComplete( const Dali::Vector2& position )
   accessibilityManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
 }
 
-bool DaliTableView::OnScrollTouched( Actor actor, const TouchEvent& event )
+bool DaliTableView::OnScrollTouched( Actor actor, const TouchData& event )
 {
-  const TouchPoint& point = event.GetPoint( 0 );
-  if( TouchPoint::Down == point.state )
+  if( PointState::DOWN == event.GetState( 0 ) )
   {
     mPressedActor = actor;
   }
@@ -901,9 +904,7 @@ void DaliTableView::OnFocusedActorActivated( Dali::Actor activatedActor )
     mPressedActor = activatedActor;
 
     // Activate the current focused actor;
-    TouchEvent touchEventUp;
-    touchEventUp.points.push_back( TouchPoint ( 0, TouchPoint::Up, 0.0f, 0.0f ) );
-    OnTilePressed(mPressedActor, touchEventUp);
+    DoTilePress( mPressedActor, PointState::UP );
   }
 }
 

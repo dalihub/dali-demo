@@ -285,7 +285,7 @@ public:
     mSize = Vector3( stageSize.x / mColumnsPerPage, stageSize.y / mRowsPerPage, 0.0f );
 
     // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchedSignal().Connect( this, &Benchmark::OnTouch );
+    stage.GetRootLayer().TouchSignal().Connect( this, &Benchmark::OnTouch );
 
     if( gUseMesh )
     {
@@ -303,7 +303,7 @@ public:
     ShowAnimation();
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
     // quit the application
     mApplication.Quit();

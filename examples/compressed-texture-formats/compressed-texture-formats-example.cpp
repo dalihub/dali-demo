@@ -108,10 +108,10 @@ public:
     stage.Add( table );
 
     // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchedSignal().Connect( this, &CompressedTextureFormatsController::OnTouch );
+    stage.GetRootLayer().TouchSignal().Connect( this, &CompressedTextureFormatsController::OnTouch );
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
     // quit the application
     mApplication.Quit();

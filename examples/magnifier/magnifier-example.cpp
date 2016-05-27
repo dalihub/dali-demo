@@ -213,7 +213,7 @@ public:
                                        APPLICATION_TITLE );
 
     mContent.SetLeaveRequired(true);
-    mContent.TouchedSignal().Connect( this, &ExampleController::OnTouched );
+    mContent.TouchSignal().Connect( this, &ExampleController::OnTouched );
 
     // Create magnifier (controlled by human touch)
     Layer overlay = Layer::New();
@@ -300,33 +300,32 @@ public:
    * @param[in] actor The actor that received the touch
    * @param[in] event The touch-event information
    */
-  bool OnTouched( Actor actor, const TouchEvent& event )
+  bool OnTouched( Actor actor, const TouchData& event )
   {
     if(event.GetPointCount() > 0)
     {
-      const TouchPoint& point = event.GetPoint(0);
-      switch(point.state)
+      switch( event.GetState( 0 ) )
       {
-        case TouchPoint::Down:
-        case TouchPoint::Motion:
+        case PointState::DOWN:
+        case PointState::MOTION:
         {
           ShowMagnifier();
           break;
         }
-        case TouchPoint::Up:
-        case TouchPoint::Leave:
-        case TouchPoint::Interrupted:
+        case PointState::UP:
+        case PointState::LEAVE:
+        case PointState::INTERRUPTED:
         {
           HideMagnifier();
           break;
         }
-        default:
+        case PointState::STATIONARY:
         {
           break;
         }
       } // end switch
 
-      Vector3 touchPoint(point.screen);
+      Vector3 touchPoint( event.GetScreenPosition( 0 ) );
 
       SetMagnifierPosition(touchPoint - mStageSize * 0.5f);
     }

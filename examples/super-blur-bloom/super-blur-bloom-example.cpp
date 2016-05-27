@@ -130,17 +130,16 @@ private:
     mBloomView.Add( mBloomActor );
 
     // Connect the callback to the touch signal on the background
-    mSuperBlurView.TouchedSignal().Connect( this, &BlurExample::OnTouch );
-    mBloomView.TouchedSignal().Connect( this, &BlurExample::OnTouch );
+    mSuperBlurView.TouchSignal().Connect( this, &BlurExample::OnTouch );
+    mBloomView.TouchSignal().Connect( this, &BlurExample::OnTouch );
   }
 
   // Callback function of the touch signal on the background
-  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& event)
+  bool OnTouch(Dali::Actor actor, const Dali::TouchData& event)
   {
-    const TouchPoint &point = event.GetPoint(0);
-    switch(point.state)
+    switch( event.GetState( 0 ) )
     {
-      case TouchPoint::Down:
+      case PointState::DOWN:
       {
         if( mAnimation )
         {
@@ -159,9 +158,9 @@ private:
         mAnimation.Play();
         break;
       }
-      case TouchPoint::Up:
-      case TouchPoint::Leave:
-      case TouchPoint::Interrupted:
+      case PointState::UP:
+      case PointState::LEAVE:
+      case PointState::INTERRUPTED:
       {
         if( mAnimation )
         {
@@ -180,10 +179,8 @@ private:
         mAnimation.Play();
         break;
       }
-      case TouchPoint::Motion:
-      case TouchPoint::Stationary:
-      case TouchPoint::Last:
-      default:
+      case PointState::MOTION:
+      case PointState::STATIONARY:
       {
         break;
       }
