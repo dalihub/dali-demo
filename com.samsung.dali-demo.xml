@@ -97,8 +97,8 @@
 	<ui-application appid="text-fonts.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-fonts.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Fonts</label>
 	</ui-application>
-	<ui-application appid="text-message-field.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-message-field.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Text Label</label>
+	<ui-application appid="text-scrolling.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-scrolling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Scrolling</label>
 	</ui-application>
 	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Logging</label>
