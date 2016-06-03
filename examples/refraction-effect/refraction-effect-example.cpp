@@ -294,7 +294,7 @@ private:
     mContent.Add( mMeshActor );
 
     // Connect the callback to the touch signal on the mesh actor
-    mContent.TouchedSignal().Connect( this, &RefractionEffectExample::OnTouch );
+    mContent.TouchSignal().Connect( this, &RefractionEffectExample::OnTouch );
 
     // shader used when the finger is touching the screen. render refraction effect
     mShaderRefraction = Shader::New( VERTEX_SHADER_REFRACTION, FRAGMENT_SHADER_REFRACTION );
@@ -348,16 +348,15 @@ private:
     return true;
   }
 
-  bool OnTouch( Actor actor , const TouchEvent& event )
+  bool OnTouch( Actor actor, const TouchData& event )
   {
-    const TouchPoint &point = event.GetPoint(0);
-    switch(point.state)
+    switch( event.GetState( 0 ) )
     {
-      case TouchPoint::Down:
+      case PointState::DOWN:
       {
         mRenderer.SetShader( mShaderRefraction );
 
-        SetLightXYOffset( point.screen );
+        SetLightXYOffset( event.GetScreenPosition( 0 ) );
 
         mLightAnimation.Play();
 
@@ -372,15 +371,15 @@ private:
 
         break;
       }
-      case TouchPoint::Motion:
+      case PointState::MOTION:
       {
         // make the light position following the finger movement
-        SetLightXYOffset( point.screen );
+        SetLightXYOffset( event.GetScreenPosition( 0 ) );
         break;
       }
-      case TouchPoint::Up:
-      case TouchPoint::Leave:
-      case TouchPoint::Interrupted:
+      case PointState::UP:
+      case PointState::LEAVE:
+      case PointState::INTERRUPTED:
       {
         mLightAnimation.Pause();
 
@@ -394,9 +393,7 @@ private:
         mStrenghAnimation.Play();
         break;
       }
-      case TouchPoint::Stationary:
-      case TouchPoint::Last:
-      default:
+      case PointState::STATIONARY:
       {
         break;
       }

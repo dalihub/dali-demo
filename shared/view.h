@@ -85,7 +85,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   toolBar.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
   toolBar.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
 
-  // Add the tool bar to the too bar layer.
+  // Add the tool bar to the tool bar layer.
   toolBarLayer.Add( toolBar );
 
   // Tool bar text.

@@ -295,7 +295,7 @@ public:
     imagePrevious.SetOpacity( 0.6f );
     controlsLayer.Add( imagePrevious );
     imagePrevious.SetName( PREVIOUS_BUTTON_ID );
-    imagePrevious.TouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
+    imagePrevious.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Next image button:
     Toolkit::ImageView imageNext = Toolkit::ImageView::New( playImage );
@@ -305,7 +305,7 @@ public:
     imageNext.SetOpacity( 0.6f );
     controlsLayer.Add( imageNext );
     imageNext.SetName( NEXT_BUTTON_ID );
-    imageNext.TouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
+    imageNext.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Buttons to popup selectors for fitting and sampling modes:
 
@@ -535,14 +535,13 @@ public:
     }
   }
 
-  bool OnControlTouched( Actor actor, const TouchEvent& event )
+  bool OnControlTouched( Actor actor, const TouchData& event )
   {
     if(event.GetPointCount() > 0)
     {
-      const TouchPoint& point = event.GetPoint(0);
-      switch(point.state)
+      switch( event.GetState( 0 ) )
       {
-        case TouchPoint::Up:
+        case PointState::UP:
         {
           const std::string & name = actor.GetName();
           if( name == NEXT_BUTTON_ID )

@@ -187,7 +187,7 @@ public:
 
       meshActor.RegisterProperty("uHue", i/(float)NUMBER_OF_SAMPLES);
 
-      meshActor.TouchedSignal().Connect(this, &ExampleController::OnTouched);
+      meshActor.TouchSignal().Connect(this, &ExampleController::OnTouched);
       std::ostringstream oss;
       oss << "Mesh Actor " << i;
       meshActor.SetName(oss.str());
@@ -196,7 +196,7 @@ public:
 
     mActors[NUMBER_OF_SAMPLES-2].GetRendererAt(0).SetTextures( firstTextureSet );
 
-    stage.GetRootLayer().TouchedSignal().Connect(this, &ExampleController::OnStageTouched);
+    stage.GetRootLayer().TouchSignal().Connect(this, &ExampleController::OnStageTouched);
   }
 
   void PrintDepths()
@@ -227,9 +227,9 @@ public:
     printf("\n");
   }
 
-  bool OnTouched( Actor actor, const TouchEvent& event )
+  bool OnTouched( Actor actor, const TouchData& event )
   {
-    if( event.GetPoint(0).state == TouchPoint::Finished )
+    if( event.GetState( 0 ) == PointState::UP )
     {
       int index = actor.GetProperty<int>(actor.GetPropertyIndex("index"));
 
@@ -244,9 +244,9 @@ public:
     return true;
   }
 
-  bool OnStageTouched( Actor rootLayer, const TouchEvent& event )
+  bool OnStageTouched( Actor rootLayer, const TouchData& event )
   {
-    if( event.GetPoint(0).state == TouchPoint::Finished )
+    if( event.GetState( 0 ) == PointState::UP )
     {
       switch( mZMode )
       {

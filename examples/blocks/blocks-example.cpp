@@ -289,8 +289,8 @@ private:
 
     mPaddle.SetPosition( stageSize * Vector3( PADDLE_START_POSITION ) );
     mContentLayer.Add(mPaddle);
-    mPaddle.TouchedSignal().Connect(this, &ExampleController::OnTouchPaddle);
-    mContentLayer.TouchedSignal().Connect(this, &ExampleController::OnTouchLayer);
+    mPaddle.TouchSignal().Connect(this, &ExampleController::OnTouchPaddle);
+    mContentLayer.TouchSignal().Connect(this, &ExampleController::OnTouchLayer);
 
     const float margin(BALL_SIZE.width * stageSize.width * 0.5f);
 
@@ -579,15 +579,15 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The touch event
    */
-  bool OnTouchPaddle(Actor actor, const TouchEvent& event)
+  bool OnTouchPaddle(Actor actor, const TouchData& event)
   {
     if(event.GetPointCount()>0)
     {
-      const TouchPoint& point = event.GetPoint(0);
-      if(point.state==TouchPoint::Down) // Commence dragging
+      if( event.GetState( 0 ) == PointState::DOWN ) // Commence dragging
       {
         // Get point where user touched paddle (relative to paddle's center)
-        mRelativeDragPoint = Vector3(point.screen.x, point.screen.y, 0.0f);
+        Vector2 screenPoint = event.GetScreenPosition( 0 );
+        mRelativeDragPoint = screenPoint;
         mRelativeDragPoint -= actor.GetCurrentPosition();
 
         mDragActor = actor;
@@ -605,17 +605,16 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The touch event
    */
-  bool OnTouchLayer(Actor actor, const TouchEvent& event)
+  bool OnTouchLayer(Actor actor, const TouchData& event)
   {
     if(event.GetPointCount()>0)
     {
-      const TouchPoint& point = event.GetPoint(0);
       if(mDragActor)
       {
-        Vector3 position(point.screen.x, point.screen.y, 0.0f);
+        Vector3 position( event.GetScreenPosition( 0 ) );
         mPaddle.SetPosition( position - mRelativeDragPoint );
 
-        if(point.state==TouchPoint::Up) // Stop dragging
+        if( event.GetState( 0 ) == PointState::UP ) // Stop dragging
         {
           mDragAnimation = Animation::New(0.25f);
           mDragAnimation.AnimateTo( Property(mDragActor, Actor::Property::SCALE), Vector3(1.0f, 1.0f, 1.0f), AlphaFunction::EASE_IN);
