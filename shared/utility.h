@@ -20,6 +20,7 @@
 
 #include <dali/dali.h>
 #include <dali/devel-api/images/atlas.h>
+#include <dali/devel-api/rendering/geometry.h>
 #include <dali/devel-api/rendering/texture.h>
 #include <dali/devel-api/adaptor-framework/bitmap-loader.h>
 
@@ -86,6 +87,35 @@ Dali::Texture LoadStageFillingTexture( const char* imagePath )
   return LoadTexture( imagePath, Dali::ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
 }
 
+Dali::Geometry CreateTexturedQuad()
+{
+  struct Vertex
+  {
+    Dali::Vector2 position;
+    Dali::Vector2 texCoord;
+  };
+
+  static const Vertex data[] = {{ Dali::Vector2( -0.5f, -0.5f ), Dali::Vector2( 0.0f, 0.0f ) },
+                                { Dali::Vector2(  0.5f, -0.5f ), Dali::Vector2( 1.0f, 0.0f ) },
+                                { Dali::Vector2( -0.5f,  0.5f ), Dali::Vector2( 0.0f, 1.0f ) },
+                                { Dali::Vector2(  0.5f,  0.5f ), Dali::Vector2( 1.0f, 1.0f ) }};
+
+  Dali::PropertyBuffer vertexBuffer;
+  Dali::Property::Map vertexFormat;
+  vertexFormat["aPosition"] = Dali::Property::VECTOR2;
+  vertexFormat["aTexCoord"] = Dali::Property::VECTOR2;
+
+  //Create a vertex buffer for vertex positions and texture coordinates
+  vertexBuffer = Dali::PropertyBuffer::New( vertexFormat );
+  vertexBuffer.SetData( data, 4u );
+
+  //Create the geometry
+  Dali::Geometry geometry = Dali::Geometry::New();
+  geometry.AddVertexBuffer( vertexBuffer );
+  geometry.SetGeometryType(Dali::Geometry::TRIANGLE_STRIP );
+
+  return geometry;
+}
 } // DemoHelper
 
 #endif // __DALI_DEMO_HELPER_VIEW_H__

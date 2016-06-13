@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,8 @@
  *
  */
 
-#include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/rendering/renderer.h>
-#include <dali/devel-api/rendering/sampler.h>
-#include <dali/public-api/common/dali-common.h>
-#include <dali/integration-api/resource-policies.h>
-#include <dali/integration-api/debug.h>
-#include <iostream>
+#include <dali-toolkit/dali-toolkit.h>
 
 #include "shared/utility.h"
 
@@ -186,29 +181,6 @@ const char* FRAGMENT_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
     }\n
 );
 
-
-Geometry& QuadMesh()
-{
-  static Geometry mesh;
-  if( !mesh )
-  {
-    PropertyBuffer vertexBuffer;
-    Property::Map vertexFormat;
-    vertexFormat["aPosition"] = Property::VECTOR2;
-    vertexFormat["aTexCoord"] = Property::VECTOR2;
-
-    //Create a vertex buffer for vertex positions and texture coordinates
-    vertexBuffer = PropertyBuffer::New( vertexFormat );
-    vertexBuffer.SetData( gQuadWithTexture, 4u );
-
-    //Create the geometry
-    mesh = Geometry::New();
-    mesh.AddVertexBuffer( vertexBuffer );
-    mesh.SetGeometryType( Geometry::TRIANGLE_STRIP );
-  }
-  return mesh;
-}
-
 bool gUseMesh(false);
 bool gNinePatch(false);
 unsigned int gRowsPerPage(15);
@@ -216,35 +188,18 @@ unsigned int gColumnsPerPage(15);
 unsigned int gPageCount(10);
 float gDuration(10.0f);
 
-Renderer CreateRenderer( unsigned int index )
+Renderer CreateRenderer( unsigned int index, Geometry geometry, Shader shader )
 {
-
-  int numImages = !gNinePatch ? NUM_IMAGES : NUM_NINEPATCH_IMAGES;
-  static Renderer* renderers = new Renderer[numImages];
-  if( !renderers[index] )
-  {
-    //Create the renderer
-    Shader shader = Shader::New( VERTEX_SHADER_TEXTURE, FRAGMENT_SHADER_TEXTURE );
-
-    const char* imagePath = !gNinePatch ? IMAGE_PATH[index] : NINEPATCH_IMAGE_PATH[index];
-    Texture texture = DemoHelper::LoadTexture( imagePath );
-
-    TextureSet textureSet = TextureSet::New();
-    textureSet.SetTexture( 0u, texture );
-    renderers[index] = Renderer::New( QuadMesh(), shader );
-    renderers[index].SetTextures( textureSet );
-    renderers[index].SetProperty( Renderer::Property::BLEND_MODE, BlendMode::OFF );
-  }
-  return renderers[index];
+  Renderer renderer = Renderer::New( geometry, shader );
+  const char* imagePath = !gNinePatch ? IMAGE_PATH[index] : NINEPATCH_IMAGE_PATH[index];
+  Texture texture = DemoHelper::LoadTexture( imagePath );
+  TextureSet textureSet = TextureSet::New();
+  textureSet.SetTexture( 0u, texture );
+  renderer.SetTextures( textureSet );
+  renderer.SetProperty( Renderer::Property::BLEND_MODE, BlendMode::OFF );
+  return renderer;
 }
 
-Actor CreateMeshActor( unsigned int index)
-{
-  Renderer renderer = CreateRenderer( index );
-  Actor meshActor = Actor::New();
-  meshActor.AddRenderer( renderer );
-  return meshActor;
-}
 
 }
 // Test application to compare performance between ImageActor and ImageView
@@ -333,18 +288,27 @@ public:
 
   void CreateMeshActors()
   {
+    unsigned int numImages = !gNinePatch ? NUM_IMAGES : NUM_NINEPATCH_IMAGES;
+
+    //Create all the renderers
+    std::vector<Renderer> renderers( numImages );
+    Shader shader = Shader::New( VERTEX_SHADER_TEXTURE, FRAGMENT_SHADER_TEXTURE );
+    Geometry geometry = DemoHelper::CreateTexturedQuad();
+    for( unsigned int i(0); i<numImages; ++i )
+    {
+      renderers[i] = CreateRenderer( i, geometry, shader );
+    }
+
+    //Create the actors
     Stage stage = Stage::GetCurrent();
-
-    unsigned int actorCount( mRowsPerPage * mColumnsPerPage * mPageCount );
-    mActor.resize( actorCount );
-
+    unsigned int actorCount(mRowsPerPage*mColumnsPerPage * mPageCount);
+    mActor.resize(actorCount);
     for( size_t i(0); i<actorCount; ++i )
     {
-      size_t numImages = !gNinePatch ? NUM_IMAGES : NUM_NINEPATCH_IMAGES;
-      mActor[i] = CreateMeshActor( i % numImages );
+      mActor[i] = Actor::New();
+      mActor[i].AddRenderer( renderers[i % numImages] );
       mActor[i].SetSize(0.0f,0.0f,0.0f);
-
-      mParent.Add( mActor[i] );
+      mParent.Add(mActor[i]);
     }
   }
 

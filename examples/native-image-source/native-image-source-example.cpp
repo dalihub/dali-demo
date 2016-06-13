@@ -15,15 +15,111 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali/dali.h>
+#include <dali/devel-api/images/native-image-interface-extension.h>
+#include <dali/devel-api/rendering/renderer.h>
+#include <dali/devel-api/rendering/frame-buffer.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <cstring>
+
+// INTERNAL INCLUDES
+#include "shared/utility.h"
 
 using namespace Dali;
 using namespace Toolkit;
 
 namespace
 {
-  const std::string JPG_FILENAME = DEMO_IMAGE_DIR "gallery-medium-4.jpg";
+
+/**
+ * @brief Creates a shader used to render a native image
+ * @param[in] nativeImageInterface The native image interface
+ * @return A shader to render the native image
+ */
+Shader CreateShader( NativeImageInterface& nativeImageInterface )
+{
+  static const char* DEFAULT_SAMPLER_TYPENAME = "sampler2D";
+
+  static const char* VERTEX_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
+      attribute mediump vec2 aPosition;\n
+      attribute mediump vec2 aTexCoord;\n
+      uniform mediump mat4 uMvpMatrix;\n
+      uniform mediump vec3 uSize;\n
+      varying mediump vec2 vTexCoord;\n
+      void main()\n
+      {\n
+        vec4 position = vec4(aPosition,0.0,1.0)*vec4(uSize,1.0);\n
+        gl_Position = uMvpMatrix * position;\n
+        vTexCoord = aTexCoord;\n
+      }\n
+  );
+
+  static const char* FRAGMENT_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
+      uniform lowp vec4 uColor;\n
+      uniform sampler2D sTexture;\n
+      varying mediump vec2 vTexCoord;\n
+
+      void main()\n
+      {\n
+        gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
+      }\n
+  );
+
+  NativeImageInterface::Extension* extension( nativeImageInterface.GetExtension() );
+  if( extension )
+  {
+    std::string fragmentShader;
+
+    //Get custom fragment shader prefix
+    const char* fragmentPreFix = extension->GetCustomFragmentPreFix();
+    if( fragmentPreFix )
+    {
+      fragmentShader = fragmentPreFix;
+      fragmentShader += FRAGMENT_SHADER_TEXTURE;
+    }
+    else
+    {
+      fragmentShader = FRAGMENT_SHADER_TEXTURE;
+    }
+
+    //Get custom sampler type name
+    const char* customSamplerTypename = extension->GetCustomSamplerTypename();
+    if( customSamplerTypename )
+    {
+      fragmentShader.replace( fragmentShader.find( DEFAULT_SAMPLER_TYPENAME ), strlen(DEFAULT_SAMPLER_TYPENAME), customSamplerTypename );
+    }
+
+    return Shader::New( VERTEX_SHADER_TEXTURE, fragmentShader );
+  }
+  else
+  {
+    return Shader::New( VERTEX_SHADER_TEXTURE, FRAGMENT_SHADER_TEXTURE );
+  }
+}
+
+/**
+ * @brief Creates an actor to render a native image
+ * @param[in] texture The texture creates from a native image
+ * @param[in] nativeImageInterface The native image interface used to create the texture
+ * @return An actor that renders the texture
+ */
+Actor CreateNativeActor( Texture texture, NativeImageInterface& nativeImageInterface )
+{
+  Actor actor = Actor::New();
+  Geometry geometry = DemoHelper::CreateTexturedQuad();
+  Shader shader = CreateShader(nativeImageInterface);
+  Renderer renderer = Renderer::New( geometry, shader );
+  TextureSet textureSet = TextureSet::New();
+  textureSet.SetTexture( 0u, texture );
+  renderer.SetTextures( textureSet );
+
+  actor.AddRenderer( renderer );
+  actor.SetSize( texture.GetWidth(), texture.GetHeight() );
+  return actor;
+}
+
+const std::string JPG_FILENAME = DEMO_IMAGE_DIR "gallery-medium-4.jpg";
 }
 
 // This example shows how to create and use a NativeImageSource as the target of the render task.
@@ -103,7 +199,9 @@ public:
     animation.Play();
 
     // create a offscreen renderer task to render content into the native image source
-    FrameBufferImage targetBuffer = FrameBufferImage::New( *nativeImageSourcePtr );
+    Texture nativeTexture = Texture::New( *nativeImageSourcePtr );
+    FrameBuffer targetBuffer = FrameBuffer::New( nativeTexture.GetWidth(), nativeTexture.GetHeight(), FrameBuffer::COLOR );
+    targetBuffer.AttachColorTexture( nativeTexture );
 
     CameraActor cameraActor = CameraActor::New(imageSize);
     cameraActor.SetParentOrigin(ParentOrigin::TOP_CENTER);
@@ -118,25 +216,24 @@ public:
     mOffscreenRenderTask.SetClearEnabled(true);
     mOffscreenRenderTask.SetCameraActor(cameraActor);
     mOffscreenRenderTask.GetCameraActor().SetInvertYAxis(true);
-    mOffscreenRenderTask.SetTargetFrameBuffer( targetBuffer );
+    mOffscreenRenderTask.SetFrameBuffer( targetBuffer );
     mOffscreenRenderTask.SetRefreshRate( RenderTask::REFRESH_ALWAYS );
 
     // Display the native image on the screen
-    NativeImage nativeImage = NativeImage::New( *nativeImageSourcePtr );
-    ImageView nativeImageView = ImageView::New( nativeImage );
-    nativeImageView.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    nativeImageView.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    stage.Add( nativeImageView );
+    Actor nativeImageActor = CreateNativeActor( nativeTexture, *nativeImageSourcePtr );
+    nativeImageActor.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    nativeImageActor.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    stage.Add( nativeImageActor );
 
     TextLabel textLabel1 = TextLabel::New( "Resource Image" );
     textLabel1.SetParentOrigin( ParentOrigin::TOP_CENTER );
     textLabel1.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    nativeImageView.Add( textLabel1 );
+    nativeImageActor.Add( textLabel1 );
 
     TextLabel textLabel2 = TextLabel::New( "Native Image" );
     textLabel2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     textLabel2.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    nativeImageView.Add( textLabel2 );
+    nativeImageActor.Add( textLabel2 );
 
     return false;
   }
