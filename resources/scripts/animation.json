@@ -92,7 +92,7 @@
     "size": [200, 200, 1],
     "orientation": [0, 0, 30],
     "signals": [{
-      "name": "touched",
+      "name": "touch",
       "action": "play",
       "animation": "animate"
     }]
@@ -106,7 +106,7 @@
     "position": [-150, -50, 0],
     "text": "or me",
     "signals": [{
-      "name": "touched",
+      "name": "touch",
       "action": "play",
       "animation": "pathAnimation"
     }]
@@ -119,14 +119,12 @@
   }, {
     "name": "image",
     "type": "ImageView",
-    "image": {
-      "url": "{DEMO_IMAGE_DIR}gallery-large-21.jpg"
-    },
+    "image": "{DEMO_IMAGE_DIR}gallery-large-21.jpg",
     "relayoutEnabled": false,
     "position": [0, 200, 0],
     "size": [200, 200, 1],
     "signals": [{
-      "name": "touched",
+      "name": "touch",
       "action": "play",
       "animation": "rotate"
     }],

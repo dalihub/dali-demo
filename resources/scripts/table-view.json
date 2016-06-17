@@ -65,9 +65,7 @@
           "name":"gallery1",
           "type":"ImageView",
           "heightResizePolicy":"FILL_TO_PARENT",
-          "image": {
-            "url": "{DEMO_IMAGE_DIR}gallery-small-1.jpg"
-          },
+          "image": "{DEMO_IMAGE_DIR}gallery-small-1.jpg",
           "properties": { // properties registered dynamically
             "cellIndex": [0,0], // property to specify the top-left cell this child occupies
             "rowSpan":4, // property to specify how many rows this child occupies, if not set, default value is 1
@@ -77,9 +75,7 @@
           "name":"gallery2",
           "type":"ImageView",
           "heightResizePolicy":"FILL_TO_PARENT",
-          "image": {
-            "url": "{DEMO_IMAGE_DIR}gallery-small-2.jpg"
-          },
+          "image": "{DEMO_IMAGE_DIR}gallery-small-2.jpg",
           "properties": { // properties registered dynamically
             "cellIndex": [0,1],
             "cellHorizontalAlignment": "right" // property to specify how to align horizontally inside the cells, if not set, default value is 'left'
@@ -87,9 +83,7 @@
         },{
           "name":"gallery3",
           "type":"ImageView",
-          "image": {
-            "url": "{DEMO_IMAGE_DIR}gallery-small-3.jpg"
-          },
+          "image": "{DEMO_IMAGE_DIR}gallery-small-3.jpg",
           "properties": {
             "cellIndex":[1,1],
             "rowSpan":3,
@@ -100,9 +94,7 @@
           "name":"gallery4",
           "type":"ImageView",
           "widthResizePolicy":"FILL_TO_PARENT",
-          "image": {
-            "url": "{DEMO_IMAGE_DIR}gallery-small-4.jpg"
-          },
+          "image": "{DEMO_IMAGE_DIR}gallery-small-4.jpg",
           "properties": {
             "cellIndex":[2,2]
           }
@@ -111,9 +103,7 @@
           "type":"ImageView",
           "widthResizePolicy":"FILL_TO_PARENT",
           "heightResizePolicy":"FILL_TO_PARENT",
-          "image": {
-            "url": "{DEMO_IMAGE_DIR}gallery-small-5.jpg"
-          },
+          "image": "{DEMO_IMAGE_DIR}gallery-small-5.jpg",
           "properties": {
             "cellIndex":[3,2],
             "columnSpan": 2
