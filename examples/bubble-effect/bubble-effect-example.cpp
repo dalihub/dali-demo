@@ -150,7 +150,7 @@ private:
     mTimerForBubbleEmission.TickSignal().Connect(this, &BubbleEffectExample::OnTimerTick);
 
     // Connect the callback to the touch signal on the background
-    mBackground.TouchedSignal().Connect( this, &BubbleEffectExample::OnTouch );
+    mBackground.TouchSignal().Connect( this, &BubbleEffectExample::OnTouch );
   }
 
 
@@ -205,24 +205,22 @@ private:
   }
 
   // Callback function of the touch signal on the background
-  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& event)
+  bool OnTouch(Dali::Actor actor, const Dali::TouchData& event)
   {
-    const TouchPoint &point = event.GetPoint(0);
-    switch(point.state)
+    switch( event.GetState( 0 ) )
     {
-      case TouchPoint::Down:
+      case PointState::DOWN:
       {
-        mCurrentTouchPosition = point.screen;
-        mEmitPosition = point.screen;
+        mCurrentTouchPosition = mEmitPosition = event.GetScreenPosition( 0 );
         mTimerForBubbleEmission.Start();
         mNonMovementCount = 0;
 
         break;
       }
-      case TouchPoint::Motion:
+      case PointState::MOTION:
       {
-        Vector2 displacement = point.screen - mCurrentTouchPosition;
-        mCurrentTouchPosition = point.screen;
+        Vector2 displacement = event.GetScreenPosition( 0 ) - mCurrentTouchPosition;
+        mCurrentTouchPosition = event.GetScreenPosition( 0 );
         //emit multiple bubbles along the moving direction when the finger moves quickly
         float step = std::min(5.f, displacement.Length());
         for( float i=0.25f; i<step; i=i+1.f)
@@ -231,9 +229,9 @@ private:
         }
         break;
       }
-      case TouchPoint::Up:
-      case TouchPoint::Leave:
-      case TouchPoint::Interrupted:
+      case PointState::UP:
+      case PointState::LEAVE:
+      case PointState::INTERRUPTED:
       {
         mTimerForBubbleEmission.Stop();
         mEmitAnimation.Play();
@@ -241,8 +239,7 @@ private:
         mAnimateComponentCount = 0;
         break;
       }
-      case TouchPoint::Stationary:
-      case TouchPoint::Last:
+      case PointState::STATIONARY:
       default:
       {
         break;

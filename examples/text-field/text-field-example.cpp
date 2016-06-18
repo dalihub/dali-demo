@@ -136,7 +136,7 @@ public:
     popup.SetSize( width, 0.0f );
     popup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
     popup.SetSizeModeFactor( POPUP_SIZE_FACTOR_TO_PARENT );
-    popup.TouchedSignal().Connect( this, &TextFieldExample::OnPopupTouched );
+    popup.TouchSignal().Connect( this, &TextFieldExample::OnPopupTouched );
 
     return popup;
   }
@@ -159,15 +159,14 @@ public:
     mField.Reset();
   }
 
-  bool OnPopupTouched( Actor actor, const TouchEvent& event )
+  bool OnPopupTouched( Actor actor, const TouchData& event )
   {
     // End edit mode for TextField if parent Popup touched.
     if(event.GetPointCount() > 0)
     {
-      const TouchPoint& point = event.GetPoint(0);
-      switch(point.state)
+      switch( event.GetState( 0 ) )
       {
-        case TouchPoint::Down:
+        case PointState::DOWN:
         {
           // Update the folder text and lose focus for Key events
           if( mButton && mField )

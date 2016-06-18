@@ -174,7 +174,6 @@ class LoggingController: public ConnectionTracker
     contentTable.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     contentTable.SetParentOrigin( ParentOrigin::TOP_LEFT );
     contentTable.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE * 0.5f ) );
-//    contentTable.TouchedSignal().Connect( this, &LoggingController::OnTouchEvent );
 
     for( unsigned int i = 0; i < contentTable.GetRows(); ++i )
     {
@@ -639,35 +638,7 @@ class LoggingController: public ConnectionTracker
     return true;
   }
 
-  bool OnTouchEvent( Actor actor, const TouchEvent& event )
-  {
-    if( 1u == event.GetPointCount() )
-    {
-      const TouchPoint::State state = event.GetPoint(0u).state;
-
-      // Clamp to integer values; this is to reduce flicking due to pixel misalignment
-      const float localPoint = static_cast<float>( static_cast<int>( event.GetPoint( 0 ).local.y ) );
-
-      if( TouchPoint::Down == state )
-      {
-        mLastPoint = localPoint;
-        mAnimation = Animation::New( 0.25f );
-      }
-      else if( TouchPoint::Motion == state )
-      {
-        if( mAnimation )
-        {
-          mAnimation.AnimateBy( Property(actor, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunction::LINEAR );
-          mAnimation.Play();
-          mLastPoint = localPoint;
-        }
-      }
-    }
-
-    return true;
-  }
-
- private:
+private:
 
   struct LoggerState
   {

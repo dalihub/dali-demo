@@ -459,7 +459,7 @@ private:
     actor.SetParentOrigin(ParentOrigin::CENTER);
     actor.SetAnchorPoint(AnchorPoint::CENTER);
 
-    actor.TouchedSignal().Connect( this, &ExampleController::OnTouchImage );
+    actor.TouchSignal().Connect( this, &ExampleController::OnTouchImage );
     return actor;
   }
 
@@ -489,12 +489,11 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The TouchEvent.
    */
-  bool OnTouchImage( Actor actor, const TouchEvent& event )
+  bool OnTouchImage( Actor actor, const TouchData& event )
   {
-    if( (event.points.size() > 0) && (!mScrolling) )
+    if( (event.GetPointCount() > 0) && (!mScrolling) )
     {
-      TouchPoint point = event.points[0];
-      if(point.state == TouchPoint::Up)
+      if( event.GetState( 0 ) == PointState::UP )
       {
         // Spin the Image a few times.
         Animation animation = Animation::New(SPIN_DURATION);

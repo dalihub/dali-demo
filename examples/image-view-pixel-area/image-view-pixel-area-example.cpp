@@ -74,13 +74,12 @@ private:
     animation.Play();
 
     // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchedSignal().Connect( this, &ImageViewPixelAreaApp::OnTouch );
+    stage.GetRootLayer().TouchSignal().Connect( this, &ImageViewPixelAreaApp::OnTouch );
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
-    const TouchPoint &point = touch.GetPoint(0);
-    if(point.state == TouchPoint::Down)
+    if( touch.GetState( 0 ) == PointState::DOWN )
     {
       mIndex++;
       for( int i=0; i<3;i++ )

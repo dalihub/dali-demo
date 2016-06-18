@@ -154,4 +154,10 @@
 	<ui-application appid="flex-container.example" exec="/usr/apps/com.samsung.dali-demo/bin/flex-container.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Flex Container</label>
 	</ui-application>
+	<ui-application appid="text-editor.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-editor.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Editor</label>
+	</ui-application>
+	<ui-application appid="video-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/video-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Video View</label>
+	</ui-application>
 </manifest>

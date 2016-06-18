@@ -63,7 +63,7 @@ public:
     mTableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     mTableView.SetParentOrigin( ParentOrigin::TOP_LEFT );
     mTableView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mTableView.TouchedSignal().Connect( this, &EmojiExample::OnTouchEvent );
+    mTableView.TouchSignal().Connect( this, &EmojiExample::OnTouch );
     stage.Add( mTableView );
 
     for( unsigned int index = 0u; index < NUMBER_OF_EMOJIS; ++index )
@@ -81,21 +81,21 @@ public:
     }
   }
 
-  bool OnTouchEvent( Actor actor, const TouchEvent& event )
+  bool OnTouch( Actor actor, const TouchData& event )
   {
     if( 1u == event.GetPointCount() )
     {
-      const TouchPoint::State state = event.GetPoint(0u).state;
+      const PointState::Type state = event.GetState( 0 );
 
       // Clamp to integer values; this is to reduce flicking due to pixel misalignment
-      const float localPoint = static_cast<float>( static_cast<int>( event.GetPoint( 0 ).local.y ) );
+      const float localPoint = static_cast<float>( static_cast<int>( event.GetLocalPosition( 0 ).y ) );
 
-      if( TouchPoint::Down == state )
+      if( PointState::DOWN == state )
       {
         mLastPoint = localPoint;
         mAnimation = Animation::New( 0.25f );
       }
-      else if( TouchPoint::Motion == state )
+      else if( PointState::MOTION == state )
       {
         if( mAnimation )
         {

@@ -164,7 +164,7 @@ public:
   ~MetaballRefracController();
 
   void Create( Application& app );
-  bool OnTouch( Actor actor, const TouchEvent& touch );
+  bool OnTouch( Actor actor, const TouchData& touch );
   void OnKeyEvent(const KeyEvent& event);
 
   void SetGravity(const Vector2 & gravity);
@@ -283,7 +283,7 @@ void MetaballRefracController::Create( Application& app )
   CreateAnimations();
 
   // Connect the callback to the touch signal on the mesh actor
-  stage.GetRootLayer().TouchedSignal().Connect( this, &MetaballRefracController::OnTouch );
+  stage.GetRootLayer().TouchSignal().Connect( this, &MetaballRefracController::OnTouch );
 }
 
 /**
@@ -759,13 +759,12 @@ void MetaballRefracController::SetPositionToMetaballs(Vector2 & metaballCenter)
   }
 }
 
-bool MetaballRefracController::OnTouch( Actor actor, const TouchEvent& touch )
+bool MetaballRefracController::OnTouch( Actor actor, const TouchData& touch )
 {
-  const TouchPoint &point = touch.GetPoint(0);
   float aspectR = mScreenSize.y / mScreenSize.x;
-  switch(point.state)
+  switch( touch.GetState( 0 ) )
   {
-    case TouchPoint::Down:
+    case PointState::DOWN:
     {
       StopAfterClickAnimations();
       for (int i = 0 ; i < METABALL_NUMBER ; i++)
@@ -776,17 +775,18 @@ bool MetaballRefracController::OnTouch( Actor actor, const TouchEvent& touch )
       //We draw with the refraction-composition shader
       mRendererRefraction.SetTextures(mTextureSetRefraction);
       mRendererRefraction.SetShader( mShaderRefraction );
-      mCurrentTouchPosition = point.screen;
+      mCurrentTouchPosition = touch.GetScreenPosition( 0 );
 
       //we use the click position for the metaballs
-      Vector2 metaballCenter = Vector2((point.screen.x / mScreenSize.x) - 0.5, (aspectR * (mScreenSize.y - point.screen.y) / mScreenSize.y) - 0.5) * 2.0;
+      Vector2 metaballCenter = Vector2((mCurrentTouchPosition.x / mScreenSize.x) - 0.5, (aspectR * (mScreenSize.y - mCurrentTouchPosition.y) / mScreenSize.y) - 0.5) * 2.0;
       SetPositionToMetaballs(metaballCenter);
       break;
     }
-    case TouchPoint::Motion:
+    case PointState::MOTION:
     {
-      Vector2 displacement = point.screen - mCurrentTouchPosition;
-      mCurrentTouchPosition = point.screen;
+      Vector2 screen = touch.GetScreenPosition( 0 );
+      Vector2 displacement = screen - mCurrentTouchPosition;
+      mCurrentTouchPosition = screen;
 
       mMetaballPosVariationTo.x += (displacement.x / mScreenSize.x) * 2.2;
       mMetaballPosVariationTo.y += (- displacement.y / mScreenSize.y) * 2.2;
@@ -803,13 +803,13 @@ bool MetaballRefracController::OnTouch( Actor actor, const TouchEvent& touch )
       mPositionVarAnimation[1].Play();
 
       //we use the click position for the metaballs
-      Vector2 metaballCenter = Vector2((point.screen.x / mScreenSize.x) - 0.5, (aspectR * (mScreenSize.y - point.screen.y) / mScreenSize.y) - 0.5) * 2.0;
+      Vector2 metaballCenter = Vector2((screen.x / mScreenSize.x) - 0.5, (aspectR * (mScreenSize.y - screen.y) / mScreenSize.y) - 0.5) * 2.0;
       SetPositionToMetaballs(metaballCenter);
       break;
     }
-    case TouchPoint::Up:
-    case TouchPoint::Leave:
-    case TouchPoint::Interrupted:
+    case PointState::UP:
+    case PointState::LEAVE:
+    case PointState::INTERRUPTED:
     {
       //Stop click animations
       StopClickAnimations();
