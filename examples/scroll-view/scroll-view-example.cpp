@@ -450,11 +450,18 @@ private:
    * @param[in] width the width of the image in texels
    * @param[in] height the height of the image in texels.
    */
-  ImageView CreateImage( const std::string& filename, unsigned int width = IMAGE_THUMBNAIL_WIDTH, unsigned int height = IMAGE_THUMBNAIL_HEIGHT )
+  ImageView CreateImage( const std::string& filename, int width = IMAGE_THUMBNAIL_WIDTH, int height = IMAGE_THUMBNAIL_HEIGHT )
   {
-    Image img = ResourceImage::New(filename, ImageDimensions( width, height ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
+    ImageView actor = ImageView::New();
+    Property::Map map;
+    map["rendererType"] = "image";
+    map["url"] = filename;
+    map["desiredWidth"] = width;
+    map["desiredHeight"] = height;
+    map["fittingMode"] = "SCALE_TO_FILL";
+    map["samplingMode"] = "BOX_THEN_LINEAR";
+    actor.SetProperty( ImageView::Property::IMAGE, map );
 
-    ImageView actor = ImageView::New(img);
     actor.SetName( filename );
     actor.SetParentOrigin(ParentOrigin::CENTER);
     actor.SetAnchorPoint(AnchorPoint::CENTER);

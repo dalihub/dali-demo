@@ -23,6 +23,8 @@
 #include <dali/integration-api/debug.h>
 #include <iostream>
 
+#include "shared/utility.h"
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 
@@ -225,10 +227,10 @@ Renderer CreateRenderer( unsigned int index )
     Shader shader = Shader::New( VERTEX_SHADER_TEXTURE, FRAGMENT_SHADER_TEXTURE );
 
     const char* imagePath = !gNinePatch ? IMAGE_PATH[index] : NINEPATCH_IMAGE_PATH[index];
-    Image image = ResourceImage::New( imagePath );
+    Texture texture = DemoHelper::LoadTexture( imagePath );
 
     TextureSet textureSet = TextureSet::New();
-    textureSet.SetImage( 0u, image );
+    textureSet.SetTexture( 0u, texture );
     renderers[index] = Renderer::New( QuadMesh(), shader );
     renderers[index].SetTextures( textureSet );
     renderers[index].SetProperty( Renderer::Property::BLEND_MODE, BlendMode::OFF );

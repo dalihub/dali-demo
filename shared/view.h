@@ -77,10 +77,11 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   toolBarLayer.RaiseToTop();
 
   // Tool bar
-  Dali::Image image = Dali::ResourceImage::New( toolbarImagePath );
   toolBar = Dali::Toolkit::ToolBar::New();
   toolBar.SetName( "TOOLBAR" );
-  toolBar.SetBackgroundImage( image );
+  Dali::Property::Map background;
+  background["url"] = toolbarImagePath;
+  toolBar.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, background );
   toolBar.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
   toolBar.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
   toolBar.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
@@ -129,8 +130,15 @@ Dali::Layer CreateView( Dali::Application& application,
   // Set background image, loading it at screen resolution:
   if ( !backgroundImagePath.empty() )
   {
-    Dali::Image backgroundImage = Dali::ResourceImage::New( backgroundImagePath, Dali::ImageDimensions( stage.GetSize().x, stage.GetSize().y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-    view.SetBackgroundImage( backgroundImage );
+    Dali::Property::Map map;
+    map["rendererType"] = "image";
+    map["url"] = backgroundImagePath;
+    map["desiredWidth"] = stage.GetSize().x;
+    map["desiredHeight"] = stage.GetSize().y;
+    map["fittingMode"] = "SCALE_TO_FILL";
+    map["samplingMode"] = "BOX_THEN_LINEAR";
+    map["synchronousLoading"] = true;
+    view.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
   }
 
   // FIXME

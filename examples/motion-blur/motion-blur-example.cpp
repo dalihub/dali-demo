@@ -95,16 +95,24 @@ const float BUTTON_TITLE_LABEL_Y_OFFSET = 0.05f;
 const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to new orientation.
 
 /**
- * @brief Load an image, scaled-down to no more than the dimensions passed in.
+ * @brief Set an image to image view, scaled-down to no more than the dimensions passed in.
  *
  * Uses SHRINK_TO_FIT which ensures the resulting image is
- * smaller than or equal to the specified dimensions while preserving its
- * original aspect ratio.
+ * smaller than or equal to the specified dimensions while preserving its original aspect ratio.
  */
-ResourceImage LoadImageFittedInBox( const char * const imagePath, uint32_t maxWidth, uint32_t maxHeight )
+void SetImageFittedInBox( ImageView& imageView, Property::Map& shaderEffect, const char * const imagePath, int maxWidth, int maxHeight )
 {
+  Property::Map map;
+  map["rendererType"] = "image";
+  map["url"] = imagePath;
   // Load the image nicely scaled-down to fit within the specified max width and height:
-  return ResourceImage::New( imagePath, ImageDimensions( maxWidth, maxHeight ), FittingMode::SHRINK_TO_FIT, Dali::SamplingMode::BOX_THEN_LINEAR );
+  map["desiredWidth"] = maxWidth;
+  map["desiredHeight"] = maxHeight;
+  map["fittingMode"] = "SHRINK_TO_FIT";
+  map["samplingMode"] = "BOX_THEN_LINEAR";
+  map.Merge( shaderEffect );
+
+  imageView.SetProperty( ImageView::Property::IMAGE, map );
 }
 
 } // unnamed namespace
@@ -207,8 +215,9 @@ public:
     mMotionBlurActorSize = Size( std::min( stageSize.x * 0.3f, MOTION_BLUR_ACTOR_WIDTH ), std::min( stageSize.y * 0.3f, MOTION_BLUR_ACTOR_HEIGHT ) );
     mMotionBlurActorSize = Size( std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ), std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ) );
 
-    Image image = LoadImageFittedInBox( MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y );
-    mMotionBlurImageView = ImageView::New(image);
+    mMotionBlurEffect = CreateMotionBlurEffect();
+    mMotionBlurImageView = ImageView::New();
+    SetImageFittedInBox( mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y );
     mMotionBlurImageView.SetParentOrigin( ParentOrigin::CENTER );
     mMotionBlurImageView.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
 
@@ -219,7 +228,6 @@ public:
 
     // set actor shader to the blur one
     Toolkit::SetMotionBlurProperties( mMotionBlurImageView, MOTION_BLUR_NUM_SAMPLES );
-    mMotionBlurImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionBlurEffect );
 
 
 #ifdef MULTIPLE_MOTION_BLURRED_ACTORS
@@ -483,10 +491,8 @@ public:
     {
       mCurrentImage = 0;
     }
+    SetImageFittedInBox( mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGES[mCurrentImage], mMotionBlurActorSize.x, mMotionBlurActorSize.y );
 
-    Image blurImage = LoadImageFittedInBox( MOTION_BLUR_ACTOR_IMAGES[mCurrentImage], mMotionBlurActorSize.x, mMotionBlurActorSize.y );
-
-    mMotionBlurImageView.SetImage(blurImage);
 #ifdef MULTIPLE_MOTION_BLURRED_ACTORS
     mMotionBlurImageView2.SetImage(blurImage);
     mMotionBlurImageView3.SetImage(blurImage);

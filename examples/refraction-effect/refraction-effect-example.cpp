@@ -26,6 +26,7 @@
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 
@@ -72,19 +73,6 @@ struct LightOffsetConstraint
 
   float mRadius;
 };
-
-/**
- * @brief Load an image, scaled-down to no more than the stage dimensions.
- *
- * Uses image scaling mode SCALE_TO_FILL to resize the image at
- * load time to cover the entire stage with pixels with no borders,
- * and filter mode BOX_THEN_LINEAR to sample the image with maximum quality.
- */
-ResourceImage LoadStageFillingImage( const char * const imagePath )
-{
-  Size stageSize = Stage::GetCurrent().GetSize();
-  return ResourceImage::New( imagePath, ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-}
 
 /**
  * structure of the vertex in the mesh
@@ -280,9 +268,9 @@ private:
     mShaderFlat = Shader::New( VERTEX_SHADER_FLAT, FRAGMENT_SHADER_FLAT );
     mGeometry = CreateGeometry( MESH_FILES[mCurrentMeshId] );
 
-    Image texture = LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] );
+    Texture texture = DemoHelper::LoadStageFillingTexture( TEXTURE_IMAGES[mCurrentTextureId] );
     mTextureSet = TextureSet::New();
-    mTextureSet.SetImage( 0u, texture );
+    mTextureSet.SetTexture( 0u, texture );
 
     mRenderer = Renderer::New( mGeometry, mShaderFlat );
     mRenderer.SetTextures( mTextureSet );
@@ -343,8 +331,8 @@ private:
   bool OnChangeTexture( Toolkit::Button button )
   {
     mCurrentTextureId = ( mCurrentTextureId + 1 ) % NUM_TEXTURE_IMAGES;
-    Image texture = LoadStageFillingImage( TEXTURE_IMAGES[mCurrentTextureId] );
-    mTextureSet.SetImage( 0u, texture );
+    Texture texture = DemoHelper::LoadStageFillingTexture( TEXTURE_IMAGES[mCurrentTextureId] );
+    mTextureSet.SetTexture( 0u, texture );
     return true;
   }
 

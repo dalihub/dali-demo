@@ -76,8 +76,7 @@ public:
     Vector2 screenSize = stage.GetSize();
 
     //Add background
-    Image imageBackground = ResourceImage::New( BACKGROUND_IMAGE );
-    Toolkit::ImageView backView = Toolkit::ImageView::New(imageBackground);
+    Toolkit::ImageView backView = Toolkit::ImageView::New(BACKGROUND_IMAGE);
     backView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     stage.Add(backView);
 

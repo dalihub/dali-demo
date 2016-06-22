@@ -24,6 +24,7 @@
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 
@@ -164,9 +165,9 @@ public:
 
     for( unsigned i=0; i<NUMBER_OF_SAMPLES; ++i)
     {
-      Image image = ResourceImage::New( IMAGES[i] );
+      Texture texture = DemoHelper::LoadTexture( IMAGES[i] );
       TextureSet textureSet = TextureSet::New();
-      textureSet.SetImage( 0u, image );
+      textureSet.SetTexture( 0u, texture );
       if( i==0 ) { firstTextureSet = textureSet; }
 
       Renderer renderer = Renderer::New( mGeometry, mShader );

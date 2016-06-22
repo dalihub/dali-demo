@@ -24,6 +24,7 @@
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -187,8 +188,7 @@ void NewWindowController::Create( Application& app )
                                           "Context recovery" );
 
   Size stageSize = stage.GetSize();
-  Image backgroundImage = ResourceImage::New( BACKGROUND_IMAGE, Dali::ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-  ImageView backgroundActor = ImageView::New( backgroundImage );
+  ImageView backgroundActor = ImageView::New( BACKGROUND_IMAGE, Dali::ImageDimensions( stageSize.x, stageSize.y ) );
   backgroundActor.SetParentOrigin( ParentOrigin::CENTER );
   mContentLayer.Add(backgroundActor);
 
@@ -212,16 +212,15 @@ void NewWindowController::Create( Application& app )
   logoLayoutActor.SetScale(0.5f);
   backgroundActor.Add(logoLayoutActor);
 
-  Image image = ResourceImage::New(LOGO_IMAGE);
-  ImageView imageView = ImageView::New(image);
+  ImageView imageView = ImageView::New( LOGO_IMAGE );
   imageView.SetName("daliLogo");
   imageView.SetParentOrigin(ParentOrigin::CENTER);
   imageView.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
   logoLayoutActor.Add(imageView);
 
   ImageView mirrorImageView = CreateBlurredMirrorImage(LOGO_IMAGE);
-  mirrorImageView.SetParentOrigin(ParentOrigin::CENTER);
-  mirrorImageView.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+  mirrorImageView.SetParentOrigin(ParentOrigin::TOP_CENTER);
+  mirrorImageView.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
   logoLayoutActor.Add(mirrorImageView);
 
   AddBubbles( backgroundActor, stage.GetSize());
@@ -241,10 +240,10 @@ void NewWindowController::Destroy( Application& app )
 void NewWindowController::AddBubbles( Actor& parentActor, const Vector2& stageSize)
 {
   mEmitter = Toolkit::BubbleEmitter::New( stageSize,
-                                          ResourceImage::New( DEMO_IMAGE_DIR "bubble-ball.png" ),
+                                          DemoHelper::LoadImage( DEMO_IMAGE_DIR "bubble-ball.png" ),
                                           200, Vector2( 5.0f, 5.0f ) );
 
-  Image background = ResourceImage::New(BACKGROUND_IMAGE);
+  Image background = DemoHelper::LoadImage(BACKGROUND_IMAGE);
   mEmitter.SetBackground( background, Vector3(0.5f, 0.f,0.5f) );
   mEmitter.SetBubbleDensity( 9.f );
   Actor bubbleRoot = mEmitter.GetRootActor();
@@ -275,10 +274,10 @@ void NewWindowController::AddMeshActor( Actor& parentActor )
   colorMeshActor.SetName("ColorMeshActor");
 
  // Create a textured mesh
-  Image effectImage = ResourceImage::New(EFFECT_IMAGE);
+  Texture effectTexture = DemoHelper::LoadTexture(EFFECT_IMAGE);
   Shader shaderTextureMesh = Shader::New( VERTEX_TEXTURE_MESH, FRAGMENT_TEXTURE_MESH );
   TextureSet textureSet = TextureSet::New();
-  textureSet.SetImage( 0u, effectImage );
+  textureSet.SetTexture( 0u, effectTexture );
   Renderer textureMeshRenderer = Renderer::New( meshGeometry, shaderTextureMesh );
   textureMeshRenderer.SetTextures( textureSet );
 
@@ -320,8 +319,7 @@ void NewWindowController::AddBlendingImageActor( Actor& parentActor )
   Property::Map map;
   map[ "shader" ] = customShader;
 
-  Image baseImage = ResourceImage::New(BASE_IMAGE);
-  ImageView blendActor = ImageView::New( baseImage );
+  ImageView blendActor = ImageView::New( BASE_IMAGE );
   blendActor.SetProperty( ImageView::Property::IMAGE, map );
   blendActor.RegisterProperty( "alpha", 0.5f );
 
@@ -345,10 +343,9 @@ void NewWindowController::AddTextLabel( Actor& parentActor )
 
 ImageView NewWindowController::CreateBlurredMirrorImage(const char* imageName)
 {
-  Image image = ResourceImage::New(imageName);
+  Image image = DemoHelper::LoadImage(imageName);
 
-  Uint16Pair intFboSize = ResourceImage::GetImageSize(imageName);
-  Vector2 FBOSize = Vector2( intFboSize.GetWidth(), intFboSize.GetHeight() );
+  Vector2 FBOSize = Vector2( image.GetWidth(), image.GetHeight() );
   FrameBufferImage fbo = FrameBufferImage::New( FBOSize.width, FBOSize.height, Pixel::RGBA8888);
 
   GaussianBlurView gbv = GaussianBlurView::New(5, 2.0f, Pixel::RGBA8888, 0.5f, 0.5f, true);

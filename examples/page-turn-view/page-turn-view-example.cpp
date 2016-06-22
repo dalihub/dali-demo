@@ -18,6 +18,7 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/image-atlas/image-atlas.h>
+#include <dali/devel-api/images/atlas.h>
 
 #include <assert.h>
 #include <cstdlib>
@@ -25,6 +26,7 @@
 #include <iostream>
 
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -39,9 +41,9 @@ const char* const CHANGE_IMAGE_ICON_SELECTED( DEMO_IMAGE_DIR "icon-change-select
 // set a ratio to modify the current page number when the rotation is changed
 const float PAGE_NUMBER_CORRESPONDING_RATIO(1.25f);
 
-const char* BOOK_COVER_PORTRAIT = ( DEMO_IMAGE_DIR "book-portrait-cover.jpg" );
-const char* BOOK_COVER_LANDSCAPE = ( DEMO_IMAGE_DIR "book-landscape-cover.jpg" );
-const char* BOOK_COVER_BACK_LANDSCAPE = ( DEMO_IMAGE_DIR "book-landscape-cover-back.jpg" );
+const char* BOOK_COVER_PORTRAIT( DEMO_IMAGE_DIR "book-portrait-cover.jpg" );
+const char* BOOK_COVER_LANDSCAPE( DEMO_IMAGE_DIR "book-landscape-cover.jpg" );
+const char* BOOK_COVER_BACK_LANDSCAPE( DEMO_IMAGE_DIR "book-landscape-cover-back.jpg" );
 
 const char* PAGE_IMAGES_PORTRAIT[] =
 {
@@ -66,6 +68,21 @@ const char* PAGE_IMAGES_LANDSCAPE[] =
 };
 const unsigned int NUMBER_OF_LANDSCAPE_IMAGE( sizeof(PAGE_IMAGES_LANDSCAPE) / sizeof(PAGE_IMAGES_LANDSCAPE[0]) );
 
+Atlas LoadImages( const char*imagePath1, const char* imagePath2 )
+{
+  PixelData pixelData1 = DemoHelper::LoadPixelData( imagePath1, ImageDimensions(), FittingMode::DEFAULT, SamplingMode::DEFAULT );
+  PixelData pixelData2 = DemoHelper::LoadPixelData( imagePath2, ImageDimensions(), FittingMode::DEFAULT, SamplingMode::DEFAULT );
+
+  unsigned int width = pixelData1.GetWidth()+pixelData2.GetWidth();
+  unsigned int height = pixelData1.GetHeight() > pixelData2.GetHeight() ? pixelData1.GetHeight() : pixelData2.GetHeight();
+
+  Atlas image  = Atlas::New( width, height );
+  image.Upload( pixelData1, 0u, 0u );
+  image.Upload( pixelData2, pixelData1.GetWidth(), 0u );
+
+  return image;
+}
+
 }// end LOCAL STUFF
 
 class PortraitPageFactory : public PageFactory
@@ -85,15 +102,15 @@ class PortraitPageFactory : public PageFactory
    */
   virtual Image NewPage( unsigned int pageId )
   {
-    Image page;
+    Atlas page;
 
     if( pageId == 0 )
     {
-      page = ResourceImage::New( BOOK_COVER_PORTRAIT );
+      page = DemoHelper::LoadImage( BOOK_COVER_PORTRAIT );
     }
     else
     {
-      page = ResourceImage::New( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] );
+      page = DemoHelper::LoadImage( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] );
     }
 
     return page;
@@ -118,29 +135,20 @@ class LandscapePageFactory : public PageFactory
    */
   virtual Image NewPage( unsigned int pageId )
   {
-    if( mImageSize.GetWidth() == 0u || mImageSize.GetHeight() == 0u )
-    {
-      mImageSize = ResourceImage::GetImageSize(BOOK_COVER_LANDSCAPE);
-    }
 
-    ImageAtlas atlas = ImageAtlas::New( mImageSize.GetWidth()*2u, mImageSize.GetHeight(), Pixel::RGB888 );
-    Vector4 textureRect;
+    Atlas page;
     if( pageId == 0 )
     {
-      atlas.Upload( textureRect, BOOK_COVER_LANDSCAPE, mImageSize );
-      atlas.Upload( textureRect, BOOK_COVER_BACK_LANDSCAPE, mImageSize );
+      page = LoadImages( BOOK_COVER_LANDSCAPE, BOOK_COVER_BACK_LANDSCAPE );
     }
     else
     {
       unsigned int imageId = (pageId-1)*2;
-      atlas.Upload( textureRect, PAGE_IMAGES_LANDSCAPE[ imageId % NUMBER_OF_LANDSCAPE_IMAGE ], mImageSize );
-      atlas.Upload( textureRect, PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ], mImageSize );
+      page = LoadImages( PAGE_IMAGES_LANDSCAPE[ imageId % NUMBER_OF_LANDSCAPE_IMAGE ], PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ] );
     }
 
-    return atlas.GetAtlas();
+    return page;
   }
-
-  ImageDimensions mImageSize;
 };
 
 /**

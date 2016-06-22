@@ -175,8 +175,10 @@ public:
     //
     // Motion stretched actor
     //
-
-    mMotionStretchImageView = ImageView::New( MOTION_STRETCH_ACTOR_IMAGE1 );
+    mMotionStretchEffect = Toolkit::CreateMotionStretchEffect();
+    mMotionStretchEffect["url"] = MOTION_STRETCH_ACTOR_IMAGE1;
+    mMotionStretchImageView = ImageView::New();
+    mMotionStretchImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionStretchEffect );
     mMotionStretchImageView.SetParentOrigin( ParentOrigin::CENTER );
     mMotionStretchImageView.SetAnchorPoint( AnchorPoint::CENTER );
     mMotionStretchImageView.SetSize( MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT );
@@ -184,9 +186,7 @@ public:
     mContentLayer.Add( mMotionStretchImageView );
 
     // Create shader used for doing motion stretch
-    mMotionStretchEffect = Toolkit::CreateMotionStretchEffect();
     Toolkit::SetMotionStretchProperties( mMotionStretchImageView );
-    mMotionStretchImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionStretchEffect );
   }
 
   //////////////////////////////////////////////////////////////
@@ -390,8 +390,8 @@ public:
       mCurrentImage = 0;
     }
 
-    Image stretchImage = ResourceImage::New( MOTION_STRETCH_ACTOR_IMAGES[mCurrentImage] );
-    mMotionStretchImageView.SetImage(stretchImage);
+    mMotionStretchEffect["url"] = MOTION_STRETCH_ACTOR_IMAGES[mCurrentImage];
+    mMotionStretchImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionStretchEffect );
   }
 
 
