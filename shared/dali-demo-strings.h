@@ -107,6 +107,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM          "Super Blur and Bloom"
 #define DALI_DEMO_STR_TITLE_EFFECTS_VIEW              "Effects View"
 #define DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE       "Native Image Source"
+#define DALI_DEMO_STR_TITLE_MESH_RENDERER             "Mesh Renderer"
 
 #endif
 
