@@ -148,14 +148,21 @@ private:
   /**
    * Callback function of cube transition completed signal
    * @param[in] effect The cube effect used for the transition
-   * @param[in] image The target Image of the completed transition
+   * @param[in] texture The target Texture of the completed transition
    */
-  void OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, Image image );
+  void OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, Texture image );
   /**
    * Callback function of timer tick
    * The timer is used to count the image display duration in slideshow,
    */
   bool OnTimerTick();
+
+  /**
+   * Loads image, resizes it to the size of stage and creates a textue out of it
+   * @param[in] filepath Path to the image file
+   * @return New texture object
+   */
+  Texture LoadStageFillingTexture( const char* filepath );
 
 private:
   Application&                    mApplication;
@@ -166,8 +173,8 @@ private:
 
   Vector2                         mViewSize;
 
-  Image                           mCurrentImage;
-  Image                           mNextImage;
+  Texture                         mCurrentTexture;
+  Texture                         mNextTexture;
   unsigned int                    mIndex;
   bool                            mIsImageLoading;
 
@@ -232,7 +239,7 @@ void CubeTransitionApp::OnInit( Application& application )
   mViewSize = Stage::GetCurrent().GetSize();
 
   // show the first image
-  mCurrentImage = DemoHelper::LoadStageFillingImage( IMAGES[mIndex] );
+  mCurrentTexture = LoadStageFillingTexture( IMAGES[mIndex] );
 
   //use small cubes
   mCubeWaveEffect = Toolkit::CubeTransitionWaveEffect::New( NUM_ROWS_WAVE, NUM_COLUMNS_WAVE );
@@ -242,7 +249,7 @@ void CubeTransitionApp::OnInit( Application& application )
 
   mCubeWaveEffect.SetSize( mViewSize );
   mCubeWaveEffect.SetParentOrigin( ParentOrigin::CENTER );
-  mCubeWaveEffect.SetCurrentImage( mCurrentImage );
+  mCubeWaveEffect.SetCurrentTexture( mCurrentTexture );
 
   // use big cubes
   mCubeCrossEffect = Toolkit::CubeTransitionCrossEffect::New(NUM_ROWS_CROSS, NUM_COLUMNS_CROSS );
@@ -252,7 +259,7 @@ void CubeTransitionApp::OnInit( Application& application )
 
   mCubeCrossEffect.SetSize( mViewSize );
   mCubeCrossEffect.SetParentOrigin( ParentOrigin::CENTER );
-  mCubeCrossEffect.SetCurrentImage( mCurrentImage );
+  mCubeCrossEffect.SetCurrentTexture( mCurrentTexture );
 
   mCubeFoldEffect = Toolkit::CubeTransitionFoldEffect::New( NUM_ROWS_FOLD, NUM_COLUMNS_FOLD );
   mCubeFoldEffect.SetTransitionDuration( ANIMATION_DURATION_FOLD );
@@ -260,7 +267,7 @@ void CubeTransitionApp::OnInit( Application& application )
 
   mCubeFoldEffect.SetSize( mViewSize );
   mCubeFoldEffect.SetParentOrigin( ParentOrigin::CENTER );
-  mCubeFoldEffect.SetCurrentImage( mCurrentImage );
+  mCubeFoldEffect.SetCurrentTexture( mCurrentTexture );
 
   mViewTimer = Timer::New( VIEWINGTIME );
   mViewTimer.TickSignal().Connect( this, &CubeTransitionApp::OnTimerTick );
@@ -303,11 +310,11 @@ void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
 
 void CubeTransitionApp::GoToNextImage()
 {
-  mNextImage = DemoHelper::LoadStageFillingImage( IMAGES[ mIndex ] );
-  mCurrentEffect.SetTargetImage( mNextImage );
+  mNextTexture = LoadStageFillingTexture( IMAGES[ mIndex ] );
+  mCurrentEffect.SetTargetTexture( mNextTexture );
   mIsImageLoading = false;
   mCurrentEffect.StartTransition( mPanPosition, mPanDisplacement );
-  mCurrentImage = mNextImage;
+  mCurrentTexture = mNextTexture;
 }
 
 bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
@@ -339,7 +346,7 @@ bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
 
   // Set the current image to cube transition effect
   // only need to set at beginning or change from another effect
-  mCurrentEffect.SetCurrentImage( mCurrentImage );
+  mCurrentEffect.SetCurrentTexture( mCurrentTexture );
   return true;
 }
 
@@ -365,7 +372,7 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   return true;
 }
 
-void CubeTransitionApp::OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, Image image )
+void CubeTransitionApp::OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, Texture texture )
 {
   if( mSlideshow )
   {
@@ -383,6 +390,17 @@ bool CubeTransitionApp::OnTimerTick()
 
   //return false to stop the timer
   return false;
+}
+
+Texture CubeTransitionApp::LoadStageFillingTexture( const char* filepath )
+{
+  ImageDimensions dimensions( Stage::GetCurrent().GetSize().x, Stage::GetCurrent().GetSize().y );
+  BitmapLoader loader = BitmapLoader::New( filepath, dimensions, FittingMode::SCALE_TO_FILL );
+  loader.Load();
+  PixelData pixelData = loader.GetPixelData();
+  Texture texture = Texture::New( TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight() );
+  texture.Upload( pixelData );
+  return texture;
 }
 
 void CubeTransitionApp::OnKeyEvent(const KeyEvent& event)
