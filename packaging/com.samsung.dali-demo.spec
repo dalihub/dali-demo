@@ -39,22 +39,23 @@ of the capability of the toolkit.
 %prep
 %setup -q
 
-
 #Use TZ_PATH when tizen version is 3.x
+
 %if "%{tizen_version_major}" == "2"
 %define dali_app_ro_dir       /usr/apps/com.samsung.dali-demo/
 %define dali_xml_file_dir     /usr/share/packages/
 %define dali_icon_dir         /usr/share/icons/
+%define smack_rule_dir        /etc/smack/accesses2.d/
 %endif
 
 %if "%{tizen_version_major}" == "3"
 %define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo/
 %define dali_xml_file_dir     %TZ_SYS_RO_PACKAGES
 %define dali_icon_dir         %TZ_SYS_RO_ICONS
+%define smack_rule_dir        %TZ_SYS_SMACK/accesses2.d/
 %endif
 
 %define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
-%define smack_rule_dir        /etc/smack/accesses2.d/
 %define locale_dir            %{dali_app_ro_dir}/res/locale
 %define local_style_dir       ../../resources/style/mobile
 
