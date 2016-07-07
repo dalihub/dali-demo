@@ -494,7 +494,7 @@ private:
    * Upon Touching an image (Release), make it spin
    * (provided we're not scrolling).
    * @param[in] actor The actor touched
-   * @param[in] event The TouchEvent.
+   * @param[in] event The touch information.
    */
   bool OnTouchImage( Actor actor, const TouchData& event )
   {

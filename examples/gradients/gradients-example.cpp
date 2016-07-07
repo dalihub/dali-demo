@@ -143,13 +143,6 @@ public:
     return true;
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
-  {
-    // quit the application
-    mApplication.Quit();
-    return true;
-  }
-
   void OnKeyEvent(const KeyEvent& event)
   {
     if(event.state == KeyEvent::Down)

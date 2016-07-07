@@ -475,7 +475,7 @@ public:
  /**
   * Upon Touching an image (Release), change its scaling mode and make it spin, provided we're not scrolling.
   * @param[in] actor The actor touched
-  * @param[in] event The TouchEvent.
+  * @param[in] event The Touch information.
   */
   bool OnTouchImage( Actor actor, const TouchData& event )
   {

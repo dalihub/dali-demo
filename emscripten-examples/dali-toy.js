@@ -1583,7 +1583,7 @@ var javascriptSources =
       "\n" +
       "function onTouched(actor, e) {\n" +
       "  for(var i = 0; i < e.points.length; i++) {\n" +
-      "      if(e.points[i].state === \"Down\") {\n" +
+      "      if(e.points[i].state === \"DOWN\") {\n" +
       "        console.log(e);\n" +
       "        animation.play();\n" +
       "        return;\n" +
@@ -1591,7 +1591,7 @@ var javascriptSources =
       "  }\n" +
       "}\n" +
       "\n" +
-      "actor2.connect(\"touched\", onTouched);\n" +
+      "actor2.connect(\"touch\", onTouched);\n" +
       "\n" +
       "\n" +
       ""
@@ -3843,7 +3843,7 @@ function path() {
 }
 
 // conditional animation
-// when("myimage", condition("touched", "inside", 0, 100),
+// when("myimage", condition("touch", "inside", 0, 100),
 //
 function condition(propertyName, conditionType, arg0, arg1)
 {
@@ -4108,7 +4108,7 @@ function _makeCallback(args) {
 //     then("play", "myanim"),
 //     thenOnChild("myimage", "child", "hide"),
 //     animate("name"),
-//     animateTo("position", 
+//     animateTo("position",
 //        )
 function doNow(args) {
   "use strict";
@@ -4121,10 +4121,10 @@ function doNow(args) {
 
 function _makeSensibleTouched(func, state) { // dali giving all mouse events on touched signal --- is this correct?? @todo
   "use strict";
-  return function(actor, touchEvent){
+  return function(actor, touch){
     var doit = false;
-    for(var i = 0; i < touchEvent.points.length; i++) {
-      if(touchEvent.points[i].state === state) {
+    for(var i = 0; i < touch.points.length; i++) {
+      if(touch.points[i].state === state) {
         doit = true;
         break;
       }
@@ -4142,7 +4142,7 @@ function _makeSensibleTouched(func, state) { // dali giving all mouse events on 
 
 //   if( signalName === "touchedDown" ) { // fix as touched signal is really "mouseState"?
 //     f = _makeSensibleTouchedDown(func);
-//     signalName = "touched";
+//     signalName = "touch";
 //   }
 
 //   for(var ai = 0; ai < actors.length; ai++) {
@@ -4152,9 +4152,9 @@ function _makeSensibleTouched(func, state) { // dali giving all mouse events on 
 // }
 
 
-// when("myimage", condition("touched", "inside", 0, 100),
+// when("myimage", condition("touch", "inside", 0, 100),
 // or
-// when("myimage", "touched",
+// when("myimage", "touch",
 //      call(myfunction),
 //      call(myfunction, arg1),
 //      and("animation-ends"),
@@ -4206,32 +4206,28 @@ function when() {
     f = _makeCallback(arguments);
 
     if( signal === "touchedDown" ) { // fix as touched signal is really "mouseState"?
-      f = _makeSensibleTouched(f, "Down");
-      signal = "touched";
+      f = _makeSensibleTouched(f, "DOWN");
+      signal = "touch";
     }
     if( signal === "touchedUp" ) { // fix as touched signal is really "mouseState"?
-      f = _makeSensibleTouched(f, "Up");
-      signal = "touched";
+      f = _makeSensibleTouched(f, "UP");
+      signal = "touch";
     }
     if( signal === "touchedMotion" ) { // fix as touched signal is really "mouseState"?
-      f = _makeSensibleTouched(f, "Motion");
-      signal = "touched";
+      f = _makeSensibleTouched(f, "MOTION");
+      signal = "touch";
     }
     if( signal === "touchedLeave" ) { // fix as touched signal is really "mouseState"?
-      f = _makeSensibleTouched(f, "Leave");
-      signal = "touched";
+      f = _makeSensibleTouched(f, "LEAVE");
+      signal = "touch";
     }
     if( signal === "touchedStationary" ) { // fix as touched signal is really "mouseState"?
-      f = _makeSensibleTouched(f, "Stationary");
-      signal = "touched";
+      f = _makeSensibleTouched(f, "STATIONARY");
+      signal = "touch";
     }
     if( signal === "touchedInterrupted" ) { // fix as touched signal is really "mouseState"?
-      f = _makeSensibleTouched(f, "Interrupted");
-      signal = "touched";
-    }
-    if( signal === "touchedLast" ) { // fix as touched signal is really "mouseState"?
-      f = _makeSensibleTouched(f, "Last");
-      signal = "touched";
+      f = _makeSensibleTouched(f, "INTERRUPTED");
+      signal = "touch";
     }
 
     for(ai = 0; ai < actors.length; ai++) {
@@ -4253,9 +4249,9 @@ function when() {
     }
   }
 
-// when("myimage", condition("touched", "inside", 0, 100),
+// when("myimage", condition("touch", "inside", 0, 100),
 // or
-// when("myimage", "touched",
+// when("myimage", "touch",
 //       ***
 //       dali.ActorWrapper.prototype.connect = function(signalName, callback) {
 //     if(d.action === "set") {
@@ -4399,9 +4395,9 @@ function when() {
 //  )
 // )
 
-// when("myimage", condition("touched", "inside", 0, 100),
+// when("myimage", condition("touch", "inside", 0, 100),
 // or
-// when("myimage", "touched",
+// when("myimage", "touch",
 //      call(myfunction),
 //      call(myfunction, arg1),
 //      and("animation-ends"),
@@ -4690,25 +4686,25 @@ Test.prototype.hierarchy = function() {
   dali.stage.add(actor);
 
   var hello = new dali.Actor();
-  // hello.connect("touched", onTouched);
+  // hello.connect("touch", onTouched);
   hello.text = "hello";
   hello.name = hello.text;
   actor.add(hello);
 
   var hellochild = new dali.Actor();
-  // hellochild.connect("touched", onTouched);
+  // hellochild.connect("touch", onTouched);
   hellochild.text = "hello-child";
   hellochild.name = hellochild.text;
   hello.add(hellochild);
 
   var hellochild2 = new dali.Actor();
-  // hellochild2.connect("touched", onTouched);
+  // hellochild2.connect("touch", onTouched);
   hellochild2.text = "hello-child2";
   hellochild2.name = hellochild2.text;
   hello.add(hellochild2);
 
   var hellochildchild = new dali.Actor();
-  // hellochildchild.connect("touched", onTouched);
+  // hellochildchild.connect("touch", onTouched);
   hellochildchild.text = "hello-child-child1";
   hellochildchild.name = "hello-child-child1";
   hellochildchild.name = hellochildchild.text;
@@ -4747,7 +4743,7 @@ Test.prototype.hierarchy = function() {
 
   assert(root.findChildByName("none") === null);
 
-  // actor.connect("touched", onTouched);
+  // actor.connect("touch", onTouched);
 
   // var inserted = new dali.TextActor(); // TextActor no more RIP
   // inserted.parentOrigin = [0.5, 0.5, 0.5];

@@ -159,7 +159,7 @@ private: // Application callbacks & implementation
    * Signal emitted when any tile has been pressed
    *
    * @param[in] actor The Actor representing this tile.
-   * @param[in] event The TouchEvent
+   * @param[in] event The Touch information.
    *
    * @return Consume flag
    */
@@ -220,7 +220,7 @@ private: // Application callbacks & implementation
    * (other than those touches consumed by OnTilePressed)
    *
    * @param[in] actor The Actor touched.
-   * @param[in] event The TouchEvent
+   * @param[in] event The Touch information.
    *
    * @return Consume flag
    */
