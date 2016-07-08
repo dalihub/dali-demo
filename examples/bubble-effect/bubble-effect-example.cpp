@@ -19,6 +19,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 
@@ -52,20 +53,6 @@ const unsigned int NUM_BUBBLE_SHAPE_IMAGES( sizeof( BUBBLE_SHAPE_IMAGES ) / size
 
 const Vector2 DEFAULT_BUBBLE_SIZE( 10.f, 30.f );
 const unsigned int DEFAULT_NUMBER_OF_BUBBLES( 1000 );
-
-/**
- * @brief Load an image, scaled-down to no more than the stage dimensions.
- *
- * Uses image scaling mode FittingMode::SCALE_TO_FILL to resize the image at
- * load time to cover the entire stage with pixels with no borders,
- * and filter mode BOX_THEN_LINEAR to sample the image with
- * maximum quality.
- */
-ResourceImage LoadStageFillingImage( const char * const imagePath )
-{
-  Size stageSize = Stage::GetCurrent().GetSize();
-  return ResourceImage::New( imagePath, Dali::ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-}
 
 }// end LOCAL_STUFF
 
@@ -130,10 +117,10 @@ private:
 
     // Create and initialize the BubbleEmitter object
     mBubbleEmitter = Toolkit::BubbleEmitter::New( stageSize,
-                                                  ResourceImage::New( BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId] ),
+                                                  DemoHelper::LoadImage( BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId] ),
                                                   DEFAULT_NUMBER_OF_BUBBLES,
                                                   DEFAULT_BUBBLE_SIZE);
-    mBackgroundImage = LoadStageFillingImage( BACKGROUND_IMAGES[mCurrentBackgroundImageId] );
+    mBackgroundImage = DemoHelper::LoadStageFillingImage( BACKGROUND_IMAGES[mCurrentBackgroundImageId] );
     mBubbleEmitter.SetBackground( mBackgroundImage, mHSVDelta );
 
     // Get the root actor of all bubbles, and add it to stage.
@@ -253,7 +240,7 @@ private:
   {
     if(button == mChangeBackgroundButton)
     {
-      mBackgroundImage = LoadStageFillingImage( BACKGROUND_IMAGES[ ++mCurrentBackgroundImageId % NUM_BACKGROUND_IMAGES  ] );
+      mBackgroundImage = DemoHelper::LoadStageFillingImage( BACKGROUND_IMAGES[ ++mCurrentBackgroundImageId % NUM_BACKGROUND_IMAGES  ] );
 
       mBubbleEmitter.SetBackground( mBackgroundImage, mHSVDelta );
 
@@ -261,7 +248,7 @@ private:
     }
     else if( button == mChangeBubbleShapeButton )
     {
-      mBubbleEmitter.SetShapeImage( ResourceImage::New( BUBBLE_SHAPE_IMAGES[ ++mCurrentBubbleShapeImageId % NUM_BUBBLE_SHAPE_IMAGES ] ) );
+      mBubbleEmitter.SetShapeImage( DemoHelper::LoadImage( BUBBLE_SHAPE_IMAGES[ ++mCurrentBubbleShapeImageId % NUM_BUBBLE_SHAPE_IMAGES ] ) );
     }
     return true;
   }

@@ -87,8 +87,8 @@ public:
     button.SetSelectedImage( FOLDER_OPEN_ICON_IMAGE );
     button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    ResourceImage imageClosed = ResourceImage::New( FOLDER_ICON_IMAGE );
-    button.SetSize( imageClosed.GetWidth(), imageClosed.GetHeight() );
+    ImageDimensions imageSize = ResourceImage::GetImageSize( FOLDER_ICON_IMAGE );
+    button.SetSize( imageSize.GetWidth(), imageSize.GetHeight() );
 
     return button;
   }

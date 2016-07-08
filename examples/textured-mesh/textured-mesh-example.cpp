@@ -21,6 +21,7 @@
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 
@@ -140,15 +141,15 @@ public:
     // Hide the indicator bar
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
-    mImage = ResourceImage::New( MATERIAL_SAMPLE );
-    Image image = ResourceImage::New( MATERIAL_SAMPLE2 );
+    Texture texture1 = DemoHelper::LoadTexture( MATERIAL_SAMPLE );
+    Texture texture2 = DemoHelper::LoadTexture( MATERIAL_SAMPLE2 );
 
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
     mTextureSet1 = TextureSet::New();
-    mTextureSet1.SetImage( 0u, mImage );
+    mTextureSet1.SetTexture( 0u, texture1 );
 
     mTextureSet2 = TextureSet::New();
-    mTextureSet2.SetImage( 0u, image );
+    mTextureSet2.SetTexture( 0u, texture2 );
 
     mGeometry = CreateGeometry();
 
@@ -258,7 +259,6 @@ private:
   Application&  mApplication;                             ///< Application instance
   Vector3 mStageSize;                                     ///< The size of the stage
 
-  Image    mImage;
   Shader   mShader;
   TextureSet mTextureSet1;
   TextureSet mTextureSet2;

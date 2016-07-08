@@ -20,6 +20,7 @@
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "shared/utility.h"
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
@@ -98,20 +99,6 @@ const float CUBE_DISPLACEMENT_CROSS(30.f);
 // The duration of the current image staying on screen when slideshow is on
 const int VIEWINGTIME = 2000; // 2 seconds
 
-/**
- * @brief Load an image, scaled-down to no more than the stage dimensions.
- *
- * Uses image scaling mode SCALE_TO_FILL to resize the image at
- * load time to cover the entire stage with pixels with no borders,
- * and filter mode BOX_THEN_LINEAR to sample the image with
- * maximum quality.
- */
-ResourceImage LoadStageFillingImage( const char * const imagePath )
-{
-  Size stageSize = Stage::GetCurrent().GetSize();
-  return ResourceImage::New( imagePath, ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-}
-
 } // namespace
 
 class CubeTransitionApp : public ConnectionTracker
@@ -142,12 +129,6 @@ private:
    * Load the next image and start the transition;
    */
   void GoToNextImage();
-  /**
-   * Callback function of image resource loading succeed
-   * Start the transition
-   * @param[in] image The image content of the imageActor for transition
-   */
-  void OnImageLoaded(ResourceImage image);
   /**
    * Main key event handler
    */
@@ -185,8 +166,8 @@ private:
 
   Vector2                         mViewSize;
 
-  ResourceImage                   mCurrentImage;
-  ResourceImage                   mNextImage;
+  Image                           mCurrentImage;
+  Image                           mNextImage;
   unsigned int                    mIndex;
   bool                            mIsImageLoading;
 
@@ -251,7 +232,7 @@ void CubeTransitionApp::OnInit( Application& application )
   mViewSize = Stage::GetCurrent().GetSize();
 
   // show the first image
-  mCurrentImage = LoadStageFillingImage( IMAGES[mIndex] );
+  mCurrentImage = DemoHelper::LoadStageFillingImage( IMAGES[mIndex] );
 
   //use small cubes
   mCubeWaveEffect = Toolkit::CubeTransitionWaveEffect::New( NUM_ROWS_WAVE, NUM_COLUMNS_WAVE );
@@ -322,25 +303,11 @@ void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
 
 void CubeTransitionApp::GoToNextImage()
 {
-  mNextImage = LoadStageFillingImage( IMAGES[ mIndex ] );
+  mNextImage = DemoHelper::LoadStageFillingImage( IMAGES[ mIndex ] );
   mCurrentEffect.SetTargetImage( mNextImage );
-  if( mNextImage.GetLoadingState() == ResourceLoadingSucceeded )
-  {
-    mIsImageLoading = false;
-    OnImageLoaded( mNextImage );
-  }
-  else
-  {
-    mIsImageLoading = true;
-    mNextImage.LoadingFinishedSignal().Connect( this, &CubeTransitionApp::OnImageLoaded );
-  }
-}
-
-void CubeTransitionApp::OnImageLoaded(ResourceImage image)
-{
-   mIsImageLoading = false;
-   mCurrentEffect.StartTransition( mPanPosition, mPanDisplacement );
-   mCurrentImage = mNextImage;
+  mIsImageLoading = false;
+  mCurrentEffect.StartTransition( mPanPosition, mPanDisplacement );
+  mCurrentImage = mNextImage;
 }
 
 bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )

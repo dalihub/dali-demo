@@ -284,8 +284,7 @@ public:
 
     // Back and next image buttons in corners of stage:
     unsigned int playWidth = std::min( stage.GetSize().x * (1 / 5.0f), 58.0f );
-    Image playImage = ResourceImage::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ), FittingMode::SHRINK_TO_FIT, SamplingMode::BOX_THEN_LINEAR );
-    Toolkit::ImageView imagePrevious = Toolkit::ImageView::New( playImage );
+    Toolkit::ImageView imagePrevious = Toolkit::ImageView::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ) );
 
     // Last image button:
     imagePrevious.SetAnchorPoint( AnchorPoint::TOP_LEFT );
@@ -298,7 +297,7 @@ public:
     imagePrevious.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Next image button:
-    Toolkit::ImageView imageNext = Toolkit::ImageView::New( playImage );
+    Toolkit::ImageView imageNext = Toolkit::ImageView::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ) );
     imageNext.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
     imageNext.SetY( playWidth * 0.5f );
     imageNext.SetX( stage.GetSize().x - playWidth * 0.5f );

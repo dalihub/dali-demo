@@ -21,6 +21,7 @@
 
 #include <cstdio>
 #include <string>
+#include "shared/utility.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -270,7 +271,7 @@ void MetaballRefracController::Create( Application& app )
   stage.SetBackgroundColor(Color::BLACK);
 
   //Set background image for the view
-  mBackImage = ResourceImage::New( BACKGROUND_IMAGE );
+  mBackImage = DemoHelper::LoadImage( BACKGROUND_IMAGE );
 
   mGravity = Vector2(GRAVITY_X,GRAVITY_Y);
   mGravityVar = Vector2(0,0);

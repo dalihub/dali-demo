@@ -111,11 +111,10 @@ public:
     stage.Add( mContainer );
 
     // Resize the center layout when the corner is grabbed
-    mGrabCorner = Control::New();
+    mGrabCorner = ImageView::New( BACKGROUND_IMAGE );
     mGrabCorner.SetName( "GrabCorner" );
     mGrabCorner.SetAnchorPoint( AnchorPoint::TOP_CENTER );
     mGrabCorner.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
-    mGrabCorner.SetBackgroundImage( ResourceImage::New( BACKGROUND_IMAGE ) );
     mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     mContainer.Add( mGrabCorner );
 

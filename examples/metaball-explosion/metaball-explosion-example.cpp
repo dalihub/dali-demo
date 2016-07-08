@@ -25,6 +25,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -328,7 +329,7 @@ void MetaballExplosionController::Create( Application& app )
   stage.SetBackgroundColor(Color::BLACK);
 
   //Set background image for the view
-  mBackImage = ResourceImage::New( BACKGROUND_IMAGE );
+  mBackImage = DemoHelper::LoadImage( BACKGROUND_IMAGE );
 
   srand((unsigned)time(0));
 

@@ -362,6 +362,17 @@ private:
 
     mBrickCount = 0;
 
+    if( mBrickImageMap.Empty() )
+    {
+      Vector2 stageSize(Stage::GetCurrent().GetSize());
+      const Vector2 brickSize(BRICK_SIZE * Vector2(stageSize.x, stageSize.x));
+
+      mBrickImageMap["desiredWidth"] = static_cast<int>( brickSize.width );
+      mBrickImageMap["desiredHeight"] = static_cast<int>( brickSize.height );
+      mBrickImageMap["fittingMode"] = "SCALE_TO_FILL";
+      mBrickImageMap["samplingMode"] = "BOX_THEN_LINEAR";
+    }
+
     switch(level%TOTAL_LEVELS)
     {
       case 0:
@@ -519,14 +530,11 @@ private:
    */
   Actor CreateBrick( const Vector2& position, int type )
   {
-    Vector2 stageSize(Stage::GetCurrent().GetSize());
-    const Vector2 brickSize(BRICK_SIZE * Vector2(stageSize.x, stageSize.x));
-
-    Image img = ResourceImage::New( BRICK_IMAGE_PATH[type], Dali::ImageDimensions( 128, 64 ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-    ImageView brick = ImageView::New(img);
+    mBrickImageMap["url"] = BRICK_IMAGE_PATH[type];
+    ImageView brick = ImageView::New();
+    brick.SetProperty( ImageView::Property::IMAGE, mBrickImageMap );
     brick.SetParentOrigin(ParentOrigin::TOP_LEFT);
     brick.SetAnchorPoint(AnchorPoint::CENTER);
-    brick.SetSize( brickSize );
     brick.SetPosition( Vector3( position ) );
 
     // Add a constraint on the brick between it and the ball generating a collision-property
@@ -815,6 +823,7 @@ private:
   Animation mWobbleAnimation;                           ///< Paddle's animation when hit (wobbles)
   Property::Index mWobbleProperty;                      ///< The wobble property (generated from animation)
   Actor mLevelContainer;                                ///< The level container (contains bricks)
+  Property::Map mBrickImageMap;                       ///< The property map used to load the brick
 
   // actor - dragging functionality
 
