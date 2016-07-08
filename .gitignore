@@ -37,3 +37,4 @@ dali-builder
 /packaging/home*
 *.mo
 demo-theme.json
+simple-image-wall.js
