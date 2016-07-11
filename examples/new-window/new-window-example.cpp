@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/images/texture-set-image.h>
 #include <dali/devel-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
@@ -329,7 +330,8 @@ void NewWindowController::AddBlendingImageActor( Actor& parentActor )
   blendActor.SetSize(140, 140);
   parentActor.Add(blendActor);
 
-  blendActor.GetRendererAt(0u).GetTextures().SetImage( 1u, fb2 );
+  TextureSet textureSet = blendActor.GetRendererAt(0u).GetTextures();
+  TextureSetImage( textureSet, 1u, fb2 );
 }
 
 void NewWindowController::AddTextLabel( Actor& parentActor )

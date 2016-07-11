@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 
 //Internal includes
 #include <dali/dali.h>
+#include <dali/devel-api/images/texture-set-image.h>
 #include <dali/devel-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 
@@ -551,8 +552,8 @@ void MetaballExplosionController::AddRefractionImage()
 
   //Create new texture set
   TextureSet textureSet = TextureSet::New();
-  textureSet.SetImage( 0u, mBackImage );
-  textureSet.SetImage( 1u, fbo );
+  TextureSetImage( textureSet, 0u, mBackImage );
+  TextureSetImage( textureSet, 1u, fbo );
 
   //Create geometry
   Geometry metaballGeom = CreateGeometryComposition();
