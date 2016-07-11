@@ -15,15 +15,74 @@
  *
  */
 
+// EXTERNAL INCLUDES
+#include <dali/dali.h>
+#include <dali/devel-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
+
+// INTERNAL INCLUDES
+#include "shared/utility.h"
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
+
+namespace
+{
 
 const char* IMAGE_FILENAME_ETC         =        DEMO_IMAGE_DIR "tx-etc1.ktx";
 const char* IMAGE_FILENAME_ASTC_LINEAR =        DEMO_IMAGE_DIR "tx-astc-4x4-linear.ktx";
 const char* IMAGE_FILENAME_ASTC_LINEAR_NATIVE = DEMO_IMAGE_DIR "tx-astc-4x4-linear-native.astc";
 
+
+static const char* VERTEX_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
+    attribute mediump vec2 aPosition;\n
+    attribute mediump vec2 aTexCoord;\n
+    uniform mediump mat4 uMvpMatrix;\n
+    uniform mediump vec3 uSize;\n
+    varying mediump vec2 vTexCoord;\n
+    void main()\n
+    {\n
+      vec4 position = vec4(aPosition,0.0,1.0)*vec4(uSize,1.0);\n
+      gl_Position = uMvpMatrix * position;\n
+      vTexCoord = aTexCoord;\n
+    }\n
+);
+
+static const char* FRAGMENT_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
+    uniform lowp vec4 uColor;\n
+    uniform sampler2D sTexture;\n
+    varying mediump vec2 vTexCoord;\n
+
+    void main()\n
+    {\n
+      gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
+    }\n
+);
+
+/**
+ * @brief Create a renderer to render an image and adds it to an actor
+ * @param[in] imagePath The path where the image file is located
+ * @param[in] actor The actor that will be used to render the image
+ * @param[in[ geometry The geometry to use
+ * @param[in] shader The shader to use
+ */
+void AddImage( const char*imagePath, Actor& actor, Geometry& geometry, Shader& shader )
+{
+  //Load the texture
+  Texture texture = DemoHelper::LoadTexture( imagePath );
+  TextureSet textureSet = TextureSet::New();
+  textureSet.SetTexture( 0u, texture );
+
+  //Create the renderer
+  Renderer renderer = Renderer::New( geometry, shader );
+  renderer.SetTextures( textureSet );
+
+  //Set actor size and add the renderer
+  actor.SetSize( texture.GetWidth(), texture.GetHeight() );
+  actor.AddRenderer( renderer );
+}
+
+}
 /**
  * @brief This example shows 3 images, each of a different compressed texture type.
  * If built and run on a OpenGL ES 3.1 compatable target, then all 3 images will display.
@@ -89,26 +148,37 @@ public:
     table.AddChild( textLabel, Toolkit::TableView::CellPosition( 2u, 0u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 2u, 0u ), HorizontalAlignment::LEFT, VerticalAlignment::CENTER );
 
+    //Create the geometry and the shader renderers will use
+    Geometry geometry = DemoHelper::CreateTexturedQuad();
+    Shader shader = Shader::New( VERTEX_SHADER_TEXTURE, FRAGMENT_SHADER_TEXTURE );
+
     // Add images.
-    Toolkit::ImageView imageView = Toolkit::ImageView::New( ResourceImage::New( IMAGE_FILENAME_ETC ) );
-    imageView.SetAnchorPoint( AnchorPoint::CENTER );
-    imageView.SetParentOrigin( ParentOrigin::CENTER );
-    table.AddChild( imageView, Toolkit::TableView::CellPosition( 0u, 1u ) );
+    Actor actor = Actor::New();
+    actor.SetAnchorPoint( AnchorPoint::CENTER );
+    actor.SetParentOrigin( ParentOrigin::CENTER );
+    AddImage( IMAGE_FILENAME_ETC, actor, geometry, shader  );
+    table.AddChild( actor, Toolkit::TableView::CellPosition( 0u, 1u ) );
+    table.SetCellAlignment( Toolkit::TableView::CellPosition( 0u, 1u ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
 
-    imageView = Toolkit::ImageView::New( ResourceImage::New( IMAGE_FILENAME_ASTC_LINEAR ) );
-    imageView.SetAnchorPoint( AnchorPoint::CENTER );
-    imageView.SetParentOrigin( ParentOrigin::CENTER );
-    table.AddChild( imageView, Toolkit::TableView::CellPosition( 1u, 1u ) );
+    actor = Actor::New();
+    actor.SetAnchorPoint( AnchorPoint::CENTER );
+    actor.SetParentOrigin( ParentOrigin::CENTER );
+    AddImage( IMAGE_FILENAME_ASTC_LINEAR, actor, geometry, shader );
+    table.AddChild( actor, Toolkit::TableView::CellPosition( 1u, 1u ) );
+    table.SetCellAlignment( Toolkit::TableView::CellPosition( 1u, 1u ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
 
-    imageView = Toolkit::ImageView::New( ResourceImage::New( IMAGE_FILENAME_ASTC_LINEAR_NATIVE ) );
-    imageView.SetAnchorPoint( AnchorPoint::CENTER );
-    imageView.SetParentOrigin( ParentOrigin::CENTER );
-    table.AddChild( imageView, Toolkit::TableView::CellPosition( 2u, 1u ) );
+    actor = Actor::New();
+    actor.SetAnchorPoint( AnchorPoint::CENTER );
+    actor.SetParentOrigin( ParentOrigin::CENTER );
+    AddImage( IMAGE_FILENAME_ASTC_LINEAR_NATIVE, actor, geometry, shader );
+    table.AddChild( actor, Toolkit::TableView::CellPosition( 2u, 1u ) );
+    table.SetCellAlignment( Toolkit::TableView::CellPosition( 2u, 1u ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
 
     stage.Add( table );
 
-    // Respond to a click anywhere on the stage
+    // Respond to touch and key signals
     stage.GetRootLayer().TouchSignal().Connect( this, &CompressedTextureFormatsController::OnTouch );
+    stage.KeyEventSignal().Connect(this, &CompressedTextureFormatsController::OnKeyEvent);
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )
@@ -116,6 +186,17 @@ public:
     // quit the application
     mApplication.Quit();
     return true;
+  }
+
+  void OnKeyEvent(const KeyEvent& event)
+  {
+    if(event.state == KeyEvent::Down)
+    {
+      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      {
+        mApplication.Quit();
+      }
+    }
   }
 
 private:

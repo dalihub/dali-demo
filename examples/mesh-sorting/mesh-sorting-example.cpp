@@ -85,34 +85,6 @@ void main()
 }
 );
 
-Geometry CreateGeometry()
-{
-  // Create vertices
-  const float halfQuadSize = .5f;
-  struct TexturedQuadVertex { Vector2 position; Vector2 textureCoordinates; };
-  TexturedQuadVertex texturedQuadVertexData[4] = {
-    { Vector2(-halfQuadSize, -halfQuadSize), Vector2(0.f, 0.f) },
-    { Vector2( halfQuadSize, -halfQuadSize), Vector2(1.f, 0.f) },
-    { Vector2(-halfQuadSize,  halfQuadSize), Vector2(0.f, 1.f) },
-    { Vector2( halfQuadSize,  halfQuadSize), Vector2(1.f, 1.f) } };
-
-  Property::Map texturedQuadVertexFormat;
-  texturedQuadVertexFormat["aPosition"] = Property::VECTOR2;
-  texturedQuadVertexFormat["aTexCoord"] = Property::VECTOR2;
-  PropertyBuffer texturedQuadVertices = PropertyBuffer::New( texturedQuadVertexFormat );
-  texturedQuadVertices.SetData( texturedQuadVertexData, 4 );
-
-  // Create indices
-  unsigned short indexData[6] = { 0, 3, 1, 0, 2, 3 };
-
-  // Create the geometry object
-  Geometry texturedQuadGeometry = Geometry::New();
-  texturedQuadGeometry.AddVertexBuffer( texturedQuadVertices );
-  texturedQuadGeometry.SetIndexBuffer( &indexData[0], sizeof(indexData)/sizeof(unsigned short) );
-
-  return texturedQuadGeometry;
-}
-
 } // anonymous namespace
 
 // This example shows how to use a simple mesh
@@ -159,7 +131,7 @@ public:
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
-    mGeometry = CreateGeometry();
+    mGeometry = DemoHelper::CreateTexturedQuad();
 
     TextureSet firstTextureSet;
 

@@ -62,34 +62,6 @@ void main()
 }
 );
 
-Geometry CreateGeometry()
-{
-  // Create vertices
-  const float halfQuadSize = .5f;
-  struct TexturedQuadVertex { Vector2 position; Vector2 textureCoordinates; };
-  TexturedQuadVertex texturedQuadVertexData[4] = {
-    { Vector2(-halfQuadSize, -halfQuadSize), Vector2(0.f, 0.f) },
-    { Vector2( halfQuadSize, -halfQuadSize), Vector2(1.f, 0.f) },
-    { Vector2(-halfQuadSize,  halfQuadSize), Vector2(0.f, 1.f) },
-    { Vector2( halfQuadSize,  halfQuadSize), Vector2(1.f, 1.f) } };
-
-  Property::Map texturedQuadVertexFormat;
-  texturedQuadVertexFormat["aPosition"] = Property::VECTOR2;
-  texturedQuadVertexFormat["aTexCoord"] = Property::VECTOR2;
-  PropertyBuffer texturedQuadVertices = PropertyBuffer::New( texturedQuadVertexFormat );
-  texturedQuadVertices.SetData( texturedQuadVertexData, 4 );
-
-  // Create indices
-  unsigned short indexData[6] = { 0, 3, 1, 0, 2, 3 };
-
-  // Create the geometry object
-  Geometry texturedQuadGeometry = Geometry::New();
-  texturedQuadGeometry.AddVertexBuffer( texturedQuadVertices );
-  texturedQuadGeometry.SetIndexBuffer( &indexData[0], sizeof(indexData)/sizeof(indexData[0]) );
-
-  return texturedQuadGeometry;
-}
-
 /**
  * Sinusoidal curve starting at zero with 2 cycles
  */
@@ -151,7 +123,7 @@ public:
     mTextureSet2 = TextureSet::New();
     mTextureSet2.SetTexture( 0u, texture2 );
 
-    mGeometry = CreateGeometry();
+    mGeometry = DemoHelper::CreateTexturedQuad();
 
     mRenderer = Renderer::New( mGeometry, mShader );
     mRenderer.SetTextures( mTextureSet1 );
