@@ -16,7 +16,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali/devel-api/images/texture-set-image.h>
-#include <dali/devel-api/rendering/renderer.h>
+#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
 

@@ -15,7 +15,7 @@
  *
  */
 
-#include <dali/devel-api/rendering/renderer.h>
+#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 
 #include "shared/utility.h"

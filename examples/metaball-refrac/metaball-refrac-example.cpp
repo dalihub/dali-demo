@@ -17,7 +17,7 @@
 
 #include <dali/dali.h>
 #include <dali/devel-api/images/texture-set-image.h>
-#include <dali/devel-api/rendering/renderer.h>
+#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 
 #include <cstdio>
