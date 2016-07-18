@@ -34,9 +34,9 @@ namespace
   //Possible shader options.
   const char * const SHADER_TYPE[] =
   {
-    "allTextures",
-    "diffuseTexture",
-    "textureless"
+    "ALL_TEXTURES",
+    "DIFFUSE_TEXTURE",
+    "TEXTURELESS"
   };
 
   //Files for background and toolbar
