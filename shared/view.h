@@ -131,7 +131,7 @@ Dali::Layer CreateView( Dali::Application& application,
   if ( !backgroundImagePath.empty() )
   {
     Dali::Property::Map map;
-    map["rendererType"] = "image";
+    map["rendererType"] = "IMAGE";
     map["url"] = backgroundImagePath;
     map["desiredWidth"] = stage.GetSize().x;
     map["desiredHeight"] = stage.GetSize().y;

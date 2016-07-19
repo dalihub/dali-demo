@@ -189,7 +189,7 @@ public:
   {
     //Create mesh property map
     Property::Map map;
-    map.Insert( "rendererType", "mesh" );
+    map.Insert( "rendererType", "MESH" );
     map.Insert( "objectUrl", MODEL_FILE[mModelIndex] );
     map.Insert( "materialUrl", MATERIAL_FILE[mModelIndex] );
     map.Insert( "texturesPath", TEXTURES_PATH );

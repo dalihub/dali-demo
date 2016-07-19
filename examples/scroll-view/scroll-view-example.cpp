@@ -454,7 +454,7 @@ private:
   {
     ImageView actor = ImageView::New();
     Property::Map map;
-    map["rendererType"] = "image";
+    map["rendererType"] = "IMAGE";
     map["url"] = filename;
     map["desiredWidth"] = width;
     map["desiredHeight"] = height;

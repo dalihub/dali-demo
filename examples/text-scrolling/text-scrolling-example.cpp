@@ -77,7 +77,7 @@ public:
     parent.Add( box );
 
     Dali::Property::Map border;
-    border.Insert( "rendererType",  "border" );
+    border.Insert( "rendererType",  "BORDER" );
     border.Insert( "borderColor",  Color::WHITE );
     border.Insert( "borderSize",  1.f );
     box.SetProperty( Control::Property::BACKGROUND, border );

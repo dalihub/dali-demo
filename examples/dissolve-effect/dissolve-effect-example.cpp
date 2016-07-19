@@ -91,7 +91,7 @@ Toolkit::ImageView CreateStageFillingImageView( const char * const imagePath )
   Size stageSize = Stage::GetCurrent().GetSize();
   Toolkit::ImageView imageView = Toolkit::ImageView::New();
   Property::Map map;
-  map["rendererType"] = "image";
+  map["rendererType"] = "IMAGE";
   map["url"] = imagePath;
   map["desiredWidth"] = stageSize.x;
   map["desiredHeight"] = stageSize.y;

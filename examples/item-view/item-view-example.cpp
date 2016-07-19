@@ -878,7 +878,7 @@ public: // From ItemFactory
     borderActor.SetColorMode( USE_PARENT_COLOR );
 
     Property::Map borderProperty;
-    borderProperty.Insert( "rendererType", "border" );
+    borderProperty.Insert( "rendererType", "BORDER" );
     borderProperty.Insert( "borderColor", Color::WHITE );
     borderProperty.Insert( "borderSize", ITEM_BORDER_SIZE );
     borderProperty.Insert( "antiAliasing", true );
@@ -902,7 +902,7 @@ public: // From ItemFactory
     checkbox.SetZ( 0.1f );
 
     Property::Map solidColorProperty;
-    solidColorProperty.Insert( "rendererType", "color" );
+    solidColorProperty.Insert( "rendererType", "COLOR" );
     solidColorProperty.Insert( "mixColor", Vector4(0.f, 0.f, 0.f, 0.6f) );
     checkbox.SetProperty( ImageView::Property::IMAGE, solidColorProperty );
 
