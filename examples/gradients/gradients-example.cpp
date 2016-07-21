@@ -16,8 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/renderer-factory/renderer-factory.h>
-#include <dali-toolkit/devel-api/controls/renderer-factory/control-renderer.h>
 #include "shared/view.h"
 
 using namespace Dali;
