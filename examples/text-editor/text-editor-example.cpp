@@ -131,6 +131,13 @@ public:
 
     mEditor.SetBackgroundColor( TEXT_EDITOR_BACKGROUND_COLOR );
 
+    const Size boundingBoxSize( stageSize * TEXT_EDITOR_RELATIVE_SIZE.GetVectorXY() );
+    Rect<int> boundingBox( 0,
+                           static_cast<int>( toolBarHeight ),
+                           static_cast<int>( boundingBoxSize.width ),
+                           static_cast<int>( boundingBoxSize.height - toolBarHeight ) );
+
+    mEditor.SetProperty( TextEditor::Property::DECORATION_BOUNDING_BOX, boundingBox );
     mEditor.SetProperty( TextEditor::Property::TEXT_COLOR, Color::BLACK );
     mEditor.SetProperty( TextEditor::Property::TEXT,
                          "Lorem ipsum dolor sit amet, aeque definiebas ea mei, posse iracundia ne cum.\n"
