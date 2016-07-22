@@ -324,7 +324,7 @@ public:
     //Renderer map for model
     mRendererMap.Clear();
     mRendererMap[ "rendererType" ] = "PRIMITIVE";
-    mRendererMap[ "color"        ] = mColor;
+    mRendererMap[ "shapeColor"   ] = mColor;
   }
 
   //Sets the 3D model to a sphere and modifies the sliders appropriately.
