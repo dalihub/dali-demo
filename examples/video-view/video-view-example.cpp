@@ -211,12 +211,12 @@ class VideoViewController: public ConnectionTracker
 
     Property::Map customShader;
     customShader.Insert( "fragmentShader", FRAGMENT_SHADER );
-    mCustomShader.Insert( "rendererType", "image" );
+    mCustomShader.Insert( "rendererType", "IMAGE" );
     mCustomShader.Insert( "shader", customShader );
 
     Property::Map defaultShader;
     customShader.Insert( "fragmentShader", DEFAULT_FRAGMENT_SHADER );
-    mDefaultShader.Insert( "rendererType", "image" );
+    mDefaultShader.Insert( "rendererType", "IMAGE" );
     mDefaultShader.Insert( "shader", defaultShader );
 
     mWindowSurfaceTarget.Insert( "RENDERING_TARGET", "windowSurfaceTarget" );

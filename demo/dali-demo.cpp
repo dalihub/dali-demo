@@ -79,6 +79,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("effects-view.example", DALI_DEMO_STR_TITLE_EFFECTS_VIEW));
   demo.AddExample(Example("native-image-source.example", DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE));
   demo.AddExample(Example("mesh-renderer.example", DALI_DEMO_STR_TITLE_MESH_RENDERER));
+  demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
 
   demo.SortAlphabetically( true );
 

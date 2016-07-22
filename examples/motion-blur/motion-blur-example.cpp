@@ -103,7 +103,7 @@ const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to
 void SetImageFittedInBox( ImageView& imageView, Property::Map& shaderEffect, const char * const imagePath, int maxWidth, int maxHeight )
 {
   Property::Map map;
-  map["rendererType"] = "image";
+  map["rendererType"] = "IMAGE";
   map["url"] = imagePath;
   // Load the image nicely scaled-down to fit within the specified max width and height:
   map["desiredWidth"] = maxWidth;

@@ -16,8 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/renderer-factory/renderer-factory.h>
-#include <dali-toolkit/devel-api/controls/renderer-factory/control-renderer.h>
 #include "shared/view.h"
 
 using namespace Dali;
@@ -79,7 +77,7 @@ public:
 
 // ---- Gradient for background
 
-    mGradientMap.Insert("rendererType",  "gradient");
+    mGradientMap.Insert("rendererType",  "GRADIENT");
 
     Property::Array stopOffsets;
     stopOffsets.PushBack( 0.0f );
@@ -117,7 +115,7 @@ public:
         Vector2 halfStageSize = Stage::GetCurrent().GetSize()*0.5f;
         gradientMap.Insert("startPosition",   halfStageSize);
         gradientMap.Insert("endPosition",    -halfStageSize );
-        gradientMap.Insert("units",  "userSpace");
+        gradientMap.Insert("units",  "USER_SPACE");
         break;
       }
       case 2: // radial gradient with units as objectBoundingBox
@@ -131,7 +129,7 @@ public:
         Vector2 stageSize = Stage::GetCurrent().GetSize();
         gradientMap.Insert("center",  stageSize*0.5f);
         gradientMap.Insert("radius",  stageSize.Length());
-        gradientMap.Insert("units",  "userSpace");
+        gradientMap.Insert("units",  "USER_SPACE");
         break;
       }
     }
