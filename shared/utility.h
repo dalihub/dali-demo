@@ -112,7 +112,7 @@ Dali::Geometry CreateTexturedQuad()
   //Create the geometry
   Dali::Geometry geometry = Dali::Geometry::New();
   geometry.AddVertexBuffer( vertexBuffer );
-  geometry.SetGeometryType(Dali::Geometry::TRIANGLE_STRIP );
+  geometry.SetType(Dali::Geometry::TRIANGLE_STRIP );
 
   return geometry;
 }

@@ -105,7 +105,7 @@ Geometry CreateGeometry()
   // Create the geometry object
   Geometry polyhedraGeometry = Geometry::New();
   polyhedraGeometry.AddVertexBuffer( polyhedraVertices );
-  polyhedraGeometry.SetGeometryType( Geometry::POINTS );
+  polyhedraGeometry.SetType( Geometry::POINTS );
 
   return polyhedraGeometry;
 }

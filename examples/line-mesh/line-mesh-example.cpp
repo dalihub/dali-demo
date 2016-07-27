@@ -102,7 +102,7 @@ Geometry CreateGeometry()
   Geometry pentagonGeometry = Geometry::New();
   pentagonGeometry.AddVertexBuffer( pentagonVertices );
   pentagonGeometry.SetIndexBuffer( INDICES[0], INDICES_SIZE[0] );
-  pentagonGeometry.SetGeometryType( Geometry::LINES );
+  pentagonGeometry.SetType( Geometry::LINES );
   return pentagonGeometry;
 }
 
@@ -334,7 +334,7 @@ public:
     std::stringstream str;
     str << mCurrentIndexCount;
     mIndicesCountLabel.SetProperty( Toolkit::TextLabel::Property::TEXT, str.str() );
-    mGeometry.SetGeometryType( mPrimitiveType );
+    mGeometry.SetType( mPrimitiveType );
     mGeometry.SetIndexBuffer( INDICES[ indicesArray ], INDICES_SIZE[ indicesArray ] );
     mRenderer.SetIndexRange( 0, mCurrentIndexCount );
     return true;
@@ -373,7 +373,7 @@ private:
   Toolkit::PushButton   mMinusButton;
   Toolkit::PushButton   mPlusButton;
   Toolkit::TextLabel    mIndicesCountLabel;
-  Geometry::GeometryType mPrimitiveType;
+  Geometry::Type mPrimitiveType;
   int      mCurrentIndexCount;
   int      mMaxIndexCount;
 };
