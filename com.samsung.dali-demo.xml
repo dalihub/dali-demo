@@ -163,8 +163,8 @@
 	<ui-application appid="video-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/video-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Video View</label>
 	</ui-application>
-	<ui-application appid="mesh-renderer.example" exec="/usr/apps/com.samsung.dali-demo/bin/mesh-renderer.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Mesh Renderer</label>
+	<ui-application appid="mesh-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/mesh-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Mesh Visual</label>
 	</ui-application>
 	<ui-application appid="primitive-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/primitive-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Primitive Shapes</label>

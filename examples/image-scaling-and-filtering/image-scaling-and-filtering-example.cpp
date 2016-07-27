@@ -177,12 +177,12 @@ public:
 
     // Background image:
     Dali::Property::Map backgroundImage;
-    backgroundImage.Insert( "rendererType",  "IMAGE" );
-    backgroundImage.Insert( "url",  BACKGROUND_IMAGE );
-    backgroundImage.Insert( "desiredWidth",   stage.GetSize().width );
-    backgroundImage.Insert( "desiredHeight",   stage.GetSize().height );
-    backgroundImage.Insert( "fittingMode",   "SCALE_TO_FILL" );
-    backgroundImage.Insert( "samplingMode",   "BOX_THEN_NEAREST" );
+    backgroundImage.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
+    backgroundImage.Insert( Toolkit::ImageVisual::Property::URL,  BACKGROUND_IMAGE );
+    backgroundImage.Insert( Toolkit::ImageVisual::Property::DESIRED_WIDTH, stage.GetSize().width );
+    backgroundImage.Insert( Toolkit::ImageVisual::Property::DESIRED_HEIGHT, stage.GetSize().height );
+    backgroundImage.Insert( Toolkit::ImageVisual::Property::FITTING_MODE,   FittingMode::SCALE_TO_FILL );
+    backgroundImage.Insert( Toolkit::ImageVisual::Property::SAMPLING_MODE,   SamplingMode::BOX_THEN_NEAREST );
 
     Toolkit::ImageView background = Toolkit::ImageView::New();
     background.SetProperty( Toolkit::ImageView::Property::IMAGE, backgroundImage );

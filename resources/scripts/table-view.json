@@ -43,7 +43,7 @@
       "name":"simpleTable",
       "type":"TableView",
       "background":{
-        "rendererType": "COLOR",
+        "visualType": "COLOR",
         "mixColor": [0.5,0.5,0,1]
         },
       "parentOrigin": "CENTER",

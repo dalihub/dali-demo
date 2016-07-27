@@ -19,15 +19,6 @@ namespace
     DEMO_IMAGE_DIR "octahedron-button.png"
   };
 
-  //Shape names
-  const char * const SHAPE_SPHERE = "SPHERE";
-  const char * const SHAPE_CONE = "CONE";
-  const char * const SHAPE_CONICAL_FRUSTRUM = "CONICAL_FRUSTRUM";
-  const char * const SHAPE_CYLINDER = "CYLINDER";
-  const char * const SHAPE_CUBE = "CUBE";
-  const char * const SHAPE_BEVELLED_CUBE = "BEVELLED_CUBE";
-  const char * const SHAPE_OCTAHEDRON = "OCTAHEDRON";
-
   //Shape property defaults
   const int DEFAULT_SLICES = 32;
   const int DEFAULT_STACKS = 32;
@@ -278,7 +269,7 @@ public:
   //
   void SetupModel( Layer layer )
   {
-    //Create a container to house the renderer-holding actor, to provide a constant hitbox.
+    //Create a container to house the visual-holding actor, to provide a constant hitbox.
     Actor container = Actor::New();
     container.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     container.SetSizeModeFactor( Vector3( 0.9, 0.3, 0.0 ) );  //90% of width, 30% of height.
@@ -309,7 +300,7 @@ public:
     mPanGestureDetector.DetectedSignal().Connect( this, &PrimitiveShapesController::OnPan );
   }
 
-  //Clears all sliders and resets the primitive renderer property map.
+  //Clears all sliders and resets the primitive visual property map.
   void InitialiseSlidersAndModel()
   {
     //Sliders
@@ -321,10 +312,10 @@ public:
       mSliderLabels.at( i ).SetVisible( false );
     }
 
-    //Renderer map for model
-    mRendererMap.Clear();
-    mRendererMap[ "rendererType" ] = "PRIMITIVE";
-    mRendererMap[ "shapeColor"   ] = mColor;
+    //Visual map for model
+    mVisualMap.Clear();
+    mVisualMap[ Visual::Property::TYPE           ] = Visual::PRIMITIVE;
+    mVisualMap[ PrimitiveVisual::Property::COLOR ] = mColor;
   }
 
   //Sets the 3D model to a sphere and modifies the sliders appropriately.
@@ -332,19 +323,19 @@ public:
   {
     InitialiseSlidersAndModel();
 
-    //Set up specific renderer properties.
-    mRendererMap[ "shape"        ] = SHAPE_SPHERE;
-    mRendererMap[ "slices"       ] = DEFAULT_SLICES;
-    mRendererMap[ "stacks"       ] = DEFAULT_STACKS;
+    //Set up specific visual properties.
+    mVisualMap[ PrimitiveVisual::Property::SHAPE  ] = PrimitiveVisual::Shape::SPHERE;
+    mVisualMap[ PrimitiveVisual::Property::SLICES ] = DEFAULT_SLICES;
+    mVisualMap[ PrimitiveVisual::Property::STACKS ] = DEFAULT_STACKS;
 
     //Set up sliders.
-    SetupSlider( 0, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND, DEFAULT_STACKS, "slices" );
+    SetupSlider( 0, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND, DEFAULT_STACKS, PrimitiveVisual::Property::SLICES, "slices" );
     SetupMarks( mSliders.at( 0 ), SLICES_LOWER_BOUND, SLICES_UPPER_BOUND );
-    SetupSlider( 1, STACKS_LOWER_BOUND, STACKS_UPPER_BOUND, DEFAULT_STACKS, "stacks" );
+    SetupSlider( 1, STACKS_LOWER_BOUND, STACKS_UPPER_BOUND, DEFAULT_STACKS, PrimitiveVisual::Property::STACKS, "stacks" );
     SetupMarks( mSliders.at( 1 ), STACKS_LOWER_BOUND, STACKS_UPPER_BOUND );
 
     //Set model in control.
-    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mRendererMap ) );
+    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
   }
 
   //Sets the 3D model to a cone and modifies the sliders appropriately.
@@ -352,20 +343,20 @@ public:
   {
     InitialiseSlidersAndModel();
 
-    //Set up specific renderer properties.
-    mRendererMap[ "shape"             ] = SHAPE_CONE;
-    mRendererMap[ "scaleHeight"       ] = DEFAULT_SCALE_HEIGHT;
-    mRendererMap[ "scaleBottomRadius" ] = DEFAULT_SCALE_BOTTOM_RADIUS;
-    mRendererMap[ "slices"            ] = DEFAULT_SLICES;
+    //Set up specific visual properties.
+    mVisualMap[ PrimitiveVisual::Property::SHAPE               ] = PrimitiveVisual::Shape::CONE;
+    mVisualMap[ PrimitiveVisual::Property::SCALE_HEIGHT        ] = DEFAULT_SCALE_HEIGHT;
+    mVisualMap[ PrimitiveVisual::Property::SCALE_BOTTOM_RADIUS ] = DEFAULT_SCALE_BOTTOM_RADIUS;
+    mVisualMap[ PrimitiveVisual::Property::SLICES              ] = DEFAULT_SLICES;
 
     //Set up sliders.
-    SetupSlider( 0, 1.0f, 32.0f, DEFAULT_SCALE_HEIGHT, "scaleHeight" );
-    SetupSlider( 1, 1.0f, 32.0f, DEFAULT_SCALE_BOTTOM_RADIUS, "scaleBottomRadius" );
-    SetupSlider( 2, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND, DEFAULT_STACKS, "slices" );
+    SetupSlider( 0, 1.0f, 32.0f, DEFAULT_SCALE_HEIGHT, PrimitiveVisual::Property::SCALE_HEIGHT, "scaleHeight" );
+    SetupSlider( 1, 1.0f, 32.0f, DEFAULT_SCALE_BOTTOM_RADIUS, PrimitiveVisual::Property::SCALE_BOTTOM_RADIUS, "scaleBottomRadius" );
+    SetupSlider( 2, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND, DEFAULT_STACKS, PrimitiveVisual::Property::SLICES, "slices" );
     SetupMarks( mSliders.at( 2 ), SLICES_LOWER_BOUND, SLICES_UPPER_BOUND );
 
     //Set model in control.
-    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mRendererMap ) );
+    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
   }
 
   //Sets the 3D model to a conical frustrum and modifies the sliders appropriately.
@@ -373,20 +364,20 @@ public:
   {
     InitialiseSlidersAndModel();
 
-    //Set up specific renderer properties.
-    mRendererMap[ "shape"             ] = SHAPE_CONICAL_FRUSTRUM;
-    mRendererMap[ "scaleTopRadius"    ] = DEFAULT_SCALE_TOP_RADIUS;
-    mRendererMap[ "scaleBottomRadius" ] = DEFAULT_SCALE_BOTTOM_RADIUS;
-    mRendererMap[ "scaleHeight"       ] = DEFAULT_SCALE_HEIGHT;
-    mRendererMap[ "slices"            ] = DEFAULT_SLICES;
+    //Set up specific visual properties.
+    mVisualMap[ PrimitiveVisual::Property::SHAPE               ] = PrimitiveVisual::Shape::CONICAL_FRUSTRUM;
+    mVisualMap[ PrimitiveVisual::Property::SCALE_TOP_RADIUS    ] = DEFAULT_SCALE_TOP_RADIUS;
+    mVisualMap[ PrimitiveVisual::Property::SCALE_BOTTOM_RADIUS ] = DEFAULT_SCALE_BOTTOM_RADIUS;
+    mVisualMap[ PrimitiveVisual::Property::SCALE_HEIGHT        ] = DEFAULT_SCALE_HEIGHT;
+    mVisualMap[ PrimitiveVisual::Property::SLICES              ] = DEFAULT_SLICES;
 
     //Set up used sliders.
-    SetupSlider( 0, 1.0f, 32.0f, DEFAULT_SCALE_HEIGHT, "scaleHeight" );
-    SetupSlider( 1, 0.0f, 32.0f, DEFAULT_SCALE_BOTTOM_RADIUS, "scaleBottomRadius" );
-    SetupSlider( 2, 0.0f, 32.0f, DEFAULT_SCALE_TOP_RADIUS, "scaleTopRadius" );
+    SetupSlider( 0, 1.0f, 32.0f, DEFAULT_SCALE_HEIGHT, PrimitiveVisual::Property::SCALE_HEIGHT, "scaleHeight" );
+    SetupSlider( 1, 0.0f, 32.0f, DEFAULT_SCALE_BOTTOM_RADIUS, PrimitiveVisual::Property::SCALE_BOTTOM_RADIUS, "scaleBottomRadius" );
+    SetupSlider( 2, 0.0f, 32.0f, DEFAULT_SCALE_TOP_RADIUS, PrimitiveVisual::Property::SCALE_TOP_RADIUS, "scaleTopRadius" );
 
     //Set model in control.
-    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mRendererMap ) );
+    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
   }
 
   //Sets the 3D model to a cylinder and modifies the sliders appropriately.
@@ -394,20 +385,20 @@ public:
   {
     InitialiseSlidersAndModel();
 
-    //Set up specific renderer properties.
-    mRendererMap[ "shape"        ] = SHAPE_CYLINDER;
-    mRendererMap[ "scaleHeight"  ] = DEFAULT_SCALE_HEIGHT;
-    mRendererMap[ "scaleRadius"  ] = DEFAULT_SCALE_RADIUS;
-    mRendererMap[ "slices"       ] = DEFAULT_SLICES;
+    //Set up specific visual properties.
+    mVisualMap[ PrimitiveVisual::Property::SHAPE        ] = PrimitiveVisual::Shape::CYLINDER;
+    mVisualMap[ PrimitiveVisual::Property::SCALE_HEIGHT ] = DEFAULT_SCALE_HEIGHT;
+    mVisualMap[ PrimitiveVisual::Property::SCALE_RADIUS ] = DEFAULT_SCALE_RADIUS;
+    mVisualMap[ PrimitiveVisual::Property::SLICES       ] = DEFAULT_SLICES;
 
     //Set up used sliders.
-    SetupSlider( 0, 1.0f, 32.0f, DEFAULT_SCALE_HEIGHT, "scaleHeight" );
-    SetupSlider( 1, 1.0f, 32.0f, DEFAULT_SCALE_RADIUS, "scaleRadius" );
-    SetupSlider( 2, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND, DEFAULT_STACKS, "slices" );
+    SetupSlider( 0, 1.0f, 32.0f, DEFAULT_SCALE_HEIGHT, PrimitiveVisual::Property::SCALE_HEIGHT, "scaleHeight" );
+    SetupSlider( 1, 1.0f, 32.0f, DEFAULT_SCALE_RADIUS, PrimitiveVisual::Property::SCALE_RADIUS, "scaleRadius" );
+    SetupSlider( 2, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND, DEFAULT_STACKS, PrimitiveVisual::Property::SLICES, "slices" );
     SetupMarks( mSliders.at( 2 ), SLICES_LOWER_BOUND, SLICES_UPPER_BOUND );
 
     //Set model in control.
-    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mRendererMap ) );
+    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
   }
 
   //Sets the 3D model to a cube and modifies the sliders appropriately.
@@ -415,11 +406,11 @@ public:
   {
     InitialiseSlidersAndModel();
 
-    //Set up specific renderer properties.
-    mRendererMap[ "shape" ] = SHAPE_CUBE;
+    //Set up specific visual properties.
+    mVisualMap[ PrimitiveVisual::Property::SHAPE ] = PrimitiveVisual::Shape::CUBE;
 
     //Set model in control.
-    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mRendererMap ) );
+    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
   }
 
   //Sets the 3D model to a bevelled cube and modifies the sliders appropriately.
@@ -427,17 +418,17 @@ public:
   {
     InitialiseSlidersAndModel();
 
-    //Set up specific renderer properties.
-    mRendererMap[ "shape"           ] = SHAPE_BEVELLED_CUBE;
-    mRendererMap[ "bevelPercentage" ] = DEFAULT_BEVEL_PERCENTAGE;
-    mRendererMap[ "bevelSmoothness" ] = DEFAULT_BEVEL_SMOOTHNESS;
+    //Set up specific visual properties.
+    mVisualMap[ PrimitiveVisual::Property::SHAPE            ] = PrimitiveVisual::Shape::BEVELLED_CUBE;
+    mVisualMap[ PrimitiveVisual::Property::BEVEL_PERCENTAGE ] = DEFAULT_BEVEL_PERCENTAGE;
+    mVisualMap[ PrimitiveVisual::Property::BEVEL_SMOOTHNESS ] = DEFAULT_BEVEL_SMOOTHNESS;
 
     //Set up used sliders.
-    SetupSlider( 0, 0.0f, 1.0f, DEFAULT_BEVEL_PERCENTAGE, "bevelPercentage" );
-    SetupSlider( 1, 0.0f, 1.0f, DEFAULT_BEVEL_SMOOTHNESS, "bevelSmoothness" );
+    SetupSlider( 0, 0.0f, 1.0f, DEFAULT_BEVEL_PERCENTAGE, PrimitiveVisual::Property::BEVEL_PERCENTAGE, "bevelPercentage" );
+    SetupSlider( 1, 0.0f, 1.0f, DEFAULT_BEVEL_SMOOTHNESS, PrimitiveVisual::Property::BEVEL_SMOOTHNESS, "bevelSmoothness" );
 
     //Set model in control.
-    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mRendererMap ) );
+    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
   }
 
   //Sets the 3D model to an octahedron and modifies the sliders appropriately.
@@ -445,20 +436,20 @@ public:
   {
     InitialiseSlidersAndModel();
 
-    //Set up specific renderer properties.
-    mRendererMap[ "shape" ] = SHAPE_OCTAHEDRON;
+    //Set up specific visual properties.
+    mVisualMap[ PrimitiveVisual::Property::SHAPE ] = PrimitiveVisual::Shape::OCTAHEDRON;
 
     //Set model in control.
-    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mRendererMap ) );
+    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
   }
 
   //Sets up the slider at the given index for the supplied property, and labels it appropriately.
-  // rendererPropertyLabel is the property that will be set by this slider.
+  // visualProperty is the property that will be set by this slider.
   void SetupSlider( int sliderIndex, float lowerBound, float upperBound, float startPoint,
-                    std::string rendererPropertyLabel )
+                    Property::Index visualProperty, std::string visualPropertyLabel )
   {
     //Set up the slider itself.
-    mSliders.at( sliderIndex ).RegisterProperty( "rendererProperty", Property::Value( rendererPropertyLabel ), Property::READ_WRITE );
+    mSliders.at( sliderIndex ).RegisterProperty( "visualProperty", Property::Value( visualProperty ), Property::READ_WRITE );
     mSliders.at( sliderIndex ).SetProperty( Slider::Property::LOWER_BOUND, Property::Value( lowerBound ) );
     mSliders.at( sliderIndex ).SetProperty( Slider::Property::UPPER_BOUND, Property::Value( upperBound ) );
     mSliders.at( sliderIndex ).SetProperty( Slider::Property::VALUE, Property::Value( startPoint ) );
@@ -468,7 +459,7 @@ public:
     //We reset the TextLabel to force a relayout of the table.
     mSliderTable.RemoveChildAt( TableView::CellPosition(sliderIndex, 0) );
 
-    TextLabel sliderLabel = TextLabel::New( rendererPropertyLabel );
+    TextLabel sliderLabel = TextLabel::New( visualPropertyLabel );
     sliderLabel.SetParentOrigin( ParentOrigin::CENTER );
     sliderLabel.SetAnchorPoint( AnchorPoint::CENTER );
     sliderLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
@@ -547,13 +538,13 @@ public:
   //When the slider is adjusted, change the corresponding shape property accordingly.
   bool OnSliderValueChanged( Slider slider, float value )
   {
-    //Update property map to reflect the change to the specific renderer property.
-    std::string rendererPropertyLabel;
-    slider.GetProperty( slider.GetPropertyIndex( "rendererProperty" ) ).Get( rendererPropertyLabel );
-    mRendererMap[ rendererPropertyLabel ] = value;
+    //Update property map to reflect the change to the specific visual property.
+    int visualProperty;
+    slider.GetProperty( slider.GetPropertyIndex( "visualProperty" ) ).Get( visualProperty );
+    mVisualMap[ visualProperty ] = value;
 
     //Reload the model to display the change.
-    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mRendererMap ) );
+    mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
 
     return true;
   }
@@ -622,8 +613,8 @@ private:
   std::vector<TextLabel> mSliderLabels; ///< Holds the labels to each slider.
   TableView mSliderTable; ///< A table to layout the sliders next to their labels.
 
-  Property::Map mRendererMap; ///< Property map to create a primitive renderer.
-  Control mModel; ///< Control to house the primitive renderer.
+  Property::Map mVisualMap; ///< Property map to create a primitive visual.
+  Control mModel; ///< Control to house the primitive visual.
 
   PanGestureDetector mPanGestureDetector; ///< Detects pan gestures for rotation of the model.
   Animation mRotationAnimation; ///< Automatically rotates the model, unless it is being panned.

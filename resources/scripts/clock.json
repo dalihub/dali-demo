@@ -8,7 +8,7 @@
       "parentOrigin": [0.5, 0.5, 0.5],
       "anchorPoint": [0.5, 1, 0.5],
       "background": {
-        "rendererType": "COLOR",
+        "visualType": "COLOR",
         "mixColor": [0.71, 0, 0, 1]
       },
       "selected": false,
@@ -27,7 +27,7 @@
       "parentOrigin": [0.5, 0.5, 0.5],
       "anchorPoint": [0.5, 1, 0.5],
       "background": {
-        "rendererType": "COLOR",
+        "visualType": "COLOR",
         "mixColor": [0, 0.14200000000000013, 0.71, 0.7]
       },
       "signals": [
@@ -45,7 +45,7 @@
       "parentOrigin": [0.5, 0.5, 0.5],
       "anchorPoint": [0.5, 1, 0.5],
       "background": {
-        "rendererType": "COLOR",
+        "visualType": "COLOR",
         "mixColor": [0.057450000000000064, 0.3, 0.0030000000000000027, 0.7]
       },
       "signals": [

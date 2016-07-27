@@ -9,7 +9,7 @@ namespace
   //Keeps information about each model for access.
   struct Model
   {
-    Control control; // Control housing the mesh renderer of the model.
+    Control control; // Control housing the mesh visual of the model.
     Vector2 rotation; // Keeps track of rotation about x and y axis for manual rotation.
     Animation rotationAnimation; // Automatically rotates when left alone.
   };
@@ -31,12 +31,12 @@ namespace
 
   const char * const TEXTURES_PATH( DEMO_IMAGE_DIR "" );
 
-  //Possible shader options.
-  const char * const SHADER_TYPE[] =
+  //Possible shading modes.
+  MeshVisual::ShadingMode::Value SHADING_MODE_TABLE[] =
   {
-    "ALL_TEXTURES",
-    "DIFFUSE_TEXTURE",
-    "TEXTURELESS"
+    MeshVisual::ShadingMode::TEXTURED_WITH_DETAILED_SPECULAR_LIGHTING,
+    MeshVisual::ShadingMode::TEXTURED_WITH_SPECULAR_LIGHTING,
+    MeshVisual::ShadingMode::TEXTURELESS_WITH_DIFFUSE_LIGHTING
   };
 
   //Files for background and toolbar
@@ -54,23 +54,23 @@ namespace
 
 } //End namespace
 
-class MeshRendererController : public ConnectionTracker
+class MeshVisualController : public ConnectionTracker
 {
 public:
 
-  MeshRendererController( Application& application )
+  MeshVisualController( Application& application )
   : mApplication( application ),   //Store handle to the application.
     mModelIndex( 1 ),              //Start with metal robot.
-    mShaderIndex( 0 ),             //Start with all textures.
+    mShadingModeIndex( 0 ),        //Start with textured with detailed specular lighting.
     mTag( -1 ),                    //Non-valid default, which will get set to a correct value when used.
     mSelectedModelIndex( -1 ),     //Non-valid default, which will get set to a correct value when used.
     mPaused( false )               //Animations play by default.
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &MeshRendererController::Create );
+    mApplication.InitSignal().Connect( this, &MeshVisualController::Create );
   }
 
-  ~MeshRendererController()
+  ~MeshVisualController()
   {
   }
 
@@ -89,7 +89,7 @@ public:
     LoadScene();
 
     //Allow for exiting of the application via key presses.
-    stage.KeyEventSignal().Connect( this, &MeshRendererController::OnKeyEvent );
+    stage.KeyEventSignal().Connect( this, &MeshVisualController::OnKeyEvent );
   }
 
   //Sets up the on-screen elements.
@@ -105,10 +105,10 @@ public:
     baseLayer.SetBehavior( Layer::LAYER_2D ); //We use a 2D layer as this is closer to UI work than full 3D scene creation.
     baseLayer.SetDepthTestDisabled( false ); //Enable depth testing, as otherwise the 2D layer would not do so.
     baseLayer.RegisterProperty( "Tag", LAYER_TAG ); //Used to differentiate between different kinds of actor.
-    baseLayer.TouchedSignal().Connect( this, &MeshRendererController::OnTouch );
+    baseLayer.TouchedSignal().Connect( this, &MeshVisualController::OnTouch );
     stage.Add( baseLayer );
 
-    //Add containers to house each renderer-holding-actor.
+    //Add containers to house each visual-holding-actor.
     for( int i = 0; i < NUM_MESHES; i++ )
     {
       mContainers[i] = Actor::New();
@@ -139,7 +139,7 @@ public:
         mContainers[i].SetAnchorPoint( AnchorPoint::TOP_RIGHT );
       }
 
-      mContainers[i].TouchedSignal().Connect( this, &MeshRendererController::OnTouch );
+      mContainers[i].TouchedSignal().Connect( this, &MeshVisualController::OnTouch );
       baseLayer.Add( mContainers[i] );
     }
 
@@ -174,7 +174,7 @@ public:
     //Create button for model changing
     Toolkit::PushButton modelButton = Toolkit::PushButton::New();
     modelButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    modelButton.ClickedSignal().Connect( this, &MeshRendererController::OnChangeModelClicked );
+    modelButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeModelClicked );
     modelButton.SetParentOrigin( Vector3( 0.05, 0.95, 0.5 ) ); //Offset from bottom left
     modelButton.SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
     modelButton.SetLabelText( "Change Model" );
@@ -183,7 +183,7 @@ public:
     //Create button for shader changing
     Toolkit::PushButton shaderButton = Toolkit::PushButton::New();
     shaderButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    shaderButton.ClickedSignal().Connect( this, &MeshRendererController::OnChangeShaderClicked );
+    shaderButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeShaderClicked );
     shaderButton.SetParentOrigin( Vector3( 0.95, 0.95, 0.5 ) ); //Offset from bottom right
     shaderButton.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
     shaderButton.SetLabelText( "Change Shader" );
@@ -192,7 +192,7 @@ public:
     //Create button for pausing animations
     Toolkit::PushButton pauseButton = Toolkit::PushButton::New();
     pauseButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    pauseButton.ClickedSignal().Connect( this, &MeshRendererController::OnPauseClicked );
+    pauseButton.ClickedSignal().Connect( this, &MeshVisualController::OnPauseClicked );
     pauseButton.SetParentOrigin( Vector3( 0.5, 0.95, 0.5 ) ); //Offset from bottom center
     pauseButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
     pauseButton.SetLabelText( " || " );
@@ -211,8 +211,8 @@ public:
 
     //Make white background.
     Property::Map lightMap;
-    lightMap.Insert( "rendererType", "COLOR" );
-    lightMap.Insert( "mixColor", Color::WHITE );
+    lightMap.Insert( Visual::Property::TYPE,  Visual::COLOR );
+    lightMap.Insert( ColorVisual::Property::MIX_COLOR, Color::WHITE );
     mLightSource.SetProperty( Control::Property::BACKGROUND, Property::Value( lightMap ) );
 
     //Label to show what this actor is for the user.
@@ -225,7 +225,7 @@ public:
     mLightSource.Add( lightLabel );
 
     //Connect to touch signal for dragging.
-    mLightSource.TouchedSignal().Connect( this, &MeshRendererController::OnTouch );
+    mLightSource.TouchedSignal().Connect( this, &MeshVisualController::OnTouch );
 
     //Place the light source on a layer above the base, so that it is rendered above everything else.
     Layer upperLayer = Layer::New();
@@ -241,12 +241,12 @@ public:
   {
     //Create mesh property map
     Property::Map map;
-    map.Insert( "rendererType", "MESH" );
-    map.Insert( "objectUrl", MODEL_FILE[mModelIndex] );
-    map.Insert( "materialUrl", MATERIAL_FILE[mModelIndex] );
-    map.Insert( "texturesPath", TEXTURES_PATH );
-    map.Insert( "shaderType", SHADER_TYPE[mShaderIndex] );
-    map.Insert( "useSoftNormals", false );
+    map.Insert( Visual::Property::TYPE,  Visual::MESH );
+    map.Insert( MeshVisual::Property::OBJECT_URL, MODEL_FILE[mModelIndex] );
+    map.Insert( MeshVisual::Property::MATERIAL_URL, MATERIAL_FILE[mModelIndex] );
+    map.Insert( MeshVisual::Property::TEXTURES_PATH, TEXTURES_PATH );
+    map.Insert( MeshVisual::Property::SHADING_MODE, SHADING_MODE_TABLE[mShadingModeIndex] );
+    map.Insert( MeshVisual::Property::USE_SOFT_NORMALS, false );
 
     //Set the two controls to use the mesh
     for( int i = 0; i < NUM_MESHES; i++ )
@@ -365,7 +365,7 @@ public:
   //Cycle through the list of shaders.
   bool OnChangeShaderClicked( Toolkit::Button button )
   {
-    ++mShaderIndex %= 3;
+    ++mShadingModeIndex %= 3;
 
     ReloadModel();
 
@@ -429,26 +429,18 @@ private:
   Vector2 mRotationStart;
 
   int mModelIndex; //Index of model to load.
-  int mShaderIndex; //Index of shader type to use.
+  int mShadingModeIndex; //Index of shader type to use.
   int mTag; //Identifies what kind of actor has been selected in OnTouch.
   int mSelectedModelIndex; //Index of model selected on screen.
   bool mPaused; //If true, all animations are paused and should stay so.
 };
-
-void RunTest( Application& application )
-{
-  MeshRendererController test( application );
-
-  application.MainLoop();
-}
 
 // Entry point for Linux & Tizen applications
 //
 int main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  MeshVisualController test( application );
+  application.MainLoop();
   return 0;
 }
