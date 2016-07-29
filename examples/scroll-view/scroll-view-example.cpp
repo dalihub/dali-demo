@@ -454,12 +454,12 @@ private:
   {
     ImageView actor = ImageView::New();
     Property::Map map;
-    map["rendererType"] = "IMAGE";
-    map["url"] = filename;
-    map["desiredWidth"] = width;
-    map["desiredHeight"] = height;
-    map["fittingMode"] = "SCALE_TO_FILL";
-    map["samplingMode"] = "BOX_THEN_LINEAR";
+    map[Visual::Property::TYPE] = Visual::IMAGE;
+    map[ImageVisual::Property::URL] = filename;
+    map[ImageVisual::Property::DESIRED_WIDTH] = width;
+    map[ImageVisual::Property::DESIRED_HEIGHT] = height;
+    map[ImageVisual::Property::FITTING_MODE] = FittingMode::SCALE_TO_FILL;
+    map[ImageVisual::Property::SAMPLING_MODE] = SamplingMode::BOX_THEN_LINEAR;
     actor.SetProperty( ImageView::Property::IMAGE, map );
 
     actor.SetName( filename );

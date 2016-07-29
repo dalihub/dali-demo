@@ -91,13 +91,13 @@ Toolkit::ImageView CreateStageFillingImageView( const char * const imagePath )
   Size stageSize = Stage::GetCurrent().GetSize();
   Toolkit::ImageView imageView = Toolkit::ImageView::New();
   Property::Map map;
-  map["rendererType"] = "IMAGE";
-  map["url"] = imagePath;
-  map["desiredWidth"] = stageSize.x;
-  map["desiredHeight"] = stageSize.y;
-  map["fittingMode"] = "SCALE_TO_FILL";
-  map["samplingMode"] = "BOX_THEN_LINEAR";
-  map["synchronousLoading"] = true;
+  map[Toolkit::Visual::Property::TYPE] = Toolkit::Visual::IMAGE;
+  map[Toolkit::ImageVisual::Property::URL] = imagePath;
+  map[Toolkit::ImageVisual::Property::DESIRED_WIDTH] = stageSize.x;
+  map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = stageSize.y;
+  map[Toolkit::ImageVisual::Property::FITTING_MODE] = FittingMode::SCALE_TO_FILL;
+  map[Toolkit::ImageVisual::Property::SAMPLING_MODE] = SamplingMode::BOX_THEN_LINEAR;
+  map[Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
   imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
 
   return imageView;

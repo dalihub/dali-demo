@@ -198,8 +198,6 @@ public:
     mModelCounter = (mModelCounter + 1) % MODEL_NUMBER;
     mModel3dView.SetProperty(Model3dView::Property::GEOMETRY_URL, MODEL_FILE[mModelCounter]);
     mModel3dView.SetProperty(Model3dView::Property::MATERIAL_URL, MATERIAL_FILE[mModelCounter]);
-    mModel3dView.SetProperty(Model3dView::Property::IMAGES_URL, IMAGE_PATH);
-
     return true;
   }
 

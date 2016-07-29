@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_CUBE_TRANSITION dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CUBE_TRANSITION")
 #define DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION")
 #define DALI_DEMO_STR_TITLE_ITEM_VIEW dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_ITEM_VIEW")
+#define DALI_DEMO_STR_TITLE_RENDERER_STENCIL dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_RENDERER_STENCIL")
 #define DALI_DEMO_STR_TITLE_MAGNIFIER dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MAGNIFIER")
 #define DALI_DEMO_STR_TITLE_MOTION_BLUR dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MOTION_BLUR")
 #define DALI_DEMO_STR_TITLE_MOTION_STRETCH dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MOTION_STRETCH")
@@ -71,6 +72,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_CUBE_TRANSITION           "Cube Effect"
 #define DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION       "Dissolve Effect"
 #define DALI_DEMO_STR_TITLE_ITEM_VIEW                 "Item View"
+#define DALI_DEMO_STR_TITLE_RENDERER_STENCIL          "Renderer Stencils"
 #define DALI_DEMO_STR_TITLE_MAGNIFIER                 "Magnifier"
 #define DALI_DEMO_STR_TITLE_MODEL_3D_VIEWER           "Model 3D Viewer"
 #define DALI_DEMO_STR_TITLE_MOTION_BLUR               "Motion Blur"
@@ -107,7 +109,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM          "Super Blur and Bloom"
 #define DALI_DEMO_STR_TITLE_EFFECTS_VIEW              "Effects View"
 #define DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE       "Native Image Source"
-#define DALI_DEMO_STR_TITLE_MESH_RENDERER             "Mesh Renderer"
+#define DALI_DEMO_STR_TITLE_MESH_VISUAL               "Mesh Visual"
 #define DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES          "Primitive Shapes"
 
 #endif

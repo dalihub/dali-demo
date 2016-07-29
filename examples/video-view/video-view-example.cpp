@@ -210,14 +210,14 @@ class VideoViewController: public ConnectionTracker
     Stage::GetCurrent().KeyEventSignal().Connect( this, &VideoViewController::OnKeyEvent );
 
     Property::Map customShader;
-    customShader.Insert( "fragmentShader", FRAGMENT_SHADER );
-    mCustomShader.Insert( "rendererType", "IMAGE" );
-    mCustomShader.Insert( "shader", customShader );
+    customShader.Insert( Visual::Shader::Property::FRAGMENT_SHADER, FRAGMENT_SHADER );
+    mCustomShader.Insert( Visual::Property::TYPE, Visual::IMAGE );
+    mCustomShader.Insert( Visual::Property::SHADER, customShader );
 
     Property::Map defaultShader;
-    customShader.Insert( "fragmentShader", DEFAULT_FRAGMENT_SHADER );
-    mDefaultShader.Insert( "rendererType", "IMAGE" );
-    mDefaultShader.Insert( "shader", defaultShader );
+    customShader.Insert( Visual::Shader::Property::FRAGMENT_SHADER, DEFAULT_FRAGMENT_SHADER );
+    mDefaultShader.Insert( Visual::Property::TYPE, Visual::IMAGE );
+    mDefaultShader.Insert( Visual::Property::SHADER, customShader );
 
     mWindowSurfaceTarget.Insert( "RENDERING_TARGET", "windowSurfaceTarget" );
     mNativeImageTarget.Insert( "RENDERING_TARGET", "nativeImageTarget" );

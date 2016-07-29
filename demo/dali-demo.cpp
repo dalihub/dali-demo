@@ -41,8 +41,8 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("cube-transition-effect.example", DALI_DEMO_STR_TITLE_CUBE_TRANSITION));
   demo.AddExample(Example("dissolve-effect.example", DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION));
   demo.AddExample(Example("item-view.example", DALI_DEMO_STR_TITLE_ITEM_VIEW));
+  demo.AddExample(Example("renderer-stencil.example", DALI_DEMO_STR_TITLE_RENDERER_STENCIL));
   demo.AddExample(Example("magnifier.example", DALI_DEMO_STR_TITLE_MAGNIFIER));
-  demo.AddExample(Example("model3d-view.example", DALI_DEMO_STR_TITLE_MODEL_3D_VIEWER));
   demo.AddExample(Example("motion-blur.example", DALI_DEMO_STR_TITLE_MOTION_BLUR));
   demo.AddExample(Example("motion-stretch.example", DALI_DEMO_STR_TITLE_MOTION_STRETCH));
   demo.AddExample(Example("page-turn-view.example", DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW));
@@ -78,7 +78,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("tilt.example", DALI_DEMO_STR_TITLE_TILT_SENSOR));
   demo.AddExample(Example("effects-view.example", DALI_DEMO_STR_TITLE_EFFECTS_VIEW));
   demo.AddExample(Example("native-image-source.example", DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE));
-  demo.AddExample(Example("mesh-renderer.example", DALI_DEMO_STR_TITLE_MESH_RENDERER));
+  demo.AddExample(Example("mesh-visual.example", DALI_DEMO_STR_TITLE_MESH_VISUAL));
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
 
   demo.SortAlphabetically( true );

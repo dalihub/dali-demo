@@ -200,7 +200,9 @@ public:
 
     // create a offscreen renderer task to render content into the native image source
     Texture nativeTexture = Texture::New( *nativeImageSourcePtr );
-    FrameBuffer targetBuffer = FrameBuffer::New( nativeTexture.GetWidth(), nativeTexture.GetHeight(), FrameBuffer::COLOR );
+    // Create a FrameBuffer object with no default attachments.
+    FrameBuffer targetBuffer = FrameBuffer::New( nativeTexture.GetWidth(), nativeTexture.GetHeight(), FrameBuffer::Attachment::NONE );
+    // Add a color attachment to the FrameBuffer object.
     targetBuffer.AttachColorTexture( nativeTexture );
 
     CameraActor cameraActor = CameraActor::New(imageSize);

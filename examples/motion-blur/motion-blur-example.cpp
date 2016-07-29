@@ -103,13 +103,13 @@ const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to
 void SetImageFittedInBox( ImageView& imageView, Property::Map& shaderEffect, const char * const imagePath, int maxWidth, int maxHeight )
 {
   Property::Map map;
-  map["rendererType"] = "IMAGE";
-  map["url"] = imagePath;
+  map[Visual::Property::TYPE] = Visual::IMAGE;
+  map[ImageVisual::Property::URL] = imagePath;
   // Load the image nicely scaled-down to fit within the specified max width and height:
-  map["desiredWidth"] = maxWidth;
-  map["desiredHeight"] = maxHeight;
-  map["fittingMode"] = "SHRINK_TO_FIT";
-  map["samplingMode"] = "BOX_THEN_LINEAR";
+  map[ImageVisual::Property::DESIRED_WIDTH] = maxWidth;
+  map[ImageVisual::Property::DESIRED_HEIGHT] = maxHeight;
+  map[ImageVisual::Property::FITTING_MODE] = FittingMode::SHRINK_TO_FIT;
+  map[ImageVisual::Property::SAMPLING_MODE] = SamplingMode::BOX_THEN_LINEAR;
   map.Merge( shaderEffect );
 
   imageView.SetProperty( ImageView::Property::IMAGE, map );

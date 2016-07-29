@@ -131,13 +131,13 @@ Dali::Layer CreateView( Dali::Application& application,
   if ( !backgroundImagePath.empty() )
   {
     Dali::Property::Map map;
-    map["rendererType"] = "IMAGE";
-    map["url"] = backgroundImagePath;
-    map["desiredWidth"] = stage.GetSize().x;
-    map["desiredHeight"] = stage.GetSize().y;
-    map["fittingMode"] = "SCALE_TO_FILL";
-    map["samplingMode"] = "BOX_THEN_LINEAR";
-    map["synchronousLoading"] = true;
+    map[Dali::Toolkit::Visual::Property::TYPE] = Dali::Toolkit::Visual::IMAGE;
+    map[Dali::Toolkit::ImageVisual::Property::URL] = backgroundImagePath;
+    map[Dali::Toolkit::ImageVisual::Property::DESIRED_WIDTH] = stage.GetSize().x;
+    map[Dali::Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = stage.GetSize().y;
+    map[Dali::Toolkit::ImageVisual::Property::FITTING_MODE] = Dali::FittingMode::SCALE_TO_FILL;
+    map[Dali::Toolkit::ImageVisual::Property::SAMPLING_MODE] = Dali::SamplingMode::BOX_THEN_LINEAR;
+    map[Dali::Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
     view.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
   }
 
