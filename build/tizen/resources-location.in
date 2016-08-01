@@ -1,0 +1,8 @@
+/**
+ * This file defines the location dali-demo resources
+   It is used exclusively for Ubuntu builds where an application resource directory is explicity defined.
+ */
+
+#include <cstdlib>
+
+int dali_demo_RESOURCE_DIR = setenv("DALI_APPLICATION_PACKAGE",  "@APP_DATA_RES_DIR@" , 1);
