@@ -1,23 +1,74 @@
-msgid "DALI_DEMO_STR_TITLE_BUBBLES"
-msgstr "Bubbles"
-
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Blocks"
 
-msgid "DALI_DEMO_STR_TITLE_CLUSTER"
-msgstr "Cluster"
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "Bubbles"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "Buttons"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "Colour Gradient"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
-msgstr "Cube Transition"
+msgstr "Cube Effect"
 
 msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
-msgstr "Dissolve Transition"
+msgstr "Dissolve Effect"
+
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "Effects View"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "Emoji Text"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "Image Fitting and Sampling"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "Image Scaling Grid"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "Image View"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "Image View Alpha Blending"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "Image View Pixel Area"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "Image View SVG"
 
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "Item View"
 
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "Lights and Shadows"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "Mesh Line"
+
+msgid "DALI_DEMO_STR_TITLE_LOGGING"
+msgstr "Logging"
+
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "Magnifier"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "Mesh Morph"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
+msgstr "Mesh Sorting"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "Mesh Visual"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "Metaball Explosion"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "Metaball Refraction"
 
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "Motion Blur"
@@ -25,8 +76,20 @@ msgstr "Motion Blur"
 msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
 msgstr "Motion Stretch"
 
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "Native Image Source"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "Negotiate Size"
+
 msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
 msgstr "Page Turn View"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "Popup"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "Primitive Shapes"
 
 msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
 msgstr "Radial Menu"
@@ -34,17 +97,35 @@ msgstr "Radial Menu"
 msgid "DALI_DEMO_STR_TITLE_REFRACTION"
 msgstr "Refraction"
 
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "Renderer Stencil"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "Script-based UI"
+
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "Scroll View"
 
-msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
-msgstr "Lights and shadows"
+msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
+msgstr "Super Blur and Bloom"
 
-msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
-msgstr "Script Based UI"
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "Mesh Texture"
 
-msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
-msgstr "Image Scaling Modes"
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "Text Editor"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "Text Field"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
 msgstr "Text Label"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "Text Scripts"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "Text Scrolling"
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "Tilt Sensor"
