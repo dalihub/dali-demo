@@ -88,6 +88,9 @@ msgstr "Seite wechseln"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup-Menü"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "Fortschrittsanzeige"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "Grundformen"
 

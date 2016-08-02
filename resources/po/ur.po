@@ -88,6 +88,9 @@ msgstr "کتاب"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "پاپ اپ"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "ترقی بار"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "سادہ ماڈلیے"
 

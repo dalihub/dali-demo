@@ -172,4 +172,7 @@
 	<ui-application appid="styling.example" exec="/usr/apps/com.samsung.dali-demo/bin/styling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Styling</label>
 	</ui-application>
+	<ui-application appid="progress-bar.example" exec="/usr/apps/com.samsung.dali-demo/bin/progress-bar.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Progress Bar</label>
+	</ui-application>
 </manifest>

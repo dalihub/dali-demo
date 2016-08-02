@@ -88,6 +88,9 @@ msgstr "翻页"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "弹窗"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "进度条"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "基本形状"
 

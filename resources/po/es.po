@@ -88,6 +88,9 @@ msgstr "Vista de páginas"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "Barra de progreso"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "Primitvas 3D"
 
