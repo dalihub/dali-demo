@@ -1,11 +1,14 @@
-msgid "DALI_DEMO_STR_TITLE_BUBBLES"
-msgstr "بلبلے"
-
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "اینٹیں"
 
-msgid "DALI_DEMO_STR_TITLE_CLUSTER"
-msgstr "کلسٹر"
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "بلبلے"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "بٹنوں"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "رنگ میلان"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "کیوب منتقلی"
@@ -13,11 +16,59 @@ msgstr "کیوب منتقلی"
 msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
 msgstr "حل منتقلی"
 
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "اثرات"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "اموٹکان"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "تصویر فٹنگ"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "تصویر پیمائی"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "تصویر کنٹرول"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "تصویر کنٹرول"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "تصویر کنٹرول شفافیت کے ساتھ"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "تصویر کنٹرول SVG"
+
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "چیزوں کی فہرست"
 
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "روشنی اور سائے"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "لکیریں"
+
+msgid "DALI_DEMO_STR_TITLE_LOGGING"
+msgstr "لاگنگ"
+
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "مکبر"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "میش کی تبدیلی"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
+msgstr "میش کی چھنٹائی"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "3D میش"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "میٹابال دھماکہ"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "میٹابال اپورتن"
 
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "دھندلانے کی حرکت"
@@ -25,8 +76,20 @@ msgstr "دھندلانے کی حرکت"
 msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
 msgstr "کھینچھنے کی حرکت"
 
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "نیٹو تصویر"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "سائز مذاکرات"
+
 msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
 msgstr "کتاب"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "پاپ اپ"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "سادہ ماڈلیے"
 
 msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
 msgstr "ریڈیل مینو"
@@ -34,17 +97,35 @@ msgstr "ریڈیل مینو"
 msgid "DALI_DEMO_STR_TITLE_REFRACTION"
 msgstr "رفراکشن"
 
-msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
-msgstr "سکرول ویو"
-
-msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
-msgstr "روشنی اور سائے"
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "سٹینسل"
 
 msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
 msgstr "سکرپٹ"
 
-msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
-msgstr "تصویر پیمائی"
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "سکرول ویو"
+
+msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
+msgstr "دھندلاپن اور بلوم"
+
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "ٹیکسچرد میش"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "حروف ایڈیٹر"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "حروف لائن ایڈیٹر"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
-msgstr "لیبل"
+msgstr "حروف کا لیبل"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "کئی زبانوں"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "حروف کاسکرال "
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "ٹلٹ سینسر"
