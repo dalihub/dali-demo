@@ -116,6 +116,9 @@ private:
   {
     Stage stage = Stage::GetCurrent();
 
+    // Hide the indicator bar
+    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+
     // Creates the background image.
     Toolkit::Control background = Dali::Toolkit::Control::New();
     background.SetAnchorPoint( Dali::AnchorPoint::CENTER );

@@ -68,6 +68,9 @@ public:
     Stage stage = Stage::GetCurrent();
     stage.SetBackgroundColor( Color::WHITE );
 
+    // Hide the indicator bar
+    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+
     //Set up layer to place UI on.
     Layer layer = Layer::New();
     layer.SetParentOrigin( ParentOrigin::CENTER );
