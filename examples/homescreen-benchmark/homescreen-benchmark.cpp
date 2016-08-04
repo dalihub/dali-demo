@@ -248,10 +248,10 @@ public:
         Property::Map map;
         std::stringstream imagePath;
         imagePath << IMAGE_PATH_PREFIX << currentIconIndex << IMAGE_PATH_POSTFIX;
-        map[ Dali::Toolkit::BatchImageVisual::Property::URL ] = imagePath.str();
+        map[ Dali::Toolkit::ImageVisual::Property::URL ] = imagePath.str();
 
         // Enable/disable batching
-        map[ Toolkit::Visual::Property::BATCHING_ENABLED ] = mConfig.mBatchingEnabled;
+        map[ Toolkit::ImageVisual::Property::BATCHING_ENABLED ] = mConfig.mBatchingEnabled;
 
         imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
         imageView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
