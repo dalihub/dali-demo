@@ -1,131 +1,131 @@
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
-msgstr "অৱৰুদ্ধ কৰক"
+msgstr "块体"
 
 msgid "DALI_DEMO_STR_TITLE_BUBBLES"
-msgstr "বেলুন"
+msgstr "气泡"
 
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
-msgstr ""
+msgstr "按钮"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
-msgstr ""
+msgstr "颜色梯度"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
-msgstr "ঘনক পৰিৱৰ্তনীয় প্ৰভাৱ"
+msgstr "方块切换效果"
 
 msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
-msgstr "পৰিৱৰ্তনীয় প্ৰভাৱ"
+msgstr "冰消瓦解切换效果"
 
 msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
-msgstr ""
+msgstr "效果视图"
 
 msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
-msgstr ""
+msgstr "表情符号"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
-msgstr ""
+msgstr "图像填充及采样"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
-msgstr "প্ৰতিচ্ছবি স্কেল কৰক"
+msgstr "图像缩放"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
-msgstr ""
+msgstr "图像视图"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
-msgstr ""
+msgstr "图像视图透明度"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
-msgstr ""
+msgstr "图像视图像素区域"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
-msgstr ""
+msgstr "图像视图 SVG"
 
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
-msgstr "আইটেম দর্শন"
+msgstr "项目视图"
 
 msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
-msgstr "ছাঁয়া"
+msgstr "阴影"
 
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
-msgstr ""
+msgstr "线条"
 
 msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr ""
+msgstr "记录"
 
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
-msgstr "পৰিবৰ্দ্ধক"
+msgstr "放大鏡"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
-msgstr ""
+msgstr "网格变形"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr ""
+msgstr "网格排序"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
-msgstr ""
+msgstr "3D模型"
 
 msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr ""
+msgstr "元球爆炸"
 
 msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr ""
+msgstr "元球折射"
 
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
-msgstr "অস্পষ্ট"
+msgstr "动作模糊"
 
 msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
-msgstr "বিস্তাৰ"
+msgstr "动作拉伸"
 
 msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
-msgstr ""
+msgstr "本地图像"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
-msgstr ""
+msgstr "尺寸协商"
 
 msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "পৃষ্ঠা লেআউট"
+msgstr "翻页"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
-msgstr ""
+msgstr "弹窗"
 
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
-msgstr ""
+msgstr "基本形状"
 
 msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
-msgstr "ৰেডিয়েল নক্সা"
+msgstr "径向菜单"
 
 msgid "DALI_DEMO_STR_TITLE_REFRACTION"
-msgstr "প্ৰতিফলিত কৰক"
+msgstr "折射"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
-msgstr ""
+msgstr "模板缓冲"
 
 msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
-msgstr "লিপি"
+msgstr "脚本用户界面"
 
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
-msgstr "স্ক্ৰ'ল কৰক"
+msgstr "滚动视图"
 
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr ""
+msgstr "模糊及泛光"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
-msgstr ""
+msgstr "纹理网格"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
-msgstr ""
+msgstr "文字编辑器"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
-msgstr ""
+msgstr "文字栏"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
-msgstr "লেৱেল কৰক"
+msgstr "标签"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
-msgstr ""
+msgstr "多语言标签"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
-msgstr ""
+msgstr "滚动文字"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
-msgstr ""
+msgstr "倾斜传感器"
