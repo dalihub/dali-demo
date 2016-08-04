@@ -242,6 +242,9 @@ void PageTurnController::OnInit( Application& app )
 
   Stage::GetCurrent().KeyEventSignal().Connect(this, &PageTurnController::OnKeyEvent);
 
+  // Hide the indicator bar
+  app.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+
   Stage stage = Stage::GetCurrent();
   Vector2 stageSize =  stage.GetSize();
 

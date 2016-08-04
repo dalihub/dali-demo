@@ -228,6 +228,9 @@ public:
   {
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
+    // Hide the indicator bar
+    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
     Toolkit::ToolBar toolBar;
