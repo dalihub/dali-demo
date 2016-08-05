@@ -1,0 +1,67 @@
+{
+  "styles":
+  {
+    "title":{
+      "textColor":"#0000ff",
+      "background":
+      {
+        "visualType":"COLOR",
+        "mixColor": [ 1.0, 1.0, 1.0, 1.0 ]
+      }
+    },
+    "tableview":{
+      "background":
+      {
+        "visualType":"COLOR",
+        "mixColor": [ 1.0, 1.0, 1.0, 0.03 ]
+      }
+    },
+    "flexcontainer":{
+      "background":
+      {
+        "visualType":"COLOR",
+        "mixColor": [ 1.0, 1.0, 1.0, 0.1 ]
+      }
+    },
+    "radiobutton":{
+      "label":{
+        "textColor": [1,1,1,1]
+      }
+    },
+    "checkboxbutton":{
+      "label":{
+        "textColor": [1,1,1,1]
+      }
+    },
+    "colorLabel1":{
+      "textColor": [1,0,0,1]
+    },
+    "colorLabel2":{
+      "textColor": [0,1,0,1]
+    },
+    "colorLabel3":{
+      "textColor": [0.3,0.3,1,1]
+    },
+    "themelabel":{
+      "textColor":[0,1,1,1]
+    },
+    "popupTitle":{
+      "textColor":[1,1,1,1]
+    },
+    "popupBody":{
+      "textColor":[1,1,0,1]
+    },
+    "textlabel":{
+      "textColor":[0,0,0,1]
+    },
+    "colorSlider1":{
+      "styles":["slider"]
+    },
+    "colorSlider2":{
+      "styles":["slider"]
+    },
+    "colorSlider3":{
+      "styles":["slider"]
+    }
+  }
+}
