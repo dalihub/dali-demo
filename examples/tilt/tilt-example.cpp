@@ -59,6 +59,9 @@ public:
     stage.GetRootLayer().TouchSignal().Connect( this, &TiltController::OnTouch );
 
     CreateSensor();
+
+    // Connect signals to allow Back and Escape to exit.
+    stage.KeyEventSignal().Connect( this, &TiltController::OnKeyEvent );
   }
 
   void CreateSensor()
@@ -86,6 +89,21 @@ public:
     mTextLabel.SetOrientation(Quaternion());
     mTextLabel.RotateBy(rollRot);
     mTextLabel.RotateBy(pitchRot);;
+  }
+
+  /**
+   * @brief OnKeyEvent signal handler.
+   * @param[in] event The key event information
+   */
+  void OnKeyEvent( const KeyEvent& event )
+  {
+    if( event.state == KeyEvent::Down )
+    {
+      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
   }
 
 private:

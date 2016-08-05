@@ -146,6 +146,10 @@ public:
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
     stage.SetBackgroundColor( Color::WHITE );
+
+    // Hide the indicator bar
+    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+
     stage.KeyEventSignal().Connect(this, &NativeImageSourceController::OnKeyEvent);
 
     mButtonRefreshAlways = PushButton::New();
