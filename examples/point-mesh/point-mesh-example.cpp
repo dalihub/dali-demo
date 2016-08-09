@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/rendering/renderer.h>
+#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 
@@ -104,7 +105,7 @@ Geometry CreateGeometry()
   // Create the geometry object
   Geometry polyhedraGeometry = Geometry::New();
   polyhedraGeometry.AddVertexBuffer( polyhedraVertices );
-  polyhedraGeometry.SetGeometryType( Geometry::POINTS );
+  polyhedraGeometry.SetType( Geometry::POINTS );
 
   return polyhedraGeometry;
 }
@@ -152,14 +153,14 @@ public:
     // Hide the indicator bar
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
-    Image image0 = ResourceImage::New( MATERIAL_SAMPLE );
-    Image image1 = ResourceImage::New( MATERIAL_SAMPLE2 );
+    Texture texture0 = DemoHelper::LoadTexture( MATERIAL_SAMPLE );
+    Texture texture1 = DemoHelper::LoadTexture( MATERIAL_SAMPLE2 );
 
     Shader shader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
 
     TextureSet textureSet = TextureSet::New();
-    textureSet.SetImage( 0u, image0 );
-    textureSet.SetImage( 1u, image1 );
+    textureSet.SetTexture( 0u, texture0 );
+    textureSet.SetTexture( 1u, texture1 );
 
     Geometry geometry = CreateGeometry();
 

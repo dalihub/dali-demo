@@ -203,15 +203,15 @@ private:
   PixelData CreatePixelData( const Vector3& color, const unsigned int width, const unsigned int height )
   {
     unsigned int size = width*height;
-    unsigned char* pixels = new unsigned char [size*3u];
+    unsigned int bufferSize = size * Pixel::GetBytesPerPixel(Pixel::RGB888);
+    unsigned char* pixels = new unsigned char [bufferSize];
     for( unsigned int i = 0; i < size; i++ )
     {
       pixels[i*3u] = 0xFF * color.x;
       pixels[i*3u+1u] = 0xFF * color.y;
       pixels[i*3u+2u] = 0xFF * color.z;
     }
-
-    return PixelData::New( pixels, width, height, Pixel::RGB888, PixelData::DELETE_ARRAY );
+    return PixelData::New( pixels, bufferSize, width, height, Pixel::RGB888, PixelData::DELETE_ARRAY );
   }
 
 

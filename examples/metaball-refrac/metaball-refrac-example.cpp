@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@
  */
 
 #include <dali/dali.h>
-#include <dali/devel-api/rendering/renderer.h>
+#include <dali/devel-api/images/texture-set-image.h>
+#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 
 #include <cstdio>
 #include <string>
+#include "shared/utility.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -270,7 +272,7 @@ void MetaballRefracController::Create( Application& app )
   stage.SetBackgroundColor(Color::BLACK);
 
   //Set background image for the view
-  mBackImage = ResourceImage::New( BACKGROUND_IMAGE );
+  mBackImage = DemoHelper::LoadImage( BACKGROUND_IMAGE );
 
   mGravity = Vector2(GRAVITY_X,GRAVITY_Y);
   mGravityVar = Vector2(0,0);
@@ -531,15 +533,15 @@ void MetaballRefracController::AddRefractionImage()
 
   //Create new texture set
   mTextureSetRefraction = TextureSet::New();
-  mTextureSetRefraction.SetImage( 0u, mBackImage );
-  mTextureSetRefraction.SetImage( 1u, mMetaballFBO );
+  TextureSetImage( mTextureSetRefraction, 0u, mBackImage );
+  TextureSetImage( mTextureSetRefraction, 1u, mMetaballFBO );
 
   //Create normal shader
   mShaderNormal = Shader::New( METABALL_VERTEX_SHADER, FRAG_SHADER );
 
   //Create new texture set
   mTextureSetNormal = TextureSet::New();
-  mTextureSetNormal.SetImage( 0u, mBackImage );
+  TextureSetImage( mTextureSetNormal, 0u, mBackImage );
 
   //Create actor
   mCompositionActor = Actor::New( );

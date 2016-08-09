@@ -77,10 +77,11 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   toolBarLayer.RaiseToTop();
 
   // Tool bar
-  Dali::Image image = Dali::ResourceImage::New( toolbarImagePath );
   toolBar = Dali::Toolkit::ToolBar::New();
   toolBar.SetName( "TOOLBAR" );
-  toolBar.SetBackgroundImage( image );
+  Dali::Property::Map background;
+  background["url"] = toolbarImagePath;
+  toolBar.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, background );
   toolBar.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
   toolBar.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
   toolBar.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
@@ -117,6 +118,9 @@ Dali::Layer CreateView( Dali::Application& application,
 {
   Dali::Stage stage = Dali::Stage::GetCurrent();
 
+  // Hide the indicator bar
+  application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+
   // Create default View.
   view = Dali::Toolkit::Control::New();
   view.SetAnchorPoint( Dali::AnchorPoint::CENTER );
@@ -129,8 +133,15 @@ Dali::Layer CreateView( Dali::Application& application,
   // Set background image, loading it at screen resolution:
   if ( !backgroundImagePath.empty() )
   {
-    Dali::Image backgroundImage = Dali::ResourceImage::New( backgroundImagePath, Dali::ImageDimensions( stage.GetSize().x, stage.GetSize().y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
-    view.SetBackgroundImage( backgroundImage );
+    Dali::Property::Map map;
+    map[Dali::Toolkit::Visual::Property::TYPE] = Dali::Toolkit::Visual::IMAGE;
+    map[Dali::Toolkit::ImageVisual::Property::URL] = backgroundImagePath;
+    map[Dali::Toolkit::ImageVisual::Property::DESIRED_WIDTH] = stage.GetSize().x;
+    map[Dali::Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = stage.GetSize().y;
+    map[Dali::Toolkit::ImageVisual::Property::FITTING_MODE] = Dali::FittingMode::SCALE_TO_FILL;
+    map[Dali::Toolkit::ImageVisual::Property::SAMPLING_MODE] = Dali::SamplingMode::BOX_THEN_LINEAR;
+    map[Dali::Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
+    view.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
   }
 
   // FIXME

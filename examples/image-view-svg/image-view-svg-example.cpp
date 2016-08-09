@@ -16,8 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/renderer-factory/renderer-factory.h>
-#include <dali-toolkit/devel-api/controls/renderer-factory/control-renderer.h>
 #include <string.h>
 
 using namespace Dali;
@@ -67,6 +65,9 @@ public:
     stage.SetBackgroundColor( Color::WHITE );
     Vector2 stageSize = stage.GetSize();
     mActorSize = stageSize/2.f;
+
+    // Hide the indicator bar
+    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
     stage.KeyEventSignal().Connect(this, &ImageSvgController::OnKeyEvent);
 

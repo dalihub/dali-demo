@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/rendering/renderer.h>
+#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <stdio.h>
 #include <sstream>
@@ -24,6 +24,7 @@
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 
@@ -84,34 +85,6 @@ void main()
 }
 );
 
-Geometry CreateGeometry()
-{
-  // Create vertices
-  const float halfQuadSize = .5f;
-  struct TexturedQuadVertex { Vector2 position; Vector2 textureCoordinates; };
-  TexturedQuadVertex texturedQuadVertexData[4] = {
-    { Vector2(-halfQuadSize, -halfQuadSize), Vector2(0.f, 0.f) },
-    { Vector2( halfQuadSize, -halfQuadSize), Vector2(1.f, 0.f) },
-    { Vector2(-halfQuadSize,  halfQuadSize), Vector2(0.f, 1.f) },
-    { Vector2( halfQuadSize,  halfQuadSize), Vector2(1.f, 1.f) } };
-
-  Property::Map texturedQuadVertexFormat;
-  texturedQuadVertexFormat["aPosition"] = Property::VECTOR2;
-  texturedQuadVertexFormat["aTexCoord"] = Property::VECTOR2;
-  PropertyBuffer texturedQuadVertices = PropertyBuffer::New( texturedQuadVertexFormat );
-  texturedQuadVertices.SetData( texturedQuadVertexData, 4 );
-
-  // Create indices
-  unsigned short indexData[6] = { 0, 3, 1, 0, 2, 3 };
-
-  // Create the geometry object
-  Geometry texturedQuadGeometry = Geometry::New();
-  texturedQuadGeometry.AddVertexBuffer( texturedQuadVertices );
-  texturedQuadGeometry.SetIndexBuffer( &indexData[0], sizeof(indexData)/sizeof(unsigned short) );
-
-  return texturedQuadGeometry;
-}
-
 } // anonymous namespace
 
 // This example shows how to use a simple mesh
@@ -158,15 +131,15 @@ public:
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
-    mGeometry = CreateGeometry();
+    mGeometry = DemoHelper::CreateTexturedQuad();
 
     TextureSet firstTextureSet;
 
     for( unsigned i=0; i<NUMBER_OF_SAMPLES; ++i)
     {
-      Image image = ResourceImage::New( IMAGES[i] );
+      Texture texture = DemoHelper::LoadTexture( IMAGES[i] );
       TextureSet textureSet = TextureSet::New();
-      textureSet.SetImage( 0u, image );
+      textureSet.SetTexture( 0u, texture );
       if( i==0 ) { firstTextureSet = textureSet; }
 
       Renderer renderer = Renderer::New( mGeometry, mShader );

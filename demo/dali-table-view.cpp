@@ -485,7 +485,6 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
 Toolkit::ImageView DaliTableView::NewStencilImage()
 {
   Toolkit::ImageView stencil = ImageView::New( TILE_BACKGROUND_ALPHA );
-
   stencil.SetParentOrigin( ParentOrigin::CENTER );
   stencil.SetAnchorPoint( AnchorPoint::CENTER );
   stencil.SetDrawMode( DrawMode::STENCIL );
@@ -717,6 +716,7 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage dis
     Dali::Property::Map effect = Toolkit::CreateDistanceFieldEffect();
     dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, effect );
     dfActor.SetColor( BUBBLE_COLOR[ i%NUMBER_OF_BUBBLE_COLOR ] );
+
     layer.Add( dfActor );
   }
 
@@ -790,8 +790,7 @@ void DaliTableView::GenerateCircle( const Size& size, std::vector< unsigned char
 
 ImageView DaliTableView::CreateLogo( std::string imagePath )
 {
-  Image image = ResourceImage::New( imagePath );
-  ImageView logo = ImageView::New( image );
+  ImageView logo = ImageView::New( imagePath );
 
   logo.SetAnchorPoint( AnchorPoint::CENTER );
   logo.SetParentOrigin( ParentOrigin::CENTER );

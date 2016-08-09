@@ -76,8 +76,7 @@ public:
     Vector2 screenSize = stage.GetSize();
 
     //Add background
-    Image imageBackground = ResourceImage::New( BACKGROUND_IMAGE );
-    Toolkit::ImageView backView = Toolkit::ImageView::New(imageBackground);
+    Toolkit::ImageView backView = Toolkit::ImageView::New(BACKGROUND_IMAGE);
     backView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     stage.Add(backView);
 
@@ -199,8 +198,6 @@ public:
     mModelCounter = (mModelCounter + 1) % MODEL_NUMBER;
     mModel3dView.SetProperty(Model3dView::Property::GEOMETRY_URL, MODEL_FILE[mModelCounter]);
     mModel3dView.SetProperty(Model3dView::Property::MATERIAL_URL, MATERIAL_FILE[mModelCounter]);
-    mModel3dView.SetProperty(Model3dView::Property::IMAGES_URL, IMAGE_PATH);
-
     return true;
   }
 

@@ -19,6 +19,11 @@
 
 using namespace Dali;
 
+namespace
+{
+const char* const IMAGE_PATH ( DEMO_IMAGE_DIR "gallery-large-20.jpg" );
+}
+
 class ImageViewAlphaBlendApp : public ConnectionTracker
 {
 public:
@@ -47,10 +52,9 @@ private:
     Vector4 green1 = Vector4( 0.f, 0.25f, 0.f, 0.25f );
     BufferImage redGreen0 = CreateBufferImage( Color::RED, green0 );
     BufferImage redGreen1 = CreateBufferImage( Color::RED, green1 );
-    ResourceImage testImage = ResourceImage::New( DEMO_IMAGE_DIR "gallery-large-20.jpg" );
     float imageSize = 512.f;
 
-    Toolkit::ImageView imageView0 = Toolkit::ImageView::New( testImage );
+    Toolkit::ImageView imageView0 = Toolkit::ImageView::New( IMAGE_PATH );
     imageView0.SetSize(imageSize, imageSize);
     imageView0.SetParentOrigin( ParentOrigin::CENTER );
     imageView0.SetY( -imageSize*0.5f );
@@ -60,7 +64,7 @@ private:
     imageView1.SetSize(imageSize, imageSize);
     imageView0.Add(imageView1);
 
-    Toolkit::ImageView imageView2 = Toolkit::ImageView::New( testImage);
+    Toolkit::ImageView imageView2 = Toolkit::ImageView::New( IMAGE_PATH );
     imageView2.SetSize(imageSize, imageSize);
     imageView2.SetParentOrigin( ParentOrigin::CENTER );
     imageView2.SetY( imageSize*0.5f );

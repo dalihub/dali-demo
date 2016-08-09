@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    1.1.39
+Version:    1.2.0
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -39,22 +39,21 @@ of the capability of the toolkit.
 %prep
 %setup -q
 
-
 #Use TZ_PATH when tizen version is 3.x
+
 %if "%{tizen_version_major}" == "2"
 %define dali_app_ro_dir       /usr/apps/com.samsung.dali-demo/
 %define dali_xml_file_dir     /usr/share/packages/
 %define dali_icon_dir         /usr/share/icons/
-%endif
-
-%if "%{tizen_version_major}" == "3"
+%define smack_rule_dir        /etc/smack/accesses2.d/
+%else
 %define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo/
 %define dali_xml_file_dir     %TZ_SYS_RO_PACKAGES
 %define dali_icon_dir         %TZ_SYS_RO_ICONS
+%define smack_rule_dir        %TZ_SYS_SMACK/accesses2.d/
 %endif
 
 %define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
-%define smack_rule_dir        /etc/smack/accesses2.d/
 %define locale_dir            %{dali_app_ro_dir}/res/locale
 %define local_style_dir       ../../resources/style/mobile
 
@@ -77,7 +76,9 @@ cmake -DDALI_APP_DIR=%{dali_app_ro_dir} \
 %if 0%{?enable_debug}
       -DCMAKE_BUILD_TYPE=Debug \
 %endif
-      -DLOCAL_STYLE_DIR=%{local_style_dir} .
+      -DLOCAL_STYLE_DIR=%{local_style_dir} \
+      -DINTERNATIONALIZATION:BOOL=OFF \
+      .
 
 make %{?jobs:-j%jobs}
 

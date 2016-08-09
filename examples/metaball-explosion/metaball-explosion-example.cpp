@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,18 @@
  *
  */
 
-//External includes
+// EXTERNAL INCLUDES
 #include <cstdio>
 #include <string>
 
-//Internal includes
+// INTERNAL INCLUDES
 #include <dali/dali.h>
-#include <dali/devel-api/rendering/renderer.h>
+#include <dali/devel-api/images/texture-set-image.h>
+#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 
 #include "shared/view.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -328,7 +330,7 @@ void MetaballExplosionController::Create( Application& app )
   stage.SetBackgroundColor(Color::BLACK);
 
   //Set background image for the view
-  mBackImage = ResourceImage::New( BACKGROUND_IMAGE );
+  mBackImage = DemoHelper::LoadImage( BACKGROUND_IMAGE );
 
   srand((unsigned)time(0));
 
@@ -550,8 +552,8 @@ void MetaballExplosionController::AddRefractionImage()
 
   //Create new texture set
   TextureSet textureSet = TextureSet::New();
-  textureSet.SetImage( 0u, mBackImage );
-  textureSet.SetImage( 1u, fbo );
+  TextureSetImage( textureSet, 0u, mBackImage );
+  TextureSetImage( textureSet, 1u, fbo );
 
   //Create geometry
   Geometry metaballGeom = CreateGeometryComposition();

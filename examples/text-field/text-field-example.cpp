@@ -75,6 +75,9 @@ public:
     stage.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
     stage.KeyEventSignal().Connect(this, &TextFieldExample::OnKeyEvent);
 
+    // Hide the indicator bar
+    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+
     mButton = CreateFolderButton();
     mButton.ClickedSignal().Connect( this, &TextFieldExample::OnButtonClicked );
     stage.Add( mButton );
@@ -87,8 +90,8 @@ public:
     button.SetSelectedImage( FOLDER_OPEN_ICON_IMAGE );
     button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    ResourceImage imageClosed = ResourceImage::New( FOLDER_ICON_IMAGE );
-    button.SetSize( imageClosed.GetWidth(), imageClosed.GetHeight() );
+    ImageDimensions imageSize = ResourceImage::GetImageSize( FOLDER_ICON_IMAGE );
+    button.SetSize( imageSize.GetWidth(), imageSize.GetHeight() );
 
     return button;
   }

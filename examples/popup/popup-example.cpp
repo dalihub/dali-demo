@@ -712,11 +712,6 @@ private:
   bool                mContextual;                 ///< True if currently using the contextual popup mode.
   bool                mAnimationFade;              ///< True if currently using the fade animation.
 
-  ResourceImage       mContextButtonDisabledImage; ///< The disabled context button icon.
-  ResourceImage       mContextButtonEnabledImage;  ///< The enabled context button icon.
-  ResourceImage       mAnimationButtonZoomImage;   ///< The zoom animation button icon.
-  ResourceImage       mAnimationButtonFadeImage;   ///< The fade animation button icon.
-
   Toolkit::Popup      mPopup;                       ///< The current example popup.
 
   Toolkit::ItemView   mItemView;                    ///< ItemView to hold test images

@@ -450,11 +450,18 @@ private:
    * @param[in] width the width of the image in texels
    * @param[in] height the height of the image in texels.
    */
-  ImageView CreateImage( const std::string& filename, unsigned int width = IMAGE_THUMBNAIL_WIDTH, unsigned int height = IMAGE_THUMBNAIL_HEIGHT )
+  ImageView CreateImage( const std::string& filename, int width = IMAGE_THUMBNAIL_WIDTH, int height = IMAGE_THUMBNAIL_HEIGHT )
   {
-    Image img = ResourceImage::New(filename, ImageDimensions( width, height ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
+    ImageView actor = ImageView::New();
+    Property::Map map;
+    map[Visual::Property::TYPE] = Visual::IMAGE;
+    map[ImageVisual::Property::URL] = filename;
+    map[ImageVisual::Property::DESIRED_WIDTH] = width;
+    map[ImageVisual::Property::DESIRED_HEIGHT] = height;
+    map[ImageVisual::Property::FITTING_MODE] = FittingMode::SCALE_TO_FILL;
+    map[ImageVisual::Property::SAMPLING_MODE] = SamplingMode::BOX_THEN_LINEAR;
+    actor.SetProperty( ImageView::Property::IMAGE, map );
 
-    ImageView actor = ImageView::New(img);
     actor.SetName( filename );
     actor.SetParentOrigin(ParentOrigin::CENTER);
     actor.SetAnchorPoint(AnchorPoint::CENTER);
@@ -487,7 +494,7 @@ private:
    * Upon Touching an image (Release), make it spin
    * (provided we're not scrolling).
    * @param[in] actor The actor touched
-   * @param[in] event The TouchEvent.
+   * @param[in] event The touch information.
    */
   bool OnTouchImage( Actor actor, const TouchData& event )
   {

@@ -35,15 +35,7 @@ const char* IMAGE_PATH[] = {
     DEMO_IMAGE_DIR "heartsframe.9.png",
 };
 
-const char* RESOURCE_IMAGE_PATH[] = {
-    DEMO_IMAGE_DIR "contacts-image.png",
-    DEMO_IMAGE_DIR "gallery-small-27.jpg",
-    DEMO_IMAGE_DIR "selection-popup-bg.8.9.png",
-    DEMO_IMAGE_DIR "heartsframe.9.png",
-};
-
 const unsigned int NUM_IMAGES = sizeof(IMAGE_PATH) / sizeof(char*);
-const unsigned int NUM_RESOURCE_IMAGES = sizeof(RESOURCE_IMAGE_PATH) / sizeof(char*);
 
 const unsigned int COLUMNS = 3;
 const unsigned int ROWS = 4;
@@ -59,7 +51,6 @@ class ImageViewController: public ConnectionTracker
       mCurrentPositionToggle( 0, 0 ),
       mCurrentPositionImage( 0, 0 ),
       mToggleOff( true ),
-      mUseResource( false ),
       mImageIdx( 1 )
   {
     // Connect to the Application's Init signal
@@ -131,14 +122,6 @@ class ImageViewController: public ConnectionTracker
     button2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     buttonsTable.AddChild( button2, Toolkit::TableView::CellPosition( 1, 0 ) );
 
-    Toolkit::CheckBoxButton button3 = Toolkit::CheckBoxButton::New();
-    button3.SetLabelText( "Use Resource Images" );
-    button3.SetParentOrigin( ParentOrigin::CENTER );
-    button3.SetAnchorPoint( AnchorPoint::CENTER );
-    button3.ClickedSignal().Connect( this, &ImageViewController::UseResourceImagesClicked );
-    button3.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    buttonsTable.AddChild( button3, Toolkit::TableView::CellPosition( 2, 0 ) );
-
     mContentLayer.Add(buttonsTable);
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ImageViewController::OnKeyEvent);
@@ -177,15 +160,7 @@ private:
   {
     Toolkit::ImageView imageView =  mImageViews[ mCurrentPositionImage.columnIndex ][ mCurrentPositionImage.rowIndex ];
 
-    if( mUseResource )
-    {
-      ResourceImage image = ResourceImage::New( RESOURCE_IMAGE_PATH[ mImageIdx ] );
-      imageView.SetImage( image );
-    }
-    else
-    {
-      imageView.SetImage( IMAGE_PATH[ mImageIdx ] );
-    }
+    imageView.SetImage( IMAGE_PATH[ mImageIdx ] );
 
     ++mCurrentPositionImage.columnIndex;
     if( mCurrentPositionImage.columnIndex == COLUMNS )
@@ -198,24 +173,10 @@ private:
       mCurrentPositionImage.rowIndex = 0;
       ++mImageIdx;
 
-      int numImages = mUseResource ? NUM_RESOURCE_IMAGES : NUM_IMAGES;
-      if( mImageIdx == numImages )
+      if( mImageIdx == NUM_IMAGES )
       {
         mImageIdx = 0;
       }
-    }
-
-    return true;
-  }
-
-  bool UseResourceImagesClicked( Toolkit::Button button )
-  {
-    mUseResource = !mUseResource;
-
-    int numImages = mUseResource ? NUM_RESOURCE_IMAGES : NUM_IMAGES;
-    if( mImageIdx >= numImages )
-    {
-      mImageIdx = 0;
     }
 
     return true;
@@ -248,7 +209,6 @@ private:
   Toolkit::TableView::CellPosition mCurrentPositionImage;
 
   bool mToggleOff;
-  bool mUseResource;
   int mImageIdx;
 
 };
