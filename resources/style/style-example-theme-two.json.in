@@ -1,0 +1,97 @@
+{
+  "constants":
+  {
+    "DEMO_IMAGE_DIR":"@DEMO_STYLE_IMAGE_DIR@"
+  },
+  "styles":
+  {
+    "title":{
+      "textColor":"#0000ff",
+      "background":
+      {
+        "visualType":"COLOR",
+        "mixColor": [ 1.0, 1.0, 1.0, 1.0 ]
+      }
+    },
+    "tableview":{
+      "background":
+      {
+        "visualType":"GRADIENT",
+        "startPosition": [0,-1],
+        "endPosition": [0,1],
+        "stopColor": [ [ 1.0, 0.0, 1.0, 0.03 ], [1.0,0.0,1.0,0.15] ]
+      }
+    },
+
+    // Change an icon size, see if it gets properly re-sized
+    "radiobutton":{
+      "unselectedStateImage":"{DEMO_IMAGE_DIR}/radio-button-unselected.png",
+      "selectedStateImage":"{DEMO_IMAGE_DIR}/radio-button-selected.png",
+      "disabledStateImage":"{DEMO_IMAGE_DIR}/radio-button-unselected-disabled.png",
+      "imageLabelGap":10,
+      "label":{
+        "textColor": [0.1,1,1,1]
+      }
+    },
+    "checkboxbutton":{
+      "label":{
+        "textColor": [1,1,1,1]
+      }
+    },
+    "colorLabel1":{
+      "textColor": [1,0,0,1]
+    },
+    "colorLabel2":{
+      "textColor": [0,1,0,1]
+    },
+    "colorLabel3":{
+      "textColor": [0.3,0.3,1,1]
+    },
+    "themelabel":{
+      "textColor":[0,1,1,1]
+    },
+    "popupTitle":{
+      "textColor":[1,1,1,1]
+    },
+    "popupBody":{
+      "textColor":[1,1,0,1]
+    },
+
+    // Note, this overrides any non-renamed label styles, e.g. those in a button.
+    "textlabel":{
+      //"textColor":[0,0,0,1]
+    },
+
+    "thinslider":{
+      "styles": ["slider"],
+      "showPopup":true,
+      "showValue":false,
+      "valuePrecision":0,
+      "handleVisual":{
+        "size":[48,48]
+      },
+      "trackVisual":{
+        "size":[10, 10]
+      },
+      "enabled":true
+    },
+    "colorSlider1":{
+      "styles":["thinslider"],
+      "progressVisual":{
+        "url":"{DEMO_IMAGE_DIR}/slider-skin-progress-red.9.png"
+      }
+    },
+    "colorSlider2":{
+      "styles":["thinslider"],
+      "progressVisual":{
+        "url":"{DEMO_IMAGE_DIR}/slider-skin-progress-green.9.png"
+      }
+    },
+    "colorSlider3":{
+      "styles":["thinslider"],
+      "progressVisual":{
+        "url":"{DEMO_IMAGE_DIR}/slider-skin-progress-blue.9.png"
+      }
+    }
+  }
+}

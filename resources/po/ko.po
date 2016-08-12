@@ -106,6 +106,9 @@ msgstr "스크립팅"
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "스크롤 뷰"
 
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr ""
+
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr ""
 
