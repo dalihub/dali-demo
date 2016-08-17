@@ -5,7 +5,7 @@
   },
   "styles":
   {
-    "title":{
+    "Title":{
       "textColor":"#0000ff",
       "background":
       {
@@ -13,7 +13,7 @@
         "mixColor": [ 1.0, 1.0, 1.0, 1.0 ]
       }
     },
-    "tableview":{
+    "TableView":{
       "background":
       {
         "visualType":"GRADIENT",
@@ -24,7 +24,7 @@
     },
 
     // Change an icon size, see if it gets properly re-sized
-    "radiobutton":{
+    "RadioButton":{
       "unselectedStateImage":"{STYLE_DIR}/images/radio-button-unselected.png",
       "selectedStateImage":"{STYLE_DIR}/images/radio-button-selected.png",
       "disabledStateImage":"{STYLE_DIR}/images/radio-button-unselected-disabled.png",
@@ -58,11 +58,11 @@
     },
 
     // Note, this overrides any non-renamed label styles, e.g. those in a button.
-    "textlabel":{
+    "TextLabel":{
       //"textColor":[0,0,0,1]
     },
 
-    "thinslider":{
+    "ThinSlider":{
       "styles": ["slider"],
       "showPopup":true,
       "showValue":false,
@@ -75,19 +75,19 @@
       },
       "enabled":true
     },
-    "colorSlider1":{
-      "styles":["thinslider"],
+    "ColorSlider1":{
+      "styles":["ThinSlider"],
       "progressVisual":{
         "url":"{STYLE_DIR}/images/slider-skin-progress-red.9.png"
       }
     },
-    "colorSlider2":{
-      "styles":["thinslider"],
+    "ColorSlider2":{
+      "styles":["ThinSlider"],
       "progressVisual":{
         "url":"{STYLE_DIR}/images/slider-skin-progress-green.9.png"
       }
     },
-    "colorSlider3":{
+    "ColorSlider3":{
       "styles":["thinslider"],
       "progressVisual":{
         "url":"{STYLE_DIR}/images/slider-skin-progress-blue.9.png"

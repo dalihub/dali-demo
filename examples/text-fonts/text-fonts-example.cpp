@@ -185,7 +185,7 @@ public:
     CreateTextLabel ( mLabel, LABEL_TEXT, Color::WHITE  );
 
     CreateTextLabel ( mLabel2, LABEL_TEXT, Color::WHITE  );
-    mLabel2.SetStyleName("textlabel-Rosemary");
+    mLabel2.SetStyleName("TextLabelRosemary");
 
     CreateTextLabel ( mLabel3, LABEL_TEXT, Color::WHITE  );
     mLabel3.SetProperty( TextLabel::Property::FONT_FAMILY, "SamsungOneUI" );

@@ -135,7 +135,7 @@ void StylingApplication::Create( Application& application )
 
   mTitle = TextLabel::New( "Styling Example" );
   mTitle.SetName( "Title" );
-  mTitle.SetStyleName("title");
+  mTitle.SetStyleName("Title");
   mTitle.SetAnchorPoint( AnchorPoint::TOP_CENTER );
   mTitle.SetParentOrigin( ParentOrigin::TOP_CENTER );
   mTitle.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
@@ -246,7 +246,7 @@ void StylingApplication::Create( Application& application )
     channelSliderLayout.SetCellAlignment( TableView::CellPosition( i, 0 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
 
     TextLabel label = TextLabel::New( checkboxLabels[i] );
-    std::ostringstream labelStyleName; labelStyleName << "colorLabel" << i+1;
+    std::ostringstream labelStyleName; labelStyleName << "ColorLabel" << i+1;
     label.SetName( labelStyleName.str() );
     label.SetStyleName( labelStyleName.str() );
     label.SetParentOrigin( ParentOrigin::CENTER );
@@ -258,7 +258,7 @@ void StylingApplication::Create( Application& application )
     channelSliderLayout.SetCellAlignment( TableView::CellPosition( i, 1 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
 
     mChannelSliders[i] = Slider::New();
-    std::ostringstream sliderStyleName; sliderStyleName << "colorSlider" << i+1;
+    std::ostringstream sliderStyleName; sliderStyleName << "ColorSlider" << i+1;
     mChannelSliders[i].SetName( sliderStyleName.str() );
     mChannelSliders[i].SetStyleName( sliderStyleName.str() );
     mChannelSliders[i].SetParentOrigin( ParentOrigin::CENTER );
@@ -302,7 +302,7 @@ void StylingApplication::Create( Application& application )
 
   TextLabel label = TextLabel::New( "Theme: ");
   label.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-  label.SetStyleName("themelabel");
+  label.SetStyleName("ThemeLabel");
   label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
   label.SetParentOrigin( ParentOrigin::TOP_CENTER );
   themeButtonLayout.AddChild( label, TableView::CellPosition( 0, 0 ) );
@@ -386,7 +386,7 @@ Popup StylingApplication::CreateResetPopup()
 
   TextLabel text = TextLabel::New( "This will reset the channel data to full value. Are you sure?" );
   text.SetName( "PopupContentText" );
-  text.SetStyleName( "popupBody" );
+  text.SetStyleName( "PopupBody" );
   text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   text.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
   text.SetProperty( TextLabel::Property::MULTI_LINE, true );
@@ -442,7 +442,7 @@ TextLabel StylingApplication::CreateTitle( std::string title )
 {
   TextLabel titleActor = TextLabel::New( title );
   titleActor.SetName( "titleActor" );
-  titleActor.SetStyleName( "popupTitle" );
+  titleActor.SetStyleName( "PopupTitle" );
   titleActor.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
   titleActor.SetProperty( TextLabel::Property::MULTI_LINE, false );
 
