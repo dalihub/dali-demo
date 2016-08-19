@@ -15,15 +15,10 @@
  */
 
 {
-  "constants":
-  {
-    "DEMO_IMAGE_DIR":"@DEMO_STYLE_IMAGE_DIR@"
-  },
-
   "styles":
   {
     "confirmationpopup":{
-      "popupBackgroundImage":"{DEMO_IMAGE_DIR}00_popup_bg.9.png"
+      "popupBackgroundImage":"{APPLICATION_RESOURCE_PATH}/images/00_popup_bg.9.png"
     },
 
     "textlabel-Rosemary":

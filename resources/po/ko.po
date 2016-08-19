@@ -5,10 +5,10 @@ msgid "DALI_DEMO_STR_TITLE_BUBBLES"
 msgstr "방울"
 
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
-msgstr ""
+msgstr "버튼"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
-msgstr ""
+msgstr "색상 그라디언트"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "입방체 전환"
@@ -17,28 +17,28 @@ msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
 msgstr "디졸브 전환"
 
 msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
-msgstr ""
+msgstr "이펙트 뷰"
 
 msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
-msgstr ""
+msgstr "이모티콘 텍스트"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
-msgstr ""
+msgstr "이미지 조정 샘플링"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
 msgstr "이미지 확대"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
-msgstr ""
+msgstr "이미지 뷰"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
-msgstr ""
+msgstr "이미지 뷰 알파 블렌딩"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
-msgstr ""
+msgstr "이미지 뷰 픽셀 영역"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
-msgstr ""
+msgstr "이미지 뷰 SVG"
 
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "아이템 뷰"
@@ -47,28 +47,28 @@ msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
 msgstr "빛과 그림자"
 
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
-msgstr ""
+msgstr "라인 메쉬"
 
 msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr ""
+msgstr "로깅"
 
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "돋보기"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
-msgstr ""
+msgstr "메쉬 형태"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr ""
+msgstr "메쉬 분류"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
-msgstr ""
+msgstr "메쉬 비주얼"
 
 msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr ""
+msgstr "메타볼 폭발"
 
 msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr ""
+msgstr "메타볼 굴절"
 
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "모션 블러"
@@ -77,19 +77,19 @@ msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
 msgstr "늘이기"
 
 msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
-msgstr ""
+msgstr "네이티브 이미지 소스"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
-msgstr ""
+msgstr "사이즈 조절"
 
 msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
 msgstr "책장 넘기기"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
-msgstr ""
+msgstr "팝업"
 
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
-msgstr ""
+msgstr "기본 모양"
 
 msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
 msgstr "레이디 얼 메뉴"
@@ -98,7 +98,7 @@ msgid "DALI_DEMO_STR_TITLE_REFRACTION"
 msgstr "굴절 효과"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
-msgstr ""
+msgstr "렌더러 스텐실"
 
 msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
 msgstr "스크립팅"
@@ -107,28 +107,28 @@ msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "스크롤 뷰"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
-msgstr ""
+msgstr "스타일링"
 
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr ""
+msgstr "블러링 이펙트"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
-msgstr ""
+msgstr "텍스쳐 메쉬"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
-msgstr ""
+msgstr "텍스트 편집기"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
-msgstr ""
+msgstr "텍스트 필드"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
 msgstr "텍스트 라벨"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
-msgstr ""
+msgstr "다국어"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
-msgstr ""
+msgstr "텍스트 스크롤"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
-msgstr ""
+msgstr "기울기 센서"

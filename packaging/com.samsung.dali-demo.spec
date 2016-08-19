@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    1.2.1
+Version:    1.2.2
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -53,8 +53,9 @@ of the capability of the toolkit.
 %define smack_rule_dir        %TZ_SYS_SMACK/accesses2.d/
 %endif
 
+%define dali_app_res_dir      %{dali_app_ro_dir}/res/
 %define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
-%define locale_dir            %{dali_app_ro_dir}/res/locale
+%define locale_dir            %{dali_app_res_dir}/locale
 %define local_style_dir       ../../resources/style/mobile
 
 ##############################
@@ -73,6 +74,7 @@ cd %{_builddir}/%{name}-%{version}/build/tizen
 
 cmake -DDALI_APP_DIR=%{dali_app_ro_dir} \
       -DLOCALE_DIR=%{locale_dir} \
+      -DDALI_APP_RES_DIR=%{dali_app_res_dir} \
 %if 0%{?enable_debug}
       -DCMAKE_BUILD_TYPE=Debug \
 %endif
@@ -89,12 +91,13 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 cd build/tizen
 %make_install DALI_APP_DIR=%{dali_app_ro_dir}
+%make_install DDALI_APP_RES_DIR=%{dali_app_res_dir}
 
 mkdir -p %{buildroot}%{dali_xml_file_dir}
 cp -f %{_builddir}/%{name}-%{version}/%{name}.xml %{buildroot}%{dali_xml_file_dir}
 
 mkdir -p %{buildroot}%{dali_icon_dir}
-mv %{buildroot}/%{dali_app_ro_dir}/images/%{name}.png %{buildroot}%{dali_icon_dir}
+mv %{buildroot}/%{dali_app_res_dir}/images/%{name}.png %{buildroot}%{dali_icon_dir}
 
 %if 0%{?enable_dali_smack_rules} && !%{with wayland}
 mkdir -p %{buildroot}%{smack_rule_dir}
@@ -133,12 +136,12 @@ exit 0
 %{dali_app_exe_dir}/dali-demo
 %{dali_app_exe_dir}/*.example
 %{dali_app_exe_dir}/dali-builder
-%{dali_app_ro_dir}/images/*
-%{dali_app_ro_dir}/videos/*
-%{dali_app_ro_dir}/models/*
-%{dali_app_ro_dir}/scripts/*
-%{dali_app_ro_dir}/style/*
-%{dali_app_ro_dir}/style/images/*
+%{dali_app_res_dir}/images/*
+%{dali_app_res_dir}/videos/*
+%{dali_app_res_dir}/models/*
+%{dali_app_res_dir}/scripts/*
+%{dali_app_res_dir}/style/*
+%{dali_app_res_dir}/style/images/*
 %{dali_xml_file_dir}/%{name}.xml
 %{dali_icon_dir}/*
 %{locale_dir}/*

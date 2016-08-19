@@ -1,7 +1,7 @@
 {
   "constants":
   {
-    "DEMO_IMAGE_DIR":"@DEMO_STYLE_IMAGE_DIR@"
+    "STYLE_DIR":"{APPLICATION_RESOURCE_PATH}/style"
   },
   "styles":
   {
@@ -25,9 +25,9 @@
 
     // Change an icon size, see if it gets properly re-sized
     "radiobutton":{
-      "unselectedStateImage":"{DEMO_IMAGE_DIR}/radio-button-unselected.png",
-      "selectedStateImage":"{DEMO_IMAGE_DIR}/radio-button-selected.png",
-      "disabledStateImage":"{DEMO_IMAGE_DIR}/radio-button-unselected-disabled.png",
+      "unselectedStateImage":"{STYLE_DIR}/images/radio-button-unselected.png",
+      "selectedStateImage":"{STYLE_DIR}/images/radio-button-selected.png",
+      "disabledStateImage":"{STYLE_DIR}/images/radio-button-unselected-disabled.png",
       "imageLabelGap":10,
       "label":{
         "textColor": [0.1,1,1,1]
@@ -78,19 +78,19 @@
     "colorSlider1":{
       "styles":["thinslider"],
       "progressVisual":{
-        "url":"{DEMO_IMAGE_DIR}/slider-skin-progress-red.9.png"
+        "url":"{STYLE_DIR}/images/slider-skin-progress-red.9.png"
       }
     },
     "colorSlider2":{
       "styles":["thinslider"],
       "progressVisual":{
-        "url":"{DEMO_IMAGE_DIR}/slider-skin-progress-green.9.png"
+        "url":"{STYLE_DIR}/images/slider-skin-progress-green.9.png"
       }
     },
     "colorSlider3":{
       "styles":["thinslider"],
       "progressVisual":{
-        "url":"{DEMO_IMAGE_DIR}/slider-skin-progress-blue.9.png"
+        "url":"{STYLE_DIR}/images/slider-skin-progress-blue.9.png"
       }
     }
   }
