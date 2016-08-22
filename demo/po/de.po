@@ -1,0 +1,50 @@
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "Schaumbildung"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "Blöcke"
+
+msgid "DALI_DEMO_STR_TITLE_CLUSTER"
+msgstr "Cluster"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "Würfel Übergangseffekt"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "Auflösen Übergangseffekt"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "Item-Ansicht"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "Bildschirmlupe"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "Bewegungsunschärfe"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "Bewegung Strecke"
+
+msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
+msgstr "Seite wechseln"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "Radialmenü"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "Brechung"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "Scroll-Ansicht"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "Licht und Schatten"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "Scripting"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "Bildskalierung"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "Beschriftung"

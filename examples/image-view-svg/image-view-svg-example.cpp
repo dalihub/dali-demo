@@ -66,9 +66,6 @@ public:
     Vector2 stageSize = stage.GetSize();
     mActorSize = stageSize/2.f;
 
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
-
     stage.KeyEventSignal().Connect(this, &ImageSvgController::OnKeyEvent);
 
     // Background, for receiving gestures

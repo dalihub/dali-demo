@@ -1,0 +1,50 @@
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "കുമിള"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "തടയപ്പെട്ട"
+
+msgid "DALI_DEMO_STR_TITLE_CLUSTER"
+msgstr "ക്ലസ്റ്റര്"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "സമചതുരക്കട്ട സംക്രമണ ഇഫക്ട്"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "സ്ഥാനാന്തരം സംക്രമണ ഇഫക്ട്"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "ഇനം കാഴ്ച"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "ഭൂതക്കണ്ണാടി"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "അവ്യക്തമാക്കല്"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "സ്ട്രെച്ച്"
+
+msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
+msgstr "പേജ് ലേഔട്ട്"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "റേഡിയല് രേഖാചിത്രം"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "പ്രതിഫലിക്കുക"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "സ്ക്രോള്ചെയ്യുക കാഴ്ച"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "നിഴല്"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "സ്ക്രിപ്റ്റ്"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "ഇമേജിംഗ്"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "ലേബലുചെയ്യുക"
