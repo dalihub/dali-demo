@@ -38,3 +38,4 @@ dali-builder
 *.mo
 demo-theme.json
 simple-image-wall.js
+/shared/resources-location.cpp
