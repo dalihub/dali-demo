@@ -1,8 +1,8 @@
-#ifndef __DALI_DEMO_H__
-#define __DALI_DEMO_H__
+#ifndef DALI_DEMO_H
+#define DALI_DEMO_H
 
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,15 +98,6 @@ public:
 private: // Application callbacks & implementation
 
   /**
-   * Shape enum for create function
-   */
-  enum ShapeType
-  {
-    CIRCLE,
-    SQUARE
-  };
-
-  /**
    * Initialize application.
    *
    * @param[in] app Application instance
@@ -140,18 +131,11 @@ private: // Application callbacks & implementation
    * @param[in] name The unique name for this Tile
    * @param[in] title The text caption that appears on the Tile
    * @param[in] parentSize Tile's parent size.
-   * @param[in] addBackground Whether to add a background graphic to the tile or not
+   * @param[in] color The color (including alpha) of the tiles contents.
    *
    * @return The Actor for the created tile.
    */
-  Dali::Actor CreateTile( const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, bool addBackground );
-
-  /**
-   * Create a stencil image
-   *
-   * @return The stencil image
-   */
-  Dali::Toolkit::ImageView NewStencilImage();
+  Dali::Actor CreateTile( const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, const Dali::Vector4& color );
 
   // Signal handlers
 
@@ -257,49 +241,6 @@ private: // Application callbacks & implementation
   void OnKeyEvent( const Dali::KeyEvent& event );
 
   /**
-   * Create a depth field background
-   *
-   * @param[in] bubbleLayer Add the graphics to this layer
-   */
-  void SetupBackground( Dali::Actor bubbleLayer );
-
-  /**
-   * Create background actors for the given layer
-   *
-   * @param[in] layer The layer to add the actors to
-   * @param[in] count The number of actors to generate
-   * @param[in] distanceField The distance field bitmap to use
-   */
-  void AddBackgroundActors( Dali::Actor layer, int count, Dali::BufferImage distanceField );
-
-  /**
-   * Create a bitmap with the specified shape and also output a distance field
-   *
-   * @param[in] shapeType The shape to generate
-   * @param[in] size The size of the bitmap to create
-   * @param[out] distanceFieldOut The return depth field alpha map
-   */
-  void CreateShapeImage( ShapeType shapeType, const Dali::Size& size, Dali::BufferImage& distanceFieldOut );
-
-  /**
-   * Generate a square bit pattern and depth field
-   *
-   * @param[in] size The size of the bitmap to create
-   * @param[out] imageOut The return bitmap
-   * @param[out] distanceFieldOut The return depth field alpha map
-   */
-  void GenerateSquare( const Dali::Size& size, std::vector<unsigned char>& distanceFieldOut );
-
-  /**
-   * Generate a circle bit pattern and depth field
-   *
-   * @param[in] size The size of the bitmap to create
-   * @param[out] imageOut The return bitmap
-   * @param[out] distanceFieldOut The return depth field alpha map
-   */
-  void GenerateCircle( const Dali::Size& size, std::vector<unsigned char>& distanceFieldOut );
-
-  /**
    * Creates the logo.
    *
    * @param[in] imagePath The path to the image file to load
@@ -307,23 +248,6 @@ private: // Application callbacks & implementation
    * @return The created image actor
    */
   Dali::Toolkit::ImageView CreateLogo( std::string imagePath );
-
-  /**
-   * Timer handler for ending background animation
-   *
-   * @return Return value for timer handler
-   */
-  bool PauseBackgroundAnimation();
-
-  /**
-   * Pause all animations
-   */
-  void PauseAnimation();
-
-  /**
-   * Resume all animations
-   */
-  void PlayAnimation();
 
   /**
    * Callback when the keyboard focus is going to be changed.
@@ -362,13 +286,6 @@ private: // Application callbacks & implementation
   */
  void OnButtonsPageRelayout( const Dali::Actor& actor );
 
- /**
-  * @brief Callback called to set up background actors
-  *
-  * @param[in] actor The actor raising the callback
-  */
- void InitialiseBackgroundActors( Dali::Actor actor );
-
 private:
 
   Dali::Application&              mApplication;              ///< Application instance.
@@ -382,20 +299,17 @@ private:
   Dali::Toolkit::RulerPtr         mScrollRulerX;             ///< ScrollView X (horizontal) ruler
   Dali::Toolkit::RulerPtr         mScrollRulerY;             ///< ScrollView Y (vertical) ruler
   Dali::Actor                     mPressedActor;             ///< The currently pressed actor.
-  Dali::Timer                     mAnimationTimer;           ///< Timer used to turn off animation after a specific time period
   Dali::TapGestureDetector        mLogoTapDetector;          ///< To detect taps on the logo
   Dali::Toolkit::Popup            mVersionPopup;             ///< Displays DALi library version information
 
   std::vector< Dali::Actor >      mPages;                    ///< List of pages.
-  AnimationList                   mBackgroundAnimations;     ///< List of background bubble animations
   ExampleList                     mExampleList;              ///< List of examples.
 
   int                             mTotalPages;               ///< Total pages within scrollview.
 
   bool                            mScrolling:1;              ///< Flag indicating whether view is currently being scrolled
   bool                            mSortAlphabetically:1;     ///< Sort examples alphabetically.
-  bool                            mBackgroundAnimsPlaying:1; ///< Are background animations playing
 
 };
 
-#endif // __DALI_DEMO_H__
+#endif // DALI_DEMO_H
