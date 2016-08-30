@@ -45,9 +45,8 @@ const char* const SAMPLING_BUTTON_ID = "SAMPLING_BUTTON";
 const char* const FITTING_BUTTON_TEXT = "Fitting";
 const char* const SAMPLING_BUTTON_TEXT = "Sampling";
 
-const char* const STYLE_LABEL_TEXT  = "grouplabel";
-const char* const STYLE_BUTTON_TEXT = "buttonlabel";
-
+const char* const STYLE_LABEL_TEXT  = "ImageScalingGroupLabel";
+const char* const STYLE_BUTTON_TEXT = "ImageScalingButton";
 
 const char* IMAGE_PATHS[] =
 {
@@ -336,7 +335,7 @@ public:
       fittingModeGroup.SetFitHeight( 1 );
 
       TextLabel label = TextLabel::New( "Image fitting mode:" );
-      label.SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_LABEL_TEXT );
+      label.SetStyleName( STYLE_LABEL_TEXT );
       fittingModeGroup.Add( label );
 
       Toolkit::PushButton button = CreateButton( FITTING_BUTTON_ID, StringFromScalingMode( mFittingMode ) );
@@ -357,7 +356,7 @@ public:
       samplingModeGroup.SetFitHeight( 1 );
 
       TextLabel label = TextLabel::New( "Image sampling mode:" );
-      label.SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_LABEL_TEXT );
+      label.SetStyleName( STYLE_LABEL_TEXT );
       samplingModeGroup.Add( label );
 
       Toolkit::PushButton button = CreateButton( SAMPLING_BUTTON_ID, StringFromFilterMode( mSamplingMode ) );
@@ -371,7 +370,7 @@ public:
   Toolkit::PushButton CreateButton( const char * id, const char * label )
   {
     Toolkit::PushButton button = Toolkit::PushButton::New();
-    button.SetProperty( Toolkit::Control::Property::STYLE_NAME, STYLE_BUTTON_TEXT );
+    button.SetStyleName( STYLE_BUTTON_TEXT );
     button.SetName( id );
     button.SetLabelText( label );
     button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );

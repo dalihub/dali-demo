@@ -63,7 +63,7 @@ Control CreateBackground( std::string stylename )
 {
   Control background = Control::New();
   Stage::GetCurrent().Add( background );
-  background.SetProperty( Control::Property::STYLE_NAME,stylename);
+  background.SetStyleName( stylename);
   background.SetName( "BACKGROUND" );
   background.SetAnchorPoint( AnchorPoint::CENTER );
   background.SetParentOrigin( ParentOrigin::CENTER );
@@ -123,7 +123,7 @@ void DaliTableView::Initialize( Application& application )
   const Vector2 stageSize = Stage::GetCurrent().GetSize();
 
   // Background
-  Control background = CreateBackground( "launcherbackground" );
+  Control background = CreateBackground( "LauncherBackground" );
   Stage::GetCurrent().Add( background );
 
   // Add root actor
@@ -378,7 +378,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   // Create the tile label.
   TextLabel label = TextLabel::New();
   label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-  label.SetProperty( Control::Property::STYLE_NAME, "launcherlabel" );
+  label.SetStyleName( "LauncherLabel" );
   label.SetProperty( TextLabel::Property::MULTI_LINE, true );
   label.SetProperty( TextLabel::Property::TEXT, title );
   label.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );

@@ -387,7 +387,7 @@ public:
   Actor MenuItem(const std::string& text)
   {
     TextLabel label = TextLabel::New( ShortName( text ) );
-    label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "builderlabel" );
+    label.SetStyleName( "BuilderLabel" );
     label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
 
     // Hook up tap detector
