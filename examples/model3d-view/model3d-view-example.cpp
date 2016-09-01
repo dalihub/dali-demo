@@ -76,18 +76,10 @@ public:
     Vector2 screenSize = stage.GetSize();
 
     //Add background
-    Toolkit::ImageView backView = Toolkit::ImageView::New(BACKGROUND_IMAGE);
-    backView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    stage.Add(backView);
-
-    //Add 3D model control
-    m3DLayer = Layer::New();
-    stage.GetRootLayer().Add(m3DLayer);
-
-    //3D models require 3D based rendering method, so it can use depth buffer, etc.
-    m3DLayer.SetBehavior(Layer::LAYER_3D);
-    m3DLayer.SetParentOrigin( ParentOrigin::CENTER );
-    m3DLayer.SetAnchorPoint( AnchorPoint::CENTER );
+    Toolkit::ImageView backView = Toolkit::ImageView::New( BACKGROUND_IMAGE );
+    backView.SetParentOrigin( ParentOrigin::CENTER );
+    backView.SetAnchorPoint( AnchorPoint::CENTER );
+    stage.Add( backView );
 
     mModelCounter = 0;
 
@@ -100,7 +92,7 @@ public:
 
     mModel3dView.SetProperty(Model3dView::Property::LIGHT_POSITION, Vector3(5,10.,0));
 
-    m3DLayer.Add( mModel3dView );
+    backView.Add( mModel3dView );
 
     mIlluminationShader = Model3dView::IlluminationType(mModel3dView.GetProperty<int>(Model3dView::Property::ILLUMINATION_TYPE));
 
@@ -108,7 +100,7 @@ public:
     mButtonLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mButtonLayer.SetParentOrigin( ParentOrigin::CENTER );
     mButtonLayer.SetAnchorPoint( AnchorPoint::CENTER );
-    stage.GetRootLayer().Add(mButtonLayer);
+    stage.Add(mButtonLayer);
 
     // Create button for model changing
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
@@ -281,7 +273,6 @@ private:
   int mModelCounter;
   Model3dView mModel3dView;
 
-  Layer m3DLayer;
   Layer mButtonLayer;
   TapGestureDetector mTapDetector;
 
