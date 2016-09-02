@@ -17,50 +17,52 @@
 {
   "styles":
   {
-    "confirmationpopup":{
+    "ConfirmationPopup":{
       "popupBackgroundImage":"{APPLICATION_RESOURCE_PATH}/images/00_popup_bg.9.png"
     },
 
-    "textlabel-Rosemary":
+    "TextLabelRosemary":
     {
       "fontFamily":"Rosemary"
     },
-    "textlabel":
+    "TextLabel":
     {
       "fontStyle":"Regular",
       "pointSize":18
     },
-    "launcherlabel":
+    "LauncherLabel":
     {
       "pointSize":18
     },
 
-    "toolbarlabel":
+    "ToolbarLabel":
     {
       "pointSize":18
     },
 
-    "builderlabel":
+    "BuilderLabel":
     {
       "pointSize":13
     },
 
-    "scrollview":
+    "ScrollView":
     {
       "overshootEffectColor":"B018"
     },
 
-    "grouplabel":
+    "ImageScalingGroupLabel":
     {
       "pointSize":9
     },
 
-    "buttonlabel":
+    "ImageScalingButton":
     {
-      "pointSize":11
+      "label":{
+        "pointSize":11
+      }
     },
 
-    "launcherbackground":
+    "LauncherBackground":
     {
       "background":
       {

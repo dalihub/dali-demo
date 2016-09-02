@@ -318,7 +318,7 @@ public:
     //Visual map for model
     mVisualMap.Clear();
     mVisualMap[ Visual::Property::TYPE           ] = Visual::PRIMITIVE;
-    mVisualMap[ PrimitiveVisual::Property::COLOR ] = mColor;
+    mVisualMap[ PrimitiveVisual::Property::MIX_COLOR ] = mColor;
   }
 
   //Sets the 3D model to a sphere and modifies the sliders appropriately.
