@@ -106,6 +106,9 @@ msgstr "سکرپٹ"
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "سکرول ویو"
 
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "سٹار"
+
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "سٹائل"
 

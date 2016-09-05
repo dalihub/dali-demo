@@ -81,6 +81,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("mesh-visual.example", DALI_DEMO_STR_TITLE_MESH_VISUAL));
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
   demo.AddExample(Example("styling.example", DALI_DEMO_STR_TITLE_STYLING));
+  demo.AddExample(Example("sparkle.example", DALI_DEMO_STR_TITLE_SPARKLE));
 
   demo.SortAlphabetically( true );
 
