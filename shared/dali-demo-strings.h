@@ -16,8 +16,8 @@
  */
 
 /* This header file includes all multi language strings which need display */
-#ifndef __DALI_DEMO_STRINGS_H__
-#define __DALI_DEMO_STRINGS_H__
+#ifndef DALI_DEMO_STRINGS_H
+#define DALI_DEMO_STRINGS_H
 
 #include <libintl.h>
 
@@ -64,7 +64,6 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_POPUP                       dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_POPUP")
 #define DALI_DEMO_STR_TITLE_PROGRESS_BAR                dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PROGRESS_BAR")
 #define DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES            dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES")
-#define DALI_DEMO_STR_TITLE_RADIAL_MENU                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_RADIAL_MENU")
 #define DALI_DEMO_STR_TITLE_REFRACTION                  dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_REFRACTION")
 #define DALI_DEMO_STR_TITLE_RENDERER_STENCIL            dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_RENDERER_STENCIL")
 #define DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI             dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI")
@@ -113,7 +112,6 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW              "Page Turn View"
 #define DALI_DEMO_STR_TITLE_POPUP                       "Popup"
 #define DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES            "Primitive Shapes"
-#define DALI_DEMO_STR_TITLE_RADIAL_MENU                 "Radial Menu"
 #define DALI_DEMO_STR_TITLE_REFRACTION                  "Refract Effect"
 #define DALI_DEMO_STR_TITLE_RENDERER_STENCIL            "Renderer Stencils"
 #define DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI             "Script Based UI"
@@ -136,4 +134,4 @@ extern "C"
 }
 #endif // __cplusplus
 
-#endif // __DALI_DEMO_STRINGS_H__
+#endif // DALI_DEMO_STRINGS_H

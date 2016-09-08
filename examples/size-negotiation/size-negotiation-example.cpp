@@ -798,7 +798,7 @@ private:
   Layer              mContentLayer;          ///< Content layer.
 
   Toolkit::TextLabel mTitleActor;            ///< Title text.
-  Toolkit::Popup     mMenu;                  ///< The navigation menu todor.
+  Toolkit::Popup     mMenu;                  ///< The navigation menu.
   Toolkit::Popup     mPopup;                 ///< The current example popup.
 
   Toolkit::ItemView  mItemView;              ///< ItemView to hold test images.
