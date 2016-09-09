@@ -95,25 +95,19 @@ public:
     Stage stage = Stage::GetCurrent();
     stage.SetBackgroundColor( Vector4( 0.0, 0.5, 1.0, 1.0 ) );
 
-    //Set up layer to place objects on.
-    Layer baseLayer = Layer::New();
-    baseLayer.SetParentOrigin( ParentOrigin::CENTER );
-    baseLayer.SetAnchorPoint( AnchorPoint::CENTER );
-    baseLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    baseLayer.SetBehavior( Layer::LAYER_2D ); //We use a 2D layer as this is closer to UI work than full 3D scene creation.
-    baseLayer.SetDepthTestDisabled( false ); //Enable depth testing, as otherwise the 2D layer would not do so.
-    baseLayer.RegisterProperty( "Tag", LAYER_TAG ); //Used to differentiate between different kinds of actor.
-    baseLayer.TouchedSignal().Connect( this, &MeshVisualController::OnTouch );
-    stage.Add( baseLayer );
+    //Set up root layer to receive touch gestures.
+    Layer rootLayer = stage.GetRootLayer();
+    rootLayer.RegisterProperty( "Tag", LAYER_TAG ); //Used to differentiate between different kinds of actor.
+    rootLayer.TouchSignal().Connect( this, &MeshVisualController::OnTouch );
 
     //Place models on the scene.
-    SetupModels( baseLayer );
+    SetupModels( rootLayer );
 
     //Place buttons on the scene.
-    SetupButtons( baseLayer );
+    SetupButtons( rootLayer );
 
     //Add a light to the scene.
-    SetupLight( baseLayer );
+    SetupLight( rootLayer );
 
     //Allow for exiting of the application via key presses.
     stage.KeyEventSignal().Connect( this, &MeshVisualController::OnKeyEvent );
@@ -129,7 +123,7 @@ public:
       mContainers[i].SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mContainers[i].RegisterProperty( "Tag", MODEL_TAG ); //Used to differentiate between different kinds of actor.
       mContainers[i].RegisterProperty( "Model", Property::Value( i ) ); //Used to index into the model.
-      mContainers[i].TouchedSignal().Connect( this, &MeshVisualController::OnTouch );
+      mContainers[i].TouchSignal().Connect( this, &MeshVisualController::OnTouch );
       layer.Add( mContainers[i] );
     }
 
@@ -284,7 +278,7 @@ public:
     SetLightImage();
 
     //Connect to touch signal for dragging.
-    mLightSource.TouchedSignal().Connect( this, &MeshVisualController::OnTouch );
+    mLightSource.TouchSignal().Connect( this, &MeshVisualController::OnTouch );
 
     //Place the light source on a layer above the base, so that it is rendered above everything else.
     Layer upperLayer = Layer::New();
@@ -396,14 +390,11 @@ public:
 
   //If the light source is touched, move it by dragging it.
   //If a model is touched, rotate it by panning around.
-  bool OnTouch( Actor actor, const TouchEvent& event )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
-    //Get primary touch point.
-    const Dali::TouchPoint& point = event.GetPoint( 0 );
-
-    switch( point.state )
+    switch( touch.GetState( 0 ) )
     {
-      case TouchPoint::Down:
+      case PointState::DOWN:
       {
         //Determine what was touched.
         actor.GetProperty( actor.GetPropertyIndex( "Tag" ) ).Get( mTag );
@@ -417,13 +408,13 @@ public:
           mModels[mSelectedModelIndex].rotationAnimation.Pause();
 
           //Store start points.
-          mPanStart = point.screen;
+          mPanStart = touch.GetScreenPosition( 0 );
           mRotationStart = mModels[mSelectedModelIndex].rotation;
         }
 
         break;
       }
-      case TouchPoint::Motion:
+      case PointState::MOTION:
       {
         //Switch on the kind of actor we're interacting with.
         switch( mTag )
@@ -431,7 +422,7 @@ public:
           case MODEL_TAG: //Rotate model
           {
             //Calculate displacement and corresponding rotation.
-            Vector2 displacement = point.screen - mPanStart;
+            Vector2 displacement = touch.GetScreenPosition( 0 ) - mPanStart;
             mModels[mSelectedModelIndex].rotation = Vector2( mRotationStart.x - displacement.y / Y_ROTATION_DISPLACEMENT_FACTOR,   // Y displacement rotates around X axis
                                                              mRotationStart.y + displacement.x / X_ROTATION_DISPLACEMENT_FACTOR ); // X displacement rotates around Y axis
             Quaternion rotation = Quaternion( Radian( mModels[mSelectedModelIndex].rotation.x ), Vector3::XAXIS) *
@@ -445,7 +436,7 @@ public:
           case LIGHT_TAG: //Drag light
           {
             //Set light source to new position and update the models accordingly.
-            mLightSource.SetPosition( Vector3( point.screen ) );
+            mLightSource.SetPosition( Vector3( touch.GetScreenPosition( 0 ) ) );
             UpdateLight();
 
             break;
@@ -454,8 +445,8 @@ public:
 
         break;
       }
-      case TouchPoint::Interrupted: //Same as finished.
-      case TouchPoint::Finished:
+      case PointState::INTERRUPTED: //Same as finished.
+      case PointState::FINISHED:
       {
         if( mTag == MODEL_TAG )
         {

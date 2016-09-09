@@ -88,6 +88,9 @@ msgstr "പേജ് ലേഔട്ട്"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "പോപപ്പ് മെനുവിൽ"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "പ്രോഗ്രസ് ബാർ"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "അടിസ്ഥാന രൂപങ്ങൾ"
 
@@ -105,6 +108,9 @@ msgstr "സ്ക്രിപ്റ്റ്"
 
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "സ്ക്രോള്ചെയ്യുക കാഴ്ച"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "നക്ഷത്ര"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "ശൈലി"

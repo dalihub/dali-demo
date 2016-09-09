@@ -88,6 +88,9 @@ msgstr "পৃষ্ঠা লেআউট"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "পোপা মেনু"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "অগ্রগতি বার"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "অংশ্যমান অৰ্কিড"
 
@@ -105,6 +108,9 @@ msgstr "লিপি"
 
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "স্ক্ৰ'ল কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "তাৰকা"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "শৈলী"

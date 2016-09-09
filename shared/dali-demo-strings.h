@@ -16,8 +16,8 @@
  */
 
 /* This header file includes all multi language strings which need display */
-#ifndef __DALI_DEMO_STRINGS_H__
-#define __DALI_DEMO_STRINGS_H__
+#ifndef DALI_DEMO_STRINGS_H
+#define DALI_DEMO_STRINGS_H
 
 #include <libintl.h>
 
@@ -62,12 +62,13 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE")
 #define DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW")
 #define DALI_DEMO_STR_TITLE_POPUP                       dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_POPUP")
+#define DALI_DEMO_STR_TITLE_PROGRESS_BAR                dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PROGRESS_BAR")
 #define DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES            dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES")
-#define DALI_DEMO_STR_TITLE_RADIAL_MENU                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_RADIAL_MENU")
 #define DALI_DEMO_STR_TITLE_REFRACTION                  dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_REFRACTION")
 #define DALI_DEMO_STR_TITLE_RENDERER_STENCIL            dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_RENDERER_STENCIL")
 #define DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI             dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI")
 #define DALI_DEMO_STR_TITLE_SCROLL_VIEW                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_SCROLL_VIEW")
+#define DALI_DEMO_STR_TITLE_SPARKLE                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_SPARKLE")
 #define DALI_DEMO_STR_TITLE_STYLING                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_STYLING")
 #define DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM            dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM")
 #define DALI_DEMO_STR_TITLE_TEXTURED_MESH               dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TEXTURED_MESH")
@@ -111,11 +112,11 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW              "Page Turn View"
 #define DALI_DEMO_STR_TITLE_POPUP                       "Popup"
 #define DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES            "Primitive Shapes"
-#define DALI_DEMO_STR_TITLE_RADIAL_MENU                 "Radial Menu"
 #define DALI_DEMO_STR_TITLE_REFRACTION                  "Refract Effect"
 #define DALI_DEMO_STR_TITLE_RENDERER_STENCIL            "Renderer Stencils"
 #define DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI             "Script Based UI"
 #define DALI_DEMO_STR_TITLE_SCROLL_VIEW                 "Scroll View"
+#define DALI_DEMO_STR_TITLE_SPARKLE                     "Sparkle"
 #define DALI_DEMO_STR_TITLE_STYLING                     "Styling"
 #define DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM            "Super Blur and Bloom"
 #define DALI_DEMO_STR_TITLE_TEXTURED_MESH               "Mesh Texture"
@@ -125,6 +126,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE   "Text Scripts"
 #define DALI_DEMO_STR_TITLE_TEXT_SCROLLING              "Text Scrolling"
 #define DALI_DEMO_STR_TITLE_TILT_SENSOR                 "Tilt Sensor"
+#define DALI_DEMO_STR_TITLE_PROGRESS_BAR                "Progress Bar"
 
 #endif
 
@@ -132,4 +134,4 @@ extern "C"
 }
 #endif // __cplusplus
 
-#endif // __DALI_DEMO_STRINGS_H__
+#endif // DALI_DEMO_STRINGS_H
