@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,6 +71,19 @@ const ButtonItem TABLEVIEW_BUTTON_ITEMS[] = {
 };
 
 const unsigned int TABLEVIEW_BUTTON_ITEMS_COUNT = sizeof( TABLEVIEW_BUTTON_ITEMS ) / sizeof( TABLEVIEW_BUTTON_ITEMS[0] );
+
+
+Actor CreateSolidColor( Vector4 color )
+{
+  Toolkit::Control control = Toolkit::Control::New();
+
+  Property::Map map;
+  map[ Toolkit::Visual::Property::TYPE ] = Toolkit::Visual::COLOR;
+  map[ Toolkit::ColorVisual::Property::MIX_COLOR ] = color;
+  control.SetProperty( Toolkit::Control::Property::BACKGROUND, map );
+
+  return control;
+}
 
 }  // anonymous namespace
 
@@ -190,7 +203,7 @@ public:
       table.SetName( "TABLEVIEW_BUTTON_1CELL_ID" );
       table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
-      Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+      Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
       backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       table.Add( backing );
 
@@ -208,17 +221,17 @@ public:
       table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 0, 0 ) );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 1, 0 ) );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 2, 0 ) );
       }
@@ -238,51 +251,51 @@ public:
 
       // Column 0
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 0, 0 ) );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 1, 0 ) );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 2, 0 ) );
       }
 
       // Column 1
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 1.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 1.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 0, 1 ) );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 1, 1 ) );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 0.0f, 1.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 0.0f, 1.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 2, 1 ) );
       }
 
       // Column 2
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 0, 2 ) );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.5f, 0.5f, 0.5f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.5f, 0.5f, 0.5f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 1, 2 ) );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.5f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.5f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         table.AddChild( backing, Toolkit::TableView::CellPosition( 2, 2 ) );
       }
@@ -302,7 +315,7 @@ public:
       table.SetFixedHeight( 0, 50.0f );
 
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -314,7 +327,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -326,7 +339,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -354,7 +367,7 @@ public:
       table.SetFixedHeight( 2, 50.0f );
 
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -368,7 +381,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -382,7 +395,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -412,7 +425,7 @@ public:
       table.SetFitHeight( 2 );
 
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 100.0f );
 
@@ -429,7 +442,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
@@ -445,7 +458,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 100.0f );
 
@@ -477,7 +490,7 @@ public:
       table.SetFitHeight( 1 );
 
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
@@ -493,7 +506,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
@@ -510,7 +523,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
@@ -545,7 +558,7 @@ public:
       table.SetFitHeight( 2 );
 
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 100.0f );
 
@@ -562,7 +575,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
@@ -579,7 +592,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 300.0f );
 
@@ -614,7 +627,7 @@ public:
       table.SetFitHeight( 1 );
 
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
         backing.SetSize( 0.0f, 100.0f );
@@ -632,7 +645,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
@@ -667,7 +680,7 @@ public:
       table.SetFitHeight( 1 );
 
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
@@ -683,7 +696,7 @@ public:
         table.Add( backing );
       }
       {
-        Actor backing = Toolkit::CreateSolidColorActor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
+        Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetSize( 0.0f, 200.0f );
 
