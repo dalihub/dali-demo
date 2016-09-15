@@ -35,7 +35,7 @@ const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-default.png" );
 const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 
 const char* APPLICATION_TITLE_PAN_LIGHT( "Lighting: Pan Light" );
-const char* APPLICATION_TITLE_PAN_OBJECT( "Lighting: Rotate Object" );
+const char* APPLICATION_TITLE_ROTATE_OBJECT( "Lighting: Rotate Object" );
 const char* APPLICATION_TITLE_PAN_SCENE( "Lighting: Pan Scene" );
 const char* APPLICATION_TITLE_ROTATE_SCENE( "Lighting: Rotate Scene" );
 const char* CHANGE_EFFECT_IMAGE( DEMO_IMAGE_DIR "icon-change.png" );
@@ -60,8 +60,8 @@ const Vector2 DEFAULT_STAGE_SIZE( 480.0f, 800.0f );
 
 const float X_ROTATION_DISPLACEMENT_FACTOR = 60.f;
 const float Y_ROTATION_DISPLACEMENT_FACTOR = 60.f;
-const float LIGHT_PAN_X_DISPLACEMENT_FACTOR = 180.f;
-const float LIGHT_PAN_Y_DISPLACEMENT_FACTOR = 180.f;
+const float LIGHT_PAN_X_DISPLACEMENT_FACTOR = 1/360.f;
+const float LIGHT_PAN_Y_DISPLACEMENT_FACTOR = 1/360.f;
 
 }
 
@@ -81,16 +81,16 @@ public:
   TestApp(Application &app)
   : mApp(app),
     mPaused(false),
-    mTranslation(Vector3::ZERO),
-    mSceneYRotation( Dali::ANGLE_30 * 0.5f ),
-    mSceneXRotation( Dali::ANGLE_30 ),
-    mLightYRotation(0.0f),
-    mLightXRotation(0.0f),
-    mObjectYRotation(0.0f),
+    mTranslation(22.0f, -1.0f, 0.0f),
+    mSceneXRotation( Degree(-6.0f) ), // Initial values give a reasonable off-straight view.
+    mSceneYRotation( Degree(20.0f) ),
+    mLightXRotation( Degree(-1.5f) ),
+    mLightYRotation( Degree(-9.5f) ),
     mObjectXRotation(0.0f),
-    mPinchScale(0.5f),
-    mScaleAtPinchStart(0.5f),
-    mPanState(PAN_SCENE)
+    mObjectYRotation(0.0f),
+    mPinchScale(0.6f),
+    mScaleAtPinchStart(0.6f),
+    mPanState(PAN_LIGHT)
   {
     app.InitSignal().Connect(this, &TestApp::Create);
     app.TerminateSignal().Connect(this, &TestApp::Terminate);
@@ -157,7 +157,7 @@ public:
     toolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
 
     // Set Title text
-    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_SCENE) );
+    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT) );
 
     //Add a reset button
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
@@ -167,7 +167,7 @@ public:
     toolBar.AddControl( resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
     // Setup
-    mView.SetPosition(Vector3(0.0f, 0.0f, -50));
+    mView.SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 
     mContents.SetBehavior(Layer::LAYER_3D);
     mContents.SetPosition(mTranslation);
@@ -324,9 +324,9 @@ public:
         {
           case PAN_LIGHT:
           {
-            mLightXRotation = mLightXRotation - gesture.displacement.y / LIGHT_PAN_X_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mLightXRotation = mLightXRotation - gesture.displacement.y * LIGHT_PAN_X_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
             mLightXRotation = Clamp(mLightXRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
-            mLightYRotation = mLightYRotation + gesture.displacement.x / LIGHT_PAN_Y_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mLightYRotation = mLightYRotation + gesture.displacement.x * LIGHT_PAN_Y_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
             mLightYRotation = Clamp(mLightYRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
             mLightAnchor.SetOrientation( CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
             break;
@@ -407,21 +407,21 @@ public:
   {
     switch(mPanState)
     {
-      case PAN_SCENE:
+      case PAN_LIGHT:
+        mPanState = ROTATE_OBJECT;
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_ROTATE_OBJECT) );
+        break;
+      case ROTATE_OBJECT:
         mPanState = ROTATE_SCENE;
         mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_ROTATE_SCENE) );
         break;
       case ROTATE_SCENE:
-        mPanState = PAN_LIGHT;
-        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT) );
-        break;
-      case PAN_LIGHT:
-        mPanState = ROTATE_OBJECT;
-        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_OBJECT) );
-        break;
-      case ROTATE_OBJECT:
         mPanState = PAN_SCENE;
         mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_SCENE) );
+        break;
+      case PAN_SCENE:
+        mPanState = PAN_LIGHT;
+        mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT) );
         break;
       default:
         break;
@@ -464,12 +464,12 @@ private:
   PinchGestureDetector      mPinchGestureDetector;
   TapGestureDetector        mTapGestureDetector;
   Vector3                   mTranslation;
-  Radian                    mSceneYRotation;
   Radian                    mSceneXRotation;
-  Radian                    mLightYRotation;
+  Radian                    mSceneYRotation;
   Radian                    mLightXRotation;
-  Radian                    mObjectYRotation;
+  Radian                    mLightYRotation;
   Radian                    mObjectXRotation;
+  Radian                    mObjectYRotation;
   float                     mPinchScale;
   float                     mScaleAtPinchStart;
 

@@ -48,7 +48,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("page-turn-view.example", DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW));
   demo.AddExample(Example("refraction-effect.example", DALI_DEMO_STR_TITLE_REFRACTION));
   demo.AddExample(Example("scroll-view.example", DALI_DEMO_STR_TITLE_SCROLL_VIEW));
-  demo.AddExample(Example("shadow-bone-lighting.example", DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS));
+  demo.AddExample(Example("shadows-and-lights.example", DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS));
   demo.AddExample(Example("builder.example", DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI));
   demo.AddExample(Example("image-scaling-and-filtering.example", DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING));
   demo.AddExample(Example("image-scaling-irregular-grid.example", DALI_DEMO_STR_TITLE_IMAGE_SCALING));
