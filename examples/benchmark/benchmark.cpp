@@ -184,7 +184,6 @@ const char* FRAGMENT_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
 );
 
 bool gUseMesh(false);
-bool gUseImageActor(false);
 bool gNinePatch(false);
 unsigned int gRowsPerPage(25);
 unsigned int gColumnsPerPage( 25 );
@@ -203,12 +202,11 @@ Renderer CreateRenderer( unsigned int index, Geometry geometry, Shader shader )
 }
 
 }
-// Test application to compare performance between ImageActor and ImageView
+// Test application to compare performance between using a mesh and ImageView
 // By default, the application consist of 10 pages of 25x25 Image views, this can be modified using the following command line arguments:
 // -r NumberOfRows  (Modifies the number of rows per page)
 // -c NumberOfColumns (Modifies the number of columns per page)
 // -p NumberOfPages (Modifies the nimber of pages )
-// --use-image-actor ( Use ImageActor instead of ImageView )
 // --use-mesh ( Use new renderer API (as ImageView) but shares renderers between actors when possible )
 // --nine-patch ( Use nine patch images )
 
@@ -251,10 +249,6 @@ public:
     {
       CreateMeshActors();
     }
-    else if( gUseImageActor )
-    {
-      CreateImageActors();
-    }
     else
     {
       CreateImageViews();
@@ -273,22 +267,6 @@ public:
   const char* ImagePath( int i )
   {
     return !gNinePatch ? IMAGE_PATH[i % NUM_IMAGES] : NINEPATCH_IMAGE_PATH[i % NUM_NINEPATCH_IMAGES];
-  }
-
-  void CreateImageActors()
-  {
-    Stage stage = Stage::GetCurrent();
-    unsigned int actorCount(mRowsPerPage*mColumnsPerPage * mPageCount);
-    mActor.resize(actorCount);
-
-    for( size_t i(0); i<actorCount; ++i )
-    {
-      Image image = ResourceImage::New(ImagePath(i));
-      mActor[i] = ImageActor::New(image);
-      mActor[i].SetSize(Vector3(0.0f,0.0f,0.0f));
-      mActor[i].SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-      stage.Add(mActor[i]);
-    }
   }
 
   void CreateImageViews()
@@ -378,7 +356,7 @@ public:
           duration = durationPerActor;
           delay = delayBetweenActors * count;
         }
-        if( gUseImageActor || gUseMesh )
+        if( gUseMesh )
         {
           mActor[count].SetPosition( initialPosition );
           mActor[count].SetSize( Vector3(0.0f,0.0f,0.0f) );
@@ -410,7 +388,7 @@ public:
     size_t actorCount( mRowsPerPage*mColumnsPerPage*mPageCount);
     for( size_t i(0); i<actorCount; ++i )
     {
-      if( gUseImageActor || gUseMesh )
+      if( gUseMesh )
       {
         mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(0.0f,3.0f));
         mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(3.0f,3.0f));
@@ -453,7 +431,7 @@ public:
           delay = delayBetweenActors * count;
         }
 
-        if( gUseImageActor || gUseMesh )
+        if( gUseMesh )
         {
           mHide.AnimateTo( Property( mActor[count], Actor::Property::ORIENTATION),  Quaternion( Radian( Degree( 70.0f ) ), Vector3::XAXIS ), AlphaFunction::EASE_OUT, TimePeriod( delay, duration ));
           mHide.AnimateBy( Property( mActor[count], Actor::Property::POSITION_Z), finalZ, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay +delayBetweenActors*actorsPerPage + duration, duration ));
@@ -506,10 +484,6 @@ int DALI_EXPORT_API main( int argc, char **argv )
     if( arg.compare("--use-mesh") == 0)
     {
       gUseMesh = true;
-    }
-    else if( arg.compare("--use-image-actor") == 0)
-    {
-      gUseImageActor = true;
     }
     else if( arg.compare("--nine-patch" ) == 0)
     {
