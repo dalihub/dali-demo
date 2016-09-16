@@ -18,13 +18,13 @@
 // EXTERNAL INCLUDES
 #include <cstdio>
 #include <string>
-
-// INTERNAL INCLUDES
 #include <dali/dali.h>
 #include <dali/devel-api/images/texture-set-image.h>
 #include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
 
+// INTERNAL INCLUDES
 #include "shared/view.h"
 #include "shared/utility.h"
 
