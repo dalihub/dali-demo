@@ -64,7 +64,7 @@
 	<ui-application appid="scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>
 	</ui-application>
-	<ui-application appid="shadow-bone-lighting.example" exec="/usr/apps/com.samsung.dali-demo/bin/shadow-bone-lighting.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+	<ui-application appid="shadows-and-lights.example" exec="/usr/apps/com.samsung.dali-demo/bin/shadows-and-lights.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Shadows and Lights</label>
 	</ui-application>
 	<ui-application appid="dali-builder" exec="/usr/apps/com.samsung.dali-demo/bin/dali-builder" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
