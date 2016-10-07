@@ -32,6 +32,7 @@ extern "C"
 
 #ifdef INTERNATIONALIZATION_ENABLED
 
+#define DALI_DEMO_STR_TITLE_ANIMATED_SHAPES             dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES")
 #define DALI_DEMO_STR_TITLE_BLOCKS                      dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BLOCKS")
 #define DALI_DEMO_STR_TITLE_BUBBLES                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUBBLES")
 #define DALI_DEMO_STR_TITLE_BUTTONS                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUTTONS")
@@ -81,6 +82,7 @@ extern "C"
 
 #else // !INTERNATIONALIZATION_ENABLED
 
+#define DALI_DEMO_STR_TITLE_ANIMATED_SHAPES             "Animated Shapes"
 #define DALI_DEMO_STR_TITLE_BLOCKS                      "Blocks"
 #define DALI_DEMO_STR_TITLE_BUBBLES                     "Bubbles"
 #define DALI_DEMO_STR_TITLE_BUTTONS                     "Buttons"

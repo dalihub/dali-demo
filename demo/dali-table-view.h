@@ -1,8 +1,8 @@
-#ifndef __DALI_DEMO_H__
-#define __DALI_DEMO_H__
+#ifndef DALI_DEMO_H
+#define DALI_DEMO_H
 
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ typedef ExampleList::const_iterator ExampleListConstIter;
 typedef std::vector<Dali::Animation> AnimationList;
 typedef AnimationList::iterator AnimationListIter;
 typedef AnimationList::const_iterator AnimationListConstIter;
-
 
 /**
  * Example information
@@ -96,6 +95,8 @@ public:
   void SortAlphabetically( bool sortAlphabetically );
 
 private: // Application callbacks & implementation
+
+  static const unsigned int FOCUS_ANIMATION_ACTOR_NUMBER = 2; ///< The number of elements used to form the custom focus effect
 
   /**
    * Shape enum for create function
@@ -320,6 +321,11 @@ private: // Application callbacks & implementation
   void PlayAnimation();
 
   /**
+   * @brief Creates and sets up the custom effect used for the keyboard (and mouse) focus.
+   */
+  void CreateFocusEffect();
+
+  /**
    * Callback when the keyboard focus is going to be changed.
    *
    * @param[in] current The current focused actor
@@ -384,10 +390,15 @@ private:
   Dali::TapGestureDetector        mLogoTapDetector;          ///< To detect taps on the logo
   Dali::Toolkit::Popup            mVersionPopup;             ///< Displays DALi library version information
 
-  Dali::Toolkit::ImageView        mFocusContainer;           ///< The parent keyboard focus highlight actor
-  Dali::Toolkit::ImageView        mFocusInner;               ///< The child keyboard focus highlight actor
-  Dali::Animation                 mFocusAnimation;           ///< The animation for the parent keyboard focus highlight actor
-  Dali::Animation                 mFocusAnimationInner;      ///< The animation for the child keyboard focus highlight actor
+  /**
+   * This struct encapsulates all data relevant to each of the elements used within the custom keyboard focus effect.
+   */
+  struct FocusEffect
+  {
+    Dali::Toolkit::ImageView        actor;                   ///< The parent keyboard focus highlight actor
+    Dali::Animation                 animation;               ///< The animation for the parent keyboard focus highlight actor
+  };
+  FocusEffect mFocusEffect[FOCUS_ANIMATION_ACTOR_NUMBER];    ///< The elements used to create the custom focus effect
 
   std::vector< Dali::Actor >      mPages;                    ///< List of pages.
   AnimationList                   mBackgroundAnimations;     ///< List of background bubble animations
@@ -402,4 +413,4 @@ private:
 
 };
 
-#endif // __DALI_DEMO_H__
+#endif // DALI_DEMO_H

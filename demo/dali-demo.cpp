@@ -36,6 +36,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   // Create the demo launcher
   DaliTableView demo(app);
 
+  demo.AddExample(Example("animated-shapes.example", DALI_DEMO_STR_TITLE_ANIMATED_SHAPES));
   demo.AddExample(Example("bubble-effect.example", DALI_DEMO_STR_TITLE_BUBBLES));
   demo.AddExample(Example("blocks.example", DALI_DEMO_STR_TITLE_BLOCKS));
   demo.AddExample(Example("cube-transition-effect.example", DALI_DEMO_STR_TITLE_CUBE_TRANSITION));
