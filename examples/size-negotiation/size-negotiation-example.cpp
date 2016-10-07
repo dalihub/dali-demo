@@ -19,6 +19,7 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
 using namespace Dali;
 
@@ -112,8 +113,12 @@ public:
     // The Init signal is received once (only) during the Application lifetime
     Stage stage = Stage::GetCurrent();
 
-    // Respond to key events
-    stage.KeyEventSignal().Connect(this, &SizeNegotiationController::OnKeyEvent);
+    // Respond to key events if not handled
+    Toolkit::KeyInputFocusManager keyInputFocusManager = Toolkit::KeyInputFocusManager::Get();
+    if( keyInputFocusManager )
+    {
+      keyInputFocusManager.UnhandledKeyEventSignal().Connect(this, &SizeNegotiationController::OnKeyEvent);
+    }
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.
