@@ -119,15 +119,29 @@ private:
     // Hide the indicator bar
     application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
-    // Creates the background image.
+    // Use a gradient visual to render the background gradient.
     Toolkit::Control background = Dali::Toolkit::Control::New();
     background.SetAnchorPoint( Dali::AnchorPoint::CENTER );
     background.SetParentOrigin( Dali::ParentOrigin::CENTER );
     background.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
-    Dali::Property::Map map;
-    map["rendererType"] = "IMAGE";
-    map["url"] = BACKGROUND_IMAGE;
-    background.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
+
+    // Set up the background gradient.
+    Property::Array stopOffsets;
+    stopOffsets.PushBack( 0.0f );
+    stopOffsets.PushBack( 1.0f );
+    Property::Array stopColors;
+    stopColors.PushBack( Vector4( 0.17f, 0.24f, 0.35f, 1.0f ) ); // Dark, medium saturated blue  ( top   of screen)
+    stopColors.PushBack( Vector4( 0.45f, 0.70f, 0.80f, 1.0f ) ); // Medium bright, pastel blue   (bottom of screen)
+    const float percentageStageHeight = stage.GetSize().height * 0.7f;
+
+    background.SetProperty( Toolkit::Control::Property::BACKGROUND, Dali::Property::Map()
+      .Add( Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT )
+      .Add( Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets )
+      .Add( Toolkit::GradientVisual::Property::STOP_COLOR, stopColors )
+      .Add( Toolkit::GradientVisual::Property::START_POSITION, Vector2( 0.0f, -percentageStageHeight ) )
+      .Add( Toolkit::GradientVisual::Property::END_POSITION, Vector2( 0.0f, percentageStageHeight ) )
+      .Add( Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE ) );
+
     stage.Add( background );
 
     // Create a TextLabel for the application title.
