@@ -26,6 +26,8 @@
 #include <dali-toolkit/devel-api/builder/tree-node.h>
 #include <dali-toolkit/devel-api/builder/json-parser.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/devel-api/controls/navigation-view/navigation-view.h>
+
 #include <map>
 #include <string>
 #include <fstream>
@@ -136,6 +138,7 @@ const std::string ShortName( const std::string& name )
 
   if( pos != std::string::npos )
   {
+    pos++;
     return name.substr( pos );
   }
   else
@@ -249,44 +252,23 @@ public:
     mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
   }
 
-  bool OnToolSelectLayout( Toolkit::Button button )
+  bool OnBackButtonPressed( Toolkit::Button button )
   {
-    bool on = mItemView.IsVisible();
-
-    if( on )
-    {
-      LeaveSelection();
-    }
-    else
-    {
-      EnterSelection();
-    }
-
+    OnQuitOrBack();
     return true;
   }
 
-  void LeaveSelection()
-  {
-
-  }
-
-  void EnterSelection()
+  void SetUpItemView()
   {
     Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
 
     mTapDetector = TapGestureDetector::New();
     mTapDetector.DetectedSignal().Connect( this, &ExampleApp::OnTap );
 
-    if( mItemView )
-    {
-      stage.Remove( mItemView );
-    }
-
     mFiles.clear();
 
     mItemView = ItemView::New(*this);
-    stage.Add( mItemView );
+
     mItemView.SetParentOrigin(ParentOrigin::CENTER);
     mItemView.SetAnchorPoint(AnchorPoint::CENTER);
     mLayout = DefaultItemLayout::New( DefaultItemLayout::LIST );
@@ -354,28 +336,11 @@ public:
       }
     }
 
-    // Display item view on the stage
-    stage.Add( mItemView );
-
-    mItemView.SetVisible( true );
-    mBuilderLayer.SetVisible( false );
-
-    SetTitle("Select");
-
     // Activate the layout
     Vector3 size(stage.GetSize());
     mItemView.ActivateLayout(0, size, 0.0f/*immediate*/);
   }
 
-  void ExitSelection()
-  {
-    mTapDetector.Reset();
-
-    mItemView.SetVisible( false );
-    mBuilderLayer.SetVisible( true );
-
-    SetTitle("View");
-  }
 
   void OnTap( Actor actor, const TapGesture& tap )
   {
@@ -411,7 +376,7 @@ public:
     Stage stage = Stage::GetCurrent();
 
     builder = Builder::New();
-    builder.QuitSignal().Connect( this, &ExampleApp::OnBuilderQuit );
+    builder.QuitSignal().Connect( this, &ExampleApp::OnQuitOrBack );
 
     Property::Map defaultDirs;
     defaultDirs[ TOKEN_STRING(DEMO_IMAGE_DIR) ]  = DEMO_IMAGE_DIR;
@@ -485,10 +450,7 @@ public:
     size.y -= DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight;
     mBuilderLayer.SetSize( size );
 
-    mBuilderLayer.LowerToBottom();
-    Stage::GetCurrent().GetRootLayer().RaiseToTop();
-
-    ExitSelection();
+    mNavigationView.Push( mBuilderLayer );
   }
 
   void Create(Application& app)
@@ -504,21 +466,43 @@ public:
                                              TOOLBAR_IMAGE,
                                              "" );
 
-    SetTitle("Builder");
+    SetTitle("Select Example");
 
     mBuilderLayer = Layer::New();
-    stage.GetRootLayer().Add(mBuilderLayer);
-
 
     // Create an edit mode button. (left of toolbar)
-    Toolkit::PushButton editButton = Toolkit::PushButton::New();
-    editButton.SetUnselectedImage( EDIT_IMAGE );
-    editButton.SetSelectedImage( EDIT_IMAGE_SELECTED );
-    editButton.ClickedSignal().Connect( this, &ExampleApp::OnToolSelectLayout);
-    editButton.SetLeaveRequired( true );
-    mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    Toolkit::PushButton backButton = Toolkit::PushButton::New();
+    backButton.SetUnselectedImage( EDIT_IMAGE );
+    backButton.SetSelectedImage( EDIT_IMAGE_SELECTED );
+    backButton.ClickedSignal().Connect( this, &ExampleApp::OnBackButtonPressed);
+    backButton.SetLeaveRequired( true );
+    mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
-    EnterSelection();
+    mNavigationView = Toolkit::NavigationView::New();
+    mNavigationView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mNavigationView.SetAnchorPoint( AnchorPoint::TOP_LEFT);
+
+    stage.Add( mNavigationView );
+
+    // Set up the background gradient.
+    Property::Array stopOffsets;
+    stopOffsets.PushBack( 0.0f );
+    stopOffsets.PushBack( 1.0f );
+    Property::Array stopColors;
+    stopColors.PushBack( Color::WHITE );
+    stopColors.PushBack( Vector4( 0.45f, 0.70f, 0.80f, 1.0f ) ); // Medium bright, pastel blue
+    const float percentageStageHeight = stage.GetSize().height * 0.6f;
+
+    mNavigationView.SetProperty( Toolkit::Control::Property::BACKGROUND, Dali::Property::Map()
+      .Add( Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT )
+      .Add( Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets )
+      .Add( Toolkit::GradientVisual::Property::STOP_COLOR, stopColors )
+      .Add( Toolkit::GradientVisual::Property::START_POSITION, Vector2( 0.0f, -percentageStageHeight ) )
+      .Add( Toolkit::GradientVisual::Property::END_POSITION, Vector2( 0.0f, percentageStageHeight ) )
+      .Add( Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE ) );
+
+    SetUpItemView();
+    mNavigationView.Push( mItemView );
 
     mTimer = Timer::New( 500 ); // ms
     mTimer.TickSignal().Connect( this, &ExampleApp::OnTimer);
@@ -546,14 +530,7 @@ public:
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
       {
-        if ( mItemView.IsVisible() )
-        {
-          mApp.Quit();
-        }
-        else
-        {
-          EnterSelection();
-        }
+        OnQuitOrBack();
       }
     }
   }
@@ -561,15 +538,15 @@ public:
   /**
    * Event handler when Builder wants to quit (we only want to close the shown json unless we're at the top-level)
    */
-  void OnBuilderQuit()
+  void OnQuitOrBack()
   {
-    if ( mItemView.IsVisible() )
+    if ( mItemView.OnStage() )
     {
       mApp.Quit();
     }
     else
     {
-      EnterSelection();
+      mNavigationView.Pop();
     }
   }
 
@@ -578,12 +555,13 @@ private:
 
   ItemLayoutPtr mLayout;
   ItemView mItemView;
+  Toolkit::NavigationView mNavigationView;
 
   Toolkit::Control mView;
   unsigned int mOrientation;
 
   Toolkit::ToolBar mToolBar;
-  TextLabel mTitleActor;             ///< The Toolbar's Title.
+  TextLabel mTitleActor;
 
   Layer mBuilderLayer;
 
