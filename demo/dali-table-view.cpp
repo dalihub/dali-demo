@@ -252,6 +252,8 @@ void DaliTableView::Initialize( Application& application )
   logo.SetAnchorPoint( AnchorPoint::TOP_CENTER );
   logo.SetParentOrigin( Vector3( 0.5f, 0.1f, 0.5f ) );
   logo.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+  // The logo should appear on top of everything.
+  logo.SetDrawMode( DrawMode::OVERLAY_2D );
 
   // Show version in a popup when log is tapped
   mLogoTapDetector = TapGestureDetector::New();
@@ -284,8 +286,6 @@ void DaliTableView::Initialize( Application& application )
   SetupBackground( bubbleContainer );
 
   mRootActor.Add( logo );
-  // We use depth index to bring the logo above the bubbles (as an alternative to creating actors).
-  logo.GetRendererAt( 0 ).SetProperty( Renderer::Property::DEPTH_INDEX, 30000 );
   mRootActor.Add( bubbleContainer );
   mRootActor.Add( mScrollView );
 
