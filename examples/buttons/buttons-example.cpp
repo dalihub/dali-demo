@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -306,6 +306,7 @@ class ButtonsController: public ConnectionTracker
       mCheckboxButton1.SetName( "checkbox1" );
       mCheckboxButton1.SetLabelText( "CheckBox1 is unselected" );
       mCheckboxButton1.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
+      mCheckboxButton1.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
 
       checkBoxBackground.Add( mCheckboxButton1 );
     }
@@ -316,6 +317,7 @@ class ButtonsController: public ConnectionTracker
       mCheckboxButton2.SetLabelText( "CheckBox2 is selected" );
       mCheckboxButton2.SetSelected( true );
       mCheckboxButton2.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
+      mCheckboxButton2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
 
       checkBoxBackground.Add( mCheckboxButton2 );
     }
@@ -325,6 +327,7 @@ class ButtonsController: public ConnectionTracker
       mCheckboxButton3.SetName( "checkbox3" );
       mCheckboxButton3.SetLabelText( "CheckBox3 is unselected" );
       mCheckboxButton3.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
+      mCheckboxButton3.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
 
       checkBoxBackground.Add( mCheckboxButton3 );
     }
