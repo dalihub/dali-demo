@@ -1,51 +1,109 @@
 {
   "styles":
   {
-    "title":{
+    "Title":{
       "textColor":"#0000ff",
       "background":
       {
-        "rendererType":"color",
+        "visualType":"COLOR",
         "mixColor": [ 1.0, 1.0, 1.0, 1.0 ]
       }
     },
-    "tableview":{
+    "TableView":{
       "background":
       {
-        "rendererType":"color",
+        "visualType":"COLOR",
         "mixColor": [ 1.0, 1.0, 1.0, 0.03 ]
       }
     },
-    "radiobutton":{
+    "RadioButton":{
       "label":{
         "textColor": [1,1,1,1]
       }
     },
-    "checkboxbutton":{
+    "CheckboxButton":{
       "label":{
         "textColor": [1,1,1,1]
       }
     },
-    "colorLabel1":{
+    "ColorLabel1":{
       "textColor": [1,0,0,1]
     },
-    "colorLabel2":{
+    "ColorLabel2":{
       "textColor": [0,1,0,1]
     },
-    "colorLabel3":{
+    "ColorLabel3":{
       "textColor": [0.3,0.3,1,1]
     },
-    "themelabel":{
+    "ThemeLabel":{
       "textColor":[0,1,1,1]
     },
-    "popupTitle":{
+    "PopupTitle":{
       "textColor":[1,1,1,1]
     },
-    "popupBody":{
+    "PopupBody":{
       "textColor":[1,1,0,1]
     },
-    "textlabel":{
+    "TextLabel":{
       "textColor":[0,0,0,1]
+    },
+    "ImageChannelControl":
+    {
+      "enableVisibilityTransition":
+      [
+        {
+          "target":"imageVisual",
+          "property":"scale",
+          "initialValue":[0.1,0.1,0.1],
+          "targetValue":[1,1,1],
+          "animator":
+          {
+            "alphaFunction":"EASE_IN",
+            "timePeriod":
+            {
+              "duration":0.3,
+              "delay":0.1
+            }
+          }
+        },
+        {
+          "target":"imageVisual",
+          "property":"colorAlpha",
+          "targetValue":1
+        }
+      ],
+      "disableVisibilityTransition":
+      [
+        {
+          "target":"imageVisual",
+          "property":"scale",
+          "initialValue":[1,1,1],
+          "targetValue":[0.1,0.1,0.1],
+          "animator":
+          {
+            "alphaFunction":"EASE_OUT",
+            "timePeriod":
+            {
+              "duration":0.3,
+              "delay":0.0
+            }
+          }
+        },
+        {
+          "target":"imageVisual",
+          "property":"colorAlpha",
+          "targetValue":0,
+          "animator":
+          {
+            "alphaFunction":"EASE_OUT",
+            "timePeriod":
+            {
+              "duration":0.3,
+              "delay":0.0
+            }
+          }
+        }
+      ]
     }
   }
 }

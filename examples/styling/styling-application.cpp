@@ -198,14 +198,41 @@ void StylingApplication::Create( Application& application )
 
   mRadioButtons[0].SetSelected( true );
 
-  mImageChannelControl = ImageChannelControl::New( BIG_IMAGE_1 );
-  mImageChannelControl.SetName("ImageChannelControl");
-  mImageChannelControl.SetResizePolicy( ResizePolicy::FILL_TO_PARENT , Dimension::ALL_DIMENSIONS );
-  mImageChannelControl.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-  imageSelectLayout.AddChild( mImageChannelControl, TableView::CellPosition( 0, 1 ) );
-
+  mImagePlacement = Actor::New();
+  mImagePlacement.SetParentOrigin( ParentOrigin::CENTER );
+  mImagePlacement.SetAnchorPoint( AnchorPoint::CENTER );
+  mImagePlacement.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  imageSelectLayout.AddChild( mImagePlacement, TableView::CellPosition( 0, 1 ) );
   imageSelectLayout.SetCellAlignment( TableView::CellPosition( 0, 1 ), HorizontalAlignment::RIGHT, VerticalAlignment::CENTER );
 
+  mIcc1 = ImageChannelControl::New( BIG_IMAGE_1 );
+  mIcc1.SetName("ICC1");
+  mIcc1.SetResizePolicy( ResizePolicy::FILL_TO_PARENT , Dimension::ALL_DIMENSIONS );
+  mIcc1.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+  mIcc1.SetParentOrigin( ParentOrigin::CENTER );
+  mIcc1.SetVisibility( true );
+  
+  mImagePlacement.Add( mIcc1 );
+
+  mIcc2 = ImageChannelControl::New( BIG_IMAGE_2 );
+  mIcc2.SetName("ICC2");
+  mIcc2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT , Dimension::ALL_DIMENSIONS );
+  mIcc2.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+  mIcc2.SetParentOrigin( ParentOrigin::CENTER );
+  mIcc2.SetVisibility( false );
+
+  mImagePlacement.Add( mIcc2 );
+
+  mIcc3 = ImageChannelControl::New( BIG_IMAGE_3 );
+  mIcc3.SetName("ICC3");
+  mIcc3.SetResizePolicy( ResizePolicy::FILL_TO_PARENT , Dimension::ALL_DIMENSIONS );
+  mIcc3.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+  mIcc3.SetParentOrigin( ParentOrigin::CENTER );
+  mIcc3.SetVisibility( false );
+
+  mImagePlacement.Add( mIcc3 );
+
+  mImageChannelControl = mIcc1;
 
   TableView channelSliderLayout = TableView::New( 3, 3 );
   channelSliderLayout.SetName("ChannelSliderLayout");
@@ -451,23 +478,40 @@ TextLabel StylingApplication::CreateTitle( std::string title )
 
 bool StylingApplication::OnButtonStateChange( Button button )
 {
-  // Todo: save / restore slider states per image
+  // On button press, called twice, once to tell new button it's selected,
+  // once to tell old button it isn't selected?
 
-  if( mImageChannelControl )
+// Todo: save / restore slider states per image
+
+  if( button.IsSelected() )
   {
+
+    ImageChannelControl prevIcc = mImageChannelControl;
+
     if( mRadioButtons[0].IsSelected() )
     {
-      mImageChannelControl.SetImage( BIG_IMAGE_1 );
+      mImageChannelControl = mIcc1;
     }
     else if( mRadioButtons[1].IsSelected() )
     {
-      mImageChannelControl.SetImage( BIG_IMAGE_2 );
+      mImageChannelControl = mIcc2;
     }
     else if( mRadioButtons[2].IsSelected() )
     {
-      mImageChannelControl.SetImage( BIG_IMAGE_3 );
+      mImageChannelControl = mIcc3;
+    }
+
+    if( prevIcc )
+    {
+      prevIcc.SetVisibility( false );
+    }
+
+    if( mImageChannelControl )
+    {
+      mImageChannelControl.SetVisibility( true );
     }
   }
+
   return true;
 }
 
@@ -512,6 +556,7 @@ bool StylingApplication::OnThemeButtonClicked( Button button )
       break;
     }
   }
+
   StyleManager::Get().ApplyTheme( themePath );
 
   return true;

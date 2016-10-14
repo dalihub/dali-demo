@@ -18,6 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/object/type-registry-helper.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <cstdio>
 
 using namespace Dali; // Needed for macros
 
@@ -53,6 +54,11 @@ DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "redChannel", FLOAT, RED_
 DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "greenChannel", FLOAT, GREEN_CHANNEL );
 DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "blueChannel", FLOAT, BLUE_CHANNEL );
 
+DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "visibility", BOOLEAN, VISIBILITY );
+DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "enableVisibilityTransition", ARRAY, ENABLE_VISIBILITY_TRANSITION );
+DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "disableVisibilityTransition", ARRAY, DISABLE_VISIBILITY_TRANSITION );
+
+DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "imageVisual", MAP, IMAGE_VISUAL );
 DALI_TYPE_REGISTRATION_END();
 
 } // anonymous namespace
@@ -60,7 +66,9 @@ DALI_TYPE_REGISTRATION_END();
 
 Internal::ImageChannelControl::ImageChannelControl()
 : Control( ControlBehaviour( REQUIRES_STYLE_CHANGE_SIGNALS ) ),
-  mChannels( 1.0f, 1.0f, 1.0f )
+  mChannels( 1.0f, 1.0f, 1.0f ),
+  mVisibility(true),
+  mTargetVisibility(true)
 {
 }
 
@@ -90,8 +98,58 @@ void ImageChannelControl::SetImage( const std::string& url )
   properties[Dali::Toolkit::ImageVisual::Property::URL] = url;
 
   Dali::Toolkit::InitializeVisual( self, mVisual, properties );
+  RegisterVisual( Demo::ImageChannelControl::Property::IMAGE_VISUAL, self, mVisual );
+  mVisual.SetName("imageVisual");
 
   RelayoutRequest();
+}
+
+void ImageChannelControl::SetVisibility( bool visibility )
+{
+  printf("ImageChannelControl %s: SetVisibility( %s )\n", Self().GetName().c_str(), visibility?"T":"F" );
+
+  Animation animation;
+
+  if( mAnimation )
+  {
+    mAnimation.Stop();
+    mAnimation.FinishedSignal().Disconnect( this, &ImageChannelControl::OnStateChangeAnimationFinished );
+    OnStateChangeAnimationFinished(mAnimation);
+  }
+
+  if( mVisibility != visibility )
+  {
+    if( mVisibility )
+    {
+      if( mDisableVisibilityTransition.Count() > 0 )
+      {
+        mAnimation = CreateTransition( mDisableVisibilityTransition );
+      }
+    }
+    else
+    {
+      if( mEnableVisibilityTransition.Count() > 0 )
+      {
+        mAnimation = CreateTransition( mEnableVisibilityTransition );
+      }
+    }
+  }
+
+  if( mAnimation )
+  {
+    mAnimation.FinishedSignal().Connect( this, &ImageChannelControl::OnStateChangeAnimationFinished );
+    mAnimation.Play();
+    mTargetVisibility = visibility;
+  }
+  else
+  {
+    mVisibility = visibility;
+  }
+}
+
+void ImageChannelControl::OnStateChangeAnimationFinished( Animation& src )
+{
+  mVisibility = mTargetVisibility;
 }
 
 void ImageChannelControl::OnInitialize()
@@ -144,6 +202,12 @@ Vector3 ImageChannelControl::GetNaturalSize()
   return Vector3::ZERO;
 }
 
+void ImageChannelControl::OnStyleChange( Toolkit::StyleManager styleManager, StyleChange::Type change )
+{
+  // Chain up.
+  Control::OnStyleChange( styleManager, change );
+}
+
 
 ///////////////////////////////////////////////////////////
 //
@@ -154,12 +218,55 @@ void ImageChannelControl::SetProperty( BaseObject* object, Property::Index index
 {
   Demo::ImageChannelControl imageChannelControl = Demo::ImageChannelControl::DownCast( Dali::BaseHandle( object ) );
 
-  if ( imageChannelControl )
+  if( imageChannelControl )
   {
     ImageChannelControl& impl = GetImpl( imageChannelControl );
     Actor self = impl.Self();
     switch ( index )
     {
+      case Demo::ImageChannelControl::Property::RESOURCE_URL:
+      {
+        impl.SetImage( value.Get<std::string>() );
+        break;
+      }
+      case Demo::ImageChannelControl::Property::IMAGE_VISUAL:
+      {
+        Property::Map* map = value.GetMap();
+        if( map )
+        {
+          Dali::Toolkit::InitializeVisual( self, impl.mVisual, *map );
+        }
+        break;
+      }
+      case Demo::ImageChannelControl::Property::VISIBILITY:
+      {
+        impl.SetVisibility( value.Get<bool>() );
+        break;
+      }
+      case Demo::ImageChannelControl::Property::ENABLE_VISIBILITY_TRANSITION:
+      {
+        if( value.GetType() == Property::ARRAY )
+        {
+          impl.mEnableVisibilityTransition = Toolkit::TransitionData::New( *value.GetArray());
+        }
+        else if( value.GetType() == Property::MAP )
+        {
+          impl.mEnableVisibilityTransition = Toolkit::TransitionData::New( *value.GetMap() );
+        }
+        break;
+      }
+      case Demo::ImageChannelControl::Property::DISABLE_VISIBILITY_TRANSITION:
+      {
+        if( value.GetType() == Property::ARRAY )
+        {
+          impl.mDisableVisibilityTransition = Toolkit::TransitionData::New( *value.GetArray());
+        }
+        else if( value.GetType() == Property::MAP )
+        {
+          impl.mDisableVisibilityTransition = Toolkit::TransitionData::New( *value.GetMap() );
+        }
+        break;
+      }
       case Demo::ImageChannelControl::Property::RED_CHANNEL:
       {
         impl.mChannels[0] = value.Get<float>();
@@ -208,6 +315,13 @@ Property::Value ImageChannelControl::GetProperty( BaseObject* object, Property::
         value = impl.mChannels[2];
         break;
       }
+      case Demo::ImageChannelControl::Property::VISIBILITY:
+      {
+        value = impl.mVisibility;
+        break;
+      }
+      default:
+        break;
     }
   }
 

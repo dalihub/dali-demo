@@ -87,6 +87,10 @@ private:
   PushButton mThemeButtons[3];
   PushButton mResetButton;
   ImageChannelControl mImageChannelControl;
+  ImageChannelControl mIcc1;
+  ImageChannelControl mIcc2;
+  ImageChannelControl mIcc3;
+  Actor mImagePlacement;
   Popup mResetPopup;
   PanGestureDetector mPanGestureDetector;
 };

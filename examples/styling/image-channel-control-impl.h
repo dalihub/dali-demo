@@ -18,8 +18,10 @@
  */
 
 #include "image-channel-control.h"
+#include <dali/public-api/animation/animation.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-base.h>
+#include <dali-toolkit/devel-api/visual-factory/transition-data.h>
 
 namespace Demo
 {
@@ -42,6 +44,11 @@ public: // API
    * @copydoc ImageChannelControl::SetImage
    */
   void SetImage( const std::string& url );
+
+  /**
+   * @copydoc ImageChannelControl::SetVisibility
+   */
+  void SetVisibility( bool visibility );
 
 public:  // Properties
   /**
@@ -86,6 +93,14 @@ private: // From Control
    */
   virtual Dali::Vector3 GetNaturalSize();
 
+  /**
+   * @copydoc Toolkit::Control::OnStyleChange
+   */
+  virtual void OnStyleChange( Dali::Toolkit::StyleManager styleManager, Dali::StyleChange::Type change );
+
+private:
+  void OnStateChangeAnimationFinished(Dali::Animation& handle);
+
 private:
   //undefined
   ImageChannelControl( const ImageChannelControl& );
@@ -96,7 +111,12 @@ private:
   std::string mUrl;
   Dali::Toolkit::Visual::Base mVisual;
   Dali::Vector3 mChannels;
+  Dali::Toolkit::TransitionData mEnableVisibilityTransition;
+  Dali::Toolkit::TransitionData mDisableVisibilityTransition;
+  Dali::Animation mAnimation;
   Dali::Property::Index mChannelIndex;
+  bool mVisibility:1;
+  bool mTargetVisibility:1;
 };
 
 } // Internal
