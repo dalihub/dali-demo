@@ -11,7 +11,10 @@ msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Tasten"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
-msgstr "Farbverlauf "
+msgstr "Farbverlauf"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "Kontakt"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "Würfel Übergangseffekt"
