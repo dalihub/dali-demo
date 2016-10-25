@@ -36,6 +36,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_ANIMATED_SHAPES             dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES")
 #define DALI_DEMO_STR_TITLE_ALPHA_BLENDING_CPU          dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_ALPHA_BLENDING_CPU")
 #define DALI_DEMO_STR_TITLE_BASIC_LIGHT                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BASIC_LIGHT")
+#define DALI_DEMO_STR_TITLE_BEZIER_CURVE                dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BEZIER_CURVE")
 #define DALI_DEMO_STR_TITLE_BLOCKS                      dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BLOCKS")
 #define DALI_DEMO_STR_TITLE_BUBBLES                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUBBLES")
 #define DALI_DEMO_STR_TITLE_BUTTONS                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUTTONS")
@@ -109,6 +110,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_ANIMATED_SHAPES             "Animated Shapes"
 #define DALI_DEMO_STR_TITLE_ALPHA_BLENDING_CPU          "CPU Alpha Blending"
 #define DALI_DEMO_STR_TITLE_BASIC_LIGHT                 "Basic Light"
+#define DALI_DEMO_STR_TITLE_BEZIER_CURVE                "Alpha Function Bezier Curve"
 #define DALI_DEMO_STR_TITLE_BLOCKS                      "Blocks"
 #define DALI_DEMO_STR_TITLE_BUBBLES                     "Bubbles"
 #define DALI_DEMO_STR_TITLE_BUTTONS                     "Buttons"
