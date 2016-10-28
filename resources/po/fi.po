@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "Animoidut Muodot"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Lohko Peli"
 

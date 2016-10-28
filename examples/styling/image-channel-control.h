@@ -42,7 +42,6 @@ public:
   {
     PROPERTY_START_INDEX = Dali::Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1,
     PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000,
-
     ANIMATABLE_PROPERTY_START_INDEX = Dali::ANIMATABLE_PROPERTY_REGISTRATION_START_INDEX,
     ANIMATABLE_PROPERTY_END_INDEX = ANIMATABLE_PROPERTY_START_INDEX+1000
   };
@@ -51,11 +50,14 @@ public:
   {
     enum
     {
-
       RESOURCE_URL = PROPERTY_START_INDEX,
       RED_CHANNEL,
       GREEN_CHANNEL,
-      BLUE_CHANNEL
+      BLUE_CHANNEL,
+      VISIBILITY,
+      ENABLE_VISIBILITY_TRANSITION,
+      DISABLE_VISIBILITY_TRANSITION,
+      IMAGE_VISUAL
     };
   };
 
@@ -105,6 +107,11 @@ public: // API
    * @param[in] url The url of the image resource
    */
   void SetImage( const std::string& url );
+
+  /**
+   * Set the visibility of this control
+   */
+  void SetVisibility( bool visibility );
 
 public: // Not for public use
   /**

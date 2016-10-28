@@ -65,6 +65,11 @@ void ImageChannelControl::SetImage( const std::string& url )
   GetImpl( *this ).SetImage( url );
 }
 
+void ImageChannelControl::SetVisibility( bool visibility )
+{
+  GetImpl( *this ).SetVisibility( visibility );
+}
+
 ImageChannelControl::ImageChannelControl( Internal::ImageChannelControl& implementation )
 : Control( implementation )
 {

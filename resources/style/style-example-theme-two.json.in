@@ -92,6 +92,49 @@
       "progressVisual":{
         "url":"{STYLE_DIR}/images/slider-skin-progress-blue.9.png"
       }
+    },
+    "ImageChannelControl":
+    {
+      "enableVisibilityTransition":
+      [
+        {
+          "target":"imageVisual",
+          "property":"colorAlpha",
+          "initialValue":0,
+          "targetValue":1,
+          "animator":
+          {
+            "alphaFunction":"EASE_IN_OUT",
+            "timePeriod":
+            {
+              "duration":0.4,
+              "delay":0
+            }
+          }
+        }
+      ],
+      "disableVisibilityTransition":
+      [
+        {
+          "target":"imageVisual",
+          "property":"colorAlpha",
+          "targetValue":0,
+          "animator":
+          {
+            "alphaFunction":"EASE_IN_OUT",
+            "timePeriod":
+            {
+              "duration":0.4,
+              "delay":0.2
+            }
+          }
+        },
+        {
+          "target":"imageVisual",
+          "property":"scale",
+          "targetValue":[1,1,1]
+        }
+      ]
     }
   }
 }
