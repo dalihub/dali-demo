@@ -97,8 +97,8 @@ void ImageChannelControl::SetImage( const std::string& url )
   properties[Dali::Toolkit::Visual::Property::SHADER]=shader;
   properties[Dali::Toolkit::ImageVisual::Property::URL] = url;
 
-  Dali::Toolkit::InitializeVisual( self, mVisual, properties );
-  RegisterVisual( Demo::ImageChannelControl::Property::IMAGE_VISUAL, self, mVisual );
+  mVisual = Toolkit::VisualFactory::Get().CreateVisual( properties );
+  RegisterVisual( Demo::ImageChannelControl::Property::IMAGE_VISUAL, mVisual );
   mVisual.SetName("imageVisual");
 
   RelayoutRequest();
