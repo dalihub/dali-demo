@@ -24,7 +24,7 @@
     },
     "TextLabel":
     {
-      "fontStyle":"Regular",
+      "fontStyle":{"weight":"normal"},
       "pointSize":18
     },
     "TextLabelFontSize0":

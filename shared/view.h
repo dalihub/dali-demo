@@ -46,7 +46,6 @@ struct ViewStyle
 const ViewStyle DEFAULT_VIEW_STYLE( 0.1f, 0.7f, 80.f, 4.f );
 
 const char*                   DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
-const char*                   DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
 const float                   DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
 
 const Dali::Toolkit::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
