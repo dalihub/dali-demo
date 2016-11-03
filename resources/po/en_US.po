@@ -144,3 +144,6 @@ msgstr "Text Scrolling"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "Tilt Sensor"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP Game"

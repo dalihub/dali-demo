@@ -84,6 +84,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("sparkle.example", DALI_DEMO_STR_TITLE_SPARKLE));
   demo.AddExample(Example("progress-bar.example", DALI_DEMO_STR_TITLE_PROGRESS_BAR));
   demo.AddExample(Example("contact-cards.example", DALI_DEMO_STR_TITLE_CONTACT_CARDS));
+  demo.AddExample(Example("fpp-game.example", DALI_DEMO_STR_TITLE_FPP_GAME));
 
   demo.SortAlphabetically( true );
 

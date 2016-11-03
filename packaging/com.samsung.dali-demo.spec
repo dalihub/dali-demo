@@ -137,6 +137,7 @@ exit 0
 %{dali_app_exe_dir}/*.example
 %{dali_app_exe_dir}/dali-builder
 %{dali_app_res_dir}/images/*
+%{dali_app_res_dir}/game/*
 %{dali_app_res_dir}/videos/*
 %{dali_app_res_dir}/models/*
 %{dali_app_res_dir}/scripts/*

@@ -172,4 +172,7 @@
 	<ui-application appid="contact-cards.example" exec="/usr/apps/com.samsung.dali-demo/bin/contact-cards.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Contact Cards</label>
 	</ui-application>
+	<ui-application appid="fpp-game.example" exec="/usr/apps/com.samsung.dali-demo/bin/fpp-game.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>First Person Camera Game</label>
+	</ui-application>
 </manifest>

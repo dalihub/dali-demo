@@ -144,3 +144,6 @@ msgstr "텍스트 스크롤"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "기울기 센서"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP Game"
