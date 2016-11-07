@@ -234,7 +234,8 @@ void ImageChannelControl::SetProperty( BaseObject* object, Property::Index index
         Property::Map* map = value.GetMap();
         if( map )
         {
-          Dali::Toolkit::InitializeVisual( self, impl.mVisual, *map );
+          impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual( *map );
+          impl.RegisterVisual( Demo::ImageChannelControl::Property::IMAGE_VISUAL, impl.mVisual );
         }
         break;
       }

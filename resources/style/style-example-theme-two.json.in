@@ -111,6 +111,11 @@
               "delay":0
             }
           }
+        },
+        {
+          "target":"imageVisual",
+          "property":"scale",
+          "targetValue":[1,1,1]
         }
       ],
       "disableVisibilityTransition":
