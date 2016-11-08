@@ -161,22 +161,10 @@ void ImageChannelControl::OnInitialize()
 void ImageChannelControl::OnStageConnection( int depth )
 {
   Control::OnStageConnection( depth );
-
-  if( mVisual )
-  {
-    CustomActor self = Self();
-    mVisual.SetOnStage( self );
-  }
 }
 
 void ImageChannelControl::OnStageDisconnection()
 {
-  if( mVisual )
-  {
-    CustomActor self = Self();
-    mVisual.SetOffStage( self );
-  }
-
   Control::OnStageDisconnection();
 }
 
