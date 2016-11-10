@@ -357,6 +357,12 @@ private: // Application callbacks & implementation
  void OnButtonsPageRelayout( const Dali::Actor& actor );
 
  /**
+  * @brief The is connected to the keyboard focus highlight actor, and called when it is placed on stage.
+  * @param[in] actor The actor that has been placed on stage.
+  */
+ void OnStageConnect( Dali::Actor actor );
+
+ /**
   * @brief Callback called to set up background actors
   *
   * @param[in] actor The actor raising the callback
@@ -377,6 +383,11 @@ private:
   Dali::Timer                     mAnimationTimer;           ///< Timer used to turn off animation after a specific time period
   Dali::TapGestureDetector        mLogoTapDetector;          ///< To detect taps on the logo
   Dali::Toolkit::Popup            mVersionPopup;             ///< Displays DALi library version information
+
+  Dali::Toolkit::ImageView        mFocusContainer;           ///< The parent keyboard focus highlight actor
+  Dali::Toolkit::ImageView        mFocusInner;               ///< The child keyboard focus highlight actor
+  Dali::Animation                 mFocusAnimation;           ///< The animation for the parent keyboard focus highlight actor
+  Dali::Animation                 mFocusAnimationInner;      ///< The animation for the child keyboard focus highlight actor
 
   std::vector< Dali::Actor >      mPages;                    ///< List of pages.
   AnimationList                   mBackgroundAnimations;     ///< List of background bubble animations
