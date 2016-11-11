@@ -13,6 +13,9 @@ msgstr "ক্লিক্"
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "ঝুৰ্"
 
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "অঁপইতা "
+
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "ঘনক পৰিৱৰ্তনীয় প্ৰভাৱ"
 

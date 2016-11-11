@@ -13,6 +13,9 @@ msgstr "按钮"
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "颜色梯度"
 
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "往来"
+
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "方块切换效果"
 

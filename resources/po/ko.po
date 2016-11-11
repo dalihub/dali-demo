@@ -13,6 +13,9 @@ msgstr "버튼"
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "색상 그라디언트"
 
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "접촉"
+
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "입방체 전환"
 

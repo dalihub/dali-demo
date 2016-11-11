@@ -13,6 +13,9 @@ msgstr "Botones"
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "Gradiente de color"
 
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "Contactos"
+
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "Transición cubos"
 

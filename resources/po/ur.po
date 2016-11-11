@@ -13,6 +13,9 @@ msgstr "بٹنوں"
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "رنگ میلان"
 
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "لوگ"
+
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "کیوب منتقلی"
 

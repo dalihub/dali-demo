@@ -161,22 +161,10 @@ void ImageChannelControl::OnInitialize()
 void ImageChannelControl::OnStageConnection( int depth )
 {
   Control::OnStageConnection( depth );
-
-  if( mVisual )
-  {
-    CustomActor self = Self();
-    mVisual.SetOnStage( self );
-  }
 }
 
 void ImageChannelControl::OnStageDisconnection()
 {
-  if( mVisual )
-  {
-    CustomActor self = Self();
-    mVisual.SetOffStage( self );
-  }
-
   Control::OnStageDisconnection();
 }
 
@@ -234,7 +222,8 @@ void ImageChannelControl::SetProperty( BaseObject* object, Property::Index index
         Property::Map* map = value.GetMap();
         if( map )
         {
-          Dali::Toolkit::InitializeVisual( self, impl.mVisual, *map );
+          impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual( *map );
+          impl.RegisterVisual( Demo::ImageChannelControl::Property::IMAGE_VISUAL, impl.mVisual );
         }
         break;
       }

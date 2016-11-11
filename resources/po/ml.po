@@ -13,6 +13,9 @@ msgstr "ബട്ടണുകൾ"
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "വർണ്ണ ഗ്രേഡിയന്റ്"
 
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "ബന്ധങ്ങൾ"
+
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "സമചതുരക്കട്ട സംക്രമണ ഇഫക്ട്"
 
