@@ -226,6 +226,7 @@ DaliTableView::DaliTableView( Application& application )
   mPages(),
   mBackgroundAnimations(),
   mExampleList(),
+  mPageWidth( 0.0f ),
   mTotalPages(),
   mScrolling( false ),
   mSortAlphabetically( false ),

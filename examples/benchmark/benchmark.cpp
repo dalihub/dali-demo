@@ -351,7 +351,7 @@ public:
 
         float delay = 0.0f;
         float duration = 0.0f;
-        if( count < mRowsPerPage*mColumnsPerPage )
+        if( count < ( static_cast< size_t >( mRowsPerPage ) * mColumnsPerPage ) )
         {
           duration = durationPerActor;
           delay = delayBetweenActors * count;
@@ -385,7 +385,7 @@ public:
     Vector3 stageSize( stage.GetSize() );
 
     mScroll = Animation::New(10.0f);
-    size_t actorCount( mRowsPerPage*mColumnsPerPage*mPageCount);
+    size_t actorCount( static_cast< size_t >( mRowsPerPage ) * mColumnsPerPage * mPageCount );
     for( size_t i(0); i<actorCount; ++i )
     {
       if( gUseMesh )

@@ -47,6 +47,7 @@ public:
   ImageSvgController( Application& application )
   : mApplication( application ),
     mScale( 1.f ),
+    mScaleAtPinchStart( 1.0f ),
     mIndex( 0 )
   {
     // Connect to the Application's Init signal

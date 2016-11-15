@@ -187,7 +187,6 @@ private:
   Actor             mCompositionActor;
 
   //Motion
-  bool              mExitClick;
   Vector2           mCurrentTouchPosition;
   Vector2           mMetaballPosVariation;
   Vector2           mMetaballPosVariationFrom;

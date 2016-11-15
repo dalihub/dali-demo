@@ -164,7 +164,8 @@ private:
 
 NewWindowController::NewWindowController( Application& application )
 : mApplication(application),
-  mNeedNewAnimation(true)
+  mNeedNewAnimation(true),
+  mAnimateComponentCount( 0 )
 {
   mApplication.InitSignal().Connect(this, &NewWindowController::Create);
   mApplication.TerminateSignal().Connect(this, &NewWindowController::Destroy);
