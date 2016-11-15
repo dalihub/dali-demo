@@ -118,9 +118,6 @@ Dali::Layer CreateView( Dali::Application& application,
 {
   Dali::Stage stage = Dali::Stage::GetCurrent();
 
-  // Hide the indicator bar
-  application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
-
   // Create default View.
   view = Dali::Toolkit::Control::New();
   view.SetAnchorPoint( Dali::AnchorPoint::CENTER );
