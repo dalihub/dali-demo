@@ -55,9 +55,6 @@
 	<ui-application appid="motion-stretch.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-stretch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Motion Stretch</label>
 	</ui-application>
-	<ui-application appid="radial-menu.example" exec="/usr/apps/com.samsung.dali-demo/bin/radial-menu.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Radial Menu</label>
-	</ui-application>
 	<ui-application appid="refraction-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/refraction-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Refraction effect</label>
 	</ui-application>
@@ -67,7 +64,7 @@
 	<ui-application appid="scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>
 	</ui-application>
-	<ui-application appid="shadow-bone-lighting.example" exec="/usr/apps/com.samsung.dali-demo/bin/shadow-bone-lighting.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+	<ui-application appid="shadows-and-lights.example" exec="/usr/apps/com.samsung.dali-demo/bin/shadows-and-lights.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Shadows and Lights</label>
 	</ui-application>
 	<ui-application appid="dali-builder" exec="/usr/apps/com.samsung.dali-demo/bin/dali-builder" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
@@ -108,9 +105,6 @@
 	</ui-application>
 	<ui-application appid="animated-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Animated shapes</label>
-	</ui-application>
-	<ui-application appid="path-animation.example" exec="/usr/apps/com.samsung.dali-demo/bin/path-animation.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Path Animation</label>
 	</ui-application>
 	<ui-application appid="atlas.example" exec="/usr/apps/com.samsung.dali-demo/bin/atlas.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Atlas</label>
@@ -168,5 +162,14 @@
 	</ui-application>
 	<ui-application appid="primitive-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/primitive-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Primitive Shapes</label>
+	</ui-application>
+	<ui-application appid="styling.example" exec="/usr/apps/com.samsung.dali-demo/bin/styling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Styling</label>
+	</ui-application>
+	<ui-application appid="progress-bar.example" exec="/usr/apps/com.samsung.dali-demo/bin/progress-bar.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Progress Bar</label>
+	</ui-application>
+	<ui-application appid="contact-cards.example" exec="/usr/apps/com.samsung.dali-demo/bin/contact-cards.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Contact Cards</label>
 	</ui-application>
 </manifest>

@@ -34,42 +34,69 @@ using namespace MultiLanguageStrings;
 
 namespace
 {
-  const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "grab-handle.png";
+const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "grab-handle.png";
 
-  const unsigned int KEY_ZERO = 10;
-  const unsigned int KEY_ONE = 11;
-  const unsigned int KEY_F = 41;
-  const unsigned int KEY_H = 43;
-  const unsigned int KEY_V = 55;
-  const unsigned int KEY_M = 58;
-  const unsigned int KEY_L = 46;
-  const unsigned int KEY_S = 39;
-  const unsigned int KEY_PLUS = 21;
-  const unsigned int KEY_MINUS = 20;
+const unsigned int KEY_ZERO = 10;
+const unsigned int KEY_ONE = 11;
+const unsigned int KEY_F = 41;
+const unsigned int KEY_H = 43;
+const unsigned int KEY_V = 55;
+const unsigned int KEY_M = 58;
+const unsigned int KEY_L = 46;
+const unsigned int KEY_S = 39;
+const unsigned int KEY_PLUS = 21;
+const unsigned int KEY_MINUS = 20;
 
-  const char* H_ALIGNMENT_STRING_TABLE[] =
-  {
-    "BEGIN",
-    "CENTER",
-    "END"
-  };
+const char* H_ALIGNMENT_STRING_TABLE[] =
+{
+  "BEGIN",
+  "CENTER",
+  "END"
+};
 
-  const unsigned int H_ALIGNMENT_STRING_COUNT = sizeof( H_ALIGNMENT_STRING_TABLE ) / sizeof( H_ALIGNMENT_STRING_TABLE[0u] );
+const unsigned int H_ALIGNMENT_STRING_COUNT = sizeof( H_ALIGNMENT_STRING_TABLE ) / sizeof( H_ALIGNMENT_STRING_TABLE[0u] );
 
-  const char* V_ALIGNMENT_STRING_TABLE[] =
-  {
-    "TOP",
-    "CENTER",
-    "BOTTOM"
-  };
+const char* V_ALIGNMENT_STRING_TABLE[] =
+{
+  "TOP",
+  "CENTER",
+  "BOTTOM"
+};
 
-  const unsigned int V_ALIGNMENT_STRING_COUNT = sizeof( V_ALIGNMENT_STRING_TABLE ) / sizeof( V_ALIGNMENT_STRING_TABLE[0u] );
+const unsigned int V_ALIGNMENT_STRING_COUNT = sizeof( V_ALIGNMENT_STRING_TABLE ) / sizeof( V_ALIGNMENT_STRING_TABLE[0u] );
 
-  int ConvertToEven(int value)
-  {
-    return (value % 2 == 0) ? value : (value + 1);
-  }
+int ConvertToEven(int value)
+{
+  return (value % 2 == 0) ? value : (value + 1);
 }
+
+struct HSVColorConstraint
+{
+  HSVColorConstraint(float hue, float saturation, float value)
+  : hue(hue),
+    saturation(saturation),
+    value(value)
+  {
+  }
+
+  void operator()(Vector4& current, const PropertyInputContainer& inputs )
+  {
+    current = hsv2rgb(Vector4(inputs[0]->GetFloat(), saturation, value, current.a));
+  }
+
+  Vector4 hsv2rgb(Vector4 colorHSV)
+  {
+    float r=colorHSV.z*(1+colorHSV.y*(cos(colorHSV.x)-1));
+    float g=colorHSV.z*(1+colorHSV.y*(cos(colorHSV.x-2.09439)-1));
+    float b=colorHSV.z*(1+colorHSV.y*(cos(colorHSV.x+2.09439)-1));
+    return Vector4(r, g, b, colorHSV.a);
+  }
+  float hue;
+  float saturation;
+  float value;
+};
+
+} // anonymous namespace
 
 /**
  * @brief The main class of the demo.
@@ -133,6 +160,20 @@ public:
     mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
     mLabel.SetBackgroundColor( Color::WHITE );
     mContainer.Add( mLabel );
+
+    mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
+    Renderer bgRenderer = mLabel.GetRendererAt(0);
+    mOverrideMixColorIndex = bgRenderer.GetPropertyIndex( ColorVisual::Property::MIX_COLOR );
+
+    Constraint constraint = Constraint::New<Vector4>( bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
+    constraint.AddSource( Source( mLabel, mHueAngleIndex ) );
+    constraint.SetRemoveAction( Constraint::Discard );
+    constraint.Apply();
+
+    Animation anim = Animation::New(50.0f);
+    anim.AnimateTo(Property(mLabel, mHueAngleIndex), 6.28318f);
+    anim.SetLooping(true);
+    anim.Play();
 
     Property::Value labelText = mLabel.GetProperty( TextLabel::Property::TEXT );
     std::cout << "Displaying text: \"" << labelText.Get< std::string >() << "\"" << std::endl;
@@ -284,6 +325,8 @@ private:
 
   unsigned int mLanguageId;
   unsigned int mAlignment;
+  Property::Index mHueAngleIndex;
+  Property::Index mOverrideMixColorIndex;
 };
 
 void RunTest( Application& application )

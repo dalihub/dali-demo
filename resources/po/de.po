@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "Animierte Formen"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Blöcke"
 
@@ -8,7 +11,10 @@ msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Tasten"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
-msgstr "Farbverlauf "
+msgstr "Farbverlauf"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "Kontakt"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "Würfel Übergangseffekt"
@@ -88,6 +94,9 @@ msgstr "Seite wechseln"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup-Menü"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "Fortschrittsanzeige"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "Grundformen"
 
@@ -105,6 +114,12 @@ msgstr "Scripting"
 
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "Scroll-Ansicht"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "Funkeln"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "Styling"
 
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr "Unschärfe und blühen"

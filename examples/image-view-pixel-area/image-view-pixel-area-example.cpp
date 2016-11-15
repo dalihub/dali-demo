@@ -16,16 +16,21 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include "shared/view.h"
 
 using namespace Dali;
 
 namespace
 {
-const char* IMAGE_PATH[] = { DEMO_IMAGE_DIR "gallery-large-7.jpg",
-                             DEMO_IMAGE_DIR "gallery-large-12.jpg",
-                             DEMO_IMAGE_DIR "gallery-large-18.jpg" };
+const char* BIG_TEST_IMAGE( DEMO_IMAGE_DIR "book-landscape-cover.jpg" );
+const char* SMALL_TEST_IMAGE( DEMO_IMAGE_DIR "gallery-large-1.jpg" );
 
-const unsigned int NUM_IMAGES = sizeof(IMAGE_PATH) / sizeof(char*);
+const char * const APPLICATION_TITLE( "Pixel Area & Wrap Mode" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
+const char * const BUTTON_ICON( DEMO_IMAGE_DIR "icon-change.png" );
+const char * const BUTTON_ICON_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
+
+const Vector4 ORIGINAL_PIXEL_AREA( -0.5f, -0.5f, 2.f, 2.f );
 }
 
 class ImageViewPixelAreaApp : public ConnectionTracker
@@ -52,44 +57,158 @@ private:
     Stage stage = Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ImageViewPixelAreaApp::OnKeyEvent);
 
-    ImageDimensions size( 510, 510 );
-    float subSize = 170.f;
-    float relativeSubSize = 0.33;
-    Animation animation = Animation::New( 10.f );
+    Toolkit::ToolBar toolBar;
+    Toolkit::Control background;
+    // Creates a default view with a default tool bar.
+    mContent = DemoHelper::CreateView( application,
+                                            background,
+                                            toolBar,
+                                            "",
+                                            TOOLBAR_IMAGE,
+                                            APPLICATION_TITLE );
+
+    // Add a button to switch the scene. (right of toolbar)
+    Toolkit::PushButton switchButton = Toolkit::PushButton::New();
+    switchButton.SetUnselectedImage( BUTTON_ICON );
+    switchButton.SetSelectedImage( BUTTON_ICON_SELECTED );
+    switchButton.ClickedSignal().Connect( this, &ImageViewPixelAreaApp::OnButtonClicked );
+    toolBar.AddControl( switchButton,
+                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
+                        Toolkit::Alignment::HorizontalRight,
+                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+
+
+    // for testing image WITH automatic atlasing
+    visualPropertyMap[0][ Toolkit::ImageVisual::Property::URL ] =  SMALL_TEST_IMAGE;
+    visualPropertyMap[0][ Toolkit::ImageVisual::Property::DESIRED_WIDTH ] = 500;
+    visualPropertyMap[0][ Toolkit::ImageVisual::Property::DESIRED_HEIGHT ] = 500;
+    visualPropertyMap[0][ Toolkit::ImageVisual::Property::WRAP_MODE_U ] = WrapMode::CLAMP_TO_EDGE;
+    visualPropertyMap[0][ Toolkit::ImageVisual::Property::WRAP_MODE_V ] = WrapMode::MIRRORED_REPEAT;
+    visualPropertyMap[0][ Toolkit::ImageVisual::Property::PIXEL_AREA ] = ORIGINAL_PIXEL_AREA;
+
+    // for testing image WITHOUT automatic atlasing
+    visualPropertyMap[1][ Toolkit::ImageVisual::Property::URL ] =  BIG_TEST_IMAGE;
+    visualPropertyMap[1][ Toolkit::ImageVisual::Property::DESIRED_WIDTH ] = 640;
+    visualPropertyMap[1][ Toolkit::ImageVisual::Property::DESIRED_HEIGHT ] = 720;
+    visualPropertyMap[1][ Toolkit::ImageVisual::Property::WRAP_MODE_U ] = WrapMode::MIRRORED_REPEAT;
+    visualPropertyMap[1][ Toolkit::ImageVisual::Property::WRAP_MODE_V ] = WrapMode::REPEAT;
+    visualPropertyMap[1][ Toolkit::ImageVisual::Property::PIXEL_AREA ] = ORIGINAL_PIXEL_AREA;
+
+    CreateScene(  visualPropertyMap[0] );
+
+    mWrapLabel = Toolkit::TextLabel::New(" Automatic atlasing\n WrapMode: CLAMP_TO_EDGE, MIRRORED_REPEAT");
+    mWrapLabel.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    mWrapLabel.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER );
+    mWrapLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    mWrapLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
+    mWrapLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
+    mContent.Add( mWrapLabel );
+
+    mPixelAreaLabel = Toolkit::TextLabel::New( " Use ImageVisual::Property::PIXEL_AREA\n " );
+    mPixelAreaLabel.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    mPixelAreaLabel.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER );
+    mPixelAreaLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    mPixelAreaLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
+    mPixelAreaLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
+    mWrapLabel.Add( mPixelAreaLabel );
+  }
+
+  void CreateScene( const Property::Value& propertyMap )
+  {
     for( int i=0; i<3;i++ )
       for( int j=0; j<3; j++ )
       {
-        mImageView[i][j] = Toolkit::ImageView::New( IMAGE_PATH[mIndex], size );
-        mImageView[i][j].SetParentOrigin( ParentOrigin::CENTER );
-        mImageView[i][j].SetAnchorPoint(AnchorPoint::CENTER );
-        mImageView[i][j].SetPosition( subSize*(i-1)*1.1f, subSize*(j-1)*1.1f );
-        mImageView[i][j].SetSize( subSize, subSize );
-        stage.Add(mImageView[i][j]);
-
-        animation.AnimateTo( Property(mImageView[i][j], Toolkit::ImageView::Property::PIXEL_AREA),
-                             Vector4( relativeSubSize*i, relativeSubSize*j, relativeSubSize, relativeSubSize ),
-                             AlphaFunction::BOUNCE );
+        mImageView[i][j] = Toolkit::ImageView::New();
+        mImageView[i][j].SetProperty( Toolkit::ImageView::Property::IMAGE, propertyMap );
+        mImageView[i][j].SetPosition( 50.f*(i-1), 50.f*(j-1) );
       }
-    animation.SetLooping( true );
-    animation.Play();
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &ImageViewPixelAreaApp::OnTouch );
+    mImageView[1][1].SetParentOrigin( ParentOrigin::CENTER );
+    mImageView[1][1].SetAnchorPoint(AnchorPoint::CENTER );
+    mImageView[1][1].SetScale( 1.f/3.f );
+    mContent.Add( mImageView[1][1] );
+
+    mImageView[0][0].SetParentOrigin( ParentOrigin::TOP_LEFT );
+    mImageView[0][0].SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT );
+    mImageView[0][0].SetPosition( -50.f, -50.f );
+    mImageView[1][1].Add( mImageView[0][0] );
+
+    mImageView[1][0].SetParentOrigin( ParentOrigin::TOP_CENTER );
+    mImageView[1][0].SetAnchorPoint(AnchorPoint::BOTTOM_CENTER );
+    mImageView[1][1].Add( mImageView[1][0] );
+
+    mImageView[2][0].SetParentOrigin( ParentOrigin::TOP_RIGHT );
+    mImageView[2][0].SetAnchorPoint(AnchorPoint::BOTTOM_LEFT );
+    mImageView[1][1].Add( mImageView[2][0] );
+
+    mImageView[0][1].SetParentOrigin( ParentOrigin::CENTER_LEFT );
+    mImageView[0][1].SetAnchorPoint(AnchorPoint::CENTER_RIGHT );
+    mImageView[1][1].Add( mImageView[0][1] );
+
+    mImageView[2][1].SetParentOrigin( ParentOrigin::CENTER_RIGHT );
+    mImageView[2][1].SetAnchorPoint(AnchorPoint::CENTER_LEFT );
+    mImageView[1][1].Add( mImageView[2][1] );
+
+    mImageView[0][2].SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
+    mImageView[0][2].SetAnchorPoint(AnchorPoint::TOP_RIGHT );
+    mImageView[1][1].Add( mImageView[0][2] );
+
+    mImageView[1][2].SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    mImageView[1][2].SetAnchorPoint(AnchorPoint::TOP_CENTER );
+    mImageView[1][1].Add( mImageView[1][2] );
+
+    mImageView[2][2].SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
+    mImageView[2][2].SetAnchorPoint(AnchorPoint::TOP_LEFT );
+    mImageView[1][1].Add( mImageView[2][2] );
+
   }
 
-  bool OnTouch( Actor actor, const TouchData& touch )
-  {
-    if( touch.GetState( 0 ) == PointState::DOWN )
+  bool OnButtonClicked( Toolkit::Button button )
     {
-      mIndex++;
-      for( int i=0; i<3;i++ )
-        for( int j=0; j<3; j++ )
+      if( mAnimation )
+      {
+        mAnimation.Stop();
+        mAnimation.Clear();
+      }
+
+      mIndex = ( mIndex+1 ) % 4;
+      if( mIndex%2 == 0 )
+      {
+        // switch to the other image
+        // set the pixel area to image visual, the pixel area property is registered on the renderer
+        mContent.Remove( mImageView[1][1] );
+        CreateScene(  visualPropertyMap[mIndex/2] );
+        if( mIndex == 0 )
         {
-          mImageView[i][j].SetImage( IMAGE_PATH[mIndex%NUM_IMAGES] );
+          mWrapLabel.SetProperty( Toolkit::TextLabel::Property::TEXT," Automatic atlasing\n WrapMode: CLAMP_TO_EDGE, MIRRORED_REPEAT");
         }
+        else
+        {
+          mWrapLabel.SetProperty( Toolkit::TextLabel::Property::TEXT," No atlasing\n WrapMode: MIRRORED_REPEAT, REPEAT");
+        }
+        mPixelAreaLabel.SetProperty( Toolkit::TextLabel::Property::TEXT, " Use ImageVisual::Property::PIXEL_AREA\n " );
+      }
+      else
+      {
+        // animate the pixel area property on image view,
+        // the animatable pixel area property is registered on the actor, which overwrites the property on the renderer
+        mAnimation = Animation::New( 10.f );
+        float relativeSubSize = 0.33;
+        for( int i=0; i<3;i++ )
+          for( int j=0; j<3; j++ )
+          {
+            mImageView[i][j].SetProperty( Toolkit::ImageView::Property::PIXEL_AREA, ORIGINAL_PIXEL_AREA );
+            mAnimation.AnimateTo( Property(mImageView[i][j], Toolkit::ImageView::Property::PIXEL_AREA),
+                Vector4( relativeSubSize*i, relativeSubSize*j, relativeSubSize, relativeSubSize ),
+                AlphaFunction::BOUNCE );
+          }
+        mAnimation.SetLooping( true );
+        mAnimation.Play();
+
+        mPixelAreaLabel.SetProperty( Toolkit::TextLabel::Property::TEXT, " Animate ImageView::Property::PIXEL_AREA \n     (Overwrite the ImageVisual property) " );
+      }
+      return true;
     }
-    return true;
-  }
 
   void OnKeyEvent(const KeyEvent& event)
   {
@@ -104,7 +223,12 @@ private:
 
 private:
   Application&  mApplication;
+  Layer mContent;
   Toolkit::ImageView mImageView[3][3];
+  Property::Map visualPropertyMap[2];
+  Toolkit::TextLabel mWrapLabel;
+  Toolkit::TextLabel mPixelAreaLabel;
+  Animation mAnimation;
   unsigned int mIndex;
 };
 

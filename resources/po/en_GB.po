@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "Animated Shapes"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Blocks"
 
@@ -9,6 +12,9 @@ msgstr "Buttons"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "Colour Gradient"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "Contact Cards"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "Cube Effect"
@@ -88,6 +94,9 @@ msgstr "Page Turn View"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "Progress Bar"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "Primitive Shapes"
 
@@ -105,6 +114,12 @@ msgstr "Script-based UI"
 
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "Scroll View"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "Sparkle"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "Styling"
 
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr "Super Blur and Bloom"

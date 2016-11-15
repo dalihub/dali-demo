@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,10 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/image-atlas/image-atlas.h>
-#include <dali/devel-api/images/atlas.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-factory.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-landscape-view.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-portrait-view.h>
+#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-view.h>
 
 #include <assert.h>
 #include <cstdlib>
@@ -68,19 +70,19 @@ const char* PAGE_IMAGES_LANDSCAPE[] =
 };
 const unsigned int NUMBER_OF_LANDSCAPE_IMAGE( sizeof(PAGE_IMAGES_LANDSCAPE) / sizeof(PAGE_IMAGES_LANDSCAPE[0]) );
 
-Atlas LoadImages( const char*imagePath1, const char* imagePath2 )
+Texture LoadTextures( const char* imagePath1, const char* imagePath2 )
 {
   PixelData pixelData1 = DemoHelper::LoadPixelData( imagePath1, ImageDimensions(), FittingMode::DEFAULT, SamplingMode::DEFAULT );
   PixelData pixelData2 = DemoHelper::LoadPixelData( imagePath2, ImageDimensions(), FittingMode::DEFAULT, SamplingMode::DEFAULT );
 
-  unsigned int width = pixelData1.GetWidth()+pixelData2.GetWidth();
+  unsigned int width = pixelData1.GetWidth() + pixelData2.GetWidth();
   unsigned int height = pixelData1.GetHeight() > pixelData2.GetHeight() ? pixelData1.GetHeight() : pixelData2.GetHeight();
 
-  Atlas image  = Atlas::New( width, height );
-  image.Upload( pixelData1, 0u, 0u );
-  image.Upload( pixelData2, pixelData1.GetWidth(), 0u );
+  Texture texture = Texture::New( Dali::TextureType::TEXTURE_2D, Pixel::RGB888, width, height );
+  texture.Upload( pixelData1 );
+  texture.Upload( pixelData2, 0u, 0u, pixelData1.GetWidth(), 0u, pixelData2.GetWidth(), pixelData2.GetHeight() );
 
-  return image;
+  return texture;
 }
 
 }// end LOCAL STUFF
@@ -96,21 +98,21 @@ class PortraitPageFactory : public PageFactory
     return 10*NUMBER_OF_PORTRAIT_IMAGE + 1;
   }
   /**
-   * Create an image to represent a page.
+   * Create an texture to represent a page.
    * @param[in] pageId The ID of the page to create.
-   * @return An image, or an uninitialized pointer if the ID is out of range.
+   * @return A texture, or an uninitialized handle if the ID is out of range.
    */
-  virtual Image NewPage( unsigned int pageId )
+  virtual Texture NewPage( unsigned int pageId )
   {
-    Atlas page;
+    Texture page;
 
     if( pageId == 0 )
     {
-      page = DemoHelper::LoadImage( BOOK_COVER_PORTRAIT );
+      page = DemoHelper::LoadTexture( BOOK_COVER_PORTRAIT );
     }
     else
     {
-      page = DemoHelper::LoadImage( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] );
+      page = DemoHelper::LoadTexture( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] );
     }
 
     return page;
@@ -129,22 +131,21 @@ class LandscapePageFactory : public PageFactory
     return 10*NUMBER_OF_LANDSCAPE_IMAGE / 2 + 1;
   }
   /**
-   * Create an image to represent a page.
+   * Create an texture to represent a page.
    * @param[in] pageId The ID of the page to create.
-   * @return An image, or an uninitialized pointer if the ID is out of range.
+   * @return A texture, or an uninitialized handle if the ID is out of range.
    */
-  virtual Image NewPage( unsigned int pageId )
+  virtual Texture NewPage( unsigned int pageId )
   {
-
-    Atlas page;
+    Texture page;
     if( pageId == 0 )
     {
-      page = LoadImages( BOOK_COVER_LANDSCAPE, BOOK_COVER_BACK_LANDSCAPE );
+      page = LoadTextures( BOOK_COVER_LANDSCAPE, BOOK_COVER_BACK_LANDSCAPE );
     }
     else
     {
       unsigned int imageId = (pageId-1)*2;
-      page = LoadImages( PAGE_IMAGES_LANDSCAPE[ imageId % NUMBER_OF_LANDSCAPE_IMAGE ], PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ] );
+      page = LoadTextures( PAGE_IMAGES_LANDSCAPE[ imageId % NUMBER_OF_LANDSCAPE_IMAGE ], PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ] );
     }
 
     return page;
@@ -154,8 +155,8 @@ class LandscapePageFactory : public PageFactory
 /**
  * This example shows how to use the page turn UI control to implement the page-turn demo
  * The effect follows the pan gesture to animate the page
- * Pan the image inwards, the page will bent,
- * Depends on the distance of the panning, the image might turn over or slide back
+ * Pan the page inwards, the page will bent,
+ * Depends on the distance of the panning, the page might turn over or slide back
  * Also, in portrait view, the pan gesture outwards from position near the spine could turn the previous page back
  * Allows to turn multiple pages one by one quickly towards the same direction, multiple animations are launched in this case
 */

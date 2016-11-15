@@ -1,8 +1,8 @@
-#ifndef __DALI_DEMO_H__
-#define __DALI_DEMO_H__
+#ifndef DALI_DEMO_H
+#define DALI_DEMO_H
 
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ typedef ExampleList::const_iterator ExampleListConstIter;
 typedef std::vector<Dali::Animation> AnimationList;
 typedef AnimationList::iterator AnimationListIter;
 typedef AnimationList::const_iterator AnimationListConstIter;
-
 
 /**
  * Example information
@@ -97,13 +96,15 @@ public:
 
 private: // Application callbacks & implementation
 
+  static const unsigned int FOCUS_ANIMATION_ACTOR_NUMBER = 2; ///< The number of elements used to form the custom focus effect
+
   /**
    * Shape enum for create function
    */
   enum ShapeType
   {
     CIRCLE,
-    SQUARE
+    BUBBLE
   };
 
   /**
@@ -135,23 +136,16 @@ private: // Application callbacks & implementation
   void Rotate( unsigned int degrees );
 
   /**
-   * Creates a tile for the main menu and toolbar.
+   * Creates a tile for the main menu.
    *
    * @param[in] name The unique name for this Tile
    * @param[in] title The text caption that appears on the Tile
    * @param[in] parentSize Tile's parent size.
-   * @param[in] addBackground Whether to add a background graphic to the tile or not
+   * @param[in] position The tiles relative position within a page
    *
    * @return The Actor for the created tile.
    */
-  Dali::Actor CreateTile( const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, bool addBackground );
-
-  /**
-   * Create a stencil image
-   *
-   * @return The stencil image
-   */
-  Dali::Toolkit::ImageView NewStencilImage();
+  Dali::Actor CreateTile( const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, Dali::Vector2& position );
 
   // Signal handlers
 
@@ -268,9 +262,9 @@ private: // Application callbacks & implementation
    *
    * @param[in] layer The layer to add the actors to
    * @param[in] count The number of actors to generate
-   * @param[in] distanceField The distance field bitmap to use
+   * @param[in] distanceField A array (pointer) to 2 distance field types to use
    */
-  void AddBackgroundActors( Dali::Actor layer, int count, Dali::BufferImage distanceField );
+  void AddBackgroundActors( Dali::Actor layer, int count, Dali::BufferImage* distanceField );
 
   /**
    * Create a bitmap with the specified shape and also output a distance field
@@ -296,8 +290,9 @@ private: // Application callbacks & implementation
    * @param[in] size The size of the bitmap to create
    * @param[out] imageOut The return bitmap
    * @param[out] distanceFieldOut The return depth field alpha map
+   * @param[in] hollow Optional - Set to true for a thick circle outline without fill
    */
-  void GenerateCircle( const Dali::Size& size, std::vector<unsigned char>& distanceFieldOut );
+  void GenerateCircle( const Dali::Size& size, std::vector<unsigned char>& distanceFieldOut, bool hollow = false );
 
   /**
    * Creates the logo.
@@ -324,6 +319,11 @@ private: // Application callbacks & implementation
    * Resume all animations
    */
   void PlayAnimation();
+
+  /**
+   * @brief Creates and sets up the custom effect used for the keyboard (and mouse) focus.
+   */
+  void CreateFocusEffect();
 
   /**
    * Callback when the keyboard focus is going to be changed.
@@ -363,6 +363,12 @@ private: // Application callbacks & implementation
  void OnButtonsPageRelayout( const Dali::Actor& actor );
 
  /**
+  * @brief The is connected to the keyboard focus highlight actor, and called when it is placed on stage.
+  * @param[in] actor The actor that has been placed on stage.
+  */
+ void OnStageConnect( Dali::Actor actor );
+
+ /**
   * @brief Callback called to set up background actors
   *
   * @param[in] actor The actor raising the callback
@@ -372,11 +378,9 @@ private: // Application callbacks & implementation
 private:
 
   Dali::Application&              mApplication;              ///< Application instance.
-  Dali::Layer                     mBackgroundLayer;          ///< Background resides on a separate layer.
-  Dali::Toolkit::TableView        mRootActor;                ///< All content (excluding background is anchored to this Actor)
+  Dali::Toolkit::Control          mRootActor;                ///< All content (excluding background is anchored to this Actor)
   Dali::Animation                 mRotateAnimation;          ///< Animation to rotate and resize mRootActor.
   Dali::Animation                 mPressedAnimation;         ///< Button press scaling animation.
-  Dali::Layer                     mScrollViewLayer;          ///< ScrollView resides on a separate layer.
   Dali::Toolkit::ScrollView       mScrollView;               ///< ScrollView container (for all Examples)
   Dali::Toolkit::ScrollViewEffect mScrollViewEffect;         ///< Effect to be applied to the scroll view
   Dali::Toolkit::RulerPtr         mScrollRulerX;             ///< ScrollView X (horizontal) ruler
@@ -386,10 +390,21 @@ private:
   Dali::TapGestureDetector        mLogoTapDetector;          ///< To detect taps on the logo
   Dali::Toolkit::Popup            mVersionPopup;             ///< Displays DALi library version information
 
+  /**
+   * This struct encapsulates all data relevant to each of the elements used within the custom keyboard focus effect.
+   */
+  struct FocusEffect
+  {
+    Dali::Toolkit::ImageView        actor;                   ///< The parent keyboard focus highlight actor
+    Dali::Animation                 animation;               ///< The animation for the parent keyboard focus highlight actor
+  };
+  FocusEffect mFocusEffect[FOCUS_ANIMATION_ACTOR_NUMBER];    ///< The elements used to create the custom focus effect
+
   std::vector< Dali::Actor >      mPages;                    ///< List of pages.
   AnimationList                   mBackgroundAnimations;     ///< List of background bubble animations
   ExampleList                     mExampleList;              ///< List of examples.
 
+  float                           mPageWidth;                ///< The width of a page within the scroll-view, used to calculate the domain
   int                             mTotalPages;               ///< Total pages within scrollview.
 
   bool                            mScrolling:1;              ///< Flag indicating whether view is currently being scrolled
@@ -398,4 +413,4 @@ private:
 
 };
 
-#endif // __DALI_DEMO_H__
+#endif // DALI_DEMO_H

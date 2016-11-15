@@ -15,57 +15,54 @@
  */
 
 {
-  "constants":
-  {
-    "DEMO_IMAGE_DIR":"@DEMO_STYLE_IMAGE_DIR@"
-  },
-
   "styles":
   {
-    "confirmationpopup":{
-      "popupBackgroundImage":"{DEMO_IMAGE_DIR}00_popup_bg.9.png"
+    "ConfirmationPopup":{
+      "popupBackgroundImage":"{APPLICATION_RESOURCE_PATH}/images/00_popup_bg.9.png"
     },
 
-    "textlabel-Rosemary":
+    "TextLabelRosemary":
     {
       "fontFamily":"Rosemary"
     },
-    "textlabel":
+    "TextLabel":
     {
-      "fontStyle":"Regular",
+      "fontStyle":{"weight":"normal"},
       "pointSize":18
     },
-    "launcherlabel":
-    {
-      "pointSize":18
-    },
-
-    "toolbarlabel":
+    "LauncherLabel":
     {
       "pointSize":18
     },
 
-    "builderlabel":
+    "ToolbarLabel":
+    {
+      "pointSize":18
+    },
+
+    "BuilderLabel":
     {
       "pointSize":13
     },
 
-    "scrollview":
+    "ScrollView":
     {
       "overshootEffectColor":"B018"
     },
 
-    "grouplabel":
+    "ImageScalingGroupLabel":
     {
       "pointSize":9
     },
 
-    "buttonlabel":
+    "ImageScalingButton":
     {
-      "pointSize":11
+      "label":{
+        "pointSize":11
+      }
     },
 
-    "launcherbackground":
+    "LauncherBackground":
     {
       "background":
       {

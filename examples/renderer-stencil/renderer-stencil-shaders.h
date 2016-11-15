@@ -29,7 +29,7 @@ const char * const POSITION( "aPosition");
 const char * const NORMAL( "aNormal" );
 const char * const TEXTURE( "aTexCoord" );
 
-// Shader for todor (vertex):
+// Shader for basic, per-vertex lighting (vertex):
 const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
   attribute mediump vec3  aPosition;
   attribute highp   vec3  aNormal;
@@ -62,6 +62,7 @@ const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
   }
 );
 
+// Fragment shader.
 const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
   varying mediump vec2  vTexCoord;
   varying mediump vec3  vIllumination;
@@ -74,6 +75,7 @@ const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
   }
 );
 
+// Shader for basic, per-vertex lighting with texture (vertex):
 const char* VERTEX_SHADER_TEXTURED = DALI_COMPOSE_SHADER(
   attribute mediump vec3  aPosition;
   attribute highp   vec3  aNormal;
@@ -107,6 +109,7 @@ const char* VERTEX_SHADER_TEXTURED = DALI_COMPOSE_SHADER(
   }
 );
 
+// Fragment shader.
 const char* FRAGMENT_SHADER_TEXTURED = DALI_COMPOSE_SHADER(
   varying mediump vec2  vTexCoord;
   varying mediump vec3  vIllumination;

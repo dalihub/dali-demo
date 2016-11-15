@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "متحرک شکلیں"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "اینٹیں"
 
@@ -9,6 +12,9 @@ msgstr "بٹنوں"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "رنگ میلان"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "لوگ"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "کیوب منتقلی"
@@ -88,6 +94,9 @@ msgstr "کتاب"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "پاپ اپ"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "ترقی بار"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "سادہ ماڈلیے"
 
@@ -105,6 +114,12 @@ msgstr "سکرپٹ"
 
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "سکرول ویو"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "سٹار"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "سٹائل"
 
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr "دھندلاپن اور بلوم"

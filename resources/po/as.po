@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "অ্যানিমেটেড আকার"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "অৱৰুদ্ধ কৰক"
 
@@ -9,6 +12,9 @@ msgstr "ক্লিক্"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "ঝুৰ্"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "অঁপইতা "
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "ঘনক পৰিৱৰ্তনীয় প্ৰভাৱ"
@@ -88,6 +94,9 @@ msgstr "পৃষ্ঠা লেআউট"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "পোপা মেনু"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "অগ্রগতি বার"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "অংশ্যমান অৰ্কিড"
 
@@ -105,6 +114,12 @@ msgstr "লিপি"
 
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "স্ক্ৰ'ল কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "তাৰকা"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "শৈলী"
 
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr "অস্পষ্টকৈ অপুষ্পক"

@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "动画造型"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "块体"
 
@@ -9,6 +12,9 @@ msgstr "按钮"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "颜色梯度"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "往来"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "方块切换效果"
@@ -88,6 +94,9 @@ msgstr "翻页"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "弹窗"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "进度条"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "基本形状"
 
@@ -105,6 +114,12 @@ msgstr "脚本用户界面"
 
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "滚动视图"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "火花"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "样式"
 
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr "模糊及泛光"

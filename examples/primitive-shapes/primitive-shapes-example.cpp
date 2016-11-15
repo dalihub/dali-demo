@@ -19,6 +19,9 @@ namespace
     DEMO_IMAGE_DIR "octahedron-button.png"
   };
 
+  //Prefix of all shape titles.
+  const std::string SHAPE_TITLE_PREFIX = "Current Shape: ";
+
   //Shape property defaults
   const int DEFAULT_SLICES = 32;
   const int DEFAULT_STACKS = 32;
@@ -94,9 +97,11 @@ public:
   }
 
   //Place buttons on the top of the screen, which allow for selection of the shape to be displayed.
+  //A title above indicates the currently selected shape.
   //The buttons are laid out like so:
   //
   //      ^    +--------------------------------+
+  //      |    | Current Shape: ~~~~~           |
   //      |    |                                |
   //      |    | +----+ +----+ +----+ +----+    |
   //      |    | |    | |    | |    | |    |    |
@@ -123,26 +128,39 @@ public:
   //           |                                |
   //           |                                |
   //           |                                |
-  //           |                                |
   //           +--------------------------------+
   //
   void SetupButtons( Layer layer )
   {
     float containerPadding = 10.0f;
-    float buttonPadding = 5.0f;
+    float elementPadding = 5.0f;
+
+    //Used to layout the title and the buttons below it.
+    Control topAlignment = Control::New();
+    topAlignment.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    topAlignment.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    topAlignment.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    topAlignment.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
+    layer.Add( topAlignment );
+
+    //Add a title to indicate the currently selected shape.
+    mShapeTitle = TextLabel::New( "DEFAULT" );
+    mShapeTitle.SetParentOrigin( ParentOrigin::CENTER );
+    mShapeTitle.SetAnchorPoint( AnchorPoint::CENTER );
+    mShapeTitle.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    mShapeTitle.SetPadding( Padding( elementPadding, elementPadding, elementPadding, elementPadding ) );
+    topAlignment.Add( mShapeTitle );
 
     //Create a variable-length container that can wrap buttons around as more are added.
     FlexContainer buttonContainer = FlexContainer::New();
-    buttonContainer.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    buttonContainer.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     buttonContainer.SetAnchorPoint( AnchorPoint::TOP_CENTER );
     buttonContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    buttonContainer.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
-    buttonContainer.SetSizeModeFactor( Vector3( 0.0, 0.3, 0.0 ) );  //30% of height.
+    buttonContainer.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
     buttonContainer.SetPadding( Padding( containerPadding, containerPadding, containerPadding, containerPadding ) );
     buttonContainer.SetProperty( FlexContainer::Property::FLEX_DIRECTION, FlexContainer::ROW );
     buttonContainer.SetProperty( FlexContainer::Property::FLEX_WRAP, FlexContainer::WRAP );
-
-    layer.Add( buttonContainer );
+    topAlignment.Add( buttonContainer );
 
     //Create buttons and place them in the container.
     for( int modelNumber = 0; modelNumber < NUM_MODELS; modelNumber++ )
@@ -151,7 +169,7 @@ public:
       button.SetParentOrigin( ParentOrigin::CENTER );
       button.SetAnchorPoint( AnchorPoint::CENTER );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-      button.SetPadding( Padding( buttonPadding, buttonPadding, buttonPadding, buttonPadding ) );
+      button.SetPadding( Padding( elementPadding, elementPadding, elementPadding, elementPadding ) );
       button.SetProperty( Button::Property::UNSELECTED_STATE_IMAGE, Property::Value( BUTTON_IMAGE_URL[modelNumber] ) );
       button.SetProperty( Button::Property::SELECTED_STATE_IMAGE, Property::Value( BUTTON_IMAGE_URL[modelNumber] ) );
       button.RegisterProperty( "modelNumber", Property::Value( modelNumber ) );
@@ -318,7 +336,7 @@ public:
     //Visual map for model
     mVisualMap.Clear();
     mVisualMap[ Visual::Property::TYPE           ] = Visual::PRIMITIVE;
-    mVisualMap[ PrimitiveVisual::Property::COLOR ] = mColor;
+    mVisualMap[ PrimitiveVisual::Property::MIX_COLOR ] = mColor;
   }
 
   //Sets the 3D model to a sphere and modifies the sliders appropriately.
@@ -333,12 +351,18 @@ public:
 
     //Set up sliders.
     SetupSlider( 0, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND, DEFAULT_STACKS, PrimitiveVisual::Property::SLICES, "slices" );
-    SetupMarks( mSliders.at( 0 ), SLICES_LOWER_BOUND, SLICES_UPPER_BOUND );
+    SetupMarks( 0, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND );
+    mSliders.at( 0 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 0 ) );
+
     SetupSlider( 1, STACKS_LOWER_BOUND, STACKS_UPPER_BOUND, DEFAULT_STACKS, PrimitiveVisual::Property::STACKS, "stacks" );
-    SetupMarks( mSliders.at( 1 ), STACKS_LOWER_BOUND, STACKS_UPPER_BOUND );
+    SetupMarks( 1, STACKS_LOWER_BOUND, STACKS_UPPER_BOUND );
+    mSliders.at( 1 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 0 ) );
 
     //Set model in control.
     mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
+
+    //Update title.
+    mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Sphere" );
   }
 
   //Sets the 3D model to a cone and modifies the sliders appropriately.
@@ -354,12 +378,20 @@ public:
 
     //Set up sliders.
     SetupSlider( 0, 1.0f, 32.0f, DEFAULT_SCALE_HEIGHT, PrimitiveVisual::Property::SCALE_HEIGHT, "scaleHeight" );
+    mSliders.at( 0 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 1 ) );
+
     SetupSlider( 1, 1.0f, 32.0f, DEFAULT_SCALE_BOTTOM_RADIUS, PrimitiveVisual::Property::SCALE_BOTTOM_RADIUS, "scaleBottomRadius" );
+    mSliders.at( 1 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 1 ) );
+
     SetupSlider( 2, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND, DEFAULT_STACKS, PrimitiveVisual::Property::SLICES, "slices" );
-    SetupMarks( mSliders.at( 2 ), SLICES_LOWER_BOUND, SLICES_UPPER_BOUND );
+    SetupMarks( 2, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND );
+    mSliders.at( 2 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 0 ) );
 
     //Set model in control.
     mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
+
+    //Update title.
+    mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Cone" );
   }
 
   //Sets the 3D model to a conical frustrum and modifies the sliders appropriately.
@@ -376,11 +408,19 @@ public:
 
     //Set up used sliders.
     SetupSlider( 0, 1.0f, 32.0f, DEFAULT_SCALE_HEIGHT, PrimitiveVisual::Property::SCALE_HEIGHT, "scaleHeight" );
+    mSliders.at( 0 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 1 ) );
+
     SetupSlider( 1, 0.0f, 32.0f, DEFAULT_SCALE_BOTTOM_RADIUS, PrimitiveVisual::Property::SCALE_BOTTOM_RADIUS, "scaleBottomRadius" );
+    mSliders.at( 1 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 1 ) );
+
     SetupSlider( 2, 0.0f, 32.0f, DEFAULT_SCALE_TOP_RADIUS, PrimitiveVisual::Property::SCALE_TOP_RADIUS, "scaleTopRadius" );
+    mSliders.at( 2 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 1 ) );
 
     //Set model in control.
     mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
+
+    //Update title.
+    mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Conical Frustrum" );
   }
 
   //Sets the 3D model to a cylinder and modifies the sliders appropriately.
@@ -396,12 +436,20 @@ public:
 
     //Set up used sliders.
     SetupSlider( 0, 1.0f, 32.0f, DEFAULT_SCALE_HEIGHT, PrimitiveVisual::Property::SCALE_HEIGHT, "scaleHeight" );
+    mSliders.at( 0 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 1 ) );
+
     SetupSlider( 1, 1.0f, 32.0f, DEFAULT_SCALE_RADIUS, PrimitiveVisual::Property::SCALE_RADIUS, "scaleRadius" );
+    mSliders.at( 1 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 1 ) );
+
     SetupSlider( 2, SLICES_LOWER_BOUND, SLICES_UPPER_BOUND, DEFAULT_STACKS, PrimitiveVisual::Property::SLICES, "slices" );
-    SetupMarks( mSliders.at( 2 ), SLICES_LOWER_BOUND, SLICES_UPPER_BOUND );
+    SetupMarks( 2 , SLICES_LOWER_BOUND, SLICES_UPPER_BOUND );
+    mSliders.at( 2 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 0 ) );
 
     //Set model in control.
     mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
+
+    //Update title.
+    mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Cylinder" );
   }
 
   //Sets the 3D model to a cube and modifies the sliders appropriately.
@@ -414,6 +462,9 @@ public:
 
     //Set model in control.
     mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
+
+    //Update title.
+    mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Cube" );
   }
 
   //Sets the 3D model to a bevelled cube and modifies the sliders appropriately.
@@ -428,10 +479,16 @@ public:
 
     //Set up used sliders.
     SetupSlider( 0, 0.0f, 1.0f, DEFAULT_BEVEL_PERCENTAGE, PrimitiveVisual::Property::BEVEL_PERCENTAGE, "bevelPercentage" );
+    mSliders.at( 0 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 2 ) );
+
     SetupSlider( 1, 0.0f, 1.0f, DEFAULT_BEVEL_SMOOTHNESS, PrimitiveVisual::Property::BEVEL_SMOOTHNESS, "bevelSmoothness" );
+    mSliders.at( 1 ).SetProperty( Slider::Property::VALUE_PRECISION, Property::Value( 2 ) );
 
     //Set model in control.
     mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
+
+    //Update title.
+    mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Bevelled Cube" );
   }
 
   //Sets the 3D model to an octahedron and modifies the sliders appropriately.
@@ -444,6 +501,9 @@ public:
 
     //Set model in control.
     mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
+
+    //Update title.
+    mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Octahedron" );
   }
 
   //Sets up the slider at the given index for the supplied property, and labels it appropriately.
@@ -475,7 +535,7 @@ public:
   }
 
   //Setup snapping to integer values between the two given values.
-  void SetupMarks( Slider& slider, int lower, int upper )
+  void SetupMarks( int sliderIndex, int lower, int upper )
   {
     Property::Array marks;
 
@@ -484,8 +544,8 @@ public:
       marks.PushBack( Property::Value( mark ) );
     }
 
-    slider.SetProperty( Slider::Property::MARKS, Property::Value( marks ) );
-    slider.SetProperty( Slider::Property::SNAP_TO_MARKS, Property::Value( true ) );
+    mSliders.at( sliderIndex ).SetProperty( Slider::Property::MARKS, Property::Value( marks ) );
+    mSliders.at( sliderIndex ).SetProperty( Slider::Property::SNAP_TO_MARKS, Property::Value( true ) );
   }
 
   //When a shape button is tapped, switch to the corresponding shape.
@@ -612,18 +672,19 @@ public:
 private:
   Application& mApplication;
 
-  std::vector<Slider> mSliders; ///< Holds the sliders on screen that each shape accesses.
-  std::vector<TextLabel> mSliderLabels; ///< Holds the labels to each slider.
-  TableView mSliderTable; ///< A table to layout the sliders next to their labels.
+  std::vector<Slider>       mSliders;               ///< Holds the sliders on screen that each shape accesses.
+  std::vector<TextLabel>    mSliderLabels;          ///< Holds the labels to each slider.
+  TableView                 mSliderTable;           ///< A table to layout the sliders next to their labels.
 
-  Property::Map mVisualMap; ///< Property map to create a primitive visual.
-  Control mModel; ///< Control to house the primitive visual.
+  Property::Map             mVisualMap;             ///< Property map to create a primitive visual.
+  Control                   mModel;                 ///< Control to house the primitive visual.
+  TextLabel                 mShapeTitle;            ///< Indicates what the currently selected shape is.
 
-  PanGestureDetector mPanGestureDetector; ///< Detects pan gestures for rotation of the model.
-  Animation mRotationAnimation; ///< Automatically rotates the model, unless it is being panned.
+  PanGestureDetector        mPanGestureDetector;    ///< Detects pan gestures for rotation of the model.
+  Animation                 mRotationAnimation;     ///< Automatically rotates the model, unless it is being panned.
 
-  Vector4 mColor; ///< Color to set all shapes.
-  Vector2 mRotation; ///< Keeps track of model rotation.
+  Vector4                   mColor;                 ///< Color to set all shapes.
+  Vector2                   mRotation;              ///< Keeps track of model rotation.
 };
 
 void RunTest( Application& application )

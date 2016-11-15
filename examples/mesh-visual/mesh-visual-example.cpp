@@ -39,11 +39,24 @@ namespace
     MeshVisual::ShadingMode::TEXTURELESS_WITH_DIFFUSE_LIGHTING
   };
 
+  //Button labels.
+  const char * const PAUSE =  "  ||  ";
+  const char * const PLAY =   "  >  ";
+  const char * const FIXED =  "FIXED";
+  const char * const MANUAL = "MANUAL";
+  const char * const FRONT =  "FRONT";
+  const char * const BACK =   "BACK";
+
+  //Image urls for the light.
+  const char * const LIGHT_URL_FRONT = DEMO_IMAGE_DIR "light-icon-front.png";
+  const char * const LIGHT_URL_BACK =  DEMO_IMAGE_DIR "light-icon-back.png";
+
   const float X_ROTATION_DISPLACEMENT_FACTOR = 60.0f;
   const float Y_ROTATION_DISPLACEMENT_FACTOR = 60.0f;
   const float MODEL_SCALE =                    0.75f;
   const float LIGHT_SCALE =                    0.15f;
-  const float BUTTONS_OFFSET_BOTTOM =          0.9f;
+  const float BUTTONS_OFFSET_BOTTOM =          0.08f;
+  const float BUTTONS_OFFSET_SIDE =            0.2f;
   const int   NUM_MESHES =                     2;
 
   //Used to identify actors.
@@ -60,11 +73,12 @@ public:
   MeshVisualController( Application& application )
   : mApplication( application ),   //Store handle to the application.
     mModelIndex( 1 ),              //Start with metal robot.
-    mShadingModeIndex( 0 ),        //Start with textured with detailed specular lighting.
+    mShadingModeIndex( 0 ),        //Start with texture and detailed specular lighting.
     mTag( -1 ),                    //Non-valid default, which will get set to a correct value when used.
     mSelectedModelIndex( -1 ),     //Non-valid default, which will get set to a correct value when used.
     mPaused( false ),              //Animations play by default.
-    mLightFixed( true )            //The light is fixed by default.
+    mLightFixed( true ),           //The light is fixed by default.
+    mLightFront( true )            //The light is in front by default.
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &MeshVisualController::Create );
@@ -81,25 +95,19 @@ public:
     Stage stage = Stage::GetCurrent();
     stage.SetBackgroundColor( Vector4( 0.0, 0.5, 1.0, 1.0 ) );
 
-    //Set up layer to place objects on.
-    Layer baseLayer = Layer::New();
-    baseLayer.SetParentOrigin( ParentOrigin::CENTER );
-    baseLayer.SetAnchorPoint( AnchorPoint::CENTER );
-    baseLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    baseLayer.SetBehavior( Layer::LAYER_2D ); //We use a 2D layer as this is closer to UI work than full 3D scene creation.
-    baseLayer.SetDepthTestDisabled( false ); //Enable depth testing, as otherwise the 2D layer would not do so.
-    baseLayer.RegisterProperty( "Tag", LAYER_TAG ); //Used to differentiate between different kinds of actor.
-    baseLayer.TouchedSignal().Connect( this, &MeshVisualController::OnTouch );
-    stage.Add( baseLayer );
+    //Set up root layer to receive touch gestures.
+    Layer rootLayer = stage.GetRootLayer();
+    rootLayer.RegisterProperty( "Tag", LAYER_TAG ); //Used to differentiate between different kinds of actor.
+    rootLayer.TouchSignal().Connect( this, &MeshVisualController::OnTouch );
 
     //Place models on the scene.
-    SetupModels( baseLayer );
+    SetupModels( rootLayer );
 
     //Place buttons on the scene.
-    SetupButtons( baseLayer );
+    SetupButtons( rootLayer );
 
     //Add a light to the scene.
-    SetupLight( baseLayer );
+    SetupLight( rootLayer );
 
     //Allow for exiting of the application via key presses.
     stage.KeyEventSignal().Connect( this, &MeshVisualController::OnKeyEvent );
@@ -115,7 +123,7 @@ public:
       mContainers[i].SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mContainers[i].RegisterProperty( "Tag", MODEL_TAG ); //Used to differentiate between different kinds of actor.
       mContainers[i].RegisterProperty( "Model", Property::Value( i ) ); //Used to index into the model.
-      mContainers[i].TouchedSignal().Connect( this, &MeshVisualController::OnTouch );
+      mContainers[i].TouchSignal().Connect( this, &MeshVisualController::OnTouch );
       layer.Add( mContainers[i] );
     }
 
@@ -163,57 +171,78 @@ public:
   //Place the various buttons on the bottom of the screen, with title labels where necessary.
   void SetupButtons( Layer layer )
   {
-    //Text label title for changing model or shader.
-    TextLabel changeTitleLabel = TextLabel::New( "Switch" );
-    changeTitleLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    changeTitleLabel.SetProperty( TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}" );
-    changeTitleLabel.SetParentOrigin( Vector3( 0.2, BUTTONS_OFFSET_BOTTOM, 0.5 ) );
-    changeTitleLabel.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    layer.Add( changeTitleLabel );
+    //Actor for positioning model and shading mode buttons.
+    Actor positionActorModel = Actor::New();
+    positionActorModel.SetParentOrigin( Vector3( BUTTONS_OFFSET_SIDE, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
+    positionActorModel.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    layer.Add( positionActorModel );
 
-    //Create button for model changing
+    //Create button for model changing.
     PushButton modelButton = Toolkit::PushButton::New();
     modelButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     modelButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeModelClicked );
-    modelButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    modelButton.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
+    modelButton.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    modelButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
     modelButton.SetLabelText( "Model" );
-    changeTitleLabel.Add( modelButton );
+    positionActorModel.Add( modelButton );
 
-    //Create button for shader changing
-    PushButton shaderButton = Toolkit::PushButton::New();
-    shaderButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    shaderButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeShaderClicked );
-    shaderButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    shaderButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    shaderButton.SetLabelText( "Shader" );
-    changeTitleLabel.Add( shaderButton );
+    //Create button for shading mode changing.
+    PushButton shadingModeButton = Toolkit::PushButton::New();
+    shadingModeButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    shadingModeButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeShadingModeClicked );
+    shadingModeButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    shadingModeButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    shadingModeButton.SetLabelText( "Shading Mode" );
+    positionActorModel.Add( shadingModeButton );
 
-    //Create button for pausing animations
+    //Text label title for changing model or shading mode.
+    TextLabel changeTitleLabel = TextLabel::New( "Change" );
+    changeTitleLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    changeTitleLabel.SetProperty( TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}" );
+    changeTitleLabel.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    changeTitleLabel.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    modelButton.Add( changeTitleLabel );
+
+    //Create button for pausing animations.
     PushButton pauseButton = Toolkit::PushButton::New();
     pauseButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     pauseButton.ClickedSignal().Connect( this, &MeshVisualController::OnPauseClicked );
-    pauseButton.SetParentOrigin( Vector3( 0.5, BUTTONS_OFFSET_BOTTOM, 0.5 ) );
-    pauseButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    pauseButton.SetLabelText( " || " );
+    pauseButton.SetParentOrigin( Vector3( 0.5, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
+    pauseButton.SetAnchorPoint( AnchorPoint::CENTER );
+    pauseButton.SetLabelText( PAUSE );
     layer.Add( pauseButton );
+
+    //Actor for positioning light position buttons.
+    Actor positionActorLight = Actor::New();
+    positionActorLight.SetParentOrigin( Vector3( 1.0 - BUTTONS_OFFSET_SIDE, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
+    positionActorLight.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    layer.Add( positionActorLight );
+
+    //Create button for switching between manual and fixed light position.
+    PushButton lightModeButton = Toolkit::PushButton::New();
+    lightModeButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    lightModeButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeLightModeClicked );
+    lightModeButton.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    lightModeButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    lightModeButton.SetLabelText( FIXED );
+    positionActorLight.Add( lightModeButton );
+
+    //Create button for switching between front and back light position.
+    PushButton lightSideButton = Toolkit::PushButton::New();
+    lightSideButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    lightSideButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeLightSideClicked );
+    lightSideButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    lightSideButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    lightSideButton.SetLabelText( FRONT );
+    positionActorLight.Add( lightSideButton );
 
     //Text label title for light position mode.
     TextLabel lightTitleLabel = TextLabel::New( "Light Position" );
     lightTitleLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     lightTitleLabel.SetProperty( TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}" );
-    lightTitleLabel.SetParentOrigin( Vector3( 0.8, BUTTONS_OFFSET_BOTTOM, 0.5 ) );
+    lightTitleLabel.SetParentOrigin( ParentOrigin::TOP_CENTER );
     lightTitleLabel.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    layer.Add( lightTitleLabel );
-
-    //Create button for switching between manual and fixed light position.
-    PushButton lightButton = Toolkit::PushButton::New();
-    lightButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    lightButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeLightModeClicked );
-    lightButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    lightButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    lightButton.SetLabelText( "FIXED" );
-    lightTitleLabel.Add( lightButton );
+    lightModeButton.Add( lightTitleLabel );
   }
 
   //Add a point light source the the scene, on a layer above the first.
@@ -246,13 +275,10 @@ public:
     mLightSource.SetPosition( Stage::GetCurrent().GetSize().x * 0.85f, Stage::GetCurrent().GetSize().y * 0.125 );
 
     //Supply an image to represent the light.
-    Property::Map lightMap;
-    lightMap.Insert( Visual::Property::TYPE, Visual::IMAGE );
-    lightMap.Insert( ImageVisual::Property::URL, DEMO_IMAGE_DIR "light-icon.png" );
-    mLightSource.SetProperty( Control::Property::BACKGROUND, Property::Value( lightMap ) );
+    SetLightImage();
 
     //Connect to touch signal for dragging.
-    mLightSource.TouchedSignal().Connect( this, &MeshVisualController::OnTouch );
+    mLightSource.TouchSignal().Connect( this, &MeshVisualController::OnTouch );
 
     //Place the light source on a layer above the base, so that it is rendered above everything else.
     Layer upperLayer = Layer::New();
@@ -264,14 +290,27 @@ public:
     upperLayer.Add( mLightSource );
 
     //Decide which light to use to begin with.
-    if( mLightFixed )
+    SetLightMode();
+  }
+
+  //Sets the image to use for the light source depending on whether the light is in front or behind.
+  void SetLightImage()
+  {
+    std::string imageUrl;
+
+    if( mLightFront )
     {
-      UseFixedLight();
+      imageUrl = LIGHT_URL_FRONT;
     }
     else
     {
-      UseManualLight();
+      imageUrl = LIGHT_URL_BACK;
     }
+
+    Property::Map lightMap;
+    lightMap.Insert( Visual::Property::TYPE, Visual::IMAGE );
+    lightMap.Insert( ImageVisual::Property::URL, imageUrl );
+    mLightSource.SetProperty( Control::Property::BACKGROUND, Property::Value( lightMap ) );
   }
 
   //Updates the displayed models to account for parameter changes.
@@ -292,16 +331,31 @@ public:
     }
   }
 
+  //Set the mode used to light the models.
+  void SetLightMode()
+  {
+    if( mLightFixed )
+    {
+      UseFixedLight();
+    }
+    else
+    {
+      UseManualLight();
+    }
+  }
+
+  //Make the models use a fixed, invisible light above the center of the stage.
   void UseFixedLight()
   {
     //Hide draggable source
     mLightSource.SetVisible( false );
 
-    //Use stage dimensions to place light at center, offset outwards in z axis.
+    //Use stage dimensions to place light at center, offset in z axis.
     Stage stage = Stage::GetCurrent();
     float width = stage.GetSize().width;
     float height = stage.GetSize().height;
-    Vector3 lightPosition = Vector3( width / 2.0f, height / 2.0f, std::max( width, height ) * 5.0f );
+    Vector3 lightPosition = Vector3( width / 2.0f, height / 2.0f,
+                                     ( mLightFront ? 1 : -1 ) * std::max( width, height ) * 5.0f );
 
     //Set global light position
     for( int i = 0; i < NUM_MESHES; ++i )
@@ -310,21 +364,23 @@ public:
     }
   }
 
+  //Make the models use a light source that the user can drag around.
   void UseManualLight()
   {
     //Show draggable source
     mLightSource.SetVisible( true );
 
-    //Update to switch light position to that off the source.
+    //Update to switch light position of models to that of the source.
     UpdateLight();
   }
 
   //Updates the light position for each model to account for changes in the source on screen.
   void UpdateLight()
   {
-    //Set light position to the x and y of the light control, offset out of the screen.
+    //Set light position to the x and y of the light control, offset into/out of the screen.
     Vector3 controlPosition = mLightSource.GetCurrentPosition();
-    Vector3 lightPosition = Vector3( controlPosition.x, controlPosition.y, Stage::GetCurrent().GetSize().x / 2.0f );
+    Vector3 lightPosition = Vector3( controlPosition.x, controlPosition.y,
+                                     ( mLightFront ? 1 : -1 ) * Stage::GetCurrent().GetSize().x / 2.0f );
 
     for( int i = 0; i < NUM_MESHES; ++i )
     {
@@ -334,14 +390,11 @@ public:
 
   //If the light source is touched, move it by dragging it.
   //If a model is touched, rotate it by panning around.
-  bool OnTouch( Actor actor, const TouchEvent& event )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
-    //Get primary touch point.
-    const Dali::TouchPoint& point = event.GetPoint( 0 );
-
-    switch( point.state )
+    switch( touch.GetState( 0 ) )
     {
-      case TouchPoint::Down:
+      case PointState::DOWN:
       {
         //Determine what was touched.
         actor.GetProperty( actor.GetPropertyIndex( "Tag" ) ).Get( mTag );
@@ -355,13 +408,13 @@ public:
           mModels[mSelectedModelIndex].rotationAnimation.Pause();
 
           //Store start points.
-          mPanStart = point.screen;
+          mPanStart = touch.GetScreenPosition( 0 );
           mRotationStart = mModels[mSelectedModelIndex].rotation;
         }
 
         break;
       }
-      case TouchPoint::Motion:
+      case PointState::MOTION:
       {
         //Switch on the kind of actor we're interacting with.
         switch( mTag )
@@ -369,7 +422,7 @@ public:
           case MODEL_TAG: //Rotate model
           {
             //Calculate displacement and corresponding rotation.
-            Vector2 displacement = point.screen - mPanStart;
+            Vector2 displacement = touch.GetScreenPosition( 0 ) - mPanStart;
             mModels[mSelectedModelIndex].rotation = Vector2( mRotationStart.x - displacement.y / Y_ROTATION_DISPLACEMENT_FACTOR,   // Y displacement rotates around X axis
                                                              mRotationStart.y + displacement.x / X_ROTATION_DISPLACEMENT_FACTOR ); // X displacement rotates around Y axis
             Quaternion rotation = Quaternion( Radian( mModels[mSelectedModelIndex].rotation.x ), Vector3::XAXIS) *
@@ -383,7 +436,7 @@ public:
           case LIGHT_TAG: //Drag light
           {
             //Set light source to new position and update the models accordingly.
-            mLightSource.SetPosition( Vector3( point.screen ) );
+            mLightSource.SetPosition( Vector3( touch.GetScreenPosition( 0 ) ) );
             UpdateLight();
 
             break;
@@ -392,8 +445,8 @@ public:
 
         break;
       }
-      case TouchPoint::Interrupted: //Same as finished.
-      case TouchPoint::Finished:
+      case PointState::INTERRUPTED: //Same as finished.
+      case PointState::FINISHED:
       {
         if( mTag == MODEL_TAG )
         {
@@ -426,8 +479,8 @@ public:
     return true;
   }
 
-  //Cycle through the list of shaders.
-  bool OnChangeShaderClicked( Toolkit::Button button )
+  //Cycle through the list of shading modes.
+  bool OnChangeShadingModeClicked( Toolkit::Button button )
   {
     ++mShadingModeIndex %= 3;
 
@@ -451,7 +504,7 @@ public:
         mModels[i].rotationAnimation.Pause();
       }
 
-      button.SetLabelText( " > " );
+      button.SetLabelText( PLAY );
     }
     else //Unpause all animations again.
     {
@@ -460,14 +513,14 @@ public:
         mModels[i].rotationAnimation.Play();
       }
 
-      button.SetLabelText( " || " );
+      button.SetLabelText( PAUSE );
     }
 
     return true;
   }
 
 
-  //Switch between a fixed light source in front of the screen, and a light source the user can drag around.
+  //Switch between a fixed light source above/behind the screen, and a light source the user can drag around.
   bool OnChangeLightModeClicked( Toolkit::Button button )
   {
     //Toggle state.
@@ -475,16 +528,38 @@ public:
 
     if( mLightFixed )
     {
-      UseFixedLight();
-
-      button.SetLabelText( "FIXED" );
+      button.SetLabelText( FIXED );
     }
     else
     {
-      UseManualLight();
-
-      button.SetLabelText( "MANUAL" );
+      button.SetLabelText( MANUAL );
     }
+
+    SetLightMode();
+
+    return true;
+  }
+
+  //Switch between the light being in front of and behind the models.
+  bool OnChangeLightSideClicked( Toolkit::Button button )
+  {
+    //Toggle state.
+    mLightFront = !mLightFront;
+
+    if( mLightFront )
+    {
+      button.SetLabelText( FRONT );
+    }
+    else
+    {
+      button.SetLabelText( BACK );
+    }
+
+    //Change light image.
+    SetLightImage();
+
+    //Update light to account for the change.
+    SetLightMode();
 
     return true;
   }
@@ -516,11 +591,12 @@ private:
   Vector2 mRotationStart;
 
   int mModelIndex; //Index of model to load.
-  int mShadingModeIndex; //Index of shader type to use.
+  int mShadingModeIndex; //Index of shading mode to use.
   int mTag; //Identifies what kind of actor has been selected in OnTouch.
   int mSelectedModelIndex; //Index of model selected on screen.
   bool mPaused; //If true, all animations are paused and should stay so.
   bool mLightFixed; //If false, the light is in manual.
+  bool mLightFront; //Bool for light being in front or behind the models.
 };
 
 // Entry point for Linux & Tizen applications

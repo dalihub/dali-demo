@@ -46,7 +46,6 @@ struct ViewStyle
 const ViewStyle DEFAULT_VIEW_STYLE( 0.1f, 0.7f, 80.f, 4.f );
 
 const char*                   DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
-const char*                   DEFAULT_TEXT_STYLE_FONT_STYLE("Regular");
 const float                   DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
 
 const Dali::Toolkit::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
@@ -94,7 +93,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   {
     Dali::Toolkit::TextLabel label = Dali::Toolkit::TextLabel::New();
     label.SetAnchorPoint( Dali::AnchorPoint::TOP_LEFT );
-    label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "toolbarlabel" );
+    label.SetStyleName( "ToolbarLabel" );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::TEXT, title );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -168,7 +167,7 @@ Dali::Layer CreateView( Dali::Application& application,
 Dali::Toolkit::TextLabel CreateToolBarLabel( const std::string& text )
 {
   Dali::Toolkit::TextLabel label = Dali::Toolkit::TextLabel::New( text );
-  label.SetProperty( Dali::Toolkit::Control::Property::STYLE_NAME, "toolbarlabel" );
+  label.SetStyleName( "ToolbarLabel" );
   label.SetProperty( Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
   label.SetProperty( Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
   label.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT );

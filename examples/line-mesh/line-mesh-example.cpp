@@ -234,7 +234,7 @@ public:
 
       Dali::Toolkit::RadioButton radio = Dali::Toolkit::RadioButton::New();
 
-      radio.SetProperty( Dali::Toolkit::RadioButton::Property::LABEL, labelMap );
+      radio.SetProperty( Dali::Toolkit::Button::Property::LABEL, labelMap );
       radio.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radio.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radio.SetSelected( i == 0 );

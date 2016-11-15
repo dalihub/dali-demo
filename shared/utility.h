@@ -37,17 +37,15 @@ Dali::PixelData LoadPixelData( const char* imagePath,
   return loader.GetPixelData();
 }
 
-
-Dali::Atlas LoadImage( const char* imagePath,
+/**
+ * @deprecated, dont use this anymore
+ */
+Dali::Image LoadImage( const char* imagePath,
                        Dali::ImageDimensions size = Dali::ImageDimensions(),
                        Dali::FittingMode::Type fittingMode = Dali::FittingMode::DEFAULT,
                        Dali::SamplingMode::Type samplingMode = Dali::SamplingMode::DEFAULT )
 {
-  Dali::PixelData pixelData = LoadPixelData(imagePath, size, fittingMode, samplingMode);
-  Dali::Atlas image  =Dali:: Atlas::New( pixelData.GetWidth(), pixelData.GetHeight(), pixelData.GetPixelFormat() );
-  image.Upload( pixelData, 0u, 0u );
-
-  return image;
+  return Dali::ResourceImage::New( imagePath, size, fittingMode, samplingMode );
 }
 
 Dali::Texture LoadTexture( const char* imagePath,
@@ -67,6 +65,7 @@ Dali::Texture LoadTexture( const char* imagePath,
 
 /**
  * @brief Load an bitmap resource.
+ * @deprecated, dont use this anymore
  *
  * If it is required to scaled-down to no more than the stage dimensions,
  * uses image scaling mode FittingMode::SCALE_TO_FILL to resize the image at
@@ -75,7 +74,7 @@ Dali::Texture LoadTexture( const char* imagePath,
  * maximum quality.
  */
 
-Dali::Atlas LoadStageFillingImage( const char* imagePath )
+Dali::Image LoadStageFillingImage( const char* imagePath )
 {
   Dali::Vector2 stageSize = Dali::Stage::GetCurrent().GetSize();
   return LoadImage( imagePath, Dali::ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );

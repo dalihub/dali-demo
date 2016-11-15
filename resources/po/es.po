@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "Formas Animadas"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Bloques"
 
@@ -9,6 +12,9 @@ msgstr "Botones"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "Gradiente de color"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "Contactos"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "Transición cubos"
@@ -88,6 +94,9 @@ msgstr "Vista de páginas"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup"
 
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "Barra de progreso"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "Primitvas 3D"
 
@@ -105,6 +114,12 @@ msgstr "Interfaz definida por Script"
 
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "Vista de desplazamiento"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "Brillar"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "Estilo"
 
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr "Efecto blur y bloom"

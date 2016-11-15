@@ -38,3 +38,8 @@ dali-builder
 *.mo
 demo-theme.json
 simple-image-wall.js
+/shared/resources-location.cpp
+/build/tizen/documentation.list
+/debugfiles.list
+/debuglinks.list
+/debugsources.list

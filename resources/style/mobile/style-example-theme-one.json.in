@@ -1,0 +1,115 @@
+{
+  "styles":
+  {
+    "Title":{
+      "textColor":"#0000ff",
+      "background":
+      {
+        "visualType":"COLOR",
+        "mixColor": [ 1.0, 1.0, 1.0, 1.0 ]
+      }
+    },
+    "TableView":{
+      "background":
+      {
+        "visualType":"COLOR",
+        "mixColor": [ 1.0, 1.0, 1.0, 0.03 ]
+      }
+    },
+    "FlexContainer":{
+      "background":
+      {
+        "visualType":"COLOR",
+        "mixColor": [ 1.0, 1.0, 1.0, 0.1 ]
+      }
+    },
+    "RadioButton":{
+      "label":{
+        "textColor": [1,1,1,1]
+      }
+    },
+    "CheckBoxButton":{
+      "label":{
+        "textColor": [1,1,1,1]
+      }
+    },
+    "ColorLabel1":{
+      "textColor": [1,0,0,1]
+    },
+    "ColorLabel2":{
+      "textColor": [0,1,0,1]
+    },
+    "ColorLabel3":{
+      "textColor": [0.3,0.3,1,1]
+    },
+    "ThemeLabel":{
+      "textColor":[0,1,1,1]
+    },
+    "PopupTitle":{
+      "textColor":[1,1,1,1]
+    },
+    "PopupBody":{
+      "textColor":[1,1,0,1]
+    },
+    "TextLabel":{
+      "textColor":[0,0,0,1]
+    },
+    "ColorSlider1":{
+      "styles":["Slider"]
+    },
+    "ColorSlider2":{
+      "styles":["slider"]
+    },
+    "ColorSlider3":{
+      "styles":["slider"]
+    },
+    "ImageChannelControl":
+    {
+      "enableVisibilityTransition":
+      [
+        {
+          "target":"imageVisual",
+          "property":"colorAlpha",
+          "initialValue":0,
+          "targetValue":1,
+          "animator":
+          {
+            "alphaFunction":"EASE_IN_OUT",
+            "timePeriod":
+            {
+              "duration":0.25,
+              "delay":0
+            }
+          }
+        },
+        {
+          "target":"imageVisual",
+          "property":"scale",
+          "targetValue":[1,1,1]
+        }
+      ],
+      "disableVisibilityTransition":
+      [
+        {
+          "target":"imageVisual",
+          "property":"colorAlpha",
+          "targetValue":0,
+          "animator":
+          {
+            "alphaFunction":"EASE_IN_OUT",
+            "timePeriod":
+            {
+              "duration":0.25,
+              "delay":0
+            }
+          }
+        },
+        {
+          "target":"imageVisual",
+          "property":"scale",
+          "targetValue":[1,1,1]
+        }
+      ]
+    }
+  }
+}
