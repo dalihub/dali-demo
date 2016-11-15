@@ -106,9 +106,6 @@ msgstr "Interfaz definida por Script"
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "Vista de desplazamiento"
 
-msgid "DALI_DEMO_STR_TITLE_STYLING"
-msgstr "Estilo"
-
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr "Efecto blur y bloom"
 

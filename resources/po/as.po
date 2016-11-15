@@ -106,9 +106,6 @@ msgstr "লিপি"
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "স্ক্ৰ'ল কৰক"
 
-msgid "DALI_DEMO_STR_TITLE_STYLING"
-msgstr "শৈলী"
-
 msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
 msgstr "অস্পষ্টকৈ অপুষ্পক"
 
