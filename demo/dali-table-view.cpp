@@ -43,14 +43,6 @@ namespace
 const std::string LOGO_PATH( DEMO_IMAGE_DIR "Logo-for-demo.png" );
 const std::string TILE_BACKGROUND(DEMO_IMAGE_DIR "item-background.9.png");
 const std::string TILE_BACKGROUND_ALPHA( DEMO_IMAGE_DIR "demo-tile-texture.9.png" );
-const std::string TILE_FOCUS( DEMO_IMAGE_DIR "tile-focus.9.png" );
-
-// Keyboard focus constants.
-const float KEYBOARD_FOCUS_ANIMATION_DURATION = 1.0f;           ///< The total duration of the keyboard focus animation
-const float KEYBOARD_FOCUS_START_SCALE = 1.05f;                 ///< The starting scale of the focus highlight
-const float KEYBOARD_FOCUS_END_SCALE = 1.18f;                   ///< The end scale of the focus highlight
-const float KEYBOARD_FOCUS_END_ALPHA = 0.7f;                    ///< The end alpha of the focus highlight
-const float KEYBOARD_FOCUS_INITIAL_FADE_PERCENTAGE = 0.16f;     ///< The duration of the initial fade (from translucent to the end-alpha) as a percentage of the overal animation duration.
 
 const float TILE_LABEL_PADDING = 8.0f;                          ///< Border between edge of tile and the example text
 const float BUTTON_PRESS_ANIMATION_TIME = 0.35f;                ///< Time to perform button scale effect.
@@ -327,61 +319,6 @@ void DaliTableView::Initialize( Application& application )
   KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &DaliTableView::OnKeyboardPreFocusChange );
   KeyboardFocusManager::Get().FocusedActorEnterKeySignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
   AccessibilityManager::Get().FocusedActorActivatedSignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
-
-  mFocusContainer = ImageView::New( TILE_FOCUS );
-  mFocusContainer.SetParentOrigin( ParentOrigin::CENTER );
-  mFocusContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  mFocusContainer.SetInheritScale( false );
-  mFocusContainer.SetColorMode( USE_OWN_COLOR );
-  mFocusContainer.SetName( "focusActor" );
-  mFocusContainer.OnStageSignal().Connect( this, &DaliTableView::OnStageConnect );
-
-  mFocusInner = ImageView::New( TILE_FOCUS );
-  mFocusInner.SetParentOrigin( ParentOrigin::CENTER );
-  mFocusInner.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  mFocusInner.SetInheritScale( false );
-  mFocusInner.SetColorMode( USE_OWN_COLOR );
-  mFocusInner.SetName( "focusActor" );
-  mFocusInner.OnStageSignal().Connect( this, &DaliTableView::OnStageConnect );
-  mFocusContainer.Add( mFocusInner );
-
-  // Setup the keyboard focus highlight.
-  Vector3 startScale( KEYBOARD_FOCUS_START_SCALE, KEYBOARD_FOCUS_START_SCALE, KEYBOARD_FOCUS_START_SCALE );
-  Vector3 endScale( KEYBOARD_FOCUS_END_SCALE, KEYBOARD_FOCUS_END_SCALE, KEYBOARD_FOCUS_END_SCALE );
-  mFocusAnimation = Animation::New( KEYBOARD_FOCUS_ANIMATION_DURATION );
-  mFocusAnimationInner = Animation::New( KEYBOARD_FOCUS_ANIMATION_DURATION );
-
-  mFocusContainer.SetScale( startScale );
-  mFocusInner.SetScale( startScale );
-  mFocusContainer.SetOpacity( 0.0f );
-  mFocusInner.SetOpacity( 0.0f );
-  const float initialFadeDuration = KEYBOARD_FOCUS_ANIMATION_DURATION * KEYBOARD_FOCUS_INITIAL_FADE_PERCENTAGE;
-
-  mFocusAnimation.AnimateTo( Property( mFocusContainer, Actor::Property::COLOR_ALPHA ), KEYBOARD_FOCUS_END_ALPHA, AlphaFunction::LINEAR, TimePeriod( 0.0f, initialFadeDuration ) );
-  mFocusAnimation.AnimateTo( Property( mFocusContainer, Actor::Property::SCALE ), endScale, AlphaFunction::LINEAR, TimePeriod( initialFadeDuration, KEYBOARD_FOCUS_ANIMATION_DURATION - initialFadeDuration ) );
-  mFocusAnimation.AnimateTo( Property( mFocusContainer, Actor::Property::COLOR_ALPHA ), 0.0f, AlphaFunction::LINEAR, TimePeriod( initialFadeDuration, KEYBOARD_FOCUS_ANIMATION_DURATION - initialFadeDuration ) );
-
-  mFocusAnimationInner.AnimateTo( Property( mFocusInner, Actor::Property::COLOR_ALPHA ), KEYBOARD_FOCUS_END_ALPHA, AlphaFunction::LINEAR, TimePeriod( 0.0f, initialFadeDuration ) );
-  mFocusAnimationInner.AnimateTo( Property( mFocusInner, Actor::Property::SCALE ), endScale, AlphaFunction::LINEAR, TimePeriod( initialFadeDuration, KEYBOARD_FOCUS_ANIMATION_DURATION - initialFadeDuration ) );
-  mFocusAnimationInner.AnimateTo( Property( mFocusInner, Actor::Property::COLOR_ALPHA ), 0.0f, AlphaFunction::LINEAR, TimePeriod( initialFadeDuration, KEYBOARD_FOCUS_ANIMATION_DURATION - initialFadeDuration ) );
-
-  // Play the animation on the 1st glow object.
-  mFocusAnimation.SetLooping( true );
-  mFocusAnimation.Play();
-  // Stagger the animation on the 2st glow object half way through.
-  mFocusAnimationInner.SetLooping( true );
-  mFocusAnimationInner.PlayFrom( KEYBOARD_FOCUS_ANIMATION_DURATION / 2.0f );
-
-  KeyboardFocusManager::Get().SetFocusIndicatorActor( mFocusContainer );
-}
-
-void DaliTableView::OnStageConnect( Dali::Actor actor )
-{
-  // If this is one of the keyboard focus actors, place it behind the object it is focusing.
-  if( actor.GetName() == "focusActor" )
-  {
-    actor.GetRendererAt( 0 ).SetProperty( Dali::Renderer::Property::DEPTH_INDEX, -40000 );
-  }
 }
 
 void DaliTableView::ApplyCubeEffectToPages()
@@ -545,12 +482,12 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   content.Add( tileContent );
 
   // Create an ImageView for the 9-patch border around the tile.
-  ImageView borderImage = ImageView::New( TILE_BACKGROUND );
-  borderImage.SetAnchorPoint( AnchorPoint::CENTER );
-  borderImage.SetParentOrigin( ParentOrigin::CENTER );
-  borderImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  borderImage.SetOpacity( 0.8f );
-  tileContent.Add( borderImage );
+  ImageView image = ImageView::New( TILE_BACKGROUND );
+  image.SetAnchorPoint( AnchorPoint::CENTER );
+  image.SetParentOrigin( ParentOrigin::CENTER );
+  image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  image.SetOpacity( 0.8f );
+  tileContent.Add( image );
 
   TextLabel label = TextLabel::New();
   label.SetAnchorPoint( AnchorPoint::CENTER );
@@ -567,7 +504,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   content.Add( label );
 
   // Set the tile to be keyboard focusable
-  content.SetKeyboardFocusable( true );
+  content.SetKeyboardFocusable(true);
 
   // connect to the touch events
   content.TouchSignal().Connect( this, &DaliTableView::OnTilePressed );
