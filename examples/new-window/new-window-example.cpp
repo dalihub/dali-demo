@@ -19,7 +19,6 @@
 #include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
-#include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
 
 #include <cstdio>
 #include <iostream>
