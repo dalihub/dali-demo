@@ -1,14 +1,11 @@
-msgid "DALI_DEMO_STR_TITLE_BLOCKS"
-msgstr "തടയപ്പെട്ട"
-
 msgid "DALI_DEMO_STR_TITLE_BUBBLES"
 msgstr "കുമിള"
 
-msgid "DALI_DEMO_STR_TITLE_BUTTONS"
-msgstr ""
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "തടയപ്പെട്ട"
 
-msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
-msgstr ""
+msgid "DALI_DEMO_STR_TITLE_CLUSTER"
+msgstr "ക്ലസ്റ്റര്"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "സമചതുരക്കട്ട സംക്രമണ ഇഫക്ട്"
@@ -16,59 +13,11 @@ msgstr "സമചതുരക്കട്ട സംക്രമണ ഇഫക്�
 msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
 msgstr "സ്ഥാനാന്തരം സംക്രമണ ഇഫക്ട്"
 
-msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
-msgstr "ഇമേജിംഗ്"
-
-msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
-msgstr ""
-
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "ഇനം കാഴ്ച"
 
-msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
-msgstr "നിഴല്"
-
-msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr ""
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "ഭൂതക്കണ്ണാടി"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr ""
 
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "അവ്യക്തമാക്കല്"
@@ -76,20 +25,8 @@ msgstr "അവ്യക്തമാക്കല്"
 msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
 msgstr "സ്ട്രെച്ച്"
 
-msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
-msgstr ""
-
 msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
 msgstr "പേജ് ലേഔട്ട്"
-
-msgid "DALI_DEMO_STR_TITLE_POPUP"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
-msgstr ""
 
 msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
 msgstr "റേഡിയല് രേഖാചിത്രം"
@@ -97,35 +34,17 @@ msgstr "റേഡിയല് രേഖാചിത്രം"
 msgid "DALI_DEMO_STR_TITLE_REFRACTION"
 msgstr "പ്രതിഫലിക്കുക"
 
-msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
-msgstr ""
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "സ്ക്രോള്ചെയ്യുക കാഴ്ച"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "നിഴല്"
 
 msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
 msgstr "സ്ക്രിപ്റ്റ്"
 
-msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
-msgstr "സ്ക്രോള്ചെയ്യുക കാഴ്ച"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
-msgstr ""
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "ഇമേജിംഗ്"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
 msgstr "ലേബലുചെയ്യുക"
-
-msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
-msgstr ""
-
-msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
-msgstr ""

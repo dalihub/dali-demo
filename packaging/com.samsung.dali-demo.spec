@@ -76,9 +76,7 @@ cmake -DDALI_APP_DIR=%{dali_app_ro_dir} \
 %if 0%{?enable_debug}
       -DCMAKE_BUILD_TYPE=Debug \
 %endif
-      -DLOCAL_STYLE_DIR=%{local_style_dir} \
-      -DINTERNATIONALIZATION:BOOL=OFF \
-      .
+      -DLOCAL_STYLE_DIR=%{local_style_dir} .
 
 make %{?jobs:-j%jobs}
 
