@@ -28,13 +28,39 @@ namespace
   const int INIT_HEIGHT( 400 );
   const int BUTTON_SIZE( 80 );
 
-  const char* const PLAY_FILE = DEMO_VIDEO_DIR "demoVideo.mp4";
+  const char* const PLAY_FILE = DEMO_VIDEO_DIR "big_buck_bunny.mp4";
   const char* const PLAY_IMAGE = DEMO_IMAGE_DIR "icon-play.png";
   const char* const PAUSE_IMAGE = DEMO_IMAGE_DIR "Pause.png";
   const char* const STOP_IMAGE = DEMO_IMAGE_DIR "icon-stop.png";
   const char* const RESET_IMAGE = DEMO_IMAGE_DIR "icon-reset.png";
   const char* const FORWARD_IMAGE = DEMO_IMAGE_DIR "Forward.png";
   const char* const BACKWARD_IMAGE = DEMO_IMAGE_DIR "Backward.png";
+
+const char* DEFAULT_FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
+  varying mediump vec2 vTexCoord;\n
+  uniform sampler2D sTexture;\n
+  uniform lowp vec4 uColor;\n
+  \n
+  void main()\n
+  {\n
+    gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
+  }\n
+);
+
+const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
+  precision mediump float;
+  varying mediump vec2 vTexCoord;\n
+  uniform sampler2D sTexture;\n
+  uniform lowp vec4 uColor;\n
+  \n
+  void main()\n
+  {\n
+    vec2 st = vTexCoord.st;\n
+    vec3 irgb = texture2D( sTexture, st ).rgb;\n
+    vec3 negative = vec3( 1., 1., 1. ) - irgb;\n
+    gl_FragColor = vec4( mix( irgb, negative, 1.0), 1. ) * uColor;\n
+  }\n
+);
 
 }  // namespace
 
@@ -47,6 +73,7 @@ class VideoViewController: public ConnectionTracker
       mIsPlay( false ),
       mIsStop( false ),
       mIsFullScreen( false ),
+      mSetCustomShader( false ),
       mScale( 1.f )
   {
     // Connect to the Application's Init signal
@@ -182,6 +209,16 @@ class VideoViewController: public ConnectionTracker
 
     Stage::GetCurrent().KeyEventSignal().Connect( this, &VideoViewController::OnKeyEvent );
 
+    Property::Map customShader;
+    customShader.Insert( Visual::Shader::Property::FRAGMENT_SHADER, FRAGMENT_SHADER );
+    mCustomShader.Insert( Visual::Property::TYPE, Visual::IMAGE );
+    mCustomShader.Insert( Visual::Property::SHADER, customShader );
+
+    Property::Map defaultShader;
+    customShader.Insert( Visual::Shader::Property::FRAGMENT_SHADER, DEFAULT_FRAGMENT_SHADER );
+    mDefaultShader.Insert( Visual::Property::TYPE, Visual::IMAGE );
+    mDefaultShader.Insert( Visual::Property::SHADER, customShader );
+
     mWindowSurfaceTarget.Insert( "RENDERING_TARGET", "windowSurfaceTarget" );
     mNativeImageTarget.Insert( "RENDERING_TARGET", "nativeImageTarget" );
 
@@ -313,6 +350,17 @@ class VideoViewController: public ConnectionTracker
     if( !mIsFullScreen )
     {
       mRotationAnimation.Play();
+
+      if( mSetCustomShader )
+      {
+        mSetCustomShader = false;
+        mVideoView.SetProperty( VideoView::Property::VIDEO, mDefaultShader );
+      }
+      else
+      {
+        mSetCustomShader = true;
+        mVideoView.SetProperty( VideoView::Property::VIDEO, mCustomShader );
+      }
     }
   }
 
@@ -341,6 +389,7 @@ private:
   bool mIsPlay;
   bool mIsStop;
   bool mIsFullScreen;
+  bool mSetCustomShader;
 
   PushButton mPlayButton;
   PushButton mPauseButton;
@@ -356,6 +405,8 @@ private:
   float mPinchStartScale;
 
   Animation mRotationAnimation;
+  Property::Map mCustomShader;
+  Property::Map mDefaultShader;
   Property::Map mWindowSurfaceTarget;
   Property::Map mNativeImageTarget;
 };
