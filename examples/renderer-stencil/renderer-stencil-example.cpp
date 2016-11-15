@@ -33,6 +33,7 @@ namespace
 
 // Application constants:
 const char * const APPLICATION_TITLE( "Renderer Stencil API Demo" );
+const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char * const BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-gradient.jpg" );
 
 // Texture filenames:
@@ -51,7 +52,6 @@ const float ANIMATION_BOUNCE_DEFORMATION_PERCENT( 20.0f ); ///< Percentage (of t
 const float ANIMATION_BOUNCE_HEIGHT_PERCENT( 40.0f );      ///< Percentage (of the cube's size) to bounce up in to the air by.
 
 // Base colors for the objects:
-const Vector4 TEXT_COLOR( 1.0f, 1.0f, 1.0f, 1.0f );        ///< White.
 const Vector4 CUBE_COLOR( 1.0f, 1.0f, 1.0f, 1.0f );        ///< White.
 const Vector4 FLOOR_COLOR( 1.0f, 1.0f, 1.0f, 1.0f );       ///< White.
 const Vector4 REFLECTION_COLOR( 0.6f, 0.6f, 0.6f, 0.6f );  ///< Note that alpha is not 1.0f, to make the blend more photo-realistic.
@@ -116,26 +116,11 @@ private:
   {
     Stage stage = Stage::GetCurrent();
 
-    // Creates the background image.
-    Toolkit::Control background = Dali::Toolkit::Control::New();
-    background.SetAnchorPoint( Dali::AnchorPoint::CENTER );
-    background.SetParentOrigin( Dali::ParentOrigin::CENTER );
-    background.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
-    Dali::Property::Map map;
-    map["rendererType"] = "IMAGE";
-    map["url"] = BACKGROUND_IMAGE;
-    background.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
-    stage.Add( background );
-
-    // Create a TextLabel for the application title.
-    Toolkit::TextLabel label = Toolkit::TextLabel::New( APPLICATION_TITLE );
-    label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    // Set the parent origin to a small percentage below the top (so the demo will scale for different resolutions).
-    label.SetParentOrigin( Vector3( 0.5f, 0.03f, 0.5f ) );
-    label.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    label.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
-    label.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, TEXT_COLOR );
-    stage.Add( label );
+    // Creates a default view with a default tool-bar.
+    // The view is added to the stage.
+    Toolkit::ToolBar toolBar;
+    Layer toolBarLayer = DemoHelper::CreateView( application, mView, toolBar, BACKGROUND_IMAGE, TOOLBAR_IMAGE, APPLICATION_TITLE );
+    stage.Add( toolBarLayer );
 
     // Layer to hold the 3D scene.
     Layer layer = Layer::New();
