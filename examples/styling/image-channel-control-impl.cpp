@@ -17,7 +17,10 @@
 #include "image-channel-control-impl.h"
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/object/type-registry-helper.h>
+#include <dali-toolkit/devel-api/align-enums.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali-toolkit/devel-api/visual-factory/devel-visual-properties.h>
+
 #include <cstdio>
 
 using namespace Dali; // Needed for macros
@@ -175,7 +178,15 @@ void ImageChannelControl::OnSizeSet( const Vector3& targetSize )
   if( mVisual )
   {
     Vector2 size( targetSize );
-    mVisual.SetSize( size );
+    Property::Map transformMap;
+    transformMap
+      .Add( Toolkit::Visual::DevelProperty::Transform::Property::OFFSET, Vector2(0.0f, 0.0f) )
+      .Add( Toolkit::Visual::DevelProperty::Transform::Property::SIZE, Vector2(1.0f, 1.0f) )
+      .Add( Toolkit::Visual::DevelProperty::Transform::Property::ORIGIN, Toolkit::Align::CENTER )
+      .Add( Toolkit::Visual::DevelProperty::Transform::Property::ANCHOR_POINT, Toolkit::Align::CENTER )
+      .Add( Toolkit::Visual::DevelProperty::Transform::Property::OFFSET_SIZE_MODE, Vector4::ZERO );
+
+    mVisual.SetTransformAndSize( transformMap, size );
   }
 }
 
