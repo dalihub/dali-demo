@@ -306,7 +306,25 @@ private:
 //----------------
 
 MetaballExplosionController::MetaballExplosionController( Application& application )
-  : mApplication( application )
+: mApplication( application ),
+  mScreenSize(),
+  mContentLayer(),
+  mBackImage(),
+  mMetaballFBO(),
+  mMetaballRoot(),
+  mMetaballs(),
+  mPositionIndex(),
+  mCompositionActor(),
+  mCurrentTouchPosition(),
+  mMetaballPosVariation(),
+  mMetaballPosVariationFrom(),
+  mMetaballPosVariationTo(),
+  mMetaballCenter(),
+  mPositionVarAnimation(),
+  mDispersion( 0 ),
+  mDispersionAnimation(),
+  mTimerDispersion(),
+  mTimeMult( 1.0f )
 {
   // Connect to the Application's Init signal
   mApplication.InitSignal().Connect( this, &MetaballExplosionController::Create );

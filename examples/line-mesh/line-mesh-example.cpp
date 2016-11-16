@@ -119,7 +119,19 @@ public:
    * @param[in] application The application instance
    */
   ExampleController( Application& application )
-  : mApplication( application )
+  : mApplication( application ),
+    mStageSize(),
+    mShader(),
+    mGeometry(),
+    mRenderer(),
+    mMeshActor(),
+    mButtons(),
+    mMinusButton(),
+    mPlusButton(),
+    mIndicesCountLabel(),
+    mPrimitiveType( Geometry::LINES ),
+    mCurrentIndexCount( 0 ),
+    mMaxIndexCount( 0 )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &ExampleController::Create );

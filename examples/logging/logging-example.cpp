@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -125,7 +125,17 @@ class LoggingController: public ConnectionTracker
  public:
 
   LoggingController( Application& application )
-    : mApplication( application )
+  : mApplication( application ),
+    mView(),
+    mToolBar(),
+    mContentLayer(),
+    mAnimation(),
+    mPerformanceLoggerNames(),
+    mPerformanceLoggers(),
+    mCurrentLogger( 0 ),
+    mLoggerStates(),
+    mLogRadioButtons(),
+    mFrequencyRadioButtons()
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &LoggingController::Create );
@@ -655,7 +665,6 @@ private:
   Layer             mContentLayer;           ///< Content layer
 
   Animation      mAnimation;
-  float          mLastPoint;
 
   typedef std::vector< std::string > Strings;
   Strings mPerformanceLoggerNames;

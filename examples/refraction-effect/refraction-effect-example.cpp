@@ -211,6 +211,21 @@ class RefractionEffectExample : public ConnectionTracker
 public:
   RefractionEffectExample( Application &application )
   : mApplication( application ),
+    mContent(),
+    mTextureSet(),
+    mGeometry(),
+    mRenderer(),
+    mMeshActor(),
+    mShaderFlat(),
+    mShaderRefraction(),
+    mLightAnimation(),
+    mStrenghAnimation(),
+    mLightXYOffsetIndex( Property::INVALID_INDEX ),
+    mSpinAngleIndex( Property::INVALID_INDEX ),
+    mLightIntensityIndex( Property::INVALID_INDEX ),
+    mEffectStrengthIndex( Property::INVALID_INDEX ),
+    mChangeTextureButton(),
+    mChangeMeshButton(),
     mCurrentTextureId( 1 ),
     mCurrentMeshId( 0 )
   {

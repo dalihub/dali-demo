@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,8 +107,15 @@ public:
 
   TextLabelExample( Application& application )
   : mApplication( application ),
+    mLabel(),
+    mContainer(),
+    mGrabCorner(),
+    mPanGestureDetector(),
+    mLayoutSize(),
     mLanguageId( 0u ),
-    mAlignment( 0u )
+    mAlignment( 0u ),
+    mHueAngleIndex( Property::INVALID_INDEX ),
+    mOverrideMixColorIndex( Property::INVALID_INDEX )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &TextLabelExample::Create );
