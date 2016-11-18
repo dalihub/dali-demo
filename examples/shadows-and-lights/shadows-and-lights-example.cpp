@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,8 +80,24 @@ public:
    */
   TestApp(Application &app)
   : mApp(app),
-    mPaused(false),
-    mTranslation(22.0f, -1.0f, 0.0f),
+    mView(),
+    mContents(),
+    mSceneActor(),
+    mAnimation(),
+    mSceneAnimation(),
+    mPaused( false ),
+    mShadowView(),
+    mShadowPlaneBg(),
+    mShadowPlane(),
+    mCastingLight(),
+    mLightAnchor(),
+    mImageActor1(),
+    mImageActor2(),
+    mImageActor3(),
+    mPanGestureDetector(),
+    mPinchGestureDetector(),
+    mTapGestureDetector(),
+    mTranslation( 22.0f, -1.0f, 0.0f ),
     mSceneXRotation( Degree(-6.0f) ), // Initial values give a reasonable off-straight view.
     mSceneYRotation( Degree(20.0f) ),
     mLightXRotation( Degree(-1.5f) ),
@@ -90,7 +106,10 @@ public:
     mObjectYRotation(0.0f),
     mPinchScale(0.6f),
     mScaleAtPinchStart(0.6f),
-    mPanState(PAN_LIGHT)
+    mAngle1Index( Property::INVALID_INDEX ),
+    mAngle3Index( Property::INVALID_INDEX ),
+    mTitleActor(),
+    mPanState( PAN_LIGHT )
   {
     app.InitSignal().Connect(this, &TestApp::Create);
     app.TerminateSignal().Connect(this, &TestApp::Terminate);

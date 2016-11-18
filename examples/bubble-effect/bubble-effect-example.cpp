@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,18 @@ class BubbleEffectExample : public ConnectionTracker
 public:
   BubbleEffectExample(Application &app)
   : mApp(app),
+    mBackgroundImage(),
+    mBackground(),
+    mBubbleEmitter(),
+    mEmitAnimation(),
+    mChangeBackgroundButton(),
+    mChangeBubbleShapeButton(),
+    mTimerForBubbleEmission(),
     mHSVDelta( Vector3( 0.f, 0.f, 0.5f ) ),
+    mCurrentTouchPosition(),
+    mEmitPosition(),
+    mAnimateComponentCount( 0 ),
+    mNonMovementCount( 0 ),
     mTimerInterval( 16 ),
     mCurrentBackgroundImageId( 0 ),
     mCurrentBubbleShapeImageId( 0 ),

@@ -354,7 +354,7 @@ public:
 
         float delay = 0.0f;
         float duration = 0.0f;
-        if( count < mRowsPerPage*mColumnsPerPage )
+        if( count < ( static_cast< size_t >( mRowsPerPage ) * mColumnsPerPage ) )
         {
           duration = durationPerActor;
           delay = delayBetweenActors * count;
