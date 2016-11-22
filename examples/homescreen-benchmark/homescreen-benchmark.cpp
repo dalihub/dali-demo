@@ -25,6 +25,11 @@ using Dali::Toolkit::TextLabel;
 
 namespace
 {
+enum IconType
+{
+  IMAGEVIEW,
+  CHECKBOX
+};
 
 const char* IMAGE_PATH_PREFIX               ( DEMO_IMAGE_DIR "application-icon-" );
 const char* IMAGE_PATH_POSTFIX              ( ".png" );
@@ -41,10 +46,13 @@ const float DEFAULT_OPT_PAGE_COUNT          ( 10 );
 const bool  DEFAULT_OPT_USE_TABLEVIEW       ( true );
 const bool  DEFAULT_OPT_BATCHING_ENABLED    ( true );
 const bool  DEFAULT_OPT_ICON_LABELS         ( true );
+const IconType  DEFAULT_OPT_ICON_TYPE       ( IMAGEVIEW );
 
 // The image/label area tries to make sure the positioning will be relative to previous sibling
 const float IMAGE_AREA                      ( 0.60f );
 const float LABEL_AREA                      ( 0.50f );
+
+
 
 /**
  * Random words used as unique application names.
@@ -103,7 +111,8 @@ public:
       mPageCount( DEFAULT_OPT_PAGE_COUNT ),
       mTableViewEnabled( DEFAULT_OPT_USE_TABLEVIEW ),
       mBatchingEnabled( DEFAULT_OPT_BATCHING_ENABLED ),
-      mIconLabelsEnabled( DEFAULT_OPT_ICON_LABELS )
+      mIconLabelsEnabled( DEFAULT_OPT_ICON_LABELS ),
+      mIconType( DEFAULT_OPT_ICON_TYPE )
     {
     }
 
@@ -113,6 +122,7 @@ public:
     bool mTableViewEnabled;
     bool mBatchingEnabled;
     bool mIconLabelsEnabled;
+    IconType mIconType;
   };
 
   // animation script data
@@ -206,6 +216,42 @@ public:
     return pageActor;
   }
 
+  Toolkit::ImageView CreateImageView( const unsigned int currentIconIndex )
+  {
+    // Create empty image to avoid early renderer creation
+    Toolkit::ImageView imageView = Toolkit::ImageView::New();
+
+    // Auto-generate the Icons image URL.
+    Property::Map map;
+    std::stringstream imagePath;
+    imagePath << IMAGE_PATH_PREFIX << currentIconIndex << IMAGE_PATH_POSTFIX;
+    map[ Dali::Toolkit::ImageVisual::Property::URL ] = imagePath.str();
+
+    // Enable/disable batching
+    map[ Toolkit::ImageVisual::Property::BATCHING_ENABLED ] = mConfig.mBatchingEnabled;
+
+    imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
+    imageView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    imageView.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+    imageView.SetAnchorPoint( AnchorPoint::CENTER );
+    imageView.SetParentOrigin( ParentOrigin::CENTER );
+    imageView.SetSizeModeFactor( Vector3( IMAGE_AREA, IMAGE_AREA, 1.0f ) );
+
+    return imageView;
+  }
+
+  Toolkit::Button CreateButton( const unsigned int currentIconIndex )
+  {
+    Toolkit::CheckBoxButton button = Toolkit::CheckBoxButton::New();
+    button.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    button.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+    button.SetAnchorPoint( AnchorPoint::CENTER );
+    button.SetParentOrigin( ParentOrigin::CENTER );
+    button.SetProperty( Toolkit::Button::Property::SELECTED, ( currentIconIndex % 2 == 0 ) ); // Select half the button
+
+    return button;
+  }
+
   void AddIconsToPage( Actor page )
   {
     Size stageSize( Stage::GetCurrent().GetSize() );
@@ -241,24 +287,21 @@ public:
           iconView.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
         }
 
-        // Create empty image to avoid early renderer creation
-        Toolkit::ImageView imageView = Toolkit::ImageView::New();
+        Actor icon;
 
-        // Auto-generate the Icons image URL.
-        Property::Map map;
-        std::stringstream imagePath;
-        imagePath << IMAGE_PATH_PREFIX << currentIconIndex << IMAGE_PATH_POSTFIX;
-        map[ Dali::Toolkit::ImageVisual::Property::URL ] = imagePath.str();
-
-        // Enable/disable batching
-        map[ Toolkit::ImageVisual::Property::BATCHING_ENABLED ] = mConfig.mBatchingEnabled;
-
-        imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
-        imageView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-        imageView.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-        imageView.SetAnchorPoint( AnchorPoint::CENTER );
-        imageView.SetParentOrigin( ParentOrigin::CENTER );
-        imageView.SetSizeModeFactor( Vector3( IMAGE_AREA, IMAGE_AREA, 1.0f ) );
+        switch( mConfig.mIconType )
+        {
+          case CHECKBOX:
+          {
+            icon = CreateButton( currentIconIndex );
+            break;
+          }
+          case IMAGEVIEW:
+          {
+            icon = CreateImageView( currentIconIndex );
+            break;
+          }
+        }
 
         if( mConfig.mIconLabelsEnabled )
         {
@@ -271,10 +314,10 @@ public:
           textLabel.SetProperty( Toolkit::TextLabel::Property::POINT_SIZE, ( ( static_cast<float>( ROW_HEIGHT * LABEL_AREA ) * 72.0f )  / dpi.y ) * 0.25f );
           textLabel.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
           textLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "TOP" );
-          imageView.Add( textLabel );
+          icon.Add( textLabel );
         }
 
-        iconView.Add( imageView );
+        iconView.Add( icon );
         page.Add( iconView );
 
         // We only have images and names for a certain number of icons.
@@ -409,6 +452,7 @@ void RunTest( Application& application, const HomescreenBenchmark::Config& confi
     PrintHelp( "-disable-tableview",   " Disables the use of TableView for layouting (must be enabled for batching)" );
     PrintHelp( "-disable-batching",    " Disables geometry batching" );
     PrintHelp( "-disable-icon-labels", " Disables labels for each icon" );
+    PrintHelp( "-use-checkbox",        " Uses checkboxes for icons" );
     return;
   }
 
@@ -450,7 +494,11 @@ int DALI_EXPORT_API main( int argc, char **argv )
     {
       config.mIconLabelsEnabled = false;
     }
-    else if( arg.compare( "--help" ) == 0 )
+    else if( arg.compare( "--use-checkbox" ) == 0 )
+    {
+      config.mIconType = CHECKBOX;
+    }
+    else if ( arg.compare( "--help" ) == 0 )
     {
       printHelpAndExit = true;
     }
