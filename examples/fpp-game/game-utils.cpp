@@ -25,10 +25,16 @@ namespace GameUtils
 bool LoadFile( const char* filename, ByteArray& bytes )
 {
   FILE* fin = fopen( filename, "rb" );
-  fseek( fin, 0, SEEK_END );
+  if( fseek( fin, 0, SEEK_END ) )
+  {
+    return false;
+  }
   bytes.resize( ftell( fin ) );
   std::fill( bytes.begin(), bytes.end(), 0 );
-  fseek( fin, 0, SEEK_SET );
+  if( fseek( fin, 0, SEEK_SET ) )
+  {
+    return false;
+  }
   size_t result = fread( bytes.data(), 1, bytes.size(), fin );
   fclose( fin );
   return (result != 0);

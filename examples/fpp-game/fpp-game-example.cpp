@@ -93,6 +93,10 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
+    // Disable indicator
+    Dali::Window winHandle = application.GetWindow();
+    winHandle.ShowIndicator( Dali::Window::INVISIBLE );
+
     // Get a handle to the stage
     mStage = Stage::GetCurrent();
 

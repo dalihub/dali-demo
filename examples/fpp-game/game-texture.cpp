@@ -23,6 +23,8 @@
 #include <dali-toolkit/public-api/image-loader/sync-image-loader.h>
 
 GameTexture::GameTexture()
+: mUniqueId( 0 ),
+  mIsReady( false )
 {
 }
 
@@ -30,8 +32,9 @@ GameTexture::~GameTexture()
 {
 }
 
-GameTexture::GameTexture( const char* filename ) :
-  mUniqueId( 0 )
+GameTexture::GameTexture( const char* filename )
+: mUniqueId( 0 ),
+  mIsReady( false )
 {
   Load( filename );
 }
