@@ -28,6 +28,9 @@ msgstr "이펙트 뷰"
 msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
 msgstr "이모티콘 텍스트"
 
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox 데모"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "이미지 조정 샘플링"
 

@@ -28,6 +28,9 @@ msgstr "Efektinäkymä"
 msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
 msgstr "Teksti Hymiöillä"
 
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox Testi Sovellus"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "Kuvien Sovitus ja Suodatus"
 

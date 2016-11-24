@@ -28,6 +28,9 @@ msgstr "اثرات"
 msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
 msgstr "اموٹکان"
 
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "فلیکس باکس ڈیمو"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "تصویر فٹنگ"
 

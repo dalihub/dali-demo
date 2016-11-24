@@ -31,6 +31,9 @@ msgstr "Emoji"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "Bild Montage und Sampling"
 
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox Playground"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
 msgstr "Bildskalierung"
 
