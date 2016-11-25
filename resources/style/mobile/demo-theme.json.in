@@ -18,6 +18,14 @@
 {
   "styles":
   {
+    "CustomPopupStyle":{
+      "popupBackgroundImage":"{APPLICATION_RESOURCE_PATH}/images/popup.9.png",
+      "popupBackgroundBorder":[0,4,4,0],
+      "tailUpImage":"{APPLICATION_RESOURCE_PATH}/images/popup-tail-up.png",
+      "tailDownImage":"{APPLICATION_RESOURCE_PATH}/images/popup-tail-down.png",
+      "tailLeftImage":"{APPLICATION_RESOURCE_PATH}/images/popup-tail-left.png",
+      "tailRightImage":"{APPLICATION_RESOURCE_PATH}/images/popup-tail-right.png"
+    },
     "TextLabelRosemary":
     {
       "fontFamily":"Rosemary"
