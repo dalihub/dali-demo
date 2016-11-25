@@ -28,6 +28,9 @@ msgstr "എഫക്റ്റുകൾ"
 msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
 msgstr "ഇമോട്ടികോണുകൾ"
 
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "ഫ്ലക്സ്ബോക്സിനുള്ള ഡെമോ"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "ചിത്രം ഉചിതമാണ് ആൻഡ് ഒരുപറ്റം"
 

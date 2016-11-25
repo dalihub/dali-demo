@@ -28,6 +28,9 @@ msgstr "Effects View"
 msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
 msgstr "Emoji Text"
 
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox Playground"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "Image Fitting and Sampling"
 
