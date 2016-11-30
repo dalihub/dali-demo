@@ -140,9 +140,7 @@ private:
     content.Add( bubbleRoot );
 
     // Set the application background
-    mBackground.SetProperty( Toolkit::Control::Property::BACKGROUND, Dali::Property::Map()
-      .Add( Dali::Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::IMAGE )
-      .Add( Dali::Toolkit::ImageVisual::Property::URL, BACKGROUND_IMAGES[mCurrentBackgroundImageId] ));
+    mBackground.SetProperty( Toolkit::Control::Property::BACKGROUND, BACKGROUND_IMAGES[ mCurrentBackgroundImageId ] );
 
     // Set up the timer to emit bubble regularly when the finger is touched down but not moved
     mTimerForBubbleEmission = Timer::New( mTimerInterval );
@@ -258,9 +256,7 @@ private:
       mBubbleEmitter.SetBackground( DemoHelper::LoadStageFillingTexture( BACKGROUND_IMAGES[ mCurrentBackgroundImageId  ] ), mHSVDelta );
 
       // Set the application background
-      mBackground.SetProperty( Toolkit::Control::Property::BACKGROUND, Dali::Property::Map()
-      .Add( Dali::Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::IMAGE )
-      .Add( Dali::Toolkit::ImageVisual::Property::URL, BACKGROUND_IMAGES[mCurrentBackgroundImageId] ));
+      mBackground.SetProperty( Toolkit::Control::Property::BACKGROUND, BACKGROUND_IMAGES[ mCurrentBackgroundImageId ] );
     }
     else if( button == mChangeBubbleShapeButton )
     {
