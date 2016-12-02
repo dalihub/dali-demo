@@ -21,6 +21,7 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/object/handle-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
 
@@ -170,7 +171,7 @@ public:
 
     mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
     Renderer bgRenderer = mLabel.GetRendererAt(0);
-    mOverrideMixColorIndex = bgRenderer.GetPropertyIndex( ColorVisual::Property::MIX_COLOR );
+    mOverrideMixColorIndex = DevelHandle::GetPropertyIndex( bgRenderer, ColorVisual::Property::MIX_COLOR );
 
     Constraint constraint = Constraint::New<Vector4>( bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
     constraint.AddSource( Source( mLabel, mHueAngleIndex ) );

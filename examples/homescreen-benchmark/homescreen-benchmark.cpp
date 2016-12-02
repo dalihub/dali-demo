@@ -17,6 +17,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <sstream>
 #include <iostream>
 
@@ -372,7 +373,7 @@ public:
 
       if( mConfig.mTableViewEnabled && mConfig.mBatchingEnabled )
       {
-        page.SetProperty( Actor::Property::BATCH_PARENT, true );
+        page.SetProperty( DevelActor::Property::BATCH_PARENT, true );
       }
     }
 

@@ -139,7 +139,6 @@ const char*const FRAG_SHADER = DALI_COMPOSE_SHADER (
 
 struct MetaballInfo
 {
-  //ShaderEffect shader;
   Actor   actor;
   Vector2 position;
   float   radius;

@@ -28,6 +28,9 @@ msgstr "Vista de efectos"
 msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
 msgstr "Texto con emojis"
 
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox Playground"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "Modo de encaje y muestreo"
 

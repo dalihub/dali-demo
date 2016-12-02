@@ -12,7 +12,6 @@
          * [SMACK enabled Targets](#smack-enabled-targets)
          * [DEBUG Builds](#debug-builds-1)
    * [Creating an example](#creating-an-example)
-   * [Installing Emscripten Examples](#installing-emscripten-examples)
 
 # Build Instructions
 
@@ -65,15 +64,3 @@ Before running make install as normal:
  - Add all source files for the required example in this directory.
  - Modify "com.samsung.dali-demo.xml" to include your example so that it can be launched on target.
  - No changes are required to the make system as long as the above is followed, your example will be automatically built & installed.
-
-# Installing Emscripten Examples
-
-Some Emscripten Javascript examples are included in dali-demo.
-
-They do not require building, to install them run the provided install script.
-Note: Your dali-env must be setup as it will install to your dali-env/opt/share/emscripten directory.
-
-         $ cd ./emscripten-examples
-         $ ./install.sh
-
-Run the examples by either opening them in a browser, or, running the browser from the command line with an example as a parameter.
