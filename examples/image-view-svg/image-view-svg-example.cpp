@@ -100,6 +100,7 @@ public:
     {
       mSvgActor[i] = Toolkit::ImageView::New(SVG_IMAGES[mIndex+i]);
       mSvgActor[i].SetSize( mActorSize );
+      mSvgActor[i].TranslateBy( Vector3( 0.0, stageSize.height * 0.05, 0.0f ) );
       stage.Add( mSvgActor[i] );
     }
     mSvgActor[0].SetParentOrigin( ParentOrigin::CENTER );

@@ -25,10 +25,16 @@
 
     // Change an icon size, see if it gets properly re-sized
     "RadioButton":{
-      "unselectedStateImage":"{STYLE_DIR}/images/radio-button-unselected.png",
-      "selectedStateImage":"{STYLE_DIR}/images/radio-button-selected.png",
-      "disabledStateImage":"{STYLE_DIR}/images/radio-button-unselected-disabled.png",
-      "imageLabelGap":10,
+     "unselectedVisual":
+      {
+        "visualType": "IMAGE",
+        "url": "{STYLE_DIR}/images/radio-button-unselected.png"
+      },
+      "selectedVisual":
+      {
+        "visualType": "IMAGE",
+        "url": "{STYLE_DIR}/images/radio-button-selected.png"
+      },
       "label":{
         "textColor": [0.1,1,1,1]
       }
