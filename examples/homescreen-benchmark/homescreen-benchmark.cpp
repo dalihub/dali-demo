@@ -21,6 +21,10 @@
 #include <sstream>
 #include <iostream>
 
+#include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
+
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
 
@@ -48,6 +52,7 @@ const bool  DEFAULT_OPT_USE_TABLEVIEW       ( true );
 const bool  DEFAULT_OPT_BATCHING_ENABLED    ( true );
 const bool  DEFAULT_OPT_ICON_LABELS         ( true );
 const IconType  DEFAULT_OPT_ICON_TYPE       ( IMAGEVIEW );
+const bool  DEFAULT_OPT_USE_TEXT_LABEL      ( false );
 
 // The image/label area tries to make sure the positioning will be relative to previous sibling
 const float IMAGE_AREA                      ( 0.60f );
@@ -113,7 +118,8 @@ public:
       mTableViewEnabled( DEFAULT_OPT_USE_TABLEVIEW ),
       mBatchingEnabled( DEFAULT_OPT_BATCHING_ENABLED ),
       mIconLabelsEnabled( DEFAULT_OPT_ICON_LABELS ),
-      mIconType( DEFAULT_OPT_ICON_TYPE )
+      mIconType( DEFAULT_OPT_ICON_TYPE ),
+      mUseTextLabel( DEFAULT_OPT_USE_TEXT_LABEL )
     {
     }
 
@@ -124,6 +130,7 @@ public:
     bool mBatchingEnabled;
     bool mIconLabelsEnabled;
     IconType mIconType;
+    bool mUseTextLabel;
   };
 
   // animation script data
@@ -253,7 +260,7 @@ public:
     return button;
   }
 
-  void AddIconsToPage( Actor page )
+  void AddIconsToPage( Actor page, bool useTextLabel )
   {
     Size stageSize( Stage::GetCurrent().GetSize() );
     const float scaledHeight = stageSize.y * PAGE_SCALE_FACTOR_Y;
@@ -307,15 +314,34 @@ public:
         if( mConfig.mIconLabelsEnabled )
         {
           // create label
-          Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( DEMO_APPS_NAMES[currentIconIndex] );
-          textLabel.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-          textLabel.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-          textLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-          textLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) ); // White.
-          textLabel.SetProperty( Toolkit::TextLabel::Property::POINT_SIZE, ( ( static_cast<float>( ROW_HEIGHT * LABEL_AREA ) * 72.0f )  / dpi.y ) * 0.25f );
-          textLabel.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-          textLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "TOP" );
-          icon.Add( textLabel );
+          if( useTextLabel )
+          {
+            Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( DEMO_APPS_NAMES[currentIconIndex] );
+            textLabel.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+            textLabel.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+            textLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+            textLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) ); // White.
+            textLabel.SetProperty( Toolkit::TextLabel::Property::POINT_SIZE, ( ( static_cast<float>( ROW_HEIGHT * LABEL_AREA ) * 72.0f )  / dpi.y ) * 0.25f );
+            textLabel.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+            textLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "TOP" );
+            icon.Add( textLabel );
+          }
+          else
+          {
+            Property::Map map;
+            map.Add( Toolkit::Visual::Property::TYPE, Toolkit::DevelVisual::TEXT ).
+              Add( Toolkit::TextVisual::Property::TEXT, DEMO_APPS_NAMES[currentIconIndex] ).
+              Add( Toolkit::TextVisual::Property::TEXT_COLOR, Color::WHITE ).
+              Add( Toolkit::TextVisual::Property::POINT_SIZE, ( ( static_cast<float>( ROW_HEIGHT * LABEL_AREA ) * 72.0f )  / dpi.y ) * 0.25f ).
+              Add( Toolkit::TextVisual::Property::HORIZONTAL_ALIGNMENT, "CENTER" ).
+              Add( Toolkit::TextVisual::Property::VERTICAL_ALIGNMENT, "TOP" );
+
+            Toolkit::Control control = Toolkit::Control::New();
+            control.SetProperty( Toolkit::Control::Property::BACKGROUND, map );
+            control.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+            control.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+            icon.Add( control );
+          }
         }
 
         iconView.Add( icon );
@@ -363,7 +389,7 @@ public:
       Actor page = AddPage();
 
       // Populate icons.
-      AddIconsToPage( page );
+      AddIconsToPage( page, mConfig.mUseTextLabel );
 
       // Move page 'a little bit up'.
       page.SetParentOrigin( ParentOrigin::CENTER );
@@ -454,6 +480,7 @@ void RunTest( Application& application, const HomescreenBenchmark::Config& confi
     PrintHelp( "-disable-batching",    " Disables geometry batching" );
     PrintHelp( "-disable-icon-labels", " Disables labels for each icon" );
     PrintHelp( "-use-checkbox",        " Uses checkboxes for icons" );
+    PrintHelp( "-use-text-label",      " Uses TextLabel instead of a TextVisual" );
     return;
   }
 
@@ -499,7 +526,11 @@ int DALI_EXPORT_API main( int argc, char **argv )
     {
       config.mIconType = CHECKBOX;
     }
-    else if ( arg.compare( "--help" ) == 0 )
+    else if( arg.compare("--use-text-label" ) == 0)
+    {
+      config.mUseTextLabel = true;
+    }
+    else if( arg.compare( "--help" ) == 0 )
     {
       printHelpAndExit = true;
     }
