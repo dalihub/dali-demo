@@ -364,7 +364,7 @@ public:
       // Set up the container's layout.
       footer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       footer.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
-      footer.SetSize( 0.0f, 80.0f );
+      footer.SetSize( 0.0f, 130.0f );
       footer.SetAnchorPoint( AnchorPoint::CENTER );
       footer.SetParentOrigin( ParentOrigin::CENTER );
 
