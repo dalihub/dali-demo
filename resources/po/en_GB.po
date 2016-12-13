@@ -150,3 +150,6 @@ msgstr "Tilt Sensor"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP Game"
+
+msgid "DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS"
+msgstr "Visual Transitions"

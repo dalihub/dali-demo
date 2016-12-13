@@ -82,6 +82,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TEXT_SCROLLING              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TEXT_SCROLLING")
 #define DALI_DEMO_STR_TITLE_TILT_SENSOR                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TILT_SENSOR")
 #define DALI_DEMO_STR_TITLE_FPP_GAME                    dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_FPP_GAME")
+#define DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS          dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS")
 
 #else // !INTERNATIONALIZATION_ENABLED
 
@@ -135,7 +136,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TILT_SENSOR                 "Tilt Sensor"
 #define DALI_DEMO_STR_TITLE_PROGRESS_BAR                "Progress Bar"
 #define DALI_DEMO_STR_TITLE_FPP_GAME                    "First Person Game"
-
+#define DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS          "Visual Transitions"
 #endif
 
 #ifdef __cplusplus
