@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "动态图"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "动画造型"
 

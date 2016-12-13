@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "അനിമേറ്റഡ് ചിത്രങ്ങൾ"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "ആനിമേഷൻ രൂപങ്ങൾ"
 
