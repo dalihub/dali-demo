@@ -112,8 +112,6 @@ void ImageChannelControl::SetVisibility( bool visibility )
 {
   printf("ImageChannelControl %s: SetVisibility( %s )\n", Self().GetName().c_str(), visibility?"T":"F" );
 
-  Animation animation;
-
   if( mAnimation )
   {
     mAnimation.Stop();
