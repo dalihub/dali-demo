@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "متحرک تصاویر"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "متحرک شکلیں"
 
