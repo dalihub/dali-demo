@@ -40,7 +40,11 @@ const char* TransitionApplication::DEMO_THEME_ONE_PATH( DEMO_STYLE_DIR "style-ex
 
 
 TransitionApplication::TransitionApplication( Application& application )
-: mApplication( application )
+: mApplication( application ),
+  mTitle(),
+  mBeatControl(),
+  mActionButtons(),
+  mActionIndex( Property::INVALID_INDEX )
 {
   application.InitSignal().Connect( this, &TransitionApplication::Create );
 }
