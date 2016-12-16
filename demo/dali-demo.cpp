@@ -82,6 +82,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
   demo.AddExample(Example("styling.example", DALI_DEMO_STR_TITLE_STYLING));
   demo.AddExample(Example("sparkle.example", DALI_DEMO_STR_TITLE_SPARKLE));
+  demo.AddExample(Example("transitions.example", DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS));
   demo.AddExample(Example("progress-bar.example", DALI_DEMO_STR_TITLE_PROGRESS_BAR));
   demo.AddExample(Example("contact-cards.example", DALI_DEMO_STR_TITLE_CONTACT_CARDS));
   demo.AddExample(Example("flex-container.example", DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND));
