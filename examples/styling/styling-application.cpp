@@ -24,8 +24,9 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
-//#include <dali-toolkit/devel-api/controls/slider/slider.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
 #include "image-channel-control.h"
 #include <cstdio>
 #include <sstream>
@@ -212,7 +213,7 @@ void StylingApplication::Create( Application& application )
   mIcc1.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mIcc1.SetParentOrigin( ParentOrigin::CENTER );
   mIcc1.SetVisibility( true );
-  
+
   mImagePlacement.Add( mIcc1 );
 
   mIcc2 = ImageChannelControl::New( BIG_IMAGE_2 );
@@ -484,20 +485,20 @@ bool StylingApplication::OnButtonStateChange( Button button )
 
 // Todo: save / restore slider states per image
 
-  if( button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
+  if( button.GetProperty<bool>(Button::Property::SELECTED) )
   {
 
     ImageChannelControl prevIcc = mImageChannelControl;
 
-    if( mRadioButtons[0].GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
+    if( mRadioButtons[0].GetProperty<bool>(Button::Property::SELECTED) )
     {
       mImageChannelControl = mIcc1;
     }
-    else if( mRadioButtons[1].GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
+    else if( mRadioButtons[1].GetProperty<bool>(Button::Property::SELECTED) )
     {
       mImageChannelControl = mIcc2;
     }
-    else if( mRadioButtons[2].GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
+    else if( mRadioButtons[2].GetProperty<bool>(Button::Property::SELECTED) )
     {
       mImageChannelControl = mIcc3;
     }
@@ -523,7 +524,7 @@ bool StylingApplication::OnCheckButtonChange( Button button )
   {
     int channel = button.GetProperty<int>( index );
     float value = mChannelSliders[channel].GetProperty<float>( Slider::Property::VALUE );
-    if( !button.IsSelected() )
+    if( !button.GetProperty<bool>(Button::Property::SELECTED) )
     {
       // "Turn off" the channel's contribution
       value = 0.0f;
@@ -600,7 +601,7 @@ bool StylingApplication::OnSliderChanged( Slider slider, float value )
   if( index != Property::INVALID_INDEX )
   {
     int channel = slider.GetProperty<int>( index );
-    if( mCheckButtons[channel].IsSelected() )
+    if( mCheckButtons[channel].GetProperty<bool>(Button::Property::SELECTED) )
     {
       Property::Index channelIndex = GetChannelProperty( channel );
       mImageChannelControl.SetProperty(channelIndex, value/100.0f);
