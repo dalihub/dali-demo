@@ -151,5 +151,8 @@ msgstr "Texto con desplazamiento"
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "Sensor de inclinacion"
 
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Tooltip"
+
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "Juego FPP"

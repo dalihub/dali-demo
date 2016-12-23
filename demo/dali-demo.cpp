@@ -88,6 +88,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("contact-cards.example", DALI_DEMO_STR_TITLE_CONTACT_CARDS));
   demo.AddExample(Example("flex-container.example", DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND));
   demo.AddExample(Example("fpp-game.example", DALI_DEMO_STR_TITLE_FPP_GAME));
+  demo.AddExample(Example("tooltip.example", DALI_DEMO_STR_TITLE_TOOLTIP));
 
   demo.SortAlphabetically( true );
 

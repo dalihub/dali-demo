@@ -1,0 +1,85 @@
+/*
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+{
+  "styles":
+  {
+    "TooltipTextOnly" :
+    {
+      "tooltip": "Using defaults defined in the Toolkit stylesheet"
+    },
+
+    "TooltipArray" :
+    {
+      "tooltip" :
+      {
+        "content" :
+        [
+          {
+            "visualType" : "IMAGE",
+            "url" : "{APPLICATION_RESOURCE_PATH}/images/application-icon-0.png",
+            "desiredWidth" : 75,
+            "desiredHeight" : 75
+          },
+          {
+            "visualType" : "TEXT",
+            "text" : "An icon on the left and\nmulti-line text on the right",
+            "multiLine" : true,
+            "pointSize" : 16
+          }
+        ],
+        "tail" : true
+      }
+    },
+
+    "TooltipCustom" :
+    {
+      "tooltip":
+      {
+        "content":
+        {
+          "visualType" : "TEXT",
+          "textColor" : [1,1,1,1],
+          "text" : "Completely custom style\nthat disappears on movement",
+          "multiLine" : true,
+          "pointSize" : 16
+        },
+        "waitTime":0.5,
+        "background":
+        {
+          "visual":"{APPLICATION_RESOURCE_PATH}/images/tooltip.9.png",
+          "border":[1,5,5,1]
+        },
+        "tail":
+        {
+          "visibility":true,
+          "aboveVisual":"{APPLICATION_RESOURCE_PATH}/images/tooltip-tail-above.png",
+          "belowVisual":"{APPLICATION_RESOURCE_PATH}/images/tooltip-tail-below.png"
+        },
+        "position":"ABOVE",
+        "hoverPointOffset":[10,10],
+        "movementThreshold":5,
+        "disappearOnMovement":true
+      }
+    },
+
+    "TableView" :
+    {
+      "cellPadding" : [ 5.0, 5.0 ]
+    }
+  }
+}
