@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "അനിമേറ്റഡ് ചിത്രങ്ങൾ"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "ആനിമേഷൻ രൂപങ്ങൾ"
 
@@ -147,6 +150,9 @@ msgstr "ടെക്സ്റ്റ് സ്ക്രോളിംഗ്"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "ചെരിവ് സെൻസർ"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "കൂടുതൽ വിവരങ്ങൾ"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP Game"

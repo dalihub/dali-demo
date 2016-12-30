@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "动态图"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "动画造型"
 
@@ -147,6 +150,9 @@ msgstr "滚动文字"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "倾斜传感器"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "更多信息"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP游戏"

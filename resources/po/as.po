@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "অ্যানিমেটেড ইমেজ"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "অ্যানিমেটেড আকার"
 
@@ -147,6 +150,9 @@ msgstr "অকনিষ্ঠ অৰ্জুন বঁটা"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "টিল্ট অনুভূতি"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Tooltip"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP খেলা"

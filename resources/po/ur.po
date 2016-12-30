@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "متحرک تصاویر"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "متحرک شکلیں"
 
@@ -147,6 +150,9 @@ msgstr "حروف کاسکرال "
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "ٹلٹ سینسر"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "مزید معلومات"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP گیم"

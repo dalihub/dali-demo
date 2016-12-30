@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "animoituja kuvia"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "Animoidut Muodot"
 
@@ -147,6 +150,9 @@ msgstr "Tekstin Vieritys"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "Kallistustunnistin"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Tooltip"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP peli"
