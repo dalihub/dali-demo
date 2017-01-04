@@ -1,3 +1,7 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "애니메이션 이미지"
+
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "애니메이션 모양"
 
@@ -27,6 +31,9 @@ msgstr "이펙트 뷰"
 
 msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
 msgstr "이모티콘 텍스트"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox 데모"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "이미지 조정 샘플링"
@@ -144,3 +151,9 @@ msgstr "텍스트 스크롤"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "기울기 센서"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "툴팁"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP Game"

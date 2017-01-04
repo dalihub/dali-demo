@@ -139,7 +139,6 @@ const char*const FRAG_SHADER = DALI_COMPOSE_SHADER (
 
 struct MetaballInfo
 {
-  //ShaderEffect shader;
   Actor   actor;
   Vector2 position;
   float   radius;
@@ -187,7 +186,6 @@ private:
   Actor             mCompositionActor;
 
   //Motion
-  bool              mExitClick;
   Vector2           mCurrentTouchPosition;
   Vector2           mMetaballPosVariation;
   Vector2           mMetaballPosVariationFrom;

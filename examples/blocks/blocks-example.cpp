@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -214,7 +214,29 @@ public:
    */
   ExampleController( Application& application )
   : mApplication( application ),
-    mView()
+    mView(),
+    mContentLayer(),
+    mBall(),
+    mBallStartPosition(),
+    mBallVelocity(),
+    mBallAnimation(),
+    mPaddle(),
+    mPaddleImage(),
+    mPaddleHandle(),
+    mPaddleHitMargin(),
+    mWobbleAnimation(),
+    mWobbleProperty( Property::INVALID_INDEX ),
+    mLevelContainer(),
+    mBrickImageMap(),
+    mDragAnimation(),
+    mDragActor(),
+    mRelativeDragPoint(),
+    mDestroyAnimationMap(),
+    mPaddleFullSize(),
+    mLevel( 0 ),
+    mLives( TOTAL_LIVES ),
+    mBrickCount( 0 )
+
   {
     // Connect to the Application's Init and orientation changed signal
     mApplication.InitSignal().Connect(this, &ExampleController::Create);

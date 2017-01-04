@@ -92,7 +92,8 @@ Property::Index GetChannelProperty( int index )
 
 
 StylingApplication::StylingApplication( Application& application )
-: mApplication( application )
+: mApplication( application ),
+  mCurrentTheme( 0 )
 {
   application.InitSignal().Connect( this, &StylingApplication::Create );
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/object/handle-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
 
@@ -107,8 +108,15 @@ public:
 
   TextLabelExample( Application& application )
   : mApplication( application ),
+    mLabel(),
+    mContainer(),
+    mGrabCorner(),
+    mPanGestureDetector(),
+    mLayoutSize(),
     mLanguageId( 0u ),
-    mAlignment( 0u )
+    mAlignment( 0u ),
+    mHueAngleIndex( Property::INVALID_INDEX ),
+    mOverrideMixColorIndex( Property::INVALID_INDEX )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &TextLabelExample::Create );
@@ -163,7 +171,7 @@ public:
 
     mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
     Renderer bgRenderer = mLabel.GetRendererAt(0);
-    mOverrideMixColorIndex = bgRenderer.GetPropertyIndex( ColorVisual::Property::MIX_COLOR );
+    mOverrideMixColorIndex = DevelHandle::GetPropertyIndex( bgRenderer, ColorVisual::Property::MIX_COLOR );
 
     Constraint constraint = Constraint::New<Vector4>( bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
     constraint.AddSource( Source( mLabel, mHueAngleIndex ) );

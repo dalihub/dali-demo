@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,17 @@ class BubbleEffectExample : public ConnectionTracker
 public:
   BubbleEffectExample(Application &app)
   : mApp(app),
+    mBackground(),
+    mBubbleEmitter(),
+    mEmitAnimation(),
+    mChangeBackgroundButton(),
+    mChangeBubbleShapeButton(),
+    mTimerForBubbleEmission(),
     mHSVDelta( Vector3( 0.f, 0.f, 0.5f ) ),
+    mCurrentTouchPosition(),
+    mEmitPosition(),
+    mAnimateComponentCount( 0 ),
+    mNonMovementCount( 0 ),
     mTimerInterval( 16 ),
     mCurrentBackgroundImageId( 0 ),
     mCurrentBubbleShapeImageId( 0 ),
@@ -117,11 +127,11 @@ private:
 
     // Create and initialize the BubbleEmitter object
     mBubbleEmitter = Toolkit::BubbleEmitter::New( stageSize,
-                                                  DemoHelper::LoadImage( BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId] ),
+                                                  DemoHelper::LoadTexture( BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId] ),
                                                   DEFAULT_NUMBER_OF_BUBBLES,
                                                   DEFAULT_BUBBLE_SIZE);
-    mBackgroundImage = DemoHelper::LoadStageFillingImage( BACKGROUND_IMAGES[mCurrentBackgroundImageId] );
-    mBubbleEmitter.SetBackground( mBackgroundImage, mHSVDelta );
+
+    mBubbleEmitter.SetBackground( DemoHelper::LoadStageFillingTexture( BACKGROUND_IMAGES[mCurrentBackgroundImageId] ), mHSVDelta );
 
     // Get the root actor of all bubbles, and add it to stage.
     Actor bubbleRoot = mBubbleEmitter.GetRootActor();
@@ -129,8 +139,8 @@ private:
     bubbleRoot.SetZ(0.1f); // Make sure the bubbles displayed on top og the background.
     content.Add( bubbleRoot );
 
-    // Add the background image actor to stage
-    mBackground.SetBackgroundImage( mBackgroundImage );
+    // Set the application background
+    mBackground.SetProperty( Toolkit::Control::Property::BACKGROUND, BACKGROUND_IMAGES[ mCurrentBackgroundImageId ] );
 
     // Set up the timer to emit bubble regularly when the finger is touched down but not moved
     mTimerForBubbleEmission = Timer::New( mTimerInterval );
@@ -240,15 +250,17 @@ private:
   {
     if(button == mChangeBackgroundButton)
     {
-      mBackgroundImage = DemoHelper::LoadStageFillingImage( BACKGROUND_IMAGES[ ++mCurrentBackgroundImageId % NUM_BACKGROUND_IMAGES  ] );
+      mCurrentBackgroundImageId = (mCurrentBackgroundImageId+1) % NUM_BACKGROUND_IMAGES;
 
-      mBubbleEmitter.SetBackground( mBackgroundImage, mHSVDelta );
+      //Update bubble emitter background
+      mBubbleEmitter.SetBackground( DemoHelper::LoadStageFillingTexture( BACKGROUND_IMAGES[ mCurrentBackgroundImageId  ] ), mHSVDelta );
 
-      mBackground.SetBackgroundImage( mBackgroundImage );
+      // Set the application background
+      mBackground.SetProperty( Toolkit::Control::Property::BACKGROUND, BACKGROUND_IMAGES[ mCurrentBackgroundImageId ] );
     }
     else if( button == mChangeBubbleShapeButton )
     {
-      mBubbleEmitter.SetShapeImage( DemoHelper::LoadImage( BUBBLE_SHAPE_IMAGES[ ++mCurrentBubbleShapeImageId % NUM_BUBBLE_SHAPE_IMAGES ] ) );
+      mBubbleEmitter.SetBubbleShape( DemoHelper::LoadTexture( BUBBLE_SHAPE_IMAGES[ ++mCurrentBubbleShapeImageId % NUM_BUBBLE_SHAPE_IMAGES ] ) );
     }
     return true;
   }
@@ -270,7 +282,6 @@ private:
 private:
 
   Application&               mApp;
-  Image                      mBackgroundImage;
   Dali::Toolkit::Control     mBackground;
 
   Toolkit::BubbleEmitter     mBubbleEmitter;

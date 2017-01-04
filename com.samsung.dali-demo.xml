@@ -172,4 +172,16 @@
 	<ui-application appid="contact-cards.example" exec="/usr/apps/com.samsung.dali-demo/bin/contact-cards.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Contact Cards</label>
 	</ui-application>
+	<ui-application appid="fpp-game.example" exec="/usr/apps/com.samsung.dali-demo/bin/fpp-game.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>First Person Camera Game</label>
+	</ui-application>
+	<ui-application appid="transitions.example" exec="/usr/apps/com.samsung.dali-demo/bin/transitions.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Visual Transitions</label>
+	</ui-application>
+	<ui-application appid="animated-images.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-images.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Animated images</label>
+	</ui-application>
+	<ui-application appid="tooltip.example" exec="/usr/apps/com.samsung.dali-demo/bin/tooltip.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Tooltip</label>
+	</ui-application>
 </manifest>

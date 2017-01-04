@@ -18,6 +18,8 @@
 // EXTERNAL INCLUDES
 #include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -119,7 +121,19 @@ public:
    * @param[in] application The application instance
    */
   ExampleController( Application& application )
-  : mApplication( application )
+  : mApplication( application ),
+    mStageSize(),
+    mShader(),
+    mGeometry(),
+    mRenderer(),
+    mMeshActor(),
+    mButtons(),
+    mMinusButton(),
+    mPlusButton(),
+    mIndicesCountLabel(),
+    mPrimitiveType( Geometry::LINES ),
+    mCurrentIndexCount( 0 ),
+    mMaxIndexCount( 0 )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &ExampleController::Create );
@@ -228,13 +242,15 @@ public:
 
     for( int i = 0; i < 3; ++i )
     {
-      Property::Map labelMap;
-      labelMap[ "text" ]      = labels[i];
-      labelMap[ "textColor" ] = Vector4( 0.8f, 0.8f, 0.8f, 1.0f );
-
       Dali::Toolkit::RadioButton radio = Dali::Toolkit::RadioButton::New();
 
-      radio.SetProperty( Dali::Toolkit::Button::Property::LABEL, labelMap );
+      radio.SetProperty( Toolkit::Button::Property::LABEL,
+                                 Property::Map()
+                                  .Add( Toolkit::Visual::Property::TYPE, Toolkit::DevelVisual::TEXT )
+                                  .Add( Toolkit::TextVisual::Property::TEXT, labels[i] )
+                                  .Add( Toolkit::TextVisual::Property::TEXT_COLOR, Vector4( 0.8f, 0.8f, 0.8f, 1.0f ) )
+                               );
+
       radio.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radio.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radio.SetSelected( i == 0 );

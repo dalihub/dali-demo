@@ -110,6 +110,70 @@
           "targetValue":[1,1,1]
         }
       ]
+    },
+    "BeatControl":
+    {
+      "beatVisual":{
+        "visualType":"IMAGE",
+        "url":"{APPLICATION_RESOURCE_PATH}/images/Logo-for-demo.png"
+      },
+
+      "bounceTransition":
+      [
+        {
+          "target":"beatVisual",
+          "property":"size",
+          "initialValue":[0.5, 0.5],
+          "targetValue":[0.75, 0.75],
+          "animator":
+          {
+            "alphaFunction":"BOUNCE",
+            "timePeriod":
+            {
+              "duration":0.5,
+              "delay":0
+            }
+          }
+        }
+      ],
+
+      "leftTransition":
+      [
+        {
+          "target":"beatVisual",
+          "property":"offset",
+          "initialValue":[0, 0],
+          "targetValue":[0.25, 0],
+          "animator":
+          {
+            "alphaFunction":"BOUNCE",
+            "timePeriod":
+            {
+              "duration":0.5,
+              "delay":0
+            }
+          }
+        }
+      ],
+
+      "upTransition":
+      [
+        {
+          "target":"beatVisual",
+          "property":"offset",
+          "initialValue":[0, 0],
+          "targetValue":[0, 0.25],
+          "animator":
+          {
+            "alphaFunction":"BOUNCE",
+            "timePeriod":
+            {
+              "duration":0.5,
+              "delay":0
+            }
+          }
+        }
+      ]
     }
   }
 }

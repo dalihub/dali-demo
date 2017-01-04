@@ -497,7 +497,6 @@ private:
   Toolkit::CheckBoxButton mCheckboxButton3;
 
   Animation      mAnimation;
-  float          mLastPoint;
 
   Toolkit::ImageView mImage;
 };

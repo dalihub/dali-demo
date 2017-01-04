@@ -164,7 +164,8 @@ private:
 
 NewWindowController::NewWindowController( Application& application )
 : mApplication(application),
-  mNeedNewAnimation(true)
+  mNeedNewAnimation(true),
+  mAnimateComponentCount( 0 )
 {
   mApplication.InitSignal().Connect(this, &NewWindowController::Create);
   mApplication.TerminateSignal().Connect(this, &NewWindowController::Destroy);
@@ -242,10 +243,10 @@ void NewWindowController::Destroy( Application& app )
 void NewWindowController::AddBubbles( Actor& parentActor, const Vector2& stageSize)
 {
   mEmitter = Toolkit::BubbleEmitter::New( stageSize,
-                                          DemoHelper::LoadImage( DEMO_IMAGE_DIR "bubble-ball.png" ),
+                                          DemoHelper::LoadTexture( DEMO_IMAGE_DIR "bubble-ball.png" ),
                                           200, Vector2( 5.0f, 5.0f ) );
 
-  Image background = DemoHelper::LoadImage(BACKGROUND_IMAGE);
+  Texture background = DemoHelper::LoadTexture(BACKGROUND_IMAGE);
   mEmitter.SetBackground( background, Vector3(0.5f, 0.f,0.5f) );
   mEmitter.SetBubbleDensity( 9.f );
   Actor bubbleRoot = mEmitter.GetRootActor();

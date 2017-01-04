@@ -16,6 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <string.h>
 
 using namespace Dali;
@@ -47,6 +48,7 @@ public:
   ImageSvgController( Application& application )
   : mApplication( application ),
     mScale( 1.f ),
+    mScaleAtPinchStart( 1.0f ),
     mIndex( 0 )
   {
     // Connect to the Application's Init signal
@@ -85,6 +87,7 @@ public:
     changeButton.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     stage.Add( changeButton );
     changeButton.ClickedSignal().Connect( this, &ImageSvgController::OnChangeButtonClicked );
+    changeButton.SetProperty( DevelActor::Property::SIBLING_ORDER, 1 );
 
     // Push button, for resetting the actor size and position
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
@@ -93,12 +96,14 @@ public:
     resetButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
     stage.Add( resetButton );
     resetButton.ClickedSignal().Connect( this, &ImageSvgController::OnResetButtonClicked );
+    resetButton.SetProperty( DevelActor::Property::SIBLING_ORDER, 1 );
 
     // Create and put imageViews to stage
     for( unsigned int i=0; i<4u; i++)
     {
       mSvgActor[i] = Toolkit::ImageView::New(SVG_IMAGES[mIndex+i]);
       mSvgActor[i].SetSize( mActorSize );
+      mSvgActor[i].TranslateBy( Vector3( 0.0, stageSize.height * 0.05, 0.0f ) );
       stage.Add( mSvgActor[i] );
     }
     mSvgActor[0].SetParentOrigin( ParentOrigin::CENTER );

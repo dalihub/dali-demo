@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "Animierte Bilder"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "Animierte Formen"
 
@@ -30,6 +33,9 @@ msgstr "Emoji"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "Bild Montage und Sampling"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox Playground"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
 msgstr "Bildskalierung"
@@ -144,3 +150,9 @@ msgstr "Text Scrollen"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "Neigungssensor"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Kurzinfo"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP Spiel"

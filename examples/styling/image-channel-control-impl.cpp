@@ -17,7 +17,10 @@
 #include "image-channel-control-impl.h"
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/object/type-registry-helper.h>
+#include <dali-toolkit/devel-api/align-enums.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+
 #include <cstdio>
 
 using namespace Dali; // Needed for macros
@@ -67,6 +70,7 @@ DALI_TYPE_REGISTRATION_END();
 Internal::ImageChannelControl::ImageChannelControl()
 : Control( ControlBehaviour( REQUIRES_STYLE_CHANGE_SIGNALS ) ),
   mChannels( 1.0f, 1.0f, 1.0f ),
+  mChannelIndex( Property::INVALID_INDEX ),
   mVisibility(true),
   mTargetVisibility(true)
 {
@@ -107,8 +111,6 @@ void ImageChannelControl::SetImage( const std::string& url )
 void ImageChannelControl::SetVisibility( bool visibility )
 {
   printf("ImageChannelControl %s: SetVisibility( %s )\n", Self().GetName().c_str(), visibility?"T":"F" );
-
-  Animation animation;
 
   if( mAnimation )
   {
@@ -175,7 +177,15 @@ void ImageChannelControl::OnSizeSet( const Vector3& targetSize )
   if( mVisual )
   {
     Vector2 size( targetSize );
-    mVisual.SetSize( size );
+    Property::Map transformMap;
+    transformMap
+      .Add( Toolkit::DevelVisual::Transform::Property::OFFSET, Vector2(0.0f, 0.0f) )
+      .Add( Toolkit::DevelVisual::Transform::Property::SIZE, Vector2(1.0f, 1.0f) )
+      .Add( Toolkit::DevelVisual::Transform::Property::ORIGIN, Toolkit::Align::CENTER )
+      .Add( Toolkit::DevelVisual::Transform::Property::ANCHOR_POINT, Toolkit::Align::CENTER )
+      .Add( Toolkit::DevelVisual::Transform::Property::OFFSET_SIZE_MODE, Vector4::ZERO );
+
+    mVisual.SetTransformAndSize( transformMap, size );
   }
 }
 

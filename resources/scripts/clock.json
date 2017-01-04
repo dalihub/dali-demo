@@ -104,7 +104,6 @@
     }
   },
   "connections": [],
-  "shader-effects": {},
   "gui-builder-device-height": 600,
   "gui-builder-device-width": 400,
   "gui-builder-json-version": "781"

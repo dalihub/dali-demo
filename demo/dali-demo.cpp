@@ -36,6 +36,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   // Create the demo launcher
   DaliTableView demo(app);
 
+  demo.AddExample(Example("animated-images.example", DALI_DEMO_STR_TITLE_ANIMATED_IMAGES));
   demo.AddExample(Example("animated-shapes.example", DALI_DEMO_STR_TITLE_ANIMATED_SHAPES));
   demo.AddExample(Example("bubble-effect.example", DALI_DEMO_STR_TITLE_BUBBLES));
   demo.AddExample(Example("blocks.example", DALI_DEMO_STR_TITLE_BLOCKS));
@@ -82,8 +83,12 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
   demo.AddExample(Example("styling.example", DALI_DEMO_STR_TITLE_STYLING));
   demo.AddExample(Example("sparkle.example", DALI_DEMO_STR_TITLE_SPARKLE));
+  demo.AddExample(Example("transitions.example", DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS));
   demo.AddExample(Example("progress-bar.example", DALI_DEMO_STR_TITLE_PROGRESS_BAR));
   demo.AddExample(Example("contact-cards.example", DALI_DEMO_STR_TITLE_CONTACT_CARDS));
+  demo.AddExample(Example("flex-container.example", DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND));
+  demo.AddExample(Example("fpp-game.example", DALI_DEMO_STR_TITLE_FPP_GAME));
+  demo.AddExample(Example("tooltip.example", DALI_DEMO_STR_TITLE_TOOLTIP));
 
   demo.SortAlphabetically( true );
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,6 +55,7 @@ const char* const POPUP_BUTTON_TITLE_CONTENT_TEXT_ID = "POPUP_BUTTON_TITLE_CONTE
 const char* const POPUP_BUTTON_TITLE_LARGE_CONTENT_BUTTONS_ID = "POPUP_BUTTON_TITLE_LARGE_CONTENT_BUTTONS";
 const char* const POPUP_BUTTON_FIXED_SIZE_ID = "POPUP_BUTTON_FIXED_SIZE_ID";
 const char* const POPUP_BUTTON_COMPLEX_ID = "POPUP_BUTTON_COMPLEX";
+const char* const POPUP_BUTTON_CUSTOM_STYLE = "POPUP_BUTTON_CUSTOM_STYLE";
 
 // Names to give Popup PushButton controls.
 const char* const POPUP_CONTROL_OK_NAME = "controlOk";
@@ -78,11 +79,13 @@ const ButtonItem POPUP_BUTTON_ITEMS[] = {
     { POPUP_BUTTON_CONTENT_TEXT_ID,                "Content Text" },
     { POPUP_BUTTON_CONTENT_IMAGE_ID,               "Content Image" },
     { POPUP_BUTTON_TITLE_CONTENT_TEXT_ID,          "Title + Content" },
-    { POPUP_BUTTON_TITLE_LARGE_CONTENT_BUTTONS_ID, "Title + Large Content + Buttons" }
+    { POPUP_BUTTON_TITLE_LARGE_CONTENT_BUTTONS_ID, "Title + Large Content + Buttons" },
+    { POPUP_BUTTON_CUSTOM_STYLE,                   "Custom Styled Popup" }
 };
 
 const int POPUP_BUTTON_ITEMS_COUNT = sizeof( POPUP_BUTTON_ITEMS ) / sizeof( POPUP_BUTTON_ITEMS[0] );
 
+const char * const CUSTOM_POPUP_STYLE_NAME = "CustomPopupStyle"; ///< Custom popup style name
 }  // anonymous namespace
 
 
@@ -361,7 +364,7 @@ public:
       // Set up the container's layout.
       footer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       footer.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
-      footer.SetSize( 0.0f, 80.0f );
+      footer.SetSize( 0.0f, 130.0f );
       footer.SetAnchorPoint( AnchorPoint::CENTER );
       footer.SetParentOrigin( ParentOrigin::CENTER );
 
@@ -650,6 +653,21 @@ public:
       mPopup.SetContent( content );
 
       SetupPopup( mPopup, button );
+    }
+    else if( button.GetName() == POPUP_BUTTON_CUSTOM_STYLE )
+    {
+      mPopup = CreateConfirmationPopup( 2 );
+
+      Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( "Styled Popup" );
+      titleActor.SetName( "titleActor" );
+      titleActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::RED );
+      titleActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
+      titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+      mPopup.SetTitle( titleActor );
+
+      SetupPopup( mPopup, button );
+
+      mPopup.SetStyleName( CUSTOM_POPUP_STYLE_NAME );
     }
 
     return true;
