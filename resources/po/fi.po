@@ -13,6 +13,9 @@ msgstr "Kuplat"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Painikkeet"
 
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "Leikkaaminen"
+
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "Liukuväri"
 
