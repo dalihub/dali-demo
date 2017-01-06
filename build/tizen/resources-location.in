@@ -1,6 +1,6 @@
 /**
- * This file defines the location dali-demo resources
-   It is used exclusively for Ubuntu builds where an application resource directory is explicity defined.
+ * This file defines the location dali-demo resources.
+ * It is used for builds where an application resource directory is NOT explicity defined.
  */
 
 #include <cstdlib>
