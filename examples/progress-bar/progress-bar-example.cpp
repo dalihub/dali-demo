@@ -25,7 +25,7 @@ using Dali::Toolkit::ProgressBar;
 
 namespace
 {
-
+const char * const THEME_PATH( DEMO_STYLE_DIR "progress-bar-example-theme.json" ); ///< The theme used for this example
 const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "background-gradient.jpg";
 const char* const TOOLBAR_IMAGE = DEMO_IMAGE_DIR "top-bar.png";
 const char* const TOOLBAR_TITLE = "Progress Bar";
@@ -36,11 +36,14 @@ const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 const int MARGIN_SIZE = 10;
 const int TOP_MARGIN = 85;
 
+const unsigned int TIMER_TIMEOUT_TIME = 50;
+const float PROGRESS_INCREMENT_VALUE = 0.01f;
+
 }  // namespace
 
-/** This example shows how to create and use PROGRESS BAR.
+/**
+ * @brief Shows how to create a default progress bar and custom styled progress bars.
  */
-
 class ProgressBarExample: public ConnectionTracker
 {
 public:
@@ -53,10 +56,7 @@ public:
     mApplication.InitSignal().Connect( this, &ProgressBarExample::Create );
   }
 
-  ~ProgressBarExample()
-  {
-    // Nothing to do here
-  }
+private:
 
   void Create( Application& application )
   {
@@ -75,11 +75,25 @@ public:
                                             TOOLBAR_IMAGE,
                                             TOOLBAR_TITLE );
 
-    mProgressBar = ProgressBar::New();
-    mProgressBar.SetParentOrigin(ParentOrigin::TOP_CENTER);
-    mProgressBar.SetAnchorPoint(AnchorPoint::TOP_CENTER);
-    mProgressBar.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mProgressBar.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    mProgressBarDefault = ProgressBar::New();
+    mProgressBarDefault.SetParentOrigin(ParentOrigin::TOP_CENTER);
+    mProgressBarDefault.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    mProgressBarDefault.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    mProgressBarDefault.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+
+    mProgressBarCustomStyle1 = ProgressBar::New();
+    mProgressBarCustomStyle1.SetStyleName( "ProgressBarCustomStyle1" );
+    mProgressBarCustomStyle1.SetParentOrigin(ParentOrigin::TOP_CENTER);
+    mProgressBarCustomStyle1.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    mProgressBarCustomStyle1.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    mProgressBarCustomStyle1.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+
+    mProgressBarCustomStyle2 = ProgressBar::New();
+    mProgressBarCustomStyle2.SetStyleName( "ProgressBarCustomStyle2" );
+    mProgressBarCustomStyle2.SetParentOrigin(ParentOrigin::TOP_CENTER);
+    mProgressBarCustomStyle2.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    mProgressBarCustomStyle2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    mProgressBarCustomStyle2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
 
     Toolkit::TableView contentTable = Toolkit::TableView::New(2, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
@@ -97,18 +111,25 @@ public:
     mContentLayer.Add( contentTable );
 
     // Image selector for progress bar
-    Toolkit::TableView progressBackground = Toolkit::TableView::New( 1, 1 );
+    Toolkit::TableView progressBackground = Toolkit::TableView::New( 3, 1 );
     progressBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     progressBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     progressBackground.SetBackgroundColor( BACKGROUND_COLOUR );
     progressBackground.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
     progressBackground.SetRelativeWidth( 0, 1.0f );
-    progressBackground.SetFitHeight( 0 );
+
+    for( unsigned int i = 0; i < progressBackground.GetRows(); ++i )
+    {
+      progressBackground.SetFitHeight( i );
+    }
+
     contentTable.Add( progressBackground );
-    progressBackground.Add( mProgressBar );
+    progressBackground.Add( mProgressBarDefault );
+    progressBackground.Add( mProgressBarCustomStyle1 );
+    progressBackground.Add( mProgressBarCustomStyle2 );
 
     // Create buttons
-    Toolkit::TableView buttonBackground = Toolkit::TableView::New( 2, 1 );
+    Toolkit::TableView buttonBackground = Toolkit::TableView::New( 1, 1 );
     buttonBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     buttonBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     buttonBackground.SetBackgroundColor( BACKGROUND_COLOUR );
@@ -121,73 +142,70 @@ public:
 
     contentTable.Add( buttonBackground );
 
-    mSetProgressButton = Toolkit::PushButton::New();
-    mSetProgressButton.SetLabelText( "Set Progress" );
-    mSetProgressButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    mSetProgressButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-    mSetProgressButton.ClickedSignal().Connect( this, &ProgressBarExample::OnSetProgressButtonSelected );
-
-    buttonBackground.Add( mSetProgressButton );
-
     mResetProgressButton = Toolkit::PushButton::New();
-    mResetProgressButton.SetLabelText( "Reset Progress" );
+    mResetProgressButton.SetLabelText( "Reset" );
     mResetProgressButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mResetProgressButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     mResetProgressButton.ClickedSignal().Connect( this, &ProgressBarExample::OnResetProgressButtonSelected );
 
     buttonBackground.Add( mResetProgressButton );
- }
 
- bool OnResetProgressButtonSelected( Toolkit::Button button )
- {
-   mProgressValue = 0.0f;
-   mProgressBar.SetProperty(ProgressBar::Property::PROGRESS_VALUE, 0.0f);
-   return true;
- }
+    // Create a timer to update the progress of all progress bars
+    mTimer = Timer::New( TIMER_TIMEOUT_TIME );
+    mTimer.TickSignal().Connect( this, &ProgressBarExample::OnTimerTick );
+    mTimer.Start();
+  }
 
- bool OnSetProgressButtonSelected( Toolkit::Button button )
- {
-   mProgressValue += 0.1f;
-   mProgressBar.SetProperty(ProgressBar::Property::PROGRESS_VALUE, mProgressValue);
-   return true;
- }
+  bool OnTimerTick()
+  {
+    mProgressValue += PROGRESS_INCREMENT_VALUE;
+    mProgressBarDefault.SetProperty(ProgressBar::Property::PROGRESS_VALUE, mProgressValue);
+    mProgressBarCustomStyle1.SetProperty(ProgressBar::Property::PROGRESS_VALUE, mProgressValue);
+    mProgressBarCustomStyle2.SetProperty(ProgressBar::Property::PROGRESS_VALUE, mProgressValue);
 
- void OnKeyEvent( const KeyEvent& event )
- {
-   if( event.state == KeyEvent::Down )
-   {
-     if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
-     {
-       // Exit application when click back or escape.
-       mApplication.Quit();
-     }
-   }
- }
+    return ( mProgressValue < 1.0f ); // Only call again if progress has NOT got to the end
+  }
 
-private:
+  bool OnResetProgressButtonSelected( Toolkit::Button button )
+  {
+    mProgressValue = 0.0f;
+    mProgressBarDefault.SetProperty(ProgressBar::Property::PROGRESS_VALUE, 0.0f);
+    mProgressBarCustomStyle1.SetProperty(ProgressBar::Property::PROGRESS_VALUE, 0.0f);
+    mProgressBarCustomStyle2.SetProperty(ProgressBar::Property::PROGRESS_VALUE, 0.0f);
+    mTimer.Start();
+    return true;
+  }
+
+  void OnKeyEvent( const KeyEvent& event )
+  {
+    if( event.state == KeyEvent::Down )
+    {
+      if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      {
+        // Exit application when click back or escape.
+        mApplication.Quit();
+      }
+    }
+  }
+
+  // Data
 
   Application&      mApplication;
+  Timer             mTimer;
   Toolkit::Control  mView;                              ///< The View instance.
   Toolkit::ToolBar  mToolBar;                           ///< The View's Toolbar.
   Layer             mContentLayer;                      ///< Content layer.
-  ProgressBar       mProgressBar;
-  Toolkit::PushButton mSetProgressButton;
+  ProgressBar       mProgressBarDefault;
+  ProgressBar       mProgressBarCustomStyle1;
+  ProgressBar       mProgressBarCustomStyle2;
   Toolkit::PushButton mResetProgressButton;
   float mProgressValue;
 };
 
-void RunTest( Application& application )
-{
-  ProgressBarExample test( application );
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
 int DALI_EXPORT_API main( int argc, char **argv )
 {
-  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  Application application = Application::New( &argc, &argv, THEME_PATH );
+  ProgressBarExample test( application );
+  application.MainLoop();
   return 0;
 }
