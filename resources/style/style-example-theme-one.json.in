@@ -312,6 +312,71 @@
             }
           }
         }
+      ],
+      "checkTransition":
+      [
+        {
+          "target":"checkboxFgVisual",
+          "property":"pixelArea",
+          "initialValue":[0.0, 0.0, 0.0, 1.0],
+          "targetValue":[0.0, 0.0, 1.0, 1.0],
+          "animator":
+          {
+            "alphaFunction":"EASE_IN",
+            "timePeriod":
+            {
+              "duration":0.4,
+              "delay":0
+            }
+          }
+        },
+        {
+          "target":"checkboxFgVisual",
+          "property":"size",
+          "initialValue":[0.0, 0.37],
+          "targetValue":[0.12, 0.37],
+          "animator":
+          {
+            "alphaFunction":"EASE_IN",
+            "timePeriod":
+            {
+              "duration":0.4,
+              "delay":0
+            }
+          }
+        }
+      ],
+      "uncheckTransition":
+      [
+        {
+          "target":"checkboxFgVisual",
+          "property":"pixelArea",
+          "initialValue":[0.0, 0.0, 1.0, 1.0],
+          "targetValue":[0.0, 0.0, 0.0, 1.0],
+          "animator":
+          {
+            "alphaFunction":"EASE_OUT",
+            "timePeriod":
+            {
+              "duration":0.4,
+              "delay":0
+            }
+          }
+        },
+        {
+          "target":"checkboxFgVisual",
+          "property":"size",
+          "targetValue":[0.0, 0.37],
+          "animator":
+          {
+            "alphaFunction":"EASE_OUT",
+            "timePeriod":
+            {
+              "duration":0.4,
+              "delay":0
+            }
+          }
+        }
       ]
     }
   }

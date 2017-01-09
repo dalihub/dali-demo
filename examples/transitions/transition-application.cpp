@@ -106,7 +106,6 @@ void TransitionApplication::Create( Application& application )
   mShadowButton = ShadowButton::New();
   mShadowButton.SetName("ShadowButton");
   mShadowButton.SetActiveState( false );
-  mShadowButton.SetCheckState( false );
   mShadowButton.SetAnchorPoint( AnchorPoint::CENTER );
   mShadowButton.SetParentOrigin( ParentOrigin::CENTER );
   mShadowButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -137,6 +136,7 @@ void TransitionApplication::Create( Application& application )
   }
   SetLabelText( mActionButtons[0], "Activate" );
   SetLabelText( mActionButtons[1], "Check" );
+  mActionButtons[1].SetProperty( Button::Property::DISABLED, true );
 
   contentLayout.Add( actionButtonLayout );
   contentLayout.SetFitHeight(2);
@@ -159,12 +159,21 @@ bool TransitionApplication::OnActionButtonClicked( Button button )
       {
         SetLabelText( button, "Deactivate" );
       }
+      mActionButtons[1].SetProperty( Button::Property::DISABLED, activeState );
       break;
     }
     case 1:
     {
       bool checkState = mShadowButton.GetCheckState();
       mShadowButton.SetCheckState( ! checkState );
+      if( checkState )
+      {
+        SetLabelText( button, "Check" );
+      }
+      else
+      {
+        SetLabelText( button, "Uncheck" );
+      }
       break;
     }
     case 2:

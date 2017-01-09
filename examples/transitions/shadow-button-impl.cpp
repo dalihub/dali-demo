@@ -45,7 +45,8 @@ DALI_TYPE_REGISTRATION_BEGIN( ShadowButton, Dali::Toolkit::Button, Create );
 
 DALI_PROPERTY_REGISTRATION( Demo, ShadowButton, "activeTransition", ARRAY, ACTIVE_TRANSITION );
 DALI_PROPERTY_REGISTRATION( Demo, ShadowButton, "inactiveTransition", ARRAY, INACTIVE_TRANSITION );
-DALI_PROPERTY_REGISTRATION( Demo, ShadowButton, "clickTransition", ARRAY, CLICK_TRANSITION );
+DALI_PROPERTY_REGISTRATION( Demo, ShadowButton, "checkTransition", ARRAY, CHECK_TRANSITION );
+DALI_PROPERTY_REGISTRATION( Demo, ShadowButton, "uncheckTransition", ARRAY, UNCHECK_TRANSITION );
 DALI_PROPERTY_REGISTRATION( Demo, ShadowButton, "backgroundVisual", MAP, BACKGROUND_VISUAL );
 DALI_PROPERTY_REGISTRATION( Demo, ShadowButton, "checkboxBgVisual", MAP, CHECKBOX_BG_VISUAL );
 DALI_PROPERTY_REGISTRATION( Demo, ShadowButton, "checkboxFgVisual", MAP, CHECKBOX_FG_VISUAL );
@@ -123,7 +124,18 @@ bool ShadowButton::GetActiveState()
 void ShadowButton::SetCheckState( bool checkState )
 {
   mCheckState = checkState;
-  EnableVisual( Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, mCheckState );
+  EnableVisual( Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, true );
+  if( Self().OnStage() )
+  {
+    if( checkState )
+    {
+      StartTransition( Demo::ShadowButton::Property::CHECK_TRANSITION );
+    }
+    else
+    {
+      StartTransition( Demo::ShadowButton::Property::UNCHECK_TRANSITION );
+    }
+  }
   RelayoutRequest();
 }
 
@@ -173,6 +185,11 @@ void ShadowButton::OnTransitionFinished( Animation& src )
         case Demo::ShadowButton::Property::INACTIVE_TRANSITION:
         {
           // Consider relayouting the text.
+          break;
+        }
+        case Demo::ShadowButton::Property::UNCHECK_TRANSITION:
+        {
+          EnableVisual( Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, false );
           break;
         }
       }
@@ -328,7 +345,6 @@ void ShadowButton::ResetVisual(
   if( map )
   {
     visual = Toolkit::VisualFactory::Get().CreateVisual( *map );
-    RegisterVisual( index, visual );
 
     // Set the appropriate depth index.
     // @todo Should be able to set this from the style sheet
@@ -336,21 +352,25 @@ void ShadowButton::ResetVisual(
     {
       case Demo::ShadowButton::Property::BACKGROUND_VISUAL:
       {
+        RegisterVisual( index, visual );
         visual.SetDepthIndex(0.0f);
         break;
       }
       case Demo::ShadowButton::Property::CHECKBOX_BG_VISUAL:
       {
+        RegisterVisual( index, visual );
         visual.SetDepthIndex(1.0f);
         break;
       }
       case Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL:
       {
+        RegisterVisual( index, visual, mCheckState );
         visual.SetDepthIndex(2.0f);
         break;
       }
       case Demo::ShadowButton::Property::LABEL_VISUAL:
       {
+        RegisterVisual( index, visual );
         visual.SetDepthIndex(1.0f);
         break;
       }
@@ -486,7 +506,8 @@ void ShadowButton::SetProperty( BaseObject* object, Property::Index index, const
       }
       case Demo::ShadowButton::Property::ACTIVE_TRANSITION:
       case Demo::ShadowButton::Property::INACTIVE_TRANSITION:
-      case Demo::ShadowButton::Property::CLICK_TRANSITION:
+      case Demo::ShadowButton::Property::CHECK_TRANSITION:
+      case Demo::ShadowButton::Property::UNCHECK_TRANSITION:
       {
         impl.ResetTransition( index, value );
         break;
