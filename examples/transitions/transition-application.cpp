@@ -125,9 +125,9 @@ void TransitionApplication::Create( Application& application )
     mActionButtons[i].ClickedSignal().Connect( this, &TransitionApplication::OnActionButtonClicked );
     actionButtonLayout.AddChild( mActionButtons[i], TableView::CellPosition( 0, 1+i ) );
   }
-  mActionButtons[0].SetLabelText( "Bounce" );
-  mActionButtons[1].SetLabelText( "X" );
-  mActionButtons[2].SetLabelText( "Y" );
+  mActionButtons[0].SetProperty( Toolkit::Button::Property::LABEL, "Bounce" );
+  mActionButtons[1].SetProperty( Toolkit::Button::Property::LABEL, "X" );
+  mActionButtons[2].SetProperty( Toolkit::Button::Property::LABEL, "Y" );
 
   contentLayout.Add( actionButtonLayout );
   contentLayout.SetFitHeight(2);

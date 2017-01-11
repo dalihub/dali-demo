@@ -143,7 +143,7 @@ private:
     contentTable.Add( buttonBackground );
 
     mResetProgressButton = Toolkit::PushButton::New();
-    mResetProgressButton.SetLabelText( "Reset" );
+    mResetProgressButton.SetProperty( Toolkit::Button::Property::LABEL, "Reset" );
     mResetProgressButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mResetProgressButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     mResetProgressButton.ClickedSignal().Connect( this, &ProgressBarExample::OnResetProgressButtonSelected );

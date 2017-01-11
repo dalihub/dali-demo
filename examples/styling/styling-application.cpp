@@ -309,7 +309,7 @@ void StylingApplication::Create( Application& application )
   }
 
   mResetButton = PushButton::New();
-  mResetButton.SetLabelText( "Reset" );
+  mResetButton.SetProperty( Toolkit::Button::Property::LABEL, "Reset" );
   mResetButton.SetName("ResetButton");
   mResetButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   mResetButton.ClickedSignal().Connect( this, &StylingApplication::OnResetClicked );
@@ -349,9 +349,9 @@ void StylingApplication::Create( Application& application )
     mThemeButtons[i].ClickedSignal().Connect( this, &StylingApplication::OnThemeButtonClicked );
     themeButtonLayout.AddChild( mThemeButtons[i], TableView::CellPosition( 0, 1+i ) );
   }
-  mThemeButtons[0].SetLabelText( "Lite" ); // Lightweight changes on top of Dali
-  mThemeButtons[1].SetLabelText( "App1" ); // Different application style
-  mThemeButtons[2].SetLabelText( "App2" );
+  mThemeButtons[0].SetProperty( Toolkit::Button::Property::LABEL, "Lite" ); // Lightweight changes on top of Dali
+  mThemeButtons[1].SetProperty( Toolkit::Button::Property::LABEL, "App1" ); // Different application style
+  mThemeButtons[2].SetProperty( Toolkit::Button::Property::LABEL, "App2" );
 
   contentLayout.Add( themeButtonLayout );
 }
@@ -438,7 +438,7 @@ Popup StylingApplication::CreateResetPopup()
   PushButton okayButton = PushButton::New();
   okayButton.SetName( POPUP_CONTROL_OK_NAME );
   okayButton.SetStyleName( POPUP_CONTROL_OK_NAME );
-  okayButton.SetLabelText( "Ok!" );
+  okayButton.SetProperty( Toolkit::Button::Property::LABEL, "Ok!" );
   okayButton.ClickedSignal().Connect( this, &StylingApplication::OnReset );
   okayButton.SetParentOrigin( ParentOrigin::CENTER );
   okayButton.SetAnchorPoint( AnchorPoint::CENTER );
@@ -448,7 +448,7 @@ Popup StylingApplication::CreateResetPopup()
   PushButton cancelButton = PushButton::New();
   cancelButton.SetName( POPUP_CONTROL_CANCEL_NAME );
   cancelButton.SetStyleName( POPUP_CONTROL_CANCEL_NAME );
-  cancelButton.SetLabelText( "Cancel" );
+  cancelButton.SetProperty( Toolkit::Button::Property::LABEL, "Cancel" );
   cancelButton.ClickedSignal().Connect( this, &StylingApplication::OnResetCancelled );
   cancelButton.SetParentOrigin( ParentOrigin::CENTER );
   cancelButton.SetAnchorPoint( AnchorPoint::CENTER );

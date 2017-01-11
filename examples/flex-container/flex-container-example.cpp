@@ -231,7 +231,7 @@ public:
       // Add a label to the button so that we can identify each item more easily
       std::ostringstream index;
       index << i + 1;
-      flexItem.SetLabelText(index.str());
+      flexItem.SetProperty( Toolkit::Button::Property::LABEL, index.str() );
       flexItem.SetName("FlexItem " + index.str());
 
       // Set a fixed size to the items so that we can wrap the line and test these

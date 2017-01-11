@@ -428,7 +428,7 @@ public:
   {
     Toolkit::PushButton okayButton = Toolkit::PushButton::New();
     okayButton.SetName( POPUP_CONTROL_OK_NAME );
-    okayButton.SetLabelText( "OK!" );
+    okayButton.SetProperty( Toolkit::Button::Property::LABEL, "OK!" );
 
     okayButton.ClickedSignal().Connect( this, &PopupExample::OnPopupButtonClicked );
 
@@ -439,7 +439,7 @@ public:
   {
     Toolkit::PushButton cancelButton = Toolkit::PushButton::New();
     cancelButton.SetName( POPUP_CONTROL_CANCEL_NAME );
-    cancelButton.SetLabelText( "Cancel" );
+    cancelButton.SetProperty( Toolkit::Button::Property::LABEL, "Cancel" );
 
     cancelButton.ClickedSignal().Connect( this, &PopupExample::OnPopupButtonClicked );
 
@@ -708,7 +708,7 @@ public: // From ItemFactory
   {
     Toolkit::PushButton popupButton = Toolkit::PushButton::New();
     popupButton.SetName( POPUP_BUTTON_ITEMS[ itemId ].name );
-    popupButton.SetLabelText( POPUP_BUTTON_ITEMS[ itemId ].text );
+    popupButton.SetProperty( Toolkit::Button::Property::LABEL, POPUP_BUTTON_ITEMS[ itemId ].text );
     popupButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
     popupButton.ClickedSignal().Connect( this, &PopupExample::OnButtonClicked );

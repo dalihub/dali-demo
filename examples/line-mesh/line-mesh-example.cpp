@@ -268,12 +268,12 @@ public:
     elementCountTableView.SetFitWidth( 1 );
     elementCountTableView.SetFitWidth( 2 );
     mMinusButton = Toolkit::PushButton::New();
-    mMinusButton.SetLabelText( "<<" );
+    mMinusButton.SetProperty( Toolkit::Button::Property::LABEL, "<<" );
     mMinusButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
     mMinusButton.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
 
     Toolkit::PushButton mPlusButton = Toolkit::PushButton::New();
-    mPlusButton.SetLabelText( ">>" );
+    mPlusButton.SetProperty( Toolkit::Button::Property::LABEL, ">>" );
     mPlusButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
     mPlusButton.SetAnchorPoint( AnchorPoint::CENTER_RIGHT );
 

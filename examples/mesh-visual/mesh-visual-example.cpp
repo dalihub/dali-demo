@@ -183,7 +183,7 @@ public:
     modelButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeModelClicked );
     modelButton.SetParentOrigin( ParentOrigin::TOP_CENTER );
     modelButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    modelButton.SetLabelText( "Model" );
+    modelButton.SetProperty( Toolkit::Button::Property::LABEL, "Model" );
     positionActorModel.Add( modelButton );
 
     //Create button for shading mode changing.
@@ -192,7 +192,7 @@ public:
     shadingModeButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeShadingModeClicked );
     shadingModeButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     shadingModeButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    shadingModeButton.SetLabelText( "Shading Mode" );
+    shadingModeButton.SetProperty( Toolkit::Button::Property::LABEL, "Shading Mode" );
     positionActorModel.Add( shadingModeButton );
 
     //Text label title for changing model or shading mode.
@@ -209,7 +209,7 @@ public:
     pauseButton.ClickedSignal().Connect( this, &MeshVisualController::OnPauseClicked );
     pauseButton.SetParentOrigin( Vector3( 0.5, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
     pauseButton.SetAnchorPoint( AnchorPoint::CENTER );
-    pauseButton.SetLabelText( PAUSE );
+    pauseButton.SetProperty( Toolkit::Button::Property::LABEL, PAUSE );
     layer.Add( pauseButton );
 
     //Actor for positioning light position buttons.
@@ -224,7 +224,7 @@ public:
     lightModeButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeLightModeClicked );
     lightModeButton.SetParentOrigin( ParentOrigin::TOP_CENTER );
     lightModeButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    lightModeButton.SetLabelText( FIXED );
+    lightModeButton.SetProperty( Toolkit::Button::Property::LABEL, FIXED );
     positionActorLight.Add( lightModeButton );
 
     //Create button for switching between front and back light position.
@@ -233,7 +233,7 @@ public:
     lightSideButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeLightSideClicked );
     lightSideButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     lightSideButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    lightSideButton.SetLabelText( FRONT );
+    lightSideButton.SetProperty( Toolkit::Button::Property::LABEL, FRONT );
     positionActorLight.Add( lightSideButton );
 
     //Text label title for light position mode.
@@ -504,7 +504,7 @@ public:
         mModels[i].rotationAnimation.Pause();
       }
 
-      button.SetLabelText( PLAY );
+      button.SetProperty( Toolkit::Button::Property::LABEL, PLAY );
     }
     else //Unpause all animations again.
     {
@@ -513,7 +513,7 @@ public:
         mModels[i].rotationAnimation.Play();
       }
 
-      button.SetLabelText( PAUSE );
+      button.SetProperty( Toolkit::Button::Property::LABEL, PAUSE );
     }
 
     return true;
@@ -528,11 +528,11 @@ public:
 
     if( mLightFixed )
     {
-      button.SetLabelText( FIXED );
+      button.SetProperty( Toolkit::Button::Property::LABEL, FIXED );
     }
     else
     {
-      button.SetLabelText( MANUAL );
+      button.SetProperty( Toolkit::Button::Property::LABEL, MANUAL );
     }
 
     SetLightMode();
@@ -548,11 +548,11 @@ public:
 
     if( mLightFront )
     {
-      button.SetLabelText( FRONT );
+      button.SetProperty( Toolkit::Button::Property::LABEL, FRONT );
     }
     else
     {
-      button.SetLabelText( BACK );
+      button.SetProperty( Toolkit::Button::Property::LABEL, BACK );
     }
 
     //Change light image.

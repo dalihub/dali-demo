@@ -152,7 +152,7 @@ public:
     {
       Property::Value text = mField.GetProperty( TextField::Property::TEXT );
       mButtonLabel = text.Get< std::string >();
-      mButton.SetLabelText( mButtonLabel );
+      mButton.SetProperty( Toolkit::Button::Property::LABEL, mButtonLabel );
     }
 
     // Hide & discard the pop-up
@@ -177,7 +177,7 @@ public:
           {
             Property::Value text = mField.GetProperty( TextField::Property::TEXT );
             mButtonLabel = text.Get< std::string >();
-            mButton.SetLabelText( mButtonLabel );
+            mButton.SetProperty( Toolkit::Button::Property::LABEL, mButtonLabel );
             mField.ClearKeyInputFocus();
           }
           break;

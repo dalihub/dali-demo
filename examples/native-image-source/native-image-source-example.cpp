@@ -155,14 +155,14 @@ public:
     mButtonRefreshAlways = PushButton::New();
     mButtonRefreshAlways.SetProperty( Button::Property::TOGGLABLE, true );
     mButtonRefreshAlways.SetProperty( Button::Property::SELECTED, true );
-    mButtonRefreshAlways.SetLabelText( "Refresh ALWAYS" );
+    mButtonRefreshAlways.SetProperty( Toolkit::Button::Property::LABEL, "Refresh ALWAYS" );
     mButtonRefreshAlways.SetParentOrigin( ParentOrigin::TOP_LEFT );
     mButtonRefreshAlways.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mButtonRefreshAlways.StateChangedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     stage.Add( mButtonRefreshAlways );
 
     mButtonRefreshOnce = PushButton::New();
-    mButtonRefreshOnce.SetLabelText( "Refresh ONCE" );
+    mButtonRefreshOnce.SetProperty( Toolkit::Button::Property::LABEL, "Refresh ONCE" );
     mButtonRefreshOnce.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     mButtonRefreshOnce.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
     mButtonRefreshOnce.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
