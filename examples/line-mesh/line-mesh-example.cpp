@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -253,7 +253,7 @@ public:
 
       radio.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radio.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      radio.SetSelected( i == 0 );
+      radio.SetProperty( Toolkit::Button::Property::SELECTED, i == 0 );
       radio.PressedSignal().Connect( this, &ExampleController::OnButtonPressed );
       mButtons[i] = radio;
       modeSelectTableView.AddChild( radio, Toolkit::TableView::CellPosition( i,  0 ) );

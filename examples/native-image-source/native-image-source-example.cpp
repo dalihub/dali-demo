@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -153,8 +153,8 @@ public:
     stage.KeyEventSignal().Connect(this, &NativeImageSourceController::OnKeyEvent);
 
     mButtonRefreshAlways = PushButton::New();
-    mButtonRefreshAlways.SetTogglableButton( true );
-    mButtonRefreshAlways.SetSelected( true );
+    mButtonRefreshAlways.SetProperty( Button::Property::TOGGLABLE, true );
+    mButtonRefreshAlways.SetProperty( Button::Property::SELECTED, true );
     mButtonRefreshAlways.SetLabelText( "Refresh ALWAYS" );
     mButtonRefreshAlways.SetParentOrigin( ParentOrigin::TOP_LEFT );
     mButtonRefreshAlways.SetAnchorPoint( AnchorPoint::TOP_LEFT );
@@ -246,10 +246,12 @@ public:
 
   bool OnButtonSelected( Toolkit::Button button )
   {
+    bool isSelected = mButtonRefreshAlways.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
+
     Toolkit::PushButton pushButton = Toolkit::PushButton::DownCast( button );
     if( pushButton == mButtonRefreshAlways )
     {
-      if( mButtonRefreshAlways.IsSelected() )
+      if( isSelected )
       {
         mOffscreenRenderTask.SetRefreshRate( RenderTask::REFRESH_ALWAYS );
       }
@@ -260,9 +262,9 @@ public:
     }
     else if( pushButton == mButtonRefreshOnce )
     {
-      if( mButtonRefreshAlways.IsSelected() )
+      if( isSelected )
       {
-        mButtonRefreshAlways.SetSelected( false );
+        mButtonRefreshAlways.SetProperty( Button::Property::SELECTED, false );
       }
       mOffscreenRenderTask.SetRefreshRate( RenderTask::REFRESH_ONCE );
     }

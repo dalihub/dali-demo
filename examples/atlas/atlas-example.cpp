@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 #include <dali/dali.h>
 #include <dali/devel-api/images/atlas.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 #include "shared/view.h"
 #include <iostream>
@@ -72,8 +73,8 @@ public:
         "Atlas" );
 
     mLoseContextButton = Toolkit::PushButton::New();
-    mLoseContextButton.SetUnselectedImage( LOSE_CONTEXT_IMAGE );
-    mLoseContextButton.SetSelectedImage( LOSE_CONTEXT_IMAGE_SELECTED );
+    mLoseContextButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, LOSE_CONTEXT_IMAGE );
+    mLoseContextButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, LOSE_CONTEXT_IMAGE_SELECTED );
     mLoseContextButton.ClickedSignal().Connect( this, &AtlasController::OnLoseContextButtonClicked );
     mToolBar.AddControl( mLoseContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 

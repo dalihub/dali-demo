@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -188,7 +188,7 @@ void StylingApplication::Create( Application& application )
     mRadioButtons[i].SetName( radioButtonStyleName.str() );
     mRadioButtons[i].SetParentOrigin( ParentOrigin::TOP_LEFT );
     mRadioButtons[i].SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mRadioButtons[i].SetSelected( false );
+    mRadioButtons[i].SetProperty( Button::Property::SELECTED, false );
     mRadioButtons[i].StateChangedSignal().Connect( this, &StylingApplication::OnButtonStateChange );
 
     radioButtonsLayout.AddChild( mRadioButtons[i], TableView::CellPosition( i, 0 ) );
@@ -197,7 +197,7 @@ void StylingApplication::Create( Application& application )
     radioButtonsLayout.SetCellAlignment( TableView::CellPosition( i, 1 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
   }
 
-  mRadioButtons[0].SetSelected( true );
+  mRadioButtons[0].SetProperty( Button::Property::SELECTED, true );
 
   mImagePlacement = Actor::New();
   mImagePlacement.SetParentOrigin( ParentOrigin::CENTER );
@@ -265,7 +265,7 @@ void StylingApplication::Create( Application& application )
     mCheckButtons[i].SetName( checkBoxStyleName.str() );
     mCheckButtons[i].SetParentOrigin( ParentOrigin::CENTER );
     mCheckButtons[i].SetAnchorPoint( AnchorPoint::CENTER );
-    mCheckButtons[i].SetSelected( true );
+    mCheckButtons[i].SetProperty( Button::Property::SELECTED, true );
 
     mCheckButtons[i].StateChangedSignal().Connect( this, &StylingApplication::OnCheckButtonChange );
     mCheckButtons[i].RegisterProperty( "channel", i, Property::READ_WRITE );
@@ -484,20 +484,20 @@ bool StylingApplication::OnButtonStateChange( Button button )
 
 // Todo: save / restore slider states per image
 
-  if( button.IsSelected() )
+  if( button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
   {
 
     ImageChannelControl prevIcc = mImageChannelControl;
 
-    if( mRadioButtons[0].IsSelected() )
+    if( mRadioButtons[0].GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
     {
       mImageChannelControl = mIcc1;
     }
-    else if( mRadioButtons[1].IsSelected() )
+    else if( mRadioButtons[1].GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
     {
       mImageChannelControl = mIcc2;
     }
-    else if( mRadioButtons[2].IsSelected() )
+    else if( mRadioButtons[2].GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
     {
       mImageChannelControl = mIcc3;
     }

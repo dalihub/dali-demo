@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -164,7 +164,7 @@ class ButtonsController: public ConnectionTracker
       mRadioButtonImage1.SetParentOrigin( ParentOrigin::TOP_LEFT );
       mRadioButtonImage1.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       mRadioButtonImage1.SetPosition( 0, DP(radioY) );
-      mRadioButtonImage1.SetSelected( true );
+      mRadioButtonImage1.SetProperty( Toolkit::Button::Property::SELECTED, true );
 
       imageSelectTableView.AddChild( mRadioButtonImage1, Toolkit::TableView::CellPosition( 0, 0 ) );
       imageSelectTableView.AddChild( image, Toolkit::TableView::CellPosition( 0, 1 ) );
@@ -267,7 +267,7 @@ class ButtonsController: public ConnectionTracker
       radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( 0, 0 );
-      radioButton.SetSelected( true );
+      radioButton.SetProperty( Toolkit::Button::Property::SELECTED, true );
 
       radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
 
@@ -315,7 +315,8 @@ class ButtonsController: public ConnectionTracker
       mCheckboxButton2 = Toolkit::CheckBoxButton::New();
       mCheckboxButton2.SetName( "checkbox2" );
       mCheckboxButton2.SetLabelText( "CheckBox2 is selected" );
-      mCheckboxButton2.SetSelected( true );
+      mCheckboxButton2.SetProperty( Toolkit::Button::Property::SELECTED, true );
+
       mCheckboxButton2.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
       mCheckboxButton2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
 
@@ -347,7 +348,7 @@ class ButtonsController: public ConnectionTracker
     contentTable.Add( toggleBackground );
 
     mToggleButton = Toolkit::PushButton::New();
-    mToggleButton.SetTogglableButton( true );
+    mToggleButton.SetProperty( Toolkit::Button::Property::TOGGLABLE, true );
     mToggleButton.SetLabelText( "Unselected" );
     mToggleButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mToggleButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
@@ -373,7 +374,8 @@ class ButtonsController: public ConnectionTracker
     Toolkit::PushButton pushButton = Toolkit::PushButton::DownCast( button );
     if( pushButton )
     {
-      if( button.IsSelected() )
+      bool isSelected = button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
+      if( isSelected )
       {
         pushButton.SetLabelText( "Selected" );
       }
@@ -388,33 +390,39 @@ class ButtonsController: public ConnectionTracker
 
   bool EnableSelectButton( Toolkit::Button button )
   {
-    if( button.GetName() == "radioSelectEnable" && button.IsSelected() == true )
+    bool isSelected = button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
+    if( !isSelected )
     {
-      mUpdateButton.SetDisabled( false );
-
-      mRadioButtonImage1.SetDisabled( false );
-      mRadioButtonImage2.SetDisabled( false );
-      mRadioButtonImage3.SetDisabled( false );
-
-      mCheckboxButton1.SetDisabled( false );
-      mCheckboxButton2.SetDisabled( false );
-      mCheckboxButton3.SetDisabled( false );
-
-      mToggleButton.SetDisabled( false );
+      return true;
     }
-    else if( button.GetName() == "radioSelectDisable" && button.IsSelected() == true )
+
+    if( button.GetName() == "radioSelectEnable" )
     {
-      mUpdateButton.SetDisabled( true );
+      mUpdateButton.SetProperty( Toolkit::Button::Property::DISABLED, false );
 
-      mRadioButtonImage1.SetDisabled( true );
-      mRadioButtonImage2.SetDisabled( true );
-      mRadioButtonImage3.SetDisabled( true );
+      mRadioButtonImage1.SetProperty( Toolkit::Button::Property::DISABLED, false );
+      mRadioButtonImage2.SetProperty( Toolkit::Button::Property::DISABLED, false );
+      mRadioButtonImage3.SetProperty( Toolkit::Button::Property::DISABLED, false );
 
-      mCheckboxButton1.SetDisabled( true );
-      mCheckboxButton2.SetDisabled( true );
-      mCheckboxButton3.SetDisabled( true );
+      mCheckboxButton1.SetProperty( Toolkit::Button::Property::DISABLED, false );
+      mCheckboxButton2.SetProperty( Toolkit::Button::Property::DISABLED, false );
+      mCheckboxButton3.SetProperty( Toolkit::Button::Property::DISABLED, false );
 
-      mToggleButton.SetDisabled( true );
+      mToggleButton.SetProperty( Toolkit::Button::Property::DISABLED, false );
+    }
+    else if( button.GetName() == "radioSelectDisable" )
+    {
+      mUpdateButton.SetProperty( Toolkit::Button::Property::DISABLED, true );
+
+      mRadioButtonImage1.SetProperty( Toolkit::Button::Property::DISABLED, true );
+      mRadioButtonImage2.SetProperty( Toolkit::Button::Property::DISABLED, true );
+      mRadioButtonImage3.SetProperty( Toolkit::Button::Property::DISABLED, true );
+
+      mCheckboxButton1.SetProperty( Toolkit::Button::Property::DISABLED, true );
+      mCheckboxButton2.SetProperty( Toolkit::Button::Property::DISABLED, true );
+      mCheckboxButton3.SetProperty( Toolkit::Button::Property::DISABLED, true );
+
+      mToggleButton.SetProperty( Toolkit::Button::Property::DISABLED, true );
     }
 
     return true;
@@ -422,15 +430,15 @@ class ButtonsController: public ConnectionTracker
 
   bool OnButtonClicked(Toolkit::Button button)
   {
-    if( mRadioButtonImage1.IsSelected() )
+    if( mRadioButtonImage1.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
     {
       mImage.SetImage( BIG_IMAGE_1 );
     }
-    else if( mRadioButtonImage2.IsSelected() )
+    else if( mRadioButtonImage2.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
     {
       mImage.SetImage( BIG_IMAGE_2 );
     }
-    else if( mRadioButtonImage3.IsSelected() )
+    else if( mRadioButtonImage3.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
     {
       mImage.SetImage( BIG_IMAGE_3 );
     }
@@ -439,9 +447,10 @@ class ButtonsController: public ConnectionTracker
 
   bool OnCheckBoxesSelected( Toolkit::Button button )
   {
+    bool isSelected = button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
     if( button.GetName() == "checkbox1" )
     {
-      if( button.IsSelected() )
+      if( isSelected )
       {
         button.SetLabelText("CheckBox1 is selected");
       }
@@ -453,7 +462,7 @@ class ButtonsController: public ConnectionTracker
 
     if( button.GetName() == "checkbox2" )
     {
-      if( button.IsSelected() )
+      if( isSelected )
       {
         button.SetLabelText("CheckBox2 is selected");
       }
@@ -465,7 +474,7 @@ class ButtonsController: public ConnectionTracker
 
     if( button.GetName() == "checkbox3" )
     {
-      if( button.IsSelected() )
+      if( isSelected )
       {
         button.SetLabelText("CheckBox3 is selected");
       }

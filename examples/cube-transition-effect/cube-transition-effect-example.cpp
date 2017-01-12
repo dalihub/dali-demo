@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-effect.h>
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-cross-effect.h>
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-fold-effect.h>
@@ -219,8 +220,8 @@ void CubeTransitionApp::OnInit( Application& application )
 
   // Add an effect-changing button on the right of the tool bar.
   mEffectChangeButton = Toolkit::PushButton::New();
-  mEffectChangeButton.SetUnselectedImage( EFFECT_WAVE_IMAGE );
-  mEffectChangeButton.SetSelectedImage( EFFECT_WAVE_IMAGE_SELECTED );
+  mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_WAVE_IMAGE );
+  mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_WAVE_IMAGE_SELECTED );
   mEffectChangeButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
@@ -230,8 +231,8 @@ void CubeTransitionApp::OnInit( Application& application )
 
   //Add an slideshow icon on the right of the title
   mSlideshowButton = Toolkit::PushButton::New();
-  mSlideshowButton.SetUnselectedImage( SLIDE_SHOW_START_ICON );
-  mSlideshowButton.SetSelectedImage( SLIDE_SHOW_START_ICON_SELECTED );
+  mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON );
+  mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON_SELECTED );
   mSlideshowButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnSildeshowButtonClicked );
   mToolBar.AddControl( mSlideshowButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
@@ -324,23 +325,23 @@ bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
   {
     mCurrentEffect = mCubeCrossEffect;
     mTitle.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_CROSS) );
-    mEffectChangeButton.SetUnselectedImage( EFFECT_CROSS_IMAGE );
-    mEffectChangeButton.SetSelectedImage( EFFECT_CROSS_IMAGE_SELECTED );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_CROSS_IMAGE );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_CROSS_IMAGE_SELECTED );
 
   }
   else if(mCurrentEffect == mCubeCrossEffect)
   {
     mCurrentEffect = mCubeFoldEffect;
     mTitle.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_FOLD) );
-    mEffectChangeButton.SetUnselectedImage( EFFECT_FOLD_IMAGE );
-    mEffectChangeButton.SetSelectedImage( EFFECT_FOLD_IMAGE_SELECTED );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_FOLD_IMAGE );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_FOLD_IMAGE_SELECTED );
   }
   else
   {
     mCurrentEffect = mCubeWaveEffect;
     mTitle.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_WAVE) );
-    mEffectChangeButton.SetUnselectedImage( EFFECT_WAVE_IMAGE );
-    mEffectChangeButton.SetSelectedImage( EFFECT_WAVE_IMAGE_SELECTED );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_WAVE_IMAGE );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_WAVE_IMAGE_SELECTED );
   }
   mContent.Add( mCurrentEffect );
 
@@ -356,8 +357,8 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   if( mSlideshow )
   {
     mPanGestureDetector.Detach( mContent );
-    mSlideshowButton.SetUnselectedImage( SLIDE_SHOW_STOP_ICON );
-    mSlideshowButton.SetSelectedImage( SLIDE_SHOW_STOP_ICON_SELECTED );
+    mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_STOP_ICON );
+    mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_STOP_ICON_SELECTED );
     mPanPosition = Vector2( mViewSize.width, mViewSize.height*0.5f );
     mPanDisplacement = Vector2( -10.f, 0.f );
     mViewTimer.Start();
@@ -365,8 +366,8 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   else
   {
     mPanGestureDetector.Attach( mContent );
-    mSlideshowButton.SetUnselectedImage( SLIDE_SHOW_START_ICON );
-    mSlideshowButton.SetSelectedImage( SLIDE_SHOW_START_ICON_SELECTED );
+    mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON );
+    mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON_SELECTED );
     mViewTimer.Stop();
   }
   return true;

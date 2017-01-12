@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -213,16 +214,16 @@ public:
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
-    editButton.SetUnselectedImage( EDIT_IMAGE );
-    editButton.SetSelectedImage( EDIT_IMAGE_SELECTED );
+    editButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EDIT_IMAGE );
+    editButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EDIT_IMAGE_SELECTED );
     editButton.ClickedSignal().Connect( this, &ItemViewExample::OnModeButtonClicked);
     editButton.SetLeaveRequired( true );
     mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create a layout toggle button. (right of toolbar)
     mLayoutButton = Toolkit::PushButton::New();
-    mLayoutButton.SetUnselectedImage( SPIRAL_LAYOUT_IMAGE );
-    mLayoutButton.SetSelectedImage(SPIRAL_LAYOUT_IMAGE_SELECTED );
+    mLayoutButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, SPIRAL_LAYOUT_IMAGE );
+    mLayoutButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, SPIRAL_LAYOUT_IMAGE_SELECTED );
     mLayoutButton.ClickedSignal().Connect( this, &ItemViewExample::OnLayoutButtonClicked);
     mLayoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
@@ -233,9 +234,9 @@ public:
     mDeleteButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mDeleteButton.SetDrawMode( DrawMode::OVERLAY_2D );
-    mDeleteButton.SetUnselectedImage( DELETE_IMAGE );
-    mDeleteButton.SetSelectedImage( DELETE_IMAGE_SELECTED );
-    mDeleteButton.SetBackgroundImage( TOOLBAR_IMAGE );
+    mDeleteButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, DELETE_IMAGE );
+    mDeleteButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, DELETE_IMAGE_SELECTED );
+    mDeleteButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
     mDeleteButton.SetSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
     mDeleteButton.ClickedSignal().Connect( this, &ItemViewExample::OnDeleteButtonClicked);
     mDeleteButton.SetLeaveRequired( true );
@@ -248,9 +249,9 @@ public:
     mInsertButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mInsertButton.SetDrawMode( DrawMode::OVERLAY_2D );
-    mInsertButton.SetUnselectedImage( INSERT_IMAGE );
-    mInsertButton.SetSelectedImage( INSERT_IMAGE_SELECTED );
-    mInsertButton.SetBackgroundImage( TOOLBAR_IMAGE );
+    mInsertButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, INSERT_IMAGE );
+    mInsertButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, INSERT_IMAGE_SELECTED );
+    mInsertButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
     mInsertButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mInsertButton.ClickedSignal().Connect( this, &ItemViewExample::OnInsertButtonClicked);
     mInsertButton.SetLeaveRequired( true );
@@ -263,9 +264,9 @@ public:
     mReplaceButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
     mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mReplaceButton.SetDrawMode( DrawMode::OVERLAY_2D );
-    mReplaceButton.SetUnselectedImage( REPLACE_IMAGE );
-    mReplaceButton.SetSelectedImage( REPLACE_IMAGE_SELECTED );
-    mReplaceButton.SetBackgroundImage( TOOLBAR_IMAGE );
+    mReplaceButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE );
+    mReplaceButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE_SELECTED );
+    mReplaceButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
     mReplaceButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mReplaceButton.ClickedSignal().Connect( this, &ItemViewExample::OnReplaceButtonClicked);
     mReplaceButton.SetLeaveRequired( true );
@@ -821,22 +822,22 @@ public:
       {
         case SPIRAL_LAYOUT:
         {
-          mLayoutButton.SetUnselectedImage( SPIRAL_LAYOUT_IMAGE );
-          mLayoutButton.SetSelectedImage( SPIRAL_LAYOUT_IMAGE_SELECTED );
+          mLayoutButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, SPIRAL_LAYOUT_IMAGE );
+          mLayoutButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, SPIRAL_LAYOUT_IMAGE_SELECTED );
           break;
         }
 
         case GRID_LAYOUT:
         {
-          mLayoutButton.SetUnselectedImage( GRID_LAYOUT_IMAGE );
-          mLayoutButton.SetSelectedImage( GRID_LAYOUT_IMAGE_SELECTED );
+          mLayoutButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, GRID_LAYOUT_IMAGE );
+          mLayoutButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, GRID_LAYOUT_IMAGE_SELECTED );
           break;
         }
 
         case DEPTH_LAYOUT:
         {
-          mLayoutButton.SetUnselectedImage( DEPTH_LAYOUT_IMAGE );
-          mLayoutButton.SetSelectedImage( DEPTH_LAYOUT_IMAGE_SELECTED );
+          mLayoutButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, DEPTH_LAYOUT_IMAGE );
+          mLayoutButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, DEPTH_LAYOUT_IMAGE_SELECTED );
           break;
         }
 

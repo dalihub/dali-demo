@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/shader-effects/dissolve-effect.h>
 
 using namespace Dali;
@@ -221,8 +222,8 @@ void DissolveEffectApp::OnInit( Application& application )
 
   // Add an effect-changing button on the right of the tool bar.
   mEffectChangeButton = Toolkit::PushButton::New();
-  mEffectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_STATE_IMAGE, EFFECT_HIGHP_IMAGE );
-  mEffectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_STATE_IMAGE, EFFECT_HIGHP_IMAGE_SELECTED );
+  mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE );
+  mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE_SELECTED );
   mEffectChangeButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnEffectButtonClicked );
   mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
@@ -232,8 +233,8 @@ void DissolveEffectApp::OnInit( Application& application )
 
   // Add an slide-show button on the right of the title
   mPlayStopButton = Toolkit::PushButton::New();
-  mPlayStopButton.SetProperty( Toolkit::Button::Property::UNSELECTED_STATE_IMAGE, PLAY_ICON );
-  mPlayStopButton.SetProperty( Toolkit::Button::Property::SELECTED_STATE_IMAGE, PLAY_ICON_SELECTED );
+  mPlayStopButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON );
+  mPlayStopButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED );
   mPlayStopButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnSildeshowButtonClicked );
   mToolBar.AddControl( mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
@@ -341,14 +342,14 @@ bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
   if(mUseHighPrecision)
   {
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP) );
-    mEffectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_STATE_IMAGE, EFFECT_HIGHP_IMAGE );
-    mEffectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_STATE_IMAGE, EFFECT_HIGHP_IMAGE_SELECTED );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE_SELECTED );
   }
   else
   {
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_MEDIUMP) );
-    mEffectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_STATE_IMAGE, EFFECT_MEDIUMP_IMAGE );
-    mEffectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_STATE_IMAGE, EFFECT_MEDIUMP_IMAGE_SELECTED );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_MEDIUMP_IMAGE );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_MEDIUMP_IMAGE_SELECTED );
   }
 
   return true;
@@ -359,16 +360,16 @@ bool DissolveEffectApp::OnSildeshowButtonClicked( Toolkit::Button button )
   mSlideshow = !mSlideshow;
   if( mSlideshow )
   {
-    mPlayStopButton.SetProperty( Toolkit::Button::Property::UNSELECTED_STATE_IMAGE, STOP_ICON );
-    mPlayStopButton.SetProperty( Toolkit::Button::Property::SELECTED_STATE_IMAGE, STOP_ICON_SELECTED );
+    mPlayStopButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, STOP_ICON );
+    mPlayStopButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, STOP_ICON_SELECTED );
     mPanGestureDetector.Detach( mParent );
     mViewTimer.Start();
     mTimerReady = false;
   }
   else
   {
-    mPlayStopButton.SetProperty( Toolkit::Button::Property::UNSELECTED_STATE_IMAGE, PLAY_ICON );
-    mPlayStopButton.SetProperty( Toolkit::Button::Property::SELECTED_STATE_IMAGE, PLAY_ICON_SELECTED );
+    mPlayStopButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON );
+    mPlayStopButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED );
     mTimerReady = true;
     mPanGestureDetector.Attach( mParent );
   }
