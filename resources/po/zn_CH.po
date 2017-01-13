@@ -13,6 +13,9 @@ msgstr "气泡"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "按钮"
 
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "剪裁"
+
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "颜色梯度"
 

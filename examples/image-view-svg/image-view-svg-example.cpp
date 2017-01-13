@@ -82,7 +82,7 @@ public:
 
     // Push button,  for changing the image set for displaying
     Toolkit::PushButton changeButton = Toolkit::PushButton::New();
-    changeButton.SetLabelText( "Next" );
+    changeButton.SetProperty( Toolkit::Button::Property::LABEL, "Next" );
     changeButton.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
     changeButton.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     stage.Add( changeButton );
@@ -91,7 +91,7 @@ public:
 
     // Push button, for resetting the actor size and position
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
-    resetButton.SetLabelText( "Reset" );
+    resetButton.SetProperty( Toolkit::Button::Property::LABEL, "Reset" );
     resetButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     resetButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
     stage.Add( resetButton );

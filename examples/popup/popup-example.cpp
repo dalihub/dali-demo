@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
@@ -140,17 +141,17 @@ public:
 
     // Create animation button.
     mAnimationButton = Toolkit::PushButton::New();
-    mAnimationButton.SetUnselectedImage( ANIMATION_FADE_ICON_IMAGE );
-    mAnimationButton.SetSelectedImage( ANIMATION_ZOOM_ICON_IMAGE );
-    mAnimationButton.SetTogglableButton( true );
+    mAnimationButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, ANIMATION_FADE_ICON_IMAGE );
+    mAnimationButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, ANIMATION_ZOOM_ICON_IMAGE );
+    mAnimationButton.SetProperty( Toolkit::Button::Property::TOGGLABLE, true );
     mAnimationButton.ClickedSignal().Connect( this, &PopupExample::OnAnimationClicked );
     mToolBar.AddControl( mAnimationButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create context button.
     mContextButton = Toolkit::PushButton::New();
-    mContextButton.SetUnselectedImage( CONTEXT_DISABLED_ICON_IMAGE );
-    mContextButton.SetSelectedImage( CONTEXT_ENABLED_ICON_IMAGE );
-    mContextButton.SetTogglableButton( true );
+    mContextButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CONTEXT_DISABLED_ICON_IMAGE );
+    mContextButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CONTEXT_ENABLED_ICON_IMAGE );
+    mContextButton.SetProperty( Toolkit::Button::Property::TOGGLABLE, true );
     mContextButton.ClickedSignal().Connect( this, &PopupExample::OnContextClicked );
     mToolBar.AddControl( mContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
@@ -176,13 +177,13 @@ public:
 
   bool OnContextClicked( Toolkit::Button button )
   {
-    mContextual = button.IsSelected();
+    mContextual = button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
     return true;
   }
 
   bool OnAnimationClicked( Toolkit::Button button )
   {
-    mAnimationFade = !button.IsSelected();
+    mAnimationFade = ! ( button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() );
     return true;
   }
 
@@ -427,7 +428,7 @@ public:
   {
     Toolkit::PushButton okayButton = Toolkit::PushButton::New();
     okayButton.SetName( POPUP_CONTROL_OK_NAME );
-    okayButton.SetLabelText( "OK!" );
+    okayButton.SetProperty( Toolkit::Button::Property::LABEL, "OK!" );
 
     okayButton.ClickedSignal().Connect( this, &PopupExample::OnPopupButtonClicked );
 
@@ -438,7 +439,7 @@ public:
   {
     Toolkit::PushButton cancelButton = Toolkit::PushButton::New();
     cancelButton.SetName( POPUP_CONTROL_CANCEL_NAME );
-    cancelButton.SetLabelText( "Cancel" );
+    cancelButton.SetProperty( Toolkit::Button::Property::LABEL, "Cancel" );
 
     cancelButton.ClickedSignal().Connect( this, &PopupExample::OnPopupButtonClicked );
 
@@ -707,7 +708,7 @@ public: // From ItemFactory
   {
     Toolkit::PushButton popupButton = Toolkit::PushButton::New();
     popupButton.SetName( POPUP_BUTTON_ITEMS[ itemId ].name );
-    popupButton.SetLabelText( POPUP_BUTTON_ITEMS[ itemId ].text );
+    popupButton.SetProperty( Toolkit::Button::Property::LABEL, POPUP_BUTTON_ITEMS[ itemId ].text );
     popupButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
     popupButton.ClickedSignal().Connect( this, &PopupExample::OnButtonClicked );

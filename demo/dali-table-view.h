@@ -2,7 +2,7 @@
 #define DALI_DEMO_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -262,37 +262,8 @@ private: // Application callbacks & implementation
    *
    * @param[in] layer The layer to add the actors to
    * @param[in] count The number of actors to generate
-   * @param[in] distanceField A array (pointer) to 2 distance field types to use
    */
-  void AddBackgroundActors( Dali::Actor layer, int count, Dali::BufferImage* distanceField );
-
-  /**
-   * Create a bitmap with the specified shape and also output a distance field
-   *
-   * @param[in] shapeType The shape to generate
-   * @param[in] size The size of the bitmap to create
-   * @param[out] distanceFieldOut The return depth field alpha map
-   */
-  void CreateShapeImage( ShapeType shapeType, const Dali::Size& size, Dali::BufferImage& distanceFieldOut );
-
-  /**
-   * Generate a square bit pattern and depth field
-   *
-   * @param[in] size The size of the bitmap to create
-   * @param[out] imageOut The return bitmap
-   * @param[out] distanceFieldOut The return depth field alpha map
-   */
-  void GenerateSquare( const Dali::Size& size, std::vector<unsigned char>& distanceFieldOut );
-
-  /**
-   * Generate a circle bit pattern and depth field
-   *
-   * @param[in] size The size of the bitmap to create
-   * @param[out] imageOut The return bitmap
-   * @param[out] distanceFieldOut The return depth field alpha map
-   * @param[in] hollow Optional - Set to true for a thick circle outline without fill
-   */
-  void GenerateCircle( const Dali::Size& size, std::vector<unsigned char>& distanceFieldOut, bool hollow = false );
+  void AddBackgroundActors( Dali::Actor layer, int count );
 
   /**
    * Creates the logo.

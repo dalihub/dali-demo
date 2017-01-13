@@ -107,7 +107,7 @@ class ImageViewController: public ConnectionTracker
     buttonsTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
 
     Toolkit::PushButton button = Toolkit::PushButton::New();
-    button.SetLabelText( "Toggle on/off stage" );
+    button.SetProperty( Toolkit::Button::Property::LABEL, "Toggle on/off stage" );
     button.SetParentOrigin( ParentOrigin::CENTER );
     button.SetAnchorPoint( AnchorPoint::CENTER );
     button.ClickedSignal().Connect( this, &ImageViewController::ToggleImageOnStage );
@@ -115,7 +115,7 @@ class ImageViewController: public ConnectionTracker
     buttonsTable.AddChild( button, Toolkit::TableView::CellPosition( 0, 0 ) );
 
     Toolkit::PushButton button2 = Toolkit::PushButton::New();
-    button2.SetLabelText( "Change Image" );
+    button2.SetProperty( Toolkit::Button::Property::LABEL, "Change Image" );
     button2.SetParentOrigin( ParentOrigin::CENTER );
     button2.SetAnchorPoint( AnchorPoint::CENTER );
     button2.ClickedSignal().Connect( this, &ImageViewController::ChangeImageClicked );

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,10 @@
 #include <dali/public-api/events/touch-data.h>
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/actors/camera-actor.h>
+#include <dali/public-api/object/property-map.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
+#include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali-toolkit/public-api/visuals/color-visual-properties.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -111,7 +114,9 @@ void FppGameTutorialController::DisplayTutorial()
   mLeftLabel.SetAnchorPoint( AnchorPoint::CENTER );
   mLeftLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   mLeftLabel.SetSize( Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
-  mLeftLabel.SetProperty( Toolkit::Control::Property::BACKGROUND_COLOR, Vector4( 0.0, 0.0, 0.7, 0.2 ));
+  mLeftLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,
+                          Property::Map().Add( Visual::Property::TYPE, Visual::COLOR )
+                                         .Add( ColorVisual::Property::MIX_COLOR, Vector4( 0.0, 0.0, 0.7, 0.2 ) ) );
   mLeftLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) ); // White.
   mLeftLabel.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
   mLeftLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -122,7 +127,9 @@ void FppGameTutorialController::DisplayTutorial()
   mRightLabel.SetAnchorPoint( AnchorPoint::CENTER );
   mRightLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   mRightLabel.SetSize( Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
-  mRightLabel.SetProperty( Toolkit::Control::Property::BACKGROUND_COLOR, Vector4( 0.5, 0.0, 0.0, 0.2 ));
+  mRightLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,
+                           Property::Map().Add( Visual::Property::TYPE, Visual::COLOR )
+                                          .Add( ColorVisual::Property::MIX_COLOR, Vector4( 0.5, 0.0, 0.0, 0.2 ) ) );
   mRightLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) ); // White.
   mRightLabel.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
   mRightLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );

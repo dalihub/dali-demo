@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_BLOCKS                      dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BLOCKS")
 #define DALI_DEMO_STR_TITLE_BUBBLES                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUBBLES")
 #define DALI_DEMO_STR_TITLE_BUTTONS                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUTTONS")
+#define DALI_DEMO_STR_TITLE_CLIPPING                    dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CLIPPING")
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_COLOR_GRADIENT")
 #define DALI_DEMO_STR_TITLE_CONTACT_CARDS               dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CONTACT_CARDS")
 #define DALI_DEMO_STR_TITLE_CUBE_TRANSITION             dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CUBE_TRANSITION")
@@ -93,6 +94,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_BLOCKS                      "Blocks"
 #define DALI_DEMO_STR_TITLE_BUBBLES                     "Bubbles"
 #define DALI_DEMO_STR_TITLE_BUTTONS                     "Buttons"
+#define DALI_DEMO_STR_TITLE_CLIPPING                    "Clipping"
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT              "Color Gradient"
 #define DALI_DEMO_STR_TITLE_CONTACT_CARDS               "Contact Cards"
 #define DALI_DEMO_STR_TITLE_CUBE_TRANSITION             "Cube Effect"

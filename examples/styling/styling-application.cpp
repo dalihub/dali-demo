@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -188,7 +188,7 @@ void StylingApplication::Create( Application& application )
     mRadioButtons[i].SetName( radioButtonStyleName.str() );
     mRadioButtons[i].SetParentOrigin( ParentOrigin::TOP_LEFT );
     mRadioButtons[i].SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mRadioButtons[i].SetSelected( false );
+    mRadioButtons[i].SetProperty( Button::Property::SELECTED, false );
     mRadioButtons[i].StateChangedSignal().Connect( this, &StylingApplication::OnButtonStateChange );
 
     radioButtonsLayout.AddChild( mRadioButtons[i], TableView::CellPosition( i, 0 ) );
@@ -197,7 +197,7 @@ void StylingApplication::Create( Application& application )
     radioButtonsLayout.SetCellAlignment( TableView::CellPosition( i, 1 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
   }
 
-  mRadioButtons[0].SetSelected( true );
+  mRadioButtons[0].SetProperty( Button::Property::SELECTED, true );
 
   mImagePlacement = Actor::New();
   mImagePlacement.SetParentOrigin( ParentOrigin::CENTER );
@@ -265,7 +265,7 @@ void StylingApplication::Create( Application& application )
     mCheckButtons[i].SetName( checkBoxStyleName.str() );
     mCheckButtons[i].SetParentOrigin( ParentOrigin::CENTER );
     mCheckButtons[i].SetAnchorPoint( AnchorPoint::CENTER );
-    mCheckButtons[i].SetSelected( true );
+    mCheckButtons[i].SetProperty( Button::Property::SELECTED, true );
 
     mCheckButtons[i].StateChangedSignal().Connect( this, &StylingApplication::OnCheckButtonChange );
     mCheckButtons[i].RegisterProperty( "channel", i, Property::READ_WRITE );
@@ -309,7 +309,7 @@ void StylingApplication::Create( Application& application )
   }
 
   mResetButton = PushButton::New();
-  mResetButton.SetLabelText( "Reset" );
+  mResetButton.SetProperty( Toolkit::Button::Property::LABEL, "Reset" );
   mResetButton.SetName("ResetButton");
   mResetButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   mResetButton.ClickedSignal().Connect( this, &StylingApplication::OnResetClicked );
@@ -349,9 +349,9 @@ void StylingApplication::Create( Application& application )
     mThemeButtons[i].ClickedSignal().Connect( this, &StylingApplication::OnThemeButtonClicked );
     themeButtonLayout.AddChild( mThemeButtons[i], TableView::CellPosition( 0, 1+i ) );
   }
-  mThemeButtons[0].SetLabelText( "Lite" ); // Lightweight changes on top of Dali
-  mThemeButtons[1].SetLabelText( "App1" ); // Different application style
-  mThemeButtons[2].SetLabelText( "App2" );
+  mThemeButtons[0].SetProperty( Toolkit::Button::Property::LABEL, "Lite" ); // Lightweight changes on top of Dali
+  mThemeButtons[1].SetProperty( Toolkit::Button::Property::LABEL, "App1" ); // Different application style
+  mThemeButtons[2].SetProperty( Toolkit::Button::Property::LABEL, "App2" );
 
   contentLayout.Add( themeButtonLayout );
 }
@@ -438,7 +438,7 @@ Popup StylingApplication::CreateResetPopup()
   PushButton okayButton = PushButton::New();
   okayButton.SetName( POPUP_CONTROL_OK_NAME );
   okayButton.SetStyleName( POPUP_CONTROL_OK_NAME );
-  okayButton.SetLabelText( "Ok!" );
+  okayButton.SetProperty( Toolkit::Button::Property::LABEL, "Ok!" );
   okayButton.ClickedSignal().Connect( this, &StylingApplication::OnReset );
   okayButton.SetParentOrigin( ParentOrigin::CENTER );
   okayButton.SetAnchorPoint( AnchorPoint::CENTER );
@@ -448,7 +448,7 @@ Popup StylingApplication::CreateResetPopup()
   PushButton cancelButton = PushButton::New();
   cancelButton.SetName( POPUP_CONTROL_CANCEL_NAME );
   cancelButton.SetStyleName( POPUP_CONTROL_CANCEL_NAME );
-  cancelButton.SetLabelText( "Cancel" );
+  cancelButton.SetProperty( Toolkit::Button::Property::LABEL, "Cancel" );
   cancelButton.ClickedSignal().Connect( this, &StylingApplication::OnResetCancelled );
   cancelButton.SetParentOrigin( ParentOrigin::CENTER );
   cancelButton.SetAnchorPoint( AnchorPoint::CENTER );
@@ -484,20 +484,20 @@ bool StylingApplication::OnButtonStateChange( Button button )
 
 // Todo: save / restore slider states per image
 
-  if( button.IsSelected() )
+  if( button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
   {
 
     ImageChannelControl prevIcc = mImageChannelControl;
 
-    if( mRadioButtons[0].IsSelected() )
+    if( mRadioButtons[0].GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
     {
       mImageChannelControl = mIcc1;
     }
-    else if( mRadioButtons[1].IsSelected() )
+    else if( mRadioButtons[1].GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
     {
       mImageChannelControl = mIcc2;
     }
-    else if( mRadioButtons[2].IsSelected() )
+    else if( mRadioButtons[2].GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
     {
       mImageChannelControl = mIcc3;
     }

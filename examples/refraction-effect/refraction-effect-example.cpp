@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include <dali/dali.h>
 #include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 #include <fstream>
 #include <sstream>
@@ -260,8 +261,8 @@ private:
 
     // Add a button to change background. (right of toolbar)
     mChangeTextureButton = Toolkit::PushButton::New();
-    mChangeTextureButton.SetUnselectedImage( CHANGE_TEXTURE_ICON );
-    mChangeTextureButton.SetSelectedImage( CHANGE_TEXTURE_ICON_SELECTED );
+    mChangeTextureButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_TEXTURE_ICON );
+    mChangeTextureButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_TEXTURE_ICON_SELECTED );
     mChangeTextureButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeTexture );
     toolBar.AddControl( mChangeTextureButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -269,8 +270,8 @@ private:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change mesh pattern. ( left of bar )
     mChangeMeshButton = Toolkit::PushButton::New();
-    mChangeMeshButton.SetUnselectedImage( CHANGE_MESH_ICON );
-    mChangeMeshButton.SetSelectedImage( CHANGE_MESH_ICON_SELECTED );
+    mChangeMeshButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_MESH_ICON );
+    mChangeMeshButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_MESH_ICON_SELECTED );
     mChangeMeshButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeMesh );
     toolBar.AddControl( mChangeMeshButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,

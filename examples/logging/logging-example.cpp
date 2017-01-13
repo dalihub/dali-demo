@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -241,7 +241,7 @@ class LoggingController: public ConnectionTracker
       radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
       radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( DP(radioX), DP(radioY) );
-      radioButton.SetSelected( true );
+      radioButton.SetProperty( Toolkit::Button::Property::SELECTED, true );
 
       radioButton.StateChangedSignal().Connect( this, &LoggingController::LoggingRadioSelect );
 
@@ -294,7 +294,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( CREATE_BUTTON_ID );
-      button.SetLabelText( CREATE_BUTTON_TEXT );
+      button.SetProperty( Toolkit::Button::Property::LABEL, CREATE_BUTTON_TEXT);
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -305,7 +305,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( DELETE_BUTTON_ID );
-      button.SetLabelText( DELETE_BUTTON_TEXT );
+      button.SetProperty( Toolkit::Button::Property::LABEL, DELETE_BUTTON_TEXT);
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -327,7 +327,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( START_BUTTON_ID );
-      button.SetLabelText( START_BUTTON_TEXT );
+      button.SetProperty( Toolkit::Button::Property::LABEL, START_BUTTON_TEXT);
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -338,7 +338,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( STOP_BUTTON_ID );
-      button.SetLabelText( STOP_BUTTON_TEXT );
+      button.SetProperty( Toolkit::Button::Property::LABEL, STOP_BUTTON_TEXT);
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -359,7 +359,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( ENABLE_BUTTON_ID );
-      button.SetLabelText( ENABLE_BUTTON_TEXT );
+      button.SetProperty( Toolkit::Button::Property::LABEL, ENABLE_BUTTON_TEXT);
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -370,7 +370,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( DISABLE_BUTTON_ID );
-      button.SetLabelText( DISABLE_BUTTON_TEXT );
+      button.SetProperty( Toolkit::Button::Property::LABEL, DISABLE_BUTTON_TEXT);
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -421,7 +421,7 @@ class LoggingController: public ConnectionTracker
       Toolkit::RadioButton radioButton = Toolkit::RadioButton::New( FREQUENCY_2_RADIO_TEXT );
       radioButton.SetName( FREQUENCY_2_RADIO_ID );
 
-      radioButton.SetSelected( true );
+      radioButton.SetProperty( Toolkit::Button::Property::SELECTED, true );
 
       radioButton.StateChangedSignal().Connect( this, &LoggingController::FrequencyRadioSelect );
 
@@ -453,7 +453,7 @@ class LoggingController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetName( VSYNC_BUTTON_ID );
-      button.SetLabelText( VSYNC_BUTTON_TEXT );
+      button.SetProperty( Toolkit::Button::Property::LABEL, VSYNC_BUTTON_TEXT);
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button.ClickedSignal().Connect( this, &LoggingController::OnButtonClicked );
@@ -473,21 +473,27 @@ class LoggingController: public ConnectionTracker
          << ", " << ((mLoggerStates[i].isTiming) ? "Started" : "Stopped")
          << ", " << ((mLoggerStates[i].isEnabled) ? "Enabled" : "Disabled");
 
-      mLogRadioButtons[i].SetLabelText( ss.str() );
+      mLogRadioButtons[i].SetProperty( Toolkit::Button::Property::LABEL, ss.str() );
     }
   }
 
   bool LoggingRadioSelect( Toolkit::Button button )
   {
-    if( button.GetName() == LOGGER_1_RADIO_ID && button.IsSelected() == true )
+    bool isSelected = button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
+    if( !isSelected )
+    {
+      return true;
+    }
+
+    if( button.GetName() == LOGGER_1_RADIO_ID )
     {
       mCurrentLogger = 0;
     }
-    else if( button.GetName() == LOGGER_2_RADIO_ID && button.IsSelected() == true )
+    else if( button.GetName() == LOGGER_2_RADIO_ID )
     {
       mCurrentLogger = 1;
     }
-    else if( button.GetName() == LOGGER_3_RADIO_ID && button.IsSelected() == true )
+    else if( button.GetName() == LOGGER_3_RADIO_ID )
     {
       mCurrentLogger = 2;
     }
@@ -503,21 +509,27 @@ class LoggingController: public ConnectionTracker
     const unsigned int frequency = mLoggerStates[mCurrentLogger].frequency;
     if( frequency == HIGH_FREQUENCY )
     {
-      mFrequencyRadioButtons[0].SetSelected( true );
+      mFrequencyRadioButtons[0].SetProperty( Toolkit::Button::Property::SELECTED, true );
     }
     else if( frequency == MEDIUM_FREQUENCY )
     {
-      mFrequencyRadioButtons[1].SetSelected( true );
+      mFrequencyRadioButtons[1].SetProperty( Toolkit::Button::Property::SELECTED, true );
     }
     else if( frequency == LOW_FREQUENCY )
     {
-      mFrequencyRadioButtons[2].SetSelected( true );
+      mFrequencyRadioButtons[2].SetProperty( Toolkit::Button::Property::SELECTED, true );
     }
   }
 
   bool FrequencyRadioSelect( Toolkit::Button button )
   {
-    if( button.GetName() == FREQUENCY_1_RADIO_ID && button.IsSelected() == true )
+    bool isSelected = button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
+    if( !isSelected )
+    {
+      return true;
+    }
+
+    if( button.GetName() == FREQUENCY_1_RADIO_ID )
     {
       if( mPerformanceLoggers[mCurrentLogger] )
       {
@@ -528,7 +540,7 @@ class LoggingController: public ConnectionTracker
         mLoggerStates[mCurrentLogger].frequency = HIGH_FREQUENCY;
       }
     }
-    else if( button.GetName() == FREQUENCY_2_RADIO_ID && button.IsSelected() == true )
+    else if( button.GetName() == FREQUENCY_2_RADIO_ID )
     {
       if( mPerformanceLoggers[mCurrentLogger] )
       {
@@ -539,7 +551,7 @@ class LoggingController: public ConnectionTracker
         mLoggerStates[mCurrentLogger].frequency = MEDIUM_FREQUENCY;
       }
     }
-    else if( button.GetName() == FREQUENCY_3_RADIO_ID && button.IsSelected() == true )
+    else if( button.GetName() == FREQUENCY_3_RADIO_ID )
     {
       if( mPerformanceLoggers[mCurrentLogger] )
       {

@@ -1,7 +1,6 @@
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
 msgstr "애니메이션 이미지"
 
-
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "애니메이션 모양"
 
@@ -13,6 +12,9 @@ msgstr "방울"
 
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "버튼"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "깎는"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "색상 그라디언트"

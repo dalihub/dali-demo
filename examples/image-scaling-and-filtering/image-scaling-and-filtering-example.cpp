@@ -373,7 +373,7 @@ public:
     Toolkit::PushButton button = Toolkit::PushButton::New();
     button.SetStyleName( STYLE_BUTTON_TEXT );
     button.SetName( id );
-    button.SetLabelText( label );
+    button.SetProperty( Toolkit::Button::Property::LABEL, label );
     button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     button.ClickedSignal().Connect( this, &ImageScalingAndFilteringController::OnButtonClicked );
@@ -400,7 +400,7 @@ public:
   {
     Toolkit::PushButton button = Toolkit::PushButton::New();
     button.SetName( id );
-    button.SetLabelText( id );
+    button.SetProperty( Toolkit::Button::Property::LABEL, id );
 
     button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     button.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
@@ -489,7 +489,7 @@ public:
     if( button.GetName() == modeName )
     {
       mFittingMode = mode;
-      mFittingModeButton.SetLabelText( modeName );
+      mFittingModeButton.SetProperty( Toolkit::Button::Property::LABEL, modeName );
       ResizeImage();
       mPopup.SetDisplayState( Toolkit::Popup::HIDDEN );
       mPopup.Reset();
@@ -504,7 +504,7 @@ public:
     if( button.GetName() == modeName )
     {
       mSamplingMode = mode;
-      mSamplingModeButton.SetLabelText( modeName );
+      mSamplingModeButton.SetProperty( Toolkit::Button::Property::LABEL, modeName );
       ResizeImage();
       mPopup.SetDisplayState( Toolkit::Popup::HIDDEN );
       mPopup.Reset();
@@ -661,13 +661,13 @@ public:
       else if ( event.keyPressedName == "f" )
       {
         mSamplingMode = NextFilterMode( mSamplingMode );
-        mSamplingModeButton.SetLabelText( StringFromFilterMode( mSamplingMode ) );
+        mSamplingModeButton.SetProperty( Toolkit::Button::Property::LABEL, StringFromFilterMode( mSamplingMode ) );
       }
       // Cycle filter and scaling modes:
       else if ( event.keyPressedName == "s" )
       {
         mFittingMode = NextScalingMode( mFittingMode );
-        mFittingModeButton.SetLabelText( StringFromScalingMode( mFittingMode ) );
+        mFittingModeButton.SetProperty( Toolkit::Button::Property::LABEL, StringFromScalingMode( mFittingMode ) );
       }
       else
       {

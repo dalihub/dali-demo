@@ -1,5 +1,23 @@
+/*
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/object/property-map.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/public-api/controls/slider/slider.h>
 
 using namespace Dali;
@@ -170,8 +188,8 @@ public:
       button.SetAnchorPoint( AnchorPoint::CENTER );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
       button.SetPadding( Padding( elementPadding, elementPadding, elementPadding, elementPadding ) );
-      button.SetProperty( Button::Property::UNSELECTED_STATE_IMAGE, Property::Value( BUTTON_IMAGE_URL[modelNumber] ) );
-      button.SetProperty( Button::Property::SELECTED_STATE_IMAGE, Property::Value( BUTTON_IMAGE_URL[modelNumber] ) );
+      button.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGE_URL[modelNumber] );
+      button.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL,  BUTTON_IMAGE_URL[modelNumber] );
       button.RegisterProperty( "modelNumber", Property::Value( modelNumber ) );
       button.ClickedSignal().Connect( this, &PrimitiveShapesController::OnChangeShapeClicked );
 

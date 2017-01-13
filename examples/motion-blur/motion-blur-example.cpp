@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/shader-effects/motion-blur-effect.h>
-#include <dali-toolkit/devel-api/controls/popup/popup.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -176,16 +176,16 @@ public:
 
     //Add an effects icon on the right of the title
     mActorEffectsButton = Toolkit::PushButton::New();
-    mActorEffectsButton.SetUnselectedImage( EFFECTS_OFF_ICON );
-    mActorEffectsButton.SetSelectedImage( EFFECTS_OFF_ICON_SELECTED );
+    mActorEffectsButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON );
+    mActorEffectsButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON_SELECTED );
     mActorEffectsButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnEffectButtonClicked );
     mToolBar.AddControl( mActorEffectsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
     // Creates a mode button.
     // Create a effect toggle button. (right of toolbar)
     Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
-    layoutButton.SetUnselectedImage( LAYOUT_IMAGE );
-    layoutButton.SetSelectedImage( LAYOUT_IMAGE_SELECTED );
+    layoutButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE );
+    layoutButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE_SELECTED );
     layoutButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnLayoutButtonClicked);
     layoutButton.SetLeaveRequired( true );
     mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -435,14 +435,14 @@ public:
     if(!mActorEffectsEnabled)
     {
       mActorEffectsEnabled = true;
-      mActorEffectsButton.SetUnselectedImage( EFFECTS_ON_ICON );
-      mActorEffectsButton.SetSelectedImage( EFFECTS_ON_ICON_SELECTED );
+      mActorEffectsButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_ON_ICON );
+      mActorEffectsButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_ON_ICON_SELECTED );
     }
     else
     {
       mActorEffectsEnabled = false;
-      mActorEffectsButton.SetUnselectedImage( EFFECTS_OFF_ICON );
-      mActorEffectsButton.SetSelectedImage( EFFECTS_OFF_ICON_SELECTED );
+      mActorEffectsButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON );
+      mActorEffectsButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON_SELECTED );
     }
   }
 
@@ -539,8 +539,6 @@ private:
 
   DeviceOrientation mOrientation;               ///< Current Device orientation
   Animation mRotateAnimation;                   ///< Animation for rotating between landscape and portrait.
-
-  Popup mInstructionsPopup;                     ///< Info Popup
 };
 
 void RunTest(Application& app)
