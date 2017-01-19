@@ -14,33 +14,19 @@
  * limitations under the License.
  *
  */
-
 {
   "styles":
   {
-    "ProgressBarCustomStyle1":
+    "ProgressBar":
     {
-      "progressValue": 0,
       "trackVisual":{
-        "url":"{APPLICATION_RESOURCE_PATH}/images/progress-bar.9.png",
-        "size":[5,24]
+        "url":"{APPLICATION_RESOURCE_PATH}/images/new-progress-bar-track.9.png"
       },
       "progressVisual":{
-        "url":"{APPLICATION_RESOURCE_PATH}/images/progress-bar-progress.9.png",
-        "size":[5,24]
-      }
-    },
-
-    "ProgressBarCustomStyle2":
-    {
-      "progressValue": 0,
-      "trackVisual":{
-        "url":"{APPLICATION_RESOURCE_PATH}/images/progress-bar-2.9.png",
-        "size":[5,7]
+        "url":"{APPLICATION_RESOURCE_PATH}/images/new-progress-bar-progress.9.png"
       },
-      "progressVisual":{
-        "url":"{APPLICATION_RESOURCE_PATH}/images/progress-bar-progress-2.9.png",
-        "size":[5,7]
+      "secondaryProgressVisual":{
+        "url":"{APPLICATION_RESOURCE_PATH}/images/new-progress-bar-secondary-progress.9.png"
       }
     }
   }
