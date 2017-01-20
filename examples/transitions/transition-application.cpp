@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,9 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
-#include "beat-control.h"
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
+#include "shadow-button.h"
 #include <cstdio>
 #include <sstream>
 
@@ -33,16 +35,27 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+namespace
+{
+
+void SetLabelText( Button button, const char* label )
+{
+  button.SetProperty( Toolkit::Button::Property::LABEL, label );
+}
+
+}
+
 namespace Demo
 {
 
 const char* TransitionApplication::DEMO_THEME_ONE_PATH( DEMO_STYLE_DIR "style-example-theme-one.json" );
+const char* TransitionApplication::DEMO_THEME_TWO_PATH( DEMO_STYLE_DIR "style-example-theme-two.json" );
 
 
 TransitionApplication::TransitionApplication( Application& application )
 : mApplication( application ),
   mTitle(),
-  mBeatControl(),
+  mShadowButton(),
   mActionButtons(),
   mActionIndex( Property::INVALID_INDEX )
 {
@@ -68,8 +81,8 @@ void TransitionApplication::Create( Application& application )
   contentLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   contentLayout.SetAnchorPoint( AnchorPoint::TOP_LEFT );
   contentLayout.SetParentOrigin( ParentOrigin::TOP_LEFT );
-  contentLayout.SetCellPadding( Size( 10, 10 ) );
-
+  contentLayout.SetCellPadding( Vector2( 0.0f, 5.0f ) );
+  contentLayout.SetBackgroundColor( Vector4(0.949, 0.949, 0.949, 1.0) );
   // Assign all rows the size negotiation property of fitting to children
 
   stage.Add( contentLayout );
@@ -77,62 +90,57 @@ void TransitionApplication::Create( Application& application )
   mTitle = TextLabel::New( "Custom Control Transition Example" );
   mTitle.SetName( "Title" );
   mTitle.SetStyleName("Title");
-  mTitle.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-  mTitle.SetParentOrigin( ParentOrigin::TOP_CENTER );
   mTitle.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   mTitle.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
   mTitle.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
   contentLayout.Add( mTitle );
-  contentLayout.SetFitHeight(0);
+  contentLayout.SetFitHeight(0); // Fill width
 
-  mBeatControl = BeatControl::New();
-  mBeatControl.SetName("BeatControl");
-  mBeatControl.SetAnchorPoint( AnchorPoint::CENTER );
-  mBeatControl.SetParentOrigin( ParentOrigin::CENTER );
-  mBeatControl.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  contentLayout.Add( mBeatControl );
-  // beat control should fill the tableview cell, so no change to default parameters
+  // Provide some padding around the center cell
+  TableView buttonLayout = TableView::New( 3, 3 );
+  buttonLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  buttonLayout.SetFixedHeight(1, 100 );
+  buttonLayout.SetFixedWidth(1, 350 );
+  contentLayout.Add( buttonLayout );
 
-  TableView actionButtonLayout = TableView::New( 1, 4 );
+  mShadowButton = ShadowButton::New();
+  mShadowButton.SetName("ShadowButton");
+  mShadowButton.SetActiveState( false );
+  mShadowButton.SetAnchorPoint( AnchorPoint::CENTER );
+  mShadowButton.SetParentOrigin( ParentOrigin::CENTER );
+  mShadowButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  buttonLayout.AddChild( mShadowButton, TableView::CellPosition(1, 1) );
+
+  TableView actionButtonLayout = TableView::New( 1, NUMBER_OF_ACTION_BUTTONS+1 );
   actionButtonLayout.SetName("ThemeButtonsLayout");
-  actionButtonLayout.SetCellPadding( Vector2( 6.0f, 0.0f ) );
-
-  actionButtonLayout.SetAnchorPoint( AnchorPoint::CENTER );
-  actionButtonLayout.SetParentOrigin( ParentOrigin::CENTER );
   actionButtonLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   actionButtonLayout.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
-  actionButtonLayout.SetCellPadding( Size( 10, 10 ) );
   actionButtonLayout.SetFitHeight( 0 );
 
   TextLabel label = TextLabel::New( "Action: ");
   label.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   label.SetStyleName("ActionLabel");
-  label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-  label.SetParentOrigin( ParentOrigin::TOP_CENTER );
   actionButtonLayout.AddChild( label, TableView::CellPosition( 0, 0 ) );
   actionButtonLayout.SetCellAlignment( TableView::CellPosition( 0, 0 ), HorizontalAlignment::LEFT, VerticalAlignment::CENTER );
 
-  for( int i=0; i<3; ++i )
+  for( int i=0; i<NUMBER_OF_ACTION_BUTTONS; ++i )
   {
     mActionButtons[i] = PushButton::New();
     mActionButtons[i].SetName("ActionButton");
     mActionButtons[i].SetStyleName("ActionButton");
-    mActionButtons[i].SetParentOrigin( ParentOrigin::CENTER );
-    mActionButtons[i].SetAnchorPoint( ParentOrigin::CENTER );
     mActionButtons[i].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mActionButtons[i].SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     mActionIndex = mActionButtons[i].RegisterProperty( "actionId", i, Property::READ_WRITE );
     mActionButtons[i].ClickedSignal().Connect( this, &TransitionApplication::OnActionButtonClicked );
     actionButtonLayout.AddChild( mActionButtons[i], TableView::CellPosition( 0, 1+i ) );
   }
-  mActionButtons[0].SetProperty( Toolkit::Button::Property::LABEL, "Bounce" );
-  mActionButtons[1].SetProperty( Toolkit::Button::Property::LABEL, "X" );
-  mActionButtons[2].SetProperty( Toolkit::Button::Property::LABEL, "Y" );
+  SetLabelText( mActionButtons[0], "Activate" );
+  SetLabelText( mActionButtons[1], "Check" );
+  mActionButtons[1].SetProperty( Button::Property::DISABLED, true );
 
   contentLayout.Add( actionButtonLayout );
   contentLayout.SetFitHeight(2);
 }
-
 
 bool TransitionApplication::OnActionButtonClicked( Button button )
 {
@@ -141,17 +149,39 @@ bool TransitionApplication::OnActionButtonClicked( Button button )
   {
     case 0:
     {
-      mBeatControl.StartBounceAnimation();
+      bool activeState = mShadowButton.GetActiveState();
+      mShadowButton.SetActiveState( ! activeState );
+      if( activeState )
+      {
+        SetLabelText( button, "Activate" );
+      }
+      else
+      {
+        SetLabelText( button, "Deactivate" );
+      }
+      mActionButtons[1].SetProperty( Button::Property::DISABLED, activeState );
       break;
     }
     case 1:
     {
-      mBeatControl.StartXAnimation();
+      bool checkState = mShadowButton.GetCheckState();
+      mShadowButton.SetCheckState( ! checkState );
+      if( checkState )
+      {
+        SetLabelText( button, "Check" );
+      }
+      else
+      {
+        SetLabelText( button, "Uncheck" );
+      }
       break;
     }
     case 2:
     {
-      mBeatControl.StartYAnimation();
+      break;
+    }
+    case 3:
+    {
       break;
     }
   }

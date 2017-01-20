@@ -53,9 +53,9 @@
       [
         {
           "target":"imageVisual",
-          "property":"scale",
-          "initialValue":[0.1,0.1,0.1],
-          "targetValue":[1,1,1],
+          "property":"size",
+          "initialValue":[0.1,0.1],
+          "targetValue":[1,1],
           "animator":
           {
             "alphaFunction":"EASE_IN",
@@ -68,17 +68,17 @@
         },
         {
           "target":"imageVisual",
-          "property":"colorAlpha",
-          "targetValue":1
+          "property":"mixColor",
+          "targetValue":[1,1,1,1]
         }
       ],
       "disableVisibilityTransition":
       [
         {
           "target":"imageVisual",
-          "property":"scale",
-          "initialValue":[1,1,1],
-          "targetValue":[0.1,0.1,0.1],
+          "property":"size",
+          "initialValue":[1,1],
+          "targetValue":[0.1,0.1],
           "animator":
           {
             "alphaFunction":"EASE_OUT",
@@ -91,8 +91,8 @@
         },
         {
           "target":"imageVisual",
-          "property":"colorAlpha",
-          "targetValue":0,
+          "property":"mixColor",
+          "targetValue":[1,1,1,0],
           "animator":
           {
             "alphaFunction":"EASE_OUT",
