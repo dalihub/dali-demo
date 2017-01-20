@@ -117,7 +117,7 @@ public:
     editButton.ClickedSignal().Connect( this, &Model3dViewController::OnChangeModelClicked);
     editButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
     editButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    editButton.SetLabelText( "Change Model" );
+    editButton.SetProperty( Toolkit::Button::Property::LABEL, "Change Model" );
     mButtonLayer.Add( editButton  );
 
     // Create button for shader changing
@@ -126,7 +126,7 @@ public:
     editButton.ClickedSignal().Connect( this, &Model3dViewController::OnChangeLightingClicked);
     editButton.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     editButton.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
-    editButton.SetLabelText( "Change Shader" );
+    editButton.SetProperty( Toolkit::Button::Property::LABEL, "Change Shader" );
     mButtonLayer.Add( editButton  );
 
     // Create button for pause/resume animation
@@ -135,7 +135,7 @@ public:
     editButton.ClickedSignal().Connect( this, &Model3dViewController::OnPauseAnimationsClicked);
     editButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     editButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    editButton.SetLabelText( "Pause Animations" );
+    editButton.SetProperty( Toolkit::Button::Property::LABEL, "Pause Animations" );
     mButtonLayer.Add( editButton  );
 
     //Create animations

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,9 @@
  */
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/super-blur-view/super-blur-view.h>
 #include <dali-toolkit/devel-api/controls/bloom-view/bloom-view.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
+#include <dali-toolkit/devel-api/controls/super-blur-view/super-blur-view.h>
 #include "shared/view.h"
 #include "shared/utility.h"
 
@@ -81,8 +82,9 @@ private:
 
     // Add a button to change background. (right of toolbar)
     Toolkit::PushButton changeBackgroundButton = Toolkit::PushButton::New();
-    changeBackgroundButton.SetUnselectedImage( CHANGE_BACKGROUND_ICON );
-    changeBackgroundButton.SetSelectedImage( CHANGE_BACKGROUND_ICON_SELECTED );
+    changeBackgroundButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_BACKGROUND_ICON );
+    changeBackgroundButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_BACKGROUND_ICON_SELECTED );
+
     changeBackgroundButton.ClickedSignal().Connect( this, &BlurExample::OnChangeBackgroundIconClicked );
     mToolBar.AddControl( changeBackgroundButton,
         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -91,8 +93,9 @@ private:
 
     // Add a button to change the blur view. (left of toolbar)
     Toolkit::PushButton changeBlurButton = Toolkit::PushButton::New();
-    changeBlurButton.SetUnselectedImage( CHANGE_BLUR_ICON );
-    changeBlurButton.SetSelectedImage( CHANGE_BLUR_ICON_SELECTED );
+    changeBlurButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_BLUR_ICON );
+    changeBlurButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_BLUR_ICON_SELECTED );
+
     changeBlurButton.ClickedSignal().Connect( this, &BlurExample::OnChangeBlurIconClicked );
     mToolBar.AddControl( changeBlurButton,
         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,

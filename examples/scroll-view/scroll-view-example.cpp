@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -33,6 +34,12 @@ const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char * const APPLICATION_TITLE( "ScrollView" );
 const char * const EFFECT_CAROUSEL_IMAGE( DEMO_IMAGE_DIR "icon-scroll-view-carousel.png" );
 const char * const EFFECT_CAROUSEL_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-scroll-view-carousel-selected.png" );
+const char * const EFFECT_CUBE_IMAGE( DEMO_IMAGE_DIR "icon-scroll-view-inner-cube.png" );
+const char * const EFFECT_CUBE_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-scroll-view-inner-cube-selected.png" );
+const char * const EFFECT_SPIRAL_IMAGE( DEMO_IMAGE_DIR "icon-scroll-view-spiral.png" );
+const char * const EFFECT_SPIRAL_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-scroll-view-spiral-selected.png" );
+const char * const EFFECT_WAVE_IMAGE( DEMO_IMAGE_DIR "icon-effect-wave.png" );
+const char * const EFFECT_WAVE_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-effect-wave-selected.png" );
 
 const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
 
@@ -175,12 +182,12 @@ public:
 
     mEffectIcon[ PageCarouselEffect ] = EFFECT_CAROUSEL_IMAGE;
     mEffectIconSelected[ PageCarouselEffect ] = EFFECT_CAROUSEL_IMAGE_SELECTED;
-    mEffectIcon[ PageCubeEffect ]     = EFFECT_CAROUSEL_IMAGE;
-    mEffectIconSelected[ PageCubeEffect ]     = EFFECT_CAROUSEL_IMAGE_SELECTED;
-    mEffectIcon[ PageSpiralEffect ]   = EFFECT_CAROUSEL_IMAGE;
-    mEffectIconSelected[ PageSpiralEffect ]   = EFFECT_CAROUSEL_IMAGE_SELECTED;
-    mEffectIcon[ PageWaveEffect ]     = EFFECT_CAROUSEL_IMAGE;
-    mEffectIconSelected[ PageWaveEffect ]     = EFFECT_CAROUSEL_IMAGE_SELECTED;
+    mEffectIcon[ PageCubeEffect ]     = EFFECT_CUBE_IMAGE;
+    mEffectIconSelected[ PageCubeEffect ]     = EFFECT_CUBE_IMAGE_SELECTED;
+    mEffectIcon[ PageSpiralEffect ]   = EFFECT_SPIRAL_IMAGE;
+    mEffectIconSelected[ PageSpiralEffect ]   = EFFECT_SPIRAL_IMAGE_SELECTED;
+    mEffectIcon[ PageWaveEffect ]     = EFFECT_WAVE_IMAGE;
+    mEffectIconSelected[ PageWaveEffect ]     = EFFECT_WAVE_IMAGE_SELECTED;
 
     // Create a effect change button. (right of toolbar)
     mEffectChangeButton = Toolkit::PushButton::New();
@@ -244,8 +251,8 @@ private:
     ss << APPLICATION_TITLE << ": " << EFFECT_MODE_NAME[mEffectMode];
     SetTitle(ss.str());
 
-    mEffectChangeButton.SetUnselectedImage( mEffectIcon[ mEffectMode ] );
-    mEffectChangeButton.SetSelectedImage( mEffectIconSelected[ mEffectMode ] );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, mEffectIcon[ mEffectMode ] );
+    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, mEffectIconSelected[ mEffectMode ] );
 
     // remove old Effect if exists.
     if(mScrollViewEffect)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <iostream>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <sstream>
 
 // INTERNAL INCLUDES
@@ -140,8 +140,7 @@ public:
     mColorButtonOption.SetParentOrigin( ParentOrigin::CENTER );
     mColorButtonOption.SetAnchorPoint( AnchorPoint::CENTER );
 
-    mColorButtonOption.SetProperty( Button::Property::UNSELECTED_COLOR, Color::BLACK );
-    mColorButtonOption.SetProperty( Button::Property::SELECTED_COLOR, Color::BLACK );
+    SetButtonColor( mColorButtonOption, Color::BLACK );
 
     mColorButtonOption.ClickedSignal().Connect( this, &TextEditorExample::OnChangeColorButtonClicked );
     mColorContainer.Add( mColorButtonOption );
@@ -208,8 +207,7 @@ public:
       s << "color" << index;
       button.SetName( s.str() );
 
-      button.SetProperty( Button::Property::UNSELECTED_COLOR, COLORS[index] );
-      button.SetProperty( Button::Property::SELECTED_COLOR, COLORS[index] );
+      SetButtonColor( button, COLORS[index] );
 
       button.ClickedSignal().Connect( this, &TextEditorExample::OnColorButtonClicked );
 
@@ -253,8 +251,7 @@ public:
       mEditor.SetProperty( TextEditor::Property::INPUT_COLOR, color );
     }
 
-    mColorButtonOption.SetProperty( Button::Property::UNSELECTED_COLOR, color );
-    mColorButtonOption.SetProperty( Button::Property::SELECTED_COLOR, color );
+    SetButtonColor( mColorButtonOption, color  );
 
     mButtonContainer.SetVisible( false );
     mButtonContainer.SetSensitive( false );
@@ -267,12 +264,20 @@ public:
     if( TextEditor::InputStyle::NONE != static_cast<TextEditor::InputStyle::Mask>( mask & TextEditor::InputStyle::COLOR ) )
     {
       const Vector4 color = editor.GetProperty( TextEditor::Property::INPUT_COLOR ).Get<Vector4>();
-
-      mColorButtonOption.SetProperty( Button::Property::UNSELECTED_COLOR, color );
-      mColorButtonOption.SetProperty( Button::Property::SELECTED_COLOR, color );
+      SetButtonColor( mColorButtonOption, color  );
     }
 
     editor.Reset();
+  }
+
+  void SetButtonColor( Button& button, const Vector4& color )
+  {
+    Property::Map colorVisualMap;
+    colorVisualMap.Add( Visual::Property::TYPE, Visual::COLOR )
+                  .Add( ColorVisual::Property::MIX_COLOR, color );
+
+    button.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, colorVisualMap );
+    button.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, colorVisualMap );
   }
 
 private:

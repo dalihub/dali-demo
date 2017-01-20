@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include "shared/view.h"
 #include "shared/utility.h"
 
@@ -108,8 +109,8 @@ private:
 
     // Add a button to change background. (right of toolbar)
     mChangeBackgroundButton = Toolkit::PushButton::New();
-    mChangeBackgroundButton.SetUnselectedImage( CHANGE_BACKGROUND_ICON );
-    mChangeBackgroundButton.SetSelectedImage( CHANGE_BACKGROUND_ICON_SELECTED );
+    mChangeBackgroundButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_BACKGROUND_ICON );
+    mChangeBackgroundButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_BACKGROUND_ICON_SELECTED );
     mChangeBackgroundButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
     toolBar.AddControl( mChangeBackgroundButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -117,8 +118,8 @@ private:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change bubble shape. ( left of bar )
     mChangeBubbleShapeButton = Toolkit::PushButton::New();
-    mChangeBubbleShapeButton.SetUnselectedImage( CHANGE_BUBBLE_SHAPE_ICON );
-    mChangeBubbleShapeButton.SetSelectedImage( CHANGE_BUBBLE_SHAPE_ICON_SELECTED );
+    mChangeBubbleShapeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_BUBBLE_SHAPE_ICON );
+    mChangeBubbleShapeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_BUBBLE_SHAPE_ICON_SELECTED );
     mChangeBubbleShapeButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
     toolBar.AddControl( mChangeBubbleShapeButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,

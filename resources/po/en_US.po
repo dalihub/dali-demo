@@ -13,6 +13,9 @@ msgstr "Bubbles"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Buttons"
 
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "Clipping"
+
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "Color Gradient"
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/page-turn-view/page-factory.h>
 #include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-landscape-view.h>
 #include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-portrait-view.h>
@@ -256,8 +257,8 @@ void PageTurnController::OnInit( Application& app )
   Toolkit::PushButton button = Toolkit::PushButton::New();
   button.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
   button.SetParentOrigin( ParentOrigin::TOP_RIGHT );
-  button.SetUnselectedImage( CHANGE_IMAGE_ICON  );
-  button.SetSelectedImage( CHANGE_IMAGE_ICON_SELECTED );
+  button.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_IMAGE_ICON );
+  button.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_IMAGE_ICON_SELECTED );
   button.SetLeaveRequired( true );
   button.SetScale(1.5f);
   button.PressedSignal().Connect( this, &PageTurnController::OnButtonClicked );

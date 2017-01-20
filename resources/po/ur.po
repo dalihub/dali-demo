@@ -13,6 +13,9 @@ msgstr "بلبلے"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "بٹنوں"
 
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "کاٹنا"
+
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "رنگ میلان"
 

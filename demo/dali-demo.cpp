@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,6 +89,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("flex-container.example", DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND));
   demo.AddExample(Example("fpp-game.example", DALI_DEMO_STR_TITLE_FPP_GAME));
   demo.AddExample(Example("tooltip.example", DALI_DEMO_STR_TITLE_TOOLTIP));
+  demo.AddExample(Example("clipping.example", DALI_DEMO_STR_TITLE_CLIPPING));
 
   demo.SortAlphabetically( true );
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@
 #include <dali-toolkit/devel-api/builder/builder.h>
 #include <dali-toolkit/devel-api/builder/tree-node.h>
 #include <dali-toolkit/devel-api/builder/json-parser.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali-toolkit/devel-api/controls/navigation-view/navigation-view.h>
 
@@ -472,8 +473,8 @@ public:
 
     // Create an edit mode button. (left of toolbar)
     Toolkit::PushButton backButton = Toolkit::PushButton::New();
-    backButton.SetUnselectedImage( EDIT_IMAGE );
-    backButton.SetSelectedImage( EDIT_IMAGE_SELECTED );
+    backButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EDIT_IMAGE );
+    backButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EDIT_IMAGE_SELECTED );
     backButton.ClickedSignal().Connect( this, &ExampleApp::OnBackButtonPressed);
     backButton.SetLeaveRequired( true );
     mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );

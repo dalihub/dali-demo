@@ -11,3 +11,4 @@ install_manifest.txt
 /builder/dali-builder
 /examples/*.demo
 /mo
+compile_commands.json

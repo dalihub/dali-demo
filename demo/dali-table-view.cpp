@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,6 +81,13 @@ const Vector4 BUBBLE_COLOR[] =
   Vector4( 1.f, 1.f, 1.f, 0.13f )
 };
 const int NUMBER_OF_BUBBLE_COLOR( sizeof(BUBBLE_COLOR) / sizeof(BUBBLE_COLOR[0]) );
+
+const char * const SHAPE_IMAGE_TABLE[] =
+{
+  DEMO_IMAGE_DIR "shape-circle.png",
+  DEMO_IMAGE_DIR "shape-bubble.png"
+};
+const int NUMBER_OF_SHAPE_IMAGES( sizeof( SHAPE_IMAGE_TABLE ) / sizeof( SHAPE_IMAGE_TABLE[0] ) );
 
 const int NUM_BACKGROUND_IMAGES = 18;
 const float BACKGROUND_SWIPE_SCALE = 0.025f;
@@ -732,16 +739,9 @@ void DaliTableView::OnKeyEvent( const KeyEvent& event )
 
 void DaliTableView::SetupBackground( Actor bubbleContainer )
 {
-  // Create distance field shapes.
-  BufferImage distanceFields[2];
-  Size imageSize( 512, 512 );
-
-  CreateShapeImage( CIRCLE, imageSize, distanceFields[0] );
-  CreateShapeImage( BUBBLE, imageSize, distanceFields[1] );
-
   // Add bubbles to the bubbleContainer.
   // Note: The bubbleContainer is parented externally to this function.
-  AddBackgroundActors( bubbleContainer, NUM_BACKGROUND_IMAGES, distanceFields );
+  AddBackgroundActors( bubbleContainer, NUM_BACKGROUND_IMAGES );
 }
 
 void DaliTableView::InitialiseBackgroundActors( Actor actor )
@@ -780,13 +780,13 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
   }
 }
 
-void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage* distanceField )
+void DaliTableView::AddBackgroundActors( Actor layer, int count )
 {
   for( int i = 0; i < count; ++i )
   {
     float randSize = Random::Range( 10.0f, 400.0f );
-    int distanceFieldType = static_cast<int>( Random::Range( 0.0f, 1.0f ) + 0.5f );
-    ImageView dfActor = ImageView::New( distanceField[ distanceFieldType ] );
+    int shapeType = static_cast<int>( Random::Range( 0.0f, NUMBER_OF_SHAPE_IMAGES - 1 ) + 0.5f );
+    ImageView dfActor = ImageView::New( SHAPE_IMAGE_TABLE[ shapeType ] );
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
@@ -799,57 +799,6 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count, BufferImage* di
 
   // Positioning will occur when the layer is relaid out
   layer.OnRelayoutSignal().Connect( this, &DaliTableView::InitialiseBackgroundActors );
-}
-
-void DaliTableView::CreateShapeImage( ShapeType shapeType, const Size& size, BufferImage& distanceFieldOut )
-{
-  // this bitmap will hold the alpha map for the distance field shader
-  distanceFieldOut = BufferImage::New( size.width, size.height, Pixel::A8 );
-
-  // Generate bit pattern
-  std::vector< unsigned char > imageDataA8;
-  imageDataA8.reserve( size.width * size.height ); // A8
-
-  switch( shapeType )
-  {
-    case CIRCLE:
-      GenerateCircle( size, imageDataA8 );
-      break;
-    case BUBBLE:
-      GenerateCircle( size, imageDataA8, true );
-      break;
-    default:
-      break;
-  }
-
-  PixelBuffer* buffer = distanceFieldOut.GetBuffer();
-  if( buffer )
-  {
-    GenerateDistanceFieldMap( &imageDataA8[ 0 ], size, buffer, size, 8.0f, size );
-    distanceFieldOut.Update();
-  }
-}
-
-void DaliTableView::GenerateCircle( const Size& size, std::vector< unsigned char >& distanceFieldOut, bool hollow )
-{
-  const float radius = size.width * 0.5f * size.width * 0.5f;
-  Vector2 center( size.width / 2, size.height / 2 );
-
-  for( int h = 0; h < size.height; ++h )
-  {
-    for( int w = 0; w < size.width; ++w )
-    {
-      Vector2 pos( w, h );
-      Vector2 dist = pos - center;
-
-      float distance = ( dist.x * dist.x ) + ( dist.y * dist.y );
-
-      // If hollow, check the distance against a min & max value, otherwise just use the max value.
-      unsigned char fillByte = ( hollow ? ( ( distance <= radius ) && ( distance > ( radius * 0.7f ) ) ) : ( distance <= radius ) ) ? 0xFF : 0x00;
-
-      distanceFieldOut.push_back( fillByte );
-    }
-  }
 }
 
 ImageView DaliTableView::CreateLogo( std::string imagePath )

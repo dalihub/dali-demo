@@ -13,6 +13,9 @@ msgstr "Burbujas"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Botones"
 
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "Recorte"
+
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "Gradiente de color"
 
