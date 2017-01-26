@@ -16,7 +16,21 @@
         "desiredWidth": 400,
         "desiredHeight": 400,
         "shader": {
-          "fragmentShader": "precision mediump float;\nuniform sampler2D sTexture;\nuniform vec4 uColor;\nuniform float uAmplitude;\nuniform float uTime;\nvarying vec2 vTexCoord;\nvoid main()\n{\n  highp vec2 pos = -1.0 + 2.0 * vTexCoord;\n  highp float len = length(pos);\n  highp vec2 texCoord = vTexCoord + pos/len * sin( len * 12.0 - uTime * 4.0 ) * uAmplitude;\n  gl_FragColor = texture2D(sTexture, texCoord) * uColor;}\n\n"
+          "fragmentShader": [
+              "precision mediump float;",
+              "uniform sampler2D sTexture;",
+              "uniform vec4 uColor;",
+              "uniform float uAmplitude;",
+              "uniform float uTime;",
+              "varying vec2 vTexCoord;",
+              "void main()",
+              "{",
+              "  highp vec2 pos = -1.0 + 2.0 * vTexCoord;",
+              "  highp float len = length(pos);",
+              "  highp vec2 texCoord = vTexCoord + pos/len * sin( len * 12.0 - uTime * 4.0 ) * uAmplitude;",
+              "  gl_FragColor = texture2D(sTexture, texCoord) * uColor;",
+              "}"
+            ]
           }
       },
       "animatableProperties": {
