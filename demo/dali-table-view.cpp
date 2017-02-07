@@ -108,7 +108,6 @@ const float BUBBLE_MAX_Z = 0.0f;
 // The shader uses the tiles position within the scroll-view page and the scroll-views rotation position to create a parallax effect.
 const char* FRAGMENT_SHADER_TEXTURED = DALI_COMPOSE_SHADER(
   varying mediump vec2  vTexCoord;
-  varying mediump vec3  vIllumination;
   uniform lowp    vec4  uColor;
   uniform sampler2D     sTexture;
   uniform mediump vec3  uCustomPosition;
@@ -266,7 +265,7 @@ void DaliTableView::Initialize( Application& application )
   Stage::GetCurrent().Add( mRootActor );
 
   // Add logo
-  ImageView logo = CreateLogo( LOGO_PATH );
+  ImageView logo = ImageView::New( LOGO_PATH );
   logo.SetName( "LOGO_IMAGE" );
   logo.SetAnchorPoint( AnchorPoint::TOP_CENTER );
   logo.SetParentOrigin( Vector3( 0.5f, 0.1f, 0.5f ) );
@@ -517,18 +516,20 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   tileContent.SetAnchorPoint( AnchorPoint::CENTER );
   tileContent.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
-  // Add the image via the property first.
-  tileContent.SetProperty( Toolkit::ImageView::Property::IMAGE, TILE_BACKGROUND_ALPHA );
-  // Register a property with the ImageView. This allows us to inject the scroll-view position into the shader.
+ // Register a property with the ImageView. This allows us to inject the scroll-view position into the shader.
   Property::Value value = Vector3( 0.0f, 0.0f, 0.0f );
   Property::Index propertyIndex = tileContent.RegisterProperty( "uCustomPosition", value );
 
   // Add a shader to the image (details in shader source).
-  Property::Map map;
   Property::Map customShader;
   customShader[ Visual::Shader::Property::FRAGMENT_SHADER ] = FRAGMENT_SHADER_TEXTURED;
-  map[ Visual::Property::SHADER ] = customShader;
-  tileContent.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
+
+  // Set the Image URL and the custom shader
+  Property::Map imageMap;
+  imageMap.Add( ImageVisual::Property::URL, TILE_BACKGROUND_ALPHA );
+  imageMap.Add( Visual::Property::SHADER, customShader );
+  tileContent.SetProperty( Toolkit::ImageView::Property::IMAGE, imageMap );
+
   tileContent.SetColor( TILE_COLOR );
 
   // We create a constraint to perform a precalculation on the scroll-view X offset
@@ -782,12 +783,18 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count )
   {
     float randSize = Random::Range( 10.0f, 400.0f );
     int shapeType = static_cast<int>( Random::Range( 0.0f, NUMBER_OF_SHAPE_IMAGES - 1 ) + 0.5f );
-    ImageView dfActor = ImageView::New( SHAPE_IMAGE_TABLE[ shapeType ] );
+
+    ImageView dfActor = ImageView::New();
     dfActor.SetSize( Vector2( randSize, randSize ) );
     dfActor.SetParentOrigin( ParentOrigin::CENTER );
 
+    // Set the Image URL and the custom shader at the same time
     Dali::Property::Map effect = Toolkit::CreateDistanceFieldEffect();
-    dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, effect );
+    Property::Map imageMap;
+    imageMap.Add( ImageVisual::Property::URL, SHAPE_IMAGE_TABLE[ shapeType ] );
+    imageMap.Add( Visual::Property::SHADER, effect );
+    dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, imageMap );
+
     dfActor.SetColor( BUBBLE_COLOR[ i%NUMBER_OF_BUBBLE_COLOR ] );
 
     layer.Add( dfActor );
@@ -795,16 +802,6 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count )
 
   // Positioning will occur when the layer is relaid out
   layer.OnRelayoutSignal().Connect( this, &DaliTableView::InitialiseBackgroundActors );
-}
-
-ImageView DaliTableView::CreateLogo( std::string imagePath )
-{
-  ImageView logo = ImageView::New( imagePath );
-
-  logo.SetAnchorPoint( AnchorPoint::CENTER );
-  logo.SetParentOrigin( ParentOrigin::CENTER );
-
-  return logo;
 }
 
 bool DaliTableView::PauseBackgroundAnimation()
