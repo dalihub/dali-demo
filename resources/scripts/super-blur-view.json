@@ -66,6 +66,7 @@
       "position": [0, 0, 0],
       "size": [200, 100, 0],
       "labelText": "Blur",
+      "siblingOrder": 1,
       "signals": [{
         "name": "pressed",
         "action": "play",
