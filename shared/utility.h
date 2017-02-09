@@ -19,7 +19,6 @@
  */
 
 #include <dali/dali.h>
-#include <dali/devel-api/images/atlas.h>
 #include <dali/devel-api/adaptor-framework/bitmap-loader.h>
 #include <dali/public-api/rendering/geometry.h>
 #include <dali/public-api/rendering/texture.h>

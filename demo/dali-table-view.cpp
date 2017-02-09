@@ -460,10 +460,6 @@ void DaliTableView::Populate()
         }
       }
 
-      // Set tableview position
-      Vector3 pagePos( stageSize.width * TABLE_RELATIVE_SIZE.x * t, 0.0f, 0.0f );
-      page.SetPosition( pagePos );
-
       mPages.push_back( page );
 
       if( iter == mExampleList.end() )

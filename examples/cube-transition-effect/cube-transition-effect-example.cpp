@@ -25,6 +25,7 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
+#include <dali-toolkit/devel-api/controls/buttons/toggle-button.h>
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-effect.h>
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-cross-effect.h>
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-fold-effect.h>
@@ -192,8 +193,6 @@ private:
 
   Vector2                         mPanPosition;
   Vector2                         mPanDisplacement;
-
-  Toolkit::PushButton             mEffectChangeButton;
 };
 
 CubeTransitionApp::CubeTransitionApp( Application& application )
@@ -218,12 +217,18 @@ void CubeTransitionApp::OnInit( Application& application )
   mContent = DemoHelper::CreateView( application, mView, mToolBar, "", TOOLBAR_IMAGE, "" );
   mContent.SetBehavior( Layer::LAYER_3D );
 
-  // Add an effect-changing button on the right of the tool bar.
-  mEffectChangeButton = Toolkit::PushButton::New();
-  mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_WAVE_IMAGE );
-  mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_WAVE_IMAGE_SELECTED );
-  mEffectChangeButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
-  mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+
+  // Add an effect changing toggle button
+  Toolkit::ToggleButton effectChangeToggleButton = Toolkit::ToggleButton::ToggleButton::New();
+
+  effectChangeToggleButton.SetProperty( Toolkit::ToggleButton::Property::STATE_VISUALS,
+                                        Property::Array().Add( EFFECT_WAVE_IMAGE )
+                                                         .Add( EFFECT_CROSS_IMAGE)
+                                                         .Add( EFFECT_FOLD_IMAGE )
+                                      );
+
+  effectChangeToggleButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
+  mToolBar.AddControl( effectChangeToggleButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
   mTitle = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_WAVE );
@@ -325,23 +330,16 @@ bool CubeTransitionApp::OnEffectButtonClicked( Toolkit::Button button )
   {
     mCurrentEffect = mCubeCrossEffect;
     mTitle.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_CROSS) );
-    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_CROSS_IMAGE );
-    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_CROSS_IMAGE_SELECTED );
-
   }
   else if(mCurrentEffect == mCubeCrossEffect)
   {
     mCurrentEffect = mCubeFoldEffect;
     mTitle.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_FOLD) );
-    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_FOLD_IMAGE );
-    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_FOLD_IMAGE_SELECTED );
   }
   else
   {
     mCurrentEffect = mCubeWaveEffect;
     mTitle.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_WAVE) );
-    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_WAVE_IMAGE );
-    mEffectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_WAVE_IMAGE_SELECTED );
   }
   mContent.Add( mCurrentEffect );
 
