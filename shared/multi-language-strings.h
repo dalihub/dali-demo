@@ -186,9 +186,29 @@ namespace MultiLanguageStrings
       "(Chinese)",
       "若要重新排列页面，您需要将视图类型更改为可自定义网格。"
     },
+    {
+      "ꦧꦱꦗꦮ, basa Jawa",
+      "(Javanese)",
+      "ꦧꦱꦗꦮ ꦕꦫꦗꦮ ꦲꦏ꧀ꦱꦫꦗꦮ ꦲꦤꦕꦫꦏ ꧋ꦱꦧꦼꦤ꧀ꦲꦸꦮꦺꦴꦁꦏꦭꦲꦶꦫꦏꦺꦏꦤ꧀ꦛꦶꦩꦂꦢꦶꦏꦭꦤ꧀ꦢꦂꦧꦺꦩꦂꦠꦧꦠ꧀ꦭꦤ꧀ꦲꦏ꧀ꦲꦏ꧀ꦏꦁꦥꦝ꧉"
+    },
+    {
+      "Basa Sunda, ᮘᮞ ᮞᮥᮔ᮪ᮓ",
+      "(Sundanese)",
+      "ᮃᮊ᮪ᮞᮛ ᮞᮥᮔ᮪ᮓ ᮀᮁᮂᮃᮄᮅᮆᮇᮈᮉᮊᮋᮌᮍᮎᮏᮐᮑᮒᮓᮔᮕᮖᮗᮘᮙᮚᮛᮜᮝᮞᮟᮠᮡᮢᮣᮤᮥᮦᮧᮨᮩ᮪᮫ᮬᮭᮮᮯ᮰᮱᮲᮳᮴᮵᮶᮷᮸᮹ᮺᮻᮼᮽᮾᮿ᳀᳁᳂᳃᳄᳅᳆᳇"
+    },
+    {
+      "isiZulu",
+      "(Zulu)",
+      "Sawubona Mhlaba"
+    },
+    {
+      "isiXhosa",
+      "(Xhosa)",
+      "Molo Lizwe"
+    },
   };
 
-  const unsigned int NUMBER_OF_LANGUAGES = 31u;
+  const unsigned int NUMBER_OF_LANGUAGES = 35u;
 
 } // MultiLanguageStrings
 

@@ -57,6 +57,7 @@ TransitionApplication::TransitionApplication( Application& application )
   mTitle(),
   mShadowButton(),
   mActionButtons(),
+  mVisualIndex( Property::INVALID_INDEX ),
   mActionIndex( Property::INVALID_INDEX )
 {
   application.InitSignal().Connect( this, &TransitionApplication::Create );
