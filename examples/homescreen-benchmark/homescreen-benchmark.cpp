@@ -49,7 +49,6 @@ const float DEFAULT_OPT_ROW_COUNT           ( 5 );
 const float DEFAULT_OPT_COL_COUNT           ( 4 );
 const float DEFAULT_OPT_PAGE_COUNT          ( 10 );
 const bool  DEFAULT_OPT_USE_TABLEVIEW       ( true );
-const bool  DEFAULT_OPT_BATCHING_ENABLED    ( true );
 const bool  DEFAULT_OPT_ICON_LABELS         ( true );
 const IconType  DEFAULT_OPT_ICON_TYPE       ( IMAGEVIEW );
 const bool  DEFAULT_OPT_USE_TEXT_LABEL      ( false );
@@ -116,7 +115,6 @@ public:
       mCols( DEFAULT_OPT_COL_COUNT ),
       mPageCount( DEFAULT_OPT_PAGE_COUNT ),
       mTableViewEnabled( DEFAULT_OPT_USE_TABLEVIEW ),
-      mBatchingEnabled( DEFAULT_OPT_BATCHING_ENABLED ),
       mIconLabelsEnabled( DEFAULT_OPT_ICON_LABELS ),
       mIconType( DEFAULT_OPT_ICON_TYPE ),
       mUseTextLabel( DEFAULT_OPT_USE_TEXT_LABEL )
@@ -127,7 +125,6 @@ public:
     int  mCols;
     int  mPageCount;
     bool mTableViewEnabled;
-    bool mBatchingEnabled;
     bool mIconLabelsEnabled;
     IconType mIconType;
     bool mUseTextLabel;
@@ -234,9 +231,6 @@ public:
     std::stringstream imagePath;
     imagePath << IMAGE_PATH_PREFIX << currentIconIndex << IMAGE_PATH_POSTFIX;
     map[ Dali::Toolkit::ImageVisual::Property::URL ] = imagePath.str();
-
-    // Enable/disable batching
-    map[ Toolkit::ImageVisual::Property::BATCHING_ENABLED ] = mConfig.mBatchingEnabled;
 
     imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
     imageView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -396,11 +390,6 @@ public:
       page.SetAnchorPoint( AnchorPoint::CENTER );
       page.SetPosition( Vector3( stageSize.x * i, 0.0f, 0.0f ) );
       mScrollParent.Add( page );
-
-      if( mConfig.mTableViewEnabled && mConfig.mBatchingEnabled )
-      {
-        page.SetProperty( DevelActor::Property::BATCH_PARENT, true );
-      }
     }
 
     mScrollParent.SetOpacity( 1.0f );
@@ -476,8 +465,7 @@ void RunTest( Application& application, const HomescreenBenchmark::Config& confi
     PrintHelp( "c<num>",               " Number of columns" );
     PrintHelp( "r<num>",               " Number of rows" );
     PrintHelp( "p<num>",               " Number of pages ( must be greater than 1 )" );
-    PrintHelp( "-disable-tableview",   " Disables the use of TableView for layouting (must be enabled for batching)" );
-    PrintHelp( "-disable-batching",    " Disables geometry batching" );
+    PrintHelp( "-disable-tableview",   " Disables the use of TableView for layouting" );
     PrintHelp( "-disable-icon-labels", " Disables labels for each icon" );
     PrintHelp( "-use-checkbox",        " Uses checkboxes for icons" );
     PrintHelp( "-use-text-label",      " Uses TextLabel instead of a TextVisual" );
@@ -513,10 +501,6 @@ int DALI_EXPORT_API main( int argc, char **argv )
     else if( arg.compare( "--disable-tableview" ) == 0 )
     {
       config.mTableViewEnabled = false;
-    }
-    else if( arg.compare( "--disable-batching" ) == 0 )
-    {
-      config.mBatchingEnabled = false;
     }
     else if( arg.compare( "--disable-icon-labels" ) == 0 )
     {
