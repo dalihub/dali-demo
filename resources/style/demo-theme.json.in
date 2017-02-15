@@ -30,6 +30,127 @@
       "tailRightImage":"{APPLICATION_RESOURCE_PATH}/images/popup-tail-right.png"
     },
 
+    "DemoTile":
+    {
+      "states":
+      {
+        "NORMAL":
+        {
+          "color":[0.4, 0.6, 0.9, 0.6],
+          "visuals":
+          {
+            "image":
+            {
+              "url":"{APPLICATION_RESOURCE_PATH}/images/demo-tile-texture.9.png",
+// TILE_BACKGROUND_ALPHA
+// This shader takes a texture.
+// An alpha discard is performed.
+// The shader uses the tiles position within the scroll-view page and the scroll-views rotation position to create a parallax effect.
+              "shader":
+              {
+                "fragmentShader":[
+                  "  varying mediump vec2  vTexCoord;",
+                  "  uniform lowp    vec4  uColor;",
+                  "  uniform sampler2D     sTexture;",
+                  "  uniform mediump vec3  uCustomPosition;",
+                  "",
+                  "  void main()",
+                  "  {",
+                  "    if( texture2D( sTexture, vTexCoord ).a <= 0.0001 )",
+                  "    {",
+                  "      discard;",
+                  "    }",
+                  "",
+                  "    mediump vec2 wrapTexCoord = vec2( ( vTexCoord.x / 4.0 ) + ( uCustomPosition.x / 4.0 ) + ( uCustomPosition.z / 2.0 ), vTexCoord.y / 4.0 );",
+                  "    mediump vec4 color = texture2D( sTexture, wrapTexCoord );",
+                  "    mediump float positionWeight = ( uCustomPosition.y + 0.3 ) * color.r * 2.0;",
+                  "",
+                  "    gl_FragColor = vec4( positionWeight, positionWeight, positionWeight, 0.9 ) * uColor + vec4( uColor.xyz, 0.0 );",
+                  "  }"
+                ]
+              }
+            }
+          }
+        },
+        "FOCUSED":
+        {
+          "color":[0.3, 0.5, 0.8, 0.5],
+          "visuals":
+          {
+            "image":
+            {
+              "url":"{APPLICATION_RESOURCE_PATH}/images/demo-tile-texture-focused.9.png",
+// TILE_BACKGROUND_ALPHA
+// This shader takes a texture.
+// An alpha discard is performed.
+// The shader uses the tiles position within the scroll-view page and the scroll-views rotation position to create a parallax effect.
+              "shader":
+              {
+                "fragmentShader":[
+                  "  varying mediump vec2  vTexCoord;",
+                  "  uniform lowp    vec4  uColor;",
+                  "  uniform sampler2D     sTexture;",
+                  "  uniform mediump vec3  uCustomPosition;",
+                  "",
+                  "  void main()",
+                  "  {",
+                  "    if( texture2D( sTexture, vTexCoord ).a <= 0.0001 )",
+                  "    {",
+                  "      discard;",
+                  "    }",
+                  "",
+                  "    mediump vec2 wrapTexCoord = vec2( ( vTexCoord.x / 4.0 ) + ( uCustomPosition.x / 4.0 ) + ( uCustomPosition.z / 2.0 ), vTexCoord.y / 4.0 );",
+                  "    mediump vec4 color = texture2D( sTexture, wrapTexCoord );",
+                  "    mediump float positionWeight = ( uCustomPosition.y + 0.3 ) * color.r * 2.0;",
+                  "",
+                  "    gl_FragColor = vec4( positionWeight, positionWeight, positionWeight, 0.9 ) * uColor + vec4( uColor.xyz, 0.0 );",
+                  "  }"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "FocusActor":
+    {
+      "visuals":
+      {
+        "image":
+        {
+          "url":"{APPLICATION_RESOURCE_PATH}/images/tile-focus.9.png"
+        }
+      }
+    },
+    "DemoTileBorder":
+    {
+      "states":
+      {
+        "NORMAL":
+        {
+          "visuals":
+          {
+            "image":
+            {
+              "url":"{APPLICATION_RESOURCE_PATH}/images/item-background.9.png" // TILE_BACKGROUND
+            }
+          }
+        },
+        "FOCUSED":
+        {
+          "visuals":
+          {
+            "image":
+            {
+              "visualType":"COLOR",
+              "mixColor":[1,0,1,1]
+
+              //"url":"{APPLICATION_RESOURCE_PATH}/images/item-background-focused.9.png" // TILE_BACKGROUND
+            }
+          }
+        }
+      }
+    },
     "TextLabelRosemary":
     {
       "fontFamily":"Rosemary"

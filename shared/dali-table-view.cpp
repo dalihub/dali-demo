@@ -41,9 +41,6 @@ namespace
 {
 
 const std::string LOGO_PATH( DEMO_IMAGE_DIR "Logo-for-demo.png" );
-const std::string TILE_BACKGROUND(DEMO_IMAGE_DIR "item-background.9.png");
-const std::string TILE_BACKGROUND_ALPHA( DEMO_IMAGE_DIR "demo-tile-texture.9.png" );
-const std::string TILE_FOCUS( DEMO_IMAGE_DIR "tile-focus.9.png" );
 
 // Keyboard focus effect constants.
 const float KEYBOARD_FOCUS_ANIMATION_DURATION = 1.0f;           ///< The total duration of the keyboard focus animation
@@ -71,7 +68,7 @@ const float STENCIL_RELATIVE_SIZE = 1.0f;
 const float EFFECT_SNAP_DURATION = 0.66f;                       ///< Scroll Snap Duration for Effects
 const float EFFECT_FLICK_DURATION = 0.5f;                       ///< Scroll Flick Duration for Effects
 const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.5f, Math::PI * 0.5f, 0.0f);
-const Vector4 TILE_COLOR( 0.4f, 0.6f, 0.9f, 0.6f );
+
 
 const Vector4 BUBBLE_COLOR[] =
 {
@@ -103,29 +100,6 @@ const Vector4 BACKGROUND_COLOR( 0.3569f, 0.5451f, 0.7294f, 1.0f );
 const float BUBBLE_MIN_Z = -1.0;
 const float BUBBLE_MAX_Z = 0.0f;
 
-// This shader takes a texture.
-// An alpha discard is performed.
-// The shader uses the tiles position within the scroll-view page and the scroll-views rotation position to create a parallax effect.
-const char* FRAGMENT_SHADER_TEXTURED = DALI_COMPOSE_SHADER(
-  varying mediump vec2  vTexCoord;
-  uniform lowp    vec4  uColor;
-  uniform sampler2D     sTexture;
-  uniform mediump vec3  uCustomPosition;
-
-  void main()
-  {
-    if( texture2D( sTexture, vTexCoord ).a <= 0.0001 )
-    {
-      discard;
-    }
-
-    mediump vec2 wrapTexCoord = vec2( ( vTexCoord.x / 4.0 ) + ( uCustomPosition.x / 4.0 ) + ( uCustomPosition.z / 2.0 ), vTexCoord.y / 4.0 );
-    mediump vec4 color = texture2D( sTexture, wrapTexCoord );
-    mediump float positionWeight = ( uCustomPosition.y + 0.3 ) * color.r * 2.0;
-
-    gl_FragColor = vec4( positionWeight, positionWeight, positionWeight, 0.9 ) * uColor + vec4( uColor.xyz, 0.0 );
-  }
-);
 
 /**
  * Creates the background image
@@ -347,7 +321,8 @@ void DaliTableView::CreateFocusEffect()
   // Loop to create both actors for the focus highlight effect.
   for( unsigned int i = 0; i < FOCUS_ANIMATION_ACTOR_NUMBER; ++i )
   {
-    mFocusEffect[i].actor = ImageView::New( TILE_FOCUS );
+    mFocusEffect[i].actor = ImageView::New();
+    mFocusEffect[i].actor.SetStyleName( "FocusActor" );
     mFocusEffect[i].actor.SetParentOrigin( ParentOrigin::CENTER );
     mFocusEffect[i].actor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mFocusEffect[i].actor.SetInheritScale( false );
@@ -502,7 +477,9 @@ void DaliTableView::Rotate( unsigned int degrees )
 
 Actor DaliTableView::CreateTile( const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, Vector2& position )
 {
-  Actor focusableTile = Actor::New();
+  Toolkit::ImageView focusableTile = ImageView::New();
+
+  focusableTile.SetStyleName( "DemoTile" );
   focusableTile.SetParentOrigin( ParentOrigin::CENTER );
   focusableTile.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   focusableTile.SetSizeModeFactor( sizeMultiplier );
@@ -511,42 +488,26 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   // Set the tile to be keyboard focusable
   focusableTile.SetKeyboardFocusable( true );
 
-  Toolkit::ImageView tileContent = ImageView::New();
-  tileContent.SetParentOrigin( ParentOrigin::CENTER );
-  tileContent.SetAnchorPoint( AnchorPoint::CENTER );
-  tileContent.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-
- // Register a property with the ImageView. This allows us to inject the scroll-view position into the shader.
+  // Register a property with the ImageView. This allows us to inject the scroll-view position into the shader.
   Property::Value value = Vector3( 0.0f, 0.0f, 0.0f );
-  Property::Index propertyIndex = tileContent.RegisterProperty( "uCustomPosition", value );
-
-  // Add a shader to the image (details in shader source).
-  Property::Map customShader;
-  customShader[ Visual::Shader::Property::FRAGMENT_SHADER ] = FRAGMENT_SHADER_TEXTURED;
-
-  // Set the Image URL and the custom shader
-  Property::Map imageMap;
-  imageMap.Add( ImageVisual::Property::URL, TILE_BACKGROUND_ALPHA );
-  imageMap.Add( Visual::Property::SHADER, customShader );
-  tileContent.SetProperty( Toolkit::ImageView::Property::IMAGE, imageMap );
-
-  tileContent.SetColor( TILE_COLOR );
+  Property::Index propertyIndex = focusableTile.RegisterProperty( "uCustomPosition", value );
 
   // We create a constraint to perform a precalculation on the scroll-view X offset
   // and pass it to the shader uniform, along with the tile's position.
-  Constraint shaderPosition = Constraint::New < Vector3 > ( tileContent, propertyIndex, TileShaderPositionConstraint( mPageWidth, position.x ) );
+  Constraint shaderPosition = Constraint::New < Vector3 > ( focusableTile, propertyIndex, TileShaderPositionConstraint( mPageWidth, position.x ) );
   shaderPosition.AddSource( Source( mScrollView, ScrollView::Property::SCROLL_POSITION ) );
   shaderPosition.SetRemoveAction( Constraint::Discard );
   shaderPosition.Apply();
-  focusableTile.Add( tileContent );
+  //focusableTile.Add( tileContent );
 
   // Create an ImageView for the 9-patch border around the tile.
-  ImageView borderImage = ImageView::New( TILE_BACKGROUND );
+  ImageView borderImage = ImageView::New();
+  borderImage.SetStyleName("DemoTileBorder");
   borderImage.SetAnchorPoint( AnchorPoint::CENTER );
   borderImage.SetParentOrigin( ParentOrigin::CENTER );
   borderImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   borderImage.SetOpacity( 0.8f );
-  tileContent.Add( borderImage );
+  focusableTile.Add( borderImage );
 
   TextLabel label = TextLabel::New();
   label.SetAnchorPoint( AnchorPoint::CENTER );
