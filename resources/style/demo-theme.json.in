@@ -124,30 +124,11 @@
     },
     "DemoTileBorder":
     {
-      "states":
+      "visuals":
       {
-        "NORMAL":
+        "image":
         {
-          "visuals":
-          {
-            "image":
-            {
-              "url":"{APPLICATION_RESOURCE_PATH}/images/item-background.9.png" // TILE_BACKGROUND
-            }
-          }
-        },
-        "FOCUSED":
-        {
-          "visuals":
-          {
-            "image":
-            {
-              "visualType":"COLOR",
-              "mixColor":[1,0,1,1]
-
-              //"url":"{APPLICATION_RESOURCE_PATH}/images/item-background-focused.9.png" // TILE_BACKGROUND
-            }
-          }
+          "url":"{APPLICATION_RESOURCE_PATH}/images/item-background.9.png" // TILE_BACKGROUND
         }
       }
     },
