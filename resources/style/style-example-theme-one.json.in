@@ -73,9 +73,9 @@
       [
         {
           "target":"imageVisual",
-          "property":"mixColor",
-          "initialValue":[1,1,1,0],
-          "targetValue":[1,1,1,1],
+          "property":"opacity",
+          "initialValue":0,
+          "targetValue":1,
           "animator":
           {
             "alphaFunction":"EASE_IN_OUT",
@@ -96,8 +96,8 @@
       [
         {
           "target":"imageVisual",
-          "property":"mixColor",
-          "targetValue":[1,1,1,0],
+          "property":"opacity",
+          "targetValue":0,
           "animator":
           {
             "alphaFunction":"EASE_IN_OUT",
@@ -373,6 +373,88 @@
             "timePeriod":
             {
               "duration":0.4,
+              "delay":0
+            }
+          }
+        }
+      ]
+    },
+    "BeatControl":
+    {
+      "beatVisual":{
+        "visualType":"IMAGE",
+        "url":"{APPLICATION_RESOURCE_PATH}/images/Logo-for-demo.png"
+      },
+
+      "bounceTransition":
+      [
+        {
+          "target":"beatVisual",
+          "property":"size",
+          "initialValue":[0.5, 0.5],
+          "targetValue":[0.75, 0.75],
+          "animator":
+          {
+            "alphaFunction":"BOUNCE",
+            "timePeriod":
+            {
+              "duration":0.5,
+              "delay":0
+            }
+          }
+        }
+      ],
+
+      "leftTransition":
+      [
+        {
+          "target":"beatVisual",
+          "property":"offset",
+          "initialValue":[0, 0],
+          "targetValue":[0.25, 0],
+          "animator":
+          {
+            "alphaFunction":"BOUNCE",
+            "timePeriod":
+            {
+              "duration":0.5,
+              "delay":0
+            }
+          }
+        }
+      ],
+
+      "upTransition":
+      [
+        {
+          "target":"beatVisual",
+          "property":"offset",
+          "initialValue":[0, 0],
+          "targetValue":[0, 0.25],
+          "animator":
+          {
+            "alphaFunction":"BOUNCE",
+            "timePeriod":
+            {
+              "duration":0.5,
+              "delay":0
+            }
+          }
+        }
+      ],
+
+      "fadeTransition":
+      [
+        {
+          "target":"beatVisual",
+          "property":"opacity",
+          "targetValue":0,
+          "animator":
+          {
+            "alphaFunction":"BOUNCE",
+            "timePeriod":
+            {
+              "duration":0.8,
               "delay":0
             }
           }

@@ -80,17 +80,17 @@ struct HSVColorConstraint
   {
   }
 
-  void operator()(Vector4& current, const PropertyInputContainer& inputs )
+  void operator()(Vector3& current, const PropertyInputContainer& inputs )
   {
-    current = hsv2rgb(Vector4(inputs[0]->GetFloat(), saturation, value, current.a));
+    current = hsv2rgb(Vector3(inputs[0]->GetFloat(), saturation, value));
   }
 
-  Vector4 hsv2rgb(Vector4 colorHSV)
+  Vector3 hsv2rgb(Vector3 colorHSV)
   {
     float r=colorHSV.z*(1+colorHSV.y*(cos(colorHSV.x)-1));
     float g=colorHSV.z*(1+colorHSV.y*(cos(colorHSV.x-2.09439)-1));
     float b=colorHSV.z*(1+colorHSV.y*(cos(colorHSV.x+2.09439)-1));
-    return Vector4(r, g, b, colorHSV.a);
+    return Vector3(r, g, b);
   }
   float hue;
   float saturation;
@@ -173,7 +173,7 @@ public:
     Renderer bgRenderer = mLabel.GetRendererAt(0);
     mOverrideMixColorIndex = DevelHandle::GetPropertyIndex( bgRenderer, ColorVisual::Property::MIX_COLOR );
 
-    Constraint constraint = Constraint::New<Vector4>( bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
+    Constraint constraint = Constraint::New<Vector3>( bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
     constraint.AddSource( Source( mLabel, mHueAngleIndex ) );
     constraint.SetRemoveAction( Constraint::Discard );
     constraint.Apply();
