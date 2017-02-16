@@ -22,7 +22,7 @@ BuildRequires:  pkgconfig(dali-core)
 BuildRequires:  pkgconfig(dali-toolkit)
 
 #need libtzplatform-config for directory if tizen version is 3.x
-%if "%{tizen_version_major}" == "3"
+%if 0%{?tizen_version_major} >= 3
 BuildRequires:  pkgconfig(libtzplatform-config)
 %endif
 
