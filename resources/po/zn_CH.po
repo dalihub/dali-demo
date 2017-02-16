@@ -79,12 +79,6 @@ msgstr "网格排序"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D模型"
 
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr "元球爆炸"
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr "元球折射"
-
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "动作模糊"
 
@@ -96,9 +90,6 @@ msgstr "本地图像"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "尺寸协商"
-
-msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "翻页"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "弹窗"
@@ -129,9 +120,6 @@ msgstr "火花"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "样式"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr "模糊及泛光"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "纹理网格"

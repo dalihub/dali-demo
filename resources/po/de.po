@@ -79,12 +79,6 @@ msgstr "Mesh Sortierung"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D-Modelle"
 
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr "Metaball Explosion"
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr "Metaball Brechung"
-
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "Bewegungsunschärfe"
 
@@ -96,9 +90,6 @@ msgstr "Nativen Bild"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "Größe Verhandlung"
-
-msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "Seite wechseln"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup-Menü"
@@ -129,9 +120,6 @@ msgstr "Funkeln"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "Styling"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr "Unschärfe und blühen"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "Strukturiertem Mesh"
