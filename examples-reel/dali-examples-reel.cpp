@@ -58,14 +58,12 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("mesh-sorting.example", DALI_DEMO_STR_TITLE_MESH_SORTING));
   demo.AddExample(Example("motion-stretch.example", DALI_DEMO_STR_TITLE_MOTION_STRETCH));
   demo.AddExample(Example("native-image-source.example", DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE));
-  demo.AddExample(Example("page-turn-view.example", DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW));
   demo.AddExample(Example("popup.example", DALI_DEMO_STR_TITLE_POPUP));
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
   demo.AddExample(Example("progress-bar.example", DALI_DEMO_STR_TITLE_PROGRESS_BAR));
   demo.AddExample(Example("scroll-view.example", DALI_DEMO_STR_TITLE_SCROLL_VIEW));
   demo.AddExample(Example("size-negotiation.example", DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE));
   demo.AddExample(Example("styling.example", DALI_DEMO_STR_TITLE_STYLING));
-  demo.AddExample(Example("super-blur-bloom.example", DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM));
   demo.AddExample(Example("text-editor.example", DALI_DEMO_STR_TITLE_TEXT_EDITOR));
   demo.AddExample(Example("text-field.example", DALI_DEMO_STR_TITLE_TEXT_FIELD));
   demo.AddExample(Example("text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));

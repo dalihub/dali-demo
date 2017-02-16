@@ -79,12 +79,6 @@ msgstr "Ordenacion de geometrias"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Gemeotria 3D"
 
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr "Explosion de metabolas"
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr "Refraccion de metabolas"
-
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "Desenfoque de movimiento"
 
@@ -96,9 +90,6 @@ msgstr "Fuente de imagenes nativas"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "Negociacion de tamaño"
-
-msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "Vista de páginas"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup"
@@ -129,9 +120,6 @@ msgstr "Brillar"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "Estilo"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr "Efecto blur y bloom"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "Geometria con texturas"

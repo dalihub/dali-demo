@@ -79,12 +79,6 @@ msgstr "തരംതിരിക്കലിനായി mesh"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D മോഡലിങ്"
 
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr "മെറ്റാ പന്ത് സ്ഫോടനം"
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr "മെറ്റാ പന്ത് അപവർത്തനം"
-
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "അവ്യക്തമാക്കല്"
 
@@ -96,9 +90,6 @@ msgstr "നേറ്റീവ് ചിത്രം"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "വലുപ്പം കൂടിയാലോചന"
-
-msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "പേജ് ലേഔട്ട്"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "പോപപ്പ് മെനുവിൽ"
@@ -129,9 +120,6 @@ msgstr "നക്ഷത്ര"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "ശൈലി"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr "മങ്ങൽ പൂക്കൽ"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "ടെക്സ്ചർ mesh"

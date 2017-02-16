@@ -43,8 +43,6 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("fpp-game.example", DALI_DEMO_STR_TITLE_FPP_GAME));
   demo.AddExample(Example("item-view.example", DALI_DEMO_STR_TITLE_ITEM_VIEW));
   demo.AddExample(Example("mesh-visual.example", DALI_DEMO_STR_TITLE_MESH_VISUAL));
-  demo.AddExample(Example("metaball-explosion.example", DALI_DEMO_STR_TITLE_METABALL_EXPLOSION));
-  demo.AddExample(Example("metaball-refrac.example", DALI_DEMO_STR_TITLE_METABALL_REFRAC));
   demo.AddExample(Example("motion-blur.example", DALI_DEMO_STR_TITLE_MOTION_BLUR));
   demo.AddExample(Example("refraction-effect.example", DALI_DEMO_STR_TITLE_REFRACTION));
   demo.AddExample(Example("renderer-stencil.example", DALI_DEMO_STR_TITLE_RENDERER_STENCIL));
