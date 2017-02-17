@@ -178,7 +178,7 @@ void StylingApplication::Create( Application& application )
   for( int i=0; i<3; ++i )
   {
     std::ostringstream thumbnailName; thumbnailName << "thumbnail" << i+1;
-    ImageView image = ImageView::New( ResourceImage::New( images[i] ) );
+    ImageView image = ImageView::New( images[i] );
     image.SetName( thumbnailName.str() );
     image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
