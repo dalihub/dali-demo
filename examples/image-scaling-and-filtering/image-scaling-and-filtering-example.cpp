@@ -18,6 +18,7 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/public-api/visuals/image-visual-properties.h>
 #include "shared/view.h"
 #include <iostream>
 
@@ -522,21 +523,6 @@ public:
     }
   }
 
-  void OnImageLoaded( ResourceImage image )
-  {
-    DALI_ASSERT_DEBUG( image == mNextImage );
-    mImageView.SetImage( image );
-    mImageView.SetSize( Size( image.GetWidth(), image.GetHeight() ) );
-    mImageLoading = false;
-
-    // We have finished loading, if a resize had occured during the load, trigger another load now.
-    if( mQueuedImageLoad )
-    {
-      mQueuedImageLoad = false;
-      LoadImage();
-    }
-  }
-
   bool OnControlTouched( Actor actor, const TouchData& event )
   {
     if(event.GetPointCount() > 0)
@@ -687,21 +673,17 @@ private:
     const char * const path = IMAGE_PATHS[ mCurrentPath ];
     Stage stage = Stage::GetCurrent();
     Size imageSize = stage.GetSize() * mImageStageScale;
-    const ImageDimensions imageSizeInt = ImageDimensions::FromFloatArray( &imageSize.x );
+    mImageView.SetSize( imageSize );
 
-    ResourceImage image = ResourceImage::New( path, imageSizeInt, mFittingMode, mSamplingMode );
+    Property::Map map;
+    map[Toolkit::ImageVisual::Property::URL] = path;
+    map[Toolkit::ImageVisual::Property::DESIRED_WIDTH] = imageSize.x;
+    map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = imageSize.y;
+    map[Toolkit::ImageVisual::Property::FITTING_MODE] = mFittingMode;
+    map[Toolkit::ImageVisual::Property::SAMPLING_MODE] = mSamplingMode;
 
-    // If the image was cached, the load has already occured, bypass hooking the signal.
-    if( image.GetLoadingState() )
-    {
-      OnImageLoaded( image );
-    }
-    else
-    {
-      image.LoadingFinishedSignal().Connect( this, &ImageScalingAndFilteringController::OnImageLoaded );
-    }
+    mImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
 
-    mNextImage = image;
   }
 
   void ResizeImage()
@@ -710,16 +692,7 @@ private:
     Stage stage = Stage::GetCurrent();
     Size imageSize = stage.GetSize() * mImageStageScale;
 
-    // If an image is already loading, queue another load when it has finished.
-    // This way we get continuous updates instead of constantly re-requesting loads.
-    if( mImageLoading )
-    {
-      mQueuedImageLoad = true;
-    }
-    else
-    {
-      LoadImage();
-    }
+    LoadImage();
 
     // Border size needs to be modified to take into account the width of the frame.
     Vector2 borderScale( ( imageSize + Vector2( BORDER_WIDTH * 2.0f, BORDER_WIDTH * 2.0f ) ) / stage.GetSize() );
@@ -742,7 +715,6 @@ private:
   Toolkit::ImageView mGrabCorner;
   PanGestureDetector mPanGestureDetector;
   Toolkit::ImageView mImageView;
-  ResourceImage mNextImage; //< Currently-loading image
   Vector2 mImageStageScale;
   int mCurrentPath;
   FittingMode::Type mFittingMode;
