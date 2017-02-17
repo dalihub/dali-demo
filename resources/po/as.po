@@ -79,12 +79,6 @@ msgstr "মেশ অসংযোগ"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D অনুগামী"
 
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr "মেটাবল মহা-বিস্ফোৰণবাদ"
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr "মেটাবল প্ৰতিসৰিত"
-
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "অস্পষ্ট"
 
@@ -96,9 +90,6 @@ msgstr "অইন অনুবিম্ব"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "অকণমান আপোচ কৰ্"
-
-msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "পৃষ্ঠা লেআউট"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "পোপা মেনু"
@@ -129,9 +120,6 @@ msgstr "তাৰকা"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "শৈলী"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr "অস্পষ্টকৈ অপুষ্পক"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "টেক্সটারেদ মেশ"

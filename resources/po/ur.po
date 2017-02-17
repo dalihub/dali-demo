@@ -79,12 +79,6 @@ msgstr "میش کی چھنٹائی"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D میش"
 
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr "میٹابال دھماکہ"
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr "میٹابال اپورتن"
-
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "دھندلانے کی حرکت"
 
@@ -96,9 +90,6 @@ msgstr "نیٹو تصویر"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "سائز مذاکرات"
-
-msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "کتاب"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "پاپ اپ"
@@ -129,9 +120,6 @@ msgstr "سٹار"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "سٹائل"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr "دھندلاپن اور بلوم"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "ٹیکسچرد میش"

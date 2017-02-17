@@ -10,6 +10,10 @@
 		<icon>/usr/share/icons/com.samsung.dali-demo.png</icon>
 		<label>DALi demo</label>
 	</ui-application>
+	<ui-application appid="com.samsung.dali-examples" exec="/usr/apps/com.samsung.dali-demo/bin/dali-examples" nodisplay="false" multiple="false" type="c++app" taskmanage="true">
+		<icon>/usr/share/icons/dali-examples.png</icon>
+		<label>DALi Examples</label>
+	</ui-application>
 	<ui-application appid="hello-world.example" exec="/usr/apps/com.samsung.dali-demo/bin/hello-world.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Hello World</label>
 	</ui-application>

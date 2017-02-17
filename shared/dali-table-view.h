@@ -1,5 +1,5 @@
-#ifndef DALI_DEMO_H
-#define DALI_DEMO_H
+#ifndef DALI_DEMO_TABLEVIEW_H
+#define DALI_DEMO_TABLEVIEW_H
 
 /*
  * Copyright (c) 2017 Samsung Electronics Co., Ltd.
@@ -375,4 +375,4 @@ private:
 
 };
 
-#endif // DALI_DEMO_H
+#endif // DALI_DEMO_TABLEVIEW_H

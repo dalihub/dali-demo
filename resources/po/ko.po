@@ -79,12 +79,6 @@ msgstr "메쉬 분류"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "메쉬 비주얼"
 
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr "메타볼 폭발"
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr "메타볼 굴절"
-
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "모션 블러"
 
@@ -96,9 +90,6 @@ msgstr "네이티브 이미지 소스"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "사이즈 조절"
-
-msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "책장 넘기기"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "팝업"
@@ -129,9 +120,6 @@ msgstr "불꽃"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "스타일링"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr "블러링 이펙트"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "텍스쳐 메쉬"

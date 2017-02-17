@@ -79,12 +79,6 @@ msgstr "Mesh Sorting"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Mesh Visual"
 
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr "Metaball Explosion"
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr "Metaball Refraction"
-
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "Motion Blur"
 
@@ -96,9 +90,6 @@ msgstr "Native Image Source"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "Negotiate Size"
-
-msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "Page Turn View"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup"
@@ -129,9 +120,6 @@ msgstr "Sparkle"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "Styling"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr "Super Blur and Bloom"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "Mesh Texture"
