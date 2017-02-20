@@ -6,65 +6,67 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-  //Keeps information about each model for access.
-  struct Model
-  {
-    Control control; // Control housing the mesh visual of the model.
-    Vector2 rotation; // Keeps track of rotation about x and y axis for manual rotation.
-    Animation rotationAnimation; // Automatically rotates when left alone.
-  };
+// Keeps information about each model for access.
+struct Model
+{
+  Control control; // Control housing the mesh visual of the model.
+  Vector2 rotation; // Keeps track of rotation about x and y axis for manual rotation.
+  Animation rotationAnimation; // Automatically rotates when left alone.
+};
 
-  //Files for meshes
-  const char * const MODEL_FILE_TABLE[] =
-  {
-      DEMO_MODEL_DIR "Dino.obj",
-      DEMO_MODEL_DIR "ToyRobot-Metal.obj",
-      DEMO_MODEL_DIR "Toyrobot-Plastic.obj"
-  };
+// Files for meshes
+const char * const MODEL_FILE_TABLE[] =
+{
+    DEMO_MODEL_DIR "Dino.obj",
+    DEMO_MODEL_DIR "ToyRobot-Metal.obj",
+    DEMO_MODEL_DIR "Toyrobot-Plastic.obj"
+};
 
-  const char * const MATERIAL_FILE_TABLE[] =
-  {
-      DEMO_MODEL_DIR "Dino.mtl",
-      DEMO_MODEL_DIR "ToyRobot-Metal.mtl",
-      DEMO_MODEL_DIR "Toyrobot-Plastic.mtl"
-  };
+const char * const MATERIAL_FILE_TABLE[] =
+{
+    DEMO_MODEL_DIR "Dino.mtl",
+    DEMO_MODEL_DIR "ToyRobot-Metal.mtl",
+    DEMO_MODEL_DIR "Toyrobot-Plastic.mtl"
+};
 
-  const char * const TEXTURES_PATH( DEMO_IMAGE_DIR "" );
+const char * const TEXTURES_PATH( DEMO_IMAGE_DIR "" );
 
-  //Possible shading modes.
-  MeshVisual::ShadingMode::Value SHADING_MODE_TABLE[] =
-  {
-    MeshVisual::ShadingMode::TEXTURED_WITH_DETAILED_SPECULAR_LIGHTING,
-    MeshVisual::ShadingMode::TEXTURED_WITH_SPECULAR_LIGHTING,
-    MeshVisual::ShadingMode::TEXTURELESS_WITH_DIFFUSE_LIGHTING
-  };
+// Possible shading modes.
+MeshVisual::ShadingMode::Value SHADING_MODE_TABLE[] =
+{
+  MeshVisual::ShadingMode::TEXTURED_WITH_DETAILED_SPECULAR_LIGHTING,
+  MeshVisual::ShadingMode::TEXTURED_WITH_SPECULAR_LIGHTING,
+  MeshVisual::ShadingMode::TEXTURELESS_WITH_DIFFUSE_LIGHTING
+};
 
-  //Button labels.
-  const char * const PAUSE =  "  ||  ";
-  const char * const PLAY =   "  >  ";
-  const char * const FIXED =  "FIXED";
-  const char * const MANUAL = "MANUAL";
-  const char * const FRONT =  "FRONT";
-  const char * const BACK =   "BACK";
+// Button labels.
+const char * const PAUSE =  "  ||  ";
+const char * const PLAY =   "  >  ";
+const char * const FIXED =  "FIXED";
+const char * const MANUAL = "MANUAL";
+const char * const FRONT =  "FRONT";
+const char * const BACK =   "BACK";
 
-  //Image urls for the light.
-  const char * const LIGHT_URL_FRONT = DEMO_IMAGE_DIR "light-icon-front.png";
-  const char * const LIGHT_URL_BACK =  DEMO_IMAGE_DIR "light-icon-back.png";
+// Image urls for the light.
+const char * const LIGHT_URL_FRONT = DEMO_IMAGE_DIR "light-icon-front.png";
+const char * const LIGHT_URL_BACK =  DEMO_IMAGE_DIR "light-icon-back.png";
 
-  const float X_ROTATION_DISPLACEMENT_FACTOR = 60.0f;
-  const float Y_ROTATION_DISPLACEMENT_FACTOR = 60.0f;
-  const float MODEL_SCALE =                    0.75f;
-  const float LIGHT_SCALE =                    0.15f;
-  const float BUTTONS_OFFSET_BOTTOM =          0.08f;
-  const float BUTTONS_OFFSET_SIDE =            0.2f;
-  const int   NUM_MESHES =                     2;
+const float X_ROTATION_DISPLACEMENT_FACTOR = 60.0f;
+const float Y_ROTATION_DISPLACEMENT_FACTOR = 60.0f;
+const float MODEL_SCALE =                    0.75f;
+const float LIGHT_SCALE =                    0.15f;
+const float BUTTONS_OFFSET_BOTTOM =          0.08f;
+const float BUTTONS_OFFSET_SIDE =            0.2f;
+const int   NUM_MESHES =                     2;
 
-  //Used to identify actors.
-  const int MODEL_TAG = 0;
-  const int LIGHT_TAG = 1;
-  const int LAYER_TAG = 2;
+// Used to identify actors.
+const int MODEL_TAG = 0;
+const int LIGHT_TAG = 1;
+const int LAYER_TAG = 2;
 
-} //End namespace
+const Vector4 STAGE_COLOR( 211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f ); ///< The color of the stage
+
+} // unnamed namespace
 
 class MeshVisualController : public ConnectionTracker
 {
@@ -93,7 +95,7 @@ public:
   {
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Vector4( 0.0, 0.5, 1.0, 1.0 ) );
+    stage.SetBackgroundColor( STAGE_COLOR );
 
     //Set up root layer to receive touch gestures.
     Layer rootLayer = stage.GetRootLayer();
