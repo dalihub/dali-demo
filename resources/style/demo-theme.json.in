@@ -183,6 +183,35 @@
         "units": "USER_SPACE",
         "stopColor": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]]
       }
+    },
+//
+// Simple Visuals Application Style section
+//
+    "MyControl":
+    {
+      "states":
+      {
+        "NORMAL":
+        {
+          "visuals":
+          {
+            "iconVisual":
+            {
+              "url":"{APPLICATION_RESOURCE_PATH}/images/application-icon-13.png"
+            }
+          }
+        },
+        "FOCUSED":
+        {
+          "visuals":
+          {
+            "iconVisual":
+            {
+              "url":"{APPLICATION_RESOURCE_PATH}/images/application-icon-83.png"
+            }
+          }
+        }
+      }
     }
   }
 }
