@@ -37,20 +37,8 @@ namespace // unnamed namespace
 // Demo setup parameters
 //
 
-//#define MULTIPLE_MOTION_BLURRED_ACTORS
-#ifndef MULTIPLE_MOTION_BLURRED_ACTORS
-
 const float MOTION_BLUR_ACTOR_WIDTH = 256;                                          // actor size on screen
 const float MOTION_BLUR_ACTOR_HEIGHT = 256;                                         // ""
-
-#else //#ifndef MULTIPLE_MOTION_BLURRED_ACTORS
-
-const float MOTION_BLUR_ACTOR_WIDTH = 150;                                          // actor size on screen
-const float MOTION_BLUR_ACTOR_HEIGHT = 112;                                         // ""
-
-#endif //#ifndef MULTIPLE_MOTION_BLURRED_ACTORS
-
-
 const unsigned int MOTION_BLUR_NUM_SAMPLES = 8;
 
 const int MOTION_BLUR_NUM_ACTOR_IMAGES = 5;
@@ -230,71 +218,6 @@ public:
     // set actor shader to the blur one
     Toolkit::SetMotionBlurProperties( mMotionBlurImageView, MOTION_BLUR_NUM_SAMPLES );
 
-
-#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
-
-    ///////////////////////////////////////////////////////
-    //
-    // Motion blurred actor 2
-    //
-
-    mMotionBlurImageView2 = ImageView::New(image);
-    mMotionBlurImageView2.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageView2.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
-    mMotionBlurImageView2.SetPosition(mMotionBlurActorSize.x * 1.1f, 0.0f);
-    mMotionBlurImageView.Add( mMotionBlurImageView2 );
-
-    // set actor shader to the blur one
-    Toolkit::SetMotionBlurProperties( mMotionBlurImageView2, MOTION_BLUR_NUM_SAMPLES );
-    mMotionBlurImageView2.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionBlurEffect );
-
-
-    ///////////////////////////////////////////////////////
-    //
-    // Motion blurred actor 3
-    //
-
-    mMotionBlurImageView3 = ImageView::New(image);
-    mMotionBlurImageView3.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageView3.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
-    mMotionBlurImageView3.SetPosition(-mMotionBlurActorSize.x * 1.1f, 0.0f);
-    mMotionBlurImageView.Add( mMotionBlurImageView3 );
-
-    // set actor shader to the blur one
-    Toolkit::SetMotionBlurProperties( mMotionBlurImageView3, MOTION_BLUR_NUM_SAMPLES );
-    mMotionBlurImageView3.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionBlurEffect );
-
-
-    ///////////////////////////////////////////////////////
-    //
-    // Motion blurred actor 4
-    //
-
-    mMotionBlurImageView4 = ImageView::New(image);
-    mMotionBlurImageView4.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageView4.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
-    mMotionBlurImageView4.SetPosition(0.0f, mMotionBlurActorSize.y * 1.1f);
-    mMotionBlurImageView.Add( mMotionBlurImageView4 );
-
-    // set actor shader to the blur one
-    Toolkit::SetMotionBlurProperties( mMotionBlurImageView4, MOTION_BLUR_NUM_SAMPLES );
-    mMotionBlurImageView4.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionBlurEffect );
-
-    ///////////////////////////////////////////////////////
-    //
-    // Motion blurred actor 5
-    //
-
-    mMotionBlurImageView5 = ImageView::New(image);
-    mMotionBlurImageView5.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionBlurImageView5.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
-    mMotionBlurImageView5.SetPosition(0.0f, -mMotionBlurActorSize.y * 1.1f);
-    mMotionBlurImageView.Add( mMotionBlurImageView5 );
-
-    // set actor shader to the blur one
-    Toolkit::SetMotionBlurProperties( mMotionBlurImageView5, MOTION_BLUR_NUM_SAMPLES );
-    mMotionBlurImageView5.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionBlurEffect );
-#endif //#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
   }
 
   void Rotate( DeviceOrientation orientation )
@@ -494,12 +417,6 @@ public:
     }
     SetImageFittedInBox( mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGES[mCurrentImage], mMotionBlurActorSize.x, mMotionBlurActorSize.y );
 
-#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
-    mMotionBlurImageView2.SetImage(blurImage);
-    mMotionBlurImageView3.SetImage(blurImage);
-    mMotionBlurImageView4.SetImage(blurImage);
-    mMotionBlurImageView5.SetImage(blurImage);
-#endif
   }
 
 
@@ -516,13 +433,6 @@ private:
   Property::Map mMotionBlurEffect;
   ImageView mMotionBlurImageView;
   Size mMotionBlurActorSize;
-
-#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
-  ImageView mMotionBlurImageView2;
-  ImageView mMotionBlurImageView3;
-  ImageView mMotionBlurImageView4;
-  ImageView mMotionBlurImageView5;
-#endif //#ifdef MULTIPLE_MOTION_BLURRED_ACTORS
 
   // animate actor to position where user taps screen
   Animation mActorTapMovementAnimation;

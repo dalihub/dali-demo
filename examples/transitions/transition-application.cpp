@@ -24,6 +24,7 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
 #include "shadow-button.h"
@@ -110,6 +111,9 @@ void TransitionApplication::Create( Application& application )
   mShadowButton.SetAnchorPoint( AnchorPoint::CENTER );
   mShadowButton.SetParentOrigin( ParentOrigin::CENTER );
   mShadowButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  mShadowButton.SetProperty( DevelControl::Property::STATE, DevelControl::DISABLED );
+  mShadowButton.SetProperty( DevelControl::Property::SUB_STATE, "UNCHECKED" );
+
   buttonLayout.AddChild( mShadowButton, TableView::CellPosition(1, 1) );
 
   TableView actionButtonLayout = TableView::New( 1, NUMBER_OF_ACTION_BUTTONS+1 );
@@ -135,7 +139,7 @@ void TransitionApplication::Create( Application& application )
     mActionButtons[i].ClickedSignal().Connect( this, &TransitionApplication::OnActionButtonClicked );
     actionButtonLayout.AddChild( mActionButtons[i], TableView::CellPosition( 0, 1+i ) );
   }
-  SetLabelText( mActionButtons[0], "Activate" );
+  SetLabelText( mActionButtons[0], "Enable" );
   SetLabelText( mActionButtons[1], "Check" );
   mActionButtons[1].SetProperty( Button::Property::DISABLED, true );
 
@@ -154,11 +158,13 @@ bool TransitionApplication::OnActionButtonClicked( Button button )
       mShadowButton.SetActiveState( ! activeState );
       if( activeState )
       {
-        SetLabelText( button, "Activate" );
+        SetLabelText( button, "Enable" );
+        mShadowButton.SetProperty( DevelControl::Property::STATE, DevelControl::DISABLED );
       }
       else
       {
-        SetLabelText( button, "Deactivate" );
+        SetLabelText( button, "Disable" );
+        mShadowButton.SetProperty( DevelControl::Property::STATE, DevelControl::NORMAL );
       }
       mActionButtons[1].SetProperty( Button::Property::DISABLED, activeState );
       break;
@@ -170,10 +176,12 @@ bool TransitionApplication::OnActionButtonClicked( Button button )
       if( checkState )
       {
         SetLabelText( button, "Check" );
+        mShadowButton.SetProperty( DevelControl::Property::SUB_STATE, "UNCHECKED" );
       }
       else
       {
         SetLabelText( button, "Uncheck" );
+        mShadowButton.SetProperty( DevelControl::Property::SUB_STATE, "CHECKED" );
       }
       break;
     }

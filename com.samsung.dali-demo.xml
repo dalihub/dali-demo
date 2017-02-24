@@ -177,6 +177,9 @@
 		<label>First Person Camera Game</label>
 	</ui-application>
 	<ui-application appid="transitions.example" exec="/usr/apps/com.samsung.dali-demo/bin/transitions.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Shadow button</label>
+	</ui-application>
+	<ui-application appid="visual-transitions.example" exec="/usr/apps/com.samsung.dali-demo/bin/visual-transitions.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Visual Transitions</label>
 	</ui-application>
 	<ui-application appid="animated-images.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-images.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">

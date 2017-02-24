@@ -36,17 +36,6 @@ Dali::PixelData LoadPixelData( const char* imagePath,
   return loader.GetPixelData();
 }
 
-/**
- * @deprecated, dont use this anymore
- */
-Dali::Image LoadImage( const char* imagePath,
-                       Dali::ImageDimensions size = Dali::ImageDimensions(),
-                       Dali::FittingMode::Type fittingMode = Dali::FittingMode::DEFAULT,
-                       Dali::SamplingMode::Type samplingMode = Dali::SamplingMode::DEFAULT )
-{
-  return Dali::ResourceImage::New( imagePath, size, fittingMode, samplingMode );
-}
-
 Dali::Texture LoadTexture( const char* imagePath,
                            Dali::ImageDimensions size = Dali::ImageDimensions(),
                            Dali::FittingMode::Type fittingMode = Dali::FittingMode::DEFAULT,
@@ -60,23 +49,6 @@ Dali::Texture LoadTexture( const char* imagePath,
   texture.Upload( pixelData );
 
   return texture;
-}
-
-/**
- * @brief Load an bitmap resource.
- * @deprecated, dont use this anymore
- *
- * If it is required to scaled-down to no more than the stage dimensions,
- * uses image scaling mode FittingMode::SCALE_TO_FILL to resize the image at
- * load time to cover the entire stage with pixels with no borders,
- * and filter mode BOX_THEN_LINEAR to sample the image with
- * maximum quality.
- */
-
-Dali::Image LoadStageFillingImage( const char* imagePath )
-{
-  Dali::Vector2 stageSize = Dali::Stage::GetCurrent().GetSize();
-  return LoadImage( imagePath, Dali::ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
 }
 
 Dali::Texture LoadStageFillingTexture( const char* imagePath )
