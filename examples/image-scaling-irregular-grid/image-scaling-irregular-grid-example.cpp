@@ -168,23 +168,6 @@ const char* IMAGE_PATHS[] = {
 const unsigned NUM_IMAGE_PATHS = sizeof(IMAGE_PATHS) / sizeof(IMAGE_PATHS[0]) - 1u;
 
 
-/**
- * Creates an Image
- *
- * @param[in] filename The path of the image.
- * @param[in] width The width of the image in pixels.
- * @param[in] height The height of the image in pixels.
- * @param[in] fittingMode The mode to use when scaling the image to fit the desired dimensions.
- */
-Image CreateImage(const std::string& filename, unsigned int width, unsigned int height, Dali::FittingMode::Type fittingMode )
-{
-#ifdef DEBUG_PRINT_DIAGNOSTICS
-    fprintf( stderr, "CreateImage(%s, %u, %u, fittingMode=%u)\n", filename.c_str(), width, height, unsigned( fittingMode ) );
-#endif
-  Image image = ResourceImage::New( filename, ImageDimensions( width, height ), fittingMode, Dali::SamplingMode::BOX_THEN_LINEAR );
-
-  return image;
-}
 
 /**
  * Creates an ImageView
@@ -194,15 +177,23 @@ Image CreateImage(const std::string& filename, unsigned int width, unsigned int 
  * @param[in] height The height of the image in pixels.
  * @param[in] fittingMode The mode to use when scaling the image to fit the desired dimensions.
  */
-ImageView CreateImageView(const std::string& filename, unsigned int width, unsigned int height, Dali::FittingMode::Type fittingMode )
+ImageView CreateImageView(const std::string& filename, int width, int height, Dali::FittingMode::Type fittingMode )
 {
-  Image img = CreateImage( filename, width, height, fittingMode );
-  ImageView actor = ImageView::New( img );
-  actor.SetName( filename );
-  actor.SetParentOrigin(ParentOrigin::CENTER);
-  actor.SetAnchorPoint(AnchorPoint::CENTER);
 
-  return actor;
+  ImageView imageView = ImageView::New();
+
+  Property::Map map;
+  map[Toolkit::ImageVisual::Property::URL] = filename;
+  map[Toolkit::ImageVisual::Property::DESIRED_WIDTH] = width;
+  map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = height;
+  map[Toolkit::ImageVisual::Property::FITTING_MODE] = fittingMode;
+  imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
+
+  imageView.SetName( filename );
+  imageView.SetParentOrigin(ParentOrigin::CENTER);
+  imageView.SetAnchorPoint(AnchorPoint::CENTER);
+
+  return imageView;
 }
 
 /** Cycle the scaling mode options. */
@@ -494,13 +485,18 @@ public:
         Dali::FittingMode::Type newMode = NextMode( mFittingModes[id] );
         const Vector2 imageSize = mSizes[actor.GetId()];
 
-        const std::string& url = mResourceUrls[id];
-        Image newImage = CreateImage( url, imageSize.width + 0.5f, imageSize.height + 0.5f, newMode );
         ImageView imageView = ImageView::DownCast( actor );
-        if(imageView)
+        if( imageView)
         {
-          imageView.SetImage( newImage );
+          Property::Map map;
+          map[Visual::Property::TYPE] = Visual::IMAGE;
+          map[ImageVisual::Property::URL] = mResourceUrls[id];
+          map[ImageVisual::Property::DESIRED_WIDTH] = imageSize.width + 0.5f;
+          map[ImageVisual::Property::DESIRED_HEIGHT] =  imageSize.height + 0.5f;
+          map[ImageVisual::Property::FITTING_MODE] = newMode;
+          imageView.SetProperty( ImageView::Property::IMAGE, map );
         }
+
         mFittingModes[id] = newMode;
       }
     }
@@ -542,8 +538,16 @@ public:
 
         const Vector2 imageSize = mSizes[ id ];
         Dali::FittingMode::Type newMode = NextMode( mFittingModes[ id ] );
-        Image newImage = CreateImage( mResourceUrls[ id ], imageSize.width, imageSize.height, newMode );
-        gridImageView.SetImage( newImage );
+
+        Property::Map map;
+        map[Visual::Property::TYPE] = Visual::IMAGE;
+        map[ImageVisual::Property::URL] = mResourceUrls[id];
+        map[ImageVisual::Property::DESIRED_WIDTH] = imageSize.width;
+        map[ImageVisual::Property::DESIRED_HEIGHT] =  imageSize.height;
+        map[ImageVisual::Property::FITTING_MODE] = newMode;
+        gridImageView.SetProperty( ImageView::Property::IMAGE, map );
+
+
 
         mFittingModes[ id ] = newMode;
 

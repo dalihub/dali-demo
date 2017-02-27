@@ -2,7 +2,11 @@ SET(DEMO_SRC_DIR ${ROOT_SRC_DIR}/demo)
 
 AUX_SOURCE_DIRECTORY(${DEMO_SRC_DIR} DEMO_SRCS)
 
-SET(DEMO_SRCS ${DEMO_SRCS} "${ROOT_SRC_DIR}/shared/resources-location.cpp")
+SET(DEMO_SRCS
+  ${DEMO_SRCS}
+  "${ROOT_SRC_DIR}/shared/resources-location.cpp"
+  "${ROOT_SRC_DIR}/shared/dali-table-view.cpp"
+)
 
 ADD_EXECUTABLE(${PROJECT_NAME} ${DEMO_SRCS})
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${REQUIRED_PKGS_LDFLAGS} -pie)

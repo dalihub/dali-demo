@@ -1,5 +1,5 @@
-#ifndef DALI_DEMO_H
-#define DALI_DEMO_H
+#ifndef DALI_DEMO_TABLEVIEW_H
+#define DALI_DEMO_TABLEVIEW_H
 
 /*
  * Copyright (c) 2017 Samsung Electronics Co., Ltd.
@@ -266,15 +266,6 @@ private: // Application callbacks & implementation
   void AddBackgroundActors( Dali::Actor layer, int count );
 
   /**
-   * Creates the logo.
-   *
-   * @param[in] imagePath The path to the image file to load
-   *
-   * @return The created image actor
-   */
-  Dali::Toolkit::ImageView CreateLogo( std::string imagePath );
-
-  /**
    * Timer handler for ending background animation
    *
    * @return Return value for timer handler
@@ -384,4 +375,4 @@ private:
 
 };
 
-#endif // DALI_DEMO_H
+#endif // DALI_DEMO_TABLEVIEW_H

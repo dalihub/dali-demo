@@ -12,23 +12,27 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
+/**
+ * @file transition-example.cpp
+ * @brief Example of stylable transitions.
+ */
+
+// External includes
+#include <dali/dali.h>
+
+// Internal includes
+#include "transition-application.h"
+
+
+/// Entry point for applications
+int DALI_EXPORT_API main( int argc, char** argv )
 {
-  "styles":
-  {
-    "ProgressBar":
-    {
-      "trackVisual":{
-        "url":"{APPLICATION_RESOURCE_PATH}/images/new-progress-bar-track.9.png"
-      },
-      "progressVisual":{
-        "url":"{APPLICATION_RESOURCE_PATH}/images/new-progress-bar-progress.9.png"
-      },
-      "secondaryProgressVisual":{
-        "url":"{APPLICATION_RESOURCE_PATH}/images/new-progress-bar-secondary-progress.9.png"
-      }
-    }
-  }
+  const char* themeName = Demo::TransitionApplication::DEMO_THEME_ONE_PATH;
+
+  Application application = Application::New( &argc, &argv, themeName );
+  Demo::TransitionApplication transitionApplication( application );
+  application.MainLoop();
+  return 0;
 }

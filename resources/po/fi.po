@@ -79,12 +79,6 @@ msgstr "Polygoniverkon Lajittelu"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Polygoniverkkovisuaali"
 
-msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
-msgstr "Metaball Räjähdys"
-
-msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
-msgstr "Metaball Valon Taittumisella"
-
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "Liikesumennus"
 
@@ -96,9 +90,6 @@ msgstr "Natiivi Kuvalähde"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "Kokoneuvottelu"
-
-msgid "DALI_DEMO_STR_TITLE_PAGE_TURN_VIEW"
-msgstr "Sivunkääntönäkymä"
 
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Ponnahdusikkuna"
@@ -129,9 +120,6 @@ msgstr "Kimalteluefekti"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "UI Tyyli"
-
-msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_BLOOM"
-msgstr "Erikoissumennus ja Hehku efekti"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "Teksturoitu Polygoniverkko"

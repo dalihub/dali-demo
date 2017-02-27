@@ -8,6 +8,9 @@
 	<assign>
 		<filesystem path="/usr/share/icons/com.samsung.dali-demo.png" label="_" />
 	</assign>
+	<assign>
+		<filesystem path="/usr/share/icons/dali-examples.png" label="_" />
+	</assign>
 	<request>
 		<domain name="com.samsung.dali-demo" />
 	</request>
