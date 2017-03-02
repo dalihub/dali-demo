@@ -143,13 +143,13 @@ class VideoViewController: public ConnectionTracker
     mMenu.Add( mForwardButton );
 
     mPauseButton.SetVisible( false );
-    mPauseButton.SetDisabled( true );
+    mPauseButton.SetProperty( Button::Property::DISABLED, true );
     mPlayButton.SetVisible( true );
-    mPlayButton.SetDisabled( false );
+    mPlayButton.SetProperty( Button::Property::DISABLED, false );
     mStopButton.SetVisible( true );
-    mStopButton.SetDisabled( false );
+    mStopButton.SetProperty( Button::Property::DISABLED, false );
     mResetButton.SetVisible( false );
-    mResetButton.SetDisabled( true );
+    mResetButton.SetProperty( Button::Property::DISABLED, true );
 
     mPlayButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_IMAGE );
     mPlayButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, PLAY_IMAGE );
@@ -198,9 +198,9 @@ class VideoViewController: public ConnectionTracker
        if( mIsPlay )
       {
         mPauseButton.SetVisible( false );
-        mPauseButton.SetDisabled( true );
+        mPauseButton.SetProperty( Button::Property::DISABLED, true );
         mPlayButton.SetVisible( true );
-        mPlayButton.SetDisabled( false );
+        mPlayButton.SetProperty( Button::Property::DISABLED, false );
 
         mIsPlay = false;
         mVideoView.Pause();
@@ -214,9 +214,9 @@ class VideoViewController: public ConnectionTracker
       }
 
       mPauseButton.SetVisible( true );
-      mPauseButton.SetDisabled( false );
+      mPauseButton.SetProperty( Button::Property::DISABLED, false );
       mPlayButton.SetVisible( false );
-      mPlayButton.SetDisabled( true );
+      mPlayButton.SetProperty( Button::Property::DISABLED, true );
 
       mIsPlay = true;
       mVideoView.Play();
@@ -226,13 +226,13 @@ class VideoViewController: public ConnectionTracker
       if( mIsStop )
       {
         mPauseButton.SetVisible( true );
-        mPauseButton.SetDisabled( false );
+        mPauseButton.SetProperty( Button::Property::DISABLED, false );
         mPlayButton.SetVisible( false );
-        mPlayButton.SetDisabled( true );
+        mPlayButton.SetProperty( Button::Property::DISABLED, true );
         mResetButton.SetVisible( false );
-        mResetButton.SetDisabled( true );
+        mResetButton.SetProperty( Button::Property::DISABLED, true );
         mStopButton.SetVisible( true );
-        mStopButton.SetDisabled( false );
+        mStopButton.SetProperty( Button::Property::DISABLED, false );
 
         mIsStop = false;
         mIsPlay = true;
@@ -243,13 +243,13 @@ class VideoViewController: public ConnectionTracker
     else if( mStopButton.GetId() == button.GetId())
     {
       mPauseButton.SetVisible( false );
-      mPauseButton.SetDisabled( true );
+      mPauseButton.SetProperty( Button::Property::DISABLED, true );
       mPlayButton.SetVisible( true );
-      mPlayButton.SetDisabled( false );
+      mPlayButton.SetProperty( Button::Property::DISABLED, false );
       mResetButton.SetVisible( true );
-      mResetButton.SetDisabled( false );
+      mPlayButton.SetProperty( Button::Property::DISABLED, false );
       mStopButton.SetVisible( false );
-      mStopButton.SetDisabled( true );
+      mStopButton.SetProperty( Button::Property::DISABLED, true );
 
       mIsStop = true;
       mVideoView.Stop();
