@@ -61,6 +61,10 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("popup.example", DALI_DEMO_STR_TITLE_POPUP));
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
   demo.AddExample(Example("progress-bar.example", DALI_DEMO_STR_TITLE_PROGRESS_BAR));
+  demo.AddExample(Example("rendering-line.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE));
+  demo.AddExample(Example("rendering-triangle.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE));
+  demo.AddExample(Example("rendering-cube.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE));
+  demo.AddExample(Example("rendering-textured-cube.example", DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE));
   demo.AddExample(Example("scroll-view.example", DALI_DEMO_STR_TITLE_SCROLL_VIEW));
   demo.AddExample(Example("size-negotiation.example", DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE));
   demo.AddExample(Example("styling.example", DALI_DEMO_STR_TITLE_STYLING));
@@ -70,7 +74,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("text-label-multi-language.example", DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE));
   demo.AddExample(Example("text-label-emojis.example", DALI_DEMO_STR_TITLE_EMOJI_TEXT));
   demo.AddExample(Example("text-scrolling.example", DALI_DEMO_STR_TITLE_TEXT_SCROLLING));
-  demo.AddExample(Example("textured-mesh.example", DALI_DEMO_STR_TITLE_TEXTURED_MESH));
+  demo.AddExample(Example("texturedss-mesh.example", DALI_DEMO_STR_TITLE_TEXTURED_MESH));
   demo.AddExample(Example("tilt.example", DALI_DEMO_STR_TITLE_TILT_SENSOR));
   demo.AddExample(Example("tooltip.example", DALI_DEMO_STR_TITLE_TOOLTIP));
   demo.AddExample(Example("transitions.example", DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS));

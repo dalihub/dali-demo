@@ -43,7 +43,7 @@ namespace
 
   const float BORDER_WIDTH = 4.0f;
 
-  const Vector3 POPUP_SIZE_FACTOR_TO_PARENT = Vector3( 0.0, 0.25, 0.0 );
+  const Vector3 POPUP_SIZE_FACTOR_TO_PARENT = Vector3( 0.8, 0.25, 0.0 );
 
 } // unnamed namespace
 
@@ -90,10 +90,6 @@ public:
     button.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, FOLDER_ICON_IMAGE );
     button.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, FOLDER_OPEN_ICON_IMAGE );
     button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    ImageDimensions imageSize = ResourceImage::GetImageSize( FOLDER_ICON_IMAGE );
-    button.SetSize( imageSize.GetWidth(), imageSize.GetHeight() );
-
     return button;
   }
 
@@ -107,7 +103,7 @@ public:
 
     // Launch a pop-up containing TextField
     mField = CreateTextField( stageSize, mButtonLabel );
-    mPopup = CreatePopup( stageSize.width * 0.8f );
+    mPopup = CreatePopup();
     mPopup.Add( mField );
     mPopup.OutsideTouchedSignal().Connect( this, &TextFieldExample::OnPopupOutsideTouched );
     stage.Add( mPopup );
@@ -132,13 +128,12 @@ public:
     return field;
   }
 
-  Popup CreatePopup( float width )
+  Popup CreatePopup()
   {
     Popup popup = Popup::New();
     popup.SetParentOrigin( ParentOrigin::CENTER );
     popup.SetAnchorPoint( AnchorPoint::CENTER );
-    popup.SetSize( width, 0.0f );
-    popup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
+    popup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     popup.SetSizeModeFactor( POPUP_SIZE_FACTOR_TO_PARENT );
     popup.TouchSignal().Connect( this, &TextFieldExample::OnPopupTouched );
 

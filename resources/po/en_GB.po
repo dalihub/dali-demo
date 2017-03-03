@@ -109,6 +109,9 @@ msgstr "Refraction"
 msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
 msgstr "Renderer Stencil"
 
+msgid "DALI_DEMO_STR_TITLE_SIMPLE_VISUALS_CONTROL"
+msgstr "Simple Visuals Control"
+
 msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
 msgstr "Script-based UI"
 
@@ -150,3 +153,15 @@ msgstr "FPP Game"
 
 msgid "DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS"
 msgstr "Visual Transitions"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "Textured cube"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "Draw cube"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Draw triangle"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Draw line"

@@ -147,3 +147,15 @@ msgstr "مزید معلومات"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP گیم"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "بویک ٹوانب "
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "ارڈ بویک "
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "ارڈ ثلثم "
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "انچنیھک ریکل "

@@ -147,3 +147,15 @@ msgstr "Tooltip"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "Juego FPP"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "Cubo con textura"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "Dibujar cubo"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Dibujar triángulo"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Dibujar linea"
