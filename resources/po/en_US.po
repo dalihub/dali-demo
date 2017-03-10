@@ -171,3 +171,6 @@ msgstr "Draw line"
 
 msgid "DALI_DEMO_STR_TITLE_FOCUS_INTEGRATION"
 msgstr "Focus integration"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "Draw radial progress"
