@@ -147,3 +147,15 @@ msgstr "툴팁"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP Game"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "질감 입방체"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "큐브 그리기"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "삼각형 그리기"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "선 그리기"

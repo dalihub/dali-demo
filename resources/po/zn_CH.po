@@ -147,3 +147,15 @@ msgstr "更多信息"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP游戏"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "纹理的多维数据集"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "绘制多维数据集"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "绘制三角形"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "画线"

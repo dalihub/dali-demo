@@ -35,6 +35,16 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+namespace
+{
+
+void SetLabelText( Button button, const char* label )
+{
+  button.SetProperty( Toolkit::Button::Property::LABEL, label );
+}
+
+}
+
 namespace Demo
 {
 
@@ -43,12 +53,12 @@ const char* DALI_LOGO_PATH( DEMO_IMAGE_DIR "Logo-for-demo.png" );
 const char* DALI_ROBOT_MODEL_PATH( DEMO_MODEL_DIR "ToyRobot-Metal.obj" );
 const char* DALI_ROBOT_MATERIAL_PATH( DEMO_MODEL_DIR "ToyRobot-Metal.mtl" );
 
-
 TransitionApplication::TransitionApplication( Application& application )
 : mApplication( application ),
   mTitle(),
   mBeatControl(),
   mActionButtons(),
+  mVisualIndex( Property::INVALID_INDEX ),
   mActionIndex( Property::INVALID_INDEX )
 {
   application.InitSignal().Connect( this, &TransitionApplication::Create );
@@ -150,10 +160,11 @@ void TransitionApplication::Create( Application& application )
     mActionButtons[i].ClickedSignal().Connect( this, &TransitionApplication::OnActionButtonClicked );
     actionButtonLayout.AddChild( mActionButtons[i], TableView::CellPosition( 0, 1+i ) );
   }
-  mActionButtons[0].SetLabelText( "Bounce" );
-  mActionButtons[1].SetLabelText( "X" );
-  mActionButtons[2].SetLabelText( "Y" );
-  mActionButtons[3].SetLabelText( "Fade" );
+
+  SetLabelText( mActionButtons[0], "Bounce" );
+  SetLabelText( mActionButtons[1], "X" );
+  SetLabelText( mActionButtons[2], "Y" );
+  SetLabelText( mActionButtons[3], "Fade" );
 
   contentLayout.Add( actionButtonLayout );
   contentLayout.SetFitHeight(3);

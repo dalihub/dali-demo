@@ -147,3 +147,15 @@ msgstr "Tooltip"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP peli"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "kuvioitu kuutio"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "piirtää kuutio"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Piirrä kolmio"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Draw linja"

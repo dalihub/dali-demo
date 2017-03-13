@@ -32,6 +32,9 @@
 	<ui-application appid="cube-transition-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/cube-transition-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Cube transition effect</label>
 	</ui-application>
+	<ui-application appid="simple-visuals-control.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-visuals-control.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Simple Control</label>
+	</ui-application>
 	<ui-application appid="dissolve-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/dissolve-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Dissolve effect</label>
 	</ui-application>
@@ -190,5 +193,11 @@
 	</ui-application>
 	<ui-application appid="clipping.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping</label>
+	</ui-application>
+	<ui-application appid="pivot.example" exec="/usr/apps/com.samsung.dali-demo/bin/pivot.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Clipping</label>
+	</ui-application>
+	<ui-application appid="focus-integration.example" exec="/usr/apps/com.samsung.dali-demo/bin/focus-integration.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Focus Integration</label>
 	</ui-application>
 </manifest>
