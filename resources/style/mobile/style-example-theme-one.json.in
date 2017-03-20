@@ -125,19 +125,21 @@
           {
             "backgroundVisual":{
               "visualType":"IMAGE",
-              "url":"{STYLE_DIR}/images/shadowButtonBg.9.png"
+              "url":"{STYLE_DIR}/images/shadowButtonBg.9.png",
+              "depthIndex":0
             },
 
             "checkboxBgVisual":{
               "visualType":"IMAGE",
               "url":"{STYLE_DIR}/images/CheckBg.png",
               "transform":{
-                "size":[0.09, 0.28],
+                "size":[0.12, 0.37],
                 "offset":[30,0],
                 "offsetSizeMode":[1,1,0,0],
                 "origin":"CENTER_BEGIN",
                 "anchorPoint":"CENTER_BEGIN"
-              }
+              },
+              "depthIndex":1
             },
 
             "labelVisual":{
@@ -147,14 +149,15 @@
               "horizontalAlignment":"END",
               "verticalAlignment":"CENTER",
               "textColor":[1,1,1,1],
-              "mixColor":[0, 0, 0, 1],
+              "mixColor":[0,0,0,1],
               "transform":{
                 "size":[0.9, 0.9],
                 "offset":[-30,0],
                 "offsetSizeMode":[1,1,0,0],
                 "origin":"CENTER_END",
                 "anchorPoint":"CENTER_END"
-              }
+              },
+              "depthIndex":1
             }
           },
 
@@ -168,12 +171,13 @@
                   "visualType":"IMAGE",
                   "url":"{STYLE_DIR}/images/Tick.png",
                   "transform":{
-                    "size":[0.09, 0.28],
+                    "size":[0.12, 0.37],
                     "offset":[30,0],
                     "offsetSizeMode":[1,1,0,0],
                     "origin":"CENTER_BEGIN",
                     "anchorPoint":"CENTER_BEGIN"
-                  }
+                  },
+                  "depthIndex":2
                 }
               },
               "entryTransition":
@@ -261,7 +265,8 @@
                 "offsetSizeMode":[1,1,0,0],
                 "origin":"CENTER_BEGIN",
                 "anchorPoint":"CENTER_BEGIN"
-              }
+              },
+              "depthIndex":0
             },
 
             "checkboxFgVisual":{
@@ -273,7 +278,8 @@
                 "offsetSizeMode":[1,1,0,0],
                 "origin":"CENTER_BEGIN",
                 "anchorPoint":"CENTER_BEGIN"
-              }
+              },
+              "depthIndex":1
             },
 
             "labelVisual":{
@@ -290,7 +296,32 @@
                 "offsetSizeMode":[1,1,0,0],
                 "origin":"CENTER_END",
                 "anchorPoint":"CENTER_END"
+              },
+              "depthIndex":1
+            }
+          },
+          "states":
+          {
+            "CHECKED":
+            {
+              "visuals":
+              {
+                "checkboxFgVisual":{
+                  "visualType":"IMAGE",
+                  "url":"{STYLE_DIR}/images/Tick.png",
+                  "transform":{
+                    "size":[0.09, 0.28],
+                    "offset":[30,0],
+                    "offsetSizeMode":[1,1,0,0],
+                    "origin":"CENTER_BEGIN",
+                    "anchorPoint":"CENTER_BEGIN"
+                  },
+                  "depthIndex":2
+                }
               }
+            },
+            "UNCHECKED":
+            {
             }
           }
         }
@@ -312,6 +343,7 @@
           "from":"DISABLED",
           "to":"NORMAL",
           "visualName":"*",
+          "effect":"CROSSFADE",
           "animator":
           {
             "alphaFunction":"EASE_OUT_BACK",
@@ -333,6 +365,7 @@
           "from":"NORMAL",
           "to":"DISABLED",
           "visualName":"*",
+          "effect":"CROSSFADE",
           "animator":
           {
             "alphaFunction":"EASE_OUT_BACK",

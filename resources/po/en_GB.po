@@ -94,6 +94,9 @@ msgstr "Negotiate Size"
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup"
 
+msgid "DALI_DEMO_STR_TITLE_PIVOT"
+msgstr "Pivot"
+
 msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
 msgstr "Progress Bar"
 
@@ -165,3 +168,6 @@ msgstr "Draw triangle"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "Draw line"
+
+msgid "DALI_DEMO_STR_TITLE_FOCUS_INTEGRATION"
+msgstr "Focus integration"
