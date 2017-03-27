@@ -101,9 +101,6 @@ mkdir -p %{buildroot}%{smack_rule_dir}
 cp -f %{_builddir}/%{name}-%{version}/%{name}.rule %{buildroot}%{smack_rule_dir}
 %endif
 
-# LICENSE
-mkdir -p %{buildroot}/usr/share/license
-cp -af %{_builddir}/%{name}-%{version}/LICENSE %{buildroot}/usr/share/license/%{name}
 
 ##############################
 # Post Install
@@ -139,7 +136,8 @@ exit 0
 %{dali_app_ro_dir}/scripts/*
 %{dali_app_ro_dir}/style/*
 %{dali_app_ro_dir}/style/images/*
-%{dali_xml_file_dir}/%{name}.xml
+%license LICENSE
+#%{dali_xml_file_dir}/%{name}.xml
 %{dali_icon_dir}/*
 %{locale_dir}/*
 %if 0%{?enable_dali_smack_rules} && !%{with wayland}
