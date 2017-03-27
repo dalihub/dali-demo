@@ -135,7 +135,8 @@
               "transform":{
                 "size":[0.12, 0.37],
                 "offset":[30,0],
-                "offsetSizeMode":[1,1,0,0],
+                "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
+                "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_BEGIN",
                 "anchorPoint":"CENTER_BEGIN"
               },
@@ -153,7 +154,8 @@
               "transform":{
                 "size":[0.9, 0.9],
                 "offset":[-30,0],
-                "offsetSizeMode":[1,1,0,0],
+                "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
+                "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_END",
                 "anchorPoint":"CENTER_END"
               },
@@ -173,7 +175,8 @@
                   "transform":{
                     "size":[0.12, 0.37],
                     "offset":[30,0],
-                    "offsetSizeMode":[1,1,0,0],
+                    "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
+                    "sizePolicy":["RELATIVE", "RELATIVE"],
                     "origin":"CENTER_BEGIN",
                     "anchorPoint":"CENTER_BEGIN"
                   },
@@ -262,7 +265,8 @@
               "transform":{
                 "size":[0.09, 0.28],
                 "offset":[30,0],
-                "offsetSizeMode":[1,1,0,0],
+                "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
+                "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_BEGIN",
                 "anchorPoint":"CENTER_BEGIN"
               },
@@ -275,7 +279,8 @@
               "transform":{
                 "size":[0.09, 0.28],
                 "offset":[30,0],
-                "offsetSizeMode":[1,1,0,0],
+                "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
+                "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_BEGIN",
                 "anchorPoint":"CENTER_BEGIN"
               },
@@ -293,7 +298,8 @@
               "transform":{
                 "size":[0.9, 0.9],
                 "offset":[-30,0],
-                "offsetSizeMode":[1,1,0,0],
+                "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
+                "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_END",
                 "anchorPoint":"CENTER_END"
               },
@@ -312,7 +318,8 @@
                   "transform":{
                     "size":[0.09, 0.28],
                     "offset":[30,0],
-                    "offsetSizeMode":[1,1,0,0],
+                    "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
+                    "sizePolicy":["RELATIVE", "RELATIVE"],
                     "origin":"CENTER_BEGIN",
                     "anchorPoint":"CENTER_BEGIN"
                   },
