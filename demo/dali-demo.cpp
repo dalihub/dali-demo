@@ -80,6 +80,10 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("mesh-visual.example", DALI_DEMO_STR_TITLE_MESH_VISUAL));
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
   demo.AddExample(Example("styling.example", DALI_DEMO_STR_TITLE_STYLING));
+  demo.AddExample(Example("rendering-line.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE));
+  demo.AddExample(Example("rendering-triangle.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE));
+  demo.AddExample(Example("rendering-cube.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE));
+  demo.AddExample(Example("rendering-textured-cube.example", DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE));
 
   demo.SortAlphabetically( true );
 

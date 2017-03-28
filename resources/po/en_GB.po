@@ -132,3 +132,15 @@ msgstr "Text Scrolling"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "Tilt Sensor"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "Textured cube"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "Draw cube"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Draw triangle"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Draw line"

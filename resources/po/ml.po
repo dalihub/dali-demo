@@ -132,3 +132,15 @@ msgstr "ടെക്സ്റ്റ് സ്ക്രോളിംഗ്"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "ചെരിവ് സെൻസർ"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "ടെക്സ്ചർ ക്യൂബ്"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "ക്യൂബ് വരയ്ക്കുക"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "ത്രികോണം വരയ്ക്കുക"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "സമനില ലൈൻ"

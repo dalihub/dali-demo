@@ -132,3 +132,16 @@ msgstr "Text Scrollen"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "Neigungssensor"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "Texturierter Würfel"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "Würfel zeichnen"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Dreieck zeichnen"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Zeichnen"
+

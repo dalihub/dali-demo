@@ -132,3 +132,15 @@ msgstr "অকনিষ্ঠ অৰ্জুন বঁটা"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "টিল্ট অনুভূতি"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "ৰেণ্ডাৰিং  গাঁথনি"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "ৰেণ্ডাৰিং  ঘনক"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "ৰেণ্ডাৰিং  ত্ৰিকোণমিতি"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "ৰেণ্ডাৰিং  শাৰী"

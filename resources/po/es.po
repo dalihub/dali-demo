@@ -132,3 +132,15 @@ msgstr "Texto con desplazamiento"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "Sensor de inclinacion"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "Cubo con textura"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "Dibujar cubo"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Dibujar triángulo"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Dibujar linea"
