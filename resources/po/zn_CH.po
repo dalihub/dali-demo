@@ -106,6 +106,9 @@ msgstr "脚本用户界面"
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "滚动视图"
 
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "火花"
+
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "样式"
 
