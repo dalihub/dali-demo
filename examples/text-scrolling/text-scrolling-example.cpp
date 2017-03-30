@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 namespace
 {
-const char* DESKTOP_IMAGE( DEMO_IMAGE_DIR "woodEffect.jpg" );
 const Vector2 DESKTOP_SIZE( Vector2( 1440.f, 1600.f ) );
 const Vector2 BOX_SIZE( Vector2(330.0f, 80.0f ) );
 const Vector2 SCROLLING_BOX_SIZE( Vector2(330.0f, 40.0f ) );
@@ -54,7 +54,8 @@ public:
   TextScrollingExample( Application& application )
   : mApplication( application ),
     mTargetActorPosition(),
-    mTargetActorSize()
+    mTargetActorSize(),
+    mToggleColor( false )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &TextScrollingExample::Create );
@@ -78,7 +79,7 @@ public:
 
     Dali::Property::Map border;
     border.Insert( Visual::Property::TYPE,  Visual::BORDER );
-    border.Insert( BorderVisual::Property::COLOR,  Color::WHITE );
+    border.Insert( BorderVisual::Property::COLOR,  Color::BLUE );
     border.Insert( BorderVisual::Property::SIZE,  1.f );
     box.SetProperty( Control::Property::BACKGROUND, border );
   }
@@ -125,14 +126,13 @@ public:
 
     stage.Add( rootActor );
 
+    mAnimation = Animation::New( 1.0f );
+
     const Size mTargetActorSize( mStageSize.width, DESKTOP_SIZE.height );
 
     // Create Desktop
-    ImageView desktop = ImageView::New();
-    Property::Map imageMap;
-    imageMap[ "url" ] = DESKTOP_IMAGE;
-    imageMap[ "synchronousLoading" ] = true;
-    desktop.SetProperty( ImageView::Property::IMAGE, imageMap );
+    Control desktop = Control::New();
+    desktop.SetBackgroundColor( Color::WHITE );
     desktop.SetName("desktopActor");
     desktop.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     desktop.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
@@ -172,9 +172,9 @@ public:
     Toolkit::PushButton scrollSmallButton = Toolkit::PushButton::New();
     scrollSmallButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedSmall );
     CreateLabel( mSmallLabel, "A Quick Brown Fox", boxC , true, scrollSmallButton );
-    mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::WHITE );
+    mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
     mSmallLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
-    mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+    mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::CYAN );
 
     CreateBox( "boxD", boxD, desktop, SCROLLING_BOX_SIZE );
     boxD.SetPosition( 0.0f, -200.0f, 1.0f );
@@ -186,12 +186,25 @@ public:
     boxE.SetPosition( 0.0f, -100.0f, 1.0f );
     Toolkit::PushButton scrollRtlLongButton = Toolkit::PushButton::New();
     scrollRtlLongButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedRtlLong );
-    CreateLabel( mRtlLongLabel, " مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم", boxE , false, scrollRtlLongButton );
-
+    CreateLabel( mRtlLongLabel, " مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم", boxE , false, scrollRtlLongButton );
+    mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_SPEED, 500);
+    mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_GAP, 500);
+    mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_LOOP_COUNT, 3);
 
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.DetectedSignal().Connect(this, &TextScrollingExample::OnPanGesture );
     mPanGestureDetector.Attach( desktop );
+
+    Toolkit::PushButton colorButton = Toolkit::PushButton::New();
+    colorButton.SetProperty( Button::Property::TOGGLABLE, true );
+    colorButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
+    colorButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
+    colorButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    colorButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    colorButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
+    colorButton.SetSize(BOX_SIZE.height,BOX_SIZE.height);
+    colorButton.ClickedSignal().Connect( this, &TextScrollingExample::OnColorButtonClicked );
+    rootActor.Add( colorButton );
   }
 
   void EnableScrolling( Labels labels )
@@ -263,6 +276,28 @@ public:
     return true;
   }
 
+  bool OnColorButtonClicked( Toolkit::Button button )
+ {
+   Vector4 color = Color::RED;
+
+  if ( mToggleColor )
+  {
+    color = Color::BLACK;
+    mToggleColor = false;
+  }
+  else
+  {
+    mToggleColor = true;
+  }
+
+  mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+  mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+  mLargeLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+  mRtlLongLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+
+  return true;
+ }
+
   /**
    * Main key event handler
    */
@@ -273,6 +308,18 @@ public:
       if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
       {
         mApplication.Quit();
+      }
+      else
+      {
+        if ( event.keyPressedName == "2" )
+        {
+          mAnimation.AnimateTo( Property( mSmallLabel, Actor::Property::SCALE ), Vector3(1.2f, 1.2f, 0.0f), AlphaFunction::BOUNCE, TimePeriod( 1.0f, 1.0f ) );
+          mAnimation.AnimateTo( Property( mLargeLabel, Actor::Property::SCALE ), Vector3(1.2f, 1.2f, 0.0f), AlphaFunction::BOUNCE, TimePeriod( 1.0f, 1.0f ) );
+          mAnimation.AnimateTo( Property( mRtlLabel, Actor::Property::SCALE ), Vector3(1.2f, 1.2f, 0.0f), AlphaFunction::BOUNCE, TimePeriod( 1.0f, 1.0f ) );
+          mAnimation.AnimateTo( Property( mRtlLongLabel, Actor::Property::SCALE ), Vector3(1.2f, 1.2f, 0.0f), AlphaFunction::BOUNCE, TimePeriod( 1.0f, 1.0f ) );
+
+          mAnimation.Play();
+        }
       }
     }
   }
@@ -302,6 +349,10 @@ private:
   TextLabel mSmallLabel;
   TextLabel mRtlLabel;
   TextLabel mRtlLongLabel;
+
+  Animation mAnimation;
+
+  bool mToggleColor;
 };
 
 void RunTest( Application& application )
