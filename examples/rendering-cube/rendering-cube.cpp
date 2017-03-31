@@ -100,6 +100,9 @@ public:
 
     // Respond to a click anywhere on the stage
     stage.GetRootLayer().TouchSignal().Connect( this, &DrawCubeController::OnTouch );
+
+    // Respond to key events
+    stage.KeyEventSignal().Connect( this, &DrawCubeController::OnKeyEvent );
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )
@@ -107,6 +110,23 @@ public:
     // quit the application
     mApplication.Quit();
     return true;
+  }
+
+  /**
+   * @brief Called when any key event is received
+   *
+   * Will use this to quit the application if Back or the Escape key is received
+   * @param[in] event The key event information
+   */
+  void OnKeyEvent( const KeyEvent& event )
+  {
+    if( event.state == KeyEvent::Down )
+    {
+      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
   }
 
   /**
