@@ -147,3 +147,6 @@ msgstr "ৰেণ্ডাৰিং  ত্ৰিকোণমিতি"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "ৰেণ্ডাৰিং  শাৰী"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "রশ্মীয় অগ্রগতি অঙ্কন"

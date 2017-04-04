@@ -147,3 +147,6 @@ msgstr "삼각형 그리기"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "선 그리기"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "방사형 진행 상황 그리기"

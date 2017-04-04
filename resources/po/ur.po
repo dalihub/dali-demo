@@ -147,3 +147,6 @@ msgstr "ارڈ ثلثم "
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "انچنیھک ریکل "
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "ریڈیل پیش رفت ڈرائنگ"

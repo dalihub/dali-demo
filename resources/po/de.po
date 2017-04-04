@@ -148,3 +148,5 @@ msgstr "Dreieck zeichnen"
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "Zeichnen"
 
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "Radialer Fortschritt zeichnen"

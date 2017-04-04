@@ -85,6 +85,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("rendering-triangle.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE));
   demo.AddExample(Example("rendering-cube.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE));
   demo.AddExample(Example("rendering-textured-cube.example", DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE));
+  demo.AddExample(Example("rendering-radial-progress.example", DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS));
 
   demo.SortAlphabetically( true );
 

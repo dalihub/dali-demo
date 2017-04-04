@@ -181,6 +181,9 @@
 	<ui-application appid="rendering-triangle.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-triangle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Rendering Triangle</label>
 	</ui-application>
+	<ui-application appid="rendering-radial-progress.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-radial-progress.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Rendering Radial Progress</label>
+	</ui-application>
 	<ui-application appid="sparkle.example" exec="/usr/apps/com.samsung.dali-demo/bin/sparkle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Sparkle Effect</label>
 	</ui-application>
