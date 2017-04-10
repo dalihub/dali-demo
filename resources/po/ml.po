@@ -159,3 +159,6 @@ msgstr "ത്രികോണം വരയ്ക്കുക"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "സമനില ലൈൻ"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "റേഡിയൽ പുരോഗതി ഡ്രോയിംഗ്"

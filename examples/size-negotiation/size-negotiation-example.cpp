@@ -114,11 +114,7 @@ public:
     Stage stage = Stage::GetCurrent();
 
     // Respond to key events if not handled
-    Toolkit::KeyInputFocusManager keyInputFocusManager = Toolkit::KeyInputFocusManager::Get();
-    if( keyInputFocusManager )
-    {
-      keyInputFocusManager.UnhandledKeyEventSignal().Connect(this, &SizeNegotiationController::OnKeyEvent);
-    }
+    stage.KeyEventSignal().Connect(this, &SizeNegotiationController::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.

@@ -159,3 +159,6 @@ msgstr "Dibujar triángulo"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "Dibujar linea"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "Dibujo progreso radial"
