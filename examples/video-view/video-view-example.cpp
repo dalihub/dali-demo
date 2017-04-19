@@ -184,10 +184,9 @@ class VideoViewController: public ConnectionTracker
 
     Stage::GetCurrent().KeyEventSignal().Connect( this, &VideoViewController::OnKeyEvent );
 
-    mWindowSurfaceTarget.Insert( "RENDERING_TARGET", "windowSurfaceTarget" );
-    mNativeImageTarget.Insert( "RENDERING_TARGET", "nativeImageTarget" );
+    mWindowSurfaceTarget.Insert( "renderingTarget", "windowSurfaceTarget" );
+    mNativeImageTarget.Insert( "renderingTarget", "nativeImageTarget" );
 
-    mVideoView.FinishedSignal().Connect( this, &VideoViewController::OnFinished );
   }
 
   bool OnButtonClicked( Button button )
@@ -264,15 +263,6 @@ class VideoViewController: public ConnectionTracker
     }
 
     return true;
-  }
-
-  void OnFinished( VideoView& view )
-  {
-    if( !mIsFullScreen )
-    {
-      mRotationAnimation.Play();
-      mIsStop = true;
-    }
   }
 
   void OnPan( Actor actor, const PanGesture& gesture )
