@@ -140,6 +140,7 @@ exit 0
 %{dali_app_res_dir}/videos/*
 %{dali_app_res_dir}/models/*
 %{dali_app_res_dir}/scripts/*
+%{dali_app_res_dir}/shaders/*
 %{dali_app_res_dir}/style/*
 %{dali_app_res_dir}/style/images/*
 %{dali_xml_file_dir}/%{name}.xml
