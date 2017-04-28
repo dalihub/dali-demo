@@ -4,6 +4,9 @@ msgstr "അനിമേറ്റഡ് ചിത്രങ്ങൾ"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "ആനിമേഷൻ രൂപങ്ങൾ"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "അടിസ്ഥാന വെളിച്ചം"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "തടയപ്പെട്ട"
 

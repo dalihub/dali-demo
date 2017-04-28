@@ -4,6 +4,9 @@ msgstr "Animierte Bilder"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "Animierte Formen"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "Grundleuchte"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Blöcke"
 
