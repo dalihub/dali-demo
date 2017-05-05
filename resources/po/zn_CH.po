@@ -4,6 +4,9 @@ msgstr "动态图"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "动画造型"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "基本光"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "块体"
 
