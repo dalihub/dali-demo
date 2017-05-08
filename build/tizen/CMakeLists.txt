@@ -108,6 +108,7 @@ CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/style-example-theme-one.json.in ${LOCAL_STYLE
 CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/style-example-theme-two.json.in ${LOCAL_STYLE_DIR}/style-example-theme-two.json )
 CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/style-example-theme-three.json.in ${LOCAL_STYLE_DIR}/style-example-theme-three.json )
 CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/tooltip-example-theme.json.in ${LOCAL_STYLE_DIR}/tooltip-example-theme.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/basic-light-theme.json.in ${LOCAL_STYLE_DIR}/basic-light-theme.json )
 MESSAGE("Configured ${LOCAL_STYLE_DIR}/style-example-theme<>.json files")
 
 FILE(GLOB LOCAL_STYLES_LIST "${LOCAL_STYLE_DIR}/*.json")

@@ -4,6 +4,9 @@ msgstr "متحرک تصاویر"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "متحرک شکلیں"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "بیسک روشنی"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "اینٹیں"
 

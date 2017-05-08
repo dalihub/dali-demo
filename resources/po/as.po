@@ -4,6 +4,9 @@ msgstr "অ্যানিমেটেড ইমেজ"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "অ্যানিমেটেড আকার"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "বেসিক আলো"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "অৱৰুদ্ধ কৰক"
 
