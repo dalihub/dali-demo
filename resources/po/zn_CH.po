@@ -165,3 +165,6 @@ msgstr "画线"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
 msgstr "绘制径向进度"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "射线行军"
