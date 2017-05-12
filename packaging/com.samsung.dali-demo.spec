@@ -63,7 +63,7 @@ of the capability of the toolkit.
 ##############################
 %build
 PREFIX="/usr"
-CXXFLAGS+=" -Wall -g -O2 -D_GLIBCXX_USE_CXX11_ABI=0 "
+CXXFLAGS+=" -Wall -g -O2"
 LDFLAGS+=" -Wl,--rpath=$PREFIX/lib -Wl,--as-needed"
 
 %ifarch %{arm}
