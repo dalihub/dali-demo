@@ -23,6 +23,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
+#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -181,6 +182,8 @@ public:
     Toolkit::PushButton scrollRtlButton = Toolkit::PushButton::New();
     scrollRtlButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedRtl );
     CreateLabel( mRtlLabel, "مرحبا بالعالم", boxD , true, scrollRtlButton );
+    mRtlLabel.SetProperty(DevelTextLabel::Property::AUTO_SCROLL_STOP_MODE, DevelTextLabel::AutoScrollStopMode::IMMEDIATE );
+    mRtlLabel.SetProperty(DevelTextLabel::Property::AUTO_SCROLL_LOOP_DELAY, 0.3f );
 
     CreateBox( "boxE", boxE, desktop, SCROLLING_BOX_SIZE );
     boxE.SetPosition( 0.0f, -100.0f, 1.0f );
@@ -190,6 +193,7 @@ public:
     mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_SPEED, 500);
     mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_GAP, 500);
     mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_LOOP_COUNT, 3);
+    mRtlLongLabel.SetProperty(DevelTextLabel::Property::AUTO_SCROLL_STOP_MODE, DevelTextLabel::AutoScrollStopMode::FINISH_LOOP );
 
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.DetectedSignal().Connect(this, &TextScrollingExample::OnPanGesture );

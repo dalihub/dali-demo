@@ -165,3 +165,6 @@ msgstr "انچنیھک ریکل "
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
 msgstr "ریڈیل پیش رفت ڈرائنگ"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "رے چلتے"
