@@ -165,3 +165,6 @@ msgstr "Zeichnen"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
 msgstr "Radialer Fortschritt zeichnen"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "Ray marschieren"

@@ -165,3 +165,6 @@ msgstr "സമനില ലൈൻ"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
 msgstr "റേഡിയൽ പുരോഗതി ഡ്രോയിംഗ്"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "ലൈറ്റ് മാർച്ചിംഗ്"
