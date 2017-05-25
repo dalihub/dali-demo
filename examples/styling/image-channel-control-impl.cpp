@@ -18,6 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/object/type-registry-helper.h>
 #include <dali-toolkit/devel-api/align-enums.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
@@ -104,7 +105,7 @@ void ImageChannelControl::SetImage( const std::string& url )
   properties[Dali::Toolkit::ImageVisual::Property::URL] = url;
 
   mVisual = Toolkit::VisualFactory::Get().CreateVisual( properties );
-  RegisterVisual( Demo::ImageChannelControl::Property::IMAGE_VISUAL, mVisual );
+  Toolkit::DevelControl::RegisterVisual( *this, Demo::ImageChannelControl::Property::IMAGE_VISUAL, mVisual );
   mVisual.SetName("imageVisual");
 
   RelayoutRequest();
@@ -127,14 +128,14 @@ void ImageChannelControl::SetVisibility( bool visibility )
     {
       if( mDisableVisibilityTransition.Count() > 0 )
       {
-        mAnimation = CreateTransition( mDisableVisibilityTransition );
+        mAnimation = Toolkit::DevelControl::CreateTransition( *this, mDisableVisibilityTransition );
       }
     }
     else
     {
       if( mEnableVisibilityTransition.Count() > 0 )
       {
-        mAnimation = CreateTransition( mEnableVisibilityTransition );
+        mAnimation = Toolkit::DevelControl::CreateTransition( *this, mEnableVisibilityTransition );
       }
     }
   }
@@ -236,7 +237,7 @@ void ImageChannelControl::SetProperty( BaseObject* object, Property::Index index
         if( map )
         {
           impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual( *map );
-          impl.RegisterVisual( Demo::ImageChannelControl::Property::IMAGE_VISUAL, impl.mVisual );
+          Toolkit::DevelControl::RegisterVisual( impl, Demo::ImageChannelControl::Property::IMAGE_VISUAL, impl.mVisual );
         }
         break;
       }
