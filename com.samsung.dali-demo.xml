@@ -221,4 +221,7 @@
 	<ui-application appid="rendering-basic-light.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-basic-light.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Basic Light</label>
 	</ui-application>
+	<ui-application appid="rendering-skybox.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-skybox.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Skybox</label>
+	</ui-application>
 </manifest>
