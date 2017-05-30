@@ -25,6 +25,8 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include "shared/view.h"
 
+#include <dali/devel-api/object/handle-devel.h>
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace DemoHelper;
@@ -742,7 +744,7 @@ private:
   void OnHitPaddle(PropertyNotification& source)
   {
     Actor delegate = Actor::DownCast(source.GetTarget());
-    Vector3 collisionVector = delegate.GetCurrentProperty< Vector3 >( source.GetTargetProperty() );
+    Vector3 collisionVector = DevelHandle::GetCurrentProperty< Vector3 >( delegate, source.GetTargetProperty() );
     Vector3 ballRelativePosition(mBall.GetCurrentPosition() - mPaddle.GetCurrentPosition());
     ballRelativePosition.Normalize();
 
@@ -777,7 +779,7 @@ private:
   void OnHitBrick(PropertyNotification& source)
   {
     Actor brick = Actor::DownCast(source.GetTarget());
-    Vector3 collisionVector = brick.GetCurrentProperty< Vector3 >( source.GetTargetProperty() );
+    Vector3 collisionVector = DevelHandle::GetCurrentProperty< Vector3 >( brick, source.GetTargetProperty() );
 
     const float normalVelocity = fabsf(mBallVelocity.Dot(collisionVector));
     mBallVelocity += collisionVector * normalVelocity * 2.0f;
