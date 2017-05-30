@@ -214,7 +214,6 @@
 	</ui-application>
 	<ui-application appid="rendering-radial-progress.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-radial-progress.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Rendering Radial Progress</label>
-	</ui-application>
 	<ui-application appid="ray-marching.example" exec="/usr/apps/com.samsung.dali-demo/bin/ray-marching.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Ray Marching example</label>
 	</ui-application>
