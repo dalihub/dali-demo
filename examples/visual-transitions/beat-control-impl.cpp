@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/object/type-registry-helper.h>
 #include <dali-toolkit/devel-api/align-enums.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
@@ -102,7 +103,7 @@ void BeatControl::StartBounceAnimation()
     OnBounceAnimationFinished(mAnimation);
   }
 
-  mAnimation = CreateTransition( mBounceTransition );
+  mAnimation = DevelControl::CreateTransition( *this, mBounceTransition );
   mAnimation.FinishedSignal().Connect( this, &BeatControl::OnBounceAnimationFinished );
   mAnimation.Play();
   mAnimationPlaying |= BOUNCE_ANIMATION_RUNNING;
@@ -118,7 +119,7 @@ void BeatControl::StartXAnimation()
     OnXAnimationFinished(mXAnimation);
   }
 
-  mXAnimation = CreateTransition( mLeftTransition );
+  mXAnimation = DevelControl::CreateTransition( *this, mLeftTransition );
   mXAnimation.FinishedSignal().Connect( this, &BeatControl::OnXAnimationFinished );
   mXAnimation.Play();
   mAnimationPlaying |= X_ANIMATION_RUNNING;
@@ -133,7 +134,7 @@ void BeatControl::StartYAnimation()
     OnYAnimationFinished(mYAnimation);
   }
 
-  mYAnimation = CreateTransition( mUpTransition );
+  mYAnimation = DevelControl::CreateTransition( *this, mUpTransition );
   mYAnimation.FinishedSignal().Connect( this, &BeatControl::OnYAnimationFinished );
   mYAnimation.Play();
   mAnimationPlaying |= Y_ANIMATION_RUNNING;
@@ -148,7 +149,7 @@ void BeatControl::StartFadeAnimation()
     OnFadeAnimationFinished(mFadeAnimation);
   }
 
-  mFadeAnimation = CreateTransition( mFadeTransition );
+  mFadeAnimation = DevelControl::CreateTransition( *this, mFadeTransition );
   mFadeAnimation.FinishedSignal().Connect( this, &BeatControl::OnFadeAnimationFinished );
   mFadeAnimation.Play();
   mAnimationPlaying |= FADE_ANIMATION_RUNNING;
@@ -276,7 +277,7 @@ void BeatControl::SetProperty( BaseObject* object, Property::Index index, const 
           {
             // Only register a visual if there is more than just a size setting
             impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual( *map );
-            impl.RegisterVisual( Demo::BeatControl::Property::BEAT_VISUAL, impl.mVisual );
+            DevelControl::RegisterVisual( impl, Demo::BeatControl::Property::BEAT_VISUAL, impl.mVisual );
 
             // We have registered a new visual: must trigger size negotiation
             // in order to call SetTransformAndSize on the visual with the right size:
