@@ -42,8 +42,6 @@ namespace
 
   const float BORDER_WIDTH = 4.0f;
 
-  const Vector3 POPUP_SIZE_FACTOR_TO_PARENT = Vector3( 0.0, 0.25, 0.0 );
-
 } // unnamed namespace
 
 /**
@@ -106,7 +104,7 @@ public:
 
     // Launch a pop-up containing TextField
     mField = CreateTextField( stageSize, mButtonLabel );
-    mPopup = CreatePopup( stageSize.width * 0.8f );
+    mPopup = CreatePopup();
     mPopup.Add( mField );
     mPopup.OutsideTouchedSignal().Connect( this, &TextFieldExample::OnPopupOutsideTouched );
     stage.Add( mPopup );
@@ -131,14 +129,13 @@ public:
     return field;
   }
 
-  Popup CreatePopup( float width )
+  Popup CreatePopup()
   {
     Popup popup = Popup::New();
     popup.SetParentOrigin( ParentOrigin::CENTER );
     popup.SetAnchorPoint( AnchorPoint::CENTER );
-    popup.SetSize( width, 0.0f );
-    popup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
-    popup.SetSizeModeFactor( POPUP_SIZE_FACTOR_TO_PARENT );
+    popup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH );
+    popup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
     popup.TouchSignal().Connect( this, &TextFieldExample::OnPopupTouched );
 
     return popup;
