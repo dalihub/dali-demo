@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -124,7 +124,7 @@ void TransitionApplication::Create( Application& application )
     Property::Map map;
     CreateVisualMap( i, map );
     map.Add( DevelVisual::Property::TRANSFORM, Property::Map()
-             .Add( DevelVisual::Transform::Property::SIZE, Vector2(0.8f, 0.8f) ) );
+             .Add( DevelVisual::Transform::Property::SIZE, Vector2(0.8f, 0.8f) )  );
     mVisualButtons[i] = BeatControl::New();
     mVisualButtons[i].SetProperty( BeatControl::Property::BEAT_VISUAL, map );
     mVisualButtons[i].SetName("VisualButton");

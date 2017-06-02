@@ -17,7 +17,9 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/object/property-map.h>
+#include <dali-toolkit/devel-api/align-enums.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali-toolkit/public-api/controls/slider/slider.h>
 
 using namespace Dali;
@@ -355,6 +357,9 @@ public:
     mVisualMap.Clear();
     mVisualMap[ Visual::Property::TYPE           ] = Visual::PRIMITIVE;
     mVisualMap[ PrimitiveVisual::Property::MIX_COLOR ] = mColor;
+    mVisualMap[ DevelVisual::Property::TRANSFORM ] =
+        Property::Map().Add( DevelVisual::Transform::Property::ORIGIN, Align::CENTER )
+                       .Add( DevelVisual::Transform::Property::ANCHOR_POINT, Align::CENTER );
   }
 
   //Sets the 3D model to a sphere and modifies the sliders appropriately.
