@@ -168,3 +168,6 @@ msgstr "Piirustus radial edistyminen"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
 msgstr "Ray marssi"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"

@@ -168,3 +168,6 @@ msgstr "방사형 진행 상황 그리기"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
 msgstr "레이 마칭"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"

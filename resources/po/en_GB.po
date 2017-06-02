@@ -180,3 +180,6 @@ msgstr "Draw radial progress"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
 msgstr "Ray Marching"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
