@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -742,7 +742,7 @@ private:
   void OnHitPaddle(PropertyNotification& source)
   {
     Actor delegate = Actor::DownCast(source.GetTarget());
-    Vector3 collisionVector = delegate.GetProperty<Vector3>(source.GetTargetProperty());
+    Vector3 collisionVector = delegate.GetCurrentProperty< Vector3 >( source.GetTargetProperty() );
     Vector3 ballRelativePosition(mBall.GetCurrentPosition() - mPaddle.GetCurrentPosition());
     ballRelativePosition.Normalize();
 
@@ -777,7 +777,7 @@ private:
   void OnHitBrick(PropertyNotification& source)
   {
     Actor brick = Actor::DownCast(source.GetTarget());
-    Vector3 collisionVector = brick.GetProperty<Vector3>(source.GetTargetProperty());
+    Vector3 collisionVector = brick.GetCurrentProperty< Vector3 >( source.GetTargetProperty() );
 
     const float normalVelocity = fabsf(mBallVelocity.Dot(collisionVector));
     mBallVelocity += collisionVector * normalVelocity * 2.0f;

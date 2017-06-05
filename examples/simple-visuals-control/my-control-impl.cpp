@@ -26,6 +26,7 @@
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -102,7 +103,7 @@ void MyControl::SetProperty( BaseObject* object, Property::Index index, const Pr
 
         if ( iconVisual )
         {
-          impl.RegisterVisual( index, iconVisual );
+          DevelControl::RegisterVisual( impl, index, iconVisual );
         }
         break;
       }
@@ -123,7 +124,8 @@ Property::Value MyControl::GetProperty( BaseObject* object, Property::Index prop
       case Demo::MyControl::Property::ICON_VISUAL:
       {
         Property::Map map;
-        Toolkit::Visual::Base visual =  GetImpl( myControl ).GetVisual( propertyIndex );
+        MyControl& impl = GetImpl( myControl );
+        Toolkit::Visual::Base visual =  DevelControl::GetVisual( impl, propertyIndex );
         if ( visual )
         {
           visual.CreatePropertyMap( map ); // Creates a Property map containing the Visual that ICON_VISUAL currently is. Can change if state changes.

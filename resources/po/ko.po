@@ -4,6 +4,9 @@ msgstr "애니메이션 이미지"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "애니메이션 모양"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "기본 표시 등"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "블록"
 
@@ -159,3 +162,12 @@ msgstr "삼각형 그리기"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "선 그리기"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "방사형 진행 상황 그리기"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "레이 마칭"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"

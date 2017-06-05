@@ -4,6 +4,9 @@ msgstr "Imágenes animadas"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "Formas Animadas"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "Iluminación Básica"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Bloques"
 
@@ -159,3 +162,12 @@ msgstr "Dibujar triángulo"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "Dibujar linea"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "Dibujo progreso radial"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "trazado de rayos"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"

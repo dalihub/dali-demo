@@ -141,6 +141,9 @@ public:
     }
 
     KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &FocusIntegrationExample::OnPreFocusChange );
+
+    // Respond to key events
+    mStage.KeyEventSignal().Connect( this, &FocusIntegrationExample::OnKeyEvent );
   }
 
   // Callback for KeyboardFocusManager
