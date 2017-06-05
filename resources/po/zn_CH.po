@@ -4,6 +4,9 @@ msgstr "动态图"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "动画造型"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "基本光"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "块体"
 
@@ -159,3 +162,12 @@ msgstr "绘制三角形"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "画线"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "绘制径向进度"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "射线行军"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"

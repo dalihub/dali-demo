@@ -4,6 +4,9 @@ msgstr "অ্যানিমেটেড ইমেজ"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "অ্যানিমেটেড আকার"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "বেসিক আলো"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "অৱৰুদ্ধ কৰক"
 
@@ -159,3 +162,12 @@ msgstr "ৰেণ্ডাৰিং  ত্ৰিকোণমিতি"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "ৰেণ্ডাৰিং  শাৰী"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "রশ্মীয় অগ্রগতি অঙ্কন"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "রে মার্চিং"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"

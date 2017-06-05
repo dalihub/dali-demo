@@ -200,4 +200,28 @@
 	<ui-application appid="focus-integration.example" exec="/usr/apps/com.samsung.dali-demo/bin/focus-integration.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Focus Integration</label>
 	</ui-application>
+	<ui-application appid="rendering-cube.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-cube.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Rendering Cube</label>
+	</ui-application>
+	<ui-application appid="rendering-line.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-line.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Rendering Line</label>
+	</ui-application>
+	<ui-application appid="rendering-textured-cube.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-textured-cube.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Rendering Textured Cube</label>
+	</ui-application>
+	<ui-application appid="rendering-triangle.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-triangle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Rendering Triangle</label>
+	</ui-application>
+	<ui-application appid="rendering-radial-progress.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-radial-progress.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Rendering Radial Progress</label>
+	</ui-application>
+	<ui-application appid="ray-marching.example" exec="/usr/apps/com.samsung.dali-demo/bin/ray-marching.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Ray Marching example</label>
+	</ui-application>
+	<ui-application appid="rendering-basic-light.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-basic-light.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Basic Light</label>
+	</ui-application>
+	<ui-application appid="rendering-skybox.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-skybox.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Skybox</label>
+	</ui-application>
 </manifest>

@@ -4,6 +4,9 @@ msgstr "متحرک تصاویر"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "متحرک شکلیں"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "بیسک روشنی"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "اینٹیں"
 
@@ -159,3 +162,12 @@ msgstr "ارڈ ثلثم "
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "انچنیھک ریکل "
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "ریڈیل پیش رفت ڈرائنگ"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "رے چلتے"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"

@@ -4,6 +4,9 @@ msgstr "Animated Images"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "Animated Shapes"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "Basic Light"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Blocks"
 
@@ -171,3 +174,12 @@ msgstr "Draw line"
 
 msgid "DALI_DEMO_STR_TITLE_FOCUS_INTEGRATION"
 msgstr "Focus integration"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "Draw radial progress"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "Ray Marching"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"

@@ -21,6 +21,7 @@
 #include <dali-toolkit/devel-api/align-enums.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 
 #include <cstdio>
 
@@ -124,7 +125,7 @@ bool ShadowButton::GetActiveState()
 void ShadowButton::SetCheckState( bool checkState )
 {
   mCheckState = checkState;
-  EnableVisual( Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, true );
+  DevelControl::EnableVisual( *this, Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, true );
   if( Self().OnStage() )
   {
     if( checkState )
@@ -157,7 +158,7 @@ void ShadowButton::StartTransition( Property::Index transitionId )
       iter->mAnimation.FinishedSignal().Disconnect( this, &ShadowButton::OnTransitionFinished );
     }
 
-    iter->mAnimation = CreateTransition( iter->mTransitionData );
+    iter->mAnimation = DevelControl::CreateTransition( *this, iter->mTransitionData );
     StoreTargetLayouts( iter->mTransitionData );
 
     iter->mAnimation.FinishedSignal().Connect( this, &ShadowButton::OnTransitionFinished );
@@ -189,7 +190,7 @@ void ShadowButton::OnTransitionFinished( Animation& src )
         }
         case Demo::ShadowButton::Property::UNCHECK_TRANSITION:
         {
-          EnableVisual( Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, false );
+          DevelControl::EnableVisual( *this, Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, false );
           break;
         }
       }
@@ -352,25 +353,25 @@ void ShadowButton::ResetVisual(
     {
       case Demo::ShadowButton::Property::BACKGROUND_VISUAL:
       {
-        RegisterVisual( index, visual );
+        DevelControl::RegisterVisual( *this, index, visual );
         visual.SetDepthIndex(0.0f);
         break;
       }
       case Demo::ShadowButton::Property::CHECKBOX_BG_VISUAL:
       {
-        RegisterVisual( index, visual );
+        DevelControl::RegisterVisual( *this, index, visual );
         visual.SetDepthIndex(1.0f);
         break;
       }
       case Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL:
       {
-        RegisterVisual( index, visual, mCheckState );
+        DevelControl::RegisterVisual( *this, index, visual, mCheckState );
         visual.SetDepthIndex(2.0f);
         break;
       }
       case Demo::ShadowButton::Property::LABEL_VISUAL:
       {
-        RegisterVisual( index, visual );
+        DevelControl::RegisterVisual( *this, index, visual );
         visual.SetDepthIndex(1.0f);
         break;
       }
@@ -399,7 +400,7 @@ void ShadowButton::ResetVisual(
 
 bool IsTransformProperty( const std::string& property )
 {
-  const char* transformProperties[]= { "size", "offset", "origin", "anchorPoint", "offsetSizeMode" };
+  const char* transformProperties[]= { "size", "offset", "origin", "anchorPoint", "offsetPolicy", "sizePolicy" };
   const int NUM_TRANSFORM_PROPERTIES = sizeof( transformProperties ) / sizeof( const char * );
 
   bool found=false;
@@ -418,7 +419,7 @@ void ShadowButton::StoreTargetLayouts( TransitionData transitionData )
 {
   // Pseudo code
   // foreach animator in transitionData
-  //   if animator{"property"} in [ "size", "offset", "origin", "anchorPoint", "offsetSizeMode" ]
+  //   if animator{"property"} in [ "size", "offset", "origin", "anchorPoint", "offsetPolicy", "sizePolicy" ]
   //     transforms{ animator{"target"} }->{animator{"property"}} = animator{"targetValue"}
 
 
@@ -496,7 +497,7 @@ void ShadowButton::SetProperty( BaseObject* object, Property::Index index, const
       case Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL:
       {
         impl.ResetVisual( index, impl.mCheckboxFgVisual, value );
-        impl.EnableVisual( Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, impl.mCheckState );
+        DevelControl::EnableVisual( impl, Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, impl.mCheckState );
         break;
       }
       case Demo::ShadowButton::Property::LABEL_VISUAL:

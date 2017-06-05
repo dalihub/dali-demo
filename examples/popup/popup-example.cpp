@@ -20,7 +20,6 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
-#include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
 using namespace Dali;
 
@@ -117,11 +116,7 @@ public:
     Stage stage = Stage::GetCurrent();
 
     // Respond to key events if not handled
-    Toolkit::KeyInputFocusManager keyInputFocusManager = Toolkit::KeyInputFocusManager::Get();
-    if( keyInputFocusManager )
-    {
-      keyInputFocusManager.UnhandledKeyEventSignal().Connect( this, &PopupExample::OnKeyEvent );
-    }
+    stage.KeyEventSignal().Connect( this, &PopupExample::OnKeyEvent );
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.

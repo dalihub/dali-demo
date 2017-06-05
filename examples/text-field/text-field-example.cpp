@@ -43,8 +43,6 @@ namespace
 
   const float BORDER_WIDTH = 4.0f;
 
-  const Vector3 POPUP_SIZE_FACTOR_TO_PARENT = Vector3( 0.8, 0.25, 0.0 );
-
 } // unnamed namespace
 
 /**
@@ -133,8 +131,8 @@ public:
     Popup popup = Popup::New();
     popup.SetParentOrigin( ParentOrigin::CENTER );
     popup.SetAnchorPoint( AnchorPoint::CENTER );
-    popup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    popup.SetSizeModeFactor( POPUP_SIZE_FACTOR_TO_PARENT );
+    popup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH );
+    popup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
     popup.TouchSignal().Connect( this, &TextFieldExample::OnPopupTouched );
 
     return popup;

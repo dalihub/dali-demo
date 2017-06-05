@@ -4,6 +4,9 @@ msgstr "അനിമേറ്റഡ് ചിത്രങ്ങൾ"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "ആനിമേഷൻ രൂപങ്ങൾ"
 
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "അടിസ്ഥാന വെളിച്ചം"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "തടയപ്പെട്ട"
 
@@ -159,3 +162,12 @@ msgstr "ത്രികോണം വരയ്ക്കുക"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
 msgstr "സമനില ലൈൻ"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "റേഡിയൽ പുരോഗതി ഡ്രോയിംഗ്"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "ലൈറ്റ് മാർച്ചിംഗ്"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
