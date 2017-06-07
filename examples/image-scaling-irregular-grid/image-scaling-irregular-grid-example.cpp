@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@
 #include <map>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 
 // INTERNAL INCLUDES
 #include "grid-flags.h"
@@ -165,25 +166,8 @@ const char* IMAGE_PATHS[] = {
   NULL
 };
 const unsigned NUM_IMAGE_PATHS = sizeof(IMAGE_PATHS) / sizeof(IMAGE_PATHS[0]) - 1u;
+const unsigned int INITIAL_IMAGES_TO_LOAD = 10;
 
-
-/**
- * Creates an Image
- *
- * @param[in] filename The path of the image.
- * @param[in] width The width of the image in pixels.
- * @param[in] height The height of the image in pixels.
- * @param[in] fittingMode The mode to use when scaling the image to fit the desired dimensions.
- */
-Image CreateImage(const std::string& filename, unsigned int width, unsigned int height, Dali::FittingMode::Type fittingMode )
-{
-#ifdef DEBUG_PRINT_DIAGNOSTICS
-    fprintf( stderr, "CreateImage(%s, %u, %u, fittingMode=%u)\n", filename.c_str(), width, height, unsigned( fittingMode ) );
-#endif
-  Image image = ResourceImage::New( filename, ImageDimensions( width, height ), fittingMode, Dali::SamplingMode::BOX_THEN_LINEAR );
-
-  return image;
-}
 
 /**
  * Creates an ImageView
@@ -193,15 +177,23 @@ Image CreateImage(const std::string& filename, unsigned int width, unsigned int 
  * @param[in] height The height of the image in pixels.
  * @param[in] fittingMode The mode to use when scaling the image to fit the desired dimensions.
  */
-ImageView CreateImageView(const std::string& filename, unsigned int width, unsigned int height, Dali::FittingMode::Type fittingMode )
+ImageView CreateImageView(const std::string& filename, int width, int height, Dali::FittingMode::Type fittingMode )
 {
-  Image img = CreateImage( filename, width, height, fittingMode );
-  ImageView actor = ImageView::New( img );
-  actor.SetName( filename );
-  actor.SetParentOrigin(ParentOrigin::CENTER);
-  actor.SetAnchorPoint(AnchorPoint::CENTER);
 
-  return actor;
+  ImageView imageView = ImageView::New();
+
+  Property::Map map;
+  map[Toolkit::ImageVisual::Property::URL] = filename;
+  map[Toolkit::ImageVisual::Property::DESIRED_WIDTH] = width;
+  map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = height;
+  map[Toolkit::ImageVisual::Property::FITTING_MODE] = fittingMode;
+  imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
+
+  imageView.SetName( filename );
+  imageView.SetParentOrigin(ParentOrigin::CENTER);
+  imageView.SetAnchorPoint(AnchorPoint::CENTER);
+
+  return imageView;
 }
 
 /** Cycle the scaling mode options. */
@@ -268,7 +260,8 @@ public:
 
   ImageScalingIrregularGridController( Application& application )
   : mApplication( application ),
-    mScrolling( false )
+    mScrolling( false ),
+    mImagesLoaded( 0 )
   {
     std::cout << "ImageScalingIrregularGridController::ImageScalingIrregularGridController" << std::endl;
 
@@ -280,6 +273,21 @@ public:
   {
     // Nothing to do here.
   }
+
+  /**
+   * Called everytime an ImageView has loaded it's image
+   */
+  void ResourceReadySignal( Toolkit::Control control )
+  {
+    mImagesLoaded++;
+    // To allow fast startup, we only place a small number of ImageViews on stage first
+    if ( mImagesLoaded == INITIAL_IMAGES_TO_LOAD )
+    {
+      // Adding the ImageViews to the stage will trigger loading of the Images
+      mGridActor.Add( mOffStageImageViews );
+    }
+  }
+
 
   /**
    * One-time setup in response to Application InitSignal.
@@ -313,6 +321,11 @@ public:
     mToolBar.AddControl( toggleScalingButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     SetTitle( APPLICATION_TITLE );
+
+    mOffStageImageViews = Actor::New();
+    mOffStageImageViews.SetAnchorPoint( AnchorPoint::CENTER );
+    mOffStageImageViews.SetParentOrigin(ParentOrigin::CENTER);
+    mOffStageImageViews.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Build the main content of the widow:
     PopulateContentLayer( DEFAULT_SCALING_MODE );
@@ -450,8 +463,9 @@ public:
     outFieldHeight = actualGridHeight * cellHeight;
     const Vector2 gridOrigin = Vector2( -fieldWidth * 0.5f, -outFieldHeight * 0.5 );
 
+     unsigned int count = 0;
     // Build the image actors in their right locations in their parent's frame:
-    for( std::vector<PositionedImage>::const_iterator i = placedImages.begin(), end = placedImages.end(); i != end; ++i )
+    for( std::vector<PositionedImage>::const_iterator i = placedImages.begin(), end = placedImages.end(); i != end; ++i, ++count )
     {
       const PositionedImage& imageSource = *i;
       const Vector2 imageSize = imageSource.imageGridDims * cellSize - Vector2( GRID_CELL_PADDING * 2, GRID_CELL_PADDING * 2 );
@@ -462,11 +476,18 @@ public:
       image.SetPosition( Vector3( imagePosition.x, imagePosition.y, 0 ) );
       image.SetSize( imageSize );
       image.TouchSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
+      Toolkit::DevelControl::ResourceReadySignal( image).Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal);
       mFittingModes[image.GetId()] = fittingMode;
       mResourceUrls[image.GetId()] = imageSource.configuration.path;
       mSizes[image.GetId()] = imageSize;
-
-      gridActor.Add( image );
+      if ( count < INITIAL_IMAGES_TO_LOAD )
+      {
+        gridActor.Add( image );
+      }
+      else
+      {
+        mOffStageImageViews.Add( image );
+      }
     }
 
     return gridActor;
@@ -493,13 +514,18 @@ public:
         Dali::FittingMode::Type newMode = NextMode( mFittingModes[id] );
         const Vector2 imageSize = mSizes[actor.GetId()];
 
-        const std::string& url = mResourceUrls[id];
-        Image newImage = CreateImage( url, imageSize.width + 0.5f, imageSize.height + 0.5f, newMode );
         ImageView imageView = ImageView::DownCast( actor );
-        if(imageView)
+        if( imageView)
         {
-          imageView.SetImage( newImage );
+          Property::Map map;
+          map[Visual::Property::TYPE] = Visual::IMAGE;
+          map[ImageVisual::Property::URL] = mResourceUrls[id];
+          map[ImageVisual::Property::DESIRED_WIDTH] = imageSize.width + 0.5f;
+          map[ImageVisual::Property::DESIRED_HEIGHT] =  imageSize.height + 0.5f;
+          map[ImageVisual::Property::FITTING_MODE] = newMode;
+          imageView.SetProperty( ImageView::Property::IMAGE, map );
         }
+
         mFittingModes[id] = newMode;
       }
     }
@@ -541,8 +567,16 @@ public:
 
         const Vector2 imageSize = mSizes[ id ];
         Dali::FittingMode::Type newMode = NextMode( mFittingModes[ id ] );
-        Image newImage = CreateImage( mResourceUrls[ id ], imageSize.width, imageSize.height, newMode );
-        gridImageView.SetImage( newImage );
+
+        Property::Map map;
+        map[Visual::Property::TYPE] = Visual::IMAGE;
+        map[ImageVisual::Property::URL] = mResourceUrls[id];
+        map[ImageVisual::Property::DESIRED_WIDTH] = imageSize.width;
+        map[ImageVisual::Property::DESIRED_HEIGHT] =  imageSize.height;
+        map[ImageVisual::Property::FITTING_MODE] = newMode;
+        gridImageView.SetProperty( ImageView::Property::IMAGE, map );
+
+
 
         mFittingModes[ id ] = newMode;
 
@@ -596,6 +630,7 @@ private:
   Toolkit::ToolBar mToolBar;          ///< The View's Toolbar.
   TextLabel mTitleActor;               ///< The Toolbar's Title.
   Actor mGridActor;                   ///< The container for the grid of images
+  Actor mOffStageImageViews;
   ScrollView mScrollView;             ///< ScrollView UI Component
   ScrollBar mScrollBarVertical;
   ScrollBar mScrollBarHorizontal;
@@ -603,6 +638,7 @@ private:
   std::map<unsigned, Dali::FittingMode::Type> mFittingModes; ///< Stores the current scaling mode of each image, keyed by image actor id.
   std::map<unsigned, std::string> mResourceUrls; ///< Stores the url of each image, keyed by image actor id.
   std::map<unsigned, Vector2> mSizes; ///< Stores the current size of each image, keyed by image actor id.
+  unsigned int mImagesLoaded;         ///< How many images have been loaded
 };
 
 void RunTest( Application& application )
