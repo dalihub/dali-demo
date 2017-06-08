@@ -87,7 +87,6 @@ public:
     changeButton.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     stage.Add( changeButton );
     changeButton.ClickedSignal().Connect( this, &ImageSvgController::OnChangeButtonClicked );
-    changeButton.SetProperty( DevelActor::Property::SIBLING_ORDER, 1 );
 
     // Push button, for resetting the actor size and position
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
@@ -96,7 +95,6 @@ public:
     resetButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
     stage.Add( resetButton );
     resetButton.ClickedSignal().Connect( this, &ImageSvgController::OnResetButtonClicked );
-    resetButton.SetProperty( DevelActor::Property::SIBLING_ORDER, 1 );
 
     // Create and put imageViews to stage
     for( unsigned int i=0; i<4u; i++)
@@ -124,6 +122,9 @@ public:
     mPinchGestureDetector = PinchGestureDetector::New();
     mPinchGestureDetector.Attach( mStageBackground);
     mPinchGestureDetector.DetectedSignal().Connect(this, &ImageSvgController::OnPinch);
+
+    DevelActor::RaiseToTop(changeButton);
+    DevelActor::RaiseToTop(resetButton);
   }
 
   // Callback of push button, for changing image set
