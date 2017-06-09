@@ -206,9 +206,14 @@ namespace MultiLanguageStrings
       "(Xhosa)",
       "Molo Lizwe"
     },
+    {
+      "Amharic",
+      "(አማርኛ)",
+      "ያስገቡት PIN ትክክለኛ አይደለም። እባክዎ እንደገና ይሞክሩ።"
+    }
   };
 
-  const unsigned int NUMBER_OF_LANGUAGES = 35u;
+  const unsigned int NUMBER_OF_LANGUAGES = 36u;
 
 } // MultiLanguageStrings
 

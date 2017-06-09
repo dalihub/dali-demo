@@ -353,26 +353,22 @@ void ShadowButton::ResetVisual(
     {
       case Demo::ShadowButton::Property::BACKGROUND_VISUAL:
       {
-        DevelControl::RegisterVisual( *this, index, visual );
-        visual.SetDepthIndex(0.0f);
+        DevelControl::RegisterVisual( *this, index, visual, 0 );
         break;
       }
       case Demo::ShadowButton::Property::CHECKBOX_BG_VISUAL:
       {
-        DevelControl::RegisterVisual( *this, index, visual );
-        visual.SetDepthIndex(1.0f);
+        DevelControl::RegisterVisual( *this, index, visual, 1 );
         break;
       }
       case Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL:
       {
-        DevelControl::RegisterVisual( *this, index, visual, mCheckState );
-        visual.SetDepthIndex(2.0f);
+        DevelControl::RegisterVisual( *this, index, visual, mCheckState, 2 );
         break;
       }
       case Demo::ShadowButton::Property::LABEL_VISUAL:
       {
-        DevelControl::RegisterVisual( *this, index, visual );
-        visual.SetDepthIndex(1.0f);
+        DevelControl::RegisterVisual( *this, index, visual, 1 );
         break;
       }
     }

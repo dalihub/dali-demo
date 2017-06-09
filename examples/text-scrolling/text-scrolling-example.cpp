@@ -36,6 +36,14 @@ const Vector2 SCROLLING_BOX_SIZE( Vector2(330.0f, 40.0f ) );
 const float MAX_OFFSCREEN_RENDERING_SIZE = 2048.f;
 const float SCREEN_BORDER = 5.0f; // Border around screen that Popups and handles will not exceed
 
+const char * ALIGNMENT_TABLE[] =
+{
+  "BEGIN",
+  "CENTER",
+  "END"
+};
+const unsigned int ALIGNMENT_TABLE_COUNT = sizeof( ALIGNMENT_TABLE ) / sizeof( ALIGNMENT_TABLE[ 0 ] );
+
 enum Labels
 {
   SMALL = 1u,
@@ -172,7 +180,7 @@ public:
     boxC.SetPosition( 0.0f, -300.0f, 1.0f );
     Toolkit::PushButton scrollSmallButton = Toolkit::PushButton::New();
     scrollSmallButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedSmall );
-    CreateLabel( mSmallLabel, "A Quick Brown Fox", boxC , true, scrollSmallButton );
+    CreateLabel( mSmallLabel, "Hello Text", boxC , true, scrollSmallButton );
     mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
     mSmallLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::CYAN );
@@ -209,6 +217,25 @@ public:
     colorButton.SetSize(BOX_SIZE.height,BOX_SIZE.height);
     colorButton.ClickedSignal().Connect( this, &TextScrollingExample::OnColorButtonClicked );
     rootActor.Add( colorButton );
+
+    for( unsigned int i = 0; i < ALIGNMENT_TABLE_COUNT; ++i )
+    {
+      Toolkit::RadioButton alignButton = Toolkit::RadioButton::New( ALIGNMENT_TABLE[ i ] );
+      alignButton.ClickedSignal().Connect( this, &TextScrollingExample::OnAlignButtonClicked );
+      alignButton.SetName( ALIGNMENT_TABLE[ i ] );
+
+      // Place first button to left aligned, second center aligned and third right aligned
+      alignButton.SetAnchorPoint( Vector3( i * 0.5f, 0.0f, 0.5f ) );
+      alignButton.SetParentOrigin( Vector3( i * 0.5f, 0.0f, 0.5f ) );
+
+      rootActor.Add( alignButton );
+
+      if( i == 0 )
+      {
+        // Set the first button as selected
+        alignButton.SetProperty( Button::Property::SELECTED, true );
+      }
+    }
   }
 
   void EnableScrolling( Labels labels )
@@ -281,26 +308,45 @@ public:
   }
 
   bool OnColorButtonClicked( Toolkit::Button button )
- {
-   Vector4 color = Color::RED;
-
-  if ( mToggleColor )
   {
-    color = Color::BLACK;
-    mToggleColor = false;
+    Vector4 color = Color::RED;
+
+    if ( mToggleColor )
+    {
+      color = Color::BLACK;
+      mToggleColor = false;
+    }
+    else
+    {
+      mToggleColor = true;
+    }
+
+    mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+    mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+    mRtlLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+    mLargeLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+    mRtlLongLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+
+    return true;
   }
-  else
+
+  bool OnAlignButtonClicked( Toolkit::Button button )
   {
-    mToggleColor = true;
+    for( unsigned int index = 0; index < ALIGNMENT_TABLE_COUNT; ++index )
+    {
+      const std::string& buttonName = button.GetName();
+      if( buttonName == ALIGNMENT_TABLE[ index ] )
+      {
+        mSmallLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[ index ] );
+        mRtlLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[ index ] );
+        mLargeLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[ index ] );
+        mRtlLongLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[ index ] );
+        break;
+      }
+    }
+
+    return true;
   }
-
-  mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
-  mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
-  mLargeLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
-  mRtlLongLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
-
-  return true;
- }
 
   /**
    * Main key event handler
