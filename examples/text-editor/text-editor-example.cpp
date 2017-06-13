@@ -34,6 +34,7 @@ using namespace Dali::Toolkit;
 namespace
 {
 
+const char * const THEME_PATH( DEMO_STYLE_DIR "text-editor-example-theme.json" ); ///< The theme used for this example
 const Vector4 BACKGROUND_COLOR( 0.04f, 0.345f, 0.392f, 1.0f );      ///< The background color.
 const char*   TOOLBAR_IMAGE = DEMO_IMAGE_DIR "top-bar.png";         ///< The tool-bar image.
 const float   TOOLBAR_BUTTON_PERCENTAGE = 0.1f;                     ///< The button's space width as a percentage of the toolbar's width.
@@ -182,6 +183,8 @@ public:
     mEditor.InputStyleChangedSignal().Connect( this, &TextEditorExample::OnTextInputStyleChanged );
 
     contents.Add( mEditor );
+    StyleManager styleManager = StyleManager::Get();
+    styleManager.ApplyTheme( THEME_PATH );
   }
 
   void CreateButtonContainer()
