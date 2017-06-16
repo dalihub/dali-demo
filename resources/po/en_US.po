@@ -4,6 +4,9 @@ msgstr "Animated Images"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "Animated Shapes"
 
+msgid "DALI_DEMO_STR_TITLE_ALPHA_BLENDING_CPU"
+msgstr "CPU Alpha Blending"
+
 msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
 msgstr "Basic Light"
 
@@ -142,6 +145,9 @@ msgstr "Text Field"
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
 msgstr "Text Label"
 
+msgid "DALI_DEMO_STR_TITLE_TEXT_OVERLAP"
+msgstr "Text Overlap"
+
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
 msgstr "Text Scripts"
 
@@ -183,3 +189,6 @@ msgstr "Ray Marching"
 
 msgid "DALI_DEMO_STR_TITLE_SKYBOX"
 msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

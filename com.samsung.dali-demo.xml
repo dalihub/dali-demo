@@ -224,4 +224,10 @@
 	<ui-application appid="rendering-skybox.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-skybox.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Skybox</label>
 	</ui-application>
+	<ui-application appid="rendering-basic-pbr.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-basic-pbr.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Physically Based Rendering</label>
+	</ui-application>
+	<ui-application appid="text-overlap.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-overlap.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Overlap</label>
+	</ui-application>
 </manifest>
