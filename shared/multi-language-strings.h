@@ -207,8 +207,8 @@ namespace MultiLanguageStrings
       "Molo Lizwe"
     },
     {
-      "Amharic",
-      "(አማርኛ)",
+      "አማርኛ",
+      "(Amharic)",
       "ያስገቡት PIN ትክክለኛ አይደለም። እባክዎ እንደገና ይሞክሩ።"
     }
   };
