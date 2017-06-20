@@ -171,3 +171,6 @@ msgstr "ലൈറ്റ് മാർച്ചിംഗ്"
 
 msgid "DALI_DEMO_STR_TITLE_SKYBOX"
 msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"
