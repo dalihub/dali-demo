@@ -210,10 +210,15 @@ namespace MultiLanguageStrings
       "አማርኛ",
       "(Amharic)",
       "ያስገቡት PIN ትክክለኛ አይደለም። እባክዎ እንደገና ይሞክሩ።"
-    }
+    },
+    {
+      "ᱚᱞ ᱪᱤᱠᱤ",
+      "(Ol Chiki)",
+      "ᱥᱟᱱᱛᱟᱞᱤ ᱵᱟᱝᱞᱟᱫᱮᱥ ᱵᱷᱩᱴᱟᱱ ᱱᱮᱯᱟᱲ"
+    },
   };
 
-  const unsigned int NUMBER_OF_LANGUAGES = 36u;
+  const unsigned int NUMBER_OF_LANGUAGES = 37u;
 
 } // MultiLanguageStrings
 
