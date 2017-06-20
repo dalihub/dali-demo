@@ -216,9 +216,14 @@ namespace MultiLanguageStrings
       "(Ol Chiki)",
       "ᱥᱟᱱᱛᱟᱞᱤ ᱵᱟᱝᱞᱟᱫᱮᱥ ᱵᱷᱩᱴᱟᱱ ᱱᱮᱯᱟᱲ"
     },
+    {
+      "ꯃꯤꯇꯩ ꯃꯌꯦꯛ",
+      "(Meitei)",
+      "ꯅꯡ ꯀꯗꯥꯏꯗꯒꯤꯅꯣ ꯁꯣꯝꯒ ꯎꯟꯅꯖꯕ ꯁꯦ ꯌꯥꯝ ꯅꯨꯉꯥꯏꯖꯩ ꯎꯗꯕ ꯀꯨꯏꯔꯦ"
+    }
   };
 
-  const unsigned int NUMBER_OF_LANGUAGES = 37u;
+  const unsigned int NUMBER_OF_LANGUAGES = 38u;
 
 } // MultiLanguageStrings
 
