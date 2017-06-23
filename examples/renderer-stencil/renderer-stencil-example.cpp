@@ -17,7 +17,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/devel-api/adaptor-framework/bitmap-loader.h>
 
 // INTERNAL INCLUDES
 #include "renderer-stencil-shaders.h"
