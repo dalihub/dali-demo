@@ -19,6 +19,9 @@ msgstr "버튼"
 msgid "DALI_DEMO_STR_TITLE_CLIPPING"
 msgstr "깎는"
 
+msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
+msgstr "드로잉 순서를 클리핑"
+
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "색상 그라디언트"
 
