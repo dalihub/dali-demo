@@ -20,7 +20,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali/integration-api/debug.h>
-#include <string>
 #include <sstream>
 #include <string.h>
 
@@ -35,7 +34,7 @@ const int MAX_POINT_INDICES = 4;
 ObjLoader::ObjLoader()
 : mSceneLoaded( false ),
   mMaterialLoaded( false ),
-  mHasTexturePoints( false ),
+  mHasTextureUv( false ),
   mHasDiffuseMap( false ),
   mHasNormalMap( false ),
   mHasSpecularMap( false )
@@ -58,10 +57,10 @@ bool ObjLoader::IsMaterialLoaded()
   return mMaterialLoaded;
 }
 
-void ObjLoader::CalculateHardFaceNormals( const Dali::Vector<Vector3>& vertices, Dali::Vector<TriIndex>& triangles,
+void ObjLoader::CalculateHardFaceNormals( const Dali::Vector<Vector3>& points, Dali::Vector<TriIndex>& triangles,
                                           Dali::Vector<Vector3>& normals )
 {
-  int numFaceVertices = 3 * triangles.Size();  //Vertex per face, as each point has different normals for each face.
+  int numFaceVertices = 3 * triangles.Size();  //Vertices per face, as each vertex has different normals instance for each face.
   int normalIndex = 0;  //Tracks progress through the array of normals.
 
   normals.Clear();
@@ -71,19 +70,19 @@ void ObjLoader::CalculateHardFaceNormals( const Dali::Vector<Vector3>& vertices,
   for( unsigned long i = 0; i < triangles.Size(); i++ )
   {
     //Triangle vertices.
-    const Vector3& v0 = vertices[triangles[i].pointIndex[0]];
-    const Vector3& v1 = vertices[triangles[i].pointIndex[1]];
-    const Vector3& v2 = vertices[triangles[i].pointIndex[2]];
+    const Vector3& v0 = points[triangles[i].pointIndex[0]];
+    const Vector3& v1 = points[triangles[i].pointIndex[1]];
+    const Vector3& v2 = points[triangles[i].pointIndex[2]];
 
     //Triangle edges.
     Vector3 edge1 = v1 - v0;
     Vector3 edge2 = v2 - v0;
 
-    //Using edges as vectors on the plane, cross to get the normal.
+    //Using edges as vectors on the plane, cross product to get the normal.
     Vector3 normalVector = edge1.Cross(edge2);
     normalVector.Normalize();
 
-    //Assign normals to points.
+    //Assign normal index to triangle vertex and set the normal vector to the list of normals.
     for( unsigned long j = 0; j < 3; j++, normalIndex++ )
     {
       triangles[i].normalIndex[j] = normalIndex;
@@ -92,22 +91,22 @@ void ObjLoader::CalculateHardFaceNormals( const Dali::Vector<Vector3>& vertices,
   }
 }
 
-void ObjLoader::CalculateSoftFaceNormals( const Dali::Vector<Vector3>& vertices, Dali::Vector<TriIndex>& triangles,
+void ObjLoader::CalculateSoftFaceNormals( const Dali::Vector<Vector3>& points, Dali::Vector<TriIndex>& triangles,
                                           Dali::Vector<Vector3>& normals )
 {
   int normalIndex = 0;  //Tracks progress through the array of normals.
 
   normals.Clear();
-  normals.Resize( vertices.Size() );  //One (averaged) normal per point.
+  normals.Resize( points.Size() );  //One (averaged) normal per point.
 
   //For each triangle, calculate the normal by crossing two vectors on the triangle's plane
   //We then add the triangle's normal to the cumulative normals at each point of it
   for( unsigned long i = 0; i < triangles.Size(); i++ )
   {
-    //Triangle vertices.
-    const Vector3& v0 = vertices[triangles[i].pointIndex[0]];
-    const Vector3& v1 = vertices[triangles[i].pointIndex[1]];
-    const Vector3& v2 = vertices[triangles[i].pointIndex[2]];
+    //Triangle points.
+    const Vector3& v0 = points[triangles[i].pointIndex[0]];
+    const Vector3& v1 = points[triangles[i].pointIndex[1]];
+    const Vector3& v2 = points[triangles[i].pointIndex[2]];
 
     //Triangle edges.
     Vector3 edge1 = v1 - v0;
@@ -116,11 +115,12 @@ void ObjLoader::CalculateSoftFaceNormals( const Dali::Vector<Vector3>& vertices,
     //Using edges as vectors on the plane, cross to get the normal.
     Vector3 normalVector = edge1.Cross(edge2);
 
-    //Add this triangle's normal to the cumulative normal of each constituent point and set the index of the normal accordingly.
-    for( unsigned long j = 0; j < 3; j++, normalIndex++ )
+    //Add this triangle's normal to the cumulative normal of each constituent triangle point and set the index of the normal accordingly.
+    for( unsigned long j = 0; j < 3; j++)
     {
-      triangles[i].normalIndex[j] = triangles[i].pointIndex[j]; //Normal index matches up to vertex index, as one normal per vertex.
-      normals[triangles[i].normalIndex[j]] += normalVector;
+      normalIndex = triangles[i].pointIndex[j];
+      triangles[i].normalIndex[j] = normalIndex; //Normal index matches up to vertex index, as one normal per vertex.
+      normals[normalIndex] += normalVector;
     }
   }
 
@@ -135,9 +135,9 @@ void ObjLoader::CalculateTangentFrame()
 {
   //Reset tangent vector to hold new values.
   mTangents.Clear();
-  mTangents.Resize( mPoints.Size() );
+  mTangents.Resize( mNormals.Size() );
 
-  //For each triangle, calculate the tangent vector and then add it to the total tangent vector of each point.
+  //For each triangle, calculate the tangent vector and then add it to the total tangent vector of each normal.
   for ( unsigned long a = 0; a < mTriangles.Size(); a++ )
   {
     Vector3 tangentVector;
@@ -149,27 +149,29 @@ void ObjLoader::CalculateTangentFrame()
     Vector3 edge1 = v1 - v0;
     Vector3 edge2 = v2 - v0;
 
-    const Vector2& w0 = mTextures[mTriangles[a].textureIndex[0]];
-    const Vector2& w1 = mTextures[mTriangles[a].textureIndex[1]];
-    const Vector2& w2 = mTextures[mTriangles[a].textureIndex[2]];
+    const Vector2& w0 = mTextureUv[mTriangles[a].textureIndex[0]];
+    const Vector2& w1 = mTextureUv[mTriangles[a].textureIndex[1]];
+    const Vector2& w2 = mTextureUv[mTriangles[a].textureIndex[2]];
 
     float deltaU1 = w1.x - w0.x;
     float deltaV1 = w1.y - w0.y;
     float deltaU2 = w2.x - w0.x;
     float deltaV2 = w2.y - w0.y;
 
-    float f = 1.0f / (deltaU1 * deltaV2 - deltaU2 * deltaV1);
+    // 1.0/f could cause division by zero in some cases, this factor will act
+    // as a weight of the tangent vector and it is fixed when it is normalised.
+    float f = (deltaU1 * deltaV2 - deltaU2 * deltaV1);
 
     tangentVector.x = f * ( deltaV2 * edge1.x - deltaV1 * edge2.x );
     tangentVector.y = f * ( deltaV2 * edge1.y - deltaV1 * edge2.y );
     tangentVector.z = f * ( deltaV2 * edge1.z - deltaV1 * edge2.z );
 
-    mTangents[mTriangles[a].pointIndex[0]] += tangentVector;
-    mTangents[mTriangles[a].pointIndex[1]] += tangentVector;
-    mTangents[mTriangles[a].pointIndex[2]] += tangentVector;
+    mTangents[mTriangles[a].normalIndex[0]] += tangentVector;
+    mTangents[mTriangles[a].normalIndex[1]] += tangentVector;
+    mTangents[mTriangles[a].normalIndex[2]] += tangentVector;
   }
 
-  //Orthogonalize tangents and set binormals.
+  //Orthogonalize tangents.
   for ( unsigned long a = 0; a < mTangents.Size(); a++ )
   {
     const Vector3& n = mNormals[a];
@@ -219,14 +221,15 @@ void ObjLoader::CreateGeometryArray( Dali::Vector<Vector3>& positions,
   bool mustCalculateTangents = ( mTangents.Size() == 0 ) || ( mTangents.Size() != mNormals.Size() );
 
   //However, we don't need to do this if the object doesn't use textures to begin with.
-  mustCalculateTangents &= mHasTexturePoints;
+  mustCalculateTangents &= mHasTextureUv;
 
-  //We also have to recalculate the normals if we need to calculate tangents,
-  // as we need just one normal, tangent per vertex, rather than the supplied per-face vertices.
-  //Alternatively, we need to calculate the normals if there weren't any to begin with.
-  if( mNormals.Size() == 0 || mustCalculateTangents )
+  // We calculate the normals if hard normals(flat normals) is set.
+  // Use the normals provided by the file to make the tangent calculation per normal,
+  // the correct results depends of normal generated by file, otherwise we need to recalculate
+  // the normal programmatically.
+  if( ( ( mNormals.Size() == 0 ) && mustCalculateTangents ) || !useSoftNormals )
   {
-    if( useSoftNormals || mustCalculateTangents )
+    if( useSoftNormals )
     {
       CalculateSoftFaceNormals( mPoints, mTriangles, mNormals );
     }
@@ -236,16 +239,16 @@ void ObjLoader::CreateGeometryArray( Dali::Vector<Vector3>& positions,
     }
   }
 
-  if( mHasTexturePoints && mustCalculateTangents )
+  if( mHasTextureUv && mustCalculateTangents )
   {
     CalculateTangentFrame();
   }
 
-  bool mapsCorrespond; //True if the sizes of the arrays necessary for the object agree.
+  bool mapsCorrespond; //True if the sizes of the arrays necessary to draw the object match.
 
-  if ( mHasTexturePoints )
+  if ( mHasTextureUv )
   {
-    mapsCorrespond = ( mPoints.Size() == mTextures.Size() ) && ( mTextures.Size() == mNormals.Size() );
+    mapsCorrespond = ( mPoints.Size() == mTextureUv.Size() ) && ( mTextureUv.Size() == mNormals.Size() );
   }
   else
   {
@@ -278,9 +281,9 @@ void ObjLoader::CreateGeometryArray( Dali::Vector<Vector3>& positions,
 
         normals[mTriangles[ui].pointIndex[j]] = mNormals[mTriangles[ui].normalIndex[j]];
 
-        if ( mHasTexturePoints )
+        if ( mHasTextureUv )
         {
-          textures[mTriangles[ui].pointIndex[j]] = mTextures[mTriangles[ui].textureIndex[j]];
+          textures[mTriangles[ui].pointIndex[j]] = mTextureUv[mTriangles[ui].textureIndex[j]];
           tangents[mTriangles[ui].pointIndex[j]] = mTangents[mTriangles[ui].normalIndex[j]];
         }
       }
@@ -304,9 +307,9 @@ void ObjLoader::CreateGeometryArray( Dali::Vector<Vector3>& positions,
         positions[index] = mPoints[mTriangles[ui].pointIndex[j]];
         normals[index] = mNormals[mTriangles[ui].normalIndex[j]];
 
-        if( mHasTexturePoints )
+        if( mHasTextureUv )
         {
-          textures[index] = mTextures[mTriangles[ui].textureIndex[j]];
+          textures[index] = mTextureUv[mTriangles[ui].textureIndex[j]];
           tangents[index] = mTangents[mTriangles[ui].normalIndex[j]];
         }
 
@@ -335,7 +338,7 @@ bool ObjLoader::LoadObject( char* objBuffer, std::streampos fileSize )
 
   std::string strMatActual;
 
-  std::string input = objBuffer;
+  std::string input( objBuffer, fileSize );
   std::istringstream ss(input);
   ss.imbue( std::locale( "C" ) );
 
@@ -388,9 +391,8 @@ bool ObjLoader::LoadObject( char* objBuffer, std::streampos fileSize )
     {
       isline >> texture.x;
       isline >> texture.y;
-
       texture.y = 1.0-texture.y;
-      mTextures.PushBack( texture );
+      mTextureUv.PushBack( texture );
     }
     else if ( tag == "#_#vt1" )
     {
@@ -398,7 +400,7 @@ bool ObjLoader::LoadObject( char* objBuffer, std::streampos fileSize )
       isline >> texture.y;
 
       texture.y = 1.0-texture.y;
-      mTextures2.PushBack( texture );
+      mTextureUv2.PushBack( texture );
     }
     else if ( tag == "s" )
     {
@@ -413,7 +415,7 @@ bool ObjLoader::LoadObject( char* objBuffer, std::streampos fileSize )
       }
 
       int numIndices = 0;
-      while( isline >> vet[numIndices] && numIndices < MAX_POINT_INDICES )
+      while( ( numIndices < MAX_POINT_INDICES ) && ( isline >> vet[numIndices] ) )
       {
         numIndices++;
       }
@@ -523,7 +525,7 @@ bool ObjLoader::LoadObject( char* objBuffer, std::streampos fileSize )
   {
     CenterAndScale( true, mPoints );
     mSceneLoaded = true;
-    mHasTexturePoints = hasTexture;
+    mHasTextureUv = hasTexture;
     return true;
   }
 
@@ -627,7 +629,7 @@ Geometry ObjLoader::CreateGeometry( int objectProperties, bool useSoftNormals )
   surface.AddVertexBuffer( normalBuffer );
 
   //Some need tangent
-  if( ( objectProperties & TANGENTS ) && mHasTexturePoints )
+  if( ( objectProperties & TANGENTS ) && mHasTextureUv )
   {
     Property::Map tangentMap;
     tangentMap["aTangent"] = Property::VECTOR3;
@@ -638,7 +640,7 @@ Geometry ObjLoader::CreateGeometry( int objectProperties, bool useSoftNormals )
   }
 
   //Some need texture coordinates
-  if( ( objectProperties & TEXTURE_COORDINATES ) && mHasTexturePoints )
+  if( ( objectProperties & TEXTURE_COORDINATES ) && mHasTextureUv )
   {
     Property::Map textCoordMap;
     textCoordMap["aTexCoord"] = Property::VECTOR2;
@@ -672,8 +674,8 @@ Vector3 ObjLoader::GetSize()
 void ObjLoader::ClearArrays()
 {
   mPoints.Clear();
-  mTextures.Clear();
-  mTextures2.Clear();
+  mTextureUv.Clear();
+  mTextureUv2.Clear();
   mNormals.Clear();
   mTangents.Clear();
   mBiTangents.Clear();
@@ -685,7 +687,7 @@ void ObjLoader::ClearArrays()
 
 bool ObjLoader::IsTexturePresent()
 {
-  return mHasTexturePoints;
+  return mHasTextureUv;
 }
 
 bool ObjLoader::IsDiffuseMapPresent()
