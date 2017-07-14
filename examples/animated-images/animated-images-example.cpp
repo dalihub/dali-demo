@@ -17,7 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
-
+#include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include "shared/utility.h"
 
 using namespace Dali;
@@ -37,6 +37,13 @@ const char* const ANIMATE_GIF_LOGO( DEMO_IMAGE_DIR "dali-logo-anim.gif" );
 const char* const ANIMATE_PIXEL_AREA( "Animate PixelArea" );
 const char* const ANIMATE_PIXEL_AREA_AND_SCALE( "Animate PixelArea & Scale" );
 
+const char* const STATIC_IMAGE_ARRAY_DOG( DEMO_IMAGE_DIR "dog-anim-001.png" );
+const char* const ANIMATE_IMAGE_ARRAY_DOG( DEMO_IMAGE_DIR "dog-anim-%03d.png" );
+
+const char* const STATIC_IMAGE_ARRAY_LOGO( DEMO_IMAGE_DIR "dali-logo-anim-001.png" );
+const char* const ANIMATE_IMAGE_ARRAY_LOGO( DEMO_IMAGE_DIR "dali-logo-anim-%03d.png" );
+
+
 const Vector4 DIM_COLOR( 0.85f, 0.85f, 0.85f, 0.85f );
 }
 
@@ -48,9 +55,20 @@ const Vector4 DIM_COLOR( 0.85f, 0.85f, 0.85f, 0.85f );
 class AnimatedImageController : public ConnectionTracker
 {
 public:
+  enum ImageType
+  {
+    GIF,
+    IMAGE_ARRAY
+  };
+  enum StateType
+  {
+    STATIC,
+    ANIMATED
+  };
 
   AnimatedImageController( Application& application )
-  : mApplication( application )
+  : mApplication( application ),
+    mImageType(GIF)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &AnimatedImageController::Create );
@@ -70,26 +88,91 @@ public:
     // Tie-in input event handlers:
     stage.KeyEventSignal().Connect( this, &AnimatedImageController::OnKeyEvent );
 
-    mActorDog = CreateGifViewWithOverlayPlayButton( STATIC_GIF_DOG );
-    mActorDog.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    mActorDog.SetY( -100.f );
-    stage.Add( mActorDog );
+    CreateStaticImageView( 0 );
+    CreateStaticImageView( 1 );
 
-    mActorLogo = CreateGifViewWithOverlayPlayButton( STATIC_GIF_LOGO );
-    mActorLogo.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    mActorLogo.SetY( 100.f );
-    stage.Add( mActorLogo );
+    mGifButton = Toolkit::RadioButton::New("Gif");
+    mGifButton.SetProperty( Button::Property::SELECTED, true );
+    mArrayButton = Toolkit::RadioButton::New("Array");
+    mGifButton.ClickedSignal().Connect( this, &AnimatedImageController::OnTypeButtonClicked );
+    mArrayButton.ClickedSignal().Connect( this, &AnimatedImageController::OnTypeButtonClicked );
+
+    Toolkit::TableView radioButtonLayout = Toolkit::TableView::New(1, 2);
+    radioButtonLayout.SetName("RadioButtonsLayout");
+    radioButtonLayout.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
+    radioButtonLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    radioButtonLayout.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    radioButtonLayout.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    radioButtonLayout.SetFitHeight(0);
+    radioButtonLayout.AddChild( mGifButton, TableView::CellPosition(0,0) );
+    radioButtonLayout.AddChild( mArrayButton, TableView::CellPosition(0,1) );
+    radioButtonLayout.SetCellAlignment( TableView::CellPosition( 0, 0 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
+    radioButtonLayout.SetCellAlignment( TableView::CellPosition( 0, 1 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
+    radioButtonLayout.SetY( -10.0f );
+
+    stage.Add( radioButtonLayout );
 
     mTapDetector = TapGestureDetector::New();
     mTapDetector.DetectedSignal().Connect( this, &AnimatedImageController::OnTap );
   }
 
+  void CreateStaticImageView( int index )
+  {
+    Actor& actor = (index==0) ? mActorDog : mActorLogo;
+
+    Stage stage = Stage::GetCurrent();
+    if( actor )
+    {
+      stage.Remove( actor );
+    }
+
+    Property::Value viewSetup = SetupViewProperties( mImageType, STATIC, index, false );
+    actor = CreateImageViewWithPlayButton( viewSetup );
+    SetLayout(actor, index);
+    stage.Add( actor );
+  }
+
+
+  void CreateAnimImageView( int index )
+  {
+    Actor& actor = (index==0) ? mActorDog : mActorLogo;
+
+    Stage stage = Stage::GetCurrent();
+    if( actor )
+    {
+      stage.Remove( actor );
+    }
+
+    const char* label = (index==0) ? ANIMATE_PIXEL_AREA_AND_SCALE : ANIMATE_PIXEL_AREA;
+
+    Property::Value viewSetup = SetupViewProperties( mImageType, ANIMATED, index, true );
+    actor = CreateImageViewWithAnimatePixelAreaButton( viewSetup, label);
+    SetLayout(actor, index);
+
+    stage.Add( actor );
+  }
+
+  void SetLayout( Actor actor, int index )
+  {
+    if( index == 0 )
+    {
+      actor.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+      actor.SetY( -80.f );
+    }
+    else
+    {
+      actor.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+      actor.SetY( 80.f );
+    }
+  }
+
   /**
    * Create the gif image view with an overlay play button.
    */
-  Toolkit::ImageView CreateGifViewWithOverlayPlayButton( const std::string& gifUrl  )
+  Toolkit::ImageView CreateImageViewWithPlayButton( Property::Value& viewSetup )
   {
-    Toolkit::ImageView imageView = Toolkit::ImageView::New( gifUrl );
+    Toolkit::ImageView imageView = Toolkit::ImageView::New();
+    imageView.SetProperty( ImageView::Property::IMAGE, viewSetup );
     imageView.SetParentOrigin( ParentOrigin::CENTER );
 
     // Create a push button, and add it as child of the image view
@@ -107,13 +190,10 @@ public:
     return imageView;
   }
 
-  Toolkit::ImageView CreateGifViewWithAnimatePixelAreaButton( const std::string& gifUrl, WrapMode::Type wrapModeU, WrapMode::Type wrapModeV, const std::string& buttonLabel )
+  Toolkit::ImageView CreateImageViewWithAnimatePixelAreaButton( Property::Value& viewSetup, const std::string& buttonLabel )
   {
     Toolkit::ImageView imageView = Toolkit::ImageView::New();
-    imageView.SetProperty( Toolkit::ImageView::Property::IMAGE,
-                           Property::Map().Add( Toolkit::ImageVisual::Property::URL, gifUrl )
-                                          .Add( Toolkit::ImageVisual::Property::WRAP_MODE_U, wrapModeU )
-                                          .Add( Toolkit::ImageVisual::Property::WRAP_MODE_V, wrapModeV ));
+    imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, viewSetup );
     imageView.SetParentOrigin( ParentOrigin::CENTER );
 
     // Create a push button, and add it as child of the image view
@@ -141,22 +221,12 @@ public:
     if( button.GetParent() ==  mActorDog )
     {
       // remove the static gif view, the play button is also removed as its child.
-      stage.Remove( mActorDog );
-
-      mActorDog = CreateGifViewWithAnimatePixelAreaButton( ANIMATE_GIF_DOG, WrapMode::REPEAT, WrapMode::DEFAULT, ANIMATE_PIXEL_AREA_AND_SCALE );
-      mActorDog.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-      mActorDog.SetY( -100.f );
-      stage.Add( mActorDog );
+      CreateAnimImageView( 0 );
     }
     else // button.GetParent() ==  mActorLogo
     {
       // remove the static gif view, the play button is also removed as its child.
-      stage.Remove( mActorLogo );
-
-      mActorLogo = CreateGifViewWithAnimatePixelAreaButton( ANIMATE_GIF_LOGO, WrapMode::DEFAULT, WrapMode::MIRRORED_REPEAT, ANIMATE_PIXEL_AREA );
-      mActorLogo.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-      mActorLogo.SetY( 100.f );
-      stage.Add( mActorLogo );
+      CreateAnimImageView( 1 );
     }
     return true;
   }
@@ -178,24 +248,28 @@ public:
     }
     else if( actor == mActorDog ) // stop the animated gif, switch to static view
     {
-      Stage stage = Stage::GetCurrent();
-      stage.Remove( mActorDog );
-
-      mActorDog = CreateGifViewWithOverlayPlayButton( STATIC_GIF_DOG );
-      mActorDog.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-      mActorDog.SetY( -100.f );
-      stage.Add( mActorDog );
+      CreateStaticImageView( 0 );
     }
     else if( actor == mActorLogo ) // stop the animated gif, switch to static view
     {
-      Stage stage = Stage::GetCurrent();
-      stage.Remove( mActorLogo );
-
-      mActorLogo = CreateGifViewWithOverlayPlayButton( STATIC_GIF_LOGO );
-      mActorLogo.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-      mActorLogo.SetY( 100.f );
-      stage.Add( mActorLogo );
+      CreateStaticImageView( 1 );
     }
+  }
+
+  bool OnTypeButtonClicked( Toolkit::Button button )
+  {
+    if( button == mGifButton )
+    {
+      mImageType = GIF;
+    }
+    else
+    {
+      mImageType = IMAGE_ARRAY;
+    }
+    Stage stage = Stage::GetCurrent();
+    CreateStaticImageView( 0 );
+    CreateStaticImageView( 1 );
+    return true;
   }
 
   void OnKeyEvent(const KeyEvent& event)
@@ -209,11 +283,98 @@ public:
     }
   }
 
+  Property::Value SetupViewProperties( ImageType type, StateType state, int index, bool wrap )
+  {
+    Property::Map map;
+
+    AddUrl( map, type, state, index );
+    AddWrap( map, wrap && state != 0, index );
+    AddCache( map, type, index );
+    return Property::Value(map);
+  }
+
+  void AddUrl( Property::Map& map, ImageType type, StateType state, int index )
+  {
+    const char* urls[2][2] =
+      { { STATIC_GIF_DOG, STATIC_GIF_LOGO },
+        { ANIMATE_GIF_DOG, ANIMATE_GIF_LOGO }
+      };
+    const char* urlFormats[2][2] =
+      { { STATIC_IMAGE_ARRAY_DOG, STATIC_IMAGE_ARRAY_LOGO } ,
+        { ANIMATE_IMAGE_ARRAY_DOG, ANIMATE_IMAGE_ARRAY_LOGO } };
+
+    int numFrames[2] = { 8, 15 };
+
+    if( type == GIF )
+    {
+      map.Add( Toolkit::ImageVisual::Property::URL, Property::Value( urls[state][index] ) );
+    }
+    else
+    {
+      if( state == STATIC )
+      {
+        Property::Array frameUrls;
+        frameUrls.Add(Property::Value( urlFormats[0][index] ));
+        map.Add( Toolkit::ImageVisual::Property::URL, frameUrls );
+      }
+      else
+      {
+        Property::Array frameUrls;
+        for( int i=1; i<= numFrames[index]; ++i )
+        {
+          char* buffer;
+          int len = asprintf( &buffer, urlFormats[1][index], i);
+          if( len > 0 )
+          {
+            std::string frameUrl(buffer);
+            free(buffer);
+            frameUrls.Add( Property::Value( frameUrl ) );
+          }
+        }
+        map.Add( Toolkit::ImageVisual::Property::URL, Property::Value( frameUrls ) );
+      }
+    }
+  }
+
+  void AddWrap( Property::Map& map, bool wrap, int index )
+  {
+    WrapMode::Type wrapModes[2][2] = {
+      { WrapMode::REPEAT, WrapMode::DEFAULT  },
+      { WrapMode::DEFAULT, WrapMode::MIRRORED_REPEAT } };
+
+    if( wrap )
+    {
+      map
+        .Add( Toolkit::ImageVisual::Property::WRAP_MODE_U, wrapModes[index][0] )
+        .Add( Toolkit::ImageVisual::Property::WRAP_MODE_V, wrapModes[index][1] );
+    }
+    else
+    {
+      map
+        .Add( Toolkit::ImageVisual::Property::WRAP_MODE_U, WrapMode::DEFAULT )
+        .Add( Toolkit::ImageVisual::Property::WRAP_MODE_V, WrapMode::DEFAULT );
+    }
+  }
+
+  void AddCache( Property::Map& map, ImageType type, int index )
+  {
+    if( type == IMAGE_ARRAY )
+    {
+      map
+        .Add( Toolkit::DevelImageVisual::Property::BATCH_SIZE, 4 )
+        .Add( Toolkit::DevelImageVisual::Property::CACHE_SIZE, 10 )
+        .Add( Toolkit::DevelImageVisual::Property::FRAME_DELAY, 150 );
+    }
+  }
+
 private:
   Application&  mApplication;
   Toolkit::ImageView mActorDog;
   Toolkit::ImageView mActorLogo;
+  Toolkit::RadioButton mGifButton;
+  Toolkit::RadioButton mArrayButton;
   TapGestureDetector mTapDetector;
+  ImageType mImageType;
 };
 
 // Entry point for Linux & Tizen applications
