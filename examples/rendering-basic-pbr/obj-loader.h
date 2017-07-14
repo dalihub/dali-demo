@@ -95,8 +95,8 @@ public:
 private:
 
   Dali::Vector<Vector3>  mPoints;
-  Dali::Vector<Vector2>  mTextures;
-  Dali::Vector<Vector2>  mTextures2;
+  Dali::Vector<Vector2>  mTextureUv;
+  Dali::Vector<Vector2>  mTextureUv2;
   Dali::Vector<Vector3>  mNormals;
   Dali::Vector<Vector3>  mTangents;
   Dali::Vector<Vector3>  mBiTangents;
@@ -106,7 +106,7 @@ private:
 
   bool mSceneLoaded;
   bool mMaterialLoaded;
-  bool mHasTexturePoints;
+  bool mHasTextureUv;
 
   //Material file properties.
   bool mHasDiffuseMap;
