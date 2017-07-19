@@ -28,8 +28,8 @@ const char* const IMAGE_PATH_1 ( DEMO_IMAGE_DIR "people-small-7b.jpg" ); // 100x
 const char* const IMAGE_PATH_2 ( DEMO_IMAGE_DIR "people-medium-7.jpg" );
 const char* const IMAGE_PATH_3 ( DEMO_IMAGE_DIR "people-medium-7-rgb565.png" ); // is compressed
 const char* const IMAGE_PATH_4 ( DEMO_IMAGE_DIR "people-medium-7-masked.png" ); // has alpha channel
-const char* const MASK_IMAGE_PATH_1 ( DEMO_IMAGE_DIR "store_mask_profile_f.png" );
-const char* const MASK_IMAGE_PATH_2 ( DEMO_IMAGE_DIR "store_mask_profile_n.png" ); // 300x300
+const char* const MASK_IMAGE_PATH_1 ( DEMO_IMAGE_DIR "store_mask_profile_n.png" ); // 300x300
+const char* const MASK_IMAGE_PATH_2 ( DEMO_IMAGE_DIR "store_mask_profile_f.png" );
 }
 
 class ImageViewAlphaBlendApp : public ConnectionTracker
@@ -108,10 +108,23 @@ private:
 
     const char* mask  = masks[mImageCombinationIndex%2 ]; // Cycle through masks
     const char* image = images[(mImageCombinationIndex/2)%4]; // then images
+
     Property::Map map;
     map.Add( Toolkit::Visual::Property::TYPE, Toolkit::Visual::Type::IMAGE );
     map.Add( Toolkit::ImageVisual::Property::URL, image );
     map.Add( Toolkit::DevelImageVisual::Property::ALPHA_MASK_URL, mask );
+
+    if( mImageCombinationIndex%2 == 0 )
+    {
+      map.Add( Toolkit::DevelImageVisual::Property::MASK_CONTENT_SCALE, 1.f );
+      map.Add( Toolkit::DevelImageVisual::Property::CROP_TO_MASK, false );
+    }
+    else
+    {
+      map.Add( Toolkit::DevelImageVisual::Property::MASK_CONTENT_SCALE, 1.6f );
+      map.Add( Toolkit::DevelImageVisual::Property::CROP_TO_MASK, true );
+    }
+
     mImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
 
     mImageLabel.SetProperty( Toolkit::TextLabel::Property::TEXT, strrchr(image, '/') );
