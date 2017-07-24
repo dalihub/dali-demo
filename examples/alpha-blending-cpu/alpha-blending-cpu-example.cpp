@@ -28,8 +28,8 @@ const char* const IMAGE_PATH_1 ( DEMO_IMAGE_DIR "people-small-7b.jpg" ); // 100x
 const char* const IMAGE_PATH_2 ( DEMO_IMAGE_DIR "people-medium-7.jpg" );
 const char* const IMAGE_PATH_3 ( DEMO_IMAGE_DIR "people-medium-7-rgb565.png" ); // is compressed
 const char* const IMAGE_PATH_4 ( DEMO_IMAGE_DIR "people-medium-7-masked.png" ); // has alpha channel
-const char* const MASK_IMAGE_PATH_1 ( DEMO_IMAGE_DIR "mask.png" );
-const char* const MASK_IMAGE_PATH_2 ( DEMO_IMAGE_DIR "mask-large.png" ); // 300x300
+const char* const MASK_IMAGE_PATH_1 ( DEMO_IMAGE_DIR "store_mask_profile_n.png" ); // 300x300
+const char* const MASK_IMAGE_PATH_2 ( DEMO_IMAGE_DIR "store_mask_profile_f.png" );
 }
 
 class ImageViewAlphaBlendApp : public ConnectionTracker
@@ -70,14 +70,14 @@ private:
     mImageLabel.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     mImageLabel.SetAnchorPoint( ParentOrigin::BOTTOM_CENTER );
     mImageLabel.SetPosition( Vector3( 0.0f, -50.0f, 0.0f ) );
-    mImageLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::GREEN );
+    mImageLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::BLACK );
     stage.Add(mImageLabel);
 
     mMaskLabel = Toolkit::TextLabel::New();
     mMaskLabel.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     mMaskLabel.SetAnchorPoint( ParentOrigin::BOTTOM_CENTER );
     mMaskLabel.SetPosition( Vector3( 0.0f, 0.0f, 0.0f ) );
-    mMaskLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::GREEN );
+    mMaskLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::BLACK );
     stage.Add(mMaskLabel);
 
     LoadImages();
@@ -108,10 +108,23 @@ private:
 
     const char* mask  = masks[mImageCombinationIndex%2 ]; // Cycle through masks
     const char* image = images[(mImageCombinationIndex/2)%4]; // then images
+
     Property::Map map;
     map.Add( Toolkit::Visual::Property::TYPE, Toolkit::Visual::Type::IMAGE );
     map.Add( Toolkit::ImageVisual::Property::URL, image );
     map.Add( Toolkit::DevelImageVisual::Property::ALPHA_MASK_URL, mask );
+
+    if( mImageCombinationIndex%2 == 0 )
+    {
+      map.Add( Toolkit::DevelImageVisual::Property::MASK_CONTENT_SCALE, 1.f );
+      map.Add( Toolkit::DevelImageVisual::Property::CROP_TO_MASK, false );
+    }
+    else
+    {
+      map.Add( Toolkit::DevelImageVisual::Property::MASK_CONTENT_SCALE, 1.6f );
+      map.Add( Toolkit::DevelImageVisual::Property::CROP_TO_MASK, true );
+    }
+
     mImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
 
     mImageLabel.SetProperty( Toolkit::TextLabel::Property::TEXT, strrchr(image, '/') );

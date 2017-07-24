@@ -15,9 +15,11 @@
  *
  */
 
+#include <string>
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 
 using namespace Dali;
 
@@ -29,16 +31,41 @@ const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "Image view" );
 
 const char* IMAGE_PATH[] = {
-    DEMO_IMAGE_DIR "blocks-ball.png",
     DEMO_IMAGE_DIR "gallery-small-23.jpg",
-    DEMO_IMAGE_DIR "selection-popup-bg.2.9.png",
+    DEMO_IMAGE_DIR "woodEffect.jpg",
     DEMO_IMAGE_DIR "heartsframe.9.png",
+    DEMO_IMAGE_DIR "World.svg"
 };
 
-const unsigned int NUM_IMAGES = sizeof(IMAGE_PATH) / sizeof(char*);
+const unsigned int NUMBER_OF_IMAGES = 3;
 
-const unsigned int COLUMNS = 3;
-const unsigned int ROWS = 4;
+enum CellPlacement
+{
+   TOP_BUTTON,
+   LOWER_BUTTON,
+   IMAGE,
+   NUMBER_OF_ROWS
+};
+
+
+unsigned int GetButtonIndex( Toolkit::Button button )
+{
+  std::string buttonName = button.GetName();
+  unsigned int index = 0;
+
+  if ( buttonName != "")
+  {
+    index = std::stoul( buttonName );
+  }
+
+  return index;
+}
+
+
+const unsigned int NUMBER_OF_RESOURCES = sizeof(IMAGE_PATH) / sizeof(char*);
+
+std::string EXAMPLE_INSTRUCTIONS = "Instructions: Change button cycles through different image visuals, "
+                           "on/off takes the ImageView and it's current visual on or off stage.";
 
 }  // namespace
 
@@ -49,9 +76,7 @@ class ImageViewController: public ConnectionTracker
   ImageViewController( Application& application )
     : mApplication( application ),
       mCurrentPositionToggle( 0, 0 ),
-      mCurrentPositionImage( 0, 0 ),
-      mToggleOff( true ),
-      mImageIdx( 1 )
+      mCurrentPositionImage( 0, 0 )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &ImageViewController::Create );
@@ -76,109 +101,99 @@ class ImageViewController: public ConnectionTracker
                                             APPLICATION_TITLE );
 
 
-    mTable = Toolkit::TableView::New( ROWS, COLUMNS );
+    // Create a table view to show a pair of buttons above each image.
+    mTable = Toolkit::TableView::New( CellPlacement::NUMBER_OF_ROWS, NUMBER_OF_IMAGES );
     mTable.SetAnchorPoint( AnchorPoint::CENTER );
     mTable.SetParentOrigin( ParentOrigin::CENTER );
-    mTable.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
-    Vector3 offset( -50.0f, -350.0f, 0.0f );
+    mTable.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    Vector3 offset( 0.9f, 0.70f, 0.0f );
     mTable.SetSizeModeFactor( offset );
-
+    mTable.SetFitHeight(CellPlacement::TOP_BUTTON);
+    mTable.SetFitHeight(CellPlacement::LOWER_BUTTON);
     mContentLayer.Add( mTable );
 
-    for( unsigned int y = 0; y < ROWS; ++y )
+    Toolkit::TextLabel instructions = Toolkit::TextLabel::New( EXAMPLE_INSTRUCTIONS );
+    instructions.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    instructions.SetParentOrigin(ParentOrigin::BOTTOM_CENTER);
+    instructions.SetY(-50.0f);
+    instructions.SetProperty( Toolkit::TextLabel::Property::ENABLE_AUTO_SCROLL, true  );
+    instructions.SetProperty( Toolkit::TextLabel::Property::AUTO_SCROLL_LOOP_COUNT, 10  );
+    mContentLayer.Add(instructions);
+
+    for( unsigned int x = 0; x < NUMBER_OF_IMAGES; x++ )
     {
-      for( unsigned int x = 0; x < COLUMNS; ++x )
-      {
-        mImageViews[x][y] = Toolkit::ImageView::New( IMAGE_PATH[ 0 ] );
-        mImageViews[x][y].SetParentOrigin( ParentOrigin::CENTER );
-        mImageViews[x][y].SetAnchorPoint( AnchorPoint::CENTER );
-        mImageViews[x][y].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+      Toolkit::PushButton button = Toolkit::PushButton::New();
+      button.SetProperty( Toolkit::Button::Property::LABEL, "on/off" );
+      button.SetParentOrigin( ParentOrigin::TOP_CENTER );
+      button.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+      button.ClickedSignal().Connect( this, &ImageViewController::ToggleImageOnStage );
+      button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+      std::string s = std::to_string(x);
+      button.SetName( s );
+      mTable.AddChild( button, Toolkit::TableView::CellPosition( CellPlacement::TOP_BUTTON, x )  );
 
-        mTable.AddChild( mImageViews[x][y], Toolkit::TableView::CellPosition( y, x ) );
-      }
+      Toolkit::PushButton button2 = Toolkit::PushButton::New();
+      button2.SetProperty( Toolkit::Button::Property::LABEL, "Change" );
+      button2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+      button2.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+      button2.ClickedSignal().Connect( this, &ImageViewController::ChangeImageClicked );
+      button2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+      button2.SetName( s );
+      mTable.AddChild( button2, Toolkit::TableView::CellPosition( CellPlacement::LOWER_BUTTON, x )  );
+
+      mImageViews[x] = Toolkit::ImageView::New( IMAGE_PATH[ 0 ] );
+      mImageViews[x].SetParentOrigin( ParentOrigin::CENTER );
+      mImageViews[x].SetAnchorPoint( AnchorPoint::CENTER );
+      mImageViews[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+      mTable.AddChild( mImageViews[x], Toolkit::TableView::CellPosition( CellPlacement::IMAGE, x ) );
+
+      // Set changeable counter and toggle for each ImageView
+      mImageViewImageIndexStatus[x] = true;
+      mImageViewToggleStatus[x] = true;
     }
-
-    Toolkit::TableView buttonsTable = Toolkit::TableView::New( 3, 1 );
-    buttonsTable.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    buttonsTable.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    buttonsTable.SetFitHeight( 0 );
-    buttonsTable.SetFitHeight( 1 );
-    buttonsTable.SetFitHeight( 2 );
-    buttonsTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-
-    Toolkit::PushButton button = Toolkit::PushButton::New();
-    button.SetProperty( Toolkit::Button::Property::LABEL, "Toggle on/off stage" );
-    button.SetParentOrigin( ParentOrigin::CENTER );
-    button.SetAnchorPoint( AnchorPoint::CENTER );
-    button.ClickedSignal().Connect( this, &ImageViewController::ToggleImageOnStage );
-    button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    buttonsTable.AddChild( button, Toolkit::TableView::CellPosition( 0, 0 ) );
-
-    Toolkit::PushButton button2 = Toolkit::PushButton::New();
-    button2.SetProperty( Toolkit::Button::Property::LABEL, "Change Image" );
-    button2.SetParentOrigin( ParentOrigin::CENTER );
-    button2.SetAnchorPoint( AnchorPoint::CENTER );
-    button2.ClickedSignal().Connect( this, &ImageViewController::ChangeImageClicked );
-    button2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    buttonsTable.AddChild( button2, Toolkit::TableView::CellPosition( 1, 0 ) );
-
-    mContentLayer.Add(buttonsTable);
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ImageViewController::OnKeyEvent);
   }
 
 private:
+
   bool ToggleImageOnStage( Toolkit::Button button )
   {
-    Toolkit::ImageView imageView =  mImageViews[ mCurrentPositionToggle.columnIndex ][ mCurrentPositionToggle.rowIndex ];
+    unsigned int buttonIndex = GetButtonIndex( button );
 
-    if( mToggleOff )
+    Toolkit::ImageView imageView =  mImageViews[ buttonIndex ];
+
+    if( mImageViewToggleStatus[ buttonIndex ] )
     {
       imageView.Unparent();
     }
     else
     {
-      mTable.AddChild( imageView, mCurrentPositionToggle );
+      mTable.AddChild( imageView, Toolkit::TableView::CellPosition( 2, GetButtonIndex( button ) ) );
     }
 
-    ++mCurrentPositionToggle.columnIndex;
-    if( mCurrentPositionToggle.columnIndex == COLUMNS )
-    {
-      mCurrentPositionToggle.columnIndex = 0;
-      ++mCurrentPositionToggle.rowIndex;
-    }
-    if( mCurrentPositionToggle.rowIndex == ROWS )
-    {
-      mCurrentPositionToggle.rowIndex = 0;
-      mToggleOff = !mToggleOff;
-    }
+    mImageViewToggleStatus[ buttonIndex ] = !mImageViewToggleStatus[ buttonIndex ];
 
     return true;
   }
 
   bool ChangeImageClicked( Toolkit::Button button )
   {
-    Toolkit::ImageView imageView =  mImageViews[ mCurrentPositionImage.columnIndex ][ mCurrentPositionImage.rowIndex ];
+    unsigned int buttonIndex = GetButtonIndex( button );
 
-    imageView.SetImage( IMAGE_PATH[ mImageIdx ] );
-
-    ++mCurrentPositionImage.columnIndex;
-    if( mCurrentPositionImage.columnIndex == COLUMNS )
+    if (  mImageViews[buttonIndex].OnStage() )
     {
-      mCurrentPositionImage.columnIndex = 0;
-      ++mCurrentPositionImage.rowIndex;
-    }
-    if( mCurrentPositionImage.rowIndex == ROWS )
-    {
-      mCurrentPositionImage.rowIndex = 0;
-      ++mImageIdx;
+      mImageViews[buttonIndex].SetImage( IMAGE_PATH[ mImageViewImageIndexStatus[buttonIndex] ] );
 
-      if( mImageIdx == NUM_IMAGES )
+      ++mImageViewImageIndexStatus[buttonIndex];
+
+      if( mImageViewImageIndexStatus[buttonIndex] == NUMBER_OF_RESOURCES )
       {
-        mImageIdx = 0;
+        mImageViewImageIndexStatus[buttonIndex] = 0;
       }
     }
-
     return true;
   }
 
@@ -203,13 +218,12 @@ private:
   Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
   Layer                      mContentLayer;                      ///< Content layer
   Toolkit::TableView         mTable;
-  Toolkit::ImageView        mImageViews[ COLUMNS ][ ROWS ];
+  Toolkit::ImageView         mImageViews[ NUMBER_OF_IMAGES ];
+  bool                       mImageViewToggleStatus[ NUMBER_OF_IMAGES ];
+  unsigned int               mImageViewImageIndexStatus[ NUMBER_OF_IMAGES ];
 
   Toolkit::TableView::CellPosition mCurrentPositionToggle;
   Toolkit::TableView::CellPosition mCurrentPositionImage;
-
-  bool mToggleOff;
-  int mImageIdx;
 
 };
 
