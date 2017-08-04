@@ -43,6 +43,7 @@ const unsigned int KEY_ONE = 11;
 const unsigned int KEY_A = 38;
 const unsigned int KEY_F = 41;
 const unsigned int KEY_H = 43;
+const unsigned int KEY_U = 30;
 const unsigned int KEY_V = 55;
 const unsigned int KEY_M = 58;
 const unsigned int KEY_L = 46;
@@ -160,12 +161,13 @@ public:
     mPanGestureDetector.DetectedSignal().Connect( this, &TextLabelExample::OnPan );
 
     mLabel = TextLabel::New( "A Quick Brown Fox Jumps Over The Lazy Dog" );
+
     mLabel.SetName( "TextLabel" );
     mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    mLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::BLUE );
+    mLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::GREEN );
     mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
     mLabel.SetBackgroundColor( Color::WHITE );
@@ -187,7 +189,7 @@ public:
 
     // Animate the text color 3 times from source color to RED
     Animation animation = Animation::New( 2.f );
-    animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED, AlphaFunction::SIN );
+    animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::YELLOW, AlphaFunction::SIN );
     animation.SetLoopCount( 3 );
     animation.Play();
 
@@ -252,7 +254,7 @@ public:
           {
             Animation animation = Animation::New( 2.f );
             animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED, AlphaFunction::SIN );
-            animation.SetLooping( true );
+            animation.SetLoopCount( 3 );
             animation.Play();
             break;
           }
@@ -316,6 +318,12 @@ public:
             {
               mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
             }
+            break;
+          }
+          case KEY_U: // Markup
+          {
+            mLabel.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
+            mLabel.SetProperty( TextLabel::Property::TEXT, "<font family='DejaVuSerif' size='18'>H<color value='blue'>ello</color> <font weight='bold'>world</font> demo</font>" );
             break;
           }
           case KEY_PLUS: // Increase shadow offset
