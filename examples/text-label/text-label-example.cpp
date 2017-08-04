@@ -22,6 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali/devel-api/object/handle-devel.h>
+#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
 
@@ -39,6 +40,7 @@ const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "grab-handle.png";
 
 const unsigned int KEY_ZERO = 10;
 const unsigned int KEY_ONE = 11;
+const unsigned int KEY_A = 38;
 const unsigned int KEY_F = 41;
 const unsigned int KEY_H = 43;
 const unsigned int KEY_V = 55;
@@ -163,7 +165,7 @@ public:
     mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLUE );
+    mLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::BLUE );
     mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
     mLabel.SetBackgroundColor( Color::WHITE );
@@ -182,6 +184,12 @@ public:
     anim.AnimateTo(Property(mLabel, mHueAngleIndex), 6.28318f);
     anim.SetLooping(true);
     anim.Play();
+
+    // Animate the text color 3 times from source color to RED
+    Animation animation = Animation::New( 2.f );
+    animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED, AlphaFunction::SIN );
+    animation.SetLoopCount( 3 );
+    animation.Play();
 
     Property::Value labelText = mLabel.GetProperty( TextLabel::Property::TEXT );
     std::cout << "Displaying text: \"" << labelText.Get< std::string >() << "\"" << std::endl;
@@ -238,6 +246,14 @@ public:
           case KEY_ONE:
           {
             mLabel.SetProperty( TextLabel::Property::RENDERING_BACKEND, event.keyCode - 10 );
+            break;
+          }
+          case KEY_A: // Animate text colour
+          {
+            Animation animation = Animation::New( 2.f );
+            animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED, AlphaFunction::SIN );
+            animation.SetLooping( true );
+            animation.Play();
             break;
           }
           case KEY_F: // Fill vertically
