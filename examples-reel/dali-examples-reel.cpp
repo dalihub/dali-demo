@@ -82,6 +82,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("text-label-emojis.example", DALI_DEMO_STR_TITLE_EMOJI_TEXT));
   demo.AddExample(Example("text-overlap.example", DALI_DEMO_STR_TITLE_TEXT_OVERLAP));
   demo.AddExample(Example("text-scrolling.example", DALI_DEMO_STR_TITLE_TEXT_SCROLLING));
+  demo.AddExample(Example("remote-image-loading.example", DALI_DEMO_STR_TITLE_REMOTE_IMAGE));
   demo.AddExample(Example("textured-mesh.example", DALI_DEMO_STR_TITLE_TEXTURED_MESH));
   demo.AddExample(Example("tilt.example", DALI_DEMO_STR_TITLE_TILT_SENSOR));
   demo.AddExample(Example("tooltip.example", DALI_DEMO_STR_TITLE_TOOLTIP));

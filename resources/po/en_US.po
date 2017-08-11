@@ -169,6 +169,9 @@ msgstr "FPP Game"
 msgid "DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS"
 msgstr "Visual Transitions"
 
+msgid "DALI_DEMO_STR_TITLE_REMOTE_IMAGE"
+msgstr "Remote Image"
+
 msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
 msgstr "Textured cube"
 
