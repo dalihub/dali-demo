@@ -22,6 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali/devel-api/object/handle-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
@@ -114,6 +115,7 @@ public:
     mLabel(),
     mContainer(),
     mGrabCorner(),
+    mBorder(),
     mPanGestureDetector(),
     mLayoutSize(),
     mLanguageId( 0u ),
@@ -164,14 +166,29 @@ public:
 
     mLabel.SetName( "TextLabel" );
     mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+    mLabel.SetSize(mLayoutSize);
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::GREEN );
     mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
     mLabel.SetBackgroundColor( Color::WHITE );
     mContainer.Add( mLabel );
+
+    // Add a border for the container so you can see the container is being resized while grabbing the handle.
+    mBorder = Control::New();
+    mBorder.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+
+    Dali::Property::Map border;
+    border.Insert( Visual::Property::TYPE,  Visual::BORDER );
+    border.Insert( BorderVisual::Property::COLOR,  Color::WHITE );
+    border.Insert( BorderVisual::Property::SIZE,  2.f );
+    mBorder.SetProperty( Control::Property::BACKGROUND, border );
+    mContainer.Add( mBorder );
+    mBorder.SetVisible(false);
+
+    DevelActor::RaiseToTop(mGrabCorner);
 
     mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
     Renderer bgRenderer = mLabel.GetRendererAt(0);
@@ -212,6 +229,9 @@ public:
       {
         mLayoutSize.y = 2.0f;
       }
+
+      // Only show the border during the panning
+      mBorder.SetVisible(true);
     }
 
     mLayoutSize.x += gesture.displacement.x * 2.0f;
@@ -225,6 +245,13 @@ public:
                                      std::max( ConvertToEven( static_cast<int>( mLayoutSize.y )), 2 ) );
 
       mContainer.SetSize( clampedSize );
+    }
+
+    if( gesture.state == Gesture::Cancelled || gesture.state == Gesture::Finished )
+    {
+      // Resize the text label to match the container size when panning is finished
+      mLabel.SetSize(mLayoutSize);
+      mBorder.SetVisible(false);
     }
   }
 
@@ -350,6 +377,7 @@ private:
 
   Control mContainer;
   Control mGrabCorner;
+  Control mBorder;
 
   PanGestureDetector mPanGestureDetector;
 
