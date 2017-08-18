@@ -22,6 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali/devel-api/object/handle-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
@@ -43,6 +44,7 @@ const unsigned int KEY_ONE = 11;
 const unsigned int KEY_A = 38;
 const unsigned int KEY_F = 41;
 const unsigned int KEY_H = 43;
+const unsigned int KEY_U = 30;
 const unsigned int KEY_V = 55;
 const unsigned int KEY_M = 58;
 const unsigned int KEY_L = 46;
@@ -113,6 +115,7 @@ public:
     mLabel(),
     mContainer(),
     mGrabCorner(),
+    mBorder(),
     mPanGestureDetector(),
     mLayoutSize(),
     mLanguageId( 0u ),
@@ -160,16 +163,32 @@ public:
     mPanGestureDetector.DetectedSignal().Connect( this, &TextLabelExample::OnPan );
 
     mLabel = TextLabel::New( "A Quick Brown Fox Jumps Over The Lazy Dog" );
+
     mLabel.SetName( "TextLabel" );
     mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+    mLabel.SetSize(mLayoutSize);
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    mLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::BLUE );
+    mLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::GREEN );
     mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
     mLabel.SetBackgroundColor( Color::WHITE );
     mContainer.Add( mLabel );
+
+    // Add a border for the container so you can see the container is being resized while grabbing the handle.
+    mBorder = Control::New();
+    mBorder.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+
+    Dali::Property::Map border;
+    border.Insert( Visual::Property::TYPE,  Visual::BORDER );
+    border.Insert( BorderVisual::Property::COLOR,  Color::WHITE );
+    border.Insert( BorderVisual::Property::SIZE,  2.f );
+    mBorder.SetProperty( Control::Property::BACKGROUND, border );
+    mContainer.Add( mBorder );
+    mBorder.SetVisible(false);
+
+    DevelActor::RaiseToTop(mGrabCorner);
 
     mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
     Renderer bgRenderer = mLabel.GetRendererAt(0);
@@ -187,7 +206,7 @@ public:
 
     // Animate the text color 3 times from source color to RED
     Animation animation = Animation::New( 2.f );
-    animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED, AlphaFunction::SIN );
+    animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::YELLOW, AlphaFunction::SIN );
     animation.SetLoopCount( 3 );
     animation.Play();
 
@@ -210,6 +229,9 @@ public:
       {
         mLayoutSize.y = 2.0f;
       }
+
+      // Only show the border during the panning
+      mBorder.SetVisible(true);
     }
 
     mLayoutSize.x += gesture.displacement.x * 2.0f;
@@ -223,6 +245,13 @@ public:
                                      std::max( ConvertToEven( static_cast<int>( mLayoutSize.y )), 2 ) );
 
       mContainer.SetSize( clampedSize );
+    }
+
+    if( gesture.state == Gesture::Cancelled || gesture.state == Gesture::Finished )
+    {
+      // Resize the text label to match the container size when panning is finished
+      mLabel.SetSize(mLayoutSize);
+      mBorder.SetVisible(false);
     }
   }
 
@@ -252,7 +281,7 @@ public:
           {
             Animation animation = Animation::New( 2.f );
             animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED, AlphaFunction::SIN );
-            animation.SetLooping( true );
+            animation.SetLoopCount( 3 );
             animation.Play();
             break;
           }
@@ -318,6 +347,12 @@ public:
             }
             break;
           }
+          case KEY_U: // Markup
+          {
+            mLabel.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
+            mLabel.SetProperty( TextLabel::Property::TEXT, "<font family='DejaVuSerif' size='18'>H<color value='blue'>ello</color> <font weight='bold'>world</font> demo</font>" );
+            break;
+          }
           case KEY_PLUS: // Increase shadow offset
           {
             mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, mLabel.GetProperty<Vector2>( TextLabel::Property::SHADOW_OFFSET ) + Vector2( 1.0f, 1.0f ) );
@@ -342,6 +377,7 @@ private:
 
   Control mContainer;
   Control mGrabCorner;
+  Control mBorder;
 
   PanGestureDetector mPanGestureDetector;
 
