@@ -109,6 +109,9 @@ msgstr "Pivot"
 msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
 msgstr "Progress Bar"
 
+msgid "DALI_DEMO_STR_TITLE_PROPERTY_NOTIFICATION"
+msgstr "Property Notification"
+
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "Primitive Shapes"
 
