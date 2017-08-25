@@ -65,6 +65,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("pivot.example", DALI_DEMO_STR_TITLE_PIVOT));
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
   demo.AddExample(Example("progress-bar.example", DALI_DEMO_STR_TITLE_PROGRESS_BAR));
+  demo.AddExample(Example("property-notification.example", DALI_DEMO_STR_TITLE_PROPERTY_NOTIFICATION));
   demo.AddExample(Example("rendering-basic-light.example", DALI_DEMO_STR_TITLE_BASIC_LIGHT));
   demo.AddExample(Example("rendering-line.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE));
   demo.AddExample(Example("rendering-triangle.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE));
