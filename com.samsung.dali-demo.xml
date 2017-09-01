@@ -235,6 +235,9 @@
 	<ui-application appid="text-overlap.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-overlap.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Overlap</label>
 	</ui-application>
+	<ui-application appid="property-notification.example" exec="/usr/apps/com.samsung.dali-demo/bin/property-notification.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Property Notification</label>
+	</ui-application>
 	<privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
 		<privilege>http://tizen.org/privilege/externalstorage</privilege>
