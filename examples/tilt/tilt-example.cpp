@@ -67,7 +67,7 @@ public:
   void CreateSensor()
   {
     mTiltSensor = TiltSensor::Get();
-    if ( mTiltSensor.Enable() )
+    if ( mTiltSensor.Start() )
     {
       // Get notifications when the device is tilted
       mTiltSensor.TiltedSignal().Connect( this, &TiltController::OnTilted );
