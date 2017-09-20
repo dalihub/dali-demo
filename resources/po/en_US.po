@@ -154,6 +154,9 @@ msgstr "Text Field"
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
 msgstr "Text Label"
 
+msgid "DALI_DEMO_STR_TITLE_TEXT_MEMORY_PROFILING"
+msgstr "Text Memory Profiling"
+
 msgid "DALI_DEMO_STR_TITLE_TEXT_OVERLAP"
 msgstr "Text Overlap"
 
