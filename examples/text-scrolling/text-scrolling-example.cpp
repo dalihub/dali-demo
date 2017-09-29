@@ -87,7 +87,7 @@ public:
     parent.Add( box );
 
     Dali::Property::Map border;
-    border.Insert( Visual::Property::TYPE,  Visual::BORDER );
+    border.Insert( Toolkit::Visual::Property::TYPE,  Visual::BORDER );
     border.Insert( BorderVisual::Property::COLOR,  Color::BLUE );
     border.Insert( BorderVisual::Property::SIZE,  1.f );
     box.SetProperty( Control::Property::BACKGROUND, border );
@@ -209,8 +209,8 @@ public:
 
     Toolkit::PushButton colorButton = Toolkit::PushButton::New();
     colorButton.SetProperty( Button::Property::TOGGLABLE, true );
-    colorButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
-    colorButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
+    colorButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
+    colorButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
     colorButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
     colorButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     colorButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );

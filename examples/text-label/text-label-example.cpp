@@ -231,7 +231,7 @@ public:
     mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
 
     Dali::Property::Map border;
-    border.Insert( Visual::Property::TYPE,  Visual::BORDER );
+    border.Insert( Toolkit::Visual::Property::TYPE,  Visual::BORDER );
     border.Insert( BorderVisual::Property::COLOR,  Color::WHITE );
     border.Insert( BorderVisual::Property::SIZE,  2.f );
     mBorder.SetProperty( Control::Property::BACKGROUND, border );
@@ -343,7 +343,7 @@ public:
       mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, propertyMap );
 
       mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_VISUAL,
-                          Property::Map().Add( Visual::Property::TYPE, Visual::BORDER )
+                          Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::BORDER )
                                          .Add( BorderVisual::Property::COLOR, Color::WHITE )
                                          .Add( BorderVisual::Property::SIZE, 2.0f )
                                          .Add( BorderVisual::Property::ANTI_ALIASING, true ) );

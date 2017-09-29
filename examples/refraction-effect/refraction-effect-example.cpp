@@ -17,7 +17,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali/dali.h>
-#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 

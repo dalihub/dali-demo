@@ -25,7 +25,6 @@
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <iostream>
-#include <dali/public-api/events/touch-point.h>
 
 // INTERNAL INCLUDES
 #include "shared/multi-language-strings.h"

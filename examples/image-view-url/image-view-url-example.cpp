@@ -17,7 +17,6 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali-toolkit/devel-api/image-loader/texture-manager.h>
 
 #include "shared/view.h"
@@ -116,7 +115,7 @@ private:
       Property::Map customShader;
       customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = FILTER_FRAGMENT_SOURCE;
       Property::Map visualMap;
-      visualMap.Insert(Toolkit::DevelVisual::Property::SHADER, customShader);
+      visualMap.Insert(Toolkit::Visual::Property::SHADER, customShader);
       mActorForInput.SetProperty(Toolkit::ImageView::Property::IMAGE, visualMap);
 
       mDeltaPropertyIndex = mActorForInput.RegisterProperty(DELTA_UNIFORM_NAME, 0.f);
