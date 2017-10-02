@@ -477,7 +477,7 @@ public:
       image.SetPosition( Vector3( imagePosition.x, imagePosition.y, 0 ) );
       image.SetSize( imageSize );
       image.TouchSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
-      Toolkit::DevelControl::ResourceReadySignal( image).Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal);
+      image.ResourceReadySignal().Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal );
       mFittingModes[image.GetId()] = fittingMode;
       mResourceUrls[image.GetId()] = imageSource.configuration.path;
       mSizes[image.GetId()] = imageSize;
