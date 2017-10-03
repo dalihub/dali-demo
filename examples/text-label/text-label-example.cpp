@@ -23,7 +23,6 @@
 // EXTERNAL INCLUDES
 #include <dali/devel-api/object/handle-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
-#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
@@ -209,7 +208,7 @@ public:
     mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mLabel.SetSize(mLayoutSize);
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    mLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::GREEN );
+    mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::GREEN );
     mLabel.SetBackgroundColor( Color::WHITE );
     mContainer.Add( mLabel );
 
@@ -256,7 +255,7 @@ public:
 
     // Animate the text color 3 times from source color to Yellow
     Animation animation = Animation::New( 2.f );
-    animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::YELLOW, AlphaFunction::SIN );
+    animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), Color::YELLOW, AlphaFunction::SIN );
     animation.SetLoopCount( 3 );
     animation.Play();
 
@@ -270,7 +269,7 @@ public:
     if( button == mStyleButtons[ StyleType::TEXT_COLOR ] )
     {
       Animation animation = Animation::New( 2.f );
-      animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), mSelectedColor, AlphaFunction::LINEAR );
+      animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), mSelectedColor, AlphaFunction::LINEAR );
       animation.Play();
     }
     else if( button == mStyleButtons[ StyleType::OUTLINE ] )
@@ -463,7 +462,7 @@ public:
           case KEY_A: // Animate text colour
           {
             Animation animation = Animation::New( 2.f );
-            animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED, AlphaFunction::SIN );
+            animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), Color::RED, AlphaFunction::SIN );
             animation.SetLoopCount( 3 );
             animation.Play();
             break;

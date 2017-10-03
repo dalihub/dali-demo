@@ -17,7 +17,6 @@
 
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -68,16 +67,16 @@ public:
     mTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mTextLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mTextLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    mTextLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::BLACK );
+    mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
     stage.Add( mTextLabel );
 
     // Create an animation and animate the text color to red
     Animation animation = Animation::New( COLOR_ANIMATION_DURATION );
-    animation.AnimateTo( Property( mTextLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED );
+    animation.AnimateTo( Property( mTextLabel, TextLabel::Property::TEXT_COLOR ), Color::RED );
     animation.Play();
 
     // Set up a property notification so we are notified when the red component of the text-color reaches 50%
-    PropertyNotification notification = mTextLabel.AddPropertyNotification( DevelTextLabel::Property::TEXT_COLOR_RED, GreaterThanCondition( 0.5f ) );
+    PropertyNotification notification = mTextLabel.AddPropertyNotification( TextLabel::Property::TEXT_COLOR_RED, GreaterThanCondition( 0.5f ) );
     notification.NotifySignal().Connect( this, &PropertyNotificationController::RedComponentNotification );
   }
 
