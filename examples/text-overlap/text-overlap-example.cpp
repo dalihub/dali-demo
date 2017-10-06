@@ -137,8 +137,7 @@ void TextOverlapController::OnKeyEvent( const KeyEvent& keyEvent )
 
 } // namespace Demo
 
-
-int main( int argc, char** argv )
+int DALI_EXPORT_API main( int argc, char** argv )
 {
   {
     Application app = Application::New( &argc, &argv );

@@ -245,20 +245,10 @@ void EffectsViewApp::OnKeyEvent(const KeyEvent& event)
 
 /*****************************************************************************/
 
-static void RunTest( Application& application )
-{
-  EffectsViewApp test( application );
-
-  application.MainLoop();
-}
-
-/*****************************************************************************/
-
 int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application application = Application::New(&argc, &argv, DEMO_THEME_PATH);
-
-  RunTest(application);
-
+  EffectsViewApp test( application );
+  application.MainLoop();
   return 0;
 }

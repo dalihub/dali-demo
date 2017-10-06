@@ -509,20 +509,10 @@ private:
   Toolkit::ImageView mImage;
 };
 
-void RunTest( Application& application )
-{
-  ButtonsController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  ButtonsController test( application );
+  application.MainLoop();
   return 0;
 }
