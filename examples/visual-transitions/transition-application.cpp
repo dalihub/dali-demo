@@ -24,8 +24,6 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
-#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
 #include "beat-control.h"
 #include <cstdio>
 #include <sstream>
@@ -101,8 +99,8 @@ void TransitionApplication::Create( Application& application )
   mBeatControl = BeatControl::New();
   mBeatControl.SetName("BeatControl");
   mBeatControl.SetProperty( BeatControl::Property::BEAT_VISUAL, Property::Map()
-                            .Add( DevelVisual::Property::TRANSFORM, Property::Map()
-                                  .Add( DevelVisual::Transform::Property::SIZE, Vector2(0.5f, 0.5f) ) ) );
+                            .Add( Visual::Property::TRANSFORM, Property::Map()
+                                  .Add( Visual::Transform::Property::SIZE, Vector2(0.5f, 0.5f) ) ) );
 
   mBeatControl.SetAnchorPoint( AnchorPoint::CENTER );
   mBeatControl.SetParentOrigin( ParentOrigin::CENTER );
@@ -123,8 +121,8 @@ void TransitionApplication::Create( Application& application )
   {
     Property::Map map;
     CreateVisualMap( i, map );
-    map.Add( DevelVisual::Property::TRANSFORM, Property::Map()
-             .Add( DevelVisual::Transform::Property::SIZE, Vector2(0.8f, 0.8f) )  );
+    map.Add( Visual::Property::TRANSFORM, Property::Map()
+             .Add( Visual::Transform::Property::SIZE, Vector2(0.8f, 0.8f) )  );
     mVisualButtons[i] = BeatControl::New();
     mVisualButtons[i].SetProperty( BeatControl::Property::BEAT_VISUAL, map );
     mVisualButtons[i].SetName("VisualButton");
@@ -176,20 +174,20 @@ void TransitionApplication::CreateVisualMap( int index, Property::Map& map )
   {
     case 0:
     {
-      map[ Visual::Property::TYPE ] = Visual::COLOR;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::COLOR;
       map[ ColorVisual::Property::MIX_COLOR ] = Color::YELLOW;
       break;
     }
     case 1:
     {
-      map[ Visual::Property::TYPE ] = Visual::BORDER;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::BORDER;
       map[ BorderVisual::Property::COLOR ] = Color::GREEN;
       map[ BorderVisual::Property::SIZE ] = 5;
       break;
     }
     case 2:
     {
-      map[ Visual::Property::TYPE ] = Visual::GRADIENT;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::GRADIENT;
 
       Property::Array stopOffsets;
       stopOffsets.PushBack( 0.0f );
@@ -212,21 +210,21 @@ void TransitionApplication::CreateVisualMap( int index, Property::Map& map )
     }
     case 3:
     {
-      map[ Visual::Property::TYPE ] = Visual::IMAGE;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::IMAGE;
       map[ ImageVisual::Property::URL ] = DALI_LOGO_PATH;
       break;
     }
     case 4:
     {
-      map[ Visual::Property::TYPE ] = Visual::IMAGE;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::IMAGE;
       map[ ImageVisual::Property::URL ] = DEMO_IMAGE_DIR "preMultAlpha.png";
-      map[ DevelVisual::Property::PREMULTIPLIED_ALPHA ] = true;
+      map[ Visual::Property::PREMULTIPLIED_ALPHA ] = true;
       break;
     }
 
     case 5:
     {
-      map[ Visual::Property::TYPE ] = Visual::MESH;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::MESH;
       map[ MeshVisual::Property::OBJECT_URL ] = DALI_ROBOT_MODEL_PATH;
       map[ MeshVisual::Property::MATERIAL_URL ] = DALI_ROBOT_MATERIAL_PATH;
       map[ MeshVisual::Property::TEXTURES_PATH ] = DEMO_IMAGE_DIR;
@@ -236,7 +234,7 @@ void TransitionApplication::CreateVisualMap( int index, Property::Map& map )
 
     case 6:
     {
-      map[ Visual::Property::TYPE ] = Visual::PRIMITIVE;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::PRIMITIVE;
 
       map[ PrimitiveVisual::Property::SHAPE ] = PrimitiveVisual::Shape::BEVELLED_CUBE;
       map[ PrimitiveVisual::Property::BEVEL_PERCENTAGE ] = 0.3f;
@@ -250,21 +248,21 @@ void TransitionApplication::CreateVisualMap( int index, Property::Map& map )
     case 7:
     {
       // NPatch
-      map[ Visual::Property::TYPE ] = Visual::IMAGE;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::IMAGE;
       map[ ImageVisual::Property::URL ] = DEMO_IMAGE_DIR "button-up-16.9.png";
       break;
     }
     case 8:
     {
       // SVG
-      map[ Visual::Property::TYPE ] = Visual::IMAGE;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::IMAGE;
       map[ ImageVisual::Property::URL ] = DEMO_IMAGE_DIR "Kid1.svg";
       break;
     }
 
     case 9:
     {
-      map[ Visual::Property::TYPE ] = DevelVisual::TEXT;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::TEXT;
       map[ TextVisual::Property::TEXT ] = "Text";
       map[ TextVisual::Property::TEXT_COLOR ] = Color::CYAN;
       map[ TextVisual::Property::POINT_SIZE ] = 10;
@@ -273,7 +271,7 @@ void TransitionApplication::CreateVisualMap( int index, Property::Map& map )
 
     default:
     {
-      map[ Visual::Property::TYPE ] = Visual::COLOR;
+      map[ Toolkit::Visual::Property::TYPE ] = Visual::COLOR;
       map[ ColorVisual::Property::MIX_COLOR ] = Color::MAGENTA;
       break;
     }
@@ -287,8 +285,8 @@ bool TransitionApplication::OnVisualButtonClicked( Actor actor, const TouchData&
     int visual = actor.GetProperty<int>( mVisualIndex );
     Property::Map map;
     CreateVisualMap( visual, map );
-    map.Add( DevelVisual::Property::TRANSFORM, Property::Map()
-             .Add( DevelVisual::Transform::Property::SIZE, Vector2( 0.5f, 0.5f ) ) );
+    map.Add( Visual::Property::TRANSFORM, Property::Map()
+             .Add( Visual::Transform::Property::SIZE, Vector2( 0.5f, 0.5f ) ) );
     mBeatControl.SetProperty( BeatControl::Property::BEAT_VISUAL, map );
   }
   return true;

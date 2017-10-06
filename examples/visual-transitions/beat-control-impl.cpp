@@ -16,10 +16,8 @@
 
 #include "beat-control-impl.h"
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/public-api/object/type-registry-helper.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
 using namespace Dali; // Needed for macros
 using namespace Dali::Toolkit;
@@ -212,9 +210,9 @@ void BeatControl::RelayoutVisuals( const Vector2& targetSize )
       Property::Map transformMap;
       // Make the visual half the size of the control, but leave
       // origin and anchor point at center, position is relative, but Zer0
-      transformMap[ DevelVisual::Transform::Property::SIZE ] = mTransformSize;
-      transformMap[ DevelVisual::Transform::Property::ORIGIN ] = mTransformOrigin;
-      transformMap[ DevelVisual::Transform::Property::ANCHOR_POINT ] = mTransformAnchorPoint;
+      transformMap[ Visual::Transform::Property::SIZE ] = mTransformSize;
+      transformMap[ Visual::Transform::Property::ORIGIN ] = mTransformOrigin;
+      transformMap[ Visual::Transform::Property::ANCHOR_POINT ] = mTransformAnchorPoint;
       mVisual.SetTransformAndSize( transformMap, size );
     }
   }
@@ -262,7 +260,7 @@ void BeatControl::SetProperty( BaseObject* object, Property::Index index, const 
         Property::Map* map = value.GetMap();
         if( map )
         {
-          Property::Value* value = map->Find( DevelVisual::Property::TRANSFORM, "transform" );
+          Property::Value* value = map->Find( Visual::Property::TRANSFORM, "transform" );
           if( value )
           {
             Property::Map* transformMap = value->GetMap();
@@ -272,14 +270,14 @@ void BeatControl::SetProperty( BaseObject* object, Property::Index index, const 
               // If there are more properties in the transform map, then we need to create a new visual
               unsigned int sizeAndPositionPropertyCount = 0;
 
-              Property::Value* sizeValue = transformMap->Find( DevelVisual::Transform::Property::SIZE, "size" );
+              Property::Value* sizeValue = transformMap->Find( Visual::Transform::Property::SIZE, "size" );
               if( sizeValue )
               {
                 sizeValue->Get( impl.mTransformSize );
                 ++sizeAndPositionPropertyCount;
               }
 
-              Property::Value* originValue = transformMap->Find( DevelVisual::Transform::Property::ORIGIN, "origin" );
+              Property::Value* originValue = transformMap->Find( Visual::Transform::Property::ORIGIN, "origin" );
               if( originValue )
               {
                 int intValue = 0;
@@ -290,7 +288,7 @@ void BeatControl::SetProperty( BaseObject* object, Property::Index index, const 
                 }
               }
 
-              Property::Value* anchorPointValue = transformMap->Find( DevelVisual::Transform::Property::ANCHOR_POINT, "anchorPoint" );
+              Property::Value* anchorPointValue = transformMap->Find( Visual::Transform::Property::ANCHOR_POINT, "anchorPoint" );
               if( anchorPointValue )
               {
                 int intValue = 0;

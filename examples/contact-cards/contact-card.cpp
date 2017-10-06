@@ -104,7 +104,7 @@ ContactCard::ContactCard(
   // Create a control which will be used for the background and to clip the contents
   mContactCard = Control::New();
   mContactCard.SetProperty( Control::Property::BACKGROUND,
-                            Property::Map().Add( Visual::Property::TYPE, Visual::COLOR )
+                            Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
                                            .Add( ColorVisual::Property::MIX_COLOR, Color::WHITE ) );
   mContactCard.SetProperty( Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN );
   mContactCard.SetParentOrigin( ParentOrigin::TOP_LEFT );
@@ -117,7 +117,7 @@ ContactCard::ContactCard(
   mHeader = Control::New();
   mHeader.SetSize( mContactCardLayoutInfo.headerSize );
   mHeader.SetProperty( Control::Property::BACKGROUND,
-                       Property::Map().Add( Visual::Property::TYPE, Visual::COLOR )
+                       Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
                                       .Add( ColorVisual::Property::MIX_COLOR, HEADER_COLOR ) );
   mHeader.SetParentOrigin( ParentOrigin::TOP_LEFT );
   mHeader.SetAnchorPoint( AnchorPoint::TOP_LEFT );

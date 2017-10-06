@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@
 #include <iostream>
 
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
-#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -323,7 +321,7 @@ public:
           else
           {
             Property::Map map;
-            map.Add( Toolkit::Visual::Property::TYPE, Toolkit::DevelVisual::TEXT ).
+            map.Add( Toolkit::Visual::Property::TYPE, Toolkit::Visual::TEXT ).
               Add( Toolkit::TextVisual::Property::TEXT, DEMO_APPS_NAMES[currentIconIndex] ).
               Add( Toolkit::TextVisual::Property::TEXT_COLOR, Color::WHITE ).
               Add( Toolkit::TextVisual::Property::POINT_SIZE, ( ( static_cast<float>( ROW_HEIGHT * LABEL_AREA ) * 72.0f )  / dpi.y ) * 0.25f ).

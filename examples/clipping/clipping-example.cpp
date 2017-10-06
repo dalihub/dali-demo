@@ -19,8 +19,6 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/actor-devel.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
-#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
 
 // INTERNAL INCLUDES
 #include "clipping-item-factory.h"
@@ -121,7 +119,7 @@ private:
     border.SetParentOrigin( ParentOrigin::CENTER );
     border.SetAnchorPoint( AnchorPoint::CENTER );
     border.SetProperty( Control::Property::BACKGROUND,
-                        Property::Map().Add( Visual::Property::TYPE, Visual::BORDER )
+                        Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::BORDER )
                                        .Add( BorderVisual::Property::COLOR, Color::WHITE )
                                        .Add( BorderVisual::Property::SIZE, 2.0f )
                                        .Add( BorderVisual::Property::ANTI_ALIASING, true ) );

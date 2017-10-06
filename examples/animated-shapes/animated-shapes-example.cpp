@@ -114,7 +114,7 @@ public:
     background.SetParentOrigin( Dali::ParentOrigin::CENTER );
     background.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
     Dali::Property::Map map;
-    map.Insert( Visual::Property::TYPE,  Visual::GRADIENT );
+    map.Insert( Toolkit::Visual::Property::TYPE,  Visual::GRADIENT );
     Property::Array stopOffsets;
     stopOffsets.PushBack( 0.0f );
     stopOffsets.PushBack( 1.0f );

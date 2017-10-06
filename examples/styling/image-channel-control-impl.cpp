@@ -16,13 +16,11 @@
 
 #include "image-channel-control-impl.h"
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali-toolkit/devel-api/align-enums.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
 #include <cstdio>
+
 
 using namespace Dali; // Needed for macros
 
@@ -182,12 +180,12 @@ void ImageChannelControl::OnSizeSet( const Vector3& targetSize )
     Vector2 size( targetSize );
     Property::Map transformMap;
     transformMap
-      .Add( Toolkit::DevelVisual::Transform::Property::OFFSET, Vector2(0.0f, 0.0f) )
-      .Add( Toolkit::DevelVisual::Transform::Property::SIZE, Vector2(1.0f, 1.0f) )
-      .Add( Toolkit::DevelVisual::Transform::Property::ORIGIN, Toolkit::Align::CENTER )
-      .Add( Toolkit::DevelVisual::Transform::Property::ANCHOR_POINT, Toolkit::Align::CENTER )
-      .Add( Toolkit::DevelVisual::Transform::Property::OFFSET_POLICY, Vector2( Toolkit::DevelVisual::Transform::Policy::RELATIVE, Toolkit::DevelVisual::Transform::Policy::RELATIVE ) )
-      .Add( Toolkit::DevelVisual::Transform::Property::SIZE_POLICY, Vector2( Toolkit::DevelVisual::Transform::Policy::RELATIVE, Toolkit::DevelVisual::Transform::Policy::RELATIVE ) );
+      .Add( Toolkit::Visual::Transform::Property::OFFSET, Vector2(0.0f, 0.0f) )
+      .Add( Toolkit::Visual::Transform::Property::SIZE, Vector2(1.0f, 1.0f) )
+      .Add( Toolkit::Visual::Transform::Property::ORIGIN, Toolkit::Align::CENTER )
+      .Add( Toolkit::Visual::Transform::Property::ANCHOR_POINT, Toolkit::Align::CENTER )
+      .Add( Toolkit::Visual::Transform::Property::OFFSET_POLICY, Vector2( Toolkit::Visual::Transform::Policy::RELATIVE, Toolkit::Visual::Transform::Policy::RELATIVE ) )
+      .Add( Toolkit::Visual::Transform::Property::SIZE_POLICY, Vector2( Toolkit::Visual::Transform::Policy::RELATIVE, Toolkit::Visual::Transform::Policy::RELATIVE ) );
 
     mVisual.SetTransformAndSize( transformMap, size );
   }

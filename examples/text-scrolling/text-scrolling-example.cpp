@@ -23,7 +23,6 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
-#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -87,7 +86,7 @@ public:
     parent.Add( box );
 
     Dali::Property::Map border;
-    border.Insert( Visual::Property::TYPE,  Visual::BORDER );
+    border.Insert( Toolkit::Visual::Property::TYPE,  Visual::BORDER );
     border.Insert( BorderVisual::Property::COLOR,  Color::BLUE );
     border.Insert( BorderVisual::Property::SIZE,  1.f );
     box.SetProperty( Control::Property::BACKGROUND, border );
@@ -190,8 +189,8 @@ public:
     Toolkit::PushButton scrollRtlButton = Toolkit::PushButton::New();
     scrollRtlButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedRtl );
     CreateLabel( mRtlLabel, "مرحبا بالعالم", boxD , true, scrollRtlButton );
-    mRtlLabel.SetProperty(DevelTextLabel::Property::AUTO_SCROLL_STOP_MODE, DevelTextLabel::AutoScrollStopMode::IMMEDIATE );
-    mRtlLabel.SetProperty(DevelTextLabel::Property::AUTO_SCROLL_LOOP_DELAY, 0.3f );
+    mRtlLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_STOP_MODE, TextLabel::AutoScrollStopMode::IMMEDIATE );
+    mRtlLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_LOOP_DELAY, 0.3f );
 
     CreateBox( "boxE", boxE, desktop, SCROLLING_BOX_SIZE );
     boxE.SetPosition( 0.0f, -100.0f, 1.0f );
@@ -201,7 +200,7 @@ public:
     mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_SPEED, 500);
     mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_GAP, 500);
     mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_LOOP_COUNT, 3);
-    mRtlLongLabel.SetProperty(DevelTextLabel::Property::AUTO_SCROLL_STOP_MODE, DevelTextLabel::AutoScrollStopMode::FINISH_LOOP );
+    mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_STOP_MODE, TextLabel::AutoScrollStopMode::FINISH_LOOP );
 
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.DetectedSignal().Connect(this, &TextScrollingExample::OnPanGesture );
@@ -209,8 +208,8 @@ public:
 
     Toolkit::PushButton colorButton = Toolkit::PushButton::New();
     colorButton.SetProperty( Button::Property::TOGGLABLE, true );
-    colorButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
-    colorButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
+    colorButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
+    colorButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
     colorButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
     colorButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     colorButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );

@@ -1,7 +1,4 @@
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/public-api/object/property-map.h>
-#include <dali-toolkit/devel-api/align-enums.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -312,7 +309,7 @@ public:
     }
 
     Property::Map lightMap;
-    lightMap.Insert( Visual::Property::TYPE, Visual::IMAGE );
+    lightMap.Insert( Toolkit::Visual::Property::TYPE, Visual::IMAGE );
     lightMap.Insert( ImageVisual::Property::URL, imageUrl );
     mLightSource.SetProperty( Control::Property::BACKGROUND, Property::Value( lightMap ) );
   }
@@ -322,10 +319,10 @@ public:
   {
     //Create mesh property map
     Property::Map map;
-    map.Insert( Visual::Property::TYPE,  Visual::MESH );
-    map.Insert( DevelVisual::Property::TRANSFORM,
-                Property::Map().Add( DevelVisual::Transform::Property::ORIGIN, Align::CENTER )
-                               .Add( DevelVisual::Transform::Property::ANCHOR_POINT, Align::CENTER ) );
+    map.Insert( Toolkit::Visual::Property::TYPE,  Visual::MESH );
+    map.Insert( Visual::Property::TRANSFORM,
+                Property::Map().Add( Visual::Transform::Property::ORIGIN, Align::CENTER )
+                               .Add( Visual::Transform::Property::ANCHOR_POINT, Align::CENTER ) );
     map.Insert( MeshVisual::Property::OBJECT_URL, MODEL_FILE_TABLE[mModelIndex] );
     map.Insert( MeshVisual::Property::MATERIAL_URL, MATERIAL_FILE_TABLE[mModelIndex] );
     map.Insert( MeshVisual::Property::TEXTURES_PATH, TEXTURES_PATH );

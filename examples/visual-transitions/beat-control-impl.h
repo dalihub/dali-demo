@@ -20,9 +20,9 @@
 #include "beat-control.h"
 #include <dali/public-api/animation/animation.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
-#include <dali-toolkit/devel-api/align-enums.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-base.h>
 #include <dali-toolkit/devel-api/visual-factory/transition-data.h>
+#include <dali-toolkit/public-api/align-enumerations.h>
 
 namespace Demo
 {

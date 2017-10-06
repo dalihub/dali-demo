@@ -78,7 +78,7 @@ public:
 
 // ---- Gradient for background
 
-    mGradientMap.Insert( Visual::Property::TYPE,  Visual::GRADIENT );
+    mGradientMap.Insert( Toolkit::Visual::Property::TYPE,  Visual::GRADIENT );
 
     Property::Array stopOffsets;
     stopOffsets.PushBack( 0.0f );
