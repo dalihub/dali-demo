@@ -52,6 +52,9 @@ public:
     Stage stage = Stage::GetCurrent();
     stage.SetBackgroundColor( Color::WHITE );
 
+    // Connect to the stage's key signal to allow Back and Escape to exit.
+    stage.KeyEventSignal().Connect( this, &ClippingDrawOrderVerification::OnKeyEvent );
+
     // Create the title label.
     TextLabel title = TextLabel::New( "Clipping draw order verification" );
     title.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
@@ -204,23 +207,32 @@ public:
     return true;
   }
 
+  /**
+   * @brief Called when any key event is received
+   *
+   * Will use this to quit the application if Back or the Escape key is received
+   * @param[in] event The key event information
+   */
+  void OnKeyEvent( const KeyEvent& event )
+  {
+    if( event.state == KeyEvent::Down )
+    {
+      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
+  }
+
 private:
   Application&  mApplication;
 };
-
-void RunVerification( Application& application )
-{
-  ClippingDrawOrderVerification verification( application );
-
-  application.MainLoop();
-}
 
 // Entry point for Linux & Tizen applications.
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunVerification( application );
-
+  ClippingDrawOrderVerification verification( application );
+  application.MainLoop();
   return 0;
 }

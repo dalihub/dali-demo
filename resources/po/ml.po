@@ -67,17 +67,11 @@ msgstr "നിഴല്"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "വര"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "ലോഗിംഗ്"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "ഭൂതക്കണ്ണാടി"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "മോർഫ് mesh"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "തരംതിരിക്കലിനായി mesh"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D മോഡലിങ്"

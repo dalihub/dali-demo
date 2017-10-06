@@ -56,10 +56,8 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("image-view-svg.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG));
   demo.AddExample(Example("image-view-url.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL));
   demo.AddExample(Example("line-mesh.example", DALI_DEMO_STR_TITLE_LINE_MESH));
-  demo.AddExample(Example("logging.example", DALI_DEMO_STR_TITLE_LOGGING));
   demo.AddExample(Example("magnifier.example", DALI_DEMO_STR_TITLE_MAGNIFIER));
   demo.AddExample(Example("mesh-morph.example", DALI_DEMO_STR_TITLE_MESH_MORPH));
-  demo.AddExample(Example("mesh-sorting.example", DALI_DEMO_STR_TITLE_MESH_SORTING));
   demo.AddExample(Example("motion-stretch.example", DALI_DEMO_STR_TITLE_MOTION_STRETCH));
   demo.AddExample(Example("native-image-source.example", DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE));
   demo.AddExample(Example("popup.example", DALI_DEMO_STR_TITLE_POPUP));

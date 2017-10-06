@@ -60,10 +60,8 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_ITEM_VIEW                   dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_ITEM_VIEW")
 #define DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS          dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS")
 #define DALI_DEMO_STR_TITLE_LINE_MESH                   dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_LINE_MESH")
-#define DALI_DEMO_STR_TITLE_LOGGING                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_LOGGING")
 #define DALI_DEMO_STR_TITLE_MAGNIFIER                   dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MAGNIFIER")
 #define DALI_DEMO_STR_TITLE_MESH_MORPH                  dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MESH_MORPH")
-#define DALI_DEMO_STR_TITLE_MESH_SORTING                dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MESH_SORTING")
 #define DALI_DEMO_STR_TITLE_MESH_VISUAL                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MESH_VISUAL")
 #define DALI_DEMO_STR_TITLE_MOTION_BLUR                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MOTION_BLUR")
 #define DALI_DEMO_STR_TITLE_MOTION_STRETCH              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MOTION_STRETCH")
@@ -132,10 +130,8 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_ITEM_VIEW                   "Item View"
 #define DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS          "Lights and shadows"
 #define DALI_DEMO_STR_TITLE_LINE_MESH                   "Mesh Line"
-#define DALI_DEMO_STR_TITLE_LOGGING                     "Logging"
 #define DALI_DEMO_STR_TITLE_MAGNIFIER                   "Magnifier"
 #define DALI_DEMO_STR_TITLE_MESH_MORPH                  "Mesh Morph"
-#define DALI_DEMO_STR_TITLE_MESH_SORTING                "Mesh Sorting"
 #define DALI_DEMO_STR_TITLE_MESH_VISUAL                 "Mesh Visual"
 #define DALI_DEMO_STR_TITLE_MOTION_BLUR                 "Motion Blur"
 #define DALI_DEMO_STR_TITLE_MOTION_STRETCH              "Motion Stretch"
