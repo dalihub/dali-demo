@@ -109,9 +109,6 @@
 	<ui-application appid="text-scrolling.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-scrolling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Scrolling</label>
 	</ui-application>
-	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Logging</label>
-	</ui-application>
 	<ui-application appid="animated-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Animated shapes</label>
 	</ui-application>
