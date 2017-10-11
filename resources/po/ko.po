@@ -70,17 +70,11 @@ msgstr "빛과 그림자"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "라인 메쉬"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "로깅"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "돋보기"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "메쉬 형태"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "메쉬 분류"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "메쉬 비주얼"

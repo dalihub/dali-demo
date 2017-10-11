@@ -511,20 +511,10 @@ private:
 
 /*****************************************************************************/
 
-static void
-RunTest(Application& app)
-{
-  TestApp theApp(app);
-  app.MainLoop();
-}
-
-/*****************************************************************************/
-
 int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
-
-  RunTest(app);
-
+  TestApp theApp(app);
+  app.MainLoop();
   return 0;
 }

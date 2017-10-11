@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 // EXTERNAL INCLUDES
 #include <dali/devel-api/object/handle-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
-#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
@@ -209,7 +208,7 @@ public:
     mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mLabel.SetSize(mLayoutSize);
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    mLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::GREEN );
+    mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::GREEN );
     mLabel.SetBackgroundColor( Color::WHITE );
     mContainer.Add( mLabel );
 
@@ -231,14 +230,14 @@ public:
     mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
 
     Dali::Property::Map border;
-    border.Insert( Visual::Property::TYPE,  Visual::BORDER );
+    border.Insert( Toolkit::Visual::Property::TYPE,  Visual::BORDER );
     border.Insert( BorderVisual::Property::COLOR,  Color::WHITE );
     border.Insert( BorderVisual::Property::SIZE,  2.f );
     mBorder.SetProperty( Control::Property::BACKGROUND, border );
     mContainer.Add( mBorder );
     mBorder.SetVisible(false);
 
-    DevelActor::RaiseToTop(mGrabCorner);
+    mGrabCorner.RaiseToTop();
 
     mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
     Renderer bgRenderer = mLabel.GetRendererAt(0);
@@ -256,7 +255,7 @@ public:
 
     // Animate the text color 3 times from source color to Yellow
     Animation animation = Animation::New( 2.f );
-    animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::YELLOW, AlphaFunction::SIN );
+    animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), Color::YELLOW, AlphaFunction::SIN );
     animation.SetLoopCount( 3 );
     animation.Play();
 
@@ -270,7 +269,7 @@ public:
     if( button == mStyleButtons[ StyleType::TEXT_COLOR ] )
     {
       Animation animation = Animation::New( 2.f );
-      animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), mSelectedColor, AlphaFunction::LINEAR );
+      animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), mSelectedColor, AlphaFunction::LINEAR );
       animation.Play();
     }
     else if( button == mStyleButtons[ StyleType::OUTLINE ] )
@@ -343,7 +342,7 @@ public:
       mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, propertyMap );
 
       mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_VISUAL,
-                          Property::Map().Add( Visual::Property::TYPE, Visual::BORDER )
+                          Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::BORDER )
                                          .Add( BorderVisual::Property::COLOR, Color::WHITE )
                                          .Add( BorderVisual::Property::SIZE, 2.0f )
                                          .Add( BorderVisual::Property::ANTI_ALIASING, true ) );
@@ -463,7 +462,7 @@ public:
           case KEY_A: // Animate text colour
           {
             Animation animation = Animation::New( 2.f );
-            animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED, AlphaFunction::SIN );
+            animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), Color::RED, AlphaFunction::SIN );
             animation.SetLoopCount( 3 );
             animation.Play();
             break;
@@ -583,19 +582,10 @@ private:
   Property::Index mOverrideMixColorIndex;
 };
 
-void RunTest( Application& application )
-{
-  TextLabelExample test( application );
-
-  application.MainLoop();
-}
-
-/** Entry point for Linux & Tizen applications */
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  TextLabelExample test( application );
+  application.MainLoop();
   return 0;
 }

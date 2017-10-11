@@ -130,7 +130,7 @@ public:
     // Add border to highlight harder-to-see colors.
     // We use a color rather than border visual as the container will always be behind the button.
     Property::Map colorMap;
-    colorMap.Insert( Visual::Property::TYPE, Visual::COLOR);
+    colorMap.Insert( Toolkit::Visual::Property::TYPE, Visual::COLOR);
     colorMap.Insert( ColorVisual::Property::MIX_COLOR, Color::BLACK );
     mColorContainer.SetProperty( Control::Property::BACKGROUND, colorMap );
 
@@ -276,7 +276,7 @@ public:
   void SetButtonColor( Button& button, const Vector4& color )
   {
     Property::Map colorVisualMap;
-    colorVisualMap.Add( Visual::Property::TYPE, Visual::COLOR )
+    colorVisualMap.Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
                   .Add( ColorVisual::Property::MIX_COLOR, color );
 
     button.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, colorVisualMap );
@@ -295,20 +295,11 @@ private:
   Toolkit::TableView  mButtonContainer;
 };
 
-void RunTest( Application& application )
-{
-  TextEditorExample test( application );
-
-  application.MainLoop();
-}
-
-/** Entry point for Linux & Tizen applications */
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   // DALI_DEMO_THEME_PATH not passed to Application so TextEditor example uses default Toolkit style sheet.
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  TextEditorExample test( application );
+  application.MainLoop();
   return 0;
 }

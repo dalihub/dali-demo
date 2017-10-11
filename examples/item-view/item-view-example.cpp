@@ -879,7 +879,7 @@ public: // From ItemFactory
     borderActor.SetColorMode( USE_PARENT_COLOR );
 
     Property::Map borderProperty;
-    borderProperty.Insert( Visual::Property::TYPE, Visual::BORDER );
+    borderProperty.Insert( Toolkit::Visual::Property::TYPE, Visual::BORDER );
     borderProperty.Insert( BorderVisual::Property::COLOR, Color::WHITE );
     borderProperty.Insert( BorderVisual::Property::SIZE, ITEM_BORDER_SIZE );
     borderProperty.Insert( BorderVisual::Property::ANTI_ALIASING, true );
@@ -903,7 +903,7 @@ public: // From ItemFactory
     checkbox.SetZ( 0.1f );
 
     Property::Map solidColorProperty;
-    solidColorProperty.Insert( Visual::Property::TYPE, Visual::COLOR );
+    solidColorProperty.Insert( Toolkit::Visual::Property::TYPE, Visual::COLOR );
     solidColorProperty.Insert( ColorVisual::Property::MIX_COLOR, Vector4(0.f, 0.f, 0.f, 0.6f) );
     checkbox.SetProperty( ImageView::Property::IMAGE, solidColorProperty );
 
@@ -994,18 +994,10 @@ private:
   LongPressGestureDetector mLongPressDetector;
 };
 
-void RunTest(Application& app)
-{
-  ItemViewExample test(app);
-
-  app.MainLoop();
-}
-
 int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
-
-  RunTest(app);
-
+  ItemViewExample test(app);
+  app.MainLoop();
   return 0;
 }

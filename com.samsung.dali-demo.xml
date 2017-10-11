@@ -103,11 +103,11 @@
 	<ui-application appid="text-fonts.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-fonts.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Fonts</label>
 	</ui-application>
+	<ui-application appid="text-memory-profiling.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-memory-profiling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Memory Profiling</label>
+	</ui-application>
 	<ui-application appid="text-scrolling.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-scrolling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Scrolling</label>
-	</ui-application>
-	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Logging</label>
 	</ui-application>
 	<ui-application appid="animated-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Animated shapes</label>

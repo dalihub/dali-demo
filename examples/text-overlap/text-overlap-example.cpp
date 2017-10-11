@@ -113,7 +113,7 @@ void TextOverlapController::Destroy( Application& app )
 bool TextOverlapController::OnClicked( Button button )
 {
   mTopmostLabel = 1-mTopmostLabel; // toggles between 0 and 1
-  DevelActor::RaiseToTop(mLabels[mTopmostLabel]);
+  mLabels[mTopmostLabel].RaiseToTop();
   return false;
 }
 
@@ -137,8 +137,7 @@ void TextOverlapController::OnKeyEvent( const KeyEvent& keyEvent )
 
 } // namespace Demo
 
-
-int main( int argc, char** argv )
+int DALI_EXPORT_API main( int argc, char** argv )
 {
   {
     Application app = Application::New( &argc, &argv );

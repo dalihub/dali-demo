@@ -17,7 +17,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali/dali.h>
-#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
@@ -589,20 +588,10 @@ private:
 
 /*****************************************************************************/
 
-static void
-RunTest(Application& app)
-{
-  RefractionEffectExample theApp(app);
-  app.MainLoop();
-}
-
-/*****************************************************************************/
-
 int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
-
-  RunTest(app);
-
+  RefractionEffectExample theApp(app);
+  app.MainLoop();
   return 0;
 }

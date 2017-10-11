@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/tooltip/tooltip-properties.h>
-#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -97,9 +95,9 @@ private:
     Layout( customFromCode, stageSize );
     customFromCode.SetProperty( DevelControl::Property::TOOLTIP,
                                 Property::Map().Add( Tooltip::Property::CONTENT,
-                                                     Property::Array().Add( Property::Map().Add( Visual::Property::TYPE, Visual::IMAGE )
+                                                     Property::Array().Add( Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::IMAGE )
                                                                                            .Add( ImageVisual::Property::URL, DEMO_IMAGE_DIR "Logo-for-demo.png" ) )
-                                                                      .Add( Property::Map().Add( Visual::Property::TYPE, DevelVisual::TEXT )
+                                                                      .Add( Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::TEXT )
                                                                                            .Add( TextVisual::Property::TEXT_COLOR, Color::WHITE )
                                                                                            .Add( TextVisual::Property::TEXT, "Custom coded style\nat hover point" )
                                                                                            .Add( TextVisual::Property::MULTI_LINE, true )
@@ -140,7 +138,7 @@ private:
     if( control )
     {
       control.SetProperty( Button::Property::LABEL,
-                           Property::Map().Add( Visual::Property::TYPE, DevelVisual::TEXT )
+                           Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::TEXT )
                                           .Add( TextVisual::Property::TEXT, label ) );
     }
   }

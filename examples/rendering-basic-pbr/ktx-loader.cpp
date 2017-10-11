@@ -19,8 +19,6 @@
 #include "ktx-loader.h"
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/images/pixel-devel.h>
-#include <dali/devel-api/images/pixel-data-devel.h>
 #include <memory.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -49,38 +47,38 @@ struct KtxFileHeader
 /**
  * Convert KTX format to Dali::Pixel::Format
  */
-bool ConvertPixelFormat(const uint32_t ktxPixelFormat, Dali::DevelPixel::Format& format)
+bool ConvertPixelFormat(const uint32_t ktxPixelFormat, Dali::Pixel::Format& format)
 {
   switch( ktxPixelFormat )
   {
     case 0x93B0: // GL_COMPRESSED_RGBA_ASTC_4x4_KHR
     {
-      format = Dali::DevelPixel::COMPRESSED_RGBA_ASTC_4x4_KHR;
+      format = Dali::Pixel::COMPRESSED_RGBA_ASTC_4x4_KHR;
       break;
     }
     case 0x881B:// GL_RGB16F
     {
-      format = Dali::DevelPixel::RGB16F;
+      format = Dali::Pixel::RGB16F;
       break;
     }
     case 0x8815: // GL_RGB32F
     {
-      format = Dali::DevelPixel::RGB32F;
+      format = Dali::Pixel::RGB32F;
       break;
     }
     case 0x8C3A: // GL_R11F_G11F_B10F
     {
-      format = Dali::DevelPixel::RGB32F;
+      format = Dali::Pixel::RGB32F;
       break;
     }
     case 0x8D7C: // GL_RGBA8UI
     {
-      format = Dali::DevelPixel::RGBA8888;
+      format = Dali::Pixel::RGBA8888;
       break;
     }
     case 0x8D7D: // GL_RGB8UI
     {
-      format = Dali::DevelPixel::RGB888;
+      format = Dali::Pixel::RGB888;
       break;
     }
     default:
@@ -162,7 +160,7 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
     header.pixelHeight = 1u;
   }
 
-  Dali::DevelPixel::Format daliformat = DevelPixel::RGB888;
+  Dali::Pixel::Format daliformat = Pixel::RGB888;
 
   ConvertPixelFormat(header.glInternalFormat, daliformat);
 
@@ -185,7 +183,7 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
         memcpy(img[face],imgPointer,byteSize);
         imgSize[face] = byteSize;
         imgPointer += byteSize;
-        cubedata.img[face][mipmapLevel] = DevelPixelData::New( img[face], imgSize[face], header.pixelWidth , header.pixelHeight , daliformat, PixelData::FREE );
+        cubedata.img[face][mipmapLevel] = PixelData::New( img[face], imgSize[face], header.pixelWidth , header.pixelHeight , daliformat, PixelData::FREE );
       }
     }
     header.pixelHeight/=2u;
