@@ -436,7 +436,6 @@ bool DissolveEffectApp::OnTimerTick()
   return false;   //return false to stop the timer
 }
 
-// Entry point for Linux & Tizen applications
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );

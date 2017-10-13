@@ -644,19 +644,10 @@ private:
   unsigned int mImagesLoaded;         ///< How many images have been loaded
 };
 
-void RunTest( Application& application )
-{
-  ImageScalingIrregularGridController test( application );
-
-  application.MainLoop();
-}
-
-/** Entry point for Linux & Tizen applications */
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  ImageScalingIrregularGridController test( application );
+  application.MainLoop();
   return 0;
 }

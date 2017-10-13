@@ -31,7 +31,6 @@ namespace
 const char* SIMPLE_DEMO_THEME( DEMO_STYLE_DIR "simple-example-theme.json" );
 }
 
-/// Entry point for applications
 int DALI_EXPORT_API main( int argc, char** argv )
 {
   Application application = Application::New( &argc, &argv, SIMPLE_DEMO_THEME ); // Use the above defined style sheet for this application.

@@ -454,26 +454,6 @@ private:
   int                         mCurrentPage;
 };
 
-void RunTest( Application& application, const HomescreenBenchmark::Config& config, bool printHelpAndExit )
-{
-  HomescreenBenchmark test( application, config );
-
-  if( printHelpAndExit )
-  {
-    PrintHelp( "c<num>",               " Number of columns" );
-    PrintHelp( "r<num>",               " Number of rows" );
-    PrintHelp( "p<num>",               " Number of pages ( must be greater than 1 )" );
-    PrintHelp( "-disable-tableview",   " Disables the use of TableView for layouting" );
-    PrintHelp( "-disable-icon-labels", " Disables labels for each icon" );
-    PrintHelp( "-use-checkbox",        " Uses checkboxes for icons" );
-    PrintHelp( "-use-text-label",      " Uses TextLabel instead of a TextVisual" );
-    return;
-  }
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications.
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   // Default settings.
@@ -519,8 +499,21 @@ int DALI_EXPORT_API main( int argc, char **argv )
   }
 
   Application application = Application::New( &argc, &argv );
+  HomescreenBenchmark test( application, config );
 
-  RunTest( application, config, printHelpAndExit );
+  if( printHelpAndExit )
+  {
+    PrintHelp( "c<num>",               " Number of columns" );
+    PrintHelp( "r<num>",               " Number of rows" );
+    PrintHelp( "p<num>",               " Number of pages ( must be greater than 1 )" );
+    PrintHelp( "-disable-tableview",   " Disables the use of TableView for layouting" );
+    PrintHelp( "-disable-icon-labels", " Disables labels for each icon" );
+    PrintHelp( "-use-checkbox",        " Uses checkboxes for icons" );
+    PrintHelp( "-use-text-label",      " Uses TextLabel instead of a TextVisual" );
+    return 0;
+  }
+
+  application.MainLoop();
 
   return 0;
 }

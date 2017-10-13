@@ -26,7 +26,6 @@
 #include "transition-application.h"
 
 
-/// Entry point for applications
 int DALI_EXPORT_API main( int argc, char** argv )
 {
   const char* themeName = Demo::TransitionApplication::DEMO_THEME_ONE_PATH;

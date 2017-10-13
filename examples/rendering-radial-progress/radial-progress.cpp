@@ -127,6 +127,9 @@ public:
     Stage stage = Stage::GetCurrent();
     stage.SetBackgroundColor( Color::BLACK );
 
+    // Connect to the stage's key signal to allow Back and Escape to exit.
+    stage.KeyEventSignal().Connect( this, &RadialProgressController::OnKeyEvent );
+
     // 1. Create actor to show the effect
     mActor = Actor::New();
     mActor.SetAnchorPoint( AnchorPoint::CENTER );
@@ -283,6 +286,23 @@ public:
     return renderer;
   }
 
+  /**
+   * @brief Called when any key event is received
+   *
+   * Will use this to quit the application if Back or the Escape key is received
+   * @param[in] event The key event information
+   */
+  void OnKeyEvent( const KeyEvent& event )
+  {
+    if( event.state == KeyEvent::Down )
+    {
+      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
+  }
+
 private:
 
   Application&  mApplication;
@@ -290,20 +310,10 @@ private:
   Actor mActor;
 };
 
-void RunTest( Application& application )
-{
-  RadialProgressController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  RadialProgressController test( application );
+  application.MainLoop();
   return 0;
 }

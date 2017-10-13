@@ -451,20 +451,10 @@ private:
   Animation mRotateAnimation;                   ///< Animation for rotating between landscape and portrait.
 };
 
-void RunTest(Application& app)
-{
-  MotionBlurExampleApp test(app);
-
-  app.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
-
-  RunTest(app);
-
+  MotionBlurExampleApp test(app);
+  app.MainLoop();
   return 0;
 }

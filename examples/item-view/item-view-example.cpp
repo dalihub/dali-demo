@@ -994,18 +994,10 @@ private:
   LongPressGestureDetector mLongPressDetector;
 };
 
-void RunTest(Application& app)
-{
-  ItemViewExample test(app);
-
-  app.MainLoop();
-}
-
 int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
-
-  RunTest(app);
-
+  ItemViewExample test(app);
+  app.MainLoop();
   return 0;
 }

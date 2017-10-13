@@ -76,17 +76,11 @@ msgstr "Lights and Shadows"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "Mesh Line"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "Logging"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "Magnifier"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "Mesh Morph"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "Mesh Sorting"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Mesh Visual"
