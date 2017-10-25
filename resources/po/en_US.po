@@ -46,6 +46,9 @@ msgstr "Emoji Text"
 msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
 msgstr "Flexbox Playground"
 
+msgid "DALI_DEMO_STR_TITLE_IMAGE_POLICIES"
+msgstr "Image Policies"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "Image Fitting and Sampling"
 
