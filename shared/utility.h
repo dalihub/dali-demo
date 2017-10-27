@@ -29,9 +29,10 @@ namespace DemoHelper
 Dali::Texture LoadTexture( const char* imagePath,
                            Dali::ImageDimensions size = Dali::ImageDimensions(),
                            Dali::FittingMode::Type fittingMode = Dali::FittingMode::DEFAULT,
-                           Dali::SamplingMode::Type samplingMode = Dali::SamplingMode::DEFAULT )
+                           Dali::SamplingMode::Type samplingMode = Dali::SamplingMode::DEFAULT,
+                           bool orientationCorrection = true )
 {
-  Dali::Devel::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, fittingMode, samplingMode);
+  Dali::Devel::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, fittingMode, samplingMode, orientationCorrection );
   Dali::Texture texture  = Dali::Texture::New( Dali::TextureType::TEXTURE_2D,
                                                pixelBuffer.GetPixelFormat(),
                                                pixelBuffer.GetWidth(),

@@ -303,8 +303,11 @@ public:
 
       mShadowActive = ( shadowOffset == Vector2::ZERO ) ? false : true;
 
-      mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, shadowOffset );
-      mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, mSelectedColor );
+      Property::Map shadowMap;
+      shadowMap.Insert( "offset", shadowOffset );
+      shadowMap.Insert( "color", mSelectedColor );
+      shadowMap.Insert( "blurRadius", 2.0f );
+      mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
     }
     return true;
   }
