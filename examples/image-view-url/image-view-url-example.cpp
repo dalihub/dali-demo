@@ -57,8 +57,9 @@ const Vector2 TARGET_SIZE(800.f, 800.f);
 class ImageViewUrlApp : public ConnectionTracker
 {
 public:
-  ImageViewUrlApp( Application& application )
+  ImageViewUrlApp( Application& application, std::string url )
   : mApplication( application ),
+    mUrl( url ),
     mDeltaPropertyIndex( Property::INVALID_INDEX )
   {
     // Connect to the Application's Init signal
@@ -95,11 +96,17 @@ private:
                         Toolkit::Alignment::HorizontalRight,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
-    CreateRenderTask(  );
+    std::string url = mUrl;
+    if( url.empty() )
+    {
+      url = BIG_TEST_IMAGE;
+    }
+
+    CreateRenderTask( url );
     CreateScene( );
   }
 
-  void CreateRenderTask()
+  void CreateRenderTask( const std::string& url )
   {
     auto rootActor = Stage::GetCurrent().GetRootLayer();
 
@@ -110,7 +117,7 @@ private:
 
     {
       // create actor to render input with applied shader
-      mActorForInput = Toolkit::ImageView::New(BIG_TEST_IMAGE);
+      mActorForInput = Toolkit::ImageView::New( url );
       mActorForInput.SetParentOrigin(ParentOrigin::CENTER);
       mActorForInput.SetSize(TARGET_SIZE);
       Property::Map customShader;
@@ -191,6 +198,7 @@ private:
 
 private:
   Application&  mApplication;
+  std::string mUrl;
   Layer mContent;
   Toolkit::ImageView mImageView;
   Animation mAnimation;
@@ -202,7 +210,14 @@ private:
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-  ImageViewUrlApp test( application );
+
+  std::string url;
+  if( argc > 1 )
+  {
+    url = argv[1];
+  }
+
+  ImageViewUrlApp test( application, url );
   application.MainLoop();
   return 0;
 }
