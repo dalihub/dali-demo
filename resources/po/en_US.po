@@ -19,6 +19,12 @@ msgstr "Bubbles"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Buttons"
 
+msgid "DALI_DEMO_STR_TITLE_CALL_ACTIVE"
+msgstr "Call Incomming"
+
+msgid "DALI_DEMO_STR_TITLE_CARD_ACTIVE"
+msgstr "Card NFC Tag"
+
 msgid "DALI_DEMO_STR_TITLE_CLIPPING"
 msgstr "Clipping"
 

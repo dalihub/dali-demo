@@ -16,6 +16,12 @@ msgstr "방울"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "버튼"
 
+msgid "DALI_DEMO_STR_TITLE_CALL_ACTIVE"
+msgstr "통화 수신"
+
+msgid "DALI_DEMO_STR_TITLE_CARD_ACTIVE"
+msgstr "NFC 카드 태깅"
+
 msgid "DALI_DEMO_STR_TITLE_CLIPPING"
 msgstr "깎는"
 
