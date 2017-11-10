@@ -19,6 +19,8 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
+#include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 
 using namespace Dali;
 
@@ -142,7 +144,13 @@ class ImageViewController: public ConnectionTracker
       button2.SetName( s );
       mTable.AddChild( button2, Toolkit::TableView::CellPosition( CellPlacement::LOWER_BUTTON, x )  );
 
-      mImageViews[x] = Toolkit::ImageView::New( IMAGE_PATH[ 0 ] );
+      mImageViews[x] = Toolkit::ImageView::New( );
+      Property::Map imagePropertyMap;
+      imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
+      imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL,  IMAGE_PATH[ 0 ]  );
+      mImageViews[x].SetProperty(Toolkit::ImageView::Property::IMAGE , imagePropertyMap );
+
+
       mImageViews[x].SetParentOrigin( ParentOrigin::CENTER );
       mImageViews[x].SetAnchorPoint( AnchorPoint::CENTER );
       mImageViews[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -157,6 +165,15 @@ class ImageViewController: public ConnectionTracker
   }
 
 private:
+
+  void ImmediateLoadImage( const char* urlToLoad )
+  {
+    Property::Map imagePropertyMap;
+    imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
+    imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL, urlToLoad );
+    Toolkit::Visual::Base visual =  Toolkit::VisualFactory::Get().CreateVisual( imagePropertyMap );
+    visual.Reset();
+  }
 
   bool ToggleImageOnStage( Toolkit::Button button )
   {
@@ -184,7 +201,10 @@ private:
 
     if (  mImageViews[buttonIndex].OnStage() )
     {
-      mImageViews[buttonIndex].SetImage( IMAGE_PATH[ mImageViewImageIndexStatus[buttonIndex] ] );
+      Property::Map imagePropertyMap;
+      imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
+      imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL,  IMAGE_PATH[ mImageViewImageIndexStatus[buttonIndex] ]  );
+      mImageViews[buttonIndex].SetProperty(Toolkit::ImageView::Property::IMAGE , imagePropertyMap );
 
       ++mImageViewImageIndexStatus[buttonIndex];
 
