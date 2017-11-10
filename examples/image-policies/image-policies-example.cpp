@@ -98,6 +98,7 @@ class ImagePolicies: public ConnectionTracker
    * param[in] releasePolicy Which ReleasePolicy to use
    * param[in] synchronousLoading If the Image should be loaded synchronously
    * param[in] imageFilenameId Which image to load, referring to the array of filenames for this example.
+   * return An ImageView with the required set up
    */
   ImageView CreateImageView( bool correctionEnabled, DevelImageVisual::LoadPolicy::Type loadPolicy, DevelImageVisual::ReleasePolicy::Type releasePolicy, bool synchronousLoading, unsigned int imageFilenameId )
   {
@@ -120,6 +121,7 @@ class ImagePolicies: public ConnectionTracker
 
     return imageView;
   }
+
 
   /**
    * To prevent the next button being pressed before an Image has loaded the Button can br disabled.
@@ -185,7 +187,9 @@ class ImagePolicies: public ConnectionTracker
     dualImageViewTable.AddChild( immediate, TableView::CellPosition( 0, 1 ) );
     mTable.AddChild( dualImageViewTable, TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
 
+    DisableButtonWhilstLoading();
     mPersistantImageView = CreateImageView( true, DevelImageVisual::LoadPolicy::IMMEDIATE, DevelImageVisual::ReleasePolicy::DESTROYED, false, 4 );
+    mPersistantImageView.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
   }
 
   /**
