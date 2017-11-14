@@ -17,7 +17,6 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
-#include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include "shared/utility.h"
 
 using namespace Dali;
@@ -361,9 +360,9 @@ public:
     if( type == IMAGE_ARRAY )
     {
       map
-        .Add( Toolkit::DevelImageVisual::Property::BATCH_SIZE, 4 )
-        .Add( Toolkit::DevelImageVisual::Property::CACHE_SIZE, 10 )
-        .Add( Toolkit::DevelImageVisual::Property::FRAME_DELAY, 150 );
+        .Add( Toolkit::ImageVisual::Property::BATCH_SIZE, 4 )
+        .Add( Toolkit::ImageVisual::Property::CACHE_SIZE, 10 )
+        .Add( Toolkit::ImageVisual::Property::FRAME_DELAY, 150 );
     }
   }
 
@@ -377,7 +376,6 @@ private:
   ImageType mImageType;
 };
 
-// Entry point for Linux & Tizen applications
 //
 int DALI_EXPORT_API main( int argc, char **argv )
 {

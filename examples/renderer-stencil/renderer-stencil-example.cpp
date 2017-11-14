@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -753,29 +753,10 @@ private:
   Actor            mCubes[2];          ///< The cube object containers
 };
 
-
-/**
- * @brief Creates an instance of the example object and runs it.
- * @param[in] application The DALi application object
- */
-void RunExample( Application& application )
-{
-  RendererStencilExample example( application );
-
-  application.MainLoop();
-}
-
-/**
- * @brief Entry point for Linux & Tizen applications
- * @param[in] argc The executables argument count
- * @param[in] argv The executables argument vector
- * @return The executables exit code (0)
- */
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunExample( application );
-
+  RendererStencilExample example( application );
+  application.MainLoop();
   return 0;
 }

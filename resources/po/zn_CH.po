@@ -67,17 +67,11 @@ msgstr "阴影"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "线条"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "记录"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "放大鏡"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "网格变形"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "网格排序"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D模型"

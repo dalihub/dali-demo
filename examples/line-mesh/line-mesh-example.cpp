@@ -16,10 +16,7 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
-#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -246,7 +243,7 @@ public:
 
       radio.SetProperty( Toolkit::Button::Property::LABEL,
                                  Property::Map()
-                                  .Add( Toolkit::Visual::Property::TYPE, Toolkit::DevelVisual::TEXT )
+                                  .Add( Toolkit::Visual::Property::TYPE, Toolkit::Visual::TEXT )
                                   .Add( Toolkit::TextVisual::Property::TEXT, labels[i] )
                                   .Add( Toolkit::TextVisual::Property::TEXT_COLOR, Vector4( 0.8f, 0.8f, 0.8f, 1.0f ) )
                                );
@@ -394,20 +391,10 @@ private:
   int      mMaxIndexCount;
 };
 
-void RunTest( Application& application )
-{
-  ExampleController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & SLP applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  ExampleController test( application );
+  application.MainLoop();
   return 0;
 }

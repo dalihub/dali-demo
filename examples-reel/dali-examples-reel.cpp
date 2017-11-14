@@ -48,17 +48,17 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("flex-container.example", DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND));
   demo.AddExample(Example("focus-integration.example", DALI_DEMO_STR_TITLE_FOCUS_INTEGRATION));
   demo.AddExample(Example("gradients.example", DALI_DEMO_STR_TITLE_COLOR_GRADIENT));
+  demo.AddExample(Example("image-policies.example", DALI_DEMO_STR_TITLE_IMAGE_POLICIES));
   demo.AddExample(Example("image-scaling-and-filtering.example", DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING));
   demo.AddExample(Example("image-scaling-irregular-grid.example", DALI_DEMO_STR_TITLE_IMAGE_SCALING));
   demo.AddExample(Example("image-view.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW));
   demo.AddExample(Example("image-view-alpha-blending.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING));
   demo.AddExample(Example("image-view-pixel-area.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA));
   demo.AddExample(Example("image-view-svg.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG));
+  demo.AddExample(Example("image-view-url.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL));
   demo.AddExample(Example("line-mesh.example", DALI_DEMO_STR_TITLE_LINE_MESH));
-  demo.AddExample(Example("logging.example", DALI_DEMO_STR_TITLE_LOGGING));
   demo.AddExample(Example("magnifier.example", DALI_DEMO_STR_TITLE_MAGNIFIER));
   demo.AddExample(Example("mesh-morph.example", DALI_DEMO_STR_TITLE_MESH_MORPH));
-  demo.AddExample(Example("mesh-sorting.example", DALI_DEMO_STR_TITLE_MESH_SORTING));
   demo.AddExample(Example("motion-stretch.example", DALI_DEMO_STR_TITLE_MOTION_STRETCH));
   demo.AddExample(Example("native-image-source.example", DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE));
   demo.AddExample(Example("popup.example", DALI_DEMO_STR_TITLE_POPUP));
@@ -81,6 +81,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));
   demo.AddExample(Example("text-label-multi-language.example", DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE));
   demo.AddExample(Example("text-label-emojis.example", DALI_DEMO_STR_TITLE_EMOJI_TEXT));
+  demo.AddExample(Example("text-memory-profiling.example", DALI_DEMO_STR_TITLE_TEXT_MEMORY_PROFILING));
   demo.AddExample(Example("text-overlap.example", DALI_DEMO_STR_TITLE_TEXT_OVERLAP));
   demo.AddExample(Example("text-scrolling.example", DALI_DEMO_STR_TITLE_TEXT_SCROLLING));
   demo.AddExample(Example("remote-image-loading.example", DALI_DEMO_STR_TITLE_REMOTE_IMAGE));

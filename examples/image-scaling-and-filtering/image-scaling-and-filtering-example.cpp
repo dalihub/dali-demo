@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
-#include <dali-toolkit/public-api/visuals/image-visual-properties.h>
 #include "shared/view.h"
 #include <iostream>
 
@@ -724,19 +723,10 @@ private:
 
 };
 
-void RunTest( Application& application )
-{
-  ImageScalingAndFilteringController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  ImageScalingAndFilteringController test( application );
+  application.MainLoop();
   return 0;
 }

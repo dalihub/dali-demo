@@ -103,11 +103,11 @@
 	<ui-application appid="text-fonts.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-fonts.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Fonts</label>
 	</ui-application>
+	<ui-application appid="text-memory-profiling.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-memory-profiling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Memory Profiling</label>
+	</ui-application>
 	<ui-application appid="text-scrolling.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-scrolling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Scrolling</label>
-	</ui-application>
-	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Logging</label>
 	</ui-application>
 	<ui-application appid="animated-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Animated shapes</label>
@@ -238,6 +238,8 @@
 	<ui-application appid="property-notification.example" exec="/usr/apps/com.samsung.dali-demo/bin/property-notification.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Property Notification</label>
 	</ui-application>
+	<ui-application appid="image-policies.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-policies.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+		<label>Image Policies</label></ui-application>
 	<privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
 		<privilege>http://tizen.org/privilege/externalstorage</privilege>

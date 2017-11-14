@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
-#include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <cstring>
 
 using namespace Dali;
@@ -112,17 +110,17 @@ private:
     Property::Map map;
     map.Add( Toolkit::Visual::Property::TYPE, Toolkit::Visual::Type::IMAGE );
     map.Add( Toolkit::ImageVisual::Property::URL, image );
-    map.Add( Toolkit::DevelImageVisual::Property::ALPHA_MASK_URL, mask );
+    map.Add( Toolkit::ImageVisual::Property::ALPHA_MASK_URL, mask );
 
     if( mImageCombinationIndex%2 == 0 )
     {
-      map.Add( Toolkit::DevelImageVisual::Property::MASK_CONTENT_SCALE, 1.f );
-      map.Add( Toolkit::DevelImageVisual::Property::CROP_TO_MASK, false );
+      map.Add( Toolkit::ImageVisual::Property::MASK_CONTENT_SCALE, 1.f );
+      map.Add( Toolkit::ImageVisual::Property::CROP_TO_MASK, false );
     }
     else
     {
-      map.Add( Toolkit::DevelImageVisual::Property::MASK_CONTENT_SCALE, 1.6f );
-      map.Add( Toolkit::DevelImageVisual::Property::CROP_TO_MASK, true );
+      map.Add( Toolkit::ImageVisual::Property::MASK_CONTENT_SCALE, 1.6f );
+      map.Add( Toolkit::ImageVisual::Property::CROP_TO_MASK, true );
     }
 
     mImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
@@ -152,20 +150,10 @@ private:
   int mImageCombinationIndex;
 };
 
-void RunTest( Application& application )
-{
-  ImageViewAlphaBlendApp test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  ImageViewAlphaBlendApp test( application );
+  application.MainLoop();
   return 0;
 }

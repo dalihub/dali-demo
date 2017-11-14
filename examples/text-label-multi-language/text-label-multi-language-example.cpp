@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -134,19 +134,10 @@ private:
   float          mLastPoint;
 };
 
-void RunTest( Application& application )
-{
-  TextLabelMultiLanguageExample test( application );
-
-  application.MainLoop();
-}
-
-/** Entry point for Linux & Tizen applications */
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  TextLabelMultiLanguageExample test( application );
+  application.MainLoop();
   return 0;
 }

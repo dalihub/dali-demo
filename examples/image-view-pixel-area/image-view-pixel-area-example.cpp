@@ -234,20 +234,10 @@ private:
   unsigned int mIndex;
 };
 
-void RunTest( Application& application )
-{
-  ImageViewPixelAreaApp test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  ImageViewPixelAreaApp test( application );
+  application.MainLoop();
   return 0;
 }

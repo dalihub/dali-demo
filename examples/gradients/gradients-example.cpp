@@ -78,7 +78,7 @@ public:
 
 // ---- Gradient for background
 
-    mGradientMap.Insert( Visual::Property::TYPE,  Visual::GRADIENT );
+    mGradientMap.Insert( Toolkit::Visual::Property::TYPE,  Visual::GRADIENT );
 
     Property::Array stopOffsets;
     stopOffsets.PushBack( 0.0f );
@@ -161,20 +161,10 @@ private:
   unsigned mIndex;
 };
 
-void RunTest( Application& application )
-{
-  GradientController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  GradientController test( application );
+  application.MainLoop();
   return 0;
 }

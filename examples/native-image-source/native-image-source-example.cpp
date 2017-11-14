@@ -18,8 +18,6 @@
 // EXTERNAL INCLUDES
 #include <dali/dali.h>
 #include <dali/devel-api/images/native-image-interface-extension.h>
-#include <dali/public-api/rendering/renderer.h>
-#include <dali/public-api/rendering/frame-buffer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <cstring>
 
@@ -434,20 +432,10 @@ private:
   bool mRefreshAlways;
 };
 
-void RunTest( Application& application )
-{
-  NativeImageSourceController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  NativeImageSourceController test( application );
+  application.MainLoop();
   return 0;
 }

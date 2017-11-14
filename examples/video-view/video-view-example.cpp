@@ -352,20 +352,10 @@ private:
   Property::Map mNativeImageTarget;
 };
 
-void RunTest( Application& application )
-{
-  VideoViewController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  VideoViewController test( application );
+  application.MainLoop();
   return 0;
 }

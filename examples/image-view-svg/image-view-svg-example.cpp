@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,8 +123,8 @@ public:
     mPinchGestureDetector.Attach( mStageBackground);
     mPinchGestureDetector.DetectedSignal().Connect(this, &ImageSvgController::OnPinch);
 
-    DevelActor::RaiseToTop(changeButton);
-    DevelActor::RaiseToTop(resetButton);
+    changeButton.RaiseToTop();
+    resetButton.RaiseToTop();
   }
 
   // Callback of push button, for changing image set
@@ -232,20 +232,10 @@ private:
   unsigned int        mIndex;
 };
 
-void RunTest( Application& application )
-{
-  ImageSvgController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  ImageSvgController test( application );
+  application.MainLoop();
   return 0;
 }

@@ -46,6 +46,9 @@ msgstr "Emoji Text"
 msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
 msgstr "Flexbox Playground"
 
+msgid "DALI_DEMO_STR_TITLE_IMAGE_POLICIES"
+msgstr "Image Policies"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "Image Fitting and Sampling"
 
@@ -64,6 +67,9 @@ msgstr "Image View Pixel Area"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
 msgstr "Image View SVG"
 
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL"
+msgstr "Image View URL"
+
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "Item View"
 
@@ -73,17 +79,11 @@ msgstr "Lights and Shadows"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "Mesh Line"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "Logging"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "Magnifier"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "Mesh Morph"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "Mesh Sorting"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Mesh Visual"
@@ -150,6 +150,9 @@ msgstr "Text Field"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
 msgstr "Text Label"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_MEMORY_PROFILING"
+msgstr "Text Memory Profiling"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_OVERLAP"
 msgstr "Text Overlap"

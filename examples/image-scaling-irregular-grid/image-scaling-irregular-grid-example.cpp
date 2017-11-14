@@ -477,7 +477,7 @@ public:
       image.SetPosition( Vector3( imagePosition.x, imagePosition.y, 0 ) );
       image.SetSize( imageSize );
       image.TouchSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
-      Toolkit::DevelControl::ResourceReadySignal( image).Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal);
+      image.ResourceReadySignal().Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal );
       mFittingModes[image.GetId()] = fittingMode;
       mResourceUrls[image.GetId()] = imageSource.configuration.path;
       mSizes[image.GetId()] = imageSize;
@@ -644,19 +644,10 @@ private:
   unsigned int mImagesLoaded;         ///< How many images have been loaded
 };
 
-void RunTest( Application& application )
-{
-  ImageScalingIrregularGridController test( application );
-
-  application.MainLoop();
-}
-
-/** Entry point for Linux & Tizen applications */
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  ImageScalingIrregularGridController test( application );
+  application.MainLoop();
   return 0;
 }

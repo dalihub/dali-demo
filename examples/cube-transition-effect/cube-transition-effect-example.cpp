@@ -413,7 +413,6 @@ void CubeTransitionApp::OnKeyEvent(const KeyEvent& event)
   }
 }
 
-// Entry point for Linux & Tizen applications
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );

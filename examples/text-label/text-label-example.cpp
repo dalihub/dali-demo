@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 // EXTERNAL INCLUDES
 #include <dali/devel-api/object/handle-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
-#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
+#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
 
@@ -38,6 +38,16 @@ using namespace MultiLanguageStrings;
 namespace
 {
 const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "grab-handle.png";
+const char* const STYLES_IMAGE = DEMO_IMAGE_DIR "FontStyleButton_Main.png";
+const char* const TICK_IMAGE_IMAGE = DEMO_IMAGE_DIR "FontStyleButton_OK_02.png";
+const char* const STYLE_SELECTED_IMAGE = DEMO_IMAGE_DIR "FontStyleButton_OK_03.png";
+
+const char* BUTTON_IMAGES[] =
+{
+  DEMO_IMAGE_DIR "FontStyleButton_Colour.png",
+  DEMO_IMAGE_DIR "FontStyleButton_Outline.png",
+  DEMO_IMAGE_DIR "FontStyleButton_Shadow.png"
+};
 
 const unsigned int KEY_ZERO = 10;
 const unsigned int KEY_ONE = 11;
@@ -70,6 +80,24 @@ const char* V_ALIGNMENT_STRING_TABLE[] =
 
 const unsigned int V_ALIGNMENT_STRING_COUNT = sizeof( V_ALIGNMENT_STRING_TABLE ) / sizeof( V_ALIGNMENT_STRING_TABLE[0u] );
 
+enum StyleType
+{
+  TEXT_COLOR = 0,
+  OUTLINE,
+  SHADOW,
+  NUMBER_OF_STYLES
+};
+
+const Vector4 AVAILABLE_COLORS[] =
+{
+  Color::GREEN,
+  Color::BLUE,
+  Color::RED,
+  Color::CYAN
+};
+
+const unsigned int NUMBER_OF_COLORS = sizeof( AVAILABLE_COLORS ) / sizeof( AVAILABLE_COLORS[0u] );
+
 int ConvertToEven(int value)
 {
   return (value % 2 == 0) ? value : (value + 1);
@@ -101,6 +129,12 @@ struct HSVColorConstraint
   float value;
 };
 
+const float STYLE_BUTTON_POSTION_RELATIVE_TO_STAGE = 0.9f;
+const float BUTTON_SIZE_RATIO_TO_STAGE = 0.1f;
+const float OUTLINE_WIDTH = 2.0f;
+const Vector2 SHADOW_OFFSET = Vector2( 2.0f, 2.0f );
+
+
 } // anonymous namespace
 
 /**
@@ -113,6 +147,9 @@ public:
   TextLabelExample( Application& application )
   : mApplication( application ),
     mLabel(),
+    mShadowActive( false ),
+    mOutlineActive( false ),
+    mSelectedColor(AVAILABLE_COLORS[0]),
     mContainer(),
     mGrabCorner(),
     mBorder(),
@@ -122,6 +159,7 @@ public:
     mAlignment( 0u ),
     mHueAngleIndex( Property::INVALID_INDEX ),
     mOverrideMixColorIndex( Property::INVALID_INDEX )
+
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &TextLabelExample::Create );
@@ -140,12 +178,14 @@ public:
     Stage stage = Stage::GetCurrent();
 
     stage.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
-    Vector2 stageSize = stage.GetSize();
+    mStageSize = stage.GetSize();
+
+    mButtonSize = Size( mStageSize.height * 0.1, mStageSize.height * 0.1 ); // Button size 1/10 of stage height
 
     mContainer = Control::New();
     mContainer.SetName( "Container" );
     mContainer.SetParentOrigin( ParentOrigin::CENTER );
-    mLayoutSize = Vector2(stageSize.width*0.6f, stageSize.width*0.6f);
+    mLayoutSize = Vector2(mStageSize.width*0.6f, mStageSize.width*0.6f);
     mContainer.SetSize( mLayoutSize );
     mContainer.SetDrawMode( DrawMode::OVERLAY_2D );
     stage.Add( mContainer );
@@ -162,17 +202,26 @@ public:
     mPanGestureDetector.Attach( mGrabCorner );
     mPanGestureDetector.DetectedSignal().Connect( this, &TextLabelExample::OnPan );
 
-    mLabel = TextLabel::New( "A Quick Brown Fox Jumps Over The Lazy Dog" );
+    mLabel = TextLabel::New( "\xF0\x9F\x98\x89 A Quick Brown Fox Jumps Over The Lazy Dog" );
 
     mLabel.SetName( "TextLabel" );
     mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     mLabel.SetSize(mLayoutSize);
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    mLabel.SetProperty( DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE, Color::GREEN );
-    mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
-    mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+    mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::GREEN );
     mLabel.SetBackgroundColor( Color::WHITE );
     mContainer.Add( mLabel );
+
+    // Create style activate button
+    mStyleMenuButton = PushButton::New();
+    mStyleMenuButton.SetPosition( mButtonSize.width, mStageSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_STAGE );
+    mStyleMenuButton.SetSize( mButtonSize );
+    mStyleMenuButton.SetProperty( Button::Property::TOGGLABLE, true );
+    mStyleMenuButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, STYLES_IMAGE );
+    mStyleMenuButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, TICK_IMAGE_IMAGE );
+
+    mStyleMenuButton.ClickedSignal().Connect( this, &TextLabelExample::OnStyleButtonClicked );
+    stage.Add( mStyleMenuButton );
 
     // Add a border for the container so you can see the container is being resized while grabbing the handle.
     mBorder = Control::New();
@@ -181,14 +230,14 @@ public:
     mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
 
     Dali::Property::Map border;
-    border.Insert( Visual::Property::TYPE,  Visual::BORDER );
+    border.Insert( Toolkit::Visual::Property::TYPE,  Visual::BORDER );
     border.Insert( BorderVisual::Property::COLOR,  Color::WHITE );
     border.Insert( BorderVisual::Property::SIZE,  2.f );
     mBorder.SetProperty( Control::Property::BACKGROUND, border );
     mContainer.Add( mBorder );
     mBorder.SetVisible(false);
 
-    DevelActor::RaiseToTop(mGrabCorner);
+    mGrabCorner.RaiseToTop();
 
     mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
     Renderer bgRenderer = mLabel.GetRendererAt(0);
@@ -204,14 +253,147 @@ public:
     anim.SetLooping(true);
     anim.Play();
 
-    // Animate the text color 3 times from source color to RED
+    // Animate the text color 3 times from source color to Yellow
     Animation animation = Animation::New( 2.f );
-    animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::YELLOW, AlphaFunction::SIN );
+    animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), Color::YELLOW, AlphaFunction::SIN );
     animation.SetLoopCount( 3 );
     animation.Play();
 
     Property::Value labelText = mLabel.GetProperty( TextLabel::Property::TEXT );
     std::cout << "Displaying text: \"" << labelText.Get< std::string >() << "\"" << std::endl;
+  }
+
+  // Depending on button pressed, apply the style to the text label
+  bool OnStyleSelected( Toolkit::Button button )
+  {
+    if( button == mStyleButtons[ StyleType::TEXT_COLOR ] )
+    {
+      Animation animation = Animation::New( 2.f );
+      animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), mSelectedColor, AlphaFunction::LINEAR );
+      animation.Play();
+    }
+    else if( button == mStyleButtons[ StyleType::OUTLINE ] )
+    {
+      Property::Map outlineMap;
+      float outlineWidth = OUTLINE_WIDTH;
+
+      if( mOutlineActive )
+      {
+        outlineWidth = ( mOutlineColor == mSelectedColor ) ? 0.0f : OUTLINE_WIDTH ;  // toggles outline on/off
+      }
+      mOutlineActive = ( outlineWidth > 0.0f ) ? true : false;
+
+      mOutlineColor = mSelectedColor;
+      outlineMap["color"] = mOutlineColor;
+      outlineMap["width"] = outlineWidth;
+      mLabel.SetProperty( TextLabel::Property::OUTLINE, outlineMap );
+    }
+    else if( button == mStyleButtons[ StyleType::SHADOW ] )
+    {
+      Vector2 shadowOffset( SHADOW_OFFSET ); // Will be set to zeros if color already set
+      Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW_COLOR  );
+      Vector4 currentShadowColor;
+      value.Get( currentShadowColor );
+
+      if ( mShadowActive )
+      {
+        // toggle shadow off ( zero offset ) if color is already set
+        shadowOffset = ( currentShadowColor == mSelectedColor ) ? Vector2::ZERO : Vector2( SHADOW_OFFSET );
+      }
+
+      mShadowActive = ( shadowOffset == Vector2::ZERO ) ? false : true;
+
+      Property::Map shadowMap;
+      shadowMap.Insert( "offset", shadowOffset );
+      shadowMap.Insert( "color", mSelectedColor );
+      shadowMap.Insert( "blurRadius", 2.0f );
+      mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+    }
+    return true;
+  }
+
+  bool OnColorSelected( Toolkit::Button button )
+  {
+    for( unsigned int index = 0; index < NUMBER_OF_COLORS; index++)
+    {
+      if ( mColorButtons[index] == button )
+      {
+        mSelectedColor = AVAILABLE_COLORS[ index ];
+        return true;
+      }
+    }
+    return true;
+  }
+
+  void ShowColorButtons()
+  {
+    for( unsigned int index = 0; index < NUMBER_OF_COLORS; index++)
+    {
+      mColorButtons[index] = RadioButton::New();
+      mColorButtons[index].SetPosition( mButtonSize.width, mStageSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_STAGE - ( mButtonSize.width * (index+1) ) );
+      mColorButtons[index].SetSize( mButtonSize );
+      mColorButtons[index].ClickedSignal().Connect( this, &TextLabelExample::OnColorSelected );
+      mColorButtons[index].SetProperty( Button::Property::TOGGLABLE, true );
+      Property::Map propertyMap;
+      propertyMap.Insert(Visual::Property::TYPE,  Visual::COLOR);
+      propertyMap.Insert(ColorVisual::Property::MIX_COLOR, AVAILABLE_COLORS[ index ]);
+      mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, propertyMap );
+      mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::UNSELECTED_VISUAL, propertyMap );
+
+      propertyMap.Insert(Visual::Property::TYPE,  Visual::COLOR);
+      propertyMap.Insert(ColorVisual::Property::MIX_COLOR, AVAILABLE_COLORS[ index ]);
+      mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, propertyMap );
+
+      mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_VISUAL,
+                          Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::BORDER )
+                                         .Add( BorderVisual::Property::COLOR, Color::WHITE )
+                                         .Add( BorderVisual::Property::SIZE, 2.0f )
+                                         .Add( BorderVisual::Property::ANTI_ALIASING, true ) );
+
+      Stage::GetCurrent().Add( mColorButtons[index] );
+    }
+  }
+
+
+  void HideColorButtons()
+  {
+    for( unsigned int index = 0; index < NUMBER_OF_COLORS; index++)
+    {
+       UnparentAndReset( mColorButtons[index] );
+    }
+  }
+
+  void HideStyleButtons()
+  {
+    for( unsigned int index = 0; index < NUMBER_OF_STYLES; index++)
+    {
+       UnparentAndReset( mStyleButtons[index] );
+    }
+  }
+
+  bool OnStyleButtonClicked( Toolkit::Button button )
+  {
+    if ( button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>() )
+    {
+      for ( unsigned int index = 0; index < NUMBER_OF_STYLES; index++ )
+      {
+        mStyleButtons[index] = PushButton::New();
+        mStyleButtons[index].SetPosition( mButtonSize.width + ( mButtonSize.width * (index+1) ), mStageSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_STAGE );
+        mStyleButtons[index].SetSize( mButtonSize );
+        mStyleButtons[index].SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGES[ index ] );
+        mStyleButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, STYLE_SELECTED_IMAGE );
+        mStyleButtons[index].ClickedSignal().Connect( this, &TextLabelExample::OnStyleSelected );
+        Stage::GetCurrent().Add( mStyleButtons[index] );
+      }
+      ShowColorButtons();
+    }
+    else
+    {
+      // hide menu and colors
+      HideColorButtons();
+      HideStyleButtons();
+    }
+    return true;
   }
 
   // Resize the text-label with pan gesture
@@ -240,6 +422,9 @@ public:
     if( mLayoutSize.x >= 2.0f ||
         mLayoutSize.y >= 2.0f )
     {
+      mLayoutSize.x = std::min ( mLayoutSize.x, mStageSize.width );
+      mLayoutSize.y = std::min ( mLayoutSize.y, mStageSize.height*.9f );
+
       // Avoid pixel mis-alignment issue
       Vector2 clampedSize = Vector2( std::max( ConvertToEven( static_cast<int>( mLayoutSize.x )), 2 ),
                                      std::max( ConvertToEven( static_cast<int>( mLayoutSize.y )), 2 ) );
@@ -280,7 +465,7 @@ public:
           case KEY_A: // Animate text colour
           {
             Animation animation = Animation::New( 2.f );
-            animation.AnimateTo( Property( mLabel, DevelTextLabel::Property::TEXT_COLOR_ANIMATABLE ), Color::RED, AlphaFunction::SIN );
+            animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), Color::RED, AlphaFunction::SIN );
             animation.SetLoopCount( 3 );
             animation.Play();
             break;
@@ -375,6 +560,14 @@ private:
 
   TextLabel mLabel;
 
+  PushButton mStyleMenuButton;
+  PushButton mStyleButtons[ NUMBER_OF_STYLES ];
+  bool mShadowActive;
+  bool mOutlineActive;
+  Vector4 mSelectedColor;
+  Vector4 mOutlineColor; // Store outline as Vector4 whilst TextLabel Outline Property returns a string when using GetProperty
+  Button mColorButtons[ NUMBER_OF_COLORS ];
+
   Control mContainer;
   Control mGrabCorner;
   Control mBorder;
@@ -383,25 +576,19 @@ private:
 
   Vector2 mLayoutSize;
 
+  Size mStageSize;
+  Size mButtonSize;
+
   unsigned int mLanguageId;
   unsigned int mAlignment;
   Property::Index mHueAngleIndex;
   Property::Index mOverrideMixColorIndex;
 };
 
-void RunTest( Application& application )
-{
-  TextLabelExample test( application );
-
-  application.MainLoop();
-}
-
-/** Entry point for Linux & Tizen applications */
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  TextLabelExample test( application );
+  application.MainLoop();
   return 0;
 }
