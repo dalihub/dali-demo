@@ -16,9 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/public-api/object/property-map.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
-#include <dali-toolkit/public-api/controls/slider/slider.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -353,8 +351,11 @@ public:
 
     //Visual map for model
     mVisualMap.Clear();
-    mVisualMap[ Visual::Property::TYPE           ] = Visual::PRIMITIVE;
+    mVisualMap[ Toolkit::Visual::Property::TYPE           ] = Visual::PRIMITIVE;
     mVisualMap[ PrimitiveVisual::Property::MIX_COLOR ] = mColor;
+    mVisualMap[ Visual::Property::TRANSFORM ] =
+        Property::Map().Add( Visual::Transform::Property::ORIGIN, Align::CENTER )
+                       .Add( Visual::Transform::Property::ANCHOR_POINT, Align::CENTER );
   }
 
   //Sets the 3D model to a sphere and modifies the sliders appropriately.
@@ -705,20 +706,10 @@ private:
   Vector2                   mRotation;              ///< Keeps track of model rotation.
 };
 
-void RunTest( Application& application )
-{
-  PrimitiveShapesController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  PrimitiveShapesController test( application );
+  application.MainLoop();
   return 0;
 }

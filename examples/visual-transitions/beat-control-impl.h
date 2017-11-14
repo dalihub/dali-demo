@@ -2,7 +2,7 @@
 #define DALI_DEMO_INTERNAL_BEAT_CONTROL_IMPL_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-base.h>
 #include <dali-toolkit/devel-api/visual-factory/transition-data.h>
+#include <dali-toolkit/public-api/align-enumerations.h>
 
 namespace Demo
 {
@@ -128,6 +129,8 @@ private:
   Dali::Animation mYAnimation;
   Dali::Animation mFadeAnimation;
   Dali::Vector2 mTransformSize;
+  Dali::Toolkit::Align::Type mTransformOrigin;
+  Dali::Toolkit::Align::Type mTransformAnchorPoint;
   int mAnimationPlaying;
 };
 

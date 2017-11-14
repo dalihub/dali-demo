@@ -67,17 +67,11 @@ msgstr "ছাঁয়া"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "অঁকোৱা-পকোৱা"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "Logging"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "পৰিবৰ্দ্ধক"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "মেশ অঙ্কুৰিত"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "মেশ অসংযোগ"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D অনুগামী"
@@ -171,3 +165,6 @@ msgstr "রে মার্চিং"
 
 msgid "DALI_DEMO_STR_TITLE_SKYBOX"
 msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

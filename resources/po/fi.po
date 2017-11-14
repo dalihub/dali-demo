@@ -67,17 +67,11 @@ msgstr "Valot ja Varjot"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "Viivapolygoniverkko"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "Loggaus"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "Suurennuslasi"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "Polygoniverkon Muodonmuutos"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "Polygoniverkon Lajittelu"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Polygoniverkkovisuaali"
@@ -171,3 +165,6 @@ msgstr "Ray marssi"
 
 msgid "DALI_DEMO_STR_TITLE_SKYBOX"
 msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

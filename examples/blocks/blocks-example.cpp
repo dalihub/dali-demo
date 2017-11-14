@@ -862,18 +862,10 @@ private:
   int mBrickCount;                                      ///< Total bricks on screen.
 };
 
-void RunTest(Application& app)
-{
-  ExampleController test(app);
-
-  app.MainLoop();
-}
-
 int DALI_EXPORT_API main(int argc, char **argv)
 {
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
-
-  RunTest(app);
-
+  ExampleController test(app);
+  app.MainLoop();
   return 0;
 }

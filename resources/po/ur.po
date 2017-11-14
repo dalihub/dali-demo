@@ -67,17 +67,11 @@ msgstr "روشنی اور سائے"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "لکیریں"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "لاگنگ"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "مکبر"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "میش کی تبدیلی"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "میش کی چھنٹائی"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D میش"
@@ -171,3 +165,6 @@ msgstr "رے چلتے"
 
 msgid "DALI_DEMO_STR_TITLE_SKYBOX"
 msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

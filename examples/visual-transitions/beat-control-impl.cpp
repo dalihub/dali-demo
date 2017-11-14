@@ -16,13 +16,8 @@
 
 #include "beat-control-impl.h"
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali-toolkit/devel-api/align-enums.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
-
-#include <cstdio>
 
 using namespace Dali; // Needed for macros
 using namespace Dali::Toolkit;
@@ -60,13 +55,18 @@ Toolkit::TransitionData ConvertPropertyToTransition( const Property::Value& valu
 {
   Toolkit::TransitionData transitionData;
 
-  if( value.GetType() == Property::ARRAY )
+  const Property::Array* array = value.GetArray();
+  if( array )
   {
-    transitionData = Toolkit::TransitionData::New( *value.GetArray());
+    transitionData = Toolkit::TransitionData::New( *array );
   }
-  else if( value.GetType() == Property::MAP )
+  else
   {
-    transitionData = Toolkit::TransitionData::New( *value.GetMap() );
+    const Property::Map* map = value.GetMap();
+    if( map )
+    {
+      transitionData = Toolkit::TransitionData::New( *map );
+    }
   }
   return transitionData;
 }
@@ -77,6 +77,8 @@ Toolkit::TransitionData ConvertPropertyToTransition( const Property::Value& valu
 Internal::BeatControl::BeatControl()
 : Control( ControlBehaviour( REQUIRES_STYLE_CHANGE_SIGNALS ) ),
   mTransformSize(1.0f, 1.0f),
+  mTransformOrigin(Align::CENTER),
+  mTransformAnchorPoint(Align::CENTER),
   mAnimationPlaying(0)
 {
 }
@@ -208,7 +210,9 @@ void BeatControl::RelayoutVisuals( const Vector2& targetSize )
       Property::Map transformMap;
       // Make the visual half the size of the control, but leave
       // origin and anchor point at center, position is relative, but Zer0
-      transformMap[ DevelVisual::Transform::Property::SIZE ] = mTransformSize;
+      transformMap[ Visual::Transform::Property::SIZE ] = mTransformSize;
+      transformMap[ Visual::Transform::Property::ORIGIN ] = mTransformOrigin;
+      transformMap[ Visual::Transform::Property::ANCHOR_POINT ] = mTransformAnchorPoint;
       mVisual.SetTransformAndSize( transformMap, size );
     }
   }
@@ -249,31 +253,60 @@ void BeatControl::SetProperty( BaseObject* object, Property::Index index, const 
     {
       case Demo::BeatControl::Property::BEAT_VISUAL:
       {
-        bool sizeOnly = false;
+        bool sizeAndPositionOnly = false;
 
         // Determine if a transform.size property exists in the map, and
         // save it.
         Property::Map* map = value.GetMap();
         if( map )
         {
-          Property::Value* value = map->Find( DevelVisual::Property::TRANSFORM, "transform" );
+          Property::Value* value = map->Find( Visual::Property::TRANSFORM, "transform" );
           if( value )
           {
             Property::Map* transformMap = value->GetMap();
             if( transformMap )
             {
-              Property::Value* sizeValue = transformMap->Find( DevelVisual::Transform::Property::SIZE, "size" );
+              // We'll increment this whenever SIZE, ORIGIN or ANCHOR_POINT's are modified as we won't need to create a new visual if only these properties are used
+              // If there are more properties in the transform map, then we need to create a new visual
+              unsigned int sizeAndPositionPropertyCount = 0;
+
+              Property::Value* sizeValue = transformMap->Find( Visual::Transform::Property::SIZE, "size" );
               if( sizeValue )
               {
                 sizeValue->Get( impl.mTransformSize );
-                if( map->Count() == 1 && transformMap->Count() == 1 )
+                ++sizeAndPositionPropertyCount;
+              }
+
+              Property::Value* originValue = transformMap->Find( Visual::Transform::Property::ORIGIN, "origin" );
+              if( originValue )
+              {
+                int intValue = 0;
+                if( originValue->Get( intValue ) )
                 {
-                  sizeOnly = true;
+                  impl.mTransformOrigin = static_cast< Toolkit::Align::Type >( intValue );
+                  ++sizeAndPositionPropertyCount;
                 }
+              }
+
+              Property::Value* anchorPointValue = transformMap->Find( Visual::Transform::Property::ANCHOR_POINT, "anchorPoint" );
+              if( anchorPointValue )
+              {
+                int intValue = 0;
+                if( anchorPointValue->Get( intValue ) )
+                {
+                  impl.mTransformAnchorPoint = static_cast< Toolkit::Align::Type >( intValue );
+                  ++sizeAndPositionPropertyCount;
+                }
+              }
+
+              // If the only properties that the application is overriding are the size and the position properties, then we do not need to create another visual.
+              if( map->Count() == 1 && transformMap->Count() == sizeAndPositionPropertyCount )
+              {
+                sizeAndPositionOnly = true;
               }
             }
           }
-          if( ! sizeOnly )
+          if( ! sizeAndPositionOnly )
           {
             // Only register a visual if there is more than just a size setting
             impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual( *map );

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,7 +114,7 @@ public:
     background.SetParentOrigin( Dali::ParentOrigin::CENTER );
     background.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
     Dali::Property::Map map;
-    map.Insert( Visual::Property::TYPE,  Visual::GRADIENT );
+    map.Insert( Toolkit::Visual::Property::TYPE,  Visual::GRADIENT );
     Property::Array stopOffsets;
     stopOffsets.PushBack( 0.0f );
     stopOffsets.PushBack( 1.0f );
@@ -460,16 +460,10 @@ private:
 
 };
 
-void RunTest( Application& application )
-{
-  AnimatedShapesExample test( application );
-  application.MainLoop();
-}
-
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-  RunTest( application );
-
+  AnimatedShapesExample test( application );
+  application.MainLoop();
   return 0;
 }

@@ -49,6 +49,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("shadows-and-lights.example", DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS));
   demo.AddExample(Example("sparkle.example", DALI_DEMO_STR_TITLE_SPARKLE));
   demo.AddExample(Example("rendering-skybox.example", DALI_DEMO_STR_TITLE_SKYBOX));
+  demo.AddExample(Example("rendering-basic-pbr.example", DALI_DEMO_STR_TITLE_PBR));
 
   demo.SortAlphabetically( true );
 

@@ -47,6 +47,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <iostream>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 
 // INTERNAL INCLUDES
 #include "grid-flags.h"
@@ -166,7 +167,7 @@ const char* IMAGE_PATHS[] = {
   NULL
 };
 const unsigned NUM_IMAGE_PATHS = sizeof(IMAGE_PATHS) / sizeof(IMAGE_PATHS[0]) - 1u;
-
+const unsigned int INITIAL_IMAGES_TO_LOAD = 10;
 
 
 /**
@@ -260,7 +261,8 @@ public:
 
   ImageScalingIrregularGridController( Application& application )
   : mApplication( application ),
-    mScrolling( false )
+    mScrolling( false ),
+    mImagesLoaded( 0 )
   {
     std::cout << "ImageScalingIrregularGridController::ImageScalingIrregularGridController" << std::endl;
 
@@ -272,6 +274,21 @@ public:
   {
     // Nothing to do here.
   }
+
+  /**
+   * Called everytime an ImageView has loaded it's image
+   */
+  void ResourceReadySignal( Toolkit::Control control )
+  {
+    mImagesLoaded++;
+    // To allow fast startup, we only place a small number of ImageViews on stage first
+    if ( mImagesLoaded == INITIAL_IMAGES_TO_LOAD )
+    {
+      // Adding the ImageViews to the stage will trigger loading of the Images
+      mGridActor.Add( mOffStageImageViews );
+    }
+  }
+
 
   /**
    * One-time setup in response to Application InitSignal.
@@ -305,6 +322,11 @@ public:
     mToolBar.AddControl( toggleScalingButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     SetTitle( APPLICATION_TITLE );
+
+    mOffStageImageViews = Actor::New();
+    mOffStageImageViews.SetAnchorPoint( AnchorPoint::CENTER );
+    mOffStageImageViews.SetParentOrigin(ParentOrigin::CENTER);
+    mOffStageImageViews.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Build the main content of the widow:
     PopulateContentLayer( DEFAULT_SCALING_MODE );
@@ -442,8 +464,9 @@ public:
     outFieldHeight = actualGridHeight * cellHeight;
     const Vector2 gridOrigin = Vector2( -fieldWidth * 0.5f, -outFieldHeight * 0.5 );
 
+     unsigned int count = 0;
     // Build the image actors in their right locations in their parent's frame:
-    for( std::vector<PositionedImage>::const_iterator i = placedImages.begin(), end = placedImages.end(); i != end; ++i )
+    for( std::vector<PositionedImage>::const_iterator i = placedImages.begin(), end = placedImages.end(); i != end; ++i, ++count )
     {
       const PositionedImage& imageSource = *i;
       const Vector2 imageSize = imageSource.imageGridDims * cellSize - Vector2( GRID_CELL_PADDING * 2, GRID_CELL_PADDING * 2 );
@@ -454,11 +477,20 @@ public:
       image.SetPosition( Vector3( imagePosition.x, imagePosition.y, 0 ) );
       image.SetSize( imageSize );
       image.TouchSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
+      image.ResourceReadySignal().Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal );
       mFittingModes[image.GetId()] = fittingMode;
       mResourceUrls[image.GetId()] = imageSource.configuration.path;
       mSizes[image.GetId()] = imageSize;
-
-      gridActor.Add( image );
+      if ( count < INITIAL_IMAGES_TO_LOAD )
+      {
+        gridActor.Add( image );
+      }
+      else
+      {
+        // Store the ImageView in an offstage actor until the inital batch of ImageViews have finished loading their images
+        // Required
+        mOffStageImageViews.Add( image );
+      }
     }
 
     return gridActor;
@@ -601,6 +633,7 @@ private:
   Toolkit::ToolBar mToolBar;          ///< The View's Toolbar.
   TextLabel mTitleActor;               ///< The Toolbar's Title.
   Actor mGridActor;                   ///< The container for the grid of images
+  Actor mOffStageImageViews;          ///< ImageViews held off stage until the inital batch have loaded their images
   ScrollView mScrollView;             ///< ScrollView UI Component
   ScrollBar mScrollBarVertical;
   ScrollBar mScrollBarHorizontal;
@@ -608,21 +641,13 @@ private:
   std::map<unsigned, Dali::FittingMode::Type> mFittingModes; ///< Stores the current scaling mode of each image, keyed by image actor id.
   std::map<unsigned, std::string> mResourceUrls; ///< Stores the url of each image, keyed by image actor id.
   std::map<unsigned, Vector2> mSizes; ///< Stores the current size of each image, keyed by image actor id.
+  unsigned int mImagesLoaded;         ///< How many images have been loaded
 };
 
-void RunTest( Application& application )
-{
-  ImageScalingIrregularGridController test( application );
-
-  application.MainLoop();
-}
-
-/** Entry point for Linux & Tizen applications */
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  ImageScalingIrregularGridController test( application );
+  application.MainLoop();
   return 0;
 }

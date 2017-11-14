@@ -394,9 +394,9 @@ bool CubeTransitionApp::OnTimerTick()
 Texture CubeTransitionApp::LoadStageFillingTexture( const char* filepath )
 {
   ImageDimensions dimensions( Stage::GetCurrent().GetSize().x, Stage::GetCurrent().GetSize().y );
-  BitmapLoader loader = BitmapLoader::New( filepath, dimensions, FittingMode::SCALE_TO_FILL );
-  loader.Load();
-  PixelData pixelData = loader.GetPixelData();
+  Devel::PixelBuffer pixelBuffer = LoadImageFromFile( filepath, dimensions, FittingMode::SCALE_TO_FILL );
+  PixelData pixelData = Devel::PixelBuffer::Convert(pixelBuffer);
+
   Texture texture = Texture::New( TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight() );
   texture.Upload( pixelData );
   return texture;
@@ -413,7 +413,6 @@ void CubeTransitionApp::OnKeyEvent(const KeyEvent& event)
   }
 }
 
-// Entry point for Linux & Tizen applications
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );

@@ -25,8 +25,6 @@
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
-#include <dali-toolkit/devel-api/visuals/text-visual-properties.h>
 #include "image-channel-control.h"
 #include <cstdio>
 #include <sstream>

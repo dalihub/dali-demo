@@ -67,17 +67,11 @@ msgstr "Licht und Schatten"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "Linien"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "Logging"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "Bildschirmlupe"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "Mesh Veränderung"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "Mesh Sortierung"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D-Modelle"
@@ -171,3 +165,6 @@ msgstr "Ray marschieren"
 
 msgid "DALI_DEMO_STR_TITLE_SKYBOX"
 msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

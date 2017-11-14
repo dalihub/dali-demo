@@ -16,11 +16,8 @@
 
 #include "shadow-button-impl.h"
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/public-api/object/type-registry-helper.h>
 #include <dali/devel-api/scripting/enum-helper.h>
-#include <dali-toolkit/devel-api/align-enums.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 
 #include <cstdio>
@@ -353,32 +350,28 @@ void ShadowButton::ResetVisual(
     {
       case Demo::ShadowButton::Property::BACKGROUND_VISUAL:
       {
-        DevelControl::RegisterVisual( *this, index, visual );
-        visual.SetDepthIndex(0.0f);
+        DevelControl::RegisterVisual( *this, index, visual, 0 );
         break;
       }
       case Demo::ShadowButton::Property::CHECKBOX_BG_VISUAL:
       {
-        DevelControl::RegisterVisual( *this, index, visual );
-        visual.SetDepthIndex(1.0f);
+        DevelControl::RegisterVisual( *this, index, visual, 1 );
         break;
       }
       case Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL:
       {
-        DevelControl::RegisterVisual( *this, index, visual, mCheckState );
-        visual.SetDepthIndex(2.0f);
+        DevelControl::RegisterVisual( *this, index, visual, mCheckState, 2 );
         break;
       }
       case Demo::ShadowButton::Property::LABEL_VISUAL:
       {
-        DevelControl::RegisterVisual( *this, index, visual );
-        visual.SetDepthIndex(1.0f);
+        DevelControl::RegisterVisual( *this, index, visual, 1 );
         break;
       }
     }
 
     // Extract transform maps out of the visual definition and store them
-    Property::Value* value = map->Find( DevelVisual::Property::TRANSFORM, "transform");
+    Property::Value* value = map->Find( Visual::Property::TRANSFORM, "transform");
     if( value )
     {
       Property::Map* transformMap = value->GetMap();

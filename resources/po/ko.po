@@ -19,6 +19,9 @@ msgstr "버튼"
 msgid "DALI_DEMO_STR_TITLE_CLIPPING"
 msgstr "깎는"
 
+msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
+msgstr "드로잉 순서를 클리핑"
+
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "색상 그라디언트"
 
@@ -67,17 +70,11 @@ msgstr "빛과 그림자"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "라인 메쉬"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "로깅"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "돋보기"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "메쉬 형태"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "메쉬 분류"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "메쉬 비주얼"
@@ -171,3 +168,6 @@ msgstr "레이 마칭"
 
 msgid "DALI_DEMO_STR_TITLE_SKYBOX"
 msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

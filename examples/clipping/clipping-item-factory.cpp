@@ -112,7 +112,7 @@ Actor ClippingItemFactory::NewItem( unsigned int itemId )
   borderActor.SetSizeModeFactor( Vector3( 2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f ) );
   borderActor.SetColorMode( USE_PARENT_COLOR );
   borderActor.SetProperty( ImageView::Property::IMAGE,
-                           Property::Map().Add( Visual::Property::TYPE, Visual::BORDER )
+                           Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::BORDER )
                                           .Add( BorderVisual::Property::COLOR, Color::WHITE )
                                           .Add( BorderVisual::Property::SIZE, ITEM_BORDER_SIZE )
                                           .Add( BorderVisual::Property::ANTI_ALIASING, true ) );

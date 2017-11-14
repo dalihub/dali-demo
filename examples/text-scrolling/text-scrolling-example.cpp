@@ -23,7 +23,6 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
-#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -35,6 +34,14 @@ const Vector2 BOX_SIZE( Vector2(330.0f, 80.0f ) );
 const Vector2 SCROLLING_BOX_SIZE( Vector2(330.0f, 40.0f ) );
 const float MAX_OFFSCREEN_RENDERING_SIZE = 2048.f;
 const float SCREEN_BORDER = 5.0f; // Border around screen that Popups and handles will not exceed
+
+const char * ALIGNMENT_TABLE[] =
+{
+  "BEGIN",
+  "CENTER",
+  "END"
+};
+const unsigned int ALIGNMENT_TABLE_COUNT = sizeof( ALIGNMENT_TABLE ) / sizeof( ALIGNMENT_TABLE[ 0 ] );
 
 enum Labels
 {
@@ -79,7 +86,7 @@ public:
     parent.Add( box );
 
     Dali::Property::Map border;
-    border.Insert( Visual::Property::TYPE,  Visual::BORDER );
+    border.Insert( Toolkit::Visual::Property::TYPE,  Visual::BORDER );
     border.Insert( BorderVisual::Property::COLOR,  Color::BLUE );
     border.Insert( BorderVisual::Property::SIZE,  1.f );
     box.SetProperty( Control::Property::BACKGROUND, border );
@@ -172,7 +179,7 @@ public:
     boxC.SetPosition( 0.0f, -300.0f, 1.0f );
     Toolkit::PushButton scrollSmallButton = Toolkit::PushButton::New();
     scrollSmallButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedSmall );
-    CreateLabel( mSmallLabel, "A Quick Brown Fox", boxC , true, scrollSmallButton );
+    CreateLabel( mSmallLabel, "Hello Text", boxC , true, scrollSmallButton );
     mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
     mSmallLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
     mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::CYAN );
@@ -182,8 +189,8 @@ public:
     Toolkit::PushButton scrollRtlButton = Toolkit::PushButton::New();
     scrollRtlButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedRtl );
     CreateLabel( mRtlLabel, "مرحبا بالعالم", boxD , true, scrollRtlButton );
-    mRtlLabel.SetProperty(DevelTextLabel::Property::AUTO_SCROLL_STOP_MODE, DevelTextLabel::AutoScrollStopMode::IMMEDIATE );
-    mRtlLabel.SetProperty(DevelTextLabel::Property::AUTO_SCROLL_LOOP_DELAY, 0.3f );
+    mRtlLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_STOP_MODE, TextLabel::AutoScrollStopMode::IMMEDIATE );
+    mRtlLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_LOOP_DELAY, 0.3f );
 
     CreateBox( "boxE", boxE, desktop, SCROLLING_BOX_SIZE );
     boxE.SetPosition( 0.0f, -100.0f, 1.0f );
@@ -193,7 +200,7 @@ public:
     mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_SPEED, 500);
     mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_GAP, 500);
     mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_LOOP_COUNT, 3);
-    mRtlLongLabel.SetProperty(DevelTextLabel::Property::AUTO_SCROLL_STOP_MODE, DevelTextLabel::AutoScrollStopMode::FINISH_LOOP );
+    mRtlLongLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_STOP_MODE, TextLabel::AutoScrollStopMode::FINISH_LOOP );
 
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.DetectedSignal().Connect(this, &TextScrollingExample::OnPanGesture );
@@ -201,14 +208,33 @@ public:
 
     Toolkit::PushButton colorButton = Toolkit::PushButton::New();
     colorButton.SetProperty( Button::Property::TOGGLABLE, true );
-    colorButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
-    colorButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
+    colorButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
+    colorButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
     colorButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
     colorButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     colorButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     colorButton.SetSize(BOX_SIZE.height,BOX_SIZE.height);
     colorButton.ClickedSignal().Connect( this, &TextScrollingExample::OnColorButtonClicked );
     rootActor.Add( colorButton );
+
+    for( unsigned int i = 0; i < ALIGNMENT_TABLE_COUNT; ++i )
+    {
+      Toolkit::RadioButton alignButton = Toolkit::RadioButton::New( ALIGNMENT_TABLE[ i ] );
+      alignButton.ClickedSignal().Connect( this, &TextScrollingExample::OnAlignButtonClicked );
+      alignButton.SetName( ALIGNMENT_TABLE[ i ] );
+
+      // Place first button to left aligned, second center aligned and third right aligned
+      alignButton.SetAnchorPoint( Vector3( i * 0.5f, 0.0f, 0.5f ) );
+      alignButton.SetParentOrigin( Vector3( i * 0.5f, 0.0f, 0.5f ) );
+
+      rootActor.Add( alignButton );
+
+      if( i == 0 )
+      {
+        // Set the first button as selected
+        alignButton.SetProperty( Button::Property::SELECTED, true );
+      }
+    }
   }
 
   void EnableScrolling( Labels labels )
@@ -281,26 +307,45 @@ public:
   }
 
   bool OnColorButtonClicked( Toolkit::Button button )
- {
-   Vector4 color = Color::RED;
-
-  if ( mToggleColor )
   {
-    color = Color::BLACK;
-    mToggleColor = false;
+    Vector4 color = Color::RED;
+
+    if ( mToggleColor )
+    {
+      color = Color::BLACK;
+      mToggleColor = false;
+    }
+    else
+    {
+      mToggleColor = true;
+    }
+
+    mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+    mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+    mRtlLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+    mLargeLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+    mRtlLongLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
+
+    return true;
   }
-  else
+
+  bool OnAlignButtonClicked( Toolkit::Button button )
   {
-    mToggleColor = true;
+    for( unsigned int index = 0; index < ALIGNMENT_TABLE_COUNT; ++index )
+    {
+      const std::string& buttonName = button.GetName();
+      if( buttonName == ALIGNMENT_TABLE[ index ] )
+      {
+        mSmallLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[ index ] );
+        mRtlLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[ index ] );
+        mLargeLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[ index ] );
+        mRtlLongLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[ index ] );
+        break;
+      }
+    }
+
+    return true;
   }
-
-  mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
-  mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
-  mLargeLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
-  mRtlLongLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
-
-  return true;
- }
 
   /**
    * Main key event handler
@@ -359,19 +404,10 @@ private:
   bool mToggleColor;
 };
 
-void RunTest( Application& application )
-{
-  TextScrollingExample test( application );
-
-  application.MainLoop();
-}
-
-/** Entry point for Linux & Tizen applications */
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-
-  RunTest( application );
-
+  TextScrollingExample test( application );
+  application.MainLoop();
   return 0;
 }

@@ -116,7 +116,7 @@ private:
   void OnTap( Actor actor, const TapGesture& /* tap */ )
   {
     // Raise the actor to the top.
-    DevelActor::RaiseToTop( actor );
+    actor.RaiseToTop();
 
     // Create the animation to rotate and scale our actor.
     Animation animation = Animation::New( 1.0f );

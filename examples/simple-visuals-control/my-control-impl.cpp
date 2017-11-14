@@ -20,12 +20,10 @@
 
 // EXTERNAL INCLUDES
 
-#include <dali/public-api/object/type-registry-helper.h>
 #include <dali/devel-api/scripting/enum-helper.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 
 using namespace Dali;

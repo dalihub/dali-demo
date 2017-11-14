@@ -19,33 +19,26 @@
  */
 
 #include <dali/dali.h>
-#include <dali/devel-api/adaptor-framework/bitmap-loader.h>
 #include <dali/public-api/rendering/geometry.h>
 #include <dali/public-api/rendering/texture.h>
+#include <dali/devel-api/adaptor-framework/image-loading.h>
 
 namespace DemoHelper
 {
 
-Dali::PixelData LoadPixelData( const char* imagePath,
-                               Dali::ImageDimensions size,
-                               Dali::FittingMode::Type fittingMode,
-                               Dali::SamplingMode::Type samplingMode )
-{
-  Dali::BitmapLoader loader = Dali::BitmapLoader::New( imagePath, size, fittingMode, samplingMode );
-  loader.Load();
-  return loader.GetPixelData();
-}
-
 Dali::Texture LoadTexture( const char* imagePath,
                            Dali::ImageDimensions size = Dali::ImageDimensions(),
                            Dali::FittingMode::Type fittingMode = Dali::FittingMode::DEFAULT,
-                           Dali::SamplingMode::Type samplingMode = Dali::SamplingMode::DEFAULT )
+                           Dali::SamplingMode::Type samplingMode = Dali::SamplingMode::DEFAULT,
+                           bool orientationCorrection = true )
 {
-  Dali::PixelData pixelData = LoadPixelData(imagePath, size, fittingMode, samplingMode);
+  Dali::Devel::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, fittingMode, samplingMode, orientationCorrection );
   Dali::Texture texture  = Dali::Texture::New( Dali::TextureType::TEXTURE_2D,
-                                               pixelData.GetPixelFormat(),
-                                               pixelData.GetWidth(),
-                                               pixelData.GetHeight() );
+                                               pixelBuffer.GetPixelFormat(),
+                                               pixelBuffer.GetWidth(),
+                                               pixelBuffer.GetHeight() );
+
+  Dali::PixelData pixelData = Dali::Devel::PixelBuffer::Convert(pixelBuffer);
   texture.Upload( pixelData );
 
   return texture;

@@ -4,6 +4,9 @@ msgstr "Animated Images"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "Animated Shapes"
 
+msgid "DALI_DEMO_STR_TITLE_ALPHA_BLENDING_CPU"
+msgstr "CPU Alpha Blending"
+
 msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
 msgstr "Basic Light"
 
@@ -18,6 +21,9 @@ msgstr "Buttons"
 
 msgid "DALI_DEMO_STR_TITLE_CLIPPING"
 msgstr "Clipping"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
+msgstr "Clipping Draw Order"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "Colour Gradient"
@@ -43,6 +49,9 @@ msgstr "Flexbox Playground"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "Image Fitting and Sampling"
 
+msgid "DALI_DEMO_STR_TITLE_IMAGE_POLICIES"
+msgstr "Image Policies"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
 msgstr "Image Scaling Grid"
 
@@ -67,17 +76,11 @@ msgstr "Lights and Shadows"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "Mesh Line"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "Logging"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "Magnifier"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "Mesh Morph"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "Mesh Sorting"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Mesh Visual"
@@ -102,6 +105,9 @@ msgstr "Pivot"
 
 msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
 msgstr "Progress Bar"
+
+msgid "DALI_DEMO_STR_TITLE_PROPERTY_NOTIFICATION"
+msgstr "Property Notification"
 
 msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
 msgstr "Primitive Shapes"
@@ -142,6 +148,12 @@ msgstr "Text Field"
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
 msgstr "Text Label"
 
+msgid "DALI_DEMO_STR_TITLE_TEXT_MEMORY_PROFILING"
+msgstr "Text Memory Profiling"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_OVERLAP"
+msgstr "Text Overlap"
+
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
 msgstr "Text Scripts"
 
@@ -159,6 +171,9 @@ msgstr "FPP Game"
 
 msgid "DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS"
 msgstr "Visual Transitions"
+
+msgid "DALI_DEMO_STR_TITLE_REMOTE_IMAGE"
+msgstr "Remote Image"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
 msgstr "Textured cube"
@@ -183,3 +198,6 @@ msgstr "Ray Marching"
 
 msgid "DALI_DEMO_STR_TITLE_SKYBOX"
 msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

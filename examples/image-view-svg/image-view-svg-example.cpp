@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -87,7 +87,6 @@ public:
     changeButton.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     stage.Add( changeButton );
     changeButton.ClickedSignal().Connect( this, &ImageSvgController::OnChangeButtonClicked );
-    changeButton.SetProperty( DevelActor::Property::SIBLING_ORDER, 1 );
 
     // Push button, for resetting the actor size and position
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
@@ -96,7 +95,6 @@ public:
     resetButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
     stage.Add( resetButton );
     resetButton.ClickedSignal().Connect( this, &ImageSvgController::OnResetButtonClicked );
-    resetButton.SetProperty( DevelActor::Property::SIBLING_ORDER, 1 );
 
     // Create and put imageViews to stage
     for( unsigned int i=0; i<4u; i++)
@@ -124,6 +122,9 @@ public:
     mPinchGestureDetector = PinchGestureDetector::New();
     mPinchGestureDetector.Attach( mStageBackground);
     mPinchGestureDetector.DetectedSignal().Connect(this, &ImageSvgController::OnPinch);
+
+    changeButton.RaiseToTop();
+    resetButton.RaiseToTop();
   }
 
   // Callback of push button, for changing image set
@@ -231,20 +232,10 @@ private:
   unsigned int        mIndex;
 };
 
-void RunTest( Application& application )
-{
-  ImageSvgController test( application );
-
-  application.MainLoop();
-}
-
-// Entry point for Linux & Tizen applications
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
-
-  RunTest( application );
-
+  ImageSvgController test( application );
+  application.MainLoop();
   return 0;
 }

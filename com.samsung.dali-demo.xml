@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns="http://tizen.org/ns/packages" package="com.samsung.dali-demo" version="0.0.1" api-version="2.4" install-location="internal-only">
 <!-- NOTE THAT ALL LEADING WHITESPACE IN THIS FILE MUST BE TABS, NOT SPACES. APPS WITH LEADING SPACES WILL SILENTLY FAIL TO RUN ON A TARGET DEVICE. -->
-
 	<label>Dali Demo</label>
 	<author email="jonghyun.ho@samsung.com" href="www.samsung.com">Jonghyun Ho</author>
 	<description>DALi demo Application</description>
@@ -104,11 +103,11 @@
 	<ui-application appid="text-fonts.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-fonts.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Fonts</label>
 	</ui-application>
+	<ui-application appid="text-memory-profiling.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-memory-profiling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Memory Profiling</label>
+	</ui-application>
 	<ui-application appid="text-scrolling.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-scrolling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Scrolling</label>
-	</ui-application>
-	<ui-application appid="logging.example" exec="/usr/apps/com.samsung.dali-demo/bin/logging.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Logging</label>
 	</ui-application>
 	<ui-application appid="animated-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Animated shapes</label>
@@ -194,11 +193,17 @@
 	<ui-application appid="clipping.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping</label>
 	</ui-application>
+	<ui-application appid="clipping-draw-order.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping-draw-order.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Clipping Draw Order</label>
+	</ui-application>
 	<ui-application appid="pivot.example" exec="/usr/apps/com.samsung.dali-demo/bin/pivot.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping</label>
 	</ui-application>
 	<ui-application appid="focus-integration.example" exec="/usr/apps/com.samsung.dali-demo/bin/focus-integration.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Focus Integration</label>
+	</ui-application>
+	<ui-application appid="remote-image-loading.example" exec="/usr/apps/com.samsung.dali-demo/bin/remote-image-loading.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Remote Image</label>
 	</ui-application>
 	<ui-application appid="rendering-cube.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-cube.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Rendering Cube</label>
@@ -224,4 +229,28 @@
 	<ui-application appid="rendering-skybox.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-skybox.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Skybox</label>
 	</ui-application>
+	<ui-application appid="rendering-basic-pbr.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-basic-pbr.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Physically Based Rendering</label>
+	</ui-application>
+	<ui-application appid="text-overlap.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-overlap.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Overlap</label>
+	</ui-application>
+	<ui-application appid="property-notification.example" exec="/usr/apps/com.samsung.dali-demo/bin/property-notification.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Property Notification</label>
+	</ui-application>
+	<ui-application appid="image-policies.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-policies.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+		<label>Image Policies</label></ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/mediastorage</privilege>
+		<privilege>http://tizen.org/privilege/externalstorage</privilege>
+		<privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>
+		<privilege>http://tizen.org/privilege/unlimitedstorage</privilege>
+		<privilege>http://tizen.org/privilege/filesystem.write</privilege>
+		<privilege>http://tizen.org/privilege/filesystem.read</privilege>
+		<privilege>http://tizen.org/privilege/download</privilege>
+		<privilege>http://tizen.org/privilege/internet</privilege>
+		<privilege>http://tizen.org/privilege/network.get</privilege>
+		<privilege>http://tizen.org/privilege/network.profile</privilege>
+		<privilege>http://tizen.org/privilege/network.set</privilege>
+	</privileges>
 </manifest>

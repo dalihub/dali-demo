@@ -115,7 +115,7 @@ void FppGameTutorialController::DisplayTutorial()
   mLeftLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   mLeftLabel.SetSize( Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
   mLeftLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,
-                          Property::Map().Add( Visual::Property::TYPE, Visual::COLOR )
+                          Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
                                          .Add( ColorVisual::Property::MIX_COLOR, Vector4( 0.0, 0.0, 0.7, 0.2 ) ) );
   mLeftLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) ); // White.
   mLeftLabel.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
@@ -128,7 +128,7 @@ void FppGameTutorialController::DisplayTutorial()
   mRightLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   mRightLabel.SetSize( Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
   mRightLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,
-                           Property::Map().Add( Visual::Property::TYPE, Visual::COLOR )
+                           Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
                                           .Add( ColorVisual::Property::MIX_COLOR, Vector4( 0.5, 0.0, 0.0, 0.2 ) ) );
   mRightLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) ); // White.
   mRightLabel.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );

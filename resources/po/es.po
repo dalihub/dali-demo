@@ -67,17 +67,11 @@ msgstr "Luces y sombras"
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "Lineas"
 
-msgid "DALI_DEMO_STR_TITLE_LOGGING"
-msgstr "Control de entrada"
-
 msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
 msgstr "Lupa"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
 msgstr "Transformacion de geometrias"
-
-msgid "DALI_DEMO_STR_TITLE_MESH_SORTING"
-msgstr "Ordenacion de geometrias"
 
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Gemeotria 3D"
@@ -171,3 +165,6 @@ msgstr "trazado de rayos"
 
 msgid "DALI_DEMO_STR_TITLE_SKYBOX"
 msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"
