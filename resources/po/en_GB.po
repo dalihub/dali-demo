@@ -20,10 +20,10 @@ msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Buttons"
 
 msgid "DALI_DEMO_STR_TITLE_CALL_ACTIVE"
-msgstr "Call Incomming"
+msgstr "Call Active"
 
 msgid "DALI_DEMO_STR_TITLE_CARD_ACTIVE"
-msgstr "Card NFC Tag"
+msgstr "Card Active"
 
 msgid "DALI_DEMO_STR_TITLE_CLIPPING"
 msgstr "Clipping"
