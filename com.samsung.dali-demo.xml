@@ -238,6 +238,12 @@
 	<ui-application appid="property-notification.example" exec="/usr/apps/com.samsung.dali-demo/bin/property-notification.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Property Notification</label>
 	</ui-application>
+	<ui-application appid="animated-gradient-call-active.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-gradient-call-active.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Call Active App</label>
+	</ui-application>
+	<ui-application appid="animated-gradient-card-active.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-gradient-card-active.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Card Active App</label>
+	</ui-application>
 	<ui-application appid="image-policies.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-policies.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Image Policies</label></ui-application>
 	<privileges>
