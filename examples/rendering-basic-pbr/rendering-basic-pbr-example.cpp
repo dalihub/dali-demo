@@ -390,21 +390,29 @@ public:
   */
   bool LoadShaderCode( const std::string& fullpath, std::vector<char>& output )
   {
-    FILE* f = fopen( fullpath.c_str(), "rb" );
-
-    if( NULL == f )
+    FILE* file = fopen( fullpath.c_str(), "rb" );
+    if( NULL == file )
     {
       return false;
     }
 
-    fseek( f, 0, SEEK_END );
-    size_t size = ftell( f );
-    fseek( f, 0, SEEK_SET );
-    output.resize( size + 1 );
-    std::fill( output.begin(), output.end(), 0 );
-    ssize_t result = fread( output.data(), size, 1, f );
-    fclose( f );
-    return ( result >= 0 );
+    bool retValue = false;
+    if( ! fseek( file, 0, SEEK_END ) )
+    {
+      long int size = ftell( file );
+
+      if( ( size != -1L ) &&
+        ( ! fseek( file, 0, SEEK_SET ) ) )
+      {
+        output.resize( size + 1 );
+        std::fill( output.begin(), output.end(), 0 );
+        ssize_t result = fread( output.data(), size, 1, file );
+
+        retValue = ( result >= 0 );
+      }
+    }
+    fclose( file );
+    return retValue;
   }
 
   /**
