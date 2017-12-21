@@ -45,6 +45,7 @@ enum TextType
   MULTI_COLOR_TEXT_WITH_STYLE,
   MULTI_COLOR_TEXT_WITH_EMOJI,
   MULTI_COLOR_TEXT_WITH_STYLE_EMOJI,
+  SMALL_TEXT_IN_LARGE_TEXT_LABEL,
   NUMBER_OF_TYPES
 };
 
@@ -57,7 +58,8 @@ std::string TEXT_TYPE_STRING[ NUMBER_OF_TYPES ] =
   "Multi color text",
   "Multi color text with style",
   "Multi color text with emoji",
-  "Multi color text with style and emoji"
+  "Multi color text with style and emoji",
+  "Small text in large Text Label"
 };
 
 const int NUMBER_OF_LABELS = 500;
@@ -154,6 +156,13 @@ public:
       {
         label.SetProperty( TextLabel::Property::TEXT, " \xF0\x9F\x98\x81 A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>" );
         label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 2.0f, 2.0f ) );
+        break;
+      }
+      case SMALL_TEXT_IN_LARGE_TEXT_LABEL:
+      {
+        label.SetProperty( TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
+        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 0.0f, 0.0f ) );
+        label.SetSize(stageSize.x, stageSize.y * 0.25f); // Set the text label in larger size
         break;
       }
       default:
