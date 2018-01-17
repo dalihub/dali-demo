@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,260 +17,278 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
-#include "shared/utility.h"
+#include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/visuals/animated-image-visual-actions-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 namespace
 {
-const char * const PLAY_ICON( DEMO_IMAGE_DIR "icon-play.png" );
+const char * const PLAY_ICON_UNSELECTED( DEMO_IMAGE_DIR "icon-play.png" );
 const char * const PLAY_ICON_SELECTED( DEMO_IMAGE_DIR "icon-play-selected.png" );
 
-const char* const STATIC_GIF_DOG( DEMO_IMAGE_DIR "dog-static.gif" );
-const char* const ANIMATE_GIF_DOG( DEMO_IMAGE_DIR "dog-anim.gif" );
+const unsigned int ANIMATED_IMAGE_COUNT = 2;
 
-const char* const STATIC_GIF_LOGO( DEMO_IMAGE_DIR "dali-logo-static.gif" );
-const char* const ANIMATE_GIF_LOGO( DEMO_IMAGE_DIR "dali-logo-anim.gif" );
+const char * ANIMATED_GIF_URLS[ ANIMATED_IMAGE_COUNT ] =
+{
+  DEMO_IMAGE_DIR "dog-anim.gif",
+  DEMO_IMAGE_DIR "dali-logo-anim.gif"
+};
 
-const char* const ANIMATE_PIXEL_AREA( "Animate PixelArea" );
-const char* const ANIMATE_PIXEL_AREA_AND_SCALE( "Animate PixelArea & Scale" );
+const char * ANIMATED_ARRAY_URL_FORMATS[ ANIMATED_IMAGE_COUNT ] =
+{
+  DEMO_IMAGE_DIR "dog-anim-%03d.png",       // Images are named dog-anim-001.png, dog-anim-002.png, etc.
+  DEMO_IMAGE_DIR "dali-logo-anim-%03d.png"  // Images are named dali-logo-anim-001.png, dali-logo-anim-002.png, etc.
+};
 
-const char* const STATIC_IMAGE_ARRAY_DOG( DEMO_IMAGE_DIR "dog-anim-001.png" );
-const char* const ANIMATE_IMAGE_ARRAY_DOG( DEMO_IMAGE_DIR "dog-anim-%03d.png" );
+int ANIMATED_ARRAY_NUMBER_OF_FRAMES[ ANIMATED_IMAGE_COUNT ] =
+{
+  8,
+  15
+};
 
-const char* const STATIC_IMAGE_ARRAY_LOGO( DEMO_IMAGE_DIR "dali-logo-anim-001.png" );
-const char* const ANIMATE_IMAGE_ARRAY_LOGO( DEMO_IMAGE_DIR "dali-logo-anim-%03d.png" );
+const char * GIF_RADIO_BUTTON_NAME( "Gif" );
+const char * ARRAY_RADIO_BUTTON_NAME( "Array" );
 
+/// Structure to specify the layout information for the animated images views.
+struct ImageLayoutInfo
+{
+  Vector3 anchorPoint;
+  Vector3 parentOrigin;
+  float yPosition;
+};
 
-const Vector4 DIM_COLOR( 0.85f, 0.85f, 0.85f, 0.85f );
-}
+ImageLayoutInfo IMAGE_LAYOUT_INFO[ ANIMATED_IMAGE_COUNT ] =
+{
+  { AnchorPoint::BOTTOM_CENTER, ParentOrigin::CENTER, -80.0f },
+  { AnchorPoint::TOP_CENTER,    ParentOrigin::CENTER,  80.0f }
+};
 
-/* This example shows how to display a GIF image.
- * First a static GIF image is loaded and then when the user presses on the "Play" icon,
- * the static image is replaced by an animated one
+} // unnamed namespace
+
+/**
+ * @brief This demonstrates how to display and control Animated Images.
+ *
+ * - It displays two animated images, an animated dog and an animated DALi logo.
+ * - The images are loaded paused, a play button is overlayed on top of the images to play the animated image.
+ * - Radio buttons at the bottom allow the user to change between Animated GIFs and a collection of Image Arrays.
  */
-
 class AnimatedImageController : public ConnectionTracker
 {
 public:
-  enum ImageType
-  {
-    GIF,
-    IMAGE_ARRAY
-  };
-  enum StateType
-  {
-    STATIC,
-    ANIMATED
-  };
 
+  /**
+   * @brief Constructor.
+   * @param[in]  application  A reference to the Application class
+   */
   AnimatedImageController( Application& application )
   : mApplication( application ),
-    mImageType(GIF)
+    mImageType( ImageType::GIF )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &AnimatedImageController::Create );
   }
 
-  ~AnimatedImageController()
-  {
-    // Nothing to do here;
-  }
+private:
 
-  // The Init signal is received once (only) during the Application lifetime
+  /**
+   * @brief The image types supported by the application.
+   */
+  enum class ImageType
+  {
+    GIF,          ///< Displays Animated GIF Files.
+    IMAGE_ARRAY   ///< Displays an array of URLs that are used as an animated image.
+  };
+
+  /**
+   * @brief Called to initialise the application content.
+   * @param[in]  application  A reference to the Application class
+   */
   void Create( Application& application )
   {
-    // Get a handle to the stage
+    // Set the stage background color and connect to the stage's key signal to allow Back and Escape to exit.
     Stage stage = Stage::GetCurrent();
     stage.SetBackgroundColor( Color::WHITE );
-    // Tie-in input event handlers:
     stage.KeyEventSignal().Connect( this, &AnimatedImageController::OnKeyEvent );
 
-    CreateStaticImageView( 0 );
-    CreateStaticImageView( 1 );
+    // Create the animated image-views
+    CreateAnimatedImageViews();
 
-    mGifButton = Toolkit::RadioButton::New("Gif");
-    mGifButton.SetProperty( Button::Property::SELECTED, true );
-    mArrayButton = Toolkit::RadioButton::New("Array");
-    mGifButton.ClickedSignal().Connect( this, &AnimatedImageController::OnTypeButtonClicked );
-    mArrayButton.ClickedSignal().Connect( this, &AnimatedImageController::OnTypeButtonClicked );
+    // Create radio buttons to change between GIF images and Image Arrays
+    CreateRadioButtonLayout();
 
-    Toolkit::TableView radioButtonLayout = Toolkit::TableView::New(1, 2);
-    radioButtonLayout.SetName("RadioButtonsLayout");
-    radioButtonLayout.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
-    radioButtonLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    radioButtonLayout.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    radioButtonLayout.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    radioButtonLayout.SetFitHeight(0);
-    radioButtonLayout.AddChild( mGifButton, TableView::CellPosition(0,0) );
-    radioButtonLayout.AddChild( mArrayButton, TableView::CellPosition(0,1) );
-    radioButtonLayout.SetCellAlignment( TableView::CellPosition( 0, 0 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
-    radioButtonLayout.SetCellAlignment( TableView::CellPosition( 0, 1 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
-    radioButtonLayout.SetY( -10.0f );
-
-    stage.Add( radioButtonLayout );
-
+    // Create a tap gesture detector to use to pause the animated images
     mTapDetector = TapGestureDetector::New();
     mTapDetector.DetectedSignal().Connect( this, &AnimatedImageController::OnTap );
   }
 
-  void CreateStaticImageView( int index )
+  /**
+   * @brief Creates and lays out radio buttons to allow changing between the different image types.
+   */
+  void CreateRadioButtonLayout()
   {
-    Actor& actor = (index==0) ? mActorDog : mActorLogo;
+    mGifButton = CreateRadioButton( GIF_RADIO_BUTTON_NAME, true );
+    mArrayButton = CreateRadioButton( ARRAY_RADIO_BUTTON_NAME, false );
 
-    Stage stage = Stage::GetCurrent();
-    if( actor )
-    {
-      stage.Remove( actor );
-    }
+    Toolkit::TableView radioButtonLayout = Toolkit::TableView::New( 1, 2 );
+    radioButtonLayout.SetName( "RadioButtonsLayout" );
+    radioButtonLayout.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
+    radioButtonLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    radioButtonLayout.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    radioButtonLayout.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    radioButtonLayout.SetFitHeight( 0 );
+    radioButtonLayout.AddChild( mGifButton, TableView::CellPosition( 0, 0 ) );
+    radioButtonLayout.AddChild( mArrayButton, TableView::CellPosition( 0, 1 ) );
+    radioButtonLayout.SetCellAlignment( TableView::CellPosition( 0, 0 ),
+                                        HorizontalAlignment::CENTER,
+                                        VerticalAlignment::CENTER );
+    radioButtonLayout.SetCellAlignment( TableView::CellPosition( 0, 1 ),
+                                        HorizontalAlignment::CENTER,
+                                        VerticalAlignment::CENTER );
+    radioButtonLayout.SetY( -10.0f );
 
-    Property::Value viewSetup = SetupViewProperties( mImageType, STATIC, index, false );
-    actor = CreateImageViewWithPlayButton( viewSetup );
-    SetLayout(actor, index);
-    stage.Add( actor );
+    Stage::GetCurrent().Add( radioButtonLayout );
   }
 
-
-  void CreateAnimImageView( int index )
+  /**
+   * @brief Creates a radio button.
+   * @param[in]  name      The name of the button
+   * @param[in]  selected  Whether the button is selected
+   * @return The created radio-button
+   */
+  RadioButton CreateRadioButton( const char * const name, bool selected )
   {
-    Actor& actor = (index==0) ? mActorDog : mActorLogo;
-
-    Stage stage = Stage::GetCurrent();
-    if( actor )
-    {
-      stage.Remove( actor );
-    }
-
-    const char* label = (index==0) ? ANIMATE_PIXEL_AREA_AND_SCALE : ANIMATE_PIXEL_AREA;
-
-    Property::Value viewSetup = SetupViewProperties( mImageType, ANIMATED, index, true );
-    actor = CreateImageViewWithAnimatePixelAreaButton( viewSetup, label);
-    SetLayout(actor, index);
-
-    stage.Add( actor );
+    RadioButton radioButton = Toolkit::RadioButton::New( name );
+    radioButton.SetProperty( Button::Property::SELECTED, selected );
+    radioButton.ClickedSignal().Connect( this, &AnimatedImageController::OnRadioButtonClicked );
+    return radioButton;
   }
 
-  void SetLayout( Actor actor, int index )
+  /**
+   * @brief Creates the required animated image views.
+   */
+  void CreateAnimatedImageViews()
   {
-    if( index == 0 )
+    for( unsigned int index = 0; index < ANIMATED_IMAGE_COUNT; ++index )
     {
-      actor.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-      actor.SetY( -80.f );
-    }
-    else
-    {
-      actor.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-      actor.SetY( 80.f );
+      Stage stage = Stage::GetCurrent();
+
+      Control& control = ( index == 0 ) ? mActorDog : mActorLogo;
+      if( control )
+      {
+        // Remove the previous control from the stage, it's resources (and children) will be deleted automatically
+        control.Unparent();
+      }
+
+      // Create and lay out the image view according to the index
+      control = Toolkit::ImageView::New();
+      control.SetProperty( Toolkit::ImageView::Property::IMAGE, SetupViewProperties( mImageType, index ) );
+      control.SetAnchorPoint( IMAGE_LAYOUT_INFO[ index ].anchorPoint );
+      control.SetParentOrigin( IMAGE_LAYOUT_INFO[ index ].parentOrigin );
+      control.SetY( IMAGE_LAYOUT_INFO[ index ].yPosition );
+
+      // We do not want the animated image playing when it's added to the stage.
+      PauseAnimatedImage( control );
+
+      stage.Add( control );
     }
   }
 
   /**
-   * Create the gif image view with an overlay play button.
+   * @brief Plays the passed in animated image.
+   * @details Also sets up the control so it can be paused when tapped.
+   * @param[in]  control  The animated image to play
    */
-  Toolkit::ImageView CreateImageViewWithPlayButton( Property::Value& viewSetup )
+  void PlayAnimatedImage( Control& control )
   {
-    Toolkit::ImageView imageView = Toolkit::ImageView::New();
-    imageView.SetProperty( ImageView::Property::IMAGE, viewSetup );
-    imageView.SetParentOrigin( ParentOrigin::CENTER );
+    DevelControl::DoAction( control,
+                            ImageView::Property::IMAGE,
+                            DevelAnimatedImageVisual::Action::PLAY,
+                            Property::Value() );
 
-    // Create a push button, and add it as child of the image view
+    if( mTapDetector )
+    {
+      mTapDetector.Attach( control );
+    }
+  }
+
+  /**
+   * @brief Pauses the animated image.
+   * @details Adds a Play button to the control and sets both up so that the animated image can be played again when
+   *          the button is tapped.
+   * @param[in]  control  The animated image to pause
+   */
+  void PauseAnimatedImage( Control& control )
+  {
+    DevelControl::DoAction( control,
+                            ImageView::Property::IMAGE,
+                            DevelAnimatedImageVisual::Action::PAUSE,
+                            Property::Value() );
+
+    // Create a push button, and add it as child of the control
     Toolkit::PushButton animateButton = Toolkit::PushButton::New();
-    animateButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON );
+    animateButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON_UNSELECTED );
     animateButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED );
     animateButton.SetParentOrigin( ParentOrigin::CENTER );
     animateButton.SetAnchorPoint( AnchorPoint::CENTER );
     animateButton.ClickedSignal().Connect( this, &AnimatedImageController::OnPlayButtonClicked );
-    imageView.Add( animateButton );
+    control.Add( animateButton );
 
-    // Apply dim color on the gif view and the play button
-    imageView.SetColor( DIM_COLOR );
-
-    return imageView;
+    if( mTapDetector )
+    {
+      mTapDetector.Detach( control );
+    }
   }
 
-  Toolkit::ImageView CreateImageViewWithAnimatePixelAreaButton( Property::Value& viewSetup, const std::string& buttonLabel )
-  {
-    Toolkit::ImageView imageView = Toolkit::ImageView::New();
-    imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, viewSetup );
-    imageView.SetParentOrigin( ParentOrigin::CENTER );
-
-    // Create a push button, and add it as child of the image view
-    Toolkit::PushButton animateButton = Toolkit::PushButton::New();
-    animateButton.SetProperty( Toolkit::Button::Property::LABEL, buttonLabel );
-    animateButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    animateButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    animateButton.SetY( 20.f );
-
-    animateButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    animateButton.SetProperty( Actor::Property::INHERIT_SCALE, false );
-    imageView.Add( animateButton );
-
-    mTapDetector.Attach( animateButton );
-    mTapDetector.Attach( imageView );
-
-    return imageView;
-  }
-
+  /**
+   * @brief Called when the play button is clicked.
+   * @details This method is used to start playing the parent image-view of the clicked button.
+   * @param[in]  button  The button that has been clicked
+   * @return We return true to state that we handled the event
+   */
   bool OnPlayButtonClicked( Toolkit::Button button )
   {
-    Stage stage = Stage::GetCurrent();
+    Control control = ( button.GetParent() == mActorDog ) ? mActorDog : mActorLogo;
+    PlayAnimatedImage( control );
 
-    // With play button clicked, the static gif is replaced with animated gif.
-    if( button.GetParent() ==  mActorDog )
-    {
-      // remove the static gif view, the play button is also removed as its child.
-      CreateAnimImageView( 0 );
-    }
-    else // button.GetParent() ==  mActorLogo
-    {
-      // remove the static gif view, the play button is also removed as its child.
-      CreateAnimImageView( 1 );
-    }
+    button.Unparent();
+
     return true;
   }
 
-  void OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
+  /**
+   * @brief Called when the animated image views are tapped.
+   * @details This method is used to pause the tapped animated image view.
+   * @param[in]  actor  The actor that's tapped
+   */
+  void OnTap( Dali::Actor actor, const Dali::TapGesture& /* tap */ )
   {
-    if( actor.GetParent() ==  mActorDog ) // "Animate Pixel Area" button is clicked
-    {
-      Animation animation = Animation::New( 3.f );
-      animation.AnimateTo( Property( mActorDog, ImageView::Property::PIXEL_AREA ), Vector4( -1.0, 0.0, 3.f, 1.f ), AlphaFunction::SIN );
-      animation.AnimateTo( Property( mActorDog, Actor::Property::SCALE_X ), 3.f, AlphaFunction::SIN );
-      animation.Play();
-    }
-    else if( actor.GetParent() ==  mActorLogo ) // "Animate Pixel Area" button is clicked
-    {
-      Animation animation = Animation::New( 3.f );
-      animation.AnimateTo( Property( mActorLogo, ImageView::Property::PIXEL_AREA ), Vector4( 0.0, 1.0, 1.f, 1.f ), AlphaFunction::SIN );
-      animation.Play();
-    }
-    else if( actor == mActorDog ) // stop the animated gif, switch to static view
-    {
-      CreateStaticImageView( 0 );
-    }
-    else if( actor == mActorLogo ) // stop the animated gif, switch to static view
-    {
-      CreateStaticImageView( 1 );
-    }
+    Control control = ( actor == mActorDog ) ? mActorDog : mActorLogo;
+    PauseAnimatedImage( control );
   }
 
-  bool OnTypeButtonClicked( Toolkit::Button button )
+  /**
+   * @brief Called when a radio button is clicked.
+   * @details This method is used to change between the different image types.
+   * @param[in]  button  The clicked radio-button
+   * @return We return true to state that we handled the event.
+   *
+   */
+  bool OnRadioButtonClicked( Toolkit::Button button )
   {
-    if( button == mGifButton )
-    {
-      mImageType = GIF;
-    }
-    else
-    {
-      mImageType = IMAGE_ARRAY;
-    }
-    Stage stage = Stage::GetCurrent();
-    CreateStaticImageView( 0 );
-    CreateStaticImageView( 1 );
+    mImageType = ( button == mGifButton ) ? ImageType::GIF : ImageType::IMAGE_ARRAY;
+
+    CreateAnimatedImageViews();
     return true;
   }
 
+  /**
+   * @brief Called when any key event is received.
+   *
+   * Will use this to quit the application if Back or the Escape key is received
+   * @param[in] event The key event information
+   */
   void OnKeyEvent(const KeyEvent& event)
   {
     if(event.state == KeyEvent::Down)
@@ -282,82 +300,60 @@ public:
     }
   }
 
-  Property::Value SetupViewProperties( ImageType type, StateType state, int index, bool wrap )
+  /**
+   * @brief Sets up the view properties appropriately.
+   * @param[in]  type   The Image type
+   * @param[in]  index  The index
+   * @return The set up property value
+   */
+  Property::Value SetupViewProperties( ImageType type, int index )
   {
     Property::Map map;
 
-    AddUrl( map, type, state, index );
-    AddWrap( map, wrap && state != 0, index );
+    AddUrl( map, type, index );
     AddCache( map, type, index );
     return Property::Value(map);
   }
 
-  void AddUrl( Property::Map& map, ImageType type, StateType state, int index )
+  /**
+   * @brief Adds the URL to the given map appropriately.
+   * @param[in/out]  map    The map to add the URL details to
+   * @param[in]      type   The Image type
+   * @param[in]      index  The index
+   */
+  void AddUrl( Property::Map& map, ImageType type, int index )
   {
-    const char* urls[2][2] =
-      { { STATIC_GIF_DOG, STATIC_GIF_LOGO },
-        { ANIMATE_GIF_DOG, ANIMATE_GIF_LOGO }
-      };
-    const char* urlFormats[2][2] =
-      { { STATIC_IMAGE_ARRAY_DOG, STATIC_IMAGE_ARRAY_LOGO } ,
-        { ANIMATE_IMAGE_ARRAY_DOG, ANIMATE_IMAGE_ARRAY_LOGO } };
-
-    int numFrames[2] = { 8, 15 };
-
-    if( type == GIF )
+    if( type == ImageType::GIF )
     {
-      map.Add( Toolkit::ImageVisual::Property::URL, Property::Value( urls[state][index] ) );
+      map.Add( Toolkit::ImageVisual::Property::URL, Property::Value( ANIMATED_GIF_URLS[ index ] ) );
     }
     else
     {
-      if( state == STATIC )
+      Property::Array frameUrls;
+      for( int i = 1; i <= ANIMATED_ARRAY_NUMBER_OF_FRAMES[ index ]; ++i )
       {
-        Property::Array frameUrls;
-        frameUrls.Add(Property::Value( urlFormats[0][index] ));
-        map.Add( Toolkit::ImageVisual::Property::URL, frameUrls );
-      }
-      else
-      {
-        Property::Array frameUrls;
-        for( int i=1; i<= numFrames[index]; ++i )
+        char* buffer;
+        int len = asprintf( &buffer, ANIMATED_ARRAY_URL_FORMATS[ index ], i );
+        if( len > 0 )
         {
-          char* buffer;
-          int len = asprintf( &buffer, urlFormats[1][index], i);
-          if( len > 0 )
-          {
-            std::string frameUrl(buffer);
-            free(buffer);
-            frameUrls.Add( Property::Value( frameUrl ) );
-          }
+          std::string frameUrl( buffer );
+          free( buffer );
+          frameUrls.Add( Property::Value( frameUrl ) );
         }
-        map.Add( Toolkit::ImageVisual::Property::URL, Property::Value( frameUrls ) );
       }
+      map.Add( Toolkit::ImageVisual::Property::URL, Property::Value( frameUrls ) );
     }
   }
 
-  void AddWrap( Property::Map& map, bool wrap, int index )
-  {
-    WrapMode::Type wrapModes[2][2] = {
-      { WrapMode::REPEAT, WrapMode::DEFAULT  },
-      { WrapMode::DEFAULT, WrapMode::MIRRORED_REPEAT } };
-
-    if( wrap )
-    {
-      map
-        .Add( Toolkit::ImageVisual::Property::WRAP_MODE_U, wrapModes[index][0] )
-        .Add( Toolkit::ImageVisual::Property::WRAP_MODE_V, wrapModes[index][1] );
-    }
-    else
-    {
-      map
-        .Add( Toolkit::ImageVisual::Property::WRAP_MODE_U, WrapMode::DEFAULT )
-        .Add( Toolkit::ImageVisual::Property::WRAP_MODE_V, WrapMode::DEFAULT );
-    }
-  }
-
+  /**
+   * @brief Adds the cache properties, if required to the map.
+   * @param[in/out]  map    The map to add the URL details to
+   * @param[in]      type   The Image type
+   * @param[in]      index  The index
+   */
   void AddCache( Property::Map& map, ImageType type, int index )
   {
-    if( type == IMAGE_ARRAY )
+    if( type == ImageType::IMAGE_ARRAY )
     {
       map
         .Add( Toolkit::ImageVisual::Property::BATCH_SIZE, 4 )
@@ -367,16 +363,19 @@ public:
   }
 
 private:
-  Application&  mApplication;
-  Toolkit::ImageView mActorDog;
-  Toolkit::ImageView mActorLogo;
-  Toolkit::RadioButton mGifButton;
-  Toolkit::RadioButton mArrayButton;
-  TapGestureDetector mTapDetector;
-  ImageType mImageType;
+  Application&  mApplication; ///< A reference to the application.
+
+  Toolkit::ImageView mActorDog;  ///< The current dog image view.
+  Toolkit::ImageView mActorLogo; ///< The current logo image view.
+
+  Toolkit::RadioButton mGifButton;   ///< The Gif Radio Button.
+  Toolkit::RadioButton mArrayButton; ///< The Array Radio Button.
+
+  TapGestureDetector mTapDetector; ///< The tap detector.
+
+  ImageType mImageType; ///< The current Image type.
 };
 
-//
 int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
