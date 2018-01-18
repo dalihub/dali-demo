@@ -107,7 +107,7 @@ Actor ClippingItemFactory::NewItem( unsigned int itemId )
   Property::Map propertyMap;
   propertyMap.Insert(Visual::Property::TYPE,  Visual::IMAGE);
   propertyMap.Insert(ImageVisual::Property::URL, IMAGE_PATHS[ itemId % NUM_IMAGES ] );
-  propertyMap.Insert(DevelVisual::Property::FITTING_MODE, DevelVisual::FILL);
+  propertyMap.Insert(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FILL);
   ImageView actor = ImageView::New();
   actor.SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
 
