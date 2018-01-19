@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include "shared/utility.h"
 
 using namespace Dali;
@@ -278,7 +278,13 @@ public:
 
     for( size_t i(0); i<actorCount; ++i )
     {
-      mImageView[i] = ImageView::New( ImagePath(i) );
+      mImageView[i] = ImageView::New();
+      Property::Map propertyMap;
+      propertyMap.Insert(Toolkit::ImageVisual::Property::URL, ImagePath(i));
+      propertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
+      propertyMap.Insert(Toolkit::DevelVisual::Property::VISUAL_FITTING_MODE, Toolkit::DevelVisual::FILL);
+      mImageView[i].SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
+
       mImageView[i].SetSize( Vector3(0.0f,0.0f,0.0f) );
       mImageView[i].SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
       mParent.Add( mImageView[i] );
