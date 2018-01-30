@@ -39,6 +39,8 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_BLOCKS                      dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BLOCKS")
 #define DALI_DEMO_STR_TITLE_BUBBLES                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUBBLES")
 #define DALI_DEMO_STR_TITLE_BUTTONS                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUTTONS")
+#define DALI_DEMO_STR_TITLE_CALL_ACTIVE                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CALL_ACTIVE")
+#define DALI_DEMO_STR_TITLE_CARD_ACTIVE                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CARD_ACTIVE")
 #define DALI_DEMO_STR_TITLE_CLIPPING                    dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CLIPPING")
 #define DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER         dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER")
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_COLOR_GRADIENT")
@@ -110,6 +112,8 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_BLOCKS                      "Blocks"
 #define DALI_DEMO_STR_TITLE_BUBBLES                     "Bubbles"
 #define DALI_DEMO_STR_TITLE_BUTTONS                     "Buttons"
+#define DALI_DEMO_STR_TITLE_CALL_ACTIVE                 "Call Active"
+#define DALI_DEMO_STR_TITLE_CARD_ACTIVE                 "Card Active"
 #define DALI_DEMO_STR_TITLE_CLIPPING                    "Clipping"
 #define DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER         "Clipping Draw Order"
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT              "Color Gradient"

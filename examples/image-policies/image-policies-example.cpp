@@ -98,16 +98,17 @@ class ImagePolicies: public ConnectionTracker
    * param[in] releasePolicy Which ReleasePolicy to use
    * param[in] synchronousLoading If the Image should be loaded synchronously
    * param[in] imageFilenameId Which image to load, referring to the array of filenames for this example.
+   * return An ImageView with the required set up
    */
-  ImageView CreateImageView( bool correctionEnabled, DevelImageVisual::LoadPolicy::Type loadPolicy, DevelImageVisual::ReleasePolicy::Type releasePolicy, bool synchronousLoading, unsigned int imageFilenameId )
+  ImageView CreateImageView( bool correctionEnabled, ImageVisual::LoadPolicy::Type loadPolicy, ImageVisual::ReleasePolicy::Type releasePolicy, bool synchronousLoading, unsigned int imageFilenameId )
   {
     ImageView imageView = ImageView::New( );
     Property::Map imagePropertyMap;
     imagePropertyMap.Insert( Visual::Property::TYPE,  Visual::IMAGE );
     imagePropertyMap.Insert( ImageVisual::Property::URL,  IMAGE_PATH[imageFilenameId ]  );
-    imagePropertyMap.Insert( DevelImageVisual::Property::ORIENTATION_CORRECTION, correctionEnabled  );
-    imagePropertyMap.Insert( DevelImageVisual::Property::LOAD_POLICY,  loadPolicy  );
-    imagePropertyMap.Insert( DevelImageVisual::Property::RELEASE_POLICY,  releasePolicy  );
+    imagePropertyMap.Insert( ImageVisual::Property::ORIENTATION_CORRECTION, correctionEnabled  );
+    imagePropertyMap.Insert( ImageVisual::Property::LOAD_POLICY,  loadPolicy  );
+    imagePropertyMap.Insert( ImageVisual::Property::RELEASE_POLICY,  releasePolicy  );
     if( synchronousLoading )
     {
       imagePropertyMap.Insert( DevelImageVisual::Property::SYNCHRONOUS_LOADING,  true  );
@@ -120,6 +121,7 @@ class ImagePolicies: public ConnectionTracker
 
     return imageView;
   }
+
 
   /**
    * To prevent the next button being pressed before an Image has loaded the Button can br disabled.
@@ -142,7 +144,7 @@ class ImagePolicies: public ConnectionTracker
     mInstructions.SetProperty( TextLabel::Property::TEXT, "Orientation Correction not applied");
     mTable.RemoveChildAt( TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
     DisableButtonWhilstLoading();
-    ImageView imageView01 = CreateImageView( false, DevelImageVisual::LoadPolicy::ATTACHED, DevelImageVisual::ReleasePolicy::DESTROYED, false, 3 );
+    ImageView imageView01 = CreateImageView( false, ImageVisual::LoadPolicy::ATTACHED, ImageVisual::ReleasePolicy::DESTROYED, false, 3 );
     imageView01.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
 
     mTable.AddChild( imageView01, TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
@@ -156,7 +158,7 @@ class ImagePolicies: public ConnectionTracker
     mInstructions.SetProperty( TextLabel::Property::TEXT, "Orientation Correction applied based on Exif data, now shown in landscape");
     mTable.RemoveChildAt( TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
     DisableButtonWhilstLoading();
-    ImageView imageView01 = CreateImageView( true, DevelImageVisual::LoadPolicy::ATTACHED, DevelImageVisual::ReleasePolicy::DESTROYED, false, 3 );
+    ImageView imageView01 = CreateImageView( true, ImageVisual::LoadPolicy::ATTACHED, ImageVisual::ReleasePolicy::DESTROYED, false, 3 );
     imageView01.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
     mTable.AddChild( imageView01, TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
   }
@@ -185,7 +187,9 @@ class ImagePolicies: public ConnectionTracker
     dualImageViewTable.AddChild( immediate, TableView::CellPosition( 0, 1 ) );
     mTable.AddChild( dualImageViewTable, TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
 
-    mPersistantImageView = CreateImageView( true, DevelImageVisual::LoadPolicy::IMMEDIATE, DevelImageVisual::ReleasePolicy::DESTROYED, false, 4 );
+    DisableButtonWhilstLoading();
+    mPersistantImageView = CreateImageView( true, ImageVisual::LoadPolicy::IMMEDIATE, ImageVisual::ReleasePolicy::DESTROYED, false, 4 );
+    mPersistantImageView.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
   }
 
   /**
@@ -212,7 +216,7 @@ class ImagePolicies: public ConnectionTracker
 
     mTable.AddChild( dualImageViewTable, TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
 
-    ImageView imageView02 = CreateImageView( true, DevelImageVisual::LoadPolicy::ATTACHED, DevelImageVisual::ReleasePolicy::DESTROYED, false, 3 );
+    ImageView imageView02 = CreateImageView( true, ImageVisual::LoadPolicy::ATTACHED, ImageVisual::ReleasePolicy::DESTROYED, false, 3 );
     imageView02.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
     dualImageViewTable.AddChild( imageView02, TableView::CellPosition( 0, 0 ) );
     dualImageViewTable.AddChild( mPersistantImageView, TableView::CellPosition( 0, 1 ) );
@@ -236,7 +240,7 @@ class ImagePolicies: public ConnectionTracker
 
     mTable.AddChild( dualImageViewTable, TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
 
-    ImageView imageView01 = CreateImageView( true, DevelImageVisual::LoadPolicy::ATTACHED, DevelImageVisual::ReleasePolicy::DESTROYED, false, 3 );
+    ImageView imageView01 = CreateImageView( true, ImageVisual::LoadPolicy::ATTACHED, ImageVisual::ReleasePolicy::DESTROYED, false, 3 );
     imageView01.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
 
     dualImageViewTable.AddChild( imageView01, TableView::CellPosition( 0, 0 ) );
@@ -259,7 +263,7 @@ class ImagePolicies: public ConnectionTracker
 
     mTable.AddChild( dualImageViewTable, TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
 
-    ImageView imageView01 = CreateImageView( true, DevelImageVisual::LoadPolicy::ATTACHED, DevelImageVisual::ReleasePolicy::DESTROYED, false, 3 );
+    ImageView imageView01 = CreateImageView( true, ImageVisual::LoadPolicy::ATTACHED, ImageVisual::ReleasePolicy::DESTROYED, false, 3 );
     imageView01.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
 
     dualImageViewTable.AddChild( imageView01, TableView::CellPosition( 0, 1 ) );
@@ -282,7 +286,7 @@ class ImagePolicies: public ConnectionTracker
 
     mTable.AddChild( dualImageViewTable, TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
 
-    ImageView imageView01 = CreateImageView( true, DevelImageVisual::LoadPolicy::ATTACHED, DevelImageVisual::ReleasePolicy::DESTROYED, false, 3 );
+    ImageView imageView01 = CreateImageView( true, ImageVisual::LoadPolicy::ATTACHED, ImageVisual::ReleasePolicy::DESTROYED, false, 3 );
     imageView01.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
 
     dualImageViewTable.AddChild( imageView01, TableView::CellPosition( 0, 0 ) );
@@ -299,7 +303,7 @@ class ImagePolicies: public ConnectionTracker
     ImageView imageViewDetached = ImageView::DownCast( dualImageViewTable.GetChildAt( TableView::CellPosition( 0, 0 ) ) );
     dualImageViewTable.RemoveChildAt( TableView::CellPosition( 0, 0 ) );
 
-    ImageView imageView01 = CreateImageView( true, DevelImageVisual::LoadPolicy::ATTACHED, DevelImageVisual::ReleasePolicy::DESTROYED, false, 3 );
+    ImageView imageView01 = CreateImageView( true, ImageVisual::LoadPolicy::ATTACHED, ImageVisual::ReleasePolicy::DESTROYED, false, 3 );
     imageView01.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
 
     dualImageViewTable.AddChild( imageView01, TableView::CellPosition( 0, 1 ) );
@@ -322,7 +326,7 @@ class ImagePolicies: public ConnectionTracker
 
     mTable.AddChild( dualImageViewTable, TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
 
-    ImageView imageView01 = CreateImageView( true, DevelImageVisual::LoadPolicy::ATTACHED, DevelImageVisual::ReleasePolicy::DETACHED, false, 3 );
+    ImageView imageView01 = CreateImageView( true, ImageVisual::LoadPolicy::ATTACHED, ImageVisual::ReleasePolicy::DETACHED, false, 3 );
     imageView01.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
 
     dualImageViewTable.AddChild( imageView01, TableView::CellPosition( 0, 0 ) );
@@ -340,7 +344,7 @@ class ImagePolicies: public ConnectionTracker
     ImageView imageViewDetached = ImageView::DownCast( dualImageViewTable.GetChildAt( TableView::CellPosition( 0, 0 ) ) );
     dualImageViewTable.RemoveChildAt( TableView::CellPosition( 0, 0 ) );
 
-    ImageView imageView01 = CreateImageView( true, DevelImageVisual::LoadPolicy::ATTACHED, DevelImageVisual::ReleasePolicy::DESTROYED, false, 3 );
+    ImageView imageView01 = CreateImageView( true, ImageVisual::LoadPolicy::ATTACHED, ImageVisual::ReleasePolicy::DESTROYED, false, 3 );
     imageView01.ResourceReadySignal().Connect( this, &ImagePolicies::ResourceReadySignal );
 
     dualImageViewTable.AddChild( imageView01, TableView::CellPosition( 0, 1 ) );

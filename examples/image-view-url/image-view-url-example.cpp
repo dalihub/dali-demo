@@ -58,7 +58,8 @@ class ImageViewUrlApp : public ConnectionTracker
 {
 public:
   ImageViewUrlApp( Application& application )
-  : mApplication( application )
+  : mApplication( application ),
+    mDeltaPropertyIndex( Property::INVALID_INDEX )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &ImageViewUrlApp::Create );

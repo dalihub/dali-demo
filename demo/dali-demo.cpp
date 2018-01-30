@@ -50,6 +50,8 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("sparkle.example", DALI_DEMO_STR_TITLE_SPARKLE));
   demo.AddExample(Example("rendering-skybox.example", DALI_DEMO_STR_TITLE_SKYBOX));
   demo.AddExample(Example("rendering-basic-pbr.example", DALI_DEMO_STR_TITLE_PBR));
+  demo.AddExample(Example("animated-gradient-call-active.example", DALI_DEMO_STR_TITLE_CALL_ACTIVE));
+  demo.AddExample(Example("animated-gradient-card-active.example", DALI_DEMO_STR_TITLE_CARD_ACTIVE));
 
   demo.SortAlphabetically( true );
 

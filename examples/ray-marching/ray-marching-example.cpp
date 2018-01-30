@@ -41,20 +41,30 @@ bool LoadShaderCode( const char* path, const char* filename, std::vector<char>& 
 {
   std::string fullpath( path );
   fullpath += filename;
-  FILE* f = fopen( fullpath.c_str(), "rb" );
-  if( !f )
+  FILE* file = fopen( fullpath.c_str(), "rb" );
+  if( ! file )
   {
     return false;
   }
-  fseek( f, 0, SEEK_END );
-  size_t size = ftell( f );
-  fseek( f, 0, SEEK_SET );
-  output.resize( size + 1 );
-  std::fill( output.begin(), output.end(), 0 );
-  ssize_t result = fread( output.data(), size, 1, f );
-  fclose( f );
 
-  return ( result >= 0 );
+  bool retValue = false;
+  if( ! fseek( file, 0, SEEK_END ) )
+  {
+    long int size = ftell( file );
+
+    if( ( size != -1L ) &&
+        ( ! fseek( file, 0, SEEK_SET ) ) )
+    {
+      output.resize( size + 1 );
+      std::fill( output.begin(), output.end(), 0 );
+      ssize_t result = fread( output.data(), size, 1, file );
+
+      retValue = ( result >= 0 );
+    }
+  }
+
+  fclose( file );
+  return retValue;
 }
 
 /**
@@ -69,9 +79,13 @@ Shader LoadShaders( const std::string& shaderName )
   std::string shaderFSH( shaderName );
   shaderVSH += ".vsh";
   shaderFSH += ".fsh";
-  LoadShaderCode( DEMO_SHADER_DIR, shaderVSH.c_str(), bufV );
-  LoadShaderCode( DEMO_SHADER_DIR, shaderFSH.c_str(), bufF );
-  Shader shader = Shader::New( bufV.data(), bufF.data() );
+
+  Shader shader;
+  if( LoadShaderCode( DEMO_SHADER_DIR, shaderVSH.c_str(), bufV ) &&
+      LoadShaderCode( DEMO_SHADER_DIR, shaderFSH.c_str(), bufF ) )
+  {
+    shader = Shader::New( bufV.data(), bufF.data() );
+  }
   return shader;
 }
 
