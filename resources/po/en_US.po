@@ -10,6 +10,9 @@ msgstr "CPU Alpha Blending"
 msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
 msgstr "Basic Light"
 
+msgid "DALI_DEMO_STR_TITLE_BEZIER_CURVE"
+msgstr "Bezier Curve"
+
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Blocks"
 

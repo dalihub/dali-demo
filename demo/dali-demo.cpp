@@ -37,6 +37,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   DaliTableView demo(app);
 
   demo.AddExample(Example("blocks.example", DALI_DEMO_STR_TITLE_BLOCKS));
+  demo.AddExample(Example("bezier-curve.example", DALI_DEMO_STR_TITLE_BEZIER_CURVE));
   demo.AddExample(Example("bubble-effect.example", DALI_DEMO_STR_TITLE_BUBBLES));
   demo.AddExample(Example("contact-cards.example", DALI_DEMO_STR_TITLE_CONTACT_CARDS));
   demo.AddExample(Example("cube-transition-effect.example", DALI_DEMO_STR_TITLE_CUBE_TRANSITION));
