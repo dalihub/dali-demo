@@ -24,6 +24,8 @@
 #include <dali/devel-api/object/handle-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
+#include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
+#include <dali-toolkit/devel-api/text/text-enumerations-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
 
@@ -45,7 +47,8 @@ const char* BUTTON_IMAGES[] =
 {
   DEMO_IMAGE_DIR "FontStyleButton_Colour.png",
   DEMO_IMAGE_DIR "FontStyleButton_Outline.png",
-  DEMO_IMAGE_DIR "FontStyleButton_Shadow.png"
+  DEMO_IMAGE_DIR "FontStyleButton_Shadow.png",
+  DEMO_IMAGE_DIR "FontStyleButton_Background.png"
 };
 
 const unsigned int KEY_ZERO = 10;
@@ -84,6 +87,7 @@ enum StyleType
   TEXT_COLOR = 0,
   OUTLINE,
   SHADOW,
+  BACKGROUND,
   NUMBER_OF_STYLES
 };
 
@@ -166,7 +170,7 @@ public:
     mApplication.InitSignal().Connect( this, &TextLabelExample::Create );
 
     // Set Style flags to inactive
-    for ( unsigned int i = OUTLINE; i < NUMBER_OF_STYLES; i++ )
+    for ( unsigned int i = TEXT_COLOR; i < NUMBER_OF_STYLES; i++ )
     {
       mStyleActiveState[ i ] = false;
       mCurrentStyleColor[i] = AVAILABLE_COLORS[ NUMBER_OF_COLORS - 1 ];
@@ -204,7 +208,7 @@ public:
 
     stage.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
     mStageSize = stage.GetSize();
-    mButtonSize = Size( mStageSize.height * 0.12, mStageSize.height * 0.12 ); // Button size 1/12 of stage height
+    mButtonSize = Size( mStageSize.height * 0.1, mStageSize.height * 0.1 ); // Button size 1/10 of stage height
 
     mContainer = Control::New();
     mContainer.SetName( "Container" );
@@ -297,6 +301,10 @@ public:
     {
       style = StyleType::SHADOW;
     }
+    else if( button == mStyleButtons[ StyleType::BACKGROUND ] )
+    {
+      style = StyleType::BACKGROUND;
+    }
     return style;
   }
 
@@ -370,8 +378,29 @@ public:
         mStyleActiveState[ SHADOW ] = ( shadowOffset == Vector2::ZERO ) ? false : true;
         mCurrentStyleColor[ SHADOW ] = mSelectedColor;
 
-        mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, shadowOffset );
-        mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, mSelectedColor );
+        Property::Map shadowMap;
+        shadowMap.Insert( "offset", shadowOffset );
+        shadowMap.Insert( "color", mSelectedColor );
+        mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+
+        break;
+      }
+      case BACKGROUND :
+      {
+        Property::Map backgroundMap;
+        auto backgroundEnabled(true);
+
+        if( mStyleActiveState[ BACKGROUND ] )
+        {
+          backgroundEnabled = ( Color::WHITE != mSelectedColor );  // toggles background on/off
+        }
+        mStyleActiveState[ BACKGROUND ] = backgroundEnabled;
+
+        backgroundMap["color"] = mSelectedColor;
+        backgroundMap["enable"] = backgroundEnabled;
+        mCurrentStyleColor[ BACKGROUND ] = mSelectedColor;
+        mLabel.SetProperty( DevelTextLabel::Property::BACKGROUND, backgroundMap );
+
         break;
       }
       default :
