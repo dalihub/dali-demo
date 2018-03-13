@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2018 Samsung Electronics Co., Ltd.
+* Copyright (c) 2017 Samsung Electronics Co., Ltd.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -141,16 +141,8 @@ public:
 
       mImageUrl[k] = CARD_IMAGE_LIST[k];
 
-      // Create an image view for this item
       mCard[k] = ImageView::New();
-      {
-        Property::Map propertyMap;
-        propertyMap.Insert(Visual::Property::TYPE, Visual::IMAGE);
-        propertyMap.Insert(ImageVisual::Property::URL, mImageUrl[k]);
-        propertyMap.Insert(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FILL);
-        mCard[k].SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
-      }
-
+      mCard[k].SetImage( mImageUrl[k] );
       mCard[k].SetParentOrigin( ParentOrigin::CENTER );
       mCard[k].SetAnchorPoint( AnchorPoint::CENTER );
       mCard[k].SetSize( mSize.x, mSize.y );
