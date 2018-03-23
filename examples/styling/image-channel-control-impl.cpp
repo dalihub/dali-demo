@@ -37,12 +37,11 @@ const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
   uniform sampler2D sTexture;\n
   uniform mediump vec4 uColor;\n
   uniform mediump vec3 mixColor;\n
-  uniform mediump float opacity;\n
   uniform mediump vec3 uChannels;\n
   \n
   void main()\n
   {\n
-      gl_FragColor = texture2D( sTexture, vTexCoord ) * vec4(mixColor,opacity) * uColor * vec4(uChannels, 1.0) ;\n
+      gl_FragColor = texture2D( sTexture, vTexCoord ) * vec4(mixColor,1.0) * uColor * vec4(uChannels, 1.0) ;\n
   }\n
 );
 
