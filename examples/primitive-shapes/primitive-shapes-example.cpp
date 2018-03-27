@@ -28,7 +28,7 @@ namespace
   {
     DEMO_IMAGE_DIR "sphere-button.png",
     DEMO_IMAGE_DIR "cone-button.png",
-    DEMO_IMAGE_DIR "conical-frustrum-button.png",
+    DEMO_IMAGE_DIR "conical-frustum-button.png",
     DEMO_IMAGE_DIR "cylinder-button.png",
     DEMO_IMAGE_DIR "cube-button.png",
     DEMO_IMAGE_DIR "bevelled-cube-button.png",
@@ -413,13 +413,13 @@ public:
     mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Cone" );
   }
 
-  //Sets the 3D model to a conical frustrum and modifies the sliders appropriately.
-  void LoadConicalFrustrum()
+  //Sets the 3D model to a conical frustum and modifies the sliders appropriately.
+  void LoadConicalFrustum()
   {
     InitialiseSlidersAndModel();
 
     //Set up specific visual properties.
-    mVisualMap[ PrimitiveVisual::Property::SHAPE               ] = PrimitiveVisual::Shape::CONICAL_FRUSTRUM;
+    mVisualMap[ PrimitiveVisual::Property::SHAPE               ] = PrimitiveVisual::Shape::CONICAL_FRUSTUM;
     mVisualMap[ PrimitiveVisual::Property::SCALE_TOP_RADIUS    ] = DEFAULT_SCALE_TOP_RADIUS;
     mVisualMap[ PrimitiveVisual::Property::SCALE_BOTTOM_RADIUS ] = DEFAULT_SCALE_BOTTOM_RADIUS;
     mVisualMap[ PrimitiveVisual::Property::SCALE_HEIGHT        ] = DEFAULT_SCALE_HEIGHT;
@@ -439,7 +439,7 @@ public:
     mModel.SetProperty( Control::Property::BACKGROUND, Property::Value( mVisualMap ) );
 
     //Update title.
-    mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Conical Frustrum" );
+    mShapeTitle.SetProperty( TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Conical Frustum" );
   }
 
   //Sets the 3D model to a cylinder and modifies the sliders appropriately.
@@ -589,7 +589,7 @@ public:
       }
       case 2:
       {
-        LoadConicalFrustrum();
+        LoadConicalFrustum();
         break;
       }
       case 3:
