@@ -870,7 +870,7 @@ public: // From ItemFactory
     Property::Map propertyMap;
     propertyMap.Insert(Toolkit::Visual::Property::TYPE,  Visual::IMAGE);
     propertyMap.Insert(ImageVisual::Property::URL, IMAGE_PATHS[ itemId % NUM_IMAGES ] );
-    propertyMap.Insert(DevelVisual::Property::FITTING_MODE, DevelVisual::FILL);
+    propertyMap.Insert(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FILL);
     ImageView actor = ImageView::New();
     actor.SetProperty( Toolkit::ImageView::Property::IMAGE, propertyMap );
     actor.SetZ( 0.0f );
