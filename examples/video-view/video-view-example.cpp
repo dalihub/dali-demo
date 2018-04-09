@@ -32,8 +32,7 @@ namespace
   const char* const PLAY_FILE = DEMO_VIDEO_DIR "demoVideo.mp4";
   const char* const PLAY_IMAGE = DEMO_IMAGE_DIR "icon-play.png";
   const char* const PAUSE_IMAGE = DEMO_IMAGE_DIR "Pause.png";
-  const char* const STOP_IMAGE = DEMO_IMAGE_DIR "icon-stop.png";
-  const char* const RESET_IMAGE = DEMO_IMAGE_DIR "icon-reset.png";
+  const char* const CHANGE_IMAGE = DEMO_IMAGE_DIR "icon-change.png";
   const char* const FORWARD_IMAGE = DEMO_IMAGE_DIR "Forward.png";
   const char* const BACKWARD_IMAGE = DEMO_IMAGE_DIR "Backward.png";
 
@@ -46,7 +45,6 @@ class VideoViewController: public ConnectionTracker
   VideoViewController( Application& application )
     : mApplication( application ),
       mIsPlay( false ),
-      mIsStop( false ),
       mIsFullScreen( false ),
       mScale( 1.f ),
       mPinchStartScale( 1.0f )
@@ -62,6 +60,8 @@ class VideoViewController: public ConnectionTracker
 
   void Create( Application& application )
   {
+    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+
     mStageSize = Stage::GetCurrent().GetSize();
 
     mVideoView = Toolkit::VideoView::New();
@@ -99,23 +99,14 @@ class VideoViewController: public ConnectionTracker
     mPauseButton.SetPosition( 40, 10 );
     mPauseButton.ClickedSignal().Connect( this, &VideoViewController::OnButtonClicked );
 
-    mStopButton = PushButton::New();
-    mStopButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mStopButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mStopButton.SetName( "Stop" );
-    mStopButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    mStopButton.SetSize( BUTTON_SIZE, BUTTON_SIZE );
-    mStopButton.SetPosition( 140, 10 );
-    mStopButton.ClickedSignal().Connect( this, &VideoViewController::OnButtonClicked );
-
-    mResetButton = PushButton::New();
-    mResetButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mResetButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mResetButton.SetName( "Reset" );
-    mResetButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    mResetButton.SetSize( BUTTON_SIZE, BUTTON_SIZE );
-    mResetButton.SetPosition( 140, 10 );
-    mResetButton.ClickedSignal().Connect( this, &VideoViewController::OnButtonClicked );
+    mChangeButton = PushButton::New();
+    mChangeButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    mChangeButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mChangeButton.SetName( "Change" );
+    mChangeButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
+    mChangeButton.SetSize( BUTTON_SIZE, BUTTON_SIZE );
+    mChangeButton.SetPosition( 140, 10 );
+    mChangeButton.ClickedSignal().Connect( this, &VideoViewController::OnButtonClicked );
 
     mBackwardButton = PushButton::New();
     mBackwardButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
@@ -137,8 +128,7 @@ class VideoViewController: public ConnectionTracker
 
     mMenu.Add( mPlayButton );
     mMenu.Add( mPauseButton );
-    mMenu.Add( mStopButton );
-    mMenu.Add( mResetButton );
+    mMenu.Add( mChangeButton );
     mMenu.Add( mBackwardButton );
     mMenu.Add( mForwardButton );
 
@@ -146,20 +136,16 @@ class VideoViewController: public ConnectionTracker
     mPauseButton.SetProperty( Button::Property::DISABLED, true );
     mPlayButton.SetVisible( true );
     mPlayButton.SetProperty( Button::Property::DISABLED, false );
-    mStopButton.SetVisible( true );
-    mStopButton.SetProperty( Button::Property::DISABLED, false );
-    mResetButton.SetVisible( false );
-    mResetButton.SetProperty( Button::Property::DISABLED, true );
+    mChangeButton.SetVisible( true );
+    mChangeButton.SetProperty( Button::Property::DISABLED, false );
 
     mPlayButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_IMAGE );
     mPlayButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, PLAY_IMAGE );
     mPauseButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PAUSE_IMAGE );
     mPauseButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, PAUSE_IMAGE );
 
-    mStopButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, STOP_IMAGE );
-    mStopButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, STOP_IMAGE );
-    mResetButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, RESET_IMAGE );
-    mResetButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, RESET_IMAGE );
+    mChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_IMAGE );
+    mChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_IMAGE );
 
     mBackwardButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, BACKWARD_IMAGE );
     mBackwardButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, BACKWARD_IMAGE );
@@ -184,14 +170,10 @@ class VideoViewController: public ConnectionTracker
 
     Stage::GetCurrent().KeyEventSignal().Connect( this, &VideoViewController::OnKeyEvent );
 
-    mWindowSurfaceTarget.Insert( "renderingTarget", "windowSurfaceTarget" );
-    mNativeImageTarget.Insert( "renderingTarget", "nativeImageTarget" );
-
   }
 
   bool OnButtonClicked( Button button )
   {
-
     if( mPauseButton.GetId() == button.GetId())
     {
        if( mIsPlay )
@@ -207,11 +189,6 @@ class VideoViewController: public ConnectionTracker
     }
     else if( mPlayButton.GetId() == button.GetId())
     {
-      if( mIsStop )
-      {
-        return false;
-      }
-
       mPauseButton.SetVisible( true );
       mPauseButton.SetProperty( Button::Property::DISABLED, false );
       mPlayButton.SetVisible( false );
@@ -220,38 +197,18 @@ class VideoViewController: public ConnectionTracker
       mIsPlay = true;
       mVideoView.Play();
     }
-    else if( mResetButton.GetId() == button.GetId())
+    else if( mChangeButton.GetId() == button.GetId())
     {
-      if( mIsStop )
+      bool underlay = false;
+      underlay = mVideoView.GetProperty( Toolkit::VideoView::Property::UNDERLAY ).Get< bool >();
+      if( underlay )
       {
-        mPauseButton.SetVisible( true );
-        mPauseButton.SetProperty( Button::Property::DISABLED, false );
-        mPlayButton.SetVisible( false );
-        mPlayButton.SetProperty( Button::Property::DISABLED, true );
-        mResetButton.SetVisible( false );
-        mResetButton.SetProperty( Button::Property::DISABLED, true );
-        mStopButton.SetVisible( true );
-        mStopButton.SetProperty( Button::Property::DISABLED, false );
-
-        mIsStop = false;
-        mIsPlay = true;
-        mVideoView.SetProperty( VideoView::Property::VIDEO, PLAY_FILE );
-        mVideoView.Play();
+        mVideoView.SetProperty( Toolkit::VideoView::Property::UNDERLAY, false );
       }
-    }
-    else if( mStopButton.GetId() == button.GetId())
-    {
-      mPauseButton.SetVisible( false );
-      mPauseButton.SetProperty( Button::Property::DISABLED, true );
-      mPlayButton.SetVisible( true );
-      mPlayButton.SetProperty( Button::Property::DISABLED, false );
-      mResetButton.SetVisible( true );
-      mPlayButton.SetProperty( Button::Property::DISABLED, false );
-      mStopButton.SetVisible( false );
-      mStopButton.SetProperty( Button::Property::DISABLED, true );
-
-      mIsStop = true;
-      mVideoView.Stop();
+      else
+      {
+        mVideoView.SetProperty( Toolkit::VideoView::Property::UNDERLAY, true );
+      }
     }
     else if( mBackwardButton.GetId() == button.GetId())
     {
@@ -283,20 +240,7 @@ class VideoViewController: public ConnectionTracker
     if( gesture.state == Gesture::Finished )
     {
       mScale = mPinchStartScale * gesture.scale;
-      if( mScale > 1.f )
-      {
-        mVideoView.SetSize( mStageSize.x, mStageSize.y );
-        mVideoView.SetProperty( VideoView::Property::VIDEO, mWindowSurfaceTarget );
-        mMenu.SetSize( mStageSize.x, 120 );
-        mIsFullScreen = true;
-      }
-      else
-      {
-        mVideoView.SetSize( INIT_WIDTH, INIT_HEIGHT );
-        mVideoView.SetProperty( VideoView::Property::VIDEO, mNativeImageTarget );
-        mMenu.SetSize( INIT_WIDTH, 120 );
-        mIsFullScreen = false;
-      }
+      mVideoView.SetScale( mScale );
     }
   }
 
@@ -304,7 +248,13 @@ class VideoViewController: public ConnectionTracker
   {
     if( !mIsFullScreen )
     {
-      mRotationAnimation.Play();
+      mVideoView.SetSize( mStageSize.x, mStageSize.y );
+      mIsFullScreen = true;
+    }
+    else
+    {
+      mVideoView.SetSize( INIT_WIDTH, INIT_HEIGHT );
+      mIsFullScreen = false;
     }
   }
 
@@ -331,12 +281,11 @@ private:
   Vector2 mStageSize;
 
   bool mIsPlay;
-  bool mIsStop;
   bool mIsFullScreen;
 
   PushButton mPlayButton;
   PushButton mPauseButton;
-  PushButton mStopButton;
+  PushButton mChangeButton;
   PushButton mResetButton;
   PushButton mBackwardButton;
   PushButton mForwardButton;
@@ -348,8 +297,6 @@ private:
   float mPinchStartScale;
 
   Animation mRotationAnimation;
-  Property::Map mWindowSurfaceTarget;
-  Property::Map mNativeImageTarget;
 };
 
 int DALI_EXPORT_API main( int argc, char **argv )
