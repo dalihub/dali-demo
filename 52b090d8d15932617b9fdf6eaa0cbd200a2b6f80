@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ebfdf10_93a5c247",
+        "filename": "examples/layouting/layouting-example.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1007416
+      },
+      "writtenOn": "2018-04-23T17:11:55Z",
+      "side": 1,
+      "message": "yuck! :)\n\nANd other set-sizes and set parent-origin setters.  Why are we doing this?  Can these not be done by the layouter or is that the next task?",
+      "range": {
+        "startLine": 108,
+        "startChar": 3,
+        "endLine": 108,
+        "endChar": 37
+      },
+      "revId": "52b090d8d15932617b9fdf6eaa0cbd200a2b6f80",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbcf8311_66847c5b",
+        "filename": "examples/layouting/layouting-example.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1007416
+      },
+      "writtenOn": "2018-04-23T17:11:55Z",
+      "side": 1,
+      "message": "Seems a shame that we\u0027re always creating a new layout.  Is there any reason we cannot store it as a member and then set it when the user presses the appropriate button?",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 36
+      },
+      "revId": "52b090d8d15932617b9fdf6eaa0cbd200a2b6f80",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3f1b020_f339796b",
+        "filename": "examples/layouting/layouting-example.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1007416
+      },
+      "writtenOn": "2018-04-23T17:11:55Z",
+      "side": 1,
+      "message": "Is the idea to replace this with properties when BaseHandle supports properties? Or will it only support child properties?",
+      "range": {
+        "startLine": 200,
+        "startChar": 6,
+        "endLine": 200,
+        "endChar": 40
+      },
+      "revId": "52b090d8d15932617b9fdf6eaa0cbd200a2b6f80",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
