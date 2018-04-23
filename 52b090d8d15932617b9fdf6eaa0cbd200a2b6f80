@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7017ef09_96354318",
+        "filename": "examples/layouting/layouting-example.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1007394
+      },
+      "writtenOn": "2018-04-23T17:15:39Z",
+      "side": 1,
+      "message": "The buttons are not using new layouting. Setting size was an attempt to make the two different buttons look consistent, but the icon is drawn to the top left, not the center, so didn\u0027t succeed there :/",
+      "parentUuid": "5ebfdf10_93a5c247",
+      "range": {
+        "startLine": 108,
+        "startChar": 3,
+        "endLine": 108,
+        "endChar": 37
+      },
+      "revId": "52b090d8d15932617b9fdf6eaa0cbd200a2b6f80",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbcf8311_66847c5b",
         "filename": "examples/layouting/layouting-example.cpp",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4202e09e_6a9051ab",
+        "filename": "examples/layouting/layouting-example.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1007394
+      },
+      "writtenOn": "2018-04-23T17:15:39Z",
+      "side": 1,
+      "message": "We could do. It\u0027s just demo code.",
+      "parentUuid": "fbcf8311_66847c5b",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 36
+      },
+      "revId": "52b090d8d15932617b9fdf6eaa0cbd200a2b6f80",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3f1b020_f339796b",
         "filename": "examples/layouting/layouting-example.cpp",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-04-23T17:11:55Z",
       "side": 1,
       "message": "Is the idea to replace this with properties when BaseHandle supports properties? Or will it only support child properties?",
+      "range": {
+        "startLine": 200,
+        "startChar": 6,
+        "endLine": 200,
+        "endChar": 40
+      },
+      "revId": "52b090d8d15932617b9fdf6eaa0cbd200a2b6f80",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af2f4772_d5749777",
+        "filename": "examples/layouting/layouting-example.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1007394
+      },
+      "writtenOn": "2018-04-23T17:15:39Z",
+      "side": 1,
+      "message": "As and when layouts can use properties, we could remove the API. until that point, we\u0027re stuck with C++ API.",
+      "parentUuid": "d3f1b020_f339796b",
       "range": {
         "startLine": 200,
         "startChar": 6,
