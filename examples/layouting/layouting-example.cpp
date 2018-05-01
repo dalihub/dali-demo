@@ -141,11 +141,21 @@ class LayoutingExample: public ConnectionTracker
       imagePropertyMap[ Toolkit::ImageVisual::Property::URL ] = IMAGE_PATH[ x ];
       imagePropertyMap[ ImageVisual::Property::DESIRED_WIDTH ] = 100.0f;
       imagePropertyMap[ ImageVisual::Property::DESIRED_HEIGHT ] = 100.0f;
-
       mImageViews[x].SetProperty(Toolkit::ImageView::Property::IMAGE , imagePropertyMap );
       mImageViews[x].SetName("ImageView");
       mImageViews[x].SetAnchorPoint( AnchorPoint::TOP_LEFT );
       mImageViews[x].SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
+
+      if( 1 == x )
+      {
+        mImageViews[x].SetProperty(Toolkit::Control::Property::PADDING, Extents(10.0f,10.0f,5.0f, 5.0f));
+      }
+
+      if( 0 == x )
+      {
+        mImageViews[x].SetProperty(Toolkit::Control::Property::MARGIN, Extents(10.0f,10.0f,5.0f, 5.0f));
+      }
+
       mLinearContainer.Add( mImageViews[x] );
     }
 
