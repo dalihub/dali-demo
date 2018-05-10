@@ -129,8 +129,8 @@ class LayoutingExample: public ConnectionTracker
     mLinearContainer.SetAnchorPoint( AnchorPoint::CENTER );
     mLinearContainer.SetName( "linearContainer" );
     stage.Add( mLinearContainer );
-    mLinearContainer.SetProperty( Toolkit::LayoutBase::ChildProperty::WIDTH_SPECIFICATION, ChildLayoutData::MATCH_PARENT );
-    mLinearContainer.SetProperty( Toolkit::LayoutBase::ChildProperty::HEIGHT_SPECIFICATION, ChildLayoutData::MATCH_PARENT );
+    mLinearContainer.SetProperty( Toolkit::LayoutItem::ChildProperty::WIDTH_SPECIFICATION, ChildLayoutData::MATCH_PARENT );
+    mLinearContainer.SetProperty( Toolkit::LayoutItem::ChildProperty::HEIGHT_SPECIFICATION, ChildLayoutData::MATCH_PARENT );
     mLinearContainer.SetProperty( Actor::Property::LAYOUT_DIRECTION, LayoutDirection::LEFT_TO_RIGHT );
 
     for( unsigned int x = 0; x < NUMBER_OF_RESOURCES; ++x )
