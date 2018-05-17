@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f175c5ae_751c9c4d",
+        "filename": "examples/layouting/layouting-example.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1011527
+      },
+      "writtenOn": "2018-05-17T14:30:51Z",
+      "side": 1,
+      "message": "The classes are representing 2 example application but run from the same launcher.  Hopefully makes more sense after renaming.",
+      "parentUuid": "cbf5d2ad_fadb59a0",
+      "range": {
+        "startLine": 140,
+        "startChar": 8,
+        "endLine": 140,
+        "endChar": 29
+      },
+      "revId": "161116e17a55c55e31ecc31cf73c1154a226b975",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01431e78_6c7370b1",
         "filename": "examples/layouting/linear-container-padded.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-05-17T11:04:37Z",
       "side": 1,
       "message": "PaddingExample",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "161116e17a55c55e31ecc31cf73c1154a226b975",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27e084bf_d16bc8a4",
+        "filename": "examples/layouting/linear-container-padded.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1011527
+      },
+      "writtenOn": "2018-05-17T14:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01431e78_6c7370b1",
       "range": {
         "startLine": 31,
         "startChar": 6,
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "cb4c87bc_52aac4cd",
+        "filename": "examples/layouting/linear-container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1011527
+      },
+      "writtenOn": "2018-05-17T14:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e34bad_994fabb3",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "161116e17a55c55e31ecc31cf73c1154a226b975",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81f5ece2_4666bd1d",
         "filename": "examples/layouting/linear-container.h",
         "patchSetId": 6
@@ -99,6 +171,30 @@
       "writtenOn": "2018-05-17T11:04:37Z",
       "side": 1,
       "message": "LinearContainerExample",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "161116e17a55c55e31ecc31cf73c1154a226b975",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cb2f4d0_8db68fa3",
+        "filename": "examples/layouting/linear-container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1011527
+      },
+      "writtenOn": "2018-05-17T14:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81f5ece2_4666bd1d",
       "range": {
         "startLine": 43,
         "startChar": 6,
