@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbf5d2ad_fadb59a0",
+        "filename": "examples/layouting/layouting-example.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1007416
+      },
+      "writtenOn": "2018-05-17T10:26:03Z",
+      "side": 1,
+      "message": "Not sure why we need two separate classes, one to show padding and one not.  There\u0027s a lot of common code in LinearContainer and LinearContainerPadded. Any reason why we can\u0027t merge them or have LinearContainerPadded inherit from LinearContainer?\n\nSeems like padding could be just a property you\u0027d set on LinearContainer.",
+      "range": {
+        "startLine": 140,
+        "startChar": 8,
+        "endLine": 140,
+        "endChar": 29
+      },
+      "revId": "161116e17a55c55e31ecc31cf73c1154a226b975",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
