@@ -22,6 +22,29 @@
       "revId": "161116e17a55c55e31ecc31cf73c1154a226b975",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3e34bad_994fabb3",
+        "filename": "examples/layouting/linear-container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1007416
+      },
+      "writtenOn": "2018-05-17T10:41:33Z",
+      "side": 1,
+      "message": "This should not be in a header file.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "161116e17a55c55e31ecc31cf73c1154a226b975",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
