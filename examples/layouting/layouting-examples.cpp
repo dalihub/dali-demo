@@ -17,6 +17,7 @@
 
 #include <string>
 #include "shared/view.h"
+#include "flex-example.h"
 #include "linear-example.h"
 #include "padding-example.h"
 #include <dali/dali.h>
@@ -92,21 +93,29 @@ class LayoutingExample: public ConnectionTracker
 
   bool ChangeLayout( Button button )
   {
+    mFlexExample.Remove();
+    mLinearExample.Remove();
+    mPaddedExample.Remove();
     mLayoutIndex++;
+
+    if (mLayoutIndex > 2)
+      mLayoutIndex = 0;
 
     switch( mLayoutIndex )
     {
+      case 0 :
+      {
+        mLinearExample.Create();
+        break;
+      }
       case 1 :
       {
-        mLinearExample.Remove();
-        mPaddedExample.Create();
+        mFlexExample.Create();
         break;
       }
       case 2 :
       {
-        mPaddedExample.Remove();
-        mNextLayout.SetProperty( Toolkit::Button::Property::LABEL, "end of test");
-        mNextLayout.SetProperty( Toolkit::Button::Property::DISABLED, true );
+        mPaddedExample.Create();
         break;
       }
       default :
@@ -136,6 +145,7 @@ private:
 
 private:
   Application& mApplication;
+  Demo::FlexExample mFlexExample;
   Demo::LinearExample mLinearExample;
   Demo::PaddingExample mPaddedExample;
   PushButton mNextLayout;
