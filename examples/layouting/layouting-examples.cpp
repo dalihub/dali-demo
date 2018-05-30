@@ -19,6 +19,7 @@
 #include "shared/view.h"
 #include "linear-example.h"
 #include "padding-example.h"
+#include "over-sized-children-example.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
@@ -44,6 +45,7 @@ class LayoutingExample: public ConnectionTracker
   : mApplication( application ),
     mLinearExample(),
     mPaddedExample(),
+    mOverSizedChildrenExample(),
     mLayoutIndex( 0 )
   {
     // Connect to the Application's Init signal
@@ -105,9 +107,16 @@ class LayoutingExample: public ConnectionTracker
       case 2 :
       {
         mPaddedExample.Remove();
+        mOverSizedChildrenExample.Create();
         mNextLayout.SetProperty( Toolkit::Button::Property::LABEL, "end of test");
         mNextLayout.SetProperty( Toolkit::Button::Property::DISABLED, true );
         break;
+      }
+      case 3 :
+      {
+        mOverSizedChildrenExample.Remove();
+        mNextLayout.SetProperty( Toolkit::Button::Property::LABEL, "end of test");
+        mNextLayout.SetProperty( Toolkit::Button::Property::DISABLED, true );
       }
       default :
       {
@@ -138,6 +147,7 @@ private:
   Application& mApplication;
   Demo::LinearExample mLinearExample;
   Demo::PaddingExample mPaddedExample;
+  Demo::OverSizedChildrenExample mOverSizedChildrenExample;
   PushButton mNextLayout;
   unsigned int mLayoutIndex;
 };
