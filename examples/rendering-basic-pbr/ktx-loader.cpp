@@ -104,6 +104,7 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
   int result = fread(&header,1,sizeof(KtxFileHeader),fp);
   if( 0 == result )
   {
+    fclose( fp );
     return false;
   }
 
@@ -112,14 +113,27 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
   // Skip the key-values:
   const long int imageSizeOffset = sizeof(KtxFileHeader) + header.bytesOfKeyValueData;
 
-  fseek(fp, imageSizeOffset, SEEK_END);
-  lSize = ftell(fp);
-  rewind(fp);
-
-  if(fseek(fp, imageSizeOffset, SEEK_SET))
+  if( fseek(fp, imageSizeOffset, SEEK_END) )
   {
+    fclose( fp );
     return false;
   }
+
+  lSize = ftell(fp);
+  if( lSize == -1L )
+  {
+    fclose( fp );
+    return false;
+  }
+
+  rewind(fp);
+
+  if( fseek(fp, imageSizeOffset, SEEK_SET) )
+  {
+    fclose( fp );
+    return false;
+  }
+
   cubedata.img.resize(header.numberOfFaces);
 
   for(unsigned int face=0; face < header.numberOfFaces; ++face) //array_element must be 0 or 1
@@ -133,12 +147,14 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
   unsigned int imgSize[6];
   unsigned char* imgPointer = buffer;
   result = fread(buffer,1,lSize,fp);
-  if( 0 == result )
-  {
-    return false;
-  }
 
   fclose(fp);
+
+  if( 0 == result )
+  {
+    free( buffer );
+    return false;
+  }
 
   if( 0 == header.numberOfMipmapLevels )
   {

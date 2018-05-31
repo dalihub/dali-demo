@@ -37,6 +37,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   DaliTableView demo(app);
 
   demo.AddExample(Example("blocks.example", DALI_DEMO_STR_TITLE_BLOCKS));
+  demo.AddExample(Example("bezier-curve.example", DALI_DEMO_STR_TITLE_BEZIER_CURVE));
   demo.AddExample(Example("bubble-effect.example", DALI_DEMO_STR_TITLE_BUBBLES));
   demo.AddExample(Example("contact-cards.example", DALI_DEMO_STR_TITLE_CONTACT_CARDS));
   demo.AddExample(Example("cube-transition-effect.example", DALI_DEMO_STR_TITLE_CUBE_TRANSITION));
@@ -50,6 +51,8 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("sparkle.example", DALI_DEMO_STR_TITLE_SPARKLE));
   demo.AddExample(Example("rendering-skybox.example", DALI_DEMO_STR_TITLE_SKYBOX));
   demo.AddExample(Example("rendering-basic-pbr.example", DALI_DEMO_STR_TITLE_PBR));
+  demo.AddExample(Example("animated-gradient-call-active.example", DALI_DEMO_STR_TITLE_CALL_ACTIVE));
+  demo.AddExample(Example("animated-gradient-card-active.example", DALI_DEMO_STR_TITLE_CARD_ACTIVE));
 
   demo.SortAlphabetically( true );
 

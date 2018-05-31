@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include "shared/view.h"
 
 using namespace Dali;
@@ -586,7 +587,12 @@ private:
    */
   ImageView CreateImage(const std::string& filename)
   {
-    ImageView actor = ImageView::New(filename);
+    Property::Map propertyMap;
+    propertyMap.Insert(Visual::Property::TYPE, Visual::IMAGE);
+    propertyMap.Insert(ImageVisual::Property::URL, filename);
+    propertyMap.Insert(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FILL);
+    ImageView actor = ImageView::New();
+    actor.SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
     actor.SetParentOrigin(ParentOrigin::TOP_LEFT);
     actor.SetAnchorPoint(AnchorPoint::CENTER);
     return actor;

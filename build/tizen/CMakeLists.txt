@@ -109,6 +109,7 @@ CONFIGURE_FILE( resources-location.in ${DEMO_SHARED}/resources-location.cpp )
 
 #Replace @DEMO_STYLE_IMAGE_DIR@ in following files
 CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/demo-theme.json.in ${LOCAL_STYLE_DIR}/demo-theme.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/animated-gradient-call-active-style.json.in ${LOCAL_STYLE_DIR}/animated-gradient-call-active-style.json )
 CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/contact-cards-example-theme.json.in ${LOCAL_STYLE_DIR}/contact-cards-example-theme.json )
 CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/progress-bar-example-theme.json.in ${LOCAL_STYLE_DIR}/progress-bar-example-theme.json )
 CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/simple-example-theme.json.in ${LOCAL_STYLE_DIR}/simple-example-theme.json )
