@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -106,8 +106,33 @@ public:
 
   BezierCurveExample( Application& application )
   : mApplication( application ),
-    mDuration(2.0f),
-    mGoingRight(true)
+    mControlPoint1(),
+    mControlPoint2(),
+    mControlLine1(),
+    mControlLine2(),
+    mAnimIcon1(),
+    mAnimIcon2(),
+    mDragActor(),
+    mCurve(),
+    mCoefficientLabel(),
+    mContentLayer(),
+    mGrid(),
+    mTimer(),
+    mDragAnimation(),
+    mBezierAnimation(),
+    mCurveVertices(),
+    mLine1Vertices(),
+    mLine2Vertices(),
+    mRelativeDragPoint(),
+    mLastControlPointPosition1(),
+    mLastControlPointPosition2(),
+    mPositionFactorIndex(),
+    mDuration( 2.0f ),
+    mControlPoint1Id( 0.0f ),
+    mControlPoint2Id( 0.0f ),
+    mControlPointScale( 0.5f ),
+    mControlPointZoomScale( mControlPointScale * 2.0 ),
+    mGoingRight( true )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &BezierCurveExample::Create );
