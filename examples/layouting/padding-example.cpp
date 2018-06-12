@@ -21,6 +21,7 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/layouting/hbox-layout.h>
+#include <dali-toolkit/devel-api/layouting/absolute-layout.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -53,9 +54,19 @@ void PaddingExample::Create()
 {
   // The Init signal is received once (only) during the Application lifetime
 
-  // Creates a default view with a default tool bar.
-  // The view is added to the stage.
+  // Create a root layout, ideally Dali would have a default layout in the root layer.
+  // Without this root layer the mAbsoluteLayout (or any other layout) will not
+  // honour WIDTH_SPECIFICATION or HEIGHT_SPECIFICATION settings.
+  // It uses the default stage size and ideally should have a layout added to it.
   auto stage = Stage::GetCurrent();
+  auto rootLayoutControl = Control::New();
+  rootLayoutControl.SetName( "AbsoluteLayout");
+  auto rootLayout = AbsoluteLayout::New();
+  DevelControl::SetLayout( rootLayoutControl, rootLayout );
+  rootLayoutControl.SetAnchorPoint( AnchorPoint::CENTER );
+  rootLayoutControl.SetParentOrigin( ParentOrigin::CENTER );
+  stage.Add( rootLayoutControl );
+
   // Create a table view to show a pair of buttons above each image.
   mHorizontalBox = Control::New();
 
@@ -63,11 +74,13 @@ void PaddingExample::Create()
   auto hboxLayout = HboxLayout::New();
   DevelControl::SetLayout( mHorizontalBox, hboxLayout );
   mHorizontalBox.SetName("HBox");
-
+  mHorizontalBox.SetBackgroundColor( Color::WHITE );
+  mHorizontalBox.SetProperty( LayoutItem::ChildProperty::WIDTH_SPECIFICATION, 480 );
+  mHorizontalBox.SetProperty( LayoutItem::ChildProperty::HEIGHT_SPECIFICATION,  700 );
   mHorizontalBox.SetAnchorPoint( AnchorPoint::CENTER );
   mHorizontalBox.SetParentOrigin( ParentOrigin::CENTER );
 
-  stage.Add( mHorizontalBox );
+  rootLayoutControl.Add( mHorizontalBox );
 
   mToggleButton = Toolkit::PushButton::New();
   mToggleButton.SetProperty( Toolkit::Button::Property::LABEL, "Toggle Padding on #2" );
@@ -86,13 +99,13 @@ void PaddingExample::Create()
     // Set Padding for second ImageView
     if( 1 == x )
     {
-      mImageViews[x].SetProperty(Toolkit::Control::Property::PADDING, Extents(10.0f,10.0f,5.0f, 5.0f));
+      mImageViews[x].SetProperty(Toolkit::Control::Property::PADDING, Extents( 10.0f,10.0f,5.0f, 5.0f));
     }
 
     // Set margin for first ImageView
     if( 0 == x )
     {
-      mImageViews[x].SetProperty(Toolkit::Control::Property::MARGIN, Extents(10.0f,10.0f,0.0f, 0.0f));
+      mImageViews[x].SetProperty(Toolkit::Control::Property::MARGIN, Extents( 10.0f,10.0f,0.0f, 0.0f));
     }
 
     mHorizontalBox.Add( mImageViews[x] );

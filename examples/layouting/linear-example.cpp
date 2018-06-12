@@ -71,7 +71,6 @@ namespace Demo
 
 void LinearExample::Create()
 {
-  // The Init signal is received once (only) during the Application lifetime
   auto stage = Stage::GetCurrent();
 
   mDirectionButton = PushButton::New();

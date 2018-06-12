@@ -27,6 +27,7 @@
 #include "linear-example.h"
 #include "padding-example.h"
 #include "example.h"
+#include "absolute-example.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -47,6 +48,7 @@ void CreateExamples( ExampleContainer& container )
 {
   container.push_back( ExamplePointer( new Demo::LinearExample ) );
   container.push_back( ExamplePointer( new Demo::PaddingExample ) );
+  container.push_back( ExamplePointer( new Demo::AbsoluteExample ) );
 }
 
 } // anonymous namespace
