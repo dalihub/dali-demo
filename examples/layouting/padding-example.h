@@ -2,7 +2,7 @@
 #define DALI_DEMO_PADDING_EXAMPLE_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
+#include "example.h"
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 
@@ -33,17 +35,17 @@ namespace Demo
  * @brief Example of a Linear Layout with padding applied, enables updating of padding values for
  * one of the children.
  */
-class PaddingExample: public ConnectionTracker
+class PaddingExample final: public ConnectionTracker, public Example
 {
 public:
 
   static const unsigned int NUMBER_OF_IMAGE_VIEWS = 3;
 
   // Create a Linear layout of ImagesViews, one with a Margin, One with padding.
-  void Create();
+  void Create() override;
 
   // Remove created Layout
-  void Remove();
+  void Remove() override;
 
 private:
 

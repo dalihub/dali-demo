@@ -15,13 +15,18 @@
  *
  */
 
+// EXTERNAL INCLUDES
+#include <memory>
 #include <string>
-#include "shared/view.h"
-#include "linear-example.h"
-#include "padding-example.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+
+// INTERNAL INCLUDES
+#include "shared/view.h"
+#include "linear-example.h"
+#include "padding-example.h"
+#include "example.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -32,9 +37,19 @@ namespace
 const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "lake_front.jpg" );
 const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 
-const char* APPLICATION_TITLE( "Layout tester" );
+const char* APPLICATION_TITLE( "Layout Tester" );
 
-}  // namespace
+typedef std::unique_ptr< Demo::Example > ExamplePointer;
+typedef std::vector< ExamplePointer > ExampleContainer;
+
+/// All layouting examples to be shown should be added to this method
+void CreateExamples( ExampleContainer& container )
+{
+  container.push_back( ExamplePointer( new Demo::LinearExample ) );
+  container.push_back( ExamplePointer( new Demo::PaddingExample ) );
+}
+
+} // anonymous namespace
 
 class LayoutingExample: public ConnectionTracker
 {
@@ -42,23 +57,17 @@ class LayoutingExample: public ConnectionTracker
 
   LayoutingExample( Application& application )
   : mApplication( application ),
-    mLinearExample(),
-    mPaddedExample(),
+    mLayoutingExamples(),
     mLayoutIndex( 0 )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &LayoutingExample::Create );
   }
 
-  ~LayoutingExample()
-  {
-    // Nothing to do here
-  }
+private:
 
   void Create( Application& application )
   {
-    // The Init signal is received once (only) during the Application lifetime
-
     auto stage = Stage::GetCurrent();
     stage.KeyEventSignal().Connect( this, &LayoutingExample::OnKeyEvent );
 
@@ -88,38 +97,24 @@ class LayoutingExample: public ConnectionTracker
     mNextLayout.SetSize(175, 50);
     toolbar.Add( mNextLayout );
 
-    mLinearExample.Demo::LinearExample::Create();
+    CreateExamples( mLayoutingExamples );
+    if( ! mLayoutingExamples.empty() )
+    {
+      mLayoutingExamples[ mLayoutIndex ]->Create();
+    }
   }
 
   bool ChangeLayout( Button button )
   {
-    mLayoutIndex++;
-
-    switch( mLayoutIndex )
+    if( ! mLayoutingExamples.empty() )
     {
-      case 1 :
-      {
-        mLinearExample.Remove();
-        mPaddedExample.Create();
-        break;
-      }
-      case 2 :
-      {
-        mPaddedExample.Remove();
-        mNextLayout.SetProperty( Toolkit::Button::Property::LABEL, "end of test");
-        mNextLayout.SetProperty( Toolkit::Button::Property::DISABLED, true );
-        break;
-      }
-      default :
-      {
-        break;
-      }
+      mLayoutingExamples[ mLayoutIndex ]->Remove();
+      mLayoutIndex = ( mLayoutIndex + 1 ) % mLayoutingExamples.size();
+      mLayoutingExamples[ mLayoutIndex ]->Create();
     }
-
     return true;
   }
 
-private:
   /**
    * Main key event handler
    */
@@ -137,8 +132,7 @@ private:
 
 private:
   Application& mApplication;
-  Demo::LinearExample mLinearExample;
-  Demo::PaddingExample mPaddedExample;
+  ExampleContainer mLayoutingExamples;
   PushButton mNextLayout;
   unsigned int mLayoutIndex;
 };

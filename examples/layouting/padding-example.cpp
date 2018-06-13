@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,18 +69,18 @@ void PaddingExample::Create()
 
   stage.Add( mHorizontalBox );
 
+  mToggleButton = Toolkit::PushButton::New();
+  mToggleButton.SetProperty( Toolkit::Button::Property::LABEL, "Toggle Padding on #2" );
+  mToggleButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+  mToggleButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+  mToggleButton.ClickedSignal().Connect( this, &Demo::PaddingExample::ChangePaddingClicked );
+  mToggleButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+  mToggleButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+
+  stage.Add( mToggleButton );
+
   for( unsigned int x = 0; x < NUMBER_OF_IMAGE_VIEWS; x++ )
   {
-    mToggleButton = Toolkit::PushButton::New();
-    mToggleButton.SetProperty( Toolkit::Button::Property::LABEL, "Toggle Padding on #2" );
-    mToggleButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mToggleButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    mToggleButton.ClickedSignal().Connect( this, &Demo::PaddingExample::ChangePaddingClicked );
-    mToggleButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    mToggleButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-
-    stage.Add( mToggleButton );
-
     CreateChildImageView( mImageViews[x], DEMO_IMAGE_DIR "gallery-small-23.jpg" , Size(100.0f, 100.0f) );
 
     // Set Padding for second ImageView

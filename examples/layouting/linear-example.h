@@ -21,6 +21,8 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 
+#include "example.h"
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 
@@ -32,16 +34,15 @@ namespace Demo
  * @brief Example of a Linear Layout with mirror feature and
  * tranisition from horizontal to vertical.
  */
-class LinearExample: public ConnectionTracker
+class LinearExample final: public ConnectionTracker, public Example
 {
-
 public:
 
   // Creates a Linear Layout Example and displays it.
-  void Create();
+  virtual void Create() override;
 
   // Remove and destroy this layout
-  void Remove();
+  virtual void Remove() override;
 
 private:
 
@@ -55,7 +56,7 @@ private:
   PushButton mDirectionButton;
   PushButton mRotateButton;
   Control mLinearContainer;
-  bool mDirection;
+  bool mDirection = false;
   bool mIsHorizontal = true;
 }; // class LinearContainer
 
