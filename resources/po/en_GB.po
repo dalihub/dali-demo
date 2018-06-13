@@ -82,6 +82,9 @@ msgstr "Item View"
 msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
 msgstr "Lights and Shadows"
 
+msgid "DALI_DEMO_STR_TITLE_LAYOUTING"
+msgstr "Layouting"
+
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "Mesh Line"
 

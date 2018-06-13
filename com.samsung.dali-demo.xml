@@ -248,8 +248,13 @@
 		<label>Card Active App</label>
 	</ui-application>
 	<ui-application appid="image-policies.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-policies.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
-		<label>Image Policies</label></ui-application>
-	<privileges>
+    <label>Image Policies</label>
+  </ui-application>
+	<ui-application appid="layouting.example" exec="/usr/apps/com.samsung.dali-demo/bin/layouting.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+    <label>Layouting</label>
+  </ui-application>
+
+  <privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
 		<privilege>http://tizen.org/privilege/externalstorage</privilege>
 		<privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>

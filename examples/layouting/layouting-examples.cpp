@@ -60,6 +60,7 @@ class LayoutingExample: public ConnectionTracker
     // The Init signal is received once (only) during the Application lifetime
 
     auto stage = Stage::GetCurrent();
+    stage.KeyEventSignal().Connect( this, &LayoutingExample::OnKeyEvent );
 
     auto bg = ImageView::New( BACKGROUND_IMAGE );
     bg.SetParentOrigin( ParentOrigin::CENTER );
