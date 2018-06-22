@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,6 +56,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("image-view-pixel-area.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA));
   demo.AddExample(Example("image-view-svg.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG));
   demo.AddExample(Example("image-view-url.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL));
+  demo.AddExample(Example("layouting.example", DALI_DEMO_STR_TITLE_LAYOUTING));
   demo.AddExample(Example("line-mesh.example", DALI_DEMO_STR_TITLE_LINE_MESH));
   demo.AddExample(Example("magnifier.example", DALI_DEMO_STR_TITLE_MAGNIFIER));
   demo.AddExample(Example("mesh-morph.example", DALI_DEMO_STR_TITLE_MESH_MORPH));
