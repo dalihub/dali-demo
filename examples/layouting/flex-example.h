@@ -1,5 +1,5 @@
-#ifndef DALI_DEMO_LINEAR_EXAMPLE_H
-#define DALI_DEMO_LINEAR_EXAMPLE_H
+#ifndef DALI_DEMO_FLEX_EXAMPLE_H
+#define DALI_DEMO_FLEX_EXAMPLE_H
 
 /*
  * Copyright (c) 2018 Samsung Electronics Co., Ltd.
@@ -30,16 +30,16 @@ namespace Demo
 {
 
 /**
- * @file linear-example.hcpp
- * @brief Example of a Linear Layout with mirror feature and
+ * @file flex-example.hcpp
+ * @brief Example of a Flex Layout with mirror feature and
  * transition from horizontal to vertical.
  */
-class LinearExample final: public ConnectionTracker, public Example
+class FlexExample final: public ConnectionTracker, public Example
 {
 public:
-  LinearExample();
+  FlexExample();
 
-  // Creates a Linear Layout Example and displays it.
+  // Creates a Flex Layout Example and displays it.
   virtual void Create() override;
 
   // Remove and destroy this layout
@@ -50,16 +50,24 @@ private:
   // Changes the direction of the items.
   bool OnDirectionClicked( Button button );
 
-  // Alternates the linear layout from horizontal to vertical
+  // Alternates the layout from horizontal to vertical
   bool OnRotateClicked( Button button );
+
+  // Alternates the layout wrapping from wrapping to none
+  bool OnWrapClicked( Button button );
+
+  // Alternates the layout to justify space between items or not
+  bool OnJustifyClicked( Button button );
 
 private:
   PushButton mDirectionButton;
   PushButton mRotateButton;
-  Control mLinearContainer;
+  PushButton mWrapButton;
+  PushButton mJustifyButton;
+  Control mFlexContainer;
   bool mLTRDirection;
-}; // class LinearContainer
+}; // class FlexExample
 
 } // namespace Demo
 
-#endif //DALI_DEMO_LINEAR_CONTAINER_H
+#endif //DALI_DEMO_FLEX_EXAMPLE_H

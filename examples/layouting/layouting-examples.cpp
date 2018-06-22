@@ -26,6 +26,7 @@
 #include "shared/view.h"
 #include "linear-example.h"
 #include "padding-example.h"
+#include "flex-example.h"
 #include "example.h"
 #include "absolute-example.h"
 
@@ -49,6 +50,7 @@ void CreateExamples( ExampleContainer& container )
   container.push_back( ExamplePointer( new Demo::LinearExample ) );
   container.push_back( ExamplePointer( new Demo::PaddingExample ) );
   container.push_back( ExamplePointer( new Demo::AbsoluteExample ) );
+  container.push_back( ExamplePointer( new Demo::FlexExample ) );
 }
 
 } // anonymous namespace
