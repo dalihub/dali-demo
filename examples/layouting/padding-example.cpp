@@ -20,8 +20,8 @@
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/layouting/hbox-layout.h>
 #include <dali-toolkit/devel-api/layouting/absolute-layout.h>
-#include <dali-toolkit/devel-api/layouting/linear-layout.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -70,8 +70,8 @@ void PaddingExample::Create()
   // Create a table view to show a pair of buttons above each image.
   mHorizontalBox = Control::New();
 
-  // Create LinearLayout for this control.
-  auto hboxLayout = LinearLayout::New();
+  // Create HBoxLayout for this control.
+  auto hboxLayout = HboxLayout::New();
   DevelControl::SetLayout( mHorizontalBox, hboxLayout );
   mHorizontalBox.SetName("HBox");
   mHorizontalBox.SetBackgroundColor( Color::WHITE );

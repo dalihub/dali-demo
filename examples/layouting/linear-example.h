@@ -32,12 +32,11 @@ namespace Demo
 /**
  * @file linear-example.hcpp
  * @brief Example of a Linear Layout with mirror feature and
- * transition from horizontal to vertical.
+ * tranisition from horizontal to vertical.
  */
 class LinearExample final: public ConnectionTracker, public Example
 {
 public:
-  LinearExample();
 
   // Creates a Linear Layout Example and displays it.
   virtual void Create() override;
@@ -57,7 +56,8 @@ private:
   PushButton mDirectionButton;
   PushButton mRotateButton;
   Control mLinearContainer;
-  bool mLTRDirection;
+  bool mDirection = false;
+  bool mIsHorizontal = true;
 }; // class LinearContainer
 
 } // namespace Demo

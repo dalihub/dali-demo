@@ -20,7 +20,8 @@
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
-#include <dali-toolkit/devel-api/layouting/linear-layout.h>
+#include <dali-toolkit/devel-api/layouting/hbox-layout.h>
+#include <dali-toolkit/devel-api/layouting/vbox-layout.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -68,11 +69,6 @@ void CreateChildImageView( ImageView& imageView, const char* filename, Size size
 namespace Demo
 {
 
-LinearExample::LinearExample()
-: mLTRDirection(true)
-{
-}
-
 void LinearExample::Create()
 {
   auto stage = Stage::GetCurrent();
@@ -97,9 +93,10 @@ void LinearExample::Create()
 
   // Create a linear layout
   mLinearContainer = Control::New();
-  auto layout = LinearLayout::New();
+  mIsHorizontal = false;
+
+  auto layout = VboxLayout::New();
   layout.SetAnimateLayout(true);
-  layout.SetOrientation( LinearLayout::Orientation::VERTICAL );
   DevelControl::SetLayout( mLinearContainer, layout );
 
   mLinearContainer.SetParentOrigin( ParentOrigin::CENTER );
@@ -132,7 +129,7 @@ void LinearExample::Remove()
 // Mirror items in layout
 bool LinearExample::OnDirectionClicked( Button button )
 {
-  if( !mLTRDirection )
+  if( mDirection )
   {
     mDirectionButton.SetProperty( PushButton::Property::UNSELECTED_ICON, LTR_IMAGE );
     mDirectionButton.SetProperty( PushButton::Property::SELECTED_ICON, LTR_SELECTED_IMAGE );
@@ -144,21 +141,25 @@ bool LinearExample::OnDirectionClicked( Button button )
     mDirectionButton.SetProperty( PushButton::Property::SELECTED_ICON, RTL_SELECTED_IMAGE );
     mLinearContainer.SetProperty( Actor::Property::LAYOUT_DIRECTION, LayoutDirection::RIGHT_TO_LEFT );
   }
-  mLTRDirection = !mLTRDirection;
+  mDirection = !mDirection;
   return true;
 }
 
 // Rotate layout by changing layout
 bool LinearExample::OnRotateClicked( Button button )
 {
-  auto layout = LinearLayout::DownCast( DevelControl::GetLayout( mLinearContainer ) );
-  if( layout.GetOrientation() == LinearLayout::Orientation::VERTICAL )
+  mIsHorizontal = !mIsHorizontal;
+  if( mIsHorizontal )
   {
-    layout.SetOrientation( LinearLayout::Orientation::HORIZONTAL );
+    auto hboxLayout = HboxLayout::New();
+    hboxLayout.SetAnimateLayout(true);
+    DevelControl::SetLayout( mLinearContainer, hboxLayout );
   }
   else
   {
-    layout.SetOrientation( LinearLayout::Orientation::VERTICAL );
+    auto vboxLayout = VboxLayout::New();
+    vboxLayout.SetAnimateLayout(true);
+    DevelControl::SetLayout( mLinearContainer, vboxLayout );
   }
   return true;
 }

@@ -18,6 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/layouting/hbox-layout.h>
 #include <dali-toolkit/devel-api/layouting/layout-item-impl.h>
 
 #include "custom-layout.h"
