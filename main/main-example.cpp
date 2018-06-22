@@ -1,5 +1,0 @@
-﻿//#include "examples/alpha-blending-cpu/alpha-blending-cpu-example.cpp"
-//#include "examples/image-view/image-view-example.cpp"
-//#include "examples/image-view-url/image-view-url-example.cpp"
-#include "examples/remote-image-loading/remote-image-loading-example.cpp"
-//#include "examples/video-view/video-view-example.cpp"
