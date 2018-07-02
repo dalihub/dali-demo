@@ -43,3 +43,5 @@ simple-image-wall.js
 /debugfiles.list
 /debuglinks.list
 /debugsources.list
+/CMakeCache.txt
+/CMakeFiles
