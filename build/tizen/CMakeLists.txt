@@ -135,7 +135,7 @@ MESSAGE("Installed style resources ${LOCAL_STYLE_IMAGES_LIST} to ${STYLE_DIR}/im
 
 SET(PKG_LIST dali-core
              dali-adaptor
-             dali-toolkit)
+             dali-toolkit )
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(REQUIRED_PKGS REQUIRED ${PKG_LIST})
