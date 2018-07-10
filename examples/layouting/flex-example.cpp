@@ -26,6 +26,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
+const char* const TITLE = "Flex Example";
 
 // Button file names
 const char* LTR_IMAGE( DEMO_IMAGE_DIR "icon-play.png" );
@@ -81,7 +82,8 @@ namespace Demo
 {
 
 FlexExample::FlexExample()
-: mLTRDirection(true)
+: Example( TITLE ),
+  mLTRDirection(true)
 {
 
 }

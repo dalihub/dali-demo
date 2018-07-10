@@ -18,6 +18,9 @@
  *
  */
 
+// EXTERNAL INCLUDES
+#include <string>
+
 namespace Demo
 {
 
@@ -35,6 +38,28 @@ public:
 
   /// Virtual destructor
   virtual ~Example() = default;
+
+  /**
+   * Gets the title set for this example
+   * @return title
+   */
+  const std::string& GetExampleTitle() const
+  {
+    return mTitle;
+  }
+
+protected:
+  /**
+   * Constructor for Example
+   * @param[in] title Title to be used for the example
+   */
+  Example( const std::string& title )
+  : mTitle( title )
+  {
+  }
+
+private:
+  const std::string mTitle;
 };
 
 } // namespace Demo
