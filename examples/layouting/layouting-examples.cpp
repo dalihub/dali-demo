@@ -27,6 +27,7 @@
 #include "linear-example.h"
 #include "padding-example.h"
 #include "flex-example.h"
+#include "grid-example.h"
 #include "example.h"
 #include "absolute-example.h"
 
@@ -47,10 +48,11 @@ typedef std::vector< ExamplePointer > ExampleContainer;
 /// All layouting examples to be shown should be added to this method
 void CreateExamples( ExampleContainer& container )
 {
-  container.push_back( ExamplePointer( new Demo::LinearExample ) );
-  container.push_back( ExamplePointer( new Demo::PaddingExample ) );
-  container.push_back( ExamplePointer( new Demo::AbsoluteExample ) );
-  container.push_back( ExamplePointer( new Demo::FlexExample ) );
+  //container.push_back( ExamplePointer( new Demo::LinearExample ) );
+  //container.push_back( ExamplePointer( new Demo::PaddingExample ) );
+  //container.push_back( ExamplePointer( new Demo::AbsoluteExample ) );
+  //container.push_back( ExamplePointer( new Demo::FlexExample ) );
+  container.push_back( ExamplePointer( new Demo::GridExample ) );
 }
 
 } // anonymous namespace
