@@ -47,8 +47,10 @@ public:
   // Remove and destroy this layout
   virtual void Remove() override;
 
-private:
+  // Title for this example
+  virtual std::string GetExampleTitle() override;
 
+private:
 
   // Callback when change size button is pressed
   bool ChangeSizeClicked( Toolkit::Button button );

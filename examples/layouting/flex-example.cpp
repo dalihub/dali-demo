@@ -26,6 +26,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
+const char* const TITLE = "Flex Example";
 
 // Button file names
 const char* LTR_IMAGE( DEMO_IMAGE_DIR "icon-play.png" );
@@ -171,6 +172,11 @@ void FlexExample::Remove()
     UnparentAndReset( mRotateButton );
     UnparentAndReset( mFlexContainer);
   }
+}
+
+std::string FlexExample::GetExampleTitle()
+{
+  return TITLE;
 }
 
 // Mirror items in layout

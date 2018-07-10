@@ -33,6 +33,9 @@ public:
   /// Should be overridden by deriving classes to remove their layouting example from stage
   virtual void Remove() = 0;
 
+  // Should be overridden by deriving classes to provide a title for their example
+  virtual std::string GetExampleTitle() = 0;
+
   /// Virtual destructor
   virtual ~Example() = default;
 };

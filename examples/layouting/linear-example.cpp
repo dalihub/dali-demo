@@ -27,6 +27,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
+const char* const TITLE = "Linear Example";
 
 // Button file names
 const char* LTR_IMAGE( DEMO_IMAGE_DIR "icon-play.png" );
@@ -127,6 +128,11 @@ void LinearExample::Remove()
     UnparentAndReset( mRotateButton );
     UnparentAndReset( mLinearContainer);
   }
+}
+
+std::string LinearExample::GetExampleTitle()
+{
+  return TITLE;
 }
 
 // Mirror items in layout

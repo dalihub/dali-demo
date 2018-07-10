@@ -1,5 +1,5 @@
-#ifndef DALI_DEMO_PADDING_EXAMPLE_H
-#define DALI_DEMO_PADDING_EXAMPLE_H
+#ifndef DALI_DEMO_GRID_EXAMPLE_H
+#define DALI_DEMO_GRID_EXAMPLE_H
 
 /*
  * Copyright (c) 2018 Samsung Electronics Co., Ltd.
@@ -31,17 +31,17 @@ namespace Demo
 {
 
 /**
- * @file padding-example.hcpp
- * @brief Example of a Linear Layout with padding applied, enables updating of padding values for
- * one of the children.
+ * @file grid-example.hcpp
+ * @brief Example of a Grid Layout
  */
-class PaddingExample final: public ConnectionTracker, public Example
+class GridExample final: public ConnectionTracker, public Example
 {
 public:
 
-  static const unsigned int NUMBER_OF_IMAGE_VIEWS = 3;
+  static const unsigned int MAX_NUMBER_OF_IMAGE_VIEWS = 9;
+  static const unsigned int INITIAL_NUMBER_OF_IMAGE_VIEWS = 5;
 
-  // Create a Linear layout of ImagesViews, one with a Margin, One with padding.
+  // Create a Grid layout of ImagesViews
   void Create() override;
 
   // Remove created Layout
@@ -49,21 +49,30 @@ public:
 
   // Title for this example
   virtual std::string GetExampleTitle() override;
+  
+private:
+
+  // Callback for button pressed
+  bool ToggleButtonClicked( Toolkit::Button button );
+
+  // Actions to perform in this example
+  void ChangeTo3Columns();
+  void AddItemsInteractively();
+  void AddMarginToItems();
+  void RemoveMarginsFromItems();
+  void MatchParentOnWidth();
+  void WrapContentOnWidth();
+  void SetExactWidth();
 
 private:
 
-  // Change Paddding callback
-  bool ChangePaddingClicked( Toolkit::Button button );
-
-private:
-
-  Toolkit::Control           mHorizontalBox;
-  Toolkit::ImageView         mImageViews[ NUMBER_OF_IMAGE_VIEWS ];
-  bool                       mImageViewToggleStatus[ NUMBER_OF_IMAGE_VIEWS ];
-  Toolkit::PushButton        mToggleButton;
-
+  Toolkit::Control                mRootLayoutControl;
+  Toolkit::Control                mGridContainer;
+  std::vector<Toolkit::ImageView> mImageViews;
+  Toolkit::PushButton             mToggleButton;
+  unsigned int                    mToggleStatus;
 };
 
 } // namespace Demo
 
-#endif // DALI_DEMO_PADDING_EXAMPLE_H
+#endif // DALI_DEMO_GRID_EXAMPLE_H

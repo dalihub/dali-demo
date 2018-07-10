@@ -45,6 +45,9 @@ public:
   // Remove and destroy this layout
   virtual void Remove() override;
 
+  // Title for this example
+  virtual std::string GetExampleTitle() override;
+
 private:
 
   // Changes the direction of the items.
