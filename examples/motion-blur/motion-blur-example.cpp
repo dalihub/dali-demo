@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -162,6 +162,11 @@ public:
                                             TOOLBAR_IMAGE,
                                             APPLICATION_TITLE );
 
+    // Ensure the content layer is a square so the touch area works in all orientations
+    Vector2 stageSize = Stage::GetCurrent().GetSize();
+    float size = std::max( stageSize.width, stageSize.height );
+    mContentLayer.SetSize( size, size );
+
     //Add an effects icon on the right of the title
     mActorEffectsButton = Toolkit::PushButton::New();
     mActorEffectsButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON );
@@ -188,11 +193,10 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
     winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
+    winHandle.ResizedSignal().Connect( this, &MotionBlurExampleApp::OnWindowResized );
 
     // set initial orientation
-    unsigned int degrees = 0;
-    Rotate( static_cast< DeviceOrientation >( degrees ) );
-
+    Rotate( PORTRAIT );
 
     ///////////////////////////////////////////////////////
     //
@@ -200,7 +204,6 @@ public:
     //
 
     // Scale down actor to fit on very low resolution screens with space to interact:
-    Size stageSize = Stage::GetCurrent().GetSize();
     mMotionBlurActorSize = Size( std::min( stageSize.x * 0.3f, MOTION_BLUR_ACTOR_WIDTH ), std::min( stageSize.y * 0.3f, MOTION_BLUR_ACTOR_HEIGHT ) );
     mMotionBlurActorSize = Size( std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ), std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ) );
 
@@ -220,16 +223,21 @@ public:
 
   }
 
+  //////////////////////////////////////////////////////////////
+  //
+  // Device Orientation Support
+  //
+  //
+
+  void OnWindowResized( Window::WindowSize size )
+  {
+    Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
+  }
+
   void Rotate( DeviceOrientation orientation )
   {
     // Resize the root actor
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
-    Vector2 targetSize = stageSize;
-    if( orientation == LANDSCAPE ||
-        orientation == LANDSCAPE_INVERSE )
-    {
-      targetSize = Vector2( stageSize.y, stageSize.x );
-    }
+    const Vector2 targetSize = Stage::GetCurrent().GetSize();
 
     if( mOrientation != orientation )
     {
@@ -240,15 +248,12 @@ public:
       {
         // has parent so we expect it to be on stage, start animation
         mRotateAnimation = Animation::New( ORIENTATION_DURATION );
-        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( -orientation ) ), Vector3::ZAXIS ), AlphaFunction::EASE_OUT );
         mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_WIDTH ), targetSize.width );
         mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_HEIGHT ), targetSize.height );
         mRotateAnimation.Play();
       }
       else
       {
-        // set the rotation to match the orientation
-        mView.SetOrientation( Degree( -orientation ), Vector3::ZAXIS );
         mView.SetSize( targetSize );
       }
     }
