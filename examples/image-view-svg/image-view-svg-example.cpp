@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ using namespace Dali;
 
 namespace
 {
+const float MIN_SCALE = 0.6f;
 const float MAX_SCALE = 6.f;
 
 const char* SVG_IMAGES[] =
@@ -37,9 +38,10 @@ const char* SVG_IMAGES[] =
     DEMO_IMAGE_DIR "Kid1.svg"
 };
 const unsigned int NUM_SVG_IMAGES( sizeof( SVG_IMAGES ) / sizeof( SVG_IMAGES[0] ) );
-}
+const unsigned int NUM_IMAGES_DISPLAYED = 4u;
+} // unnamed namespace
 
-// This example shows how to display svg images with ImageView
+// This example shows how to display svg images with ImageView.
 //
 class ImageSvgController : public ConnectionTracker
 {
@@ -48,7 +50,6 @@ public:
   ImageSvgController( Application& application )
   : mApplication( application ),
     mScale( 1.f ),
-    mScaleAtPinchStart( 1.0f ),
     mIndex( 0 )
   {
     // Connect to the Application's Init signal
@@ -97,7 +98,7 @@ public:
     resetButton.ClickedSignal().Connect( this, &ImageSvgController::OnResetButtonClicked );
 
     // Create and put imageViews to stage
-    for( unsigned int i=0; i<4u; i++)
+    for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
     {
       mSvgActor[i] = Toolkit::ImageView::New(SVG_IMAGES[mIndex+i]);
       mSvgActor[i].SetSize( mActorSize );
@@ -130,8 +131,8 @@ public:
   // Callback of push button, for changing image set
   bool OnChangeButtonClicked( Toolkit::Button button )
   {
-    mIndex = (mIndex+4) % NUM_SVG_IMAGES;
-    for( unsigned int i=0; i<4u; i++)
+    mIndex = ( mIndex + NUM_IMAGES_DISPLAYED ) % NUM_SVG_IMAGES;
+    for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
     {
       mSvgActor[i].SetImage(SVG_IMAGES[mIndex+i]);
     }
@@ -142,7 +143,7 @@ public:
   // Callback of push button, for resetting image size and position
   bool OnResetButtonClicked( Toolkit::Button button )
   {
-    for( unsigned int i=0; i<4u; i++)
+    for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED ; i++ )
     {
       mSvgActor[i].SetSize(mActorSize);
       mSvgActor[i].SetPosition( Vector3::ZERO );
@@ -157,7 +158,7 @@ public:
   {
     if( gesture.state == Gesture::Continuing )
     {
-      for( unsigned int i=0; i<4u; i++)
+      for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
       {
         mSvgActor[i].TranslateBy(Vector3(gesture.displacement));
       }
@@ -167,18 +168,42 @@ public:
   // Callback of pinch gesture, for resizing the actors
   void OnPinch(Actor actor, const PinchGesture& gesture)
   {
-    if (gesture.state == Gesture::Started)
+    switch( gesture.state )
     {
-      mScaleAtPinchStart = mScale;
-    }
-    if( gesture.state == Gesture::Finished )
-    {
-      mScale = mScaleAtPinchStart * gesture.scale;
-      mScale = mScale > MAX_SCALE ? MAX_SCALE : mScale;
-      for( unsigned int i=0; i<4u; i++)
+      // Only scale the image when we start or continue pinching
+
+      case Gesture::Started:
+      case Gesture::Continuing:
       {
-        mSvgActor[i].SetSize( mActorSize * mScale);
+        float scale = std::max( gesture.scale, MIN_SCALE / mScale );
+        scale = std::min( MAX_SCALE / mScale, scale );
+
+        for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
+        {
+          mSvgActor[i].SetScale( scale );
+        }
+        break;
       }
+
+      case Gesture::Finished:
+      {
+        // Resize the image when pinching is complete, this will rasterize the SVG to the new size
+
+        mScale = mScale * gesture.scale;
+        mScale = mScale > MAX_SCALE ? MAX_SCALE : mScale;
+        mScale = mScale < MIN_SCALE ? MIN_SCALE : mScale;
+        for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
+        {
+          mSvgActor[i].SetSize( mActorSize * mScale );
+          mSvgActor[i].SetScale( 1.0f );
+        }
+        break;
+      }
+
+      case Gesture::Cancelled:
+      case Gesture::Clear:
+      case Gesture::Possible:
+        break;
     }
   }
 
@@ -198,10 +223,13 @@ public:
          const char* keyName = event.keyPressedName.c_str();
          if( strcmp(keyName, "Left") == 0 )
          {
-           mScale /= 1.1f;
-           for( unsigned int i=0; i<4u; i++)
+           if( mScale > MIN_SCALE )
            {
-             mSvgActor[i].SetSize( mActorSize * mScale);
+             mScale /= 1.1f;
+           }
+           for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
+           {
+             mSvgActor[i].SetSize( mActorSize * mScale );
            }
          }
          else if( strcmp(keyName, "Right") == 0 )
@@ -210,9 +238,9 @@ public:
            {
              mScale *= 1.1f;
            }
-           for( unsigned int i=0; i<4u; i++)
+           for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
            {
-             mSvgActor[i].SetSize( mActorSize * mScale);
+             mSvgActor[i].SetSize( mActorSize * mScale );
            }
          }
        }
@@ -228,7 +256,6 @@ private:
   Toolkit::ImageView  mSvgActor[4];
   Vector2             mActorSize;
   float               mScale;
-  float               mScaleAtPinchStart;
   unsigned int        mIndex;
 };
 
