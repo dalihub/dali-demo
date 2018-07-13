@@ -38,7 +38,8 @@ const char* const ANIMATION_BACKGROUND( DEMO_IMAGE_DIR "slider-skin.9.png" );
 const char* APPLICATION_TITLE("Bezier curve animation");
 const float ANIM_LEFT_FACTOR(0.2f);
 const float ANIM_RIGHT_FACTOR(0.8f);
-
+const int AXIS_LABEL_POINT_SIZE(7);
+const float AXIS_LINE_SIZE(1.0f);
 
 const char* CURVE_VERTEX_SHADER = DALI_COMPOSE_SHADER
   (
@@ -193,6 +194,7 @@ public:
     contentLayout.SetCellAlignment(1, HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
     CreateCubic(mGrid);
     CreateControlPoints( mGrid ); // Control points constrained to double height of grid
+    CreateAxisLabels( mGrid );
 
     mCoefficientLabel = TextLabel::New();
     mCoefficientLabel.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
@@ -373,6 +375,36 @@ public:
     parent.Add( mControlLine2 );
     parent.Add( mControlPoint1 );
     parent.Add( mControlPoint2 );
+  }
+
+  void CreateAxisLabels( Actor parent )
+  {
+    TextLabel progressionLabel = TextLabel::New( "Progression" );
+    progressionLabel.SetProperty( TextLabel::Property::POINT_SIZE, AXIS_LABEL_POINT_SIZE );
+    progressionLabel.SetOrientation( Degree(-90.0f), Vector3::ZAXIS );
+    progressionLabel.SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
+    progressionLabel.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
+    CreateLine( progressionLabel, ParentOrigin::BOTTOM_LEFT );
+
+    TextLabel timeLabel = TextLabel::New( "Time" );
+    timeLabel.SetProperty( TextLabel::Property::POINT_SIZE, AXIS_LABEL_POINT_SIZE );
+    timeLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    timeLabel.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
+    CreateLine( timeLabel, ParentOrigin::TOP_LEFT );
+
+    parent.Add( progressionLabel );
+    parent.Add( timeLabel );
+  }
+
+  void CreateLine( Actor parent, const Vector3& parentOrigin )
+  {
+    Control control = Control::New();
+    control.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    control.SetParentOrigin( parentOrigin );
+    control.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    control.SetProperty( Actor::Property::SIZE_HEIGHT, AXIS_LINE_SIZE );
+    control.SetBackgroundColor( Color::BLACK );
+    parent.Add( control );
   }
 
   void SetLabel( Vector2 pos1, Vector2 pos2 )
