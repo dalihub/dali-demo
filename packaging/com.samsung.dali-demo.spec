@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    1.3.26
+Version:    1.3.32
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -19,15 +19,13 @@ BuildRequires:  pkgconfig(capi-media-player)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(dali-core)
+BuildRequires:  pkgconfig(dali-adaptor)
 BuildRequires:  pkgconfig(dali-toolkit)
 
 #need libtzplatform-config for directory if tizen version is 3.x
 %if 0%{?tizen_version_major} >= 3
 BuildRequires:  pkgconfig(libtzplatform-config)
 %endif
-
-# DALi C++ applications always run on dali-adaptor.
-BuildRequires:  pkgconfig(dali-adaptor)
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations

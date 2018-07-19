@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,6 +63,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL")
 #define DALI_DEMO_STR_TITLE_ITEM_VIEW                   dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_ITEM_VIEW")
 #define DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS          dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS")
+#define DALI_DEMO_STR_TITLE_LAYOUTING                   dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_LAYOUTING")
 #define DALI_DEMO_STR_TITLE_LINE_MESH                   dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_LINE_MESH")
 #define DALI_DEMO_STR_TITLE_MAGNIFIER                   dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MAGNIFIER")
 #define DALI_DEMO_STR_TITLE_MESH_MORPH                  dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MESH_MORPH")
@@ -137,6 +138,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL              "Image View URL"
 #define DALI_DEMO_STR_TITLE_ITEM_VIEW                   "Item View"
 #define DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS          "Lights and shadows"
+#define DALI_DEMO_STR_TITLE_LAYOUTING                   "Layouting"
 #define DALI_DEMO_STR_TITLE_LINE_MESH                   "Mesh Line"
 #define DALI_DEMO_STR_TITLE_MAGNIFIER                   "Magnifier"
 #define DALI_DEMO_STR_TITLE_MESH_MORPH                  "Mesh Morph"
