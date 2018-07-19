@@ -1,6 +1,6 @@
 %bcond_with wayland
 
-Name:       com.samsung.dali-demo
+Name:       com.samsung.dali-demo-vk
 Summary:    The OpenGLES Canvas Core Demo
 Version:    1.3.33
 Release:    1
@@ -18,9 +18,9 @@ BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-media-player)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  gettext-tools
-BuildRequires:  pkgconfig(dali-core)
-BuildRequires:  pkgconfig(dali-adaptor)
-BuildRequires:  pkgconfig(dali-toolkit)
+BuildRequires:  pkgconfig(dali-core-vk)
+BuildRequires:  pkgconfig(dali-adaptor-vk)
+BuildRequires:  pkgconfig(dali-toolkit-vk)
 
 #need libtzplatform-config for directory if tizen version is 3.x
 %if 0%{?tizen_version_major} >= 3
@@ -95,7 +95,7 @@ mkdir -p %{buildroot}%{dali_xml_file_dir}
 cp -f %{_builddir}/%{name}-%{version}/%{name}.xml %{buildroot}%{dali_xml_file_dir}
 
 mkdir -p %{buildroot}%{dali_icon_dir}
-mv %{buildroot}/%{dali_app_res_dir}/images/%{name}.png %{buildroot}%{dali_icon_dir}
+mv %{buildroot}/%{dali_app_res_dir}/images/com.samsung.dali-demo.png %{buildroot}%{dali_icon_dir}
 mv %{buildroot}/%{dali_app_res_dir}/images/dali-examples.png %{buildroot}%{dali_icon_dir}
 
 %if 0%{?enable_dali_smack_rules} && !%{with wayland}

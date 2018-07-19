@@ -133,9 +133,9 @@ FOREACH(flag ${LOCAL_STYLE_IMAGES_LIST})
 ENDFOREACH(flag)
 MESSAGE("Installed style resources ${LOCAL_STYLE_IMAGES_LIST} to ${STYLE_DIR}/images")
 
-SET(PKG_LIST dali-core
-             dali-adaptor
-             dali-toolkit)
+SET(PKG_LIST dali-core-vk
+             dali-adaptor-vk
+             dali-toolkit-vk)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(REQUIRED_PKGS REQUIRED ${PKG_LIST})
