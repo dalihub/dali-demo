@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/image-loader/texture-manager.h>
-
+#include <dali-toolkit/devel-api/builder/base64-encoding.h>
+#include "custom-shader.h"
 #include "shared/view.h"
 
 using namespace Dali;
@@ -32,26 +33,10 @@ const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char * const BUTTON_ICON( DEMO_IMAGE_DIR "icon-change.png" );
 const char * const BUTTON_ICON_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
 
-const char* FILTER_FRAGMENT_SOURCE =
-{
- "precision highp float;\n"
- "varying mediump vec2 vTexCoord;\n"
- "uniform sampler2D sTexture;\n"
- "uniform mediump float uDelta;\n"
- "void main()\n"
- "{\n"
- "  vec4 color = vec4(0.0);\n"
- "  vec2 texCoord = vTexCoord * 2. - 1.;\n"
- "  mat2 rotation = mat2(cos(uDelta), -sin(uDelta), sin(uDelta), cos(uDelta));"
- "  texCoord = (rotation * texCoord) * .5 + .5;\n"
- "  color += texture2D( sTexture, texCoord );\n"
- "  gl_FragColor = color;\n"
- "}\n"
-};
-
 const char* DELTA_UNIFORM_NAME = "uDelta";
 
-const Vector2 TARGET_SIZE(800.f, 800.f);
+const Vector2 TARGET_SIZE(400.f, 400.f);
+
 }
 
 class ImageViewUrlApp : public ConnectionTracker
@@ -105,7 +90,7 @@ private:
 
     auto cameraActor = CameraActor::New(TARGET_SIZE);
     cameraActor.SetParentOrigin(ParentOrigin::CENTER);
-    cameraActor.SetInvertYAxis(true);
+    //cameraActor.SetInvertYAxis(true);
     rootActor.Add(cameraActor);
 
     {
@@ -114,7 +99,9 @@ private:
       mActorForInput.SetParentOrigin(ParentOrigin::CENTER);
       mActorForInput.SetSize(TARGET_SIZE);
       Property::Map customShader;
-      customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = FILTER_FRAGMENT_SOURCE;
+      Property::Value value;
+      Toolkit::EncodeBase64PropertyData( value, CUSTOM_SHADER_FRAG);
+      customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = value;
       Property::Map visualMap;
       visualMap.Insert(Toolkit::Visual::Property::SHADER, customShader);
       mActorForInput.SetProperty(Toolkit::ImageView::Property::IMAGE, visualMap);
@@ -136,7 +123,7 @@ private:
       renderTask.SetCameraActor(cameraActor);
 
       mOutputTexture = Texture::New(TextureType::TEXTURE_2D,
-                                    Pixel::RGB888,
+                                    Pixel::RGBA8888,
                                     unsigned(TARGET_SIZE.width),
                                     unsigned(TARGET_SIZE.height));
       auto framebuffer = FrameBuffer::New(TARGET_SIZE.width, TARGET_SIZE.height, Pixel::RGB888);

@@ -1,0 +1,192 @@
+#!/usr/bin/perl
+#
+# Copyright (c) 2018 Samsung Electronics Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+use strict;
+use Getopt::Long;
+use Pod::Usage;
+
+my $opt_output;
+my $opt_help;
+my $opt_quiet;
+my $opt_verbose;
+my $opt_mode="b"; #base 64 encoding
+my $opt_variable="";
+
+# longopt[([=|:]valuetype)]; '=' => mandatory; ':' => optional; valuetype => ['s', 'i', 'f'];//string|int|float
+my %options = (
+    "output=s"     => { "optvar"=>\$opt_output, "desc"=>"output"},
+    "mode=s"       => { "optvar"=>\$opt_mode, "desc"=>"Mode for writing shader output. Can encode base64 or C++ header. Default: Base64. Options: 'b'|'h'"},
+    "variable=s"   => { "optvar"=>\$opt_variable, "desk"=>""},
+    "help"         => { "optvar"=>\$opt_help, "desc"=>""},
+    "quiet"        => { "optvar"=>\$opt_quiet, "desc"=>""},
+    "verbose"      => { "optvar"=>\$opt_verbose, "desc"=>"" });
+
+my %longOptions = map { $_ => $options{$_}->{"optvar"} } keys(%options);
+GetOptions( %longOptions ) or pod2usage(2);
+pod2usage(1) if $opt_help;
+
+if( $opt_mode eq "h" &&  $opt_variable eq "")
+{
+    #my ($base, @rest)=split(/\./, $ARGV[0]);
+    my $base=$ARGV[0];
+    $base =~ tr/a-z/A-Z/;
+    $base =~ s/-/_/g;
+    $base =~ s/\./_/g;
+    print( STDERR "No variable supplied, using $base\n");
+    $opt_variable=$base;
+}
+
+my $tempFile="/tmp/shader.spv$$";
+
+sub createBase64
+{
+    my $inFile=shift;
+    # Create a binary file from the main argument
+    print( STDERR  `glslangValidator -V1.0 $inFile -o $tempFile` );
+    open PIPE, "uuencode -m $tempFile $tempFile | " || die "Can't execute pipe: $!\n";
+
+    my @lines;
+    my $firstLine=1;
+
+    while(<PIPE>)
+    {
+        if( $firstLine )
+        {
+            $firstLine = 0; # Ignore first line
+        }
+        else
+        {
+            chomp;
+            push @lines, "\"$_\"";
+        }
+    }
+    close PIPE;
+    unlink $tempFile;
+    # Throw away last line:
+    pop @lines;
+
+    if( $opt_output )
+    {
+        open OUT, "> $opt_output" || die "Can't open $opt_output for writing: $!\n";
+    }
+    else
+    {
+        *OUT=*STDOUT;
+    }
+    # Output in a format suitable for inclusion in JSON array
+    $firstLine = 1;
+    foreach my $line ( @lines )
+    {
+        if( !$firstLine )
+        {
+            print( OUT ",\n" );
+        }
+        $firstLine = 0;
+        print( OUT $line );
+    }
+    print( OUT "\n" );
+    close OUT;
+}
+
+
+sub createHeader
+{
+    my $inFile=shift;
+
+    print( STDERR `glslangValidator -V1.0 $inFile --vn $opt_variable -o $tempFile` );
+
+    open IN, "< $tempFile" || die "Can't open $tempFile for reading: $!\n";
+    if( $opt_output )
+    {
+        open OUT, "> $opt_output" || die "Can't open $opt_output for writing: $!\n";
+    }
+    else
+    {
+        *OUT=*STDOUT;
+    }
+
+    my $lineNo=1; # ignore first 2 lines
+    while(<IN>)
+    {
+        if($lineNo==3)
+        {
+            s/const uint32_t /std::vector<uint32_t> /g;
+            s/\[\]//; # strip []
+            print( OUT $_);
+        }
+        elsif( $lineNo > 3)
+        {
+            print( OUT $_);
+        }
+        $lineNo++;
+    }
+    print( OUT "\n" );
+    unlink $tempFile;
+
+    close IN;
+    close OUT;
+}
+
+
+if( $opt_mode eq "b" )
+{
+    createBase64($ARGV[0]);
+}
+else
+{
+    createHeader($ARGV[0]);
+}
+
+
+
+exit(0);
+
+__END__
+
+=head1 NAME
+
+encode-shader
+
+=head1 SYNOPSIS
+
+encode-shader <filename> -o <output-filename> --mode=[b|h] --variable=<name>
+
+=head1 DESCRIPTION
+Encodes glsl #430 shaders into base64 for inclusion into style sheets and other
+json files for use as custom shaders, or into headers for direct compilation in source.
+
+=head1 OPTIONS
+
+=over 28
+
+=item B<   --help>
+This help
+
+=item B<   --mode='b'|'h'>
+One of 'b' or 'h', indicating 'base64' or 'header', respectively.
+
+=item B<   --variable>
+A name to give the variable when encoding for header. If none is specified, then
+derives a variable name from the input filename.
+
+=head1 RETURN STATUS
+0
+
+=head1 EXAMPLES
+
+
+=cut
