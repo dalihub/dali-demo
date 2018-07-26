@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -244,6 +244,9 @@ public:
     // Respond to a click anywhere on the stage
     stage.GetRootLayer().TouchSignal().Connect( this, &Benchmark::OnTouch );
 
+    // Respond to key events
+    stage.KeyEventSignal().Connect( this, &Benchmark::OnKeyEvent );
+
     if( gUseMesh )
     {
       CreateMeshActors();
@@ -446,6 +449,17 @@ public:
 
     mHide.Play();
     mHide.FinishedSignal().Connect( this, &Benchmark::OnAnimationEnd );
+  }
+
+  void OnKeyEvent( const KeyEvent& event )
+  {
+    if( event.state == KeyEvent::Down )
+    {
+      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
   }
 
 private:

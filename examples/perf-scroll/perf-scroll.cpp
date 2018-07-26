@@ -242,6 +242,9 @@ public:
     // Respond to a click anywhere on the stage
     stage.GetRootLayer().TouchSignal().Connect( this, &PerfScroll::OnTouch );
 
+    // Respond to key events
+    stage.KeyEventSignal().Connect( this, &PerfScroll::OnKeyEvent );
+
     mParent = Actor::New();
     mParent.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     stage.Add(mParent);
@@ -438,6 +441,17 @@ public:
 
     mHide.Play();
     mHide.FinishedSignal().Connect( this, &PerfScroll::OnAnimationEnd );
+  }
+
+  void OnKeyEvent( const KeyEvent& event )
+  {
+    if( event.state == KeyEvent::Down )
+    {
+      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
   }
 
 private:
