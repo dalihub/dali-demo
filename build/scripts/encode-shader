@@ -1,0 +1,112 @@
+#!/usr/bin/perl
+#
+# Copyright (c) 2018 Samsung Electronics Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+use strict;
+use Getopt::Long;
+use Pod::Usage;
+
+my $opt_output;
+my $opt_help;
+my $opt_quiet;
+my $opt_verbose;
+
+my %options = (
+    "output:s"     => { "optvar"=>\$opt_output, "desc"=>"output"},
+    "help"         => { "optvar"=>\$opt_help, "desc"=>""},
+    "quiet"        => { "optvar"=>\$opt_quiet, "desc"=>""},
+    "verbose"      => { "optvar"=>\$opt_verbose, "desc"=>"" });
+
+my %longOptions = map { $_ => $options{$_}->{"optvar"} } keys(%options);
+GetOptions( %longOptions ) or pod2usage(2);
+pod2usage(1) if $opt_help;
+
+if( $opt_output )
+{
+}
+
+my $tempFile="/tmp/shader.spv$$";
+
+# Create a binary file from the main argument
+print `glslangValidator -V1.0 $ARGV[0] -vn -o $tempFile`;
+open PIPE, "uuencode -m $tempFile $tempFile | " || die "Can't execute pipe: $!\n";
+
+my @lines;
+my $firstLine=1;
+
+while(<PIPE>)
+{
+    if( $firstLine )
+    {
+	$firstLine = 0; # Ignore first line
+    }
+    else
+    {
+	chomp;
+	push @lines, "\"$_\"";
+    }
+}
+close PIPE;
+unlink $tempFile;
+
+open OUT, "> $opt_output" || die "Can't open $opt_output for writing: $!\n";
+
+# Throw away last line:
+pop @lines;
+
+# Output in a format suitable for inclusion in JSON array
+$firstLine = 1;
+foreach my $line ( @lines )
+{
+    if( !$firstLine )
+    {
+	print( OUT ",\n" );
+    }
+    $firstLine = 0;
+    print( OUT $line );
+}
+print( OUT "\n" );
+
+exit(0);
+
+__END__
+
+=head1 NAME
+
+encode-shader
+
+=head1 SYNOPSIS
+
+encode-shader <filename> -o output-filename
+
+=head1 DESCRIPTION
+Encodes glsl #430 shaders into base64 for inclusion into style sheets and other
+json files for use as custom shaders.
+
+=head1 OPTIONS
+
+=over 28
+
+=item B<   --help>
+This help
+
+=head1 RETURN STATUS
+0
+
+=head1 EXAMPLES
+
+
+=cut

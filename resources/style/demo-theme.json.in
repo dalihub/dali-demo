@@ -42,31 +42,63 @@
             "image":
             {
               "url":"{APPLICATION_RESOURCE_PATH}/images/demo-tile-texture.9.png",
-// TILE_BACKGROUND_ALPHA
-// This shader takes a texture.
-// An alpha discard is performed.
-// The shader uses the tiles position within the scroll-view page and the scroll-views rotation position to create a parallax effect.
+
+	      // TILE_BACKGROUND_ALPHA
+	      // This shader takes a texture.
+	      // An alpha discard is performed.
+	      // The shader uses the tiles position within the scroll-view page and the scroll-views rotation position to create a parallax effect.
               "shader":
               {
+		"fragmentShaderSource":"tile-background-shader.frag",
                 "fragmentShader":[
-                  "  varying mediump vec2  vTexCoord;",
-                  "  uniform lowp    vec4  uColor;",
-                  "  uniform sampler2D     sTexture;",
-                  "  uniform mediump vec3  uCustomPosition;",
-                  "",
-                  "  void main()",
-                  "  {",
-                  "    if( texture2D( sTexture, vTexCoord ).a <= 0.0001 )",
-                  "    {",
-                  "      discard;",
-                  "    }",
-                  "",
-                  "    mediump vec2 wrapTexCoord = vec2( ( vTexCoord.x / 4.0 ) + ( uCustomPosition.x / 4.0 ) + ( uCustomPosition.z / 2.0 ), vTexCoord.y / 4.0 );",
-                  "    mediump vec4 color = texture2D( sTexture, wrapTexCoord );",
-                  "    mediump float positionWeight = ( uCustomPosition.y + 0.3 ) * color.r * 2.0;",
-                  "",
-                  "    gl_FragColor = vec4( positionWeight, positionWeight, positionWeight, 0.9 ) * uColor + vec4( uColor.xyz, 0.0 );",
-                  "  }"
+                  "AwIjBwAAAQADAAgAXQAAAAAAAAARAAIAAQAAAAsABgABAAAAR0xTTC5zdGQu",
+                  "NDUwAAAAAA4AAwAAAAAAAQAAAA8ABwAEAAAABAAAAG1haW4AAAAADgAAAEkA",
+                  "AAAQAAMABAAAAAcAAAADAAMAAgAAAK4BAAAFAAQABAAAAG1haW4AAAAABQAF",
+                  "AAoAAABzVGV4dHVyZQAAAAAFAAUADgAAAHZUZXhDb29yZAAAAAUABgAcAAAA",
+                  "d3JhcFRleENvb3JkAAAAAAUABQAkAAAARnJhZ0RhdGEAAAAABgAFACQAAAAA",
+                  "AAAAdUNvbG9yAAAGAAcAJAAAAAEAAAB1Q3VzdG9tUG9zaXRpb24ABQADACYA",
+                  "AAAAAAAABQAEADoAAABjb2xvcgAAAAUABgA/AAAAcG9zaXRpb25XZWlnaHQA",
+                  "AAUABQBJAAAAZnJhZ0NvbG9yAAAARwAEAAoAAAAiAAAAAAAAAEcABAAKAAAA",
+                  "IQAAAAIAAABHAAQADgAAAB4AAAAAAAAASAAFACQAAAAAAAAAIwAAAAAAAABI",
+                  "AAUAJAAAAAEAAAAjAAAAEAAAAEcAAwAkAAAAAgAAAEcABAAmAAAAIgAAAAAA",
+                  "AABHAAQAJgAAACEAAAABAAAARwAEAEkAAAAeAAAAAAAAABMAAgACAAAAIQAD",
+                  "AAMAAAACAAAAFgADAAYAAAAgAAAAGQAJAAcAAAAGAAAAAQAAAAAAAAAAAAAA",
+                  "AAAAAAEAAAAAAAAAGwADAAgAAAAHAAAAIAAEAAkAAAAAAAAACAAAADsABAAJ",
+                  "AAAACgAAAAAAAAAXAAQADAAAAAYAAAACAAAAIAAEAA0AAAABAAAADAAAADsA",
+                  "BAANAAAADgAAAAEAAAAXAAQAEAAAAAYAAAAEAAAAFQAEABIAAAAgAAAAAAAA",
+                  "ACsABAASAAAAEwAAAAMAAAArAAQABgAAABUAAAAXt9E4FAACABYAAAAgAAQA",
+                  "GwAAAAcAAAAMAAAAKwAEABIAAAAdAAAAAAAAACAABAAeAAAAAQAAAAYAAAAr",
+                  "AAQABgAAACEAAAAAAIBAFwAEACMAAAAGAAAAAwAAAB4ABAAkAAAAEAAAACMA",
+                  "AAAgAAQAJQAAAAIAAAAkAAAAOwAEACUAAAAmAAAAAgAAABUABAAnAAAAIAAA",
+                  "AAEAAAArAAQAJwAAACgAAAABAAAAIAAEACkAAAACAAAABgAAACsABAASAAAA",
+                  "LgAAAAIAAAArAAQABgAAADEAAAAAAABAKwAEABIAAAA0AAAAAQAAACAABAA5",
+                  "AAAABwAAABAAAAAgAAQAPgAAAAcAAAAGAAAAKwAEAAYAAABCAAAAmpmZPiAA",
+                  "BABIAAAAAwAAABAAAAA7AAQASAAAAEkAAAADAAAAKwAEAAYAAABNAAAAZmZm",
+                  "PysABAAnAAAATwAAAAAAAAAgAAQAUAAAAAIAAAAQAAAAKwAEAAYAAABXAAAA",
+                  "AAAAADYABQACAAAABAAAAAAAAAADAAAA+AACAAUAAAA7AAQAGwAAABwAAAAH",
+                  "AAAAOwAEADkAAAA6AAAABwAAADsABAA+AAAAPwAAAAcAAAA9AAQACAAAAAsA",
+                  "AAAKAAAAPQAEAAwAAAAPAAAADgAAAFcABQAQAAAAEQAAAAsAAAAPAAAAUQAF",
+                  "AAYAAAAUAAAAEQAAAAMAAAC8AAUAFgAAABcAAAAUAAAAFQAAAPcAAwAZAAAA",
+                  "AAAAAPoABAAXAAAAGAAAABkAAAD4AAIAGAAAAPwAAQD4AAIAGQAAAEEABQAe",
+                  "AAAAHwAAAA4AAAAdAAAAPQAEAAYAAAAgAAAAHwAAAIgABQAGAAAAIgAAACAA",
+                  "AAAhAAAAQQAGACkAAAAqAAAAJgAAACgAAAAdAAAAPQAEAAYAAAArAAAAKgAA",
+                  "AIgABQAGAAAALAAAACsAAAAhAAAAgQAFAAYAAAAtAAAAIgAAACwAAABBAAYA",
+                  "KQAAAC8AAAAmAAAAKAAAAC4AAAA9AAQABgAAADAAAAAvAAAAiAAFAAYAAAAy",
+                  "AAAAMAAAADEAAACBAAUABgAAADMAAAAtAAAAMgAAAEEABQAeAAAANQAAAA4A",
+                  "AAA0AAAAPQAEAAYAAAA2AAAANQAAAIgABQAGAAAANwAAADYAAAAhAAAAUAAF",
+                  "AAwAAAA4AAAAMwAAADcAAAA+AAMAHAAAADgAAAA9AAQACAAAADsAAAAKAAAA",
+                  "PQAEAAwAAAA8AAAAHAAAAFcABQAQAAAAPQAAADsAAAA8AAAAPgADADoAAAA9",
+                  "AAAAQQAGACkAAABAAAAAJgAAACgAAAA0AAAAPQAEAAYAAABBAAAAQAAAAIEA",
+                  "BQAGAAAAQwAAAEEAAABCAAAAQQAFAD4AAABEAAAAOgAAAB0AAAA9AAQABgAA",
+                  "AEUAAABEAAAAhQAFAAYAAABGAAAAQwAAAEUAAACFAAUABgAAAEcAAABGAAAA",
+                  "MQAAAD4AAwA/AAAARwAAAD0ABAAGAAAASgAAAD8AAAA9AAQABgAAAEsAAAA/",
+                  "AAAAPQAEAAYAAABMAAAAPwAAAFAABwAQAAAATgAAAEoAAABLAAAATAAAAE0A",
+                  "AABBAAUAUAAAAFEAAAAmAAAATwAAAD0ABAAQAAAAUgAAAFEAAACFAAUAEAAA",
+                  "AFMAAABOAAAAUgAAAEEABQBQAAAAVAAAACYAAABPAAAAPQAEABAAAABVAAAA",
+                  "VAAAAE8ACAAjAAAAVgAAAFUAAABVAAAAAAAAAAEAAAACAAAAUQAFAAYAAABY",
+                  "AAAAVgAAAAAAAABRAAUABgAAAFkAAABWAAAAAQAAAFEABQAGAAAAWgAAAFYA",
+                  "AAACAAAAUAAHABAAAABbAAAAWAAAAFkAAABaAAAAVwAAAIEABQAQAAAAXAAA",
+                  "AFMAAABbAAAAPgADAEkAAABcAAAA/QABADgAAQA="
                 ]
               }
             }
@@ -80,31 +112,62 @@
             "image":
             {
               "url":"{APPLICATION_RESOURCE_PATH}/images/demo-tile-texture-focused.9.png",
-// TILE_BACKGROUND_ALPHA
-// This shader takes a texture.
-// An alpha discard is performed.
-// The shader uses the tiles position within the scroll-view page and the scroll-views rotation position to create a parallax effect.
+	      // TILE_BACKGROUND_ALPHA
+	      // This shader takes a texture.  An alpha discard is
+	      // performed.  The shader uses the tiles position within
+	      // the scroll-view page and the scroll-views rotation
+	      // position to create a parallax effect.
               "shader":
               {
                 "fragmentShader":[
-                  "  varying mediump vec2  vTexCoord;",
-                  "  uniform lowp    vec4  uColor;",
-                  "  uniform sampler2D     sTexture;",
-                  "  uniform mediump vec3  uCustomPosition;",
-                  "",
-                  "  void main()",
-                  "  {",
-                  "    if( texture2D( sTexture, vTexCoord ).a <= 0.0001 )",
-                  "    {",
-                  "      discard;",
-                  "    }",
-                  "",
-                  "    mediump vec2 wrapTexCoord = vec2( ( vTexCoord.x / 4.0 ) + ( uCustomPosition.x / 4.0 ) + ( uCustomPosition.z / 2.0 ), vTexCoord.y / 4.0 );",
-                  "    mediump vec4 color = texture2D( sTexture, wrapTexCoord );",
-                  "    mediump float positionWeight = ( uCustomPosition.y + 0.3 ) * color.r * 2.0;",
-                  "",
-                  "    gl_FragColor = vec4( positionWeight, positionWeight, positionWeight, 0.9 ) * uColor + vec4( uColor.xyz, 0.0 );",
-                  "  }"
+                  "AwIjBwAAAQADAAgAXQAAAAAAAAARAAIAAQAAAAsABgABAAAAR0xTTC5zdGQu",
+                  "NDUwAAAAAA4AAwAAAAAAAQAAAA8ABwAEAAAABAAAAG1haW4AAAAADgAAAEkA",
+                  "AAAQAAMABAAAAAcAAAADAAMAAgAAAK4BAAAFAAQABAAAAG1haW4AAAAABQAF",
+                  "AAoAAABzVGV4dHVyZQAAAAAFAAUADgAAAHZUZXhDb29yZAAAAAUABgAcAAAA",
+                  "d3JhcFRleENvb3JkAAAAAAUABQAkAAAARnJhZ0RhdGEAAAAABgAFACQAAAAA",
+                  "AAAAdUNvbG9yAAAGAAcAJAAAAAEAAAB1Q3VzdG9tUG9zaXRpb24ABQADACYA",
+                  "AAAAAAAABQAEADoAAABjb2xvcgAAAAUABgA/AAAAcG9zaXRpb25XZWlnaHQA",
+                  "AAUABQBJAAAAZnJhZ0NvbG9yAAAARwAEAAoAAAAiAAAAAAAAAEcABAAKAAAA",
+                  "IQAAAAIAAABHAAQADgAAAB4AAAAAAAAASAAFACQAAAAAAAAAIwAAAAAAAABI",
+                  "AAUAJAAAAAEAAAAjAAAAEAAAAEcAAwAkAAAAAgAAAEcABAAmAAAAIgAAAAAA",
+                  "AABHAAQAJgAAACEAAAABAAAARwAEAEkAAAAeAAAAAAAAABMAAgACAAAAIQAD",
+                  "AAMAAAACAAAAFgADAAYAAAAgAAAAGQAJAAcAAAAGAAAAAQAAAAAAAAAAAAAA",
+                  "AAAAAAEAAAAAAAAAGwADAAgAAAAHAAAAIAAEAAkAAAAAAAAACAAAADsABAAJ",
+                  "AAAACgAAAAAAAAAXAAQADAAAAAYAAAACAAAAIAAEAA0AAAABAAAADAAAADsA",
+                  "BAANAAAADgAAAAEAAAAXAAQAEAAAAAYAAAAEAAAAFQAEABIAAAAgAAAAAAAA",
+                  "ACsABAASAAAAEwAAAAMAAAArAAQABgAAABUAAAAXt9E4FAACABYAAAAgAAQA",
+                  "GwAAAAcAAAAMAAAAKwAEABIAAAAdAAAAAAAAACAABAAeAAAAAQAAAAYAAAAr",
+                  "AAQABgAAACEAAAAAAIBAFwAEACMAAAAGAAAAAwAAAB4ABAAkAAAAEAAAACMA",
+                  "AAAgAAQAJQAAAAIAAAAkAAAAOwAEACUAAAAmAAAAAgAAABUABAAnAAAAIAAA",
+                  "AAEAAAArAAQAJwAAACgAAAABAAAAIAAEACkAAAACAAAABgAAACsABAASAAAA",
+                  "LgAAAAIAAAArAAQABgAAADEAAAAAAABAKwAEABIAAAA0AAAAAQAAACAABAA5",
+                  "AAAABwAAABAAAAAgAAQAPgAAAAcAAAAGAAAAKwAEAAYAAABCAAAAmpmZPiAA",
+                  "BABIAAAAAwAAABAAAAA7AAQASAAAAEkAAAADAAAAKwAEAAYAAABNAAAAZmZm",
+                  "PysABAAnAAAATwAAAAAAAAAgAAQAUAAAAAIAAAAQAAAAKwAEAAYAAABXAAAA",
+                  "AAAAADYABQACAAAABAAAAAAAAAADAAAA+AACAAUAAAA7AAQAGwAAABwAAAAH",
+                  "AAAAOwAEADkAAAA6AAAABwAAADsABAA+AAAAPwAAAAcAAAA9AAQACAAAAAsA",
+                  "AAAKAAAAPQAEAAwAAAAPAAAADgAAAFcABQAQAAAAEQAAAAsAAAAPAAAAUQAF",
+                  "AAYAAAAUAAAAEQAAAAMAAAC8AAUAFgAAABcAAAAUAAAAFQAAAPcAAwAZAAAA",
+                  "AAAAAPoABAAXAAAAGAAAABkAAAD4AAIAGAAAAPwAAQD4AAIAGQAAAEEABQAe",
+                  "AAAAHwAAAA4AAAAdAAAAPQAEAAYAAAAgAAAAHwAAAIgABQAGAAAAIgAAACAA",
+                  "AAAhAAAAQQAGACkAAAAqAAAAJgAAACgAAAAdAAAAPQAEAAYAAAArAAAAKgAA",
+                  "AIgABQAGAAAALAAAACsAAAAhAAAAgQAFAAYAAAAtAAAAIgAAACwAAABBAAYA",
+                  "KQAAAC8AAAAmAAAAKAAAAC4AAAA9AAQABgAAADAAAAAvAAAAiAAFAAYAAAAy",
+                  "AAAAMAAAADEAAACBAAUABgAAADMAAAAtAAAAMgAAAEEABQAeAAAANQAAAA4A",
+                  "AAA0AAAAPQAEAAYAAAA2AAAANQAAAIgABQAGAAAANwAAADYAAAAhAAAAUAAF",
+                  "AAwAAAA4AAAAMwAAADcAAAA+AAMAHAAAADgAAAA9AAQACAAAADsAAAAKAAAA",
+                  "PQAEAAwAAAA8AAAAHAAAAFcABQAQAAAAPQAAADsAAAA8AAAAPgADADoAAAA9",
+                  "AAAAQQAGACkAAABAAAAAJgAAACgAAAA0AAAAPQAEAAYAAABBAAAAQAAAAIEA",
+                  "BQAGAAAAQwAAAEEAAABCAAAAQQAFAD4AAABEAAAAOgAAAB0AAAA9AAQABgAA",
+                  "AEUAAABEAAAAhQAFAAYAAABGAAAAQwAAAEUAAACFAAUABgAAAEcAAABGAAAA",
+                  "MQAAAD4AAwA/AAAARwAAAD0ABAAGAAAASgAAAD8AAAA9AAQABgAAAEsAAAA/",
+                  "AAAAPQAEAAYAAABMAAAAPwAAAFAABwAQAAAATgAAAEoAAABLAAAATAAAAE0A",
+                  "AABBAAUAUAAAAFEAAAAmAAAATwAAAD0ABAAQAAAAUgAAAFEAAACFAAUAEAAA",
+                  "AFMAAABOAAAAUgAAAEEABQBQAAAAVAAAACYAAABPAAAAPQAEABAAAABVAAAA",
+                  "VAAAAE8ACAAjAAAAVgAAAFUAAABVAAAAAAAAAAEAAAACAAAAUQAFAAYAAABY",
+                  "AAAAVgAAAAAAAABRAAUABgAAAFkAAABWAAAAAQAAAFEABQAGAAAAWgAAAFYA",
+                  "AAACAAAAUAAHABAAAABbAAAAWAAAAFkAAABaAAAAVwAAAIEABQAQAAAAXAAA",
+                  "AFMAAABbAAAAPgADAEkAAABcAAAA/QABADgAAQA="
                 ]
               }
             }
