@@ -33,6 +33,8 @@ dali-builder
 *.swp
 *.creator
 *.creator.user
+*.spv
+*.b64
 /build/desktop
 /packaging/home*
 *.mo
