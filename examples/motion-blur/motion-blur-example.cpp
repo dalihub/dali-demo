@@ -215,9 +215,6 @@ public:
 
     mContentLayer.Add( mMotionBlurImageView );
 
-    // Create shader used for doing motion blur
-    mMotionBlurEffect = CreateMotionBlurEffect();
-
     // set actor shader to the blur one
     Toolkit::SetMotionBlurProperties( mMotionBlurImageView, MOTION_BLUR_NUM_SAMPLES );
 
