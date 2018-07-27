@@ -753,9 +753,9 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count )
     Dali::Property::Map effect = Toolkit::CreateDistanceFieldEffect();
     Property::Map imageMap;
     imageMap.Add( ImageVisual::Property::URL, SHAPE_IMAGE_TABLE[ shapeType ] );
-    //imageMap.Add( Toolkit::Visual::Property::SHADER, effect );
-    dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, imageMap );
+    imageMap.Merge( effect );
 
+    dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, imageMap );
     dfActor.SetColor( BUBBLE_COLOR[ i%NUMBER_OF_BUBBLE_COLOR ] );
 
     layer.Add( dfActor );
