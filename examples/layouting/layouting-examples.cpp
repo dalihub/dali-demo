@@ -48,7 +48,7 @@ typedef std::vector< ExamplePointer > ExampleContainer;
 /// All layouting examples to be shown should be added to this method
 void CreateExamples( ExampleContainer& container )
 {
-  //container.push_back( ExamplePointer( new Demo::LinearExample ) );
+  container.push_back( ExamplePointer( new Demo::LinearExample ) );
   //container.push_back( ExamplePointer( new Demo::PaddingExample ) );
   //container.push_back( ExamplePointer( new Demo::AbsoluteExample ) );
   //container.push_back( ExamplePointer( new Demo::FlexExample ) );

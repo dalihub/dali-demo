@@ -96,25 +96,56 @@ void LinearExample::Create()
   stage.Add( mRotateButton );
 
   // Create a linear layout
+  Control rootContainer = Control::New();
+  auto rootLayout = LinearLayout::New();
+  rootLayout.SetAnimateLayout(true);
+  rootLayout.SetOrientation( LinearLayout::Orientation::HORIZONTAL );
+  DevelControl::SetLayout( rootContainer, rootLayout );
+  rootContainer.SetParentOrigin( ParentOrigin::CENTER );
+  stage.Add( rootContainer );
+
+  // Create a linear layout
   mLinearContainer = Control::New();
   auto layout = LinearLayout::New();
   layout.SetAnimateLayout(true);
   layout.SetOrientation( LinearLayout::Orientation::VERTICAL );
   DevelControl::SetLayout( mLinearContainer, layout );
 
-  mLinearContainer.SetParentOrigin( ParentOrigin::CENTER );
-  mLinearContainer.SetAnchorPoint( AnchorPoint::CENTER );
+  //mLinearContainer.SetParentOrigin( ParentOrigin::CENTER );
   mLinearContainer.SetName( "LinearExample" );
-  stage.Add( mLinearContainer );
-  mLinearContainer.SetProperty( Toolkit::LayoutItem::ChildProperty::WIDTH_SPECIFICATION, ChildLayoutData::MATCH_PARENT );
-  mLinearContainer.SetProperty( Toolkit::LayoutItem::ChildProperty::HEIGHT_SPECIFICATION, ChildLayoutData::MATCH_PARENT );
+  rootContainer.Add( mLinearContainer );
+  mLinearContainer.SetProperty( Toolkit::LayoutItem::ChildProperty::WIDTH_SPECIFICATION, ChildLayoutData::WRAP_CONTENT );
+  mLinearContainer.SetProperty( Toolkit::LayoutItem::ChildProperty::HEIGHT_SPECIFICATION, ChildLayoutData::WRAP_CONTENT );
   mLinearContainer.SetProperty( Actor::Property::LAYOUT_DIRECTION, LayoutDirection::LEFT_TO_RIGHT );
+  mLinearContainer.SetParentOrigin( ParentOrigin::CENTER );
+  DevelControl::SetLayout( mLinearContainer, rootLayout );
 
   for( unsigned int x = 0; x < NUMBER_OF_RESOURCES; ++x )
   {
     Toolkit::ImageView imageView;
     CreateChildImageView( imageView, IMAGE_PATH[ x ], Size(100.0f, 100.0f) );
     mLinearContainer.Add( imageView );
+  }
+
+    // Create a linear layout
+  Control linearContainer2 = Control::New();
+  auto layout2 = LinearLayout::New();
+  layout2.SetAnimateLayout(true);
+  layout2.SetOrientation( LinearLayout::Orientation::VERTICAL );
+  DevelControl::SetLayout( linearContainer2, layout2 );
+
+  linearContainer2.SetParentOrigin( ParentOrigin::CENTER );
+  linearContainer2.SetName( "LinearExample2" );
+  rootContainer.Add( linearContainer2 );
+  linearContainer2.SetProperty( Toolkit::LayoutItem::ChildProperty::WIDTH_SPECIFICATION, ChildLayoutData::WRAP_CONTENT );
+  linearContainer2.SetProperty( Toolkit::LayoutItem::ChildProperty::HEIGHT_SPECIFICATION, ChildLayoutData::WRAP_CONTENT );
+  linearContainer2.SetProperty( Actor::Property::LAYOUT_DIRECTION, LayoutDirection::LEFT_TO_RIGHT );
+
+  for( unsigned int x = 0; x < NUMBER_OF_RESOURCES; ++x )
+  {
+    Toolkit::ImageView imageView;
+    CreateChildImageView( imageView, IMAGE_PATH[ x ], Size(100.0f, 100.0f) );
+    linearContainer2.Add( imageView );
   }
 }
 
