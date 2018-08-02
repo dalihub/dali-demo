@@ -48,6 +48,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("flex-container.example", DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND));
   demo.AddExample(Example("focus-integration.example", DALI_DEMO_STR_TITLE_FOCUS_INTEGRATION));
   demo.AddExample(Example("gradients.example", DALI_DEMO_STR_TITLE_COLOR_GRADIENT));
+  demo.AddExample(Example("hello-world.example", DALI_DEMO_STR_TITLE_HELLO_WORLD));
   demo.AddExample(Example("image-policies.example", DALI_DEMO_STR_TITLE_IMAGE_POLICIES));
   demo.AddExample(Example("image-scaling-and-filtering.example", DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING));
   demo.AddExample(Example("image-scaling-irregular-grid.example", DALI_DEMO_STR_TITLE_IMAGE_SCALING));
@@ -66,7 +67,6 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("pivot.example", DALI_DEMO_STR_TITLE_PIVOT));
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
   demo.AddExample(Example("progress-bar.example", DALI_DEMO_STR_TITLE_PROGRESS_BAR));
-  demo.AddExample(Example("property-notification.example", DALI_DEMO_STR_TITLE_PROPERTY_NOTIFICATION));
   demo.AddExample(Example("rendering-basic-light.example", DALI_DEMO_STR_TITLE_BASIC_LIGHT));
   demo.AddExample(Example("rendering-line.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE));
   demo.AddExample(Example("rendering-triangle.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE));
@@ -82,8 +82,6 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));
   demo.AddExample(Example("text-label-multi-language.example", DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE));
   demo.AddExample(Example("text-label-emojis.example", DALI_DEMO_STR_TITLE_EMOJI_TEXT));
-  demo.AddExample(Example("text-memory-profiling.example", DALI_DEMO_STR_TITLE_TEXT_MEMORY_PROFILING));
-  demo.AddExample(Example("text-overlap.example", DALI_DEMO_STR_TITLE_TEXT_OVERLAP));
   demo.AddExample(Example("text-scrolling.example", DALI_DEMO_STR_TITLE_TEXT_SCROLLING));
   demo.AddExample(Example("remote-image-loading.example", DALI_DEMO_STR_TITLE_REMOTE_IMAGE));
   demo.AddExample(Example("textured-mesh.example", DALI_DEMO_STR_TITLE_TEXTURED_MESH));

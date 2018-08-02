@@ -3,6 +3,7 @@ CMakeFiles/
 cmake_install.cmake
 demo/dali-demo
 examples-reel/dali-examples
+tests-reel/dali-tests
 install_manifest.txt
 /demo/dali-demo
 /demo/dali-examples
