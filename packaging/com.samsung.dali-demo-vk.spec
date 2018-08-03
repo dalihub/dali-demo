@@ -13,6 +13,7 @@ Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 
 BuildRequires:  cmake
+BuildRequires:  coregl
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-media-player)
@@ -21,6 +22,7 @@ BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(dali-core-vk)
 BuildRequires:  pkgconfig(dali-adaptor-vk)
 BuildRequires:  pkgconfig(dali-toolkit-vk)
+BuildRequires:  elementary
 
 #need libtzplatform-config for directory if tizen version is 3.x
 %if 0%{?tizen_version_major} >= 3
@@ -40,12 +42,12 @@ of the capability of the toolkit.
 #Use TZ_PATH when tizen version is 3.x
 
 %if "%{tizen_version_major}" == "2"
-%define dali_app_ro_dir       /usr/apps/com.samsung.dali-demo/
+%define dali_app_ro_dir       /usr/apps/com.samsung.dali-demo-vk/
 %define dali_xml_file_dir     /usr/share/packages/
 %define dali_icon_dir         /usr/share/icons/
 %define smack_rule_dir        /etc/smack/accesses2.d/
 %else
-%define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo/
+%define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo-vk/
 %define dali_xml_file_dir     %TZ_SYS_RO_PACKAGES
 %define dali_icon_dir         %TZ_SYS_RO_ICONS
 %define smack_rule_dir        %TZ_SYS_SMACK/accesses2.d/
