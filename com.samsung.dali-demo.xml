@@ -13,6 +13,10 @@
 		<icon>/usr/share/icons/dali-examples.png</icon>
 		<label>DALi Examples</label>
 	</ui-application>
+	<ui-application appid="dali-tests" exec="/usr/apps/com.samsung.dali-demo/bin/dali-tests" nodisplay="false" multiple="false" type="c++app" taskmanage="true">
+		<icon>/usr/share/icons/dali-tests.png</icon>
+		<label>DALi Tests</label>
+	</ui-application>
 	<ui-application appid="hello-world.example" exec="/usr/apps/com.samsung.dali-demo/bin/hello-world.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Hello World</label>
 	</ui-application>
@@ -248,13 +252,22 @@
 		<label>Card Active App</label>
 	</ui-application>
 	<ui-application appid="image-policies.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-policies.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
-    <label>Image Policies</label>
-  </ui-application>
+		<label>Image Policies</label>
+	</ui-application>
 	<ui-application appid="layouting.example" exec="/usr/apps/com.samsung.dali-demo/bin/layouting.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
-    <label>Layouting</label>
-  </ui-application>
+		<label>Layouting</label>
+	</ui-application>
+	<ui-application appid="compressed-texture-formats.example" exec="/usr/apps/com.samsung.dali-demo/bin/compressed-texture-formats.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+		<label>Compressed Texture Formats</label>
+	</ui-application>
+	<ui-application appid="point-mesh.example" exec="/usr/apps/com.samsung.dali-demo/bin/point-mesh.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+		<label>Point Mesh</label>
+	</ui-application>
+	<ui-application appid="simple-layout.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-layout.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+		<label>Simple Layout</label>
+	</ui-application>
 
-  <privileges>
+	<privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
 		<privilege>http://tizen.org/privilege/externalstorage</privilege>
 		<privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>
