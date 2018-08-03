@@ -10,6 +10,9 @@ msgstr "CPU Alpha Blending"
 msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
 msgstr "Basic Light"
 
+msgid "DALI_DEMO_STR_TITLE_BENCHMARK"
+msgstr "ImageView Benchmark"
+
 msgid "DALI_DEMO_STR_TITLE_BEZIER_CURVE"
 msgstr "Bezier Curve"
 
@@ -27,6 +30,9 @@ msgstr "Call Active"
 
 msgid "DALI_DEMO_STR_TITLE_CARD_ACTIVE"
 msgstr "Card Active"
+
+msgid "DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS"
+msgstr "Compressed Texture Formats"
 
 msgid "DALI_DEMO_STR_TITLE_CLIPPING"
 msgstr "Clipping"
@@ -54,6 +60,12 @@ msgstr "Emoji Text"
 
 msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
 msgstr "Flexbox Playground"
+
+msgid "DALI_DEMO_STR_TITLE_HELLO_WORLD"
+msgstr "Hello World"
+
+msgid "DALI_DEMO_STR_TITLE_HOMESCREEN"
+msgstr "Homescreen Benchmark"
 
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "Image Fitting and Sampling"
@@ -109,6 +121,12 @@ msgstr "Native Image Source"
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "Negotiate Size"
 
+msgid "DALI_DEMO_STR_TITLE_PERF_SCROLL"
+msgstr "Scrolling Performance"
+
+msgid "DALI_DEMO_STR_TITLE_POINT_MESH"
+msgstr "Point Mesh"
+
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup"
 
@@ -133,6 +151,9 @@ msgstr "Refraction"
 msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
 msgstr "Renderer Stencil"
 
+msgid "DALI_DEMO_STR_TITLE_SIMPLE_LAYOUT"
+msgstr "Simple Layout"
+
 msgid "DALI_DEMO_STR_TITLE_SIMPLE_VISUALS_CONTROL"
 msgstr "Simple Visuals Control"
 
@@ -156,6 +177,9 @@ msgstr "Text Editor"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
 msgstr "Text Field"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FONTS"
+msgstr "Text Fonts"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
 msgstr "Text Label"

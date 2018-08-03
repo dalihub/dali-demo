@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo-vk
 Summary:    The OpenGLES Canvas Core Demo
-Version:    1.3.34
+Version:    1.3.35
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -97,6 +97,7 @@ cp -f %{_builddir}/%{name}-%{version}/%{name}.xml %{buildroot}%{dali_xml_file_di
 mkdir -p %{buildroot}%{dali_icon_dir}
 mv %{buildroot}/%{dali_app_res_dir}/images/com.samsung.dali-demo.png %{buildroot}%{dali_icon_dir}
 mv %{buildroot}/%{dali_app_res_dir}/images/dali-examples.png %{buildroot}%{dali_icon_dir}
+mv %{buildroot}/%{dali_app_res_dir}/images/dali-tests.png %{buildroot}%{dali_icon_dir}
 
 %if 0%{?enable_dali_smack_rules} && !%{with wayland}
 mkdir -p %{buildroot}%{smack_rule_dir}
@@ -131,6 +132,7 @@ exit 0
 %defattr(-,root,root,-)
 %{dali_app_exe_dir}/dali-demo
 %{dali_app_exe_dir}/dali-examples
+%{dali_app_exe_dir}/dali-tests
 %{dali_app_exe_dir}/*.example
 %{dali_app_exe_dir}/dali-builder
 %{dali_app_res_dir}/images/*
