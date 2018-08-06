@@ -48,7 +48,18 @@ public:
     TextLabel textLabel = TextLabel::New( "Hello World" );
     textLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     textLabel.SetName( "helloWorldLabel" );
+    textLabel.SetParentOrigin( ParentOrigin::CENTER );
+    textLabel.SetAnchorPoint( AnchorPoint::CENTER );
+    textLabel.SetBackgroundColor( Color::RED );
+    textLabel.SetProperty( Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_TO_BOUNDING_BOX );
     stage.Add( textLabel );
+
+    TextLabel textLabel2 = TextLabel::New( "2nd One" );
+    textLabel2.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    textLabel2.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    textLabel2.SetBackgroundColor( Color::YELLOW );
+    textLabel2.SetPosition( 100.0f, 10.0f );
+    textLabel.Add( textLabel2 );
 
     // Respond to a click anywhere on the stage
     stage.GetRootLayer().TouchSignal().Connect( this, &HelloWorldController::OnTouch );
