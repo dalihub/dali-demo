@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "745554f7_1b473019",
+        "filename": "resources/style/demo-theme.json.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1007416
+      },
+      "writtenOn": "2018-08-08T11:20:56Z",
+      "side": 1,
+      "message": "tabs",
+      "revId": "f3c4eff9271707159e1ff4a376fcec1ef13972b5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
