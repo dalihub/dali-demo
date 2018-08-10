@@ -62,7 +62,8 @@ namespace Demo
 {
 
 GridExample::GridExample()
-: Example( TITLE )
+: Example( TITLE ),
+  mToggleStatus( GRID_EXACT_WIDTH )
 {
 }
 
