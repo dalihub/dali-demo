@@ -27,6 +27,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
+const char* const TITLE = "Linear Example";
 
 // Button file names
 const char* LTR_IMAGE( DEMO_IMAGE_DIR "icon-play.png" );
@@ -69,7 +70,8 @@ namespace Demo
 {
 
 LinearExample::LinearExample()
-: mLTRDirection(true)
+: Example( TITLE ),
+  mLTRDirection(true)
 {
 }
 

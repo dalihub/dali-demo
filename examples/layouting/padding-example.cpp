@@ -17,6 +17,7 @@
 
 #include <string>
 #include "padding-example.h"
+#include "layout-utilities.h"
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
@@ -29,6 +30,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
+const char* const TITLE = "Padding Example";
 
 // Helper function to create ImageViews with given filename and size.
 void CreateChildImageView( ImageView& imageView, const char* filename, Size size )
@@ -50,21 +52,17 @@ void CreateChildImageView( ImageView& imageView, const char* filename, Size size
 namespace Demo
 {
 
+PaddingExample::PaddingExample()
+: Example( TITLE )
+{}
+
 void PaddingExample::Create()
 {
   // The Init signal is received once (only) during the Application lifetime
 
-  // Create a root layout, ideally Dali would have a default layout in the root layer.
-  // Without this root layer the mAbsoluteLayout (or any other layout) will not
-  // honour WIDTH_SPECIFICATION or HEIGHT_SPECIFICATION settings.
-  // It uses the default stage size and ideally should have a layout added to it.
   auto stage = Stage::GetCurrent();
-  auto rootLayoutControl = Control::New();
-  rootLayoutControl.SetName( "AbsoluteLayout");
-  auto rootLayout = AbsoluteLayout::New();
-  DevelControl::SetLayout( rootLayoutControl, rootLayout );
-  rootLayoutControl.SetAnchorPoint( AnchorPoint::CENTER );
-  rootLayoutControl.SetParentOrigin( ParentOrigin::CENTER );
+
+  Control rootLayoutControl = LayoutUtilities::CreateRootContainer();
   stage.Add( rootLayoutControl );
 
   // Create a table view to show a pair of buttons above each image.

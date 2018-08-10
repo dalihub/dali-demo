@@ -17,6 +17,7 @@
 
 #include <string>
 #include "absolute-example.h"
+#include "layout-utilities.h"
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
@@ -28,6 +29,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
+const char* const TITLE = "Absolute Example";
 
 struct ImageDetails
 {
@@ -67,7 +69,8 @@ namespace Demo
 {
 
 AbsoluteExample::AbsoluteExample()
-: mRootLayoutControl(),
+: Example( TITLE ),
+  mRootLayoutControl(),
   mAbsoluteLayoutContainer(),
   mLayoutSizeToggleStatus( true ),
   mToggleButton()
@@ -77,16 +80,9 @@ AbsoluteExample::AbsoluteExample()
 
 void AbsoluteExample::Create()
 {
-  // Create a root layout, ideally Dali would have a default layout in the root layer.
-  // Without this root layer the mAbsoluteLayout (or any other layout) will not
-  // honour WIDTH_SPECIFICATION or HEIGHT_SPECIFICATION settings.
-  // It uses the default stage size and ideally should have a layout added to it.
   auto stage = Stage::GetCurrent();
-  mRootLayoutControl = Control::New();
-  auto rootLayout = AbsoluteLayout::New();
-  DevelControl::SetLayout( mRootLayoutControl, rootLayout );
-  mRootLayoutControl.SetAnchorPoint( AnchorPoint::CENTER );
-  mRootLayoutControl.SetParentOrigin( ParentOrigin::CENTER );
+  // This layout will be the size of the stage but allows subsequent layouts to be any size.
+  mRootLayoutControl = LayoutUtilities::CreateRootContainer();
   stage.Add( mRootLayoutControl );
 
   // Create an Absolute Layout to show ImageViews at explictly provided positions.

@@ -37,6 +37,8 @@ namespace Demo
 class FlexExample final: public ConnectionTracker, public Example
 {
 public:
+
+  // Constructor
   FlexExample();
 
   // Creates a Flex Layout Example and displays it.
