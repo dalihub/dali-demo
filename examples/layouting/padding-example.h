@@ -41,6 +41,9 @@ public:
 
   static const unsigned int NUMBER_OF_IMAGE_VIEWS = 3;
 
+  // Constructor
+  PaddingExample();
+
   // Create a Linear layout of ImagesViews, one with a Margin, One with padding.
   void Create() override;
 
