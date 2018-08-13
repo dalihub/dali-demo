@@ -34,11 +34,12 @@ namespace Demo
  * @brief Example of a Linear Layout with padding applied, enables updating of padding values for
  * one of the children.
  */
-class AbsoluteExample: public ConnectionTracker, public Example
+class AbsoluteExample final: public ConnectionTracker, public Example
 {
 public:
   static const unsigned int NUMBER_OF_IMAGE_VIEWS = 4;
 
+  // Constructor
   AbsoluteExample();
 
   // Creates a Absolute Layout Example and displays it.
@@ -48,7 +49,6 @@ public:
   virtual void Remove() override;
 
 private:
-
 
   // Callback when change size button is pressed
   bool ChangeSizeClicked( Toolkit::Button button );

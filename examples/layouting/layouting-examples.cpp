@@ -27,6 +27,7 @@
 #include "linear-example.h"
 #include "padding-example.h"
 #include "flex-example.h"
+#include "grid-example.h"
 #include "example.h"
 #include "absolute-example.h"
 
@@ -39,18 +40,18 @@ namespace
 const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "lake_front.jpg" );
 const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 
-const char* APPLICATION_TITLE( "Layout Tester" );
-
 typedef std::unique_ptr< Demo::Example > ExamplePointer;
+
 typedef std::vector< ExamplePointer > ExampleContainer;
 
 /// All layouting examples to be shown should be added to this method
 void CreateExamples( ExampleContainer& container )
 {
-  container.push_back( ExamplePointer( new Demo::LinearExample ) );
-  container.push_back( ExamplePointer( new Demo::PaddingExample ) );
-  container.push_back( ExamplePointer( new Demo::AbsoluteExample ) );
-  container.push_back( ExamplePointer( new Demo::FlexExample ) );
+  container.push_back( ExamplePointer(new Demo::LinearExample) );
+  container.push_back( ExamplePointer(new Demo::PaddingExample) );
+  container.push_back( ExamplePointer(new Demo::AbsoluteExample) );
+  container.push_back( ExamplePointer(new Demo::FlexExample) ) ;
+  container.push_back( ExamplePointer(new Demo::GridExample) ) ;
 }
 
 } // anonymous namespace
@@ -86,12 +87,12 @@ private:
 
     stage.Add( toolbar );
 
-    auto title = TextLabel::New( APPLICATION_TITLE );
-    title.SetParentOrigin( ParentOrigin::CENTER );
-    title.SetAnchorPoint( AnchorPoint::CENTER );
-    title.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLUE );
-    title.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::LEFT );
-    toolbar.Add( title );
+    mToolbarTitle = TextLabel::New( "");
+    mToolbarTitle.SetParentOrigin( ParentOrigin::CENTER );
+    mToolbarTitle.SetAnchorPoint( AnchorPoint::CENTER );
+    mToolbarTitle.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLUE );
+    mToolbarTitle.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::LEFT );
+    toolbar.Add( mToolbarTitle );
 
     mNextLayout = PushButton::New();
     mNextLayout.SetProperty( Toolkit::Button::Property::LABEL, "change layout");
@@ -105,6 +106,7 @@ private:
     if( ! mLayoutingExamples.empty() )
     {
       mLayoutingExamples[ mLayoutIndex ]->Create();
+      mToolbarTitle.SetProperty(Toolkit::TextLabel::Property::TEXT, mLayoutingExamples[ mLayoutIndex ]->GetExampleTitle() );
     }
   }
 
@@ -115,6 +117,7 @@ private:
       mLayoutingExamples[ mLayoutIndex ]->Remove();
       mLayoutIndex = ( mLayoutIndex + 1 ) % mLayoutingExamples.size();
       mLayoutingExamples[ mLayoutIndex ]->Create();
+      mToolbarTitle.SetProperty(Toolkit::TextLabel::Property::TEXT, mLayoutingExamples[ mLayoutIndex ]->Example::GetExampleTitle() );
     }
     return true;
   }
@@ -139,6 +142,7 @@ private:
   ExampleContainer mLayoutingExamples;
   PushButton mNextLayout;
   unsigned int mLayoutIndex;
+  TextLabel mToolbarTitle;
 };
 
 int DALI_EXPORT_API main( int argc, char **argv )
