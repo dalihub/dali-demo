@@ -45,7 +45,7 @@ of the capability of the toolkit.
 %define dali_icon_dir         /usr/share/icons/
 %define smack_rule_dir        /etc/smack/accesses2.d/
 %else
-%define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo/
+%define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo-vk/
 %define dali_xml_file_dir     %TZ_SYS_RO_PACKAGES
 %define dali_icon_dir         %TZ_SYS_RO_ICONS
 %define smack_rule_dir        %TZ_SYS_SMACK/accesses2.d/
@@ -125,9 +125,9 @@ exit 0
 
 %files
 %if 0%{?enable_dali_smack_rules}
-%manifest com.samsung.dali-demo.manifest-smack
+%manifest com.samsung.dali-demo-vk.manifest-smack
 %else
-%manifest com.samsung.dali-demo.manifest
+%manifest com.samsung.dali-demo-vk.manifest
 %endif
 %defattr(-,root,root,-)
 %{dali_app_exe_dir}/dali-demo
