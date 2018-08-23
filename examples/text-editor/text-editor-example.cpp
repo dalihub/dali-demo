@@ -168,17 +168,7 @@ public:
     mEditor.SetProperty( TextEditor::Property::DECORATION_BOUNDING_BOX, boundingBox );
     mEditor.SetProperty( TextEditor::Property::TEXT_COLOR, Color::BLACK );
     mEditor.SetProperty( TextEditor::Property::TEXT,
-                         "Lorem ipsum dolor sit amet, aeque definiebas ea mei, posse iracundia ne cum.\n"
-                         "Usu ne nisl maiorum iudicabit, veniam epicurei oporteat eos an.\n"
-                         "Ne nec nulla regione albucius, mea doctus delenit ad!\n"
-                         "Et everti blandit adversarium mei, eam porro neglegentur suscipiantur an.\n"
-                         "Quidam corpora at duo. An eos possim scripserit?\n\n"
-                         "Aťqui dicant sěnťenťíae aň vel!\n"
-                         "Vis viris médiocrem elaboraret ét, verear civibus moderatius ex duo!\n"
-                         "Án veri laborě iňtěgré quó, mei aď poššit lobortis, mei prompťa čonsťitůťó eů.\n"
-                         "Aliquip sanctůs delicáta quí ěá, et natum aliquam est?\n"
-                         "Asšúm sapěret usu ůť.\n"
-                         "Síť ut apeirián laboramúš percipitur, sůas hařum ín éos?\n" );
+                         "Lorem ipsum dolor" );
 
     mEditor.InputStyleChangedSignal().Connect( this, &TextEditorExample::OnTextInputStyleChanged );
 
