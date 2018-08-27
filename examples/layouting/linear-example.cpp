@@ -39,6 +39,9 @@ const char* RTL_SELECTED_IMAGE( DEMO_IMAGE_DIR "icon-reverse-selected.png" );
 const char* ROTATE_CLOCKWISE_IMAGE( DEMO_IMAGE_DIR "icon-reset.png" );
 const char* ROTATE_CLOCKWISE_SELECTED_IMAGE( DEMO_IMAGE_DIR "icon-reset-selected.png" );
 
+const char* ALIGN_IMAGE( DEMO_IMAGE_DIR "icon-replace.png" );
+const char* ALIGN_SELECTED_IMAGE( DEMO_IMAGE_DIR "icon-replace-selected.png" );
+
 // Child image filenames
 const char* IMAGE_PATH[] = {
   DEMO_IMAGE_DIR "application-icon-101.png",
@@ -97,11 +100,22 @@ void LinearExample::Create()
   mRotateButton.SetSize(75, 75);
   stage.Add( mRotateButton );
 
+  mAlignmentButton = PushButton::New();
+  mAlignmentButton.SetProperty( PushButton::Property::UNSELECTED_ICON, ALIGN_IMAGE );
+  mAlignmentButton.SetProperty( PushButton::Property::SELECTED_ICON, ALIGN_SELECTED_IMAGE );
+  mAlignmentButton.ClickedSignal().Connect( this, &LinearExample::OnAlignmentClicked );
+  mAlignmentButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+  mAlignmentButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+  mAlignmentButton.SetSize(75, 75);
+
+  stage.Add( mAlignmentButton );
+
   // Create a linear layout
   mLinearContainer = Control::New();
   auto layout = LinearLayout::New();
   layout.SetAnimateLayout(true);
-  layout.SetOrientation( LinearLayout::Orientation::VERTICAL );
+  layout.SetOrientation( LinearLayout::Orientation::HORIZONTAL );
+  layout.SetAlignment( LinearLayout::Alignment::CENTER_VERTICAL );
   DevelControl::SetLayout( mLinearContainer, layout );
 
   mLinearContainer.SetParentOrigin( ParentOrigin::CENTER );
@@ -127,6 +141,7 @@ void LinearExample::Remove()
   {
     UnparentAndReset( mDirectionButton );
     UnparentAndReset( mRotateButton );
+    UnparentAndReset( mAlignmentButton );
     UnparentAndReset( mLinearContainer);
   }
 }
@@ -134,6 +149,8 @@ void LinearExample::Remove()
 // Mirror items in layout
 bool LinearExample::OnDirectionClicked( Button button )
 {
+  auto layout = LinearLayout::DownCast( DevelControl::GetLayout( mLinearContainer ) );
+  layout.SetOrientation( LinearLayout::Orientation::HORIZONTAL );
   if( !mLTRDirection )
   {
     mDirectionButton.SetProperty( PushButton::Property::UNSELECTED_ICON, LTR_IMAGE );
@@ -157,10 +174,41 @@ bool LinearExample::OnRotateClicked( Button button )
   if( layout.GetOrientation() == LinearLayout::Orientation::VERTICAL )
   {
     layout.SetOrientation( LinearLayout::Orientation::HORIZONTAL );
+    layout.SetAlignment(LinearLayout::Alignment::CENTER_VERTICAL );
   }
   else
   {
     layout.SetOrientation( LinearLayout::Orientation::VERTICAL );
+    layout.SetAlignment( LinearLayout::Alignment::CENTER_HORIZONTAL );
+  }
+  return true;
+}
+
+bool LinearExample::OnAlignmentClicked( Button button )
+{
+  auto layout = LinearLayout::DownCast( DevelControl::GetLayout( mLinearContainer ) );
+  if ( layout.GetAlignment() == LinearLayout::Alignment::CENTER_VERTICAL ) {
+    layout.SetAlignment( LinearLayout::Alignment::BEGIN );
+  }
+  else if ( layout.GetAlignment() == LinearLayout::Alignment::BEGIN )
+  {
+    layout.SetAlignment( LinearLayout::Alignment::END );
+  }
+  else if ( layout.GetAlignment() == LinearLayout::Alignment::END )
+  {
+    layout.SetAlignment( LinearLayout::Alignment::CENTER_HORIZONTAL);
+  }
+  else if ( layout.GetAlignment() == LinearLayout::Alignment::CENTER_HORIZONTAL )
+  {
+    layout.SetAlignment( LinearLayout::Alignment::TOP );
+  }
+  else if ( layout.GetAlignment() == LinearLayout::Alignment::TOP )
+  {
+    layout.SetAlignment( LinearLayout::Alignment::BOTTOM );
+  }
+  else if ( layout.GetAlignment() == LinearLayout::Alignment::BOTTOM )
+  {
+    layout.SetAlignment( LinearLayout::Alignment::CENTER_VERTICAL );
   }
   return true;
 }
