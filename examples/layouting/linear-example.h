@@ -53,9 +53,13 @@ private:
   // Alternates the linear layout from horizontal to vertical
   bool OnRotateClicked( Button button );
 
+  // Cycles through alignment options
+  bool OnAlignmentClicked( Button button );
+
 private:
   PushButton mDirectionButton;
   PushButton mRotateButton;
+  PushButton mAlignmentButton;
   Control mLinearContainer;
   bool mLTRDirection;
 }; // class LinearContainer
