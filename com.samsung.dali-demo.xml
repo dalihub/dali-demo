@@ -269,6 +269,9 @@
 	<ui-application appid="frame-callback.example" exec="/usr/apps/com.samsung.dali-demo/bin/frame-callback.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Frame Callback</label>
 	</ui-application>
+	<ui-application appid="pre-render-callback.example" exec="/usr/apps/com.samsung.dali-demo/bin/pre-render-callback.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Frame Callback</label>
+	</ui-application>
 
 	<privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
