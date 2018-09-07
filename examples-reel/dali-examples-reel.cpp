@@ -46,6 +46,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("dissolve-effect.example", DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION));
   demo.AddExample(Example("effects-view.example", DALI_DEMO_STR_TITLE_EFFECTS_VIEW));
   demo.AddExample(Example("flex-container.example", DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND));
+  demo.AddExample(Example("frame-callback.example", DALI_DEMO_STR_TITLE_FRAME_CALLBACK));
   demo.AddExample(Example("focus-integration.example", DALI_DEMO_STR_TITLE_FOCUS_INTEGRATION));
   demo.AddExample(Example("gradients.example", DALI_DEMO_STR_TITLE_COLOR_GRADIENT));
   demo.AddExample(Example("hello-world.example", DALI_DEMO_STR_TITLE_HELLO_WORLD));
