@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (control) 2017 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,74 +15,97 @@
  *
  */
 
+#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 using namespace Dali;
-using Dali::Toolkit::TextLabel;
+using namespace Dali::Toolkit;
 
-// This example shows how to create and display Hello World! using a simple TextActor
-//
-class HelloWorldController : public ConnectionTracker
+
+class MyTester : public ConnectionTracker
 {
 public:
-
-  HelloWorldController( Application& application )
-  : mApplication( application )
+  MyTester(Application &application)
+      : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &HelloWorldController::Create );
+    mApplication.InitSignal().Connect(this, &MyTester::Create);
   }
 
-  ~HelloWorldController()
+  ~MyTester()
   {
     // Nothing to do here;
   }
 
+private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create( Application& application )
+  void Create(Application &application)
   {
     // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    mStage = Stage::GetCurrent();
+    mStage.SetBackgroundColor(Color::BLUE);
 
-    TextLabel textLabel = TextLabel::New( "Hello World" );
-    textLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    textLabel.SetName( "helloWorldLabel" );
-    stage.Add( textLabel );
+    mStage.KeyEventSignal().Connect(this, &MyTester::OnKeyEvent);
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &HelloWorldController::OnTouch );
+    mApplication.GetWindow().SetSize(Uint16Pair(1920 / 2, 1080));
+    mApplication.GetWindow().SetPosition(Uint16Pair(0, 0));
 
-    // Respond to key events
-    stage.KeyEventSignal().Connect( this, &HelloWorldController::OnKeyEvent );
+    control = Dali::Toolkit::Control::New();
+    control.SetPosition(50, 50);
+    control.SetSize(100, 100);
+    control.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    control.SetParentOrigin(ParentOrigin::TOP_LEFT);
+    control.SetBackgroundColor(Color::YELLOW);
+
+    mStage.Add(control);
   }
 
-  bool OnTouch( Actor actor, const TouchData& touch )
+  void CreateScene()
   {
-    // quit the application
-    mApplication.Quit();
-    return true;
+
   }
 
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent &event)
   {
-    if( event.state == KeyEvent::Down )
+    if (event.state == KeyEvent::Down)
     {
-      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      if (IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
+      }
+      else if (event.keyPressedName == "1")
+      {
+        mApplication.GetWindow().SetSize(Uint16Pair(1920 / 2, 1080 / 2));
+        control.SetBackgroundColor(Color::GREEN);
+      }
+      else if (event.keyPressedName == "2")
+      {
+        mApplication.GetWindow().SetSize(Uint16Pair(1920 / 2, 1080));
+        control.SetBackgroundColor(Color::YELLOW);
+      }else if (event.keyPressedName == "3")
+      {
+        mApplication.GetWindow().SetPosition(Uint16Pair(0, 0));
+        control.SetBackgroundColor(Color::GREEN);
+      }else if (event.keyPressedName == "4")
+      {
+        mApplication.GetWindow().SetPosition(Uint16Pair(1920 / 2, 0));
+        control.SetBackgroundColor(Color::YELLOW);
       }
     }
   }
 
 private:
-  Application&  mApplication;
+  uint32_t focussedIndex = 0, focussedRow = 0;
+  Stage mStage;
+  Toolkit::Control control;
+  Application &mApplication;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char **argv)
 {
-  Application application = Application::New( &argc, &argv );
-  HelloWorldController test( application );
+  Application application = Application::New(&argc, &argv);
+  MyTester test(application);
   application.MainLoop();
   return 0;
 }
