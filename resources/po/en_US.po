@@ -61,6 +61,9 @@ msgstr "Emoji Text"
 msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
 msgstr "Flexbox Playground"
 
+msgid "DALI_DEMO_STR_TITLE_FRAME_CALLBACK"
+msgstr "Frame Callback"
+
 msgid "DALI_DEMO_STR_TITLE_HELLO_WORLD"
 msgstr "Hello World"
 
@@ -135,6 +138,9 @@ msgstr "Popup"
 
 msgid "DALI_DEMO_STR_TITLE_PIVOT"
 msgstr "Pivot"
+
+msgid "DALI_DEMO_STR_TITLE_PRE_RENDER_CALLBACK"
+msgstr "Pre Render Callback"
 
 msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
 msgstr "Progress Bar"

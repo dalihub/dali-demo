@@ -42,6 +42,9 @@ const char* ROTATE_CLOCKWISE_SELECTED_IMAGE( DEMO_IMAGE_DIR "icon-reset-selected
 const char* ALIGN_IMAGE( DEMO_IMAGE_DIR "icon-replace.png" );
 const char* ALIGN_SELECTED_IMAGE( DEMO_IMAGE_DIR "icon-replace-selected.png" );
 
+const char* WEIGHT_IMAGE( DEMO_IMAGE_DIR "icon-item-view-layout-grid.png" );
+const char* WEIGHT_SELECTED_IMAGE( DEMO_IMAGE_DIR "icon-item-view-layout-grid-selected.png" );
+
 // Child image filenames
 const char* IMAGE_PATH[] = {
   DEMO_IMAGE_DIR "application-icon-101.png",
@@ -61,8 +64,8 @@ void CreateChildImageView( ImageView& imageView, const char* filename, Size size
   imagePropertyMap[ Toolkit::ImageVisual::Property::URL ] = filename;
   imagePropertyMap[ ImageVisual::Property::DESIRED_WIDTH ] = size.width;
   imagePropertyMap[ ImageVisual::Property::DESIRED_HEIGHT ] = size.height;
-  imageView.SetProperty(Toolkit::ImageView::Property::IMAGE , imagePropertyMap );
-  imageView.SetName("ImageView");
+  imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, imagePropertyMap );
+  imageView.SetName( "ImageView" );
   imageView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
   imageView.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 }
@@ -74,7 +77,8 @@ namespace Demo
 
 LinearExample::LinearExample()
 : Example( TITLE ),
-  mLTRDirection(true)
+  mLTRDirection(true),
+  mImagesWeighted (false )
 {
 }
 
@@ -86,29 +90,37 @@ void LinearExample::Create()
   mDirectionButton.SetProperty( PushButton::Property::UNSELECTED_ICON, RTL_IMAGE );
   mDirectionButton.SetProperty( PushButton::Property::SELECTED_ICON, RTL_SELECTED_IMAGE );
   mDirectionButton.ClickedSignal().Connect( this, &LinearExample::OnDirectionClicked );
-  mDirectionButton.SetParentOrigin( Vector3(0.33f, 1.0f, 0.5f ) );
+  mDirectionButton.SetParentOrigin( Vector3( 0.2f, 1.0f, 0.5f ) );
   mDirectionButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-  mDirectionButton.SetSize(75, 75);
+  mDirectionButton.SetSize( 75, 75 );
   stage.Add( mDirectionButton );
-
-  mRotateButton = PushButton::New();
-  mRotateButton.SetProperty( PushButton::Property::UNSELECTED_ICON, ROTATE_CLOCKWISE_IMAGE );
-  mRotateButton.SetProperty( PushButton::Property::SELECTED_ICON, ROTATE_CLOCKWISE_SELECTED_IMAGE );
-  mRotateButton.ClickedSignal().Connect( this, &LinearExample::OnRotateClicked );
-  mRotateButton.SetParentOrigin( Vector3(0.66f, 1.0f, 0.5f ));
-  mRotateButton.SetAnchorPoint( Vector3(0.5f, 1.0f, 0.5f));
-  mRotateButton.SetSize(75, 75);
-  stage.Add( mRotateButton );
 
   mAlignmentButton = PushButton::New();
   mAlignmentButton.SetProperty( PushButton::Property::UNSELECTED_ICON, ALIGN_IMAGE );
   mAlignmentButton.SetProperty( PushButton::Property::SELECTED_ICON, ALIGN_SELECTED_IMAGE );
   mAlignmentButton.ClickedSignal().Connect( this, &LinearExample::OnAlignmentClicked );
-  mAlignmentButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+  mAlignmentButton.SetParentOrigin( Vector3( 0.4f, 1.0f, 0.5f ) );
   mAlignmentButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-  mAlignmentButton.SetSize(75, 75);
-
+  mAlignmentButton.SetSize( 75, 75 );
   stage.Add( mAlignmentButton );
+
+  mWeightButton = Toolkit::PushButton::New();
+  mWeightButton.SetProperty( PushButton::Property::UNSELECTED_ICON, WEIGHT_IMAGE );
+  mWeightButton.SetProperty( PushButton::Property::SELECTED_ICON, WEIGHT_SELECTED_IMAGE );
+  mWeightButton.ClickedSignal().Connect( this, &LinearExample::OnWeightClicked );
+  mWeightButton.SetParentOrigin( Vector3( 0.6f, 1.0f, 0.5f ) );
+  mWeightButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+  mWeightButton.SetSize( 75, 75 );
+  stage.Add( mWeightButton );
+
+  mRotateButton = PushButton::New();
+  mRotateButton.SetProperty( PushButton::Property::UNSELECTED_ICON, ROTATE_CLOCKWISE_IMAGE );
+  mRotateButton.SetProperty( PushButton::Property::SELECTED_ICON, ROTATE_CLOCKWISE_SELECTED_IMAGE );
+  mRotateButton.ClickedSignal().Connect( this, &LinearExample::OnRotateClicked );
+  mRotateButton.SetParentOrigin( Vector3( 0.8f, 1.0f, 0.5f ) );
+  mRotateButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+  mRotateButton.SetSize( 75, 75 );
+  stage.Add( mRotateButton );
 
   // Create a linear layout
   mLinearContainer = Control::New();
@@ -129,8 +141,9 @@ void LinearExample::Create()
   for( unsigned int x = 0; x < NUMBER_OF_RESOURCES; ++x )
   {
     Toolkit::ImageView imageView;
-    CreateChildImageView( imageView, IMAGE_PATH[ x ], Size(100.0f, 100.0f) );
+    CreateChildImageView( imageView, IMAGE_PATH[ x ], Size( 100.0f, 100.0f ) );
     mLinearContainer.Add( imageView );
+    mImages.push_back( imageView );
   }
 }
 
@@ -140,8 +153,9 @@ void LinearExample::Remove()
   if ( mLinearContainer )
   {
     UnparentAndReset( mDirectionButton );
-    UnparentAndReset( mRotateButton );
     UnparentAndReset( mAlignmentButton );
+    UnparentAndReset( mWeightButton );
+    UnparentAndReset( mRotateButton );
     UnparentAndReset( mLinearContainer);
   }
 }
@@ -210,6 +224,27 @@ bool LinearExample::OnAlignmentClicked( Button button )
   {
     layout.SetAlignment( LinearLayout::Alignment::CENTER_VERTICAL );
   }
+  return true;
+}
+
+bool LinearExample::OnWeightClicked( Button button )
+{
+  if( !mImagesWeighted )
+  {
+    for( auto&& iter : mImages )
+    {
+      iter.SetProperty( Toolkit::LinearLayout::ChildProperty::WEIGHT, 0.25f );
+    }
+  }
+  else
+  {
+    for( auto&& iter : mImages )
+    {
+      iter.SetProperty( Toolkit::LinearLayout::ChildProperty::WEIGHT, 0.0f );
+    }
+  }
+
+  mImagesWeighted = !mImagesWeighted;
   return true;
 }
 

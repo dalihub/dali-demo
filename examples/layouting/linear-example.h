@@ -56,12 +56,18 @@ private:
   // Cycles through alignment options
   bool OnAlignmentClicked( Button button );
 
+  // Justifies linear layout children using weight property
+  bool OnWeightClicked( Button button );
+
 private:
   PushButton mDirectionButton;
-  PushButton mRotateButton;
   PushButton mAlignmentButton;
+  PushButton mWeightButton;
+  PushButton mRotateButton;
+  std::vector< Toolkit::ImageView > mImages;
   Control mLinearContainer;
   bool mLTRDirection;
+  bool mImagesWeighted;
 }; // class LinearContainer
 
 } // namespace Demo
