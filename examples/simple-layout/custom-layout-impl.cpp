@@ -66,8 +66,7 @@ void CustomLayout::OnLayout( bool changed, LayoutLength left, LayoutLength top, 
   LayoutLength childLeft( 0 );
 
   // We want to vertically align the children to the middle
-  LayoutLength height = bottom - top;
-  LayoutLength middle = height / 2;
+  LayoutLength middle = (bottom - top) / 2;
 
   // Horizontally align the children to the middle of the space they are given too
   LayoutLength width = right - left;
@@ -90,7 +89,7 @@ void CustomLayout::OnLayout( bool changed, LayoutLength left, LayoutLength top, 
       LayoutLength childWidth = childLayout->GetMeasuredWidth();
       LayoutLength childHeight = childLayout->GetMeasuredHeight();
 
-      childTop = middle - (childHeight / 2);
+      childTop = middle - childHeight / 2;
 
       LayoutLength left = childLeft + center - childWidth / 2;
 
