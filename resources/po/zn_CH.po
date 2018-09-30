@@ -31,6 +31,9 @@ msgstr "方块切换效果"
 msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
 msgstr "冰消瓦解切换效果"
 
+msgid "DALI_DEMO_STR_TITLE_DRAG_AND_DROP"
+msgstr "拖放"
+
 msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
 msgstr "效果视图"
 
