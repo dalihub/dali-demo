@@ -37,8 +37,8 @@ CustomLayoutPtr CustomLayout::New()
 
 void CustomLayout::OnMeasure( MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec )
 {
-  auto accumulatedWidth = 0;
-  auto maxHeight = 0;
+  LayoutLength accumulatedWidth = 0;
+  LayoutLength maxHeight = 0;
 
   // In this layout we will:
   //  Measuring the layout with the children in a horizontal configuration, one after another
@@ -52,7 +52,7 @@ void CustomLayout::OnMeasure( MeasureSpec widthMeasureSpec, MeasureSpec heightMe
     {
       MeasureChild( childLayout, widthMeasureSpec, heightMeasureSpec );
       accumulatedWidth += childLayout->GetMeasuredWidth();
-      std::max( childLayout->GetMeasuredHeight().mValue, maxHeight );
+      std::max( childLayout->GetMeasuredHeight(), maxHeight );
     }
   }
 
@@ -66,14 +66,13 @@ void CustomLayout::OnLayout( bool changed, LayoutLength left, LayoutLength top, 
   LayoutLength childLeft( 0 );
 
   // We want to vertically align the children to the middle
-  auto height = bottom - top;
-  auto middle = height / 2;
+  LayoutLength middle = (bottom - top) / 2;
 
   // Horizontally align the children to the middle of the space they are given too
-  auto width = right - left;
+  LayoutLength width = right - left;
   int count = GetChildCount();
-  auto childIncrement = width / count;
-  auto center = childIncrement / 2;
+  LayoutLength childIncrement = width / count;
+  LayoutLength center = childIncrement / 2;
 
   // Check layout direction
   auto owner = GetOwner();
@@ -87,12 +86,12 @@ void CustomLayout::OnLayout( bool changed, LayoutLength left, LayoutLength top, 
     Dali::Toolkit::Internal::LayoutItemPtr childLayout = GetChildAt( itemIndex );
     if( childLayout != nullptr )
     {
-      auto childWidth = childLayout->GetMeasuredWidth();
-      auto childHeight = childLayout->GetMeasuredHeight();
+      LayoutLength childWidth = childLayout->GetMeasuredWidth();
+      LayoutLength childHeight = childLayout->GetMeasuredHeight();
 
-      childTop = middle - (childHeight / 2);
+      childTop = middle - childHeight / 2;
 
-      auto left = childLeft + center - childWidth / 2;
+      LayoutLength left = childLeft + center - childWidth / 2;
 
       childLayout->Layout( left, childTop, left + childWidth, childTop + childHeight );
       childLeft += childIncrement;

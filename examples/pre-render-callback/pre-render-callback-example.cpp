@@ -50,7 +50,15 @@ public:
     mTapDetector(),
     mKeepPreRender(false),
     mRotateTextCharacter(0),
-    mLastRTC(-1)
+    mLastRTC(-1),
+    mImageActor1(),
+    mImageActor2(),
+    mImageActor3(),
+    mAngle1Index( Property::INVALID_INDEX ),
+    mAngle3Index( Property::INVALID_INDEX ),
+    mSceneActor(),
+    mSceneAnimation(),
+    mSpinner()
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &PreRenderCallbackController::Create );
