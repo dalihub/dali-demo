@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo-vk
 Summary:    The OpenGLES Canvas Core Demo
-Version:    1.3.43
+Version:    1.3.45
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
