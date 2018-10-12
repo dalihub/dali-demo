@@ -31,7 +31,7 @@ void FrameCallback::SetStageWidth( float stageWidth )
   stageHalfWidth = stageWidth * 0.5f;
 }
 
-void FrameCallback::AddId( unsigned int id )
+void FrameCallback::AddId( uint32_t id )
 {
   mActorIdContainer.PushBack( id );
 }

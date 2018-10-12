@@ -48,7 +48,7 @@ public:
    * @brief The actor with the specified ID will be changed when Update() is called.
    * @param[in]  id  Actor ID of actor which should be changed by the FrameCallback.
    */
-  void AddId( unsigned int id );
+  void AddId( uint32_t id );
 
 private:
 
@@ -61,7 +61,7 @@ private:
 
 private:
 
-  Dali::Vector< unsigned int > mActorIdContainer; ///< Container of Actor IDs.
+  Dali::Vector< uint32_t > mActorIdContainer; ///< Container of Actor IDs.
   float stageHalfWidth; ///< Half the width of the stage. Center is 0,0 in the world matrix.
 
   constexpr static float SIZE_MULTIPLIER = 2.0f; ///< Multiplier for the size to set as the actors hit the edge.
