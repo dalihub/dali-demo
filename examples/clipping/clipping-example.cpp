@@ -38,7 +38,8 @@ const float ITEM_VIEW_MAXIMUM_ROTATION_IN_DEGREES = 20.0f;
 const float ITEM_VIEW_LAYOUT_POSITION_CHANGE_MULTIPLIER = 3.0f;
 const float ITEM_VIEW_ROTATION_ANIMATION_TIME = 0.2f;
 
-const char * const BUTTON_LABEL( "Toggle Clipping Mode" );
+const char * const BUTTON_LABEL_0( "Toggle Clipping Mode" );
+const char * const BUTTON_LABEL_1( "Toggle Depth Mode" );
 } // unnamed namespace
 
 /**
@@ -99,7 +100,7 @@ private:
 
     // Create a Spiral Layout and add it to the Item View.
     mItemView.AddLayout( * DefaultItemLayout::New( DefaultItemLayout::SPIRAL ) );
-    stage.GetRootLayer().SetBehavior( Layer::LAYER_3D ); // The item-view spiral layout requires Layer 3D behaviour.
+    stage.GetRootLayer().SetBehavior( Layer::LAYER_2D ); // The item-view spiral layout requires Layer 3D behaviour.
 
     // Calculate the size we would like our item-view layout to be, and then activate the layout.
     const Vector2 stageSize = stage.GetSize();
@@ -132,15 +133,26 @@ private:
     constraint.Apply();
 
     // Create a button to toggle the clipping mode
+
     PushButton button = Toolkit::PushButton::New();
     button.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     button.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
     button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     button.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
-    button.SetProperty( Button::Property::LABEL, BUTTON_LABEL );
-    button.ClickedSignal().Connect( this, &ClippingExample::OnButtonClicked );
+    button.SetProperty( Button::Property::LABEL, BUTTON_LABEL_0 );
+    button.ClickedSignal().Connect( this, &ClippingExample::OnButton0Clicked );
     stage.Add( button );
+    PushButton button1 = Toolkit::PushButton::New();
+    button1.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    button1.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    button1.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    button1.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+    button1.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
+    button1.SetProperty( Button::Property::LABEL, BUTTON_LABEL_1 );
+    button1.ClickedSignal().Connect( this, &ClippingExample::OnButton1Clicked );
+    button.Add( button1 );
+
   }
 
   /**
@@ -181,7 +193,18 @@ private:
       {
         mApplication.Quit();
       }
+
+      if( event.keyCode == 10 )
+      {
+        OnButton0Clicked( Button() );
+      }
+      else if( event.keyCode == 11 )
+      {
+        OnButton1Clicked( Button() );
+      }
     }
+
+
   }
 
   /**
@@ -190,12 +213,30 @@ private:
    * Will use this to toggle between the clipping modes.
    * @param[in] button The button that has been clicked.
    */
-  bool OnButtonClicked( Toolkit::Button button )
+  bool OnButton0Clicked( Toolkit::Button button )
   {
     if( mItemView )
     {
       ClippingMode::Type currentMode = static_cast< ClippingMode::Type >( mItemView.GetProperty( Actor::Property::CLIPPING_MODE ).Get< int >() );
       mItemView.SetProperty( Actor::Property::CLIPPING_MODE, ( currentMode == ClippingMode::CLIP_CHILDREN ) ? ClippingMode::DISABLED : ClippingMode::CLIP_CHILDREN );
+    }
+    return true;
+  }
+
+  bool OnButton1Clicked( Toolkit::Button button )
+  {
+    if( mItemView )
+    {
+      Stage stage = Dali::Stage::GetCurrent();
+      if( mLayerBehavior == Layer::LAYER_2D )
+      {
+        mLayerBehavior = Layer::LAYER_3D;
+      }
+      else
+      {
+        mLayerBehavior = Layer::LAYER_2D;
+      }
+      stage.GetRootLayer().SetBehavior( mLayerBehavior );
     }
     return true;
   }
@@ -206,6 +247,7 @@ private:
   ItemView mItemView; ///< The item view which whose children we would like to clip.
   ClippingItemFactory mClippingItemFactory; ///< The ItemFactory used to create our items.
   Constraint mItemViewOrientationConstraint; ///< The constraint used to control the orientation of item-view.
+  Layer::Behavior mLayerBehavior { Layer::LAYER_2D };
 };
 
 int DALI_EXPORT_API main( int argc, char **argv )
