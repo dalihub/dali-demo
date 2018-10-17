@@ -757,6 +757,9 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count )
 
     dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, imageMap );
     dfActor.SetColor( BUBBLE_COLOR[ i%NUMBER_OF_BUBBLE_COLOR ] );
+    dfActor.RegisterProperty( "uDoShadow", 0.0f );
+    dfActor.RegisterProperty( "uDoOutline", 0.0f );
+    dfActor.RegisterProperty( "uDoGlow", 0.0f );
 
     layer.Add( dfActor );
   }
