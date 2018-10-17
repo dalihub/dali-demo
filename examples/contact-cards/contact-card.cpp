@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,12 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
 // INTERNAL INCLUDES
 #include "contact-card-layout-info.h"
 #include "clipped-image.h"
+#include "masked-image.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -93,14 +95,20 @@ ContactCard::ContactCard(
   mContactCard(),
   mHeader(),
   mClippedImage(),
+  mMaskedImage(),
   mNameText(),
   mDetailText(),
+  mAnimation(),
   mSlotDelegate( this ),
   mContactCardLayoutInfo( contactCardLayoutInfo ),
   foldedPosition( position ),
   mClippedImagePropertyIndex( Property::INVALID_INDEX ),
   mFolded( true )
 {
+  // Connect to the stage's key signal to allow Back and Escape to fold a contact card if it is unfolded
+  Stage stage = Stage::GetCurrent();
+  stage.KeyEventSignal().Connect( mSlotDelegate, &ContactCard::OnKeyEvent );
+
   // Create a control which will be used for the background and to clip the contents
   mContactCard = Control::New();
   mContactCard.SetProperty( Control::Property::BACKGROUND,
@@ -111,7 +119,7 @@ ContactCard::ContactCard(
   mContactCard.SetAnchorPoint( AnchorPoint::TOP_LEFT );
   mContactCard.SetPosition( foldedPosition.x, foldedPosition.y );
   mContactCard.SetSize( mContactCardLayoutInfo.foldedSize );
-  Stage::GetCurrent().Add( mContactCard );
+  stage.Add( mContactCard );
 
   // Create the header which will be shown only when the contact is unfolded
   mHeader = Control::New();
@@ -129,7 +137,16 @@ ContactCard::ContactCard(
   mClippedImage.SetParentOrigin( ParentOrigin::TOP_LEFT );
   mClippedImage.SetAnchorPoint( AnchorPoint::TOP_LEFT );
   mClippedImage.SetPosition( mContactCardLayoutInfo.imageFoldedPosition.x, mContactCardLayoutInfo.imageFoldedPosition.y );
+  mClippedImage.SetVisible( false ); // Hide image as we only want to display it if we are animating or unfolded
   mContactCard.Add( mClippedImage );
+
+  // Create an image with a mask which is to be used when the contact is folded
+  mMaskedImage = MaskedImage::Create( imagePath );
+  mMaskedImage.SetSize( mContactCardLayoutInfo.imageSize );
+  mMaskedImage.SetParentOrigin( ParentOrigin::TOP_LEFT );
+  mMaskedImage.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  mMaskedImage.SetPosition( mContactCardLayoutInfo.imageFoldedPosition.x, mContactCardLayoutInfo.imageFoldedPosition.y );
+  mContactCard.Add( mMaskedImage );
 
   // Add the text label for just the name
   mNameText = TextLabel::New( contactName );
@@ -167,112 +184,158 @@ ContactCard::~ContactCard()
   }
 }
 
-void ContactCard::OnTap( Actor actor, const TapGesture& gesture )
+void ContactCard::OnTap( Actor actor, const TapGesture& /* gesture */ )
 {
+  if( actor == mContactCard )
+  {
+    Animate();
+  }
+}
+
+void ContactCard::Animate()
+{
+  KeyInputFocusManager keyInputFocusManager = KeyInputFocusManager::Get();
+
+  mAnimation = Animation::New( 0.0f ); // Overall duration is unimportant as superseded by TimePeriods set later
+
   if( mFolded )
   {
+    // Set key-input-focus to our contact-card so that we can fold the contact-card if we receive a Back or Esc key
+    keyInputFocusManager.SetFocus( mContactCard );
+
     mContactCard.Add( mHeader );
     mContactCard.Add( mDetailText );
 
+    // Show clipped-image to animate geometry and hide the masked-image
+    mClippedImage.SetVisible( true );
+    mMaskedImage.SetVisible( false );
+
     // Animate the size of the control (and clipping area)
-    Animation animation = Animation::New( 0.0f ); // Overall duration is unimportant as superseded by TimePeriods set later
-    animation.AnimateTo( Property( mContactCard, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.unfoldedPosition.x,  ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
-    animation.AnimateTo( Property( mContactCard, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.unfoldedPosition.y,  ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
-    animation.AnimateTo( Property( mContactCard, Actor::Property::SIZE_WIDTH ),  mContactCardLayoutInfo.unfoldedSize.width,  ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_WIDTH );
-    animation.AnimateTo( Property( mContactCard, Actor::Property::SIZE_HEIGHT ), mContactCardLayoutInfo.unfoldedSize.height, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_HEIGHT );
+    mAnimation.AnimateTo( Property( mContactCard, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.unfoldedPosition.x,  ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
+    mAnimation.AnimateTo( Property( mContactCard, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.unfoldedPosition.y,  ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
+    mAnimation.AnimateTo( Property( mContactCard, Actor::Property::SIZE_WIDTH ),  mContactCardLayoutInfo.unfoldedSize.width,  ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_WIDTH );
+    mAnimation.AnimateTo( Property( mContactCard, Actor::Property::SIZE_HEIGHT ), mContactCardLayoutInfo.unfoldedSize.height, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_HEIGHT );
 
     // Animate the header area into position
-    animation.AnimateTo( Property( mHeader, Actor::Property::POSITION_X ), mContactCardLayoutInfo.headerUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
-    animation.AnimateTo( Property( mHeader, Actor::Property::POSITION_Y ), mContactCardLayoutInfo.headerUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
+    mAnimation.AnimateTo( Property( mHeader, Actor::Property::POSITION_X ), mContactCardLayoutInfo.headerUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
+    mAnimation.AnimateTo( Property( mHeader, Actor::Property::POSITION_Y ), mContactCardLayoutInfo.headerUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
 
     // Animate the clipped image into the unfolded position and into a quad
-    animation.AnimateTo( Property( mClippedImage, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.imageUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
-    animation.AnimateTo( Property( mClippedImage, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.imageUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
-    animation.AnimateTo( Property( mClippedImage, mClippedImagePropertyIndex ), ClippedImage::QUAD_GEOMETRY, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_MESH_MORPH );
+    mAnimation.AnimateTo( Property( mClippedImage, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.imageUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
+    mAnimation.AnimateTo( Property( mClippedImage, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.imageUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
+    mAnimation.AnimateTo( Property( mClippedImage, mClippedImagePropertyIndex ), ClippedImage::QUAD_GEOMETRY, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_MESH_MORPH );
 
     // Fade out the opacity of the name, and animate into the unfolded position
-    animation.AnimateTo( Property( mNameText, Actor::Property::COLOR_ALPHA ), 0.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_NAME_OPACITY );
-    animation.AnimateTo( Property( mNameText, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.textUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
-    animation.AnimateTo( Property( mNameText, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.textUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
+    mAnimation.AnimateTo( Property( mNameText, Actor::Property::COLOR_ALPHA ), 0.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_NAME_OPACITY );
+    mAnimation.AnimateTo( Property( mNameText, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.textUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
+    mAnimation.AnimateTo( Property( mNameText, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.textUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
 
     // Fade in the opacity of the detail, and animate into the unfolded position
-    animation.AnimateTo( Property( mDetailText, Actor::Property::COLOR_ALPHA ), 1.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_DETAIL_OPACITY );
-    animation.AnimateTo( Property( mDetailText, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.textUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
-    animation.AnimateTo( Property( mDetailText, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.textUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
+    mAnimation.AnimateTo( Property( mDetailText, Actor::Property::COLOR_ALPHA ), 1.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_DETAIL_OPACITY );
+    mAnimation.AnimateTo( Property( mDetailText, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.textUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
+    mAnimation.AnimateTo( Property( mDetailText, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.textUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y );
 
     // Fade out all the siblings
-    Actor parent = actor.GetParent();
+    Actor parent = mContactCard.GetParent();
     for( size_t i = 0; i < parent.GetChildCount(); ++i )
     {
       Actor sibling = parent.GetChildAt( i );
-      if( sibling != actor )
+      if( sibling != mContactCard )
       {
-        animation.AnimateTo( Property( sibling, Actor::Property::COLOR_ALPHA ), 0.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_SIBLING_OPACITY );
+        mAnimation.AnimateTo( Property( sibling, Actor::Property::COLOR_ALPHA ), 0.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_SIBLING_OPACITY );
         sibling.SetSensitive( false );
       }
     }
 
-    animation.FinishedSignal().Connect( mSlotDelegate, &ContactCard::OnAnimationFinished );
-    animation.Play();
+    mAnimation.FinishedSignal().Connect( mSlotDelegate, &ContactCard::OnAnimationFinished );
+    mAnimation.Play();
   }
   else
   {
+    // Remove key-input-focus from our contact-card when we are folded
+    keyInputFocusManager.RemoveFocus( mContactCard );
+
     mContactCard.Add( mNameText );
 
     // Animate the size of the control (and clipping area)
-    Animation animation = Animation::New( 0.0f ); // Overall duration is unimportant as superseded by TimePeriods set later
-    animation.AnimateTo( Property( mContactCard, Actor::Property::POSITION_X ),  foldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
-    animation.AnimateTo( Property( mContactCard, Actor::Property::POSITION_Y ),  foldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
-    animation.AnimateTo( Property( mContactCard, Actor::Property::SIZE_WIDTH ),  mContactCardLayoutInfo.foldedSize.width,  ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_WIDTH );
-    animation.AnimateTo( Property( mContactCard, Actor::Property::SIZE_HEIGHT ), mContactCardLayoutInfo.foldedSize.height, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_HEIGHT );
+    mAnimation.AnimateTo( Property( mContactCard, Actor::Property::POSITION_X ),  foldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
+    mAnimation.AnimateTo( Property( mContactCard, Actor::Property::POSITION_Y ),  foldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
+    mAnimation.AnimateTo( Property( mContactCard, Actor::Property::SIZE_WIDTH ),  mContactCardLayoutInfo.foldedSize.width,  ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_WIDTH );
+    mAnimation.AnimateTo( Property( mContactCard, Actor::Property::SIZE_HEIGHT ), mContactCardLayoutInfo.foldedSize.height, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_HEIGHT );
 
     // Animate the header area out of position
-    animation.AnimateTo( Property( mHeader, Actor::Property::POSITION_X ), mContactCardLayoutInfo.headerFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
-    animation.AnimateTo( Property( mHeader, Actor::Property::POSITION_Y ), mContactCardLayoutInfo.headerFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
+    mAnimation.AnimateTo( Property( mHeader, Actor::Property::POSITION_X ), mContactCardLayoutInfo.headerFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
+    mAnimation.AnimateTo( Property( mHeader, Actor::Property::POSITION_Y ), mContactCardLayoutInfo.headerFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
 
     // Animate the clipped image into the folded position and into a circle
-    animation.AnimateTo( Property( mClippedImage, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.imageFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
-    animation.AnimateTo( Property( mClippedImage, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.imageFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
-    animation.AnimateTo( Property( mClippedImage, mClippedImagePropertyIndex ), ClippedImage::CIRCLE_GEOMETRY, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_MESH_MORPH );
+    mAnimation.AnimateTo( Property( mClippedImage, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.imageFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
+    mAnimation.AnimateTo( Property( mClippedImage, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.imageFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
+    mAnimation.AnimateTo( Property( mClippedImage, mClippedImagePropertyIndex ), ClippedImage::CIRCLE_GEOMETRY, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_MESH_MORPH );
 
     // Fade in the opacity of the name, and animate into the folded position
-    animation.AnimateTo( Property( mNameText, Actor::Property::COLOR_ALPHA ), 1.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_NAME_OPACITY );
-    animation.AnimateTo( Property( mNameText, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.textFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
-    animation.AnimateTo( Property( mNameText, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.textFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
+    mAnimation.AnimateTo( Property( mNameText, Actor::Property::COLOR_ALPHA ), 1.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_NAME_OPACITY );
+    mAnimation.AnimateTo( Property( mNameText, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.textFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
+    mAnimation.AnimateTo( Property( mNameText, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.textFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
 
     // Fade out the opacity of the detail, and animate into the folded position
-    animation.AnimateTo( Property( mDetailText, Actor::Property::COLOR_ALPHA ), 0.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_DETAIL_OPACITY );
-    animation.AnimateTo( Property( mDetailText, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.textFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
-    animation.AnimateTo( Property( mDetailText, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.textFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
+    mAnimation.AnimateTo( Property( mDetailText, Actor::Property::COLOR_ALPHA ), 0.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_DETAIL_OPACITY );
+    mAnimation.AnimateTo( Property( mDetailText, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.textFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X );
+    mAnimation.AnimateTo( Property( mDetailText, Actor::Property::POSITION_Y ),  mContactCardLayoutInfo.textFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y );
 
     // Slowly fade in all the siblings
-    Actor parent = actor.GetParent();
+    Actor parent = mContactCard.GetParent();
     for( size_t i = 0; i < parent.GetChildCount(); ++i )
     {
       Actor sibling = parent.GetChildAt( i );
-      if( sibling != actor )
+      if( sibling != mContactCard )
       {
-        animation.AnimateTo( Property( sibling, Actor::Property::COLOR_ALPHA ), 1.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_SIBLING_OPACITY );
+        mAnimation.AnimateTo( Property( sibling, Actor::Property::COLOR_ALPHA ), 1.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_SIBLING_OPACITY );
         sibling.SetSensitive( true );
       }
     }
 
-    animation.FinishedSignal().Connect( mSlotDelegate, &ContactCard::OnAnimationFinished );
-    animation.Play();
+    mAnimation.FinishedSignal().Connect( mSlotDelegate, &ContactCard::OnAnimationFinished );
+    mAnimation.Play();
   }
 
   mFolded = !mFolded;
 }
 
-void ContactCard::OnAnimationFinished( Dali::Animation& animation )
+void ContactCard::OnAnimationFinished( Animation& animation )
 {
-  if( mFolded )
+  // Ensure the finishing animation is the latest as we do not want to change state if a previous animation has finished
+  if( mAnimation == animation )
   {
-    mHeader.Unparent();
-    mDetailText.Unparent();
+    if( mFolded )
+    {
+      mHeader.Unparent();
+      mDetailText.Unparent();
+
+      // Hide the clipped-image as we have finished animating the geometry and show the masked-image again
+      mClippedImage.SetVisible( false );
+      mMaskedImage.SetVisible( true );
+    }
+    else
+    {
+      mNameText.Unparent();
+    }
+    mAnimation.Reset();
   }
-  else
+}
+
+void ContactCard::OnKeyEvent( const KeyEvent& event )
+{
+  if( ( ! mFolded ) && // If we're folded then there's no need to do any more checking
+      ( event.state == KeyEvent::Down ) )
   {
-    mNameText.Unparent();
+    if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+    {
+      KeyInputFocusManager keyInputFocusManager = KeyInputFocusManager::Get();
+      if( keyInputFocusManager.GetCurrentFocusControl() == mContactCard )
+      {
+        // Our contact-card is set to receive focus so call OnTap which should trigger the required animation
+        Animate();
+      }
+    }
   }
 }

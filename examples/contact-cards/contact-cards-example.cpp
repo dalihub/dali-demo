@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,14 @@
 #include <dali/public-api/adaptor-framework/key.h>
 #include <dali/public-api/common/stage.h>
 #include <dali/public-api/events/key-event.h>
+#include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
 // INTERNAL INCLUDES
 #include "contact-card-layouter.h"
 #include "contact-data.h"
 
 using namespace Dali;
+using namespace Dali::Toolkit;
 
 namespace
 {
@@ -51,6 +53,8 @@ const char * const THEME_PATH( DEMO_STYLE_DIR "contact-cards-example-theme.json"
  *               This clipping comes in the form of a Circle or Quad.
  *               The Vertex shader mixes in the Circle and Quad geometry depending on the value of a uniform float.
  *               Animating this float between CIRCLE_GEOMETRY and QUAD_GEOMETRY is what enables the morphing between the two geometries.
+ * MaskedImage: This namespace provides a helper function which creates an ImageView with a mask that matches the Circle geometry provided by ClippedImage.
+ *              Using a mask yields much better quality than when using an image with a circle geometry, so this is ONLY used when the contact card is folded.
  */
 class ContactCardController : public ConnectionTracker // Inherit from ConnectionTracker so that our signals can be automatically disconnected upon our destruction.
 {
@@ -100,9 +104,13 @@ private:
   {
     if( event.state == KeyEvent::Down )
     {
-      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      KeyInputFocusManager keyInputFocusManager = KeyInputFocusManager::Get();
+      if( ! keyInputFocusManager.GetCurrentFocusControl() ) // Don't quit if a control has focus
       {
-        mApplication.Quit();
+        if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+        {
+          mApplication.Quit();
+        }
       }
     }
   }
