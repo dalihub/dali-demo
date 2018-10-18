@@ -333,7 +333,7 @@ void ContactCard::OnKeyEvent( const KeyEvent& event )
       KeyInputFocusManager keyInputFocusManager = KeyInputFocusManager::Get();
       if( keyInputFocusManager.GetCurrentFocusControl() == mContactCard )
       {
-        // Our contact-card is set to receive focus so call OnTap which should trigger the required animation
+        // Our contact-card is set to receive focus and we're unfolded so animate back to the folded state
         Animate();
       }
     }
