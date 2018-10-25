@@ -15,10 +15,19 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
+#include <dali-toolkit/devel-api/builder/base64-encoding.h>
+#include <dali-toolkit/devel-api/image-loader/texture-manager.h>
+#include "gaussian-blur-frag-shader.h"
+#include "utils.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+
+namespace
+{
+const Vector2 TARGET_SIZE(900.f, 600.f);
+const char* URL="https://upload.wikimedia.org/wikipedia/commons/2/2c/NZ_Landscape_from_the_van.jpg";
+}
 
 class ImageViewBlurExample : public ConnectionTracker
 {
@@ -33,44 +42,113 @@ public:
   {
     auto stage = Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ImageViewBlurExample::OnKeyEvent);
+    stage.SetBackgroundColor( Vector4( 0.2f, 0.1f, 0.2f, 1.0f ) );
 
-    CreateBlurView1();
+    mSceneActor = CreateScene( TARGET_SIZE );
+
+    // Don't add to stage until it's ready.... Must use immediate only.
+    // If image view's aren't added with loading policy = Immediate, then the render task cannot use REFRESH_ONCE,
+    // and must run until de-activated
+
+    // Build render tasks in ready callback.
+    Stage::GetCurrent().Add( mSceneActor ); // Will make all text labels ready
+    mSceneActor.SetVisible(false);
   }
 
-  void CreateBlurView1()
+
+  Actor CreateScene( Vector2 targetSize )
+  {
+    auto sceneActor = Actor::New();
+    sceneActor.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::ALL_DIMENSIONS );
+    sceneActor.SetParentOrigin( ParentOrigin::CENTER );
+    auto sceneImage = ImageView::New();
+    sceneImage.SetProperty(ImageView::Property::IMAGE, Property::Map()
+                           .Add( ImageVisual::Property::URL, URL )
+                           .Add( ImageVisual::Property::LOAD_POLICY, ImageVisual::LoadPolicy::IMMEDIATE ) );
+
+    sceneImage.ResourceReadySignal().Connect( this, &ImageViewBlurExample::OnImageReady );
+
+    sceneImage.SetSize( targetSize );
+    sceneImage.SetParentOrigin( ParentOrigin::CENTER );
+    sceneImage.SetAnchorPoint( AnchorPoint::CENTER );
+    sceneImage.SetName("SceneImage");
+    sceneActor.Add(sceneImage);
+
+    auto sceneText = TextLabel::New( "Landscape photo");
+    sceneText.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+    sceneText.SetProperty( TextLabel::Property::POINT_SIZE, 40 );
+    sceneText.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
+    sceneText.SetProperty( TextLabel::Property::OUTLINE, Property::Map().Add("color",Color::WHITE).Add("width", 2) );
+    sceneText.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    sceneText.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    sceneText.SetName("SceneText");
+    sceneImage.Add(sceneText);
+    return sceneActor;
+  }
+
+  void OnImageReady( Control control )
+  {
+    mSceneActor.SetVisible(true);
+    CreateBlurView( mSceneActor, TARGET_SIZE ); // Renders the scene in an exclusive render task
+  }
+
+  /**
+   * Create a scene render + 2 stage filter, reusing Framebuffers
+   */
+  void CreateBlurView( Actor sceneActor, Vector2 targetSize )
   {
     auto stage = Stage::GetCurrent();
-    auto size = stage.GetSize();
-    auto image1 = ImageView::New( DEMO_IMAGE_DIR "background-1.jpg" );
-    image1.SetSize( size * 0.5f );
 
-    blurView1 = GaussianBlurView::New();
-    blurView1.SetSize( size * 0.5f );
-    blurView1.SetParentOrigin( ParentOrigin::CENTER );//  Vector3(0.0f, -0.25f, 0.0f) );
-    blurView1.SetAnchorPoint( AnchorPoint::CENTER );
-    blurView1.Add( image1 );
-    //blurView1.SetBackgroundColor( Color::RED );
+    // Step 1 captures the scene into a framebuffer without any effects
+    auto step1Output = Texture::New( TextureType::TEXTURE_2D,
+                                     Pixel::RGBA8888,
+                                     unsigned(targetSize.width),
+                                     unsigned(targetSize.height) );
 
-    image1.SetParentOrigin( ParentOrigin::CENTER );
-    image1.SetAnchorPoint( AnchorPoint::CENTER );
-    blurView1.Activate();
+    auto fb1 = FrameBuffer::New(targetSize.width, targetSize.height, Pixel::RGBA8888);
+    fb1.AttachColorTexture( step1Output );
 
-    blurView1.SetProperty(blurView1.GetBlurStrengthPropertyIndex(), 1.0f);
-    auto blurAnim = Animation::New(0.5f);
-    blurAnim.AnimateTo( Property( blurView1, blurView1.GetBlurStrengthPropertyIndex() ), 1.0f);
-    blurAnim.FinishedSignal().Connect( this, &ImageViewBlurExample::OnBlurAnimFinished );
-    blurAnim.Play();
-    stage.Add(blurView1);
+    Utils::CreateRenderTask( sceneActor, targetSize, fb1 ); // Renders scene exclusively - it shouldn't be drawn to main fb
+    auto step1Url = TextureManager::AddTexture( step1Output );
+
+    mPreview1 = Utils::CreatePreview( step1Url, targetSize, ParentOrigin::TOP_LEFT, ParentOrigin::BOTTOM_LEFT,"Step 1", true );
+    stage.Add( mPreview1 );
+
+    // Step2 executes the first pass of the effect shader
+    auto step2Url = Utils::CreateEffectPassTexture( step1Url, GAUSSIAN_BLUR_FRAG_SHADER, targetSize, Utils::Direction::HORIZONTAL );
+
+    mPreview2 = Utils::CreatePreview( step2Url, targetSize, ParentOrigin::BOTTOM_LEFT, ParentOrigin::TOP_LEFT,"Step 2", true );
+    stage.Add( mPreview2 );
+
+    // Step 3 renders the second pass of the effect shader to fb1
+    Utils::CreateEffectPassTexture( step2Url, GAUSSIAN_BLUR_FRAG_SHADER, targetSize, Utils::Direction::VERTICAL, fb1 );
+
+    // Render step 3 output (same as step 1 output) to center:
+    mFinalImage = ImageView::New( step1Url );
+    mFinalImage.SetSize( targetSize );
+    mFinalImage.SetParentOrigin( ParentOrigin::CENTER );
+    mFinalImage.SetAnchorPoint( AnchorPoint::CENTER );
+    stage.Add( mFinalImage );
   }
 
-  void OnBlurAnimFinished(Animation& anim)
+  void Deactivate()
   {
-    blurView1.Deactivate();
-  }
-
-  void OnBlurFinished(GaussianBlurView source)
-  {
-    printf("Blur finished\n");
+    Stage stage = Stage::GetCurrent();
+    auto taskList = stage.GetRenderTaskList();
+    for( unsigned int i=taskList.GetTaskCount()-1; i>0; --i )
+    {
+      auto task = taskList.GetTask(i);
+      Actor cameraActor = task.GetCameraActor();
+      Actor sourceActor = task.GetSourceActor();
+      stage.Remove( cameraActor );
+      stage.Remove( sourceActor );
+      task.SetCameraActor( CameraActor() );
+      task.SetSourceActor( Actor() );
+      taskList.RemoveTask(taskList.GetTask(i));
+    }
+    UnparentAndReset(mPreview1);
+    UnparentAndReset(mPreview2);
+    mFinalImage.SetSize( TARGET_SIZE * 1.8f );
   }
 
   void OnKeyEvent(const KeyEvent& event)
@@ -81,13 +159,19 @@ public:
       {
         mApp.Quit();
       }
+      if( event.keyCode == 10 )
+      {
+        Deactivate();
+      }
     }
   }
 
 private:
   Application& mApp;
-  GaussianBlurView blurView1;
-  GaussianBlurView blurView2;
+  Actor mSceneActor;
+  ImageView mFinalImage;
+  Actor mPreview1;
+  Actor mPreview2;
 };
 
 int main( int argc, char** argv )

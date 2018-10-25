@@ -18,22 +18,27 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 using namespace Dali;
-using Dali::Toolkit::TextLabel;
+using namespace Dali::Toolkit;
+#include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
 
-// This example shows how to create and display Hello World! using a simple TextActor
-//
-class HelloWorldController : public ConnectionTracker
+const char* URL="https://upload.wikimedia.org/wikipedia/commons/2/2c/NZ_Landscape_from_the_van.jpg";
+
+/**
+ * This example shows how to use GaussianBlur UI control.
+ */
+class ImageScalingExample : public ConnectionTracker
 {
 public:
 
-  HelloWorldController( Application& application )
+  // Initialize variables and connect signal
+  ImageScalingExample( Application& application )
   : mApplication( application )
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &HelloWorldController::Create );
+    mApplication.InitSignal().Connect( this, &ImageScalingExample::Create );
   }
 
-  ~HelloWorldController()
+  ~ImageScalingExample()
   {
     // Nothing to do here;
   }
@@ -42,47 +47,75 @@ public:
   void Create( Application& application )
   {
     // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    mStage = Stage::GetCurrent();
+    // Set stage background color
+    mStage.SetBackgroundColor( Color::BLACK );
+    mStage.KeyEventSignal().Connect(this, &ImageScalingExample::OnKeyEvent);
 
-    TextLabel textLabel = TextLabel::New( "Hello World" );
-    textLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    textLabel.SetName( "helloWorldLabel" );
-    stage.Add( textLabel );
+    mGaussianBlurView = GaussianBlurView::New();
+    mGaussianBlurView.SetSize(mStage.GetSize());
+    mGaussianBlurView.SetVisible( true );
+    mGaussianBlurView.SetAnchorPoint(AnchorPoint::TOP_LEFT);
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &HelloWorldController::OnTouch );
+    mImageView = ImageView::New();
+    mImageView.SetProperty(ImageView::Property::IMAGE, Property::Map()
+                           .Add(ImageVisual::Property::URL, URL)
+                           .Add(ImageVisual::Property::LOAD_POLICY, ImageVisual::LoadPolicy::IMMEDIATE ) );
 
-    // Respond to key events
-    stage.KeyEventSignal().Connect( this, &HelloWorldController::OnKeyEvent );
+    mImageView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mImageView.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+
+    mGaussianBlurView.Add(mImageView);
+    mGaussianBlurView.SetBackgroundColor( Color::MAGENTA ); // All render tasks should use this color...
+
+    mStage.Add(mGaussianBlurView);
+    mGaussianBlurView.Activate();
+    mStage.KeepRendering( 2.0f );
   }
 
-  bool OnTouch( Actor actor, const TouchData& touch )
-  {
-    // quit the application
-    mApplication.Quit();
-    return true;
-  }
 
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.state == KeyEvent::Down )
+    if(event.state == KeyEvent::Down)
     {
-      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
       {
         mApplication.Quit();
+      }
+      if( event.keyCode == 10 )
+      {
+        mGaussianBlurView.Deactivate();
+      }
+      else if( event.keyCode == 11 )
+      {
+        mStage.Remove(mGaussianBlurView);
+      }
+      else if( event.keyCode == 12 )
+      {
+        mStage.Add( mGaussianBlurView );
+        mGaussianBlurView.Activate();
+        mStage.KeepRendering( 2.0f );
       }
     }
   }
 
 private:
   Application&  mApplication;
+  Stage mStage;
+  GaussianBlurView mGaussianBlurView;
+  ImageView mImageView;
+
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+// Entry point for Linux & Tizen applications
+int main(int argc, char **argv)
 {
-  Application application = Application::New( &argc, &argv );
-  HelloWorldController test( application );
-  application.MainLoop();
+  // Create application instance
+  Application app = Application::New(&argc, &argv);
+  ImageScalingExample test(app);
+
+  // Start application.
+  app.MainLoop();
+
   return 0;
 }
