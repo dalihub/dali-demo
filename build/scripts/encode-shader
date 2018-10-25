@@ -23,9 +23,11 @@ my $opt_output;
 my $opt_help;
 my $opt_quiet;
 my $opt_verbose;
+my $opt_variable;
 
 my %options = (
     "output:s"     => { "optvar"=>\$opt_output, "desc"=>"output"},
+    "variable=s"   => { "optvar"=>\$opt_variable, "desc"=>"variable"},
     "help"         => { "optvar"=>\$opt_help, "desc"=>""},
     "quiet"        => { "optvar"=>\$opt_quiet, "desc"=>""},
     "verbose"      => { "optvar"=>\$opt_verbose, "desc"=>"" });
@@ -34,14 +36,17 @@ my %longOptions = map { $_ => $options{$_}->{"optvar"} } keys(%options);
 GetOptions( %longOptions ) or pod2usage(2);
 pod2usage(1) if $opt_help;
 
-if( $opt_output )
+my $var;
+if($opt_variable)
 {
+    $var = "--vn $opt_variable";
 }
 
 my $tempFile="/tmp/shader.spv$$";
 
 # Create a binary file from the main argument
-print `glslangValidator -V1.0 $ARGV[0] -vn -o $tempFile`;
+print " Executing: glslangValidator -V1.0 $ARGV[0] $var -o $tempFile\n";
+print `glslangValidator -V1.0 $ARGV[0] $var -o $tempFile`;
 open PIPE, "uuencode -m $tempFile $tempFile | " || die "Can't execute pipe: $!\n";
 
 my @lines;
