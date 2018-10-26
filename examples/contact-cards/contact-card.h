@@ -2,7 +2,7 @@
 #define CONTACT_CARD_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2018 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 // EXTERNAL INCLUDES
 #include <string>
 #include <dali/public-api/actors/actor.h>
+#include <dali/public-api/animation/animation.h>
 #include <dali/public-api/events/tap-gesture-detector.h>
 #include <dali/public-api/object/ref-object.h>
 #include <dali-toolkit/public-api/controls/control.h>
@@ -67,23 +68,39 @@ private:
 
   /**
    * @brief Called when this contact card is tapped.
-   * @param[in] actor The tapped actor.
-   * @param[in] gesture The tap gesture.
+   * @param[in]  actor    The tapped actor.
+   * @param[in]  gesture  The tap gesture.
    */
   void OnTap( Dali::Actor actor, const Dali::TapGesture& gesture );
 
   /**
+   * @brief Animates the fold/unfold animation as required.
+   */
+  void Animate();
+
+  /**
    * @brief Called when the animation finishes.
-   * @param[in] animation The animation which has just finished.
+   * @param[in]  animation  The animation which has just finished.
    */
   void OnAnimationFinished( Dali::Animation& animation );
+
+  /**
+   * @brief Called when any key event is received
+   *
+   * Will use this to fold a contact card if it is unfolded.
+   * @param[in]  event  The key event information
+   */
+  void OnKeyEvent( const Dali::KeyEvent& event );
 
   Dali::TapGestureDetector mTapDetector; ///< Used for tap detection.
   Dali::Toolkit::Control mContactCard; ///< Used for the background and to clip the contents.
   Dali::Toolkit::Control mHeader; ///< Header shown when unfolded.
   Dali::Toolkit::Control mClippedImage; ///< The image representing the contact (whose clipping can be animated).
+  Dali::Toolkit::Control mMaskedImage; ///< The image with a mask (better quality around the edges than the clipped image when folded).
   Dali::Toolkit::Control mNameText; ///< The text shown when folded.
   Dali::Toolkit::Control mDetailText; ///< The text shown when unfolded.
+
+  Dali::Animation mAnimation; ///< The fold/unfold animation.
 
   Dali::SlotDelegate< ContactCard > mSlotDelegate; ///< Used to automatically disconnect our member functions from signals that this class connects to upon destruction. Can be used instead of inheriting from ConnectionTracker.
 
