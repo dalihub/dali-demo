@@ -18,8 +18,6 @@
 // CLASS HEADER
 #include "frame-callback.h"
 
-#include <iostream>
-
 using namespace Dali;
 
 FrameCallback::FrameCallback()
@@ -33,7 +31,7 @@ void FrameCallback::SetStageWidth( float stageWidth )
   stageHalfWidth = stageWidth * 0.5f;
 }
 
-void FrameCallback::AddId( unsigned int id )
+void FrameCallback::AddId( uint32_t id )
 {
   mActorIdContainer.PushBack( id );
 }
@@ -45,23 +43,27 @@ void FrameCallback::Update( Dali::UpdateProxy& updateProxy, float /* elapsedSeco
   {
     Vector3 position;
     Vector3 size;
-    updateProxy.GetPositionAndSize( i, position, size ); // Retrieve the position and size using the Actor ID.
-
-    float halfWidthPoint = stageHalfWidth - size.width * 0.5f;
-    float xTranslation = std::abs( position.x );
-    if( xTranslation > halfWidthPoint )
+    if( updateProxy.GetPositionAndSize( i, position, size ) ) // Retrieve the position and size using the Actor ID.
     {
-      // Actor has hit the edge, adjust the size accordingly.
-      float adjustment = xTranslation - halfWidthPoint;
-      size.width += adjustment * SIZE_MULTIPLIER;
-      size.height += adjustment * SIZE_MULTIPLIER;
+      float halfWidthPoint = stageHalfWidth - size.width * 0.5f;
+      float xTranslation = std::abs( position.x );
+      if( xTranslation > halfWidthPoint )
+      {
+        // Actor has hit the edge, adjust the size accordingly.
+        float adjustment = xTranslation - halfWidthPoint;
+        size.width += adjustment * SIZE_MULTIPLIER;
+        size.height += adjustment * SIZE_MULTIPLIER;
 
-      updateProxy.SetSize( i, size ); // Set the size using the UpdateProxy.
+        updateProxy.SetSize( i, size ); // Set the size using the UpdateProxy.
+      }
+
+      // Retrieve the actor's position and set make it more transparent the closer it is to the middle.
+      Vector4 color;
+      if( updateProxy.GetColor( i, color ) )
+      {
+        color.a = xTranslation / halfWidthPoint;
+        updateProxy.SetColor( i, color );
+      }
     }
-
-    // Retrieve the actor's position and set make it more transparent the closer it is to the middle.
-    Vector4 color = updateProxy.GetWorldColor( i );
-    color.a = xTranslation / halfWidthPoint;
-    updateProxy.SetWorldColor( i, color );
   }
 }
