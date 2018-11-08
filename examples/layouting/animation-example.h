@@ -61,7 +61,6 @@ private:
   PushButton mAddButton;
   PushButton mSelectGridButton;
   PushButton mShakeButton;
-  std::vector< Toolkit::ImageView > mImages;
   Control mAnimationContainer;
   Grid mGridLayout;
   LinearLayout mHorizontalLayout;
