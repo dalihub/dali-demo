@@ -114,6 +114,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TILT_SENSOR                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TILT_SENSOR")
 #define DALI_DEMO_STR_TITLE_TOOLTIP                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TOOLTIP")
 #define DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS          dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS")
+#define DALI_DEMO_STR_TITLE_WEB_VIEW                    dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_WEB_VIEW")
 
 #else // !INTERNATIONALIZATION_ENABLED
 
@@ -199,6 +200,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TILT_SENSOR                 "Tilt Sensor"
 #define DALI_DEMO_STR_TITLE_TOOLTIP                     "Tooltip"
 #define DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS          "Visual Transitions"
+#define DALI_DEMO_STR_TITLE_WEB_VIEW                    "Web View"
 #endif
 
 #ifdef __cplusplus
