@@ -76,6 +76,12 @@ msgstr "মেশ অঙ্কুৰিত"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D অনুগামী"
 
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "মেটাবল মহা-বিস্ফোৰণবাদ"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "মেটাবল প্ৰতিসৰিত"
+
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "অস্পষ্ট"
 

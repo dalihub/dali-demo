@@ -76,6 +76,12 @@ msgstr "Transformacion de geometrias"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Gemeotria 3D"
 
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "Explosion de metabolas"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "Refraccion de metabolas"
+
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "Desenfoque de movimiento"
 
