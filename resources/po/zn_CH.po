@@ -76,6 +76,12 @@ msgstr "网格变形"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D模型"
 
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "元球爆炸"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "元球折射"
+
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "动作模糊"
 

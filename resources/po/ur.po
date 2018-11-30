@@ -79,6 +79,12 @@ msgstr "میش کی تبدیلی"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D میش"
 
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "میٹابال دھماکہ"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "میٹابال اپورتن"
+
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "دھندلانے کی حرکت"
 

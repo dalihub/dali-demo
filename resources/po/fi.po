@@ -76,6 +76,12 @@ msgstr "Polygoniverkon Muodonmuutos"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Polygoniverkkovisuaali"
 
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "Metaball Räjähdys"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "Metaball Valon Taittumisella"
+
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "Liikesumennus"
 
