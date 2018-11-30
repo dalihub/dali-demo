@@ -112,6 +112,12 @@ msgstr "Mesh Morph"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "Mesh Visual"
 
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "Metaball Explosion"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "Metaball Refraction"
+
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "Motion Blur"
 
@@ -243,3 +249,6 @@ msgstr "Skybox"
 
 msgid "DALI_DEMO_STR_TITLE_PBR"
 msgstr "PBR"
+
+msgid "DALI_DEMO_STR_TITLE_WEB_VIEW"
+msgstr "Web View"

@@ -85,6 +85,12 @@ msgstr "메쉬 형태"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "메쉬 비주얼"
 
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "메타볼 폭발"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "메타볼 굴절"
+
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "모션 블러"
 

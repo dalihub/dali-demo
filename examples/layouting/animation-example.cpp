@@ -17,11 +17,13 @@
 
 #include <string>
 #include "animation-example.h"
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/layouting/linear-layout.h>
 #include <dali-toolkit/devel-api/layouting/grid.h>
+#include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
 #include <dali/integration-api/debug.h>
 
@@ -59,24 +61,26 @@ Debug::Filter* gLayoutFilter = Debug::Filter::New( Debug::NoLogging, false, "LOG
 
 const unsigned int NUMBER_OF_RESOURCES = sizeof(IMAGE_PATH) / sizeof(char*);
 
-// Helper function to create ImageViews with given filename and size.
-void CreateChildImageView( ImageView& imageView, int index, Size size )
+// Helper function
+void CreateChild( ImageView& child, int index, Size size )
 {
-  imageView = ImageView::New();
+  child = ImageView::New();
   Property::Map imagePropertyMap;
-  imagePropertyMap[ Toolkit::Visual::Property::TYPE ] = Toolkit::Visual::IMAGE;
-  imagePropertyMap[ Toolkit::ImageVisual::Property::URL ] = IMAGE_PATH[ index ];
+  imagePropertyMap[ Visual::Property::TYPE ] = Toolkit::Visual::IMAGE;
+  imagePropertyMap[ ImageVisual::Property::URL ] = IMAGE_PATH[ index ];
   imagePropertyMap[ ImageVisual::Property::DESIRED_WIDTH ] = size.width;
   imagePropertyMap[ ImageVisual::Property::DESIRED_HEIGHT ] = size.height;
-  imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, imagePropertyMap );
+  imagePropertyMap[ ImageVisual::Property::FITTING_MODE ] = FittingMode::SCALE_TO_FILL;
+  child.SetProperty( Toolkit::ImageView::Property::IMAGE, imagePropertyMap );
   std::string name = "ImageView";
   name.append( 1, '0' + index );
-  imageView.SetName( name );
-  imageView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-  imageView.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
+  child.SetName( name );
+  child.SetAnchorPoint( AnchorPoint::CENTER );
+  child.SetProperty( DevelActor::Property::POSITION_USES_ANCHOR_POINT, false );
 }
 
-LayoutTransitionData CreateOnSetLayoutTransition( Control& parent, std::vector< Toolkit::ImageView >& children )
+// Create set layout transition. A parent opacity increases 'ease in out' from semi-transparent to fully opaque and children pulse in order
+LayoutTransitionData CreateOnSetLayoutTransition( Control& container )
 {
   auto layoutTransitionData = LayoutTransitionData::New();
   Property::Map map;
@@ -84,31 +88,57 @@ LayoutTransitionData CreateOnSetLayoutTransition( Control& parent, std::vector< 
   map[ LayoutTransitionData::AnimatorKey::INITIAL_VALUE ] = 0.5f;
   map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = 1.0f;
   map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
-    .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, "EASE_IN_OUT" )
+    .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::EASE_IN_OUT )
     .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
       .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.25f )
       .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f ) );
 
   // Apply to parent only
-  layoutTransitionData.AddPropertyAnimator( parent, map );
+  layoutTransitionData.AddPropertyAnimator( container, map );
 
-  for( size_t i = 0; i < children.size(); i++ )
+  // Reset scale after possible focus animation
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SCALE;
+    map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Vector3::ONE;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+        .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f)
+        .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.0f));
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
+  }
+
+  // Children pulses in/out
+  for( size_t i = 0; i < container.GetChildCount(); i++ )
   {
     Property::Map map;
     map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SIZE;
     map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Vector3( 100.0f * 1.2f, 100.0f * 1.2f, 0 );
     map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
-      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, "SIN" )
+      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::SIN )
       .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
         .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.5f + 0.1f * i)
         .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.25f ) );
-    layoutTransitionData.AddPropertyAnimator( children[i], map );
+    layoutTransitionData.AddPropertyAnimator( container.GetChildAt( i ), map );
+  }
+
+  // Children move
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::POSITION;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::LINEAR )
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+         .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
+         .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f ) );
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
   }
 
   return layoutTransitionData;
 }
 
-LayoutTransitionData CreateOnChildAddTransition( Control& parent, ImageView& child )
+// Create add child transition. An added child grows from (0, 0) to its full size and instantly appears in its position
+LayoutTransitionData CreateOnChildAddTransition( Control& parent )
 {
   auto layoutTransitionData = LayoutTransitionData::New();
 
@@ -116,71 +146,219 @@ LayoutTransitionData CreateOnChildAddTransition( Control& parent, ImageView& chi
   Property::Map map;
   map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SIZE;
   map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
-    .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, "LINEAR")
+    .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::LINEAR )
     .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
       .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
       .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.0f ) );
   layoutTransitionData.AddPropertyAnimator( parent, map );
 
+  // Reset scale after possible focus animation
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SCALE;
+    map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Vector3::ONE;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+        .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f)
+        .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f));
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
+  }
+
   // New child is growing
   {
     Property::Map map;
-    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SIZE;
-    map["initialValue"] = Vector3( 0.0f, 0.0f, 0 );
-    map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Vector3( 100.0f, 100.0f, 0 );
+    map[ LayoutTransitionData::AnimatorKey::CONDITION ] = LayoutTransitionData::Condition::ON_ADD;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SCALE;
+    map[ LayoutTransitionData::AnimatorKey::INITIAL_VALUE ] = Vector3::ZERO;
+    map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Vector3::ONE;
     map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
-      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, "LINEAR")
+      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::LINEAR )
       .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
         .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
         .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f ) );
-    layoutTransitionData.AddPropertyAnimator( child, map );
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
   }
 
   // Want new children instantly appear in their positions
   {
     Property::Map map;
-    map[ LayoutTransitionData::AnimatorKey::PROPERTY] = Actor::Property::POSITION;
-    map[ LayoutTransitionData::AnimatorKey::ANIMATOR] = Property::Map()
-      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, "LINEAR")
+    map[ LayoutTransitionData::AnimatorKey::CONDITION ] = LayoutTransitionData::Condition::ON_ADD;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::POSITION;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::LINEAR )
       .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
          .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
          .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.0f ) );
-    layoutTransitionData.AddPropertyAnimator( child, map );
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
+  }
+
+  // Other just move
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::POSITION;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::LINEAR )
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+         .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
+         .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f ) );
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
   }
 
   return layoutTransitionData;
 }
 
-LayoutTransitionData CreateOnChildRemoveTransition(std::vector< Toolkit::ImageView >& images)
+// Create remove child transition. Remaining children shake around their positions
+LayoutTransitionData CreateOnChildRemoveTransition( Control& container )
 {
   auto layoutTransitionData = LayoutTransitionData::New();
-  // Apply animation to remaining children
-  for (unsigned int i = 0; i < images.size(); i++)
+
+  // Reset scale after possible focus animation
   {
-    {
-      Property::Map map;
-      map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = "position";
-      map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
-        .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, "SIN")
-        .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
-           .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f)
-           .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f));
-      layoutTransitionData.AddPropertyAnimator( images[i], map );
-    }
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SCALE;
+    map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Vector3::ONE;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+        .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f)
+        .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.0f));
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
+  }
+
+  // Apply animation to remaining children - sin shaking
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::POSITION;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::SIN )
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+        .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f)
+        .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f));
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
+  }
+
+  // Add a linear to reduce a linear to half
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::POSITION;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::LINEAR )
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+         .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f)
+         .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f));
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
   }
 
   return layoutTransitionData;
 }
 
-void CreateChildImageViewAndAdd( Control& container, int index, std::vector< Toolkit::ImageView >& images )
+// Create child focus transition. A focus gained child grows 120% and focus lost child gets its original size back
+LayoutTransitionData CreateOnChildFocusTransition( Control& parent, bool affectsSiblings )
+{
+  auto layoutTransitionData = LayoutTransitionData::New();
+
+  // Focus gain child animation
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::CONDITION ] = LayoutTransitionData::Condition::ON_FOCUS_GAINED;
+    map[ LayoutTransitionData::AnimatorKey::AFFECTS_SIBLINGS ] = affectsSiblings;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SCALE;
+    map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Vector3( 1.2f, 1.2f, 1.0f );
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::TYPE, LayoutTransitionData::Animator::ANIMATE_TO )
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+        .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
+        .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f ) );
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
+  }
+
+  // Focus lost child animation
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::CONDITION ] = LayoutTransitionData::Condition::ON_FOCUS_LOST;
+    map[ LayoutTransitionData::AnimatorKey::AFFECTS_SIBLINGS ] = affectsSiblings;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SCALE;
+    map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Vector3( 1.0f, 1.0f, 1.0f );
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::TYPE, LayoutTransitionData::Animator::ANIMATE_TO )
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+        .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
+        .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f ) );
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
+  }
+
+  // Linear children positioning
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::POSITION;
+    map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Property::Value();
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+         .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
+         .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f ) );
+    layoutTransitionData.AddPropertyAnimator( Actor(), map );
+  }
+
+  return layoutTransitionData;
+}
+
+// An example of custom default transition, ease in for position animation, ease out for size animation
+LayoutTransitionData CreateCustomDefaultTransition( Control& control )
+{
+  auto layoutTransitionData = LayoutTransitionData::New();
+  // Resets control scale after possible focus animation
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SCALE;
+    map[ LayoutTransitionData::AnimatorKey::TARGET_VALUE ] = Vector3::ONE;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+        .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
+        .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.0f ) );
+    layoutTransitionData.AddPropertyAnimator( control, map );
+  }
+
+  // Moves control ease in
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::POSITION;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::EASE_IN )
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+        .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
+        .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f ) );
+    layoutTransitionData.AddPropertyAnimator( control, map );
+  }
+
+  // Sizes control ease out
+  {
+    Property::Map map;
+    map[ LayoutTransitionData::AnimatorKey::PROPERTY ] = Actor::Property::SIZE;
+    map[ LayoutTransitionData::AnimatorKey::ANIMATOR ] = Property::Map()
+      .Add( LayoutTransitionData::AnimatorKey::ALPHA_FUNCTION, AlphaFunction::EASE_OUT )
+      .Add( LayoutTransitionData::AnimatorKey::TIME_PERIOD, Property::Map()
+        .Add( LayoutTransitionData::AnimatorKey::DELAY, 0.0f )
+        .Add( LayoutTransitionData::AnimatorKey::DURATION, 0.5f ) );
+    layoutTransitionData.AddPropertyAnimator( control, map );
+  }
+
+  return layoutTransitionData;
+}
+
+bool OnImageTouchCallback( Actor actor, const TouchData& event )
+{
+  KeyInputFocusManager manager = KeyInputFocusManager::Get();
+  manager.SetFocus( Control::DownCast( actor ) );
+  return true;
+}
+
+void CreateChildAndAdd( Demo::AnimationExample& animationExample, Control& container )
 {
   Toolkit::ImageView imageView;
-  CreateChildImageView( imageView, index, Size( 100.0f, 100.0f ) );
-  auto layout = DevelControl::GetLayout( container );
-  layout.SetTransitionData( LayoutTransitionData::ON_CHILD_ADD, CreateOnChildAddTransition( container, imageView ) );
-
+  CreateChild( imageView, container.GetChildCount(), Size( 100.0f, 100.0f ) );
+  imageView.TouchSignal().Connect( &animationExample, &OnImageTouchCallback );
   container.Add( imageView );
-  images.push_back( imageView );
+
+  DevelControl::GetLayout( imageView ).SetTransitionData( Toolkit::LayoutTransitionData::ON_LAYOUT_CHANGE, CreateCustomDefaultTransition( imageView ) );
 }
 
 }  // namespace
@@ -249,13 +427,20 @@ void AnimationExample::Create()
   mHorizontalLayout.SetOrientation( LinearLayout::Orientation::HORIZONTAL );
   mHorizontalLayout.SetAlignment( LinearLayout::Alignment::CENTER_HORIZONTAL | LinearLayout::Alignment::CENTER_VERTICAL );
   mHorizontalLayout.SetAnimateLayout(true);
+  mHorizontalLayout.SetTransitionData( LayoutTransitionData::ON_CHILD_FOCUS, CreateOnChildFocusTransition( mAnimationContainer, true ) );
+  mHorizontalLayout.SetTransitionData( LayoutTransitionData::ON_CHILD_REMOVE, CreateOnChildRemoveTransition( mAnimationContainer ) );
+  mHorizontalLayout.SetTransitionData( LayoutTransitionData::ON_CHILD_ADD, CreateOnChildAddTransition( mAnimationContainer ) );
+
   DevelControl::SetLayout( mAnimationContainer, mHorizontalLayout );
 
   mGridLayout = Grid::New();
-  mGridLayout.SetAnimateLayout(true);
-  mGridLayout.SetNumberOfColumns(2);
+  mGridLayout.SetAnimateLayout( true );
+  mGridLayout.SetNumberOfColumns( 2 );
+  mGridLayout.SetTransitionData( LayoutTransitionData::ON_CHILD_FOCUS, CreateOnChildFocusTransition( mAnimationContainer, false ) );
+  mGridLayout.SetTransitionData( LayoutTransitionData::ON_CHILD_REMOVE, CreateOnChildRemoveTransition( mAnimationContainer ) );
+  mGridLayout.SetTransitionData( LayoutTransitionData::ON_CHILD_ADD, CreateOnChildAddTransition( mAnimationContainer ) );
 
-  CreateChildImageViewAndAdd( mAnimationContainer, 0, mImages );
+  CreateChildAndAdd( *this, mAnimationContainer );
   stage.Add( mAnimationContainer );
 }
 
@@ -269,7 +454,6 @@ void AnimationExample::Remove()
     UnparentAndReset( mSelectGridButton );
     UnparentAndReset( mShakeButton );
     UnparentAndReset( mAnimationContainer);
-    mImages.clear();
   }
 }
 
@@ -277,14 +461,9 @@ bool AnimationExample::OnRemoveClicked( Button button )
 {
   DALI_LOG_INFO( gLayoutFilter, Debug::Verbose, "AnimationExample::OnRemoveClicked\n");
 
-  if (mImages.size() > 1)
+  if ( mAnimationContainer.GetChildCount() > 1 )
   {
-    auto layout = DevelControl::GetLayout( mAnimationContainer );
-    layout.SetTransitionData(LayoutTransitionData::ON_CHILD_REMOVE, CreateOnChildRemoveTransition( mImages ) );
-
-    ImageView imageView = mImages.back();
-    mAnimationContainer.Remove( imageView );
-    mImages.pop_back();
+    mAnimationContainer.Remove( mAnimationContainer.GetChildAt( mAnimationContainer.GetChildCount() - 1 ) );
   }
   return true;
 }
@@ -296,12 +475,12 @@ bool AnimationExample::OnSelectGridClicked( Button button )
 
   if ( !mGridSet )
   {
-    mGridLayout.SetTransitionData( LayoutTransitionData::ON_OWNER_SET, CreateOnSetLayoutTransition( mAnimationContainer, mImages ) );
+    mGridLayout.SetTransitionData( LayoutTransitionData::ON_OWNER_SET, CreateOnSetLayoutTransition( mAnimationContainer ) );
     DevelControl::SetLayout( mAnimationContainer, mGridLayout );
   }
   else
   {
-    mHorizontalLayout.SetTransitionData( LayoutTransitionData::ON_OWNER_SET, CreateOnSetLayoutTransition( mAnimationContainer, mImages ) );
+    mHorizontalLayout.SetTransitionData( LayoutTransitionData::ON_OWNER_SET, CreateOnSetLayoutTransition( mAnimationContainer ) );
     DevelControl::SetLayout( mAnimationContainer, mHorizontalLayout );
   }
 
@@ -311,9 +490,9 @@ bool AnimationExample::OnSelectGridClicked( Button button )
 
 bool AnimationExample::OnAddClicked( Button button )
 {
-  if (mImages.size() < 4)
+  if( mAnimationContainer.GetChildCount() < 4 )
   {
-    CreateChildImageViewAndAdd( mAnimationContainer, mImages.size(), mImages );
+    CreateChildAndAdd( *this, mAnimationContainer );
   }
   return true;
 }

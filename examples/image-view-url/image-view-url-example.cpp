@@ -126,7 +126,7 @@ private:
                                     Pixel::RGBA8888,
                                     unsigned(TARGET_SIZE.width),
                                     unsigned(TARGET_SIZE.height));
-      auto framebuffer = FrameBuffer::New(TARGET_SIZE.width, TARGET_SIZE.height, Pixel::RGB888);
+      auto framebuffer = FrameBuffer::New(TARGET_SIZE.width, TARGET_SIZE.height, FrameBuffer::Attachment::NONE );
       framebuffer.AttachColorTexture(mOutputTexture);
 
       renderTask.SetFrameBuffer(framebuffer);

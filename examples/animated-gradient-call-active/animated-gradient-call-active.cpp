@@ -211,6 +211,8 @@ private:
     mCallStartButton.ClickedSignal().Connect( this, &CallController::OnButtonClicked );
     mCallStartButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
     mCallStartButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
+    mCallStartButton.SetProperty( Control::Property::BACKGROUND, ICON_CALL_IMAGE );
+    mCallStartButton.SetLabelText("");
 
     mStage.Add( mCallStartButton );
     mStage.Add( mButtonIconDecall );
@@ -291,6 +293,7 @@ private:
     mCallEndButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, "" );
     mCallEndButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, "" );
     mCallEndButton.SetStyleName( DECLINE_BUTTON_STYLE_STR );
+    mCallEndButton.SetLabelText("");
 
     mButtonClip.Add( mCallEndButton );
     mButtonClip.Add( mButtonIcon );

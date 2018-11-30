@@ -76,6 +76,12 @@ msgstr "മോർഫ് mesh"
 msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
 msgstr "3D മോഡലിങ്"
 
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "മെറ്റാ പന്ത് സ്ഫോടനം"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "മെറ്റാ പന്ത് അപവർത്തനം"
+
 msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
 msgstr "അവ്യക്തമാക്കല്"
 
