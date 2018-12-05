@@ -174,15 +174,16 @@ public:
     scrollLargeButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedLarge );
     CreateLabel( mLargeLabel, "A Quick Brown Fox Jumps Over The Lazy Dog", boxB, false ,scrollLargeButton );
 
-
     CreateBox( "boxC", boxC, desktop, SCROLLING_BOX_SIZE );
     boxC.SetPosition( 0.0f, -300.0f, 1.0f );
     Toolkit::PushButton scrollSmallButton = Toolkit::PushButton::New();
     scrollSmallButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedSmall );
     CreateLabel( mSmallLabel, "Hello Text", boxC , true, scrollSmallButton );
     mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
-    mSmallLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 1.0f, 1.0f ) );
-    mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::CYAN );
+    Property::Map shadowMap;
+    shadowMap.Insert( "color", Color::CYAN );
+    shadowMap.Insert( "offset", Vector2( 1.0f, 1.0f ) );
+    mSmallLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
 
     CreateBox( "boxD", boxD, desktop, SCROLLING_BOX_SIZE );
     boxD.SetPosition( 0.0f, -200.0f, 1.0f );
@@ -320,7 +321,9 @@ public:
       mToggleColor = true;
     }
 
-    mSmallLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+    Property::Map shadowMap;
+    shadowMap.Insert( "color", Color::BLACK );
+    mSmallLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
     mSmallLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
     mRtlLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );
     mLargeLabel.SetProperty( TextLabel::Property::TEXT_COLOR, color );

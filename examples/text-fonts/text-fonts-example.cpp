@@ -80,8 +80,10 @@ public:
     }
     else
     {
-      textLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 0.3f, 0.3f ) );
-      textLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+      Property::Map shadowMap;
+      shadowMap.Insert( "color", Color::BLACK );
+      shadowMap.Insert( "offset", Vector2( 0.3f, 0.3f ) );
+      textLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
       textLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLUE );
     }
     textLabel.SetBackgroundColor( color );

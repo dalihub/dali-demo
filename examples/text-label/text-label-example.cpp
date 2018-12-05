@@ -365,7 +365,7 @@ public:
       case SHADOW :
       {
         Vector2 shadowOffset( SHADOW_OFFSET ); // Will be set to zeros if color already set
-        Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW_COLOR  );
+        Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW );
         Vector4 currentShadowColor;
         value.Get( currentShadowColor );
 
@@ -697,13 +697,19 @@ public:
           }
           case KEY_S: // Shadow color
           {
-            if( Color::BLACK == mLabel.GetProperty<Vector4>( TextLabel::Property::SHADOW_COLOR ) )
+            Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW );
+            Vector4 shadowColor;
+            value.Get( shadowColor );
+            Property::Map shadowMap;
+            if( Color::BLACK == shadowColor )
             {
-              mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::RED );
+              shadowMap.Insert( "color", Color::RED );
+              mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
             }
             else
             {
-              mLabel.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::BLACK );
+              shadowMap.Insert( "color", Color::BLACK );
+              mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
             }
             break;
           }
@@ -715,12 +721,26 @@ public:
           }
           case KEY_PLUS: // Increase shadow offset
           {
-            mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, mLabel.GetProperty<Vector2>( TextLabel::Property::SHADOW_OFFSET ) + Vector2( 1.0f, 1.0f ) );
+            Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW );
+            Vector2 shadowOffset;
+            value.Get( shadowOffset );
+            shadowOffset += Vector2( 1.0f, 1.0f );
+
+            Property::Map shadowMap;
+            shadowMap.Insert( "offset", shadowOffset );
+            mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
             break;
           }
           case KEY_MINUS: // Decrease shadow offset
           {
-            mLabel.SetProperty( TextLabel::Property::SHADOW_OFFSET, mLabel.GetProperty<Vector2>( TextLabel::Property::SHADOW_OFFSET ) - Vector2( 1.0f, 1.0f ) );
+            Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW );
+            Vector2 shadowOffset;
+            value.Get( shadowOffset );
+            shadowOffset -= Vector2( 1.0f, 1.0f );
+
+            Property::Map shadowMap;
+            shadowMap.Insert( "offset", shadowOffset );
+            mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
             break;
           }
 
