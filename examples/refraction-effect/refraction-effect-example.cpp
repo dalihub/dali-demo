@@ -509,7 +509,9 @@ private:
         }
 
         std::istringstream iss(line.substr(2), std::istringstream::in);
-        unsigned int indices[ numOfInt ];
+
+        std::vector<unsigned int> indices( numOfInt );
+
         unsigned int i=0;
         while( iss >> indices[i++] && i < numOfInt);
         unsigned int step = (i+1) / 3;
