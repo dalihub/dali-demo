@@ -52,6 +52,9 @@ msgstr "Cube Effect"
 msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
 msgstr "Dissolve Effect"
 
+msgid "DALI_DEMO_STR_TITLE_DRAG_AND_DROP"
+msgstr "Drag and Drop"
+
 msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
 msgstr "Effects View"
 
@@ -255,3 +258,6 @@ msgstr "PBR"
 
 msgid "DALI_DEMO_STR_TITLE_WEB_VIEW"
 msgstr "Web View"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
+msgstr "Animated Vector Images"
