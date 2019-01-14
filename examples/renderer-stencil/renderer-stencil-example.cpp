@@ -158,7 +158,7 @@ private:
     layer.SetAnchorPoint( AnchorPoint::CENTER );
     // Set the parent origin to a small percentage below the center (so the demo will scale for different resolutions).
     layer.SetParentOrigin( Vector3( 0.5f, 0.58f, 0.5f ) );
-    layer.SetBehavior( Layer::LAYER_2D );
+    layer.SetBehavior( Layer::LAYER_UI );
     layer.SetDepthTestDisabled( false );
     stage.Add( layer );
 

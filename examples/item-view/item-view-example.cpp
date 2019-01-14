@@ -356,7 +356,7 @@ public:
       }
       case GRID_LAYOUT:
       {
-        stage.GetRootLayer().SetBehavior(Layer::LAYER_2D);
+        stage.GetRootLayer().SetBehavior(Layer::LAYER_UI);
         break;
       }
     }

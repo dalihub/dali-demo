@@ -95,7 +95,7 @@ public:
     layer.SetParentOrigin( ParentOrigin::CENTER );
     layer.SetAnchorPoint( AnchorPoint::CENTER );
     layer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    layer.SetBehavior( Layer::LAYER_2D ); //We use a 2D layer as this is closer to UI work than full 3D scene creation.
+    layer.SetBehavior( Layer::LAYER_UI ); //We use a 2D layer as this is closer to UI work than full 3D scene creation.
     layer.SetDepthTestDisabled( false ); //Enable depth testing, as otherwise the 2D layer would not do so.
     stage.Add( layer );
 
