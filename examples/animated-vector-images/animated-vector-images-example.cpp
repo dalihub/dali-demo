@@ -21,6 +21,8 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/animated-vector-image-visual-actions-devel.h>
+#include <dali-toolkit/devel-api/visuals/animated-vector-image-visual-signals-devel.h>
+#include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -48,14 +50,14 @@ enum CellPlacement
   NUMBER_OF_ROWS
 };
 
-unsigned int GetButtonIndex( Button button )
+unsigned int GetControlIndex( Control control )
 {
-  std::string buttonName = button.GetName();
+  std::string controlName = control.GetName();
   unsigned int index = 0;
 
-  if ( buttonName != "")
+  if ( controlName != "")
   {
-    index = std::stoul( buttonName );
+    index = std::stoul( controlName );
   }
 
   return index;
@@ -114,31 +116,31 @@ class AnimatedVectorImageViewController: public ConnectionTracker
       mPlayButtons[x].SetName( s );
       mTable.AddChild( mPlayButtons[x], TableView::CellPosition( CellPlacement::TOP_BUTTON, x )  );
 
-      mPauseButtons[x] = PushButton::New();
-      mPauseButtons[x].SetProperty( Button::Property::LABEL, "Pause" );
-      mPauseButtons[x].SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-      mPauseButtons[x].SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-      mPauseButtons[x].ClickedSignal().Connect( this, &AnimatedVectorImageViewController::OnPauseButtonClicked );
-      mPauseButtons[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-      mPauseButtons[x].SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-      mPauseButtons[x].SetName( s );
-      mTable.AddChild( mPauseButtons[x], TableView::CellPosition( CellPlacement::LOWER_BUTTON, x )  );
+      mStopButtons[x] = PushButton::New();
+      mStopButtons[x].SetProperty( Button::Property::LABEL, "Stop" );
+      mStopButtons[x].SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+      mStopButtons[x].SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+      mStopButtons[x].ClickedSignal().Connect( this, &AnimatedVectorImageViewController::OnStopButtonClicked );
+      mStopButtons[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      mStopButtons[x].SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+      mStopButtons[x].SetName( s );
+      mTable.AddChild( mStopButtons[x], TableView::CellPosition( CellPlacement::LOWER_BUTTON, x )  );
 
       mImageViews[x] = ImageView::New( );
       Property::Map imagePropertyMap;
-      imagePropertyMap.Insert( Visual::Property::TYPE,  Visual::IMAGE );
-      imagePropertyMap.Insert( ImageVisual::Property::URL,  IMAGE_PATH[ x ]  );
-      mImageViews[x].SetProperty( ImageView::Property::IMAGE , imagePropertyMap );
+      imagePropertyMap.Insert( Visual::Property::TYPE, Visual::IMAGE );
+      imagePropertyMap.Insert( ImageVisual::Property::URL, IMAGE_PATH[ x ] );
+      imagePropertyMap.Insert( DevelImageVisual::Property::LOOP_COUNT, 3 );
+      mImageViews[x].SetProperty( ImageView::Property::IMAGE, imagePropertyMap );
 
       mImageViews[x].SetParentOrigin( ParentOrigin::CENTER );
       mImageViews[x].SetAnchorPoint( AnchorPoint::CENTER );
       mImageViews[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+      mImageViews[x].SetName( s );
+
+      DevelControl::VisualEventSignal( mImageViews[x] ).Connect( this, &AnimatedVectorImageViewController::OnVisualEvent );
 
       mTable.AddChild( mImageViews[x], TableView::CellPosition( CellPlacement::IMAGE, x ) );
-
-      // Set changeable counter and toggle for each ImageView
-      mImageViewPlayStatus[x] = false;
-      mImageViewPauseStatus[x] = false;
     }
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &AnimatedVectorImageViewController::OnKeyEvent);
@@ -148,48 +150,46 @@ private:
 
   bool OnPlayButtonClicked( Button button )
   {
-    unsigned int buttonIndex = GetButtonIndex( button );
+    unsigned int controlIndex = GetControlIndex( button );
 
-    ImageView imageView =  mImageViews[buttonIndex];
-    if( !mImageViewPlayStatus[buttonIndex] )
+    ImageView imageView =  mImageViews[controlIndex];
+
+    Property::Map map = imageView.GetProperty< Property::Map >( ImageView::Property::IMAGE );
+    Property::Value* value = map.Find( DevelImageVisual::Property::PLAY_STATE );
+
+    if( value->Get< int >() != static_cast< int >( DevelImageVisual::PlayState::PLAYING ) )
     {
-      mPlayButtons[buttonIndex].SetProperty( Button::Property::LABEL, "Stop" );
+      mPlayButtons[controlIndex].SetProperty( Button::Property::LABEL, "Pause" );
 
       DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::PLAY, Property::Value() );
     }
     else
     {
-      mPlayButtons[buttonIndex].SetProperty( Button::Property::LABEL, "Play" );
+      mPlayButtons[controlIndex].SetProperty( Button::Property::LABEL, "Play" );
 
-      DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::STOP, Property::Value() );
+      DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::PAUSE, Property::Value() );
     }
-
-    mImageViewPlayStatus[buttonIndex] = !mImageViewPlayStatus[buttonIndex];
 
     return true;
   }
 
-  bool OnPauseButtonClicked( Button button )
+  bool OnStopButtonClicked( Button button )
   {
-    unsigned int buttonIndex = GetButtonIndex( button );
-
-    ImageView imageView =  mImageViews[buttonIndex];
-    if( !mImageViewPauseStatus[buttonIndex] )
-    {
-      mPauseButtons[buttonIndex].SetProperty( Button::Property::LABEL, "Resume" );
-
-      DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::PAUSE, Property::Value() );
-    }
-    else
-    {
-      mPauseButtons[buttonIndex].SetProperty( Button::Property::LABEL, "Pause" );
-
-      DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::RESUME, Property::Value() );
-    }
-
-    mImageViewPauseStatus[buttonIndex] = !mImageViewPauseStatus[buttonIndex];
+    unsigned int controlIndex = GetControlIndex( button );
+    ImageView imageView =  mImageViews[controlIndex];
+    DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::STOP, Property::Value() );
 
     return true;
+  }
+
+  void OnVisualEvent( Control control, Dali::Property::Index visualIndex, Dali::Property::Index signalId )
+  {
+    unsigned int controlIndex = GetControlIndex( control );
+
+    if( visualIndex == ImageView::Property::IMAGE && signalId == DevelAnimatedVectorImageVisual::Signal::ANIMATION_FINISHED )
+    {
+      mPlayButtons[controlIndex].SetProperty( Button::Property::LABEL, "Play" );
+    }
   }
 
   /**
@@ -215,9 +215,7 @@ private:
   TableView         mTable;
   ImageView         mImageViews[ NUMBER_OF_IMAGES ];
   PushButton        mPlayButtons[ NUMBER_OF_IMAGES ];
-  PushButton        mPauseButtons[ NUMBER_OF_IMAGES ];
-  bool              mImageViewPlayStatus[ NUMBER_OF_IMAGES ];
-  bool              mImageViewPauseStatus[ NUMBER_OF_IMAGES ];
+  PushButton        mStopButtons[ NUMBER_OF_IMAGES ];
 
 };
 
