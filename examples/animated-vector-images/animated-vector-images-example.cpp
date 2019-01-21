@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -157,17 +157,20 @@ private:
     Property::Map map = imageView.GetProperty< Property::Map >( ImageView::Property::IMAGE );
     Property::Value* value = map.Find( DevelImageVisual::Property::PLAY_STATE );
 
-    if( value->Get< int >() != static_cast< int >( DevelImageVisual::PlayState::PLAYING ) )
+    if( value )
     {
-      mPlayButtons[controlIndex].SetProperty( Button::Property::LABEL, "Pause" );
+      if( value->Get< int >() != static_cast< int >( DevelImageVisual::PlayState::PLAYING ) )
+      {
+        mPlayButtons[controlIndex].SetProperty( Button::Property::LABEL, "Pause" );
 
-      DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::PLAY, Property::Value() );
-    }
-    else
-    {
-      mPlayButtons[controlIndex].SetProperty( Button::Property::LABEL, "Play" );
+        DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::PLAY, Property::Value() );
+      }
+      else
+      {
+        mPlayButtons[controlIndex].SetProperty( Button::Property::LABEL, "Play" );
 
-      DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::PAUSE, Property::Value() );
+        DevelControl::DoAction( imageView, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::PAUSE, Property::Value() );
+      }
     }
 
     return true;
