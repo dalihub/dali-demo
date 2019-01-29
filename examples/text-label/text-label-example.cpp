@@ -213,7 +213,7 @@ public:
     mContainer = Control::New();
     mContainer.SetName( "Container" );
     mContainer.SetParentOrigin( ParentOrigin::CENTER );
-    mLayoutSize = Vector2(mStageSize.width*0.6f, mStageSize.width*0.6f);
+    mLayoutSize = Vector2(mStageSize.width*0.6f, mStageSize.height*0.6f);
     mContainer.SetSize( mLayoutSize );
     stage.Add( mContainer );
 
