@@ -218,7 +218,6 @@ private: // Data
 
   Texture           mBackgroundTexture;
   FrameBuffer       mMetaballFBO;
-  Texture           mMetaballFBOTexture;
 
   Actor             mMetaballRoot;
   MetaballInfo      mMetaballs[METABALL_NUMBER];
@@ -312,7 +311,6 @@ MetaballExplosionController::MetaballExplosionController( Application& applicati
   mScreenSize(),
   mBackgroundTexture(),
   mMetaballFBO(),
-  mMetaballFBOTexture(),
   mMetaballRoot(),
   mMetaballs(),
   mPositionIndex(),
@@ -474,11 +472,7 @@ void MetaballExplosionController::CreateMetaballImage()
   // Create an FBO and a render task to create to render the metaballs with a fragment shader
   Stage stage = Stage::GetCurrent();
 
-  mMetaballFBO = FrameBuffer::New( mScreenSize.x, mScreenSize.y, FrameBuffer::Attachment::NONE );
-  mMetaballFBOTexture = Texture::New( Dali::TextureType::TEXTURE_2D,
-                                      Pixel::RGB888,
-                                      mScreenSize.x, mScreenSize.y );
-  mMetaballFBO.AttachColorTexture( mMetaballFBOTexture );
+  mMetaballFBO = FrameBuffer::New( mScreenSize.x, mScreenSize.y );
 
   stage.Add(mMetaballRoot);
 
@@ -501,7 +495,7 @@ void MetaballExplosionController::CreateComposition()
   // Create new texture set
   auto textureSet = TextureSet::New();
   textureSet.SetTexture( 0u, mBackgroundTexture  );
-  textureSet.SetTexture( 1u, mMetaballFBOTexture );
+  textureSet.SetTexture( 1u, mMetaballFBO.GetColorTexture() );
 
   // Create geometry
   Geometry metaballGeom = CreateGeometry( false );

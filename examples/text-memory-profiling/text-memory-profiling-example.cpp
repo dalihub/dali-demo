@@ -102,7 +102,9 @@ public:
     label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     label.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
     label.SetProperty( TextLabel::Property::POINT_SIZE, 12.0f );
-    label.SetProperty( TextLabel::Property::SHADOW_COLOR, Color::YELLOW );
+    Property::Map shadowMap;
+    shadowMap.Insert( "color", Color::YELLOW );
+    label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
     label.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
 
     Vector2 stageSize = Stage::GetCurrent().GetSize();
@@ -113,55 +115,73 @@ public:
       case SINGLE_COLOR_TEXT:
       {
         label.SetProperty( TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
-        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 0.0f, 0.0f ) );
+
+        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
+        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
         break;
       }
       case SINGLE_COLOR_TEXT_WITH_STYLE:
       {
         label.SetProperty( TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
-        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 2.0f, 2.0f ) );
+
+        shadowMap.Insert( "offset", Vector2( 2.0f, 2.0f ) );
+        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
         break;
       }
       case SINGLE_COLOR_TEXT_WITH_EMOJI:
       {
         label.SetProperty( TextLabel::Property::TEXT, "\xF0\x9F\x98\x81 A Quick Brown Fox Jumps Over The Lazy Dog" );
-        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 0.0f, 0.0f ) );
+
+        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
+        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
         break;
       }
       case SINGLE_COLOR_TEXT_WITH_STYLE_EMOJI:
       {
         label.SetProperty( TextLabel::Property::TEXT, "\xF0\x9F\x98\x81 A Quick Brown Fox Jumps Over The Lazy Dog" );
-        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 2.0f, 2.0f ) );
+
+        shadowMap.Insert( "offset", Vector2( 2.0f, 2.0f ) );
+        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
         break;
       }
       case MULTI_COLOR_TEXT:
       {
         label.SetProperty( TextLabel::Property::TEXT, "A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>" );
-        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 0.0f, 0.0f ) );
+
+        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
+        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
         break;
       }
       case MULTI_COLOR_TEXT_WITH_STYLE:
       {
         label.SetProperty( TextLabel::Property::TEXT, "A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>" );
-        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 2.0f, 2.0f ) );
+
+        shadowMap.Insert( "offset", Vector2( 2.0f, 2.0f ) );
+        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
         break;
       }
       case MULTI_COLOR_TEXT_WITH_EMOJI:
       {
         label.SetProperty( TextLabel::Property::TEXT, " \xF0\x9F\x98\x81 A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>" );
-        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 0.0f, 0.0f ) );
+
+        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
+        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
         break;
       }
       case MULTI_COLOR_TEXT_WITH_STYLE_EMOJI:
       {
         label.SetProperty( TextLabel::Property::TEXT, " \xF0\x9F\x98\x81 A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>" );
-        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 2.0f, 2.0f ) );
+
+        shadowMap.Insert( "offset", Vector2( 2.0f, 2.0f ) );
+        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
         break;
       }
       case SMALL_TEXT_IN_LARGE_TEXT_LABEL:
       {
         label.SetProperty( TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
-        label.SetProperty( TextLabel::Property::SHADOW_OFFSET, Vector2( 0.0f, 0.0f ) );
+
+        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
+        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
         label.SetSize(stageSize.x, stageSize.y * 0.25f); // Set the text label in larger size
         break;
       }

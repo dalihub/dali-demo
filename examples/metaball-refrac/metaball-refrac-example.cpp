@@ -210,7 +210,6 @@ private: // Data
 
   Texture           mBackgroundTexture;
   FrameBuffer       mMetaballFBO;
-  Texture           mMetaballFBOTexture;
 
   Actor             mMetaballRoot;
   MetaballInfo      mMetaballs[METABALL_NUMBER];
@@ -451,11 +450,7 @@ void MetaballRefracController::CreateMetaballImage()
 {
   // Create an FBO and a render task to create to render the metaballs with a fragment shader
   Stage stage = Stage::GetCurrent();
-  mMetaballFBO = FrameBuffer::New( mScreenSize.x, mScreenSize.y, FrameBuffer::Attachment::NONE );
-  mMetaballFBOTexture = Texture::New( Dali::TextureType::TEXTURE_2D,
-                                      Pixel::RGB888,
-                                      mScreenSize.x, mScreenSize.y );
-  mMetaballFBO.AttachColorTexture( mMetaballFBOTexture );
+  mMetaballFBO = FrameBuffer::New( mScreenSize.x, mScreenSize.y );
 
   stage.Add(mMetaballRoot);
 
@@ -478,7 +473,7 @@ void MetaballRefracController::CreateComposition()
   // Create new texture set
   mTextureSetRefraction = TextureSet::New();
   mTextureSetRefraction.SetTexture( 0u, mBackgroundTexture  );
-  mTextureSetRefraction.SetTexture( 1u, mMetaballFBOTexture );
+  mTextureSetRefraction.SetTexture( 1u, mMetaballFBO.GetColorTexture() );
 
   // Create normal shader
   mShaderNormal = Shader::New( METABALL_VERTEX_SHADER, FRAG_SHADER );

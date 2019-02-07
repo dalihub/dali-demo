@@ -275,6 +275,9 @@
 	<ui-application appid="web-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/web-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Web View</label>
 	</ui-application>
+	<ui-application appid="drag-and-drop.example" exec="/usr/apps/com.samsung.dali-demo/bin/drag-and-drop.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Drag And Drop</label>
+	</ui-application>
 
 	<privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
