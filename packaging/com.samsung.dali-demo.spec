@@ -20,6 +20,7 @@ BuildRequires:  pkgconfig(dlog)
 BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(dali-core-vk)
 BuildRequires:  pkgconfig(dali-adaptor-vk)
+BuildRequires:  pkgconfig(dali-graphics-vk)
 BuildRequires:  pkgconfig(dali-toolkit-vk)
 
 #need libtzplatform-config for directory if tizen version is 3.x
