@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,6 +119,9 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TOOLTIP                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TOOLTIP")
 #define DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS          dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS")
 #define DALI_DEMO_STR_TITLE_WEB_VIEW                    dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_WEB_VIEW")
+#define DALI_DEMO_STR_TITLE_TEXT_RENDERER               dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TEXT_RENDERER")
+#define DALI_DEMO_STR_TITLE_TEXT_VISUAL                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TEXT_VISUAL")
+#define DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT      dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT")
 
 #else // !INTERNATIONALIZATION_ENABLED
 
@@ -209,6 +212,9 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TOOLTIP                     "Tooltip"
 #define DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS          "Visual Transitions"
 #define DALI_DEMO_STR_TITLE_WEB_VIEW                    "Web View"
+#define DALI_DEMO_STR_TITLE_TEXT_RENDERER               "Text Renderer"
+#define DALI_DEMO_STR_TITLE_TEXT_VISUAL                 "Text Visual"
+#define DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT      "Text Bitmap Font"
 #endif
 
 #ifdef __cplusplus
