@@ -461,7 +461,7 @@ bool AnimationExample::OnRemoveClicked( Button button )
 {
   DALI_LOG_INFO( gLayoutFilter, Debug::Verbose, "AnimationExample::OnRemoveClicked\n");
 
-  if ( mAnimationContainer.GetChildCount() > 1 )
+  if ( mAnimationContainer.GetChildCount() > 0 )
   {
     mAnimationContainer.Remove( mAnimationContainer.GetChildAt( mAnimationContainer.GetChildCount() - 1 ) );
   }
