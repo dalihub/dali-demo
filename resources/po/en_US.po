@@ -40,6 +40,9 @@ msgstr "Clipping"
 msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
 msgstr "Clipping Draw Order"
 
+msgid "DALI_DEMO_STR_TITLE_GESTURES"
+msgstr "Gestures"
+
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "Color Gradient"
 
@@ -261,3 +264,12 @@ msgstr "Web View"
 
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
 msgstr "Animated Vector Images"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_RENDERER"
+msgstr "Text Renderer"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_VISUAL"
+msgstr "Text Visual"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT"
+msgstr "Text Bitmap Font"
