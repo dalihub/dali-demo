@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,9 +37,9 @@ Dali::Toolkit::Control Create( const std::string& imagePath )
   Control maskedImage = ImageView::New();
   maskedImage.SetProperty(
     Toolkit::ImageView::Property::IMAGE,
-    Property::Map().Add( Visual::Property::TYPE, Toolkit::Visual::Type::IMAGE )
-                   .Add( ImageVisual::Property::URL, imagePath )
-                   .Add( ImageVisual::Property::ALPHA_MASK_URL, IMAGE_MASK )
+    Property::Map{ { Visual::Property::TYPE, Toolkit::Visual::Type::IMAGE },
+                   { ImageVisual::Property::URL, imagePath },
+                   { ImageVisual::Property::ALPHA_MASK_URL, IMAGE_MASK } }
   );
   return maskedImage;
 }

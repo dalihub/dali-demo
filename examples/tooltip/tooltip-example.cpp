@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,21 +94,21 @@ private:
     SetLabel( customFromCode, "Custom From Code" );
     Layout( customFromCode, stageSize );
     customFromCode.SetProperty( DevelControl::Property::TOOLTIP,
-                                Property::Map().Add( Tooltip::Property::CONTENT,
-                                                     Property::Array().Add( Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::IMAGE )
-                                                                                           .Add( ImageVisual::Property::URL, DEMO_IMAGE_DIR "Logo-for-demo.png" ) )
-                                                                      .Add( Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::TEXT )
-                                                                                           .Add( TextVisual::Property::TEXT_COLOR, Color::WHITE )
-                                                                                           .Add( TextVisual::Property::TEXT, "Custom coded style\nat hover point" )
-                                                                                           .Add( TextVisual::Property::MULTI_LINE, true )
-                                                                                           .Add( TextVisual::Property::HORIZONTAL_ALIGNMENT, "CENTER" )
-                                                                                           .Add( TextVisual::Property::POINT_SIZE, 16 ) ) )
-                                               .Add( Tooltip::Property::LAYOUT, Vector2( 2, 1 ) )
-                                               .Add( Tooltip::Property::POSITION, Tooltip::Position::HOVER_POINT )
-                                               .Add( Tooltip::Property::BACKGROUND,
-                                                     Property::Map().Add( Tooltip::Background::Property::VISUAL, DEMO_IMAGE_DIR "tooltip.9.png" )
-                                                                    .Add( Tooltip::Background::Property::BORDER, Rect< int >( 1, 5, 5, 1 ) ) )
-                              );
+                                { { Tooltip::Property::CONTENT,
+                                    Property::Array{ { { { Toolkit::Visual::Property::TYPE, Visual::IMAGE },
+                                                         { ImageVisual::Property::URL, DEMO_IMAGE_DIR "Logo-for-demo.png" } } },
+                                                     { { { Toolkit::Visual::Property::TYPE, Visual::TEXT },
+                                                         { TextVisual::Property::TEXT_COLOR, Color::WHITE },
+                                                         { TextVisual::Property::TEXT, "Custom coded style\nat hover point" },
+                                                         { TextVisual::Property::MULTI_LINE, true },
+                                                         { TextVisual::Property::HORIZONTAL_ALIGNMENT, "CENTER" },
+                                                         { TextVisual::Property::POINT_SIZE, 16 } } } } },
+                                  { Tooltip::Property::LAYOUT, Vector2( 2, 1 ) },
+                                  { Tooltip::Property::POSITION, Tooltip::Position::HOVER_POINT },
+                                  { Tooltip::Property::BACKGROUND,
+                                    { { Tooltip::Background::Property::VISUAL, DEMO_IMAGE_DIR "tooltip.9.png" },
+                                      { Tooltip::Background::Property::BORDER, Rect< int >( 1, 5, 5, 1 ) } } }
+                                } );
     stage.Add( customFromCode );
   }
 

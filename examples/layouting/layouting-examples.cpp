@@ -37,10 +37,14 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const Vector4 BACKGROUND_GRADIENT_1 = Vector4( 0.0f, 0.352941176f, 0.654901961f, 1.0f );
-const Vector4 BACKGROUND_GRADIENT_2 = Vector4( 1.0f, 0.992156863f, 0.894117647f, 1.0f );
-const Vector2 BACKGROUND_GRADIENT_START_POSITION( 0.0f, -0.5f );
-const Vector2 BACKGROUND_GRADIENT_END_POSITION( 0.0f,  0.5f );
+const Property::Value BACKGROUND
+{
+  { Toolkit::Visual::Property::TYPE, Visual::GRADIENT },
+  { GradientVisual::Property::STOP_COLOR, Property::Array{ Vector4( 0.0f, 0.352941176f, 0.654901961f, 1.0f ),
+                                                           Vector4( 1.0f, 0.992156863f, 0.894117647f, 1.0f ) } },
+  { GradientVisual::Property::START_POSITION, Vector2( 0.0f, -0.5f ) },
+  { GradientVisual::Property::END_POSITION,   Vector2( 0.0f,  0.5f ) }
+};
 
 const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 
@@ -84,13 +88,7 @@ private:
     auto bg = Control::New();
     bg.SetParentOrigin( ParentOrigin::CENTER );
     bg.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    bg.SetProperty(
-        Control::Property::BACKGROUND,
-        Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::GRADIENT )
-                       .Add( GradientVisual::Property::STOP_COLOR, Property::Array().Add( BACKGROUND_GRADIENT_1 )
-                                                                                    .Add( BACKGROUND_GRADIENT_2 ) )
-                       .Add( GradientVisual::Property::START_POSITION, BACKGROUND_GRADIENT_START_POSITION )
-                       .Add( GradientVisual::Property::END_POSITION,   BACKGROUND_GRADIENT_END_POSITION ) );
+    bg.SetProperty( Control::Property::BACKGROUND, BACKGROUND );
     stage.Add( bg );
     auto toolbar = ImageView::New( TOOLBAR_IMAGE );
     toolbar.SetParentOrigin( ParentOrigin::TOP_CENTER );
