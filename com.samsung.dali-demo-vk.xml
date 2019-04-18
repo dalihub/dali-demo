@@ -278,6 +278,24 @@
 	<ui-application appid="drag-and-drop.example" exec="/usr/apps/com.samsung.dali-demo/bin/drag-and-drop.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Drag And Drop</label>
 	</ui-application>
+	<ui-application appid="simple-text-label.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-label.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Simple Text Label</label>
+	</ui-application>
+	<ui-application appid="simple-bitmap-font-text-label.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-bitmap-font-text-label.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Simple Bitmap Font Text Label</label>
+	</ui-application>
+	<ui-application appid="simple-text-field.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-field.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Simple Text Field</label>
+	</ui-application>
+	<ui-application appid="simple-text-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Text Visual</label>
+	</ui-application>
+	<ui-application appid="simple-text-renderer.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-renderer.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Simple Text Renderer</label>
+	</ui-application>
+  <ui-application appid="gestures.example" exec="/usr/apps/com.samsung.dali-demo/bin/gestures.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Gestures</label>
+	</ui-application>
 
 	<privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
