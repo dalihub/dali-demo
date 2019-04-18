@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,11 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("text-memory-profiling.example", DALI_DEMO_STR_TITLE_TEXT_MEMORY_PROFILING));
   demo.AddExample(Example("text-overlap.example", DALI_DEMO_STR_TITLE_TEXT_OVERLAP));
   demo.AddExample(Example("visual-transitions.example", DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS));
+  demo.AddExample(Example("simple-text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));
+  demo.AddExample(Example("simple-text-field.example", DALI_DEMO_STR_TITLE_TEXT_FIELD));
+  demo.AddExample(Example("simple-text-renderer.example", DALI_DEMO_STR_TITLE_TEXT_RENDERER));
+  demo.AddExample(Example("simple-text-visual.example", DALI_DEMO_STR_TITLE_TEXT_VISUAL));
+  demo.AddExample(Example("simple-bitmap-font-text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT));
 
   demo.SortAlphabetically( true );
 
