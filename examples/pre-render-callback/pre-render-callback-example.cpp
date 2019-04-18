@@ -17,7 +17,6 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/integration-api/adaptors/adaptor.h>
 #include <dali/devel-api/adaptor-framework/application-devel.h>
-#include <dali-toolkit/devel-api/layouting/linear-layout.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 
 using namespace Dali::Toolkit;
@@ -28,12 +27,16 @@ const char* SCENE_IMAGE_1( DEMO_IMAGE_DIR "gallery-small-10.jpg");
 const char* SCENE_IMAGE_2( DEMO_IMAGE_DIR "gallery-small-42.jpg");
 const char* SCENE_IMAGE_3( DEMO_IMAGE_DIR "gallery-small-48.jpg");
 const char* ROTATE_TEXT("-\\|/");
+const float TEXT_HEIGHT = 40.0f;
 
-void AddText( Control textContainer, std::string text )
+void AddText( Control textContainer, std::string text, unsigned int yIndex )
 {
   auto label = TextLabel::New(text);
+  label.SetParentOrigin( ParentOrigin::TOP_CENTER );
   label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-  textContainer.Add(label);
+  label.SetSize( 300,TEXT_HEIGHT );
+  label.SetY( yIndex*TEXT_HEIGHT );
+  textContainer.Add( label );
 }
 
 class PreRenderCallbackController : public ConnectionTracker
@@ -100,29 +103,21 @@ private:
 
     CreateAnimatingScene();
 
-    auto vbox = LinearLayout::New();
-    vbox.SetOrientation(LinearLayout::Orientation::VERTICAL);
-    vbox.SetAlignment( LinearLayout::Alignment::TOP | LinearLayout::Alignment::CENTER_HORIZONTAL );
     auto textContainer = Control::New();
     textContainer.SetAnchorPoint(AnchorPoint::TOP_LEFT);
-    DevelControl::SetLayout( textContainer, vbox );
-    AddText(textContainer, "Click to add callback");
-    AddText(textContainer, "Press 1 to add callback");
-    AddText(textContainer, "Press 2 to clear callback");
-    AddText(textContainer, "Press 3 to toggle keep alive");
+    AddText(textContainer, "Click to add callback", 1 );
+    AddText(textContainer, "Press 1 to add callback", 2 );
+    AddText(textContainer, "Press 2 to clear callback", 3 );
+    AddText(textContainer, "Press 3 to toggle keep alive", 4 );
 
-    auto vbox2 = LinearLayout::New();
-    vbox2.SetOrientation(LinearLayout::Orientation::VERTICAL);
-    vbox2.SetAlignment( LinearLayout::Alignment::BOTTOM | LinearLayout::Alignment::CENTER_HORIZONTAL );
-    auto textContainer2 = Control::New();
-    textContainer2.SetAnchorPoint(AnchorPoint::TOP_LEFT);
-    DevelControl::SetLayout( textContainer2, vbox2 );
+
     mSpinner = TextLabel::New("");
     mSpinner.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    textContainer2.Add(mSpinner);
+    mSpinner.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    mSpinner.SetSize(100,100);
 
+    mStage.Add(mSpinner);
     mStage.Add(textContainer);
-    mStage.Add(textContainer2);
 
     DevelApplication::AddIdleWithReturnValue( application, MakeCallback( this, &PreRenderCallbackController::OnIdle ) );
   }
