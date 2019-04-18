@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,11 @@ using namespace Dali::Toolkit;
 
 namespace
 {
+const Vector4 BACKGROUND_GRADIENT_1 = Vector4( 0.0f, 0.352941176f, 0.654901961f, 1.0f );
+const Vector4 BACKGROUND_GRADIENT_2 = Vector4( 1.0f, 0.992156863f, 0.894117647f, 1.0f );
+const Vector2 BACKGROUND_GRADIENT_START_POSITION( 0.0f, -0.5f );
+const Vector2 BACKGROUND_GRADIENT_END_POSITION( 0.0f,  0.5f );
 
-const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "lake_front.jpg" );
 const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 
 typedef std::unique_ptr< Demo::Example > ExamplePointer;
@@ -78,8 +81,16 @@ private:
     auto stage = Stage::GetCurrent();
     stage.KeyEventSignal().Connect( this, &LayoutingExample::OnKeyEvent );
 
-    auto bg = ImageView::New( BACKGROUND_IMAGE );
+    auto bg = Control::New();
     bg.SetParentOrigin( ParentOrigin::CENTER );
+    bg.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    bg.SetProperty(
+        Control::Property::BACKGROUND,
+        Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::GRADIENT )
+                       .Add( GradientVisual::Property::STOP_COLOR, Property::Array().Add( BACKGROUND_GRADIENT_1 )
+                                                                                    .Add( BACKGROUND_GRADIENT_2 ) )
+                       .Add( GradientVisual::Property::START_POSITION, BACKGROUND_GRADIENT_START_POSITION )
+                       .Add( GradientVisual::Property::END_POSITION,   BACKGROUND_GRADIENT_END_POSITION ) );
     stage.Add( bg );
     auto toolbar = ImageView::New( TOOLBAR_IMAGE );
     toolbar.SetParentOrigin( ParentOrigin::TOP_CENTER );
@@ -97,7 +108,8 @@ private:
     toolbar.Add( mToolbarTitle );
 
     mNextLayout = PushButton::New();
-    mNextLayout.SetProperty( Toolkit::Button::Property::LABEL, "change layout");
+    mNextLayout.SetStyleName( "ChangeLayoutButton" );
+    mNextLayout.SetProperty( Toolkit::Button::Property::LABEL, "Change Layout" );
     mNextLayout.ClickedSignal().Connect( this, &LayoutingExample::ChangeLayout );
     mNextLayout.SetParentOrigin( ParentOrigin::TOP_RIGHT );
     mNextLayout.SetAnchorPoint( AnchorPoint::TOP_RIGHT );

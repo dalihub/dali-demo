@@ -53,6 +53,7 @@ public:
   void Create( Application& application )
   {
     Stage stage = Stage::GetCurrent();
+    stage.KeyEventSignal().Connect(this, &SimpleTextFieldExample::OnKeyEvent);
     stage.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
 
     TextField field = TextField::New();
@@ -66,6 +67,20 @@ public:
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
 
     stage.Add( field );
+  }
+
+  /**
+   * Main key event handler
+   */
+  void OnKeyEvent(const KeyEvent& event)
+  {
+    if(event.state == KeyEvent::Down)
+    {
+      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      {
+        mApplication.Quit();
+      }
+    }
   }
 
 private:
