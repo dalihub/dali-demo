@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_CARD_ACTIVE                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CARD_ACTIVE")
 #define DALI_DEMO_STR_TITLE_CLIPPING                    dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CLIPPING")
 #define DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER         dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER")
+#define DALI_DEMO_STR_TITLE_GESTURES                    dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_GESTURES")
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_COLOR_GRADIENT")
 #define DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS  dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS")
 #define DALI_DEMO_STR_TITLE_CONTACT_CARDS               dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CONTACT_CARDS")
@@ -119,6 +120,9 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TOOLTIP                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TOOLTIP")
 #define DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS          dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS")
 #define DALI_DEMO_STR_TITLE_WEB_VIEW                    dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_WEB_VIEW")
+#define DALI_DEMO_STR_TITLE_TEXT_RENDERER               dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TEXT_RENDERER")
+#define DALI_DEMO_STR_TITLE_TEXT_VISUAL                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TEXT_VISUAL")
+#define DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT      dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT")
 
 #else // !INTERNATIONALIZATION_ENABLED
 
@@ -136,6 +140,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_CARD_ACTIVE                 "Card Active"
 #define DALI_DEMO_STR_TITLE_CLIPPING                    "Clipping"
 #define DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER         "Clipping Draw Order"
+#define DALI_DEMO_STR_TITLE_GESTURES                    "Gestures"
 #define DALI_DEMO_STR_TITLE_COLOR_GRADIENT              "Color Gradient"
 #define DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS  "Compressed Texture Formats"
 #define DALI_DEMO_STR_TITLE_CONTACT_CARDS               "Contact Cards"
@@ -209,6 +214,9 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_TOOLTIP                     "Tooltip"
 #define DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS          "Visual Transitions"
 #define DALI_DEMO_STR_TITLE_WEB_VIEW                    "Web View"
+#define DALI_DEMO_STR_TITLE_TEXT_RENDERER               "Text Renderer"
+#define DALI_DEMO_STR_TITLE_TEXT_VISUAL                 "Text Visual"
+#define DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT      "Text Bitmap Font"
 #endif
 
 #ifdef __cplusplus
