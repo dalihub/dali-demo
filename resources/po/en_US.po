@@ -106,9 +106,6 @@ msgstr "Item View"
 msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
 msgstr "Lights and Shadows"
 
-msgid "DALI_DEMO_STR_TITLE_LAYOUTING"
-msgstr "Layouting"
-
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "Mesh Line"
 
@@ -171,9 +168,6 @@ msgstr "Refraction"
 
 msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
 msgstr "Renderer Stencil"
-
-msgid "DALI_DEMO_STR_TITLE_SIMPLE_LAYOUT"
-msgstr "Simple Layout"
 
 msgid "DALI_DEMO_STR_TITLE_SIMPLE_VISUALS_CONTROL"
 msgstr "Simple Visuals Control"

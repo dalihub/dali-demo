@@ -24,15 +24,23 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const Vector4 BACKGROUND_GRADIENT_1 = Vector4( 167.0f, 207.0f, 223.0f, 255.0f ) / 255.0f;
-const Vector4 BACKGROUND_GRADIENT_2 = Vector4(   0.0f,  64.0f, 137.0f, 255.0f ) / 255.0f;
-const Vector2 BACKGROUND_GRADIENT_START_POSITION( 0.0f, -0.5f );
-const Vector2 BACKGROUND_GRADIENT_END_POSITION( 0.0f,  0.5f );
+const Property::Value BACKGROUND
+{
+  { Toolkit::Visual::Property::TYPE, Visual::GRADIENT },
+  { GradientVisual::Property::STOP_COLOR,  Property::Array{ Vector4( 167.0f, 207.0f, 223.0f, 255.0f ) / 255.0f,
+                                                            Vector4(   0.0f,  64.0f, 137.0f, 255.0f ) / 255.0f } },
+  { GradientVisual::Property::START_POSITION, Vector2( 0.0f, -0.5f ) },
+  { GradientVisual::Property::END_POSITION,   Vector2( 0.0f,  0.5f ) }
+};
 
-const Vector4 CONTROL_GRADIENT_1 = Vector4( 234.0f, 185.0f,  45.0f, 255.0f ) / 255.0f;
-const Vector4 CONTROL_GRADIENT_2 = Vector4( 199.0f, 152.0f,  16.0f, 255.0f ) / 255.0f;
-const Vector2 CONTROL_GRADIENT_CENTER( Vector2::ZERO );
-const float CONTROL_GRADIENT_RADIUS( 0.5f );
+const Property::Value CONTROL_BACKGROUND
+{
+  { Toolkit::Visual::Property::TYPE, Visual::GRADIENT },
+  { GradientVisual::Property::STOP_COLOR, Property::Array{ Vector4( 234.0f, 185.0f,  45.0f, 255.0f ) / 255.0f,
+                                                           Vector4( 199.0f, 152.0f,  16.0f, 255.0f ) / 255.0f } },
+  { GradientVisual::Property::CENTER, Vector2::ZERO },
+  { GradientVisual::Property::RADIUS, 0.5f }
+};
 
 const float HELP_ANIMATION_DURATION( 25.0f );
 const float HELP_ANIMATION_SEGMENT_TIME( 5.0f );
@@ -56,45 +64,6 @@ const Vector4 TAP_ANIMATION_COLOR( 0.8f, 0.5, 0.2f, 0.6f );
 const Vector3 MINIMUM_SCALE( Vector3::ONE );
 const Vector3 MAXIMUM_SCALE( Vector3::ONE * 2.0f );
 const float SCALE_BACK_ANIMATION_DURATION( 0.25f );
-
-/**
- * @brief Creates a background with a linear gradient which matches parent size & is placed in the center.
- */
-Actor CreateBackground()
-{
-  Actor background = Control::New();
-  background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  background.SetParentOrigin( ParentOrigin::CENTER );
-  background.SetProperty(
-      Control::Property::BACKGROUND,
-      Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::GRADIENT )
-                     .Add( GradientVisual::Property::STOP_COLOR, Property::Array().Add( BACKGROUND_GRADIENT_1 )
-                                                                                  .Add( BACKGROUND_GRADIENT_2 ) )
-                     .Add( GradientVisual::Property::START_POSITION, BACKGROUND_GRADIENT_START_POSITION )
-                     .Add( GradientVisual::Property::END_POSITION,   BACKGROUND_GRADIENT_END_POSITION ) );
-  return background;
-}
-
-/**
- * @brief Create a control with a circular gradient & a specific size & is placed in the center of its parent.
- *
- * @param[in]  size  The size we want the control to be.
- */
-Actor CreateTouchControl( const Vector2& size )
-{
-  Actor touchControl = Control::New();
-  touchControl.SetSize( size );
-  touchControl.SetParentOrigin( ParentOrigin::CENTER );
-  touchControl.SetProperty(
-      Control::Property::BACKGROUND,
-      Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::GRADIENT )
-                     .Add( GradientVisual::Property::STOP_COLOR, Property::Array().Add( CONTROL_GRADIENT_1 )
-                                                                                  .Add( CONTROL_GRADIENT_2 ) )
-                     .Add( GradientVisual::Property::CENTER, CONTROL_GRADIENT_CENTER )
-                     .Add( GradientVisual::Property::RADIUS, CONTROL_GRADIENT_RADIUS )
-  );
-  return touchControl;
-}
 
 /**
  * @brief Shows the given string between the given start and end times.
@@ -170,12 +139,18 @@ private:
     Stage stage = Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &GestureExample::OnKeyEvent);
 
-    // Create a background with a gradient
-    Actor background = CreateBackground();
+    // Create a background with a linear gradient which matches parent size & is placed in the center.
+    Actor background = Control::New();
+    background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    background.SetParentOrigin( ParentOrigin::CENTER );
+    background.SetProperty( Control::Property::BACKGROUND, BACKGROUND );
     stage.Add( background );
 
-    // Create a control that we'll use for the gestures to be a quarter of the size of the stage
-    Actor touchControl = CreateTouchControl( stage.GetSize() * 0.25f );
+    // Create a control with a circular gradient that we'll use for the gestures and be a quarter of the size of the stage.
+    Actor touchControl = Control::New();
+    touchControl.SetSize( stage.GetSize() * 0.25f );
+    touchControl.SetParentOrigin( ParentOrigin::CENTER );
+    touchControl.SetProperty( Control::Property::BACKGROUND, CONTROL_BACKGROUND );
     background.Add( touchControl );
 
     // Connect to the touch signal

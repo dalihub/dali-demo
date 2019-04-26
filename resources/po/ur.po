@@ -64,9 +64,6 @@ msgstr "چیزوں کی فہرست"
 msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
 msgstr "روشنی اور سائے"
 
-msgid "DALI_DEMO_STR_TITLE_LAYOUTING"
-msgstr "تَرتيب"
-
 msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
 msgstr "لکیریں"
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -222,9 +222,9 @@ void CubeTransitionApp::OnInit( Application& application )
   Toolkit::ToggleButton effectChangeToggleButton = Toolkit::ToggleButton::ToggleButton::New();
 
   effectChangeToggleButton.SetProperty( Toolkit::ToggleButton::Property::STATE_VISUALS,
-                                        Property::Array().Add( EFFECT_WAVE_IMAGE )
-                                                         .Add( EFFECT_CROSS_IMAGE)
-                                                         .Add( EFFECT_FOLD_IMAGE )
+                                        Property::Array{ EFFECT_WAVE_IMAGE,
+                                                         EFFECT_CROSS_IMAGE,
+                                                         EFFECT_FOLD_IMAGE }
                                       );
 
   effectChangeToggleButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
