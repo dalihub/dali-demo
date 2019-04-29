@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,8 +112,8 @@ ContactCard::ContactCard(
   // Create a control which will be used for the background and to clip the contents
   mContactCard = Control::New();
   mContactCard.SetProperty( Control::Property::BACKGROUND,
-                            Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
-                                           .Add( ColorVisual::Property::MIX_COLOR, Color::WHITE ) );
+                            Property::Map{ { Toolkit::Visual::Property::TYPE, Visual::COLOR },
+                                           { ColorVisual::Property::MIX_COLOR, Color::WHITE } } );
   mContactCard.SetProperty( Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN );
   mContactCard.SetParentOrigin( ParentOrigin::TOP_LEFT );
   mContactCard.SetAnchorPoint( AnchorPoint::TOP_LEFT );
@@ -125,8 +125,8 @@ ContactCard::ContactCard(
   mHeader = Control::New();
   mHeader.SetSize( mContactCardLayoutInfo.headerSize );
   mHeader.SetProperty( Control::Property::BACKGROUND,
-                       Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
-                                      .Add( ColorVisual::Property::MIX_COLOR, HEADER_COLOR ) );
+                       Property::Map{ { Toolkit::Visual::Property::TYPE, Visual::COLOR },
+                                      { ColorVisual::Property::MIX_COLOR, HEADER_COLOR } } );
   mHeader.SetParentOrigin( ParentOrigin::TOP_LEFT );
   mHeader.SetAnchorPoint( AnchorPoint::TOP_LEFT );
   mHeader.SetPosition( mContactCardLayoutInfo.headerFoldedPosition.x, mContactCardLayoutInfo.headerFoldedPosition.y );
