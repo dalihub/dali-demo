@@ -21,11 +21,7 @@ BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(dali-core)
 BuildRequires:  pkgconfig(dali-adaptor)
 BuildRequires:  pkgconfig(dali-toolkit)
-
-#need libtzplatform-config for directory if tizen version is 3.x
-%if 0%{?tizen_version_major} >= 3
 BuildRequires:  pkgconfig(libtzplatform-config)
-%endif
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations
@@ -37,19 +33,10 @@ of the capability of the toolkit.
 %prep
 %setup -q
 
-#Use TZ_PATH when tizen version is 3.x
-
-%if "%{tizen_version_major}" == "2"
-%define dali_app_ro_dir       /usr/apps/com.samsung.dali-demo/
-%define dali_xml_file_dir     /usr/share/packages/
-%define dali_icon_dir         /usr/share/icons/
-%define smack_rule_dir        /etc/smack/accesses2.d/
-%else
 %define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo/
 %define dali_xml_file_dir     %TZ_SYS_RO_PACKAGES
 %define dali_icon_dir         %TZ_SYS_RO_ICONS
 %define smack_rule_dir        %TZ_SYS_SMACK/accesses2.d/
-%endif
 
 %define dali_app_res_dir      %{dali_app_ro_dir}/res/
 %define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
