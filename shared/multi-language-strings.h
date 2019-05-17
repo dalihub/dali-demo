@@ -1,5 +1,5 @@
-#ifndef __DALI_DEMO_MULTI_LANGUAGE_STRINGS_H__
-#define __DALI_DEMO_MULTI_LANGUAGE_STRINGS_H__
+#ifndef DALI_DEMO_MULTI_LANGUAGE_STRINGS_H
+#define DALI_DEMO_MULTI_LANGUAGE_STRINGS_H
 
 /*
  * Copyright (c) 2015 Samsung Electronics Co., Ltd.
@@ -227,4 +227,4 @@ namespace MultiLanguageStrings
 
 } // MultiLanguageStrings
 
-#endif // __DALI_DEMO_MULTI_LANGUAGE_STRINGS_H__
+#endif // DALI_DEMO_MULTI_LANGUAGE_STRINGS_H

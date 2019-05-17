@@ -1,5 +1,5 @@
-#ifndef __DALI_DEMO_HELPER_VIEW_H__
-#define __DALI_DEMO_HELPER_VIEW_H__
+#ifndef DALI_DEMO_HELPER_VIEW_H
+#define DALI_DEMO_HELPER_VIEW_H
 
 /*
  * Copyright (c) 2014 Samsung Electronics Co., Ltd.
@@ -177,4 +177,4 @@ Dali::Toolkit::TextLabel CreateToolBarLabel( const std::string& text )
 
 } // DemoHelper
 
-#endif // __DALI_DEMO_HELPER_VIEW_H__
+#endif // DALI_DEMO_HELPER_VIEW_H

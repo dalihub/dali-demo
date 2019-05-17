@@ -1,5 +1,5 @@
-#ifndef __DALI_DEMO_GRID_FLAGS_H_
-#define __DALI_DEMO_GRID_FLAGS_H_
+#ifndef DALI_DEMO_GRID_FLAGS_H
+#define DALI_DEMO_GRID_FLAGS_H
 /*
  * Copyright (c) 2014 Samsung Electronics Co., Ltd.
  *
@@ -197,7 +197,8 @@ private:
   unsigned mHighestUsedRow;
 };
 
-} /* namespace Demo */
-} /* namespace Dali */
+} // namespace Demo
 
-#endif /* __DALI_DEMO_GRID_FLAGS_H_ */
+} // namespace Dali
+
+#endif // DALI_DEMO_GRID_FLAGS_H
