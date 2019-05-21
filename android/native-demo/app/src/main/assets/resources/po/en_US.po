@@ -1,0 +1,269 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "Animated Images"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "Animated Shapes"
+
+msgid "DALI_DEMO_STR_TITLE_ALPHA_BLENDING_CPU"
+msgstr "CPU Alpha Blending"
+
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "Basic Light"
+
+msgid "DALI_DEMO_STR_TITLE_BENCHMARK"
+msgstr "ImageView Benchmark"
+
+msgid "DALI_DEMO_STR_TITLE_BEZIER_CURVE"
+msgstr "Bezier Curve"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "Blocks"
+
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "Bubbles"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "Buttons"
+
+msgid "DALI_DEMO_STR_TITLE_CALL_ACTIVE"
+msgstr "Call Active"
+
+msgid "DALI_DEMO_STR_TITLE_CARD_ACTIVE"
+msgstr "Card Active"
+
+msgid "DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS"
+msgstr "Compressed Texture Formats"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "Clipping"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
+msgstr "Clipping Draw Order"
+
+msgid "DALI_DEMO_STR_TITLE_GESTURES"
+msgstr "Gestures"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "Color Gradient"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "Contact Cards"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "Cube Effect"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "Dissolve Effect"
+
+msgid "DALI_DEMO_STR_TITLE_DRAG_AND_DROP"
+msgstr "Drag and Drop"
+
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "Effects View"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "Emoji Text"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox Playground"
+
+msgid "DALI_DEMO_STR_TITLE_FRAME_CALLBACK"
+msgstr "Frame Callback"
+
+msgid "DALI_DEMO_STR_TITLE_HELLO_WORLD"
+msgstr "Hello World"
+
+msgid "DALI_DEMO_STR_TITLE_HOMESCREEN"
+msgstr "Homescreen Benchmark"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_POLICIES"
+msgstr "Image Policies"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "Image Fitting and Sampling"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "Image Scaling Grid"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "Image View"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "Image View Alpha Blending"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "Image View Pixel Area"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "Image View SVG"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL"
+msgstr "Image View URL"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "Item View"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "Lights and Shadows"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "Mesh Line"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "Magnifier"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "Mesh Morph"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "Mesh Visual"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "Metaball Explosion"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "Metaball Refraction"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "Motion Blur"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "Motion Stretch"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "Native Image Source"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "Negotiate Size"
+
+msgid "DALI_DEMO_STR_TITLE_PERF_SCROLL"
+msgstr "Scrolling Performance"
+
+msgid "DALI_DEMO_STR_TITLE_POINT_MESH"
+msgstr "Point Mesh"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "Popup"
+
+msgid "DALI_DEMO_STR_TITLE_PIVOT"
+msgstr "Pivot"
+
+msgid "DALI_DEMO_STR_TITLE_PRE_RENDER_CALLBACK"
+msgstr "Pre Render Callback"
+
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "Progress Bar"
+
+msgid "DALI_DEMO_STR_TITLE_PROPERTY_NOTIFICATION"
+msgstr "Property Notification"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "Primitive Shapes"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "Radial Menu"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "Refraction"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "Renderer Stencil"
+
+msgid "DALI_DEMO_STR_TITLE_SIMPLE_VISUALS_CONTROL"
+msgstr "Simple Visuals Control"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "Script-based UI"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "Scroll View"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "Sparkle"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "Styling"
+
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "Mesh Texture"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "Text Editor"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "Text Field"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FONTS"
+msgstr "Text Fonts"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "Text Label"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_MEMORY_PROFILING"
+msgstr "Text Memory Profiling"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_OVERLAP"
+msgstr "Text Overlap"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "Text Scripts"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "Text Scrolling"
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "Tilt Sensor"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Tooltip"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP Game"
+
+msgid "DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS"
+msgstr "Visual Transitions"
+
+msgid "DALI_DEMO_STR_TITLE_REMOTE_IMAGE"
+msgstr "Remote Image"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "Textured cube"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "Draw cube"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Draw triangle"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Draw line"
+
+msgid "DALI_DEMO_STR_TITLE_FOCUS_INTEGRATION"
+msgstr "Focus integration"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "Draw radial progress"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "Ray Marching"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"
+
+msgid "DALI_DEMO_STR_TITLE_WEB_VIEW"
+msgstr "Web View"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
+msgstr "Animated Vector Images"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_RENDERER"
+msgstr "Text Renderer"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_VISUAL"
+msgstr "Text Visual"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT"
+msgstr "Text Bitmap Font"

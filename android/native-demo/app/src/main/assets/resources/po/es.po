@@ -1,0 +1,176 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "Imágenes animadas"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "Formas Animadas"
+
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "Iluminación Básica"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "Bloques"
+
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "Burbujas"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "Botones"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "Recorte"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "Gradiente de color"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "Contactos"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "Transición cubos"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "Transición disolver"
+
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "Vista de efectos"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "Texto con emojis"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox Playground"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "Modo de encaje y muestreo"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "Modo de escalado de imagen"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "Control con imagenes"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "Control con imagenes con transparencias"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "Control con imagenes con area de pixeles"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "Control con imagenes SVG"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "Vista de elementos"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "Luces y sombras"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "Lineas"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "Lupa"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "Transformacion de geometrias"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "Gemeotria 3D"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "Explosion de metabolas"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "Refraccion de metabolas"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "Desenfoque de movimiento"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "Movimiento con deformación"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "Fuente de imagenes nativas"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "Negociacion de tamaño"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "Popup"
+
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "Barra de progreso"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "Primitvas 3D"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "Menú radial"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "Refracción"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "Dibujado con stencil"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "Interfaz definida por Script"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "Vista de desplazamiento"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "Brillar"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "Estilo"
+
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "Geometria con texturas"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "Editor de texto"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "Campo de texto"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "Etiqueta de texto"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "Textos internacionales"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "Texto con desplazamiento"
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "Sensor de inclinacion"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Tooltip"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "Juego FPP"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "Cubo con textura"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "Dibujar cubo"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Dibujar triángulo"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Dibujar linea"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "Dibujo progreso radial"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "trazado de rayos"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

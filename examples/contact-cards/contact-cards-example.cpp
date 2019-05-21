@@ -30,6 +30,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace ContactCardsExample
+{
+#endif
+
 namespace
 {
 const Vector4 STAGE_COLOR( 211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f ); ///< The color of the stage
@@ -126,3 +131,8 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif
+

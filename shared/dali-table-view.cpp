@@ -594,7 +594,12 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
   if( mPressedActor )
   {
     std::string name = mPressedActor.GetName();
+    mPressedActor.Reset();
 
+#ifdef ANDROID
+    startOnQuit = name;
+    mApplication.Quit();
+#else
     std::stringstream stream;
     stream << DEMO_EXAMPLE_BIN << name.c_str();
     pid_t pid = fork();
@@ -603,7 +608,7 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
       execlp( stream.str().c_str(), name.c_str(), NULL );
       DALI_ASSERT_ALWAYS(false && "exec failed!");
     }
-    mPressedActor.Reset();
+#endif
   }
 }
 

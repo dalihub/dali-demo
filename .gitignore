@@ -43,3 +43,12 @@ simple-image-wall.js
 /debugfiles.list
 /debuglinks.list
 /debugsources.list
+android/native-demo/app/build/*
+android/native-demo/app/debug
+android/native-demo/app/release
+android/native-demo/app/.externalNativeBuild
+android/native-demo/app/app.iml
+android/native-demo/.gradle
+android/native-demo/.idea
+android/native-demo/local.properties
+

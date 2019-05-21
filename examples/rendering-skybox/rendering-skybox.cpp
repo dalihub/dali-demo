@@ -23,6 +23,11 @@
 using namespace Dali;
 using namespace Toolkit;
 
+#ifdef ANDROID
+namespace RenderingSkyboxExample
+{
+#endif
+
 namespace
 {
 
@@ -491,3 +496,8 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif
+

@@ -1,0 +1,176 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "animoituja kuvia"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "Animoidut Muodot"
+
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "Perusvalo"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "Lohko Peli"
+
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "Kuplat"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "Painikkeet"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "Leikkaaminen"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "Liukuväri"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "Yhteystietokortit"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "Kuutioefekti"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "Häivytysefekti"
+
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "Efektinäkymä"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "Teksti Hymiöillä"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox Testi Sovellus"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "Kuvien Sovitus ja Suodatus"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "Kuvien Skaalaus"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "Kuvanäkymä"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "Kuvanäkymän Läpinäkyvyysmoodit"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "Kuvanäkymän Pikselialue"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "SVG Kuvanäkymä"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "Esinenäkymä"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "Valot ja Varjot"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "Viivapolygoniverkko"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "Suurennuslasi"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "Polygoniverkon Muodonmuutos"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "Polygoniverkkovisuaali"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "Metaball Räjähdys"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "Metaball Valon Taittumisella"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "Liikesumennus"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "Liikevenytys"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "Natiivi Kuvalähde"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "Kokoneuvottelu"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "Ponnahdusikkuna"
+
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "Edistymispalkki"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "Primitiivimuodot"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "Säteittäinen Valikko"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "Valon Taittuminen"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "Sapluuna Efekti"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "Skriptipohjainen UI"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "Vieritysnäkymä"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "Kimalteluefekti"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "UI Tyyli"
+
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "Teksturoitu Polygoniverkko"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "Tekstieditori"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "Tekstikenttä"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "Tekstietiketti"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "Monikielinen Teksti"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "Tekstin Vieritys"
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "Kallistustunnistin"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Tooltip"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP peli"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "kuvioitu kuutio"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "piirtää kuutio"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Piirrä kolmio"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Draw linja"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "Piirustus radial edistyminen"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "Ray marssi"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

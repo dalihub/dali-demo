@@ -30,6 +30,11 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace DemoHelper;
 
+#ifdef ANDROID
+namespace BlocksExample
+{
+#endif
+
 namespace
 {
 const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-blocks.jpg" );
@@ -875,3 +880,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   app.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

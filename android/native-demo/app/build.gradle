@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId = 'com.sec.dali_demo'
+        minSdkVersion 25
+        targetSdkVersion 25
+        externalNativeBuild {
+            cmake {
+                cppFlags "-fexceptions -frtti -w -Wall -std=gnu++11"
+                arguments '-DANDROID_STL=c++_shared'
+            }
+        }
+    }
+    aaptOptions {
+        noCompress ''
+    }
+    buildTypes {
+        debug {
+            ndk {
+                abiFilters "x86_64", "armeabi-v7a"
+            }
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+            ndk {
+                abiFilters "x86_64", "armeabi-v7a"
+            }
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
+    externalNativeBuild {
+        cmake {
+            version '3.10.2'
+            path 'src/main/cpp/CMakeLists.txt'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+}

@@ -1,0 +1,176 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "Animierte Bilder"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "Animierte Formen"
+
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "Grundleuchte"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "Blöcke"
+
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "Schaumbildung"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "Tasten"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "Clipping"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "Farbverlauf"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "Kontakt"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "Würfel Übergangseffekt"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "Auflösen Übergangseffekt"
+
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "Auswirkungen"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "Emoji"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "Bild Montage und Sampling"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox Playground"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "Bildskalierung"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "Bildansicht "
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "Bildansicht mit Transparenz"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "Bildansicht Pixelbereich"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "Bildansicht SVG"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "Item-Ansicht"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "Licht und Schatten"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "Linien"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "Bildschirmlupe"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "Mesh Veränderung"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "3D-Modelle"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "Metaball Explosion"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "Metaball Brechung"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "Bewegungsunschärfe"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "Bewegung Strecke"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "Nativen Bild"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "Größe Verhandlung"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "Popup-Menü"
+
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "Fortschrittsanzeige"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "Grundformen"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "Radialmenü"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "Brechung"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "Schablone"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "Scripting"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "Scroll-Ansicht"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "Funkeln"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "Styling"
+
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "Strukturiertem Mesh"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "Texteditor"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "Textfeld"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "Beschriftung"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "Mehrere Sprachen Beschriftung"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "Text Scrollen"
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "Neigungssensor"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Kurzinfo"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP Spiel"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "Texturierter Würfel"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "Würfel zeichnen"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "Dreieck zeichnen"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "Zeichnen"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "Radialer Fortschritt zeichnen"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "Ray marschieren"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

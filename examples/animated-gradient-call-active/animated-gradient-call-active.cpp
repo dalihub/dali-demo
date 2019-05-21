@@ -25,6 +25,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace AnimatedGradientCallActiveExample
+{
+#endif
+
 // This example shows how to create and display animated-gradient-effect
 //
 namespace
@@ -412,3 +417,8 @@ int main(int argc, char **argv)
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif
+

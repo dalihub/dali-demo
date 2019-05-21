@@ -1,0 +1,176 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "অ্যানিমেটেড ইমেজ"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "অ্যানিমেটেড আকার"
+
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "বেসিক আলো"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "অৱৰুদ্ধ কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "বেলুন"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "ক্লিক্"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "Clipping"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "ঝুৰ্"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "অঁপইতা "
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "ঘনক পৰিৱৰ্তনীয় প্ৰভাৱ"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "পৰিৱৰ্তনীয় প্ৰভাৱ"
+
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "অকৃতকাৰ্য্য হ"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "Emoji"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox ডেমো"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "অনুবিম্ব ইজাৰ"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "প্ৰতিচ্ছবি স্কেল কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "অনুবিম্ব"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "অনুবিম্ব অনুৰেখ পত্ৰ"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "অনুবিম্ব Pixel Area"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "অনুবিম্ব SVG"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "আইটেম দর্শন"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "ছাঁয়া"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "অঁকোৱা-পকোৱা"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "পৰিবৰ্দ্ধক"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "মেশ অঙ্কুৰিত"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "3D অনুগামী"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "মেটাবল মহা-বিস্ফোৰণবাদ"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "মেটাবল প্ৰতিসৰিত"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "অস্পষ্ট"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "বিস্তাৰ"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "অইন অনুবিম্ব"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "অকণমান আপোচ কৰ্"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "পোপা মেনু"
+
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "অগ্রগতি বার"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "অংশ্যমান অৰ্কিড"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "ৰেডিয়েল নক্সা"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "প্ৰতিফলিত কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "চক্ৰলেখন"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "লিপি"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "স্ক্ৰ'ল কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "তাৰকা"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "শৈলী"
+
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "টেক্সটারেদ মেশ"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "অকনিষ্ঠ আনুবংশিক"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "অকনিষ্ঠ অগ্ৰণী"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "লেৱেল কৰক"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "অক্ষশক্তি অঁকা অকনিষ্ঠ"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "অকনিষ্ঠ অৰ্জুন বঁটা"
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "টিল্ট অনুভূতি"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Tooltip"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP খেলা"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "ৰেণ্ডাৰিং  গাঁথনি"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "ৰেণ্ডাৰিং  ঘনক"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "ৰেণ্ডাৰিং  ত্ৰিকোণমিতি"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "ৰেণ্ডাৰিং  শাৰী"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "রশ্মীয় অগ্রগতি অঙ্কন"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "রে মার্চিং"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

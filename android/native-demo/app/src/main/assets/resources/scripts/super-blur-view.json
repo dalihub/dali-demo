@@ -1,0 +1,81 @@
+/*
+ * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+{
+  "constants": {
+    "TEXT_VIEW_SIZE": [200, 150, 1]
+  },
+  "animations": {
+    "blur": {
+      "duration": 1,
+      "properties": [{
+        "actor": "superBlur",
+        "property": "blurStrength",
+        "value": 1,
+        "timePeriod": {
+          "delay": 0,
+          "duration": 1
+        }
+      }]
+    },
+    "clear": {
+      "duration": 1,
+      "properties": [{
+        "actor": "superBlur",
+        "property": "blurStrength",
+        "value": 0,
+        "timePeriod": {
+          "delay": 0,
+          "duration": 1
+        }
+      }]
+    }
+  },
+  "stage": [
+    // SuperBlurView
+    {
+      "type": "SuperBlurView",
+      "name": "superBlur",
+      "parentOrigin": "TOP_CENTER",
+      "anchorPoint": "TOP_CENTER",
+      "size": [800, 1280, 0],
+      "image": {
+        "filename": "{DEMO_IMAGE_DIR}background-4.jpg"
+      }
+    },
+
+    // Button to blur/clear
+    {
+      "type": "PushButton",
+      "name": "toggleButton",
+      "parentOrigin": "BOTTOM_CENTER",
+      "anchorPoint": "BOTTOM_CENTER",
+      "position": [0, 0, 0],
+      "size": [200, 100, 0],
+      "labelText": "Blur",
+      "siblingOrder": 1,
+      "signals": [{
+        "name": "pressed",
+        "action": "play",
+        "animation": "blur"
+      }, {
+        "name": "released",
+        "action": "play",
+        "animation": "clear"
+      }]
+    }
+  ]
+}

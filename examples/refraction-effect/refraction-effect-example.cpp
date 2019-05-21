@@ -30,6 +30,11 @@
 
 using namespace Dali;
 
+#ifdef ANDROID
+namespace RefractionEffectExample
+{
+#endif
+
 namespace
 {
 const char * const APPLICATION_TITLE( "Refraction Effect" );
@@ -595,3 +600,8 @@ int DALI_EXPORT_API main(int argc, char **argv)
   app.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif
+

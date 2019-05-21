@@ -1,0 +1,110 @@
+{
+  "stage": [{
+      "name": "seconds",
+      "type": "Control",
+      "actors": [],
+      "size": [10, 200, 1],
+      "position": [0, 0, -2],
+      "parentOrigin": [0.5, 0.5, 0.5],
+      "anchorPoint": [0.5, 1, 0.5],
+      "background": {
+        "visualType": "COLOR",
+        "mixColor": [0.71, 0, 0, 1]
+      },
+      "selected": false,
+      "signals": [
+      {
+        "name": "onStage",
+        "action": "play",
+        "animation": "animate-seconds"
+      }]
+    }, {
+      "name": "minutes",
+      "type": "Control",
+      "actors": [],
+      "size": [11, 180, 1],
+      "position": [0, 0, -2],
+      "parentOrigin": [0.5, 0.5, 0.5],
+      "anchorPoint": [0.5, 1, 0.5],
+      "background": {
+        "visualType": "COLOR",
+        "mixColor": [0, 0.14200000000000013, 0.71, 0.7]
+      },
+      "signals": [
+      {
+        "name": "onStage",
+        "action": "play",
+        "animation": "animate-minutes"
+      }]
+    }, {
+      "name": "hours",
+      "type": "Control",
+      "actors": [],
+      "size": [12, 120, 1],
+      "position": [0, 0, 0],
+      "parentOrigin": [0.5, 0.5, 0.5],
+      "anchorPoint": [0.5, 1, 0.5],
+      "background": {
+        "visualType": "COLOR",
+        "mixColor": [0.057450000000000064, 0.3, 0.0030000000000000027, 0.7]
+      },
+      "signals": [
+      {
+        "name": "onStage",
+        "action": "play",
+        "animation": "animate-hours"
+      }]
+    }],
+  "paths": {},
+  "animations": {
+    "animate-seconds": {
+      "properties": [{
+          "actor": "seconds",
+          "property": "orientation",
+          "value": [0, 0, 360],
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
+            "delay": 0,
+            "duration": 60.0
+          },
+          "gui-builder-timeline-color": "#f5aeb8",
+          "relative": true
+      }],
+      "loop": true
+    },
+    "animate-minutes": {
+      "properties": [{
+          "actor": "minutes",
+          "property": "orientation",
+          "value": [0, 0, 360],
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
+            "delay": 0,
+            "duration": 3600.0
+          },
+          "gui-builder-timeline-color": "#aabcc4",
+          "relative": true
+      }],
+      "loop": true
+    },
+    "animate-hours": {
+      "properties": [{
+          "actor": "hours",
+          "property": "orientation",
+          "value": [0, 0, 360],
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
+            "delay": 0,
+            "duration": 43200.0
+          },
+          "gui-builder-timeline-color": "#9e7f9e",
+          "relative": true
+      }],
+      "loop": true
+    }
+  },
+  "connections": [],
+  "gui-builder-device-height": 600,
+  "gui-builder-device-width": 400,
+  "gui-builder-json-version": "781"
+}

@@ -1,0 +1,133 @@
+/*
+ * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+{
+  // library of styles
+  "styles": {
+    "redTheme": {
+      "color": [1, 0, 0, 1]
+    },
+    "basicText": {
+      "parentOrigin": "CENTER"
+    }
+  },
+  "paths":
+  {
+    "path0":
+    {
+      "points":[ [-150, -50, 0], [0.0,70.0,0.0], [190.0,-150.0,0.0] ],
+      "curvature":0.35
+    }
+  },
+  // library of animations
+  "animations": {
+    "animate": {
+      "duration": 10.0,
+      "properties": [{
+        "actor": "greeting", // referenced actors must exist on stage
+        "property": "position",
+        "value": [300, 300, -1000],
+        "alphaFunction": "EASE_IN_OUT",
+        "timePeriod": {
+          "delay": 0,
+          "duration": 3
+        }
+      }, {
+        "actor": "greeting", // referenced actors must exist on stage
+        "property": "scale",
+        "value": [5, 5, 1],
+        "timePeriod": {
+          "delay": 2,
+          "duration": 3
+        }
+      }]
+    },
+    "rotate": {
+      "duration": 10.0,
+      "properties": [{
+        "actor": "image", // referenced actors must exist on stage
+        "property": "orientation",
+        "value": [0, 0, -45],
+        "alphaFunction": "EASE_IN_OUT",
+        "timePeriod": {
+          "delay": 0,
+          "duration": 3
+        }
+      }]
+    },
+    "pathAnimation": {
+      "duration": 3.0,
+      "properties": [{
+        "actor": "greeting2", // referenced actors must exist on stage
+        "path":"path0",
+        "forward":[1,0,0],
+        "alphaFunction": "EASE_IN_OUT",
+        "timePeriod": {
+          "delay": 0,
+          "duration": 3
+        }
+      }]
+    }
+  },
+  // a tree of actors
+  "stage": [{
+    "name": "greeting",
+    "type": "TextLabel",
+    "text": "Touch me",
+    "styles": ["basicText"],
+    "position": [0, -120, 0],
+    "size": [200, 200, 1],
+    "orientation": [0, 0, 30],
+    "signals": [{
+      "name": "touch",
+      "action": "play",
+      "animation": "animate"
+    }]
+  }, {
+    "name":"greeting2",
+    "type": "TextLabel",
+    "parentOrigin": "CENTER",
+    "anchorPoint": "CENTER",
+    "size": [200, 200, 1],
+    "orientation": [0, 0, 39],
+    "position": [-150, -50, 0],
+    "text": "or me",
+    "signals": [{
+      "name": "touch",
+      "action": "play",
+      "animation": "pathAnimation"
+    }]
+  }, {
+    "type": "TextLabel", // styles can be additive
+    "parentOrigin": "CENTER",
+    "anchorPoint": "CENTER",
+    "size": [200, 200, 1],
+    "text": "or the image.."
+  }, {
+    "name": "image",
+    "type": "ImageView",
+    "image": "{DEMO_IMAGE_DIR}gallery-large-21.jpg",
+    "relayoutEnabled": false,
+    "position": [0, 200, 0],
+    "size": [200, 200, 1],
+    "signals": [{
+      "name": "touch",
+      "action": "play",
+      "animation": "rotate"
+    }],
+    "positionInheritance": "DONT_INHERIT_POSITION"
+  }]
+}

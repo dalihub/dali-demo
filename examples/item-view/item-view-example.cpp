@@ -26,6 +26,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace ItemViewExample
+{
+#endif
+
 namespace
 {
 
@@ -1007,3 +1012,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   app.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

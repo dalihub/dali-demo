@@ -1,0 +1,188 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "애니메이션 이미지"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "애니메이션 모양"
+
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "기본 표시 등"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "블록"
+
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "방울"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "버튼"
+
+msgid "DALI_DEMO_STR_TITLE_CALL_ACTIVE"
+msgstr "통화 수신"
+
+msgid "DALI_DEMO_STR_TITLE_CARD_ACTIVE"
+msgstr "NFC 카드 태깅"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "깎는"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
+msgstr "드로잉 순서를 클리핑"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "색상 그라디언트"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "접촉"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "입방체 전환"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "디졸브 전환"
+
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "이펙트 뷰"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "이모티콘 텍스트"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox 데모"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "이미지 조정 샘플링"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "이미지 확대"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "이미지 뷰"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "이미지 뷰 알파 블렌딩"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "이미지 뷰 픽셀 영역"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "이미지 뷰 SVG"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "아이템 뷰"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "빛과 그림자"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "라인 메쉬"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "돋보기"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "메쉬 형태"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "메쉬 비주얼"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "메타볼 폭발"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "메타볼 굴절"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "모션 블러"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "늘이기"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "네이티브 이미지 소스"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "사이즈 조절"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "팝업"
+
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "진행률 표시 줄"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "기본 모양"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "레이디 얼 메뉴"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "굴절 효과"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "렌더러 스텐실"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "스크립팅"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "스크롤 뷰"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "불꽃"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "스타일링"
+
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "텍스쳐 메쉬"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "텍스트 편집기"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "텍스트 필드"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "텍스트 라벨"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "다국어"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "텍스트 스크롤"
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "기울기 센서"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "툴팁"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP Game"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "질감 입방체"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "큐브 그리기"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "삼각형 그리기"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "선 그리기"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "방사형 진행 상황 그리기"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "레이 마칭"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
+msgstr "애니메이션 벡터 이미지"

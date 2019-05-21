@@ -36,6 +36,11 @@ using namespace Dali;
 
 using Dali::Toolkit::TextLabel;
 
+#ifdef ANDROID
+namespace CubeTransitionEffectExample
+{
+#endif
+
 // LOCAL STUFF
 namespace
 {
@@ -421,3 +426,8 @@ int DALI_EXPORT_API main( int argc, char **argv )
 
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif
+

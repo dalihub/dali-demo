@@ -30,6 +30,11 @@
 
 using namespace Dali;
 
+#ifdef ANDROID
+namespace MetaballRefracExample
+{
+#endif
+
 namespace // unnamed namespace for constants
 {
 const char * const BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-2.jpg" );
@@ -780,3 +785,7 @@ int32_t DALI_EXPORT_API main( int argc, char **argv )
 
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

@@ -1,0 +1,176 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "അനിമേറ്റഡ് ചിത്രങ്ങൾ"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "ആനിമേഷൻ രൂപങ്ങൾ"
+
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "അടിസ്ഥാന വെളിച്ചം"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "തടയപ്പെട്ട"
+
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "കുമിള"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "ബട്ടണുകൾ"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "ക്ലിപ്പിംഗ്"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "വർണ്ണ ഗ്രേഡിയന്റ്"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "ബന്ധങ്ങൾ"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "സമചതുരക്കട്ട സംക്രമണ ഇഫക്ട്"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "സ്ഥാനാന്തരം സംക്രമണ ഇഫക്ട്"
+
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "എഫക്റ്റുകൾ"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "ഇമോട്ടികോണുകൾ"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "ഫ്ലക്സ്ബോക്സിനുള്ള ഡെമോ"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "ചിത്രം ഉചിതമാണ് ആൻഡ് ഒരുപറ്റം"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "ഇമേജിംഗ്"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "ചിത്രം കാഴ്ച"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "ചിത്രം കാഴ്ച"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "സുതാര്യത ഉപയോഗിച്ച് ഇമേജ് കാഴ്ച"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "ചിത്രം കാഴ്ച SVG"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "ഇനം കാഴ്ച"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "നിഴല്"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "വര"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "ഭൂതക്കണ്ണാടി"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "മോർഫ് mesh"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "3D മോഡലിങ്"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "മെറ്റാ പന്ത് സ്ഫോടനം"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "മെറ്റാ പന്ത് അപവർത്തനം"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "അവ്യക്തമാക്കല്"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "സ്ട്രെച്ച്"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "നേറ്റീവ് ചിത്രം"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "വലുപ്പം കൂടിയാലോചന"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "പോപപ്പ് മെനുവിൽ"
+
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "പ്രോഗ്രസ് ബാർ"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "അടിസ്ഥാന രൂപങ്ങൾ"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "റേഡിയല് രേഖാചിത്രം"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "പ്രതിഫലിക്കുക"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "സീരിയോലിത്തോഗ്രാഫ്"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "സ്ക്രിപ്റ്റ്"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "സ്ക്രോള്ചെയ്യുക കാഴ്ച"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "നക്ഷത്ര"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "ശൈലി"
+
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "ടെക്സ്ചർ mesh"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "ടെക്സ്റ്റ് എഡിറ്റർ"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "ടെക്സ്റ്റ് ഫീൽഡ്"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "ലേബലുചെയ്യുക"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "ഒന്നിലധികം ഭാഷ വാചകം"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "ടെക്സ്റ്റ് സ്ക്രോളിംഗ്"
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "ചെരിവ് സെൻസർ"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "കൂടുതൽ വിവരങ്ങൾ"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP Game"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "ടെക്സ്ചർ ക്യൂബ്"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "ക്യൂബ് വരയ്ക്കുക"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "ത്രികോണം വരയ്ക്കുക"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "സമനില ലൈൻ"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "റേഡിയൽ പുരോഗതി ഡ്രോയിംഗ്"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "ലൈറ്റ് മാർച്ചിംഗ്"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

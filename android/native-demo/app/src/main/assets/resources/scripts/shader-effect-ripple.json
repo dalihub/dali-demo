@@ -1,0 +1,67 @@
+{
+  "stage": [
+    {
+      "type": "ImageView",
+      "name": "Image1",
+      "position": [
+        0.40461349487305,
+        0.9150390625,
+        0.0
+      ],
+      "parentOrigin": [0.5, 0.5, 0.5],
+      "widthResizePolicy":"FILL_TO_PARENT",
+      "heightResizePolicy":"DIMENSION_DEPENDENCY",
+      "image": {
+        "url": "{DEMO_IMAGE_DIR}gallery-medium-25.jpg",
+        "desiredWidth": 400,
+        "desiredHeight": 400,
+        "shader": {
+          "fragmentShader": [
+              "precision mediump float;",
+              "uniform sampler2D sTexture;",
+              "uniform vec4 uColor;",
+              "uniform float uAmplitude;",
+              "uniform float uTime;",
+              "varying vec2 vTexCoord;",
+              "void main()",
+              "{",
+              "  highp vec2 pos = -1.0 + 2.0 * vTexCoord;",
+              "  highp float len = length(pos);",
+              "  highp vec2 texCoord = vTexCoord + pos/len * sin( len * 12.0 - uTime * 4.0 ) * uAmplitude;",
+              "  gl_FragColor = texture2D(sTexture, texCoord) * uColor;",
+              "}"
+            ]
+          }
+      },
+      "animatableProperties": {
+        "uAmplitude": 0.02,
+        "uTime": 0.0
+      },
+      "signals": [
+        {
+          "name": "onStage",
+          "action": "play",
+          "animation": "Animation_1"
+        }
+      ]
+    }
+  ],
+  "animations": {
+    "Animation_1": {
+      "loop":true,
+      "properties": [
+        {
+          "actor": "Image1",
+          "property": "uTime",
+          "value": 36.0,
+          "alphaFunction": "LINEAR",
+          "timePeriod": {
+            "delay": 0,
+            "duration": 20.0
+          },
+          "guiBuilderTimelineColor": "#8dc0da"
+        }
+      ]
+    }
+  }
+}

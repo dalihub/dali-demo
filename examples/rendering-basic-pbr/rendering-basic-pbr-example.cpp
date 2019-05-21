@@ -29,6 +29,11 @@
 using namespace Dali;
 using namespace Toolkit;
 
+#ifdef ANDROID
+namespace RenderingBasicPbrExample
+{
+#endif
+
 /*
  *
  * "papermill_pmrem.ktx" and "papermill_E_diffuse-64.ktx are image files generated from
@@ -466,3 +471,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

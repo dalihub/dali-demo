@@ -1,0 +1,179 @@
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
+msgstr "动态图"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
+msgstr "动画造型"
+
+msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
+msgstr "基本光"
+
+msgid "DALI_DEMO_STR_TITLE_BLOCKS"
+msgstr "块体"
+
+msgid "DALI_DEMO_STR_TITLE_BUBBLES"
+msgstr "气泡"
+
+msgid "DALI_DEMO_STR_TITLE_BUTTONS"
+msgstr "按钮"
+
+msgid "DALI_DEMO_STR_TITLE_CLIPPING"
+msgstr "剪裁"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
+msgstr "颜色梯度"
+
+msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
+msgstr "往来"
+
+msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
+msgstr "方块切换效果"
+
+msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
+msgstr "冰消瓦解切换效果"
+
+msgid "DALI_DEMO_STR_TITLE_DRAG_AND_DROP"
+msgstr "拖放"
+
+msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
+msgstr "效果视图"
+
+msgid "DALI_DEMO_STR_TITLE_EMOJI_TEXT"
+msgstr "表情符号"
+
+msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
+msgstr "Flexbox演示"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
+msgstr "图像填充及采样"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_SCALING"
+msgstr "图像缩放"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW"
+msgstr "图像视图"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
+msgstr "图像视图透明度"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
+msgstr "图像视图像素区域"
+
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
+msgstr "图像视图 SVG"
+
+msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
+msgstr "项目视图"
+
+msgid "DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS"
+msgstr "阴影"
+
+msgid "DALI_DEMO_STR_TITLE_LINE_MESH"
+msgstr "线条"
+
+msgid "DALI_DEMO_STR_TITLE_MAGNIFIER"
+msgstr "放大鏡"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_MORPH"
+msgstr "网格变形"
+
+msgid "DALI_DEMO_STR_TITLE_MESH_VISUAL"
+msgstr "3D模型"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_EXPLOSION"
+msgstr "元球爆炸"
+
+msgid "DALI_DEMO_STR_TITLE_METABALL_REFRAC"
+msgstr "元球折射"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_BLUR"
+msgstr "动作模糊"
+
+msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
+msgstr "动作拉伸"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
+msgstr "本地图像"
+
+msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
+msgstr "尺寸协商"
+
+msgid "DALI_DEMO_STR_TITLE_POPUP"
+msgstr "弹窗"
+
+msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
+msgstr "进度条"
+
+msgid "DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES"
+msgstr "基本形状"
+
+msgid "DALI_DEMO_STR_TITLE_RADIAL_MENU"
+msgstr "径向菜单"
+
+msgid "DALI_DEMO_STR_TITLE_REFRACTION"
+msgstr "折射"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
+msgstr "模板缓冲"
+
+msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
+msgstr "脚本用户界面"
+
+msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
+msgstr "滚动视图"
+
+msgid "DALI_DEMO_STR_TITLE_SPARKLE"
+msgstr "火花"
+
+msgid "DALI_DEMO_STR_TITLE_STYLING"
+msgstr "样式"
+
+msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
+msgstr "纹理网格"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_EDITOR"
+msgstr "文字编辑器"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_FIELD"
+msgstr "文字栏"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL"
+msgstr "标签"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_MULTI_LANGUAGE"
+msgstr "多语言标签"
+
+msgid "DALI_DEMO_STR_TITLE_TEXT_SCROLLING"
+msgstr "滚动文字"
+
+msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
+msgstr "倾斜传感器"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "更多信息"
+
+msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
+msgstr "FPP游戏"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE"
+msgstr "纹理的多维数据集"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_CUBE"
+msgstr "绘制多维数据集"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE"
+msgstr "绘制三角形"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE"
+msgstr "画线"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS"
+msgstr "绘制径向进度"
+
+msgid "DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING"
+msgstr "射线行军"
+
+msgid "DALI_DEMO_STR_TITLE_SKYBOX"
+msgstr "Skybox"
+
+msgid "DALI_DEMO_STR_TITLE_PBR"
+msgstr "PBR"

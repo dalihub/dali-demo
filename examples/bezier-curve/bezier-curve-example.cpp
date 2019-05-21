@@ -24,6 +24,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace BezierCurveExample
+{
+#endif
+
 namespace
 {
 
@@ -35,7 +40,7 @@ const Vector3 CONTROL_POINT2_ORIGIN( 100, -200, 0);
 const char* const CIRCLE1_IMAGE( DEMO_IMAGE_DIR "circle1.png" );
 const char* const CIRCLE2_IMAGE( DEMO_IMAGE_DIR "circle2.png" );
 const char* const ANIMATION_BACKGROUND( DEMO_IMAGE_DIR "slider-skin.9.png" );
-const char* APPLICATION_TITLE("Bezier curve animation");
+const char* BEZIER_CURVE_APPLICATION_TITLE("Bezier curve animation");
 const float ANIM_LEFT_FACTOR(0.2f);
 const float ANIM_RIGHT_FACTOR(0.8f);
 const int AXIS_LABEL_POINT_SIZE(7);
@@ -174,7 +179,7 @@ public:
     mContentLayer.Add( contentLayout );
 
     // Create a TextLabel for the application title.
-    Toolkit::TextLabel label = Toolkit::TextLabel::New( APPLICATION_TITLE );
+    Toolkit::TextLabel label = Toolkit::TextLabel::New( BEZIER_CURVE_APPLICATION_TITLE );
     label.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::BLACK );
@@ -444,8 +449,11 @@ public:
     auto gridSize = mGrid.GetProperty<Vector3>( Actor::Property::SIZE ); // Get target value
     auto currentPosition = actor.GetCurrentPosition(); // Get constrained current value
 
+#ifdef ANDROID
+    position = Vector2( floorf( currentPosition.x ), floorf( currentPosition.y ) );
+#else
     position = Vector2( std::floor( currentPosition.x ), std::floor( currentPosition.y ) );
-
+#endif
     point.x = Clamp( position.x / gridSize.x, -0.5f, 0.5f ) + 0.5f;
     point.y = 0.5f - position.y / gridSize.y;
   }
@@ -611,7 +619,6 @@ private:
   bool mGoingRight;
 };
 
-
 int main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
@@ -620,3 +627,7 @@ int main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

@@ -31,6 +31,11 @@
 
 using namespace Dali;
 
+#ifdef ANDROID
+namespace MetaballExplosionExample
+{
+#endif
+
 namespace // unnamed namespace for constants
 {
 // background image
@@ -689,3 +694,8 @@ int32_t DALI_EXPORT_API main( int argc, char **argv )
 
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif
+
