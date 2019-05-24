@@ -1,5 +1,5 @@
-#ifndef __DALI_DEMO_EMOJI_STRINGS_H__
-#define __DALI_DEMO_EMOJI_STRINGS_H__
+#ifndef DALI_DEMO_EMOJI_STRINGS_H
+#define DALI_DEMO_EMOJI_STRINGS_H
 
 /*
  * Copyright (c) 2015 Samsung Electronics Co., Ltd.
@@ -100,4 +100,4 @@ namespace EmojiStrings
 
 } // EmojiStrings
 
-#endif // __DALI_DEMO_EMOJI_STRINGS_H__
+#endif // DALI_DEMO_EMOJI_STRINGS_H
