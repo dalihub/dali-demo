@@ -20,11 +20,16 @@
 
 #include <stdio.h>
 #include <sstream>
+#include <shared/file-wrapper.h>
 
 // INTERNAL INCLUDES
 #include "ktx-loader.h"
 #include "model-skybox.h"
 #include "model-pbr.h"
+
+#ifdef ANDROID
+#include "../../shared/file-wrapper.h"
+#endif
 
 using namespace Dali;
 using namespace Toolkit;
@@ -395,7 +400,11 @@ public:
   */
   bool LoadShaderCode( const std::string& fullpath, std::vector<char>& output )
   {
+#ifndef ANDROID
     FILE* file = fopen( fullpath.c_str(), "rb" );
+#else
+    FILE* file = Android::OpenFile( fullpath.c_str(), "rb" );
+#endif
     if( NULL == file )
     {
       return false;
@@ -409,8 +418,7 @@ public:
       if( ( size != -1L ) &&
         ( ! fseek( file, 0, SEEK_SET ) ) )
       {
-        output.resize( size + 1 );
-        std::fill( output.begin(), output.end(), 0 );
+        output.resize( size + 1, 0 );
         ssize_t result = fread( output.data(), size, 1, file );
 
         retValue = ( result >= 0 );

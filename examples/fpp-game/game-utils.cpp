@@ -17,6 +17,11 @@
 
 #include <inttypes.h>
 #include <stdio.h>
+#include <shared/file-wrapper.h>
+
+#ifdef ANDROID
+#include "../../shared/file-wrapper.h"
+#endif
 
 #include "game-utils.h"
 
@@ -24,7 +29,11 @@ namespace GameUtils
 {
 bool LoadFile( const char* filename, ByteArray& bytes )
 {
+#ifndef ANDROID
   FILE* fin = fopen( filename, "rb" );
+#else
+  FILE* fin = Android::OpenFile( filename, "rb" );
+#endif
   if( fin )
   {
     if( fseek( fin, 0, SEEK_END ) )
@@ -32,15 +41,18 @@ bool LoadFile( const char* filename, ByteArray& bytes )
       fclose(fin);
       return false;
     }
-    bytes.resize( ftell( fin ) );
-    std::fill( bytes.begin(), bytes.end(), 0 );
+
+    bytes.resize( ftell( fin ), 0 );
+
     if( fseek( fin, 0, SEEK_SET ) )
     {
       fclose( fin );
       return false;
     }
+
     size_t result = fread( bytes.data(), 1, bytes.size(), fin );
     fclose( fin );
+
     return ( result != 0 );
   }
   return false;
