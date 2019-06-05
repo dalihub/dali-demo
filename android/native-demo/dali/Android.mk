@@ -128,6 +128,7 @@ cppfiles += $(public_api_header_files) \
             $(adaptor_clipboard_common_src_files) \
             $(adaptor_clipboard_android_src_files) \
             $(adaptor_imaging_common_src_files) \
+            $(adaptor_imaging_android_src_files) \
             $(adaptor_styling_common_src_files) \
             $(adaptor_accessibility_common_src_files) \
             $(adaptor_accessibility_android_src_files) \
