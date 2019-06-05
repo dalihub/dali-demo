@@ -21,6 +21,11 @@
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
 
+#ifdef ANDROID
+namespace TiltExample
+{
+#endif
+
 // This example shows how to use sensor using a simple TextLabel
 //
 class TiltController : public ConnectionTracker
@@ -120,3 +125,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

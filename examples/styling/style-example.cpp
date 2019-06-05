@@ -25,6 +25,10 @@
 // Internal includes
 #include "styling-application.h"
 
+#ifdef ANDROID
+namespace StyleExample
+{
+#endif
 
 int DALI_EXPORT_API main( int argc, char** argv )
 {
@@ -50,3 +54,7 @@ int DALI_EXPORT_API main( int argc, char** argv )
   }
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

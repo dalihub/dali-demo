@@ -24,6 +24,11 @@ using namespace Dali;
 using Dali::Toolkit::TextLabel;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace DragAndDropExample
+{
+#endif
+
 namespace
 {
 Vector4 TEXT_LABEL_COLOR[] =
@@ -287,3 +292,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

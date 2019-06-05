@@ -25,6 +25,11 @@ using namespace Dali;
 
 using Dali::Toolkit::TextLabel;
 
+#ifdef ANDROID
+namespace SizeNegotiationExample
+{
+#endif
+
 struct ButtonItem
 {
   const char* name;
@@ -826,3 +831,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

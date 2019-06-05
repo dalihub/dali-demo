@@ -21,6 +21,11 @@
 
 using namespace Dali;
 
+#ifdef ANDROID
+namespace ImageViewSvgExample
+{
+#endif
+
 namespace
 {
 const float MIN_SCALE = 0.6f;
@@ -266,3 +271,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

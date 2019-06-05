@@ -33,6 +33,11 @@ using namespace std;
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace SimpleTextRendererExample
+{
+#endif
+
 namespace
 {
 
@@ -355,3 +360,7 @@ int main( int argc, char **argv )
 
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

@@ -20,6 +20,11 @@
 using namespace Dali;
 using Dali::Toolkit::Model3dView;
 
+#ifdef ANDROID
+namespace Model3dViewExample
+{
+#endif
+
 namespace
 {
 const int MODEL_NUMBER(3);
@@ -301,3 +306,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

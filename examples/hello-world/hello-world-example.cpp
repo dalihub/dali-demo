@@ -20,6 +20,11 @@
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
 
+#ifdef ANDROID
+namespace HelloWorldExample
+{
+#endif
+
 // This example shows how to create and display Hello World! using a simple TextActor
 //
 class HelloWorldController : public ConnectionTracker
@@ -86,3 +91,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

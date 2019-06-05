@@ -27,6 +27,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace ScrollViewExample
+{
+#endif
+
 namespace
 {
 const char * const BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-default.png" );
@@ -599,3 +604,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   app.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

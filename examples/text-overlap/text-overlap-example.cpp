@@ -137,6 +137,11 @@ void TextOverlapController::OnKeyEvent( const KeyEvent& keyEvent )
 
 } // namespace Demo
 
+#ifdef ANDROID
+namespace TextOverlapExample
+{
+#endif
+
 int DALI_EXPORT_API main( int argc, char** argv )
 {
   {
@@ -146,3 +151,7 @@ int DALI_EXPORT_API main( int argc, char** argv )
   }
   exit( 0 );
 }
+
+#ifdef ANDROID
+}
+#endif

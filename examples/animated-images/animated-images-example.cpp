@@ -23,6 +23,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace AnimatedImagesExample
+{
+#endif
+
 namespace
 {
 const char * const PLAY_ICON_UNSELECTED( DEMO_IMAGE_DIR "icon-play.png" );
@@ -386,3 +391,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
 
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

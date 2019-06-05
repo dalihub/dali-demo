@@ -31,6 +31,10 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace MultiLanguageStrings;
 
+#ifdef ANDROID
+namespace TextLabelMultiLanguageExample
+{
+#endif
 /**
  * @brief The main class of the demo.
  */
@@ -141,3 +145,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

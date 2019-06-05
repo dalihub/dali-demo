@@ -24,6 +24,11 @@
 
 using namespace Dali;
 
+#ifdef ANDROID
+namespace TexturedMeshExample
+{
+#endif
+
 namespace
 {
 const char* MATERIAL_SAMPLE( DEMO_IMAGE_DIR "gallery-small-48.jpg" );
@@ -248,3 +253,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

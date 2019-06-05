@@ -67,25 +67,106 @@ std::string startOnQuit;
 #include <shared/dali-table-view.cpp>
 #include <shared/file-wrapper.cpp>
 #include <demo/dali-demo.cpp>
+
+#include <examples/alpha-blending-cpu/alpha-blending-cpu-example.cpp>
 #include <examples/animated-gradient-call-active/animated-gradient-call-active.cpp>
 #include <examples/animated-gradient-card-active/animated-gradient-card-active.cpp>
-#include <examples/blocks/blocks-example.cpp>
+#include <examples/animated-images/animated-images-example.cpp>
+#include <examples/animated-shapes/animated-shapes-example.cpp>
+#include <examples/animated-vector-images/animated-vector-images-example.cpp>
 #include <examples/bezier-curve/bezier-curve-example.cpp>
+#include <examples/blocks/blocks-example.cpp>
 #include <examples/bubble-effect/bubble-effect-example.cpp>
+#include <examples/buttons/buttons-example.cpp>
+#include <examples/clipping/clipping-example.cpp>
+#include <examples/clipping-draw-order/clipping-draw-order.cpp>
+#include <examples/compressed-texture-formats/compressed-texture-formats-example.cpp>
 #include <examples/contact-cards/contact-cards-example.cpp>
 #include <examples/cube-transition-effect/cube-transition-effect-example.cpp>
+#include <examples/dissolve-effect/dissolve-effect-example.cpp>
+#include <examples/drag-and-drop/drag-and-drop-example.cpp>
+#include <examples/effects-view/effects-view-example.cpp>
+#include <examples/flex-container/flex-container-example.cpp>
+#include <examples/focus-integration/focus-integration.cpp>
 #include <examples/fpp-game/fpp-game-example.cpp>
+#include <examples/frame-callback/frame-callback-example.cpp>
+#include <examples/gestures/gesture-example.cpp>
+#include <examples/gradients/gradients-example.cpp>
+#include <examples/hello-world/hello-world-example.cpp>
+#include <examples/image-policies/image-policies-example.cpp>
+#include <examples/image-scaling-and-filtering/image-scaling-and-filtering-example.cpp>
+#include <examples/image-scaling-irregular-grid/image-scaling-irregular-grid-example.cpp>
+#include <examples/image-view-alpha-blending/image-view-alpha-blending-example.cpp>
+#include <examples/image-view/image-view-example.cpp>
+#include <examples/image-view-pixel-area/image-view-pixel-area-example.cpp>
+#include <examples/image-view-svg/image-view-svg-example.cpp>
+#include <examples/image-view-url/image-view-url-example.cpp>
 #include <examples/item-view/item-view-example.cpp>
+#include <examples/line-mesh/line-mesh-example.cpp>
+#include <examples/magnifier/magnifier-example.cpp>
+#include <examples/mesh-morph/mesh-morph-example.cpp>
 #include <examples/mesh-visual/mesh-visual-example.cpp>
 #include <examples/metaball-explosion/metaball-explosion-example.cpp>
 #include <examples/metaball-refrac/metaball-refrac-example.cpp>
+#include <examples/model3d-view/model3d-view-example.cpp>
 #include <examples/motion-blur/motion-blur-example.cpp>
+#include <examples/motion-stretch/motion-stretch-example.cpp>
+#include <examples/native-image-source/native-image-source-example.cpp>
+#include <examples/pivot/pivot-example.cpp>
+#include <examples/point-mesh/point-mesh-example.cpp>
+#include <examples/popup/popup-example.cpp>
+#include <examples/pre-render-callback/pre-render-callback-example.cpp>
+#include <examples/primitive-shapes/primitive-shapes-example.cpp>
+#include <examples/progress-bar/progress-bar-example.cpp>
+#include <examples/property-notification/property-notification-example.cpp>
+#include <examples/ray-marching/ray-marching-example.cpp>
 #include <examples/refraction-effect/refraction-effect-example.cpp>
+#include <examples/remote-image-loading/remote-image-loading-example.cpp>
 #include <examples/renderer-stencil/renderer-stencil-example.cpp>
-#include <examples/rendering-skybox/rendering-skybox.cpp>
+#include <examples/rendering-basic-light/rendering-basic-light-example.cpp>
 #include <examples/rendering-basic-pbr/rendering-basic-pbr-example.cpp>
+#include <examples/rendering-cube/rendering-cube.cpp>
+#include <examples/rendering-line/rendering-line.cpp>
+#include <examples/rendering-radial-progress/radial-progress.cpp>
+#include <examples/rendering-skybox/rendering-skybox.cpp>
+#include <examples/rendering-textured-cube/rendering-textured-cube.cpp>
+#include <examples/rendering-triangle/rendering-triangle.cpp>
+// #include <examples/scripting/scripting-example.cpp> - multiple definition of 'DemoHelper::
+// ./dali-adaptor/dali/public-api/adaptor-framework/native-image-source.cpp:111: error: undefined reference to 'Dali::Internal::Adaptor::GetNativeImageSourceFactory()'
+#include <examples/scroll-view/scroll-view-example.cpp>
 #include <examples/shadows-and-lights/shadows-and-lights-example.cpp>
+#include <examples/simple-bitmap-font-text-label/simple-text-label-example.cpp>
+#include <examples/simple-text-label/simple-text-label-example.cpp>
+/*
+#include <examples/simple-text-renderer/simple-text-renderer-example.cpp>
+ error: undefined reference to 'Dali::TextAbstraction::Internal::TextRenderer
+*/
+#include <examples/simple-text-visual/simple-text-visual-example.cpp>
+#include <examples/simple-visuals-control/simple-visuals-example.cpp>
+#include <examples/size-negotiation/size-negotiation-example.cpp>
 #include <examples/sparkle/sparkle-effect-example.cpp>
+#include <examples/styling/style-example.cpp>
+#include <examples/text-editor/text-editor-example.cpp>
+#include <examples/text-field/text-field-example.cpp>
+#include <examples/text-fonts/text-fonts-example.cpp>
+#include <examples/text-label-emojis/text-label-emojis.cpp>
+#include <examples/text-label-multi-language/text-label-multi-language-example.cpp>
+#include <examples/text-label/text-label-example.cpp>
+#include <examples/text-memory-profiling/text-memory-profiling-example.cpp>
+#include <examples/text-overlap/text-overlap-example.cpp>
+#include <examples/text-scrolling/text-scrolling-example.cpp>
+#include <examples/textured-mesh/textured-mesh-example.cpp>
+/*
+#include <examples/tilt/tilt-example.cpp>
+tilt-sensor.cpp:37: error: undefined reference to 'Dali::Internal::Adaptor::TiltSensorFactory::Get()'
+*/
+#include <examples/tooltip/tooltip-example.cpp>
+#include <examples/transitions/transition-example.cpp>
+/* no video support
+#include <examples/video-view/video-view-example.cpp>
+*/
+#include <examples/visual-transitions/transition-example.cpp>
+
 
 void AutoHideNavBar(struct android_app* state)
 {
@@ -212,11 +293,7 @@ std::string GetCallParameter( struct android_app* state )
 
 void android_main( struct android_app* state )
 {
-    DALI_LOG_ERROR( "\n" );
-
     std::string callParam = GetCallParameter( state );
-    DALI_LOG_ERROR( "%s\n", callParam.c_str() );
-
     std::string filesDir = state->activity->internalDataPath;
 
     struct stat st = { 0 };
@@ -294,10 +371,116 @@ void android_main( struct android_app* state )
       status = ShadowsAndLightsExample::main( 0, nullptr );
     else if ( callParam == "sparkle.example")
       status = SparkleEffectExample::main( 0, nullptr );
-    else if ( callParam == "animated-gradient-call-active.example")
+    else if ( callParam == "animated-gradient-call-active.example" )
       status = AnimatedGradientCallActiveExample::main( 0, nullptr );
-    else if ( callParam == "animated-gradient-card-active.example")
+    else if ( callParam == "animated-gradient-card-active.example" )
       status = AnimatedGradientCardActiveExample::main( 0, nullptr );
+    else if ( callParam == "animated-images.example" )
+      status = AnimatedImagesExample::main( 0, nullptr );
+    else if ( callParam == "animated-shapes.example" )
+      status = AnimatedShapesExample::main( 0, nullptr );
+    else if ( callParam == "animated-vector-images.example" )
+      status = AnimatedVectorImagesExample::main( 0, nullptr );
+    else if ( callParam == "alpha-blending-cpu.example" )
+      status = AlphaBlendingCpuExample::main( 0, nullptr );
+    else if ( callParam == "buttons.example" )
+      status = ButtonsExample::main( 0, nullptr );
+    else if ( callParam == "clipping.example" )
+      status = ClippingExample::main( 0, nullptr );
+    else if ( callParam == "clipping-draw-order.example" )
+      status = ClippingDrawOrderExample::main( 0, nullptr );
+    else if ( callParam == "dissolve-effect.example" )
+      status = DissolveEffectExample::main( 0, nullptr );
+    else if ( callParam == "drag-and-drop.example" )
+      status = DragAndDropExample::main( 0, nullptr );
+    else if ( callParam == "effects-view.example" )
+      status = EffectsViewExample::main( 0, nullptr );
+    else if ( callParam == "flex-container.example" )
+      status = FlexContainerExample::main( 0, nullptr );
+    else if ( callParam == "frame-callback.example" )
+      status = FrameCallbackExample::main( 0, nullptr );
+    else if ( callParam == "focus-integration.example" )
+      status = FocusIntegrationExample::main( 0, nullptr );
+    else if ( callParam == "gestures.example" )
+      status = GestureExample::main( 0, nullptr );
+    else if ( callParam == "gradients.example" )
+      status = GradientsExample::main( 0, nullptr );
+    else if ( callParam == "hello-world.example" )
+      status = HelloWorldExample::main( 0, nullptr );
+    else if ( callParam == "image-policies.example" )
+      status = ImagePoliciesExample::main( 0, nullptr );
+    else if ( callParam == "image-scaling-and-filtering.example" )
+      status = ImageScalingAndFilteringExample::main( 0, nullptr );
+    else if ( callParam == "image-scaling-irregular-grid.example" )
+      status = ImageScalingIrregularGridExample::main( 0, nullptr );
+    else if ( callParam == "image-view.example" )
+      status = ImageViewExample::main( 0, nullptr );
+    else if ( callParam == "image-view-alpha-blending.example" )
+      status = ImageViewPixelAreaExample::main( 0, nullptr );
+    else if ( callParam == "image-view-pixel-area.example" )
+      status = ImageViewPixelAreaExample::main( 0, nullptr );
+    else if ( callParam == "image-view-svg.example" )
+      status = ImageViewSvgExample::main( 0, nullptr );
+    else if ( callParam == "image-view-url.example" )
+      status = ImageViewUrlExample::main( 0, nullptr );
+    else if ( callParam == "line-mesh.example" )
+      status = LineMeshExample::main( 0, nullptr );
+    else if ( callParam == "magnifier.example" )
+      status = MagnifierExample::main( 0, nullptr );
+    else if ( callParam == "mesh-morph.example" )
+      status = MeshMorphExample::main( 0, nullptr );
+    else if ( callParam == "motion-stretch.example" )
+      status = MotionStretchExample::main( 0, nullptr );
+    else if ( callParam == "native-image-source.example" )
+      status = NativeImageSourceExample::main( 0, nullptr );
+    else if ( callParam == "popup.example" )
+      status = PopupExample::main( 0, nullptr );
+    else if ( callParam == "pivot.example" )
+      status = PivotExample::main( 0, nullptr );
+    else if ( callParam == "primitive-shapes.example" )
+      status = PrimitiveShapesExample::main( 0, nullptr );
+    else if ( callParam == "progress-bar.example" )
+      status = ProgressBarExample::main( 0, nullptr );
+    else if ( callParam == "rendering-basic-light.example" )
+      status = RenderingBasicLightExample::main( 0, nullptr );
+    else if ( callParam == "rendering-line.example" )
+      status = RenderingLineExample::main( 0, nullptr );
+    else if ( callParam == "rendering-triangle.example" )
+      status = RenderingTriangleExample::main( 0, nullptr );
+    else if ( callParam == "rendering-cube.example" )
+      status = RenderingCubeExample::main( 0, nullptr );
+    else if ( callParam == "rendering-textured-cube.example" )
+      status = RenderingTexturedCubeExample::main( 0, nullptr );
+    else if ( callParam == "rendering-radial-progress.example" )
+      status = RenderingRadialProgressExample::main( 0, nullptr );
+    else if ( callParam == "ray-marching.example" )
+      status = RayMarchingExample::main( 0, nullptr );
+    else if ( callParam == "scroll-view.example" )
+      status = ScrollViewExample::main( 0, nullptr );
+    else if ( callParam == "size-negotiation.example" )
+      status = SizeNegotiationExample::main( 0, nullptr );
+    else if ( callParam == "styling.example" )
+      status = StyleExample::main( 0, nullptr );
+    else if ( callParam == "text-editor.example" )
+      status = TextEditorExample::main( 0, nullptr );
+    else if ( callParam == "text-field.example" )
+      status = TextFieldExample::main( 0, nullptr );
+    else if ( callParam == "text-label.example" )
+      status = TextLabelExample::main( 0, nullptr );
+    else if ( callParam == "text-label-multi-language.example" )
+      status = TextLabelMultiLanguageExample::main( 0, nullptr );
+    else if ( callParam == "text-label-emojis.example" )
+      status = TextLabelEmojisExample::main( 0, nullptr );
+    else if ( callParam == "text-scrolling.example" )
+      status = TextScrollingExample::main( 0, nullptr );
+    else if ( callParam == "remote-image-loading.example" )
+      status = RemoteImageLoadingExample::main( 0, nullptr );
+    else if ( callParam == "textured-mesh.example" )
+      status = TexturedMeshExample::main( 0, nullptr );
+    else if ( callParam == "tooltip.example" )
+      status = TooltipExample::main( 0, nullptr );
+    else if ( callParam == "transitions.example" )
+      status = TransitionExample::main( 0, nullptr );
     else
       status = main( 0, nullptr );
 

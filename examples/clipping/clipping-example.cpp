@@ -27,6 +27,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace ClippingExample
+{
+#endif
+
 namespace
 {
 const char * const APPLICATION_TITLE( "Clipping Controls" );
@@ -215,3 +220,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   app.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

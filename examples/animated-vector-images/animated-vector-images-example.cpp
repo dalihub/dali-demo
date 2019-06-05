@@ -27,6 +27,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace AnimatedVectorImagesExample
+{
+#endif
+
 namespace
 {
 
@@ -229,3 +234,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

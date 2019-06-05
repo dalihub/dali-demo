@@ -24,6 +24,11 @@
 #include <dali-toolkit/devel-api/controls/magnifier/magnifier.h>
 using namespace Dali;
 
+#ifdef ANDROID
+namespace MagnifierExample
+{
+#endif
+
 namespace
 {
 const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-magnifier.jpg" );
@@ -409,3 +414,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

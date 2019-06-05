@@ -22,6 +22,11 @@
 using namespace Dali;
 using namespace Toolkit;
 
+#ifdef ANDROID
+namespace VideoViewExample
+{
+#endif
+
 namespace
 {
   const int SEEK_POS( 5000 );
@@ -306,3 +311,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

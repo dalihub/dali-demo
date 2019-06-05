@@ -38,6 +38,11 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace MultiLanguageStrings;
 
+#ifdef ANDROID
+namespace TextLabelExample
+{
+#endif
+
 namespace
 {
 const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "grab-handle.png";
@@ -796,3 +801,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

@@ -26,6 +26,11 @@ using Dali::Toolkit::TextLabel;
 using Dali::Toolkit::Control;
 using Dali::Toolkit::ToolBar;
 
+#ifdef ANDROID
+namespace RayMarchingExample
+{
+#endif
+
 const char* BACKGROUND_IMAGE( "" );
 const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "Ray Marching" );
@@ -232,3 +237,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

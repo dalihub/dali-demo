@@ -20,6 +20,11 @@
 
 using namespace Dali;
 
+#ifdef ANDROID
+namespace AlphaBlendingCpuExample
+{
+#endif
+
 namespace
 {
 const char* const IMAGE_PATH_1 ( DEMO_IMAGE_DIR "people-small-7b.jpg" ); // 100x100
@@ -157,3 +162,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

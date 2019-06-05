@@ -22,6 +22,11 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 using Dali::Toolkit::ProgressBar;
 
+#ifdef ANDROID
+namespace ProgressBarExample
+{
+#endif
+
 namespace
 {
 const char * const THEME_PATH( DEMO_STYLE_DIR "progress-bar-example-theme.json" ); ///< The theme used for this example
@@ -251,3 +256,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

@@ -26,6 +26,11 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace EmojiStrings;
 
+#ifdef ANDROID
+namespace TextLabelEmojisExample
+{
+#endif
+
  // TODO Need to expose Text::RENDER.....
 const int ATLAS_RENDERER = 0;
 
@@ -139,3 +144,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

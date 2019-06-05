@@ -22,6 +22,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace GestureExample
+{
+#endif
+
 namespace
 {
 const Property::Value BACKGROUND
@@ -332,8 +337,13 @@ private:
 
           // Move actor back to center if we're out of bounds
           Vector2 halfStageSize = Stage::GetCurrent().GetSize() * 0.5f;
+#ifndef ANDROID
           if( ( std::abs( newPosition.x ) > halfStageSize.width  ) ||
               ( std::abs( newPosition.y ) > halfStageSize.height ) )
+#else
+          if( ( abs( newPosition.x ) > halfStageSize.width  ) ||
+              ( abs( newPosition.y ) > halfStageSize.height ) )
+#endif
           {
             anim.AnimateTo( Property( actor, Actor::Property::POSITION ), Vector3::ZERO, AlphaFunction::EASE_IN );
           }
@@ -455,3 +465,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

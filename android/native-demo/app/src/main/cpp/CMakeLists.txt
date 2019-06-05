@@ -16,6 +16,7 @@ add_definitions(-DDEMO_STYLE_DIR=\"assets/resources/style/\")
 add_definitions(-DDEMO_GAME_DIR=\"/data/data/com.sec.dali_demo/files/resources/game/\")
 add_definitions(-DDEMO_MODEL_DIR=\"/data/data/com.sec.dali_demo/files/resources/models/\")
 add_definitions(-DDEMO_SHADER_DIR=\"/data/data/com.sec.dali_demo/files/resources/shaders/\")
+add_definitions(-DDEMO_SCRIPT_DIR=\"/data/data/com.sec.dali_demo/files/resources/scripts/\")
 add_definitions(-DDEMO_EXAMPLE_BIN=\"\")
 
 # now build app's shared lib
@@ -33,6 +34,7 @@ target_include_directories(native-activity PRIVATE
 
 # DALi
 include_directories(${DALI_ANDROID}/dali-env/android/include)
+include_directories(${DALI_ANDROID}/dali-env/android/include/dali)
 include_directories(${DALI_ANDROID}/android-dependencies/libexif)
 include_directories(${DALI_ANDROID}/android-dependencies/libfontconfig)
 include_directories(${DALI_ANDROID}/android-dependencies/libfreetype)
@@ -41,23 +43,20 @@ include_directories(${DALI_ANDROID}/android-dependencies/libjpeg-turbo)
 include_directories(${DALI_ANDROID}/android-dependencies/libpng)
 include_directories(${DALI_ANDROID}/dali-demo)
 
-add_library(contact-cards-example STATIC
+add_library(contact-cards-example-files STATIC
         ${DALI_ANDROID}/dali-demo/examples/contact-cards/clipped-image.cpp
         ${DALI_ANDROID}/dali-demo/examples/contact-cards/masked-image.cpp
         ${DALI_ANDROID}/dali-demo/examples/contact-cards/contact-card-layouter.cpp
         ${DALI_ANDROID}/dali-demo/examples/contact-cards/contact-card.cpp
         ${DALI_ANDROID}/dali-demo/examples/contact-cards/contact-data.cpp)
 
-add_library(rendering-skybox-example STATIC
-        ${DALI_ANDROID}/dali-demo/examples/rendering-skybox/look-camera.cpp)
+add_library(clipping-example-files STATIC
+        ${DALI_ANDROID}/dali-demo/examples/clipping/clipping-item-factory.cpp)
 
-add_library(rendering-basic-pbr-example STATIC
-        ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/ktx-loader.cpp
-        ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/model-pbr.cpp
-        ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/model-skybox.cpp
-        ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/obj-loader.cpp)
+add_library(frame-callback-example-files STATIC
+        ${DALI_ANDROID}/dali-demo/examples/frame-callback/frame-callback.cpp)
 
-add_library(fpp-game-example STATIC
+add_library(fpp-game-example-files STATIC
         ${DALI_ANDROID}/dali-demo/examples/fpp-game/fpp-game-tutorial-controller.cpp
         ${DALI_ANDROID}/dali-demo/examples/fpp-game/game-camera.cpp
         ${DALI_ANDROID}/dali-demo/examples/fpp-game/game-entity.cpp
@@ -66,6 +65,37 @@ add_library(fpp-game-example STATIC
         ${DALI_ANDROID}/dali-demo/examples/fpp-game/game-scene.cpp
         ${DALI_ANDROID}/dali-demo/examples/fpp-game/game-texture.cpp
         ${DALI_ANDROID}/dali-demo/examples/fpp-game/game-utils.cpp)
+
+add_library(rendering-skybox-example-files STATIC
+        ${DALI_ANDROID}/dali-demo/examples/rendering-skybox/look-camera.cpp)
+
+add_library(rendering-basic-pbr-example-files STATIC
+        ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/ktx-loader.cpp
+        ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/model-pbr.cpp
+        ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/model-skybox.cpp
+        ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/obj-loader.cpp)
+
+add_library(scripting-example-files STATIC
+        ${DALI_ANDROID}/dali-demo/examples/scripting/launcher.cpp)
+
+add_library(simple-visuals-controls STATIC
+        ${DALI_ANDROID}/dali-demo/examples/simple-visuals-control/my-control.cpp
+        ${DALI_ANDROID}/dali-demo/examples/simple-visuals-control/my-control-impl.cpp
+        ${DALI_ANDROID}/dali-demo/examples/simple-visuals-control/simple-visuals-application.cpp)
+
+add_library(styling-example-files STATIC
+        ${DALI_ANDROID}/dali-demo/examples/styling/image-channel-control.cpp
+        ${DALI_ANDROID}/dali-demo/examples/styling/image-channel-control-impl.cpp
+        ${DALI_ANDROID}/dali-demo/examples/styling/styling-application.cpp)
+
+add_library(text-label-example-files STATIC
+        ${DALI_ANDROID}/dali-demo/examples/text-label/expanding-buttons.cpp
+        ${DALI_ANDROID}/dali-demo/examples/text-label/expanding-buttons-impl.cpp)
+
+add_library(transition-example-files STATIC
+        ${DALI_ANDROID}/dali-demo/examples/transitions/shadow-button.cpp
+        ${DALI_ANDROID}/dali-demo/examples/transitions/shadow-button-impl.cpp
+        ${DALI_ANDROID}/dali-demo/examples/transitions/transition-application.cpp)
 
 add_library(dali
         STATIC
@@ -157,10 +187,16 @@ set_target_properties(png
 
 # add lib dependencies
 target_link_libraries(native-activity
-        contact-cards-example
-        fpp-game-example
-        rendering-basic-pbr-example
-        rendering-skybox-example
+        clipping-example-files
+        contact-cards-example-files
+        frame-callback-example-files
+        fpp-game-example-files
+        rendering-basic-pbr-example-files
+        rendering-skybox-example-files
+        simple-visuals-controls
+        styling-example-files
+        text-label-example-files
+        transition-example-files
         dali
         android
         native_app_glue

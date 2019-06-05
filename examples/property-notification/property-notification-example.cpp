@@ -21,6 +21,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace PropertyNotificationExample
+{
+#endif
+
 namespace
 {
 const float COLOR_ANIMATION_DURATION( 5.0f );
@@ -122,3 +127,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

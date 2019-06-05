@@ -38,6 +38,11 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace MultiLanguageStrings;
 
+#ifdef ANDROID
+namespace TextFontsExample
+{
+#endif
+
 namespace
 {
   const char* const LABEL_TEXT = "A Quick Fox";
@@ -254,3 +259,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

@@ -25,6 +25,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace FrameCallbackExample
+{
+#endif
+
 namespace
 {
 const char * IMAGE_NAME = DEMO_IMAGE_DIR "application-icon-1.png";
@@ -194,3 +199,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

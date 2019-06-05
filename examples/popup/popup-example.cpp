@@ -31,6 +31,11 @@ struct ButtonItem
   const char* text;
 };
 
+#ifdef ANDROID
+namespace PopupExample
+{
+#endif
+
 namespace
 {
 
@@ -739,3 +744,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

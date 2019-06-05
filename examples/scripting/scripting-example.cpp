@@ -24,6 +24,11 @@
 // INTERNAL INCLUDES
 #include "launcher.h"
 
+#ifdef ANDROID
+namespace ScriptingExample
+{
+#endif
+
 namespace
 {
 bool CheckIfFileExists( const std::string& filename )
@@ -92,3 +97,7 @@ int DALI_EXPORT_API main( int argc, char* argv[] )
 
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

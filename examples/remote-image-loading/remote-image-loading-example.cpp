@@ -27,6 +27,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace RemoteImageLoadingExample
+{
+#endif
+
 // This example shows the load-time image scaling and filtering features.
 //
 class MyTester : public ConnectionTracker
@@ -215,3 +220,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

@@ -19,15 +19,22 @@
 #include <dali/devel-api/adaptor-framework/application-devel.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 
+using namespace Dali;
 using namespace Dali::Toolkit;
 
-namespace Dali
+#ifdef ANDROID
+namespace PrerenderCallbackExample
+{
+#endif
+
+namespace
 {
 const char* SCENE_IMAGE_1( DEMO_IMAGE_DIR "gallery-small-10.jpg");
 const char* SCENE_IMAGE_2( DEMO_IMAGE_DIR "gallery-small-42.jpg");
 const char* SCENE_IMAGE_3( DEMO_IMAGE_DIR "gallery-small-48.jpg");
 const char* ROTATE_TEXT("-\\|/");
 const float TEXT_HEIGHT = 40.0f;
+}
 
 void AddText( Control textContainer, std::string text, unsigned int yIndex )
 {
@@ -251,12 +258,14 @@ private:
   TextLabel                 mSpinner;
 };
 
-} // namespace Dali
-
 int main( int argc, char **argv )
 {
   Dali::Application application = Dali::Application::New( &argc, &argv );
-  Dali::PreRenderCallbackController controller( application );
+  PreRenderCallbackController controller( application );
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

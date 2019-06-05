@@ -25,6 +25,10 @@
 // Internal includes
 #include "transition-application.h"
 
+#ifdef ANDROID
+namespace TransitionExample
+{
+#endif
 
 int DALI_EXPORT_API main( int argc, char** argv )
 {
@@ -35,3 +39,7 @@ int DALI_EXPORT_API main( int argc, char** argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

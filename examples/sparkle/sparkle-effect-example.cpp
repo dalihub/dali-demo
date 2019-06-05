@@ -564,4 +564,3 @@ int DALI_EXPORT_API main( int argc, char **argv )
 #ifdef ANDROID
 }
 #endif
-

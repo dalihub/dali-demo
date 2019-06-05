@@ -22,6 +22,11 @@
 
 using namespace Dali;
 
+#ifdef ANDROID
+namespace ImageViewPixelAreaExample
+{
+#endif
+
 namespace
 {
 const char* BIG_TEST_IMAGE( DEMO_IMAGE_DIR "book-landscape-cover.jpg" );
@@ -241,3 +246,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

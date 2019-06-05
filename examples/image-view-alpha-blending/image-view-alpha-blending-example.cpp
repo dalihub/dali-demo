@@ -21,6 +21,11 @@
 
 using namespace Dali;
 
+#ifdef ANDROID
+namespace ImageViewAlphaBlendingExample
+{
+#endif
+
 namespace
 {
 const char* const IMAGE_PATH ( DEMO_IMAGE_DIR "gallery-large-20.jpg" );
@@ -145,3 +150,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

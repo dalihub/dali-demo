@@ -25,6 +25,11 @@
 // INTERNAL INCLUDES
 #include "simple-visuals-application.h"
 
+#ifdef ANDROID
+namespace SimpleVisualsExample
+{
+#endif
+
 namespace
 {
 // Style sheet to be used by this application
@@ -34,7 +39,11 @@ const char* SIMPLE_DEMO_THEME( DEMO_STYLE_DIR "simple-example-theme.json" );
 int DALI_EXPORT_API main( int argc, char** argv )
 {
   Application application = Application::New( &argc, &argv, SIMPLE_DEMO_THEME ); // Use the above defined style sheet for this application.
-  Demo::SimpleVisualsApplication simpleVisualsApplication( application );
+  SimpleVisualsApplication simpleVisualsApplication( application );
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

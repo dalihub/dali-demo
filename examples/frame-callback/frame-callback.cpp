@@ -46,7 +46,11 @@ void FrameCallback::Update( Dali::UpdateProxy& updateProxy, float /* elapsedSeco
     if( updateProxy.GetPositionAndSize( i, position, size ) ) // Retrieve the position and size using the Actor ID.
     {
       float halfWidthPoint = stageHalfWidth - size.width * 0.5f;
+#ifndef ANDROID
       float xTranslation = std::abs( position.x );
+#else
+      float xTranslation = fabs( position.x );
+#endif
       if( xTranslation > halfWidthPoint )
       {
         // Actor has hit the edge, adjust the size accordingly.

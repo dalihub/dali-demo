@@ -22,6 +22,11 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace GradientsExample
+{
+#endif
+
 namespace
 {
 const char * const APPLICATION_TITLE( "Color Gradients" );
@@ -168,3 +173,7 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif
