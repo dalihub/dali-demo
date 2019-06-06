@@ -383,7 +383,17 @@ public:
         mDepthLayout->SetItemSize( DepthLayoutItemSizeFunctionLandscape( stageSize.height ) );
       }
     }
-
+#ifdef ANDROID
+    else if (layoutId == SPIRAL_LAYOUT)
+    {
+      float itemSize = stageSize.width / 6;
+      if( !Toolkit::IsVertical( mDepthLayout->GetOrientation() ) )
+      {
+        itemSize = stageSize.height / 6;
+      }
+      mSpiralLayout->SetItemSize( Vector3( itemSize, itemSize, itemSize ) );
+    }
+#endif
     // Enable anchoring for depth layout only
     mItemView.SetAnchoring(layoutId == DEPTH_LAYOUT);
 
