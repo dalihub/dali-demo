@@ -99,15 +99,27 @@ const char * const BUTTON_ADD_IMAGE( DEMO_IMAGE_DIR "Card_Add_Button.png" );
 const Vector2 LABEL_TICKET_SIZE = Vector2( 148.0f, 31.0f );
 const Vector3 LABEL_TICKET_POSITION = Vector3( 0.0f, 72.5f, 0.0f );
 const Vector4 LABEL_TICKET_FONT_COLOR = Vector4( 0.98f, 0.98f, 0.98f, 1.0f );
+#ifdef ANDROID
+const float   LABEL_TICKET_FONT_SIZE = 20.0f;
+#else
 const float   LABEL_TICKET_FONT_SIZE = 25.0f;
+#endif
 const Vector2 LABEL_HOLD_SIZE = Vector2( 180.0f, 60.0f );
 const Vector3 LABEL_HOLD_POSITION = Vector3( 1.0f, 103.0f, 0.0f );
 const Vector4 LABEL_HOLD_FONT_COLOR = Vector4( 0.98f, 0.98f, 0.98f, 1.0f );
+#ifdef ANDROID
+const float   LABEL_HOLD_FONT_SIZE = 20.0f;
+#else
 const float   LABEL_HOLD_FONT_SIZE = 25.0f;
+#endif
 const Vector2 LABEL_TERMINAL_SIZE = Vector2( 180.0f, 60.0f );
 const Vector3 LABEL_TERMINAL_POSITION = Vector3( 1.0f, 133.0f, 0.0f );
 const Vector4 LABEL_TERMINAL_FONT_COLOR = Vector4( 0.98f, 0.98f, 0.98f, 1.0f );
+#ifdef ANDROID
+const float   LABEL_TERMINAL_FONT_SIZE = 20.0f;
+#else
 const float   LABEL_TERMINAL_FONT_SIZE = 25.0f;
+#endif
 
 // string string
 const char * const LABEL_TICKET_STR( "Select Ticket" );
