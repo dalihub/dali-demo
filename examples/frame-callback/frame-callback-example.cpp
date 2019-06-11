@@ -36,8 +36,8 @@ const char * IMAGE_NAME = DEMO_IMAGE_DIR "application-icon-1.png";
 
 const char * TEXT_ENABLED( "FrameCallback: ON" );
 const char * TEXT_DISABLED( "FrameCallback: OFF" );
-Vector4 TEXT_COLOR_ENABLED( Color::BLACK );
-Vector4 TEXT_COLOR_DISABLED( Color::RED );
+Vector4 TEXT_COLOR_ENABLED;
+Vector4 TEXT_COLOR_DISABLED;
 
 float ANIMATION_TIME( 4.0f );
 float ANIMATION_PROGRESS_MULTIPLIER( 0.02f );
@@ -129,6 +129,9 @@ private:
       animation.SetCurrentProgress( std::min( 1.0f, ANIMATION_PROGRESS_MULTIPLIER * i ) );
       animation.Play();
     }
+
+    TEXT_COLOR_ENABLED = Color::BLACK;
+    TEXT_COLOR_DISABLED = Color::RED;
 
     // Create a text-label to display whether the FrameCallback is enabled/disabled.
     mTextLabel = TextLabel::New( TEXT_ENABLED );

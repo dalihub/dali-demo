@@ -31,23 +31,11 @@ namespace DragAndDropExample
 
 namespace
 {
-Vector4 TEXT_LABEL_COLOR[] =
-{
-  Color::MAGENTA,
-  Color::YELLOW,
-  Color::CYAN,
-  Color::BLUE,
-  Color::MAGENTA,
-  Color::YELLOW,
-  Color::CYAN,
-  Color::BLUE
-};
-
+const unsigned int TEXT_LABEL_NUM = 8;
 const float TEXT_LABEL_POSITION_X = 100.0f;
 const float TEXT_LABEL_POSITION_START_Y = 50.0f;
 const float TEXT_LABEL_WIDTH = 250.0f;
 const float TEXT_LABEL_HEIGHT = 70.0f;
-const unsigned int TEXT_LABEL_NUM = sizeof(TEXT_LABEL_COLOR) / sizeof(TEXT_LABEL_COLOR[0]);
 
 #if defined(DEBUG_ENABLED)
   Debug::Filter* gDragAndDropFilter = Debug::Filter::New(Debug::NoLogging, false, "LOG_DRAG_AND_DROP_EXAMPLE");
@@ -86,6 +74,18 @@ public:
     hintText.SetAnchorPoint(AnchorPoint::TOP_LEFT);
     hintText.SetProperty(TextLabel::Property::MULTI_LINE, true);
     stage.Add(hintText);
+
+    Vector4 TEXT_LABEL_COLOR[TEXT_LABEL_NUM] =
+    {
+      Color::MAGENTA,
+      Color::YELLOW,
+      Color::CYAN,
+      Color::BLUE,
+      Color::MAGENTA,
+      Color::YELLOW,
+      Color::CYAN,
+      Color::BLUE
+    };
 
     for(unsigned int i = 0 ; i < TEXT_LABEL_NUM; i++)
     {
