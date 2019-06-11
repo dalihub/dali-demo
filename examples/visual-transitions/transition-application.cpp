@@ -256,7 +256,11 @@ void TransitionApplication::CreateVisualMap( int index, Property::Map& map )
     {
       // SVG
       map[ Toolkit::Visual::Property::TYPE ] = Visual::IMAGE;
+#ifndef ANDROID
       map[ ImageVisual::Property::URL ] = DEMO_IMAGE_DIR "Kid1.svg";
+#else
+      map[ ImageVisual::Property::URL ] = DEMO_EXTRACTED_IMAGE_DIR "Kid1.svg";
+#endif
       break;
     }
 

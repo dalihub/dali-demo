@@ -39,7 +39,11 @@ const char* const TITLE( "EffectsView: effect size = " );
 const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char* VIEW_SWAP_IMAGE( DEMO_IMAGE_DIR "icon-change.png" );
 const char* VIEW_SWAP_SELECTED_IMAGE( DEMO_IMAGE_DIR "icon-change-selected.png" );
+#ifndef ANDROID
 const char* TEST_IMAGE( DEMO_IMAGE_DIR "Kid1.svg" );
+#else
+const char* TEST_IMAGE( DEMO_EXTRACTED_IMAGE_DIR "Kid1.svg" );
+#endif
 } // namespace
 
 // This example illustrates the capabilities of the EffectsView container

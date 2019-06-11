@@ -131,7 +131,6 @@ std::string startOnQuit;
 #include <examples/rendering-skybox/rendering-skybox.cpp>
 #include <examples/rendering-textured-cube/rendering-textured-cube.cpp>
 #include <examples/rendering-triangle/rendering-triangle.cpp>
-// #include <examples/scripting/scripting-example.cpp> - multiple definition of 'DemoHelper::
 // ./dali-adaptor/dali/public-api/adaptor-framework/native-image-source.cpp:111: error: undefined reference to 'Dali::Internal::Adaptor::GetNativeImageSourceFactory()'
 #include <examples/scroll-view/scroll-view-example.cpp>
 #include <examples/shadows-and-lights/shadows-and-lights-example.cpp>
@@ -306,7 +305,9 @@ void android_main( struct android_app* state )
       ExtractAssets( state, "fonts/dejavu", filesDir + "/fonts/dejavu" );
       ExtractAssets( state, "fonts/tizen", filesDir + "/fonts/tizen" );
     }
+
 /*
+    All toolkit assests are extracted runtime
     path = filesDir + "/toolkit";
     if( stat( path.c_str(), &st ) == -1 )
     {
@@ -321,15 +322,29 @@ void android_main( struct android_app* state )
     path = filesDir + "/resources";
     if( stat( path.c_str(), &st ) == -1 )
     {
-        mkdir( filesDir.c_str(), S_IRWXU );
-        ExtractAssets( state, "resources", filesDir + "/resources" );
-        ExtractAssets( state, "resources/game", filesDir + "/resources/game" );
-        ExtractAssets( state, "resources/models", filesDir + "/resources/models" );
-        ExtractAssets( state, "resources/scripts", filesDir + "/resources/scripts" );
-        ExtractAssets( state, "resources/shaders", filesDir + "/resources/shaders" );
-        //ExtractAssets( state, "resources/images", filesDir + "/resources/images" );
-        //ExtractAssets( state, "resources/style", filesDir + "/resources/style" );
-        //ExtractAssets( state, "resources/style/images", filesDir + "/resources/style/images" );
+      mkdir( filesDir.c_str(), S_IRWXU );
+      ExtractAssets( state, "resources", filesDir + "/resources" );
+      ExtractAssets( state, "resources/game", filesDir + "/resources/game" );
+      ExtractAssets( state, "resources/models", filesDir + "/resources/models" );
+      ExtractAssets( state, "resources/scripts", filesDir + "/resources/scripts" );
+      ExtractAssets( state, "resources/shaders", filesDir + "/resources/shaders" );
+      // nanosvg library fopen its files
+      path = filesDir + "/resources/images";
+      mkdir( path.c_str(), S_IRWXU );
+      ExtractAsset(state, "resources/images/Mail.svg", filesDir + "/resources/images/Mail.svg");
+      ExtractAsset(state, "resources/images/Settings.svg",
+                     filesDir + "/resources/images/Settings.svg");
+      ExtractAsset(state, "resources/images/World.svg", filesDir + "/resources/images/World.svg");
+      ExtractAsset(state, "resources/images/Phone.svg", filesDir + "/resources/images/Phone.svg");
+      ExtractAsset(state, "resources/images/Contacts.svg",
+                     filesDir + "/resources/images/Contacts.svg");
+      ExtractAsset(state, "resources/images/Message.svg",
+                     filesDir + "/resources/images/Message.svg");
+      ExtractAsset(state, "resources/images/Kid1.svg", filesDir + "/resources/images/Kid1.svg");
+      // Don't extract image assets since they are too big and can be extracted when accessed.
+      //ExtractAssets( state, "resources/images", filesDir + "/resources/images" );
+      //ExtractAssets( state, "resources/style", filesDir + "/resources/style" );
+      //ExtractAssets( state, "resources/style/images", filesDir + "/resources/style/images" );
     }
 
     AutoHideNavBar( state );

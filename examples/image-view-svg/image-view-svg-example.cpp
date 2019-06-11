@@ -31,6 +31,7 @@ namespace
 const float MIN_SCALE = 0.6f;
 const float MAX_SCALE = 6.f;
 
+#ifndef ANDROID
 const char* SVG_IMAGES[] =
 {
     DEMO_IMAGE_DIR "Camera.svg",
@@ -42,6 +43,20 @@ const char* SVG_IMAGES[] =
     DEMO_IMAGE_DIR "World.svg",
     DEMO_IMAGE_DIR "Kid1.svg"
 };
+#else
+const char* SVG_IMAGES[] =
+{
+    DEMO_EXTRACTED_IMAGE_DIR "Camera.svg",
+    DEMO_EXTRACTED_IMAGE_DIR "Contacts.svg",
+    DEMO_EXTRACTED_IMAGE_DIR "Mail.svg",
+    DEMO_EXTRACTED_IMAGE_DIR "Message.svg",
+    DEMO_EXTRACTED_IMAGE_DIR "Phone.svg",
+    DEMO_EXTRACTED_IMAGE_DIR "Settings.svg",
+    DEMO_EXTRACTED_IMAGE_DIR "World.svg",
+    DEMO_EXTRACTED_IMAGE_DIR "Kid1.svg"
+};
+#endif
+
 const unsigned int NUM_SVG_IMAGES( sizeof( SVG_IMAGES ) / sizeof( SVG_IMAGES[0] ) );
 const unsigned int NUM_IMAGES_DISPLAYED = 4u;
 } // unnamed namespace

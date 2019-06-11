@@ -40,7 +40,11 @@ const char* IMAGE_PATH[] = {
     DEMO_IMAGE_DIR "gallery-small-23.jpg",
     DEMO_IMAGE_DIR "woodEffect.jpg",
     DEMO_IMAGE_DIR "heartsframe.9.png",
+#ifndef ANDROID
     DEMO_IMAGE_DIR "World.svg"
+#else
+    DEMO_EXTRACTED_IMAGE_DIR "World.svg"
+#endif
 };
 
 const unsigned int NUMBER_OF_IMAGES = 3;
