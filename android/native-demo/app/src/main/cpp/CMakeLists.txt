@@ -75,9 +75,6 @@ add_library(rendering-basic-pbr-example-files STATIC
         ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/model-skybox.cpp
         ${DALI_ANDROID}/dali-demo/examples/rendering-basic-pbr/obj-loader.cpp)
 
-add_library(scripting-example-files STATIC
-        ${DALI_ANDROID}/dali-demo/examples/scripting/launcher.cpp)
-
 add_library(simple-visuals-controls STATIC
         ${DALI_ANDROID}/dali-demo/examples/simple-visuals-control/my-control.cpp
         ${DALI_ANDROID}/dali-demo/examples/simple-visuals-control/my-control-impl.cpp

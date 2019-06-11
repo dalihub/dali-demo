@@ -62,7 +62,6 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("animated-shapes.example", DALI_DEMO_STR_TITLE_ANIMATED_SHAPES));
   demo.AddExample(Example("animated-vector-images.example", DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES));
   demo.AddExample(Example("alpha-blending-cpu.example", DALI_DEMO_STR_TITLE_ALPHA_BLENDING_CPU));
-  demo.AddExample(Example("builder.example", DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI));
   demo.AddExample(Example("buttons.example", DALI_DEMO_STR_TITLE_BUTTONS));
   demo.AddExample(Example("clipping.example", DALI_DEMO_STR_TITLE_CLIPPING));
   demo.AddExample(Example("clipping-draw-order.example", DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER));
