@@ -96,13 +96,21 @@ enum StyleType
   NUMBER_OF_STYLES
 };
 
-const Vector4 AVAILABLE_COLORS[] =
+const Vector4 AVAILABLE_COLORS[5] =
 {
+#ifndef ANDROID
   Color::GREEN,
   Color::BLUE,
   Color::RED,
   Color::CYAN,
   Color::WHITE // Used as clear
+#else
+  Vector4( 0.0f, 1.0f, 0.0f, 1.0f ),
+  Vector4( 0.0f, 0.0f, 1.0f, 1.0f ),
+  Vector4( 1.0f, 0.0f, 0.0f, 1.0f ),
+  Vector4( 0.0f, 1.0f, 1.0f, 1.0f ),
+  Vector4( 0.0f, 0.0f, 0.0f, 0.0f ) // Used as clear
+#endif
 };
 
 const unsigned int NUMBER_OF_COLORS = sizeof( AVAILABLE_COLORS ) / sizeof( AVAILABLE_COLORS[0u] );
@@ -157,7 +165,7 @@ public:
   TextLabelExample( Application& application )
   : mApplication( application ),
     mLabel(),
-    mSelectedColor(AVAILABLE_COLORS[0]),
+    mSelectedColor( AVAILABLE_COLORS[0] ),
     mStyleActivatedForColor( NUMBER_OF_STYLES ),
     mContainer(),
     mGrabCorner(),
@@ -175,7 +183,7 @@ public:
     mApplication.InitSignal().Connect( this, &TextLabelExample::Create );
 
     // Set Style flags to inactive
-    for ( unsigned int i = TEXT_COLOR; i < NUMBER_OF_STYLES; i++ )
+    for( unsigned int i = TEXT_COLOR; i < NUMBER_OF_STYLES; i++ )
     {
       mStyleActiveState[ i ] = false;
       mCurrentStyleColor[i] = AVAILABLE_COLORS[ NUMBER_OF_COLORS - 1 ];
