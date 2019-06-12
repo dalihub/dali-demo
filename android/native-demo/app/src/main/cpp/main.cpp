@@ -64,6 +64,7 @@ namespace
 //#include <examples/benchmark/benchmark.cpp>
 
 std::string startOnQuit;
+
 #include <shared/dali-table-view.cpp>
 #include <shared/file-wrapper.cpp>
 #include <demo/dali-demo.cpp>
@@ -279,12 +280,51 @@ std::string GetCallParameter( struct android_app* state )
         const char *callParam = env->GetStringUTFChars( jsCallParam, 0 );
         std::string callParamString = std::string( callParam );
         env->ReleaseStringUTFChars( jsCallParam, callParam );
+        state->activity->vm->DetachCurrentThread();
         return callParamString;
     }
     else
     {
+        state->activity->vm->DetachCurrentThread();
         return std::string();
     }
+}
+
+bool ShowSoftKeyboard(struct android_app* state)
+{
+  JNIEnv *env;
+  state->activity->vm->AttachCurrentThread( &env, NULL );
+  jclass activityClass = env->GetObjectClass( state->activity->clazz );
+
+  jclass contextClass = env->FindClass("android/content/Context");
+  jfieldID INPUT_METHOD_SERVICE_ID =
+          env->GetStaticFieldID( contextClass, "INPUT_METHOD_SERVICE", "Ljava/lang/String;" );
+  jobject INPUT_METHOD_SERVICE =
+          env->GetStaticObjectField( contextClass, INPUT_METHOD_SERVICE_ID );
+
+  jmethodID getSystemService = env->GetMethodID( activityClass, "getSystemService",
+                                                "(Ljava/lang/String;)Ljava/lang/Object;" );
+
+  jobject inputMethodManager = env->CallObjectMethod( state->activity->clazz, getSystemService, INPUT_METHOD_SERVICE );
+  jclass inputMethodManagerClass = env->GetObjectClass( inputMethodManager );
+/*
+  jmethodID toggleSoftInput = env->GetMethodID( inputMethodManagerClass, "toggleSoftInput", "(II)V" );
+  env->CallVoidMethod( inputMethodManager, toggleSoftInput, 2, 0 );
+*/
+
+  jmethodID getWindow = env->GetMethodID( activityClass, "getWindow", "()Landroid/view/Window;" );
+  jobject window = env->CallObjectMethod( state->activity->clazz, getWindow );
+  jclass windowClass = env->GetObjectClass( window );
+
+  jmethodID getDecorView = env->GetMethodID( windowClass, "getDecorView", "()Landroid/view/View;" );
+  jobject decorView = env->CallObjectMethod( window, getDecorView );
+
+  jmethodID showSoftInput = env->GetMethodID( inputMethodManagerClass, "showSoftInput", "(Landroid/view/View;I)Z" );
+  jboolean result = env->CallBooleanMethod( inputMethodManager, showSoftInput, decorView, 0 );
+
+  state->activity->vm->DetachCurrentThread();
+
+  return result ? true : false;
 }
 
 // "am start -a android.intent.action.MAIN -n com.sec.dali_demo/android.app.NativeActivity --es "start" "blocks.example""
@@ -477,7 +517,10 @@ void android_main( struct android_app* state )
     else if ( callParam == "styling.example" )
       status = StyleExample::main( 0, nullptr );
     else if ( callParam == "text-editor.example" )
+    {
+      ANativeActivity_showSoftInput( state->activity, 2 );
       status = TextEditorExample::main( 0, nullptr );
+    }
     else if ( callParam == "text-field.example" )
       status = TextFieldExample::main( 0, nullptr );
     else if ( callParam == "text-label.example" )
