@@ -49,7 +49,7 @@ const float   TOOLBAR_PADDING = 4.f;                                ///< The pad
 const float   BUTTON_PERCENTAGE = 0.8f;                             ///< The button's height as a percentage of the space for the buttons in the toolbar.
 const Vector3 TEXT_EDITOR_RELATIVE_SIZE( 1.f, 0.45f, 1.0f );        ///< The size of the text editor as a percentage of the stage's size.
 const Vector4 TEXT_EDITOR_BACKGROUND_COLOR( 1.f, 1.f, 1.f, 0.15f ); ///< The background color of the text editor.
-
+#ifndef ANDROID
 const Vector4 COLORS[] = { Color::RED,
                            Color::GREEN,
                            Color::BLUE,
@@ -58,6 +58,16 @@ const Vector4 COLORS[] = { Color::RED,
                            Color::MAGENTA,
                            Color::WHITE,
                            Color::BLACK };
+#else
+const Vector4 COLORS[] = { Vector4( 1.0f, 0.0f, 0.0f, 1.0f ),
+                           Vector4( 0.0f, 1.0f, 0.0f, 1.0f ),
+                           Vector4( 1.0f, 0.0f, 0.0f, 1.0f ),
+                           Vector4( 1.0f, 1.0f, 0.0f, 1.0f ),
+                           Vector4( 0.0f, 1.0f, 1.0f, 1.0f ),
+                           Vector4( 1.0f, 0.0f, 1.0f, 1.0f ),
+                           Vector4( 1.0f, 1.0f, 1.0f, 1.0f ),
+                           Vector4( 0.0f, 0.0f, 0.0f, 1.0f ) };
+#endif
 const unsigned int NUMBER_OF_COLORS = sizeof( COLORS ) / sizeof( Vector4 );
 
 } // Unnamed namespace
