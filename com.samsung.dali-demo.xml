@@ -296,6 +296,9 @@
   <ui-application appid="gestures.example" exec="/usr/apps/com.samsung.dali-demo/bin/gestures.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Gestures</label>
 	</ui-application>
+  <ui-application appid="visual-fitting-mode.example" exec="/usr/apps/com.samsung.dali-demo/bin/visual-fitting-mode.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Visual Fitting Mode</label>
+	</ui-application>
 
 	<privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
