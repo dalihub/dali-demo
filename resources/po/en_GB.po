@@ -40,6 +40,9 @@ msgstr "Clipping"
 msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
 msgstr "Clipping Draw Order"
 
+msgid "DALI_DEMO_STR_TITLE_GAUSSIAN_BLUR_VIEW"
+msgstr "Gaussian Blur"
+
 msgid "DALI_DEMO_STR_TITLE_GESTURES"
 msgstr "Gestures"
 
@@ -180,6 +183,9 @@ msgstr "Sparkle"
 
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "Styling"
+
+msgid "DALI_DEMO_STR_TITLE_SUPER_BLUR_VIEW"
+msgstr "Super Blur"
 
 msgid "DALI_DEMO_STR_TITLE_TEXTURED_MESH"
 msgstr "Mesh Texture"

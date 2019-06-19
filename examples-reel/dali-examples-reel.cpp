@@ -50,6 +50,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("flex-container.example", DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND));
   demo.AddExample(Example("frame-callback.example", DALI_DEMO_STR_TITLE_FRAME_CALLBACK));
   demo.AddExample(Example("focus-integration.example", DALI_DEMO_STR_TITLE_FOCUS_INTEGRATION));
+  demo.AddExample(Example("gaussian-blur-view.example", DALI_DEMO_STR_TITLE_GAUSSIAN_BLUR_VIEW));
   demo.AddExample(Example("gestures.example", DALI_DEMO_STR_TITLE_GESTURES));
   demo.AddExample(Example("gradients.example", DALI_DEMO_STR_TITLE_COLOR_GRADIENT));
   demo.AddExample(Example("hello-world.example", DALI_DEMO_STR_TITLE_HELLO_WORLD));
@@ -80,6 +81,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("scroll-view.example", DALI_DEMO_STR_TITLE_SCROLL_VIEW));
   demo.AddExample(Example("size-negotiation.example", DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE));
   demo.AddExample(Example("styling.example", DALI_DEMO_STR_TITLE_STYLING));
+  demo.AddExample(Example("super-blur-view.example", DALI_DEMO_STR_TITLE_SUPER_BLUR_VIEW));
   demo.AddExample(Example("text-editor.example", DALI_DEMO_STR_TITLE_TEXT_EDITOR));
   demo.AddExample(Example("text-field.example", DALI_DEMO_STR_TITLE_TEXT_FIELD));
   demo.AddExample(Example("text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));
