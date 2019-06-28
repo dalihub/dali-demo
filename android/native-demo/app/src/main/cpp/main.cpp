@@ -59,10 +59,6 @@ namespace
     }
 }
 
-//#include <examples/hello-world/hello-world-example.cpp>
-//#include <examples/homescreen-benchmark/homescreen-benchmark.cpp>
-//#include <examples/benchmark/benchmark.cpp>
-
 std::string startOnQuit;
 
 #include <shared/dali-table-view.cpp>
@@ -75,6 +71,7 @@ std::string startOnQuit;
 #include <examples/animated-images/animated-images-example.cpp>
 #include <examples/animated-shapes/animated-shapes-example.cpp>
 #include <examples/animated-vector-images/animated-vector-images-example.cpp>
+#include <examples/benchmark/benchmark.cpp>
 #include <examples/bezier-curve/bezier-curve-example.cpp>
 #include <examples/blocks/blocks-example.cpp>
 #include <examples/bubble-effect/bubble-effect-example.cpp>
@@ -94,6 +91,7 @@ std::string startOnQuit;
 #include <examples/gestures/gesture-example.cpp>
 #include <examples/gradients/gradients-example.cpp>
 #include <examples/hello-world/hello-world-example.cpp>
+#include <examples/homescreen-benchmark/homescreen-benchmark.cpp>
 #include <examples/image-policies/image-policies-example.cpp>
 #include <examples/image-scaling-and-filtering/image-scaling-and-filtering-example.cpp>
 #include <examples/image-scaling-irregular-grid/image-scaling-irregular-grid-example.cpp>
@@ -116,6 +114,7 @@ std::string startOnQuit;
 #include <examples/pivot/pivot-example.cpp>
 #include <examples/point-mesh/point-mesh-example.cpp>
 #include <examples/popup/popup-example.cpp>
+#include <examples/perf-scroll/perf-scroll.cpp>
 #include <examples/pre-render-callback/pre-render-callback-example.cpp>
 #include <examples/primitive-shapes/primitive-shapes-example.cpp>
 #include <examples/progress-bar/progress-bar-example.cpp>
@@ -132,17 +131,18 @@ std::string startOnQuit;
 #include <examples/rendering-skybox/rendering-skybox.cpp>
 #include <examples/rendering-textured-cube/rendering-textured-cube.cpp>
 #include <examples/rendering-triangle/rendering-triangle.cpp>
-// ./dali-adaptor/dali/public-api/adaptor-framework/native-image-source.cpp:111: error: undefined reference to 'Dali::Internal::Adaptor::GetNativeImageSourceFactory()'
-#include <examples/scroll-view/scroll-view-example.cpp>
-#include <examples/shadows-and-lights/shadows-and-lights-example.cpp>
 #include <examples/simple-bitmap-font-text-label/simple-text-label-example.cpp>
 #include <examples/simple-text-label/simple-text-label-example.cpp>
+#include <examples/simple-text-field/simple-text-field.cpp>
+#include <examples/simple-text-visual/simple-text-visual-example.cpp>
+#include <examples/simple-visuals-control/simple-visuals-example.cpp>
 /*
 #include <examples/simple-text-renderer/simple-text-renderer-example.cpp>
  error: undefined reference to 'Dali::TextAbstraction::Internal::TextRenderer
 */
-#include <examples/simple-text-visual/simple-text-visual-example.cpp>
-#include <examples/simple-visuals-control/simple-visuals-example.cpp>
+// ./dali-adaptor/dali/public-api/adaptor-framework/native-image-source.cpp:111: error: undefined reference to 'Dali::Internal::Adaptor::GetNativeImageSourceFactory()'
+#include <examples/scroll-view/scroll-view-example.cpp>
+#include <examples/shadows-and-lights/shadows-and-lights-example.cpp>
 #include <examples/size-negotiation/size-negotiation-example.cpp>
 #include <examples/sparkle/sparkle-effect-example.cpp>
 #include <examples/styling/style-example.cpp>
@@ -394,6 +394,8 @@ void android_main( struct android_app* state )
     int status = 0;
     if( callParam == "blocks.example" )
       status = BlocksExample::main( 0, nullptr );
+    else if ( callParam == "benchmark.example" )
+      status = Benchmark::main( 0, nullptr );
     else if ( callParam == "bezier-curve.example" )
       status = BezierCurveExample::main( 0, nullptr );
     else if ( callParam == "bubble-effect.example")
@@ -462,6 +464,8 @@ void android_main( struct android_app* state )
       status = GradientsExample::main( 0, nullptr );
     else if ( callParam == "hello-world.example" )
       status = HelloWorldExample::main( 0, nullptr );
+    else if ( callParam == "homescreen-benchmark.example" )
+      status = HomescreenBenchmark::main( 0, nullptr );
     else if ( callParam == "image-policies.example" )
       status = ImagePoliciesExample::main( 0, nullptr );
     else if ( callParam == "image-scaling-and-filtering.example" )
@@ -488,6 +492,8 @@ void android_main( struct android_app* state )
       status = MotionStretchExample::main( 0, nullptr );
     else if ( callParam == "native-image-source.example" )
       status = NativeImageSourceExample::main( 0, nullptr );
+    else if ( callParam == "perf-scroll.example" )
+      status = PerfScrollExample::main( 0, nullptr );
     else if ( callParam == "popup.example" )
       status = PopupExample::main( 0, nullptr );
     else if ( callParam == "pivot.example" )
@@ -512,6 +518,16 @@ void android_main( struct android_app* state )
       status = RayMarchingExample::main( 0, nullptr );
     else if ( callParam == "scroll-view.example" )
       status = ScrollViewExample::main( 0, nullptr );
+    else if ( callParam == "simple-bitmap-font-text-label.example" )
+      status = SimpleBitmapFontTextLabelExample::main( 0, nullptr );
+    else if ( callParam == "simple-text-field.example" )
+      status = SimpleTextFieldExample::main( 0, nullptr );
+    else if ( callParam == "simple-text-label.example" )
+      status = SimpleTextLabelExample::main( 0, nullptr );
+    else if ( callParam == "simple-text-visual.example" )
+      status = SimpleTextVisualExample::main( 0, nullptr );
+    else if ( callParam == "simple-visuals-control.example" )
+      status = SimpleVisualsExample::main( 0, nullptr );
     else if ( callParam == "size-negotiation.example" )
       status = SizeNegotiationExample::main( 0, nullptr );
     else if ( callParam == "styling.example" )

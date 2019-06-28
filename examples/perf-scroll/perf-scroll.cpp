@@ -22,6 +22,10 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace PerfScrollExample
+{
+#endif
 
 namespace
 {
@@ -497,3 +501,8 @@ int DALI_EXPORT_API main( int argc, char **argv )
 
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif
+

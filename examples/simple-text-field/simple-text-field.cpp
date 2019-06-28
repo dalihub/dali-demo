@@ -27,6 +27,10 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
+#ifdef ANDROID
+namespace SimpleTextFieldExample
+{
+#endif
 
 /**
  * @brief The main class of the demo.
@@ -105,3 +109,7 @@ int main( int argc, char **argv )
 
   return 0;
 }
+
+#ifdef ANDROID
+}
+#endif

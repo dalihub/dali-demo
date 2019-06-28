@@ -111,6 +111,23 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("textured-mesh.example", DALI_DEMO_STR_TITLE_TEXTURED_MESH));
   demo.AddExample(Example("tooltip.example", DALI_DEMO_STR_TITLE_TOOLTIP));
   demo.AddExample(Example("transitions.example", DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS));
+  demo.AddExample(Example("benchmark.example", DALI_DEMO_STR_TITLE_BENCHMARK));
+//  demo.AddExample(Example("compressed-texture-formats.example", DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS));
+  demo.AddExample(Example("homescreen-benchmark.example", DALI_DEMO_STR_TITLE_HOMESCREEN));
+//  demo.AddExample(Example("pre-render-callback.example", DALI_DEMO_STR_TITLE_PRE_RENDER_CALLBACK));
+  demo.AddExample(Example("perf-scroll.example", DALI_DEMO_STR_TITLE_PERF_SCROLL));
+//  demo.AddExample(Example("point-mesh.example", DALI_DEMO_STR_TITLE_POINT_MESH));
+//  demo.AddExample(Example("property-notification.example", DALI_DEMO_STR_TITLE_PROPERTY_NOTIFICATION));
+  demo.AddExample(Example("simple-visuals-control.example", DALI_DEMO_STR_TITLE_SIMPLE_VISUALS_CONTROL));
+//  demo.AddExample(Example("text-fonts.example", DALI_DEMO_STR_TITLE_TEXT_FONTS));
+//  demo.AddExample(Example("text-memory-profiling.example", DALI_DEMO_STR_TITLE_TEXT_MEMORY_PROFILING));
+//  demo.AddExample(Example("text-overlap.example", DALI_DEMO_STR_TITLE_TEXT_OVERLAP));
+//  demo.AddExample(Example("visual-transitions.example", DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS));
+  demo.AddExample(Example("simple-text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));
+  demo.AddExample(Example("simple-text-field.example", DALI_DEMO_STR_TITLE_TEXT_FIELD));
+//  demo.AddExample(Example("simple-text-renderer.example", DALI_DEMO_STR_TITLE_TEXT_RENDERER));
+  demo.AddExample(Example("simple-text-visual.example", DALI_DEMO_STR_TITLE_TEXT_VISUAL));
+  demo.AddExample(Example("simple-bitmap-font-text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT));
 #else
   demo.SortAlphabetically( true );
 #endif
