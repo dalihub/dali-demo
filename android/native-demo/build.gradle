@@ -19,3 +19,40 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task cleanDali(type: Exec) {
+    workingDir "./dali"
+    commandLine 'sh', './build.sh', 'clean'
+}
+
+task cleanDaliDependencies(type: Exec) {
+    workingDir "../../../android-dependencies"
+    commandLine 'sh', './buildall.sh', 'clean'
+}
+
+task cleanAll{
+    dependsOn clean
+    dependsOn cleanDali
+    dependsOn cleanDaliDependencies
+}
+
+task buildDaliDependencies(type: Exec) {
+    workingDir "../../../android-dependencies"
+    commandLine 'sh', './buildall.sh'
+}
+
+task buildDali(type: Exec) {
+    workingDir "./dali"
+    commandLine 'sh', './build.sh'
+}
+
+task buildAll{
+    dependsOn buildDaliDependencies
+    dependsOn buildDali
+    tasks.findByName('buildDali').mustRunAfter 'buildDaliDependencies'
+}
+
+
+
+
+
