@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@
 #include <memory.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <dali/integration-api/debug.h>
+#include <dali/devel-api/adaptor-framework/file-loader.h>
 
 namespace PbrDemo
 {
@@ -92,8 +94,14 @@ bool ConvertPixelFormat(const uint32_t ktxPixelFormat, Dali::Pixel::Format& form
 
 bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
 {
-  FILE* fp = fopen(path.c_str(),"rb");
+  std::streampos bufferSize = 0;
+  Dali::Vector<char> fileBuffer;
+  if( !Dali::FileLoader::ReadFile( path, bufferSize, fileBuffer, FileLoader::FileType::BINARY ) )
+  {
+    return false;
+  }
 
+  FILE* fp = fmemopen( &fileBuffer[0], bufferSize, "rb" );
   if( NULL == fp )
   {
     return false;

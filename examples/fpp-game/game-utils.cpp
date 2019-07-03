@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 
 #include <inttypes.h>
 #include <stdio.h>
+#include <dali/integration-api/debug.h>
+#include <dali/devel-api/adaptor-framework/file-loader.h>
 
 #include "game-utils.h"
 
@@ -24,7 +26,14 @@ namespace GameUtils
 {
 bool LoadFile( const char* filename, ByteArray& bytes )
 {
-  FILE* fin = fopen( filename, "rb" );
+  std::streampos bufferSize = 0;
+  Dali::Vector<char> fileBuffer;
+  if( !Dali::FileLoader::ReadFile( filename, bufferSize, fileBuffer, Dali::FileLoader::FileType::BINARY ) )
+  {
+    return false;
+  }
+
+  FILE* fin = fmemopen( &fileBuffer[0], bufferSize, "rb" );
   if( fin )
   {
     if( fseek( fin, 0, SEEK_END ) )
