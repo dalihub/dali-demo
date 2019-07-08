@@ -396,7 +396,7 @@ public:
     Dali::Vector<char> fileBuffer;
     if( !Dali::FileLoader::ReadFile( fullpath, bufferSize, fileBuffer, FileLoader::FileType::BINARY ) )
     {
-      DALI_LOG_WARNING( "file open failed for: \"%s\"", path );
+      DALI_LOG_WARNING( "file open failed for: \"%s\"", fullpath );
       return false;
     }
 
