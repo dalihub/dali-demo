@@ -43,6 +43,7 @@
 #include <cstring>
 
 #include <dali/integration-api/debug.h>
+#include <dali/devel-api/adaptor-framework/file-loader.h>
 #include "shared/view.h"
 
 #define TOKEN_STRING(x) #x
@@ -86,9 +87,14 @@ std::string ReplaceQuotes(const std::string &single_quoted)
 
 std::string GetFileContents(const std::string &fn)
 {
-  std::ifstream t(fn.c_str());
-  return std::string((std::istreambuf_iterator<char>(t)),
-                     std::istreambuf_iterator<char>());
+  std::streampos bufferSize = 0;
+  Dali::Vector<char> fileBuffer;
+  if( !Dali::FileLoader::ReadFile( fn, bufferSize, fileBuffer, FileLoader::FileType::BINARY ) )
+  {
+    return std::string();
+  }
+
+  return std::string( &fileBuffer[0], bufferSize );
 };
 
 typedef std::vector<std::string> FileList;

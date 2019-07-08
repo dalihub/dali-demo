@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@
 #include "ktx-loader.h"
 #include "model-skybox.h"
 #include "model-pbr.h"
+#include <dali/integration-api/debug.h>
+#include <dali/devel-api/adaptor-framework/file-loader.h>
 
 using namespace Dali;
 using namespace Toolkit;
@@ -390,7 +392,15 @@ public:
   */
   bool LoadShaderCode( const std::string& fullpath, std::vector<char>& output )
   {
-    FILE* file = fopen( fullpath.c_str(), "rb" );
+    std::streampos bufferSize = 0;
+    Dali::Vector<char> fileBuffer;
+    if( !Dali::FileLoader::ReadFile( fullpath, bufferSize, fileBuffer, FileLoader::FileType::BINARY ) )
+    {
+      DALI_LOG_WARNING( "file open failed for: \"%s\"", path );
+      return false;
+    }
+
+    FILE* file = fmemopen( &fileBuffer[0], bufferSize, "rb" );
     if( NULL == file )
     {
       return false;

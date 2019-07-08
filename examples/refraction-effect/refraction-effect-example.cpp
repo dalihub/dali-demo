@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,9 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
+#include <dali/integration-api/debug.h>
+#include <dali/devel-api/adaptor-framework/file-loader.h>
 
-#include <fstream>
 #include <sstream>
 #include <limits>
 
@@ -471,14 +472,22 @@ private:
       std::vector<Vector3>& vertexPositions,
       Vector<unsigned int>& faceIndices)
   {
-    std::ifstream ifs( objFileName.c_str(), std::ios::in );
+    std::streampos bufferSize = 0;
+    Dali::Vector<char> fileBuffer;
+    if( !Dali::FileLoader::ReadFile( objFileName, bufferSize, fileBuffer, Dali::FileLoader::FileType::TEXT ) )
+    {
+        DALI_LOG_WARNING( "file open failed for: \"%s\"", objFileName );
+        return;
+    }
+
+    std::stringstream iss( &fileBuffer[0], std::ios::in );
 
     boundingBox.Resize( 6 );
     boundingBox[0]=boundingBox[2]=boundingBox[4] = std::numeric_limits<float>::max();
     boundingBox[1]=boundingBox[3]=boundingBox[5] = -std::numeric_limits<float>::max();
 
     std::string line;
-    while( std::getline( ifs, line ) )
+    while( std::getline( iss, line ) )
     {
       if( line[0] == 'v' && std::isspace(line[1]))  // vertex
       {
@@ -518,8 +527,6 @@ private:
         faceIndices.PushBack( indices[2*step]-1 );
       }
     }
-
-    ifs.close();
   }
 
   void ShapeResizeAndTexureCoordinateCalculation( const Vector<float>& boundingBox,
