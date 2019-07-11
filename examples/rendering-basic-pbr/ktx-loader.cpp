@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <dali/integration-api/debug.h>
-#include <dali/devel-api/adaptor-framework/file-loader.h>
+#include <dali/devel-api/adaptor-framework/file-stream.h>
 
 namespace PbrDemo
 {
@@ -94,14 +94,8 @@ bool ConvertPixelFormat(const uint32_t ktxPixelFormat, Dali::Pixel::Format& form
 
 bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
 {
-  std::streampos bufferSize = 0;
-  Dali::Vector<char> fileBuffer;
-  if( !Dali::FileLoader::ReadFile( path, bufferSize, fileBuffer, FileLoader::FileType::BINARY ) )
-  {
-    return false;
-  }
-
-  FILE* fp = fmemopen( &fileBuffer[0], bufferSize, "rb" );
+  Dali::FileStream fileStream( path, Dali::FileStream::READ | Dali::FileStream::BINARY );
+  FILE* fp = fileStream.GetFile();
   if( NULL == fp )
   {
     return false;
@@ -112,7 +106,6 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
   int result = fread(&header,1,sizeof(KtxFileHeader),fp);
   if( 0 == result )
   {
-    fclose( fp );
     return false;
   }
 
@@ -123,14 +116,12 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
 
   if( fseek(fp, imageSizeOffset, SEEK_END) )
   {
-    fclose( fp );
     return false;
   }
 
   lSize = ftell(fp);
   if( lSize == -1L )
   {
-    fclose( fp );
     return false;
   }
 
@@ -138,7 +129,6 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
 
   if( fseek(fp, imageSizeOffset, SEEK_SET) )
   {
-    fclose( fp );
     return false;
   }
 

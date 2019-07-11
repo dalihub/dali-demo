@@ -18,7 +18,7 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <dali/integration-api/debug.h>
-#include <dali/devel-api/adaptor-framework/file-loader.h>
+#include <dali/devel-api/adaptor-framework/file-stream.h>
 
 #include "game-utils.h"
 
@@ -26,32 +26,25 @@ namespace GameUtils
 {
 bool LoadFile( const char* filename, ByteArray& bytes )
 {
-  std::streampos bufferSize = 0;
-  Dali::Vector<char> fileBuffer;
-  if( !Dali::FileLoader::ReadFile( filename, bufferSize, fileBuffer, Dali::FileLoader::FileType::BINARY ) )
-  {
-    return false;
-  }
+  Dali::FileStream fileStream( filename, Dali::FileStream::READ | Dali::FileStream::BINARY );
+  FILE* fin = fileStream.GetFile();
 
-  FILE* fin = fmemopen( &fileBuffer[0], bufferSize, "rb" );
   if( fin )
   {
     if( fseek( fin, 0, SEEK_END ) )
     {
-      fclose(fin);
       return false;
     }
     bytes.resize( ftell( fin ) );
     std::fill( bytes.begin(), bytes.end(), 0 );
     if( fseek( fin, 0, SEEK_SET ) )
     {
-      fclose( fin );
       return false;
     }
     size_t result = fread( bytes.data(), 1, bytes.size(), fin );
-    fclose( fin );
     return ( result != 0 );
   }
+
   return false;
 }
 
