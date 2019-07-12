@@ -26,9 +26,6 @@
 #include <dali-toolkit/devel-api/text/text-utils-devel.h>
 #include <devel-api/adaptor-framework/image-loading.h>
 
-#include <iostream>
-#include <fstream>
-
 using namespace std;
 using namespace Dali;
 using namespace Dali::Toolkit;
