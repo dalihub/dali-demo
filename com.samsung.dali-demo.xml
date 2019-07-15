@@ -299,6 +299,12 @@
   <ui-application appid="visual-fitting-mode.example" exec="/usr/apps/com.samsung.dali-demo/bin/visual-fitting-mode.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Visual Fitting Mode</label>
 	</ui-application>
+	<ui-application appid="gaussian-blur-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/gaussian-blur-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Gaussian Blur</label>
+	</ui-application>
+	<ui-application appid="super-blur-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/super-blur-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Super Blur</label>
+	</ui-application>
 
 	<privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
