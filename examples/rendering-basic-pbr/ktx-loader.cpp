@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,8 @@
 #include <memory.h>
 #include <stdio.h>
 #include <stdint.h>
-
-#ifdef ANDROID
-#include "../../shared/file-wrapper.h"
-#endif
+#include <dali/integration-api/debug.h>
+#include <dali/devel-api/adaptor-framework/file-stream.h>
 
 namespace PbrDemo
 {
@@ -96,11 +94,8 @@ bool ConvertPixelFormat(const uint32_t ktxPixelFormat, Dali::Pixel::Format& form
 
 bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
 {
-#ifndef ANDROID
-  FILE* fp = fopen(path.c_str(),"rb");
-#else
-  FILE* fp = Android::OpenFile(path.c_str(),"rb");
-#endif
+  Dali::FileStream fileStream( path, Dali::FileStream::READ | Dali::FileStream::BINARY );
+  FILE* fp = fileStream.GetFile();
   if( NULL == fp )
   {
     return false;
@@ -111,7 +106,6 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
   int result = fread( &header, 1, sizeof (KtxFileHeader ), fp );
   if( 0 == result )
   {
-    fclose( fp );
     return false;
   }
 
@@ -122,7 +116,6 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
 
   if( fseek( fp, 0, SEEK_END ) )
   {
-    fclose( fp );
     return false;
   }
 
@@ -130,7 +123,6 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
   lSize -= imageSizeOffset;
   if( lSize <= 0 )
   {
-    fclose( fp );
     return false;
   }
 
@@ -138,7 +130,6 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
 
   if( fseek( fp, imageSizeOffset, SEEK_SET ) )
   {
-    fclose( fp );
     return false;
   }
 

@@ -27,6 +27,7 @@
 //------------------------------------------------------------------------------
 
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/builder/builder.h>
 #include <dali-toolkit/devel-api/builder/tree-node.h>
@@ -102,10 +103,16 @@ private:
   std::time_t mLastTime;
   std::string mstringPath;
 
-  std::string GetFileContents(const std::string &fn)
+  std::string GetFileContents(const std::string &filename)
   {
-    std::ifstream t(fn.c_str());
-    return std::string((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+    std::streampos bufferSize = 0;
+    Dali::Vector<char> fileBuffer;
+    if( !Dali::FileLoader::ReadFile( filename, bufferSize, fileBuffer, FileLoader::FileType::BINARY ) )
+    {
+      return std::string();
+    }
+
+    return std::string( &fileBuffer[0], bufferSize );
   };
 };
 

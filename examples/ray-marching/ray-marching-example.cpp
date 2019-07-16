@@ -20,6 +20,8 @@
 #include "shared/view.h"
 #include "shared/utility.h"
 #include <stdio.h>
+#include <dali/integration-api/debug.h>
+#include <dali/devel-api/adaptor-framework/file-stream.h>
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -46,14 +48,16 @@ bool LoadShaderCode( const char* path, const char* filename, std::vector<char>& 
 {
   std::string fullpath( path );
   fullpath += filename;
-  FILE* file = fopen( fullpath.c_str(), "rb" );
-  if( ! file )
+
+  Dali::FileStream fileStream( fullpath, Dali::FileStream::READ | Dali::FileStream::BINARY );
+  FILE* file = fileStream.GetFile();
+  if( !file )
   {
     return false;
   }
 
   bool retValue = false;
-  if( ! fseek( file, 0, SEEK_END ) )
+  if( !fseek( file, 0, SEEK_END ) )
   {
     long int size = ftell( file );
 
@@ -68,7 +72,6 @@ bool LoadShaderCode( const char* path, const char* filename, std::vector<char>& 
     }
   }
 
-  fclose( file );
   return retValue;
 }
 

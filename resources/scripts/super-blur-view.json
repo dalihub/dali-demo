@@ -52,9 +52,7 @@
       "parentOrigin": "TOP_CENTER",
       "anchorPoint": "TOP_CENTER",
       "size": [800, 1280, 0],
-      "image": {
-        "filename": "{DEMO_IMAGE_DIR}background-4.jpg"
-      }
+      "imageUrl": "{DEMO_IMAGE_DIR}background-4.jpg"
     },
 
     // Button to blur/clear
