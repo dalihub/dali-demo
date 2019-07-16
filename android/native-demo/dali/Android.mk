@@ -41,6 +41,9 @@ include $(adaptor_adaptor_dir)/file.list
 adaptor_accessibility_dir=$(SRC_PATH)/dali-adaptor/dali/internal/accessibility
 include $(adaptor_accessibility_dir)/file.list
 
+adaptor_framework_dir=$(SRC_PATH)/dali-adaptor/dali/internal/adaptor-framework
+include $(adaptor_framework_dir)/file.list
+
 adaptor_haptics_dir=$(SRC_PATH)/dali-adaptor/dali/internal/haptics
 include $(adaptor_haptics_dir)/file.list
 
@@ -109,6 +112,7 @@ cppfiles += $(public_api_header_files) \
             $(devel_api_text_abstraction_src_files) \
             $(adaptor_adaptor_common_src_files) \
             $(adaptor_adaptor_android_src_files) \
+            $(adaptor_framework_android_src_files) \
             $(adaptor_legacy_common_src_files) \
             $(adaptor_integration_api_header_files) \
             $(adaptor_integration_api_src_files) \
