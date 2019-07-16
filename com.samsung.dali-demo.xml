@@ -305,6 +305,9 @@
 	<ui-application appid="super-blur-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/super-blur-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Super Blur</label>
 	</ui-application>
+	<ui-application appid="bloom-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/bloom-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Bloom</label>
+	</ui-application>
 
 	<privileges>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
