@@ -83,6 +83,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_MOTION_STRETCH              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_MOTION_STRETCH")
 #define DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE         dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE")
 #define DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE              dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE")
+#define DALI_DEMO_STR_TITLE_PAGE_TURN                   dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PAGE_TURN")
 #define DALI_DEMO_STR_TITLE_PBR                         dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PBR")
 #define DALI_DEMO_STR_TITLE_PERF_SCROLL                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PERF_SCROLL")
 #define DALI_DEMO_STR_TITLE_POINT_MESH                  dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_POINT_MESH")
@@ -179,6 +180,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_MOTION_STRETCH              "Motion Stretch"
 #define DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE         "Native Image Source"
 #define DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE              "Negotiate Size"
+#define DALI_DEMO_STR_TITLE_PAGE_TURN                   "Page Turn"
 #define DALI_DEMO_STR_TITLE_PBR                         "PBR"
 #define DALI_DEMO_STR_TITLE_PERF_SCROLL                 "Scrolling Performance"
 #define DALI_DEMO_STR_TITLE_POINT_MESH                  "Point Mesh"
