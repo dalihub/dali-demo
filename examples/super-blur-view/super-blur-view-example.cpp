@@ -71,7 +71,7 @@ private:
     mPushButton = PushButton::New();
     mPushButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     mPushButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    mPushButton.SetProperty( Button::Property::LABEL_TEXT, "Blur" );
+    mPushButton.SetProperty( Button::Property::LABEL, "Blur" );
     mPushButton.PressedSignal().Connect( this, &SuperBlurViewExample::OnButtonPressed );
     mPushButton.ReleasedSignal().Connect( this, &SuperBlurViewExample::OnButtonReleased );
     stage.Add( mPushButton );
