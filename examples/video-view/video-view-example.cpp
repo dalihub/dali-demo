@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 using namespace Dali;
 using namespace Toolkit;
@@ -139,18 +138,18 @@ class VideoViewController: public ConnectionTracker
     mChangeButton.SetVisible( true );
     mChangeButton.SetProperty( Button::Property::DISABLED, false );
 
-    mPlayButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_IMAGE );
-    mPlayButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, PLAY_IMAGE );
-    mPauseButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PAUSE_IMAGE );
-    mPauseButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, PAUSE_IMAGE );
+    mPlayButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_IMAGE );
+    mPlayButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_IMAGE );
+    mPauseButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PAUSE_IMAGE );
+    mPauseButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PAUSE_IMAGE );
 
-    mChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_IMAGE );
-    mChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_IMAGE );
+    mChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_IMAGE );
+    mChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_IMAGE );
 
-    mBackwardButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, BACKWARD_IMAGE );
-    mBackwardButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, BACKWARD_IMAGE );
-    mForwardButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, FORWARD_IMAGE );
-    mForwardButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, FORWARD_IMAGE );
+    mBackwardButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, BACKWARD_IMAGE );
+    mBackwardButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, BACKWARD_IMAGE );
+    mForwardButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, FORWARD_IMAGE );
+    mForwardButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, FORWARD_IMAGE );
 
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.Attach( mVideoView );

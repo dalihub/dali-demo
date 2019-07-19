@@ -45,7 +45,7 @@
             "parentOrigin": "CENTER_LEFT",
             "anchorPoint": "CENTER_LEFT",
             "position": [20, 0, 0],
-            "labelText": "OK"
+            "label": "OK"
           },
           {
             "type": "PushButton",
@@ -53,7 +53,7 @@
             "parentOrigin": "CENTER_RIGHT",
             "anchorPoint": "CENTER_RIGHT",
             "position": [-20, 0, 0],
-            "labelText": "Cancel"
+            "label": "Cancel"
           }
         ]
       },
@@ -172,7 +172,7 @@
             "parentOrigin": "CENTER_LEFT",
             "anchorPoint": "CENTER_LEFT",
             "position": [20, 0, 0],
-            "labelText": "OK"
+            "label": "OK"
           },
           {
             "type": "PushButton",
@@ -180,7 +180,7 @@
             "parentOrigin": "CENTER_RIGHT",
             "anchorPoint": "CENTER_RIGHT",
             "position": [-20, 0, 0],
-            "labelText": "Cancel"
+            "label": "Cancel"
           }
         ]
       },
@@ -257,7 +257,7 @@
       "widthResizePolicy": "SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy": "SIZE_RELATIVE_TO_PARENT",
       "sizeModeFactor": [0.38, 0.14, 1.0],
-      "labelText": "Popup",
+      "label": "Popup",
       "signals": [{
         "name": "clicked",
         "action": "set",
@@ -274,7 +274,7 @@
       "widthResizePolicy": "SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy": "SIZE_RELATIVE_TO_PARENT",
       "sizeModeFactor": [0.38, 0.14, 1.0],
-      "labelText": "Animated",
+      "label": "Animated",
       "signals": [{
         "name": "clicked",
         "action": "set",
@@ -291,7 +291,7 @@
       "widthResizePolicy": "SIZE_RELATIVE_TO_PARENT",
       "heightResizePolicy": "SIZE_RELATIVE_TO_PARENT",
       "sizeModeFactor": [0.5, 0.14, 1.0],
-      "labelText": "Push for Toast",
+      "label": "Push for Toast",
       "signals": [{
         "name": "clicked",
         "action": "set",

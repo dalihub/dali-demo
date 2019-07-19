@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 // EXTERNAL INCLUDES
 #include <dali/devel-api/object/handle-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 #include <dali-toolkit/devel-api/text/text-enumerations-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
@@ -422,7 +421,7 @@ public:
       {
         if ( mColorButtons[i] )
         {
-          mColorButtons[ i ].SetProperty( Toolkit::DevelButton::Property::SELECTED, true );
+          mColorButtons[ i ].SetProperty( Toolkit::Button::Property::SELECTED, true );
         }
         break;
       }
@@ -453,17 +452,17 @@ public:
         Property::Map propertyMap;
         propertyMap.Insert(Visual::Property::TYPE,  Visual::COLOR);
         propertyMap.Insert(ColorVisual::Property::MIX_COLOR, AVAILABLE_COLORS[ index ]);
-        mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, propertyMap );
-        mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::UNSELECTED_VISUAL, propertyMap );
+        mColorButtons[index].SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, propertyMap );
+        mColorButtons[index].SetProperty( Toolkit::Button::Property::UNSELECTED_VISUAL, propertyMap );
         mColorButtons[index].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
         mColorButtons[index].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
 
 
         propertyMap.Insert(Visual::Property::TYPE,  Visual::COLOR);
         propertyMap.Insert(ColorVisual::Property::MIX_COLOR, AVAILABLE_COLORS[ index ]);
-        mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, propertyMap );
+        mColorButtons[index].SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, propertyMap );
 
-        mColorButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_VISUAL,
+        mColorButtons[index].SetProperty( Toolkit::Button::Property::SELECTED_VISUAL,
                             Property::Map().Add( Visual::Property::TYPE, Visual::BORDER )
                                            .Add( BorderVisual::Property::COLOR, Color::WHITE )
                                            .Add( BorderVisual::Property::SIZE, 4.0f )
@@ -531,8 +530,8 @@ public:
       if ( ! mStyleButtons[index] )
       {
         mStyleButtons[index] = PushButton::New();
-        mStyleButtons[index].SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGES[ index ] );
-        mStyleButtons[index].SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, STYLE_SELECTED_IMAGE );
+        mStyleButtons[index].SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGES[ index ] );
+        mStyleButtons[index].SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, STYLE_SELECTED_IMAGE );
         mStyleButtons[index].SetProperty( Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
         mStyleButtons[index].SetSize( mButtonSize );
         mStyleButtons[index].ClickedSignal().Connect( this, &TextLabelExample::OnStyleButtonClicked );

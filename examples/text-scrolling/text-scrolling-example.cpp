@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -209,8 +208,8 @@ public:
 
     Toolkit::PushButton colorButton = Toolkit::PushButton::New();
     colorButton.SetProperty( Button::Property::TOGGLABLE, true );
-    colorButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
-    colorButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
+    colorButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
+    colorButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
     colorButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
     colorButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     colorButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 #include "shared/view.h"
 
@@ -71,8 +70,8 @@ private:
 
     // Add a button to switch the scene. (right of toolbar)
     Toolkit::PushButton switchButton = Toolkit::PushButton::New();
-    switchButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_ICON );
-    switchButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, BUTTON_ICON_SELECTED );
+    switchButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_ICON );
+    switchButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, BUTTON_ICON_SELECTED );
     switchButton.ClickedSignal().Connect( this, &ImageViewPixelAreaApp::OnButtonClicked );
     toolBar.AddControl( switchButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,

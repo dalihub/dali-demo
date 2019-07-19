@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,6 @@
 #include <algorithm>
 #include <map>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <iostream>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 
@@ -316,8 +315,8 @@ public:
 
     // Create an image scaling toggle button. (right of toolbar)
     Toolkit::PushButton toggleScalingButton = Toolkit::PushButton::New();
-    toggleScalingButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, TOGGLE_SCALING_IMAGE );
-    toggleScalingButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, TOGGLE_SCALING_IMAGE_SELECTED );
+    toggleScalingButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, TOGGLE_SCALING_IMAGE );
+    toggleScalingButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, TOGGLE_SCALING_IMAGE_SELECTED );
     toggleScalingButton.ClickedSignal().Connect( this, &ImageScalingIrregularGridController::OnToggleScalingTouched );
     mToolBar.AddControl( toggleScalingButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 // EXTERNAL INCLUDES
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/navigation-view/navigation-view.h>
 
 // INTERNAL INCLUDES
@@ -329,8 +328,8 @@ public:
 
     // Create a back button in the left of toolbar
     PushButton backButton = PushButton::New();
-    backButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, BACK_IMAGE );
-    backButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, BACK_IMAGE_SELECTED );
+    backButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, BACK_IMAGE );
+    backButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, BACK_IMAGE_SELECTED );
     backButton.ClickedSignal().Connect( this, &TextMemoryProfilingExample::OnBackButtonPressed );
     backButton.SetLeaveRequired( true );
     mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
