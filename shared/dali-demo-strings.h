@@ -40,6 +40,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_BENCHMARK                   dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BENCHMARK")
 #define DALI_DEMO_STR_TITLE_BEZIER_CURVE                dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BEZIER_CURVE")
 #define DALI_DEMO_STR_TITLE_BLOCKS                      dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BLOCKS")
+#define DALI_DEMO_STR_TITLE_BLOOM_VIEW                  dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BLOOM_VIEW")
 #define DALI_DEMO_STR_TITLE_BUBBLES                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUBBLES")
 #define DALI_DEMO_STR_TITLE_BUTTONS                     dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUTTONS")
 #define DALI_DEMO_STR_TITLE_CALL_ACTIVE                 dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CALL_ACTIVE")
@@ -135,6 +136,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_BENCHMARK                   "ImageView Benchmark"
 #define DALI_DEMO_STR_TITLE_BEZIER_CURVE                "Alpha Function Bezier Curve"
 #define DALI_DEMO_STR_TITLE_BLOCKS                      "Blocks"
+#define DALI_DEMO_STR_TITLE_BLOOM_VIEW                  "Bloom"
 #define DALI_DEMO_STR_TITLE_BUBBLES                     "Bubbles"
 #define DALI_DEMO_STR_TITLE_BUTTONS                     "Buttons"
 #define DALI_DEMO_STR_TITLE_CALL_ACTIVE                 "Call Active"

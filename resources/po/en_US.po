@@ -19,6 +19,9 @@ msgstr "Bezier Curve"
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "Blocks"
 
+msgid "DALI_DEMO_STR_TITLE_BLOOM_VIEW"
+msgstr "Bloom"
+
 msgid "DALI_DEMO_STR_TITLE_BUBBLES"
 msgstr "Bubbles"
 
