@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2017 Samsung Electronics Co., Ltd.
+* Copyright (c) 2019 Samsung Electronics Co., Ltd.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -212,7 +212,7 @@ private:
     mCallStartButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
     mCallStartButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
     mCallStartButton.SetProperty( Control::Property::BACKGROUND, ICON_CALL_IMAGE );
-    mCallStartButton.SetLabelText("");
+    mCallStartButton.SetProperty( Button::Property::LABEL, "" );
 
     mStage.Add( mCallStartButton );
     mStage.Add( mButtonIconDecall );
@@ -293,7 +293,7 @@ private:
     mCallEndButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, "" );
     mCallEndButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, "" );
     mCallEndButton.SetStyleName( DECLINE_BUTTON_STYLE_STR );
-    mCallEndButton.SetLabelText("");
+    mCallEndButton.SetProperty( Button::Property::LABEL, "" );
 
     mButtonClip.Add( mCallEndButton );
     mButtonClip.Add( mButtonIcon );
