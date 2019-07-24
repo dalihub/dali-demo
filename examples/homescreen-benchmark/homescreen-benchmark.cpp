@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -199,22 +199,18 @@ public:
   Actor AddPage()
   {
     // Create root page actor.
-    Actor pageActor;
+    Toolkit::Control pageActor;
 
     if( mConfig.mTableViewEnabled )
     {
-      Toolkit::TableView tableView = Toolkit::TableView::New( mConfig.mRows, mConfig.mCols );
-
-      // Create geometry batcher for table view.
-      tableView.SetBackgroundColor( Vector4( 0.0f, 0.0f, 0.0f, 0.5f ) );
-      pageActor = tableView;
+      pageActor = Toolkit::TableView::New( mConfig.mRows, mConfig.mCols );
     }
     else
     {
       pageActor = Toolkit::Control::New();
-      pageActor.SetProperty( Toolkit::Control::Property::BACKGROUND_COLOR, Vector4( 0.0f, 0.0f, 0.0f, 0.5f ) );
     }
 
+    pageActor.SetBackgroundColor( Vector4( 0.0f, 0.0f, 0.0f, 0.5f ) );
     pageActor.SetParentOrigin( ParentOrigin::CENTER );
     pageActor.SetAnchorPoint( AnchorPoint::CENTER );
     pageActor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
