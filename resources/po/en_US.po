@@ -142,6 +142,9 @@ msgstr "Native Image Source"
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "Negotiate Size"
 
+msgid "DALI_DEMO_STR_TITLE_PAGE_TURN"
+msgstr "Page Turn"
+
 msgid "DALI_DEMO_STR_TITLE_PERF_SCROLL"
 msgstr "Scrolling Performance"
 
