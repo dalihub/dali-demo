@@ -57,11 +57,15 @@ public:
   DragAndDropExample( Application& application )
   : mApplication( application ),
     mDragIndex(-1),
-    mDragRealIndex(-1),
-    mDroppedFinished(false)
+    mDragRealIndex(-1)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &DragAndDropExample::Create );
+  }
+
+  ~DragAndDropExample()
+  {
+    mDragAndDropDetector.DetachAll();
   }
 
   // The Init signal is received once (only) during the Application lifetime
@@ -232,12 +236,9 @@ public:
     k1.Add(1.0f, 1.0f);
 
     Animation dropAnimation = Animation::New(0.5f);
-    dropAnimation.FinishedSignal().Connect(this, &DragAndDropExample::DropAnimationFinished);
     dropAnimation.AnimateBetween(Property(mTextLabel[mDragRealIndex], Actor::Property::POSITION), k0, AlphaFunction::EASE_OUT);
     dropAnimation.AnimateBetween(Property(mTextLabel[mDragRealIndex], DevelActor::Property::OPACITY), k1, AlphaFunction::EASE_OUT);
     dropAnimation.Play();
-
-    mDroppedFinished = true;
   }
 
   void DropAnimationFinished(Animation& animation)
@@ -254,13 +255,6 @@ public:
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetName().c_str());
 
     control.SetOpacity(1.0f);
-
-    if(mDroppedFinished)
-    {
-      mDragAndDropDetector.DetachAll();
-    }
-
-    mDroppedFinished = false;
   }
 
 private:
@@ -275,8 +269,6 @@ private:
   int mDragRealIndex;
 
   Vector2 mDragLocalPos;
-
-  bool mDroppedFinished;
 
 };
 

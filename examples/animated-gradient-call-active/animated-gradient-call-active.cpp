@@ -17,7 +17,6 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/visuals/animated-gradient-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/integration-api/debug.h>
@@ -209,8 +208,8 @@ private:
     mCallStartButton.SetSize( BUTTON_CALL_START_SIZE * SCALED_WIDTH );
     mCallStartButton.SetPosition( BUTTON_CALL_START_POSITION * SCALED_WIDTH );
     mCallStartButton.ClickedSignal().Connect( this, &CallController::OnButtonClicked );
-    mCallStartButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
-    mCallStartButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
+    mCallStartButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
+    mCallStartButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
     mCallStartButton.SetProperty( Control::Property::BACKGROUND, ICON_CALL_IMAGE );
     mCallStartButton.SetProperty( Button::Property::LABEL, "" );
 
@@ -290,8 +289,8 @@ private:
     mCallEndButton.SetSize( BUTTON_DECALL_SIZE * SCALED_WIDTH );
     mCallEndButton.SetPosition( BUTTON_DECALL_POSITION * SCALED_WIDTH );
     mCallEndButton.ClickedSignal().Connect( this, &CallController::OnButtonClicked );
-    mCallEndButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, "" );
-    mCallEndButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, "" );
+    mCallEndButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, "" );
+    mCallEndButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, "" );
     mCallEndButton.SetStyleName( DECLINE_BUTTON_STYLE_STR );
     mCallEndButton.SetProperty( Button::Property::LABEL, "" );
 

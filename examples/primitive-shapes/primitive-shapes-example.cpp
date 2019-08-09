@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -186,8 +185,8 @@ public:
       button.SetAnchorPoint( AnchorPoint::CENTER );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
       button.SetPadding( Padding( elementPadding, elementPadding, elementPadding, elementPadding ) );
-      button.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGE_URL[modelNumber] );
-      button.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL,  BUTTON_IMAGE_URL[modelNumber] );
+      button.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGE_URL[modelNumber] );
+      button.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL,  BUTTON_IMAGE_URL[modelNumber] );
       button.RegisterProperty( "modelNumber", Property::Value( modelNumber ) );
       button.ClickedSignal().Connect( this, &PrimitiveShapesController::OnChangeShapeClicked );
 

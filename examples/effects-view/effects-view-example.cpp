@@ -22,7 +22,6 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/effects-view/effects-view.h>
 #include <sstream>
 
@@ -133,8 +132,8 @@ void EffectsViewApp::OnAppInitialize( Application& application )
 
   // Creates view change button.
   Toolkit::PushButton viewButton = Toolkit::PushButton::New();
-  viewButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, VIEW_SWAP_IMAGE );
-  viewButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, VIEW_SWAP_SELECTED_IMAGE );
+  viewButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, VIEW_SWAP_IMAGE );
+  viewButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, VIEW_SWAP_SELECTED_IMAGE );
   // Connects the view change button clicked signal to the OnView method.
   viewButton.ClickedSignal().Connect( this, &EffectsViewApp::ChangeEffectSize );
   mToolBar.AddControl( viewButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );

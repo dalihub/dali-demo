@@ -24,7 +24,6 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/buttons/toggle-button.h>
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-effect.h>
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-cross-effect.h>
@@ -236,8 +235,8 @@ void CubeTransitionApp::OnInit( Application& application )
 
   //Add an slideshow icon on the right of the title
   mSlideshowButton = Toolkit::PushButton::New();
-  mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON );
-  mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON_SELECTED );
+  mSlideshowButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON );
+  mSlideshowButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON_SELECTED );
   mSlideshowButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnSildeshowButtonClicked );
   mToolBar.AddControl( mSlideshowButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
@@ -355,8 +354,8 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   if( mSlideshow )
   {
     mPanGestureDetector.Detach( mContent );
-    mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_STOP_ICON );
-    mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_STOP_ICON_SELECTED );
+    mSlideshowButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_STOP_ICON );
+    mSlideshowButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_STOP_ICON_SELECTED );
     mPanPosition = Vector2( mViewSize.width, mViewSize.height*0.5f );
     mPanDisplacement = Vector2( -10.f, 0.f );
     mViewTimer.Start();
@@ -364,8 +363,8 @@ bool CubeTransitionApp::OnSildeshowButtonClicked( Toolkit::Button button )
   else
   {
     mPanGestureDetector.Attach( mContent );
-    mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON );
-    mSlideshowButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON_SELECTED );
+    mSlideshowButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON );
+    mSlideshowButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON_SELECTED );
     mViewTimer.Stop();
   }
   return true;

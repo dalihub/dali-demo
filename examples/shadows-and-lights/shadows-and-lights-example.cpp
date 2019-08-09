@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/shadow-view/shadow-view.h>
 
 #include <iostream>
@@ -167,8 +166,8 @@ public:
 
     // Add an effect-changing button on the right of the tool bar.
     Toolkit::PushButton effectChangeButton = Toolkit::PushButton::New();
-    effectChangeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE );
-    effectChangeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE_SELECTED );
+    effectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE );
+    effectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE_SELECTED );
     effectChangeButton.ClickedSignal().Connect( this, &TestApp::OnEffectButtonClicked );
     toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
@@ -181,8 +180,8 @@ public:
 
     //Add a reset button
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
-    resetButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, RESET_ICON );
-    resetButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, RESET_ICON_SELECTED );
+    resetButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, RESET_ICON );
+    resetButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, RESET_ICON_SELECTED );
     resetButton.ClickedSignal().Connect( this, &TestApp::OnResetPressed );
     toolBar.AddControl( resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 

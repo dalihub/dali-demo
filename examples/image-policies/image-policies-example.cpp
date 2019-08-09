@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-base.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 using namespace Dali;
 using namespace Toolkit;
@@ -409,13 +408,13 @@ class ImagePolicies: public ConnectionTracker
     Property::Map imagePropertyMap;
     imagePropertyMap.Insert( Visual::Property::TYPE,  Visual::IMAGE );
     imagePropertyMap.Insert( ImageVisual::Property::URL, NEXT_BUTTON_IMAGE );
-    mNextButton.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, imagePropertyMap );
+    mNextButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, imagePropertyMap );
     imagePropertyMap.Clear();
     imagePropertyMap.Insert( Visual::Property::TYPE,  Visual::IMAGE );
     imagePropertyMap.Insert( ImageVisual::Property::URL, NEXT_BUTTON_PRESSED_IMAGE );
-    mNextButton.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, imagePropertyMap );
-    mNextButton.SetProperty( DevelButton::Property::DISABLED_UNSELECTED_BACKGROUND_VISUAL, LOADING_IMAGE );
-    mNextButton.SetProperty( DevelButton::Property::DISABLED_SELECTED_BACKGROUND_VISUAL, NEXT_BUTTON_DISABLED_IMAGE );
+    mNextButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, imagePropertyMap );
+    mNextButton.SetProperty( Button::Property::DISABLED_UNSELECTED_BACKGROUND_VISUAL, LOADING_IMAGE );
+    mNextButton.SetProperty( Button::Property::DISABLED_SELECTED_BACKGROUND_VISUAL, NEXT_BUTTON_DISABLED_IMAGE );
     mNextButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
     mNextButton.SetY( -50.0f );
     mNextButton.SetSize( 100.0f, 100.0f );
@@ -507,8 +506,8 @@ private:
       {
         ReleasePolicyDestroyedExample06();
         // Change Next button to complete button ( will quit app once pressed )
-        button.SetProperty( DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, OK_IMAGE_IMAGE );
-        button.SetProperty( DevelButton::Property::SELECTED_BACKGROUND_VISUAL, OK_IMAGE_IMAGE );
+        button.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, OK_IMAGE_IMAGE );
+        button.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, OK_IMAGE_IMAGE );
         break;
       }
       default:

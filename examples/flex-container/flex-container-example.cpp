@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@
 
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -138,8 +137,8 @@ public:
     // Create a flex direction toggle button. (left of toolbar)
     mFlexDirectionButton = Toolkit::PushButton::New();
     mFlexDirectionButton.SetName("mFlexDirectionButton");
-    mFlexDirectionButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-change.png" );
-    mFlexDirectionButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-change-selected.png" );
+    mFlexDirectionButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-change.png" );
+    mFlexDirectionButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-change-selected.png" );
     mFlexDirectionButton.ClickedSignal().Connect( this, &FlexContainerExample::OnFlexDirectionButtonClicked);
     mFlexDirectionButton.SetLeaveRequired( true );
     mToolBar.AddControl( mFlexDirectionButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -147,8 +146,8 @@ public:
     // Create a flex wrap toggle button. (left of toolbar)
     mFlexWrapButton = Toolkit::PushButton::New();
     mFlexWrapButton.SetName("mFlexWrapButton");
-    mFlexWrapButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-edit.png" );
-    mFlexWrapButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-edit-selected.png" );
+    mFlexWrapButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-edit.png" );
+    mFlexWrapButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-edit-selected.png" );
     mFlexWrapButton.ClickedSignal().Connect( this, &FlexContainerExample::OnFlexWrapButtonClicked);
     mFlexWrapButton.SetLeaveRequired( true );
     mToolBar.AddControl( mFlexWrapButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -156,8 +155,8 @@ public:
     // Create a content direction toggle button. (left of toolbar)
     mContentDirectionButton = Toolkit::PushButton::New();
     mContentDirectionButton.SetName("mContentDirectionButton");
-    mContentDirectionButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-replace.png" );
-    mContentDirectionButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-replace-selected.png" );
+    mContentDirectionButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-replace.png" );
+    mContentDirectionButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-replace-selected.png" );
     mContentDirectionButton.ClickedSignal().Connect( this, &FlexContainerExample::OnContentDirectionButtonClicked);
     mContentDirectionButton.SetLeaveRequired( true );
     mToolBar.AddControl( mContentDirectionButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -165,8 +164,8 @@ public:
     // Create a justify content toggle button. (right of toolbar)
     mJustifyContentButton = Toolkit::PushButton::New();
     mJustifyContentButton.SetName("mJustifyContentButton");
-    mJustifyContentButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-reset.png" );
-    mJustifyContentButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-reset-selected.png" );
+    mJustifyContentButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-reset.png" );
+    mJustifyContentButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-reset-selected.png" );
     mJustifyContentButton.ClickedSignal().Connect( this, &FlexContainerExample::OnJustifyContentButtonClicked);
     mJustifyContentButton.SetLeaveRequired( true );
     mToolBar.AddControl( mJustifyContentButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -174,8 +173,8 @@ public:
     // Create a align items toggle button. (right of toolbar)
     mAlignItemsButton = Toolkit::PushButton::New();
     mAlignItemsButton.SetName("mAlignItemsButton");
-    mAlignItemsButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-highp.png" );
-    mAlignItemsButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-highp-selected.png" );
+    mAlignItemsButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-highp.png" );
+    mAlignItemsButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-highp-selected.png" );
     mAlignItemsButton.ClickedSignal().Connect( this, &FlexContainerExample::OnAlignItemsButtonClicked);
     mAlignItemsButton.SetLeaveRequired( true );
     mToolBar.AddControl( mAlignItemsButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -183,8 +182,8 @@ public:
     // Create a align content toggle button. (right of toolbar)
     mAlignContentButton = Toolkit::PushButton::New();
     mAlignContentButton.SetName("mAlignContentButton");
-    mAlignContentButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-effect-cross.png" );
-    mAlignContentButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-effect-cross-selected.png" );
+    mAlignContentButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-effect-cross.png" );
+    mAlignContentButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-effect-cross-selected.png" );
     mAlignContentButton.ClickedSignal().Connect( this, &FlexContainerExample::OnAlignContentButtonClicked);
     mAlignContentButton.SetLeaveRequired( true );
     mToolBar.AddControl( mAlignContentButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
@@ -225,8 +224,8 @@ public:
 
       // Set different background colour to help to identify different items
       flexItem.SetBackgroundColor(Vector4(static_cast<float>(i) / NUM_FLEX_ITEMS, static_cast<float>(NUM_FLEX_ITEMS - i) / NUM_FLEX_ITEMS, 1.0f, 1.0f));
-      flexItem.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, "" );
-      flexItem.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, "" );
+      flexItem.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, "" );
+      flexItem.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, "" );
 
       // Add a label to the button so that we can identify each item more easily
       std::ostringstream index;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/animated-image-visual-actions-devel.h>
 
@@ -228,8 +227,8 @@ private:
 
     // Create a push button, and add it as child of the control
     Toolkit::PushButton animateButton = Toolkit::PushButton::New();
-    animateButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON_UNSELECTED );
-    animateButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED );
+    animateButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON_UNSELECTED );
+    animateButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED );
     animateButton.SetParentOrigin( ParentOrigin::CENTER );
     animateButton.SetAnchorPoint( AnchorPoint::CENTER );
     animateButton.ClickedSignal().Connect( this, &AnimatedImageController::OnPlayButtonClicked );

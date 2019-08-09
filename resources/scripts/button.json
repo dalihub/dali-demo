@@ -25,7 +25,7 @@
       "widthResizePolicy":"FILL_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "sizeModeFactor": [1,0.25,1],
-      "labelText": "Normal"
+      "label": "Normal"
     },
 
     // Second Button
@@ -38,7 +38,7 @@
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
       "sizeModeFactor": [1,0.25,1],
       "disabled": true,
-      "labelText": "Disabled"
+      "label": "Disabled"
     },
 
     // Third Button
@@ -54,7 +54,7 @@
       "togglable": true,
       "unselectedStateImage": "{DEMO_IMAGE_DIR}button-up-6.9.png",
       "selectedStateImage": "{DEMO_IMAGE_DIR}button-up-8.9.png",
-      "labelText": "Toggle With Custom Images"
+      "label": "Toggle With Custom Images"
     }
   ]
 }

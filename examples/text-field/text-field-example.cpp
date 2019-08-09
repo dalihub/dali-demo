@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <iostream>
 
@@ -84,8 +83,8 @@ public:
   PushButton CreateFolderButton()
   {
     PushButton button = PushButton::New();
-    button.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, FOLDER_ICON_IMAGE );
-    button.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, FOLDER_OPEN_ICON_IMAGE );
+    button.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, FOLDER_ICON_IMAGE );
+    button.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, FOLDER_OPEN_ICON_IMAGE );
     button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
     return button;
   }
