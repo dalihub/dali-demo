@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include "shared/view.h"
 
 using namespace Dali;
@@ -68,8 +67,8 @@ public:
                                             APPLICATION_TITLE );
 
     PushButton changeButton = Toolkit::PushButton::New();
-    changeButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_ICON );
-    changeButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_ICON_SELECTED );
+    changeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_ICON );
+    changeButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_ICON_SELECTED );
     changeButton.ClickedSignal().Connect( this, &GradientController::OnChangeIconClicked );
     toolBar.AddControl( changeButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,

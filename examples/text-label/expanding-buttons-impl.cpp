@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali/public-api/animation/animation.h>
 
 #include "expanding-buttons-impl.h"
@@ -76,8 +75,8 @@ void ExpandingButtons::OnInitialize()
 
   mExpandButton.ClickedSignal().Connect( this, &ExpandingButtons::OnExpandButtonClicked );
   mExpandButton.SetProperty( Button::Property::TOGGLABLE, true );
-  mExpandButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, STYLES_IMAGE ); // Default for Styles
-  mExpandButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, TICK_IMAGE_IMAGE );
+  mExpandButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, STYLES_IMAGE ); // Default for Styles
+  mExpandButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, TICK_IMAGE_IMAGE );
   mExpandButton.SetProperty( Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   Self().Add( mExpandButton );
 }

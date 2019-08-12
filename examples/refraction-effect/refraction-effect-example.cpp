@@ -18,7 +18,6 @@
 // EXTERNAL INCLUDES
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/button-devel.h>
 #include <dali/integration-api/debug.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 
@@ -261,8 +260,8 @@ private:
 
     // Add a button to change background. (right of toolbar)
     mChangeTextureButton = Toolkit::PushButton::New();
-    mChangeTextureButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_TEXTURE_ICON );
-    mChangeTextureButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_TEXTURE_ICON_SELECTED );
+    mChangeTextureButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_TEXTURE_ICON );
+    mChangeTextureButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_TEXTURE_ICON_SELECTED );
     mChangeTextureButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeTexture );
     toolBar.AddControl( mChangeTextureButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
@@ -270,8 +269,8 @@ private:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change mesh pattern. ( left of bar )
     mChangeMeshButton = Toolkit::PushButton::New();
-    mChangeMeshButton.SetProperty( Toolkit::DevelButton::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_MESH_ICON );
-    mChangeMeshButton.SetProperty( Toolkit::DevelButton::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_MESH_ICON_SELECTED );
+    mChangeMeshButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_MESH_ICON );
+    mChangeMeshButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_MESH_ICON_SELECTED );
     mChangeMeshButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeMesh );
     toolBar.AddControl( mChangeMeshButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
