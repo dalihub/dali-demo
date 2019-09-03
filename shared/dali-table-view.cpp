@@ -27,6 +27,7 @@
 #include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -316,7 +317,6 @@ void DaliTableView::CreateFocusEffect()
   // Hook the required signals to manage the focus.
   KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &DaliTableView::OnKeyboardPreFocusChange );
   KeyboardFocusManager::Get().FocusedActorEnterKeySignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
-  AccessibilityManager::Get().FocusedActorActivatedSignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
 
   // Loop to create both actors for the focus highlight effect.
   for( unsigned int i = 0; i < FOCUS_ANIMATION_ACTOR_NUMBER; ++i )
@@ -384,7 +384,6 @@ void DaliTableView::Populate()
       sort( mExampleList.begin(), mExampleList.end(), CompareByTitle );
     }
 
-    unsigned int exampleCount = 0;
     ExampleListConstIter iter = mExampleList.begin();
 
     for( int t = 0; t < mTotalPages; t++ )
@@ -409,14 +408,6 @@ void DaliTableView::Populate()
           // Calculate the tiles relative position on the page (between 0 & 1 in each dimension).
           Vector2 position( static_cast<float>( column ) / ( EXAMPLES_PER_ROW - 1.0f ), static_cast<float>( row ) / ( EXAMPLES_PER_ROW - 1.0f ) );
           Actor tile = CreateTile( example.name, example.title, Vector3( tileParentMultiplier, tileParentMultiplier, 1.0f ), position );
-          AccessibilityManager accessibilityManager = AccessibilityManager::Get();
-          accessibilityManager.SetFocusOrder( tile, ++exampleCount );
-          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_LABEL,
-                                                  example.title );
-          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_TRAIT, "Tile" );
-          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_HINT,
-                                                  "You can run this example" );
-
           tile.SetPadding( Padding( margin, margin, margin, margin ) );
           page.AddChild( tile, TableView::CellPosition( row, column ) );
 
@@ -507,6 +498,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   borderImage.SetParentOrigin( ParentOrigin::CENTER );
   borderImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   borderImage.SetOpacity( 0.8f );
+  DevelControl::AppendAccessibilityRelation( borderImage, focusableTile, Accessibility::RelationType::CONTROLLED_BY );
   focusableTile.Add( borderImage );
 
   TextLabel label = TextLabel::New();
@@ -521,11 +513,18 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
 
   // Pad around the label as its size is the same as the 9-patch border. It will overlap it without padding.
   label.SetPadding( Padding( TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING ) );
+  label.SetProperty( Toolkit::DevelControl::Property::ACCESSIBILITY_HIGHLIGHTABLE, false );
+  DevelControl::AppendAccessibilityRelation( label, focusableTile, Accessibility::RelationType::CONTROLLED_BY );
   focusableTile.Add( label );
 
   // Connect to the touch events
   focusableTile.TouchSignal().Connect( this, &DaliTableView::OnTilePressed );
   focusableTile.HoveredSignal().Connect( this, &DaliTableView::OnTileHovered );
+  focusableTile.SetProperty( Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::PUSH_BUTTON );
+  DevelControl::AccessibilityActivateSignal( focusableTile ).Connect( this, [=]() {
+    DoTilePress( focusableTile, PointState::DOWN );
+    DoTilePress( focusableTile, PointState::UP );
+  } );
 
   return focusableTile;
 }
@@ -617,10 +616,6 @@ void DaliTableView::OnScrollStart( const Dali::Vector2& position )
 void DaliTableView::OnScrollComplete( const Dali::Vector2& position )
 {
   mScrolling = false;
-
-  // move focus to 1st item of new page
-  AccessibilityManager accessibilityManager = AccessibilityManager::Get();
-  accessibilityManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
 }
 
 bool DaliTableView::OnScrollTouched( Actor actor, const TouchData& event )
