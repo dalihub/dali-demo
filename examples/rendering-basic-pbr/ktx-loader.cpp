@@ -146,8 +146,6 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
   unsigned char* imgPointer = buffer;
   result = fread(buffer,1,lSize,fp);
 
-  fclose(fp);
-
   if( 0 == result )
   {
     free( buffer );
