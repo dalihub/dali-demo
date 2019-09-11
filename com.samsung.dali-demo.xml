@@ -24,7 +24,7 @@
 		<label>New Window</label>
 	</ui-application>
 	<ui-application appid="page-turn-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/page-turn-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>PageTurnView Example</label>
+		<label>Page Turn</label>
 	</ui-application>
 	<ui-application appid="bezier-curve.example" exec="/usr/apps/com.samsung.dali-demo/bin/bezier-curve.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Alpha Function Curve</label>
@@ -307,9 +307,6 @@
 	</ui-application>
 	<ui-application appid="bloom-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/bloom-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Bloom</label>
-	</ui-application>
-	<ui-application appid="page-turn-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/page-turn-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Page Turn</label>
 	</ui-application>
 
 	<privileges>
