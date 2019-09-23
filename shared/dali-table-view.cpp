@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -896,12 +896,14 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
 
       Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( "Version information" );
       titleActor.SetName( "titleActor" );
-      titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+      titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER );
+      titleActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
 
       Toolkit::TextLabel contentActor = Toolkit::TextLabel::New( stream.str() );
       contentActor.SetName( "contentActor" );
       contentActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
-      contentActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
+      contentActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER );
+      contentActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
       contentActor.SetPadding( Padding( 0.0f, 0.0f, 20.0f, 0.0f ) );
 
       mVersionPopup.SetTitle( titleActor );
