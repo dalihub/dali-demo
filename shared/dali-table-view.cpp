@@ -69,15 +69,14 @@ const float EFFECT_SNAP_DURATION = 0.66f;                       ///< Scroll Snap
 const float EFFECT_FLICK_DURATION = 0.5f;                       ///< Scroll Flick Duration for Effects
 const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.5f, Math::PI * 0.5f, 0.0f);
 
-
-const Vector4 BUBBLE_COLOR[] =
+const char * const BUBBLE_COLOR_STYLE_NAME[] =
 {
-  Vector4( 0.3255f, 0.3412f, 0.6353f, 0.32f ),
-  Vector4( 0.3647f, 0.7569f, 0.8157f, 0.32f ),
-  Vector4( 0.3804f, 0.7412f, 0.6510f, 0.32f ),
-  Vector4( 1.f, 1.f, 1.f, 0.13f )
+  "BubbleColor1",
+  "BubbleColor2",
+  "BubbleColor3",
+  "BubbleColor4"
 };
-const int NUMBER_OF_BUBBLE_COLOR( sizeof(BUBBLE_COLOR) / sizeof(BUBBLE_COLOR[0]) );
+const int NUMBER_OF_BUBBLE_COLORS( sizeof( BUBBLE_COLOR_STYLE_NAME ) / sizeof( BUBBLE_COLOR_STYLE_NAME[ 0 ] ) );
 
 const char * const SHAPE_IMAGE_TABLE[] =
 {
@@ -750,7 +749,7 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count )
     imageMap.Add( Toolkit::Visual::Property::SHADER, effect );
     dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, imageMap );
 
-    dfActor.SetColor( BUBBLE_COLOR[ i%NUMBER_OF_BUBBLE_COLOR ] );
+    dfActor.SetStyleName( BUBBLE_COLOR_STYLE_NAME[ i%NUMBER_OF_BUBBLE_COLORS ] );
 
     layer.Add( dfActor );
   }
