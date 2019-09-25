@@ -31,7 +31,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   textdomain(DALI_DEMO_DOMAIN_LOCAL);
   setlocale(LC_ALL, DEMO_LANG);
 
-  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  Application app = Application::New( &argc, &argv, DEMO_STYLE_DIR "/tests-theme.json" );
 
   // Create the demo launcher
   DaliTableView demo(app);
