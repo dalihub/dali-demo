@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
- *
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -25,7 +24,14 @@
   {
     "DemoTile":
     {
-      "styles":[ "DemoTileBase" ]
+      "styles": ["DemoTileBase"],
+      "states":
+      {
+        "NORMAL":
+        {
+          "color":[0.6, 0.4, 0.9, 0.6]
+        }
+      }
     },
 
     "LauncherBackground":
@@ -36,23 +42,23 @@
         "center": [360, 640],
         "radius": 1468,
         "units": "USER_SPACE",
-        "stopColor": [[0.247,0.38,0.52,1.0],[0.055,0.18,0.286,1.0]]
+        "stopColor": [[0.392157,0.254902,0.647059,1.0],[0.164706,0.0313725,0.270588,1.0]]
       }
     },
 
     "BubbleColor1":
     {
-      "color": [ 0.3255, 0.3412, 0.6353, 0.32 ]
+      "color": [ 0.8255, 0.2412, 0.9353, 0.32 ]
     },
 
     "BubbleColor2":
     {
-      "color": [ 0.3647, 0.7569, 0.8157, 0.32 ]
+      "color": [ 0.8647, 0.4569, 0.8157, 0.32 ]
     },
 
     "BubbleColor3":
     {
-      "color": [ 0.3804, 0.7412, 0.6510, 0.32 ]
+      "color": [ 0.9804, 0.5412, 0.9510, 0.32 ]
     },
 
     "BubbleColor4":
