@@ -298,6 +298,20 @@ private: // Application callbacks & implementation
   void OnFocusedActorActivated( Dali::Actor activatedActor );
 
   /**
+   * Callback when the keyboard focus indicator is enabled.
+   *
+   * @param[in] actor The keyboard focus indicator.
+   */
+  void OnFocusIndicatorEnabled( Dali::Actor actor );
+
+  /**
+   * Callback when the keyboard focus indicator is disabled.
+   *
+   * @param[in] actor The keyboard focus indicator.
+   */
+  void OnFocusIndicatorDisabled( Dali::Actor actor );
+
+  /**
    * Called when the logo is tapped
    *
    * @param[in]  actor  The tapped actor

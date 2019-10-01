@@ -44,13 +44,15 @@ const std::string LOGO_PATH( DEMO_IMAGE_DIR "Logo-for-demo.png" );
 
 // Keyboard focus effect constants.
 const float KEYBOARD_FOCUS_ANIMATION_DURATION = 1.0f;           ///< The total duration of the keyboard focus animation
-const float KEYBOARD_FOCUS_START_SCALE = 1.05f;                 ///< The starting scale of the focus highlight
-const float KEYBOARD_FOCUS_END_SCALE = 1.18f;                   ///< The end scale of the focus highlight
-const float KEYBOARD_FOCUS_END_ALPHA = 0.7f;                    ///< The end alpha of the focus highlight
-const float KEYBOARD_FOCUS_INITIAL_FADE_PERCENTAGE = 0.16f;     ///< The duration of the initial fade (from translucent to the end-alpha) as a percentage of the overal animation duration.
-const Vector3 startScale( KEYBOARD_FOCUS_START_SCALE, KEYBOARD_FOCUS_START_SCALE, KEYBOARD_FOCUS_START_SCALE ); ///< @see KEYBOARD_FOCUS_START_SCALE
-const Vector3 endScale( KEYBOARD_FOCUS_END_SCALE, KEYBOARD_FOCUS_END_SCALE, KEYBOARD_FOCUS_END_SCALE );         ///< @see KEYBOARD_FOCUS_END_SCALE
-const float initialFadeDuration = KEYBOARD_FOCUS_ANIMATION_DURATION * KEYBOARD_FOCUS_INITIAL_FADE_PERCENTAGE;   ///< @see KEYBOARD_FOCUS_INITIAL_FADE_PERCENTAGE
+const int32_t KEYBOARD_FOCUS_ANIMATION_LOOP_COUNT = 5;          ///< The number of loops for the keyboard focus animation
+const float KEYBOARD_FOCUS_FINAL_SCALE_FLOAT = 1.05f;           ///< The final scale of the focus highlight
+const float KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT = 1.18f;        ///< The scale of the focus highlight during the animation
+const float KEYBOARD_FOCUS_FINAL_ALPHA = 0.7f;                  ///< The final alpha of the focus highlight
+const float KEYBOARD_FOCUS_ANIMATING_ALPHA = 0.0f;              ///< The alpha of the focus highlight during the animation
+const float KEYBOARD_FOCUS_FADE_PERCENTAGE = 0.16f;             ///< The duration of the fade (from translucent to the final-alpha) as a percentage of the overall animation duration
+const Vector3 KEYBOARD_FOCUS_FINAL_SCALE( KEYBOARD_FOCUS_FINAL_SCALE_FLOAT, KEYBOARD_FOCUS_FINAL_SCALE_FLOAT, KEYBOARD_FOCUS_FINAL_SCALE_FLOAT );  ///< @see KEYBOARD_FOCUS_START_SCALE_FLOAT
+const Vector3 FOCUS_INDICATOR_ANIMATING_SCALE( KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT, KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT, KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT );   ///< @see KEYBOARD_FOCUS_END_SCALE_FLOAT
+const float KEYBOARD_FOCUS_MID_KEY_FRAME_TIME = KEYBOARD_FOCUS_ANIMATION_DURATION - ( KEYBOARD_FOCUS_ANIMATION_DURATION * KEYBOARD_FOCUS_FADE_PERCENTAGE ); ///< Time of the mid key-frame
 
 const float TILE_LABEL_PADDING = 8.0f;                          ///< Border between edge of tile and the example text
 const float BUTTON_PRESS_ANIMATION_TIME = 0.35f;                ///< Time to perform button scale effect.
@@ -69,15 +71,14 @@ const float EFFECT_SNAP_DURATION = 0.66f;                       ///< Scroll Snap
 const float EFFECT_FLICK_DURATION = 0.5f;                       ///< Scroll Flick Duration for Effects
 const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.5f, Math::PI * 0.5f, 0.0f);
 
-
-const Vector4 BUBBLE_COLOR[] =
+const char * const BUBBLE_COLOR_STYLE_NAME[] =
 {
-  Vector4( 0.3255f, 0.3412f, 0.6353f, 0.32f ),
-  Vector4( 0.3647f, 0.7569f, 0.8157f, 0.32f ),
-  Vector4( 0.3804f, 0.7412f, 0.6510f, 0.32f ),
-  Vector4( 1.f, 1.f, 1.f, 0.13f )
+  "BubbleColor1",
+  "BubbleColor2",
+  "BubbleColor3",
+  "BubbleColor4"
 };
-const int NUMBER_OF_BUBBLE_COLOR( sizeof(BUBBLE_COLOR) / sizeof(BUBBLE_COLOR[0]) );
+const int NUMBER_OF_BUBBLE_COLORS( sizeof( BUBBLE_COLOR_STYLE_NAME ) / sizeof( BUBBLE_COLOR_STYLE_NAME[ 0 ] ) );
 
 const char * const SHAPE_IMAGE_TABLE[] =
 {
@@ -308,8 +309,9 @@ void DaliTableView::Initialize( Application& application )
 void DaliTableView::CreateFocusEffect()
 {
   // Hook the required signals to manage the focus.
-  KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &DaliTableView::OnKeyboardPreFocusChange );
-  KeyboardFocusManager::Get().FocusedActorEnterKeySignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
+  auto keyboardFocusManager = KeyboardFocusManager::Get();
+  keyboardFocusManager.PreFocusChangeSignal().Connect( this, &DaliTableView::OnKeyboardPreFocusChange );
+  keyboardFocusManager.FocusedActorEnterKeySignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
   AccessibilityManager::Get().FocusedActorActivatedSignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
 
   // Loop to create both actors for the focus highlight effect.
@@ -322,31 +324,49 @@ void DaliTableView::CreateFocusEffect()
     mFocusEffect[i].actor.SetInheritScale( false );
     mFocusEffect[i].actor.SetColorMode( USE_OWN_COLOR );
 
-    // Setup initial values pre-animation.
-    mFocusEffect[i].actor.SetScale( startScale );
-    mFocusEffect[i].actor.SetOpacity( 0.0f );
+    KeyFrames alphaKeyFrames = KeyFrames::New();
+    alphaKeyFrames.Add( 0.0f, KEYBOARD_FOCUS_FINAL_ALPHA );
+    alphaKeyFrames.Add( KEYBOARD_FOCUS_MID_KEY_FRAME_TIME, KEYBOARD_FOCUS_ANIMATING_ALPHA );
+    alphaKeyFrames.Add( KEYBOARD_FOCUS_ANIMATION_DURATION, KEYBOARD_FOCUS_FINAL_ALPHA );
 
-    // Create and setup the animation to do the following:
-    //   1) Initial fade in over short period of time
-    //   2) Zoom in (larger) and fade out simultaneously over longer period of time.
+    KeyFrames scaleKeyFrames = KeyFrames::New();
+    scaleKeyFrames.Add( 0.0f, KEYBOARD_FOCUS_FINAL_SCALE );
+    scaleKeyFrames.Add( KEYBOARD_FOCUS_MID_KEY_FRAME_TIME, FOCUS_INDICATOR_ANIMATING_SCALE );
+    scaleKeyFrames.Add( KEYBOARD_FOCUS_ANIMATION_DURATION, KEYBOARD_FOCUS_FINAL_SCALE );
+
     mFocusEffect[i].animation = Animation::New( KEYBOARD_FOCUS_ANIMATION_DURATION );
+    mFocusEffect[i].animation.AnimateBetween( Property( mFocusEffect[i].actor, Actor::Property::COLOR_ALPHA ), alphaKeyFrames );
+    mFocusEffect[i].animation.AnimateBetween( Property( mFocusEffect[i].actor, Actor::Property::SCALE ), scaleKeyFrames );
 
-    mFocusEffect[i].animation.AnimateTo( Property( mFocusEffect[i].actor, Actor::Property::COLOR_ALPHA ), KEYBOARD_FOCUS_END_ALPHA, AlphaFunction::LINEAR, TimePeriod( 0.0f, initialFadeDuration ) );
-    mFocusEffect[i].animation.AnimateTo( Property( mFocusEffect[i].actor, Actor::Property::SCALE ), endScale, AlphaFunction::LINEAR, TimePeriod( initialFadeDuration, KEYBOARD_FOCUS_ANIMATION_DURATION - initialFadeDuration ) );
-    mFocusEffect[i].animation.AnimateTo( Property( mFocusEffect[i].actor, Actor::Property::COLOR_ALPHA ), 0.0f, AlphaFunction::LINEAR, TimePeriod( initialFadeDuration, KEYBOARD_FOCUS_ANIMATION_DURATION - initialFadeDuration ) );
-
-    mFocusEffect[i].animation.SetLooping( true );
+    mFocusEffect[i].animation.SetLoopCount( KEYBOARD_FOCUS_ANIMATION_LOOP_COUNT );
   }
 
   // Parent the secondary effect from the primary.
   mFocusEffect[0].actor.Add( mFocusEffect[1].actor );
 
+  keyboardFocusManager.SetFocusIndicatorActor( mFocusEffect[0].actor );
+
+  // Connect to the on & off stage signals of the indicator which represents when it is enabled & disabled respectively
+  mFocusEffect[0].actor.OnStageSignal().Connect( this, &DaliTableView::OnFocusIndicatorEnabled );
+  mFocusEffect[0].actor.OffStageSignal().Connect( this, &DaliTableView::OnFocusIndicatorDisabled );
+}
+
+void DaliTableView::OnFocusIndicatorEnabled( Actor /* actor */ )
+{
   // Play the animation on the 1st glow object.
   mFocusEffect[0].animation.Play();
-  // Stagger the animation on the 2st glow object half way through.
-  mFocusEffect[1].animation.PlayFrom( KEYBOARD_FOCUS_ANIMATION_DURATION / 2.0f );
 
-  KeyboardFocusManager::Get().SetFocusIndicatorActor( mFocusEffect[0].actor );
+  // Stagger the animation on the 2nd glow object half way through.
+  mFocusEffect[1].animation.PlayFrom( KEYBOARD_FOCUS_ANIMATION_DURATION / 2.0f );
+}
+
+void DaliTableView::OnFocusIndicatorDisabled( Dali::Actor /* actor */ )
+{
+  // Stop the focus effect animations
+  for( auto i = 0u; i < FOCUS_ANIMATION_ACTOR_NUMBER; ++i )
+  {
+    mFocusEffect[ i ].animation.Stop();
+  }
 }
 
 void DaliTableView::ApplyCubeEffectToPages()
@@ -750,7 +770,7 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count )
     imageMap.Add( Toolkit::Visual::Property::SHADER, effect );
     dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, imageMap );
 
-    dfActor.SetColor( BUBBLE_COLOR[ i%NUMBER_OF_BUBBLE_COLOR ] );
+    dfActor.SetStyleName( BUBBLE_COLOR_STYLE_NAME[ i%NUMBER_OF_BUBBLE_COLORS ] );
 
     layer.Add( dfActor );
   }
