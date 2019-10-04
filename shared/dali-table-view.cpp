@@ -95,6 +95,7 @@ const unsigned int BACKGROUND_ANIMATION_DURATION = 15000; // 15 secs
 const float BUBBLE_MIN_Z = -1.0;
 const float BUBBLE_MAX_Z = 0.0f;
 
+const char * const DEMO_BUILD_DATE    = __DATE__ " " __TIME__;
 
 /**
  * Creates the background image
@@ -905,6 +906,7 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
       stream << "DALi Core: "    << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl << "(" << CORE_BUILD_DATE << ")\n";
       stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl << "(" << ADAPTOR_BUILD_DATE << ")\n";
       stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl << "(" << TOOLKIT_BUILD_DATE << ")\n";
+      stream << "DALi Demo:" << "\n(" << DEMO_BUILD_DATE << ")\n";
 
       mVersionPopup = Dali::Toolkit::Popup::New();
 
