@@ -18,6 +18,8 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <string>
+#include <dali/devel-api/events/rotation-gesture.h>
+#include <dali/devel-api/events/rotation-gesture-detector.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -58,12 +60,13 @@ const float PAN_MODE_CHANGE_ANIMATION_DURATION( 0.25f );
 const Vector3 PAN_MODE_START_ANIMATION_SCALE( 1.2f, 1.2f, 1.0f );
 const Vector3 PAN_MODE_END_ANIMATION_SCALE( 0.8f, 0.8f, 1.0f );
 
-const float TAP_ANIMATION_DURATON( 0.5f );
+const float TAP_ANIMATION_DURATION( 0.5f );
 const Vector4 TAP_ANIMATION_COLOR( 0.8f, 0.5, 0.2f, 0.6f );
 
 const Vector3 MINIMUM_SCALE( Vector3::ONE );
 const Vector3 MAXIMUM_SCALE( Vector3::ONE * 2.0f );
 const float SCALE_BACK_ANIMATION_DURATION( 0.25f );
+const float ROTATE_BACK_ANIMATION_DURATION( 0.25f );
 
 /**
  * @brief Shows the given string between the given start and end times.
@@ -86,6 +89,7 @@ void AddHelpInfo( const std::string&& string, Actor parent, Animation animation,
   text.SetPosition( position );
   text.SetOpacity( 0.0f );
   text.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, Text::HorizontalAlignment::CENTER );
+  text.SetProperty( TextLabel::Property::MULTI_LINE, true );
   parent.Add( text );
 
   // Animate IN
@@ -177,6 +181,11 @@ private:
     mPinchDetector.Attach( touchControl );
     mPinchDetector.DetectedSignal().Connect( this, &GestureExample::OnPinch );
 
+    // Create a rotation gesture detector, attach the actor & connect
+    mRotationDetector = RotationGestureDetector::New();
+    mRotationDetector.Attach( touchControl );
+    mRotationDetector.DetectedSignal().Connect( this, &GestureExample::OnRotation );
+
     // Create an animation which shakes the actor when in Pan mode
     mShakeAnimation = Animation::New( SHAKY_ANIMATION_DURATION );
     mShakeAnimation.AnimateBy( Property( touchControl, Actor::Property::ORIENTATION ),
@@ -196,9 +205,10 @@ private:
     float startTime( 0.0f );
     float endTime( startTime + HELP_ANIMATION_SEGMENT_TIME );
 
-    AddHelpInfo( "Tap image for animation",         background, helpAnimation, startTime, endTime );
-    AddHelpInfo( "Press & Hold image to drag",      background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
-    AddHelpInfo( "Pinch image to resize",           background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
+    AddHelpInfo( "Tap image for animation",                              background, helpAnimation, startTime, endTime );
+    AddHelpInfo( "Press & Hold image to drag",                           background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
+    AddHelpInfo( "Pinch image to resize",                                background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
+    AddHelpInfo( "Move fingers in a circular motion on image to rotate", background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
     helpAnimation.SetLooping( true );
     helpAnimation.Play();
   }
@@ -362,10 +372,11 @@ private:
   {
     // Do a short animation to show a tap has happened.
 
-    Animation anim = Animation::New( TAP_ANIMATION_DURATON );
-    anim.AnimateBy( Property( actor, Actor::Property::ORIENTATION ), Quaternion( Degree( 360.0f ), Vector3::ZAXIS ) );
+    Animation anim = Animation::New( TAP_ANIMATION_DURATION );
+    anim.AnimateBy( Property( actor, Actor::Property::ORIENTATION ), Quaternion( ANGLE_360, Vector3::ZAXIS ) );
     anim.AnimateTo( Property( actor, Actor::Property::SCALE ), Vector3::ONE, AlphaFunction::LINEAR );
     anim.AnimateTo( Property( actor, Actor::Property::COLOR ), TAP_ANIMATION_COLOR, AlphaFunction::BOUNCE );
+    anim.AnimateTo( Property( actor, Actor::Property::POSITION ), Vector3::ZERO, AlphaFunction::EASE_OUT_SQUARE );
     anim.Play();
   }
 
@@ -418,6 +429,42 @@ private:
   }
 
   /**
+   * @brief Called when a rotation gesture is detected on our control.
+   *
+   * @param[in]  actor     The actor that's been pinched
+   * @param[in]  rotation  The rotation gesture information
+   */
+  void OnRotation( Actor actor, const RotationGesture& rotation )
+  {
+    switch( rotation.state )
+    {
+      case Gesture::Started:
+      {
+        // Starting orientation is required so that we know what to multiply the rotation.rotation by.
+        mStartingOrientation = actor.GetCurrentOrientation();
+        break;
+      }
+
+      case Gesture::Finished:
+      case Gesture::Cancelled:
+      {
+        // Do an animation to come back to go back to the original orientation.
+        Animation anim = Animation::New( ROTATE_BACK_ANIMATION_DURATION );
+        anim.AnimateTo( Property( actor, Actor::Property::ORIENTATION ), Quaternion::IDENTITY, AlphaFunction::LINEAR );
+        anim.Play();
+        break;
+      }
+
+      default:
+      {
+        break;
+      }
+    }
+
+    actor.SetOrientation( mStartingOrientation * Quaternion( rotation.rotation, Vector3::ZAXIS ) );
+  }
+
+  /**
    * @brief Called when any key event is received.
    *
    * Will use this to quit the application if Back or the Escape key is received.
@@ -441,8 +488,10 @@ private:
   LongPressGestureDetector mLongPressDetector;
   TapGestureDetector mTapDetector;
   PinchGestureDetector mPinchDetector;
+  RotationGestureDetector mRotationDetector;
 
   Vector3 mStartingScale; ///< Set to the scale of the control when pinch starts.
+  Quaternion mStartingOrientation; ///< Set to the orientation of the control when the rotation starts.
   Animation mShakeAnimation; ///< "Shake" animation to show when we are in panning mode.
   bool mPanMode = false; ///< Set to true when we have long-pressed to put us into panning mode.
   bool mPanStarted = false; ///< Set to true to state that panning has started.
