@@ -28,7 +28,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const Vector2 DESKTOP_SIZE( Vector2( 1440.f, 1600.f ) );
+const float STAGE_HEIGHT_MULTIPLIER( 1.5f );
 const Vector2 BOX_SIZE( Vector2(330.0f, 80.0f ) );
 const Vector2 SCROLLING_BOX_SIZE( Vector2(330.0f, 40.0f ) );
 const float MAX_OFFSCREEN_RENDERING_SIZE = 2048.f;
@@ -135,7 +135,7 @@ public:
 
     mAnimation = Animation::New( 1.0f );
 
-    const Size mTargetActorSize( mStageSize.width, DESKTOP_SIZE.height );
+    const Size mTargetActorSize( mStageSize.width, mStageSize.height * STAGE_HEIGHT_MULTIPLIER );
 
     // Create Desktop
     Control desktop = Control::New();
