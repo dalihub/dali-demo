@@ -423,7 +423,7 @@ void ShadowButton::StoreTargetLayouts( TransitionData transitionData )
     if( target )
     {
       // Convert to index
-      Property::Index index;
+      Property::Index index = Property::INVALID_INDEX;
       if( Scripting::GetEnumerationProperty( *target, VISUAL_PROPERTIES_TABLE, VISUAL_PROPERTIES_TABLE_COUNT, index ) )
       {
         ShadowButton::Transforms::iterator iter = FindTransform( index );
