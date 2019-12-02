@@ -232,6 +232,9 @@
 	<ui-application appid="simple-layout.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-layout.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Simple Layout</label>
 	</ui-application>
+	<ui-application appid="simple-scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Simple Scroll View</label>
+	</ui-application>
 	<ui-application appid="simple-text-field.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-field.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Simple Text Field</label>
 	</ui-application>
