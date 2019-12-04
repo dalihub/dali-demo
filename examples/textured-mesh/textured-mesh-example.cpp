@@ -173,36 +173,6 @@ public:
     stage.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));
   }
 
-  BufferImage CreateBufferImage()
-  {
-    BufferImage image = BufferImage::New( 200, 200, Pixel::RGB888 );
-    PixelBuffer* pixelBuffer = image.GetBuffer();
-    unsigned int stride = image.GetBufferStride();
-    for( unsigned int x=0; x<200; x++ )
-    {
-      for( unsigned int y=0; y<200; y++ )
-      {
-        PixelBuffer* pixel = pixelBuffer + y*stride + x*3;
-        if( ((int)(x/20.0f))%2 + ((int)(y/20.0f)%2) == 1 )
-        {
-          pixel[0]=255;
-          pixel[1]=0;
-          pixel[2]=0;
-          pixel[3]=255;
-        }
-        else
-        {
-          pixel[0]=0;
-          pixel[1]=0;
-          pixel[2]=255;
-          pixel[3]=255;
-        }
-      }
-    }
-    image.Update();
-    return image;
-  }
-
   /**
    * Invoked whenever the quit button is clicked
    * @param[in] button the quit button
