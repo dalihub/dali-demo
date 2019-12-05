@@ -184,6 +184,9 @@ msgstr "Script-based UI"
 msgid "DALI_DEMO_STR_TITLE_SCROLL_VIEW"
 msgstr "Scroll View"
 
+msgid "DALI_DEMO_STR_TITLE_SIMPLE_SCROLL_VIEW"
+msgstr "Simple Scroll View"
+
 msgid "DALI_DEMO_STR_TITLE_SPARKLE"
 msgstr "Sparkle"
 
