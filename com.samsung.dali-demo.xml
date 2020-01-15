@@ -70,6 +70,9 @@
 	<ui-application appid="dali-builder" exec="/usr/apps/com.samsung.dali-demo/bin/dali-builder" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Builder</label>
 	</ui-application>
+	<ui-application appid="deferred-shading" exec="/usr/apps/com.samsung.dali-demo/bin/deferred-shading" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Deferred Shading</label>
+	</ui-application>
 	<ui-application appid="dissolve-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/dissolve-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Dissolve effect</label>
 	</ui-application>

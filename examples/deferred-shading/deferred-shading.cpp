@@ -1,0 +1,803 @@
+/*
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+#include "dali/dali.h"
+#include "dali/public-api/actors/actor.h"
+#include "dali/public-api/rendering/renderer.h"
+#include <random>
+#include <iostream>
+#include <cstring>
+
+using namespace Dali;
+
+namespace
+{
+//=============================================================================
+// Demonstrates deferred shading with multiple render targets (for color,
+// position, and normal), a Phong lighting model and 32 point lights.
+//
+// Invoked with the --show-lights it will render a mesh at each light position.
+//=============================================================================
+
+#define QUOTE(x) DALI_COMPOSE_SHADER(x)
+
+#define MAX_LIGHTS 32
+
+#define DEFINE_MAX_LIGHTS "const int kMaxLights = " QUOTE(MAX_LIGHTS) ";"
+
+#define DEFINE(x) "#define " DALI_COMPOSE_SHADER(x) DALI_COMPOSE_SHADER(\n)
+
+//=============================================================================
+// PRE-PASS
+//=============================================================================
+const char* const PREPASS_VSH = DALI_COMPOSE_SHADER(#version 300 es\n
+precision mediump float;)
+  DALI_COMPOSE_SHADER(
+
+// DALI uniforms
+uniform mat4 uMvpMatrix;
+uniform mat3 uNormalMatrix;
+uniform vec3 uSize;
+
+uniform vec3 uDepth_InvDepth_Near;\n)
+  DEFINE(DEPTH uDepth_InvDepth_Near.x)
+  DEFINE(INV_DEPTH uDepth_InvDepth_Near.y)
+  DEFINE(NEAR uDepth_InvDepth_Near.z)
+  DALI_COMPOSE_SHADER(
+
+in vec3 aPosition;
+in vec3 aNormal;
+
+out vec4 vPosition;
+out vec3 vNormal;
+
+vec4 Map(vec4 v)	// projection space -> texture
+{
+  return vec4(v.xyz / (2.f * v.w) + vec3(.5f), (v.w - NEAR) * INV_DEPTH);
+}
+
+void main()
+{
+  vec4 position = uMvpMatrix * vec4(aPosition * uSize, 1.f);
+  vPosition = Map(position);
+  gl_Position = position;
+
+  vNormal = normalize(uNormalMatrix * aNormal);
+});
+
+//=============================================================================
+const char* const PREPASS_FSH = DALI_COMPOSE_SHADER(#version 300 es\n
+precision mediump float;
+
+// DALI uniform
+uniform vec4 uColor;
+
+in vec4 vPosition;
+in vec3 vNormal;
+
+// These are our outputs.
+layout(location = 0) out vec3 oNormal;
+layout(location = 1) out vec4 oPosition;
+layout(location = 2) out vec3 oColor;
+
+void main()
+{
+  oColor = uColor.rgb;
+  oPosition = vPosition;
+  oNormal = normalize(vNormal) * .5f + .5f;
+});
+
+//=============================================================================
+// MAIN (LIGHTING) PASS
+//=============================================================================
+const char* const MAINPASS_VSH = DALI_COMPOSE_SHADER(#version 300 es\n
+precision mediump float;
+
+// DALI uniforms
+uniform mat4 uMvpMatrix;
+uniform vec3 uSize;
+
+in vec3 aPosition;
+in vec2 aTexCoord;
+
+out vec2 vUv;
+
+void main()
+{
+  vec4 position = uMvpMatrix * vec4(aPosition * uSize, 1.f);
+  vUv = aTexCoord;
+
+  gl_Position = position;
+});
+
+//=============================================================================
+const char* const MAINPASS_FSH = DALI_COMPOSE_SHADER(#version 300 es\n
+precision mediump float;\n)
+  DEFINE_MAX_LIGHTS
+  DALI_COMPOSE_SHADER(
+
+const float kAttenuationConst = .05f;
+const float kAttenuationLinear = .1f;
+const float kAttenuationQuadratic = .15f;
+
+// G-buffer
+uniform sampler2D uTextureNormal;
+uniform sampler2D uTexturePosition;
+uniform sampler2D uTextureColor;
+
+uniform mat4 uInvProjection;
+
+uniform vec3 uDepth_InvDepth_Near;\n)
+  DEFINE(DEPTH uDepth_InvDepth_Near.x)
+  DEFINE(INV_DEPTH uDepth_InvDepth_Near.y)
+  DEFINE(NEAR uDepth_InvDepth_Near.z)
+  DALI_COMPOSE_SHADER(
+
+// Light source uniforms
+struct Light
+{
+  vec3 position;	// view space
+  float radius;
+  vec3 color;
+};
+
+uniform Light uLights[kMaxLights];
+
+in vec2 vUv;
+
+out vec4 oColor;
+
+vec4 Unmap(vec4 m)	// texture -> projection
+{
+  m.w = m.w * DEPTH + NEAR;
+  m.xyz = (m.xyz - vec3(.5)) * (2.f * m.w);
+  return m;
+}
+
+vec3 CalculateLighting(vec3 pos, vec3 normal)
+{
+  vec3 viewDir = normalize(pos);
+  vec3 viewDirRefl = -reflect(viewDir, normal);
+
+  vec3 light = vec3(0.04f); // fake ambient term
+  for (int i = 0; i < kMaxLights; ++i)
+  {
+    vec3 rel = pos - uLights[i].position;
+    float distance = length(rel);
+    rel /= distance;
+
+    float a = uLights[i].radius / (kAttenuationConst + kAttenuationLinear * distance +
+      kAttenuationQuadratic * distance * distance);	// attenuation
+
+    float l = max(0.f, dot(normal, rel));	// lambertian
+    float s = pow(max(0.f, dot(viewDirRefl, rel)), 256.f);	// specular
+
+    light += (uLights[i].color * (l + s)) * a;
+  }
+
+  return light;
+}
+
+void main()
+{
+  vec3 normSample = texture(uTextureNormal, vUv).xyz;
+  if (dot(normSample, normSample) == 0.f)
+  {
+    discard;  // if we didn't write this texel, don't bother lighting it.
+  }
+
+  vec3 normal = normalize(normSample - .5f);
+
+  vec4 posSample = texture(uTexturePosition, vUv);
+  vec3 pos = (uInvProjection * Unmap(posSample)).xyz;
+
+  vec3 color = texture(uTextureColor, vUv).rgb;
+  vec3 finalColor = color * CalculateLighting(pos, normal);
+
+  oColor = vec4(finalColor, 1.f);
+});
+
+//=============================================================================
+// PRNG for floats.
+struct FloatRand
+{
+  std::random_device mDevice;
+  std::mt19937 mMersenneTwister;
+  std::uniform_real_distribution<float> mDistribution;
+
+  FloatRand()
+  : mMersenneTwister(mDevice()),
+    mDistribution(0., 1.)
+  {}
+
+  float operator()()
+  {
+    return mDistribution(mMersenneTwister);
+  }
+};
+
+//=============================================================================
+float FastFloor(float x)
+{
+  return static_cast<int>(x) - static_cast<int>(x < 0);
+}
+
+//=============================================================================
+Vector3 FromHueSaturationLightness(Vector3 hsl)
+{
+  Vector3 rgb;
+  if (hsl.y * hsl.y > 0.f)
+  {
+    if(hsl.x >= 360.f)
+    {
+      hsl.x -= 360.f;
+    }
+    hsl.x /= 60.f;
+
+    int i = FastFloor(hsl.x);
+    float ff = hsl.x - i;
+    float p = hsl.z * (1.0 - hsl.y);
+    float q = hsl.z * (1.0 - (hsl.y * ff));
+    float t = hsl.z * (1.0 - (hsl.y * (1.f - ff)));
+
+    switch (i)
+    {
+    case 0:
+      rgb.r = hsl.z;
+      rgb.g = t;
+      rgb.b = p;
+      break;
+
+    case 1:
+      rgb.r = q;
+      rgb.g = hsl.z;
+      rgb.b = p;
+      break;
+
+    case 2:
+      rgb.r = p;
+      rgb.g = hsl.z;
+      rgb.b = t;
+      break;
+
+    case 3:
+      rgb.r = p;
+      rgb.g = q;
+      rgb.b = hsl.z;
+      break;
+
+    case 4:
+      rgb.r = t;
+      rgb.g = p;
+      rgb.b = hsl.z;
+      break;
+
+    case 5:
+    default:
+      rgb.r = hsl.z;
+      rgb.g = p;
+      rgb.b = q;
+      break;
+    }
+  }
+  else
+  {
+    rgb = Vector3::ONE * hsl.z;
+  }
+
+  return rgb;
+}
+
+//=============================================================================
+Geometry CreateTexturedQuadGeometry(bool flipV)
+{
+  // Create geometry -- unit square with whole of the texture mapped to it.
+  struct Vertex
+  {
+    Vector3 aPosition;
+    Vector2 aTexCoord;
+  };
+
+  Vertex vertexData[] = {
+  { Vector3(-.5f, .5f, .0f), Vector2(.0f, 1.0f) },
+  { Vector3(.5f, .5f, .0f), Vector2(1.0f, 1.0f) },
+  { Vector3(-.5f, -.5f, .0f), Vector2(.0f, .0f) },
+  { Vector3(.5f, -.5f, .0f), Vector2(1.0f, .0f) },
+  };
+
+  if (flipV)
+  {
+    std::swap(vertexData[0].aTexCoord, vertexData[2].aTexCoord);
+    std::swap(vertexData[1].aTexCoord, vertexData[3].aTexCoord);
+  }
+
+  PropertyBuffer vertexBuffer = PropertyBuffer::New( Property::Map()
+    .Add( "aPosition", Property::VECTOR3 )
+    .Add( "aTexCoord", Property::VECTOR2 ) );
+  vertexBuffer.SetData( vertexData, std::extent<decltype(vertexData)>::value );
+
+  Geometry geometry = Geometry::New();
+  geometry.AddVertexBuffer( vertexBuffer );
+  geometry.SetType( Geometry::TRIANGLE_STRIP );
+  return geometry;
+}
+
+//=============================================================================
+Geometry CreateOctahedron(bool invertNormals)
+{
+  Vector3 positions[] = {
+    Vector3{ -1.f, 0.f, 0.f },
+    Vector3{ 1.f, 0.f, 0.f },
+    Vector3{ 0.f, -1.f, 0.f },
+    Vector3{ 0.f, 1.f, 0.f },
+    Vector3{ 0.f, 0.f, -1.f },
+    Vector3{ 0.f, 0.f, 1.f },
+  };
+
+  struct Vertex
+  {
+    Vector3 position;
+    Vector3 normal;
+  };
+  Vertex vertexData[] = {
+    { positions[0] },
+    { positions[3] },
+    { positions[5] },
+
+    { positions[5] },
+    { positions[3] },
+    { positions[1] },
+
+    { positions[1] },
+    { positions[3] },
+    { positions[4] },
+
+    { positions[4] },
+    { positions[3] },
+    { positions[0] },
+
+    { positions[0] },
+    { positions[5] },
+    { positions[2] },
+
+    { positions[5] },
+    { positions[1] },
+    { positions[2] },
+
+    { positions[1] },
+    { positions[4] },
+    { positions[2] },
+
+    { positions[4] },
+    { positions[0] },
+    { positions[2] },
+  };
+
+  // Calculate normals
+  for (uint32_t i = 0; i < std::extent<decltype(vertexData)>::value / 3; ++i)
+  {
+    uint32_t idx = i * 3;
+
+    Vector3 normal = (vertexData[idx + 2].position - vertexData[idx].position).
+        Cross(vertexData[idx + 1].position - vertexData[idx].position);
+    normal.Normalize();
+    normal *= invertNormals * 2.f - 1.f;
+
+    vertexData[idx++].normal = normal;
+    vertexData[idx++].normal = normal;
+    vertexData[idx].normal = normal;
+  }
+
+  // Configure property buffers and create geometry.
+  PropertyBuffer vertexBuffer = PropertyBuffer::New(Property::Map()
+    .Add("aPosition", Property::VECTOR3)
+    .Add("aNormal", Property::VECTOR3));
+  vertexBuffer.SetData(vertexData, std::extent<decltype(vertexData)>::value);
+
+  Geometry geometry = Geometry::New();
+  geometry.AddVertexBuffer( vertexBuffer );
+  geometry.SetType( Geometry::TRIANGLES );
+  return geometry;
+}
+
+//=============================================================================
+enum RendererOptions
+{
+  OPTION_NONE = 0x0,
+  OPTION_BLEND = 0x01,
+  OPTION_DEPTH_TEST = 0x02,
+  OPTION_DEPTH_WRITE = 0x04
+};
+
+Renderer CreateRenderer(TextureSet textures, Geometry geometry, Shader shader, uint32_t options = OPTION_NONE)
+{
+  Renderer renderer = Renderer::New(geometry, shader);
+  renderer.SetProperty(Renderer::Property::BLEND_MODE,
+      (options & OPTION_BLEND) ? BlendMode::ON : BlendMode::OFF);
+  renderer.SetProperty(Renderer::Property::DEPTH_TEST_MODE,
+      (options & OPTION_DEPTH_TEST) ? DepthTestMode::ON : DepthTestMode::OFF);
+  renderer.SetProperty(Renderer::Property::DEPTH_WRITE_MODE,
+      (options & OPTION_DEPTH_WRITE) ? DepthWriteMode::ON : DepthWriteMode::OFF);
+  renderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
+
+  if (!textures)
+  {
+    textures = TextureSet::New();
+  }
+
+  renderer.SetTextures(textures);
+  return renderer;
+}
+
+//=============================================================================
+void CenterActor(Actor actor)
+{
+  actor.SetAnchorPoint( AnchorPoint::CENTER );
+  actor.SetParentOrigin( ParentOrigin::CENTER );
+}
+
+//=============================================================================
+void RegisterDepthProperties(float depth, float near, Handle& h)
+{
+  h.RegisterProperty("uDepth_InvDepth_Near", Vector3(depth, 1.f / depth, near));
+}
+
+}
+
+//=============================================================================
+class DeferredShadingExample : public ConnectionTracker
+{
+public:
+  struct Options
+  {
+    enum
+    {
+      NONE = 0x0,
+      SHOW_LIGHTS = 0x1,
+    };
+  };
+
+  DeferredShadingExample(Application& app, uint32_t options = Options::NONE)
+  : mApp(app),
+    mOptions(options)
+  {
+    app.InitSignal().Connect( this, &DeferredShadingExample::Create );
+    app.TerminateSignal().Connect( this, &DeferredShadingExample::Destroy );
+  }
+
+private:
+  void Create(Application& app)
+  {
+    // Grab stage, configure layer
+    Stage stage = Stage::GetCurrent();
+    auto rootLayer = stage.GetRootLayer();
+    rootLayer.SetBehavior(Layer::LAYER_3D);
+
+    auto stageSize = stage.GetSize();
+    auto stageHalfSize = stageSize * .5f;
+    auto invStageHalfSize = Vector2::ONE / stageHalfSize;
+
+    float unit = stageSize.y / 24.f;
+
+    // Get camera - we'll be re-using the same old camera in the two passes.
+    RenderTaskList tasks = stage.GetRenderTaskList();
+    CameraActor camera = tasks.GetTask(0).GetCameraActor();
+
+    auto zCameraPos = camera.GetProperty(Actor::Property::POSITION_Z).Get<float>();
+    camera.SetFarClippingPlane(zCameraPos + stageSize.y * .5f);
+    camera.SetNearClippingPlane(zCameraPos - stageSize.y * .5f);
+
+    const float zNear = camera.GetNearClippingPlane();
+    const float zFar = camera.GetFarClippingPlane();
+    const float depth = zFar - zNear;
+
+    // Create root of scene that shall be rendered off-screen.
+    auto sceneRoot = Actor::New();
+    CenterActor(sceneRoot);
+
+    mSceneRoot = sceneRoot;
+    stage.Add(sceneRoot);
+
+    // Create an axis to spin our actors around.
+    auto axis = Actor::New();
+    CenterActor(axis);
+    sceneRoot.Add(axis);
+    mAxis = axis;
+
+    // Create an octahedral mesh for our main actors and to visualise the light sources.
+    Geometry mesh = CreateOctahedron(false);
+
+    // Create main actors
+    Shader preShader = Shader::New(PREPASS_VSH, PREPASS_FSH);
+    TextureSet noTexturesThanks = TextureSet::New();
+    Renderer meshRenderer = CreateRenderer(noTexturesThanks, mesh, preShader,
+        OPTION_DEPTH_TEST | OPTION_DEPTH_WRITE);
+    meshRenderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
+    meshRenderer.RegisterProperty("uInvStageHalfSize", invStageHalfSize);
+    RegisterDepthProperties(depth, zNear, meshRenderer);
+    float c = 1.f;
+    for (auto v: {
+      Vector3{ -c, -c, -c },
+      Vector3{ c, -c, -c },
+      Vector3{ -c, c, -c },
+      Vector3{ c, c, -c },
+      Vector3{ -c, -c, c },
+      Vector3{ c, -c, c },
+      Vector3{ -c, c, c },
+      Vector3{ c, c, c },
+
+      Vector3{ 0.f, -c, -c },
+      Vector3{ 0.f, c, -c },
+      Vector3{ 0.f, -c, c },
+      Vector3{ 0.f, c, c },
+
+      Vector3{ -c, 0.f, -c },
+      Vector3{ c, 0.f, -c },
+      Vector3{ -c, 0.f, c },
+      Vector3{ c, 0.f, c },
+
+      Vector3{ -c, -c, 0.f },
+      Vector3{ c, -c, 0.f },
+      Vector3{ -c, c, 0.f },
+      Vector3{ c, c, 0.f },
+    })
+    {
+      Actor a = Actor::New();
+      CenterActor(a);
+
+      Vector3 position{ v * unit * 5.f };
+      a.SetPosition(position);
+
+      float scale = (c + ((v.x + v.y + v.z) + c * 3.f) * .5f) / (c * 4.f);
+      Vector3 size{ Vector3::ONE * scale * unit * 2.f };
+      a.SetSize(size);
+
+      a.SetColor(Color::WHITE * .25f +
+          (Color::RED * (v.x + c) / (c * 2.f) +
+          Color::GREEN * (v.y + c) / (c * 2.f) +
+          Color::BLUE * (v.z + c) / (c * 2.f)) * .015625f);
+      a.AddRenderer(meshRenderer);
+
+      axis.Add(a);
+    }
+
+    // Create off-screen textures, fbo and render task.
+    uint32_t width = static_cast<uint32_t>(stageSize.x);
+    uint32_t height = static_cast<uint32_t>(stageSize.y);
+
+    Texture rttNormal = Texture::New(TextureType::TEXTURE_2D, Pixel::Format::RGB888,
+        width, height);
+    Texture rttPosition = Texture::New(TextureType::TEXTURE_2D, Pixel::Format::RGBA8888,
+        width, height);
+    Texture rttColor = Texture::New(TextureType::TEXTURE_2D, Pixel::Format::RGB888,
+        width, height);
+    FrameBuffer fbo = FrameBuffer::New(width, height, FrameBuffer::Attachment::DEPTH);
+    fbo.AttachColorTexture(rttNormal);
+    fbo.AttachColorTexture(rttPosition);
+    fbo.AttachColorTexture(rttColor);
+
+    RenderTask sceneRender = tasks.CreateTask();
+    sceneRender.SetViewportSize(stageSize);
+    sceneRender.SetFrameBuffer(fbo);
+    sceneRender.SetCameraActor(camera);
+    sceneRender.SetSourceActor(sceneRoot);
+    sceneRender.SetInputEnabled(false);
+    sceneRender.SetCullMode(false);
+    sceneRender.SetClearEnabled(true);
+    sceneRender.SetClearColor(Color::BLACK);
+    sceneRender.SetExclusive(true);
+
+    mSceneRender = sceneRender;
+
+    // Create final image for deferred shading
+    auto finalImage = Actor::New();
+    CenterActor(finalImage);
+    finalImage.SetSize(stageSize);
+
+    TextureSet finalImageTextures = TextureSet::New();
+    finalImageTextures.SetTexture(0, rttNormal);
+    finalImageTextures.SetTexture(1, rttPosition);
+    finalImageTextures.SetTexture(2, rttColor);
+
+    Sampler sampler = Sampler::New();
+    sampler.SetFilterMode(FilterMode::NEAREST, FilterMode::NEAREST);
+    finalImageTextures.SetSampler(0, sampler);
+    finalImageTextures.SetSampler(1, sampler);
+    finalImageTextures.SetSampler(2, sampler);
+
+    Shader shdMain = Shader::New(MAINPASS_VSH, MAINPASS_FSH);
+    Geometry finalImageGeom = CreateTexturedQuadGeometry(true);
+    Renderer finalImageRenderer = CreateRenderer(finalImageTextures, finalImageGeom, shdMain);
+    finalImageRenderer.RegisterProperty("uStageHalfSize", stageHalfSize);
+    RegisterDepthProperties(depth, zNear, finalImageRenderer);
+
+    auto propInvProjection = finalImageRenderer.RegisterProperty("uInvProjection", Matrix::IDENTITY);
+    Constraint cnstrInvProjection = Constraint::New<Matrix>(finalImageRenderer, propInvProjection,
+      [zCameraPos, zNear, depth](Matrix& output, const PropertyInputContainer& input) {
+        output = input[0]->GetMatrix();
+        DALI_ASSERT_ALWAYS(output.Invert() && "Failed to invert projection matrix.");
+      });
+    cnstrInvProjection.AddSource(Source(camera, CameraActor::Property::PROJECTION_MATRIX));
+    cnstrInvProjection.AddSource(Source(camera, CameraActor::Property::VIEW_MATRIX));
+    cnstrInvProjection.Apply();
+
+    finalImage.AddRenderer(finalImageRenderer);
+
+    mFinalImage = finalImage;
+    stage.Add(finalImage);
+
+    // Create a node for our lights
+    auto lights = Actor::New();
+    CenterActor(lights);
+    sceneRoot.Add(lights);
+
+    // Create Lights
+    const bool showLights = mOptions & Options::SHOW_LIGHTS;
+    Renderer lightRenderer;
+    if (showLights)
+    {
+      Geometry lightMesh = CreateOctahedron(true);
+      lightRenderer = CreateRenderer(noTexturesThanks, lightMesh, preShader,
+          OPTION_DEPTH_TEST | OPTION_DEPTH_WRITE);
+      lightRenderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::FRONT);
+    }
+
+    Vector3 lightPos{ unit * 12.f, 0.f, 0.f };
+    float theta = M_PI * 2.f / MAX_LIGHTS;
+    float cosTheta = std::cos(theta);
+    float sinTheta = std::sin(theta);
+    for (int i = 0; i < MAX_LIGHTS; ++i)
+    {
+      Vector3 color = FromHueSaturationLightness(Vector3((360.f * i) / MAX_LIGHTS, .5f, 1.f));
+
+      Actor light = CreateLight(lightPos * (1 + (i % 8)) / 8.f, unit * 16.f, color, camera, finalImageRenderer);
+
+      float z = (((i & 1) << 1) - 1) * unit * 8.f;
+      lightPos = Vector3(cosTheta * lightPos.x - sinTheta * lightPos.y, sinTheta * lightPos.x + cosTheta * lightPos.y, z);
+
+      if (showLights)
+      {
+        light.SetProperty(Actor::Property::SIZE, Vector3::ONE * unit / 8.f);
+        light.AddRenderer(lightRenderer);
+      }
+
+      lights.Add(light);
+    }
+
+    // Take them for a spin.
+    Animation animLights = Animation::New(40.f);
+    animLights.SetLooping(true);
+    animLights.AnimateBy(Property(lights, Actor::Property::ORIENTATION), Quaternion(Radian(M_PI * 2.f), Vector3::YAXIS));
+    animLights.Play();
+
+    // Event handling
+    stage.KeyEventSignal().Connect(this, &DeferredShadingExample::OnKeyEvent);
+
+    mPanDetector = PanGestureDetector::New();
+    mPanDetector.DetectedSignal().Connect(this, &DeferredShadingExample::OnPan);
+    mPanDetector.Attach(stage.GetRootLayer());
+  }
+
+  void Destroy(Application& app)
+  {
+    Stage::GetCurrent().GetRenderTaskList().RemoveTask(mSceneRender);
+    mSceneRender.Reset();
+
+    UnparentAndReset(mSceneRoot);
+    UnparentAndReset(mFinalImage);
+  }
+
+  Actor CreateLight(Vector3 position, float radius, Vector3 color, CameraActor camera, Renderer renderer)
+  {
+    Actor light = Actor::New();
+    CenterActor(light);
+    light.SetProperty(Actor::Property::COLOR, Color::WHITE);
+    light.SetProperty(Actor::Property::POSITION, position);
+
+    auto iPropRadius = light.RegisterProperty("radius", radius);
+    auto iPropLightColor = light.RegisterProperty("lightcolor", color);
+
+    // Create light source uniforms on lighting shader.
+    char buffer[128];
+    char* writep = buffer + sprintf(buffer, "uLights[%d].", mNumLights);
+    ++mNumLights;
+
+    strcpy(writep, "position");
+    auto oPropLightPos = renderer.RegisterProperty(buffer, position);
+
+    strcpy(writep, "radius");
+    auto oPropLightRadius = renderer.RegisterProperty(buffer, radius);
+
+    strcpy(writep, "color");
+    auto oPropLightColor = renderer.RegisterProperty(buffer, color);
+
+    // Constrain the light position, radius and color to lighting shader uniforms.
+    // Convert light position to view space;
+    Constraint cLightPos = Constraint::New<Vector3>(renderer, oPropLightPos, [](Vector3& output, const PropertyInputContainer& input)
+    {
+      Vector4 worldPos(input[0]->GetVector3());
+      worldPos.w = 1.f;
+
+      worldPos = input[1]->GetMatrix() * worldPos;
+      output = Vector3(worldPos);
+    });
+    cLightPos.AddSource(Source(light, Actor::Property::WORLD_POSITION));
+    cLightPos.AddSource(Source(camera, CameraActor::Property::VIEW_MATRIX));
+    cLightPos.Apply();
+
+    Constraint cLightRadius = Constraint::New<float>(renderer, oPropLightRadius,
+        EqualToConstraint());
+    cLightRadius.AddSource(Source(light, iPropRadius));
+    cLightRadius.Apply();
+
+    Constraint cLightColor = Constraint::New<Vector3>(renderer, oPropLightColor,
+        EqualToConstraint());
+    cLightColor.AddSource(Source(light, iPropLightColor));
+    cLightColor.Apply();
+
+    return light;
+  }
+
+  void OnPan(Actor, PanGesture const& gesture)
+  {
+    Quaternion q = mAxis.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
+    Quaternion qx(Radian(Degree(gesture.screenDisplacement.y) * -.5f), Vector3::XAXIS);
+    Quaternion qy(Radian(Degree(gesture.screenDisplacement.x) * .5f), Vector3::YAXIS);
+    mAxis.SetProperty(Actor::Property::ORIENTATION, qy * qx * q);
+  }
+
+  void OnKeyEvent(const KeyEvent& event)
+  {
+    if(event.state == KeyEvent::Down)
+    {
+      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      {
+        mApp.Quit();
+      }
+    }
+  }
+
+  Application& mApp;
+  uint32_t mOptions;
+
+  Actor mSceneRoot;
+  Actor mAxis;
+
+  RenderTask mSceneRender;
+  Actor mFinalImage;
+
+  int mNumLights = 0;
+
+  PanGestureDetector mPanDetector;
+};
+
+
+int main(int argc, char** argv)
+{
+  const bool showLights = [](int argc, char** argv)
+  {
+    auto endArgs = argv + argc;
+    return std::find_if(argv, endArgs, [](const char* arg)
+    {
+      return strcmp(arg, "--show-lights") == 0;
+    }) != endArgs;
+  }(argc, argv);
+
+  Application app = Application::New(&argc, &argv);
+  DeferredShadingExample example(app, (showLights ? DeferredShadingExample::Options::SHOW_LIGHTS : 0));
+  app.MainLoop();
+  return 0;
+}
