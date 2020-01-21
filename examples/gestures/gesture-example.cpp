@@ -166,9 +166,8 @@ private:
     mLongPressDetector.Attach( touchControl );
     mLongPressDetector.DetectedSignal().Connect( this, &GestureExample::OnLongPress );
 
-    // Create a pan gesture detector, attach the actor & connect
+    // Create a pan gesture detector & connect, don't attach the actor as we'll attach it when we detect a long-press
     mPanDetector = PanGestureDetector::New();
-    mPanDetector.Attach( touchControl );
     mPanDetector.DetectedSignal().Connect( this, &GestureExample::OnPan );
 
     // Create a tap gesture detector, attach the actor & connect
@@ -267,36 +266,19 @@ private:
    */
   void OnLongPress( Actor actor, const LongPressGesture& longPress )
   {
-    switch( longPress.state )
+    if( longPress.state == Gesture::Started )
     {
-      case Gesture::Started:
-      {
-        // When we first receive a long press, change state to pan mode.
+      // When we first receive a long press, attach the actor to the pan detector.
+      mPanDetector.Attach( actor );
 
-        // Do a small animation to indicate to the user that we are in pan mode.
-        Animation anim = Animation::New( PAN_MODE_CHANGE_ANIMATION_DURATION );
-        anim.AnimateTo( Property( actor, Actor::Property::SCALE ), actor.GetCurrentScale() * PAN_MODE_START_ANIMATION_SCALE, AlphaFunction::BOUNCE );
-        anim.Play();
-        mPanMode = true;
+      // Do a small animation to indicate to the user that we are in pan mode.
+      Animation anim = Animation::New( PAN_MODE_CHANGE_ANIMATION_DURATION );
+      anim.AnimateTo( Property( actor, Actor::Property::SCALE ), actor.GetCurrentScale() * PAN_MODE_START_ANIMATION_SCALE, AlphaFunction::BOUNCE );
+      anim.Play();
 
-        // Start the shake animation so the user knows when they are in pan mode.
-        mShakeAnimation.SetLooping( true );
-        mShakeAnimation.Play();
-        break;
-      }
-
-      case Gesture::Finished:
-      case Gesture::Cancelled:
-      {
-        // We get this state when all touches are released after a long press. We end pan mode...
-        mPanMode = false;
-        break;
-      }
-
-      default:
-      {
-        break;
-      }
+      // Start the shake animation so the user knows when they are in pan mode.
+      mShakeAnimation.SetLooping( true );
+      mShakeAnimation.Play();
     }
   }
 
@@ -308,56 +290,55 @@ private:
    */
   void OnPan( Actor actor, const PanGesture& pan )
   {
-    if( mPanMode || mPanStarted )
+    // Just move the actor by the displacement.
+
+    // As the displacement is in local actor coords, we will have to multiply the displacement by the
+    // actor's scale so that it moves the correct amount in the parent's coordinate system.
+    Vector3 scaledDisplacement( pan.displacement );
+    scaledDisplacement *= actor.GetCurrentScale();
+
+    Vector3 currentPosition;
+    actor.GetProperty( Actor::Property::POSITION ).Get( currentPosition );
+
+    Vector3 newPosition = currentPosition + scaledDisplacement;
+    actor.SetPosition( newPosition );
+
+    switch( pan.state )
     {
-      // When we are in Pan mode, just move the actor by the displacement.
-
-      // As the displacement is in local actor coords, we will have to multiply the displacement by the
-      // actor's scale so that it moves the correct amount in the parent's coordinate system.
-      Vector3 scaledDisplacement( pan.displacement );
-      scaledDisplacement *= actor.GetCurrentScale();
-
-      Vector3 currentPosition;
-      actor.GetProperty( Actor::Property::POSITION ).Get( currentPosition );
-
-      Vector3 newPosition = currentPosition + scaledDisplacement;
-      actor.SetPosition( newPosition );
-
-      switch( pan.state )
+      case Gesture::Started:
       {
-        case Gesture::Started:
+        mPanStarted = true;
+        break;
+      }
+
+      case Gesture::Finished:
+      case Gesture::Cancelled:
+      {
+        // If we cancel or finish the pan, do an animation to indicate this and stop the shake animation.
+
+        Animation anim = Animation::New( PAN_MODE_CHANGE_ANIMATION_DURATION );
+        anim.AnimateTo( Property( actor, Actor::Property::COLOR ), Vector4::ONE );
+        anim.AnimateTo( Property( actor, Actor::Property::SCALE ), actor.GetCurrentScale() * PAN_MODE_END_ANIMATION_SCALE, AlphaFunction::BOUNCE );
+
+        // Move actor back to center if we're out of bounds
+        Vector2 halfStageSize = Stage::GetCurrent().GetSize() * 0.5f;
+        if( ( std::abs( newPosition.x ) > halfStageSize.width  ) ||
+            ( std::abs( newPosition.y ) > halfStageSize.height ) )
         {
-          mPanStarted = true;
-          break;
+          anim.AnimateTo( Property( actor, Actor::Property::POSITION ), Vector3::ZERO, AlphaFunction::EASE_IN );
         }
+        anim.Play();
 
-        case Gesture::Finished:
-        case Gesture::Cancelled:
-        {
-          // If we cancel or finish the pan, do an animation to indicate this and stop the shake animation.
+        // Set end of pan configuration and disconnect the actor from the pan detector
+        mShakeAnimation.SetLooping( false );
+        mPanStarted = false;
+        mPanDetector.Detach( actor );
+        break;
+      }
 
-          Animation anim = Animation::New( PAN_MODE_CHANGE_ANIMATION_DURATION );
-          anim.AnimateTo( Property( actor, Actor::Property::COLOR ), Vector4::ONE );
-          anim.AnimateTo( Property( actor, Actor::Property::SCALE ), actor.GetCurrentScale() * PAN_MODE_END_ANIMATION_SCALE, AlphaFunction::BOUNCE );
-
-          // Move actor back to center if we're out of bounds
-          Vector2 halfStageSize = Stage::GetCurrent().GetSize() * 0.5f;
-          if( ( std::abs( newPosition.x ) > halfStageSize.width  ) ||
-              ( std::abs( newPosition.y ) > halfStageSize.height ) )
-          {
-            anim.AnimateTo( Property( actor, Actor::Property::POSITION ), Vector3::ZERO, AlphaFunction::EASE_IN );
-          }
-          anim.Play();
-
-          mShakeAnimation.SetLooping( false );
-          mPanStarted = false;
-          break;
-        }
-
-        default:
-        {
-          break;
-        }
+      default:
+      {
+        break;
       }
     }
   }
@@ -493,7 +474,6 @@ private:
   Vector3 mStartingScale; ///< Set to the scale of the control when pinch starts.
   Quaternion mStartingOrientation; ///< Set to the orientation of the control when the rotation starts.
   Animation mShakeAnimation; ///< "Shake" animation to show when we are in panning mode.
-  bool mPanMode = false; ///< Set to true when we have long-pressed to put us into panning mode.
   bool mPanStarted = false; ///< Set to true to state that panning has started.
 };
 
