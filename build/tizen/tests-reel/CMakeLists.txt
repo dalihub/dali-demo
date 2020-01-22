@@ -6,6 +6,7 @@ SET(TESTS_REEL_SRCS
   ${TESTS_REEL_SRCS}
   "${ROOT_SRC_DIR}/shared/resources-location.cpp"
   "${ROOT_SRC_DIR}/shared/dali-table-view.cpp"
+  "${ROOT_SRC_DIR}/shared/execute-process-unix.cpp"
 )
 
 ADD_EXECUTABLE(dali-tests ${TESTS_REEL_SRCS})

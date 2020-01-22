@@ -6,6 +6,7 @@ SET(DEMO_SRCS
   ${DEMO_SRCS}
   "${ROOT_SRC_DIR}/shared/resources-location.cpp"
   "${ROOT_SRC_DIR}/shared/dali-table-view.cpp"
+  "${ROOT_SRC_DIR}/shared/execute-process-unix.cpp"
 )
 
 ADD_EXECUTABLE(${PROJECT_NAME} ${DEMO_SRCS})
