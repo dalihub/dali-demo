@@ -277,7 +277,7 @@ void PageTurnExample::OnKeyEvent(const KeyEvent& event)
 }
 
 // Entry point for applications
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application app = Application::New(&argc, &argv);
   PageTurnExample test ( app );

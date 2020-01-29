@@ -620,7 +620,7 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
   {
     std::string name = mPressedActor.GetName();
 
-    ExecuteProcess( name );
+    ExecuteProcess( name, mApplication );
 
     mPressedActor.Reset();
   }

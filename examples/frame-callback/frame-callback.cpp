@@ -19,6 +19,7 @@
 #include "frame-callback.h"
 
 using namespace Dali;
+using namespace std;
 
 FrameCallback::FrameCallback()
 : mActorIdContainer(),
@@ -46,7 +47,7 @@ void FrameCallback::Update( Dali::UpdateProxy& updateProxy, float /* elapsedSeco
     if( updateProxy.GetPositionAndSize( i, position, size ) ) // Retrieve the position and size using the Actor ID.
     {
       float halfWidthPoint = stageHalfWidth - size.width * 0.5f;
-      float xTranslation = std::abs( position.x );
+      float xTranslation = abs( position.x );
       if( xTranslation > halfWidthPoint )
       {
         // Actor has hit the edge, adjust the size accordingly.

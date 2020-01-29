@@ -23,6 +23,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace std;
 
 namespace
 {
@@ -322,8 +323,8 @@ private:
 
         // Move actor back to center if we're out of bounds
         Vector2 halfStageSize = Stage::GetCurrent().GetSize() * 0.5f;
-        if( ( std::abs( newPosition.x ) > halfStageSize.width  ) ||
-            ( std::abs( newPosition.y ) > halfStageSize.height ) )
+        if( ( abs( newPosition.x ) > halfStageSize.width  ) ||
+            ( abs( newPosition.y ) > halfStageSize.height ) )
         {
           anim.AnimateTo( Property( actor, Actor::Property::POSITION ), Vector3::ZERO, AlphaFunction::EASE_IN );
         }

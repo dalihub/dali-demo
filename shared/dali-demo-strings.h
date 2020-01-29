@@ -19,7 +19,9 @@
 #ifndef DALI_DEMO_STRINGS_H
 #define DALI_DEMO_STRINGS_H
 
+#ifdef INTERNATIONALIZATION_ENABLED
 #include <libintl.h>
+#endif
 
 #ifdef __cplusplus
 extern "C"

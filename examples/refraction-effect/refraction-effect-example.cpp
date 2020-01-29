@@ -475,7 +475,7 @@ private:
     Dali::Vector<char> fileBuffer;
     if( !Dali::FileLoader::ReadFile( objFileName, bufferSize, fileBuffer, Dali::FileLoader::FileType::TEXT ) )
     {
-        DALI_LOG_WARNING( "file open failed for: \"%s\"", objFileName );
+        DALI_LOG_WARNING( "file open failed for: \"%s\"", objFileName.c_str() );
         return;
     }
 
