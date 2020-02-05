@@ -20,8 +20,6 @@
 
 // EXTERNAL INCLUDES
 #include <algorithm>
-#include <sstream>
-#include <unistd.h>
 #include <dali/devel-api/images/distance-field.h>
 #include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
 #include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
@@ -29,8 +27,9 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 
 // INTERNAL INCLUDES
-#include "shared/view.h"
+#include "shared/execute-process.h"
 #include "shared/utility.h"
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -621,14 +620,8 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
   {
     std::string name = mPressedActor.GetName();
 
-    std::stringstream stream;
-    stream << DEMO_EXAMPLE_BIN << name.c_str();
-    pid_t pid = fork();
-    if( pid == 0)
-    {
-      execlp( stream.str().c_str(), name.c_str(), NULL );
-      DALI_ASSERT_ALWAYS(false && "exec failed!");
-    }
+    ExecuteProcess( name );
+
     mPressedActor.Reset();
   }
 }
