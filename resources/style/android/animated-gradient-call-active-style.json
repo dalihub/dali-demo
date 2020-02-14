@@ -1,0 +1,76 @@
+{
+  "styles": {
+    "IncomeBackground": {
+      "background": {
+        "visualType": "ANIMATED_GRADIENT",
+        "gradientType": "RADIAL",
+        "unitType": "USER_SPACE",
+        "startPosition": [0.0, 0.0],
+        "endPosition": [180.0, 0.0],
+        "startColor": [0.1333, 0.1647, 0.2941, 1.0],
+        "endColor": [0.0784, 0.3961, 0.4863, 1.0],
+        "rotateCenter": [0.0, 0.0],
+        "rotateAmount": 0.0,
+        "offset": {
+          "startValue": 0.0,
+          "targetValue": 2.0,
+          "directionType": "BACKWARD",
+          "duration": 1.25,
+          "delay": 0.0,
+          "repeat": -1,
+          "repeatDelay": 0.0,
+          "motionType": "LOOP",
+          "easingType": "LINEAR"
+        }
+      }
+    },
+    "ActiveBackground":{
+      "background":{
+        "visualType": "ANIMATED_GRADIENT",
+        "gradientType": "RADIAL",
+        "unitType": "USER_SPACE",
+        "startPosition": [0.0, 0.0],
+        "endPosition": [180.0, 0.0],
+        "startColor": [0.1066, 0.1318, 0.2353, 1.0],
+        "endColor": [0.0627, 0.3169, 0.3890, 1.0],
+        "rotateCenter": [0.0, 0.0],
+        "rotateAmount": 0.0,
+        "offset": {
+          "startValue": 0.0,
+          "targetValue": 2.0,
+          "directionType": "BACKWARD",
+          "duration": 4.0,
+          "delay": 0.0,
+          "repeat": -1,
+          "repeatDelay": 0.0,
+          "motionType": "LOOP",
+          "easingType": "LINEAR"
+        }
+      }
+    },
+    "DeclineButton":{
+      "background":{
+        "visualType": "ANIMATED_GRADIENT",
+        "gradientType": "LINEAR",
+        "unitType": "USER_SPACE",
+        "startPosition": [-180.0, 0.0],
+        "endPosition": [180.0, 0.0],
+        "startColor": [0.8941, 0.0078, 0.0078, 1.0],
+        "endColor": [1.0000, 0.5961, 0.0000, 1.0],
+        "rotateCenter": [0.0, 0.0],
+        "rotateAmount": 0.78539816,
+        "offset": {
+          "startValue": 0.0,
+          "targetValue": 2.0,
+          "directionType": "FORWARD",
+          "duration": 1.8,
+          "delay": -1.2,
+          "repeat": -1,
+          "repeatDelay": 1.2,
+          "motionType": "LOOP",
+          "easingType": "IN_OUT"
+        }
+      }
+    }
+  }
+}

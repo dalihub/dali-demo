@@ -6,10 +6,26 @@ SET(DEMO_SRCS
   ${DEMO_SRCS}
   "${ROOT_SRC_DIR}/shared/resources-location.cpp"
   "${ROOT_SRC_DIR}/shared/dali-table-view.cpp"
-  "${ROOT_SRC_DIR}/shared/execute-process-unix.cpp"
 )
 
-ADD_EXECUTABLE(${PROJECT_NAME} ${DEMO_SRCS})
+IF(ANDROID)
+  SET(DEMO_SRCS
+    ${DEMO_SRCS}
+    "${ROOT_SRC_DIR}/shared/execute-process-android.cpp"
+  )
+ELSE()
+  SET(DEMO_SRCS
+    ${DEMO_SRCS}
+    "${ROOT_SRC_DIR}/shared/execute-process-unix.cpp"
+  )
+ENDIF()
+
+IF(SHARED)
+  ADD_LIBRARY(${PROJECT_NAME} SHARED ${DEMO_SRCS})
+ELSE()
+  ADD_EXECUTABLE(${PROJECT_NAME} ${DEMO_SRCS})
+ENDIF()
+
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${REQUIRED_PKGS_LDFLAGS} -pie)
 
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${BINDIR})

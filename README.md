@@ -19,7 +19,7 @@
 
 ### Requirements
 
- - Ubuntu 14.04 or later
+ - Ubuntu 16.04 or later
  - Environment created using dali_env script in dali-core repository
  - GCC version 6
 
@@ -71,3 +71,34 @@ Before running make install as normal:
  - Add all source files for the required example in this directory.
  - Modify "com.samsung.dali-demo.xml" to include your example so that it can be launched on target.
  - No changes are required to the make system as long as the above is followed, your example will be automatically built & installed.
+
+## 3. Building for Android
+
+### Requirements
+
+ - Ubuntu 16.04 or later
+ - GCC version 6
+
+### Building the Repository
+
+To build the repository enter the 'build/android' folder:
+
+         $ cd dali-demo/build/android
+
+Then run the following command:
+
+         $ ./build.sh
+
+For debug build:
+
+         $ DEBUG=1 ./build.sh
+
+To clean the build:
+
+         $ ./build.sh clean
+
+To install apks:
+
+         $ adb install -r ./app/build/outputs/apk/debug/dali-demo-debug.apk
+         $ adb install -r ./app/build/outputs/apk/release/dali-demo-release.apk
+
