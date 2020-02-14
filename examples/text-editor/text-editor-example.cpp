@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ const float   TOOLBAR_TITLE_PERCENTAGE = 0.7f;                      ///< The tit
 const float   TOOLBAR_HEIGHT_PERCENTAGE = 0.05f;                    ///< The toolbar's height as a percentage of the stage's height.
 const float   TOOLBAR_PADDING = 4.f;                                ///< The padding in pixels.
 const float   BUTTON_PERCENTAGE = 0.8f;                             ///< The button's height as a percentage of the space for the buttons in the toolbar.
-const Vector3 TEXT_EDITOR_RELATIVE_SIZE( 1.f, 0.45f, 1.0f );        ///< The size of the text editor as a percentage of the stage's size.
+const Vector3 TEXT_EDITOR_RELATIVE_SIZE( 0.9f, 0.5f, 1.0f );        ///< The size of the text editor as a percentage of the stage's size.
 const Vector4 TEXT_EDITOR_BACKGROUND_COLOR( 1.f, 1.f, 1.f, 0.15f ); ///< The background color of the text editor.
 
 const Vector4 COLORS[] = { Color::RED,
@@ -152,7 +152,7 @@ public:
     mEditor = TextEditor::New();
     mEditor.SetParentOrigin( ParentOrigin::TOP_CENTER );
     mEditor.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    mEditor.SetPosition( 0.f, toolBarHeight, 0.f );
+    mEditor.SetPosition( 0.f, toolBarHeight * 2.0f, 0.f );
     mEditor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mEditor.SetSizeModeFactor( TEXT_EDITOR_RELATIVE_SIZE );
 
