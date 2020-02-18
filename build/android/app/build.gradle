@@ -1,0 +1,120 @@
+apply plugin: 'com.android.application'
+
+def buildType = "debug"
+def androidABI = System.getenv('TARGET')
+def daliDir = System.getenv('DALI_DIR')
+def daliEnvDir = System.getenv('DALI_ENV_DIR')
+def daliEnvLibDir = daliEnvDir + '/lib'
+def daliEnvFilesDir = daliEnvDir + '/files'
+
+android {
+    signingConfigs {
+        config {
+            storeFile file("../key.jks")
+            storePassword "Samsung"
+            keyAlias "key0"
+            keyPassword "Samsung"
+        }
+    }
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId = 'com.sec.dalidemo'
+        minSdkVersion 26
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-fexceptions -frtti -w -Wall -std=gnu++11"
+                arguments '-DANDROID_STL=c++_shared'
+            }
+        }
+    }
+    project.archivesBaseName = 'dali-demo'
+    aaptOptions {
+        noCompress ''
+    }
+    buildTypes {
+        debug {
+            ndk {
+                abiFilters androidABI
+            }
+            buildType = "debug"
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+            ndk {
+                abiFilters androidABI
+            }
+
+            signingConfig signingConfigs.config
+            buildType = "release"
+        }
+    }
+    packagingOptions {
+        if( androidABI == "arm64-v8a" )
+        {
+          pickFirst 'lib/arm64-v8a/libc++_shared.so'
+          pickFirst 'lib/arm64-v8a/libdaliview.so'
+        }
+        else
+        {
+          pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+          pickFirst 'lib/armeabi-v7a/libdaliview.so'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs += daliEnvLibDir
+            assets.srcDirs += daliEnvFilesDir
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
+    externalNativeBuild {
+        cmake {
+            version '3.10.2'
+            path 'src/main/cpp/CMakeLists.txt'
+        }
+    }
+    compileOptions {
+        targetCompatibility = 1.6
+        sourceCompatibility = 1.6
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+}
+
+task buildDaliDependencies(type:Exec) {
+    environment "PREFIX", daliEnvDir
+    environment "ANDROID_ABI", androidABI
+    environment "ANDROID_PLATFORM", "26"
+    if (buildType == 'debug')
+        environment "DEBUG", "1"
+    workingDir file(daliDir + '/android-dependencies/cmake').getAbsolutePath()
+    commandLine 'sh',  './buildall.sh'
+}
+
+task buildDali(type:Exec) {
+    workingDir "../dali"
+    if (buildType == 'debug')
+        environment "DEBUG", "1"
+    commandLine 'sh', './build.sh'
+}
+
+task cleanDali(type:Exec) {
+    workingDir "../dali"
+    commandLine 'sh', './build.sh', 'clean'
+}
+
+buildDali.dependsOn buildDaliDependencies
+preBuild.dependsOn buildDali
+
+clean.dependsOn cleanDali

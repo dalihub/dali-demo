@@ -27,9 +27,11 @@ using namespace Dali;
 int DALI_EXPORT_API main(int argc, char **argv)
 {
   // Configure gettext for internalization
+#ifdef INTERNATIONALIZATION_ENABLED
   bindtextdomain(DALI_DEMO_DOMAIN_LOCAL, DEMO_LOCALE_DIR);
   textdomain(DALI_DEMO_DOMAIN_LOCAL);
   setlocale(LC_ALL, DEMO_LANG);
+#endif
 
   Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
 

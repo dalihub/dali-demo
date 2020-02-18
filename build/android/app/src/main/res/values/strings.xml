@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DALi</string>
+    <string name="demo_name">DALi Demo</string>
+    <string name="examples_name">DALi Examples</string>
+    <string name="tests_name">DALi Tests</string>
+</resources>

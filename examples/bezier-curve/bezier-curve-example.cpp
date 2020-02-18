@@ -23,6 +23,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace std;
 
 namespace
 {
@@ -444,7 +445,7 @@ public:
     auto gridSize = mGrid.GetProperty<Vector3>( Actor::Property::SIZE ); // Get target value
     auto currentPosition = actor.GetCurrentPosition(); // Get constrained current value
 
-    position = Vector2( std::floor( currentPosition.x ), std::floor( currentPosition.y ) );
+    position = Vector2( floor( currentPosition.x ), floor( currentPosition.y ) );
 
     point.x = Clamp( position.x / gridSize.x, -0.5f, 0.5f ) + 0.5f;
     point.y = 0.5f - position.y / gridSize.y;
@@ -612,7 +613,7 @@ private:
 };
 
 
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   Application application = Application::New( &argc, &argv );
 

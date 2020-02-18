@@ -23,12 +23,12 @@
 #include <unistd.h>
 #include <dali/public-api/common/dali-common.h>
 
-void ExecuteProcess( const std::string& processName )
+void ExecuteProcess( const std::string& processName, Dali::Application& application )
 {
   std::stringstream stream;
   stream << DEMO_EXAMPLE_BIN << processName.c_str();
   pid_t pid = fork();
-  if( pid == 0)
+  if( pid == 0 )
   {
     execlp( stream.str().c_str(), processName.c_str(), NULL );
     DALI_ASSERT_ALWAYS(false && "exec failed!");

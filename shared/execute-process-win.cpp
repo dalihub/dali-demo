@@ -27,7 +27,7 @@ namespace
 const std::string PATH_SEPARATOR( "\\" );
 }
 
-void ExecuteProcess( const std::string& processName )
+void ExecuteProcess( const std::string& processName, Dali::Application& application )
 {
   char currentPath[MAX_PATH];
   DWORD numberOfCharacters = GetCurrentDirectory( MAX_PATH, currentPath );
