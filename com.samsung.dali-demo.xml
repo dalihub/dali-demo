@@ -187,6 +187,9 @@
 	<ui-application appid="ray-marching.example" exec="/usr/apps/com.samsung.dali-demo/bin/ray-marching.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Ray Marching example</label>
 	</ui-application>
+	<ui-application appid="reflection-demo.example" exec="/usr/apps/com.samsung.dali-demo/bin/reflection-demo.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Reflection effect</label>
+	</ui-application>
 	<ui-application appid="refraction-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/refraction-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Refraction effect</label>
 	</ui-application>
