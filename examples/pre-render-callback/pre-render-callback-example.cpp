@@ -253,7 +253,7 @@ private:
 
 } // namespace Dali
 
-int main( int argc, char **argv )
+int DALI_EXPORT_API main( int argc, char **argv )
 {
   Dali::Application application = Dali::Application::New( &argc, &argv );
   Dali::PreRenderCallbackController controller( application );

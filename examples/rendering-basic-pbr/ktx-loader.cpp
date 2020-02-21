@@ -114,7 +114,7 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
   // Skip the key-values:
   const long int imageSizeOffset = sizeof(KtxFileHeader) + header.bytesOfKeyValueData;
 
-  if( fseek(fp, imageSizeOffset, SEEK_END) )
+  if( fseek(fp, 0, SEEK_END) )
   {
     return false;
   }
@@ -124,6 +124,8 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
   {
     return false;
   }
+
+  lSize -= imageSizeOffset;
 
   rewind(fp);
 
