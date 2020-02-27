@@ -18,7 +18,6 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include "dali-toolkit/devel-api/controls/web-view/web-view.h"
 #include <dali/integration-api/debug.h>
-#include <unistd.h>
 
 using namespace Dali;
 
