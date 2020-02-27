@@ -24,7 +24,7 @@
 #include <dali/devel-api/adaptor-framework/pixel-buffer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/text/text-utils-devel.h>
-#include <devel-api/adaptor-framework/image-loading.h>
+#include <dali/devel-api/adaptor-framework/image-loading.h>
 
 using namespace std;
 using namespace Dali;
