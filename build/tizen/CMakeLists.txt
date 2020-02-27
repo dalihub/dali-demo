@@ -11,8 +11,14 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   endif()
 endif()
 
-SET(ROOT_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..)
-SET(DEMO_SHARED ${CMAKE_CURRENT_SOURCE_DIR}/../../shared)
+# Define options to CMake
+OPTION(ENABLE_EXPORTALL          "Enable Export all symbols" OFF)
+OPTION(ENABLE_DEBUG              "Enable Debug" OFF)
+OPTION(ENABLE_PKG_CONFIGURE      "Use pkgconfig" ON)
+OPTION(INTERNATIONALIZATION      "Internationalization demo string names" ON)
+
+SET(ROOT_SRC_DIR ${CMAKE_SOURCE_DIR}/../..)
+SET(DEMO_SHARED ${CMAKE_SOURCE_DIR}/../../shared)
 
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 
@@ -29,9 +35,16 @@ ELSE()
 ENDIF()
 
 MESSAGE( STATUS "CMAKE_BUILD_TYPE: " ${CMAKE_BUILD_TYPE} )
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-    MESSAGE("Setting variable: DEBUG_ENABLED")
-    SET(DEBUG_ENABLED "1")
+
+IF(CMAKE_BUILD_TYPE MATCHES Debug)
+  SET( ENABLE_DEBUG ON )
+ENDIF()
+
+IF( ENABLE_DEBUG )
+  MESSAGE( STATUS "CMAKE_BUILD_TYPE: " Debug )
+  SET( ENABLE_EXPORTALL ON )
+ELSE()
+  MESSAGE( STATUS "CMAKE_BUILD_TYPE: " Release )
 ENDIF()
 
 SET(RESOURCE_DIR ${ROOT_SRC_DIR}/resources)
@@ -70,7 +83,7 @@ IF(DEFINED DALI_DEMO_RES_DIR)
   SET(DEMO_SHADER_DIR \\"${DALI_DEMO_RES_DIR}/shaders/\\")
   SET(DEMO_STYLE_DIR \\"${DALI_DEMO_RES_DIR}/style/\\")
   SET(DEMO_THEME_PATH \\"${DALI_DEMO_RES_DIR}/style/demo-theme.json\\")
-  SET(DEMO_LOCALE_DIR \\"${DALI_DEMO_RES_DIR}/locale\\")
+  SET(DEMO_LOCALE_DIR \\"${DALI_DEMO_RES_DIR}/locale/\\")
   SET(DEMO_STYLE_IMAGE_DIR \\"${DALI_DEMO_RES_DIR}/style/images\\")
 ELSE()
   SET(DEMO_GAME_DIR \\"${GAME_DIR}\\")
@@ -152,35 +165,115 @@ FOREACH(flag ${LOCAL_STYLE_IMAGES_LIST})
 ENDFOREACH(flag)
 MESSAGE("Installed style resources ${LOCAL_STYLE_IMAGES_LIST} to ${STYLE_DIR}/images")
 
-SET(PKG_LIST dali-core
-             dali-adaptor
-             dali-toolkit)
+IF( ENABLE_PKG_CONFIGURE )
+  SET(PKG_LIST dali-core
+               dali-adaptor
+               dali-toolkit)
 
-INCLUDE(FindPkgConfig)
-pkg_check_modules(REQUIRED_PKGS REQUIRED ${PKG_LIST})
+  INCLUDE(FindPkgConfig)
+  pkg_check_modules(REQUIRED_PKGS REQUIRED ${PKG_LIST})
 
-FOREACH(flag ${REQUIRED_PKGS_CFLAGS})
+  FOREACH(flag ${REQUIRED_PKGS_CFLAGS})
         SET(REQUIRED_CFLAGS "${REQUIRED_CFLAGS} ${flag}")
-ENDFOREACH(flag)
+  ENDFOREACH(flag)
+ENDIF()
 
-SET(DALI_DEMO_CFLAGS "-DDEMO_GAME_DIR=${DEMO_GAME_DIR} -DDEMO_IMAGE_DIR=${DEMO_IMAGE_DIR} -DDEMO_VIDEO_DIR=${DEMO_VIDEO_DIR} -DDEMO_MODEL_DIR=${DEMO_MODEL_DIR} -DDEMO_SCRIPT_DIR=${DEMO_SCRIPT_DIR} -DDEMO_SHADER_DIR=${DEMO_SHADER_DIR}  -DDEMO_STYLE_DIR=${DEMO_STYLE_DIR} -DDEMO_THEME_PATH=${DEMO_THEME_PATH} -DDEMO_EXAMPLE_BIN=${DEMO_EXAMPLE_BIN} -DDEMO_LOCALE_DIR=${DEMO_LOCALE_DIR} -fvisibility=hidden -DHIDE_DALI_INTERNALS -DDEMO_LANG=${DEMO_LANG}")
+SET( VCPKG_INCLUDE_DIR "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
 
-IF(DEFINED DEBUG_ENABLED)
+IF( WIN32 ) # WIN32 includes x64 as well according to the cmake doc.
+  FIND_PACKAGE( pthreads REQUIRED )
+  FIND_PACKAGE( curl REQUIRED )
+  FIND_LIBRARY( GETOPT_LIBRARY NAMES getopt )
+  FIND_LIBRARY( EXIF_LIBRARY NAMES libexif )
+
+  FIND_PACKAGE( png REQUIRED )
+  FIND_PACKAGE( gif REQUIRED )
+  FIND_PACKAGE( jpeg REQUIRED )
+  FIND_LIBRARY( TURBO_JPEG_LIBRARY NAMES turbojpeg )
+
+  FIND_PACKAGE( unofficial-fontconfig REQUIRED )
+  FIND_PACKAGE( freetype REQUIRED )
+  FIND_PACKAGE( harfbuzz REQUIRED )
+  FIND_LIBRARY( FRIBIDI_LIBRARY NAMES fribidi )
+
+  FIND_PACKAGE( unofficial-angle REQUIRED )
+  FIND_PACKAGE( unofficial-cairo REQUIRED )
+
+  FIND_PACKAGE( dali-windows-dependencies REQUIRED )
+  FIND_PACKAGE( dali-core REQUIRED )
+  FIND_PACKAGE( dali-adaptor REQUIRED )
+  FIND_PACKAGE( dali-toolkit REQUIRED )
+
+  # Set up the include dir
+  SET( INCLUDE_DIR $ENV{includedir} )
+  IF( NOT INCLUDE_DIR )
+    SET( INCLUDE_DIR ${CMAKE_INSTALL_INCLUDEDIR} )
+  ENDIF()
+  IF( NOT INCLUDE_DIR )
+    SET( INCLUDE_DIR ${PREFIX}/include )
+  ENDIF()
+
+  SET( LIB_DIR $ENV{libdir} )
+  IF( NOT LIB_DIR )
+    SET( LIB_DIR ${CMAKE_INSTALL_LIBDIR} )
+  ENDIF()
+  IF( NOT LIB_DIR )
+    SET( LIB_DIR ${PREFIX}/lib )
+  ENDIF()
+
+  SET( REQUIRED_LIBS
+    PThreads4W::PThreads4W
+    CURL::libcurl
+    ${GETOPT_LIBRARY}
+    ${EXIF_LIBRARY}
+    ${PNG_LIBRARIES}
+    ${GIF_LIBRARIES}
+    JPEG::JPEG
+    ${TURBO_JPEG_LIBRARY}
+    unofficial::fontconfig::fontconfig
+    Freetype::Freetype
+    harfbuzz::harfbuzz
+    ${FRIBIDI_LIBRARY}
+    unofficial::angle::libEGL
+    unofficial::angle::libGLESv2
+    unofficial::cairo::cairo
+    dali-windows-dependencies::dali-windows-dependencies
+    dali-core::dali-core
+    dali-adaptor::dali-adaptor
+    dali-toolkit::dali-toolkit
+  )
+ELSEIF( UNIX )
+  SET( REQUIRED_LIBS
+    ${REQUIRED_PKGS_LDFLAGS}
+    -pie
+  )
+ENDIF()
+
+SET(DALI_DEMO_CFLAGS "-DDEMO_GAME_DIR=${DEMO_GAME_DIR} -DDEMO_IMAGE_DIR=${DEMO_IMAGE_DIR} -DDEMO_VIDEO_DIR=${DEMO_VIDEO_DIR} -DDEMO_MODEL_DIR=${DEMO_MODEL_DIR} -DDEMO_SCRIPT_DIR=${DEMO_SCRIPT_DIR} -DDEMO_SHADER_DIR=${DEMO_SHADER_DIR}  -DDEMO_STYLE_DIR=${DEMO_STYLE_DIR} -DDEMO_THEME_PATH=${DEMO_THEME_PATH} -DDEMO_EXAMPLE_BIN=${DEMO_EXAMPLE_BIN} -DDEMO_LOCALE_DIR=${DEMO_LOCALE_DIR} -DDEMO_LANG=${DEMO_LANG}")
+
+IF( ENABLE_DEBUG )
   SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -DDEBUG_ENABLED")
+ENDIF()
+
+IF( UNIX )
+  IF( NOT ${ENABLE_EXPORTALL} )
+    ADD_DEFINITIONS( "-DHIDE_DALI_INTERNALS" )
+  ENDIF()
 ENDIF()
 
 ###########################################################################
 # Internationalization
 
-SET(PO_DIR ${RESOURCE_DIR}/po)
+IF (UNIX)
+  SET(PO_DIR ${RESOURCE_DIR}/po)
 
-FILE(GLOB PO_FILES RELATIVE "${PO_DIR}" "${PO_DIR}/*.po")
+  FILE(GLOB PO_FILES RELATIVE "${PO_DIR}" "${PO_DIR}/*.po")
 
-SET(MSGFMT "/usr/bin/msgfmt")
-SET(MO_FILES_DIR ${CMAKE_CURRENT_BINARY_DIR}/mo)
-FILE(MAKE_DIRECTORY ${MO_FILES_DIR})
+  SET(MSGFMT "/usr/bin/msgfmt")
+  SET(MO_FILES_DIR ${CMAKE_BINARY_DIR}/mo)
+  FILE(MAKE_DIRECTORY ${MO_FILES_DIR})
 
-FOREACH(PO_FILE ${PO_FILES})
+  FOREACH(PO_FILE ${PO_FILES})
         SET(PO_FILE ${PO_DIR}/${PO_FILE})
         MESSAGE("PO: ${PO_FILE}")
         GET_FILENAME_COMPONENT(ABS_PO_FILE ${PO_FILE} ABSOLUTE)
@@ -191,22 +284,40 @@ FOREACH(PO_FILE ${PO_FILES})
                            DEPENDS ${ABS_PO_FILE})
         INSTALL(FILES ${MO_FILE} DESTINATION ${LOCALE_DIR}/${lang}/LC_MESSAGES RENAME ${PROJECT_NAME}.mo)
         SET(MO_FILES ${MO_FILES} ${MO_FILE})
-ENDFOREACH(PO_FILE)
+  ENDFOREACH(PO_FILE)
 
-MESSAGE(".mo files: ${MO_FILES}")
-ADD_CUSTOM_TARGET(po ALL DEPENDS ${MO_FILES})
+  MESSAGE(".mo files: ${MO_FILES}")
+  ADD_CUSTOM_TARGET(po ALL DEPENDS ${MO_FILES})
+ENDIF()
 
-OPTION(INTERNATIONALIZATION "Internationalization demo string names" ON)
 IF (INTERNATIONALIZATION)
-        SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -DINTERNATIONALIZATION_ENABLED")
+  SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -DINTERNATIONALIZATION_ENABLED")
 ENDIF(INTERNATIONALIZATION)
 
 ###########################################################################
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${REQUIRED_CFLAGS} ${DALI_DEMO_CFLAGS} -Werror -Wall -fPIE")
+IF( WIN32 )
+  ADD_COMPILE_OPTIONS( /FIdali-windows-dependencies.h ) # Adds missing definitions.
+  ADD_COMPILE_OPTIONS( /vmg )                           # Avoids a 'reinterpret_cast' compile error while compiling signals and callbacks.
+  ADD_COMPILE_OPTIONS( /wd4251 )                        # Ignores warning C4251: "'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'"
+ELSE()
+  SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -Werror -Wall -fPIE")
+
+  IF( NOT ${ENABLE_EXPORTALL} )
+    SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -fvisibility=hidden")
+  ENDIF()
+ENDIF()
+
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${REQUIRED_CFLAGS} ${DALI_DEMO_CFLAGS}")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_C_FLAGS}")
 
-INCLUDE_DIRECTORIES(${ROOT_SRC_DIR})
+INCLUDE_DIRECTORIES(
+  ${SYSTEM_INCLUDE_DIR}
+  ${ROOT_SRC_DIR}
+  ${VCPKG_INCLUDE_DIR}
+  ${INCLUDE_DIR}
+)
+
 IF(ANDROID)
   INCLUDE_DIRECTORIES( ${ANDROID_NDK}/sources/android/native_app_glue )
   INCLUDE_DIRECTORIES( ${ANDROID_NDK}/sysroot/usr )
@@ -214,8 +325,23 @@ IF(ANDROID)
   INCLUDE_DIRECTORIES( ${ROOT_SRC_DIR}/build/android/app/src/main/cpp )
 ENDIF()
 
+LINK_DIRECTORIES(${LIB_DIR})
+
 ADD_SUBDIRECTORY(demo)
 ADD_SUBDIRECTORY(examples)
 ADD_SUBDIRECTORY(examples-reel)
 ADD_SUBDIRECTORY(tests-reel)
 ADD_SUBDIRECTORY(builder)
+
+
+MESSAGE( " Folder   DEMO_IMAGE_DIR : [" ${DEMO_IMAGE_DIR} "]" )
+MESSAGE( " Folder   DEMO_STYLE_DIR : [" ${DEMO_STYLE_DIR} "]" )
+MESSAGE( " Folder  DEMO_SHADER_DIR : [" ${DEMO_SHADER_DIR} "]" )
+MESSAGE( " Folder  DEMO_THEME_PATH : [" ${DEMO_THEME_PATH} "]" )
+MESSAGE( " Folder    DEMO_GAME_DIR : [" ${DEMO_GAME_DIR} "]" )
+MESSAGE( " Folder   DEMO_VIDEO_DIR : [" ${DEMO_VIDEO_DIR} "]" )
+MESSAGE( " Folder   DEMO_MODEL_DIR : [" ${DEMO_MODEL_DIR} "]" )
+MESSAGE( " Folder  DEMO_SCRIPT_DIR : [" ${DEMO_SCRIPT_DIR} "]" )
+MESSAGE( " Folder  DEMO_LOCALE_DIR : [" ${DEMO_LOCALE_DIR} "]" )
+MESSAGE( " Folder DEMO_EXAMPLE_BIN : [" ${DEMO_EXAMPLE_BIN} "]" )
+MESSAGE( " Folder        DEMO_LANG : [" ${DEMO_LANG} "]" )
