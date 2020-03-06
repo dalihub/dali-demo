@@ -58,6 +58,9 @@ msgstr "Contact Cards"
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "Cube Effect"
 
+msgid "DALI_DEMO_STR_TITLE_DEFERRED_SHADING"
+msgstr "Deferred Shading"
+
 msgid "DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION"
 msgstr "Dissolve Effect"
 
