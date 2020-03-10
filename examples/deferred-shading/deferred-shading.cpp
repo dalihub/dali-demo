@@ -458,6 +458,26 @@ void RegisterDepthProperties(float depth, float near, Handle& h)
 }
 
 //=============================================================================
+/// Create a String whose size can be evaluated at compile time
+struct ConstantString
+{
+  const char * const string;
+  const uint16_t size;
+
+  template<uint16_t inputSize>
+  constexpr ConstantString(const char (&input)[inputSize])
+  : string(input),
+    size(inputSize)
+  {
+  }
+};
+
+constexpr ConstantString POSITION_STRING("position");
+constexpr ConstantString RADIUS_STRING("radius");
+constexpr ConstantString COLOR_STRING("color");
+constexpr uint16_t LIGHT_SOURCE_BUFFER_SIZE(128u);
+
+//=============================================================================
 class DeferredShadingExample : public ConnectionTracker
 {
 public:
@@ -711,17 +731,17 @@ private:
     auto iPropLightColor = light.RegisterProperty("lightcolor", color);
 
     // Create light source uniforms on lighting shader.
-    char buffer[128];
-    char* writep = buffer + sprintf(buffer, "uLights[%d].", mNumLights);
+    char buffer[LIGHT_SOURCE_BUFFER_SIZE];
+    char* writep = buffer + snprintf(buffer, LIGHT_SOURCE_BUFFER_SIZE, "uLights[%d].", mNumLights);
     ++mNumLights;
 
-    strcpy(writep, "position");
+    strncpy(writep, POSITION_STRING.string, POSITION_STRING.size);
     auto oPropLightPos = renderer.RegisterProperty(buffer, position);
 
-    strcpy(writep, "radius");
+    strncpy(writep, RADIUS_STRING.string, RADIUS_STRING.size);
     auto oPropLightRadius = renderer.RegisterProperty(buffer, radius);
 
-    strcpy(writep, "color");
+    strncpy(writep, COLOR_STRING.string, COLOR_STRING.size);
     auto oPropLightColor = renderer.RegisterProperty(buffer, color);
 
     // Constrain the light position, radius and color to lighting shader uniforms.
