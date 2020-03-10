@@ -94,82 +94,53 @@ bool ConvertPixelFormat(const uint32_t ktxPixelFormat, Dali::Pixel::Format& form
 
 bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
 {
-  Dali::FileStream fileStream( path, Dali::FileStream::READ | Dali::FileStream::BINARY );
-  FILE* fp = fileStream.GetFile();
-  if( NULL == fp )
+  std::unique_ptr<FILE, void(*)(FILE*)> fp(fopen(path.c_str(), "rb"), [](FILE* fp) {
+    if (fp)
+    {
+      fclose(fp);
+    }
+  });
+  if (!fp)
   {
     return false;
   }
 
   KtxFileHeader header;
-
-  int result = fread(&header,1,sizeof(KtxFileHeader),fp);
-  if( 0 == result )
+  int result = fread(&header, sizeof(KtxFileHeader), 1u, fp.get());
+  if (0 == result)
   {
     return false;
   }
-
-  long lSize = 0;
 
   // Skip the key-values:
-  const long int imageSizeOffset = sizeof(KtxFileHeader) + header.bytesOfKeyValueData;
-
-  if( fseek(fp, 0, SEEK_END) )
-  {
-    return false;
-  }
-
-  lSize = ftell(fp);
-  if( lSize == -1L )
-  {
-    return false;
-  }
-
-  lSize -= imageSizeOffset;
-
-  rewind(fp);
-
-  if( fseek(fp, imageSizeOffset, SEEK_SET) )
+  if (fseek(fp.get(), header.bytesOfKeyValueData, SEEK_CUR))
   {
     return false;
   }
 
   cubedata.img.resize(header.numberOfFaces);
 
-  for(unsigned int face=0; face < header.numberOfFaces; ++face) //array_element must be 0 or 1
+  for (unsigned int face = 0; face < header.numberOfFaces; ++face) //array_element must be 0 or 1
   {
     cubedata.img[face].resize(header.numberOfMipmapLevels);
   }
 
-  unsigned char* buffer= reinterpret_cast<unsigned char*>( malloc( lSize ) );
-
-  unsigned char* img[6];
-  unsigned int imgSize[6];
-  unsigned char* imgPointer = buffer;
-  result = fread(buffer,1,lSize,fp);
-
-  if( 0 == result )
-  {
-    free( buffer );
-    return false;
-  }
-
-  if( 0 == header.numberOfMipmapLevels )
+  if (0 == header.numberOfMipmapLevels)
   {
     header.numberOfMipmapLevels = 1u;
   }
 
-  if( 0 == header.numberOfArrayElements )
+  if (0 == header.numberOfArrayElements)
   {
     header.numberOfArrayElements = 1u;
   }
 
-  if( 0 == header.pixelDepth )
+  if (0 == header.pixelDepth)
   {
     header.pixelDepth = 1u;
   }
 
-  if( 0 == header.pixelHeight )
+  if (0 == header.pixelHeight)
   {
     header.pixelHeight = 1u;
   }
@@ -178,33 +149,36 @@ bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata )
 
   ConvertPixelFormat(header.glInternalFormat, daliformat);
 
-  for( unsigned int mipmapLevel = 0; mipmapLevel < header.numberOfMipmapLevels; ++mipmapLevel )
+  for (unsigned int mipmapLevel = 0; mipmapLevel < header.numberOfMipmapLevels; ++mipmapLevel)
   {
-    long int byteSize = 0;
-    int imageSize;
-    memcpy(&imageSize,imgPointer,sizeof(unsigned int));
-    imgPointer += 4u;
-    for(unsigned int arrayElement=0; arrayElement < header.numberOfArrayElements; ++arrayElement) //arrayElement must be 0 or 1
+    uint32_t byteSize = 0;
+    if (fread(&byteSize, sizeof(byteSize), 1u, fp.get()) != 1)
     {
-      for(unsigned int face=0; face < header.numberOfFaces; ++face)
+      return false;
+    }
+
+    if (0 != byteSize % 4u)
+    {
+      byteSize += 4u - byteSize % 4u;
+    }
+
+    for (unsigned int arrayElement = 0; arrayElement < header.numberOfArrayElements; ++arrayElement) // arrayElement must be 0 or 1
+    {
+      for (unsigned int face = 0; face < header.numberOfFaces; ++face)
       {
-        byteSize = imageSize;
-        if(byteSize % 4u)
+        std::unique_ptr<uint8_t, void(*)(void*)> img(static_cast<unsigned char*>(malloc(byteSize)), free); // resources will be freed when the PixelData is destroyed.
+        if (fread(img.get(), byteSize, 1u, fp.get()) != 1)
         {
-          byteSize += 4u - byteSize % 4u;
+          return false;
         }
-        img[face] = reinterpret_cast<unsigned char*>( malloc( byteSize ) ); // resources will be freed when the PixelData is destroyed.
-        memcpy(img[face],imgPointer,byteSize);
-        imgSize[face] = byteSize;
-        imgPointer += byteSize;
-        cubedata.img[face][mipmapLevel] = PixelData::New( img[face], imgSize[face], header.pixelWidth , header.pixelHeight , daliformat, PixelData::FREE );
+        cubedata.img[face][mipmapLevel] = PixelData::New(img.release(), byteSize, header.pixelWidth, header.pixelHeight, daliformat, PixelData::FREE);
       }
     }
-    header.pixelHeight/=2u;
-    header.pixelWidth/=2u;
+
+    header.pixelHeight /= 2u;
+    header.pixelWidth /= 2u;
   }
 
-  free(buffer);
   return true;
 }
 
