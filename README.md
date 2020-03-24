@@ -78,8 +78,13 @@ Before running make install as normal:
 
  - Ubuntu 16.04 or later
  - GCC version 6
+ - Android DALi dependencies
 
 ### Building the Repository
+To download Android DALi dependencies clone https://github.com/dalihub/android-dependencies
+in your DALi folder (folder containing dali-demo).
+
+         $ git clone https://github.com/dalihub/android-dependencies.git
 
 To build the repository enter the 'build/android' folder:
 
@@ -93,6 +98,11 @@ For debug build:
 
          $ DEBUG=1 ./build.sh
 
+To debug from Android Studio set Android DALi enviroment using setenv script in 'build/android' and launch Android Studio from the enviroment:
+
+         $ . setenv
+         $ <path/to/androidstudio>/bin/studio.sh
+
 To clean the build:
 
          $ ./build.sh clean
@@ -101,4 +111,5 @@ To install apks:
 
          $ adb install -r ./app/build/outputs/apk/debug/dali-demo-debug.apk
          $ adb install -r ./app/build/outputs/apk/release/dali-demo-release.apk
+
 
