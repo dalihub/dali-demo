@@ -23,6 +23,7 @@
 
 #include <sstream>
 #include <limits>
+#include <cctype>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -517,7 +518,8 @@ private:
         }
 
         std::istringstream iss(line.substr(2), std::istringstream::in);
-        unsigned int indices[ numOfInt ];
+        Dali::Vector<unsigned int> indices;
+        indices.Resize(numOfInt);
         unsigned int i=0;
         while( iss >> indices[i++] && i < numOfInt);
         unsigned int step = (i+1) / 3;
