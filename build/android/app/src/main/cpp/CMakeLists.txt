@@ -24,6 +24,7 @@ ADD_LIBRARY(native-activity SHARED main.cpp)
 TARGET_INCLUDE_DIRECTORIES(native-activity PRIVATE
   ${ANDROID_NDK}/sources/android/native_app_glue)
 
+INCLUDE_DIRECTORIES(.)
 INCLUDE_DIRECTORIES(${DALI_ENV_DIR}/include)
 INCLUDE_DIRECTORIES(${DALI_ENV_DIR}/include/dali)
 
