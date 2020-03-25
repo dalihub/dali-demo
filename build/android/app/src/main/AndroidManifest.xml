@@ -14,13 +14,30 @@
       android:label="@string/app_name"
       android:name="com.sec.dalidemo.DaliDemoApplication">
 
+    <activity android:name="com.sec.dalidemo.DaliDemoNativeActivity"
+        android:icon="@mipmap/dali_launcher"
+        android:label="DALi Example"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="stateAlwaysVisible"
+        android:process=":example">
+      <!-- Tell NativeActivity the name of our .so -->
+      <meta-data android:name="android.app.lib_name"
+          android:value="native-activity" />
+      <meta-data android:name="start"
+          android:value="blocks.example" />
+      <intent-filter>
+        <action android:name="android.intent.action.RUN" />
+      </intent-filter>
+    </activity>
+
     <!-- Our activity is the built-in NativeActivity framework class.
          This will take care of integrating with our NDK code. -->
-    <activity android:name="com.sec.dalidemo.DaliDemoNativeActivity"
+    <activity android:name="com.sec.dalidemo.DaliDemosNativeActivity"
               android:icon="@mipmap/dali_launcher"
               android:label="@string/demo_name"
               android:screenOrientation="portrait"
-              android:windowSoftInputMode="stateAlwaysVisible">
+              android:windowSoftInputMode="stateAlwaysVisible"
+              android:process=":dalidemos">
       <!-- Tell NativeActivity the name of our .so -->
       <meta-data android:name="android.app.lib_name"
                  android:value="native-activity" />
@@ -37,7 +54,8 @@
         android:icon="@mipmap/dali_examples"
         android:label="@string/examples_name"
         android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysVisible">
+        android:windowSoftInputMode="stateAlwaysVisible"
+        android:process=":daliexamples">
       <!-- Tell NativeActivity the name of our .so -->
       <meta-data android:name="android.app.lib_name"
           android:value="native-activity" />
@@ -54,7 +72,8 @@
         android:icon="@mipmap/dali_tests"
         android:label="@string/tests_name"
         android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateAlwaysVisible">
+        android:windowSoftInputMode="stateAlwaysVisible"
+        android:process=":dalitests">
       <!-- Tell NativeActivity the name of our .so -->
       <meta-data android:name="android.app.lib_name"
           android:value="native-activity" />
