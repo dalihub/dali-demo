@@ -43,6 +43,9 @@ msgstr "Clipping"
 msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
 msgstr "Clipping Draw Order"
 
+msgid "DALI_DEMO_STR_TITLE_COLOR_VISUAL"
+msgstr "Color Visual"
+
 msgid "DALI_DEMO_STR_TITLE_DEFERRED_SHADING"
 msgstr "Deferred Shading"
 

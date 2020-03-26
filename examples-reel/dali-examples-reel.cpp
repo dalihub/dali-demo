@@ -47,6 +47,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("buttons.example", DALI_DEMO_STR_TITLE_BUTTONS));
   demo.AddExample(Example("clipping.example", DALI_DEMO_STR_TITLE_CLIPPING));
   demo.AddExample(Example("clipping-draw-order.example", DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER));
+  demo.AddExample(Example("color-visual.example", DALI_DEMO_STR_TITLE_COLOR_VISUAL));
   demo.AddExample(Example("deferred-shading.example", DALI_DEMO_STR_TITLE_DEFERRED_SHADING));
   demo.AddExample(Example("dissolve-effect.example", DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION));
   demo.AddExample(Example("drag-and-drop.example", DALI_DEMO_STR_TITLE_DRAG_AND_DROP));
