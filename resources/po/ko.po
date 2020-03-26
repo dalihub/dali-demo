@@ -4,6 +4,9 @@ msgstr "애니메이션 이미지"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "애니메이션 모양"
 
+msgid "DALI_DEMO_STR_TITLE_ARC_VISUAL"
+msgstr "호 비주얼"
+
 msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
 msgstr "기본 표시 등"
 
