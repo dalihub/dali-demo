@@ -82,7 +82,7 @@ Geometry CreateGeometry()
   // Create vertices
   struct Vertex { Vector2 position; float hue; };
 
-  unsigned int numSides = 20;
+  const unsigned int numSides = 20;
   Vertex polyhedraVertexData[numSides];
   float angle=0;
   float sectorAngle = 2.0f * Math::PI / (float) numSides;

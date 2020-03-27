@@ -175,6 +175,9 @@ msgstr "Radial Menu"
 msgid "DALI_DEMO_STR_TITLE_REFRACTION"
 msgstr "Refraction"
 
+msgid "DALI_DEMO_STR_TITLE_REFLECTION"
+msgstr "Reflection"
+
 msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
 msgstr "Renderer Stencil"
 
