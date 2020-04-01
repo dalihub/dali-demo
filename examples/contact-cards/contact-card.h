@@ -26,7 +26,7 @@
 #include <dali/public-api/object/ref-object.h>
 #include <dali-toolkit/public-api/controls/control.h>
 
-class ContactCardLayoutInfo;
+struct ContactCardLayoutInfo;
 
 /**
  * @brief Creates and sets up animations for a contact card
