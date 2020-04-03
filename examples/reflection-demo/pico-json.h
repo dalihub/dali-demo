@@ -132,8 +132,8 @@ public:
     object* object_;
   };
 protected:
-  int type_;
-  _storage u_;
+  int type_{};
+  _storage u_ {};
 public:
   value();
   value(int type, bool);

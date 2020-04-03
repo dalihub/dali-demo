@@ -22,6 +22,7 @@
 
 #include <android/log.h>
 #include <android_native_app_glue.h>
+#include <dali-demo-native-activity-jni.h>
 #include <dali/devel-api/adaptor-framework/application-devel.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/adaptor-framework/android/android-framework.h>
@@ -39,16 +40,17 @@ namespace
 
 void free_saved_state(struct android_app *android_app)
 {
-    pthread_mutex_lock(&android_app->mutex);
+  LOGV("free_saved_state");
+  pthread_mutex_lock(&android_app->mutex);
 
-    if (android_app->savedState != NULL)
-    {
-      free(android_app->savedState);
-      android_app->savedState = NULL;
-      android_app->savedStateSize = 0;
-    }
+  if (android_app->savedState != NULL)
+  {
+    free(android_app->savedState);
+    android_app->savedState = NULL;
+    android_app->savedStateSize = 0;
+  }
 
-    pthread_mutex_unlock(&android_app->mutex);
+  pthread_mutex_unlock(&android_app->mutex);
 }
 
 void android_app_destroy(struct android_app *android_app)
@@ -145,77 +147,12 @@ void ExtractFontConfig(struct android_app* state, std::string assetFontConfig, s
   }
 }
 
-class DaliDemoNativeActivity
-{
-public:
-  ANativeActivity* activity;
-  DaliDemoNativeActivity(ANativeActivity* activity)
-  : activity(activity)
-  {
-  }
-
-  class NativeActivityJNI
-  {
-  public:
-    ANativeActivity* activity;
-    JNIEnv* env;
-    jclass clazz;
-
-    NativeActivityJNI(ANativeActivity* activity)
-    : activity(activity)
-    {
-      activity->vm->AttachCurrentThread(&env, NULL);
-      clazz = env->GetObjectClass(activity->clazz);
-    }
-
-    ~NativeActivityJNI()
-    {
-      activity->vm->DetachCurrentThread();
-    }
-
-    jstring toJString(const std::string& str)
-    {
-      return env->NewStringUTF(str.c_str());
-    }
-
-    std::string toString(jstring jstr)
-    {
-      std::string out;
-      if (jstr)
-      {
-        const char* utf = env->GetStringUTFChars(jstr, 0);
-        out = std::string(utf);
-        env->ReleaseStringUTFChars(jstr, utf);
-      }
-
-      return out;
-    }
-
-    std::string callStringMethod(const std::string& name, const std::string& arg)
-    {
-      jmethodID methodID = env->GetMethodID(clazz, name.c_str(), "(Ljava/lang/String;)Ljava/lang/String;");
-      jstring jstr = (jstring)env->CallObjectMethod(activity->clazz, methodID, toJString(arg));
-      return toString(jstr);
-    }
-  };
-
-  std::string getMetaData(const std::string& key)
-  {
-    NativeActivityJNI nativeActivityJNI(activity);
-    return nativeActivityJNI.callStringMethod("getMetaData", key);
-  }
-
-  std::string getIntentStringExtra(const std::string& key)
-  {
-    NativeActivityJNI nativeActivityJNI(activity);
-    return nativeActivityJNI.callStringMethod("getIntentStringExtra", key);
-  }
-};
-
 extern "C" void FcConfigPathInit(const char* path, const char* file);
 
 void android_main( struct android_app* state )
 {
+  LOGV("android_main() >>");
+
   std::string filesDir = state->activity->internalDataPath;
 
   std::string fontconfigPath = filesDir + "/fonts";
@@ -239,19 +176,19 @@ void android_main( struct android_app* state )
   }
 
   Dali::Integration::AndroidFramework::New();
-  Dali::Integration::AndroidFramework::Get().SetNativeApplication( state );
-  Dali::Integration::AndroidFramework::Get().SetApplicationConfiguration( state->config );
-  Dali::Integration::AndroidFramework::Get().SetApplicationAssets( state->activity->assetManager );
-  Dali::Integration::AndroidFramework::Get().SetInternalDataPath( filesDir );
+  Dali::Integration::AndroidFramework::Get().SetNativeApplication(state);
+  Dali::Integration::AndroidFramework::Get().SetApplicationConfiguration(state->config);
+  Dali::Integration::AndroidFramework::Get().SetApplicationAssets(state->activity->assetManager);
+  Dali::Integration::AndroidFramework::Get().SetInternalDataPath(filesDir);
 
   DaliDemoNativeActivity nativeActivity(state->activity);
 
   int status = 0;
   std::string libpath = "/data/data/com.sec.dalidemo/lib/libdali-demo.so";
-  std::string callParam = nativeActivity.getIntentStringExtra("start");
+  std::string callParam = nativeActivity.GetIntentStringExtra("start");
   if (callParam.empty())
   {
-    callParam = nativeActivity.getMetaData("start");
+    callParam = nativeActivity.GetMetaData("start");
   }
 
   if (!callParam.empty())
@@ -259,7 +196,7 @@ void android_main( struct android_app* state )
     libpath = "/data/data/com.sec.dalidemo/lib/lib" +  callParam + ".so";
   }
 
-  void* handle = dlopen( libpath.c_str(), RTLD_LAZY );
+  void* handle = dlopen(libpath.c_str(), RTLD_LAZY);
   if (!handle)
   {
     std::exit(status);
@@ -286,7 +223,9 @@ void android_main( struct android_app* state )
   Dali::Integration::AndroidFramework::Get().SetApplicationAssets(nullptr);
   Dali::Integration::AndroidFramework::Delete();
 
-  // We need to kill the application process manually, DALi cannot restart in the same process due to memory leaks
+  LOGV("android_main() <<");
+
+  // We need to kill the application process manually, DALi cannot exit the process properly due to memory leaks
   std::exit(status);
 }
 

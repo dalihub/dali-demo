@@ -639,30 +639,31 @@ private:
   }
 
 private:
+
   Application&  mApplication;
 
-  Layer mLayer3D;
+  Layer mLayer3D{};
 
-  std::vector<Actor>                      mActors;
-  std::vector<CameraActor>                mCameras;
-  std::vector<std::unique_ptr<Model>>     mModels;
-  std::vector<TextureSet>                 mTextureSets;
+  std::vector<Actor>                      mActors {};
+  std::vector<CameraActor>                mCameras {};
+  std::vector<std::unique_ptr<Model>>     mModels {};
+  std::vector<TextureSet>                 mTextureSets {};
 
-  Animation mAnimation;
-  float mMockTime = 0.0f;
-  float mKFactor = 0.0f;
-  Property::Index mSunTimeUniformIndex;
-  Property::Index mSunKFactorUniformIndex;
-  PanGestureDetector mPanGestureDetector;
+  Animation mAnimation {};
+  float mMockTime { 0.0f };
+  float mKFactor { 0.0f };
+  Property::Index mSunTimeUniformIndex {};
+  Property::Index mSunKFactorUniformIndex {};
+  PanGestureDetector mPanGestureDetector {};
 
-  Vector3 mCameraPos;
-  Vector3 mLightDir;
-  Timer mTickTimer;
+  Vector3 mCameraPos { Vector3::ZERO };
+  Vector3 mLightDir { Vector3::ZERO };
+  Timer mTickTimer {};
 
-  CameraActor mCamera3D;
-  CameraActor mReflectionCamera3D;
-  Actor mCenterActor;
-  Actor mCenterHorizActor;
+  CameraActor mCamera3D {};
+  CameraActor mReflectionCamera3D {};
+  Actor mCenterActor {};
+  Actor mCenterHorizActor {};
 };
 
 int DALI_EXPORT_API main( int argc, char **argv )

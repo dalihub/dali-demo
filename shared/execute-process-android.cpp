@@ -21,28 +21,23 @@
  // EXTERNAL INCLUDES
 #include <sstream>
 #include <unistd.h>
+
 #include <dali/public-api/common/dali-common.h>
+#include <dali/integration-api/debug.h>
+#include <dali/integration-api/adaptor-framework/android/android-framework.h>
+
+#include <android_native_app_glue.h>
+#include <dali-demo-native-activity-jni.h>
 
 void ExecuteProcess( const std::string& processName, Dali::Application& application )
 {
-  std::stringstream stream;
-  stream << "am start -a android.intent.action.MAIN -n com.sec.dalidemo/.DaliDemoNativeActivity --user 0 --es start " << processName.c_str();
-  pid_t parentPID = getpid();
-
-  pid_t pid = fork();
-  if( pid == 0 )
+  struct android_app* nativeApp = Dali::Integration::AndroidFramework::Get().GetNativeApplication();
+  if (!nativeApp)
   {
-    do
-    {
-      sleep( 1 );
-    }
-    while( kill( parentPID, 0 ) == 0 );
+    DALI_LOG_ERROR("Couldn't get native app.");
+    return;
+  }
 
-    system( stream.str().c_str() );
-    exit( 0 );
-  }
-  else
-  {
-    application.Quit();
-  }
+  DaliDemoNativeActivity nativeActivity(nativeApp->activity);
+  nativeActivity.LaunchExample(processName);
 }

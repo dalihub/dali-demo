@@ -1,0 +1,35 @@
+[ -z $ROOT_DIR ] && ROOT_DIR=$HOME
+echo "Using ROOT_DIR=\"$ROOT_DIR\""
+
+[ -z $DALI_DIR ] && DALI_DIR=$(cd ../../../;pwd)
+echo "Using DALI_DIR=\"$DALI_DIR\""
+export DALI_DIR=$DALI_DIR
+
+[ -z $DALI_ENV_DIR ] && DALI_ENV_DIR=$DALI_DIR/dali-env/android
+echo "Using DALI_ENV_DIR=\"$DALI_ENV_DIR\""
+export DALI_ENV_DIR=$DALI_ENV_DIR
+
+[ -z $TARGET ] && export TARGET=armeabi-v7a
+echo "Using TARGET=\"$TARGET\""
+
+if [ ! -d "$ANDROID_SDK" ]; then
+# try default path
+  if [ -d "$ROOT_DIR/Android/Sdk" ]; then
+    export ANDROID_SDK=$ROOT_DIR/Android/Sdk
+  fi
+fi
+echo "Using ANDROID_SDK=\"$ANDROID_SDK\""
+
+if [ ! -d "$ANDROID_NDK" ]; then
+  if [ -d "$ANDROID_SDK" ]; then
+    NDK_DIR=$(find $ANDROID_SDK -maxdepth 2 -name ndk-build | sed 's/\/ndk-build//')
+    # Some sdk folder structures have extra <version> dir for ndk folders.
+    if [ ! -d "$NDK_DIR" ]; then
+      NDK_DIR=$(find $ANDROID_SDK -maxdepth 3 -name ndk-build | sed 's/\/ndk-build//')
+    fi
+    if [ -d "$NDK_DIR" ]; then
+      export ANDROID_NDK=$NDK_DIR
+    fi
+  fi
+fi
+echo "Using ANDROID_NDK=\"$ANDROID_NDK\""
