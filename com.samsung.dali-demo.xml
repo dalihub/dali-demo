@@ -31,6 +31,9 @@
 	<ui-application appid="animated-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Animated shapes</label>
 	</ui-application>
+	<ui-application appid="arc-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/arc-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Arc Visual</label>
+	</ui-application>
 	<ui-application appid="benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Benchmark</label>
 	</ui-application>
