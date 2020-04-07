@@ -4,8 +4,11 @@ msgstr "애니메이션 이미지"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "애니메이션 모양"
 
+msgid "DALI_DEMO_STR_TITLE_ARC_VISUAL"
+msgstr "호 비주얼"
+
 msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
-msgstr "기본 표시 등"
+msgstr "기본 조명"
 
 msgid "DALI_DEMO_STR_TITLE_BLOCKS"
 msgstr "블록"
@@ -23,16 +26,19 @@ msgid "DALI_DEMO_STR_TITLE_CARD_ACTIVE"
 msgstr "NFC 카드 태깅"
 
 msgid "DALI_DEMO_STR_TITLE_CLIPPING"
-msgstr "깎는"
+msgstr "클리핑"
 
 msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
 msgstr "드로잉 순서를 클리핑"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_VISUAL"
+msgstr "색상 비주얼"
 
 msgid "DALI_DEMO_STR_TITLE_COLOR_GRADIENT"
 msgstr "색상 그라디언트"
 
 msgid "DALI_DEMO_STR_TITLE_CONTACT_CARDS"
-msgstr "접촉"
+msgstr "연락처"
 
 msgid "DALI_DEMO_STR_TITLE_CUBE_TRANSITION"
 msgstr "입방체 전환"
