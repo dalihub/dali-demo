@@ -31,6 +31,9 @@
 	<ui-application appid="animated-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Animated shapes</label>
 	</ui-application>
+	<ui-application appid="arc-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/arc-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Arc Visual</label>
+	</ui-application>
 	<ui-application appid="benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Benchmark</label>
 	</ui-application>
@@ -57,6 +60,9 @@
 	</ui-application>
 	<ui-application appid="clipping.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping</label>
+	</ui-application>
+	<ui-application appid="color-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/color-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Color Visual</label>
 	</ui-application>
 	<ui-application appid="compressed-texture-formats.example" exec="/usr/apps/com.samsung.dali-demo/bin/compressed-texture-formats.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Compressed Texture Formats</label>

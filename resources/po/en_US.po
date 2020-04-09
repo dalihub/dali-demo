@@ -7,6 +7,9 @@ msgstr "Animated Shapes"
 msgid "DALI_DEMO_STR_TITLE_ALPHA_BLENDING_CPU"
 msgstr "CPU Alpha Blending"
 
+msgid "DALI_DEMO_STR_TITLE_ARC_VISUAL"
+msgstr "Arc Visual"
+
 msgid "DALI_DEMO_STR_TITLE_BASIC_LIGHT"
 msgstr "Basic Light"
 
@@ -42,6 +45,9 @@ msgstr "Clipping"
 
 msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
 msgstr "Clipping Draw Order"
+
+msgid "DALI_DEMO_STR_TITLE_COLOR_VISUAL"
+msgstr "Color Visual"
 
 msgid "DALI_DEMO_STR_TITLE_DEFERRED_SHADING"
 msgstr "Deferred Shading"
