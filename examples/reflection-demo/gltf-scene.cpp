@@ -185,7 +185,7 @@ void glTF::LoadFromFile( const std::string& filename )
   }
   else
   {
-    GLTF_LOG( "GLTF: %s loaded, size = %d", binFile.c_str(), int(mBuffer.size()));
+    GLTF_LOG( "GLTF: %s loaded, size = %d", binFile.c_str(), int(jsonBuffer.size()));
   }
 
   // Abort if errors
@@ -412,12 +412,18 @@ glTF_Buffer glTF::LoadFile( const std::string& filename )
   std::vector<unsigned char> buffer;
   if( fin )
   {
-    fseek( fin, 0, SEEK_END );
+    if( fseek( fin, 0, SEEK_END ) )
+    {
+      return {};
+    }
     auto size = ftell(fin);
-    fseek( fin, 0, SEEK_SET );
+    if( fseek( fin, 0, SEEK_SET ) )
+    {
+      return {};
+    }
     buffer.resize(unsigned(size));
     auto result = fread( buffer.data(), 1, size_t(size), fin );
-    if( result < 0 )
+    if( result != size_t(size) )
     {
       GLTF_LOG("LoadFile: Result: %d", int(result));
       // return empty buffer

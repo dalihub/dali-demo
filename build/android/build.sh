@@ -43,6 +43,10 @@ fi
 if [ ! -d "$ANDROID_NDK" ]; then
   if [ -d "$ANDROID_SDK" ]; then
     NDK_DIR=$(find $ANDROID_SDK -maxdepth 2 -name ndk-build | sed 's/\/ndk-build//')
+    # Some sdk folder structures have extra <version> dir for ndk folders.
+    if [ ! -d "$NDK_DIR" ]; then
+      NDK_DIR=$(find $ANDROID_SDK -maxdepth 3 -name ndk-build | sed 's/\/ndk-build//')
+    fi
     if [ -d "$NDK_DIR" ]; then
       export ANDROID_NDK=$NDK_DIR
     fi

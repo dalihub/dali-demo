@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.NativeActivity;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -93,5 +94,11 @@ public class DaliDemoNativeActivity extends NativeActivity {
 
     public final String getIntentStringExtra(String key) {
         return getIntent().getStringExtra(key);
+    }
+
+    public final void launchExample(String exampleName) {
+        Intent intent = new Intent(this, DaliDemoNativeActivity.class);
+        intent.putExtra("start", exampleName);
+        startActivity(intent);
     }
 }
