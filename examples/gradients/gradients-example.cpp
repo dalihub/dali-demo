@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include "shared/view.h"
 
 using namespace Dali;
@@ -28,6 +29,11 @@ const char * const APPLICATION_TITLE( "Color Gradients" );
 const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char * const CHANGE_ICON( DEMO_IMAGE_DIR "icon-change.png" );
 const char * const CHANGE_ICON_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
+const char * const ROUNDED_CORNER_ICON( DEMO_IMAGE_DIR "icon-replace.png" );
+const char * const ROUNDED_CORNER_ICON_SELECTED( DEMO_IMAGE_DIR "icon-replace-selected.png" );
+
+const float CORNER_RADIUS_VALUE( 20.0f );
+
 }
 
 // This example shows how to render color gradients
@@ -38,7 +44,8 @@ public:
 
   GradientController( Application& application )
   : mApplication( application ),
-    mIndex( 0 )
+    mIndex( 0 ),
+    mRoundedCorner( false )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &GradientController::Create );
@@ -75,6 +82,23 @@ public:
                         Toolkit::Alignment::HorizontalRight,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
+    PushButton roundedCornerButton = Toolkit::PushButton::New();
+    roundedCornerButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, ROUNDED_CORNER_ICON );
+    roundedCornerButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, ROUNDED_CORNER_ICON_SELECTED );
+    roundedCornerButton.ClickedSignal().Connect( this, &GradientController::OnRoundedCornerClicked );
+    toolBar.AddControl( roundedCornerButton,
+                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
+                        Toolkit::Alignment::HorizontalCenter,
+                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+
+    mGradientControl = Control::New();
+    mGradientControl.SetAnchorPoint( AnchorPoint::CENTER );
+    mGradientControl.SetParentOrigin( ParentOrigin::CENTER );
+    mGradientControl.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    Vector3 offset( 0.9f, 0.7f, 0.0f );
+    mGradientControl.SetSizeModeFactor( offset );
+    content.Add( mGradientControl );
+
 // ---- Gradient for background
 
     mGradientMap.Insert( Toolkit::Visual::Property::TYPE,  Visual::GRADIENT );
@@ -95,10 +119,29 @@ public:
     stopColors.PushBack( Color::YELLOW );
     mGradientMap.Insert( GradientVisual::Property::STOP_COLOR, stopColors );
 
-    OnChangeIconClicked( changeButton );
+    mGradientMap.Insert( DevelVisual::Property::CORNER_RADIUS, mRoundedCorner ? CORNER_RADIUS_VALUE : 0.0f );
+
+    UpdateGradientMap();
   }
 
   bool OnChangeIconClicked( Toolkit::Button button )
+  {
+    mIndex++;
+    UpdateGradientMap();
+    return true;
+  }
+
+  bool OnRoundedCornerClicked( Toolkit::Button button )
+  {
+    mRoundedCorner = !mRoundedCorner;
+    mGradientMap[DevelVisual::Property::CORNER_RADIUS] = mRoundedCorner ? CORNER_RADIUS_VALUE : 0.0f;
+
+    UpdateGradientMap();
+
+    return true;
+  }
+
+  void UpdateGradientMap()
   {
     Property::Map gradientMap;
 
@@ -135,10 +178,7 @@ public:
     }
 
     gradientMap.Merge( mGradientMap );
-    mView.SetProperty( Control::Property::BACKGROUND, gradientMap );
-
-    mIndex++;
-    return true;
+    mGradientControl.SetProperty( Control::Property::BACKGROUND, gradientMap );
   }
 
   void OnKeyEvent(const KeyEvent& event)
@@ -157,7 +197,9 @@ private:
 
   Property::Map mGradientMap;
   Control mView;
+  Control mGradientControl;
   unsigned mIndex;
+  bool mRoundedCorner;
 };
 
 int DALI_EXPORT_API main( int argc, char **argv )
