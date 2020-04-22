@@ -29,17 +29,26 @@ const std::string PATH_SEPARATOR( "\\" );
 
 void ExecuteProcess( const std::string& processName, Dali::Application& application )
 {
-  char currentPath[MAX_PATH];
-  DWORD numberOfCharacters = GetCurrentDirectory( MAX_PATH, currentPath );
+  std::string processPathName;
 
-  if( 0u == numberOfCharacters )
+  const bool isRelativePath = '.' == DEMO_EXAMPLE_BIN[0];
+  if (isRelativePath)
   {
-    DALI_ASSERT_ALWAYS( !"Failed to retrieve the current working directory" );
+    char currentPath[MAX_PATH];
+    DWORD numberOfCharacters = GetCurrentDirectory( MAX_PATH, currentPath );
+
+    if( 0u == numberOfCharacters )
+    {
+      DALI_ASSERT_ALWAYS( !"Failed to retrieve the current working directory" );
+    }
+
+    currentPath[numberOfCharacters] = '\0';
+    processPathName = std::string(currentPath) + PATH_SEPARATOR + DEMO_EXAMPLE_BIN + PATH_SEPARATOR + processName + ".exe";
   }
-
-  currentPath[numberOfCharacters] = '\0';
-
-  const std::string processPathName = std::string( currentPath ) + PATH_SEPARATOR + DEMO_EXAMPLE_BIN + PATH_SEPARATOR + processName + ".exe";
+  else
+  {
+    processPathName = DEMO_EXAMPLE_BIN + PATH_SEPARATOR + processName + ".exe";
+  }
 
   STARTUPINFO info = { sizeof( info ) };
   PROCESS_INFORMATION processInfo;

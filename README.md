@@ -11,6 +11,10 @@
          * [NON-SMACK Targets](#non-smack-targets)
          * [SMACK enabled Targets](#smack-enabled-targets)
          * [DEBUG Builds](#debug-builds-1)
+      * [3. Building for Android](#3-android-builds)
+      * [4. Building for MS Windows](#4-windows-builds)
+         * Build with the Visual Studio project.
+         * Build with CMake.
    * [Creating an example](#creating-an-example)
 
 # Build Instructions
@@ -112,4 +116,56 @@ To install apks:
          $ adb install -r ./app/build/outputs/apk/debug/dali-demo-debug.apk
          $ adb install -r ./app/build/outputs/apk/release/dali-demo-release.apk
 
+## 4. Building for MS Windows
 
+Third party dependencies are built using vcpkg. Instructions on how to install vcpkg can be found in the
+vcpkg-script folder in the windows-dependencies repository.
+
+- Download the windows-dependencies repository from DaliHub
+
+         $ git clone https://github.com/dalihub/windows-dependencies.git
+
+- Read the windows-dependencies/vcpkg-script/Readme.md file for more instructions on how to build and install the third-party dependencies.
+
+### Build with the Visual Studio project
+  Read the windows-dependencies/README.md file for more instructions on how to build and run DALi for MS Windows.
+
+### Build with CMake
+
+  * Requirements
+    It's required the version 3.12.2 of CMake and a Git Bash Shell.
+
+  * Notes and troubleshoting:
+    It should be possible to use the MS Visual studio Developer Command Prompt (https://docs.microsoft.com/en-us/dotnet/framework/tools/developer-command-prompt-for-vs) to build DALi from the command line.
+    However, the CMake version installed with MS Visual Studio 2017 is a bit out of date and some VCPKG modules require a higher version.
+    This instructions have been tested with CMake 3.12.2 on a Git Bash shell.
+
+  * Define an environment variable to set the path to the VCPKG folder
+
+    $ export VCPKG_FOLDER=C:/Users/username/Workspace/VCPKG_TOOL
+
+  * Define an environment variable to set the path where DALi is going to be installed.
+
+    $ export DALI_ENV_FOLDER=C:/Users/username/Workspace/dali-env
+
+  * Execute the following commands to create the makefiles, build and install DALi.
+
+    $ cmake -g Ninja . -DCMAKE_TOOLCHAIN_FILE=$VCPKG_FOLDER/vcpkg/scripts/buildsystems/vcpkg.cmake -DENABLE_PKG_CONFIGURE=OFF -DINTERNATIONALIZATION=OFF -DCMAKE_INSTALL_PREFIX=$DALI_ENV_FOLDER
+    $ cmake --build . --target install
+
+  * Options:
+    - CMAKE_TOOLCHAIN_FILE  ---> Needed to find packages installed by VCPKG.
+    - ENABLE_PKG_CONFIGURE  ---> Whether to install pkg configure files (not currently working on MS Windows. CMake modules used instead).
+    - INTERNATIONALIZATION  ---> Whether to generate and install internazionalization '.po' Portable Object files.
+    - CMAKE_INSTALL_PREFIX  ---> Were DALi is installed.
+    - ENABLE_DEBUG          ---> Whether to build with debug enabled.
+
+  * If dali-toolkit has been compiled with the USE_DEFAULT_RESOURCE_DIR option disabled then is needed to set global environment variables in order to find the default toolkit resources.
+
+    i.e
+    $ setx DALI_ENV_FOLDER C:/Users/username/dali-env
+    $ setx DALI_IMAGE_DIR $DALI_ENV_FOLDER/share/dali/toolkit/images/
+    $ setx DALI_SOUND_DIR $DALI_ENV_FOLDER/share/dali/toolkit/sounds/
+    $ setx DALI_STYLE_DIR $DALI_ENV_FOLDER/share/dali/toolkit/styles/
+    $ setx DALI_STYLE_IMAGE_DIR $DALI_ENV_FOLDER/share/dali/toolkit/styles/images/
+    $ setx DALI_DATA_READ_ONLY_DIR $DALI_ENV_FOLDER/share/dali/

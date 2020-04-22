@@ -8,7 +8,12 @@ SET(EXAMPLES_REEL_SRCS
   "${ROOT_SRC_DIR}/shared/dali-table-view.cpp"
 )
 
-IF(ANDROID)
+IF(WIN32)
+  SET(EXAMPLES_REEL_SRCS
+    ${EXAMPLES_REEL_SRCS}
+    "${ROOT_SRC_DIR}/shared/execute-process-win.cpp"
+  )
+ELSEIF(ANDROID)
   SET(EXAMPLES_REEL_SRCS
     ${EXAMPLES_REEL_SRCS}
     "${ROOT_SRC_DIR}/shared/execute-process-android.cpp"
@@ -26,7 +31,7 @@ ELSE()
   ADD_EXECUTABLE(dali-examples ${EXAMPLES_REEL_SRCS})
 ENDIF()
 
-TARGET_LINK_LIBRARIES(dali-examples ${REQUIRED_PKGS_LDFLAGS} -pie)
+TARGET_LINK_LIBRARIES(dali-examples ${REQUIRED_LIBS})
 
 INSTALL(TARGETS dali-examples DESTINATION ${BINDIR})
 
