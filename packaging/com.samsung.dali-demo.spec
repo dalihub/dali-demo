@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    1.9.10
+Version:    1.9.11
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -18,9 +18,9 @@ BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-media-player)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  gettext-tools
-BuildRequires:  pkgconfig(dali-core)
-BuildRequires:  pkgconfig(dali-adaptor)
-BuildRequires:  pkgconfig(dali-toolkit)
+BuildRequires:  pkgconfig(dali2-core)
+BuildRequires:  pkgconfig(dali2-adaptor)
+BuildRequires:  pkgconfig(dali2-toolkit)
 BuildRequires:  pkgconfig(libtzplatform-config)
 
 %description
