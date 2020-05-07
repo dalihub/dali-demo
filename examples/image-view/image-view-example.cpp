@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
 using namespace Dali;
 
@@ -34,6 +35,7 @@ const char* APPLICATION_TITLE( "Image view" );
 const char* IMAGE_PATH[] = {
     DEMO_IMAGE_DIR "gallery-small-23.jpg",
     DEMO_IMAGE_DIR "woodEffect.jpg",
+    DEMO_IMAGE_DIR "wood.png",       // 32bits image
     DEMO_IMAGE_DIR "heartsframe.9.png",
     DEMO_IMAGE_DIR "World.svg"
 };
@@ -43,6 +45,7 @@ const unsigned int NUMBER_OF_IMAGES = 3;
 enum CellPlacement
 {
    TOP_BUTTON,
+   MID_BUTTON,
    LOWER_BUTTON,
    IMAGE,
    NUMBER_OF_ROWS
@@ -67,6 +70,8 @@ const unsigned int NUMBER_OF_RESOURCES = sizeof(IMAGE_PATH) / sizeof(char*);
 
 std::string EXAMPLE_INSTRUCTIONS = "Instructions: Change button cycles through different image visuals, "
                            "on/off takes the ImageView and it's current visual on or off stage.";
+
+const float CORNER_RADIUS_VALUE( 20.0f );
 
 }  // namespace
 
@@ -110,6 +115,7 @@ class ImageViewController: public ConnectionTracker
     Vector3 offset( 0.9f, 0.70f, 0.0f );
     mTable.SetSizeModeFactor( offset );
     mTable.SetFitHeight(CellPlacement::TOP_BUTTON);
+    mTable.SetFitHeight(CellPlacement::MID_BUTTON);
     mTable.SetFitHeight(CellPlacement::LOWER_BUTTON);
     mContentLayer.Add( mTable );
 
@@ -142,7 +148,17 @@ class ImageViewController: public ConnectionTracker
       button2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       button2.SetName( s );
-      mTable.AddChild( button2, Toolkit::TableView::CellPosition( CellPlacement::LOWER_BUTTON, x )  );
+      mTable.AddChild( button2, Toolkit::TableView::CellPosition( CellPlacement::MID_BUTTON, x )  );
+
+      Toolkit::PushButton button3 = Toolkit::PushButton::New();
+      button3.SetProperty( Toolkit::Button::Property::LABEL, "Round" );
+      button3.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+      button3.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+      button3.ClickedSignal().Connect( this, &ImageViewController::RoundedCornerClicked );
+      button3.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+      button3.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+      button3.SetName( s );
+      mTable.AddChild( button3, Toolkit::TableView::CellPosition( CellPlacement::LOWER_BUTTON, x )  );
 
       mImageViews[x] = Toolkit::ImageView::New( );
       Property::Map imagePropertyMap;
@@ -157,8 +173,9 @@ class ImageViewController: public ConnectionTracker
       mTable.AddChild( mImageViews[x], Toolkit::TableView::CellPosition( CellPlacement::IMAGE, x ) );
 
       // Set changeable counter and toggle for each ImageView
-      mImageViewImageIndexStatus[x] = true;
+      mImageViewImageIndexStatus[x] = 0;
       mImageViewToggleStatus[x] = true;
+      mImageViewRoundedCornerStatus[x] = false;
     }
 
     Stage::GetCurrent().KeyEventSignal().Connect(this, &ImageViewController::OnKeyEvent);
@@ -187,7 +204,7 @@ private:
     }
     else
     {
-      mTable.AddChild( imageView, Toolkit::TableView::CellPosition( 2, GetButtonIndex( button ) ) );
+      mTable.AddChild( imageView, Toolkit::TableView::CellPosition( CellPlacement::IMAGE, GetButtonIndex( button ) ) );
     }
 
     mImageViewToggleStatus[ buttonIndex ] = !mImageViewToggleStatus[ buttonIndex ];
@@ -199,19 +216,40 @@ private:
   {
     unsigned int buttonIndex = GetButtonIndex( button );
 
-    if (  mImageViews[buttonIndex].OnStage() )
+    if( mImageViews[buttonIndex].OnStage() )
     {
-      Property::Map imagePropertyMap;
-      imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
-      imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL,  IMAGE_PATH[ mImageViewImageIndexStatus[buttonIndex] ]  );
-      mImageViews[buttonIndex].SetProperty(Toolkit::ImageView::Property::IMAGE , imagePropertyMap );
-
       ++mImageViewImageIndexStatus[buttonIndex];
 
       if( mImageViewImageIndexStatus[buttonIndex] == NUMBER_OF_RESOURCES )
       {
         mImageViewImageIndexStatus[buttonIndex] = 0;
       }
+
+      // Reset corner radius state value
+      mImageViewRoundedCornerStatus[buttonIndex] = false;
+
+      Property::Map imagePropertyMap;
+      imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
+      imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL,  IMAGE_PATH[ mImageViewImageIndexStatus[buttonIndex] ]  );
+      mImageViews[buttonIndex].SetProperty(Toolkit::ImageView::Property::IMAGE , imagePropertyMap );
+    }
+    return true;
+  }
+
+  bool RoundedCornerClicked( Toolkit::Button button )
+  {
+    unsigned int buttonIndex = GetButtonIndex( button );
+
+    if( mImageViews[buttonIndex].OnStage() )
+    {
+      mImageViewRoundedCornerStatus[ buttonIndex ] = !mImageViewRoundedCornerStatus[ buttonIndex ];
+
+      Property::Map imagePropertyMap;
+      imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE );
+      imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL, IMAGE_PATH[ mImageViewImageIndexStatus[buttonIndex] ]  );
+      imagePropertyMap.Insert( Toolkit::DevelVisual::Property::CORNER_RADIUS, mImageViewRoundedCornerStatus[buttonIndex] ? CORNER_RADIUS_VALUE : 0.0f );
+
+      mImageViews[buttonIndex].SetProperty( Toolkit::ImageView::Property::IMAGE, imagePropertyMap );
     }
     return true;
   }
@@ -239,6 +277,7 @@ private:
   Toolkit::TableView         mTable;
   Toolkit::ImageView         mImageViews[ NUMBER_OF_IMAGES ];
   bool                       mImageViewToggleStatus[ NUMBER_OF_IMAGES ];
+  bool                       mImageViewRoundedCornerStatus[ NUMBER_OF_IMAGES ];
   unsigned int               mImageViewImageIndexStatus[ NUMBER_OF_IMAGES ];
 
   Toolkit::TableView::CellPosition mCurrentPositionToggle;

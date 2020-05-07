@@ -166,9 +166,9 @@ ENDFOREACH(flag)
 MESSAGE("Installed style resources ${LOCAL_STYLE_IMAGES_LIST} to ${STYLE_DIR}/images")
 
 IF( ENABLE_PKG_CONFIGURE )
-  SET(PKG_LIST dali-core
-               dali-adaptor
-               dali-toolkit)
+  SET(PKG_LIST dali2-core
+               dali2-adaptor
+               dali2-toolkit)
 
   INCLUDE(FindPkgConfig)
   pkg_check_modules(REQUIRED_PKGS REQUIRED ${PKG_LIST})
@@ -200,9 +200,9 @@ IF( WIN32 ) # WIN32 includes x64 as well according to the cmake doc.
   FIND_PACKAGE( unofficial-cairo REQUIRED )
 
   FIND_PACKAGE( dali-windows-dependencies REQUIRED )
-  FIND_PACKAGE( dali-core REQUIRED )
-  FIND_PACKAGE( dali-adaptor REQUIRED )
-  FIND_PACKAGE( dali-toolkit REQUIRED )
+  FIND_PACKAGE( dali2-core REQUIRED )
+  FIND_PACKAGE( dali2-adaptor REQUIRED )
+  FIND_PACKAGE( dali2-toolkit REQUIRED )
 
   # Set up the include dir
   SET( INCLUDE_DIR $ENV{includedir} )
@@ -238,9 +238,9 @@ IF( WIN32 ) # WIN32 includes x64 as well according to the cmake doc.
     unofficial::angle::libGLESv2
     unofficial::cairo::cairo
     dali-windows-dependencies::dali-windows-dependencies
-    dali-core::dali-core
-    dali-adaptor::dali-adaptor
-    dali-toolkit::dali-toolkit
+    dali2-core::dali2-core
+    dali2-adaptor::dali2-adaptor
+    dali2-toolkit::dali2-toolkit
   )
 ELSEIF( UNIX )
   SET( REQUIRED_LIBS
