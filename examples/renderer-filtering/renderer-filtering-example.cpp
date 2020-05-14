@@ -62,6 +62,7 @@ Geometry CreateQuad()
   struct Vertex {
     Vector3 aPosition;
   };
+
   Vertex vertices[] = {
     { Vector3(-0.5f, -0.5f, 0.0f) },
     { Vector3(0.5f, -0.5f, 0.0f) },
@@ -88,12 +89,11 @@ class RendererFilteringExample: public ConnectionTracker
 {
 public:
   RendererFilteringExample(Application &application)
-  :  mApplication(application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
     application.InitSignal().Connect(this, &RendererFilteringExample::Init);
     application.TerminateSignal().Connect(this, &RendererFilteringExample::Terminate);
-
   }
 
 private:
@@ -105,86 +105,83 @@ private:
     Geometry quad = CreateQuad();
     Shader shader = Shader::New(VSH, FSH);
 
-  Vector2 viewSize = stage.GetSize() * Vector2(.5f, .25f);
+    Vector2 viewSize = stage.GetSize() * Vector2(.5f, .25f);
 
-  float lc = .3f;
-  float hc = .9f;
+    float lc = .3f;
+    float hc = .9f;
 
-  Renderer renderer1 = Renderer::New(quad, shader);
-  renderer1.RegisterProperty("uPositionOffset", Vector3(viewSize * -.125f));
-  renderer1.RegisterProperty("uRendererColor", Vector3(hc, lc, lc));
+    Renderer renderer1 = Renderer::New(quad, shader);
+    renderer1.RegisterProperty("uPositionOffset", Vector3(viewSize * -.125f));
+    renderer1.RegisterProperty("uRendererColor", Vector3(hc, lc, lc));
 
-  DevelRenderer::SetFilteringMask(renderer1, 0x1);
+    DevelRenderer::SetFilteringMask(renderer1, 0x1);
 
-  Renderer renderer2 = Renderer::New(quad, shader);
-  renderer2.RegisterProperty("uPositionOffset", Vector3(viewSize * 0.f));
-  renderer2.RegisterProperty("uRendererColor", Vector3(hc * .75f, lc, lc));
+    Renderer renderer2 = Renderer::New(quad, shader);
+    renderer2.RegisterProperty("uPositionOffset", Vector3(viewSize * 0.f));
+    renderer2.RegisterProperty("uRendererColor", Vector3(hc * .75f, lc, lc));
 
-  DevelRenderer::SetFilteringMask(renderer2, 0x2);
+    DevelRenderer::SetFilteringMask(renderer2, 0x2);
 
-  Renderer renderer3 = Renderer::New(quad, shader);
-  renderer3.RegisterProperty("uPositionOffset", Vector3(viewSize * .125f));
-  renderer3.RegisterProperty("uRendererColor", Vector3(hc * .5f, lc, lc));
+    Renderer renderer3 = Renderer::New(quad, shader);
+    renderer3.RegisterProperty("uPositionOffset", Vector3(viewSize * .125f));
+    renderer3.RegisterProperty("uRendererColor", Vector3(hc * .5f, lc, lc));
 
-  DevelRenderer::SetFilteringMask(renderer3, 0x4);
+    DevelRenderer::SetFilteringMask(renderer3, 0x4);
 
-  Actor actor = Actor::New();
-  actor.SetParentOrigin(ParentOrigin::CENTER);
-  actor.SetAnchorPoint(AnchorPoint::CENTER);
-  actor.SetSize(Vector2::ONE * viewSize.x * .6f);
-  actor.AddRenderer(renderer1);
-  actor.AddRenderer(renderer2);
-  actor.AddRenderer(renderer3);
-  stage.Add(actor);
+    Actor actor = Actor::New();
+    actor.SetParentOrigin(ParentOrigin::CENTER);
+    actor.SetAnchorPoint(AnchorPoint::CENTER);
+    actor.SetSize(Vector2::ONE * viewSize.x * .6f);
+    actor.AddRenderer(renderer1);
+    actor.AddRenderer(renderer2);
+    actor.AddRenderer(renderer3);
+    stage.Add(actor);
 
-  mActors.push_back(actor);
+    mActors.push_back(actor);
 
-  Actor labels = Actor::New();
-  labels.SetAnchorPoint(AnchorPoint::TOP_LEFT);
-  labels.SetParentOrigin(ParentOrigin::TOP_LEFT);
-  labels.SetSize(stage.GetSize());
-  stage.Add(labels);
+    Actor labels = Actor::New();
+    labels.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    labels.SetParentOrigin(ParentOrigin::TOP_LEFT);
+    labels.SetSize(stage.GetSize());
+    stage.Add(labels);
 
-  mActors.push_back(labels);
+    mActors.push_back(labels);
 
-  CameraActor cam = CameraActor::New(viewSize);
-  cam.SetParentOrigin(ParentOrigin::CENTER);
-  cam.SetAnchorPoint(AnchorPoint::CENTER);
-  stage.Add(cam);
+    CameraActor cam = CameraActor::New(viewSize);
+    cam.SetParentOrigin(ParentOrigin::CENTER);
+    cam.SetAnchorPoint(AnchorPoint::CENTER);
+    stage.Add(cam);
 
-  mActors.push_back(cam);
+    mActors.push_back(cam);
 
-  auto& vs = viewSize;
-  mRenderTasks = {
-    CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 0.f, vs.y * 0.f), Vector3(lc, lc, Lerp(.25f, lc, hc)), 0x0),
-	CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 0.f, vs.y * 1.f), Vector3(lc, lc, Lerp(.5f,  lc, hc)), 0x1),
-	CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 0.f, vs.y * 2.f), Vector3(lc, lc, Lerp(.75f, lc, hc)), 0x2),
-	CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 0.f, vs.y * 3.f), Vector3(lc, lc, Lerp(1.f,  lc, hc)), 0x3),
+    auto& vs = viewSize;
+    mRenderTasks = {
+      CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 0.f, vs.y * 0.f), Vector3(lc, lc, Lerp(.25f, lc, hc)), 0x0),
+      CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 0.f, vs.y * 1.f), Vector3(lc, lc, Lerp(.5f,  lc, hc)), 0x1),
+      CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 0.f, vs.y * 2.f), Vector3(lc, lc, Lerp(.75f, lc, hc)), 0x2),
+      CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 0.f, vs.y * 3.f), Vector3(lc, lc, Lerp(1.f,  lc, hc)), 0x3),
+    
+      CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 1.f, vs.y * 0.f), Vector3(lc, hc, Lerp(.25f, lc, hc)), 0x4),
+      CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 1.f, vs.y * 1.f), Vector3(lc, hc, Lerp(.5f,  lc, hc)), 0x5),
+      CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 1.f, vs.y * 2.f), Vector3(lc, hc, Lerp(.75f, lc, hc)), 0x6),
+      CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 1.f, vs.y * 3.f), Vector3(lc, hc, Lerp(1.f,  lc, hc)), 0x7),
+    };
 
-    CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 1.f, vs.y * 0.f), Vector3(lc, hc, Lerp(.25f, lc, hc)), 0x4),
-	CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 1.f, vs.y * 1.f), Vector3(lc, hc, Lerp(.5f,  lc, hc)), 0x5),
-	CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 1.f, vs.y * 2.f), Vector3(lc, hc, Lerp(.75f, lc, hc)), 0x6),
-	CreateRenderTask(stage, cam, actor, vs, Vector2(vs.x * 1.f, vs.y * 3.f), Vector3(lc, hc, Lerp(1.f,  lc, hc)), 0x7),
-  };
+    mRenderTasks.push_back(stage.GetRenderTaskList().CreateTask());
+    mRenderTasks.back().SetSourceActor(labels);
 
-  mRenderTasks.push_back(stage.GetRenderTaskList().CreateTask());
-  mRenderTasks.back().SetSourceActor(labels);
+    labels.Add(CreateTextLabel("Task 1", Vector3::ONE, Vector2(vs.x * 0.f, vs.y * 0.f)));
+    labels.Add(CreateTextLabel("Task 2", Vector3::ONE, Vector2(vs.x * 0.f, vs.y * 1.f)));
+    labels.Add(CreateTextLabel("Task 3", Vector3::ONE, Vector2(vs.x * 0.f, vs.y * 2.f)));
+    labels.Add(CreateTextLabel("Task 4", Vector3::ONE, Vector2(vs.x * 0.f, vs.y * 3.f)));
 
-  labels.Add(CreateTextLabel("Task 1", Vector3::ONE, Vector2(vs.x * 0.f, vs.y * 0.f)));
-  labels.Add(CreateTextLabel("Task 2", Vector3::ONE, Vector2(vs.x * 0.f, vs.y * 1.f)));
-  labels.Add(CreateTextLabel("Task 3", Vector3::ONE, Vector2(vs.x * 0.f, vs.y * 2.f)));
-  labels.Add(CreateTextLabel("Task 4", Vector3::ONE, Vector2(vs.x * 0.f, vs.y * 3.f)));
+    labels.Add(CreateTextLabel("Task 5", Vector3::ONE, Vector2(vs.x * 1.f, vs.y * 0.f)));
+    labels.Add(CreateTextLabel("Task 6", Vector3::ONE, Vector2(vs.x * 1.f, vs.y * 1.f)));
+    labels.Add(CreateTextLabel("Task 7", Vector3::ONE, Vector2(vs.x * 1.f, vs.y * 2.f)));
+    labels.Add(CreateTextLabel("Task 8", Vector3::ONE, Vector2(vs.x * 1.f, vs.y * 3.f)));
 
-  labels.Add(CreateTextLabel("Task 5", Vector3::ONE, Vector2(vs.x * 1.f, vs.y * 0.f)));
-  labels.Add(CreateTextLabel("Task 6", Vector3::ONE, Vector2(vs.x * 1.f, vs.y * 1.f)));
-  labels.Add(CreateTextLabel("Task 7", Vector3::ONE, Vector2(vs.x * 1.f, vs.y * 2.f)));
-  labels.Add(CreateTextLabel("Task 8", Vector3::ONE, Vector2(vs.x * 1.f, vs.y * 3.f)));
-
-  // Respond to a click anywhere on the stage
-  stage.GetRootLayer().TouchSignal().Connect(this, &RendererFilteringExample::OnTouch);
-
-  // Respond to key events
-  stage.KeyEventSignal().Connect(this, &RendererFilteringExample::OnKeyEvent);
+    stage.GetRootLayer().TouchSignal().Connect(this, &RendererFilteringExample::OnTouch);
+    stage.KeyEventSignal().Connect(this, &RendererFilteringExample::OnKeyEvent);
   }
 
   void Terminate(Application& app)
@@ -223,11 +220,11 @@ private:
   TextLabel CreateTextLabel(const char* text, Vector3 color, Vector2 position)
   {
     TextLabel label = TextLabel::New(text);
-	label.SetAnchorPoint(AnchorPoint::TOP_LEFT);
-	label.SetParentOrigin(ParentOrigin::TOP_LEFT);
+    label.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    label.SetParentOrigin(ParentOrigin::TOP_LEFT);
     label.SetProperty(TextLabel::Property::TEXT_COLOR, Vector4(color.r, color.g, color.b, 1.f));
-	label.SetPosition(position.x, position.y);
-	return label;
+    label.SetPosition(position.x, position.y);
+    return label;
   }
 
   bool OnTouch(Actor actor, const TouchData &touch)
