@@ -88,6 +88,9 @@ msgstr "Desenfoque de movimiento"
 msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
 msgstr "Movimiento con deformación"
 
+msgid "DALI_DEMO_STR_TITLE_RENDERER_FILTERING"
+msgstr "Renderer Filtering"
+
 msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
 msgstr "Fuente de imagenes nativas"
 

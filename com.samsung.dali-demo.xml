@@ -163,6 +163,9 @@
 	<ui-application appid="motion-stretch.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-stretch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Motion Stretch</label>
 	</ui-application>
+	<ui-application appid="renderer-filtering.example" exec="/usr/apps/com.samsung.dali-demo/bin/renderer-filtering.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Renderer Filtering</label>
+	</ui-application>
 	<ui-application appid="native-image-source.example" exec="/usr/apps/com.samsung.dali-demo/bin/native-image-source.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Native Image Source</label>
 	</ui-application>

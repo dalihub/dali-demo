@@ -91,6 +91,9 @@ msgstr "动作模糊"
 msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
 msgstr "动作拉伸"
 
+msgid "DALI_DEMO_STR_TITLE_RENDERER_FILTERING"
+msgstr "Renderer Filtering"
+
 msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
 msgstr "本地图像"
 

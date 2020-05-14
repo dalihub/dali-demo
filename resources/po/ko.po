@@ -103,6 +103,9 @@ msgstr "모션 블러"
 msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
 msgstr "늘이기"
 
+msgid "DALI_DEMO_STR_TITLE_RENDERER_FILTERING"
+msgstr "Renderer Filtering"
+
 msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
 msgstr "네이티브 이미지 소스"
 

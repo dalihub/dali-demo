@@ -88,6 +88,9 @@ msgstr "അവ്യക്തമാക്കല്"
 msgid "DALI_DEMO_STR_TITLE_MOTION_STRETCH"
 msgstr "സ്ട്രെച്ച്"
 
+msgid "DALI_DEMO_STR_TITLE_RENDERER_FILTERING"
+msgstr "Renderer Filtering"
+
 msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
 msgstr "നേറ്റീവ് ചിത്രം"
 
