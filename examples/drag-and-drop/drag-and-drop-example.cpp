@@ -81,8 +81,8 @@ public:
 
     TextLabel hintText = TextLabel::New("please drag one textlabel, move and drop on other textlabel");
     hintText.SetPosition(0.0f, 700.0f);
-    hintText.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    hintText.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    hintText.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    hintText.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     hintText.SetProperty(TextLabel::Property::MULTI_LINE, true);
     stage.Add(hintText);
 
@@ -90,10 +90,10 @@ public:
     {
       std::string str = "textlabel ";
       mTextLabel[i] = TextLabel::New(str + std::to_string(i));
-      mTextLabel[i].SetParentOrigin(ParentOrigin::TOP_LEFT);
-      mTextLabel[i].SetAnchorPoint(AnchorPoint::TOP_LEFT);
-      mTextLabel[i].SetName("textlabel " + std::to_string(i));
-      mTextLabel[i].SetLeaveRequired(true);
+      mTextLabel[i].SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+      mTextLabel[i].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
+      mTextLabel[i].SetProperty( Dali::Actor::Property::NAME,"textlabel " + std::to_string(i));
+      mTextLabel[i].SetProperty( Actor::Property::LEAVE_REQUIRED,true);
       mTextLabel[i].SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
       mTextLabel[i].SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
       mTextLabel[i].SetBackgroundColor(TEXT_LABEL_COLOR[i]);
@@ -130,9 +130,9 @@ public:
   void OnStart(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnStart---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetName().c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str());
 
-    control.SetOpacity(0.1f);
+    control.SetProperty( DevelActor::Property::OPACITY,0.1f);
     Vector2 screenPos  = detector.GetCurrentScreenPosition();
     control.ScreenToLocal(mDragLocalPos.x, mDragLocalPos.y,screenPos.x, screenPos.y );
     Rect<float> targetRect(screenPos.x, screenPos.y, 0.0f, 0.0f);
@@ -151,26 +151,26 @@ public:
   void OnEnter(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnEnter---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetName().c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str());
   }
 
   void OnExit(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnExit---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetName().c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str());
   }
 
   void OnMoved(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::Verbose, "---OnMoved---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::Verbose, "---control name is %s---\n", control.GetName().c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::Verbose, "---control name is %s---\n", control.GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str());
     DALI_LOG_INFO(gDragAndDropFilter, Debug::Verbose, "---coordinate is (%f, %f)---\n", detector.GetCurrentScreenPosition().x, detector.GetCurrentScreenPosition().y);
   }
 
   void OnDropped(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnDropped---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetName().c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str());
 
     Vector2 screenPos  = detector.GetCurrentScreenPosition();
     Rect<float> targetRect(screenPos.x, screenPos.y, 0.0f, 0.0f);
@@ -189,7 +189,7 @@ public:
     {
       for(int i = mDragIndex + 1; i <= droppedIndex; i++)
       {
-        float y = mTextLabel[mOrder[i]].GetCurrentPosition().y;
+        float y = mTextLabel[mOrder[i]].GetCurrentProperty< Vector3 >( Actor::Property::POSITION ).y;
         mAnimation.AnimateTo(Property(mTextLabel[mOrder[i]], Actor::Property::POSITION), Vector3(TEXT_LABEL_POSITION_X, y - TEXT_LABEL_HEIGHT, 0.0f), AlphaFunction::EASE_OUT);
         mAnimation.Play();
       }
@@ -207,7 +207,7 @@ public:
 
       for(int i = mDragIndex - 1; i >= droppedIndex; i--)
       {
-        float y = mTextLabel[mOrder[i]].GetCurrentPosition().y;
+        float y = mTextLabel[mOrder[i]].GetCurrentProperty< Vector3 >( Actor::Property::POSITION ).y;
         mAnimation.AnimateTo(Property(mTextLabel[mOrder[i]], Actor::Property::POSITION), Vector3(TEXT_LABEL_POSITION_X, y + TEXT_LABEL_HEIGHT, 0.0f), AlphaFunction::EASE_OUT);
         mAnimation.Play();
       }
@@ -229,7 +229,7 @@ public:
 
     KeyFrames k0 = KeyFrames::New();
     k0.Add(0.0f, Vector3(localPos.x - mDragLocalPos.x, localPos.y - mDragLocalPos.y, 0.0f));
-    k0.Add(1.0f, Vector3(control.GetCurrentPosition().x, control.GetCurrentPosition().y, 0.0f));
+    k0.Add(1.0f, Vector3(control.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ).x, control.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ).y, 0.0f));
 
     KeyFrames k1 = KeyFrames::New();
     k1.Add(0.0f, 0.1f);
@@ -252,9 +252,9 @@ public:
   void OnEnd(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnEnd---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetName().c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str());
 
-    control.SetOpacity(1.0f);
+    control.SetProperty( DevelActor::Property::OPACITY,1.0f);
   }
 
 private:

@@ -85,7 +85,7 @@ public:
     PushButton button = PushButton::New();
     button.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, FOLDER_ICON_IMAGE );
     button.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, FOLDER_OPEN_ICON_IMAGE );
-    button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     return button;
   }
 
@@ -111,8 +111,8 @@ public:
   TextField CreateTextField( const Vector2& stageSize, const std::string& text )
   {
     TextField field = TextField::New();
-    field.SetName("textField");
-    field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    field.SetProperty( Dali::Actor::Property::NAME,"textField");
+    field.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     field.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     field.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
     field.SetProperty( TextField::Property::TEXT, text );
@@ -127,8 +127,8 @@ public:
   Popup CreatePopup()
   {
     Popup popup = Popup::New();
-    popup.SetParentOrigin( ParentOrigin::CENTER );
-    popup.SetAnchorPoint( AnchorPoint::CENTER );
+    popup.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     popup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH );
     popup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
     popup.TouchSignal().Connect( this, &TextFieldExample::OnPopupTouched );

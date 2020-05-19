@@ -76,9 +76,9 @@ public:
 
   void CreateBox( const std::string& name, Actor& box, Actor parent, const Vector2& size )
   {
-    box.SetName(name);
-    box.SetAnchorPoint( AnchorPoint::CENTER );
-    box.SetParentOrigin( ParentOrigin::CENTER );
+    box.SetProperty( Dali::Actor::Property::NAME,name);
+    box.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    box.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     box.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
     box.SetResizePolicy( ResizePolicy::FIXED, Dimension::WIDTH );
     box.SetSize( size.width, 0.f );
@@ -97,8 +97,8 @@ public:
     label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     label.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
     label.SetPadding( Padding( 1.0f, 1.0f, 1.0f, 1.0f ) );
-    label.SetAnchorPoint( AnchorPoint::CENTER );
-    label.SetParentOrigin( ParentOrigin::CENTER );
+    label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    label.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     parent.Add( label );
 
     if ( scrollOnStart )
@@ -108,8 +108,8 @@ public:
 
     button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     button.SetSize(BOX_SIZE.height,BOX_SIZE.height);
-    button.SetParentOrigin( ParentOrigin::TOP_RIGHT );
-    button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    button.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
+    button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     parent.Add(button);
   }
 
@@ -126,10 +126,10 @@ public:
 
     // Create Root actor
     Actor rootActor = Actor::New();
-    rootActor.SetName("rootActor");
+    rootActor.SetProperty( Dali::Actor::Property::NAME,"rootActor");
     rootActor.SetResizePolicy( ResizePolicy::FIXED,  Dimension::ALL_DIMENSIONS );
     rootActor.SetSize( mStageSize );
-    rootActor.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    rootActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
 
     stage.Add( rootActor );
 
@@ -140,8 +140,8 @@ public:
     // Create Desktop
     Control desktop = Control::New();
     desktop.SetBackgroundColor( Color::WHITE );
-    desktop.SetName("desktopActor");
-    desktop.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    desktop.SetProperty( Dali::Actor::Property::NAME,"desktopActor");
+    desktop.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     desktop.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     desktop.SetSize( mTargetActorSize );
 
@@ -161,7 +161,7 @@ public:
     TextField field = TextField::New();
     field.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     field.SetPadding( Padding( 1.0f, 1.0f, 1.0f, 1.0f ) );
-    field.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    field.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Enter Folder Name" );
     field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( SCREEN_BORDER, SCREEN_BORDER, mStageSize.width - SCREEN_BORDER*2, mStageSize.height - SCREEN_BORDER*2 ) );
     boxA.Add( field );
@@ -210,8 +210,8 @@ public:
     colorButton.SetProperty( Button::Property::TOGGLABLE, true );
     colorButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::RED ) );
     colorButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add ( Toolkit::Visual::Property::TYPE, Visual::COLOR ).Add( ColorVisual::Property::MIX_COLOR, Color::BLACK ) );
-    colorButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    colorButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    colorButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
+    colorButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     colorButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     colorButton.SetSize(BOX_SIZE.height,BOX_SIZE.height);
     colorButton.ClickedSignal().Connect( this, &TextScrollingExample::OnColorButtonClicked );
@@ -221,11 +221,11 @@ public:
     {
       Toolkit::RadioButton alignButton = Toolkit::RadioButton::New( ALIGNMENT_TABLE[ i ] );
       alignButton.ClickedSignal().Connect( this, &TextScrollingExample::OnAlignButtonClicked );
-      alignButton.SetName( ALIGNMENT_TABLE[ i ] );
+      alignButton.SetProperty( Dali::Actor::Property::NAME, ALIGNMENT_TABLE[ i ] );
 
       // Place first button to left aligned, second center aligned and third right aligned
-      alignButton.SetAnchorPoint( Vector3( i * 0.5f, 0.0f, 0.5f ) );
-      alignButton.SetParentOrigin( Vector3( i * 0.5f, 0.0f, 0.5f ) );
+      alignButton.SetProperty( Actor::Property::ANCHOR_POINT, Vector3( i * 0.5f, 0.0f, 0.5f ) );
+      alignButton.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( i * 0.5f, 0.0f, 0.5f ) );
 
       rootActor.Add( alignButton );
 
@@ -335,7 +335,7 @@ public:
   {
     for( unsigned int index = 0; index < ALIGNMENT_TABLE_COUNT; ++index )
     {
-      const std::string& buttonName = button.GetName();
+      const std::string& buttonName = button.GetProperty< std::string >( Dali::Actor::Property::NAME );
       if( buttonName == ALIGNMENT_TABLE[ index ] )
       {
         mSmallLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[ index ] );

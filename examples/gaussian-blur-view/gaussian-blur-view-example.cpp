@@ -58,8 +58,8 @@ private:
     stage.KeyEventSignal().Connect(this, &GaussianBlurViewExample::OnKeyEvent);
 
     mImageView = Toolkit::ImageView::New( BACKGROUND_IMAGE );
-    mImageView.SetParentOrigin( ParentOrigin::CENTER );
-    mImageView.SetAnchorPoint( AnchorPoint::CENTER );
+    mImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mImageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     stage.Add( mImageView );
 
@@ -84,22 +84,22 @@ private:
     }
 
     Layer onTop = Layer::New();
-    onTop.SetParentOrigin( ParentOrigin::CENTER );
-    onTop.SetAnchorPoint( AnchorPoint::CENTER );
+    onTop.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    onTop.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     onTop.SetSize( stageSize );
     stage.Add( onTop );
     onTop.RaiseToTop();
 
     mOnLabel = TextLabel::New( "Blur ON" );
-    mOnLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mOnLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mOnLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::GREEN );
-    mOnLabel.SetVisible( false );
+    mOnLabel.SetProperty( Actor::Property::VISIBLE, false );
     onTop.Add( mOnLabel );
 
     mOffLabel = TextLabel::New( "Blur OFF" );
-    mOffLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mOffLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mOffLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::WHITE );
-    mOffLabel.SetVisible( true );
+    mOffLabel.SetProperty( Actor::Property::VISIBLE, true );
     onTop.Add( mOffLabel );
 
     stage.GetRootLayer().TouchSignal().Connect( this, &GaussianBlurViewExample::OnTouch );
@@ -118,8 +118,8 @@ private:
         if( !mGaussianBlurView )
         {
           mGaussianBlurView = GaussianBlurView::New( 30, 8.0f, Pixel::RGBA8888, 0.5f, 0.5f, false );
-          mGaussianBlurView.SetParentOrigin( ParentOrigin::CENTER );
-          mGaussianBlurView.SetAnchorPoint( AnchorPoint::CENTER );
+          mGaussianBlurView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+          mGaussianBlurView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
           mGaussianBlurView.SetSize( stage.GetSize() );
           stage.Add( mGaussianBlurView );
 
@@ -128,8 +128,8 @@ private:
 
           mGaussianBlurView.SetProperty( mGaussianBlurView.GetBlurStrengthPropertyIndex(), mStrength );
 
-          mOnLabel.SetVisible( true );
-          mOffLabel.SetVisible( false );
+          mOnLabel.SetProperty( Actor::Property::VISIBLE, true );
+          mOffLabel.SetProperty( Actor::Property::VISIBLE, false );
         }
         else
         {
@@ -137,8 +137,8 @@ private:
 
           UnparentAndReset( mGaussianBlurView );
 
-          mOnLabel.SetVisible( false );
-          mOffLabel.SetVisible( true );
+          mOnLabel.SetProperty( Actor::Property::VISIBLE, false );
+          mOffLabel.SetProperty( Actor::Property::VISIBLE, true );
         }
 
       }

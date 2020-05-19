@@ -110,8 +110,8 @@ public:
 
     // Creates the background gradient
     Toolkit::Control background = Dali::Toolkit::Control::New();
-    background.SetAnchorPoint( Dali::AnchorPoint::CENTER );
-    background.SetParentOrigin( Dali::ParentOrigin::CENTER );
+    background.SetProperty( Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
+    background.SetProperty( Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
     background.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
     Dali::Property::Map map;
     map.Insert( Toolkit::Visual::Property::TYPE,  Visual::GRADIENT );
@@ -132,8 +132,8 @@ public:
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label = Toolkit::TextLabel::New( APPLICATION_TITLE );
-    label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    label.SetParentOrigin( Vector3( 0.5f, 0.0f, 0.5f ) );
+    label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    label.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.0f, 0.5f ) );
     label.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) );
@@ -213,8 +213,8 @@ public:
     Actor actor = Actor::New();
     actor.SetSize( 400.0f, 400.0f );
     actor.SetPosition( center );
-    actor.SetAnchorPoint( AnchorPoint::CENTER );
-    actor.SetColor(Vector4(1.0f,1.0f,0.0f,1.0f) );
+    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    actor.SetProperty( Actor::Property::COLOR,Vector4(1.0f,1.0f,0.0f,1.0f) );
     actor.AddRenderer( renderer );
 
     Stage stage = Stage::GetCurrent();
@@ -305,7 +305,7 @@ public:
     Actor actor = Actor::New();
     actor.SetSize( 400.0f, 400.0f );
     actor.SetPosition( center );
-    actor.SetAnchorPoint( AnchorPoint::CENTER );
+    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     actor.AddRenderer( renderer );
 
     Stage stage = Stage::GetCurrent();
@@ -406,8 +406,8 @@ public:
     Actor actor = Actor::New();
     actor.SetSize( 400.0f, 400.0f );
     actor.SetPosition( center );
-    actor.SetAnchorPoint( AnchorPoint::CENTER );
-    actor.SetColor(Vector4(1.0f,0.0f,0.0f,1.0f) );
+    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    actor.SetProperty( Actor::Property::COLOR,Vector4(1.0f,0.0f,0.0f,1.0f) );
     actor.AddRenderer( renderer );
 
     Stage stage = Stage::GetCurrent();

@@ -422,9 +422,9 @@ void MetaballRefracController::CreateMetaballActors()
     mMetaballs[i].position = Vector2(0.0f, 0.0f);
 
     mMetaballs[i].actor = Actor::New();
-    mMetaballs[i].actor.SetName( "Metaball" );
+    mMetaballs[i].actor.SetProperty( Dali::Actor::Property::NAME, "Metaball" );
     mMetaballs[i].actor.SetScale( 1.0f );
-    mMetaballs[i].actor.SetParentOrigin( ParentOrigin::CENTER );
+    mMetaballs[i].actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
 
     mMetaballs[i].actor.AddRenderer( renderer );
@@ -439,7 +439,7 @@ void MetaballRefracController::CreateMetaballActors()
 
   //Root creation
   mMetaballRoot = Actor::New();
-  mMetaballRoot.SetParentOrigin( ParentOrigin::CENTER );
+  mMetaballRoot.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   for( uint32_t i = 0 ; i < METABALL_NUMBER ; i++ )
   {
     mMetaballRoot.Add( mMetaballs[i].actor );
@@ -484,7 +484,7 @@ void MetaballRefracController::CreateComposition()
 
   // Create actor
   mCompositionActor = Actor::New( );
-  mCompositionActor.SetParentOrigin(ParentOrigin::CENTER);
+  mCompositionActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
   mCompositionActor.SetPosition(Vector3(0.0f, 0.0f, 0.0f));
   mCompositionActor.SetSize(mScreenSize.x, mScreenSize.y);
 

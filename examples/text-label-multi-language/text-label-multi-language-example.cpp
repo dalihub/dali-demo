@@ -64,8 +64,8 @@ public:
     mTableView = Toolkit::TableView::New( NUMBER_OF_LANGUAGES, 1 );
     mTableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mTableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-    mTableView.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mTableView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mTableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mTableView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mTableView.TouchSignal().Connect( this, &TextLabelMultiLanguageExample::OnTouch );
     stage.Add( mTableView );
 

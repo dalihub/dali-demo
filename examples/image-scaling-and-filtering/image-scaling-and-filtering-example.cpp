@@ -16,6 +16,7 @@
  */
 
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include "shared/view.h"
@@ -189,7 +190,7 @@ public:
 
     Toolkit::ImageView background = Toolkit::ImageView::New();
     background.SetProperty( Toolkit::ImageView::Property::IMAGE, backgroundImage );
-    background.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    background.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     background.SetSize( stage.GetSize() );
     stage.Add( background );
 
@@ -206,34 +207,34 @@ public:
     widthPixel[2] = 0x4f;
 
     mHeightBox = Toolkit::ImageView::New( heightBackground );
-    mHeightBox.SetOpacity( 0.2f );
+    mHeightBox.SetProperty( DevelActor::Property::OPACITY, 0.2f );
     background.Add( mHeightBox );
 
     mWidthBox = Toolkit::ImageView::New( widthBackground );
-    mWidthBox.SetOpacity( 0.2f );
+    mWidthBox.SetProperty( DevelActor::Property::OPACITY, 0.2f );
     background.Add( mWidthBox );
 
     mDesiredBox = Toolkit::ImageView::New( BORDER_IMAGE );
     background.Add( mDesiredBox );
 
     mDesiredBox.SetSize( stage.GetSize() * mImageStageScale );
-    mDesiredBox.SetParentOrigin( ParentOrigin::CENTER );
-    mDesiredBox.SetAnchorPoint( AnchorPoint::CENTER );
+    mDesiredBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mDesiredBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     mHeightBox.SetSize( stage.GetSize().width,  (stage.GetSize() * mImageStageScale).height );
-    mHeightBox.SetParentOrigin( ParentOrigin::CENTER );
-    mHeightBox.SetAnchorPoint( AnchorPoint::CENTER );
+    mHeightBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mHeightBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     mWidthBox.SetSize( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height );
-    mWidthBox.SetParentOrigin( ParentOrigin::CENTER );
-    mWidthBox.SetAnchorPoint( AnchorPoint::CENTER );
+    mWidthBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mWidthBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     // Initialize the actor
     mImageView = Toolkit::ImageView::New( IMAGE_PATHS[ 0 ] );
 
     // Reposition the actor
-    mImageView.SetParentOrigin( ParentOrigin::CENTER );
-    mImageView.SetAnchorPoint( AnchorPoint::CENTER );
+    mImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mImageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     // Display the actor on the stage
     mDesiredBox.Add( mImageView );
@@ -247,15 +248,15 @@ public:
 
     mGrabCorner = Toolkit::ImageView::New( RESIZE_HANDLE_IMAGE );
     mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    mGrabCorner.SetName( "GrabCorner" );
-    mGrabCorner.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
-    mGrabCorner.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
+    mGrabCorner.SetProperty( Dali::Actor::Property::NAME, "GrabCorner" );
+    mGrabCorner.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT );
+    mGrabCorner.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT );
     mGrabCorner.SetPosition( -BORDER_WIDTH, -BORDER_WIDTH );
-    mGrabCorner.SetOpacity( 0.6f );
+    mGrabCorner.SetProperty( DevelActor::Property::OPACITY, 0.6f );
 
     Layer grabCornerLayer = Layer::New();
-    grabCornerLayer.SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
-    grabCornerLayer.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
+    grabCornerLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT );
+    grabCornerLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT );
     grabCornerLayer.Add( mGrabCorner );
     mDesiredBox.Add( grabCornerLayer );
 
@@ -281,8 +282,8 @@ public:
     Dali::Layer controlsLayer = Dali::Layer::New();
     controlsLayer.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     controlsLayer.SetSizeModeFactor( Vector3( 1.0f, 1.0f, 1.0f ) );
-    controlsLayer.SetAnchorPoint( AnchorPoint::TOP_LEFT);
-    controlsLayer.SetParentOrigin( ParentOrigin::TOP_LEFT);
+    controlsLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    controlsLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     stage.Add( controlsLayer );
 
     // Back and next image buttons in corners of stage:
@@ -290,23 +291,23 @@ public:
     Toolkit::ImageView imagePrevious = Toolkit::ImageView::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ) );
 
     // Last image button:
-    imagePrevious.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    imagePrevious.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     imagePrevious.RotateBy( Radian(3.14159265358979323846f), Vector3( 0, 1.0f, 0 ) );
     imagePrevious.SetY( playWidth * 0.5f );
     imagePrevious.SetX( playWidth + playWidth * 0.5f );
-    imagePrevious.SetOpacity( 0.6f );
+    imagePrevious.SetProperty( DevelActor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imagePrevious );
-    imagePrevious.SetName( PREVIOUS_BUTTON_ID );
+    imagePrevious.SetProperty( Dali::Actor::Property::NAME, PREVIOUS_BUTTON_ID );
     imagePrevious.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Next image button:
     Toolkit::ImageView imageNext = Toolkit::ImageView::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ) );
-    imageNext.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
+    imageNext.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
     imageNext.SetY( playWidth * 0.5f );
     imageNext.SetX( stage.GetSize().x - playWidth * 0.5f );
-    imageNext.SetOpacity( 0.6f );
+    imageNext.SetProperty( DevelActor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imageNext );
-    imageNext.SetName( NEXT_BUTTON_ID );
+    imageNext.SetProperty( Dali::Actor::Property::NAME, NEXT_BUTTON_ID );
     imageNext.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Buttons to popup selectors for fitting and sampling modes:
@@ -319,8 +320,8 @@ public:
     modesGroupBackground.SetCellPadding( Size( MARGIN_SIZE * 0.5f, MARGIN_SIZE ) );
     modesGroupBackground.SetFitHeight( 0 );
 
-    modesGroupBackground.SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
-    modesGroupBackground.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
+    modesGroupBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT );
+    modesGroupBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT );
     modesGroupBackground.SetPosition( 0.0f, 0.0f );
 
     controlsLayer.Add( modesGroupBackground );
@@ -372,7 +373,7 @@ public:
   {
     Toolkit::PushButton button = Toolkit::PushButton::New();
     button.SetStyleName( STYLE_BUTTON_TEXT );
-    button.SetName( id );
+    button.SetProperty( Dali::Actor::Property::NAME, id );
     button.SetProperty( Toolkit::Button::Property::LABEL, label );
     button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
@@ -386,9 +387,9 @@ public:
     const float POPUP_WIDTH_DP = stage.GetSize().width * 0.75f;
 
     Toolkit::Popup popup = Toolkit::Popup::New();
-    popup.SetName( "POPUP" );
-    popup.SetParentOrigin( ParentOrigin::CENTER );
-    popup.SetAnchorPoint( AnchorPoint::CENTER );
+    popup.SetProperty( Dali::Actor::Property::NAME, "POPUP" );
+    popup.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     popup.SetSize( POPUP_WIDTH_DP, 0.0f );
 
     popup.OutsideTouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnPopupOutsideTouched );
@@ -399,11 +400,11 @@ public:
   Toolkit::PushButton CreatePopupButton( Actor parent, const char* id )
   {
     Toolkit::PushButton button = Toolkit::PushButton::New();
-    button.SetName( id );
+    button.SetProperty( Dali::Actor::Property::NAME, id );
     button.SetProperty( Toolkit::Button::Property::LABEL, id );
 
-    button.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    button.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
+    button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    button.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT );
     button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
 
@@ -415,7 +416,7 @@ public:
 
   bool OnButtonClicked( Toolkit::Button button )
   {
-    if( button.GetName() == FITTING_BUTTON_ID )
+    if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == FITTING_BUTTON_ID )
     {
       mPopup = CreatePopup();
 
@@ -438,7 +439,7 @@ public:
       Stage::GetCurrent().Add( mPopup );
       mPopup.SetDisplayState( Toolkit::Popup::SHOWN );
     }
-    else if( button.GetName() == SAMPLING_BUTTON_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == SAMPLING_BUTTON_ID )
     {
       mPopup = CreatePopup();
 
@@ -486,7 +487,7 @@ public:
   bool CheckFittingModeButton( Actor &button, FittingMode::Type mode )
   {
     const char * const modeName = StringFromScalingMode( mode );
-    if( button.GetName() == modeName )
+    if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == modeName )
     {
       mFittingMode = mode;
       mFittingModeButton.SetProperty( Toolkit::Button::Property::LABEL, modeName );
@@ -501,7 +502,7 @@ public:
   bool CheckSamplingModeButton( Actor &button, SamplingMode::Type mode )
   {
     const char * const modeName = StringFromFilterMode( mode );
-    if( button.GetName() == modeName )
+    if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == modeName )
     {
       mSamplingMode = mode;
       mSamplingModeButton.SetProperty( Toolkit::Button::Property::LABEL, modeName );
@@ -530,7 +531,7 @@ public:
       {
         case PointState::UP:
         {
-          const std::string & name = actor.GetName();
+          const std::string & name = actor.GetProperty< std::string >( Dali::Actor::Property::NAME );
           if( name == NEXT_BUTTON_ID )
           {
             mCurrentPath = mCurrentPath + 1;
@@ -596,7 +597,7 @@ public:
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
-        if( mPopup && mPopup.IsVisible() )
+        if( mPopup && mPopup.GetCurrentProperty< bool >( Actor::Property::VISIBLE ) )
         {
           mPopup.SetDisplayState( Toolkit::Popup::HIDDEN );
           mPopup.Reset();

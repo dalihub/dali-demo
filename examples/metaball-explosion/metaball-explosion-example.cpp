@@ -443,9 +443,9 @@ void MetaballExplosionController::CreateMetaballActors()
     mMetaballs[i].radius = mMetaballs[i].initRadius = Random::Range(0.05f,0.07f);
 
     mMetaballs[i].actor = Actor::New( );
-    mMetaballs[i].actor.SetName( "Metaball" );
+    mMetaballs[i].actor.SetProperty( Dali::Actor::Property::NAME, "Metaball" );
     mMetaballs[i].actor.SetScale( 1.0f );
-    mMetaballs[i].actor.SetParentOrigin( ParentOrigin::CENTER );
+    mMetaballs[i].actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mMetaballs[i].actor.AddRenderer( renderer );
 
     mMetaballs[i].positionIndex = mMetaballs[i].actor.RegisterProperty( "uPositionMetaball", mMetaballs[i].position );
@@ -459,7 +459,7 @@ void MetaballExplosionController::CreateMetaballActors()
 
   // Root creation
   mMetaballRoot = Actor::New();
-  mMetaballRoot.SetParentOrigin( ParentOrigin::CENTER );
+  mMetaballRoot.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   for( uint32_t i = 0; i < METABALL_NUMBER; i++ )
   {
     mMetaballRoot.Add( mMetaballs[i].actor );
@@ -505,7 +505,7 @@ void MetaballExplosionController::CreateComposition()
 
   // Create actor
   mCompositionActor = Actor::New( );
-  mCompositionActor.SetParentOrigin(ParentOrigin::CENTER);
+  mCompositionActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
   mCompositionActor.SetPosition(Vector3(0.0f, 0.0f, 0.0f));
   mCompositionActor.SetSize(mScreenSize.x, mScreenSize.y);
   mCompositionActor.AddRenderer( mRenderer );

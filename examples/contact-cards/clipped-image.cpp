@@ -211,8 +211,8 @@ Dali::Toolkit::Control Create( const std::string& imagePath, Property::Index& pr
   // Add the actual image to the control
   Control image = ImageView::New( imagePath );
   image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  image.SetParentOrigin( ParentOrigin::CENTER );
-  image.SetAnchorPoint( AnchorPoint::CENTER );
+  image.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+  image.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   clippedImage.Add( image );
 
   return clippedImage;

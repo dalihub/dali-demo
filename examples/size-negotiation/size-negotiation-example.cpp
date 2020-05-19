@@ -133,8 +133,8 @@ public:
     mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::Padding( padding, padding, padding, padding ) );
 
     mItemView = Toolkit::ItemView::New( *this );
-    mItemView.SetParentOrigin( ParentOrigin::CENTER );
-    mItemView.SetAnchorPoint( AnchorPoint::CENTER );
+    mItemView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mItemView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mItemView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Use a grid layout for tests
@@ -180,9 +180,9 @@ public:
     const float POPUP_WIDTH_DP = stage.GetSize().width * 0.75f;
 
     Toolkit::Popup popup = Toolkit::Popup::New();
-    popup.SetName( "popup" );
-    popup.SetParentOrigin( ParentOrigin::CENTER );
-    popup.SetAnchorPoint( AnchorPoint::CENTER );
+    popup.SetProperty( Dali::Actor::Property::NAME, "popup" );
+    popup.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     popup.SetSize( POPUP_WIDTH_DP, 0.0f );
     popup.SetProperty( Toolkit::Popup::Property::TAIL_VISIBILITY, false );
 
@@ -194,14 +194,14 @@ public:
 
   bool OnButtonClicked( Toolkit::Button button )
   {
-    if( button.GetName() == TABLEVIEW_BUTTON_1CELL_ID )
+    if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_1CELL_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::TableView table = Toolkit::TableView::New( 0, 0 );
-      table.SetName( "TABLEVIEW_BUTTON_1CELL_ID" );
+      table.SetProperty( Dali::Actor::Property::NAME, "TABLEVIEW_BUTTON_1CELL_ID" );
       table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
       Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
@@ -212,7 +212,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == TABLEVIEW_BUTTON_3CELL_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_3CELL_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -241,7 +241,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == TABLEVIEW_BUTTON_3X3CELL_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_3X3CELL_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -305,7 +305,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == TABLEVIEW_BUTTON_FIXED1_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_FIXED1_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -320,7 +320,7 @@ public:
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -333,7 +333,7 @@ public:
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
         backing.Add( text );
@@ -345,7 +345,7 @@ public:
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
         backing.Add( text );
@@ -356,7 +356,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == TABLEVIEW_BUTTON_FIXED2_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_FIXED2_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -372,8 +372,8 @@ public:
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -386,8 +386,8 @@ public:
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -400,8 +400,8 @@ public:
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -414,7 +414,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == TABLEVIEW_BUTTON_FIT1_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_FIT1_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -432,8 +432,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -448,8 +448,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -465,8 +465,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -480,7 +480,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == TABLEVIEW_BUTTON_FIT2_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_FIT2_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -496,8 +496,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -517,8 +517,8 @@ public:
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
 
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         backing.Add( text );
 
         table.Add( backing );
@@ -529,8 +529,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fill" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -544,7 +544,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL1_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_NATURAL1_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
@@ -565,8 +565,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -582,8 +582,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -599,8 +599,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -614,7 +614,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL2_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_NATURAL2_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
@@ -635,8 +635,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -652,8 +652,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -667,7 +667,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == TABLEVIEW_BUTTON_NATURAL3_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_NATURAL3_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
@@ -686,8 +686,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -703,8 +703,8 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-        text.SetAnchorPoint( AnchorPoint::CENTER );
-        text.SetParentOrigin( ParentOrigin::CENTER );
+        text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         text.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
         text.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -717,7 +717,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == POPUP_BUTTON_CONTENT_IMAGE_SCALE_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_CONTENT_IMAGE_SCALE_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -730,7 +730,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == POPUP_BUTTON_CONTENT_IMAGE_FIT_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_CONTENT_IMAGE_FIT_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -744,7 +744,7 @@ public:
 
       StagePopup( mPopup );
     }
-    else if( button.GetName() == POPUP_BUTTON_CONTENT_IMAGE_FILL_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_CONTENT_IMAGE_FILL_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -795,7 +795,7 @@ public: // From ItemFactory
   virtual Actor NewItem(unsigned int itemId)
   {
     Toolkit::PushButton popupButton = Toolkit::PushButton::New();
-    popupButton.SetName( TABLEVIEW_BUTTON_ITEMS[ itemId ].name );
+    popupButton.SetProperty( Dali::Actor::Property::NAME, TABLEVIEW_BUTTON_ITEMS[ itemId ].name );
     popupButton.SetProperty( Toolkit::Button::Property::LABEL, TABLEVIEW_BUTTON_ITEMS[ itemId ].text );
     popupButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 

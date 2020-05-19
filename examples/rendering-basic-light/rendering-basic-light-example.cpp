@@ -161,8 +161,8 @@ public:
     Stage stage = Stage::GetCurrent();
     stage.SetBackgroundColor( Color::BLACK );
     mLabel = TextLabel::New( material[MaterialID].name );
-    mLabel.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    mLabel.SetParentOrigin( Vector3( 0.5f, 0.0f, 0.5f ) );
+    mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    mLabel.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.0f, 0.5f ) );
     mLabel.SetSize( stage.GetSize().x * 0.5f, stage.GetSize().y * 0.083f );
     mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -170,12 +170,12 @@ public:
     stage.Add( mLabel );
     mButton = PushButton::New();
     mButton.SetProperty( Button::Property::LABEL, "Exit" );
-    mButton.SetParentOrigin( ParentOrigin::CENTER );
-    mButton.SetAnchorPoint( AnchorPoint::CENTER );
+    mButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mButton.ClickedSignal().Connect( this, &BasicLightController::OnExit );
-    mButton.SetParentOrigin( Vector3( 0.5f, 0.1f, 0.5f ) );
+    mButton.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.1f, 0.5f ) );
     mButton.SetStyleName(CUSTOM_BASIC_LIGHT_THEME);
-    mButton.SetColor( Vector4( material[MaterialID].diffuse) + Vector4( 0.0f, 0.0f, 0.0f, 1.0f ) );
+    mButton.SetProperty( Actor::Property::COLOR, Vector4( material[MaterialID].diffuse) + Vector4( 0.0f, 0.0f, 0.0f, 1.0f ) );
     stage.Add(mButton);
 
     // Step 1. Create shader
@@ -215,7 +215,7 @@ public:
         mShader.SetProperty( mShader.GetPropertyIndex( "material.specular" ), material[MaterialID].specular );
         mShader.SetProperty( mShader.GetPropertyIndex( "material.shininess" ), material[MaterialID].shininess * 128.0f );
         mLabel.SetProperty( TextLabel::Property::TEXT, material[MaterialID].name );
-        mButton.SetColor( Vector4(material[MaterialID].diffuse) + Vector4(0.0f, 0.0f, 0.0f, 1.0f) );
+        mButton.SetProperty( Actor::Property::COLOR, Vector4(material[MaterialID].diffuse) + Vector4(0.0f, 0.0f, 0.0f, 1.0f) );
     }
     return true;
   }
@@ -377,9 +377,9 @@ public:
 
     float quarterStageWidth = stage.GetSize().x * 0.25f;
     mActor = Actor::New();
-    mActor.SetColor( Vector4( 1.0f, 1.0f, 0.6f, 1.0f ) );
-    mActor.SetAnchorPoint( AnchorPoint::CENTER );
-    mActor.SetParentOrigin( ParentOrigin::CENTER );
+    mActor.SetProperty( Actor::Property::COLOR, Vector4( 1.0f, 1.0f, 0.6f, 1.0f ) );
+    mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mActor.SetSize( Vector3( quarterStageWidth, quarterStageWidth, quarterStageWidth ) );
     mActor.AddRenderer( mRenderer );
     stage.Add( mActor );

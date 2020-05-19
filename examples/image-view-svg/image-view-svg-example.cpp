@@ -76,24 +76,24 @@ public:
 
     // Background, for receiving gestures
     mStageBackground = Actor::New();
-    mStageBackground.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    mStageBackground.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    mStageBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    mStageBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mStageBackground.SetSize( stageSize.x, stageSize.y );
     stage.Add(mStageBackground);
 
     // Push button,  for changing the image set for displaying
     Toolkit::PushButton changeButton = Toolkit::PushButton::New();
     changeButton.SetProperty( Toolkit::Button::Property::LABEL, "Next" );
-    changeButton.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
-    changeButton.SetParentOrigin( ParentOrigin::TOP_RIGHT );
+    changeButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
+    changeButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
     stage.Add( changeButton );
     changeButton.ClickedSignal().Connect( this, &ImageSvgController::OnChangeButtonClicked );
 
     // Push button, for resetting the actor size and position
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
     resetButton.SetProperty( Toolkit::Button::Property::LABEL, "Reset" );
-    resetButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    resetButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    resetButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    resetButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     stage.Add( resetButton );
     resetButton.ClickedSignal().Connect( this, &ImageSvgController::OnResetButtonClicked );
 
@@ -105,14 +105,14 @@ public:
       mSvgActor[i].TranslateBy( Vector3( 0.0, stageSize.height * 0.05, 0.0f ) );
       stage.Add( mSvgActor[i] );
     }
-    mSvgActor[0].SetParentOrigin( ParentOrigin::CENTER );
-    mSvgActor[0].SetAnchorPoint( AnchorPoint::BOTTOM_RIGHT );
-    mSvgActor[1].SetParentOrigin( ParentOrigin::CENTER );
-    mSvgActor[1].SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
-    mSvgActor[2].SetParentOrigin( ParentOrigin::CENTER );
-    mSvgActor[2].SetAnchorPoint( AnchorPoint::TOP_RIGHT );
-    mSvgActor[3].SetParentOrigin( ParentOrigin::CENTER );
-    mSvgActor[3].SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mSvgActor[0].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mSvgActor[0].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT );
+    mSvgActor[1].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mSvgActor[1].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT );
+    mSvgActor[2].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mSvgActor[2].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
+    mSvgActor[3].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mSvgActor[3].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
 
     // Connect pan gesture for moving the actors
     mPanGestureDetector = PanGestureDetector::New();

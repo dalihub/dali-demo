@@ -294,7 +294,7 @@ private:
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
     mMeshActor.SetSize( stageSize );
-    mMeshActor.SetParentOrigin(ParentOrigin::CENTER);
+    mMeshActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mContent.Add( mMeshActor );
 
     // Connect the callback to the touch signal on the mesh actor

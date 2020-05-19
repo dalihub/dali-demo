@@ -200,8 +200,8 @@ public:
 
     mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
 
-    mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
-    mMeshActor.SetAnchorPoint( AnchorPoint::CENTER );
+    mMeshActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mMeshActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     stage.Add( mMeshActor );
 
     Animation  animation = Animation::New(5);
@@ -222,8 +222,8 @@ public:
     Stage stage = Stage::GetCurrent();
 
     Toolkit::TableView modeSelectTableView = Toolkit::TableView::New( 4, 1 );
-    modeSelectTableView.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    modeSelectTableView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    modeSelectTableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    modeSelectTableView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     modeSelectTableView.SetFitHeight( 0 );
     modeSelectTableView.SetFitHeight( 1 );
     modeSelectTableView.SetFitHeight( 2 );
@@ -248,8 +248,8 @@ public:
                                   .Add( Toolkit::TextVisual::Property::TEXT_COLOR, Vector4( 0.8f, 0.8f, 0.8f, 1.0f ) )
                                );
 
-      radio.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      radio.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+      radio.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+      radio.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
       radio.SetProperty( Toolkit::Button::Property::SELECTED, i == 0 );
       radio.PressedSignal().Connect( this, &ExampleController::OnButtonPressed );
       mButtons[i] = radio;
@@ -258,28 +258,28 @@ public:
 
     Toolkit::TableView elementCountTableView = Toolkit::TableView::New( 1, 3 );
     elementCountTableView.SetCellPadding( Vector2( 6.0f, 0.0f ) );
-    elementCountTableView.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
-    elementCountTableView.SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
+    elementCountTableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT );
+    elementCountTableView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT );
     elementCountTableView.SetFitHeight( 0 );
     elementCountTableView.SetFitWidth( 0 );
     elementCountTableView.SetFitWidth( 1 );
     elementCountTableView.SetFitWidth( 2 );
     mMinusButton = Toolkit::PushButton::New();
     mMinusButton.SetProperty( Toolkit::Button::Property::LABEL, "<<" );
-    mMinusButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mMinusButton.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
+    mMinusButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mMinusButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT );
 
     Toolkit::PushButton mPlusButton = Toolkit::PushButton::New();
     mPlusButton.SetProperty( Toolkit::Button::Property::LABEL, ">>" );
-    mPlusButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mPlusButton.SetAnchorPoint( AnchorPoint::CENTER_RIGHT );
+    mPlusButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mPlusButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_RIGHT );
 
     mMinusButton.ClickedSignal().Connect( this, &ExampleController::OnButtonClicked );
     mPlusButton.ClickedSignal().Connect( this, &ExampleController::OnButtonClicked );
 
     mIndicesCountLabel = Toolkit::TextLabel::New();
-    mIndicesCountLabel.SetParentOrigin( ParentOrigin::CENTER );
-    mIndicesCountLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mIndicesCountLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mIndicesCountLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
 
     std::stringstream str;
     str << mCurrentIndexCount;

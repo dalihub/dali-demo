@@ -72,7 +72,7 @@ private:
     stage.SetBackgroundColor( Color::WHITE );
 
     mControl = Control::New();
-    mControl.SetParentOrigin( ParentOrigin::CENTER );
+    mControl.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mControl.SetSize( 200.0f, 200.0f );
     mControl.SetProperty( Control::Property::BACKGROUND, BACKGROUND );
 

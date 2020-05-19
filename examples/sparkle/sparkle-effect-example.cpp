@@ -90,8 +90,8 @@ private:
     stage.SetBackgroundColor( BACKGROUND_COLOR );
 
     mCircleBackground = ImageView::New( CIRCLE_BACKGROUND_IMAGE );
-    mCircleBackground.SetParentOrigin( ParentOrigin::CENTER );
-    mCircleBackground.SetAnchorPoint( AnchorPoint::CENTER );
+    mCircleBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mCircleBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     stage.Add( mCircleBackground );
 
@@ -166,7 +166,7 @@ private:
     renderer.SetTextures( textureSet );
 
     Actor meshActor = Actor::New();
-    meshActor.SetParentOrigin( ParentOrigin::CENTER );
+    meshActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     meshActor.SetSize( 1, 1 );
     meshActor.AddRenderer( renderer );
 

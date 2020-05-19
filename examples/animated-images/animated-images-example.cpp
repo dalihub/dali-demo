@@ -131,11 +131,11 @@ private:
     mArrayButton = CreateRadioButton( ARRAY_RADIO_BUTTON_NAME, false );
 
     Toolkit::TableView radioButtonLayout = Toolkit::TableView::New( 1, 2 );
-    radioButtonLayout.SetName( "RadioButtonsLayout" );
+    radioButtonLayout.SetProperty( Dali::Actor::Property::NAME, "RadioButtonsLayout" );
     radioButtonLayout.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
     radioButtonLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    radioButtonLayout.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    radioButtonLayout.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    radioButtonLayout.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    radioButtonLayout.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     radioButtonLayout.SetFitHeight( 0 );
     radioButtonLayout.AddChild( mGifButton, TableView::CellPosition( 0, 0 ) );
     radioButtonLayout.AddChild( mArrayButton, TableView::CellPosition( 0, 1 ) );
@@ -183,8 +183,8 @@ private:
       // Create and lay out the image view according to the index
       control = Toolkit::ImageView::New();
       control.SetProperty( Toolkit::ImageView::Property::IMAGE, SetupViewProperties( mImageType, index ) );
-      control.SetAnchorPoint( IMAGE_LAYOUT_INFO[ index ].anchorPoint );
-      control.SetParentOrigin( IMAGE_LAYOUT_INFO[ index ].parentOrigin );
+      control.SetProperty( Actor::Property::ANCHOR_POINT, IMAGE_LAYOUT_INFO[ index ].anchorPoint );
+      control.SetProperty( Actor::Property::PARENT_ORIGIN, IMAGE_LAYOUT_INFO[ index ].parentOrigin );
       control.SetY( IMAGE_LAYOUT_INFO[ index ].yPosition );
 
       // We do not want the animated image playing when it's added to the stage.
@@ -229,8 +229,8 @@ private:
     Toolkit::PushButton animateButton = Toolkit::PushButton::New();
     animateButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON_UNSELECTED );
     animateButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED );
-    animateButton.SetParentOrigin( ParentOrigin::CENTER );
-    animateButton.SetAnchorPoint( AnchorPoint::CENTER );
+    animateButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    animateButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     animateButton.ClickedSignal().Connect( this, &AnimatedImageController::OnPlayButtonClicked );
     control.Add( animateButton );
 

@@ -265,8 +265,8 @@ public:
 
     float quarterStageWidth = stage.GetSize().x * 0.25f;
     mActor = Actor::New();
-    mActor.SetAnchorPoint( AnchorPoint::CENTER );
-    mActor.SetParentOrigin( ParentOrigin::CENTER );
+    mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mActor.SetPosition( Vector3( 0.0f, 0.0f, 0.0f ) );
     mActor.SetSize( Vector3( quarterStageWidth, quarterStageWidth, quarterStageWidth ) );
     mActor.AddRenderer( mRenderer );

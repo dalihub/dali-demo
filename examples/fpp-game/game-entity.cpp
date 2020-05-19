@@ -21,7 +21,7 @@
 GameEntity::GameEntity( const char* name )
 {
   mActor = Dali::Actor::New();
-  mActor.SetName( name );
+  mActor.SetProperty( Dali::Actor::Property::NAME, name );
 }
 
 GameEntity::~GameEntity()

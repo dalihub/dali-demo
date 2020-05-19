@@ -20,6 +20,7 @@
 
 // EXTERNAL INCLUDES
 #include <algorithm>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/images/distance-field.h>
 #include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
 #include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
@@ -104,9 +105,9 @@ Control CreateBackground( std::string stylename )
   Control background = Control::New();
   Stage::GetCurrent().Add( background );
   background.SetStyleName( stylename );
-  background.SetName( "BACKGROUND" );
-  background.SetAnchorPoint( AnchorPoint::CENTER );
-  background.SetParentOrigin( ParentOrigin::CENTER );
+  background.SetProperty( Actor::Property::NAME, "BACKGROUND" );
+  background.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  background.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   return background;
 }
@@ -235,9 +236,9 @@ void DaliTableView::Initialize( Application& application )
 
   // Add logo
   ImageView logo = ImageView::New( LOGO_PATH );
-  logo.SetName( "LOGO_IMAGE" );
-  logo.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-  logo.SetParentOrigin( Vector3( 0.5f, 0.1f, 0.5f ) );
+  logo.SetProperty( Actor::Property::NAME, "LOGO_IMAGE" );
+  logo.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+  logo.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.1f, 0.5f ) );
   logo.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   // The logo should appear on top of everything.
   logo.SetDrawMode( DrawMode::OVERLAY_2D );
@@ -250,8 +251,8 @@ void DaliTableView::Initialize( Application& application )
 
   // Scrollview occupying the majority of the screen
   mScrollView = ScrollView::New();
-  mScrollView.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-  mScrollView.SetParentOrigin( Vector3( 0.5f, 1.0f - 0.05f, 0.5f ) );
+  mScrollView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
+  mScrollView.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 1.0f - 0.05f, 0.5f ) );
   mScrollView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   mScrollView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
   mScrollView.SetSizeModeFactor( Vector3( 0.0f, 0.6f, 0.0f ) );
@@ -269,8 +270,8 @@ void DaliTableView::Initialize( Application& application )
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
   Actor bubbleContainer = Actor::New();
   bubbleContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  bubbleContainer.SetAnchorPoint( AnchorPoint::CENTER );
-  bubbleContainer.SetParentOrigin( ParentOrigin::CENTER );
+  bubbleContainer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  bubbleContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   SetupBackground( bubbleContainer );
 
   mRootActor.Add( bubbleContainer );
@@ -330,9 +331,9 @@ void DaliTableView::CreateFocusEffect()
   {
     mFocusEffect[i].actor = ImageView::New();
     mFocusEffect[i].actor.SetStyleName( "FocusActor" );
-    mFocusEffect[i].actor.SetParentOrigin( ParentOrigin::CENTER );
+    mFocusEffect[i].actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mFocusEffect[i].actor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mFocusEffect[i].actor.SetInheritScale( false );
+    mFocusEffect[i].actor.SetProperty( Actor::Property::INHERIT_SCALE, false );
     mFocusEffect[i].actor.SetColorMode( USE_OWN_COLOR );
 
     KeyFrames alphaKeyFrames = KeyFrames::New();
@@ -416,8 +417,8 @@ void DaliTableView::Populate()
     {
       // Create Table
       TableView page = TableView::New( ROWS_PER_PAGE, EXAMPLES_PER_ROW );
-      page.SetAnchorPoint( AnchorPoint::CENTER );
-      page.SetParentOrigin( ParentOrigin::CENTER );
+      page.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+      page.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mScrollView.Add( page );
 
@@ -505,10 +506,10 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   Toolkit::ImageView focusableTile = ImageView::New();
 
   focusableTile.SetStyleName( "DemoTile" );
-  focusableTile.SetParentOrigin( ParentOrigin::CENTER );
+  focusableTile.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   focusableTile.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
   focusableTile.SetSizeModeFactor( sizeMultiplier );
-  focusableTile.SetName( name );
+  focusableTile.SetProperty( Actor::Property::NAME, name );
 
   // Set the tile to be keyboard focusable
   focusableTile.SetKeyboardFocusable( true );
@@ -528,15 +529,15 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   // Create an ImageView for the 9-patch border around the tile.
   ImageView borderImage = ImageView::New();
   borderImage.SetStyleName("DemoTileBorder");
-  borderImage.SetAnchorPoint( AnchorPoint::CENTER );
-  borderImage.SetParentOrigin( ParentOrigin::CENTER );
+  borderImage.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  borderImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   borderImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  borderImage.SetOpacity( 0.8f );
+  borderImage.SetProperty( DevelActor::Property::OPACITY, 0.8f );
   focusableTile.Add( borderImage );
 
   TextLabel label = TextLabel::New();
-  label.SetAnchorPoint( AnchorPoint::CENTER );
-  label.SetParentOrigin( ParentOrigin::CENTER );
+  label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  label.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   label.SetStyleName( "LauncherLabel" );
   label.SetProperty( TextLabel::Property::MULTI_LINE, true );
   label.SetProperty( TextLabel::Property::TEXT, title );
@@ -578,7 +579,7 @@ bool DaliTableView::DoTilePress( Actor actor, PointState::Type pointState )
     // ignore Example button presses when scrolling or button animating.
     if( ( !mScrolling ) && ( !mPressedAnimation ) )
     {
-      std::string name = actor.GetName();
+      std::string name = actor.GetProperty< std::string >( Dali::Actor::Property::NAME );
       const ExampleListIter end = mExampleList.end();
       for( ExampleListIter iter = mExampleList.begin(); iter != end; ++iter )
       {
@@ -618,7 +619,7 @@ void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
   mPressedAnimation.Reset();
   if( mPressedActor )
   {
-    std::string name = mPressedActor.GetName();
+    std::string name = mPressedActor.GetProperty< std::string >( Dali::Actor::Property::NAME );
 
     ExecuteProcess( name, mApplication );
 
@@ -766,7 +767,7 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count )
 
     ImageView dfActor = ImageView::New();
     dfActor.SetSize( Vector2( randSize, randSize ) );
-    dfActor.SetParentOrigin( ParentOrigin::CENTER );
+    dfActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
     // Set the Image URL and the custom shader at the same time
     Dali::Property::Map effect = Toolkit::CreateDistanceFieldEffect();
@@ -915,12 +916,12 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
       mVersionPopup = Dali::Toolkit::Popup::New();
 
       Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( "Version information" );
-      titleActor.SetName( "titleActor" );
+      titleActor.SetProperty( Actor::Property::NAME, "titleActor" );
       titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER );
       titleActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
 
       Toolkit::TextLabel contentActor = Toolkit::TextLabel::New( stream.str() );
-      contentActor.SetName( "contentActor" );
+      contentActor.SetProperty( Actor::Property::NAME, "contentActor" );
       contentActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
       contentActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER );
       contentActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );

@@ -176,8 +176,8 @@ public:
     mRenderer.RegisterProperty( "uPointSize", 80.0f );
     mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
 
-    mMeshActor.SetParentOrigin( ParentOrigin::CENTER );
-    mMeshActor.SetAnchorPoint( AnchorPoint::CENTER );
+    mMeshActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mMeshActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     stage.Add( mMeshActor );
 
     Animation  animation = Animation::New(15);

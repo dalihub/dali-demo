@@ -169,10 +169,10 @@ public:
     Stage stage = Stage::GetCurrent();
     Size size = stage.GetSize() * 0.25f;
     mActor = Actor::New();
-    mActor.SetAnchorPoint( AnchorPoint::CENTER );
-    mActor.SetParentOrigin( ParentOrigin::CENTER );
+    mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mActor.SetPosition( Vector3( 0.0f, 0.0f, 0.0f ) );
-    mActor.SetColor( Color::RED );
+    mActor.SetProperty( Actor::Property::COLOR, Color::RED );
     mActor.SetSize( Vector3( size.x, size.x, size.x ) );
     mActor.AddRenderer( mRenderer );
     stage.Add( mActor );

@@ -92,8 +92,8 @@ public:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     mGradientControl = Control::New();
-    mGradientControl.SetAnchorPoint( AnchorPoint::CENTER );
-    mGradientControl.SetParentOrigin( ParentOrigin::CENTER );
+    mGradientControl.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mGradientControl.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mGradientControl.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     Vector3 offset( 0.9f, 0.7f, 0.0f );
     mGradientControl.SetSizeModeFactor( offset );

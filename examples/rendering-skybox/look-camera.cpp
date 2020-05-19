@@ -74,7 +74,7 @@ void LookCamera::Initialise( const Vector3& position, float fovY, float near, fl
   mNear = near;
   mFar = far;
 
-  // Camera position is shadowed in order to avoid using GetCurrentPosition()
+  // Camera position is shadowed in order to avoid using.GetCurrentProperty< Vector3 >( Actor::Property::POSITION )
   mCameraPosition = position;
 
   // Initialise default camera
@@ -121,9 +121,9 @@ void LookCamera::InitialiseDefaultCamera()
 {
   Stage stage = Stage::GetCurrent();
   mCameraActor = stage.GetRenderTaskList().GetTask(0).GetCameraActor();
-  mCameraActor.SetName( "LookCamera" );
-  mCameraActor.SetAnchorPoint( AnchorPoint::CENTER );
-  mCameraActor.SetParentOrigin( ParentOrigin::CENTER );
+  mCameraActor.SetProperty( Dali::Actor::Property::NAME, "LookCamera" );
+  mCameraActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  mCameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCameraActor.SetFieldOfView( Radian( Degree( mFovY ) ) );
 
   // should be read from file
@@ -137,11 +137,11 @@ void LookCamera::CreateInterceptorActor()
   Stage stage = Stage::GetCurrent();
 
   mInterceptorActor = Actor::New();
-  mInterceptorActor.SetName( "InputInterceptor" );
+  mInterceptorActor.SetProperty( Dali::Actor::Property::NAME, "InputInterceptor" );
   mInterceptorActor.SetSize( Vector3( stage.GetSize().x, stage.GetSize().y, 1 ) );
   mInterceptorActor.SetPosition( Vector3( 0.0, 0.0, 1.0  ) );
-  mInterceptorActor.SetAnchorPoint( AnchorPoint::CENTER );
-  mInterceptorActor.SetParentOrigin( ParentOrigin::CENTER );
+  mInterceptorActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  mInterceptorActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCameraActor.Add( mInterceptorActor );
 
   // Connect TouchSignal to interceptor actor

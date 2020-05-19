@@ -211,17 +211,17 @@ public:
   void CreateShadowViewAndLights()
   {
     mShadowView = Toolkit::ShadowView::New();
-    mShadowView.SetName("Container");
-    mShadowView.SetParentOrigin(ParentOrigin::CENTER);
-    mShadowView.SetAnchorPoint(AnchorPoint::CENTER);
+    mShadowView.SetProperty( Dali::Actor::Property::NAME,"Container");
+    mShadowView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    mShadowView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mShadowView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mShadowView.SetPointLightFieldOfView( Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
     mShadowPlaneBg = ImageView::New( DEMO_IMAGE_DIR "brick-wall.jpg" );
-    mShadowPlaneBg.SetParentOrigin(ParentOrigin::CENTER);
-    mShadowPlaneBg.SetAnchorPoint(AnchorPoint::CENTER);
-    mShadowPlaneBg.SetName("Plane");
+    mShadowPlaneBg.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    mShadowPlaneBg.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
+    mShadowPlaneBg.SetProperty( Dali::Actor::Property::NAME,"Plane");
     mShadowPlaneBg.SetSize(1000.0f, 1000.0f);
     mContents.Add(mShadowPlaneBg);
     mShadowPlaneBg.SetPosition(Vector3(50.0f, 50.0f, -200.0f));
@@ -230,8 +230,8 @@ public:
     mShadowView.Activate();
 
     mLightAnchor = Actor::New();
-    mLightAnchor.SetParentOrigin(ParentOrigin::CENTER);
-    mLightAnchor.SetAnchorPoint(AnchorPoint::CENTER);
+    mLightAnchor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    mLightAnchor.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mLightAnchor.SetOrientation( CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
 
     // Work out a scaling factor as the initial light position was calculated for desktop
@@ -240,27 +240,27 @@ public:
     float scaleFactor = stageSize.x / DEFAULT_STAGE_SIZE.x;
 
     mCastingLight = Actor::New();
-    mCastingLight.SetParentOrigin(ParentOrigin::CENTER);
-    mCastingLight.SetAnchorPoint(AnchorPoint::CENTER);
+    mCastingLight.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    mCastingLight.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
 
     TextLabel text = TextLabel::New( "Light" );
     text.SetProperty( TextLabel::Property::POINT_SIZE, 20.0f );
     text.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    text.SetColor( Color::BLUE );
+    text.SetProperty( Actor::Property::COLOR, Color::BLUE );
 
     mCastingLight.Add(text);
     mLightAnchor.Add(mCastingLight);
     mShadowPlaneBg.Add(mLightAnchor);
 
-    text.SetParentOrigin(ParentOrigin::CENTER);
+    text.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mShadowView.SetPointLight(mCastingLight);
   }
 
   void CreateScene()
   {
     mSceneActor = Actor::New();
-    mSceneActor.SetParentOrigin(ParentOrigin::CENTER);
+    mSceneActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
     // Create and add images to the scene actor:
     mImageActor1 = ImageView::New( SCENE_IMAGE_1 );
@@ -271,13 +271,13 @@ public:
     mImageActor2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     mImageActor3.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
-    mImageActor2.SetParentOrigin(ParentOrigin::CENTER);
+    mImageActor2.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
-    mImageActor1.SetParentOrigin(ParentOrigin::CENTER_LEFT);
-    mImageActor1.SetAnchorPoint(AnchorPoint::CENTER_RIGHT);
+    mImageActor1.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER_LEFT);
+    mImageActor1.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER_RIGHT);
 
-    mImageActor3.SetParentOrigin(ParentOrigin::CENTER_RIGHT);
-    mImageActor3.SetAnchorPoint(AnchorPoint::CENTER_LEFT);
+    mImageActor3.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER_RIGHT);
+    mImageActor3.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER_LEFT);
 
     mSceneActor.Add(mImageActor2);
     mImageActor2.Add(mImageActor1);
@@ -392,7 +392,7 @@ public:
   {
     if (gesture.state == Gesture::Started)
     {
-      mScaleAtPinchStart = mContents.GetCurrentScale().x;
+      mScaleAtPinchStart = mContents.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ).x;
     }
     mPinchScale = Clamp(mScaleAtPinchStart * gesture.scale, MIN_PINCH_SCALE, MAX_PINCH_SCALE);
 

@@ -445,8 +445,8 @@ Renderer CreateRenderer(TextureSet textures, Geometry geometry, Shader shader, u
 //=============================================================================
 void CenterActor(Actor actor)
 {
-  actor.SetAnchorPoint( AnchorPoint::CENTER );
-  actor.SetParentOrigin( ParentOrigin::CENTER );
+  actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 }
 
 //=============================================================================
@@ -585,7 +585,7 @@ private:
       Vector3 size{ Vector3::ONE * scale * unit * 2.f };
       a.SetSize(size);
 
-      a.SetColor(Color::WHITE * .25f +
+      a.SetProperty( Actor::Property::COLOR,Color::WHITE * .25f +
           (Color::RED * (v.x + c) / (c * 2.f) +
           Color::GREEN * (v.y + c) / (c * 2.f) +
           Color::BLUE * (v.z + c) / (c * 2.f)) * .015625f);

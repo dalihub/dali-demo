@@ -68,7 +68,7 @@ public:
   void CreateTextLabel( TextLabel& textLabel, std::string textString, const Vector4& color, bool infoLabel=false )
   {
     textLabel = TextLabel::New( textString );
-    textLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    textLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
     textLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
@@ -93,14 +93,14 @@ public:
   {
     container = Control::New();
     container.SetSize( size );
-    container.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     container.SetDrawMode( DrawMode::OVERLAY_2D );
   }
 
   void CreateFolderButton( PushButton& button )
   {
     button = PushButton::New();
-    button.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     button.SetSize( 50.0f, 50.0f );
   }
@@ -121,7 +121,7 @@ public:
       stage.Add( mContainer4 );
       // Info
       CreateContainer ( mContainer4Info , mLayoutSize );
-      mContainer4Info.SetParentOrigin( ParentOrigin::TOP_RIGHT );
+      mContainer4Info.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
       mContainer4.Add( mContainer4Info );
       CreateTextLabel ( mLabel4Info, "system free", Color::BLACK, true  );
       mContainer4Info.Add ( mLabel4Info );
@@ -154,7 +154,7 @@ public:
     stage.KeyEventSignal().Connect(this, &TextFontsExample::OnKeyEvent);
 
     CreateFolderButton ( mButton );
-    mButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    mButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mButton.ClickedSignal().Connect( this, &TextFontsExample::OnButtonClicked );
     stage.Add( mButton );
 
@@ -167,9 +167,9 @@ public:
     CreateContainer ( mContainerInfo , mLayoutSize );
     CreateContainer ( mContainer2Info , mLayoutSize );
     CreateContainer ( mContainer3Info , mLayoutSize );
-    mContainerInfo.SetParentOrigin( ParentOrigin::TOP_RIGHT );
-    mContainer2Info.SetParentOrigin( ParentOrigin::TOP_RIGHT );
-    mContainer3Info.SetParentOrigin( ParentOrigin::TOP_RIGHT );
+    mContainerInfo.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
+    mContainer2Info.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
+    mContainer3Info.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
     mContainer.Add( mContainerInfo );
     mContainer2.Add( mContainer2Info );
     mContainer3.Add( mContainer3Info );

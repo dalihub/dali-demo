@@ -18,6 +18,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <string>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/events/rotation-gesture.h>
 #include <dali/devel-api/events/rotation-gesture-detector.h>
 
@@ -85,10 +86,10 @@ void AddHelpInfo( const std::string&& string, Actor parent, Animation animation,
   Actor text = TextLabel::New( std::move( string ) );
   Vector3 position( Stage::GetCurrent().GetSize() * HELP_TEXT_POSITION_MULTIPLIER );
 
-  text.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-  text.SetParentOrigin( ParentOrigin::TOP_CENTER );
+  text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+  text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
   text.SetPosition( position );
-  text.SetOpacity( 0.0f );
+  text.SetProperty( DevelActor::Property::OPACITY, 0.0f );
   text.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, Text::HorizontalAlignment::CENTER );
   text.SetProperty( TextLabel::Property::MULTI_LINE, true );
   parent.Add( text );
@@ -147,20 +148,20 @@ private:
     // Create a background with a linear gradient which matches parent size & is placed in the center.
     Actor background = Control::New();
     background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    background.SetParentOrigin( ParentOrigin::CENTER );
+    background.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     background.SetProperty( Control::Property::BACKGROUND, BACKGROUND );
     stage.Add( background );
 
     // Create a control with a circular gradient that we'll use for the gestures and be a quarter of the size of the stage.
     Actor touchControl = Control::New();
     touchControl.SetSize( stage.GetSize() * 0.25f );
-    touchControl.SetParentOrigin( ParentOrigin::CENTER );
+    touchControl.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     touchControl.SetProperty( Control::Property::BACKGROUND, CONTROL_BACKGROUND );
     background.Add( touchControl );
 
     // Connect to the touch signal
     touchControl.TouchSignal().Connect( this, &GestureExample::OnTouch );
-    touchControl.SetLeaveRequired( true );
+    touchControl.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
 
     // Create a long press gesture detector, attach the actor & connect
     mLongPressDetector = LongPressGestureDetector::New();
@@ -274,7 +275,7 @@ private:
 
       // Do a small animation to indicate to the user that we are in pan mode.
       Animation anim = Animation::New( PAN_MODE_CHANGE_ANIMATION_DURATION );
-      anim.AnimateTo( Property( actor, Actor::Property::SCALE ), actor.GetCurrentScale() * PAN_MODE_START_ANIMATION_SCALE, AlphaFunction::BOUNCE );
+      anim.AnimateTo( Property( actor, Actor::Property::SCALE ), actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ) * PAN_MODE_START_ANIMATION_SCALE, AlphaFunction::BOUNCE );
       anim.Play();
 
       // Start the shake animation so the user knows when they are in pan mode.
@@ -296,7 +297,7 @@ private:
     // As the displacement is in local actor coords, we will have to multiply the displacement by the
     // actor's scale so that it moves the correct amount in the parent's coordinate system.
     Vector3 scaledDisplacement( pan.displacement );
-    scaledDisplacement *= actor.GetCurrentScale();
+    scaledDisplacement *= actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE );
 
     Vector3 currentPosition;
     actor.GetProperty( Actor::Property::POSITION ).Get( currentPosition );
@@ -319,7 +320,7 @@ private:
 
         Animation anim = Animation::New( PAN_MODE_CHANGE_ANIMATION_DURATION );
         anim.AnimateTo( Property( actor, Actor::Property::COLOR ), Vector4::ONE );
-        anim.AnimateTo( Property( actor, Actor::Property::SCALE ), actor.GetCurrentScale() * PAN_MODE_END_ANIMATION_SCALE, AlphaFunction::BOUNCE );
+        anim.AnimateTo( Property( actor, Actor::Property::SCALE ), actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ) * PAN_MODE_END_ANIMATION_SCALE, AlphaFunction::BOUNCE );
 
         // Move actor back to center if we're out of bounds
         Vector2 halfStageSize = Stage::GetCurrent().GetSize() * 0.5f;
@@ -375,14 +376,14 @@ private:
       case Gesture::Started:
       {
         // Starting scale is required so that we know what to multiply the pinch.scale by.
-        mStartingScale = actor.GetCurrentScale();
+        mStartingScale = actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE );
         break;
       }
 
       case Gesture::Finished:
       case Gesture::Cancelled:
       {
-        Vector3 scale( actor.GetCurrentScale() );
+        Vector3 scale( actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ) );
 
         // Ensure the actor sizes itself to be within the limits defined.
         if ( scale.x < MINIMUM_SCALE.x )
@@ -423,7 +424,7 @@ private:
       case Gesture::Started:
       {
         // Starting orientation is required so that we know what to multiply the rotation.rotation by.
-        mStartingOrientation = actor.GetCurrentOrientation();
+        mStartingOrientation = actor.GetCurrentProperty< Quaternion >( Actor::Property::ORIENTATION );
         break;
       }
 

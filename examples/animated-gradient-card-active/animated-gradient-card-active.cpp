@@ -151,8 +151,8 @@ public:
         mCard[k].SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
       }
 
-      mCard[k].SetParentOrigin( ParentOrigin::CENTER );
-      mCard[k].SetAnchorPoint( AnchorPoint::CENTER );
+      mCard[k].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+      mCard[k].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       mCard[k].SetSize( mSize.x, mSize.y );
       mCard[k].SetPosition( mPosition[k].x, mPosition[k].y );
 
@@ -295,8 +295,8 @@ public:
     FONT_SCALE = 0.25f * STAGE_SIZE.y / STAGE_SIZE.x;
 
     mBackground = Control::New();
-    mBackground.SetParentOrigin( ParentOrigin::CENTER );
-    mBackground.SetAnchorPoint( AnchorPoint::CENTER );
+    mBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mBackground.SetSize( STAGE_SIZE );
 
     mStage.Add( mBackground );
@@ -592,39 +592,39 @@ private:
   {
     mAddButton = ImageView::New();
     mAddButton.SetImage( BUTTON_ADD_IMAGE );
-    mAddButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mAddButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    mAddButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    mAddButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     mAddButton.SetSize( BUTTON_ADD_SIZE * SCALED_WIDTH );
     mAddButton.SetPosition( BUTTON_ADD_POSITION * SCALED_WIDTH );
 
     mLabel1 = TextLabel::New( LABEL_TICKET_STR );
-    mLabel1.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mLabel1.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mLabel1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mLabel1.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mLabel1.SetSize( LABEL_TICKET_SIZE * SCALED_WIDTH );
     mLabel1.SetPosition( LABEL_TICKET_POSITION * SCALED_WIDTH );
-    mLabel1.SetVisible( true );
+    mLabel1.SetProperty( Actor::Property::VISIBLE, true );
     mLabel1.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_TICKET_FONT_COLOR );
     mLabel1.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_TICKET_FONT_SIZE * FONT_SCALE );
     mLabel1.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mLabel1.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
 
     mLabel2 = TextLabel::New( LABEL_HOLD_STR );
-    mLabel2.SetParentOrigin( ParentOrigin::CENTER );
-    mLabel2.SetAnchorPoint( AnchorPoint::CENTER );
+    mLabel2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mLabel2.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mLabel2.SetSize( LABEL_HOLD_SIZE * SCALED_WIDTH );
     mLabel2.SetPosition( LABEL_HOLD_POSITION * SCALED_WIDTH );
-    mLabel2.SetVisible( false );
+    mLabel2.SetProperty( Actor::Property::VISIBLE, false );
     mLabel2.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_HOLD_FONT_COLOR );
     mLabel2.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_HOLD_FONT_SIZE * FONT_SCALE );
     mLabel2.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mLabel2.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
 
     mLabel3 = TextLabel::New( LABEL_TERMINAL_STR );
-    mLabel3.SetParentOrigin( ParentOrigin::CENTER );
-    mLabel3.SetAnchorPoint( AnchorPoint::CENTER );
+    mLabel3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mLabel3.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mLabel3.SetSize( LABEL_TERMINAL_SIZE * SCALED_WIDTH );
     mLabel3.SetPosition( LABEL_TERMINAL_POSITION * SCALED_WIDTH );
-    mLabel3.SetVisible( false );
+    mLabel3.SetProperty( Actor::Property::VISIBLE, false );
     mLabel3.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_TERMINAL_FONT_COLOR );
     mLabel3.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_TERMINAL_FONT_SIZE * FONT_SCALE );
     mLabel3.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );

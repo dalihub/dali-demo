@@ -235,7 +235,7 @@ void PageTurnExample::Rotate( DemoOrientation orientation )
       if( !mPageTurnPortraitView )
       {
         mPageTurnPortraitView = PageTurnPortraitView::New( mPortraitPageFactory, stageSize );
-        mPageTurnPortraitView.SetParentOrigin( ParentOrigin::CENTER );
+        mPageTurnPortraitView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       }
 
       if( mPageTurnLandscapeView )
@@ -249,7 +249,7 @@ void PageTurnExample::Rotate( DemoOrientation orientation )
       if( !mPageTurnLandscapeView )
       {
         mPageTurnLandscapeView = PageTurnLandscapeView::New( mLandscapePageFactory, Vector2(stageSize.x*0.5f, stageSize.y) );
-        mPageTurnLandscapeView.SetParentOrigin( ParentOrigin::CENTER );
+        mPageTurnLandscapeView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       }
 
       if( mPageTurnPortraitView )
