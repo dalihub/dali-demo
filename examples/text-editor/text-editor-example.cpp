@@ -122,8 +122,8 @@ public:
     mColorContainer.SetSizeModeFactor( Vector3( 0.0f, BUTTON_PERCENTAGE, 0.0f ) );
 
     // Place to right of parent.
-    mColorContainer.SetParentOrigin( ParentOrigin::CENTER_RIGHT );
-    mColorContainer.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
+    mColorContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT );
+    mColorContainer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT );
     colorLabel.Add( mColorContainer );
 
     // Add border to highlight harder-to-see colors.
@@ -137,8 +137,8 @@ public:
     mColorButtonOption = Toolkit::PushButton::New();
     mColorButtonOption.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mColorButtonOption.SetSizeModeFactor( Vector3( 0.9f, 0.9f, 0.0f ) ); // Smaller than container to show border.
-    mColorButtonOption.SetParentOrigin( ParentOrigin::CENTER );
-    mColorButtonOption.SetAnchorPoint( AnchorPoint::CENTER );
+    mColorButtonOption.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mColorButtonOption.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     SetButtonColor( mColorButtonOption, Color::BLACK );
 
@@ -150,8 +150,8 @@ public:
 
     // Create the text editor.
     mEditor = TextEditor::New();
-    mEditor.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mEditor.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mEditor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mEditor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mEditor.SetPosition( 0.f, toolBarHeight * 2.0f, 0.f );
     mEditor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mEditor.SetSizeModeFactor( TEXT_EDITOR_RELATIVE_SIZE );
@@ -193,8 +193,8 @@ public:
     mButtonContainer.SetSizeModeFactor( Vector3( 1.0f, NUMBER_OF_COLORS, 1.0f ) );
 
     // Place below color selection button.
-    mButtonContainer.SetParentOrigin( ParentOrigin::BOTTOM_CENTER  );
-    mButtonContainer.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mButtonContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER  );
+    mButtonContainer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mButtonContainer.SetPosition( 0.0f, 2.f * TOOLBAR_PADDING, 0.f );
     mColorContainer.Add( mButtonContainer );
 
@@ -207,7 +207,7 @@ public:
 
       std::ostringstream s;
       s << "color" << index;
-      button.SetName( s.str() );
+      button.SetProperty( Dali::Actor::Property::NAME, s.str() );
 
       SetButtonColor( button, COLORS[index] );
 
@@ -236,14 +236,14 @@ public:
       CreateButtonContainer();
     }
 
-    mButtonContainer.SetVisible( true );
-    mButtonContainer.SetSensitive( true );
+    mButtonContainer.SetProperty( Actor::Property::VISIBLE, true );
+    mButtonContainer.SetProperty( Actor::Property::SENSITIVE, true );
     return true;
   }
 
   bool OnColorButtonClicked( Button button )
   {
-    const std::string& name = button.GetName();
+    const std::string& name = button.GetProperty< std::string >( Dali::Actor::Property::NAME );
 
     Vector4 color;
     if( "color" == name.substr( 0u, 5u ) )
@@ -255,8 +255,8 @@ public:
 
     SetButtonColor( mColorButtonOption, color  );
 
-    mButtonContainer.SetVisible( false );
-    mButtonContainer.SetSensitive( false );
+    mButtonContainer.SetProperty( Actor::Property::VISIBLE, false );
+    mButtonContainer.SetProperty( Actor::Property::SENSITIVE, false );
 
     return true;
   }

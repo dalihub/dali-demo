@@ -132,13 +132,13 @@ public:
 
     //Main, central model
     mContainers[0].SetSizeModeFactor( Vector3( MODEL_SCALE, MODEL_SCALE, 0.0f ) );
-    mContainers[0].SetParentOrigin( ParentOrigin::CENTER );
-    mContainers[0].SetAnchorPoint( AnchorPoint::CENTER );
+    mContainers[0].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mContainers[0].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     //Top left model
     mContainers[1].SetSizeModeFactor( Vector3( MODEL_SCALE / 3.0f, MODEL_SCALE / 3.0f, 0.0f ) );
-    mContainers[1].SetParentOrigin( Vector3( 0.05, 0.03, 0.5 ) ); //Offset from top left
-    mContainers[1].SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mContainers[1].SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.05, 0.03, 0.5 ) ); //Offset from top left
+    mContainers[1].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
 
     //Set up models
     for( int i = 0; i < NUM_MESHES; i++ )
@@ -146,8 +146,8 @@ public:
       //Create control to display model
       Control control = Control::New();
       control.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      control.SetParentOrigin( ParentOrigin::CENTER );
-      control.SetAnchorPoint( AnchorPoint::CENTER );
+      control.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+      control.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       mContainers[i].Add( control );
 
       //Make model spin to demonstrate 3D
@@ -174,16 +174,16 @@ public:
   {
     //Actor for positioning model and shading mode buttons.
     Actor positionActorModel = Actor::New();
-    positionActorModel.SetParentOrigin( Vector3( BUTTONS_OFFSET_SIDE, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
-    positionActorModel.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    positionActorModel.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( BUTTONS_OFFSET_SIDE, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
+    positionActorModel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     layer.Add( positionActorModel );
 
     //Create button for model changing.
     PushButton modelButton = Toolkit::PushButton::New();
     modelButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     modelButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeModelClicked );
-    modelButton.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    modelButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    modelButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    modelButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     modelButton.SetProperty( Toolkit::Button::Property::LABEL, "Model" );
     positionActorModel.Add( modelButton );
 
@@ -191,8 +191,8 @@ public:
     PushButton shadingModeButton = Toolkit::PushButton::New();
     shadingModeButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     shadingModeButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeShadingModeClicked );
-    shadingModeButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    shadingModeButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    shadingModeButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    shadingModeButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     shadingModeButton.SetProperty( Toolkit::Button::Property::LABEL, "Shading Mode" );
     positionActorModel.Add( shadingModeButton );
 
@@ -200,31 +200,31 @@ public:
     TextLabel changeTitleLabel = TextLabel::New( "Change" );
     changeTitleLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     changeTitleLabel.SetProperty( TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}" );
-    changeTitleLabel.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    changeTitleLabel.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    changeTitleLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    changeTitleLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     modelButton.Add( changeTitleLabel );
 
     //Create button for pausing animations.
     PushButton pauseButton = Toolkit::PushButton::New();
     pauseButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     pauseButton.ClickedSignal().Connect( this, &MeshVisualController::OnPauseClicked );
-    pauseButton.SetParentOrigin( Vector3( 0.5, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
-    pauseButton.SetAnchorPoint( AnchorPoint::CENTER );
+    pauseButton.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
+    pauseButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     pauseButton.SetProperty( Toolkit::Button::Property::LABEL, PAUSE );
     layer.Add( pauseButton );
 
     //Actor for positioning light position buttons.
     Actor positionActorLight = Actor::New();
-    positionActorLight.SetParentOrigin( Vector3( 1.0 - BUTTONS_OFFSET_SIDE, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
-    positionActorLight.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    positionActorLight.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 1.0 - BUTTONS_OFFSET_SIDE, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5 ) );
+    positionActorLight.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     layer.Add( positionActorLight );
 
     //Create button for switching between manual and fixed light position.
     PushButton lightModeButton = Toolkit::PushButton::New();
     lightModeButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     lightModeButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeLightModeClicked );
-    lightModeButton.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    lightModeButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    lightModeButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    lightModeButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     lightModeButton.SetProperty( Toolkit::Button::Property::LABEL, FIXED );
     positionActorLight.Add( lightModeButton );
 
@@ -232,8 +232,8 @@ public:
     PushButton lightSideButton = Toolkit::PushButton::New();
     lightSideButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     lightSideButton.ClickedSignal().Connect( this, &MeshVisualController::OnChangeLightSideClicked );
-    lightSideButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    lightSideButton.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    lightSideButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    lightSideButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     lightSideButton.SetProperty( Toolkit::Button::Property::LABEL, FRONT );
     positionActorLight.Add( lightSideButton );
 
@@ -241,8 +241,8 @@ public:
     TextLabel lightTitleLabel = TextLabel::New( "Light Position" );
     lightTitleLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     lightTitleLabel.SetProperty( TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}" );
-    lightTitleLabel.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    lightTitleLabel.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    lightTitleLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    lightTitleLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     lightModeButton.Add( lightTitleLabel );
   }
 
@@ -271,8 +271,8 @@ public:
     }
 
     //Set position relative to top left, as the light source property is also relative to the top left.
-    mLightSource.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mLightSource.SetAnchorPoint( AnchorPoint::CENTER );
+    mLightSource.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mLightSource.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mLightSource.SetPosition( Stage::GetCurrent().GetSize().x * 0.85f, Stage::GetCurrent().GetSize().y * 0.125 );
 
     //Supply an image to represent the light.
@@ -284,8 +284,8 @@ public:
     //Place the light source on a layer above the base, so that it is rendered above everything else.
     Layer upperLayer = Layer::New();
     upperLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    upperLayer.SetParentOrigin( ParentOrigin::CENTER );
-    upperLayer.SetAnchorPoint( AnchorPoint::CENTER );
+    upperLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    upperLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     baseLayer.Add( upperLayer );
     upperLayer.Add( mLightSource );
@@ -352,7 +352,7 @@ public:
   void UseFixedLight()
   {
     //Hide draggable source
-    mLightSource.SetVisible( false );
+    mLightSource.SetProperty( Actor::Property::VISIBLE, false );
 
     //Use stage dimensions to place light at center, offset in z axis.
     Stage stage = Stage::GetCurrent();
@@ -372,7 +372,7 @@ public:
   void UseManualLight()
   {
     //Show draggable source
-    mLightSource.SetVisible( true );
+    mLightSource.SetProperty( Actor::Property::VISIBLE, true );
 
     //Update to switch light position of models to that of the source.
     UpdateLight();
@@ -382,7 +382,7 @@ public:
   void UpdateLight()
   {
     //Set light position to the x and y of the light control, offset into/out of the screen.
-    Vector3 controlPosition = mLightSource.GetCurrentPosition();
+    Vector3 controlPosition = mLightSource.GetCurrentProperty< Vector3 >( Actor::Property::POSITION );
     Vector3 lightPosition = Vector3( controlPosition.x, controlPosition.y,
                                      ( mLightFront ? 1 : -1 ) * Stage::GetCurrent().GetSize().x / 2.0f );
 

@@ -402,9 +402,9 @@ public:
     mRenderer.SetProperty( Renderer::Property::DEPTH_WRITE_MODE, DepthWriteMode::ON );
 
     mActor = Actor::New();
-    mActor.SetName( "Cube" );
-    mActor.SetAnchorPoint( AnchorPoint::CENTER );
-    mActor.SetParentOrigin( ParentOrigin::CENTER );
+    mActor.SetProperty( Dali::Actor::Property::NAME, "Cube" );
+    mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mActor.AddRenderer( mRenderer );
 
     mActor.SetSize( 10.f, 10.f, 10.f );
@@ -443,9 +443,9 @@ public:
     Stage stage = Stage::GetCurrent();
 
     mSkyboxActor = Actor::New();
-    mSkyboxActor.SetName( "SkyBox" );
-    mSkyboxActor.SetAnchorPoint( AnchorPoint::CENTER );
-    mSkyboxActor.SetParentOrigin( ParentOrigin::CENTER );
+    mSkyboxActor.SetProperty( Dali::Actor::Property::NAME, "SkyBox" );
+    mSkyboxActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mSkyboxActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mSkyboxActor.SetPosition( CAMERA_DEFAULT_POSITION );
     mSkyboxActor.AddRenderer( mSkyboxRenderer );
     stage.Add( mSkyboxActor );

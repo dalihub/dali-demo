@@ -210,17 +210,17 @@ public:
     mButtonSize = Size( mStageSize.height * 0.1, mStageSize.height * 0.1 ); // Button size 1/10 of stage height
 
     mContainer = Control::New();
-    mContainer.SetName( "Container" );
-    mContainer.SetParentOrigin( ParentOrigin::CENTER );
+    mContainer.SetProperty( Dali::Actor::Property::NAME, "Container" );
+    mContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLayoutSize = Vector2(mStageSize.width*0.6f, mStageSize.width*0.6f);
     mContainer.SetSize( mLayoutSize );
     stage.Add( mContainer );
 
     // Resize the center layout when the corner is grabbed
     mGrabCorner = ImageView::New( BACKGROUND_IMAGE );
-    mGrabCorner.SetName( "GrabCorner" );
-    mGrabCorner.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    mGrabCorner.SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
+    mGrabCorner.SetProperty( Dali::Actor::Property::NAME, "GrabCorner" );
+    mGrabCorner.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    mGrabCorner.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT );
     mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     mContainer.Add( mGrabCorner );
 
@@ -230,8 +230,8 @@ public:
 
     mLabel = TextLabel::New( "\xF0\x9F\x98\x89 A Quick Brown Fox Jumps Over The Lazy Dog" );
 
-    mLabel.SetName( "TextLabel" );
-    mLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mLabel.SetProperty( Dali::Actor::Property::NAME, "TextLabel" );
+    mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mLabel.SetSize(mLayoutSize);
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::GREEN );
@@ -245,7 +245,7 @@ public:
 
     // Add a border for the container so you can see the container is being resized while grabbing the handle.
     mBorder = Control::New();
-    mBorder.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mBorder.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
 
@@ -255,7 +255,7 @@ public:
     border.Insert( BorderVisual::Property::SIZE,  3.f );
     mBorder.SetProperty( Control::Property::BACKGROUND, border );
     mContainer.Add( mBorder );
-    mBorder.SetVisible(false);
+    mBorder.SetProperty( Actor::Property::VISIBLE,false);
     mGrabCorner.RaiseToTop();
 
     mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
@@ -471,7 +471,7 @@ public:
         // Use a white button with 50% transparency as a clear color button
         if ( Color::WHITE == AVAILABLE_COLORS[ index ] && styleButtonIndex != StyleType::TEXT_COLOR )
         {
-          mColorButtons[index].SetOpacity(0.5f);
+          mColorButtons[index].SetProperty( DevelActor::Property::OPACITY,0.5f);
 
           mColorButtons[index].SetProperty( Toolkit::Button::Property::LABEL,
                                             Property::Map().Add( Toolkit::Visual::Property::TYPE, Toolkit::Visual::TEXT )
@@ -585,7 +585,7 @@ public:
       }
 
       // Only show the border during the panning
-      mBorder.SetVisible(true);
+      mBorder.SetProperty( Actor::Property::VISIBLE,true);
 
       HideStyleAndColorButtons();
     }
@@ -610,7 +610,7 @@ public:
     {
       // Resize the text label to match the container size when panning is finished
       mLabel.SetSize(mLayoutSize);
-      mBorder.SetVisible(false);
+      mBorder.SetProperty( Actor::Property::VISIBLE,false);
     }
   }
 

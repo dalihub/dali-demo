@@ -46,8 +46,8 @@ public:
     stage.SetBackgroundColor( Color::WHITE );
 
     TextLabel textLabel = TextLabel::New( "Hello World" );
-    textLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    textLabel.SetName( "helloWorldLabel" );
+    textLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    textLabel.SetProperty( Dali::Actor::Property::NAME, "helloWorldLabel" );
     stage.Add( textLabel );
 
     // Respond to a click anywhere on the stage

@@ -153,8 +153,8 @@ bool GameScene::Load(const char *filename)
   // add all to the stage
   Stage stage = Stage::GetCurrent();
   mRootActor = Actor::New();
-  mRootActor.SetAnchorPoint( AnchorPoint::CENTER );
-  mRootActor.SetParentOrigin( ParentOrigin::CENTER );
+  mRootActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  mRootActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   stage.GetRootLayer().Add( mRootActor );
   mRootActor.SetScale( -1.0, 1.0, 1.0 );
   mRootActor.SetPosition( 0.0, 0.0, 0.0 );
@@ -162,8 +162,8 @@ bool GameScene::Load(const char *filename)
   for( size_t i = 0; i < mEntities.Size(); ++i )
   {
     Actor actor( mEntities[i]->GetActor() );
-    actor.SetAnchorPoint( AnchorPoint::CENTER );
-    actor.SetParentOrigin( ParentOrigin::CENTER );
+    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mRootActor.Add( actor );
     mEntities[i]->UpdateRenderer();
   }

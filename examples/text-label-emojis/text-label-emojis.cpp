@@ -62,8 +62,8 @@ public:
     mTableView = Toolkit::TableView::New( NUMBER_OF_EMOJIS, 1 );
     mTableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mTableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-    mTableView.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mTableView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mTableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mTableView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mTableView.TouchSignal().Connect( this, &EmojiExample::OnTouch );
     stage.Add( mTableView );
 
@@ -73,8 +73,8 @@ public:
       const std::string text = emoji.mUTF8 + " " + emoji.mDescription;
 
       TextLabel label = TextLabel::New( text );
-      label.SetParentOrigin( ParentOrigin::TOP_CENTER );
-      label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+      label.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+      label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
       label.SetProperty( TextLabel::Property::MULTI_LINE, true );
 
       mTableView.SetFitHeight( index );

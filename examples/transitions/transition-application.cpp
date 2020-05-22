@@ -77,10 +77,10 @@ void TransitionApplication::Create( Application& application )
 
   // Content panes:
   TableView contentLayout = TableView::New( 3, 1 );
-  contentLayout.SetName("ContentLayout");
+  contentLayout.SetProperty( Dali::Actor::Property::NAME,"ContentLayout");
   contentLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  contentLayout.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-  contentLayout.SetParentOrigin( ParentOrigin::TOP_LEFT );
+  contentLayout.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+  contentLayout.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
   contentLayout.SetCellPadding( Vector2( 0.0f, 5.0f ) );
   contentLayout.SetBackgroundColor( Vector4(0.949, 0.949, 0.949, 1.0) );
   // Assign all rows the size negotiation property of fitting to children
@@ -88,7 +88,7 @@ void TransitionApplication::Create( Application& application )
   stage.Add( contentLayout );
 
   mTitle = TextLabel::New( "Custom Control Transition Example" );
-  mTitle.SetName( "Title" );
+  mTitle.SetProperty( Dali::Actor::Property::NAME, "Title" );
   mTitle.SetStyleName("Title");
   mTitle.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   mTitle.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
@@ -104,10 +104,10 @@ void TransitionApplication::Create( Application& application )
   contentLayout.Add( buttonLayout );
 
   mShadowButton = ShadowButton::New();
-  mShadowButton.SetName("ShadowButton");
+  mShadowButton.SetProperty( Dali::Actor::Property::NAME,"ShadowButton");
   mShadowButton.SetActiveState( false );
-  mShadowButton.SetAnchorPoint( AnchorPoint::CENTER );
-  mShadowButton.SetParentOrigin( ParentOrigin::CENTER );
+  mShadowButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  mShadowButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mShadowButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   mShadowButton.SetProperty( DevelControl::Property::STATE, DevelControl::DISABLED );
   mShadowButton.SetProperty( DevelControl::Property::SUB_STATE, "UNCHECKED" );
@@ -115,7 +115,7 @@ void TransitionApplication::Create( Application& application )
   buttonLayout.AddChild( mShadowButton, TableView::CellPosition(1, 1) );
 
   TableView actionButtonLayout = TableView::New( 1, NUMBER_OF_ACTION_BUTTONS+1 );
-  actionButtonLayout.SetName("ThemeButtonsLayout");
+  actionButtonLayout.SetProperty( Dali::Actor::Property::NAME,"ThemeButtonsLayout");
   actionButtonLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   actionButtonLayout.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
   actionButtonLayout.SetFitHeight( 0 );
@@ -129,7 +129,7 @@ void TransitionApplication::Create( Application& application )
   for( int i=0; i<NUMBER_OF_ACTION_BUTTONS; ++i )
   {
     mActionButtons[i] = PushButton::New();
-    mActionButtons[i].SetName("ActionButton");
+    mActionButtons[i].SetProperty( Dali::Actor::Property::NAME,"ActionButton");
     mActionButtons[i].SetStyleName("ActionButton");
     mActionButtons[i].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mActionButtons[i].SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );

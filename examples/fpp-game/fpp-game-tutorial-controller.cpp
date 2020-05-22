@@ -110,8 +110,8 @@ void FppGameTutorialController::DisplayTutorial()
 
   // left tutorial text label
   mLeftLabel = Toolkit::TextLabel::New("Touch here to walk");
-  mLeftLabel.SetParentOrigin( ParentOrigin::CENTER );
-  mLeftLabel.SetAnchorPoint( AnchorPoint::CENTER );
+  mLeftLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+  mLeftLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mLeftLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   mLeftLabel.SetSize( Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
   mLeftLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,
@@ -123,8 +123,8 @@ void FppGameTutorialController::DisplayTutorial()
 
   // right tutorial text label
   mRightLabel = Toolkit::TextLabel::New("Touch here to look around");
-  mRightLabel.SetParentOrigin( ParentOrigin::CENTER );
-  mRightLabel.SetAnchorPoint( AnchorPoint::CENTER );
+  mRightLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+  mRightLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mRightLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   mRightLabel.SetSize( Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
   mRightLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,

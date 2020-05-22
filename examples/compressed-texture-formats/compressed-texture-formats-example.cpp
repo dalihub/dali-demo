@@ -112,8 +112,8 @@ public:
 
     // Setup a TableView to hold a grid of images and labels.
     Toolkit::TableView table = Toolkit::TableView::New( 3u, 2u );
-    table.SetAnchorPoint( AnchorPoint::CENTER );
-    table.SetParentOrigin( ParentOrigin::CENTER );
+    table.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    table.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     table.SetRelativeWidth( 0u, 0.5f );
     table.SetRelativeWidth( 1u, 0.5f );
@@ -124,24 +124,24 @@ public:
 
     // Add text labels.
     TextLabel textLabel = TextLabel::New( "ETC1 (KTX):" );
-    textLabel.SetAnchorPoint( AnchorPoint::CENTER );
-    textLabel.SetParentOrigin( ParentOrigin::CENTER );
+    textLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    textLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     textLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     table.AddChild( textLabel, Toolkit::TableView::CellPosition( 0u, 0u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 0u, 0u ), HorizontalAlignment::LEFT, VerticalAlignment::CENTER );
 
     textLabel = TextLabel::New( "ASTC (KTX) 4x4 linear:" );
-    textLabel.SetAnchorPoint( AnchorPoint::CENTER );
-    textLabel.SetParentOrigin( ParentOrigin::CENTER );
+    textLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    textLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     textLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     table.AddChild( textLabel, Toolkit::TableView::CellPosition( 1u, 0u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 1u, 0u ), HorizontalAlignment::LEFT, VerticalAlignment::CENTER );
 
     textLabel = TextLabel::New( "ASTC (Native) 4x4 linear:" );
-    textLabel.SetAnchorPoint( AnchorPoint::CENTER );
-    textLabel.SetParentOrigin( ParentOrigin::CENTER );
+    textLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    textLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     textLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     table.AddChild( textLabel, Toolkit::TableView::CellPosition( 2u, 0u ) );
@@ -153,22 +153,22 @@ public:
 
     // Add images.
     Actor actor = Actor::New();
-    actor.SetAnchorPoint( AnchorPoint::CENTER );
-    actor.SetParentOrigin( ParentOrigin::CENTER );
+    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     AddImage( IMAGE_FILENAME_ETC, actor, geometry, shader  );
     table.AddChild( actor, Toolkit::TableView::CellPosition( 0u, 1u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 0u, 1u ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
 
     actor = Actor::New();
-    actor.SetAnchorPoint( AnchorPoint::CENTER );
-    actor.SetParentOrigin( ParentOrigin::CENTER );
+    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     AddImage( IMAGE_FILENAME_ASTC_LINEAR, actor, geometry, shader );
     table.AddChild( actor, Toolkit::TableView::CellPosition( 1u, 1u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 1u, 1u ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
 
     actor = Actor::New();
-    actor.SetAnchorPoint( AnchorPoint::CENTER );
-    actor.SetParentOrigin( ParentOrigin::CENTER );
+    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     AddImage( IMAGE_FILENAME_ASTC_LINEAR_NATIVE, actor, geometry, shader );
     table.AddChild( actor, Toolkit::TableView::CellPosition( 2u, 1u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 2u, 1u ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );

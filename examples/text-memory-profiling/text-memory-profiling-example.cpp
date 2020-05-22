@@ -97,8 +97,8 @@ public:
   TextLabel SetupTextLabel( int type )
   {
     TextLabel label = TextLabel::New();
-    label.SetAnchorPoint( ParentOrigin::TOP_LEFT );
-    label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    label.SetProperty( Actor::Property::ANCHOR_POINT, ParentOrigin::TOP_LEFT );
+    label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     label.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
     label.SetProperty( TextLabel::Property::POINT_SIZE, 12.0f );
     Property::Map shadowMap;
@@ -205,8 +205,8 @@ public:
     // Create an item view for the main menu
     mItemView = ItemView::New( *this );
 
-    mItemView.SetParentOrigin( ParentOrigin::CENTER );
-    mItemView.SetAnchorPoint( AnchorPoint::CENTER );
+    mItemView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mItemView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     mLayout = DefaultItemLayout::New( DefaultItemLayout::LIST );
     mLayout->SetItemSize( Vector3( stageSize.width, 60.0f, 0.0f ) );
@@ -278,8 +278,8 @@ public:
       mLayer.Remove( mLayer.GetChildAt( 0 ) );
     }
 
-    mLayer.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mLayer.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    mLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    mLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     mLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mLayer.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::HEIGHT );
     mLayer.SetSizeModeFactor( Vector3( 0.0f, -DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight, 0.0f ) );
@@ -322,8 +322,8 @@ public:
     mLayer = Layer::New();
 
     mIndicator = Toolkit::ImageView::New(INDICATOR_IMAGE);
-    mIndicator.SetParentOrigin( ParentOrigin::CENTER );
-    mIndicator.SetAnchorPoint( AnchorPoint::CENTER );
+    mIndicator.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mIndicator.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mIndicator.SetProperty( Actor::Property::VISIBLE, false );
 
     // Create a back button in the left of toolbar
@@ -331,13 +331,13 @@ public:
     backButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, BACK_IMAGE );
     backButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, BACK_IMAGE_SELECTED );
     backButton.ClickedSignal().Connect( this, &TextMemoryProfilingExample::OnBackButtonPressed );
-    backButton.SetLeaveRequired( true );
+    backButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Create a navigation view to navigate different types of text labels
     mNavigationView = NavigationView::New();
     mNavigationView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mNavigationView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mNavigationView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mNavigationView.SetBackgroundColor( Color::WHITE );
     stage.Add( mNavigationView );
 

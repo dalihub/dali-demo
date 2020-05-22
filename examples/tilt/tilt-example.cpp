@@ -46,13 +46,13 @@ public:
     stage.SetBackgroundColor( Color::BLUE);
 
     mTextLabel = TextLabel::New( "Tilt Sensor Demo" );
-    mTextLabel.SetParentOrigin( ParentOrigin::CENTER );
-    mTextLabel.SetAnchorPoint( AnchorPoint::CENTER );
+    mTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mTextLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mTextLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mTextLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::WHITE );
     mTextLabel.SetProperty( TextLabel::Property::POINT_SIZE, 15.0f );
-    mTextLabel.SetName( "tiltLabel" );
+    mTextLabel.SetProperty( Dali::Actor::Property::NAME, "tiltLabel" );
     stage.Add( mTextLabel );
 
     // Respond to a click anywhere on the stage

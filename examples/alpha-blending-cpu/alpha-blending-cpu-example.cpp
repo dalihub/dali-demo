@@ -61,19 +61,19 @@ private:
     mImageView = Toolkit::ImageView::New();
 
     mImageView.SetSize(200, 200);
-    mImageView.SetParentOrigin( ParentOrigin::CENTER );
+    mImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     stage.Add(mImageView);
 
     mImageLabel = Toolkit::TextLabel::New();
-    mImageLabel.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mImageLabel.SetAnchorPoint( ParentOrigin::BOTTOM_CENTER );
+    mImageLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    mImageLabel.SetProperty( Actor::Property::ANCHOR_POINT, ParentOrigin::BOTTOM_CENTER );
     mImageLabel.SetPosition( Vector3( 0.0f, -50.0f, 0.0f ) );
     mImageLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::BLACK );
     stage.Add(mImageLabel);
 
     mMaskLabel = Toolkit::TextLabel::New();
-    mMaskLabel.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mMaskLabel.SetAnchorPoint( ParentOrigin::BOTTOM_CENTER );
+    mMaskLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    mMaskLabel.SetProperty( Actor::Property::ANCHOR_POINT, ParentOrigin::BOTTOM_CENTER );
     mMaskLabel.SetPosition( Vector3( 0.0f, 0.0f, 0.0f ) );
     mMaskLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::BLACK );
     stage.Add(mMaskLabel);

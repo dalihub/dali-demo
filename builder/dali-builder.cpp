@@ -215,9 +215,9 @@ private:
     if(!layer)
     {
       layer = Layer::New();
-      layer.SetParentOrigin(ParentOrigin::CENTER);
-      layer.SetAnchorPoint(AnchorPoint::CENTER);
-      layer.SetSize( stage.GetRootLayer().GetCurrentSize() );
+      layer.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+      layer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
+      layer.SetSize( stage.GetRootLayer().GetCurrentProperty< Vector3 >( Actor::Property::SIZE ) );
       stage.GetRootLayer().Add(layer);
 
       // render tasks may have been setup last load so remove them

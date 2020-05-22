@@ -54,7 +54,7 @@ enum CellPlacement
 
 unsigned int GetButtonIndex( Toolkit::Button button )
 {
-  std::string buttonName = button.GetName();
+  std::string buttonName = button.GetProperty< std::string >( Dali::Actor::Property::NAME );
   unsigned int index = 0;
 
   if ( buttonName != "")
@@ -109,8 +109,8 @@ class ImageViewController: public ConnectionTracker
 
     // Create a table view to show a pair of buttons above each image.
     mTable = Toolkit::TableView::New( CellPlacement::NUMBER_OF_ROWS, NUMBER_OF_IMAGES );
-    mTable.SetAnchorPoint( AnchorPoint::CENTER );
-    mTable.SetParentOrigin( ParentOrigin::CENTER );
+    mTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mTable.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     Vector3 offset( 0.9f, 0.70f, 0.0f );
     mTable.SetSizeModeFactor( offset );
@@ -121,7 +121,7 @@ class ImageViewController: public ConnectionTracker
 
     Toolkit::TextLabel instructions = Toolkit::TextLabel::New( EXAMPLE_INSTRUCTIONS );
     instructions.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    instructions.SetParentOrigin(ParentOrigin::BOTTOM_CENTER);
+    instructions.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_CENTER);
     instructions.SetY(-50.0f);
     instructions.SetProperty( Toolkit::TextLabel::Property::ENABLE_AUTO_SCROLL, true  );
     instructions.SetProperty( Toolkit::TextLabel::Property::AUTO_SCROLL_LOOP_COUNT, 10  );
@@ -131,33 +131,33 @@ class ImageViewController: public ConnectionTracker
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetProperty( Toolkit::Button::Property::LABEL, "on/off" );
-      button.SetParentOrigin( ParentOrigin::TOP_CENTER );
-      button.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+      button.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+      button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
       button.ClickedSignal().Connect( this, &ImageViewController::ToggleImageOnStage );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       std::string s = std::to_string(x);
-      button.SetName( s );
+      button.SetProperty( Dali::Actor::Property::NAME, s );
       mTable.AddChild( button, Toolkit::TableView::CellPosition( CellPlacement::TOP_BUTTON, x )  );
 
       Toolkit::PushButton button2 = Toolkit::PushButton::New();
       button2.SetProperty( Toolkit::Button::Property::LABEL, "Change" );
-      button2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-      button2.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+      button2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+      button2.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
       button2.ClickedSignal().Connect( this, &ImageViewController::ChangeImageClicked );
       button2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-      button2.SetName( s );
+      button2.SetProperty( Dali::Actor::Property::NAME, s );
       mTable.AddChild( button2, Toolkit::TableView::CellPosition( CellPlacement::MID_BUTTON, x )  );
 
       Toolkit::PushButton button3 = Toolkit::PushButton::New();
       button3.SetProperty( Toolkit::Button::Property::LABEL, "Round" );
-      button3.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-      button3.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+      button3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+      button3.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
       button3.ClickedSignal().Connect( this, &ImageViewController::RoundedCornerClicked );
       button3.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button3.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-      button3.SetName( s );
+      button3.SetProperty( Dali::Actor::Property::NAME, s );
       mTable.AddChild( button3, Toolkit::TableView::CellPosition( CellPlacement::LOWER_BUTTON, x )  );
 
       mImageViews[x] = Toolkit::ImageView::New( );
@@ -167,8 +167,8 @@ class ImageViewController: public ConnectionTracker
       mImageViews[x].SetProperty(Toolkit::ImageView::Property::IMAGE , imagePropertyMap );
 
 
-      mImageViews[x].SetParentOrigin( ParentOrigin::CENTER );
-      mImageViews[x].SetAnchorPoint( AnchorPoint::CENTER );
+      mImageViews[x].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+      mImageViews[x].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       mImageViews[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       mTable.AddChild( mImageViews[x], Toolkit::TableView::CellPosition( CellPlacement::IMAGE, x ) );
 

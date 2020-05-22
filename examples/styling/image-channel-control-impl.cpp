@@ -110,7 +110,7 @@ void ImageChannelControl::SetImage( const std::string& url )
 
 void ImageChannelControl::SetVisibility( bool visibility )
 {
-  printf("ImageChannelControl %s: SetVisibility( %s )\n", Self().GetName().c_str(), visibility?"T":"F" );
+  printf("ImageChannelControl %s: SetVisibility( %s )\n", Self().GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str(), visibility?"T":"F" );
 
   if( mAnimation )
   {

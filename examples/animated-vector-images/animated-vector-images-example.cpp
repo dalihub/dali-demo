@@ -52,7 +52,7 @@ enum CellPlacement
 
 unsigned int GetControlIndex( Control control )
 {
-  std::string controlName = control.GetName();
+  std::string controlName = control.GetProperty< std::string >( Dali::Actor::Property::NAME );
   unsigned int index = 0;
 
   if ( controlName != "")
@@ -94,8 +94,8 @@ class AnimatedVectorImageViewController: public ConnectionTracker
 
     // Create a table view to show a pair of buttons above each image.
     mTable = TableView::New( CellPlacement::NUMBER_OF_ROWS, NUMBER_OF_IMAGES );
-    mTable.SetAnchorPoint( AnchorPoint::CENTER );
-    mTable.SetParentOrigin( ParentOrigin::CENTER );
+    mTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mTable.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     Vector3 offset( 0.9f, 0.70f, 0.0f );
     mTable.SetSizeModeFactor( offset );
@@ -107,23 +107,23 @@ class AnimatedVectorImageViewController: public ConnectionTracker
     {
       mPlayButtons[x] = PushButton::New();
       mPlayButtons[x].SetProperty( Button::Property::LABEL, "Play" );
-      mPlayButtons[x].SetParentOrigin( ParentOrigin::TOP_CENTER );
-      mPlayButtons[x].SetAnchorPoint( AnchorPoint::TOP_CENTER );
+      mPlayButtons[x].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+      mPlayButtons[x].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
       mPlayButtons[x].ClickedSignal().Connect( this, &AnimatedVectorImageViewController::OnPlayButtonClicked );
       mPlayButtons[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       mPlayButtons[x].SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       std::string s = std::to_string(x);
-      mPlayButtons[x].SetName( s );
+      mPlayButtons[x].SetProperty( Dali::Actor::Property::NAME, s );
       mTable.AddChild( mPlayButtons[x], TableView::CellPosition( CellPlacement::TOP_BUTTON, x )  );
 
       mStopButtons[x] = PushButton::New();
       mStopButtons[x].SetProperty( Button::Property::LABEL, "Stop" );
-      mStopButtons[x].SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-      mStopButtons[x].SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+      mStopButtons[x].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+      mStopButtons[x].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
       mStopButtons[x].ClickedSignal().Connect( this, &AnimatedVectorImageViewController::OnStopButtonClicked );
       mStopButtons[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       mStopButtons[x].SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-      mStopButtons[x].SetName( s );
+      mStopButtons[x].SetProperty( Dali::Actor::Property::NAME, s );
       mTable.AddChild( mStopButtons[x], TableView::CellPosition( CellPlacement::LOWER_BUTTON, x )  );
 
       mImageViews[x] = ImageView::New( );
@@ -133,10 +133,10 @@ class AnimatedVectorImageViewController: public ConnectionTracker
       imagePropertyMap.Insert( DevelImageVisual::Property::LOOP_COUNT, 3 );
       mImageViews[x].SetProperty( ImageView::Property::IMAGE, imagePropertyMap );
 
-      mImageViews[x].SetParentOrigin( ParentOrigin::CENTER );
-      mImageViews[x].SetAnchorPoint( AnchorPoint::CENTER );
+      mImageViews[x].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+      mImageViews[x].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       mImageViews[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mImageViews[x].SetName( s );
+      mImageViews[x].SetProperty( Dali::Actor::Property::NAME, s );
 
       DevelControl::VisualEventSignal( mImageViews[x] ).Connect( this, &AnimatedVectorImageViewController::OnVisualEvent );
 

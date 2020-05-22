@@ -195,8 +195,8 @@ private:
     mLayer3D.SetSize( stageWidth, stageHeight );
     stage.Add(mLayer3D);
 
-    mLayer3D.SetAnchorPoint( AnchorPoint::CENTER );
-    mLayer3D.SetParentOrigin( ParentOrigin::CENTER );
+    mLayer3D.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mLayer3D.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLayer3D.SetBehavior( Layer::LAYER_3D );
     mLayer3D.SetDepthTestDisabled( false );
 
@@ -302,8 +302,8 @@ private:
     Actor panScreen = Actor::New();
     auto stageSize = stage.GetSize();
     panScreen.SetSize( stageSize.width, stageSize.height );
-    panScreen.SetAnchorPoint( AnchorPoint::CENTER );
-    panScreen.SetParentOrigin( ParentOrigin::CENTER );
+    panScreen.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    panScreen.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     auto camera2d = stage.GetRenderTaskList().GetTask(0).GetCameraActor();
     panScreen.SetPosition( 0, 0, camera2d.GetNearClippingPlane() );
     camera2d.Add(panScreen);
@@ -331,9 +331,9 @@ private:
       auto actor = node.cameraId != 0xffffffff ? CameraActor::New( stage.GetSize() ) : Actor::New();
 
       actor.SetSize( 1, 1, 1 );
-      actor.SetName( node.name );
-      actor.SetAnchorPoint( AnchorPoint::CENTER );
-      actor.SetParentOrigin( ParentOrigin::CENTER );
+      actor.SetProperty( Dali::Actor::Property::NAME, node.name );
+      actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+      actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       actor.SetPosition( node.translation[0], node.translation[1], node.translation[2] );
       actor.SetScale( node.scale[0], node.scale[1], node.scale[2] );
       actor.SetOrientation( Quaternion(node.rotationQuaternion[3],
@@ -388,8 +388,8 @@ private:
         cameraActor.SetFieldOfView( camera->yfov );
 
         cameraActor.SetProperty( CameraActor::Property::INVERT_Y_AXIS, true);
-        cameraActor.SetAnchorPoint( AnchorPoint::CENTER );
-        cameraActor.SetParentOrigin( ParentOrigin::CENTER );
+        cameraActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        cameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
         mCameras.emplace_back( cameraActor );
       }

@@ -217,7 +217,7 @@ public:
     editButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EDIT_IMAGE );
     editButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EDIT_IMAGE_SELECTED );
     editButton.ClickedSignal().Connect( this, &ItemViewExample::OnModeButtonClicked);
-    editButton.SetLeaveRequired( true );
+    editButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create a layout toggle button. (right of toolbar)
@@ -225,13 +225,13 @@ public:
     mLayoutButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, SPIRAL_LAYOUT_IMAGE );
     mLayoutButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, SPIRAL_LAYOUT_IMAGE_SELECTED );
     mLayoutButton.ClickedSignal().Connect( this, &ItemViewExample::OnLayoutButtonClicked);
-    mLayoutButton.SetLeaveRequired( true );
+    mLayoutButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create a delete button (bottom right of screen)
     mDeleteButton = Toolkit::PushButton::New();
-    mDeleteButton.SetParentOrigin(ParentOrigin::BOTTOM_RIGHT);
-    mDeleteButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
+    mDeleteButton.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_RIGHT);
+    mDeleteButton.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT);
     mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mDeleteButton.SetDrawMode( DrawMode::OVERLAY_2D );
     mDeleteButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DELETE_IMAGE );
@@ -239,14 +239,14 @@ public:
     mDeleteButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
     mDeleteButton.SetSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
     mDeleteButton.ClickedSignal().Connect( this, &ItemViewExample::OnDeleteButtonClicked);
-    mDeleteButton.SetLeaveRequired( true );
-    mDeleteButton.SetVisible( false );
+    mDeleteButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
+    mDeleteButton.SetProperty( Actor::Property::VISIBLE, false );
     stage.Add( mDeleteButton );
 
     // Create an insert button (bottom right of screen)
     mInsertButton = Toolkit::PushButton::New();
-    mInsertButton.SetParentOrigin(ParentOrigin::BOTTOM_RIGHT);
-    mInsertButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
+    mInsertButton.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_RIGHT);
+    mInsertButton.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT);
     mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mInsertButton.SetDrawMode( DrawMode::OVERLAY_2D );
     mInsertButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, INSERT_IMAGE );
@@ -254,14 +254,14 @@ public:
     mInsertButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
     mInsertButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mInsertButton.ClickedSignal().Connect( this, &ItemViewExample::OnInsertButtonClicked);
-    mInsertButton.SetLeaveRequired( true );
-    mInsertButton.SetVisible( false );
+    mInsertButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
+    mInsertButton.SetProperty( Actor::Property::VISIBLE, false );
     stage.Add( mInsertButton );
 
     // Create an replace button (bottom right of screen)
     mReplaceButton = Toolkit::PushButton::New();
-    mReplaceButton.SetParentOrigin(ParentOrigin::BOTTOM_RIGHT);
-    mReplaceButton.SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT);
+    mReplaceButton.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_RIGHT);
+    mReplaceButton.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT);
     mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
     mReplaceButton.SetDrawMode( DrawMode::OVERLAY_2D );
     mReplaceButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE );
@@ -269,14 +269,14 @@ public:
     mReplaceButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
     mReplaceButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
     mReplaceButton.ClickedSignal().Connect( this, &ItemViewExample::OnReplaceButtonClicked);
-    mReplaceButton.SetLeaveRequired( true );
-    mReplaceButton.SetVisible( false );
+    mReplaceButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
+    mReplaceButton.SetProperty( Actor::Property::VISIBLE, false );
     stage.Add( mReplaceButton );
 
     // Create the item view actor
     mItemView = ItemView::New(*this);
-    mItemView.SetParentOrigin(ParentOrigin::CENTER);
-    mItemView.SetAnchorPoint(AnchorPoint::CENTER);
+    mItemView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    mItemView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
 
     // Display item view on the stage
     stage.Add( mItemView );
@@ -495,7 +495,7 @@ public:
   {
     SetTitle("Edit: Remove Many");
 
-    mDeleteButton.SetVisible( true );
+    mDeleteButton.SetProperty( Actor::Property::VISIBLE, true );
 
     mTapDetector = TapGestureDetector::New();
 
@@ -507,7 +507,7 @@ public:
       if( box )
       {
         mTapDetector.Attach( child );
-        box.SetVisible( true );
+        box.SetProperty( Actor::Property::VISIBLE, true );
       }
     }
 
@@ -523,19 +523,19 @@ public:
 
       if( box )
       {
-        box.SetVisible( false );
+        box.SetProperty( Actor::Property::VISIBLE, false );
 
         Actor tick = box.FindChildByName( "Tick" );
         if( tick )
         {
-          tick.SetVisible( false );
+          tick.SetProperty( Actor::Property::VISIBLE, false );
         }
       }
     }
 
     mTapDetector.Reset();
 
-    mDeleteButton.SetVisible( false );
+    mDeleteButton.SetProperty( Actor::Property::VISIBLE, false );
   }
 
   void SelectOnTap( Actor actor, const TapGesture& tap )
@@ -543,7 +543,7 @@ public:
     Actor tick = actor.FindChildByName( "Tick" );
     if( tick )
     {
-      tick.SetVisible( !tick.IsVisible() );
+      tick.SetProperty( Actor::Property::VISIBLE, !tick.GetCurrentProperty< bool >( Actor::Property::VISIBLE ) );
     }
   }
 
@@ -585,7 +585,7 @@ public:
       Actor child = mItemView.GetChildAt( i );
       Actor tick = child.FindChildByName( "Tick" );
 
-      if( tick && tick.IsVisible() )
+      if( tick && tick.GetCurrentProperty< bool >( Actor::Property::VISIBLE ) )
       {
         removeList.push_back( mItemView.GetItemId(child) );
       }
@@ -631,7 +631,7 @@ public:
   {
     SetTitle("Edit: Insert Many");
 
-    mInsertButton.SetVisible( true );
+    mInsertButton.SetProperty( Actor::Property::VISIBLE, true );
 
     mTapDetector = TapGestureDetector::New();
 
@@ -643,7 +643,7 @@ public:
       if( box )
       {
         mTapDetector.Attach( child );
-        box.SetVisible( true );
+        box.SetProperty( Actor::Property::VISIBLE, true );
       }
     }
 
@@ -659,19 +659,19 @@ public:
 
       if( box )
       {
-        box.SetVisible( false );
+        box.SetProperty( Actor::Property::VISIBLE, false );
 
         Actor tick = box.FindChildByName( "Tick" );
         if( tick )
         {
-          tick.SetVisible( false );
+          tick.SetProperty( Actor::Property::VISIBLE, false );
         }
       }
     }
 
     mTapDetector.Reset();
 
-    mInsertButton.SetVisible( false );
+    mInsertButton.SetProperty( Actor::Property::VISIBLE, false );
   }
 
   bool OnInsertButtonClicked( Toolkit::Button button )
@@ -683,7 +683,7 @@ public:
       Actor child = mItemView.GetChildAt( i );
       Actor tick = child.FindChildByName( "Tick" );
 
-      if( tick && tick.IsVisible() )
+      if( tick && tick.GetCurrentProperty< bool >( Actor::Property::VISIBLE ) )
       {
         insertList.push_back( Item( mItemView.GetItemId(child), NewItem(rand()) ) );
       }
@@ -725,7 +725,7 @@ public:
   {
     SetTitle("Edit: Replace Many");
 
-    mReplaceButton.SetVisible( true );
+    mReplaceButton.SetProperty( Actor::Property::VISIBLE, true );
 
     mTapDetector = TapGestureDetector::New();
 
@@ -737,7 +737,7 @@ public:
       if( box )
       {
         mTapDetector.Attach( child );
-        box.SetVisible( true );
+        box.SetProperty( Actor::Property::VISIBLE, true );
       }
     }
 
@@ -753,19 +753,19 @@ public:
 
       if( box )
       {
-        box.SetVisible( false );
+        box.SetProperty( Actor::Property::VISIBLE, false );
 
         Actor tick = box.FindChildByName( "Tick" );
         if( tick )
         {
-          tick.SetVisible( false );
+          tick.SetProperty( Actor::Property::VISIBLE, false );
         }
       }
     }
 
     mTapDetector.Reset();
 
-    mReplaceButton.SetVisible( false );
+    mReplaceButton.SetProperty( Actor::Property::VISIBLE, false );
   }
 
   bool OnReplaceButtonClicked( Toolkit::Button button )
@@ -777,7 +777,7 @@ public:
       Actor child = mItemView.GetChildAt( i );
       Actor tick = child.FindChildByName( "Tick" );
 
-      if( tick && tick.IsVisible() )
+      if( tick && tick.GetCurrentProperty< bool >( Actor::Property::VISIBLE ) )
       {
         replaceList.push_back( Item( mItemView.GetItemId(child), NewItem(rand()) ) );
       }
@@ -877,8 +877,8 @@ public: // From ItemFactory
 
     // Add a border image child actor
     ImageView borderActor = ImageView::New();
-    borderActor.SetParentOrigin( ParentOrigin::CENTER );
-    borderActor.SetAnchorPoint( AnchorPoint::CENTER );
+    borderActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    borderActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     borderActor.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
     borderActor.SetSizeModeFactor( Vector3( 2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f ) );
     borderActor.SetColorMode( USE_PARENT_COLOR );
@@ -899,10 +899,10 @@ public: // From ItemFactory
 
     // Add a checkbox child actor; invisible until edit-mode is enabled
     ImageView checkbox = ImageView::New();
-    checkbox.SetName( "CheckBox" );
+    checkbox.SetProperty( Dali::Actor::Property::NAME, "CheckBox" );
     checkbox.SetColorMode( USE_PARENT_COLOR );
-    checkbox.SetParentOrigin( ParentOrigin::TOP_RIGHT );
-    checkbox.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
+    checkbox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
+    checkbox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
     checkbox.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
     checkbox.SetPosition( -SELECTION_BORDER_WIDTH, SELECTION_BORDER_WIDTH );
     checkbox.SetZ( 0.1f );
@@ -916,18 +916,18 @@ public: // From ItemFactory
         MODE_INSERT_MANY  != mMode &&
         MODE_REPLACE_MANY != mMode )
     {
-      checkbox.SetVisible( false );
+      checkbox.SetProperty( Actor::Property::VISIBLE, false );
     }
     borderActor.Add( checkbox );
 
     ImageView tick = ImageView::New( SELECTED_IMAGE );
-    tick.SetName( "Tick" );
+    tick.SetProperty( Dali::Actor::Property::NAME, "Tick" );
     tick.SetColorMode( USE_PARENT_COLOR );
-    tick.SetParentOrigin( ParentOrigin::TOP_RIGHT );
-    tick.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
+    tick.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
+    tick.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
     tick.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
     tick.SetZ( 0.2f );
-    tick.SetVisible( false );
+    tick.SetProperty( Actor::Property::VISIBLE, false );
     checkbox.Add( tick );
 
     // Connect new items for various editing modes

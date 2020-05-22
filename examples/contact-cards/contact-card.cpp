@@ -19,6 +19,7 @@
 #include "contact-card.h"
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
@@ -115,8 +116,8 @@ ContactCard::ContactCard(
                             Property::Map{ { Toolkit::Visual::Property::TYPE, Visual::COLOR },
                                            { ColorVisual::Property::MIX_COLOR, Color::WHITE } } );
   mContactCard.SetProperty( Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN );
-  mContactCard.SetParentOrigin( ParentOrigin::TOP_LEFT );
-  mContactCard.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  mContactCard.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+  mContactCard.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   mContactCard.SetPosition( foldedPosition.x, foldedPosition.y );
   mContactCard.SetSize( mContactCardLayoutInfo.foldedSize );
   stage.Add( mContactCard );
@@ -127,32 +128,32 @@ ContactCard::ContactCard(
   mHeader.SetProperty( Control::Property::BACKGROUND,
                        Property::Map{ { Toolkit::Visual::Property::TYPE, Visual::COLOR },
                                       { ColorVisual::Property::MIX_COLOR, HEADER_COLOR } } );
-  mHeader.SetParentOrigin( ParentOrigin::TOP_LEFT );
-  mHeader.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  mHeader.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+  mHeader.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   mHeader.SetPosition( mContactCardLayoutInfo.headerFoldedPosition.x, mContactCardLayoutInfo.headerFoldedPosition.y );
 
   // Create a clipped image (whose clipping can be animated)
   mClippedImage = ClippedImage::Create( imagePath, mClippedImagePropertyIndex );
   mClippedImage.SetSize( mContactCardLayoutInfo.imageSize );
-  mClippedImage.SetParentOrigin( ParentOrigin::TOP_LEFT );
-  mClippedImage.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  mClippedImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+  mClippedImage.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   mClippedImage.SetPosition( mContactCardLayoutInfo.imageFoldedPosition.x, mContactCardLayoutInfo.imageFoldedPosition.y );
-  mClippedImage.SetVisible( false ); // Hide image as we only want to display it if we are animating or unfolded
+  mClippedImage.SetProperty( Actor::Property::VISIBLE, false ); // Hide image as we only want to display it if we are animating or unfolded
   mContactCard.Add( mClippedImage );
 
   // Create an image with a mask which is to be used when the contact is folded
   mMaskedImage = MaskedImage::Create( imagePath );
   mMaskedImage.SetSize( mContactCardLayoutInfo.imageSize );
-  mMaskedImage.SetParentOrigin( ParentOrigin::TOP_LEFT );
-  mMaskedImage.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  mMaskedImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+  mMaskedImage.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   mMaskedImage.SetPosition( mContactCardLayoutInfo.imageFoldedPosition.x, mContactCardLayoutInfo.imageFoldedPosition.y );
   mContactCard.Add( mMaskedImage );
 
   // Add the text label for just the name
   mNameText = TextLabel::New( contactName );
   mNameText.SetStyleName( "ContactNameTextLabel" );
-  mNameText.SetParentOrigin( ParentOrigin::TOP_LEFT );
-  mNameText.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  mNameText.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+  mNameText.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   mNameText.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   mNameText.SetPosition( mContactCardLayoutInfo.textFoldedPosition.x, mContactCardLayoutInfo.textFoldedPosition.y );
   mContactCard.Add( mNameText );
@@ -164,11 +165,11 @@ ContactCard::ContactCard(
 
   mDetailText = TextLabel::New( detailString );
   mDetailText.SetStyleName( "ContactDetailTextLabel" );
-  mDetailText.SetParentOrigin( ParentOrigin::TOP_LEFT );
-  mDetailText.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  mDetailText.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+  mDetailText.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   mDetailText.SetPosition( mContactCardLayoutInfo.textFoldedPosition.x, mContactCardLayoutInfo.textFoldedPosition.y );
   mDetailText.SetSize( Vector2( mContactCardLayoutInfo.unfoldedSize.width - mContactCardLayoutInfo.textFoldedPosition.x * 2.0f, 0.0f ) );
-  mDetailText.SetOpacity( 0.0f );
+  mDetailText.SetProperty( DevelActor::Property::OPACITY, 0.0f );
 
   // Attach tap detection to the overall clip control
   mTapDetector = TapGestureDetector::New();
@@ -207,8 +208,8 @@ void ContactCard::Animate()
     mContactCard.Add( mDetailText );
 
     // Show clipped-image to animate geometry and hide the masked-image
-    mClippedImage.SetVisible( true );
-    mMaskedImage.SetVisible( false );
+    mClippedImage.SetProperty( Actor::Property::VISIBLE, true );
+    mMaskedImage.SetProperty( Actor::Property::VISIBLE, false );
 
     // Animate the size of the control (and clipping area)
     mAnimation.AnimateTo( Property( mContactCard, Actor::Property::POSITION_X ),  mContactCardLayoutInfo.unfoldedPosition.x,  ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X );
@@ -243,7 +244,7 @@ void ContactCard::Animate()
       if( sibling != mContactCard )
       {
         mAnimation.AnimateTo( Property( sibling, Actor::Property::COLOR_ALPHA ), 0.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_SIBLING_OPACITY );
-        sibling.SetSensitive( false );
+        sibling.SetProperty( Actor::Property::SENSITIVE, false );
       }
     }
 
@@ -290,7 +291,7 @@ void ContactCard::Animate()
       if( sibling != mContactCard )
       {
         mAnimation.AnimateTo( Property( sibling, Actor::Property::COLOR_ALPHA ), 1.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_SIBLING_OPACITY );
-        sibling.SetSensitive( true );
+        sibling.SetProperty( Actor::Property::SENSITIVE, true );
       }
     }
 
@@ -312,8 +313,8 @@ void ContactCard::OnAnimationFinished( Animation& animation )
       mDetailText.Unparent();
 
       // Hide the clipped-image as we have finished animating the geometry and show the masked-image again
-      mClippedImage.SetVisible( false );
-      mMaskedImage.SetVisible( true );
+      mClippedImage.SetProperty( Actor::Property::VISIBLE, false );
+      mMaskedImage.SetProperty( Actor::Property::VISIBLE, true );
     }
     else
     {

@@ -66,51 +66,51 @@ public:
     rubric.SetProperty( TextLabel::Property::TEXT_COLOR, Color::WHITE );
     rubric.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     rubric.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
-    rubric.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    rubric.SetAnchorPoint( ParentOrigin::TOP_CENTER );
+    rubric.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    rubric.SetProperty( Actor::Property::ANCHOR_POINT, ParentOrigin::TOP_CENTER );
     stage.Add( rubric );
 
     mImageView1 = Toolkit::ImageView::New("http://static.midomi.com/s/s/images/000/000/000/000/293/259/19/520_000000000000293259191500x1500_72dpi_RGB_q70.jpg");
 
-    mImageView1.SetName("mImageView1");
-    mImageView1.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    mImageView1.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    mImageView1.SetProperty( Dali::Actor::Property::NAME,"mImageView1");
+    mImageView1.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    mImageView1.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView1.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView1.SetPosition(0, 100);
     mImageView1.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     stage.Add(mImageView1);
 
     mImageView2 = Toolkit::ImageView::New("http://static.midomi.com/s/s/images/000/000/000/000/212/651/88/520_000000000000212651881500x1500_72dpi_RGB_q70.jpg");
-    mImageView2.SetName("mImageView2");
-    mImageView2.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    mImageView2.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    mImageView2.SetProperty( Dali::Actor::Property::NAME,"mImageView2");
+    mImageView2.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    mImageView2.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView2.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView2.SetPosition(400, 100);
     mImageView2.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     stage.Add(mImageView2);
 
     mImageView3 = Toolkit::ImageView::New("http://static.midomi.com/s/s/images/000/000/000/000/212/353/21/520_000000000000212353211500x1500_72dpi_RGB_q70.jpg");
-    mImageView3.SetName("mImageView3");
-    mImageView3.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    mImageView3.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    mImageView3.SetProperty( Dali::Actor::Property::NAME,"mImageView3");
+    mImageView3.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    mImageView3.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView3.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView3.SetPosition(0, 400);
     mImageView3.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     stage.Add(mImageView3);
 
     mImageView4 = Toolkit::ImageView::New("http://d2k43l0oslhof9.cloudfront.net/platform/image/contents/vc/20/01/58/20170629100630071189_0bf6b911-a847-cba4-e518-be40fe2f579420170629192203240.jpg");
-    mImageView4.SetName("mImageView4");
-    mImageView4.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    mImageView4.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    mImageView4.SetProperty( Dali::Actor::Property::NAME,"mImageView4");
+    mImageView4.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    mImageView4.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView4.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView4.SetPosition(400, 400);
     mImageView4.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     stage.Add(mImageView4);
 
     mImageView5 = Toolkit::ImageView::New("http://static.midomi.com/h/images/w/weather_sunny.png");
-    mImageView5.SetName("mImageView5");
-    mImageView4.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    mImageView5.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    mImageView5.SetProperty( Dali::Actor::Property::NAME,"mImageView5");
+    mImageView4.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    mImageView5.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView5.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView5.SetPosition(800, 100);
     mImageView5.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
@@ -156,11 +156,11 @@ public:
   {
     if (event.state == KeyEvent::Down)
     {
-      std::cout<<"Control down key : " << control.GetName() << ", keyCode : " << event.keyCode << std::endl;
+      std::cout<<"Control down key : " << control.GetProperty< std::string >( Dali::Actor::Property::NAME ) << ", keyCode : " << event.keyCode << std::endl;
     }
     else
     {
-      std::cout<<"Control up key : " << control.GetName() << ", keyCode : " << event.keyCode << std::endl;
+      std::cout<<"Control up key : " << control.GetProperty< std::string >( Dali::Actor::Property::NAME ) << ", keyCode : " << event.keyCode << std::endl;
     }
     return false;
   }
@@ -170,7 +170,7 @@ public:
     if (touch.GetState(0) == PointState::DOWN)
     {
 
-      std::cout<<"Control touch " << actor.GetName() << ", parent " << actor.GetParent().GetName() << std::endl;
+      std::cout<<"Control touch " << actor.GetProperty< std::string >( Dali::Actor::Property::NAME ) << ", parent " << actor.GetParent().GetProperty< std::string >( Dali::Actor::Property::NAME ) << std::endl;
     }
 
     return false;
@@ -178,12 +178,12 @@ public:
 
   void OnFocusSet(Control control)
   {
-    std::cout<<"OnFocusSet " << control.GetName() << std::endl;
+    std::cout<<"OnFocusSet " << control.GetProperty< std::string >( Dali::Actor::Property::NAME ) << std::endl;
   }
 
   void OnFocusUnSet(Control control)
   {
-    std::cout<<"OnFocusUnSet " << control.GetName() << std::endl;
+    std::cout<<"OnFocusUnSet " << control.GetProperty< std::string >( Dali::Actor::Property::NAME ) << std::endl;
   }
 
 private:

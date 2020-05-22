@@ -151,8 +151,8 @@ public:
 
     // Add title to the tool bar.
     mItemView = Toolkit::ItemView::New( *this );
-    mItemView.SetParentOrigin( ParentOrigin::CENTER );
-    mItemView.SetAnchorPoint( AnchorPoint::CENTER );
+    mItemView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mItemView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mItemView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Use a grid layout for tests
@@ -334,9 +334,9 @@ public:
     const float POPUP_WIDTH_DP = stage.GetSize().width * 0.75f;
 
     Toolkit::Popup popup = Toolkit::Popup::New();
-    popup.SetName( "popup" );
-    popup.SetParentOrigin( ParentOrigin::CENTER );
-    popup.SetAnchorPoint( AnchorPoint::CENTER );
+    popup.SetProperty( Dali::Actor::Property::NAME, "popup" );
+    popup.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     popup.SetSize( POPUP_WIDTH_DP, 0.0f );
     popup.SetProperty( Toolkit::Popup::Property::TAIL_VISIBILITY, false );
 
@@ -349,36 +349,36 @@ public:
   Toolkit::Popup CreateConfirmationPopup( int numberOfButtons )
   {
     Toolkit::Popup confirmationPopup = Toolkit::Popup::New();
-    confirmationPopup.SetName( "MAIN-POPUP-SELF" );
+    confirmationPopup.SetProperty( Dali::Actor::Property::NAME, "MAIN-POPUP-SELF" );
 
     if( numberOfButtons > 0 )
     {
       // Start with a control area image.
       Toolkit::ImageView footer = Toolkit::ImageView::New( DEFAULT_CONTROL_AREA_IMAGE_PATH );
-      footer.SetName( "controlAreaImage" );
+      footer.SetProperty( Dali::Actor::Property::NAME, "controlAreaImage" );
       // Set up the container's layout.
       footer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       footer.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
       footer.SetSize( 0.0f, 130.0f );
-      footer.SetAnchorPoint( AnchorPoint::CENTER );
-      footer.SetParentOrigin( ParentOrigin::CENTER );
+      footer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+      footer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
       Actor okButton = CreateOKButton();
-      okButton.SetParentOrigin( ParentOrigin::CENTER );
-      okButton.SetAnchorPoint( AnchorPoint::CENTER );
+      okButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+      okButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       okButton.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
       okButton.SetSizeModeFactor( Vector3( -20.0f, -20.0f, 0.0 ) );
 
       if( numberOfButtons > 1 )
       {
         Toolkit::TableView controlLayout = Toolkit::TableView::New( 1, 2 );
-        controlLayout.SetParentOrigin( ParentOrigin::CENTER );
-        controlLayout.SetAnchorPoint( AnchorPoint::CENTER );
+        controlLayout.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+        controlLayout.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
         controlLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
         Actor cancelButton = CreateCancelButton();
-        cancelButton.SetParentOrigin( ParentOrigin::CENTER );
-        cancelButton.SetAnchorPoint( AnchorPoint::CENTER );
+        cancelButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+        cancelButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
         cancelButton.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
         cancelButton.SetSizeModeFactor( Vector3( -20.0f, -20.0f, 0.0 ) );
 
@@ -410,7 +410,7 @@ public:
   Actor CreateTitle( std::string title )
   {
     Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( title );
-    titleActor.SetName( "titleActor" );
+    titleActor.SetProperty( Dali::Actor::Property::NAME, "titleActor" );
     titleActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
     titleActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
@@ -421,7 +421,7 @@ public:
   Toolkit::PushButton CreateOKButton()
   {
     Toolkit::PushButton okayButton = Toolkit::PushButton::New();
-    okayButton.SetName( POPUP_CONTROL_OK_NAME );
+    okayButton.SetProperty( Dali::Actor::Property::NAME, POPUP_CONTROL_OK_NAME );
     okayButton.SetProperty( Toolkit::Button::Property::LABEL, "OK!" );
 
     okayButton.ClickedSignal().Connect( this, &PopupExample::OnPopupButtonClicked );
@@ -432,7 +432,7 @@ public:
   Toolkit::PushButton CreateCancelButton()
   {
     Toolkit::PushButton cancelButton = Toolkit::PushButton::New();
-    cancelButton.SetName( POPUP_CONTROL_CANCEL_NAME );
+    cancelButton.SetProperty( Dali::Actor::Property::NAME, POPUP_CONTROL_CANCEL_NAME );
     cancelButton.SetProperty( Toolkit::Button::Property::LABEL, "Cancel" );
 
     cancelButton.ClickedSignal().Connect( this, &PopupExample::OnPopupButtonClicked );
@@ -450,28 +450,28 @@ public:
   bool OnButtonClicked( Toolkit::Button button )
   {
     // Handle menu items that create popups.
-    if( button.GetName() == POPUP_BUTTON_TITLE_ID )
+    if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_TITLE_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetTitle( CreateTitle( "Popup!" ) );
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_BUTTONS_1_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_BUTTONS_1_ID )
     {
       mPopup = CreateConfirmationPopup( 1 );
       mPopup.SetTitle( CreateTitle( "Title" ) );
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_BUTTONS_2_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_BUTTONS_2_ID )
     {
       mPopup = CreateConfirmationPopup( 2 );
       mPopup.SetTitle( CreateTitle( "Title" ) );
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_TOAST_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_TOAST_ID )
     {
       // Create a toast popup via the type registry (as it is a named-type).
       TypeInfo typeInfo = TypeRegistry::Get().GetTypeInfo( "PopupToast" );
@@ -488,13 +488,13 @@ public:
         }
       }
     }
-    else if( button.GetName() == POPUP_BUTTON_TITLE_CONTENT_BUTTONS_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_TITLE_CONTENT_BUTTONS_ID )
     {
       mPopup = CreateConfirmationPopup( 2 );
       mPopup.SetTitle( CreateTitle( "Erase image" ) );
 
       Toolkit::TextLabel text = Toolkit::TextLabel::New( "This will erase the image permanently. Are you sure?" );
-      text.SetName( "POPUP_CONTENT_TEXT" );
+      text.SetProperty( Dali::Actor::Property::NAME, "POPUP_CONTENT_TEXT" );
       text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
       text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       text.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
@@ -504,12 +504,12 @@ public:
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_CONTENT_TEXT_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_CONTENT_TEXT_ID )
     {
       mPopup = CreatePopup();
 
       TextLabel text = TextLabel::New( CONTENT_TEXT );
-      text.SetName( "POPUP_CONTENT_TEXT" );
+      text.SetProperty( Dali::Actor::Property::NAME, "POPUP_CONTENT_TEXT" );
       text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
       text.SetProperty( TextLabel::Property::MULTI_LINE, true );
       text.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
@@ -522,7 +522,7 @@ public:
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_CONTENT_IMAGE_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_CONTENT_IMAGE_ID )
     {
       mPopup = CreatePopup();
       Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE2 );
@@ -534,13 +534,13 @@ public:
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_TITLE_CONTENT_TEXT_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_TITLE_CONTENT_TEXT_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetTitle( CreateTitle( "Popup!" ) );
 
       Toolkit::TextLabel text = Toolkit::TextLabel::New( CONTENT_TEXT );
-      text.SetName( "POPUP_CONTENT_TEXT" );
+      text.SetProperty( Dali::Actor::Property::NAME, "POPUP_CONTENT_TEXT" );
       text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
       text.SetProperty( TextLabel::Property::MULTI_LINE, true );
       text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
@@ -551,13 +551,13 @@ public:
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_FIXED_SIZE_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_FIXED_SIZE_ID )
     {
       mPopup = CreatePopup();
       mPopup.SetTitle( CreateTitle( "Popup!" ) );
 
       Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fixed size popup" );
-      text.SetName( "POPUP_CONTENT_TEXT" );
+      text.SetProperty( Dali::Actor::Property::NAME, "POPUP_CONTENT_TEXT" );
       text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
       text.SetProperty( TextLabel::Property::MULTI_LINE, true );
       text.SetPadding( Padding( 20.0f, 20.0f, 20.0f, 20.0f ) );
@@ -570,13 +570,13 @@ public:
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_TITLE_LARGE_CONTENT_BUTTONS_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_TITLE_LARGE_CONTENT_BUTTONS_ID )
     {
       mPopup = CreateConfirmationPopup( 2 );
       mPopup.SetTitle( CreateTitle( "Popup!" ) );
 
       Toolkit::TextLabel text = Toolkit::TextLabel::New( CONTENT_TEXT );
-      text.SetName( "POPUP_CONTENT_TEXT" );
+      text.SetProperty( Dali::Actor::Property::NAME, "POPUP_CONTENT_TEXT" );
       text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
       text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       text.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
@@ -587,14 +587,14 @@ public:
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_COMPLEX_ID )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_COMPLEX_ID )
     {
       mPopup = CreateConfirmationPopup( 2 );
       mPopup.SetTitle( CreateTitle( "Warning" ) );
 
       // Content
       Toolkit::TableView content = Toolkit::TableView::New( 2, 2 );
-      content.SetName( "COMPLEX_TABLEVIEW" );
+      content.SetProperty( Dali::Actor::Property::NAME, "COMPLEX_TABLEVIEW" );
       content.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       content.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       content.SetFitHeight( 0 );
@@ -615,7 +615,7 @@ public:
       // Image
       {
         Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE1 );
-        image.SetName( "COMPLEX_IMAGE" );
+        image.SetProperty( Dali::Actor::Property::NAME, "COMPLEX_IMAGE" );
         image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         image.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
         image.SetPadding( Padding( 20.0f, 0.0f, 0.0f, 0.0f ) );
@@ -649,12 +649,12 @@ public:
 
       SetupPopup( mPopup, button );
     }
-    else if( button.GetName() == POPUP_BUTTON_CUSTOM_STYLE )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_CUSTOM_STYLE )
     {
       mPopup = CreateConfirmationPopup( 2 );
 
       Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( "Styled Popup" );
-      titleActor.SetName( "titleActor" );
+      titleActor.SetProperty( Dali::Actor::Property::NAME, "titleActor" );
       titleActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::RED );
       titleActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
       titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
@@ -701,7 +701,7 @@ public: // From ItemFactory
   virtual Actor NewItem(unsigned int itemId)
   {
     Toolkit::PushButton popupButton = Toolkit::PushButton::New();
-    popupButton.SetName( POPUP_BUTTON_ITEMS[ itemId ].name );
+    popupButton.SetProperty( Dali::Actor::Property::NAME, POPUP_BUTTON_ITEMS[ itemId ].name );
     popupButton.SetProperty( Toolkit::Button::Property::LABEL, POPUP_BUTTON_ITEMS[ itemId ].text );
     popupButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 

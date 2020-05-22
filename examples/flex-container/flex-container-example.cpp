@@ -136,62 +136,62 @@ public:
 
     // Create a flex direction toggle button. (left of toolbar)
     mFlexDirectionButton = Toolkit::PushButton::New();
-    mFlexDirectionButton.SetName("mFlexDirectionButton");
+    mFlexDirectionButton.SetProperty( Dali::Actor::Property::NAME,"mFlexDirectionButton");
     mFlexDirectionButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-change.png" );
     mFlexDirectionButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-change-selected.png" );
     mFlexDirectionButton.ClickedSignal().Connect( this, &FlexContainerExample::OnFlexDirectionButtonClicked);
-    mFlexDirectionButton.SetLeaveRequired( true );
+    mFlexDirectionButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( mFlexDirectionButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Create a flex wrap toggle button. (left of toolbar)
     mFlexWrapButton = Toolkit::PushButton::New();
-    mFlexWrapButton.SetName("mFlexWrapButton");
+    mFlexWrapButton.SetProperty( Dali::Actor::Property::NAME,"mFlexWrapButton");
     mFlexWrapButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-edit.png" );
     mFlexWrapButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-edit-selected.png" );
     mFlexWrapButton.ClickedSignal().Connect( this, &FlexContainerExample::OnFlexWrapButtonClicked);
-    mFlexWrapButton.SetLeaveRequired( true );
+    mFlexWrapButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( mFlexWrapButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Create a content direction toggle button. (left of toolbar)
     mContentDirectionButton = Toolkit::PushButton::New();
-    mContentDirectionButton.SetName("mContentDirectionButton");
+    mContentDirectionButton.SetProperty( Dali::Actor::Property::NAME,"mContentDirectionButton");
     mContentDirectionButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-replace.png" );
     mContentDirectionButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-replace-selected.png" );
     mContentDirectionButton.ClickedSignal().Connect( this, &FlexContainerExample::OnContentDirectionButtonClicked);
-    mContentDirectionButton.SetLeaveRequired( true );
+    mContentDirectionButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( mContentDirectionButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Create a justify content toggle button. (right of toolbar)
     mJustifyContentButton = Toolkit::PushButton::New();
-    mJustifyContentButton.SetName("mJustifyContentButton");
+    mJustifyContentButton.SetProperty( Dali::Actor::Property::NAME,"mJustifyContentButton");
     mJustifyContentButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-reset.png" );
     mJustifyContentButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-reset-selected.png" );
     mJustifyContentButton.ClickedSignal().Connect( this, &FlexContainerExample::OnJustifyContentButtonClicked);
-    mJustifyContentButton.SetLeaveRequired( true );
+    mJustifyContentButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( mJustifyContentButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Create a align items toggle button. (right of toolbar)
     mAlignItemsButton = Toolkit::PushButton::New();
-    mAlignItemsButton.SetName("mAlignItemsButton");
+    mAlignItemsButton.SetProperty( Dali::Actor::Property::NAME,"mAlignItemsButton");
     mAlignItemsButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-highp.png" );
     mAlignItemsButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-highp-selected.png" );
     mAlignItemsButton.ClickedSignal().Connect( this, &FlexContainerExample::OnAlignItemsButtonClicked);
-    mAlignItemsButton.SetLeaveRequired( true );
+    mAlignItemsButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( mAlignItemsButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Create a align content toggle button. (right of toolbar)
     mAlignContentButton = Toolkit::PushButton::New();
-    mAlignContentButton.SetName("mAlignContentButton");
+    mAlignContentButton.SetProperty( Dali::Actor::Property::NAME,"mAlignContentButton");
     mAlignContentButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-effect-cross.png" );
     mAlignContentButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-effect-cross-selected.png" );
     mAlignContentButton.ClickedSignal().Connect( this, &FlexContainerExample::OnAlignContentButtonClicked);
-    mAlignContentButton.SetLeaveRequired( true );
+    mAlignContentButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( mAlignContentButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Create the base flex container
     mFlexContainer = FlexContainer::New();
-    mFlexContainer.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    mFlexContainer.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    mFlexContainer.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    mFlexContainer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     mFlexContainer.SetSize( stageSize.width, stageSize.height - VIEW_STYLE.mToolBarHeight );
     mFlexContainer.SetY(VIEW_STYLE.mToolBarHeight);
     mFlexContainer.SetProperty(FlexContainer::Property::FLEX_DIRECTION, FlexContainer::COLUMN); // column as main axis
@@ -207,8 +207,8 @@ public:
 
     // Create the flex container for the flex items and add it to the base flex container
     mFlexItemContainer = FlexContainer::New();
-    mFlexItemContainer.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    mFlexItemContainer.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    mFlexItemContainer.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    mFlexItemContainer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     mFlexItemContainer.SetBackgroundColor( Color::YELLOW );
     mFlexItemContainer.SetProperty(FlexContainer::Property::FLEX_DIRECTION, mCurrentFlexDirection);
     mFlexItemContainer.SetProperty(FlexContainer::Property::FLEX_WRAP, mCurrentFlexWrap);
@@ -219,8 +219,8 @@ public:
     for (int i = 0; i < NUM_FLEX_ITEMS; i++)
     {
       PushButton flexItem = PushButton::New();
-      flexItem.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-      flexItem.SetParentOrigin( ParentOrigin::TOP_LEFT );
+      flexItem.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+      flexItem.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
 
       // Set different background colour to help to identify different items
       flexItem.SetBackgroundColor(Vector4(static_cast<float>(i) / NUM_FLEX_ITEMS, static_cast<float>(NUM_FLEX_ITEMS - i) / NUM_FLEX_ITEMS, 1.0f, 1.0f));
@@ -231,7 +231,7 @@ public:
       std::ostringstream index;
       index << i + 1;
       flexItem.SetProperty( Toolkit::Button::Property::LABEL, index.str() );
-      flexItem.SetName("FlexItem " + index.str());
+      flexItem.SetProperty( Dali::Actor::Property::NAME,"FlexItem " + index.str());
 
       // Set a fixed size to the items so that we can wrap the line and test these
       // flex properties that only work when there are multiple lines in the layout

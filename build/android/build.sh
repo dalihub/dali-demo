@@ -28,7 +28,7 @@ if [ ! -d "$ANDROID_SDK" ]; then
     wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
     unzip sdk-tools-linux-4333796.zip
     tools/bin/sdkmanager --update $SdbProxyOptions
-    yes | tools/bin/sdkmanager $SdbProxyOptions "patcher;v4" "platform-tools" "platforms;android-29" "build-tools;29.0.2" "lldb;3.1" "cmake;3.10.2.4988404" "ndk-bundle" "ndk;20.1.5948944"
+    yes | tools/bin/sdkmanager $SdbProxyOptions "patcher;v4" "platform-tools" "platforms;android-29" "build-tools;29.0.2" "cmake;3.10.2.4988404" "ndk-bundle" "ndk;20.1.5948944"
     cd -
   fi
 fi

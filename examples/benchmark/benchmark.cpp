@@ -417,7 +417,7 @@ public:
 
     unsigned int totalColumns = mColumnsPerPage * mPageCount;
 
-    float finalZ = Dali::Stage::GetCurrent().GetRenderTaskList().GetTask(0).GetCameraActor().GetCurrentWorldPosition().z;
+    float finalZ = Dali::Stage::GetCurrent().GetRenderTaskList().GetTask(0).GetCameraActor().GetCurrentProperty< Vector3 >( Actor::Property::WORLD_POSITION ).z;
     float totalDuration( 5.0f);
     float durationPerActor( 0.5f );
     float delayBetweenActors = ( totalDuration - durationPerActor) / (mRowsPerPage*mColumnsPerPage);

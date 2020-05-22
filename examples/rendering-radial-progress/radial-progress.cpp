@@ -132,8 +132,8 @@ public:
 
     // 1. Create actor to show the effect
     mActor = Actor::New();
-    mActor.SetAnchorPoint( AnchorPoint::CENTER );
-    mActor.SetParentOrigin( ParentOrigin::CENTER );
+    mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mActor.SetSize( Vector2( TEXTURE_WIDTH, TEXTURE_HEIGHT ) );
     mActor.RegisterProperty("uProgress", float(1.0f) );
     stage.Add( mActor );

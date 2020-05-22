@@ -63,8 +63,8 @@ private:
 
     // Add a text label at the top for information purposes
     Control label = TextLabel::New( "Hover over buttons to see tooltip" );
-    label.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    label.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     label.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "Center" );
     stage.Add( label );
 
@@ -155,8 +155,8 @@ private:
       previousPosition += POSITION_INCREMENTER;
       control.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
       control.SetSizeModeFactor( Vector3( 0.75, 0.1, 1.0 ) );
-      control.SetAnchorPoint( AnchorPoint::CENTER );
-      control.SetParentOrigin( ParentOrigin::TOP_CENTER );
+      control.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+      control.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
       control.SetY( stageSize.height * previousPosition );
     }
   }

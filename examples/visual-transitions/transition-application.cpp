@@ -77,10 +77,10 @@ void TransitionApplication::Create( Application& application )
 
   // Content panes:
   TableView contentLayout = TableView::New( 4, 1 );
-  contentLayout.SetName("ContentLayout");
+  contentLayout.SetProperty( Dali::Actor::Property::NAME,"ContentLayout");
   contentLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  contentLayout.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-  contentLayout.SetParentOrigin( ParentOrigin::TOP_LEFT );
+  contentLayout.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+  contentLayout.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
   contentLayout.SetCellPadding( Vector2( 0.0f, 5.0f ) );
 
   // Assign all rows the size negotiation property of fitting to children
@@ -88,7 +88,7 @@ void TransitionApplication::Create( Application& application )
   stage.Add( contentLayout );
 
   mTitle = TextLabel::New( "Custom Control Transition Example" );
-  mTitle.SetName( "Title" );
+  mTitle.SetProperty( Dali::Actor::Property::NAME, "Title" );
   mTitle.SetStyleName("Title");
   mTitle.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   mTitle.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
@@ -97,19 +97,19 @@ void TransitionApplication::Create( Application& application )
   contentLayout.SetFitHeight(0); // Fill width
 
   mBeatControl = BeatControl::New();
-  mBeatControl.SetName("BeatControl");
+  mBeatControl.SetProperty( Dali::Actor::Property::NAME,"BeatControl");
   mBeatControl.SetProperty( BeatControl::Property::BEAT_VISUAL, Property::Map()
                             .Add( Visual::Property::TRANSFORM, Property::Map()
                                   .Add( Visual::Transform::Property::SIZE, Vector2(0.5f, 0.5f) ) ) );
 
-  mBeatControl.SetAnchorPoint( AnchorPoint::CENTER );
-  mBeatControl.SetParentOrigin( ParentOrigin::CENTER );
+  mBeatControl.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  mBeatControl.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mBeatControl.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   contentLayout.Add( mBeatControl );
   // beat control should fill the tableview cell, so no change to default parameters
 
   TableView visualTypeLayout = TableView::New( 1, NUMBER_OF_VISUAL_BUTTONS );
-  visualTypeLayout.SetName("VisualTypeLayout");
+  visualTypeLayout.SetProperty( Dali::Actor::Property::NAME,"VisualTypeLayout");
   visualTypeLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   visualTypeLayout.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
   visualTypeLayout.SetFitHeight( 0 );
@@ -125,7 +125,7 @@ void TransitionApplication::Create( Application& application )
              .Add( Visual::Transform::Property::SIZE, Vector2(0.8f, 0.8f) )  );
     mVisualButtons[i] = BeatControl::New();
     mVisualButtons[i].SetProperty( BeatControl::Property::BEAT_VISUAL, map );
-    mVisualButtons[i].SetName("VisualButton");
+    mVisualButtons[i].SetProperty( Dali::Actor::Property::NAME,"VisualButton");
     mVisualButtons[i].SetStyleName("VisualButton");
     mVisualButtons[i].SetSize(0, 50);
     mVisualButtons[i].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
@@ -136,7 +136,7 @@ void TransitionApplication::Create( Application& application )
   }
 
   TableView actionButtonLayout = TableView::New( 1, NUMBER_OF_ACTION_BUTTONS+1 );
-  actionButtonLayout.SetName("ThemeButtonsLayout");
+  actionButtonLayout.SetProperty( Dali::Actor::Property::NAME,"ThemeButtonsLayout");
   actionButtonLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   actionButtonLayout.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
   actionButtonLayout.SetFitHeight( 0 );
@@ -150,7 +150,7 @@ void TransitionApplication::Create( Application& application )
   for( int i=0; i<NUMBER_OF_ACTION_BUTTONS; ++i )
   {
     mActionButtons[i] = PushButton::New();
-    mActionButtons[i].SetName("ActionButton");
+    mActionButtons[i].SetProperty( Dali::Actor::Property::NAME,"ActionButton");
     mActionButtons[i].SetStyleName("ActionButton");
     mActionButtons[i].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mActionButtons[i].SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );

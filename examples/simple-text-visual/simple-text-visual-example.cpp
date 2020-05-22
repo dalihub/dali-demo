@@ -56,7 +56,7 @@ public:
     stage.SetBackgroundColor( Color::WHITE );
 
     Dali::Toolkit::Control control = Dali::Toolkit::ImageView::New();
-    control.SetParentOrigin( ParentOrigin::CENTER );
+    control.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
     const std::string markupText( "<color value='blue'><font size='50'>H</font></color>ello <color value='blue'><font size='50'>w</font></color>orld" );
 

@@ -214,8 +214,8 @@ public:
     Actor actor = Actor::New();
     actor.AddRenderer( renderer );
 
-    actor.SetAnchorPoint( Dali::AnchorPoint::CENTER );
-    actor.SetParentOrigin( Dali::ParentOrigin::CENTER );
+    actor.SetProperty( Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
+    actor.SetProperty( Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
     actor.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
 
     mContentLayer.Add( actor );

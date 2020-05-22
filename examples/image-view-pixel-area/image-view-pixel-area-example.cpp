@@ -98,16 +98,16 @@ private:
     CreateScene(  visualPropertyMap[0] );
 
     mWrapLabel = Toolkit::TextLabel::New(" Automatic atlasing\n WrapMode: CLAMP_TO_EDGE, MIRRORED_REPEAT");
-    mWrapLabel.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mWrapLabel.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER );
+    mWrapLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    mWrapLabel.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_CENTER );
     mWrapLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mWrapLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     mWrapLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
     mContent.Add( mWrapLabel );
 
     mPixelAreaLabel = Toolkit::TextLabel::New( " Use ImageVisual::Property::PIXEL_AREA\n " );
-    mPixelAreaLabel.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mPixelAreaLabel.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER );
+    mPixelAreaLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mPixelAreaLabel.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_CENTER );
     mPixelAreaLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mPixelAreaLabel.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
     mPixelAreaLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -124,42 +124,42 @@ private:
         mImageView[i][j].SetPosition( 50.f*(i-1), 50.f*(j-1) );
       }
 
-    mImageView[1][1].SetParentOrigin( ParentOrigin::CENTER );
-    mImageView[1][1].SetAnchorPoint(AnchorPoint::CENTER );
+    mImageView[1][1].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mImageView[1][1].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER );
     mImageView[1][1].SetScale( 1.f/3.f );
     mContent.Add( mImageView[1][1] );
 
-    mImageView[0][0].SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mImageView[0][0].SetAnchorPoint(AnchorPoint::BOTTOM_RIGHT );
+    mImageView[0][0].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mImageView[0][0].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT );
     mImageView[0][0].SetPosition( -50.f, -50.f );
     mImageView[1][1].Add( mImageView[0][0] );
 
-    mImageView[1][0].SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mImageView[1][0].SetAnchorPoint(AnchorPoint::BOTTOM_CENTER );
+    mImageView[1][0].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mImageView[1][0].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_CENTER );
     mImageView[1][1].Add( mImageView[1][0] );
 
-    mImageView[2][0].SetParentOrigin( ParentOrigin::TOP_RIGHT );
-    mImageView[2][0].SetAnchorPoint(AnchorPoint::BOTTOM_LEFT );
+    mImageView[2][0].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
+    mImageView[2][0].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_LEFT );
     mImageView[1][1].Add( mImageView[2][0] );
 
-    mImageView[0][1].SetParentOrigin( ParentOrigin::CENTER_LEFT );
-    mImageView[0][1].SetAnchorPoint(AnchorPoint::CENTER_RIGHT );
+    mImageView[0][1].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT );
+    mImageView[0][1].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER_RIGHT );
     mImageView[1][1].Add( mImageView[0][1] );
 
-    mImageView[2][1].SetParentOrigin( ParentOrigin::CENTER_RIGHT );
-    mImageView[2][1].SetAnchorPoint(AnchorPoint::CENTER_LEFT );
+    mImageView[2][1].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT );
+    mImageView[2][1].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER_LEFT );
     mImageView[1][1].Add( mImageView[2][1] );
 
-    mImageView[0][2].SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
-    mImageView[0][2].SetAnchorPoint(AnchorPoint::TOP_RIGHT );
+    mImageView[0][2].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT );
+    mImageView[0][2].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_RIGHT );
     mImageView[1][1].Add( mImageView[0][2] );
 
-    mImageView[1][2].SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mImageView[1][2].SetAnchorPoint(AnchorPoint::TOP_CENTER );
+    mImageView[1][2].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    mImageView[1][2].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER );
     mImageView[1][1].Add( mImageView[1][2] );
 
-    mImageView[2][2].SetParentOrigin( ParentOrigin::BOTTOM_RIGHT );
-    mImageView[2][2].SetAnchorPoint(AnchorPoint::TOP_LEFT );
+    mImageView[2][2].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT );
+    mImageView[2][2].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT );
     mImageView[1][1].Add( mImageView[2][2] );
 
   }

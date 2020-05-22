@@ -246,7 +246,7 @@ public:
     stage.KeyEventSignal().Connect( this, &PerfScroll::OnKeyEvent );
 
     mParent = Actor::New();
-    mParent.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mParent.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     stage.Add(mParent);
 
     if( gUseMesh )

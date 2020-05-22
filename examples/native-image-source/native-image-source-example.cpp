@@ -147,15 +147,15 @@ public:
 
     mButtonArea = Layer::New();
     mButtonArea.SetSize( stageSize.x, BUTTON_HEIGHT );
-    mButtonArea.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mButtonArea.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mButtonArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mButtonArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     stage.Add( mButtonArea );
 
     mButtonShow = PushButton::New();
     mButtonShow.SetProperty( Button::Property::TOGGLABLE, true );
     mButtonShow.SetProperty( Toolkit::Button::Property::LABEL, "SHOW" );
-    mButtonShow.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mButtonShow.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mButtonShow.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mButtonShow.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mButtonShow.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
     mButtonShow.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonShow );
@@ -163,8 +163,8 @@ public:
     mButtonRefreshAlways = PushButton::New();
     mButtonRefreshAlways.SetProperty( Button::Property::TOGGLABLE, true );
     mButtonRefreshAlways.SetProperty( Toolkit::Button::Property::LABEL, "ALWAYS" );
-    mButtonRefreshAlways.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mButtonRefreshAlways.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mButtonRefreshAlways.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mButtonRefreshAlways.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mButtonRefreshAlways.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
     mButtonRefreshAlways.SetPosition( (stageSize.x / BUTTON_COUNT)*1.0f, 0.0f );
     mButtonRefreshAlways.StateChangedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
@@ -172,8 +172,8 @@ public:
 
     mButtonRefreshOnce = PushButton::New();
     mButtonRefreshOnce.SetProperty( Toolkit::Button::Property::LABEL, "ONCE" );
-    mButtonRefreshOnce.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mButtonRefreshOnce.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mButtonRefreshOnce.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mButtonRefreshOnce.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mButtonRefreshOnce.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
     mButtonRefreshOnce.SetPosition( (stageSize.x / BUTTON_COUNT)*2.0f, 0.0f );
     mButtonRefreshOnce.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
@@ -181,8 +181,8 @@ public:
 
     mButtonCapture = PushButton::New();
     mButtonCapture.SetProperty( Toolkit::Button::Property::LABEL, "CAPTURE" );
-    mButtonCapture.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mButtonCapture.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mButtonCapture.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mButtonCapture.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mButtonCapture.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
     mButtonCapture.SetPosition( (stageSize.x / BUTTON_COUNT)*3.0f, 0.0f );
     mButtonCapture.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
@@ -190,8 +190,8 @@ public:
 
     mButtonReset = PushButton::New();
     mButtonReset.SetProperty( Toolkit::Button::Property::LABEL, "RESET" );
-    mButtonReset.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mButtonReset.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mButtonReset.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mButtonReset.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mButtonReset.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
     mButtonReset.SetPosition( (stageSize.x / BUTTON_COUNT)*4.0f, 0.0f );
     mButtonReset.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
@@ -207,20 +207,20 @@ public:
 
     mTopContentArea = Actor::New();
     mTopContentArea.SetSize( stageSize.x, contentHeight );
-    mTopContentArea.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mTopContentArea.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mTopContentArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mTopContentArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mTopContentArea.SetY( BUTTON_HEIGHT );
     stage.Add( mTopContentArea );
 
     mBottomContentArea = Actor::New();
     mBottomContentArea.SetSize( stageSize.x, contentHeight );
-    mBottomContentArea.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mBottomContentArea.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    mBottomContentArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    mBottomContentArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     stage.Add( mBottomContentArea );
 
     mSourceActor = ImageView::New(JPG_FILENAME);
-    mSourceActor.SetParentOrigin( ParentOrigin::CENTER);
-    mSourceActor.SetAnchorPoint( AnchorPoint::CENTER );
+    mSourceActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mSourceActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mTopContentArea.Add( mSourceActor );
 
     Animation animation = Animation::New(2.f);
@@ -234,15 +234,15 @@ public:
     animation.Play();
 
     TextLabel textLabel1 = TextLabel::New( "Image" );
-    textLabel1.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    textLabel1.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    textLabel1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    textLabel1.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     mTopContentArea.Add( textLabel1 );
 
     // Wait until button press before creating mOffscreenRenderTask
 
     TextLabel textLabel2 = TextLabel::New( "Native Image" );
-    textLabel2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    textLabel2.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    textLabel2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    textLabel2.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     mBottomContentArea.Add( textLabel2 );
   }
 
@@ -263,8 +263,8 @@ public:
       mFrameBuffer.AttachColorTexture( mNativeTexture );
 
       mCameraActor = CameraActor::New( imageSize );
-      mCameraActor.SetParentOrigin( ParentOrigin::CENTER );
-      mCameraActor.SetParentOrigin( AnchorPoint::CENTER );
+      mCameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+      mCameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, AnchorPoint::CENTER );
       mTopContentArea.Add( mCameraActor );
 
       RenderTaskList taskList = stage.GetRenderTaskList();
@@ -297,8 +297,8 @@ public:
         SetupNativeImage();
 
         mDisplayActor = Actor::New();
-        mDisplayActor.SetParentOrigin( ParentOrigin::CENTER );
-        mDisplayActor.SetAnchorPoint( AnchorPoint::CENTER );
+        mDisplayActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+        mDisplayActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
         Geometry geometry = DemoHelper::CreateTexturedQuad();
 

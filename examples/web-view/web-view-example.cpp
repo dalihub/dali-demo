@@ -66,8 +66,8 @@ public:
     float fontSize = width * 0.02f;
 
     mWebView = Toolkit::WebView::New( "ko-KR", "Asia/Seoul" );
-    mWebView.SetParentOrigin( Dali::ParentOrigin::CENTER );
-    mWebView.SetAnchorPoint( Dali::AnchorPoint::CENTER );
+    mWebView.SetProperty( Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
+    mWebView.SetProperty( Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
     mWebView.SetPosition( 0, 0 );
     mWebView.SetSize( width, height );
     mWebView.PageLoadStartedSignal().Connect( this, &WebViewController::OnPageLoadStarted );
@@ -78,7 +78,7 @@ public:
     stage.Add(mWebView);
 
     mAddressLabel = Toolkit::TextLabel::New( url );
-    mAddressLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    mAddressLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mAddressLabel.SetProperty( Toolkit::TextLabel::Property::POINT_SIZE, fontSize );
     mAddressLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
     mAddressLabel.SetBackgroundColor( Vector4( 0, 0, 0, 0.5f ) );
