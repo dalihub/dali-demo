@@ -172,7 +172,7 @@ private:
     mSceneActor.SetPosition(0.0f, 0.0f, 130.0f);
     Quaternion p( Degree( -6.0f ), Vector3::XAXIS );
     Quaternion q( Degree( 20.0f ), Vector3::YAXIS );
-    mSceneActor.SetOrientation( p * q );
+    mSceneActor.SetProperty( Actor::Property::ORIENTATION, p * q );
 
     mStage.Add( mSceneActor );
   }

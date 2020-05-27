@@ -282,7 +282,7 @@ public:
     mLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     mLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mLayer.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::HEIGHT );
-    mLayer.SetSizeModeFactor( Vector3( 0.0f, -DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight, 0.0f ) );
+    mLayer.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.0f, -DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight, 0.0f ) );
 
     mNavigationView.Push( mLayer );
 

@@ -112,7 +112,7 @@ bool LookCamera::OnTick()
   Quaternion rotY( Degree( mCameraYawPitch.y), Vector3( 0.0f, 1.0f, 0.0f ) );
   rotation = ( rotY * rotX );
 
-  mCameraActor.SetOrientation( rotation );
+  mCameraActor.SetProperty( Actor::Property::ORIENTATION, rotation );
 
   return true;
 }

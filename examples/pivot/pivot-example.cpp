@@ -74,7 +74,7 @@ private:
     tableView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     tableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     tableView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    tableView.SetSizeModeFactor( TABLE_VIEW_SIZE_MODE_FACTOR );
+    tableView.SetProperty( Actor::Property::SIZE_MODE_FACTOR, TABLE_VIEW_SIZE_MODE_FACTOR );
     stage.Add( tableView );
 
     // Create a tap detector - we are going to rotate an actor round our anchor-point (pivot) when one of our controls is tapped.

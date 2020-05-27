@@ -62,7 +62,7 @@ void GameEntity::SetLocation( const Dali::Vector3& loc )
 
 void GameEntity::SetRotation( const Dali::Quaternion& rot )
 {
-  mActor.SetOrientation( rot );
+  mActor.SetProperty( Dali::Actor::Property::ORIENTATION, rot );
 }
 
 void GameEntity::SetScale( const Dali::Vector3& scale )

@@ -241,7 +241,7 @@ void DaliTableView::Initialize( Application& application )
   logo.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.1f, 0.5f ) );
   logo.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   // The logo should appear on top of everything.
-  logo.SetDrawMode( DrawMode::OVERLAY_2D );
+  logo.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
   mRootActor.Add( logo );
 
   // Show version in a popup when log is tapped
@@ -255,10 +255,10 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 1.0f - 0.05f, 0.5f ) );
   mScrollView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   mScrollView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
-  mScrollView.SetSizeModeFactor( Vector3( 0.0f, 0.6f, 0.0f ) );
+  mScrollView.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.0f, 0.6f, 0.0f ) );
 
   const float buttonsPageMargin = ( 1.0f - TABLE_RELATIVE_SIZE.x ) * 0.5f * stageSize.width;
-  mScrollView.SetPadding( Padding( buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f ) );
+  mScrollView.SetProperty( Actor::Property::PADDING, Padding( buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f ) );
 
   mScrollView.SetAxisAutoLock( true );
   mScrollView.ScrollCompletedSignal().Connect( this, &DaliTableView::OnScrollComplete );
@@ -334,7 +334,7 @@ void DaliTableView::CreateFocusEffect()
     mFocusEffect[i].actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mFocusEffect[i].actor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mFocusEffect[i].actor.SetProperty( Actor::Property::INHERIT_SCALE, false );
-    mFocusEffect[i].actor.SetColorMode( USE_OWN_COLOR );
+    mFocusEffect[i].actor.SetProperty( Actor::Property::COLOR_MODE, USE_OWN_COLOR );
 
     KeyFrames alphaKeyFrames = KeyFrames::New();
     alphaKeyFrames.Add( 0.0f, KEYBOARD_FOCUS_FINAL_ALPHA );
@@ -443,7 +443,7 @@ void DaliTableView::Populate()
           accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_HINT,
                                                   "You can run this example" );
 
-          tile.SetPadding( Padding( margin, margin, margin, margin ) );
+          tile.SetProperty( Actor::Property::PADDING, Padding( margin, margin, margin, margin ) );
           page.AddChild( tile, TableView::CellPosition( row, column ) );
 
           iter++;
@@ -508,7 +508,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   focusableTile.SetStyleName( "DemoTile" );
   focusableTile.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   focusableTile.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  focusableTile.SetSizeModeFactor( sizeMultiplier );
+  focusableTile.SetProperty( Actor::Property::SIZE_MODE_FACTOR, sizeMultiplier );
   focusableTile.SetProperty( Actor::Property::NAME, name );
 
   // Set the tile to be keyboard focusable
@@ -546,7 +546,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
 
   // Pad around the label as its size is the same as the 9-patch border. It will overlap it without padding.
-  label.SetPadding( Padding( TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING ) );
+  label.SetProperty( Actor::Property::PADDING, Padding( TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING ) );
   focusableTile.Add( label );
 
   // Connect to the touch events
@@ -925,13 +925,13 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
       contentActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
       contentActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER );
       contentActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-      contentActor.SetPadding( Padding( 0.0f, 0.0f, 20.0f, 0.0f ) );
+      contentActor.SetProperty( Actor::Property::PADDING, Padding( 0.0f, 0.0f, 20.0f, 0.0f ) );
 
       mVersionPopup.SetTitle( titleActor );
       mVersionPopup.SetContent( contentActor );
 
       mVersionPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
-      mVersionPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
+      mVersionPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 1.0f, 1.0f ) );
       mVersionPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
 
       mVersionPopup.OutsideTouchedSignal().Connect( this, &DaliTableView::HideVersionPopup );

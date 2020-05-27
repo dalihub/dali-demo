@@ -86,7 +86,7 @@ public:
     Quaternion pitchRot(Radian(Degree(sensor.GetPitch() * 90.0f)), Vector3(1, 0, 0));
     Quaternion rollRot(Radian(Degree(sensor.GetRoll() * 90.0f)), Vector3(0, 1, 0));
 
-    mTextLabel.SetOrientation(Quaternion());
+    mTextLabel.SetProperty( Actor::Property::ORIENTATION, Quaternion() );
     mTextLabel.RotateBy(rollRot);
     mTextLabel.RotateBy(pitchRot);;
   }

@@ -336,7 +336,7 @@ private:
       actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       actor.SetPosition( node.translation[0], node.translation[1], node.translation[2] );
       actor.SetScale( node.scale[0], node.scale[1], node.scale[2] );
-      actor.SetOrientation( Quaternion(node.rotationQuaternion[3],
+      actor.SetProperty( Actor::Property::ORIENTATION, Quaternion(node.rotationQuaternion[3],
                                        node.rotationQuaternion[0],
                                        node.rotationQuaternion[1],
                                        node.rotationQuaternion[2]));
@@ -374,7 +374,7 @@ private:
         mCameraPos = Vector3(node.translation[0], node.translation[1], node.translation[2]);
         auto quatY = Quaternion( Degree(180.0f), Vector3( 0.0, 1.0, 0.0) );
         auto cameraActor = CameraActor::DownCast( actor );
-        cameraActor.SetOrientation( Quaternion(node.rotationQuaternion[3],
+        cameraActor.SetProperty( Actor::Property::ORIENTATION, Quaternion(node.rotationQuaternion[3],
                                                node.rotationQuaternion[0],
                                                node.rotationQuaternion[1],
                                                node.rotationQuaternion[2] )
@@ -634,7 +634,7 @@ private:
     auto sun = root.FindChildByName( "sun" );
     sun.SetProperty( mSunTimeUniformIndex, mMockTime );
     sun.SetProperty( mSunKFactorUniformIndex, mKFactor );
-    sun.SetOrientation( Quaternion( Radian(Degree(rotationAngle)), Vector3(0.0, 1.0, 0.0)));
+    sun.SetProperty( Actor::Property::ORIENTATION, Quaternion( Radian(Degree(rotationAngle)), Vector3(0.0, 1.0, 0.0)));
     return true;
   }
 

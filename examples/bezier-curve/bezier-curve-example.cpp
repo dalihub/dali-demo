@@ -230,7 +230,7 @@ public:
                           .Add( Visual::Property::TYPE, Visual::IMAGE )
                           .Add( ImageVisual::Property::URL, ANIMATION_BACKGROUND ) );
     animRail.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    animRail.SetSizeModeFactor( Vector3( 0.666f, 0.2f, 1.0f ) );
+    animRail.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.666f, 0.2f, 1.0f ) );
     animRail.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     animContainer.Add( animRail );
 
@@ -382,7 +382,7 @@ public:
   {
     TextLabel progressionLabel = TextLabel::New( "Progression" );
     progressionLabel.SetProperty( TextLabel::Property::POINT_SIZE, AXIS_LABEL_POINT_SIZE );
-    progressionLabel.SetOrientation( Degree(-90.0f), Vector3::ZAXIS );
+    progressionLabel.SetProperty( Actor::Property::ORIENTATION, Quaternion( Radian( Degree(-90.0f) ), Vector3::ZAXIS ) );
     progressionLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT );
     progressionLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT );
     CreateLine( progressionLabel, ParentOrigin::BOTTOM_LEFT );

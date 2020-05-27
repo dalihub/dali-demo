@@ -198,7 +198,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::TableView table = Toolkit::TableView::New( 0, 0 );
       table.SetProperty( Dali::Actor::Property::NAME, "TABLEVIEW_BUTTON_1CELL_ID" );
@@ -216,7 +216,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
       table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -245,7 +245,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 3 );
       table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -309,7 +309,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
       table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -360,7 +360,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
       table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -418,7 +418,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
       table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -484,7 +484,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
       table.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -548,7 +548,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 1.0f, 1.0f ) );
       mPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
@@ -618,7 +618,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 1.0f, 1.0f ) );
       mPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
@@ -671,7 +671,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 1.0f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 1.0f, 1.0f ) );
       mPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
 
       Toolkit::TableView table = Toolkit::TableView::New( 3, 1 );
@@ -721,7 +721,7 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -734,11 +734,11 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      image.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+      image.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
 
       mPopup.Add( image );
 
@@ -748,11 +748,11 @@ public:
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mPopup.SetSizeModeFactor( Vector3( 0.75f, 0.5f, 1.0f ) );
+      mPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 0.5f, 1.0f ) );
 
       Toolkit::ImageView image = Toolkit::ImageView::New( IMAGE );
       image.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      image.SetSizeScalePolicy( SizeScalePolicy::FILL_WITH_ASPECT_RATIO );
+      image.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FILL_WITH_ASPECT_RATIO );
 
       mPopup.Add( image );
 

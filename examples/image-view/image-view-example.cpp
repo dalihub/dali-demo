@@ -113,7 +113,7 @@ class ImageViewController: public ConnectionTracker
     mTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mTable.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     Vector3 offset( 0.9f, 0.70f, 0.0f );
-    mTable.SetSizeModeFactor( offset );
+    mTable.SetProperty( Actor::Property::SIZE_MODE_FACTOR, offset );
     mTable.SetFitHeight(CellPlacement::TOP_BUTTON);
     mTable.SetFitHeight(CellPlacement::MID_BUTTON);
     mTable.SetFitHeight(CellPlacement::LOWER_BUTTON);
