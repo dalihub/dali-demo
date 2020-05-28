@@ -189,9 +189,9 @@ ImageView CreateImageView(const std::string& filename, int width, int height, Da
   map[Toolkit::ImageVisual::Property::FITTING_MODE] = fittingMode;
   imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
 
-  imageView.SetName( filename );
-  imageView.SetParentOrigin(ParentOrigin::CENTER);
-  imageView.SetAnchorPoint(AnchorPoint::CENTER);
+  imageView.SetProperty( Dali::Actor::Property::NAME, filename );
+  imageView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+  imageView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
 
   return imageView;
 }
@@ -323,8 +323,8 @@ public:
     SetTitle( APPLICATION_TITLE );
 
     mOffStageImageViews = Actor::New();
-    mOffStageImageViews.SetAnchorPoint( AnchorPoint::CENTER );
-    mOffStageImageViews.SetParentOrigin(ParentOrigin::CENTER);
+    mOffStageImageViews.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mOffStageImageViews.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mOffStageImageViews.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Build the main content of the widow:
@@ -347,8 +347,8 @@ public:
     mScrollView.ScrollStartedSignal().Connect( this, &ImageScalingIrregularGridController::OnScrollStarted );
     mScrollView.ScrollCompletedSignal().Connect( this, &ImageScalingIrregularGridController::OnScrollCompleted );
 
-    mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
-    mScrollView.SetParentOrigin(ParentOrigin::CENTER);
+    mScrollView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
+    mScrollView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
     mScrollView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
@@ -371,15 +371,15 @@ public:
 
     // Create the scroll bar
     mScrollBarVertical = ScrollBar::New(Toolkit::ScrollBar::Vertical);
-    mScrollBarVertical.SetParentOrigin(ParentOrigin::TOP_RIGHT);
-    mScrollBarVertical.SetAnchorPoint(AnchorPoint::TOP_RIGHT);
+    mScrollBarVertical.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_RIGHT);
+    mScrollBarVertical.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_RIGHT);
     mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
     mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
     mScrollView.Add(mScrollBarVertical);
 
     mScrollBarHorizontal = ScrollBar::New(Toolkit::ScrollBar::Horizontal);
-    mScrollBarHorizontal.SetParentOrigin(ParentOrigin::BOTTOM_LEFT);
-    mScrollBarHorizontal.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    mScrollBarHorizontal.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_LEFT);
+    mScrollBarHorizontal.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     mScrollBarHorizontal.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
     mScrollBarHorizontal.SetOrientation(Quaternion(Radian( 1.5f * Math::PI ), Vector3::ZAXIS));
     mScrollView.Add(mScrollBarHorizontal);
@@ -453,8 +453,8 @@ public:
 
     Actor gridActor = Actor::New();
     gridActor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    gridActor.SetParentOrigin( ParentOrigin::CENTER );
-    gridActor.SetAnchorPoint( AnchorPoint::CENTER );
+    gridActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    gridActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     // Work out the constants of the grid and cell dimensions and positions:
     const float cellWidth = fieldWidth / gridWidth;

@@ -65,8 +65,8 @@ class VideoViewController: public ConnectionTracker
 
     mVideoView = Toolkit::VideoView::New();
     Stage::GetCurrent().Add( mVideoView );
-    mVideoView.SetParentOrigin( ParentOrigin::CENTER );
-    mVideoView.SetAnchorPoint( AnchorPoint::CENTER );
+    mVideoView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mVideoView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mVideoView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     mVideoView.SetSize( INIT_WIDTH, INIT_HEIGHT );
     mVideoView.SetProperty( VideoView::Property::LOOPING, true );
@@ -74,52 +74,52 @@ class VideoViewController: public ConnectionTracker
     mVideoView.SetProperty( VideoView::Property::VIDEO, PLAY_FILE );
 
     mMenu = Layer::New();
-    mMenu.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
-    mMenu.SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
+    mMenu.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT );
+    mMenu.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT );
     mMenu.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     mMenu.SetSize( INIT_WIDTH, 120 );
     mVideoView.Add( mMenu );
 
     mPlayButton = PushButton::New();
-    mPlayButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mPlayButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mPlayButton.SetName( "Play" );
+    mPlayButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mPlayButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    mPlayButton.SetProperty( Dali::Actor::Property::NAME, "Play" );
     mPlayButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     mPlayButton.SetSize( BUTTON_SIZE, BUTTON_SIZE );
     mPlayButton.SetPosition( 40, 10 );
     mPlayButton.ClickedSignal().Connect( this, &VideoViewController::OnButtonClicked );
 
     mPauseButton = PushButton::New();
-    mPauseButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mPauseButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mPauseButton.SetName( "Pause" );
+    mPauseButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mPauseButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    mPauseButton.SetProperty( Dali::Actor::Property::NAME, "Pause" );
     mPauseButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     mPauseButton.SetSize( BUTTON_SIZE, BUTTON_SIZE );
     mPauseButton.SetPosition( 40, 10 );
     mPauseButton.ClickedSignal().Connect( this, &VideoViewController::OnButtonClicked );
 
     mChangeButton = PushButton::New();
-    mChangeButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mChangeButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mChangeButton.SetName( "Change" );
+    mChangeButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mChangeButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    mChangeButton.SetProperty( Dali::Actor::Property::NAME, "Change" );
     mChangeButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     mChangeButton.SetSize( BUTTON_SIZE, BUTTON_SIZE );
     mChangeButton.SetPosition( 140, 10 );
     mChangeButton.ClickedSignal().Connect( this, &VideoViewController::OnButtonClicked );
 
     mBackwardButton = PushButton::New();
-    mBackwardButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mBackwardButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mBackwardButton.SetName( "Backward" );
+    mBackwardButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mBackwardButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    mBackwardButton.SetProperty( Dali::Actor::Property::NAME, "Backward" );
     mBackwardButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     mBackwardButton.SetSize( BUTTON_SIZE, BUTTON_SIZE );
     mBackwardButton.SetPosition( 240, 10 );
     mBackwardButton.ClickedSignal().Connect( this, &VideoViewController::OnButtonClicked );
 
     mForwardButton = PushButton::New();
-    mForwardButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mForwardButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mForwardButton.SetName( "Forward" );
+    mForwardButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mForwardButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    mForwardButton.SetProperty( Dali::Actor::Property::NAME, "Forward" );
     mForwardButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
     mForwardButton.SetSize( BUTTON_SIZE, BUTTON_SIZE );
     mForwardButton.SetPosition( 340, 10 );
@@ -131,11 +131,11 @@ class VideoViewController: public ConnectionTracker
     mMenu.Add( mBackwardButton );
     mMenu.Add( mForwardButton );
 
-    mPauseButton.SetVisible( false );
+    mPauseButton.SetProperty( Actor::Property::VISIBLE, false );
     mPauseButton.SetProperty( Button::Property::DISABLED, true );
-    mPlayButton.SetVisible( true );
+    mPlayButton.SetProperty( Actor::Property::VISIBLE, true );
     mPlayButton.SetProperty( Button::Property::DISABLED, false );
-    mChangeButton.SetVisible( true );
+    mChangeButton.SetProperty( Actor::Property::VISIBLE, true );
     mChangeButton.SetProperty( Button::Property::DISABLED, false );
 
     mPlayButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_IMAGE );
@@ -177,9 +177,9 @@ class VideoViewController: public ConnectionTracker
     {
        if( mIsPlay )
       {
-        mPauseButton.SetVisible( false );
+        mPauseButton.SetProperty( Actor::Property::VISIBLE, false );
         mPauseButton.SetProperty( Button::Property::DISABLED, true );
-        mPlayButton.SetVisible( true );
+        mPlayButton.SetProperty( Actor::Property::VISIBLE, true );
         mPlayButton.SetProperty( Button::Property::DISABLED, false );
 
         mIsPlay = false;
@@ -188,9 +188,9 @@ class VideoViewController: public ConnectionTracker
     }
     else if( mPlayButton.GetId() == button.GetId())
     {
-      mPauseButton.SetVisible( true );
+      mPauseButton.SetProperty( Actor::Property::VISIBLE, true );
       mPauseButton.SetProperty( Button::Property::DISABLED, false );
-      mPlayButton.SetVisible( false );
+      mPlayButton.SetProperty( Actor::Property::VISIBLE, false );
       mPlayButton.SetProperty( Button::Property::DISABLED, true );
 
       mIsPlay = true;

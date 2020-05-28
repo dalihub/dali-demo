@@ -134,8 +134,8 @@ public:
     Property::Index fadeColorIndex = mRenderer.RegisterProperty( "uFadeColor", Color::MAGENTA );
     mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
 
-    mMeshActor.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mMeshActor.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mMeshActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mMeshActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     stage.Add( mMeshActor );
 
     mRenderer2 = Renderer::New( mGeometry, mShader );
@@ -152,8 +152,8 @@ public:
     Property::Index fadeColorIndex2 = mRenderer2.RegisterProperty( "uFadeColor", Color::BLUE );
     mRenderer2.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
 
-    mMeshActor2.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mMeshActor2.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    mMeshActor2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    mMeshActor2.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     stage.Add( mMeshActor2 );
 
     Animation  animation = Animation::New(5);

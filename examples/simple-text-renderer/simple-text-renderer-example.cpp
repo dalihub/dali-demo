@@ -311,11 +311,11 @@ public:
     renderer.SetTextures( textureSet );
 
     Actor actor = Actor::New();
-    actor.SetAnchorPoint( AnchorPoint::CENTER );
-    actor.SetParentOrigin( ParentOrigin::CENTER );
+    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     actor.SetPosition( 0.f, 0.f);
     actor.SetSize( 360.f, 360.f );
-    actor.SetColor( Color::WHITE );
+    actor.SetProperty( Actor::Property::COLOR, Color::WHITE );
 
     actor.AddRenderer( renderer );
 

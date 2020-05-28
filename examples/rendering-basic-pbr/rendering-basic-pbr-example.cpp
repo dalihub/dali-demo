@@ -113,8 +113,8 @@ public:
     stage.SetBackgroundColor( Color::BLACK );
     mAnimation = Animation::New( 1.0f );
     mLabel = TextLabel::New( "R:1 M:0" );
-    mLabel.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    mLabel.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    mLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mLabel.SetSize( stage.GetSize().width * 0.5f, stage.GetSize().height * 0.083f );
     mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
@@ -284,19 +284,19 @@ public:
     mUiRoot = Actor::New();
     m3dRoot = Actor::New();
     CameraActor cameraUi = CameraActor::New(stage.GetSize());
-    cameraUi.SetAnchorPoint(AnchorPoint::CENTER);
-    cameraUi.SetParentOrigin(ParentOrigin::CENTER);
+    cameraUi.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
+    cameraUi.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
     RenderTask rendertask = Stage::GetCurrent().GetRenderTaskList().CreateTask();
     rendertask.SetCameraActor( cameraUi );
     rendertask.SetSourceActor( mUiRoot );
 
-    mUiRoot.SetAnchorPoint(AnchorPoint::TOP_LEFT);
-    mUiRoot.SetParentOrigin(ParentOrigin::TOP_LEFT);
+    mUiRoot.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
+    mUiRoot.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     mUiRoot.SetSize(stage.GetSize());
 
-    m3dRoot.SetAnchorPoint(AnchorPoint::CENTER);
-    m3dRoot.SetParentOrigin(ParentOrigin::CENTER);
+    m3dRoot.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
+    m3dRoot.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
     // Setting camera parameters for 3D Scene
     mSkybox.GetActor().SetPosition( CAMERA_DEFAULT_POSITION );

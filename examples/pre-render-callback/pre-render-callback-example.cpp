@@ -32,8 +32,8 @@ const float TEXT_HEIGHT = 40.0f;
 void AddText( Control textContainer, std::string text, unsigned int yIndex )
 {
   auto label = TextLabel::New(text);
-  label.SetParentOrigin( ParentOrigin::TOP_CENTER );
-  label.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+  label.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+  label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   label.SetSize( 300,TEXT_HEIGHT );
   label.SetY( yIndex*TEXT_HEIGHT );
   textContainer.Add( label );
@@ -104,7 +104,7 @@ private:
     CreateAnimatingScene();
 
     auto textContainer = Control::New();
-    textContainer.SetAnchorPoint(AnchorPoint::TOP_LEFT);
+    textContainer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     AddText(textContainer, "Click to add callback", 1 );
     AddText(textContainer, "Press 1 to add callback", 2 );
     AddText(textContainer, "Press 2 to clear callback", 3 );
@@ -112,8 +112,8 @@ private:
 
 
     mSpinner = TextLabel::New("");
-    mSpinner.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mSpinner.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    mSpinner.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    mSpinner.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mSpinner.SetSize(100,100);
 
     mStage.Add(mSpinner);
@@ -126,7 +126,7 @@ private:
   {
     mSceneActor = Layer::New();
     mSceneActor.SetBehavior( Layer::LAYER_3D );
-    mSceneActor.SetParentOrigin(ParentOrigin::CENTER);
+    mSceneActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
     // Create and add images to the scene actor:
     mImageActor1 = ImageView::New( SCENE_IMAGE_1 );
@@ -137,13 +137,13 @@ private:
     mImageActor2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     mImageActor3.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
-    mImageActor2.SetParentOrigin(ParentOrigin::CENTER);
+    mImageActor2.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
-    mImageActor1.SetParentOrigin(ParentOrigin::CENTER_LEFT);
-    mImageActor1.SetAnchorPoint(AnchorPoint::CENTER_RIGHT);
+    mImageActor1.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER_LEFT);
+    mImageActor1.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER_RIGHT);
 
-    mImageActor3.SetParentOrigin(ParentOrigin::CENTER_RIGHT);
-    mImageActor3.SetAnchorPoint(AnchorPoint::CENTER_LEFT);
+    mImageActor3.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER_RIGHT);
+    mImageActor3.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER_LEFT);
 
     mSceneActor.Add(mImageActor2);
     mImageActor2.Add(mImageActor1);

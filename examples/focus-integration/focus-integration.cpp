@@ -63,8 +63,8 @@ public:
     TableView contentTable = TableView::New(2, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     contentTable.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-    contentTable.SetAnchorPoint(AnchorPoint::TOP_LEFT);
-    contentTable.SetParentOrigin(ParentOrigin::TOP_LEFT);
+    contentTable.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
+    contentTable.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     contentTable.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5f));
     contentTable.SetKeyboardFocusable(true);
 
@@ -135,7 +135,7 @@ public:
     {
       Control control = Control::DownCast( mContainer.GetChildAt( TableView::CellPosition( (i/3)*2+1, i%3 ) ) );
       control.SetKeyboardFocusable(true);
-      control.SetName(ITEMNAME[i]);
+      control.SetProperty( Dali::Actor::Property::NAME,ITEMNAME[i]);
       control.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       control.KeyEventSignal().Connect( this, &FocusIntegrationExample::OnControlKeyEvent );
     }
@@ -160,7 +160,7 @@ public:
   // Display current control name.
   bool OnControlKeyEvent( Control control, const KeyEvent& event )
   {
-    std::string controlName = control.GetName();
+    std::string controlName = control.GetProperty< std::string >( Dali::Actor::Property::NAME );
     mEventLabel.SetProperty( TextLabel::Property::TEXT, controlName+"'s KeyEvent works\n" );
 
     return false;

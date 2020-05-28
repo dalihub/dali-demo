@@ -67,8 +67,8 @@ private:
 
     // Create a scroll view and set our desired properties
     ScrollView scrollView = ScrollView::New();
-    scrollView.SetAnchorPoint( AnchorPoint::CENTER );
-    scrollView.SetParentOrigin( ParentOrigin::CENTER );
+    scrollView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    scrollView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     scrollView.SetSize( pageSize );
     scrollView.SetAxisAutoLock( true );
     stage.Add( scrollView );
@@ -105,8 +105,8 @@ private:
   {
     Actor page = Actor::New();
     page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    page.SetParentOrigin( ParentOrigin::CENTER );
-    page.SetAnchorPoint( AnchorPoint::CENTER );
+    page.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    page.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     Stage stage = Stage::GetCurrent();
 

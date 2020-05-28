@@ -57,7 +57,7 @@ public:
     stage.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
 
     TextField field = TextField::New();
-    field.SetParentOrigin( ParentOrigin::CENTER );
+    field.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     field.SetSize( 300.f, 60.f );
     field.SetBackgroundColor( Color::WHITE );
     field.SetBackgroundColor( Vector4( 1.f, 1.f, 1.f, 0.15f ) );

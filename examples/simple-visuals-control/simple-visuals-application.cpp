@@ -111,12 +111,12 @@ void SimpleVisualsApplication::Create( Application& application )
 
   // Create a table view to parent the 2 MyControls
   TableView contentLayout = TableView::New( 2, 2 );
-  contentLayout.SetName("ContentLayout");
+  contentLayout.SetProperty( Dali::Actor::Property::NAME,"ContentLayout");
   contentLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   contentLayout.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
   contentLayout.SetSizeModeFactor( Vector3( 1.0f, .5f, 1.0f ) );
-  contentLayout.SetAnchorPoint( AnchorPoint::CENTER );
-  contentLayout.SetParentOrigin( ParentOrigin::CENTER );
+  contentLayout.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  contentLayout.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   contentLayout.SetCellPadding( Vector2( 50.0f, 15.0f ) );
   contentLayout.SetBackgroundColor( Vector4(0.949, 0.949, 0.949, 1.0) );
 
@@ -128,11 +128,11 @@ void SimpleVisualsApplication::Create( Application& application )
   // Create 2 MyControls and add to table view.
   mMyControl = MyControl::New();
   mMyControl.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  mMyControl.SetParentOrigin(ParentOrigin::TOP_LEFT);
+  mMyControl.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
 
   mMyControl2 = MyControl::New();
   mMyControl2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  mMyControl2.SetParentOrigin(ParentOrigin::CENTER);
+  mMyControl2.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
   contentLayout.AddChild( mMyControl2, TableView::CellPosition(0, 0) );
   contentLayout.AddChild( mMyControl, TableView::CellPosition(0, 1) );

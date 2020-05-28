@@ -66,9 +66,9 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   Dali::Stage stage = Dali::Stage::GetCurrent();
 
   Dali::Layer toolBarLayer = Dali::Layer::New();
-  toolBarLayer.SetName( "TOOLBAR_LAYER" );
-  toolBarLayer.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
-  toolBarLayer.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
+  toolBarLayer.SetProperty( Dali::Actor::Property::NAME, "TOOLBAR_LAYER" );
+  toolBarLayer.SetProperty( Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_CENTER );
+  toolBarLayer.SetProperty( Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::TOP_CENTER );
   toolBarLayer.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::WIDTH );
   toolBarLayer.SetSize( 0.0f, style.mToolBarHeight );
 
@@ -77,12 +77,12 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
 
   // Tool bar
   toolBar = Dali::Toolkit::ToolBar::New();
-  toolBar.SetName( "TOOLBAR" );
+  toolBar.SetProperty( Dali::Actor::Property::NAME, "TOOLBAR" );
   Dali::Property::Map background;
   background["url"] = toolbarImagePath;
   toolBar.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, background );
-  toolBar.SetParentOrigin( Dali::ParentOrigin::TOP_CENTER );
-  toolBar.SetAnchorPoint( Dali::AnchorPoint::TOP_CENTER );
+  toolBar.SetProperty( Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::TOP_CENTER );
+  toolBar.SetProperty( Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_CENTER );
   toolBar.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
 
   // Add the tool bar to the tool bar layer.
@@ -92,7 +92,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   if( !title.empty() )
   {
     Dali::Toolkit::TextLabel label = Dali::Toolkit::TextLabel::New();
-    label.SetAnchorPoint( Dali::AnchorPoint::TOP_LEFT );
+    label.SetProperty( Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_LEFT );
     label.SetStyleName( "ToolbarLabel" );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::TEXT, title );
     label.SetProperty( Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
@@ -122,8 +122,8 @@ Dali::Layer CreateView( Dali::Application& application,
 
   // Create default View.
   view = Dali::Toolkit::Control::New();
-  view.SetAnchorPoint( Dali::AnchorPoint::CENTER );
-  view.SetParentOrigin( Dali::ParentOrigin::CENTER );
+  view.SetProperty( Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
+  view.SetProperty( Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
   view.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
 
   // Add the view to the stage before setting the background.
@@ -155,8 +155,8 @@ Dali::Layer CreateView( Dali::Application& application,
 
   // Create a content layer.
   Dali::Layer contentLayer = Dali::Layer::New();
-  contentLayer.SetAnchorPoint( Dali::AnchorPoint::CENTER );
-  contentLayer.SetParentOrigin( Dali::ParentOrigin::CENTER );
+  contentLayer.SetProperty( Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
+  contentLayer.SetProperty( Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
   contentLayer.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
   view.Add( contentLayer );
   contentLayer.LowerBelow( toolBarLayer );

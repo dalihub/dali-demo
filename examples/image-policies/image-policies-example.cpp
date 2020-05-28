@@ -114,8 +114,8 @@ class ImagePolicies: public ConnectionTracker
     }
     imageView.SetProperty(ImageView::Property::IMAGE , imagePropertyMap );
 
-    imageView.SetParentOrigin( ParentOrigin::CENTER );
-    imageView.SetAnchorPoint( AnchorPoint::CENTER );
+    imageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    imageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     imageView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     return imageView;
@@ -172,9 +172,9 @@ class ImagePolicies: public ConnectionTracker
     mTable.RemoveChildAt( TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
     mInstructions.SetProperty( TextLabel::Property::TEXT, "Loading Image before staging, press next to see it in right column");
     TableView dualImageViewTable = TableView::New( 1, 2 );
-    dualImageViewTable.SetAnchorPoint( AnchorPoint::CENTER );
-    dualImageViewTable.SetName("dualTable");
-    dualImageViewTable.SetParentOrigin( ParentOrigin::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    dualImageViewTable.SetProperty( Dali::Actor::Property::NAME,"dualTable");
+    dualImageViewTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     dualImageViewTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     dualImageViewTable.SetCellPadding( Vector2( 6.0f, 0.0f ) );
     TextLabel attached = TextLabel::New("ATTACHED loaded image \nWill appear here");
@@ -201,9 +201,9 @@ class ImagePolicies: public ConnectionTracker
     mTable.RemoveChildAt( TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
 
     TableView dualImageViewTable = TableView::New( 2, 2 );
-    dualImageViewTable.SetAnchorPoint( AnchorPoint::CENTER );
-    dualImageViewTable.SetName("dualTable");
-    dualImageViewTable.SetParentOrigin( ParentOrigin::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    dualImageViewTable.SetProperty( Dali::Actor::Property::NAME,"dualTable");
+    dualImageViewTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     dualImageViewTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     dualImageViewTable.SetCellPadding( Vector2( 6.0f, 0.0f ) );
 
@@ -232,8 +232,8 @@ class ImagePolicies: public ConnectionTracker
     mInstructions.SetProperty( TextLabel::Property::TEXT, "ReleasePolicy::DESTROYED shown in first column, press next to destroy it.");
     DisableButtonWhilstLoading();
     TableView dualImageViewTable = TableView::New( 1, 2 );
-    dualImageViewTable.SetAnchorPoint( AnchorPoint::CENTER );
-    dualImageViewTable.SetParentOrigin( ParentOrigin::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     dualImageViewTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     dualImageViewTable.SetCellPadding( Vector2( 6.0f, 0.0f ) );
 
@@ -255,8 +255,8 @@ class ImagePolicies: public ConnectionTracker
     mTable.RemoveChildAt( TableView::CellPosition( TableRowPlacement::IMAGE, 0 ) );
     DisableButtonWhilstLoading();
     TableView dualImageViewTable = TableView::New( 1, 2 );
-    dualImageViewTable.SetAnchorPoint( AnchorPoint::CENTER );
-    dualImageViewTable.SetParentOrigin( ParentOrigin::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     dualImageViewTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     dualImageViewTable.SetCellPadding( Vector2( 6.0f, 0.0f ) );
 
@@ -278,8 +278,8 @@ class ImagePolicies: public ConnectionTracker
     mInstructions.SetProperty( TextLabel::Property::TEXT, "Image with ReleasePolicy::DESTROYED shown in first column, Image will be detached, reusing it will be fast");
     DisableButtonWhilstLoading();
     TableView dualImageViewTable = TableView::New( 1, 2 );
-    dualImageViewTable.SetAnchorPoint( AnchorPoint::CENTER );
-    dualImageViewTable.SetParentOrigin( ParentOrigin::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     dualImageViewTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     dualImageViewTable.SetCellPadding( Vector2( 6.0f, 0.0f ) );
 
@@ -318,8 +318,8 @@ class ImagePolicies: public ConnectionTracker
     mInstructions.SetProperty( TextLabel::Property::TEXT, "Image with ReleasePolicy::DETACHED shown in first column, will be detached and reloaded");
     DisableButtonWhilstLoading();
     TableView dualImageViewTable = TableView::New( 1, 2 );
-    dualImageViewTable.SetAnchorPoint( AnchorPoint::CENTER );
-    dualImageViewTable.SetParentOrigin( ParentOrigin::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    dualImageViewTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     dualImageViewTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     dualImageViewTable.SetCellPadding( Vector2( 6.0f, 0.0f ) );
 
@@ -386,16 +386,16 @@ class ImagePolicies: public ConnectionTracker
 
     // Create default View.
     Toolkit::Control view = Toolkit::Control::New();
-    view.SetAnchorPoint( Dali::AnchorPoint::CENTER );
-    view.SetParentOrigin( Dali::ParentOrigin::CENTER );
+    view.SetProperty( Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
+    view.SetProperty( Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
     view.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
     view.SetProperty( Toolkit::Control::Property::BACKGROUND , gradientBackground );
     stage.Add( view );
 
     // Create a table view to show a pair of buttons above each image.
     mTable = TableView::New( TableRowPlacement::NUMBER_OF_ROWS, 1 );
-    mTable.SetAnchorPoint( AnchorPoint::CENTER );
-    mTable.SetParentOrigin( ParentOrigin::CENTER );
+    mTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mTable.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     Vector3 offset( 0.9f, 0.90f, 0.0f );
     mTable.SetSizeModeFactor( offset );
@@ -415,7 +415,7 @@ class ImagePolicies: public ConnectionTracker
     mNextButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, imagePropertyMap );
     mNextButton.SetProperty( Button::Property::DISABLED_UNSELECTED_BACKGROUND_VISUAL, LOADING_IMAGE );
     mNextButton.SetProperty( Button::Property::DISABLED_SELECTED_BACKGROUND_VISUAL, NEXT_BUTTON_DISABLED_IMAGE );
-    mNextButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    mNextButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mNextButton.SetY( -50.0f );
     mNextButton.SetSize( 100.0f, 100.0f );
     mNextButton.ClickedSignal().Connect( this, &ImagePolicies::ChangeImageClicked );

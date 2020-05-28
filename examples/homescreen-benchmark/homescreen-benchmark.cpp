@@ -168,15 +168,15 @@ public:
 
     mScrollParent = Actor::New();
     mScrollParent.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mScrollParent.SetAnchorPoint( AnchorPoint::CENTER );
-    mScrollParent.SetParentOrigin( ParentOrigin::CENTER );
+    mScrollParent.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mScrollParent.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
     // create background
     Toolkit::ImageView background = Toolkit::ImageView::New( BACKGROUND_IMAGE );
     Stage::GetCurrent().Add( background );
     background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    background.SetAnchorPoint( AnchorPoint::CENTER );
-    background.SetParentOrigin( ParentOrigin::CENTER );
+    background.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    background.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
     PopulatePages();
 
@@ -211,8 +211,8 @@ public:
     }
 
     pageActor.SetBackgroundColor( Vector4( 0.0f, 0.0f, 0.0f, 0.5f ) );
-    pageActor.SetParentOrigin( ParentOrigin::CENTER );
-    pageActor.SetAnchorPoint( AnchorPoint::CENTER );
+    pageActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    pageActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     pageActor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     pageActor.SetSizeModeFactor( Vector3( PAGE_SCALE_FACTOR_X, PAGE_SCALE_FACTOR_Y, 1.0f ) );
     return pageActor;
@@ -232,8 +232,8 @@ public:
     imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
     imageView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     imageView.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-    imageView.SetAnchorPoint( AnchorPoint::CENTER );
-    imageView.SetParentOrigin( ParentOrigin::CENTER );
+    imageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    imageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     imageView.SetSizeModeFactor( Vector3( IMAGE_AREA, IMAGE_AREA, 1.0f ) );
 
     return imageView;
@@ -244,8 +244,8 @@ public:
     Toolkit::CheckBoxButton button = Toolkit::CheckBoxButton::New();
     button.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     button.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-    button.SetAnchorPoint( AnchorPoint::CENTER );
-    button.SetParentOrigin( ParentOrigin::CENTER );
+    button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    button.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     button.SetProperty( Toolkit::Button::Property::SELECTED, ( currentIconIndex % 2 == 0 ) ); // Select half the button
 
     return button;
@@ -270,8 +270,8 @@ public:
       {
         // Create parent icon view
         Toolkit::Control iconView = Toolkit::Control::New();
-        iconView.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-        iconView.SetParentOrigin( ParentOrigin::TOP_LEFT );
+        iconView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+        iconView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
 
         if( !mConfig.mTableViewEnabled )
         {
@@ -308,8 +308,8 @@ public:
           if( useTextLabel )
           {
             Toolkit::TextLabel textLabel = Toolkit::TextLabel::New( DEMO_APPS_NAMES[currentIconIndex] );
-            textLabel.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-            textLabel.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+            textLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+            textLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
             textLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
             textLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) ); // White.
             textLabel.SetProperty( Toolkit::TextLabel::Property::POINT_SIZE, ( ( static_cast<float>( ROW_HEIGHT * LABEL_AREA ) * 72.0f )  / dpi.y ) * 0.25f );
@@ -329,8 +329,8 @@ public:
 
             Toolkit::Control control = Toolkit::Control::New();
             control.SetProperty( Toolkit::Control::Property::BACKGROUND, map );
-            control.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-            control.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+            control.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+            control.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
             icon.Add( control );
           }
         }
@@ -383,13 +383,13 @@ public:
       AddIconsToPage( page, mConfig.mUseTextLabel );
 
       // Move page 'a little bit up'.
-      page.SetParentOrigin( ParentOrigin::CENTER );
-      page.SetAnchorPoint( AnchorPoint::CENTER );
+      page.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+      page.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       page.SetPosition( Vector3( stageSize.x * i, 0.0f, 0.0f ) );
       mScrollParent.Add( page );
     }
 
-    mScrollParent.SetOpacity( 1.0f );
+    mScrollParent.SetProperty( DevelActor::Property::OPACITY, 1.0f );
     mScrollParent.SetScale( Vector3::ONE );
 
     // Fade in.

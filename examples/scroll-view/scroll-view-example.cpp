@@ -214,8 +214,8 @@ private:
     Vector2 stageSize = stage.GetSize();
 
     mScrollView = ScrollView::New();
-    mScrollView.SetAnchorPoint(AnchorPoint::CENTER);
-    mScrollView.SetParentOrigin(ParentOrigin::CENTER);
+    mScrollView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
+    mScrollView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mContentLayer.Add( mScrollView );
     mScrollView.SetSize( stageSize );
     mScrollView.SetAxisAutoLock( true );
@@ -276,8 +276,8 @@ private:
   {
     Actor page = Actor::New();
     page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    page.SetParentOrigin( ParentOrigin::CENTER );
-    page.SetAnchorPoint( AnchorPoint::CENTER );
+    page.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    page.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     Stage stage = Stage::GetCurrent();
     Vector2 stageSize = stage.GetSize();
@@ -294,8 +294,8 @@ private:
       {
         ImageView image = CreateImage( GetNextImagePath(), imageSize.x, imageSize.y );
 
-        image.SetParentOrigin( ParentOrigin::CENTER );
-        image.SetAnchorPoint( AnchorPoint::CENTER );
+        image.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+        image.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
         Vector3 position( margin * 0.5f + (imageSize.x + margin) * column - stageSize.width * 0.5f,
                          margin * 0.5f + (imageSize.y + margin) * row - stageSize.height * 0.5f,
@@ -468,9 +468,9 @@ private:
     map[ImageVisual::Property::SAMPLING_MODE] = SamplingMode::BOX_THEN_LINEAR;
     actor.SetProperty( ImageView::Property::IMAGE, map );
 
-    actor.SetName( filename );
-    actor.SetParentOrigin(ParentOrigin::CENTER);
-    actor.SetAnchorPoint(AnchorPoint::CENTER);
+    actor.SetProperty( Dali::Actor::Property::NAME, filename );
+    actor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    actor.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
 
     actor.TouchSignal().Connect( this, &ExampleController::OnTouchImage );
     return actor;

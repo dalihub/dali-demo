@@ -106,8 +106,8 @@ private:
     for( int i = 0; yPos < stageSize.height; ++i )
     {
       ImageView imageView = ImageView::New( IMAGE_NAME );
-      imageView.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-      imageView.SetParentOrigin( ParentOrigin::TOP_CENTER );
+      imageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+      imageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
       imageView.SetY( yPos );
       yPos += imageView.GetNaturalSize().height;
 
@@ -129,8 +129,8 @@ private:
     mTextLabel = TextLabel::New( TEXT_ENABLED );
     mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, TEXT_COLOR_ENABLED );
     mTextLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    mTextLabel.SetAnchorPoint( AnchorPoint::CENTER );
-    mTextLabel.SetParentOrigin( ParentOrigin::CENTER );
+    mTextLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mStage.Add( mTextLabel );
 
     // Set the FrameCallbackInterface on the root layer.

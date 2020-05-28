@@ -113,8 +113,8 @@ Actor ClippingItemFactory::NewItem( unsigned int itemId )
 
   // Add a border image child actor
   ImageView borderActor = ImageView::New();
-  borderActor.SetParentOrigin( ParentOrigin::CENTER );
-  borderActor.SetAnchorPoint( AnchorPoint::CENTER );
+  borderActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+  borderActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   borderActor.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
   borderActor.SetSizeModeFactor( Vector3( 2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f ) );
   borderActor.SetColorMode( USE_PARENT_COLOR );

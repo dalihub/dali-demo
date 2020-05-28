@@ -105,8 +105,8 @@ class ButtonsController: public ConnectionTracker
     Toolkit::TableView contentTable = Toolkit::TableView::New( 4, 1 );
     contentTable.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     contentTable.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-    contentTable.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    contentTable.SetParentOrigin( ParentOrigin::TOP_LEFT );
+    contentTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    contentTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     contentTable.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE * 0.5f ) );
 
     for( unsigned int i = 0; i < contentTable.GetRows(); ++i )
@@ -161,8 +161,8 @@ class ButtonsController: public ConnectionTracker
       image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage1 = Dali::Toolkit::RadioButton::New( "1" );
-      mRadioButtonImage1.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      mRadioButtonImage1.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+      mRadioButtonImage1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+      mRadioButtonImage1.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
       mRadioButtonImage1.SetPosition( 0, DP(radioY) );
       mRadioButtonImage1.SetProperty( Toolkit::Button::Property::SELECTED, true );
 
@@ -178,8 +178,8 @@ class ButtonsController: public ConnectionTracker
       image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage2 = Dali::Toolkit::RadioButton::New( "2" );
-      mRadioButtonImage2.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      mRadioButtonImage2.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+      mRadioButtonImage2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+      mRadioButtonImage2.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
       mRadioButtonImage2.SetPosition( 0, DP(radioY) );
 
       imageSelectTableView.AddChild( mRadioButtonImage2, Toolkit::TableView::CellPosition( 1, 0 ) );
@@ -194,8 +194,8 @@ class ButtonsController: public ConnectionTracker
       image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
 
       mRadioButtonImage3 = Dali::Toolkit::RadioButton::New( "3" );
-      mRadioButtonImage3.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      mRadioButtonImage3.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+      mRadioButtonImage3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+      mRadioButtonImage3.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
       mRadioButtonImage3.SetPosition( 0, DP(radioY) );
 
       imageSelectTableView.AddChild( mRadioButtonImage3, Toolkit::TableView::CellPosition( 2, 0 ) );
@@ -205,7 +205,7 @@ class ButtonsController: public ConnectionTracker
     // Create select button
     mUpdateButton = Toolkit::PushButton::New();
     mUpdateButton.SetProperty( Toolkit::Button::Property::LABEL, "Select" );
-    mUpdateButton.SetName( "selectButton" );
+    mUpdateButton.SetProperty( Dali::Actor::Property::NAME, "selectButton" );
     mUpdateButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
 
     mUpdateButton.ClickedSignal().Connect( this, &ButtonsController::OnButtonClicked );
@@ -263,9 +263,9 @@ class ButtonsController: public ConnectionTracker
     // First radio button
     {
       Toolkit::RadioButton radioButton = Dali::Toolkit::RadioButton::New( "Select enabled" );
-      radioButton.SetName( "radioSelectEnable" );
-      radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+      radioButton.SetProperty( Dali::Actor::Property::NAME, "radioSelectEnable" );
+      radioButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+      radioButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( 0, 0 );
       radioButton.SetProperty( Toolkit::Button::Property::SELECTED, true );
 
@@ -277,9 +277,9 @@ class ButtonsController: public ConnectionTracker
     // Second radio button
     {
       Toolkit::RadioButton radioButton = Dali::Toolkit::RadioButton::New( "Select disabled" );
-      radioButton.SetName( "radioSelectDisable" );
-      radioButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-      radioButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+      radioButton.SetProperty( Dali::Actor::Property::NAME, "radioSelectDisable" );
+      radioButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+      radioButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
       radioButton.SetPosition( 0, DP(50) );
 
       radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
@@ -303,7 +303,7 @@ class ButtonsController: public ConnectionTracker
 
     {
       mCheckboxButton1 = Toolkit::CheckBoxButton::New();
-      mCheckboxButton1.SetName( "checkbox1" );
+      mCheckboxButton1.SetProperty( Dali::Actor::Property::NAME, "checkbox1" );
       mCheckboxButton1.SetProperty( Toolkit::Button::Property::LABEL, "CheckBox1 is unselected" );
       mCheckboxButton1.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
       mCheckboxButton1.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
@@ -313,7 +313,7 @@ class ButtonsController: public ConnectionTracker
 
     {
       mCheckboxButton2 = Toolkit::CheckBoxButton::New();
-      mCheckboxButton2.SetName( "checkbox2" );
+      mCheckboxButton2.SetProperty( Dali::Actor::Property::NAME, "checkbox2" );
       mCheckboxButton2.SetProperty( Toolkit::Button::Property::LABEL, "CheckBox2 is selected" );
       mCheckboxButton2.SetProperty( Toolkit::Button::Property::SELECTED, true );
       mCheckboxButton2.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
@@ -324,7 +324,7 @@ class ButtonsController: public ConnectionTracker
 
     {
       mCheckboxButton3 = Toolkit::CheckBoxButton::New();
-      mCheckboxButton3.SetName( "checkbox3" );
+      mCheckboxButton3.SetProperty( Dali::Actor::Property::NAME, "checkbox3" );
       mCheckboxButton3.SetProperty( Toolkit::Button::Property::LABEL, "CheckBox3 is unselected" );
       mCheckboxButton3.StateChangedSignal().Connect( this, &ButtonsController::OnCheckBoxesSelected );
       mCheckboxButton3.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
@@ -395,7 +395,7 @@ class ButtonsController: public ConnectionTracker
       return true;
     }
 
-    if( button.GetName() == "radioSelectEnable" )
+    if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == "radioSelectEnable" )
     {
       mUpdateButton.SetProperty( Toolkit::Button::Property::DISABLED, false );
 
@@ -409,7 +409,7 @@ class ButtonsController: public ConnectionTracker
 
       mToggleButton.SetProperty( Toolkit::Button::Property::DISABLED, false );
     }
-    else if( button.GetName() == "radioSelectDisable" )
+    else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == "radioSelectDisable" )
     {
       mUpdateButton.SetProperty( Toolkit::Button::Property::DISABLED, true );
 
@@ -447,7 +447,7 @@ class ButtonsController: public ConnectionTracker
   bool OnCheckBoxesSelected( Toolkit::Button button )
   {
     bool isSelected = button.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
-    if( button.GetName() == "checkbox1" )
+    if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == "checkbox1" )
     {
       if( isSelected )
       {
@@ -459,7 +459,7 @@ class ButtonsController: public ConnectionTracker
       }
     }
 
-    if( button.GetName() == "checkbox2" )
+    if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == "checkbox2" )
     {
       if( isSelected )
       {
@@ -471,7 +471,7 @@ class ButtonsController: public ConnectionTracker
       }
     }
 
-    if( button.GetName() == "checkbox3" )
+    if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == "checkbox3" )
     {
       if( isSelected )
       {

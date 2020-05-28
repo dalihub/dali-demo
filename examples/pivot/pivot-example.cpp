@@ -71,8 +71,8 @@ private:
 
     // Create a table view.
     TableView tableView = TableView::New( TABLE_VIEW_ROWS, TABLE_VIEW_COLUMNS );
-    tableView.SetAnchorPoint( AnchorPoint::CENTER );
-    tableView.SetParentOrigin( ParentOrigin::CENTER );
+    tableView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    tableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     tableView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     tableView.SetSizeModeFactor( TABLE_VIEW_SIZE_MODE_FACTOR );
     stage.Add( tableView );
@@ -97,7 +97,7 @@ private:
         control.SetBackgroundColor( Vector4( Random::Range( 0.0f, 1.0f ), Random::Range( 0.0f, 1.0f ), Random::Range( 0.0f, 1.0f ), 1.0f ) );
         control.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
         control.SetProperty( DevelActor::Property::POSITION_USES_ANCHOR_POINT, false ); // Ensures the position always uses top-left for its calculations.
-        control.SetAnchorPoint( anchorPoint ); // This anchor-point is used for the rotation and the scale.
+        control.SetProperty( Actor::Property::ANCHOR_POINT, anchorPoint ); // This anchor-point is used for the rotation and the scale.
 
         // Add to the table-view
         tableView.AddChild( control, TableView::CellPosition( row, column ) );

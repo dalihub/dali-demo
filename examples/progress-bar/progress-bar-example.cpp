@@ -77,8 +77,8 @@ private:
                                             TOOLBAR_TITLE );
 
     mProgressBarDefault = ProgressBar::New();
-    mProgressBarDefault.SetParentOrigin(ParentOrigin::TOP_CENTER);
-    mProgressBarDefault.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    mProgressBarDefault.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_CENTER);
+    mProgressBarDefault.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mProgressBarDefault.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mProgressBarDefault.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mProgressBarDefault.ValueChangedSignal().Connect( this, &ProgressBarExample::OnValueChanged );
@@ -86,8 +86,8 @@ private:
     Toolkit::TableView contentTable = Toolkit::TableView::New(2, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     contentTable.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-    contentTable.SetAnchorPoint(AnchorPoint::TOP_LEFT);
-    contentTable.SetParentOrigin(ParentOrigin::TOP_LEFT);
+    contentTable.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
+    contentTable.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     contentTable.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5f));
 
     for( unsigned int i = 0; i < contentTable.GetRows(); ++i )

@@ -55,9 +55,9 @@ public:
     stage.KeyEventSignal().Connect(this, &SimpleTextLabelExample::OnKeyEvent);
 
     mLabel = TextLabel::New( "A Quick Brown Fox Jumps Over The Lazy Dog" );
-    mLabel.SetName( "SimpleTextLabel" );
-    mLabel.SetAnchorPoint( AnchorPoint::CENTER );
-    mLabel.SetParentOrigin( ParentOrigin::CENTER );
+    mLabel.SetProperty( Dali::Actor::Property::NAME, "SimpleTextLabel" );
+    mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabel.SetSize( 400.f, 400.f );
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );

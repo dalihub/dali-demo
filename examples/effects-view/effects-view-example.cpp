@@ -140,14 +140,14 @@ void EffectsViewApp::OnAppInitialize( Application& application )
 
   Vector2 effectsViewSize( mStageSize.width, mStageSize.height * 0.25f );
   mDropShadowView = CreateEffectsView( EffectsView::DROP_SHADOW, effectsViewSize, mEffectSize );
-  mDropShadowView.SetParentOrigin( ParentOrigin::CENTER );
-  mDropShadowView.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+  mDropShadowView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+  mDropShadowView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
   mDropShadowView.SetZ( -mStageSize.height * 0.1f );
   mContents.Add( mDropShadowView );
 
   mEmbossView = CreateEffectsView( EffectsView::EMBOSS, effectsViewSize, mEffectSize );
-  mEmbossView.SetParentOrigin( ParentOrigin::CENTER );
-  mEmbossView.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+  mEmbossView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+  mEmbossView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
   mEmbossView.SetZ( mStageSize.height * 0.1f );
   mContents.Add( mEmbossView );
 
@@ -167,8 +167,8 @@ EffectsView EffectsViewApp::CreateEffectsView( EffectsView::EffectType type, con
   // text
   std::string text = ( type == EffectsView::DROP_SHADOW) ? "Drop Shadow" : "Emboss";
   TextLabel textActor( TextLabel::New( text ) );
-  textActor.SetParentOrigin( ParentOrigin::CENTER_LEFT );
-  textActor.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
+  textActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT );
+  textActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT );
   textActor.SetSize( viewSize );
   textActor.SetPosition( viewSize.width*0.4f, viewSize.height*0.3f );
   textActor.SetProperty(  TextLabel::Property::POINT_SIZE, DemoHelper::ScalePointSize(14.f) );
@@ -176,8 +176,8 @@ EffectsView EffectsViewApp::CreateEffectsView( EffectsView::EffectType type, con
 
   // image
   ImageView icon = ImageView::New( TEST_IMAGE );
-  icon.SetParentOrigin( ParentOrigin::CENTER_LEFT );
-  icon.SetAnchorPoint( AnchorPoint::CENTER_LEFT );
+  icon.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT );
+  icon.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT );
   icon.SetX( viewSize.width*0.1f );
   icon.SetSize( viewSize.height*0.8f, viewSize.height*0.8f );
   effectsView.Add( icon );

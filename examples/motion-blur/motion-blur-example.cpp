@@ -179,7 +179,7 @@ public:
     layoutButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE );
     layoutButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE_SELECTED );
     layoutButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnLayoutButtonClicked);
-    layoutButton.SetLeaveRequired( true );
+    layoutButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Input
@@ -209,7 +209,7 @@ public:
     mMotionBlurEffect = CreateMotionBlurEffect();
     mMotionBlurImageView = ImageView::New();
     SetImageFittedInBox( mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y );
-    mMotionBlurImageView.SetParentOrigin( ParentOrigin::CENTER );
+    mMotionBlurImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mMotionBlurImageView.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
 
     mContentLayer.Add( mMotionBlurImageView );

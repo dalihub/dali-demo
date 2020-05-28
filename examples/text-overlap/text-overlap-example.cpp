@@ -33,8 +33,8 @@ void TextOverlapController::Create( Application& app )
   mLabels[0] = TextLabel::New("Text Label 1");
   mLabels[1] = TextLabel::New("Text Label 2");
 
-  mLabels[0].SetName("Label1");
-  mLabels[1].SetName("Label2");
+  mLabels[0].SetProperty( Dali::Actor::Property::NAME,"Label1");
+  mLabels[1].SetProperty( Dali::Actor::Property::NAME,"Label2");
 
   mLabels[0].SetProperty( DevelActor::Property::SIBLING_ORDER, 1 );
   mLabels[1].SetProperty( DevelActor::Property::SIBLING_ORDER, 2 );
@@ -45,8 +45,8 @@ void TextOverlapController::Create( Application& app )
   for(int i=0; i<NUMBER_OF_LABELS; ++i )
   {
     mLabels[i].SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    mLabels[i].SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    mLabels[i].SetParentOrigin( ParentOrigin::TOP_LEFT );
+    mLabels[i].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    mLabels[i].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mLabels[i].SetPosition( 0, (i*2+1) * stageSize.height * 0.25f );
   }
 
@@ -55,8 +55,8 @@ void TextOverlapController::Create( Application& app )
 
   mSwapButton = PushButton::New();
   mSwapButton.SetProperty( Button::Property::LABEL, "Swap depth order");
-  mSwapButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-  mSwapButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+  mSwapButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+  mSwapButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
   mSwapButton.ClickedSignal().Connect( this, &TextOverlapController::OnClicked );
   mSwapButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   mSwapButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
@@ -64,7 +64,7 @@ void TextOverlapController::Create( Application& app )
 
 
   Layer rootLayer = stage.GetRootLayer();
-  rootLayer.SetName("RootLayer");
+  rootLayer.SetProperty( Dali::Actor::Property::NAME,"RootLayer");
 
   mPanDetector = PanGestureDetector::New();
   mPanDetector.Attach( rootLayer );
@@ -79,8 +79,8 @@ void TextOverlapController::OnPan( Actor actor, const PanGesture& gesture )
   {
     for( int i=0; i<NUMBER_OF_LABELS; ++i )
     {
-      Vector3 position = mLabels[i].GetCurrentPosition();
-      Vector3 size = mLabels[i].GetCurrentSize();
+      Vector3 position = mLabels[i].GetCurrentProperty< Vector3 >( Actor::Property::POSITION );
+      Vector3 size = mLabels[i].GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
       if( gesture.position.y > position.y - size.y * 0.5f &&
           gesture.position.y <= position.y + size.y * 0.5f )
       {
@@ -92,7 +92,7 @@ void TextOverlapController::OnPan( Actor actor, const PanGesture& gesture )
   else if( mGrabbedActor && gesture.state == PanGesture::Continuing )
   {
     Vector2 stageSize = Stage::GetCurrent().GetSize();
-    Vector3 size = mGrabbedActor.GetCurrentSize();
+    Vector3 size = mGrabbedActor.GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
     float y = Clamp( gesture.position.y, size.y * 0.5f, stageSize.y - size.y*0.5f );
     mGrabbedActor.SetPosition( 0, y );
   }

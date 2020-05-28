@@ -180,9 +180,9 @@ void GameCamera::InitialiseDefaultCamera()
 {
   Stage stage = Stage::GetCurrent();
   mCameraActor = stage.GetRenderTaskList().GetTask(0).GetCameraActor();
-  mCameraActor.SetName( "GameCamera" );
-  mCameraActor.SetAnchorPoint( AnchorPoint::CENTER );
-  mCameraActor.SetParentOrigin( ParentOrigin::CENTER );
+  mCameraActor.SetProperty( Dali::Actor::Property::NAME, "GameCamera" );
+  mCameraActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  mCameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCameraActor.SetFieldOfView( Radian( Degree( mFovY ) ) );
 
   // should be read from file
@@ -190,7 +190,7 @@ void GameCamera::InitialiseDefaultCamera()
   mCameraActor.SetFarClippingPlane( mFar );
   mCameraActor.SetPosition( CAMERA_DEFAULT_POSITION );
 
-  // Camera position is shadowed in order to avoid using GetCurrentPosition()
+  // Camera position is shadowed in order to avoid using.GetCurrentProperty< Vector3 >( Actor::Property::POSITION )
   mCameraPosition = CAMERA_DEFAULT_POSITION;
 }
 
@@ -199,11 +199,11 @@ void GameCamera::CreateInterceptorActor()
   Stage stage = Stage::GetCurrent();
 
   mInterceptorActor = Actor::New();
-  mInterceptorActor.SetName( "GameInputInterceptor" );
+  mInterceptorActor.SetProperty( Dali::Actor::Property::NAME, "GameInputInterceptor" );
   mInterceptorActor.SetSize( Vector3( stage.GetSize().x, stage.GetSize().y, 1 ) );
   mInterceptorActor.SetPosition( Vector3( 0.0, 0.0, 1.0  ) );
-  mInterceptorActor.SetAnchorPoint( AnchorPoint::CENTER );
-  mInterceptorActor.SetParentOrigin( ParentOrigin::CENTER );
+  mInterceptorActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  mInterceptorActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCameraActor.Add( mInterceptorActor );
 
   // Connect TouchSignal to interceptor actor

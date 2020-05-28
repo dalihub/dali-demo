@@ -275,8 +275,8 @@ public:
 
     mItemView = ItemView::New(*this);
 
-    mItemView.SetParentOrigin(ParentOrigin::CENTER);
-    mItemView.SetAnchorPoint(AnchorPoint::CENTER);
+    mItemView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    mItemView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mLayout = DefaultItemLayout::New( DefaultItemLayout::LIST );
 
     mLayout->SetItemSize( Vector3( stage.GetSize().width, 50, 1 ) );
@@ -450,9 +450,9 @@ public:
   {
     ReloadJsonFile( name, mBuilder, mBuilderLayer );
 
-    mBuilderLayer.SetParentOrigin(ParentOrigin::BOTTOM_CENTER);
-    mBuilderLayer.SetAnchorPoint(AnchorPoint::BOTTOM_CENTER);
-    Dali::Vector3 size = Stage::GetCurrent().GetRootLayer().GetCurrentSize();
+    mBuilderLayer.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_CENTER);
+    mBuilderLayer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_CENTER);
+    Dali::Vector3 size = Stage::GetCurrent().GetRootLayer().GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
     size.y -= DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight;
     mBuilderLayer.SetSize( size );
 
@@ -481,12 +481,12 @@ public:
     backButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EDIT_IMAGE );
     backButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EDIT_IMAGE_SELECTED );
     backButton.ClickedSignal().Connect( this, &ExampleApp::OnBackButtonPressed);
-    backButton.SetLeaveRequired( true );
+    backButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     mNavigationView = Toolkit::NavigationView::New();
     mNavigationView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mNavigationView.SetAnchorPoint( AnchorPoint::TOP_LEFT);
+    mNavigationView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
 
     stage.Add( mNavigationView );
 

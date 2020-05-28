@@ -158,7 +158,7 @@ public:
     layoutButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE );
     layoutButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE_SELECTED );
     layoutButton.ClickedSignal().Connect( this, &MotionStretchExampleApp::OnLayoutButtonClicked);
-    layoutButton.SetLeaveRequired( true );
+    layoutButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Input
@@ -185,8 +185,8 @@ public:
     mMotionStretchEffect["url"] = MOTION_STRETCH_ACTOR_IMAGE1;
     mMotionStretchImageView = ImageView::New();
     mMotionStretchImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionStretchEffect );
-    mMotionStretchImageView.SetParentOrigin( ParentOrigin::CENTER );
-    mMotionStretchImageView.SetAnchorPoint( AnchorPoint::CENTER );
+    mMotionStretchImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mMotionStretchImageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mMotionStretchImageView.SetSize( MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT );
 
     mContentLayer.Add( mMotionStretchImageView );

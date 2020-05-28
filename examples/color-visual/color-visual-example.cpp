@@ -73,7 +73,7 @@ public:
     stage.SetBackgroundColor( Color::WHITE );
 
     mImageView = ImageView::New( IMAGE_FILE );
-    mImageView.SetParentOrigin( ParentOrigin::CENTER );
+    mImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mImageView.SetSize( 200.0f, 200.0f );
     mImageView.SetProperty( DevelControl::Property::SHADOW, SHADOW );
 

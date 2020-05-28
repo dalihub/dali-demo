@@ -86,16 +86,16 @@ public:
 
     //Add background
     Toolkit::ImageView backView = Toolkit::ImageView::New( BACKGROUND_IMAGE );
-    backView.SetParentOrigin( ParentOrigin::CENTER );
-    backView.SetAnchorPoint( AnchorPoint::CENTER );
+    backView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    backView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     stage.Add( backView );
 
     mModelCounter = 0;
 
     mModel3dView = Model3dView::New( MODEL_FILE[0], MATERIAL_FILE[0], IMAGE_PATH );
-    mModel3dView.SetParentOrigin( ParentOrigin::CENTER );
-    mModel3dView.SetAnchorPoint( AnchorPoint::CENTER );
-    mModel3dView.SetName( "model3dViewControl" );
+    mModel3dView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mModel3dView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mModel3dView.SetProperty( Dali::Actor::Property::NAME, "model3dViewControl" );
     mModel3dView.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mModel3dView.SetSize(screenSize);
 
@@ -107,16 +107,16 @@ public:
 
     mButtonLayer = Layer::New();
     mButtonLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mButtonLayer.SetParentOrigin( ParentOrigin::CENTER );
-    mButtonLayer.SetAnchorPoint( AnchorPoint::CENTER );
+    mButtonLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mButtonLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     stage.Add(mButtonLayer);
 
     // Create button for model changing
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
     editButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     editButton.ClickedSignal().Connect( this, &Model3dViewController::OnChangeModelClicked);
-    editButton.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    editButton.SetAnchorPoint( AnchorPoint::TOP_LEFT );
+    editButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    editButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     editButton.SetProperty( Toolkit::Button::Property::LABEL, "Change Model" );
     mButtonLayer.Add( editButton  );
 
@@ -124,8 +124,8 @@ public:
     editButton = Toolkit::PushButton::New();
     editButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     editButton.ClickedSignal().Connect( this, &Model3dViewController::OnChangeLightingClicked);
-    editButton.SetParentOrigin( ParentOrigin::TOP_RIGHT );
-    editButton.SetAnchorPoint( AnchorPoint::TOP_RIGHT );
+    editButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
+    editButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
     editButton.SetProperty( Toolkit::Button::Property::LABEL, "Change Shader" );
     mButtonLayer.Add( editButton  );
 
@@ -133,8 +133,8 @@ public:
     editButton = Toolkit::PushButton::New();
     editButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
     editButton.ClickedSignal().Connect( this, &Model3dViewController::OnPauseAnimationsClicked);
-    editButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    editButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    editButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    editButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     editButton.SetProperty( Toolkit::Button::Property::LABEL, "Pause Animations" );
     mButtonLayer.Add( editButton  );
 

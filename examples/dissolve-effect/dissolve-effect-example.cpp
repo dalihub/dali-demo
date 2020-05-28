@@ -22,6 +22,7 @@
 #include "shared/view.h"
 
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/shader-effects/dissolve-effect.h>
 
@@ -248,12 +249,12 @@ void DissolveEffectApp::OnInit( Application& application )
   // Set size to stage size to avoid seeing a black border on transition
   mParent = Actor::New();
   mParent.SetSize( Stage::GetCurrent().GetSize() );
-  mParent.SetParentOrigin( ParentOrigin::CENTER );
+  mParent.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mContent.Add( mParent );
 
   // show the first image
   mCurrentImage = CreateStageFillingImageView( IMAGES[mIndex] );
-  mCurrentImage.SetParentOrigin( ParentOrigin::CENTER );
+  mCurrentImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCurrentImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   mCurrentImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mParent.Add( mCurrentImage );
@@ -286,12 +287,12 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     }
 
     mNextImage = CreateStageFillingImageView( IMAGES[ mIndex ] );
-    mNextImage.SetParentOrigin( ParentOrigin::CENTER );
+    mNextImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);
     mParent.Add( mNextImage );
-    Vector2 size = Vector2( mCurrentImage.GetCurrentSize() );
+    Vector2 size = Vector2( mCurrentImage.GetCurrentProperty< Vector3 >( Actor::Property::SIZE ) );
     StartTransition( gesture.position / size, gesture.displacement * Vector2(1.0, size.x/size.y));
   }
 }
@@ -304,7 +305,7 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
   mCurrentImage.SetProperty( Toolkit::ImageView::Property::IMAGE, mDissolveEffect );
   mAnimation.AnimateTo( Property( mCurrentImage, "uPercentage" ), 1.0f, AlphaFunction::LINEAR );
 
-  mNextImage.SetOpacity(0.0f);
+  mNextImage.SetProperty( DevelActor::Property::OPACITY,0.0f);
   mAnimation.AnimateTo( Property( mNextImage, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::LINEAR );
 
   if(mUseHighPrecision)
@@ -401,7 +402,7 @@ bool DissolveEffectApp::OnTimerTick()
   {
     mIndex = (mIndex + 1)%NUM_IMAGES;
     mNextImage = CreateStageFillingImageView( IMAGES[ mIndex ] );
-    mNextImage.SetParentOrigin( ParentOrigin::CENTER );
+    mNextImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNextImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     mNextImage.SetZ(INITIAL_DEPTH);

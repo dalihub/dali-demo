@@ -296,13 +296,13 @@ private:
     mPaddleImage = CreateImage(PADDLE_IMAGE);
     mPaddle.Add( mPaddleHandle );
     mPaddle.Add( mPaddleImage );
-    mPaddleHandle.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mPaddleHandle.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    mPaddleHandle.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mPaddleHandle.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mPaddleHandle.SetPosition( 0.0f, stageSize.width * 0.0125f );
-    mPaddleImage.SetParentOrigin( ParentOrigin::TOP_CENTER );
-    mPaddleImage.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    mPaddle.SetParentOrigin( ParentOrigin::TOP_LEFT );
-    mPaddle.SetAnchorPoint( AnchorPoint::CENTER );
+    mPaddleImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mPaddleImage.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    mPaddle.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
+    mPaddle.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mPaddleFullSize = PADDLE_SIZE * stageSize.width;
     mPaddle.SetSize( mPaddleFullSize + mPaddleHitMargin );
     mPaddleHandle.SetSize( PADDLE_HANDLE_SIZE * stageSize.width );
@@ -380,8 +380,8 @@ private:
     }
 
     mLevelContainer = Actor::New();
-    mLevelContainer.SetAnchorPoint( AnchorPoint::CENTER );
-    mLevelContainer.SetParentOrigin( ParentOrigin::CENTER );
+    mLevelContainer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mLevelContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLevelContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     mContentLayer.Add( mLevelContainer );
@@ -559,8 +559,8 @@ private:
     mBrickImageMap["url"] = BRICK_IMAGE_PATH[type];
     ImageView brick = ImageView::New();
     brick.SetProperty( ImageView::Property::IMAGE, mBrickImageMap );
-    brick.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    brick.SetAnchorPoint(AnchorPoint::CENTER);
+    brick.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    brick.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     brick.SetPosition( Vector3( position ) );
 
     // Add a constraint on the brick between it and the ball generating a collision-property
@@ -593,8 +593,8 @@ private:
     propertyMap.Insert(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FILL);
     ImageView actor = ImageView::New();
     actor.SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
-    actor.SetParentOrigin(ParentOrigin::TOP_LEFT);
-    actor.SetAnchorPoint(AnchorPoint::CENTER);
+    actor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    actor.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     return actor;
   }
 
@@ -627,7 +627,7 @@ private:
         // Get point where user touched paddle (relative to paddle's center)
         Vector2 screenPoint = event.GetScreenPosition( 0 );
         mRelativeDragPoint = screenPoint;
-        mRelativeDragPoint -= actor.GetCurrentPosition();
+        mRelativeDragPoint -= actor.GetCurrentProperty< Vector3 >( Actor::Property::POSITION );
 
         mDragActor = actor;
         mDragAnimation = Animation::New(0.25f);
@@ -730,7 +730,7 @@ private:
   {
     // Reposition Ball in start position, and make ball appear.
     mBall.SetPosition( mBallStartPosition );
-    mBall.SetColor( Vector4(1.0f, 1.0f, 1.0f, 0.1f) );
+    mBall.SetProperty( Actor::Property::COLOR, Vector4(1.0f, 1.0f, 1.0f, 0.1f) );
     Animation appear = Animation::New(0.5f);
     appear.AnimateTo( Property(mBall, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 1.0f) );
     appear.Play();
@@ -749,7 +749,7 @@ private:
   {
     Actor delegate = Actor::DownCast(source.GetTarget());
     Vector3 collisionVector = delegate.GetCurrentProperty< Vector3 >( source.GetTargetProperty() );
-    Vector3 ballRelativePosition(mBall.GetCurrentPosition() - mPaddle.GetCurrentPosition());
+    Vector3 ballRelativePosition(mBall.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ) - mPaddle.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ));
     ballRelativePosition.Normalize();
 
     collisionVector.x += ballRelativePosition.x * 0.5f;

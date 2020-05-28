@@ -213,13 +213,13 @@ public:
                                        TOOLBAR_IMAGE,
                                        APPLICATION_TITLE );
 
-    mContent.SetLeaveRequired(true);
+    mContent.SetProperty( Actor::Property::LEAVE_REQUIRED,true);
     mContent.TouchSignal().Connect( this, &ExampleController::OnTouched );
 
     // Create magnifier (controlled by human touch)
     Layer overlay = Layer::New();
-    overlay.SetSensitive(false);
-    overlay.SetParentOrigin( ParentOrigin::CENTER );
+    overlay.SetProperty( Actor::Property::SENSITIVE,false);
+    overlay.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     overlay.SetSize(mStageSize);
     Stage::GetCurrent().Add(overlay);
 

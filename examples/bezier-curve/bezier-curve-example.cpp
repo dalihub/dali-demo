@@ -162,16 +162,16 @@ public:
     mContentLayer = Layer::New();
     mContentLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mContentLayer.TouchSignal().Connect(this, &BezierCurveExample::OnTouchLayer);
-    mContentLayer.SetParentOrigin( ParentOrigin::CENTER );
+    mContentLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     stage.Add( mContentLayer );
 
     // 6 rows: title, grid, coords, play, anim1, anim2
     TableView contentLayout = TableView::New(5, 1);
-    contentLayout.SetName("contentLayout");
+    contentLayout.SetProperty( Dali::Actor::Property::NAME,"contentLayout");
     contentLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     contentLayout.SetCellPadding( Size( 30, 30 ) );
-    contentLayout.SetParentOrigin(ParentOrigin::TOP_CENTER);
-    contentLayout.SetAnchorPoint(AnchorPoint::TOP_CENTER);
+    contentLayout.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_CENTER);
+    contentLayout.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mContentLayer.Add( contentLayout );
 
     // Create a TextLabel for the application title.
@@ -187,8 +187,8 @@ public:
     mGrid.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
     mGrid.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
 
-    mGrid.SetParentOrigin(ParentOrigin::CENTER);
-    mGrid.SetAnchorPoint(AnchorPoint::CENTER);
+    mGrid.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    mGrid.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mGrid.SetBackgroundColor(GRID_BACKGROUND_COLOR);
 
     contentLayout.Add( mGrid );
@@ -201,7 +201,7 @@ public:
     mCoefficientLabel.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
     mCoefficientLabel.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mCoefficientLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
-    mCoefficientLabel.SetParentOrigin(ParentOrigin::CENTER);
+    mCoefficientLabel.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
     contentLayout.Add( mCoefficientLabel );
     SetLabel( Vector2(0,0), Vector2(1,1));
@@ -211,8 +211,8 @@ public:
     // Setup Play button and 2 icons to show off current anim and linear anim
 
     PushButton play = PushButton::New();
-    play.SetName("Play");
-    play.SetParentOrigin(ParentOrigin::CENTER);
+    play.SetProperty( Dali::Actor::Property::NAME,"Play");
+    play.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     play.SetProperty( Button::Property::LABEL, "Play");
     play.ClickedSignal().Connect( this, &BezierCurveExample::OnPlayClicked );
 
@@ -221,8 +221,8 @@ public:
     contentLayout.SetFitHeight(3);
 
     auto animContainer = Control::New();
-    animContainer.SetName("AnimationContainer");
-    animContainer.SetParentOrigin( ParentOrigin::CENTER );
+    animContainer.SetProperty( Dali::Actor::Property::NAME,"AnimationContainer");
+    animContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     animContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     auto animRail = Control::New();
@@ -231,15 +231,15 @@ public:
                           .Add( ImageVisual::Property::URL, ANIMATION_BACKGROUND ) );
     animRail.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     animRail.SetSizeModeFactor( Vector3( 0.666f, 0.2f, 1.0f ) );
-    animRail.SetParentOrigin( ParentOrigin::CENTER );
+    animRail.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     animContainer.Add( animRail );
 
     contentLayout.Add( animContainer );
     contentLayout.SetFixedHeight(4, 150 );
 
     mAnimIcon1 = ImageView::New( CIRCLE1_IMAGE );
-    mAnimIcon1.SetParentOrigin( ParentOrigin::CENTER );
-    mAnimIcon1.SetAnchorPoint( AnchorPoint::CENTER );
+    mAnimIcon1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mAnimIcon1.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     // Would like some means of setting and animating position as a percentage of
     // parent size without using constraints, but this will have to suffice for the moment.
@@ -280,8 +280,8 @@ public:
   void CreateBackground( Stage stage )
   {
     Toolkit::Control background = Dali::Toolkit::Control::New();
-    background.SetAnchorPoint( Dali::AnchorPoint::CENTER );
-    background.SetParentOrigin( Dali::ParentOrigin::CENTER );
+    background.SetProperty( Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
+    background.SetProperty( Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
     background.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
 
     Property::Map map;
@@ -296,7 +296,7 @@ public:
     // Create a mesh to draw the cubic as a single line
     mCurve = Actor::New();
     mCurve.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mCurve.SetParentOrigin( ParentOrigin::CENTER );
+    mCurve.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
     Shader shader = Shader::New( CURVE_VERTEX_SHADER, CURVE_FRAGMENT_SHADER );
 
@@ -319,7 +319,7 @@ public:
   {
     Actor actor = ImageView::New( url );
     actor.SetScale( mControlPointScale);
-    actor.SetParentOrigin( ParentOrigin::CENTER );
+    actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     // Curve and line drawing works off current value (i.e. last update frame's value). Need to animate to ensure
     // initial position is baked to both frames before initially drawing the curve.
     auto positionAnimation = Animation::New( 0.01f );
@@ -340,7 +340,7 @@ public:
   {
     Actor line = Actor::New();
     line.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    line.SetParentOrigin( ParentOrigin::CENTER );
+    line.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
     Shader shader = Shader::New( CURVE_VERTEX_SHADER, CURVE_FRAGMENT_SHADER );
     Geometry geometry = Geometry::New();
@@ -383,14 +383,14 @@ public:
     TextLabel progressionLabel = TextLabel::New( "Progression" );
     progressionLabel.SetProperty( TextLabel::Property::POINT_SIZE, AXIS_LABEL_POINT_SIZE );
     progressionLabel.SetOrientation( Degree(-90.0f), Vector3::ZAXIS );
-    progressionLabel.SetAnchorPoint( AnchorPoint::BOTTOM_LEFT );
-    progressionLabel.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
+    progressionLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT );
+    progressionLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT );
     CreateLine( progressionLabel, ParentOrigin::BOTTOM_LEFT );
 
     TextLabel timeLabel = TextLabel::New( "Time" );
     timeLabel.SetProperty( TextLabel::Property::POINT_SIZE, AXIS_LABEL_POINT_SIZE );
-    timeLabel.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    timeLabel.SetParentOrigin( ParentOrigin::BOTTOM_LEFT );
+    timeLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    timeLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT );
     CreateLine( timeLabel, ParentOrigin::TOP_LEFT );
 
     parent.Add( progressionLabel );
@@ -400,8 +400,8 @@ public:
   void CreateLine( Actor parent, const Vector3& parentOrigin )
   {
     Control control = Control::New();
-    control.SetAnchorPoint( AnchorPoint::TOP_LEFT );
-    control.SetParentOrigin( parentOrigin );
+    control.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
+    control.SetProperty( Actor::Property::PARENT_ORIGIN, parentOrigin );
     control.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     control.SetProperty( Actor::Property::SIZE_HEIGHT, AXIS_LINE_SIZE );
     control.SetBackgroundColor( Color::BLACK );
@@ -431,8 +431,8 @@ public:
   {
     Vector3 gridSize = mGrid.GetProperty<Vector3>( Actor::Property::SIZE ); // Get target value
 
-    pt1 = AlignToGrid( mControlPoint1.GetCurrentPosition(), gridSize );
-    pt2 = AlignToGrid( mControlPoint2.GetCurrentPosition(), gridSize );
+    pt1 = AlignToGrid( mControlPoint1.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ), gridSize );
+    pt2 = AlignToGrid( mControlPoint2.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ), gridSize );
   }
 
   /**
@@ -443,7 +443,7 @@ public:
   void GetPoint( Actor actor, Vector2& point, Vector2& position)
   {
     auto gridSize = mGrid.GetProperty<Vector3>( Actor::Property::SIZE ); // Get target value
-    auto currentPosition = actor.GetCurrentPosition(); // Get constrained current value
+    auto currentPosition = actor.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ); // Get constrained current value
 
     position = Vector2( floor( currentPosition.x ), floor( currentPosition.y ) );
 
@@ -502,7 +502,7 @@ public:
       {
         Vector2 screenPoint = event.GetScreenPosition( 0 );
         mRelativeDragPoint = screenPoint;
-        mRelativeDragPoint -= Vector2(controlPoint.GetCurrentPosition());
+        mRelativeDragPoint -= Vector2(controlPoint.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ));
         mDragActor = controlPoint;
         mDragAnimation = Animation::New(0.25f);
         mDragAnimation.AnimateTo( Property(mDragActor, Actor::Property::SCALE), Vector3( mControlPointZoomScale, mControlPointZoomScale, 1.0f), AlphaFunction::EASE_OUT);

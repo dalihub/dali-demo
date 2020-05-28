@@ -70,8 +70,8 @@ void ModelPbr::Init( Shader shader, const std::string& modelUrl, const Vector3& 
   renderer.SetProperty( Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK );
 
   mActor = Actor::New();
-  mActor.SetAnchorPoint( AnchorPoint::CENTER );
-  mActor.SetParentOrigin( ParentOrigin::CENTER );
+  mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+  mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mActor.SetPosition( position );
   mActor.SetSize( size );
   mActor.AddRenderer( renderer );

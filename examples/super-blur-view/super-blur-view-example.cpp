@@ -56,8 +56,8 @@ private:
     stage.KeyEventSignal().Connect( this, &SuperBlurViewExample::OnKeyEvent );
 
     mSuperBlurView = SuperBlurView::New( DEFAULT_BLUR_LEVEL );
-    mSuperBlurView.SetParentOrigin( ParentOrigin::CENTER );
-    mSuperBlurView.SetAnchorPoint( AnchorPoint::CENTER );
+    mSuperBlurView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mSuperBlurView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mSuperBlurView.SetSize( 800, 1280 );
     mSuperBlurView.SetProperty( SuperBlurView::Property::IMAGE_URL, BACKGROUND_IMAGE );
     stage.Add( mSuperBlurView );
@@ -69,8 +69,8 @@ private:
     mClearAnimation.AnimateTo( Property(mSuperBlurView, mSuperBlurView.GetBlurStrengthPropertyIndex()), 0.0f );
 
     mPushButton = PushButton::New();
-    mPushButton.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
-    mPushButton.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
+    mPushButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
+    mPushButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     mPushButton.SetProperty( Button::Property::LABEL, "Blur" );
     mPushButton.PressedSignal().Connect( this, &SuperBlurViewExample::OnButtonPressed );
     mPushButton.ReleasedSignal().Connect( this, &SuperBlurViewExample::OnButtonReleased );

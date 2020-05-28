@@ -110,14 +110,14 @@ private:
     auto rootActor = Stage::GetCurrent().GetRootLayer();
 
     auto cameraActor = CameraActor::New(TARGET_SIZE);
-    cameraActor.SetParentOrigin(ParentOrigin::CENTER);
+    cameraActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     cameraActor.SetInvertYAxis(true);
     rootActor.Add(cameraActor);
 
     {
       // create actor to render input with applied shader
       mActorForInput = Toolkit::ImageView::New( url );
-      mActorForInput.SetParentOrigin(ParentOrigin::CENTER);
+      mActorForInput.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
       mActorForInput.SetSize(TARGET_SIZE);
       Property::Map customShader;
       customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = FILTER_FRAGMENT_SOURCE;
@@ -166,8 +166,8 @@ private:
     auto url = Dali::Toolkit::TextureManager::AddTexture(mOutputTexture);
     mImageView = Toolkit::ImageView::New(url);
 
-    mImageView.SetParentOrigin(ParentOrigin::CENTER);
-    mImageView.SetAnchorPoint(AnchorPoint::CENTER);
+    mImageView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    mImageView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mContent.Add(mImageView);
   }
 

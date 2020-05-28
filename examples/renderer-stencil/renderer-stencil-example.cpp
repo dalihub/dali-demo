@@ -120,8 +120,8 @@ private:
 
     // Use a gradient visual to render the background gradient.
     Toolkit::Control background = Dali::Toolkit::Control::New();
-    background.SetAnchorPoint( Dali::AnchorPoint::CENTER );
-    background.SetParentOrigin( Dali::ParentOrigin::CENTER );
+    background.SetProperty( Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
+    background.SetProperty( Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
     background.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
 
     // Set up the background gradient.
@@ -145,9 +145,9 @@ private:
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label = Toolkit::TextLabel::New( APPLICATION_TITLE );
-    label.SetAnchorPoint( AnchorPoint::TOP_CENTER );
+    label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     // Set the parent origin to a small percentage below the top (so the demo will scale for different resolutions).
-    label.SetParentOrigin( Vector3( 0.5f, 0.03f, 0.5f ) );
+    label.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.03f, 0.5f ) );
     label.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, TEXT_COLOR );
@@ -155,9 +155,9 @@ private:
 
     // Layer to hold the 3D scene.
     Layer layer = Layer::New();
-    layer.SetAnchorPoint( AnchorPoint::CENTER );
+    layer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     // Set the parent origin to a small percentage below the center (so the demo will scale for different resolutions).
-    layer.SetParentOrigin( Vector3( 0.5f, 0.58f, 0.5f ) );
+    layer.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.58f, 0.5f ) );
     layer.SetBehavior( Layer::LAYER_UI );
     layer.SetDepthTestDisabled( false );
     stage.Add( layer );
@@ -278,8 +278,8 @@ private:
   Actor CreateMainCubeObject( Geometry& geometry, Vector3 size, TextureSet& textureSet )
   {
     Toolkit::Control container = Toolkit::Control::New();
-    container.SetAnchorPoint( AnchorPoint::BOTTOM_CENTER );
-    container.SetParentOrigin( ParentOrigin::BOTTOM_CENTER );
+    container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
+    container.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     container.SetSize( size );
     container.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 
@@ -315,8 +315,8 @@ private:
   Actor CreateFloorObject( Geometry& geometry, Vector3 size )
   {
     Toolkit::Control container = Toolkit::Control::New();
-    container.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    container.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    container.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     container.SetSize( size );
     container.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 
@@ -353,8 +353,8 @@ private:
   Actor CreateStencilPlaneObject( Vector3 size )
   {
     Toolkit::Control container = Toolkit::Control::New();
-    container.SetAnchorPoint( AnchorPoint::CENTER );
-    container.SetParentOrigin( ParentOrigin::CENTER );
+    container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    container.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     container.SetSize( size );
     container.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 
@@ -402,8 +402,8 @@ private:
   Actor CreateReflectionCubeObject( Vector3 size, TextureSet& textureSet )
   {
     Toolkit::Control container = Toolkit::Control::New();
-    container.SetAnchorPoint( AnchorPoint::TOP_CENTER );
-    container.SetParentOrigin( ParentOrigin::TOP_CENTER );
+    container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    container.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     container.SetSize( size );
     container.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 
