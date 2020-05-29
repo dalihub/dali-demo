@@ -444,7 +444,7 @@ private:
       }
     }
 
-    actor.SetOrientation( mStartingOrientation * Quaternion( rotation.rotation, Vector3::ZAXIS ) );
+    actor.SetProperty( Actor::Property::ORIENTATION, Quaternion( mStartingOrientation * Quaternion( rotation.rotation, Vector3::ZAXIS ) ) );
   }
 
   /**

@@ -134,7 +134,7 @@ bool GameCamera::OnTick()
   {
     rotation = ( rotY * rotX );
   }
-  mCameraActor.SetOrientation( rotation );
+  mCameraActor.SetProperty( Actor::Property::ORIENTATION, rotation );
 
   // ---------------------------------------------------------------------
   // update position

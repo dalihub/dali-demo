@@ -114,7 +114,7 @@ void SimpleVisualsApplication::Create( Application& application )
   contentLayout.SetProperty( Dali::Actor::Property::NAME,"ContentLayout");
   contentLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   contentLayout.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
-  contentLayout.SetSizeModeFactor( Vector3( 1.0f, .5f, 1.0f ) );
+  contentLayout.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 1.0f, .5f, 1.0f ) );
   contentLayout.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   contentLayout.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   contentLayout.SetCellPadding( Vector2( 50.0f, 15.0f ) );

@@ -190,7 +190,7 @@ public:
 
     mContents.SetBehavior(Layer::LAYER_3D);
     mContents.SetPosition(mTranslation);
-    mContents.SetOrientation( CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
+    mContents.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
     mContents.SetScale(mPinchScale, mPinchScale, mPinchScale);
 
     mPanGestureDetector = PanGestureDetector::New();
@@ -232,7 +232,7 @@ public:
     mLightAnchor = Actor::New();
     mLightAnchor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mLightAnchor.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
-    mLightAnchor.SetOrientation( CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
+    mLightAnchor.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
 
     // Work out a scaling factor as the initial light position was calculated for desktop
     // Need to scale light position as scene actor size is based on stage size (i.e. much bigger on device)
@@ -347,7 +347,7 @@ public:
             mLightXRotation = Clamp(mLightXRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
             mLightYRotation = mLightYRotation + gesture.displacement.x * LIGHT_PAN_Y_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
             mLightYRotation = Clamp(mLightYRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
-            mLightAnchor.SetOrientation( CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
+            mLightAnchor.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
             break;
           }
 
@@ -364,7 +364,7 @@ public:
             mSceneXRotation = Clamp( mSceneXRotation, -Dali::ANGLE_90, Dali::ANGLE_90 );
             mSceneYRotation = mSceneYRotation + gesture.displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
             mSceneYRotation = Clamp( mSceneYRotation, -Dali::ANGLE_90, Dali::ANGLE_90 );
-            mContents.SetOrientation( CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
+            mContents.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
             break;
           }
 
@@ -372,7 +372,7 @@ public:
           {
             mObjectXRotation = mObjectXRotation - gesture.displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
             mObjectYRotation = mObjectYRotation + gesture.displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
-            mSceneActor.SetOrientation( CalculateWorldRotation( mObjectXRotation, mObjectYRotation ) );
+            mSceneActor.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mObjectXRotation, mObjectYRotation ) );
             break;
           }
         }
@@ -458,7 +458,7 @@ public:
     // Align scene so that light anchor orientation is Z Axis
     mSceneXRotation = -mLightXRotation;
     mSceneYRotation = -mLightYRotation;
-    mContents.SetOrientation( CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
+    mContents.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
 
     return true;
   }

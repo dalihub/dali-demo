@@ -209,7 +209,7 @@ void StylingApplication::Create( Application& application )
   mIcc1 = ImageChannelControl::New( BIG_IMAGE_1 );
   mIcc1.SetProperty( Dali::Actor::Property::NAME,"ICC1");
   mIcc1.SetResizePolicy( ResizePolicy::FILL_TO_PARENT , Dimension::ALL_DIMENSIONS );
-  mIcc1.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+  mIcc1.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mIcc1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mIcc1.SetVisibility( true );
 
@@ -218,7 +218,7 @@ void StylingApplication::Create( Application& application )
   mIcc2 = ImageChannelControl::New( BIG_IMAGE_2 );
   mIcc2.SetProperty( Dali::Actor::Property::NAME,"ICC2");
   mIcc2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT , Dimension::ALL_DIMENSIONS );
-  mIcc2.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+  mIcc2.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mIcc2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mIcc2.SetVisibility( false );
 
@@ -227,7 +227,7 @@ void StylingApplication::Create( Application& application )
   mIcc3 = ImageChannelControl::New( BIG_IMAGE_3 );
   mIcc3.SetProperty( Dali::Actor::Property::NAME,"ICC3");
   mIcc3.SetResizePolicy( ResizePolicy::FILL_TO_PARENT , Dimension::ALL_DIMENSIONS );
-  mIcc3.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+  mIcc3.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
   mIcc3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mIcc3.SetVisibility( false );
 
@@ -362,7 +362,7 @@ Actor StylingApplication::CreateContentPane()
   contentPane.SetProperty( Dali::Actor::Property::NAME,"ContentPane");
   contentPane.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   contentPane.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  contentPane.SetPadding( Padding( BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH ) );
+  contentPane.SetProperty( Actor::Property::PADDING, Padding( BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH ) );
   return contentPane;
 }
 
@@ -372,7 +372,7 @@ Actor StylingApplication::CreateResizableContentPane()
   contentPane.SetProperty( Dali::Actor::Property::NAME,"ContentPane");
   contentPane.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   contentPane.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  contentPane.SetPadding( Padding( BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH ) );
+  contentPane.SetProperty( Actor::Property::PADDING, Padding( BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH ) );
 
   Toolkit::ImageView grabHandle = Toolkit::ImageView::New( RESIZE_HANDLE_IMAGE );
   grabHandle.SetProperty( Dali::Actor::Property::NAME,"GrabHandle");
@@ -418,7 +418,7 @@ Popup StylingApplication::CreateResetPopup()
   text.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   text.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
   text.SetProperty( TextLabel::Property::MULTI_LINE, true );
-  text.SetPadding( Padding( 10.0f, 10.0f, 20.0f, 0.0f ) );
+  text.SetProperty( Actor::Property::PADDING, Padding( 10.0f, 10.0f, 20.0f, 0.0f ) );
   popup.SetContent( text );
 
   ImageView footer = ImageView::New( DEFAULT_CONTROL_AREA_IMAGE_PATH );
@@ -443,7 +443,7 @@ Popup StylingApplication::CreateResetPopup()
   okayButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   okayButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   okayButton.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
-  okayButton.SetSizeModeFactor( Vector3( -20.0f, -20.0f, 0.0f ) );
+  okayButton.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( -20.0f, -20.0f, 0.0f ) );
 
   PushButton cancelButton = PushButton::New();
   cancelButton.SetProperty( Dali::Actor::Property::NAME, POPUP_CONTROL_CANCEL_NAME );
@@ -453,7 +453,7 @@ Popup StylingApplication::CreateResetPopup()
   cancelButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   cancelButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   cancelButton.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
-  cancelButton.SetSizeModeFactor( Vector3( -20.0f, -20.0f, 0.0f ) );
+  cancelButton.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( -20.0f, -20.0f, 0.0f ) );
 
   footerLayout.SetCellAlignment( TableView::CellPosition( 0, 0 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
   footerLayout.SetCellAlignment( TableView::CellPosition( 0, 1 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );

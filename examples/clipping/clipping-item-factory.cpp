@@ -116,8 +116,8 @@ Actor ClippingItemFactory::NewItem( unsigned int itemId )
   borderActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   borderActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   borderActor.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
-  borderActor.SetSizeModeFactor( Vector3( 2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f ) );
-  borderActor.SetColorMode( USE_PARENT_COLOR );
+  borderActor.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f ) );
+  borderActor.SetProperty( Actor::Property::COLOR_MODE, USE_PARENT_COLOR );
   borderActor.SetProperty( ImageView::Property::IMAGE,
                            Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::BORDER )
                                           .Add( BorderVisual::Property::COLOR, Color::WHITE )
