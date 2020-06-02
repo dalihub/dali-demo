@@ -273,7 +273,7 @@ public:
     //Set position relative to top left, as the light source property is also relative to the top left.
     mLightSource.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mLightSource.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLightSource.SetPosition( Stage::GetCurrent().GetSize().x * 0.85f, Stage::GetCurrent().GetSize().y * 0.125 );
+    mLightSource.SetProperty( Actor::Property::POSITION, Vector2( Stage::GetCurrent().GetSize().x * 0.85f, Stage::GetCurrent().GetSize().y * 0.125 ));
 
     //Supply an image to represent the light.
     SetLightImage();
@@ -440,7 +440,7 @@ public:
           case LIGHT_TAG: //Drag light
           {
             //Set light source to new position and update the models accordingly.
-            mLightSource.SetPosition( Vector3( touch.GetScreenPosition( 0 ) ) );
+            mLightSource.SetProperty( Actor::Property::POSITION, Vector3( touch.GetScreenPosition( 0 ) ) );
             UpdateLight();
 
             break;

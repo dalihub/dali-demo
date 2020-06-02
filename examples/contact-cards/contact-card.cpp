@@ -118,35 +118,35 @@ ContactCard::ContactCard(
   mContactCard.SetProperty( Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN );
   mContactCard.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
   mContactCard.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-  mContactCard.SetPosition( foldedPosition.x, foldedPosition.y );
-  mContactCard.SetSize( mContactCardLayoutInfo.foldedSize );
+  mContactCard.SetProperty( Actor::Property::POSITION, Vector2( foldedPosition.x, foldedPosition.y ));
+  mContactCard.SetProperty( Actor::Property::SIZE, mContactCardLayoutInfo.foldedSize );
   stage.Add( mContactCard );
 
   // Create the header which will be shown only when the contact is unfolded
   mHeader = Control::New();
-  mHeader.SetSize( mContactCardLayoutInfo.headerSize );
+  mHeader.SetProperty( Actor::Property::SIZE, mContactCardLayoutInfo.headerSize );
   mHeader.SetProperty( Control::Property::BACKGROUND,
                        Property::Map{ { Toolkit::Visual::Property::TYPE, Visual::COLOR },
                                       { ColorVisual::Property::MIX_COLOR, HEADER_COLOR } } );
   mHeader.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
   mHeader.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-  mHeader.SetPosition( mContactCardLayoutInfo.headerFoldedPosition.x, mContactCardLayoutInfo.headerFoldedPosition.y );
+  mHeader.SetProperty( Actor::Property::POSITION, Vector2( mContactCardLayoutInfo.headerFoldedPosition.x, mContactCardLayoutInfo.headerFoldedPosition.y ));
 
   // Create a clipped image (whose clipping can be animated)
   mClippedImage = ClippedImage::Create( imagePath, mClippedImagePropertyIndex );
-  mClippedImage.SetSize( mContactCardLayoutInfo.imageSize );
+  mClippedImage.SetProperty( Actor::Property::SIZE, mContactCardLayoutInfo.imageSize );
   mClippedImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
   mClippedImage.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-  mClippedImage.SetPosition( mContactCardLayoutInfo.imageFoldedPosition.x, mContactCardLayoutInfo.imageFoldedPosition.y );
+  mClippedImage.SetProperty( Actor::Property::POSITION, Vector2( mContactCardLayoutInfo.imageFoldedPosition.x, mContactCardLayoutInfo.imageFoldedPosition.y ));
   mClippedImage.SetProperty( Actor::Property::VISIBLE, false ); // Hide image as we only want to display it if we are animating or unfolded
   mContactCard.Add( mClippedImage );
 
   // Create an image with a mask which is to be used when the contact is folded
   mMaskedImage = MaskedImage::Create( imagePath );
-  mMaskedImage.SetSize( mContactCardLayoutInfo.imageSize );
+  mMaskedImage.SetProperty( Actor::Property::SIZE, mContactCardLayoutInfo.imageSize );
   mMaskedImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
   mMaskedImage.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-  mMaskedImage.SetPosition( mContactCardLayoutInfo.imageFoldedPosition.x, mContactCardLayoutInfo.imageFoldedPosition.y );
+  mMaskedImage.SetProperty( Actor::Property::POSITION, Vector2( mContactCardLayoutInfo.imageFoldedPosition.x, mContactCardLayoutInfo.imageFoldedPosition.y ));
   mContactCard.Add( mMaskedImage );
 
   // Add the text label for just the name
@@ -155,7 +155,7 @@ ContactCard::ContactCard(
   mNameText.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
   mNameText.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   mNameText.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-  mNameText.SetPosition( mContactCardLayoutInfo.textFoldedPosition.x, mContactCardLayoutInfo.textFoldedPosition.y );
+  mNameText.SetProperty( Actor::Property::POSITION, Vector2( mContactCardLayoutInfo.textFoldedPosition.x, mContactCardLayoutInfo.textFoldedPosition.y ));
   mContactCard.Add( mNameText );
 
   // Create the detail text-label
@@ -167,8 +167,8 @@ ContactCard::ContactCard(
   mDetailText.SetStyleName( "ContactDetailTextLabel" );
   mDetailText.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
   mDetailText.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-  mDetailText.SetPosition( mContactCardLayoutInfo.textFoldedPosition.x, mContactCardLayoutInfo.textFoldedPosition.y );
-  mDetailText.SetSize( Vector2( mContactCardLayoutInfo.unfoldedSize.width - mContactCardLayoutInfo.textFoldedPosition.x * 2.0f, 0.0f ) );
+  mDetailText.SetProperty( Actor::Property::POSITION, Vector2( mContactCardLayoutInfo.textFoldedPosition.x, mContactCardLayoutInfo.textFoldedPosition.y ));
+  mDetailText.SetProperty( Actor::Property::SIZE, Vector2( mContactCardLayoutInfo.unfoldedSize.width - mContactCardLayoutInfo.textFoldedPosition.x * 2.0f, 0.0f ) );
   mDetailText.SetProperty( DevelActor::Property::OPACITY, 0.0f );
 
   // Attach tap detection to the overall clip control

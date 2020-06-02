@@ -129,7 +129,7 @@ void LookCamera::InitialiseDefaultCamera()
   // should be read from file
   mCameraActor.SetNearClippingPlane( mNear );
   mCameraActor.SetFarClippingPlane( mFar );
-  mCameraActor.SetPosition( mCameraPosition );
+  mCameraActor.SetProperty( Actor::Property::POSITION, mCameraPosition );
 }
 
 void LookCamera::CreateInterceptorActor()
@@ -138,8 +138,8 @@ void LookCamera::CreateInterceptorActor()
 
   mInterceptorActor = Actor::New();
   mInterceptorActor.SetProperty( Dali::Actor::Property::NAME, "InputInterceptor" );
-  mInterceptorActor.SetSize( Vector3( stage.GetSize().x, stage.GetSize().y, 1 ) );
-  mInterceptorActor.SetPosition( Vector3( 0.0, 0.0, 1.0  ) );
+  mInterceptorActor.SetProperty( Actor::Property::SIZE, Vector3( stage.GetSize().x, stage.GetSize().y, 1 ) );
+  mInterceptorActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0, 0.0, 1.0  ) );
   mInterceptorActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mInterceptorActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCameraActor.Add( mInterceptorActor );

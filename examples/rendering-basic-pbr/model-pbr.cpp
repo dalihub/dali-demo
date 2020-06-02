@@ -72,8 +72,8 @@ void ModelPbr::Init( Shader shader, const std::string& modelUrl, const Vector3& 
   mActor = Actor::New();
   mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  mActor.SetPosition( position );
-  mActor.SetSize( size );
+  mActor.SetProperty( Actor::Property::POSITION, position );
+  mActor.SetProperty( Actor::Property::SIZE, size );
   mActor.AddRenderer( renderer );
 }
 

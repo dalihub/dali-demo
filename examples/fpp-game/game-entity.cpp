@@ -57,7 +57,7 @@ Dali::Actor& GameEntity::GetActor()
 
 void GameEntity::SetLocation( const Dali::Vector3& loc )
 {
-  mActor.SetPosition( loc );
+  mActor.SetProperty( Dali::Actor::Property::POSITION, loc );
 }
 
 void GameEntity::SetRotation( const Dali::Quaternion& rot )
@@ -67,10 +67,10 @@ void GameEntity::SetRotation( const Dali::Quaternion& rot )
 
 void GameEntity::SetScale( const Dali::Vector3& scale )
 {
-  mActor.SetScale( scale );
+  mActor.SetProperty( Dali::Actor::Property::SCALE, scale );
 }
 
 void GameEntity::SetSize( const Dali::Vector3& size )
 {
-  mActor.SetSize( size );
+  mActor.SetProperty( Dali::Actor::Property::SIZE, size );
 }

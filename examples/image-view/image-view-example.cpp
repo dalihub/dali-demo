@@ -122,7 +122,7 @@ class ImageViewController: public ConnectionTracker
     Toolkit::TextLabel instructions = Toolkit::TextLabel::New( EXAMPLE_INSTRUCTIONS );
     instructions.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     instructions.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_CENTER);
-    instructions.SetY(-50.0f);
+    instructions.SetProperty( Actor::Property::POSITION_Y, -50.0f);
     instructions.SetProperty( Toolkit::TextLabel::Property::ENABLE_AUTO_SCROLL, true  );
     instructions.SetProperty( Toolkit::TextLabel::Property::AUTO_SCROLL_LOOP_COUNT, 10  );
     mContentLayer.Add(instructions);

@@ -97,7 +97,7 @@ public:
     mModel3dView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mModel3dView.SetProperty( Dali::Actor::Property::NAME, "model3dViewControl" );
     mModel3dView.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
-    mModel3dView.SetSize(screenSize);
+    mModel3dView.SetProperty( Actor::Property::SIZE, screenSize);
 
     mModel3dView.SetProperty(Model3dView::Property::LIGHT_POSITION, Vector3(5,10.,0));
 
@@ -170,8 +170,8 @@ public:
   {
     if (mScaled)
     {
-      mModel3dView.SetScale(1.0);
-      mModel3dView.SetPosition(0,0,0);
+      mModel3dView.SetProperty( Actor::Property::SCALE, 1.0f );
+      mModel3dView.SetProperty( Actor::Property::POSITION, Vector3( 0, 0, 0 ) );
       mScaled = false;
     }
     else
@@ -185,8 +185,8 @@ public:
 
       float size = 2.5;
 
-      mModel3dView.SetScale(size);
-      mModel3dView.SetPosition(-position.x * size,-position.y * size, 0);
+      mModel3dView.SetProperty( Actor::Property::SCALE, size );
+      mModel3dView.SetProperty( Actor::Property::POSITION, Vector3( -position.x * size, -position.y * size, 0 ) );
       mScaled = true;
     }
   }

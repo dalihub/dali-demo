@@ -114,7 +114,7 @@ class ButtonsController: public ConnectionTracker
       contentTable.SetFitHeight( i );
     }
 
-    contentTable.SetPosition( 0.0f, TOP_MARGIN );
+    contentTable.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, TOP_MARGIN ));
 
     mContentLayer.Add( contentTable );
 
@@ -158,12 +158,12 @@ class ButtonsController: public ConnectionTracker
     // Radio 1
     {
       Toolkit::ImageView image = Toolkit::ImageView::New( SMALL_IMAGE_1 );
-      image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      image.SetProperty( Actor::Property::SIZE, Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
 
       mRadioButtonImage1 = Dali::Toolkit::RadioButton::New( "1" );
       mRadioButtonImage1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
       mRadioButtonImage1.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-      mRadioButtonImage1.SetPosition( 0, DP(radioY) );
+      mRadioButtonImage1.SetProperty( Actor::Property::POSITION, Vector2( 0, DP(radioY) ));
       mRadioButtonImage1.SetProperty( Toolkit::Button::Property::SELECTED, true );
 
       imageSelectTableView.AddChild( mRadioButtonImage1, Toolkit::TableView::CellPosition( 0, 0 ) );
@@ -175,12 +175,12 @@ class ButtonsController: public ConnectionTracker
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
       Toolkit::ImageView image = Toolkit::ImageView::New( SMALL_IMAGE_2 );
-      image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      image.SetProperty( Actor::Property::SIZE, Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
 
       mRadioButtonImage2 = Dali::Toolkit::RadioButton::New( "2" );
       mRadioButtonImage2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
       mRadioButtonImage2.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-      mRadioButtonImage2.SetPosition( 0, DP(radioY) );
+      mRadioButtonImage2.SetProperty( Actor::Property::POSITION, Vector2( 0, DP(radioY) ));
 
       imageSelectTableView.AddChild( mRadioButtonImage2, Toolkit::TableView::CellPosition( 1, 0 ) );
       imageSelectTableView.AddChild( image, Toolkit::TableView::CellPosition( 1, 1 ) );
@@ -191,12 +191,12 @@ class ButtonsController: public ConnectionTracker
       radioY += RADIO_LABEL_THUMBNAIL_SIZE + RADIO_IMAGE_SPACING;
 
       Toolkit::ImageView image = Toolkit::ImageView::New( SMALL_IMAGE_3 );
-      image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+      image.SetProperty( Actor::Property::SIZE, Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
 
       mRadioButtonImage3 = Dali::Toolkit::RadioButton::New( "3" );
       mRadioButtonImage3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
       mRadioButtonImage3.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-      mRadioButtonImage3.SetPosition( 0, DP(radioY) );
+      mRadioButtonImage3.SetProperty( Actor::Property::POSITION, Vector2( 0, DP(radioY) ));
 
       imageSelectTableView.AddChild( mRadioButtonImage3, Toolkit::TableView::CellPosition( 2, 0 ) );
       imageSelectTableView.AddChild( image, Toolkit::TableView::CellPosition( 2, 1 ) );
@@ -254,7 +254,7 @@ class ButtonsController: public ConnectionTracker
     textLabel.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
 
     Toolkit::ImageView image = Toolkit::ImageView::New( ENABLED_IMAGE );
-    image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+    image.SetProperty( Actor::Property::SIZE, Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
     image.SetProperty( Actor::Property::PADDING, Padding( DP(20.0f), 0.0f, 0.0f, 0.0f ) );
     tableView.AddChild( image, Toolkit::TableView::CellPosition( 0, 1 ) );
 
@@ -266,7 +266,7 @@ class ButtonsController: public ConnectionTracker
       radioButton.SetProperty( Dali::Actor::Property::NAME, "radioSelectEnable" );
       radioButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
       radioButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-      radioButton.SetPosition( 0, 0 );
+      radioButton.SetProperty( Actor::Property::POSITION, Vector2( 0, 0 ));
       radioButton.SetProperty( Toolkit::Button::Property::SELECTED, true );
 
       radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
@@ -280,7 +280,7 @@ class ButtonsController: public ConnectionTracker
       radioButton.SetProperty( Dali::Actor::Property::NAME, "radioSelectDisable" );
       radioButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
       radioButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-      radioButton.SetPosition( 0, DP(50) );
+      radioButton.SetProperty( Actor::Property::POSITION, Vector2( 0, DP(50) ));
 
       radioButton.StateChangedSignal().Connect( this, &ButtonsController::EnableSelectButton );
 

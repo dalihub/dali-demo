@@ -136,7 +136,7 @@ private:
     // Get the root actor of all bubbles, and add it to stage.
     Actor bubbleRoot = mBubbleEmitter.GetRootActor();
     bubbleRoot.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
-    bubbleRoot.SetZ(0.1f); // Make sure the bubbles displayed on top og the background.
+    bubbleRoot.SetProperty( Actor::Property::POSITION_Z, 0.1f); // Make sure the bubbles displayed on top og the background.
     content.Add( bubbleRoot );
 
     // Set the application background

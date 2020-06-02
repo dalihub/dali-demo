@@ -121,17 +121,17 @@ private:
       {
         mImageView[i][j] = Toolkit::ImageView::New();
         mImageView[i][j].SetProperty( Toolkit::ImageView::Property::IMAGE, propertyMap );
-        mImageView[i][j].SetPosition( 50.f*(i-1), 50.f*(j-1) );
+        mImageView[i][j].SetProperty( Actor::Property::POSITION, Vector2( 50.f*(i-1), 50.f*(j-1) ));
       }
 
     mImageView[1][1].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mImageView[1][1].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER );
-    mImageView[1][1].SetScale( 1.f/3.f );
+    mImageView[1][1].SetProperty( Actor::Property::SCALE, 1.f/3.f );
     mContent.Add( mImageView[1][1] );
 
     mImageView[0][0].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mImageView[0][0].SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT );
-    mImageView[0][0].SetPosition( -50.f, -50.f );
+    mImageView[0][0].SetProperty( Actor::Property::POSITION, Vector2( -50.f, -50.f ));
     mImageView[1][1].Add( mImageView[0][0] );
 
     mImageView[1][0].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );

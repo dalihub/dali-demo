@@ -72,12 +72,12 @@ public:
     {
       contentTable.SetFitHeight( i );
     }
-    contentTable.SetPosition( 0.0f, TOP_MARGIN );
+    contentTable.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, TOP_MARGIN ));
     mContentLayer.Add( contentTable );
 
     // Create label to display which control's KeyEvent callback is called
     mEventLabel = TextLabel::New("Controls don't get KeyEvent yet");
-    mEventLabel.SetSize( mStage.GetSize().width, mStage.GetSize().height*0.1f );
+    mEventLabel.SetProperty( Actor::Property::SIZE, Vector2( mStage.GetSize().width, mStage.GetSize().height*0.1f ) );
     mEventLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mEventLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mEventLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
@@ -85,7 +85,7 @@ public:
     contentTable.Add( mEventLabel );
 
     mContainer = TableView::New( 4, 3 );
-    mContainer.SetSize( mStage.GetSize().width, mStage.GetSize().height*0.4f );
+    mContainer.SetProperty( Actor::Property::SIZE, Vector2( mStage.GetSize().width, mStage.GetSize().height*0.4f ) );
     mContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mContainer.SetBackgroundColor( BACKGROUND_COLOUR );
     mContainer.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );

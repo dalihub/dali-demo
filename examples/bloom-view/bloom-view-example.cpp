@@ -78,47 +78,47 @@ public:
 
     mRootActor = Actor::New();
     mRootActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mRootActor.SetSize( stageSize );
+    mRootActor.SetProperty( Actor::Property::SIZE, stageSize );
     stage.Add( mRootActor );
 
     // Create the object that will perform the blooming work
     mBloomView = Dali::Toolkit::BloomView::New();
     mBloomView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mBloomView.SetSize( viewSize );
+    mBloomView.SetProperty( Actor::Property::SIZE,  viewSize );
     mRootActor.Add( mBloomView );
     mBloomView.Activate();
 
     Layer backgroundLayer = Layer::New();
-    backgroundLayer.SetSize( viewSize );
+    backgroundLayer.SetProperty( Actor::Property::SIZE,  viewSize );
     backgroundLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mBloomView.Add( backgroundLayer );
 
     // Create the background image
     ImageView backgroundImage = ImageView::New( BACKGROUND_IMAGE_PATH );
     backgroundImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    backgroundImage.SetSize( viewSize );
+    backgroundImage.SetProperty( Actor::Property::SIZE,  viewSize );
     backgroundLayer.Add( backgroundImage );
 
     Layer foregroundLayer = Layer::New();
-    foregroundLayer.SetSize( viewSize );
+    foregroundLayer.SetProperty( Actor::Property::SIZE,  viewSize );
     foregroundLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mBloomView.Add( foregroundLayer );
 
     // Create visible actors
     mObjectRootActor = Actor::New();
     mObjectRootActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mObjectRootActor.SetSize( viewSize );
+    mObjectRootActor.SetProperty( Actor::Property::SIZE,  viewSize );
     foregroundLayer.Add( mObjectRootActor );
 
     ImageView imageView = ImageView::New( UI_DIFFUSE_IMAGE );
     imageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView.SetSize( viewSize );
+    imageView.SetProperty( Actor::Property::SIZE,  viewSize );
     mObjectRootActor.Add( imageView );
 
     imageView = ImageView::New( UI_DIFFUSE_IMAGE );
     imageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView.SetSize( stageSize * 0.5f );
-    imageView.SetPosition( 0.0f, 0.0f, 100.0f );
+    imageView.SetProperty( Actor::Property::SIZE, stageSize * 0.5f );
+    imageView.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 100.0f ) );
     mObjectRootActor.Add( imageView );
 
     AnimateBloomView();

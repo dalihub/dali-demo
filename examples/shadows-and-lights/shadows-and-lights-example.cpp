@@ -186,12 +186,12 @@ public:
     toolBar.AddControl( resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
     // Setup
-    mView.SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+    mView.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 0.0f ) );
 
     mContents.SetBehavior(Layer::LAYER_3D);
-    mContents.SetPosition(mTranslation);
+    mContents.SetProperty( Actor::Property::POSITION, mTranslation );
     mContents.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
-    mContents.SetScale(mPinchScale, mPinchScale, mPinchScale);
+    mContents.SetProperty( Actor::Property::SCALE, Vector3( mPinchScale, mPinchScale, mPinchScale ) );
 
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.Attach( mView );
@@ -222,9 +222,9 @@ public:
     mShadowPlaneBg.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mShadowPlaneBg.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mShadowPlaneBg.SetProperty( Dali::Actor::Property::NAME,"Plane");
-    mShadowPlaneBg.SetSize(1000.0f, 1000.0f);
+    mShadowPlaneBg.SetProperty( Actor::Property::SIZE, Vector2(1000.0f, 1000.0f) );
     mContents.Add(mShadowPlaneBg);
-    mShadowPlaneBg.SetPosition(Vector3(50.0f, 50.0f, -200.0f));
+    mShadowPlaneBg.SetProperty( Actor::Property::POSITION, Vector3(50.0f, 50.0f, -200.0f));
 
     mShadowView.SetShadowPlaneBackground(mShadowPlaneBg);
     mShadowView.Activate();
@@ -242,7 +242,7 @@ public:
     mCastingLight = Actor::New();
     mCastingLight.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mCastingLight.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
-    mCastingLight.SetPosition( Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
+    mCastingLight.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 800.0f ) * scaleFactor );
 
     TextLabel text = TextLabel::New( "Light" );
     text.SetProperty( TextLabel::Property::POINT_SIZE, 20.0f );
@@ -303,8 +303,8 @@ public:
     mSceneAnimation.SetLooping(true);
     mSceneAnimation.Play();
 
-    mSceneActor.SetSize(250.0f, 250.0f);
-    mSceneActor.SetPosition(0.0f, 0.0f, 130.0f);
+    mSceneActor.SetProperty( Actor::Property::SIZE, Vector2( 250.0f, 250.0f ) );
+    mSceneActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 130.0f ) );
     mShadowView.Add(mSceneActor);
   }
 
@@ -354,7 +354,7 @@ public:
           case PAN_SCENE:
           {
             mTranslation += Vector3(gesture.displacement.x, gesture.displacement.y, 0.f);
-            mContents.SetPosition(mTranslation);
+            mContents.SetProperty( Actor::Property::POSITION, mTranslation );
             break;
           }
 
@@ -396,7 +396,7 @@ public:
     }
     mPinchScale = Clamp(mScaleAtPinchStart * gesture.scale, MIN_PINCH_SCALE, MAX_PINCH_SCALE);
 
-    mContents.SetScale(mPinchScale, mPinchScale, mPinchScale);
+    mContents.SetProperty( Actor::Property::SCALE, Vector3( mPinchScale, mPinchScale, mPinchScale ) );
   }
 
   void Terminate(Application& app)
@@ -453,7 +453,7 @@ public:
   {
     // Reset translation
     mTranslation = Vector3::ZERO;
-    mContents.SetPosition(mTranslation);
+    mContents.SetProperty( Actor::Property::POSITION, mTranslation );
 
     // Align scene so that light anchor orientation is Z Axis
     mSceneXRotation = -mLightXRotation;

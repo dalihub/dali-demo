@@ -146,7 +146,7 @@ public:
     Vector2 stageSize = stage.GetSize();
 
     mButtonArea = Layer::New();
-    mButtonArea.SetSize( stageSize.x, BUTTON_HEIGHT );
+    mButtonArea.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x, BUTTON_HEIGHT ) );
     mButtonArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mButtonArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     stage.Add( mButtonArea );
@@ -156,7 +156,7 @@ public:
     mButtonShow.SetProperty( Toolkit::Button::Property::LABEL, "SHOW" );
     mButtonShow.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonShow.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonShow.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
+    mButtonShow.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
     mButtonShow.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonShow );
 
@@ -165,8 +165,8 @@ public:
     mButtonRefreshAlways.SetProperty( Toolkit::Button::Property::LABEL, "ALWAYS" );
     mButtonRefreshAlways.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonRefreshAlways.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonRefreshAlways.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
-    mButtonRefreshAlways.SetPosition( (stageSize.x / BUTTON_COUNT)*1.0f, 0.0f );
+    mButtonRefreshAlways.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
+    mButtonRefreshAlways.SetProperty( Actor::Property::POSITION, Vector2( (stageSize.x / BUTTON_COUNT)*1.0f, 0.0f ));
     mButtonRefreshAlways.StateChangedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonRefreshAlways );
 
@@ -174,8 +174,8 @@ public:
     mButtonRefreshOnce.SetProperty( Toolkit::Button::Property::LABEL, "ONCE" );
     mButtonRefreshOnce.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonRefreshOnce.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonRefreshOnce.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
-    mButtonRefreshOnce.SetPosition( (stageSize.x / BUTTON_COUNT)*2.0f, 0.0f );
+    mButtonRefreshOnce.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
+    mButtonRefreshOnce.SetProperty( Actor::Property::POSITION, Vector2( (stageSize.x / BUTTON_COUNT)*2.0f, 0.0f ));
     mButtonRefreshOnce.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonRefreshOnce );
 
@@ -183,8 +183,8 @@ public:
     mButtonCapture.SetProperty( Toolkit::Button::Property::LABEL, "CAPTURE" );
     mButtonCapture.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonCapture.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonCapture.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
-    mButtonCapture.SetPosition( (stageSize.x / BUTTON_COUNT)*3.0f, 0.0f );
+    mButtonCapture.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
+    mButtonCapture.SetProperty( Actor::Property::POSITION, Vector2( (stageSize.x / BUTTON_COUNT)*3.0f, 0.0f ));
     mButtonCapture.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonCapture );
 
@@ -192,8 +192,8 @@ public:
     mButtonReset.SetProperty( Toolkit::Button::Property::LABEL, "RESET" );
     mButtonReset.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonReset.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonReset.SetSize( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT );
-    mButtonReset.SetPosition( (stageSize.x / BUTTON_COUNT)*4.0f, 0.0f );
+    mButtonReset.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
+    mButtonReset.SetProperty( Actor::Property::POSITION, Vector2( (stageSize.x / BUTTON_COUNT)*4.0f, 0.0f ));
     mButtonReset.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonReset );
   }
@@ -206,14 +206,14 @@ public:
     float contentHeight( (stageSize.y - BUTTON_HEIGHT)/2.0f );
 
     mTopContentArea = Actor::New();
-    mTopContentArea.SetSize( stageSize.x, contentHeight );
+    mTopContentArea.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x, contentHeight ) );
     mTopContentArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mTopContentArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mTopContentArea.SetY( BUTTON_HEIGHT );
+    mTopContentArea.SetProperty( Actor::Property::POSITION_Y,  BUTTON_HEIGHT );
     stage.Add( mTopContentArea );
 
     mBottomContentArea = Actor::New();
-    mBottomContentArea.SetSize( stageSize.x, contentHeight );
+    mBottomContentArea.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x, contentHeight ) );
     mBottomContentArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mBottomContentArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     stage.Add( mBottomContentArea );
@@ -311,7 +311,7 @@ public:
         renderer.SetTextures( textureSet );
 
         mDisplayActor.AddRenderer( renderer );
-        mDisplayActor.SetSize( mNativeTexture.GetWidth(), mNativeTexture.GetHeight() );
+        mDisplayActor.SetProperty( Actor::Property::SIZE, Vector2( mNativeTexture.GetWidth(), mNativeTexture.GetHeight() ) );
 
         mBottomContentArea.Add( mDisplayActor );
       }

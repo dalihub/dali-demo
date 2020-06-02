@@ -142,13 +142,13 @@ void EffectsViewApp::OnAppInitialize( Application& application )
   mDropShadowView = CreateEffectsView( EffectsView::DROP_SHADOW, effectsViewSize, mEffectSize );
   mDropShadowView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mDropShadowView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-  mDropShadowView.SetZ( -mStageSize.height * 0.1f );
+  mDropShadowView.SetProperty( Actor::Property::POSITION_Z,  -mStageSize.height * 0.1f );
   mContents.Add( mDropShadowView );
 
   mEmbossView = CreateEffectsView( EffectsView::EMBOSS, effectsViewSize, mEffectSize );
   mEmbossView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mEmbossView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-  mEmbossView.SetZ( mStageSize.height * 0.1f );
+  mEmbossView.SetProperty( Actor::Property::POSITION_Z,  mStageSize.height * 0.1f );
   mContents.Add( mEmbossView );
 
   SetTitle( mEffectSize );
@@ -159,7 +159,7 @@ EffectsView EffectsViewApp::CreateEffectsView( EffectsView::EffectType type, con
 {
   Toolkit::EffectsView effectsView = Toolkit::EffectsView::New(type);
   // set control size
-   effectsView.SetSize( viewSize.width, viewSize.height );
+   effectsView.SetProperty( Actor::Property::SIZE, Vector2( viewSize.width, viewSize.height ) );
   // set effect size property
   effectsView.SetProperty( EffectsView::Property::EFFECT_SIZE, effectSize );
 
@@ -169,8 +169,8 @@ EffectsView EffectsViewApp::CreateEffectsView( EffectsView::EffectType type, con
   TextLabel textActor( TextLabel::New( text ) );
   textActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT );
   textActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT );
-  textActor.SetSize( viewSize );
-  textActor.SetPosition( viewSize.width*0.4f, viewSize.height*0.3f );
+  textActor.SetProperty( Actor::Property::SIZE, viewSize );
+  textActor.SetProperty( Actor::Property::POSITION, Vector2( viewSize.width*0.4f, viewSize.height*0.3f ));
   textActor.SetProperty(  TextLabel::Property::POINT_SIZE, DemoHelper::ScalePointSize(14.f) );
   effectsView.Add( textActor );
 
@@ -178,8 +178,8 @@ EffectsView EffectsViewApp::CreateEffectsView( EffectsView::EffectType type, con
   ImageView icon = ImageView::New( TEST_IMAGE );
   icon.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT );
   icon.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT );
-  icon.SetX( viewSize.width*0.1f );
-  icon.SetSize( viewSize.height*0.8f, viewSize.height*0.8f );
+  icon.SetProperty( Actor::Property::POSITION_X,  viewSize.width*0.1f );
+  icon.SetProperty( Actor::Property::SIZE, Vector2( viewSize.height*0.8f, viewSize.height*0.8f ) );
   effectsView.Add( icon );
 
   AnimateEffectProperties( effectsView );

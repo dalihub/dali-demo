@@ -86,7 +86,7 @@ private:
     Layer onTop = Layer::New();
     onTop.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     onTop.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    onTop.SetSize( stageSize );
+    onTop.SetProperty( Actor::Property::SIZE, stageSize );
     stage.Add( onTop );
     onTop.RaiseToTop();
 
@@ -120,7 +120,7 @@ private:
           mGaussianBlurView = GaussianBlurView::New( 30, 8.0f, Pixel::RGBA8888, 0.5f, 0.5f, false );
           mGaussianBlurView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
           mGaussianBlurView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-          mGaussianBlurView.SetSize( stage.GetSize() );
+          mGaussianBlurView.SetProperty( Actor::Property::SIZE, stage.GetSize() );
           stage.Add( mGaussianBlurView );
 
           mGaussianBlurView.Add( mImageView );

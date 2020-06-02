@@ -47,7 +47,7 @@ void TextOverlapController::Create( Application& app )
     mLabels[i].SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mLabels[i].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mLabels[i].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    mLabels[i].SetPosition( 0, (i*2+1) * stageSize.height * 0.25f );
+    mLabels[i].SetProperty( Actor::Property::POSITION, Vector2( 0, (i*2+1) * stageSize.height * 0.25f ));
   }
 
   stage.Add( mLabels[0] );
@@ -94,7 +94,7 @@ void TextOverlapController::OnPan( Actor actor, const PanGesture& gesture )
     Vector2 stageSize = Stage::GetCurrent().GetSize();
     Vector3 size = mGrabbedActor.GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
     float y = Clamp( gesture.position.y, size.y * 0.5f, stageSize.y - size.y*0.5f );
-    mGrabbedActor.SetPosition( 0, y );
+    mGrabbedActor.SetProperty( Actor::Property::POSITION, Vector2( 0, y ));
   }
   else
   {

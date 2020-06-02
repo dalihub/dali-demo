@@ -280,7 +280,7 @@ private:
     Toolkit::Control container = Toolkit::Control::New();
     container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     container.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-    container.SetSize( size );
+    container.SetProperty( Actor::Property::SIZE, Vector2( size ) );
     container.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 
     // Create a renderer from the geometry and add the texture.
@@ -317,7 +317,7 @@ private:
     Toolkit::Control container = Toolkit::Control::New();
     container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     container.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-    container.SetSize( size );
+    container.SetProperty( Actor::Property::SIZE, Vector2( size ) );
     container.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 
     // Create a renderer from the geometry and add the texture.
@@ -355,7 +355,7 @@ private:
     Toolkit::Control container = Toolkit::Control::New();
     container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     container.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    container.SetSize( size );
+    container.SetProperty( Actor::Property::SIZE, Vector2( size ) );
     container.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 
     // We rotate the plane as the geometry is created flat in X & Y. We want it to span X & Z axis.
@@ -404,7 +404,7 @@ private:
     Toolkit::Control container = Toolkit::Control::New();
     container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     container.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-    container.SetSize( size );
+    container.SetProperty( Actor::Property::SIZE, Vector2( size ) );
     container.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 
     // Create the cube geometry of unity size.

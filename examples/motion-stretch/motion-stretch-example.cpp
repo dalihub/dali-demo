@@ -143,7 +143,7 @@ public:
     // Ensure the content layer is a square so the touch area works in all orientations
     Vector2 stageSize = Stage::GetCurrent().GetSize();
     float size = std::max( stageSize.width, stageSize.height );
-    mContentLayer.SetSize( size, size );
+    mContentLayer.SetProperty( Actor::Property::SIZE, Vector2( size, size ) );
 
     //Add an slideshow icon on the right of the title
     mActorEffectsButton = Toolkit::PushButton::New();
@@ -187,7 +187,7 @@ public:
     mMotionStretchImageView.SetProperty( Toolkit::ImageView::Property::IMAGE, mMotionStretchEffect );
     mMotionStretchImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mMotionStretchImageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mMotionStretchImageView.SetSize( MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT );
+    mMotionStretchImageView.SetProperty( Actor::Property::SIZE, Vector2( MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT ) );
 
     mContentLayer.Add( mMotionStretchImageView );
 
@@ -226,13 +226,13 @@ public:
       }
       else
       {
-        mView.SetSize( targetSize );
+        mView.SetProperty( Actor::Property::SIZE, targetSize );
       }
     }
     else
     {
       // for first time just set size
-      mView.SetSize( targetSize );
+      mView.SetProperty( Actor::Property::SIZE, targetSize );
     }
   }
 

@@ -444,7 +444,7 @@ void MetaballExplosionController::CreateMetaballActors()
 
     mMetaballs[i].actor = Actor::New( );
     mMetaballs[i].actor.SetProperty( Dali::Actor::Property::NAME, "Metaball" );
-    mMetaballs[i].actor.SetScale( 1.0f );
+    mMetaballs[i].actor.SetProperty( Actor::Property::SCALE, 1.0f );
     mMetaballs[i].actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mMetaballs[i].actor.AddRenderer( renderer );
 
@@ -506,8 +506,8 @@ void MetaballExplosionController::CreateComposition()
   // Create actor
   mCompositionActor = Actor::New( );
   mCompositionActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
-  mCompositionActor.SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-  mCompositionActor.SetSize(mScreenSize.x, mScreenSize.y);
+  mCompositionActor.SetProperty( Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
+  mCompositionActor.SetProperty( Actor::Property::SIZE, Vector2(mScreenSize.x, mScreenSize.y) );
   mCompositionActor.AddRenderer( mRenderer );
 
   Vector2 metaballCenter(0.0,0);
@@ -517,7 +517,7 @@ void MetaballExplosionController::CreateComposition()
 
   SetPositionToMetaballs( metaballCenter );
 
-  mCompositionActor.SetSize(mScreenSize.x, mScreenSize.y);
+  mCompositionActor.SetProperty( Actor::Property::SIZE, Vector2(mScreenSize.x, mScreenSize.y) );
 
   Stage stage = Stage::GetCurrent();
   stage.Add( mCompositionActor );

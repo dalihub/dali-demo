@@ -211,8 +211,8 @@ public:
     renderer.SetProperty( Renderer::Property::BLEND_MODE, BlendMode::ON );
 
     Actor actor = Actor::New();
-    actor.SetSize( 400.0f, 400.0f );
-    actor.SetPosition( center );
+    actor.SetProperty( Actor::Property::SIZE, Vector2( 400.0f, 400.0f ) );
+    actor.SetProperty( Actor::Property::POSITION, center );
     actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     actor.SetProperty( Actor::Property::COLOR,Vector4(1.0f,1.0f,0.0f,1.0f) );
     actor.AddRenderer( renderer );
@@ -303,8 +303,8 @@ public:
     renderer.SetProperty( Renderer::Property::BLEND_MODE, BlendMode::ON );
 
     Actor actor = Actor::New();
-    actor.SetSize( 400.0f, 400.0f );
-    actor.SetPosition( center );
+    actor.SetProperty( Actor::Property::SIZE, Vector2( 400.0f, 400.0f ) );
+    actor.SetProperty( Actor::Property::POSITION, center );
     actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     actor.AddRenderer( renderer );
 
@@ -404,8 +404,8 @@ public:
     renderer.SetProperty( Renderer::Property::BLEND_MODE, BlendMode::ON );
 
     Actor actor = Actor::New();
-    actor.SetSize( 400.0f, 400.0f );
-    actor.SetPosition( center );
+    actor.SetProperty( Actor::Property::SIZE, Vector2( 400.0f, 400.0f ) );
+    actor.SetProperty( Actor::Property::POSITION, center );
     actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     actor.SetProperty( Actor::Property::COLOR,Vector4(1.0f,0.0f,0.0f,1.0f) );
     actor.AddRenderer( renderer );

@@ -88,7 +88,7 @@ void AddHelpInfo( const std::string&& string, Actor parent, Animation animation,
 
   text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
   text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-  text.SetPosition( position );
+  text.SetProperty( Actor::Property::POSITION, position );
   text.SetProperty( DevelActor::Property::OPACITY, 0.0f );
   text.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, Text::HorizontalAlignment::CENTER );
   text.SetProperty( TextLabel::Property::MULTI_LINE, true );
@@ -154,7 +154,7 @@ private:
 
     // Create a control with a circular gradient that we'll use for the gestures and be a quarter of the size of the stage.
     Actor touchControl = Control::New();
-    touchControl.SetSize( stage.GetSize() * 0.25f );
+    touchControl.SetProperty( Actor::Property::SIZE, stage.GetSize() * 0.25f );
     touchControl.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     touchControl.SetProperty( Control::Property::BACKGROUND, CONTROL_BACKGROUND );
     background.Add( touchControl );
@@ -303,7 +303,7 @@ private:
     actor.GetProperty( Actor::Property::POSITION ).Get( currentPosition );
 
     Vector3 newPosition = currentPosition + scaledDisplacement;
-    actor.SetPosition( newPosition );
+    actor.SetProperty( Actor::Property::POSITION, newPosition );
 
     switch( pan.state )
     {
@@ -408,7 +408,7 @@ private:
       }
     }
 
-    actor.SetScale( mStartingScale * pinch.scale );
+    actor.SetProperty( Actor::Property::SCALE, mStartingScale * pinch.scale );
   }
 
   /**
