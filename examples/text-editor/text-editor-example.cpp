@@ -119,7 +119,7 @@ public:
     mColorContainer = Control::New();
     mColorContainer.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::WIDTH );
     mColorContainer.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
-    mColorContainer.SetSizeModeFactor( Vector3( 0.0f, BUTTON_PERCENTAGE, 0.0f ) );
+    mColorContainer.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.0f, BUTTON_PERCENTAGE, 0.0f ) );
 
     // Place to right of parent.
     mColorContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT );
@@ -136,7 +136,7 @@ public:
     // Create a 'select color' button.
     mColorButtonOption = Toolkit::PushButton::New();
     mColorButtonOption.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mColorButtonOption.SetSizeModeFactor( Vector3( 0.9f, 0.9f, 0.0f ) ); // Smaller than container to show border.
+    mColorButtonOption.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.9f, 0.9f, 0.0f ) ); // Smaller than container to show border.
     mColorButtonOption.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mColorButtonOption.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
@@ -154,7 +154,7 @@ public:
     mEditor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mEditor.SetPosition( 0.f, toolBarHeight * 2.0f, 0.f );
     mEditor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mEditor.SetSizeModeFactor( TEXT_EDITOR_RELATIVE_SIZE );
+    mEditor.SetProperty( Actor::Property::SIZE_MODE_FACTOR, TEXT_EDITOR_RELATIVE_SIZE );
 
     mEditor.SetBackgroundColor( TEXT_EDITOR_BACKGROUND_COLOR );
 
@@ -190,7 +190,7 @@ public:
   {
     mButtonContainer = Toolkit::TableView::New( NUMBER_OF_COLORS, 1u );
     mButtonContainer.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mButtonContainer.SetSizeModeFactor( Vector3( 1.0f, NUMBER_OF_COLORS, 1.0f ) );
+    mButtonContainer.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 1.0f, NUMBER_OF_COLORS, 1.0f ) );
 
     // Place below color selection button.
     mButtonContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER  );
@@ -203,7 +203,7 @@ public:
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      button.SetSizeModeFactor( buttonPercentage );
+      button.SetProperty( Actor::Property::SIZE_MODE_FACTOR, buttonPercentage );
 
       std::ostringstream s;
       s << "color" << index;

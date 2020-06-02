@@ -215,7 +215,7 @@ class ButtonsController: public ConnectionTracker
     // ImageView to display selected image
     mImage = Toolkit::ImageView::New( BIG_IMAGE_1 );
     mImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mImage.SetSizeScalePolicy( SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
+    mImage.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
     radioGroup2Background.AddChild( mImage, Toolkit::TableView::CellPosition( 0, 1, 2, 1 ) );
 
     // The enable/disable radio group
@@ -255,7 +255,7 @@ class ButtonsController: public ConnectionTracker
 
     Toolkit::ImageView image = Toolkit::ImageView::New( ENABLED_IMAGE );
     image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
-    image.SetPadding( Padding( DP(20.0f), 0.0f, 0.0f, 0.0f ) );
+    image.SetProperty( Actor::Property::PADDING, Padding( DP(20.0f), 0.0f, 0.0f, 0.0f ) );
     tableView.AddChild( image, Toolkit::TableView::CellPosition( 0, 1 ) );
 
     radioButtonsGroup1.Add( tableView );

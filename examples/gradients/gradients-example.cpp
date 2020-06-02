@@ -96,7 +96,7 @@ public:
     mGradientControl.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mGradientControl.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     Vector3 offset( 0.9f, 0.7f, 0.0f );
-    mGradientControl.SetSizeModeFactor( offset );
+    mGradientControl.SetProperty( Actor::Property::SIZE_MODE_FACTOR, offset );
     content.Add( mGradientControl );
 
 // ---- Gradient for background

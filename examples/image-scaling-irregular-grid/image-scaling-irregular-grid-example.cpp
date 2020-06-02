@@ -381,7 +381,7 @@ public:
     mScrollBarHorizontal.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_LEFT);
     mScrollBarHorizontal.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     mScrollBarHorizontal.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
-    mScrollBarHorizontal.SetOrientation(Quaternion(Radian( 1.5f * Math::PI ), Vector3::ZAXIS));
+    mScrollBarHorizontal.SetProperty( Actor::Property::ORIENTATION, Quaternion( Quaternion( Radian( 1.5f * Math::PI ), Vector3::ZAXIS) ) );
     mScrollView.Add(mScrollBarHorizontal);
 
     mScrollView.OnRelayoutSignal().Connect( this, &ImageScalingIrregularGridController::OnScrollViewRelayout );

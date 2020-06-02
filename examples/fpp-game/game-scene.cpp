@@ -158,7 +158,7 @@ bool GameScene::Load(const char *filename)
   stage.GetRootLayer().Add( mRootActor );
   mRootActor.SetScale( -1.0, 1.0, 1.0 );
   mRootActor.SetPosition( 0.0, 0.0, 0.0 );
-  mRootActor.SetOrientation( Degree( 90 ), Vector3( 1.0, 0.0, 0.0 ));
+  mRootActor.SetProperty( Actor::Property::ORIENTATION, Quaternion( Degree( 90 ), Vector3( 1.0, 0.0, 0.0 ) ) );
   for( size_t i = 0; i < mEntities.Size(); ++i )
   {
     Actor actor( mEntities[i]->GetActor() );

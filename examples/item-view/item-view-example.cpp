@@ -233,7 +233,7 @@ public:
     mDeleteButton.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_RIGHT);
     mDeleteButton.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT);
     mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
-    mDeleteButton.SetDrawMode( DrawMode::OVERLAY_2D );
+    mDeleteButton.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
     mDeleteButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DELETE_IMAGE );
     mDeleteButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DELETE_IMAGE_SELECTED );
     mDeleteButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
@@ -248,7 +248,7 @@ public:
     mInsertButton.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_RIGHT);
     mInsertButton.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT);
     mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
-    mInsertButton.SetDrawMode( DrawMode::OVERLAY_2D );
+    mInsertButton.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
     mInsertButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, INSERT_IMAGE );
     mInsertButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, INSERT_IMAGE_SELECTED );
     mInsertButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
@@ -263,7 +263,7 @@ public:
     mReplaceButton.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_RIGHT);
     mReplaceButton.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT);
     mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
-    mReplaceButton.SetDrawMode( DrawMode::OVERLAY_2D );
+    mReplaceButton.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
     mReplaceButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE );
     mReplaceButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE_SELECTED );
     mReplaceButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
@@ -880,8 +880,8 @@ public: // From ItemFactory
     borderActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     borderActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     borderActor.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
-    borderActor.SetSizeModeFactor( Vector3( 2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f ) );
-    borderActor.SetColorMode( USE_PARENT_COLOR );
+    borderActor.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f ) );
+    borderActor.SetProperty( Actor::Property::COLOR_MODE, USE_PARENT_COLOR );
 
     Property::Map borderProperty;
     borderProperty.Insert( Toolkit::Visual::Property::TYPE, Visual::BORDER );
@@ -900,7 +900,7 @@ public: // From ItemFactory
     // Add a checkbox child actor; invisible until edit-mode is enabled
     ImageView checkbox = ImageView::New();
     checkbox.SetProperty( Dali::Actor::Property::NAME, "CheckBox" );
-    checkbox.SetColorMode( USE_PARENT_COLOR );
+    checkbox.SetProperty( Actor::Property::COLOR_MODE, USE_PARENT_COLOR );
     checkbox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
     checkbox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
     checkbox.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
@@ -922,7 +922,7 @@ public: // From ItemFactory
 
     ImageView tick = ImageView::New( SELECTED_IMAGE );
     tick.SetProperty( Dali::Actor::Property::NAME, "Tick" );
-    tick.SetColorMode( USE_PARENT_COLOR );
+    tick.SetProperty( Actor::Property::COLOR_MODE, USE_PARENT_COLOR );
     tick.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
     tick.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
     tick.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );

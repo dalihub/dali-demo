@@ -94,7 +94,7 @@ public:
     container = Control::New();
     container.SetSize( size );
     container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    container.SetDrawMode( DrawMode::OVERLAY_2D );
+    container.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
   }
 
   void CreateFolderButton( PushButton& button )

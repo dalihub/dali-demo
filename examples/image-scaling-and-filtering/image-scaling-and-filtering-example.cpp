@@ -281,7 +281,7 @@ public:
 
     Dali::Layer controlsLayer = Dali::Layer::New();
     controlsLayer.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    controlsLayer.SetSizeModeFactor( Vector3( 1.0f, 1.0f, 1.0f ) );
+    controlsLayer.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 1.0f, 1.0f, 1.0f ) );
     controlsLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     controlsLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     stage.Add( controlsLayer );

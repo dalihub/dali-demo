@@ -223,9 +223,9 @@ public:
           const Quaternion yawRot(Radian(Degree(angle2 * -200.0f)), modelOrientation.Rotate( Vector3::YAXIS ) );
 
           mModelOrientation = mModelOrientation * yawRot * pitchRot ;
-          mSkybox.GetActor().SetOrientation( mModelOrientation );
-          actor1.SetOrientation( mModelOrientation );
-          actor2.SetOrientation( mModelOrientation );
+          mSkybox.GetActor().SetProperty( Actor::Property::ORIENTATION, mModelOrientation );
+          actor1.SetProperty( Actor::Property::ORIENTATION, mModelOrientation );
+          actor2.SetProperty( Actor::Property::ORIENTATION, mModelOrientation );
 
           mPointZ = point;
         }
