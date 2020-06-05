@@ -31,7 +31,7 @@ const float START_ANGLE_INITIAL_VALUE( 0.0f );
 const float START_ANGLE_TARGET_VALUE( 360.0f );
 const float SWEEP_ANGLE_INITIAL_VALUE( 90.0f );
 const float SWEEP_ANGLE_TARGET_VALUE( 360.0f );
-const float ANIMATION_DURATION( 5.0f );
+const float ANIMATION_DURATION( 3.0f );
 
 const Property::Value BACKGROUND
 {
@@ -41,6 +41,29 @@ const Property::Value BACKGROUND
   { DevelArcVisual::Property::SWEEP_ANGLE, 90.0f },
   { DevelArcVisual::Property::CAP, DevelArcVisual::Cap::ROUND },
   { DevelArcVisual::Property::THICKNESS, 20.0f }
+};
+
+const Property::Value TRANSITION_ANIMATOR
+{
+  { "timePeriod", Property::Map().Add( "duration", ANIMATION_DURATION ) }
+};
+
+const Property::Value TRANSITION_START_ANGLE
+{
+  { "target", "background" },
+  { "property", "startAngle" },
+  { "initialValue", START_ANGLE_INITIAL_VALUE },
+  { "targetValue", START_ANGLE_TARGET_VALUE },
+  { "animator", TRANSITION_ANIMATOR }
+};
+
+const Property::Value TRANSITION_SWEEP_ANGLE
+{
+  { "target", "background" },
+  { "property", "sweepAngle" },
+  { "initialValue", SWEEP_ANGLE_INITIAL_VALUE },
+  { "targetValue", SWEEP_ANGLE_TARGET_VALUE },
+  { "animator", TRANSITION_ANIMATOR }
 };
 
 } // namespace
@@ -90,16 +113,8 @@ private:
     if( touch.GetState( 0 ) == PointState::UP )
     {
       Property::Array array;
-      array.PushBack( Property::Map().Add( "target", "background" )
-                                     .Add( "property", "startAngle" )
-                                     .Add( "initialValue", START_ANGLE_INITIAL_VALUE )
-                                     .Add( "targetValue", START_ANGLE_TARGET_VALUE )
-                                     .Add( "animator", Property::Map().Add( "duration", ANIMATION_DURATION ) ) );
-      array.PushBack( Property::Map().Add( "target", "background" )
-                                     .Add( "property", "sweepAngle" )
-                                     .Add( "initialValue", SWEEP_ANGLE_INITIAL_VALUE )
-                                     .Add( "targetValue", SWEEP_ANGLE_TARGET_VALUE )
-                                     .Add( "animator", Property::Map().Add( "duration", ANIMATION_DURATION ) ) );
+      array.PushBack( TRANSITION_START_ANGLE );
+      array.PushBack( TRANSITION_SWEEP_ANGLE );
 
       TransitionData transitionData = TransitionData::New( array );
       Animation animation = DevelControl::CreateTransition( Toolkit::Internal::GetImplementation( mControl ), transitionData );
