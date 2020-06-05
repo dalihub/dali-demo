@@ -101,8 +101,8 @@ private:
 
     stage.Add( mMeshActor );
 
-    mMeshActor.SetPosition( ACTOR_POSITION );
-    mMeshActor.SetScale( ACTOR_SCALE );
+    mMeshActor.SetProperty( Actor::Property::POSITION, ACTOR_POSITION );
+    mMeshActor.SetProperty( Actor::Property::SCALE, ACTOR_SCALE );
 
     mTapDetector = TapGestureDetector::New();
     mTapDetector.Attach(mCircleBackground);
@@ -167,7 +167,7 @@ private:
 
     Actor meshActor = Actor::New();
     meshActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    meshActor.SetSize( 1, 1 );
+    meshActor.SetProperty( Actor::Property::SIZE, Vector2( 1, 1 ) );
     meshActor.AddRenderer( renderer );
 
     return meshActor;
@@ -354,9 +354,9 @@ private:
 
     // prepare the animation by setting the uniform to the required value
     mEffect.SetProperty( mEffect.GetPropertyIndex( BREAK_UNIFORM_NAME ), 1.f );
-    mMeshActor.SetScale(0.01f);
+    mMeshActor.SetProperty( Actor::Property::SCALE,0.01f);
     mEffect.SetProperty( mEffect.GetPropertyIndex( "uScale" ), 0.01f );
-    mMeshActor.SetPosition( 0.f, 0.f, 1.f );
+    mMeshActor.SetProperty( Actor::Property::POSITION, Vector3( 0.f, 0.f, 1.f ) );
 
     Animation breakAnimation = Animation::New(duration*1.5f);
     breakAnimation.AnimateTo( Property(mMeshActor, Actor::Property::SCALE), Vector3(ACTOR_SCALE,ACTOR_SCALE,ACTOR_SCALE), EaseOutSquare);

@@ -115,7 +115,7 @@ public:
     mLabel = TextLabel::New( "R:1 M:0" );
     mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-    mLabel.SetSize( stage.GetSize().width * 0.5f, stage.GetSize().height * 0.083f );
+    mLabel.SetProperty( Actor::Property::SIZE, Vector2( stage.GetSize().width * 0.5f, stage.GetSize().height * 0.083f ) );
     mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -293,16 +293,16 @@ public:
 
     mUiRoot.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     mUiRoot.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
-    mUiRoot.SetSize(stage.GetSize());
+    mUiRoot.SetProperty( Actor::Property::SIZE, stage.GetSize());
 
     m3dRoot.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     m3dRoot.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
     // Setting camera parameters for 3D Scene
-    mSkybox.GetActor().SetPosition( CAMERA_DEFAULT_POSITION );
+    mSkybox.GetActor().SetProperty( Actor::Property::POSITION, CAMERA_DEFAULT_POSITION );
     CameraActor camera3d = stage.GetRenderTaskList().GetTask(0).GetCameraActor();
     camera3d.SetInvertYAxis( true );
-    camera3d.SetPosition( CAMERA_DEFAULT_POSITION );
+    camera3d.SetProperty( Actor::Property::POSITION, CAMERA_DEFAULT_POSITION );
     camera3d.SetNearClippingPlane( CAMERA_DEFAULT_NEAR );
     camera3d.SetFarClippingPlane( CAMERA_DEFAULT_FAR );
     camera3d.SetFieldOfView( Radian( Degree( CAMERA_DEFAULT_FOV ) ) );

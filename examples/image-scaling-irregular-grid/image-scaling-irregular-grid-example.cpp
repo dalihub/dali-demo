@@ -393,7 +393,7 @@ public:
   void OnScrollViewRelayout(Actor actor)
   {
     // Make the height of the horizontal scroll bar to be the same as the width of scroll view.
-    mScrollBarHorizontal.SetSize(Vector2(0.0f, mScrollView.GetRelayoutSize( Dimension::WIDTH) ));
+    mScrollBarHorizontal.SetProperty( Actor::Property::SIZE, Vector2(0.0f, mScrollView.GetRelayoutSize( Dimension::WIDTH) ));
   }
 
   /**
@@ -473,8 +473,8 @@ public:
       const Vector2 imagePosition = imageRegionCorner + Vector2( GRID_CELL_PADDING , GRID_CELL_PADDING ) + imageSize * 0.5f;
 
       ImageView image = CreateImageView( imageSource.configuration.path, imageSize.x, imageSize.y, fittingMode );
-      image.SetPosition( Vector3( imagePosition.x, imagePosition.y, 0 ) );
-      image.SetSize( imageSize );
+      image.SetProperty( Actor::Property::POSITION, Vector3( imagePosition.x, imagePosition.y, 0 ) );
+      image.SetProperty( Actor::Property::SIZE, imageSize );
       image.TouchSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
       image.ResourceReadySignal().Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal );
       mFittingModes[image.GetId()] = fittingMode;

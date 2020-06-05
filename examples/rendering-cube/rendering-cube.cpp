@@ -249,8 +249,8 @@ public:
     mActor = Actor::New();
     mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mActor.SetPosition( Vector3( 0.0f, 0.0f, 0.0f ) );
-    mActor.SetSize( Vector3( quarterStageWidth, quarterStageWidth, quarterStageWidth ) );
+    mActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 0.0f ) );
+    mActor.SetProperty( Actor::Property::SIZE, Vector3( quarterStageWidth, quarterStageWidth, quarterStageWidth ) );
     mActor.AddRenderer( mRenderer );
     stage.Add( mActor );
   }

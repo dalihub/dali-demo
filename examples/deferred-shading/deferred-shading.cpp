@@ -579,11 +579,11 @@ private:
       CenterActor(a);
 
       Vector3 position{ v * unit * 5.f };
-      a.SetPosition(position);
+      a.SetProperty( Actor::Property::POSITION, position );
 
       float scale = (c + ((v.x + v.y + v.z) + c * 3.f) * .5f) / (c * 4.f);
       Vector3 size{ Vector3::ONE * scale * unit * 2.f };
-      a.SetSize(size);
+      a.SetProperty( Actor::Property::SIZE, size);
 
       a.SetProperty( Actor::Property::COLOR,Color::WHITE * .25f +
           (Color::RED * (v.x + c) / (c * 2.f) +
@@ -625,7 +625,7 @@ private:
     // Create final image for deferred shading
     auto finalImage = Actor::New();
     CenterActor(finalImage);
-    finalImage.SetSize(stageSize);
+    finalImage.SetProperty( Actor::Property::SIZE, stageSize);
 
     TextureSet finalImageTextures = TextureSet::New();
     finalImageTextures.SetTexture(0, rttNormal);

@@ -192,7 +192,7 @@ private:
 
     stage.GetRenderTaskList().GetTask(0).SetClearEnabled(false);
     mLayer3D = Layer::New();
-    mLayer3D.SetSize( stageWidth, stageHeight );
+    mLayer3D.SetProperty( Actor::Property::SIZE, Vector2( stageWidth, stageHeight ) );
     stage.Add(mLayer3D);
 
     mLayer3D.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
@@ -301,11 +301,11 @@ private:
 
     Actor panScreen = Actor::New();
     auto stageSize = stage.GetSize();
-    panScreen.SetSize( stageSize.width, stageSize.height );
+    panScreen.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width, stageSize.height ) );
     panScreen.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     panScreen.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     auto camera2d = stage.GetRenderTaskList().GetTask(0).GetCameraActor();
-    panScreen.SetPosition( 0, 0, camera2d.GetNearClippingPlane() );
+    panScreen.SetProperty( Actor::Property::POSITION, Vector3( 0, 0, camera2d.GetNearClippingPlane() ));
     camera2d.Add(panScreen);
     camera2d.RotateBy( Degree(180.0f), Vector3( 0.0, 1.0, 0.0 ) );
     mPanGestureDetector = PanGestureDetector::New();
@@ -330,12 +330,12 @@ private:
     {
       auto actor = node.cameraId != 0xffffffff ? CameraActor::New( stage.GetSize() ) : Actor::New();
 
-      actor.SetSize( 1, 1, 1 );
+      actor.SetProperty( Actor::Property::SIZE, Vector3( 1, 1, 1 ) );
       actor.SetProperty( Dali::Actor::Property::NAME, node.name );
       actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-      actor.SetPosition( node.translation[0], node.translation[1], node.translation[2] );
-      actor.SetScale( node.scale[0], node.scale[1], node.scale[2] );
+      actor.SetProperty( Actor::Property::POSITION, Vector3( node.translation[0], node.translation[1], node.translation[2] ));
+      actor.SetProperty( Actor::Property::SCALE, Vector3( node.scale[0], node.scale[1], node.scale[2] ) );
       actor.SetProperty( Actor::Property::ORIENTATION, Quaternion(node.rotationQuaternion[3],
                                        node.rotationQuaternion[0],
                                        node.rotationQuaternion[1],

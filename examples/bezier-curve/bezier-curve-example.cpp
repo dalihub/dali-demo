@@ -318,7 +318,7 @@ public:
   Actor CreateControlPoint( Actor parent, const char* url, Vector3 position)
   {
     Actor actor = ImageView::New( url );
-    actor.SetScale( mControlPointScale);
+    actor.SetProperty( Actor::Property::SCALE, mControlPointScale);
     actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     // Curve and line drawing works off current value (i.e. last update frame's value). Need to animate to ensure
     // initial position is baked to both frames before initially drawing the curve.
@@ -520,7 +520,7 @@ public:
       {
         Vector3 position( event.GetScreenPosition( 0 ) );
 
-        mDragActor.SetPosition( position - Vector3( mRelativeDragPoint ) );
+        mDragActor.SetProperty( Actor::Property::POSITION, position - Vector3( mRelativeDragPoint ) );
 
         if( event.GetState( 0 ) == PointState::UP ) // Stop dragging
         {

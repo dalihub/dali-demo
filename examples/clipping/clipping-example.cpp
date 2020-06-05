@@ -123,7 +123,7 @@ private:
                                        .Add( BorderVisual::Property::COLOR, Color::WHITE )
                                        .Add( BorderVisual::Property::SIZE, 2.0f )
                                        .Add( BorderVisual::Property::ANTI_ALIASING, true ) );
-    border.SetSize( Vector3( itemViewLayoutSize.x + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.y + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.z + ITEM_VIEW_BORDER_SIZE * 2.0f ) );
+    border.SetProperty( Actor::Property::SIZE, Vector3( itemViewLayoutSize.x + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.y + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.z + ITEM_VIEW_BORDER_SIZE * 2.0f ) );
     stage.Add( border );
 
     // Constrain the border's orientation to the orientation of item-view.

@@ -118,7 +118,7 @@ private:
       // create actor to render input with applied shader
       mActorForInput = Toolkit::ImageView::New( url );
       mActorForInput.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
-      mActorForInput.SetSize(TARGET_SIZE);
+      mActorForInput.SetProperty( Actor::Property::SIZE, TARGET_SIZE);
       Property::Map customShader;
       customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = FILTER_FRAGMENT_SOURCE;
       Property::Map visualMap;

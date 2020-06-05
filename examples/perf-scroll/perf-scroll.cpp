@@ -288,7 +288,7 @@ public:
       propertyMap.Insert(Toolkit::DevelVisual::Property::VISUAL_FITTING_MODE, Toolkit::DevelVisual::FILL);
       mImageView[i].SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
 
-      mImageView[i].SetSize( Vector3(0.0f,0.0f,0.0f) );
+      mImageView[i].SetProperty( Actor::Property::SIZE, Vector3(0.0f,0.0f,0.0f) );
       mImageView[i].SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
       mParent.Add( mImageView[i] );
     }
@@ -315,7 +315,7 @@ public:
     {
       mActor[i] = Actor::New();
       mActor[i].AddRenderer( renderers[i % numImages] );
-      mActor[i].SetSize(0.0f,0.0f,0.0f);
+      mActor[i].SetProperty( Actor::Property::SIZE, Vector3(0.0f,0.0f,0.0f) );
       mParent.Add(mActor[i]);
     }
   }
@@ -369,16 +369,16 @@ public:
         }
         if( gUseMesh )
         {
-          mActor[count].SetPosition( initialPosition );
-          mActor[count].SetSize( Vector3(0.0f,0.0f,0.0f) );
+          mActor[count].SetProperty( Actor::Property::POSITION, initialPosition );
+          mActor[count].SetProperty( Actor::Property::SIZE, Vector3(0.0f,0.0f,0.0f) );
           mActor[count].SetProperty( Actor::Property::ORIENTATION, Quaternion( Quaternion( Radian( 0.0f ), Vector3::XAXIS ) ) );
           mShow.AnimateTo( Property( mActor[count], Actor::Property::POSITION ), Vector3( xpos+mSize.x*0.5f, ypos+mSize.y*0.5f, 0.0f), AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ) );
           mShow.AnimateTo( Property( mActor[count], Actor::Property::SIZE ), mSize, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ) );
         }
         else
         {
-          mImageView[count].SetPosition( initialPosition );
-          mImageView[count].SetSize( Vector3(0.0f,0.0f,0.0f) );
+          mImageView[count].SetProperty( Actor::Property::POSITION, initialPosition );
+          mImageView[count].SetProperty( Actor::Property::SIZE, Vector3(0.0f,0.0f,0.0f) );
           mImageView[count].SetProperty( Actor::Property::ORIENTATION, Quaternion( Quaternion( Radian(0.0f), Vector3::XAXIS ) ) );
           mShow.AnimateTo( Property( mImageView[count], Actor::Property::POSITION ), Vector3( xpos+mSize.x*0.5f, ypos+mSize.y*0.5f, 0.0f ), AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ) );
           mShow.AnimateTo( Property( mImageView[count], Actor::Property::SIZE ), mSize, AlphaFunction::EASE_OUT_BACK, TimePeriod( delay, duration ) );

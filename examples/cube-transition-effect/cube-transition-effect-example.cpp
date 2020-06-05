@@ -252,7 +252,7 @@ void CubeTransitionApp::OnInit( Application& application )
   mCubeWaveEffect.SetCubeDisplacement( CUBE_DISPLACEMENT_WAVE );
   mCubeWaveEffect.TransitionCompletedSignal().Connect(this, &CubeTransitionApp::OnTransitionCompleted);
 
-  mCubeWaveEffect.SetSize( mViewSize );
+  mCubeWaveEffect.SetProperty( Actor::Property::SIZE, mViewSize );
   mCubeWaveEffect.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCubeWaveEffect.SetCurrentTexture( mCurrentTexture );
 
@@ -262,7 +262,7 @@ void CubeTransitionApp::OnInit( Application& application )
   mCubeCrossEffect.SetCubeDisplacement( CUBE_DISPLACEMENT_CROSS );
   mCubeCrossEffect.TransitionCompletedSignal().Connect(this, &CubeTransitionApp::OnTransitionCompleted);
 
-  mCubeCrossEffect.SetSize( mViewSize );
+  mCubeCrossEffect.SetProperty( Actor::Property::SIZE, mViewSize );
   mCubeCrossEffect.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCubeCrossEffect.SetCurrentTexture( mCurrentTexture );
 
@@ -270,7 +270,7 @@ void CubeTransitionApp::OnInit( Application& application )
   mCubeFoldEffect.SetTransitionDuration( ANIMATION_DURATION_FOLD );
   mCubeFoldEffect.TransitionCompletedSignal().Connect(this, &CubeTransitionApp::OnTransitionCompleted);
 
-  mCubeFoldEffect.SetSize( mViewSize );
+  mCubeFoldEffect.SetProperty( Actor::Property::SIZE, mViewSize );
   mCubeFoldEffect.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCubeFoldEffect.SetCurrentTexture( mCurrentTexture );
 

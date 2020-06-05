@@ -58,7 +58,7 @@ public:
     mLabel.SetProperty( Dali::Actor::Property::NAME, "SimpleTextLabel" );
     mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mLabel.SetSize( 400.f, 400.f );
+    mLabel.SetProperty( Actor::Property::SIZE, Vector2( 400.f, 400.f ) );
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
     mLabel.SetBackgroundColor( Color::WHITE );

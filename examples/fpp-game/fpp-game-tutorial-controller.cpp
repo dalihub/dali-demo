@@ -113,7 +113,7 @@ void FppGameTutorialController::DisplayTutorial()
   mLeftLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mLeftLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mLeftLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-  mLeftLabel.SetSize( Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
+  mLeftLabel.SetProperty( Actor::Property::SIZE, Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
   mLeftLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,
                           Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
                                          .Add( ColorVisual::Property::MIX_COLOR, Vector4( 0.0, 0.0, 0.7, 0.2 ) ) );
@@ -126,7 +126,7 @@ void FppGameTutorialController::DisplayTutorial()
   mRightLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mRightLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mRightLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-  mRightLabel.SetSize( Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
+  mRightLabel.SetProperty( Actor::Property::SIZE, Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
   mRightLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,
                            Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
                                           .Add( ColorVisual::Property::MIX_COLOR, Vector4( 0.5, 0.0, 0.0, 0.2 ) ) );
@@ -147,8 +147,8 @@ void FppGameTutorialController::DisplayTutorial()
     uiCamera.RotateBy( Degree(90.0f), Vector3( 0.0f, 0.0f, 1.0f ));
   }
 
-  mLeftLabel.SetPosition( Vector3( -stageSize.x*0.25f, 0.0, 0.0 ) );
-  mRightLabel.SetPosition( Vector3( stageSize.x*0.25f, 0.0, 0.0 ) );
+  mLeftLabel.SetProperty( Actor::Property::POSITION, Vector3( -stageSize.x*0.25f, 0.0, 0.0 ) );
+  mRightLabel.SetProperty( Actor::Property::POSITION, Vector3( stageSize.x*0.25f, 0.0, 0.0 ) );
 
   mUiRoot.Add( mLeftLabel );
   mUiRoot.Add( mRightLabel );

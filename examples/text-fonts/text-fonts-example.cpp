@@ -92,7 +92,7 @@ public:
   void CreateContainer( Control& container, const Vector2 size )
   {
     container = Control::New();
-    container.SetSize( size );
+    container.SetProperty( Actor::Property::SIZE, size );
     container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     container.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
   }
@@ -102,7 +102,7 @@ public:
     button = PushButton::New();
     button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    button.SetSize( 50.0f, 50.0f );
+    button.SetProperty( Actor::Property::SIZE, Vector2( 50.0f, 50.0f ) );
   }
 
   bool OnButtonClicked( Toolkit::Button button )
@@ -117,7 +117,7 @@ public:
       CreateContainer ( mContainer4 , mLayoutSize);
       Stage stage = Stage::GetCurrent();
       Vector2 stageSize = stage.GetSize();
-      mContainer4.SetPosition( 0, stageSize.height*0.25f*3 );
+      mContainer4.SetProperty( Actor::Property::POSITION, Vector2( 0, stageSize.height*0.25f*3 ));
       stage.Add( mContainer4 );
       // Info
       CreateContainer ( mContainer4Info , mLayoutSize );
@@ -192,9 +192,9 @@ public:
     CreateTextLabel ( mLabel3, LABEL_TEXT, Color::WHITE  );
     mLabel3.SetProperty( TextLabel::Property::FONT_FAMILY, "SamsungOneUI" );
 
-    mContainer.SetPosition( 0, 0 );
-    mContainer2.SetPosition( 0, stageSize.height*0.25f );
-    mContainer3.SetPosition( 0, stageSize.height*0.25f*2 );
+    mContainer.SetProperty( Actor::Property::POSITION, Vector2( 0, 0 ));
+    mContainer2.SetProperty( Actor::Property::POSITION, Vector2( 0, stageSize.height*0.25f ));
+    mContainer3.SetProperty( Actor::Property::POSITION, Vector2( 0, stageSize.height*0.25f*2 ));
 
     mContainer.Add( mLabel );
     mContainer2.Add( mLabel2 );

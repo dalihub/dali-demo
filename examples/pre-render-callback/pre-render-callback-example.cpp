@@ -34,8 +34,8 @@ void AddText( Control textContainer, std::string text, unsigned int yIndex )
   auto label = TextLabel::New(text);
   label.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
   label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-  label.SetSize( 300,TEXT_HEIGHT );
-  label.SetY( yIndex*TEXT_HEIGHT );
+  label.SetProperty( Actor::Property::SIZE, Vector2( 300,TEXT_HEIGHT ) );
+  label.SetProperty( Actor::Property::POSITION_Y,  yIndex*TEXT_HEIGHT );
   textContainer.Add( label );
 }
 
@@ -114,7 +114,7 @@ private:
     mSpinner = TextLabel::New("");
     mSpinner.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mSpinner.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    mSpinner.SetSize(100,100);
+    mSpinner.SetProperty( Actor::Property::SIZE, Vector2(100,100) );
 
     mStage.Add(mSpinner);
     mStage.Add(textContainer);
@@ -168,8 +168,8 @@ private:
     mSceneAnimation.SetLooping(true);
     mSceneAnimation.Play();
 
-    mSceneActor.SetSize(250.0f, 250.0f);
-    mSceneActor.SetPosition(0.0f, 0.0f, 130.0f);
+    mSceneActor.SetProperty( Actor::Property::SIZE, Vector2(250.0f, 250.0f) );
+    mSceneActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 130.0f ) );
     Quaternion p( Degree( -6.0f ), Vector3::XAXIS );
     Quaternion q( Degree( 20.0f ), Vector3::YAXIS );
     mSceneActor.SetProperty( Actor::Property::ORIENTATION, p * q );

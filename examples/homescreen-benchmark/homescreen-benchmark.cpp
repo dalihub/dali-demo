@@ -277,8 +277,8 @@ public:
         {
           float rowX = x * COL_WIDTH + PADDING;
           float rowY = y * ROW_HEIGHT + PADDING;
-          iconView.SetSize( Vector3( COL_WIDTH, ROW_HEIGHT, 1.0f ) );
-          iconView.SetPosition( Vector3( rowX, rowY, 0.0f ) );
+          iconView.SetProperty( Actor::Property::SIZE, Vector3( COL_WIDTH, ROW_HEIGHT, 1.0f ) );
+          iconView.SetProperty( Actor::Property::POSITION, Vector3( rowX, rowY, 0.0f ) );
         }
         else
         {
@@ -385,12 +385,12 @@ public:
       // Move page 'a little bit up'.
       page.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       page.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-      page.SetPosition( Vector3( stageSize.x * i, 0.0f, 0.0f ) );
+      page.SetProperty( Actor::Property::POSITION, Vector3( stageSize.x * i, 0.0f, 0.0f ) );
       mScrollParent.Add( page );
     }
 
     mScrollParent.SetProperty( DevelActor::Property::OPACITY, 1.0f );
-    mScrollParent.SetScale( Vector3::ONE );
+    mScrollParent.SetProperty( Actor::Property::SCALE, Vector3::ONE );
 
     // Fade in.
     ShowAnimation();

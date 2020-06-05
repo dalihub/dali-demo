@@ -454,7 +454,7 @@ public:
     mBuilderLayer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_CENTER);
     Dali::Vector3 size = Stage::GetCurrent().GetRootLayer().GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
     size.y -= DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight;
-    mBuilderLayer.SetSize( size );
+    mBuilderLayer.SetProperty( Actor::Property::SIZE, size );
 
     mNavigationView.Push( mBuilderLayer );
   }

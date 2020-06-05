@@ -108,7 +108,7 @@ private:
       ImageView imageView = ImageView::New( IMAGE_NAME );
       imageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
       imageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-      imageView.SetY( yPos );
+      imageView.SetProperty( Actor::Property::POSITION_Y,  yPos );
       yPos += imageView.GetNaturalSize().height;
 
       // Add the ID of the created ImageView to mFrameCallback.

@@ -80,7 +80,7 @@ public:
     stage.KeyEventSignal().Connect( this, &DragAndDropExample::OnKeyEvent );
 
     TextLabel hintText = TextLabel::New("please drag one textlabel, move and drop on other textlabel");
-    hintText.SetPosition(0.0f, 700.0f);
+    hintText.SetProperty( Actor::Property::POSITION, Vector2(0.0f, 700.0f));
     hintText.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     hintText.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     hintText.SetProperty(TextLabel::Property::MULTI_LINE, true);
@@ -98,8 +98,8 @@ public:
       mTextLabel[i].SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
       mTextLabel[i].SetBackgroundColor(TEXT_LABEL_COLOR[i]);
 
-      mTextLabel[i].SetSize(TEXT_LABEL_WIDTH, TEXT_LABEL_HEIGHT);
-      mTextLabel[i].SetPosition(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * i);
+      mTextLabel[i].SetProperty( Actor::Property::SIZE, Vector2(TEXT_LABEL_WIDTH, TEXT_LABEL_HEIGHT) );
+      mTextLabel[i].SetProperty( Actor::Property::POSITION, Vector2(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * i));
       mDragAndDropDetector.Attach(mTextLabel[i]);
 
       mRect[i] = Rect<float>(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * i, TEXT_LABEL_WIDTH, TEXT_LABEL_HEIGHT);

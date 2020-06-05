@@ -313,8 +313,8 @@ public:
     Actor actor = Actor::New();
     actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    actor.SetPosition( 0.f, 0.f);
-    actor.SetSize( 360.f, 360.f );
+    actor.SetProperty( Actor::Property::POSITION, Vector2( 0.f, 0.f));
+    actor.SetProperty( Actor::Property::SIZE, Vector2( 360.f, 360.f ) );
     actor.SetProperty( Actor::Property::COLOR, Color::WHITE );
 
     actor.AddRenderer( renderer );

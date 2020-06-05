@@ -157,7 +157,7 @@ private:
       control.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75, 0.1, 1.0 ) );
       control.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       control.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-      control.SetY( stageSize.height * previousPosition );
+      control.SetProperty( Actor::Property::POSITION_Y,  stageSize.height * previousPosition );
     }
   }
 

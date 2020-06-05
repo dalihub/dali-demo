@@ -81,7 +81,7 @@ public:
     box.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     box.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
     box.SetResizePolicy( ResizePolicy::FIXED, Dimension::WIDTH );
-    box.SetSize( size.width, 0.f );
+    box.SetProperty( Actor::Property::SIZE, Vector2( size.width, 0.f ) );
     parent.Add( box );
 
     Dali::Property::Map border;
@@ -107,7 +107,7 @@ public:
     }
 
     button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    button.SetSize(BOX_SIZE.height,BOX_SIZE.height);
+    button.SetProperty( Actor::Property::SIZE, Vector2(BOX_SIZE.height,BOX_SIZE.height) );
     button.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
     button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     parent.Add(button);
@@ -128,7 +128,7 @@ public:
     Actor rootActor = Actor::New();
     rootActor.SetProperty( Dali::Actor::Property::NAME,"rootActor");
     rootActor.SetResizePolicy( ResizePolicy::FIXED,  Dimension::ALL_DIMENSIONS );
-    rootActor.SetSize( mStageSize );
+    rootActor.SetProperty( Actor::Property::SIZE, mStageSize );
     rootActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
 
     stage.Add( rootActor );
@@ -143,7 +143,7 @@ public:
     desktop.SetProperty( Dali::Actor::Property::NAME,"desktopActor");
     desktop.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     desktop.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    desktop.SetSize( mTargetActorSize );
+    desktop.SetProperty( Actor::Property::SIZE, mTargetActorSize );
 
     rootActor.Add( desktop ); // Add desktop (content) to offscreen actor
 
@@ -155,7 +155,7 @@ public:
     Control boxE = Control::New();
 
     CreateBox( "boxA", boxA, desktop, BOX_SIZE );
-    boxA.SetPosition( 0.0f, -500.0f, 1.0f );
+    boxA.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, -500.0f, 1.0f ));
 
     // Create TextField
     TextField field = TextField::New();
@@ -165,16 +165,16 @@ public:
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Enter Folder Name" );
     field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( SCREEN_BORDER, SCREEN_BORDER, mStageSize.width - SCREEN_BORDER*2, mStageSize.height - SCREEN_BORDER*2 ) );
     boxA.Add( field );
-    boxA.SetSize(BOX_SIZE);
+    boxA.SetProperty( Actor::Property::SIZE, BOX_SIZE);
 
     CreateBox( "boxB", boxB, desktop, SCROLLING_BOX_SIZE );
-    boxB.SetPosition( 0.0f, -400.0f, 1.0f );
+    boxB.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, -400.0f, 1.0f ));
     Toolkit::PushButton scrollLargeButton = Toolkit::PushButton::New();
     scrollLargeButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedLarge );
     CreateLabel( mLargeLabel, "A Quick Brown Fox Jumps Over The Lazy Dog", boxB, false ,scrollLargeButton );
 
     CreateBox( "boxC", boxC, desktop, SCROLLING_BOX_SIZE );
-    boxC.SetPosition( 0.0f, -300.0f, 1.0f );
+    boxC.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, -300.0f, 1.0f ));
     Toolkit::PushButton scrollSmallButton = Toolkit::PushButton::New();
     scrollSmallButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedSmall );
     CreateLabel( mSmallLabel, "Hello Text", boxC , true, scrollSmallButton );
@@ -185,7 +185,7 @@ public:
     mSmallLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
 
     CreateBox( "boxD", boxD, desktop, SCROLLING_BOX_SIZE );
-    boxD.SetPosition( 0.0f, -200.0f, 1.0f );
+    boxD.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, -200.0f, 1.0f ));
     Toolkit::PushButton scrollRtlButton = Toolkit::PushButton::New();
     scrollRtlButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedRtl );
     CreateLabel( mRtlLabel, "مرحبا بالعالم", boxD , true, scrollRtlButton );
@@ -193,7 +193,7 @@ public:
     mRtlLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_LOOP_DELAY, 0.3f );
 
     CreateBox( "boxE", boxE, desktop, SCROLLING_BOX_SIZE );
-    boxE.SetPosition( 0.0f, -100.0f, 1.0f );
+    boxE.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, -100.0f, 1.0f ));
     Toolkit::PushButton scrollRtlLongButton = Toolkit::PushButton::New();
     scrollRtlLongButton.ClickedSignal().Connect( this, &TextScrollingExample::OnButtonClickedRtlLong );
     CreateLabel( mRtlLongLabel, " مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم مرحبا بالعالم", boxE , false, scrollRtlLongButton );
@@ -213,7 +213,7 @@ public:
     colorButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     colorButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     colorButton.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    colorButton.SetSize(BOX_SIZE.height,BOX_SIZE.height);
+    colorButton.SetProperty( Actor::Property::SIZE, Vector2(BOX_SIZE.height,BOX_SIZE.height) );
     colorButton.ClickedSignal().Connect( this, &TextScrollingExample::OnColorButtonClicked );
     rootActor.Add( colorButton );
 
@@ -383,7 +383,7 @@ public:
       mTargetActorPosition.y = mTargetActorPosition.y + position.y;
       mTargetActorPosition.y = std::min( mTargetActorPosition.y, -mTargetActorSize.height );
       mTargetActorPosition.y = std::max( mTargetActorPosition.y, ( mTargetActorSize.height - mStageSize.height*0.25f ) );
-      actor.SetPosition( 0.0f, mTargetActorPosition.y );
+      actor.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, mTargetActorPosition.y ));
     }
   }
 

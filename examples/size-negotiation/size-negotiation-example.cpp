@@ -183,7 +183,7 @@ public:
     popup.SetProperty( Dali::Actor::Property::NAME, "popup" );
     popup.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    popup.SetSize( POPUP_WIDTH_DP, 0.0f );
+    popup.SetProperty( Actor::Property::SIZE, Vector2( POPUP_WIDTH_DP, 0.0f ) );
     popup.SetProperty( Toolkit::Popup::Property::TAIL_VISIBILITY, false );
 
     popup.OutsideTouchedSignal().Connect( this, &SizeNegotiationController::OnPopupOutsideTouched );
@@ -428,7 +428,7 @@ public:
       {
         Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-        backing.SetSize( 0.0f, 100.0f );
+        backing.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 100.0f ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -461,7 +461,7 @@ public:
       {
         Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-        backing.SetSize( 0.0f, 100.0f );
+        backing.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 100.0f ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -509,7 +509,7 @@ public:
       {
         Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-        backing.SetSize( 0.0f, 200.0f );
+        backing.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 200.0f ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -561,7 +561,7 @@ public:
       {
         Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-        backing.SetSize( 0.0f, 100.0f );
+        backing.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 100.0f ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -578,7 +578,7 @@ public:
       {
         Actor backing = CreateSolidColor( Vector4( 1.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-        backing.SetSize( 0.0f, 200.0f );
+        backing.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 200.0f ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -595,7 +595,7 @@ public:
       {
         Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-        backing.SetSize( 0.0f, 300.0f );
+        backing.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 300.0f ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -631,7 +631,7 @@ public:
         Actor backing = CreateSolidColor( Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
         backing.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
-        backing.SetSize( 0.0f, 100.0f );
+        backing.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 100.0f ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -648,7 +648,7 @@ public:
       {
         Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-        backing.SetSize( 0.0f, 200.0f );
+        backing.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 200.0f ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -699,7 +699,7 @@ public:
       {
         Actor backing = CreateSolidColor( Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
         backing.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-        backing.SetSize( 0.0f, 200.0f );
+        backing.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 200.0f ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Fit" );
         text.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );

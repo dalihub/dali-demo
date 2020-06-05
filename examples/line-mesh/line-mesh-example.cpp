@@ -194,7 +194,7 @@ public:
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
-    mMeshActor.SetSize(200, 200);
+    mMeshActor.SetProperty( Actor::Property::SIZE, Vector2(200, 200) );
 
     Property::Index morphAmountIndex = mMeshActor.RegisterProperty( "uMorphAmount", 0.0f );
 
@@ -228,7 +228,7 @@ public:
     modeSelectTableView.SetFitHeight( 1 );
     modeSelectTableView.SetFitHeight( 2 );
     modeSelectTableView.SetCellPadding( Vector2( 6.0f, 0.0f ) );
-    modeSelectTableView.SetScale( Vector3( 0.8f, 0.8f, 0.8f ));
+    modeSelectTableView.SetProperty( Actor::Property::SCALE, Vector3( 0.8f, 0.8f, 0.8f ));
 
     const char* labels[] =
     {

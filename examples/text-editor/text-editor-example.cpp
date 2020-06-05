@@ -152,7 +152,7 @@ public:
     mEditor = TextEditor::New();
     mEditor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mEditor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mEditor.SetPosition( 0.f, toolBarHeight * 2.0f, 0.f );
+    mEditor.SetProperty( Actor::Property::POSITION, Vector3( 0.f, toolBarHeight * 2.0f, 0.f ));
     mEditor.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mEditor.SetProperty( Actor::Property::SIZE_MODE_FACTOR, TEXT_EDITOR_RELATIVE_SIZE );
 
@@ -195,7 +195,7 @@ public:
     // Place below color selection button.
     mButtonContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER  );
     mButtonContainer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mButtonContainer.SetPosition( 0.0f, 2.f * TOOLBAR_PADDING, 0.f );
+    mButtonContainer.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 2.f * TOOLBAR_PADDING, 0.f ));
     mColorContainer.Add( mButtonContainer );
 
     const Vector3 buttonPercentage( 1.f, 0.8f / static_cast<float>( NUMBER_OF_COLORS ), 1.f );

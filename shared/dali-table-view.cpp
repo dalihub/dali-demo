@@ -739,7 +739,7 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
                       Random::Range( -size.y, size.y ),
                       Random::Range( BUBBLE_MIN_Z, BUBBLE_MAX_Z ) );
 
-    child.SetPosition( childPos );
+    child.SetProperty( Actor::Property::POSITION, childPos );
 
     // Define bubble horizontal parallax and vertical wrapping
     Constraint animConstraint = Constraint::New < Vector3 > ( child, Actor::Property::POSITION, AnimateBubbleConstraint( childPos, Random::Range( -0.85f, 0.25f ) ) );
@@ -766,7 +766,7 @@ void DaliTableView::AddBackgroundActors( Actor layer, int count )
     int shapeType = static_cast<int>( Random::Range( 0.0f, NUMBER_OF_SHAPE_IMAGES - 1 ) + 0.5f );
 
     ImageView dfActor = ImageView::New();
-    dfActor.SetSize( Vector2( randSize, randSize ) );
+    dfActor.SetProperty( Actor::Property::SIZE, Vector2( randSize, randSize ) );
     dfActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
     // Set the Image URL and the custom shader at the same time

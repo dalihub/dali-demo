@@ -107,7 +107,7 @@ public:
     label.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
 
     Vector2 stageSize = Stage::GetCurrent().GetSize();
-    label.SetPosition( Vector3( Random::Range( 0.0f, stageSize.x ), Random::Range( 0.0f, stageSize.y ), 0.0f) );
+    label.SetProperty( Actor::Property::POSITION, Vector3( Random::Range( 0.0f, stageSize.x ), Random::Range( 0.0f, stageSize.y ), 0.0f) );
 
     switch ( type )
     {
@@ -181,7 +181,7 @@ public:
 
         shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
         label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
-        label.SetSize(stageSize.x, stageSize.y * 0.25f); // Set the text label in larger size
+        label.SetProperty( Actor::Property::SIZE, Vector2(stageSize.x, stageSize.y * 0.25f) ); // Set the text label in larger size
         break;
       }
       default:

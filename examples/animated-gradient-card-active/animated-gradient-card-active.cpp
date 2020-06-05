@@ -153,8 +153,8 @@ public:
 
       mCard[k].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       mCard[k].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-      mCard[k].SetSize( mSize.x, mSize.y );
-      mCard[k].SetPosition( mPosition[k].x, mPosition[k].y );
+      mCard[k].SetProperty( Actor::Property::SIZE, Vector2( mSize.x, mSize.y ) );
+      mCard[k].SetProperty( Actor::Property::POSITION, Vector2( mPosition[k].x, mPosition[k].y ));
 
       stage.Add( mCard[k] );
     }
@@ -297,7 +297,7 @@ public:
     mBackground = Control::New();
     mBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mBackground.SetSize( STAGE_SIZE );
+    mBackground.SetProperty( Actor::Property::SIZE, STAGE_SIZE );
 
     mStage.Add( mBackground );
 
@@ -594,14 +594,14 @@ private:
     mAddButton.SetImage( BUTTON_ADD_IMAGE );
     mAddButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mAddButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    mAddButton.SetSize( BUTTON_ADD_SIZE * SCALED_WIDTH );
-    mAddButton.SetPosition( BUTTON_ADD_POSITION * SCALED_WIDTH );
+    mAddButton.SetProperty( Actor::Property::SIZE, BUTTON_ADD_SIZE * SCALED_WIDTH );
+    mAddButton.SetProperty( Actor::Property::POSITION, BUTTON_ADD_POSITION * SCALED_WIDTH );
 
     mLabel1 = TextLabel::New( LABEL_TICKET_STR );
     mLabel1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mLabel1.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mLabel1.SetSize( LABEL_TICKET_SIZE * SCALED_WIDTH );
-    mLabel1.SetPosition( LABEL_TICKET_POSITION * SCALED_WIDTH );
+    mLabel1.SetProperty( Actor::Property::SIZE, LABEL_TICKET_SIZE * SCALED_WIDTH );
+    mLabel1.SetProperty( Actor::Property::POSITION, LABEL_TICKET_POSITION * SCALED_WIDTH );
     mLabel1.SetProperty( Actor::Property::VISIBLE, true );
     mLabel1.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_TICKET_FONT_COLOR );
     mLabel1.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_TICKET_FONT_SIZE * FONT_SCALE );
@@ -611,8 +611,8 @@ private:
     mLabel2 = TextLabel::New( LABEL_HOLD_STR );
     mLabel2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabel2.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabel2.SetSize( LABEL_HOLD_SIZE * SCALED_WIDTH );
-    mLabel2.SetPosition( LABEL_HOLD_POSITION * SCALED_WIDTH );
+    mLabel2.SetProperty( Actor::Property::SIZE, LABEL_HOLD_SIZE * SCALED_WIDTH );
+    mLabel2.SetProperty( Actor::Property::POSITION, LABEL_HOLD_POSITION * SCALED_WIDTH );
     mLabel2.SetProperty( Actor::Property::VISIBLE, false );
     mLabel2.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_HOLD_FONT_COLOR );
     mLabel2.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_HOLD_FONT_SIZE * FONT_SCALE );
@@ -622,8 +622,8 @@ private:
     mLabel3 = TextLabel::New( LABEL_TERMINAL_STR );
     mLabel3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabel3.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabel3.SetSize( LABEL_TERMINAL_SIZE * SCALED_WIDTH );
-    mLabel3.SetPosition( LABEL_TERMINAL_POSITION * SCALED_WIDTH );
+    mLabel3.SetProperty( Actor::Property::SIZE, LABEL_TERMINAL_SIZE * SCALED_WIDTH );
+    mLabel3.SetProperty( Actor::Property::POSITION, LABEL_TERMINAL_POSITION * SCALED_WIDTH );
     mLabel3.SetProperty( Actor::Property::VISIBLE, false );
     mLabel3.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_TERMINAL_FONT_COLOR );
     mLabel3.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_TERMINAL_FONT_SIZE * FONT_SCALE );

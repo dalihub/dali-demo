@@ -416,8 +416,8 @@ class ImagePolicies: public ConnectionTracker
     mNextButton.SetProperty( Button::Property::DISABLED_UNSELECTED_BACKGROUND_VISUAL, LOADING_IMAGE );
     mNextButton.SetProperty( Button::Property::DISABLED_SELECTED_BACKGROUND_VISUAL, NEXT_BUTTON_DISABLED_IMAGE );
     mNextButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-    mNextButton.SetY( -50.0f );
-    mNextButton.SetSize( 100.0f, 100.0f );
+    mNextButton.SetProperty( Actor::Property::POSITION_Y,  -50.0f );
+    mNextButton.SetProperty( Actor::Property::SIZE, Vector2( 100.0f, 100.0f ) );
     mNextButton.ClickedSignal().Connect( this, &ImagePolicies::ChangeImageClicked );
     mTable.AddChild( mNextButton, TableView::CellPosition( TableRowPlacement::NEXT_BUTTON, 0 ) );
     mTable.SetCellPadding( Vector2( 2.0f, 2.0f ) );

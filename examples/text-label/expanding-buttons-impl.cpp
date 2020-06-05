@@ -84,7 +84,7 @@ void ExpandingButtons::OnInitialize()
 void ExpandingButtons::OnRelayout( const Dali::Vector2& targetSize, Dali::RelayoutContainer& container )
 {
   mButtonSize = targetSize;
-  mExpandButton.SetSize( targetSize );
+  mExpandButton.SetProperty( Actor::Property::SIZE, targetSize );
 }
 
 void ExpandingButtons::RegisterButton( Dali::Toolkit::Control& control )

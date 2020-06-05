@@ -73,7 +73,7 @@ private:
 
     mControl = Control::New();
     mControl.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mControl.SetSize( 200.0f, 200.0f );
+    mControl.SetProperty( Actor::Property::SIZE, Vector2( 200.0f, 200.0f ) );
     mControl.SetProperty( Control::Property::BACKGROUND, BACKGROUND );
 
     stage.Add( mControl );

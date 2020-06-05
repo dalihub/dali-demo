@@ -96,7 +96,7 @@ void ModelSkybox::Init( const Vector3& size )
   mActor = Actor::New();
   mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  mActor.SetSize( size );
+  mActor.SetProperty( Actor::Property::SIZE, size );
   mActor.AddRenderer( renderer );
 }
 

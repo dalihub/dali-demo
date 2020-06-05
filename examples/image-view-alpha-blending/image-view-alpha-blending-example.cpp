@@ -57,23 +57,23 @@ private:
     float imageSize = 512.f;
 
     Toolkit::ImageView imageView0 = CreateImageView( IMAGE_PATH );
-    imageView0.SetSize(imageSize, imageSize);
+    imageView0.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
     imageView0.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView0.SetY( -imageSize*0.5f );
+    imageView0.SetProperty( Actor::Property::POSITION_Y,  -imageSize*0.5f );
     stage.Add(imageView0);
     Toolkit::ImageView imageView1 = CreateImageView( redGreen0 );
     imageView1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView1.SetSize(imageSize, imageSize);
+    imageView1.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
     imageView0.Add(imageView1);
 
     Toolkit::ImageView imageView2 = CreateImageView( IMAGE_PATH );
-    imageView2.SetSize(imageSize, imageSize);
+    imageView2.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
     imageView2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView2.SetY( imageSize*0.5f );
+    imageView2.SetProperty( Actor::Property::POSITION_Y,  imageSize*0.5f );
     stage.Add(imageView2);
     Toolkit::ImageView imageView3 = CreateImageView( redGreen1);
     imageView3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView3.SetSize(imageSize, imageSize);
+    imageView3.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
     imageView2.Add(imageView3);
 
     imageView2.SetProperty( Toolkit::ImageView::Property::PRE_MULTIPLIED_ALPHA, true );

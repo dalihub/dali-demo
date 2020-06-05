@@ -169,7 +169,7 @@ bool GameCamera::OnTick()
 
   position += sidewaysVector * (sidewaysSpeed * 0.5f);
 
-  mCameraActor.SetPosition( position );
+  mCameraActor.SetProperty( Actor::Property::POSITION, position );
 
   mCameraPosition = position;
 
@@ -188,7 +188,7 @@ void GameCamera::InitialiseDefaultCamera()
   // should be read from file
   mCameraActor.SetNearClippingPlane( mNear );
   mCameraActor.SetFarClippingPlane( mFar );
-  mCameraActor.SetPosition( CAMERA_DEFAULT_POSITION );
+  mCameraActor.SetProperty( Actor::Property::POSITION, CAMERA_DEFAULT_POSITION );
 
   // Camera position is shadowed in order to avoid using.GetCurrentProperty< Vector3 >( Actor::Property::POSITION )
   mCameraPosition = CAMERA_DEFAULT_POSITION;
@@ -200,8 +200,8 @@ void GameCamera::CreateInterceptorActor()
 
   mInterceptorActor = Actor::New();
   mInterceptorActor.SetProperty( Dali::Actor::Property::NAME, "GameInputInterceptor" );
-  mInterceptorActor.SetSize( Vector3( stage.GetSize().x, stage.GetSize().y, 1 ) );
-  mInterceptorActor.SetPosition( Vector3( 0.0, 0.0, 1.0  ) );
+  mInterceptorActor.SetProperty( Actor::Property::SIZE, Vector3( stage.GetSize().x, stage.GetSize().y, 1 ) );
+  mInterceptorActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0, 0.0, 1.0  ) );
   mInterceptorActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mInterceptorActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCameraActor.Add( mInterceptorActor );

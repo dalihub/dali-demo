@@ -69,7 +69,7 @@ private:
     ScrollView scrollView = ScrollView::New();
     scrollView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     scrollView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    scrollView.SetSize( pageSize );
+    scrollView.SetProperty( Actor::Property::SIZE, pageSize );
     scrollView.SetAxisAutoLock( true );
     stage.Add( scrollView );
 
@@ -89,7 +89,7 @@ private:
     for( int column = 0, textNumber = 0; column < NUMBER_OF_PAGES; column++ )
     {
       Actor page = CreatePage( pageSize, textNumber );
-      page.SetPosition( column * pageSize.x, 0.0f );
+      page.SetProperty( Actor::Property::POSITION, Vector2( column * pageSize.x, 0.0f ));
       scrollView.Add( page );
     }
 
