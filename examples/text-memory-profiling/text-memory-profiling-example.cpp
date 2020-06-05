@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -246,29 +246,6 @@ public:
   void CreateTextLabels( int type )
   {
     Stage stage = Stage::GetCurrent();
-
-    // Render tasks may have been setup last load so remove them
-    RenderTaskList taskList = stage.GetRenderTaskList();
-    if( taskList.GetTaskCount() > 1 )
-    {
-      typedef std::vector<RenderTask> Collection;
-      typedef Collection::iterator ColIter;
-      Collection tasks;
-
-      for( unsigned int i = 1; i < taskList.GetTaskCount(); ++i )
-      {
-        tasks.push_back( taskList.GetTask(i) );
-      }
-
-      for( ColIter iter = tasks.begin(); iter != tasks.end(); ++iter )
-      {
-        taskList.RemoveTask(*iter);
-      }
-
-      RenderTask defaultTask = taskList.GetTask( 0 );
-      defaultTask.SetSourceActor( stage.GetRootLayer() );
-      defaultTask.SetTargetFrameBuffer( FrameBufferImage() );
-    }
 
     // Delete any existing text labels
     unsigned int numChildren = mLayer.GetChildCount();
