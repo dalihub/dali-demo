@@ -220,14 +220,14 @@ public:
     Layer overlay = Layer::New();
     overlay.SetProperty( Actor::Property::SENSITIVE,false);
     overlay.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    overlay.SetSize(mStageSize);
+    overlay.SetProperty( Actor::Property::SIZE, mStageSize);
     Stage::GetCurrent().Add(overlay);
 
     mMagnifier = Toolkit::Magnifier::New();
     mMagnifier.SetSourceActor( mView );
-    mMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width );  // Size of magnifier is in relation to stage width
+    mMagnifier.SetProperty( Actor::Property::SIZE, MAGNIFIER_SIZE * mStageSize.width );  // Size of magnifier is in relation to stage width
     mMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
-    mMagnifier.SetScale(Vector3::ZERO);
+    mMagnifier.SetProperty( Actor::Property::SCALE,Vector3::ZERO);
     overlay.Add( mMagnifier );
 
     // Apply constraint to animate the position of the magnifier.
@@ -242,7 +242,7 @@ public:
     // Create bouncing magnifier automatically bounces around screen.
     mBouncingMagnifier = Toolkit::Magnifier::New();
     mBouncingMagnifier.SetSourceActor( mView );
-    mBouncingMagnifier.SetSize( MAGNIFIER_SIZE * mStageSize.width ); // Size of magnifier is in relation to stage width
+    mBouncingMagnifier.SetProperty( Actor::Property::SIZE, MAGNIFIER_SIZE * mStageSize.width ); // Size of magnifier is in relation to stage width
     mBouncingMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
     overlay.Add( mBouncingMagnifier );
 
@@ -374,7 +374,7 @@ public:
     Vector3 glassPosition(position);
     glassPosition.y -= mStageSize.width * MAGNIFIER_SIZE.height * 0.5f + Stage::GetCurrent().GetDpi().height * FINGER_RADIUS_INCHES;
 
-    mMagnifier.SetPosition( glassPosition );
+    mMagnifier.SetProperty( Actor::Property::POSITION, glassPosition );
   }
 
   void OnKeyEvent(const KeyEvent& event)

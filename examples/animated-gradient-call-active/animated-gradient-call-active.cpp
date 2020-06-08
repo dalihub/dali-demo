@@ -149,7 +149,7 @@ public:
     mBackground = Control::New();
     mBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mBackground.SetSize( STAGE_SIZE );
+    mBackground.SetProperty( Actor::Property::SIZE, STAGE_SIZE );
 
     mStage.Add( mBackground );
 
@@ -192,21 +192,21 @@ private:
     mButtonIconDecall.SetImage( ICON_DECALL_IMAGE );
     mButtonIconDecall.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mButtonIconDecall.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mButtonIconDecall.SetSize( ICON_DECALL_SIZE * SCALED_WIDTH );
-    mButtonIconDecall.SetPosition( ICON_DECALL_POSITION * SCALED_WIDTH );
+    mButtonIconDecall.SetProperty( Actor::Property::SIZE, ICON_DECALL_SIZE * SCALED_WIDTH );
+    mButtonIconDecall.SetProperty( Actor::Property::POSITION, ICON_DECALL_POSITION * SCALED_WIDTH );
 
     mButtonIconBattery = ImageView::New();
     mButtonIconBattery.SetImage( ICON_BATTERY_IMAGE );
     mButtonIconBattery.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mButtonIconBattery.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mButtonIconBattery.SetSize( ICON_BATTERY_SIZE * SCALED_WIDTH );
-    mButtonIconBattery.SetPosition( ICON_BATTERY_POSITION * SCALED_WIDTH );
+    mButtonIconBattery.SetProperty( Actor::Property::SIZE, ICON_BATTERY_SIZE * SCALED_WIDTH );
+    mButtonIconBattery.SetProperty( Actor::Property::POSITION, ICON_BATTERY_POSITION * SCALED_WIDTH );
 
     mCallStartButton = PushButton::New();
     mCallStartButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mCallStartButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mCallStartButton.SetSize( BUTTON_CALL_START_SIZE * SCALED_WIDTH );
-    mCallStartButton.SetPosition( BUTTON_CALL_START_POSITION * SCALED_WIDTH );
+    mCallStartButton.SetProperty( Actor::Property::SIZE, BUTTON_CALL_START_SIZE * SCALED_WIDTH );
+    mCallStartButton.SetProperty( Actor::Property::POSITION, BUTTON_CALL_START_POSITION * SCALED_WIDTH );
     mCallStartButton.ClickedSignal().Connect( this, &CallController::OnButtonClicked );
     mCallStartButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
     mCallStartButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE );
@@ -220,8 +220,8 @@ private:
     mLabelIncoming = TextLabel::New( LABEL_INCOMING_STR );
     mLabelIncoming.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabelIncoming.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabelIncoming.SetSize( LABEL_INCOMING_SIZE * SCALED_STAGE_SIZE );
-    mLabelIncoming.SetPosition( LABEL_INCOMING_POSITION * SCALED_STAGE_SIZE_3 );
+    mLabelIncoming.SetProperty( Actor::Property::SIZE, LABEL_INCOMING_SIZE * SCALED_STAGE_SIZE );
+    mLabelIncoming.SetProperty( Actor::Property::POSITION, LABEL_INCOMING_POSITION * SCALED_STAGE_SIZE_3 );
     mLabelIncoming.SetProperty( Actor::Property::VISIBLE, true );
     mLabelIncoming.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_INCOMING_FONT_COLOR );
     mLabelIncoming.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_INCOMING_FONT_SIZE * FONT_SCALE );
@@ -231,8 +231,8 @@ private:
     mLabelName = TextLabel::New( LABEL_NAME_STR );
     mLabelName.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabelName.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabelName.SetSize( LABEL_NAME_SIZE * SCALED_STAGE_SIZE );
-    mLabelName.SetPosition( LABEL_NAME_POSITION * SCALED_STAGE_SIZE_3 );
+    mLabelName.SetProperty( Actor::Property::SIZE, LABEL_NAME_SIZE * SCALED_STAGE_SIZE );
+    mLabelName.SetProperty( Actor::Property::POSITION, LABEL_NAME_POSITION * SCALED_STAGE_SIZE_3 );
     mLabelName.SetProperty( Actor::Property::VISIBLE, true );
     mLabelName.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_NAME_FONT_COLOR );
     mLabelName.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_NAME_FONT_SIZE * FONT_SCALE );
@@ -242,8 +242,8 @@ private:
     mLabelNumber = TextLabel::New( LABEL_NUMBER_STR );
     mLabelNumber.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabelNumber.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabelNumber.SetSize( LABEL_NUMBER_SIZE * SCALED_STAGE_SIZE );
-    mLabelNumber.SetPosition( LABEL_NUMBER_POSITION * SCALED_STAGE_SIZE_3 );
+    mLabelNumber.SetProperty( Actor::Property::SIZE, LABEL_NUMBER_SIZE * SCALED_STAGE_SIZE );
+    mLabelNumber.SetProperty( Actor::Property::POSITION, LABEL_NUMBER_POSITION * SCALED_STAGE_SIZE_3 );
     mLabelNumber.SetProperty( Actor::Property::VISIBLE, true );
     mLabelNumber.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_NUMBER_FONT_COLOR );
     mLabelNumber.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_NUMBER_FONT_SIZE * FONT_SCALE );
@@ -253,8 +253,8 @@ private:
     mLabelDecline = TextLabel::New( LABEL_DECLINE_STR );
     mLabelDecline.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mLabelDecline.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    mLabelDecline.SetSize( LABEL_DECLINE_SIZE * SCALED_STAGE_SIZE );
-    mLabelDecline.SetPosition( LABEL_DECLINE_POSITION * SCALED_WIDTH );
+    mLabelDecline.SetProperty( Actor::Property::SIZE, LABEL_DECLINE_SIZE * SCALED_STAGE_SIZE );
+    mLabelDecline.SetProperty( Actor::Property::POSITION, LABEL_DECLINE_POSITION * SCALED_WIDTH );
     mLabelDecline.SetProperty( Actor::Property::VISIBLE, true );
     mLabelDecline.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_DECLINE_FONT_COLOR );
     mLabelDecline.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_DECLINE_FONT_SIZE * FONT_SCALE );
@@ -273,21 +273,21 @@ private:
     mButtonClip = Control::New();
     mButtonClip.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mButtonClip.SetProperty( Actor::Property::ANCHOR_POINT, ParentOrigin::BOTTOM_CENTER );
-    mButtonClip.SetSize( BUTTON_DECALL_SIZE * SCALED_WIDTH );
-    mButtonClip.SetPosition( BUTTON_DECALL_CLIP_POSITION * SCALED_WIDTH );
+    mButtonClip.SetProperty( Actor::Property::SIZE, BUTTON_DECALL_SIZE * SCALED_WIDTH );
+    mButtonClip.SetProperty( Actor::Property::POSITION, BUTTON_DECALL_CLIP_POSITION * SCALED_WIDTH );
 
     mButtonIcon = ImageView::New();
     mButtonIcon.SetImage( BUTTON_DECALL_ICON_IMAGE );
     mButtonIcon.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mButtonIcon.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mButtonIcon.SetSize( BUTTON_DECALL_ICON_SIZE * SCALED_WIDTH );
-    mButtonIcon.SetPosition( BUTTON_DECALL_ICON_POSITION * SCALED_WIDTH );
+    mButtonIcon.SetProperty( Actor::Property::SIZE, BUTTON_DECALL_ICON_SIZE * SCALED_WIDTH );
+    mButtonIcon.SetProperty( Actor::Property::POSITION, BUTTON_DECALL_ICON_POSITION * SCALED_WIDTH );
 
     mCallEndButton = PushButton::New();
     mCallEndButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mCallEndButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mCallEndButton.SetSize( BUTTON_DECALL_SIZE * SCALED_WIDTH );
-    mCallEndButton.SetPosition( BUTTON_DECALL_POSITION * SCALED_WIDTH );
+    mCallEndButton.SetProperty( Actor::Property::SIZE, BUTTON_DECALL_SIZE * SCALED_WIDTH );
+    mCallEndButton.SetProperty( Actor::Property::POSITION, BUTTON_DECALL_POSITION * SCALED_WIDTH );
     mCallEndButton.ClickedSignal().Connect( this, &CallController::OnButtonClicked );
     mCallEndButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, "" );
     mCallEndButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, "" );
@@ -300,8 +300,8 @@ private:
     mLabelTime = TextLabel::New( LABEL_TIME_STR );
     mLabelTime.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabelTime.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabelTime.SetSize( LABEL_TIME_SIZE * SCALED_STAGE_SIZE );
-    mLabelTime.SetPosition( LABEL_TIME_POSITION * SCALED_STAGE_SIZE_3 );
+    mLabelTime.SetProperty( Actor::Property::SIZE, LABEL_TIME_SIZE * SCALED_STAGE_SIZE );
+    mLabelTime.SetProperty( Actor::Property::POSITION, LABEL_TIME_POSITION * SCALED_STAGE_SIZE_3 );
     mLabelTime.SetProperty( Actor::Property::VISIBLE, false );
     mLabelTime.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_TIME_FONT_COLOR );
     mLabelTime.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_TIME_FONT_SIZE * FONT_SCALE );

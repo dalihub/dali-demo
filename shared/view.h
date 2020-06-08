@@ -70,7 +70,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
   toolBarLayer.SetProperty( Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_CENTER );
   toolBarLayer.SetProperty( Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::TOP_CENTER );
   toolBarLayer.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::WIDTH );
-  toolBarLayer.SetSize( 0.0f, style.mToolBarHeight );
+  toolBarLayer.SetProperty( Dali::Actor::Property::SIZE, Dali::Vector2( 0.0f, style.mToolBarHeight ) );
 
   // Raise tool bar layer to the top.
   toolBarLayer.RaiseToTop();

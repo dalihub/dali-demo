@@ -163,7 +163,7 @@ public:
     mLabel = TextLabel::New( material[MaterialID].name );
     mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mLabel.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.0f, 0.5f ) );
-    mLabel.SetSize( stage.GetSize().x * 0.5f, stage.GetSize().y * 0.083f );
+    mLabel.SetProperty( Actor::Property::SIZE, Vector2( stage.GetSize().x * 0.5f, stage.GetSize().y * 0.083f ) );
     mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ));
@@ -380,7 +380,7 @@ public:
     mActor.SetProperty( Actor::Property::COLOR, Vector4( 1.0f, 1.0f, 0.6f, 1.0f ) );
     mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mActor.SetSize( Vector3( quarterStageWidth, quarterStageWidth, quarterStageWidth ) );
+    mActor.SetProperty( Actor::Property::SIZE, Vector3( quarterStageWidth, quarterStageWidth, quarterStageWidth ) );
     mActor.AddRenderer( mRenderer );
     stage.Add( mActor );
   }

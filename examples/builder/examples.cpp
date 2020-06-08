@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -411,7 +411,7 @@ public:
 
       RenderTask defaultTask = taskList.GetTask(0);
       defaultTask.SetSourceActor( stage.GetRootLayer() );
-      defaultTask.SetTargetFrameBuffer( FrameBufferImage() );
+      defaultTask.SetFrameBuffer( FrameBuffer() );
     }
 
     unsigned int numChildren = layer.GetChildCount();
@@ -454,7 +454,7 @@ public:
     mBuilderLayer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_CENTER);
     Dali::Vector3 size = Stage::GetCurrent().GetRootLayer().GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
     size.y -= DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight;
-    mBuilderLayer.SetSize( size );
+    mBuilderLayer.SetProperty( Actor::Property::SIZE, size );
 
     mNavigationView.Push( mBuilderLayer );
   }

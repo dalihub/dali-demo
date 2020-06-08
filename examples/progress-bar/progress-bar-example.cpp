@@ -95,7 +95,7 @@ private:
       contentTable.SetFitHeight( i );
     }
 
-    contentTable.SetPosition( 0.0f, TOP_MARGIN );
+    contentTable.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, TOP_MARGIN ));
     mContentLayer.Add( contentTable );
 
     // Image selector for progress bar

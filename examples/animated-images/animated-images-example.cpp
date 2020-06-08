@@ -145,7 +145,7 @@ private:
     radioButtonLayout.SetCellAlignment( TableView::CellPosition( 0, 1 ),
                                         HorizontalAlignment::CENTER,
                                         VerticalAlignment::CENTER );
-    radioButtonLayout.SetY( -10.0f );
+    radioButtonLayout.SetProperty( Actor::Property::POSITION_Y,  -10.0f );
 
     Stage::GetCurrent().Add( radioButtonLayout );
   }
@@ -185,7 +185,7 @@ private:
       control.SetProperty( Toolkit::ImageView::Property::IMAGE, SetupViewProperties( mImageType, index ) );
       control.SetProperty( Actor::Property::ANCHOR_POINT, IMAGE_LAYOUT_INFO[ index ].anchorPoint );
       control.SetProperty( Actor::Property::PARENT_ORIGIN, IMAGE_LAYOUT_INFO[ index ].parentOrigin );
-      control.SetY( IMAGE_LAYOUT_INFO[ index ].yPosition );
+      control.SetProperty( Actor::Property::POSITION_Y,  IMAGE_LAYOUT_INFO[ index ].yPosition );
 
       // We do not want the animated image playing when it's added to the stage.
       PauseAnimatedImage( control );

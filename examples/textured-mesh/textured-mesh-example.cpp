@@ -129,7 +129,7 @@ public:
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
-    mMeshActor.SetSize(400, 400);
+    mMeshActor.SetProperty( Actor::Property::SIZE, Vector2(400, 400) );
 
     Property::Index fadeColorIndex = mRenderer.RegisterProperty( "uFadeColor", Color::MAGENTA );
     mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
@@ -143,7 +143,7 @@ public:
 
     mMeshActor2 = Actor::New();
     mMeshActor2.AddRenderer( mRenderer2 );
-    mMeshActor2.SetSize(400, 400);
+    mMeshActor2.SetProperty( Actor::Property::SIZE, Vector2(400, 400) );
 
     mMeshActor2.RegisterProperty( "anotherProperty",    Color::GREEN );
 

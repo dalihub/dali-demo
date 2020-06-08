@@ -185,9 +185,9 @@ public:
   void SetUpExpandingStyleButtons( Vector2 position )
   {
     mExpandingButtons = Demo::ExpandingButtons::New();
-    mExpandingButtons.SetPosition( mButtonSize.width, mStageSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_STAGE );
+    mExpandingButtons.SetProperty( Actor::Property::POSITION, Vector2( mButtonSize.width, mStageSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_STAGE ));
     mExpandingButtons.CollapsingSignal().Connect( this, &TextLabelExample::OnExpandingButtonCollapsing );
-    mExpandingButtons.SetSize( mButtonSize );
+    mExpandingButtons.SetProperty( Actor::Property::SIZE, mButtonSize );
     // Creates the buttons to be expanded
     CreateStyleButtons();
 
@@ -213,7 +213,7 @@ public:
     mContainer.SetProperty( Dali::Actor::Property::NAME, "Container" );
     mContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLayoutSize = Vector2(mStageSize.width*0.6f, mStageSize.width*0.6f);
-    mContainer.SetSize( mLayoutSize );
+    mContainer.SetProperty( Actor::Property::SIZE, mLayoutSize );
     stage.Add( mContainer );
 
     // Resize the center layout when the corner is grabbed
@@ -232,7 +232,7 @@ public:
 
     mLabel.SetProperty( Dali::Actor::Property::NAME, "TextLabel" );
     mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mLabel.SetSize(mLayoutSize);
+    mLabel.SetProperty( Actor::Property::SIZE, mLayoutSize );
     mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::GREEN );
     mLabel.SetBackgroundColor( Color::WHITE );
@@ -446,7 +446,7 @@ public:
       if ( ! mColorButtons[index] )
       {
         mColorButtons[index] = RadioButton::New();
-        mColorButtons[index].SetSize( mButtonSize );
+        mColorButtons[index].SetProperty( Actor::Property::SIZE, mButtonSize );
         mColorButtons[index].ClickedSignal().Connect( this, &TextLabelExample::OnColorSelected );
         mColorButtons[index].SetProperty( Button::Property::TOGGLABLE, true );
         Property::Map propertyMap;
@@ -489,7 +489,7 @@ public:
       mColorButtons[index].Lower();
 
       // Position button using nice animation
-      mColorButtons[index].SetY( -GAP_BETWEEN_BUTTONS );
+      mColorButtons[index].SetProperty( Actor::Property::POSITION_Y,  -GAP_BETWEEN_BUTTONS );
       float desiredPosition = -( mButtonSize.height + GAP_BETWEEN_BUTTONS ) * (index);
       AlphaFunction focusedAlphaFunction = AlphaFunction( Vector2 ( 0.32f, 0.08f ), Vector2( 0.38f, 1.72f ) );
       mColorButtonsAnimation.AnimateBy( Property( mColorButtons[index], Actor::Property::POSITION_Y ), desiredPosition, focusedAlphaFunction );
@@ -533,7 +533,7 @@ public:
         mStyleButtons[index].SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGES[ index ] );
         mStyleButtons[index].SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, STYLE_SELECTED_IMAGE );
         mStyleButtons[index].SetProperty( Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-        mStyleButtons[index].SetSize( mButtonSize );
+        mStyleButtons[index].SetProperty( Actor::Property::SIZE, mButtonSize );
         mStyleButtons[index].ClickedSignal().Connect( this, &TextLabelExample::OnStyleButtonClicked );
       }
     }
@@ -603,13 +603,13 @@ public:
       Vector2 clampedSize = Vector2( std::max( ConvertToEven( static_cast<int>( mLayoutSize.x )), 2 ),
                                      std::max( ConvertToEven( static_cast<int>( mLayoutSize.y )), 2 ) );
 
-      mContainer.SetSize( clampedSize );
+      mContainer.SetProperty( Actor::Property::SIZE, clampedSize );
     }
 
     if( gesture.state == Gesture::Cancelled || gesture.state == Gesture::Finished )
     {
       // Resize the text label to match the container size when panning is finished
-      mLabel.SetSize(mLayoutSize);
+      mLabel.SetProperty( Actor::Property::SIZE, mLayoutSize );
       mBorder.SetProperty( Actor::Property::VISIBLE,false);
     }
   }

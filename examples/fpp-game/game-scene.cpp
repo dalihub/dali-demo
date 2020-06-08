@@ -156,8 +156,8 @@ bool GameScene::Load(const char *filename)
   mRootActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mRootActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   stage.GetRootLayer().Add( mRootActor );
-  mRootActor.SetScale( -1.0, 1.0, 1.0 );
-  mRootActor.SetPosition( 0.0, 0.0, 0.0 );
+  mRootActor.SetProperty( Actor::Property::SCALE, Vector3( -1.0, 1.0, 1.0 ) );
+  mRootActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0, 0.0, 0.0 ) );
   mRootActor.SetProperty( Actor::Property::ORIENTATION, Quaternion( Degree( 90 ), Vector3( 1.0, 0.0, 0.0 ) ) );
   for( size_t i = 0; i < mEntities.Size(); ++i )
   {

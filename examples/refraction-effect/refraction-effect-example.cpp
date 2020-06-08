@@ -293,7 +293,7 @@ private:
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
-    mMeshActor.SetSize( stageSize );
+    mMeshActor.SetProperty( Actor::Property::SIZE, stageSize );
     mMeshActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mContent.Add( mMeshActor );
 

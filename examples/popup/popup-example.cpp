@@ -279,7 +279,7 @@ public:
     if( modifySize )
     {
       // The size is set once at the end.
-      popup.SetSize( Vector2( newSize[ 0 ], newSize[ 1 ] ) );
+      popup.SetProperty( Actor::Property::SIZE, Vector2( newSize[ 0 ], newSize[ 1 ] ) );
     }
   }
 
@@ -337,7 +337,7 @@ public:
     popup.SetProperty( Dali::Actor::Property::NAME, "popup" );
     popup.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    popup.SetSize( POPUP_WIDTH_DP, 0.0f );
+    popup.SetProperty( Actor::Property::SIZE, Vector2( POPUP_WIDTH_DP, 0.0f ) );
     popup.SetProperty( Toolkit::Popup::Property::TAIL_VISIBILITY, false );
 
     popup.OutsideTouchedSignal().Connect( this, &PopupExample::HidePopup );
@@ -359,7 +359,7 @@ public:
       // Set up the container's layout.
       footer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       footer.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
-      footer.SetSize( 0.0f, 130.0f );
+      footer.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 130.0f ) );
       footer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       footer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
@@ -565,7 +565,7 @@ public:
       mPopup.Add( text );
 
       // Fix the popup's size.
-      mPopup.SetSize( 240.0f, 400.0f );
+      mPopup.SetProperty( Actor::Property::SIZE, Vector2( 240.0f, 400.0f ) );
       mPopup.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
 
       SetupPopup( mPopup, button );
@@ -632,7 +632,7 @@ public:
         root.SetProperty( Actor::Property::PADDING, Padding( 0.0f, 0.0f, 0.0f, 20.0f ) );
 
         Toolkit::CheckBoxButton checkBox = Toolkit::CheckBoxButton::New();
-        checkBox.SetSize( 48, 48 );
+        checkBox.SetProperty( Actor::Property::SIZE, Vector2( 48, 48 ) );
         root.AddChild( checkBox, Toolkit::TableView::CellPosition( 0, 0 ) );
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New( "Don't show again" );

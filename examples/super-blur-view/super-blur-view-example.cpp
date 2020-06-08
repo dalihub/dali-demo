@@ -58,7 +58,7 @@ private:
     mSuperBlurView = SuperBlurView::New( DEFAULT_BLUR_LEVEL );
     mSuperBlurView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mSuperBlurView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mSuperBlurView.SetSize( 800, 1280 );
+    mSuperBlurView.SetProperty( Actor::Property::SIZE, Vector2( 800, 1280 ) );
     mSuperBlurView.SetProperty( SuperBlurView::Property::IMAGE_URL, BACKGROUND_IMAGE );
     stage.Add( mSuperBlurView );
 

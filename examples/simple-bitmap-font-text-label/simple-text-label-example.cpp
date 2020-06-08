@@ -108,8 +108,8 @@ public:
     TextLabel label01 = TextLabel::New();
     label01.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     label01.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    label01.SetSize( 400.f, 50.f );
-    label01.SetPosition( 0.f, -100.f );
+    label01.SetProperty( Actor::Property::SIZE, Vector2( 400.f, 50.f ) );
+    label01.SetProperty( Actor::Property::POSITION, Vector2( 0.f, -100.f ));
     label01.SetProperty( TextLabel::Property::MULTI_LINE, true );
 
     label01.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
@@ -125,8 +125,8 @@ public:
     TextLabel  label02 = TextLabel::New();
     label02.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     label02.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    label02.SetSize( 400.f, 50.f );
-    label02.SetPosition( 0.f, -50.f );
+    label02.SetProperty( Actor::Property::SIZE, Vector2( 400.f, 50.f ) );
+    label02.SetProperty( Actor::Property::POSITION, Vector2( 0.f, -50.f ));
     label02.SetProperty( TextLabel::Property::MULTI_LINE, true );
 
     label02.SetProperty( TextLabel::Property::TEXT, "0123456789:" );
@@ -140,8 +140,8 @@ public:
     TextLabel  label03 = TextLabel::New();
     label03.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     label03.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    label03.SetSize( 400.f, 50.f );
-    label03.SetPosition( 0.f, 0.f );
+    label03.SetProperty( Actor::Property::SIZE, Vector2( 400.f, 50.f ) );
+    label03.SetProperty( Actor::Property::POSITION, Vector2( 0.f, 0.f ));
     label03.SetProperty( TextLabel::Property::MULTI_LINE, true );
 
     label03.SetProperty( TextLabel::Property::TEXT, "0123456789:" );
@@ -154,8 +154,8 @@ public:
     TextLabel  label04 = TextLabel::New();
     label04.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     label04.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    label04.SetSize( 400.f, 50.f );
-    label04.SetPosition( 0.f, 50.f );
+    label04.SetProperty( Actor::Property::SIZE, Vector2( 400.f, 50.f ) );
+    label04.SetProperty( Actor::Property::POSITION, Vector2( 0.f, 50.f ));
     label04.SetProperty( TextLabel::Property::MULTI_LINE, true );
 
     label04.SetProperty( TextLabel::Property::TEXT, "0123456789:" );

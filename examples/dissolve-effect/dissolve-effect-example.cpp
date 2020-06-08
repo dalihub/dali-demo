@@ -248,7 +248,7 @@ void DissolveEffectApp::OnInit( Application& application )
 
   // Set size to stage size to avoid seeing a black border on transition
   mParent = Actor::New();
-  mParent.SetSize( Stage::GetCurrent().GetSize() );
+  mParent.SetProperty( Actor::Property::SIZE, Stage::GetCurrent().GetSize() );
   mParent.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mContent.Add( mParent );
 
@@ -290,7 +290,7 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     mNextImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNextImage.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-    mNextImage.SetZ(INITIAL_DEPTH);
+    mNextImage.SetProperty( Actor::Property::POSITION_Z, INITIAL_DEPTH);
     mParent.Add( mNextImage );
     Vector2 size = Vector2( mCurrentImage.GetCurrentProperty< Vector3 >( Actor::Property::SIZE ) );
     StartTransition( gesture.position / size, gesture.displacement * Vector2(1.0, size.x/size.y));
@@ -405,7 +405,7 @@ bool DissolveEffectApp::OnTimerTick()
     mNextImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNextImage.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-    mNextImage.SetZ(INITIAL_DEPTH);
+    mNextImage.SetProperty( Actor::Property::POSITION_Z, INITIAL_DEPTH);
     mParent.Add( mNextImage );
     switch( mCentralLineIndex%4 )
     {

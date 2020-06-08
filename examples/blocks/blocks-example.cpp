@@ -284,8 +284,8 @@ private:
     // Ball setup
     mBallStartPosition = stageSize * Vector3( BALL_START_POSITION );
     mBall = CreateImage(BALL_IMAGE);
-    mBall.SetPosition( mBallStartPosition );
-    mBall.SetSize( BALL_SIZE * stageSize.width );
+    mBall.SetProperty( Actor::Property::POSITION, mBallStartPosition );
+    mBall.SetProperty( Actor::Property::SIZE, BALL_SIZE * stageSize.width );
     mContentLayer.Add(mBall);
     mBallVelocity = Vector3::ZERO;
 
@@ -298,22 +298,22 @@ private:
     mPaddle.Add( mPaddleImage );
     mPaddleHandle.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mPaddleHandle.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mPaddleHandle.SetPosition( 0.0f, stageSize.width * 0.0125f );
+    mPaddleHandle.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, stageSize.width * 0.0125f ));
     mPaddleImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mPaddleImage.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mPaddle.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mPaddle.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mPaddleFullSize = PADDLE_SIZE * stageSize.width;
-    mPaddle.SetSize( mPaddleFullSize + mPaddleHitMargin );
-    mPaddleHandle.SetSize( PADDLE_HANDLE_SIZE * stageSize.width );
-    mPaddleImage.SetSize( mPaddleFullSize );
+    mPaddle.SetProperty( Actor::Property::SIZE, mPaddleFullSize + mPaddleHitMargin );
+    mPaddleHandle.SetProperty( Actor::Property::SIZE, PADDLE_HANDLE_SIZE * stageSize.width );
+    mPaddleImage.SetProperty( Actor::Property::SIZE, mPaddleFullSize );
 
     mWobbleProperty = mPaddle.RegisterProperty(WOBBLE_PROPERTY_NAME, 0.0f);
     Constraint wobbleConstraint = Constraint::New<Quaternion>( mPaddle, Actor::Property::ORIENTATION, WobbleConstraint(Degree( 10.0f )));
     wobbleConstraint.AddSource( LocalSource(mWobbleProperty) );
     wobbleConstraint.Apply();
 
-    mPaddle.SetPosition( stageSize * Vector3( PADDLE_START_POSITION ) );
+    mPaddle.SetProperty( Actor::Property::POSITION, stageSize * Vector3( PADDLE_START_POSITION ) );
     mContentLayer.Add(mPaddle);
     mPaddle.TouchSignal().Connect(this, &ExampleController::OnTouchPaddle);
     mContentLayer.TouchSignal().Connect(this, &ExampleController::OnTouchLayer);
@@ -358,10 +358,10 @@ private:
   {
     mLives = TOTAL_LIVES;
     mLevel = 0;
-    mBall.SetPosition( mBallStartPosition );
+    mBall.SetProperty( Actor::Property::POSITION, mBallStartPosition );
     mBallVelocity = Vector3::ZERO;
-    mPaddle.SetSize( mPaddleFullSize + mPaddleHitMargin );
-    mPaddleImage.SetSize( mPaddleFullSize );
+    mPaddle.SetProperty( Actor::Property::SIZE, mPaddleFullSize + mPaddleHitMargin );
+    mPaddleImage.SetProperty( Actor::Property::SIZE, mPaddleFullSize );
 
     LoadLevel(mLevel);
   }
@@ -561,7 +561,7 @@ private:
     brick.SetProperty( ImageView::Property::IMAGE, mBrickImageMap );
     brick.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     brick.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
-    brick.SetPosition( Vector3( position ) );
+    brick.SetProperty( Actor::Property::POSITION, position );
 
     // Add a constraint on the brick between it and the ball generating a collision-property
     Property::Index property = brick.RegisterProperty(COLLISION_PROPERTY_NAME, Vector3::ZERO);
@@ -651,7 +651,7 @@ private:
       if(mDragActor)
       {
         Vector3 position( event.GetScreenPosition( 0 ) );
-        mPaddle.SetPosition( position - mRelativeDragPoint );
+        mPaddle.SetProperty( Actor::Property::POSITION, position - mRelativeDragPoint );
 
         if( event.GetState( 0 ) == PointState::UP ) // Stop dragging
         {
@@ -729,7 +729,7 @@ private:
   void OnPaddleShrunk( Animation &source )
   {
     // Reposition Ball in start position, and make ball appear.
-    mBall.SetPosition( mBallStartPosition );
+    mBall.SetProperty( Actor::Property::POSITION, mBallStartPosition );
     mBall.SetProperty( Actor::Property::COLOR, Vector4(1.0f, 1.0f, 1.0f, 0.1f) );
     Animation appear = Animation::New(0.5f);
     appear.AnimateTo( Property(mBall, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 1.0f) );

@@ -192,8 +192,8 @@ public:
     mFlexContainer = FlexContainer::New();
     mFlexContainer.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     mFlexContainer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
-    mFlexContainer.SetSize( stageSize.width, stageSize.height - VIEW_STYLE.mToolBarHeight );
-    mFlexContainer.SetY(VIEW_STYLE.mToolBarHeight);
+    mFlexContainer.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width, stageSize.height - VIEW_STYLE.mToolBarHeight ) );
+    mFlexContainer.SetProperty( Actor::Property::POSITION_Y, VIEW_STYLE.mToolBarHeight);
     mFlexContainer.SetProperty(FlexContainer::Property::FLEX_DIRECTION, FlexContainer::COLUMN); // column as main axis
     contents.Add(mFlexContainer);
 
@@ -237,7 +237,7 @@ public:
       // flex properties that only work when there are multiple lines in the layout
       flexItem.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
       // Make sure there are still extra space in the line after wrapping
-      flexItem.SetSize(stageSize.width / NUM_FLEX_ITEMS * 1.25f, (stageSize.height - VIEW_STYLE.mToolBarHeight) * 0.95f / NUM_FLEX_ITEMS * 1.25f);
+      flexItem.SetProperty( Actor::Property::SIZE, Vector2(stageSize.width / NUM_FLEX_ITEMS * 1.25f, (stageSize.height - VIEW_STYLE.mToolBarHeight) * 0.95f / NUM_FLEX_ITEMS * 1.25f) );
 
       mFlexItemContainer.Add( flexItem );
     }

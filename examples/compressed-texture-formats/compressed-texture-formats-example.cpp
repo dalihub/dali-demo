@@ -77,7 +77,7 @@ void AddImage( const char*imagePath, Actor& actor, Geometry& geometry, Shader& s
   renderer.SetTextures( textureSet );
 
   //Set actor size and add the renderer
-  actor.SetSize( texture.GetWidth(), texture.GetHeight() );
+  actor.SetProperty( Actor::Property::SIZE, Vector2( texture.GetWidth(), texture.GetHeight() ) );
   actor.AddRenderer( renderer );
 }
 

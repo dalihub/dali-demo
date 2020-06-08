@@ -407,7 +407,7 @@ public:
     mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mActor.AddRenderer( mRenderer );
 
-    mActor.SetSize( 10.f, 10.f, 10.f );
+    mActor.SetProperty( Actor::Property::SIZE, Vector3( 10.f, 10.f, 10.f ) );
 
     Stage stage = Stage::GetCurrent();
     stage.Add( mActor );
@@ -446,7 +446,7 @@ public:
     mSkyboxActor.SetProperty( Dali::Actor::Property::NAME, "SkyBox" );
     mSkyboxActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mSkyboxActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mSkyboxActor.SetPosition( CAMERA_DEFAULT_POSITION );
+    mSkyboxActor.SetProperty( Actor::Property::POSITION, CAMERA_DEFAULT_POSITION );
     mSkyboxActor.AddRenderer( mSkyboxRenderer );
     stage.Add( mSkyboxActor );
   }

@@ -50,24 +50,6 @@ public:
     textLabel.SetProperty( Dali::Actor::Property::NAME, "helloWorldLabel" );
     stage.Add( textLabel );
 
-
-    Actor parent = Actor::New();
-    Vector4 parentColor( 1.0f, 0.5f, 0.0f, 0.8f );
-    parent.SetProperty( Actor::Property::COLOR, parentColor );
-    Stage::GetCurrent().Add( parent );
-
-    Actor child = Actor::New();
-    Vector4 childColor( 0.5f, 0.6f, 0.5f, 1.0f );
-    child.SetProperty( Actor::Property::COLOR, childColor );
-    parent.Add( child );
-
-    std::string colorMode = static_cast<std::string>( child.GetProperty< std::string >( Actor::Property::COLOR_MODE ) );
-    printf("color mode: %s, should be: %d\n", colorMode.c_str(), ColorMode::USE_OWN_MULTIPLY_PARENT_ALPHA );
-
-    child.SetProperty( Actor::Property::COLOR_MODE, ColorMode::USE_PARENT_COLOR );
-    colorMode = static_cast<std::string>( child.GetProperty< std::string >( Actor::Property::COLOR_MODE ) );
-    printf("color mode: %s, should be: %d\n", colorMode.c_str(), ColorMode::USE_PARENT_COLOR );
-
     // Respond to a click anywhere on the stage
     stage.GetRootLayer().TouchSignal().Connect( this, &HelloWorldController::OnTouch );
 

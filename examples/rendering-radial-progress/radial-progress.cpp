@@ -134,7 +134,7 @@ public:
     mActor = Actor::New();
     mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mActor.SetSize( Vector2( TEXTURE_WIDTH, TEXTURE_HEIGHT ) );
+    mActor.SetProperty( Actor::Property::SIZE, Vector2( TEXTURE_WIDTH, TEXTURE_HEIGHT ) );
     mActor.RegisterProperty("uProgress", float(1.0f) );
     stage.Add( mActor );
 

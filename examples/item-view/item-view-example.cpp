@@ -232,12 +232,12 @@ public:
     mDeleteButton = Toolkit::PushButton::New();
     mDeleteButton.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_RIGHT);
     mDeleteButton.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT);
-    mDeleteButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
+    mDeleteButton.SetProperty( Actor::Property::POSITION, Vector2( BUTTON_BORDER, BUTTON_BORDER ));
     mDeleteButton.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
     mDeleteButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DELETE_IMAGE );
     mDeleteButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DELETE_IMAGE_SELECTED );
     mDeleteButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
-    mDeleteButton.SetSize( Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mDeleteButton.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
     mDeleteButton.ClickedSignal().Connect( this, &ItemViewExample::OnDeleteButtonClicked);
     mDeleteButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mDeleteButton.SetProperty( Actor::Property::VISIBLE, false );
@@ -247,12 +247,12 @@ public:
     mInsertButton = Toolkit::PushButton::New();
     mInsertButton.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_RIGHT);
     mInsertButton.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT);
-    mInsertButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
+    mInsertButton.SetProperty( Actor::Property::POSITION, Vector2( BUTTON_BORDER, BUTTON_BORDER ));
     mInsertButton.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
     mInsertButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, INSERT_IMAGE );
     mInsertButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, INSERT_IMAGE_SELECTED );
     mInsertButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
-    mInsertButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
+    mInsertButton.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
     mInsertButton.ClickedSignal().Connect( this, &ItemViewExample::OnInsertButtonClicked);
     mInsertButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mInsertButton.SetProperty( Actor::Property::VISIBLE, false );
@@ -262,12 +262,12 @@ public:
     mReplaceButton = Toolkit::PushButton::New();
     mReplaceButton.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_RIGHT);
     mReplaceButton.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_RIGHT);
-    mReplaceButton.SetPosition( BUTTON_BORDER, BUTTON_BORDER );
+    mReplaceButton.SetProperty( Actor::Property::POSITION, Vector2( BUTTON_BORDER, BUTTON_BORDER ));
     mReplaceButton.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
     mReplaceButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE );
     mReplaceButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE_SELECTED );
     mReplaceButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
-    mReplaceButton.SetSize( stageSize.width * 0.15f, stageSize.width * 0.15f );
+    mReplaceButton.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
     mReplaceButton.ClickedSignal().Connect( this, &ItemViewExample::OnReplaceButtonClicked);
     mReplaceButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mReplaceButton.SetProperty( Actor::Property::VISIBLE, false );
@@ -872,8 +872,8 @@ public: // From ItemFactory
     propertyMap.Insert(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FILL);
     ImageView actor = ImageView::New();
     actor.SetProperty( Toolkit::ImageView::Property::IMAGE, propertyMap );
-    actor.SetZ( 0.0f );
-    actor.SetPosition( INITIAL_OFFSCREEN_POSITION );
+    actor.SetProperty( Actor::Property::POSITION_Z,  0.0f );
+    actor.SetProperty( Actor::Property::POSITION, INITIAL_OFFSCREEN_POSITION );
 
     // Add a border image child actor
     ImageView borderActor = ImageView::New();
@@ -903,9 +903,9 @@ public: // From ItemFactory
     checkbox.SetProperty( Actor::Property::COLOR_MODE, USE_PARENT_COLOR );
     checkbox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
     checkbox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
-    checkbox.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
-    checkbox.SetPosition( -SELECTION_BORDER_WIDTH, SELECTION_BORDER_WIDTH );
-    checkbox.SetZ( 0.1f );
+    checkbox.SetProperty( Actor::Property::SIZE, Vector2( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f ) );
+    checkbox.SetProperty( Actor::Property::POSITION, Vector2( -SELECTION_BORDER_WIDTH, SELECTION_BORDER_WIDTH ));
+    checkbox.SetProperty( Actor::Property::POSITION_Z,  0.1f );
 
     Property::Map solidColorProperty;
     solidColorProperty.Insert( Toolkit::Visual::Property::TYPE, Visual::COLOR );
@@ -925,8 +925,8 @@ public: // From ItemFactory
     tick.SetProperty( Actor::Property::COLOR_MODE, USE_PARENT_COLOR );
     tick.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
     tick.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
-    tick.SetSize( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f );
-    tick.SetZ( 0.2f );
+    tick.SetProperty( Actor::Property::SIZE, Vector2( spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f ) );
+    tick.SetProperty( Actor::Property::POSITION_Z,  0.2f );
     tick.SetProperty( Actor::Property::VISIBLE, false );
     checkbox.Add( tick );
 

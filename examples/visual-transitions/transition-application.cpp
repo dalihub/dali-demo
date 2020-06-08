@@ -127,7 +127,7 @@ void TransitionApplication::Create( Application& application )
     mVisualButtons[i].SetProperty( BeatControl::Property::BEAT_VISUAL, map );
     mVisualButtons[i].SetProperty( Dali::Actor::Property::NAME,"VisualButton");
     mVisualButtons[i].SetStyleName("VisualButton");
-    mVisualButtons[i].SetSize(0, 50);
+    mVisualButtons[i].SetProperty( Actor::Property::SIZE, Vector2(0, 50) );
     mVisualButtons[i].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mVisualButtons[i].SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
     mVisualIndex = mVisualButtons[i].RegisterProperty( "visualId", i, Property::READ_WRITE );

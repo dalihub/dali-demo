@@ -68,8 +68,8 @@ public:
     mWebView = Toolkit::WebView::New( "ko-KR", "Asia/Seoul" );
     mWebView.SetProperty( Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
     mWebView.SetProperty( Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
-    mWebView.SetPosition( 0, 0 );
-    mWebView.SetSize( width, height );
+    mWebView.SetProperty( Actor::Property::POSITION, Vector2( 0, 0 ));
+    mWebView.SetProperty( Actor::Property::SIZE, Vector2( width, height ) );
     mWebView.PageLoadStartedSignal().Connect( this, &WebViewController::OnPageLoadStarted );
     mWebView.PageLoadFinishedSignal().Connect( this, &WebViewController::OnPageLoadFinished );
 

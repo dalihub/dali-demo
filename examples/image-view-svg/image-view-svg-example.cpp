@@ -78,7 +78,7 @@ public:
     mStageBackground = Actor::New();
     mStageBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mStageBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-    mStageBackground.SetSize( stageSize.x, stageSize.y );
+    mStageBackground.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x, stageSize.y ) );
     stage.Add(mStageBackground);
 
     // Push button,  for changing the image set for displaying
@@ -101,7 +101,7 @@ public:
     for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
     {
       mSvgActor[i] = Toolkit::ImageView::New(SVG_IMAGES[mIndex+i]);
-      mSvgActor[i].SetSize( mActorSize );
+      mSvgActor[i].SetProperty( Actor::Property::SIZE, mActorSize );
       mSvgActor[i].TranslateBy( Vector3( 0.0, stageSize.height * 0.05, 0.0f ) );
       stage.Add( mSvgActor[i] );
     }
@@ -145,8 +145,8 @@ public:
   {
     for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED ; i++ )
     {
-      mSvgActor[i].SetSize(mActorSize);
-      mSvgActor[i].SetPosition( Vector3::ZERO );
+      mSvgActor[i].SetProperty( Actor::Property::SIZE, mActorSize);
+      mSvgActor[i].SetProperty( Actor::Property::POSITION, Vector3::ZERO );
       mScale = 1.f;
     }
 
@@ -180,7 +180,7 @@ public:
 
         for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
         {
-          mSvgActor[i].SetScale( scale );
+          mSvgActor[i].SetProperty( Actor::Property::SCALE, scale );
         }
         break;
       }
@@ -194,8 +194,8 @@ public:
         mScale = mScale < MIN_SCALE ? MIN_SCALE : mScale;
         for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
         {
-          mSvgActor[i].SetSize( mActorSize * mScale );
-          mSvgActor[i].SetScale( 1.0f );
+          mSvgActor[i].SetProperty( Actor::Property::SIZE, mActorSize * mScale );
+          mSvgActor[i].SetProperty( Actor::Property::SCALE, 1.0f );
         }
         break;
       }
@@ -229,7 +229,7 @@ public:
            }
            for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
            {
-             mSvgActor[i].SetSize( mActorSize * mScale );
+             mSvgActor[i].SetProperty( Actor::Property::SIZE, mActorSize * mScale );
            }
          }
          else if( strcmp(keyName, "Right") == 0 )
@@ -240,7 +240,7 @@ public:
            }
            for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
            {
-             mSvgActor[i].SetSize( mActorSize * mScale );
+             mSvgActor[i].SetProperty( Actor::Property::SIZE, mActorSize * mScale );
            }
          }
        }

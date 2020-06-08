@@ -217,7 +217,7 @@ private:
     mScrollView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mScrollView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mContentLayer.Add( mScrollView );
-    mScrollView.SetSize( stageSize );
+    mScrollView.SetProperty( Actor::Property::SIZE, stageSize );
     mScrollView.SetAxisAutoLock( true );
     mScrollView.SetAxisAutoLockGradient( 1.0f );
 
@@ -230,7 +230,7 @@ private:
       {
         Actor page = CreatePage();
 
-        page.SetPosition( column * stageSize.x, row * stageSize.y );
+        page.SetProperty( Actor::Property::POSITION, Vector2( column * stageSize.x, row * stageSize.y ));
         mScrollView.Add( page );
 
         mPages.push_back(page);
@@ -300,8 +300,8 @@ private:
         Vector3 position( margin * 0.5f + (imageSize.x + margin) * column - stageSize.width * 0.5f,
                          margin * 0.5f + (imageSize.y + margin) * row - stageSize.height * 0.5f,
                           0.0f);
-        image.SetPosition( position + imageSize * 0.5f );
-        image.SetSize( imageSize );
+        image.SetProperty( Actor::Property::POSITION, position + imageSize * 0.5f );
+        image.SetProperty( Actor::Property::SIZE, imageSize );
         page.Add(image);
       }
     }

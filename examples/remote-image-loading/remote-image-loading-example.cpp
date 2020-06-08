@@ -76,7 +76,7 @@ public:
     mImageView1.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     mImageView1.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView1.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
-    mImageView1.SetPosition(0, 100);
+    mImageView1.SetProperty( Actor::Property::POSITION, Vector2(0, 100));
     mImageView1.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     stage.Add(mImageView1);
 
@@ -85,7 +85,7 @@ public:
     mImageView2.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     mImageView2.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView2.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
-    mImageView2.SetPosition(400, 100);
+    mImageView2.SetProperty( Actor::Property::POSITION, Vector2(400, 100));
     mImageView2.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     stage.Add(mImageView2);
 
@@ -94,7 +94,7 @@ public:
     mImageView3.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     mImageView3.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView3.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
-    mImageView3.SetPosition(0, 400);
+    mImageView3.SetProperty( Actor::Property::POSITION, Vector2(0, 400));
     mImageView3.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     stage.Add(mImageView3);
 
@@ -103,7 +103,7 @@ public:
     mImageView4.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     mImageView4.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView4.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
-    mImageView4.SetPosition(400, 400);
+    mImageView4.SetProperty( Actor::Property::POSITION, Vector2(400, 400));
     mImageView4.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     stage.Add(mImageView4);
 
@@ -112,7 +112,7 @@ public:
     mImageView4.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     mImageView5.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_CENTER);
     mImageView5.SetProperty(DevelActor::Property::POSITION_USES_ANCHOR_POINT, false);
-    mImageView5.SetPosition(800, 100);
+    mImageView5.SetProperty( Actor::Property::POSITION, Vector2(800, 100));
     mImageView5.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     stage.Add(mImageView5);
 

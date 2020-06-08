@@ -164,7 +164,7 @@ public:
     // Ensure the content layer is a square so the touch area works in all orientations
     Vector2 stageSize = Stage::GetCurrent().GetSize();
     float size = std::max( stageSize.width, stageSize.height );
-    mContentLayer.SetSize( size, size );
+    mContentLayer.SetProperty( Actor::Property::SIZE, Vector2( size, size ) );
 
     //Add an effects icon on the right of the title
     mActorEffectsButton = Toolkit::PushButton::New();
@@ -210,7 +210,7 @@ public:
     mMotionBlurImageView = ImageView::New();
     SetImageFittedInBox( mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y );
     mMotionBlurImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mMotionBlurImageView.SetSize(mMotionBlurActorSize.x, mMotionBlurActorSize.y);
+    mMotionBlurImageView.SetProperty( Actor::Property::SIZE, Vector2(mMotionBlurActorSize.x, mMotionBlurActorSize.y) );
 
     mContentLayer.Add( mMotionBlurImageView );
 
@@ -253,13 +253,13 @@ public:
       }
       else
       {
-        mView.SetSize( targetSize );
+        mView.SetProperty( Actor::Property::SIZE, targetSize );
       }
     }
     else
     {
       // for first time just set size
-      mView.SetSize( targetSize );
+      mView.SetProperty( Actor::Property::SIZE, targetSize );
     }
   }
 

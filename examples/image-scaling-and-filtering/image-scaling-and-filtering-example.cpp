@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -191,43 +191,15 @@ public:
     Toolkit::ImageView background = Toolkit::ImageView::New();
     background.SetProperty( Toolkit::ImageView::Property::IMAGE, backgroundImage );
     background.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    background.SetSize( stage.GetSize() );
+    background.SetProperty( Actor::Property::SIZE, stage.GetSize() );
     stage.Add( background );
-
-    BufferImage heightBackground = BufferImage::WHITE();
-    PixelBuffer* const heightPixel = heightBackground.GetBuffer();
-    heightPixel[0] = 0x8f;
-    heightPixel[1] = 0x8f;
-    heightPixel[2] = 0x8f;
-
-    BufferImage widthBackground = BufferImage::WHITE();
-    PixelBuffer* const widthPixel = widthBackground.GetBuffer();
-    widthPixel[0] = 0x4f;
-    widthPixel[1] = 0x4f;
-    widthPixel[2] = 0x4f;
-
-    mHeightBox = Toolkit::ImageView::New( heightBackground );
-    mHeightBox.SetProperty( DevelActor::Property::OPACITY, 0.2f );
-    background.Add( mHeightBox );
-
-    mWidthBox = Toolkit::ImageView::New( widthBackground );
-    mWidthBox.SetProperty( DevelActor::Property::OPACITY, 0.2f );
-    background.Add( mWidthBox );
 
     mDesiredBox = Toolkit::ImageView::New( BORDER_IMAGE );
     background.Add( mDesiredBox );
 
-    mDesiredBox.SetSize( stage.GetSize() * mImageStageScale );
+    mDesiredBox.SetProperty( Actor::Property::SIZE, stage.GetSize() * mImageStageScale );
     mDesiredBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mDesiredBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-
-    mHeightBox.SetSize( stage.GetSize().width,  (stage.GetSize() * mImageStageScale).height );
-    mHeightBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mHeightBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-
-    mWidthBox.SetSize( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height );
-    mWidthBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mWidthBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     // Initialize the actor
     mImageView = Toolkit::ImageView::New( IMAGE_PATHS[ 0 ] );
@@ -239,7 +211,7 @@ public:
     // Display the actor on the stage
     mDesiredBox.Add( mImageView );
 
-    mImageView.SetSize( stage.GetSize() * mImageStageScale );
+    mImageView.SetProperty( Actor::Property::SIZE, stage.GetSize() * mImageStageScale );
 
     // Setup the pinch detector for scaling the desired image load dimensions:
     mPinchDetector = PinchGestureDetector::New();
@@ -251,7 +223,7 @@ public:
     mGrabCorner.SetProperty( Dali::Actor::Property::NAME, "GrabCorner" );
     mGrabCorner.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT );
     mGrabCorner.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT );
-    mGrabCorner.SetPosition( -BORDER_WIDTH, -BORDER_WIDTH );
+    mGrabCorner.SetProperty( Actor::Property::POSITION, Vector2( -BORDER_WIDTH, -BORDER_WIDTH ));
     mGrabCorner.SetProperty( DevelActor::Property::OPACITY, 0.6f );
 
     Layer grabCornerLayer = Layer::New();
@@ -293,8 +265,8 @@ public:
     // Last image button:
     imagePrevious.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     imagePrevious.RotateBy( Radian(3.14159265358979323846f), Vector3( 0, 1.0f, 0 ) );
-    imagePrevious.SetY( playWidth * 0.5f );
-    imagePrevious.SetX( playWidth + playWidth * 0.5f );
+    imagePrevious.SetProperty( Actor::Property::POSITION_Y,  playWidth * 0.5f );
+    imagePrevious.SetProperty( Actor::Property::POSITION_X,  playWidth + playWidth * 0.5f );
     imagePrevious.SetProperty( DevelActor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imagePrevious );
     imagePrevious.SetProperty( Dali::Actor::Property::NAME, PREVIOUS_BUTTON_ID );
@@ -303,8 +275,8 @@ public:
     // Next image button:
     Toolkit::ImageView imageNext = Toolkit::ImageView::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ) );
     imageNext.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
-    imageNext.SetY( playWidth * 0.5f );
-    imageNext.SetX( stage.GetSize().x - playWidth * 0.5f );
+    imageNext.SetProperty( Actor::Property::POSITION_Y,  playWidth * 0.5f );
+    imageNext.SetProperty( Actor::Property::POSITION_X,  stage.GetSize().x - playWidth * 0.5f );
     imageNext.SetProperty( DevelActor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imageNext );
     imageNext.SetProperty( Dali::Actor::Property::NAME, NEXT_BUTTON_ID );
@@ -322,7 +294,7 @@ public:
 
     modesGroupBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT );
     modesGroupBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT );
-    modesGroupBackground.SetPosition( 0.0f, 0.0f );
+    modesGroupBackground.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, 0.0f ));
 
     controlsLayer.Add( modesGroupBackground );
 
@@ -390,7 +362,7 @@ public:
     popup.SetProperty( Dali::Actor::Property::NAME, "POPUP" );
     popup.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    popup.SetSize( POPUP_WIDTH_DP, 0.0f );
+    popup.SetProperty( Actor::Property::SIZE, Vector2( POPUP_WIDTH_DP, 0.0f ) );
 
     popup.OutsideTouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnPopupOutsideTouched );
 
@@ -673,7 +645,7 @@ private:
     const char * const path = IMAGE_PATHS[ mCurrentPath ];
     Stage stage = Stage::GetCurrent();
     Size imageSize = stage.GetSize() * mImageStageScale;
-    mImageView.SetSize( imageSize );
+    mImageView.SetProperty( Actor::Property::SIZE, imageSize );
 
     Property::Map map;
     map[Toolkit::ImageVisual::Property::URL] = path;
@@ -696,17 +668,12 @@ private:
 
     // Border size needs to be modified to take into account the width of the frame.
     Vector2 borderScale( ( imageSize + Vector2( BORDER_WIDTH * 2.0f, BORDER_WIDTH * 2.0f ) ) / stage.GetSize() );
-    mDesiredBox.SetSize( stage.GetSize() * borderScale );
-
-    mHeightBox.SetSize( stage.GetSize().width, (stage.GetSize() * mImageStageScale).height );
-    mWidthBox.SetSize( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height );
+    mDesiredBox.SetProperty( Actor::Property::SIZE, stage.GetSize() * borderScale );
   }
 
 private:
   Application&  mApplication;
   Toolkit::ImageView mDesiredBox; //< Background rectangle to show requested image size.
-  Toolkit::ImageView mHeightBox;  //< Background horizontal stripe to show requested image height.
-  Toolkit::ImageView mWidthBox;   //< Background vertical stripe to show requested image width.
   Toolkit::PushButton mFittingModeButton;
   Toolkit::PushButton mSamplingModeButton;
   Toolkit::Popup mPopup;

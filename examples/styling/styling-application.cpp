@@ -113,7 +113,7 @@ void StylingApplication::Create( Application& application )
 
   mContentPane = CreateContentPane();
   stage.Add( mContentPane );
-  mContentPane.SetSize( stage.GetSize() );
+  mContentPane.SetProperty( Actor::Property::SIZE, stage.GetSize() );
 
   // Content panes:
   TableView contentLayout = TableView::New( 5, 1 );
@@ -179,7 +179,7 @@ void StylingApplication::Create( Application& application )
     std::ostringstream thumbnailName; thumbnailName << "thumbnail" << i+1;
     ImageView image = ImageView::New( images[i] );
     image.SetProperty( Dali::Actor::Property::NAME, thumbnailName.str() );
-    image.SetSize( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) );
+    image.SetProperty( Actor::Property::SIZE, Vector2( DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE) ) );
 
     std::ostringstream label; label << (i+1);
     std::ostringstream radioButtonStyleName;
@@ -379,7 +379,7 @@ Actor StylingApplication::CreateResizableContentPane()
   grabHandle.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
   grabHandle.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT );
   grabHandle.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT );
-  grabHandle.SetPosition( -BORDER_WIDTH, -BORDER_WIDTH );
+  grabHandle.SetProperty( Actor::Property::POSITION, Vector2( -BORDER_WIDTH, -BORDER_WIDTH ));
   grabHandle.SetProperty( DevelActor::Property::OPACITY, 0.6f );
 
   Layer grabCornerLayer = Layer::New();
@@ -405,7 +405,7 @@ Popup StylingApplication::CreateResetPopup()
   popup.SetStyleName("ResetPopup");
   popup.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  popup.SetSize( stage.GetSize().width * 0.75f, 0.0f );
+  popup.SetProperty( Actor::Property::SIZE, Vector2( stage.GetSize().width * 0.75f, 0.0f ) );
   popup.SetProperty( Popup::Property::TAIL_VISIBILITY, false );
   popup.OutsideTouchedSignal().Connect( this, &StylingApplication::HidePopup );
   popup.HiddenSignal().Connect( this, &StylingApplication::PopupHidden );
@@ -426,7 +426,7 @@ Popup StylingApplication::CreateResetPopup()
   footer.SetStyleName( "PopupFooter" );
   footer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   footer.SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
-  footer.SetSize( 0.0f, 80.0f );
+  footer.SetProperty( Actor::Property::SIZE, Vector2( 0.0f, 80.0f ) );
   footer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   footer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
@@ -630,7 +630,7 @@ void StylingApplication::PopupHidden()
 void StylingApplication::OnPan( Actor actor, const PanGesture& gesture )
 {
   Vector3 size = mContentPane.GetTargetSize();
-  mContentPane.SetSize( size.GetVectorXY() + gesture.displacement * 2.0f );
+  mContentPane.SetProperty( Actor::Property::SIZE, Vector2( size.GetVectorXY() + gesture.displacement * 2.0f ) );
 }
 
 void StylingApplication::OnKeyEvent( const KeyEvent& keyEvent )
