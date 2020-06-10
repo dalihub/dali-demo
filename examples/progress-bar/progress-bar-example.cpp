@@ -17,6 +17,7 @@
 
 #include "shared/view.h"
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/progress-bar/progress-bar-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -34,6 +35,7 @@ const Vector4 BACKGROUND_COLOUR( 1.0f, 1.0f, 1.0f, 0.15f );
 // Layout sizes
 const int MARGIN_SIZE = 10;
 const int TOP_MARGIN = 85;
+const int CIRCULAR_PROGRESS_BAR_SIZE = 64;
 
 const unsigned int TIMER_TIMEOUT_TIME = 50;
 const float PROGRESS_INCREMENT_VALUE = 0.01f;
@@ -83,6 +85,12 @@ private:
     mProgressBarDefault.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mProgressBarDefault.ValueChangedSignal().Connect( this, &ProgressBarExample::OnValueChanged );
 
+    // Creates a progress bar in circular style
+    mProgressBarCircular = DevelProgressBar::New( DevelProgressBar::Style::CIRCULAR );
+    mProgressBarCircular.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mProgressBarCircular.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    mProgressBarCircular.SetProperty( Actor::Property::SIZE, Vector2( CIRCULAR_PROGRESS_BAR_SIZE, CIRCULAR_PROGRESS_BAR_SIZE ) );
+
     Toolkit::TableView contentTable = Toolkit::TableView::New(2, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     contentTable.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
@@ -99,7 +107,7 @@ private:
     mContentLayer.Add( contentTable );
 
     // Image selector for progress bar
-    Toolkit::TableView progressBackground = Toolkit::TableView::New( 1, 1 );
+    Toolkit::TableView progressBackground = Toolkit::TableView::New( 2, 1 );
     progressBackground.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     progressBackground.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
     progressBackground.SetBackgroundColor( BACKGROUND_COLOUR );
@@ -113,6 +121,7 @@ private:
 
     contentTable.Add( progressBackground );
     progressBackground.Add( mProgressBarDefault );
+    progressBackground.Add( mProgressBarCircular );
 
     // Create buttons
     Toolkit::TableView buttonBackground = Toolkit::TableView::New( 3, 1 );
@@ -164,6 +173,8 @@ private:
     mSecondaryProgressValue = mProgressValue + 0.1f;
     mProgressBarDefault.SetProperty(ProgressBar::Property::PROGRESS_VALUE, mProgressValue);
     mProgressBarDefault.SetProperty(ProgressBar::Property::SECONDARY_PROGRESS_VALUE, mSecondaryProgressValue);
+    mProgressBarCircular.SetProperty( ProgressBar::Property::PROGRESS_VALUE, mProgressValue );
+    mProgressBarCircular.SetProperty( ProgressBar::Property::SECONDARY_PROGRESS_VALUE, mSecondaryProgressValue );
 
     return ( mProgressValue < 1.0f ); // Only call again if progress has NOT got to the end
   }
@@ -174,6 +185,8 @@ private:
     mSecondaryProgressValue = 0.1f;
     mProgressBarDefault.SetProperty(ProgressBar::Property::PROGRESS_VALUE, 0.0f);
     mProgressBarDefault.SetProperty(ProgressBar::Property::SECONDARY_PROGRESS_VALUE, 0.1f);
+    mProgressBarCircular.SetProperty( ProgressBar::Property::PROGRESS_VALUE, 0.0f );
+    mProgressBarCircular.SetProperty( ProgressBar::Property::SECONDARY_PROGRESS_VALUE, 0.1f );
     mTimer.Start();
     return true;
   }
@@ -192,10 +205,12 @@ private:
     if( mProgressBarDefault.GetProperty<bool>(ProgressBar::Property::INDETERMINATE))
     {
       mProgressBarDefault.SetProperty(ProgressBar::Property::INDETERMINATE, false);
+      mProgressBarCircular.SetProperty( ProgressBar::Property::INDETERMINATE, false );
     }
     else
     {
       mProgressBarDefault.SetProperty(ProgressBar::Property::INDETERMINATE, true);
+      mProgressBarCircular.SetProperty( ProgressBar::Property::INDETERMINATE, true );
     }
     return true;
   }
@@ -236,6 +251,7 @@ private:
   Toolkit::ToolBar  mToolBar;                           ///< The View's Toolbar.
   Layer             mContentLayer;                      ///< Content layer.
   ProgressBar       mProgressBarDefault;
+  ProgressBar       mProgressBarCircular;
   Toolkit::PushButton mResetProgressButton;
   Toolkit::PushButton mSetIndeterminateButton;
   Toolkit::PushButton mChangeThemeButton;
