@@ -121,7 +121,7 @@ public:
   {
     Stage stage = Dali::Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &FlexContainerExample::OnKeyEvent);
-    stage.GetRootLayer().SetBehavior(Layer::LAYER_3D);
+    stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR,Layer::LAYER_3D );
 
     Vector2 stageSize = Stage::GetCurrent().GetSize();
 

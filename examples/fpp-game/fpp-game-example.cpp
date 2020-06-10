@@ -103,7 +103,7 @@ public:
     mStage.SetBackgroundColor( Color::BLACK );
 
     // Use 3D layer
-    mStage.GetRootLayer().SetBehavior( Layer::LAYER_3D );
+    mStage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
     // Load game scene
     mScene.Load( SCENE_URL );

@@ -198,7 +198,7 @@ public:
   {
     Stage stage = Dali::Stage::GetCurrent();
     stage.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
-    stage.GetRootLayer().SetBehavior(Layer::LAYER_3D);
+    stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
     Vector2 stageSize = Stage::GetCurrent().GetSize();
 
@@ -280,7 +280,7 @@ public:
 
     // Display item view on the stage
     stage.Add( mItemView );
-    stage.GetRootLayer().SetBehavior( Layer::LAYER_3D );
+    stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
     // Create the layouts
     mSpiralLayout = DefaultItemLayout::New( DefaultItemLayout::SPIRAL );
@@ -350,12 +350,12 @@ public:
       case SPIRAL_LAYOUT:
       case DEPTH_LAYOUT:
       {
-        stage.GetRootLayer().SetBehavior(Layer::LAYER_3D);
+        stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
         break;
       }
       case GRID_LAYOUT:
       {
-        stage.GetRootLayer().SetBehavior(Layer::LAYER_UI);
+        stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_UI );
         break;
       }
     }

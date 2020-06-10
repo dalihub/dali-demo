@@ -197,8 +197,8 @@ private:
 
     mLayer3D.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mLayer3D.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mLayer3D.SetBehavior( Layer::LAYER_3D );
-    mLayer3D.SetDepthTestDisabled( false );
+    mLayer3D.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
+    mLayer3D.SetProperty( Layer::Property::DEPTH_TEST, true );
 
 
     auto gltf = glTF(DEMO_GAME_DIR "/reflection");

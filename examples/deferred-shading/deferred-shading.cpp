@@ -504,7 +504,7 @@ private:
     // Grab stage, configure layer
     Stage stage = Stage::GetCurrent();
     auto rootLayer = stage.GetRootLayer();
-    rootLayer.SetBehavior(Layer::LAYER_3D);
+    rootLayer.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
     auto stageSize = stage.GetSize();
     auto stageHalfSize = stageSize * .5f;

@@ -94,8 +94,8 @@ public:
     layer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     layer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     layer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    layer.SetBehavior( Layer::LAYER_UI ); //We use a 2D layer as this is closer to UI work than full 3D scene creation.
-    layer.SetDepthTestDisabled( false ); //Enable depth testing, as otherwise the 2D layer would not do so.
+    layer.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_UI ); //We use a 2D layer as this is closer to UI work than full 3D scene creation.
+    layer.SetProperty( Layer::Property::DEPTH_TEST, true ); //Enable depth testing, as otherwise the 2D layer would not do so.
     stage.Add( layer );
 
     //Set up model selection buttons.
