@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -194,40 +194,12 @@ public:
     background.SetProperty( Actor::Property::SIZE, stage.GetSize() );
     stage.Add( background );
 
-    BufferImage heightBackground = BufferImage::WHITE();
-    PixelBuffer* const heightPixel = heightBackground.GetBuffer();
-    heightPixel[0] = 0x8f;
-    heightPixel[1] = 0x8f;
-    heightPixel[2] = 0x8f;
-
-    BufferImage widthBackground = BufferImage::WHITE();
-    PixelBuffer* const widthPixel = widthBackground.GetBuffer();
-    widthPixel[0] = 0x4f;
-    widthPixel[1] = 0x4f;
-    widthPixel[2] = 0x4f;
-
-    mHeightBox = Toolkit::ImageView::New( heightBackground );
-    mHeightBox.SetProperty( DevelActor::Property::OPACITY, 0.2f );
-    background.Add( mHeightBox );
-
-    mWidthBox = Toolkit::ImageView::New( widthBackground );
-    mWidthBox.SetProperty( DevelActor::Property::OPACITY, 0.2f );
-    background.Add( mWidthBox );
-
     mDesiredBox = Toolkit::ImageView::New( BORDER_IMAGE );
     background.Add( mDesiredBox );
 
     mDesiredBox.SetProperty( Actor::Property::SIZE, stage.GetSize() * mImageStageScale );
     mDesiredBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mDesiredBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-
-    mHeightBox.SetProperty( Actor::Property::SIZE, Vector2( stage.GetSize().width,  (stage.GetSize() * mImageStageScale).height ) );
-    mHeightBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mHeightBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-
-    mWidthBox.SetProperty( Actor::Property::SIZE, Vector2( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height ) );
-    mWidthBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mWidthBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     // Initialize the actor
     mImageView = Toolkit::ImageView::New( IMAGE_PATHS[ 0 ] );
@@ -697,16 +669,11 @@ private:
     // Border size needs to be modified to take into account the width of the frame.
     Vector2 borderScale( ( imageSize + Vector2( BORDER_WIDTH * 2.0f, BORDER_WIDTH * 2.0f ) ) / stage.GetSize() );
     mDesiredBox.SetProperty( Actor::Property::SIZE, stage.GetSize() * borderScale );
-
-    mHeightBox.SetProperty( Actor::Property::SIZE, Vector2( stage.GetSize().width, (stage.GetSize() * mImageStageScale).height ) );
-    mWidthBox.SetProperty( Actor::Property::SIZE, Vector2( (stage.GetSize() * mImageStageScale).width, stage.GetSize().height ) );
   }
 
 private:
   Application&  mApplication;
   Toolkit::ImageView mDesiredBox; //< Background rectangle to show requested image size.
-  Toolkit::ImageView mHeightBox;  //< Background horizontal stripe to show requested image height.
-  Toolkit::ImageView mWidthBox;   //< Background vertical stripe to show requested image width.
   Toolkit::PushButton mFittingModeButton;
   Toolkit::PushButton mSamplingModeButton;
   Toolkit::Popup mPopup;

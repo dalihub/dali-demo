@@ -99,7 +99,7 @@ private:
 
     // Create a Spiral Layout and add it to the Item View.
     mItemView.AddLayout( * DefaultItemLayout::New( DefaultItemLayout::SPIRAL ) );
-    stage.GetRootLayer().SetBehavior( Layer::LAYER_3D ); // The item-view spiral layout requires Layer 3D behaviour.
+    stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D ); // The item-view spiral layout requires Layer 3D behaviour.
 
     // Calculate the size we would like our item-view layout to be, and then activate the layout.
     const Vector2 stageSize = stage.GetSize();

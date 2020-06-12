@@ -125,7 +125,7 @@ private:
   void CreateAnimatingScene()
   {
     mSceneActor = Layer::New();
-    mSceneActor.SetBehavior( Layer::LAYER_3D );
+    mSceneActor.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
     mSceneActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
     // Create and add images to the scene actor:

@@ -214,7 +214,7 @@ void CubeTransitionApp::OnInit( Application& application )
 
   // Creates a default view with a default tool bar, the view is added to the stage.
   mContent = DemoHelper::CreateView( application, mView, mToolBar, "", TOOLBAR_IMAGE, "" );
-  mContent.SetBehavior( Layer::LAYER_3D );
+  mContent.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
 
   // Add an effect changing toggle button

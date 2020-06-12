@@ -237,7 +237,7 @@ public:
     stage.SetBackgroundColor( Color::WHITE );
     Vector2 stageSize = stage.GetSize();
 
-    stage.GetRootLayer().SetDepthTestDisabled(true);
+    stage.GetRootLayer().SetProperty( Layer::Property::DEPTH_TEST, false );
 
     mSize = Vector3( stageSize.x / mColumnsPerPage, stageSize.y / mRowsPerPage, 0.0f );
 
