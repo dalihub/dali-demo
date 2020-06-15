@@ -188,7 +188,7 @@ public:
     // Setup
     mView.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 0.0f ) );
 
-    mContents.SetBehavior(Layer::LAYER_3D);
+    mContents.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
     mContents.SetProperty( Actor::Property::POSITION, mTranslation );
     mContents.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
     mContents.SetProperty( Actor::Property::SCALE, Vector3( mPinchScale, mPinchScale, mPinchScale ) );

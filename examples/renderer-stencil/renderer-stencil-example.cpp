@@ -158,8 +158,8 @@ private:
     layer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     // Set the parent origin to a small percentage below the center (so the demo will scale for different resolutions).
     layer.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.58f, 0.5f ) );
-    layer.SetBehavior( Layer::LAYER_UI );
-    layer.SetDepthTestDisabled( false );
+    layer.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_UI );
+    layer.SetProperty( Layer::Property::DEPTH_TEST, true );
     stage.Add( layer );
 
     // Main cube:
