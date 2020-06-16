@@ -173,7 +173,7 @@ class VideoViewController: public ConnectionTracker
 
   bool OnButtonClicked( Button button )
   {
-    if( mPauseButton.GetId() == button.GetId())
+    if( mPauseButton.GetProperty< int >( Actor::Property::ID ) == button.GetProperty< int >( Actor::Property::ID ))
     {
        if( mIsPlay )
       {
@@ -186,7 +186,7 @@ class VideoViewController: public ConnectionTracker
         mVideoView.Pause();
       }
     }
-    else if( mPlayButton.GetId() == button.GetId())
+    else if( mPlayButton.GetProperty< int >( Actor::Property::ID ) == button.GetProperty< int >( Actor::Property::ID ))
     {
       mPauseButton.SetProperty( Actor::Property::VISIBLE, true );
       mPauseButton.SetProperty( Button::Property::DISABLED, false );
@@ -196,7 +196,7 @@ class VideoViewController: public ConnectionTracker
       mIsPlay = true;
       mVideoView.Play();
     }
-    else if( mChangeButton.GetId() == button.GetId())
+    else if( mChangeButton.GetProperty< int >( Actor::Property::ID ) == button.GetProperty< int >( Actor::Property::ID ))
     {
       bool underlay = false;
       underlay = mVideoView.GetProperty( Toolkit::VideoView::Property::UNDERLAY ).Get< bool >();
@@ -209,11 +209,11 @@ class VideoViewController: public ConnectionTracker
         mVideoView.SetProperty( Toolkit::VideoView::Property::UNDERLAY, true );
       }
     }
-    else if( mBackwardButton.GetId() == button.GetId())
+    else if( mBackwardButton.GetProperty< int >( Actor::Property::ID ) == button.GetProperty< int >( Actor::Property::ID ))
     {
       mVideoView.Backward( SEEK_POS );
     }
-    else if( mForwardButton.GetId() == button.GetId())
+    else if( mForwardButton.GetProperty< int >( Actor::Property::ID ) == button.GetProperty< int >( Actor::Property::ID ))
     {
       mVideoView.Forward( SEEK_POS );
     }

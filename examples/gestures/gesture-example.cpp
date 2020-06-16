@@ -89,7 +89,7 @@ void AddHelpInfo( const std::string&& string, Actor parent, Animation animation,
   text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
   text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
   text.SetProperty( Actor::Property::POSITION, position );
-  text.SetProperty( DevelActor::Property::OPACITY, 0.0f );
+  text.SetProperty( Actor::Property::OPACITY, 0.0f );
   text.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, Text::HorizontalAlignment::CENTER );
   text.SetProperty( TextLabel::Property::MULTI_LINE, true );
   parent.Add( text );

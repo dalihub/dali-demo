@@ -224,7 +224,7 @@ public:
     mGrabCorner.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT );
     mGrabCorner.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT );
     mGrabCorner.SetProperty( Actor::Property::POSITION, Vector2( -BORDER_WIDTH, -BORDER_WIDTH ));
-    mGrabCorner.SetProperty( DevelActor::Property::OPACITY, 0.6f );
+    mGrabCorner.SetProperty( Actor::Property::OPACITY, 0.6f );
 
     Layer grabCornerLayer = Layer::New();
     grabCornerLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT );
@@ -267,7 +267,7 @@ public:
     imagePrevious.RotateBy( Radian(3.14159265358979323846f), Vector3( 0, 1.0f, 0 ) );
     imagePrevious.SetProperty( Actor::Property::POSITION_Y,  playWidth * 0.5f );
     imagePrevious.SetProperty( Actor::Property::POSITION_X,  playWidth + playWidth * 0.5f );
-    imagePrevious.SetProperty( DevelActor::Property::OPACITY, 0.6f );
+    imagePrevious.SetProperty( Actor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imagePrevious );
     imagePrevious.SetProperty( Dali::Actor::Property::NAME, PREVIOUS_BUTTON_ID );
     imagePrevious.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
@@ -277,7 +277,7 @@ public:
     imageNext.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
     imageNext.SetProperty( Actor::Property::POSITION_Y,  playWidth * 0.5f );
     imageNext.SetProperty( Actor::Property::POSITION_X,  stage.GetSize().x - playWidth * 0.5f );
-    imageNext.SetProperty( DevelActor::Property::OPACITY, 0.6f );
+    imageNext.SetProperty( Actor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imageNext );
     imageNext.SetProperty( Dali::Actor::Property::NAME, NEXT_BUTTON_ID );
     imageNext.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );

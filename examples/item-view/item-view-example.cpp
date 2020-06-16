@@ -297,7 +297,7 @@ public:
 
     // Activate the spiral layout
     SetLayout( mCurrentLayout );
-    mItemView.SetKeyboardFocusable( true );
+    mItemView.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE, true );
     KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &ItemViewExample::OnKeyboardPreFocusChange );
 
     // Set the title and icon to the current layout
@@ -892,7 +892,7 @@ public: // From ItemFactory
 
     actor.Add(borderActor);
 
-    actor.SetKeyboardFocusable( true );
+    actor.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE, true );
 
     Vector3 spiralItemSize;
     static_cast<ItemLayout&>(*mSpiralLayout).GetItemSize( 0u, Vector3( Stage::GetCurrent().GetSize() ), spiralItemSize );

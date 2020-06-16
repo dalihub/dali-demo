@@ -283,7 +283,7 @@ public:
 
     mItemView.AddLayout( *mLayout );
 
-    mItemView.SetKeyboardFocusable( true );
+    mItemView.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE, true );
 
     mFiles.clear();
     FileList files;
@@ -546,7 +546,7 @@ public:
    */
   void OnQuitOrBack()
   {
-    if ( mItemView.OnStage() )
+    if ( mItemView.GetProperty< bool >( Actor::Property::CONNECTED_TO_SCENE ) )
     {
       mApp.Quit();
     }

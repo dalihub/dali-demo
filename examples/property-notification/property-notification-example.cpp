@@ -106,7 +106,7 @@ public:
   void RedComponentNotification( PropertyNotification& /* source */ )
   {
     Animation animation = Animation::New( OPACITY_ANIMATION_DURATION );
-    animation.AnimateTo( Property( mTextLabel, DevelActor::Property::OPACITY ), 0.0f );
+    animation.AnimateTo( Property( mTextLabel, Actor::Property::OPACITY ), 0.0f );
     animation.Play();
   }
 
