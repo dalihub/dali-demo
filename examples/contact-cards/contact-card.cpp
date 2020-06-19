@@ -169,7 +169,7 @@ ContactCard::ContactCard(
   mDetailText.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   mDetailText.SetProperty( Actor::Property::POSITION, Vector2( mContactCardLayoutInfo.textFoldedPosition.x, mContactCardLayoutInfo.textFoldedPosition.y ));
   mDetailText.SetProperty( Actor::Property::SIZE, Vector2( mContactCardLayoutInfo.unfoldedSize.width - mContactCardLayoutInfo.textFoldedPosition.x * 2.0f, 0.0f ) );
-  mDetailText.SetProperty( DevelActor::Property::OPACITY, 0.0f );
+  mDetailText.SetProperty( Actor::Property::OPACITY, 0.0f );
 
   // Attach tap detection to the overall clip control
   mTapDetector = TapGestureDetector::New();

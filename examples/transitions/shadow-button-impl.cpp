@@ -123,7 +123,7 @@ void ShadowButton::SetCheckState( bool checkState )
 {
   mCheckState = checkState;
   DevelControl::EnableVisual( *this, Demo::ShadowButton::Property::CHECKBOX_FG_VISUAL, true );
-  if( Self().OnStage() )
+  if( Self().GetProperty< bool >( Actor::Property::CONNECTED_TO_SCENE ) )
   {
     if( checkState )
     {

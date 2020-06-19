@@ -357,12 +357,12 @@ public:
     mControlPoint1 = CreateControlPoint( parent,
                                          CIRCLE1_IMAGE,
                                          CONTROL_POINT1_ORIGIN );
-    mControlPoint1Id = mControlPoint1.GetId();
+    mControlPoint1Id = mControlPoint1.GetProperty< int >( Actor::Property::ID );
 
     mControlPoint2 = CreateControlPoint( parent,
                                          CIRCLE2_IMAGE,
                                          CONTROL_POINT2_ORIGIN );
-    mControlPoint2Id = mControlPoint2.GetId();
+    mControlPoint2Id = mControlPoint2.GetProperty< int >( Actor::Property::ID );
 
     Property::Map lineVertexFormat;
     lineVertexFormat["aPosition"] = Property::VECTOR2;

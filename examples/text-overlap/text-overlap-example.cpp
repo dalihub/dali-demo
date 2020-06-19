@@ -36,8 +36,8 @@ void TextOverlapController::Create( Application& app )
   mLabels[0].SetProperty( Dali::Actor::Property::NAME,"Label1");
   mLabels[1].SetProperty( Dali::Actor::Property::NAME,"Label2");
 
-  mLabels[0].SetProperty( DevelActor::Property::SIBLING_ORDER, 1 );
-  mLabels[1].SetProperty( DevelActor::Property::SIBLING_ORDER, 2 );
+  mLabels[0].SetProperty( Dali::DevelActor::Property::SIBLING_ORDER, 1 );
+  mLabels[1].SetProperty( Dali::DevelActor::Property::SIBLING_ORDER, 2 );
 
   mLabels[0].SetProperty( Control::Property::BACKGROUND, Color::RED );
   mLabels[1].SetProperty( Control::Property::BACKGROUND, Color::YELLOW );

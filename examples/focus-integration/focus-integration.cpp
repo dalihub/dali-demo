@@ -66,7 +66,7 @@ public:
     contentTable.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     contentTable.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     contentTable.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5f));
-    contentTable.SetKeyboardFocusable(true);
+    contentTable.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE,true);
 
     for( unsigned int i = 0; i < contentTable.GetRows(); ++i )
     {
@@ -93,7 +93,7 @@ public:
     mContainer.SetRelativeHeight( 1, 0.3f);
     mContainer.SetRelativeHeight( 2, 0.2f);
     mContainer.SetRelativeHeight( 3, 0.3f);
-    mContainer.SetKeyboardFocusable(true);
+    mContainer.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE,true);
     contentTable.Add( mContainer );
 
     // Make name label for each controls
@@ -134,7 +134,7 @@ public:
     for(int i = 0; i<6; i++)
     {
       Control control = Control::DownCast( mContainer.GetChildAt( TableView::CellPosition( (i/3)*2+1, i%3 ) ) );
-      control.SetKeyboardFocusable(true);
+      control.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE,true);
       control.SetProperty( Dali::Actor::Property::NAME,ITEMNAME[i]);
       control.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
       control.KeyEventSignal().Connect( this, &FocusIntegrationExample::OnControlKeyEvent );

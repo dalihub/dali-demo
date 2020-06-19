@@ -305,7 +305,7 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
   mCurrentImage.SetProperty( Toolkit::ImageView::Property::IMAGE, mDissolveEffect );
   mAnimation.AnimateTo( Property( mCurrentImage, "uPercentage" ), 1.0f, AlphaFunction::LINEAR );
 
-  mNextImage.SetProperty( DevelActor::Property::OPACITY,0.0f);
+  mNextImage.SetProperty( Actor::Property::OPACITY,0.0f);
   mAnimation.AnimateTo( Property( mNextImage, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::LINEAR );
 
   if(mUseHighPrecision)

@@ -477,9 +477,9 @@ public:
       image.SetProperty( Actor::Property::SIZE, imageSize );
       image.TouchSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
       image.ResourceReadySignal().Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal );
-      mFittingModes[image.GetId()] = fittingMode;
-      mResourceUrls[image.GetId()] = imageSource.configuration.path;
-      mSizes[image.GetId()] = imageSize;
+      mFittingModes[image.GetProperty< int >( Actor::Property::ID )] = fittingMode;
+      mResourceUrls[image.GetProperty< int >( Actor::Property::ID )] = imageSource.configuration.path;
+      mSizes[image.GetProperty< int >( Actor::Property::ID )] = imageSize;
       if ( count < INITIAL_IMAGES_TO_LOAD )
       {
         gridActor.Add( image );
@@ -512,9 +512,9 @@ public:
         animation.Play();
 
         // Change the scaling mode:
-        const unsigned id = actor.GetId();
+        const unsigned id = actor.GetProperty< int >( Actor::Property::ID );
         Dali::FittingMode::Type newMode = NextMode( mFittingModes[id] );
-        const Vector2 imageSize = mSizes[actor.GetId()];
+        const Vector2 imageSize = mSizes[actor.GetProperty< int >( Actor::Property::ID )];
 
         ImageView imageView = ImageView::DownCast( actor );
         if( imageView)
@@ -565,7 +565,7 @@ public:
       if( gridImageView )
       {
         // Cycle the scaling mode options:
-        unsigned int id = gridImageView.GetId();
+        unsigned int id = gridImageView.GetProperty< int >( Actor::Property::ID );
 
         const Vector2 imageSize = mSizes[ id ];
         Dali::FittingMode::Type newMode = NextMode( mFittingModes[ id ] );

@@ -28,6 +28,31 @@
       "secondaryProgressVisual":{
         "url":"{APPLICATION_RESOURCE_PATH}/images/new-progress-bar-secondary-progress.9.png"
       }
+    },
+    "CircularProgressBar":
+    {
+      "trackVisual":{
+        "visualType":"ARC",
+        "mixColor":[1.0, 0.898, 0.769, 1.0],
+        "thickness":8.0
+      },
+      "progressVisual":{
+        "visualType":"ARC",
+        "mixColor":[0.965, 0.494, 0.49, 1.0],
+        "thickness":8.0
+      },
+      "secondaryProgressVisual":{
+        "visualType":"ARC",
+        "mixColor":[1.0, 0.757, 0.655, 1.0],
+        "thickness":8.0
+      },
+      "indeterminateVisual":{
+        "visualType":"ARC",
+        "mixColor":[0.49, 0.478, 0.635, 1.0],
+        "thickness":8.0,
+        "startAngle":267.0,
+        "sweepAngle":75.0
+      }
     }
   }
 }

@@ -132,7 +132,7 @@ public:
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnStart---\n");
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str());
 
-    control.SetProperty( DevelActor::Property::OPACITY,0.1f);
+    control.SetProperty( Actor::Property::OPACITY,0.1f);
     Vector2 screenPos  = detector.GetCurrentScreenPosition();
     control.ScreenToLocal(mDragLocalPos.x, mDragLocalPos.y,screenPos.x, screenPos.y );
     Rect<float> targetRect(screenPos.x, screenPos.y, 0.0f, 0.0f);
@@ -237,7 +237,7 @@ public:
 
     Animation dropAnimation = Animation::New(0.5f);
     dropAnimation.AnimateBetween(Property(mTextLabel[mDragRealIndex], Actor::Property::POSITION), k0, AlphaFunction::EASE_OUT);
-    dropAnimation.AnimateBetween(Property(mTextLabel[mDragRealIndex], DevelActor::Property::OPACITY), k1, AlphaFunction::EASE_OUT);
+    dropAnimation.AnimateBetween(Property(mTextLabel[mDragRealIndex], Actor::Property::OPACITY), k1, AlphaFunction::EASE_OUT);
     dropAnimation.Play();
   }
 
@@ -254,7 +254,7 @@ public:
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnEnd---\n");
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str());
 
-    control.SetProperty( DevelActor::Property::OPACITY,1.0f);
+    control.SetProperty( Actor::Property::OPACITY,1.0f);
   }
 
 private:
