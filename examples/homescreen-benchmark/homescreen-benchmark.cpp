@@ -389,7 +389,7 @@ public:
       mScrollParent.Add( page );
     }
 
-    mScrollParent.SetProperty( DevelActor::Property::OPACITY, 1.0f );
+    mScrollParent.SetProperty( Actor::Property::OPACITY, 1.0f );
     mScrollParent.SetProperty( Actor::Property::SCALE, Vector3::ONE );
 
     // Fade in.

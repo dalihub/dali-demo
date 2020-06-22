@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
@@ -195,6 +196,7 @@ public:
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
     mMeshActor.SetProperty( Actor::Property::SIZE, Vector2(200, 200) );
+    mMeshActor.SetProperty( DevelActor::Property::UPDATE_SIZE_HINT, Vector2(400, 400) );
 
     Property::Index morphAmountIndex = mMeshActor.RegisterProperty( "uMorphAmount", 0.0f );
 

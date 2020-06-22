@@ -77,7 +77,7 @@ Demo::MyControl Internal::MyControl::New()
 void MyControl::OnInitialize()
 {
   Dali::Actor self = Self();
-  self.SetKeyboardFocusable( true );
+  self.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE, true );
 }
 
 void MyControl::SetProperty( BaseObject* object, Property::Index index, const Property::Value& value )

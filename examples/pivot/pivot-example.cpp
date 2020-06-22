@@ -96,7 +96,7 @@ private:
         Control control = Control::New();
         control.SetBackgroundColor( Vector4( Random::Range( 0.0f, 1.0f ), Random::Range( 0.0f, 1.0f ), Random::Range( 0.0f, 1.0f ), 1.0f ) );
         control.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-        control.SetProperty( DevelActor::Property::POSITION_USES_ANCHOR_POINT, false ); // Ensures the position always uses top-left for its calculations.
+        control.SetProperty( Actor::Property::POSITION_USES_ANCHOR_POINT, false ); // Ensures the position always uses top-left for its calculations.
         control.SetProperty( Actor::Property::ANCHOR_POINT, anchorPoint ); // This anchor-point is used for the rotation and the scale.
 
         // Add to the table-view

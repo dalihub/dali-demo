@@ -216,7 +216,7 @@ private:
   {
     unsigned int buttonIndex = GetButtonIndex( button );
 
-    if( mImageViews[buttonIndex].OnStage() )
+    if( mImageViews[buttonIndex].GetProperty< bool >( Actor::Property::CONNECTED_TO_SCENE ) )
     {
       ++mImageViewImageIndexStatus[buttonIndex];
 
@@ -240,7 +240,7 @@ private:
   {
     unsigned int buttonIndex = GetButtonIndex( button );
 
-    if( mImageViews[buttonIndex].OnStage() )
+    if( mImageViews[buttonIndex].GetProperty< bool >( Actor::Property::CONNECTED_TO_SCENE ) )
     {
       mImageViewRoundedCornerStatus[ buttonIndex ] = !mImageViewRoundedCornerStatus[ buttonIndex ];
 

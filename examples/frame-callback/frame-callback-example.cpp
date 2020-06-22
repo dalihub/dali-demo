@@ -113,7 +113,7 @@ private:
 
       // Add the ID of the created ImageView to mFrameCallback.
       // Again, can call methods in mFrameCallback directly as we have not set it on the stage yet.
-      mFrameCallback.AddId( imageView.GetId() );
+      mFrameCallback.AddId( imageView.GetProperty< int >( Actor::Property::ID ) );
 
       mStage.Add( imageView );
 

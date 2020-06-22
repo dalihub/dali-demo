@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 #include "shared/view.h"
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/shader-effects/motion-stretch-effect.h>
 
@@ -188,6 +189,8 @@ public:
     mMotionStretchImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mMotionStretchImageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mMotionStretchImageView.SetProperty( Actor::Property::SIZE, Vector2( MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT ) );
+    // Add stretch padding
+    mMotionStretchImageView.SetProperty( DevelActor::Property::UPDATE_SIZE_HINT, Vector2( MOTION_STRETCH_ACTOR_WIDTH+32, MOTION_STRETCH_ACTOR_HEIGHT+32 ) );
 
     mContentLayer.Add( mMotionStretchImageView );
 

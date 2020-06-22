@@ -471,7 +471,7 @@ public:
         // Use a white button with 50% transparency as a clear color button
         if ( Color::WHITE == AVAILABLE_COLORS[ index ] && styleButtonIndex != StyleType::TEXT_COLOR )
         {
-          mColorButtons[index].SetProperty( DevelActor::Property::OPACITY,0.5f);
+          mColorButtons[index].SetProperty( Actor::Property::OPACITY,0.5f);
 
           mColorButtons[index].SetProperty( Toolkit::Button::Property::LABEL,
                                             Property::Map().Add( Toolkit::Visual::Property::TYPE, Toolkit::Visual::TEXT )

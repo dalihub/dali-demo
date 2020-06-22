@@ -389,7 +389,7 @@ public:
    */
   void ReturnToPreviousScreen()
   {
-    if ( mItemView.OnStage() )
+    if ( mItemView.GetProperty< bool >( Actor::Property::CONNECTED_TO_SCENE ) )
     {
       // Quit the application if it is in the main menu
       mApplication.Quit();

@@ -380,7 +380,7 @@ Actor StylingApplication::CreateResizableContentPane()
   grabHandle.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT );
   grabHandle.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT );
   grabHandle.SetProperty( Actor::Property::POSITION, Vector2( -BORDER_WIDTH, -BORDER_WIDTH ));
-  grabHandle.SetProperty( DevelActor::Property::OPACITY, 0.6f );
+  grabHandle.SetProperty( Actor::Property::OPACITY, 0.6f );
 
   Layer grabCornerLayer = Layer::New();
   grabCornerLayer.SetProperty( Dali::Actor::Property::NAME,"GrabCornerLayer");
