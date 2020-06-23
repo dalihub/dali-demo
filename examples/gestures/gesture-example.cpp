@@ -266,7 +266,7 @@ private:
    */
   void OnLongPress( Actor actor, const LongPressGesture& longPress )
   {
-    if( longPress.state == Gesture::Started )
+    if( longPress.GetState() == Gesture::Started )
     {
       // When we first receive a long press, attach the actor to the pan detector.
       mPanDetector.Attach( actor );
@@ -294,7 +294,7 @@ private:
 
     // As the displacement is in local actor coords, we will have to multiply the displacement by the
     // actor's scale so that it moves the correct amount in the parent's coordinate system.
-    Vector3 scaledDisplacement( pan.displacement );
+    Vector3 scaledDisplacement( pan.GetDisplacement() );
     scaledDisplacement *= actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE );
 
     Vector3 currentPosition;
@@ -303,7 +303,7 @@ private:
     Vector3 newPosition = currentPosition + scaledDisplacement;
     actor.SetProperty( Actor::Property::POSITION, newPosition );
 
-    switch( pan.state )
+    switch( pan.GetState() )
     {
       case Gesture::Started:
       {
@@ -369,7 +369,7 @@ private:
    */
   void OnPinch( Actor actor, const PinchGesture& pinch )
   {
-    switch( pinch.state )
+    switch( pinch.GetState() )
     {
       case Gesture::Started:
       {
@@ -406,7 +406,7 @@ private:
       }
     }
 
-    actor.SetProperty( Actor::Property::SCALE, mStartingScale * pinch.scale );
+    actor.SetProperty( Actor::Property::SCALE, mStartingScale * pinch.GetScale() );
   }
 
   /**
@@ -417,7 +417,7 @@ private:
    */
   void OnRotation( Actor actor, const RotationGesture& rotation )
   {
-    switch( rotation.state )
+    switch( rotation.GetState() )
     {
       case Gesture::Started:
       {
@@ -442,7 +442,7 @@ private:
       }
     }
 
-    actor.SetProperty( Actor::Property::ORIENTATION, Quaternion( mStartingOrientation * Quaternion( rotation.rotation, Vector3::ZAXIS ) ) );
+    actor.SetProperty( Actor::Property::ORIENTATION, Quaternion( mStartingOrientation * Quaternion( rotation.GetRotation(), Vector3::ZAXIS ) ) );
   }
 
   /**

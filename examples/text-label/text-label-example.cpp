@@ -572,7 +572,8 @@ public:
   void OnPan( Actor actor, const PanGesture& gesture )
   {
     // Reset mLayoutSize when the pan starts
-    if( gesture.state == Gesture::Started )
+    Gesture::State state = gesture.GetState();
+    if( state == Gesture::Started )
     {
       if( mLayoutSize.x < 2.0f )
       {
@@ -590,8 +591,9 @@ public:
       HideStyleAndColorButtons();
     }
 
-    mLayoutSize.x += gesture.displacement.x * 2.0f;
-    mLayoutSize.y += gesture.displacement.y * 2.0f;
+    const Vector2& displacement = gesture.GetDisplacement();
+    mLayoutSize.x += displacement.x * 2.0f;
+    mLayoutSize.y += displacement.y * 2.0f;
 
     if( mLayoutSize.x >= 2.0f ||
         mLayoutSize.y >= 2.0f )
@@ -606,7 +608,7 @@ public:
       mContainer.SetProperty( Actor::Property::SIZE, clampedSize );
     }
 
-    if( gesture.state == Gesture::Cancelled || gesture.state == Gesture::Finished )
+    if( state == Gesture::Cancelled || state == Gesture::Finished )
     {
       // Resize the text label to match the container size when panning is finished
       mLabel.SetProperty( Actor::Property::SIZE, mLayoutSize );

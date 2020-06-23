@@ -335,17 +335,18 @@ public:
 
   void OnPan(Actor actor, const PanGesture& gesture)
   {
-    switch (gesture.state)
+    switch (gesture.GetState())
     {
       case Gesture::Continuing:
       {
+        const Vector2& displacement = gesture.GetDisplacement();
         switch(mPanState)
         {
           case PAN_LIGHT:
           {
-            mLightXRotation = mLightXRotation - gesture.displacement.y * LIGHT_PAN_X_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mLightXRotation = mLightXRotation - displacement.y * LIGHT_PAN_X_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
             mLightXRotation = Clamp(mLightXRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
-            mLightYRotation = mLightYRotation + gesture.displacement.x * LIGHT_PAN_Y_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mLightYRotation = mLightYRotation + displacement.x * LIGHT_PAN_Y_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
             mLightYRotation = Clamp(mLightYRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
             mLightAnchor.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
             break;
@@ -353,16 +354,16 @@ public:
 
           case PAN_SCENE:
           {
-            mTranslation += Vector3(gesture.displacement.x, gesture.displacement.y, 0.f);
+            mTranslation += Vector3(displacement.x, displacement.y, 0.f);
             mContents.SetProperty( Actor::Property::POSITION, mTranslation );
             break;
           }
 
           case ROTATE_SCENE:
           {
-            mSceneXRotation = mSceneXRotation - gesture.displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mSceneXRotation = mSceneXRotation - displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
             mSceneXRotation = Clamp( mSceneXRotation, -Dali::ANGLE_90, Dali::ANGLE_90 );
-            mSceneYRotation = mSceneYRotation + gesture.displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mSceneYRotation = mSceneYRotation + displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
             mSceneYRotation = Clamp( mSceneYRotation, -Dali::ANGLE_90, Dali::ANGLE_90 );
             mContents.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
             break;
@@ -370,8 +371,8 @@ public:
 
           case ROTATE_OBJECT:
           {
-            mObjectXRotation = mObjectXRotation - gesture.displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
-            mObjectYRotation = mObjectYRotation + gesture.displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mObjectXRotation = mObjectXRotation - displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mObjectYRotation = mObjectYRotation + displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
             mSceneActor.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mObjectXRotation, mObjectYRotation ) );
             break;
           }
@@ -390,11 +391,11 @@ public:
 
   void OnPinch(Actor actor, const PinchGesture& gesture)
   {
-    if (gesture.state == Gesture::Started)
+    if (gesture.GetState() == Gesture::Started)
     {
       mScaleAtPinchStart = mContents.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ).x;
     }
-    mPinchScale = Clamp(mScaleAtPinchStart * gesture.scale, MIN_PINCH_SCALE, MAX_PINCH_SCALE);
+    mPinchScale = Clamp(mScaleAtPinchStart * gesture.GetScale(), MIN_PINCH_SCALE, MAX_PINCH_SCALE);
 
     mContents.SetProperty( Actor::Property::SCALE, Vector3( mPinchScale, mPinchScale, mPinchScale ) );
   }

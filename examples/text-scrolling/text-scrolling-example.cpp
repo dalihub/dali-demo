@@ -377,10 +377,9 @@ public:
 
   void OnPanGesture( Actor actor, const PanGesture& gesture )
   {
-    if( gesture.state == Gesture::Continuing )
+    if( gesture.GetState() == Gesture::Continuing )
     {
-      Vector2 position = Vector2( gesture.displacement );
-      mTargetActorPosition.y = mTargetActorPosition.y + position.y;
+      mTargetActorPosition.y = mTargetActorPosition.y + gesture.GetDisplacement().y;
       mTargetActorPosition.y = std::min( mTargetActorPosition.y, -mTargetActorSize.height );
       mTargetActorPosition.y = std::max( mTargetActorPosition.y, ( mTargetActorSize.height - mWindowSize.height*0.25f ) );
       actor.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, mTargetActorPosition.y ));

@@ -770,8 +770,9 @@ private:
   void OnPan(Actor, PanGesture const& gesture)
   {
     Quaternion q = mAxis.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
-    Quaternion qx(Radian(Degree(gesture.screenDisplacement.y) * -.5f), Vector3::XAXIS);
-    Quaternion qy(Radian(Degree(gesture.screenDisplacement.x) * .5f), Vector3::YAXIS);
+    const Vector2& displacement = gesture.GetScreenDisplacement();
+    Quaternion qx(Radian(Degree(displacement.y) * -.5f), Vector3::XAXIS);
+    Quaternion qy(Radian(Degree(displacement.x) * .5f), Vector3::YAXIS);
     mAxis.SetProperty(Actor::Property::ORIENTATION, qy * qx * q);
   }
 

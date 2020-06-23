@@ -549,7 +549,7 @@ public:
 
   void OnLongPress( Actor actor, const LongPressGesture& gesture )
   {
-    switch( gesture.state )
+    switch( gesture.GetState() )
     {
       case Gesture::Started:
       {
@@ -558,7 +558,7 @@ public:
         ItemRange range( 0u, 0u );
         mItemView.GetItemsRange( range );
 
-        const unsigned int item = ( gesture.screenPoint.y < 0.5f * size.height ) ? range.begin : range.end;
+        const unsigned int item = ( gesture.GetScreenPoint().y < 0.5f * size.height ) ? range.begin : range.end;
         mItemView.ScrollToItem( item, SCROLL_TO_ITEM_ANIMATION_TIME );
 
         break;

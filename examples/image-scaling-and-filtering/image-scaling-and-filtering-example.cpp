@@ -530,11 +530,11 @@ public:
 
   void OnPinch( Actor actor, const PinchGesture& pinch )
   {
-    if( pinch.state == Gesture::Started )
+    if( pinch.GetState() == Gesture::Started )
     {
-      mLastPinchScale = pinch.scale;
+      mLastPinchScale = pinch.GetScale();
     }
-    const float scale = pinch.scale;
+    const float scale = pinch.GetScale();
 
     if( ! Equals( scale, mLastPinchScale ) )
     {
@@ -557,9 +557,11 @@ public:
   {
     Window window = mApplication.GetWindow();
     Vector2 windowSize = window.GetSize();
+    const Vector2& displacement = gesture.GetDisplacement();
+
     // 1.0f and 0.75f are the maximum size caps of the resized image, as a factor of window-size.
-    mImageWindowScale.x = std::max( 0.05f, std::min( 0.95f,  mImageWindowScale.x + ( gesture.displacement.x * 2.0f / windowSize.width ) ) );
-    mImageWindowScale.y = std::max( 0.05f, std::min( 0.70f, mImageWindowScale.y + ( gesture.displacement.y * 2.0f / windowSize.height ) ) );
+    mImageWindowScale.x = std::max( 0.05f, std::min( 0.95f,  mImageWindowScale.x + ( displacement.x * 2.0f / windowSize.width ) ) );
+    mImageWindowScale.y = std::max( 0.05f, std::min( 0.70f, mImageWindowScale.y + ( displacement.y * 2.0f / windowSize.height ) ) );
 
     ResizeImage();
   }

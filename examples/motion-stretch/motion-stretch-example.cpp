@@ -257,8 +257,9 @@ public:
     actor.ScreenToLocal(originOffsetX, originOffsetY, windowSize.width * 0.5f, windowSize.height * 0.5f);
 
     // get dest point in local actor space
-    destPos.x = tapGesture.localPoint.x - originOffsetX;
-    destPos.y = tapGesture.localPoint.y - originOffsetY;
+    const Vector2& localPoint = tapGesture.GetLocalPoint();
+    destPos.x = localPoint.x - originOffsetX;
+    destPos.y = localPoint.y - originOffsetY;
     destPos.z = 0.0f;
 
     float animDuration = 0.5f;

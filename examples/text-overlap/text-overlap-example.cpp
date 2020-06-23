@@ -75,25 +75,29 @@ void TextOverlapController::Create( Application& app )
 
 void TextOverlapController::OnPan( Actor actor, const PanGesture& gesture )
 {
-  if( ! mGrabbedActor || gesture.state == PanGesture::Started )
+  const Gesture::State state = gesture.GetState();
+  if( ! mGrabbedActor || state == PanGesture::Started )
   {
+    const Vector2& gesturePosition = gesture.GetPosition();
     for( int i=0; i<NUMBER_OF_LABELS; ++i )
     {
       Vector3 position = mLabels[i].GetCurrentProperty< Vector3 >( Actor::Property::POSITION );
       Vector3 size = mLabels[i].GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
-      if( gesture.position.y > position.y - size.y * 0.5f &&
-          gesture.position.y <= position.y + size.y * 0.5f )
+      if( gesturePosition.y > position.y - size.y * 0.5f &&
+          gesturePosition.y <= position.y + size.y * 0.5f )
       {
         mGrabbedActor = mLabels[i];
         break;
       }
     }
   }
-  else if( mGrabbedActor && gesture.state == PanGesture::Continuing )
+  else if( mGrabbedActor && state == PanGesture::Continuing )
   {
     Vector2 windowSize = mApplication.GetWindow().GetSize();
     Vector3 size = mGrabbedActor.GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
-    float y = Clamp( gesture.position.y, size.y * 0.5f, windowSize.y - size.y*0.5f );
+    const Vector2& gesturePosition = gesture.GetPosition();
+
+    float y = Clamp( gesturePosition.y, size.y * 0.5f, windowSize.y - size.y*0.5f );
     mGrabbedActor.SetProperty( Actor::Property::POSITION, Vector2( 0, y ));
   }
   else

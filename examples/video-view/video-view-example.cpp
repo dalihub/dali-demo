@@ -221,22 +221,23 @@ class VideoViewController: public ConnectionTracker
 
   void OnPan( Actor actor, const PanGesture& gesture )
   {
-    if( !mIsFullScreen && gesture.state == Gesture::Continuing )
+    if( !mIsFullScreen && gesture.GetState() == Gesture::Continuing )
     {
-      mVideoView.TranslateBy( Vector3( gesture.displacement ) );
+      mVideoView.TranslateBy( Vector3( gesture.GetDisplacement() ) );
     }
   }
 
   void OnPinch( Actor actor, const PinchGesture& gesture )
   {
-    if( gesture.state == Gesture::Started )
+    Gesture::State state = gesture.GetState();
+    if( state == Gesture::Started )
     {
       mPinchStartScale = mScale;
     }
 
-    if( gesture.state == Gesture::Finished )
+    if( state == Gesture::Finished )
     {
-      mScale = mPinchStartScale * gesture.scale;
+      mScale = mPinchStartScale * gesture.GetScale();
       mVideoView.SetProperty( Actor::Property::SCALE, mScale );
     }
   }

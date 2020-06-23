@@ -631,7 +631,7 @@ public:
   //Panning around the shape rotates it.
   void OnPan( Actor actor, const PanGesture& gesture )
   {
-    switch( gesture.state )
+    switch( gesture.GetState() )
     {
       case Gesture::Started:
       {
@@ -643,8 +643,9 @@ public:
       case Gesture::Continuing:
       {
         //Rotate based off the gesture.
-        mRotation.x -= gesture.displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
-        mRotation.y += gesture.displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+        const Vector2& displacement = gesture.GetDisplacement();
+        mRotation.x -= displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+        mRotation.y += displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
         Quaternion rotation = Quaternion( Radian( mRotation.x ), Vector3::XAXIS) *
                               Quaternion( Radian( mRotation.y ), Vector3::YAXIS);
 

@@ -296,9 +296,10 @@ void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     return;
   }
 
-  if( gesture.state == Gesture::Continuing )
+  if( gesture.GetState() == Gesture::Continuing )
   {
-    if( gesture.displacement.x < 0)
+    const Vector2& displacement = gesture.GetDisplacement();
+    if( displacement.x < 0)
     {
       mIndex = (mIndex + 1)%NUM_IMAGES;
     }
@@ -307,8 +308,8 @@ void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
       mIndex = (mIndex + NUM_IMAGES -1)%NUM_IMAGES;
     }
 
-    mPanPosition = gesture.position;
-    mPanDisplacement = gesture.displacement;
+    mPanPosition = gesture.GetPosition();
+    mPanDisplacement = displacement;
     GoToNextImage();
   }
 }

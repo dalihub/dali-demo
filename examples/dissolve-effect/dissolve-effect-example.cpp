@@ -276,9 +276,10 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     return;
   }
 
-  if( gesture.state == Gesture::Continuing )
+  if( gesture.GetState() == Gesture::Continuing )
   {
-    if( gesture.displacement.x < 0)
+    const Vector2& displacement = gesture.GetDisplacement();
+    if( displacement.x < 0)
     {
       mIndex = (mIndex + 1)%NUM_IMAGES;
     }
@@ -294,7 +295,7 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     mNextImage.SetProperty( Actor::Property::POSITION_Z, INITIAL_DEPTH);
     mParent.Add( mNextImage );
     Vector2 size = Vector2( mCurrentImage.GetCurrentProperty< Vector3 >( Actor::Property::SIZE ) );
-    StartTransition( gesture.position / size, gesture.displacement * Vector2(1.0, size.x/size.y));
+    StartTransition( gesture.GetPosition() / size, displacement * Vector2(1.0, size.x/size.y));
   }
 }
 
