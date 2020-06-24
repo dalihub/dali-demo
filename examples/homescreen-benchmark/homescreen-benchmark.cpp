@@ -21,6 +21,7 @@
 #include <sstream>
 #include <iostream>
 
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 
 using namespace Dali;

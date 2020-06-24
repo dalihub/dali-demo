@@ -27,6 +27,7 @@
 #include "beat-control.h"
 #include <cstdio>
 #include <sstream>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 
 // Internal includes
 

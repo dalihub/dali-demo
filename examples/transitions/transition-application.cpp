@@ -25,6 +25,7 @@
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include "shadow-button.h"
 #include <cstdio>
 #include <sstream>
