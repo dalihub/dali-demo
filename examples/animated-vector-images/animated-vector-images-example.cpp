@@ -20,6 +20,7 @@
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visuals/animated-vector-image-visual-actions-devel.h>
 #include <dali-toolkit/devel-api/visuals/animated-vector-image-visual-signals-devel.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>

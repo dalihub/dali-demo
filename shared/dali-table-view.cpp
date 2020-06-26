@@ -26,6 +26,8 @@
 #include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali-toolkit/devel-api/accessibility-manager/accessibility-manager.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 
 // INTERNAL INCLUDES
 #include "shared/execute-process.h"

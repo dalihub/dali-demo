@@ -20,6 +20,7 @@
 
 #include "shared/view.h"
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/shader-effects/motion-blur-effect.h>
 
@@ -204,13 +205,15 @@ public:
 
     // Scale down actor to fit on very low resolution screens with space to interact:
     mMotionBlurActorSize = Size( std::min( stageSize.x * 0.3f, MOTION_BLUR_ACTOR_WIDTH ), std::min( stageSize.y * 0.3f, MOTION_BLUR_ACTOR_HEIGHT ) );
+    mMotionBlurActorUpdateSize = Size( std::max( mMotionBlurActorSize.x, mMotionBlurActorSize.y ), std::max( mMotionBlurActorSize.x, mMotionBlurActorSize.y ) );
     mMotionBlurActorSize = Size( std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ), std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ) );
 
     mMotionBlurEffect = CreateMotionBlurEffect();
     mMotionBlurImageView = ImageView::New();
     SetImageFittedInBox( mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y );
     mMotionBlurImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mMotionBlurImageView.SetProperty( Actor::Property::SIZE, Vector2(mMotionBlurActorSize.x, mMotionBlurActorSize.y) );
+    mMotionBlurImageView.SetProperty( Actor::Property::SIZE, mMotionBlurActorUpdateSize );
+    mMotionBlurImageView.SetProperty( DevelActor::Property::UPDATE_SIZE_HINT, mMotionBlurActorUpdateSize );
 
     mContentLayer.Add( mMotionBlurImageView );
 
@@ -437,6 +440,7 @@ private:
   Property::Map mMotionBlurEffect;
   ImageView mMotionBlurImageView;
   Size mMotionBlurActorSize;
+  Size mMotionBlurActorUpdateSize;
 
   // animate actor to position where user taps screen
   Animation mActorTapMovementAnimation;

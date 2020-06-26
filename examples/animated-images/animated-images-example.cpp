@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visuals/animated-image-visual-actions-devel.h>
 
 using namespace Dali;
@@ -29,9 +30,9 @@ const char * const PLAY_ICON_SELECTED( DEMO_IMAGE_DIR "icon-play-selected.png" )
 
 const unsigned int ANIMATED_IMAGE_COUNT = 2;
 
-const char * ANIMATED_GIF_URLS[ ANIMATED_IMAGE_COUNT ] =
+const char * ANIMATED_IMAGE_URLS[ ANIMATED_IMAGE_COUNT ] =
 {
-  DEMO_IMAGE_DIR "dog-anim.gif",
+  DEMO_IMAGE_DIR "dog-anim.webp",
   DEMO_IMAGE_DIR "dali-logo-anim.gif"
 };
 
@@ -47,7 +48,7 @@ int ANIMATED_ARRAY_NUMBER_OF_FRAMES[ ANIMATED_IMAGE_COUNT ] =
   15
 };
 
-const char * GIF_RADIO_BUTTON_NAME( "Gif" );
+const char * ANIMATION_RADIO_BUTTON_NAME( "Animation Image" );
 const char * ARRAY_RADIO_BUTTON_NAME( "Array" );
 
 /// Structure to specify the layout information for the animated images views.
@@ -71,7 +72,7 @@ ImageLayoutInfo IMAGE_LAYOUT_INFO[ ANIMATED_IMAGE_COUNT ] =
  *
  * - It displays two animated images, an animated dog and an animated DALi logo.
  * - The images are loaded paused, a play button is overlayed on top of the images to play the animated image.
- * - Radio buttons at the bottom allow the user to change between Animated GIFs and a collection of Image Arrays.
+ * - Radio buttons at the bottom allow the user to change between Animated Images and a collection of Image Arrays.
  */
 class AnimatedImageController : public ConnectionTracker
 {
@@ -83,7 +84,7 @@ public:
    */
   AnimatedImageController( Application& application )
   : mApplication( application ),
-    mImageType( ImageType::GIF )
+    mImageType( ImageType::ANIMATED_IMAGE )
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &AnimatedImageController::Create );
@@ -96,8 +97,8 @@ private:
    */
   enum class ImageType
   {
-    GIF,          ///< Displays Animated GIF Files.
-    IMAGE_ARRAY   ///< Displays an array of URLs that are used as an animated image.
+    ANIMATED_IMAGE,          ///< Displays Animated Image Files.
+    IMAGE_ARRAY              ///< Displays an array of URLs that are used as an animated image.
   };
 
   /**
@@ -114,7 +115,7 @@ private:
     // Create the animated image-views
     CreateAnimatedImageViews();
 
-    // Create radio buttons to change between GIF images and Image Arrays
+    // Create radio buttons to change between Animated images and Image Arrays
     CreateRadioButtonLayout();
 
     // Create a tap gesture detector to use to pause the animated images
@@ -127,7 +128,7 @@ private:
    */
   void CreateRadioButtonLayout()
   {
-    mGifButton = CreateRadioButton( GIF_RADIO_BUTTON_NAME, true );
+    mAnimatedImageButton = CreateRadioButton( ANIMATION_RADIO_BUTTON_NAME, true );
     mArrayButton = CreateRadioButton( ARRAY_RADIO_BUTTON_NAME, false );
 
     Toolkit::TableView radioButtonLayout = Toolkit::TableView::New( 1, 2 );
@@ -137,7 +138,7 @@ private:
     radioButtonLayout.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     radioButtonLayout.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     radioButtonLayout.SetFitHeight( 0 );
-    radioButtonLayout.AddChild( mGifButton, TableView::CellPosition( 0, 0 ) );
+    radioButtonLayout.AddChild( mAnimatedImageButton, TableView::CellPosition( 0, 0 ) );
     radioButtonLayout.AddChild( mArrayButton, TableView::CellPosition( 0, 1 ) );
     radioButtonLayout.SetCellAlignment( TableView::CellPosition( 0, 0 ),
                                         HorizontalAlignment::CENTER,
@@ -186,6 +187,8 @@ private:
       control.SetProperty( Actor::Property::ANCHOR_POINT, IMAGE_LAYOUT_INFO[ index ].anchorPoint );
       control.SetProperty( Actor::Property::PARENT_ORIGIN, IMAGE_LAYOUT_INFO[ index ].parentOrigin );
       control.SetProperty( Actor::Property::POSITION_Y,  IMAGE_LAYOUT_INFO[ index ].yPosition );
+
+      control.SetProperty( Actor::Property::SIZE, Vector2(300, 300) );
 
       // We do not want the animated image playing when it's added to the stage.
       PauseAnimatedImage( control );
@@ -276,7 +279,7 @@ private:
    */
   bool OnRadioButtonClicked( Toolkit::Button button )
   {
-    mImageType = ( button == mGifButton ) ? ImageType::GIF : ImageType::IMAGE_ARRAY;
+    mImageType = ( button == mAnimatedImageButton ) ? ImageType::ANIMATED_IMAGE : ImageType::IMAGE_ARRAY;
 
     CreateAnimatedImageViews();
     return true;
@@ -322,9 +325,9 @@ private:
    */
   void AddUrl( Property::Map& map, ImageType type, int index )
   {
-    if( type == ImageType::GIF )
+    if( type == ImageType::ANIMATED_IMAGE )
     {
-      map.Add( Toolkit::ImageVisual::Property::URL, Property::Value( ANIMATED_GIF_URLS[ index ] ) );
+      map.Add( Toolkit::ImageVisual::Property::URL, Property::Value( ANIMATED_IMAGE_URLS[ index ] ) );
     }
     else
     {
@@ -367,7 +370,7 @@ private:
   Toolkit::ImageView mActorDog;  ///< The current dog image view.
   Toolkit::ImageView mActorLogo; ///< The current logo image view.
 
-  Toolkit::RadioButton mGifButton;   ///< The Gif Radio Button.
+  Toolkit::RadioButton mAnimatedImageButton;   ///< The Animated Image Radio Button.
   Toolkit::RadioButton mArrayButton; ///< The Array Radio Button.
 
   TapGestureDetector mTapDetector; ///< The tap detector.

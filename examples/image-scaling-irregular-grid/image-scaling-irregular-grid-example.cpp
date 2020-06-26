@@ -47,6 +47,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <iostream>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/scroll-bar/scroll-bar.h>
 
 // INTERNAL INCLUDES
 #include "grid-flags.h"
