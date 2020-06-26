@@ -200,6 +200,8 @@ IF( WIN32 ) # WIN32 includes x64 as well according to the cmake doc.
   FIND_PACKAGE( unofficial-angle REQUIRED )
   FIND_PACKAGE( unofficial-cairo REQUIRED )
 
+  FIND_PACKAGE( WebP REQUIRED )
+
   FIND_PACKAGE( dali-windows-dependencies REQUIRED )
   FIND_PACKAGE( dali2-core REQUIRED )
   FIND_PACKAGE( dali2-adaptor REQUIRED )
@@ -238,6 +240,8 @@ IF( WIN32 ) # WIN32 includes x64 as well according to the cmake doc.
     unofficial::angle::libEGL
     unofficial::angle::libGLESv2
     unofficial::cairo::cairo
+    WebP::webp
+    WebP::webpdemux
     dali-windows-dependencies::dali-windows-dependencies
     dali2-core::dali2-core
     dali2-adaptor::dali2-adaptor
