@@ -49,7 +49,8 @@ const Property::Value TEXT_BACKGROUND
 {
   { Visual::Property::TYPE, Visual::COLOR },
   { ColorVisual::Property::MIX_COLOR, Vector4( 0.8f, 0.8f, 0.8f, 1.0f ) },
-  { DevelVisual::Property::CORNER_RADIUS, 10.0f }
+  { DevelVisual::Property::CORNER_RADIUS, 0.5f },
+  { DevelVisual::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::RELATIVE }
 };
 
 const Property::Value TRANSITION_ANIMATOR
