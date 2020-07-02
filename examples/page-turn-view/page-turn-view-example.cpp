@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -169,7 +169,7 @@ public:
 private:
 
 
-  void OnWindowResized( Window::WindowSize size );
+  void OnWindowResized( Window window, Window::WindowSize size );
 
   void Rotate( DemoOrientation orientation );
 
@@ -210,13 +210,13 @@ void PageTurnExample::OnInit( Application& app )
   window.AddAvailableOrientation( Window::LANDSCAPE );
   window.AddAvailableOrientation( Window::PORTRAIT_INVERSE  );
   window.AddAvailableOrientation( Window::LANDSCAPE_INVERSE );
-  window.ResizedSignal().Connect( this, &PageTurnExample::OnWindowResized );
+  window.ResizeSignal().Connect( this, &PageTurnExample::OnWindowResized );
 
   Window::WindowSize size = window.GetSize();
   Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
 }
 
-void PageTurnExample::OnWindowResized( Window::WindowSize size )
+void PageTurnExample::OnWindowResized( Window window, Window::WindowSize size )
 {
   Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
 }

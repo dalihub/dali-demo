@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -308,8 +308,6 @@ void DaliTableView::Initialize( Application& application )
   // Set initial orientation
   unsigned int degrees = 0;
   Rotate( degrees );
-
-  winHandle.ShowIndicator( Dali::Window::INVISIBLE );
 
   // Background animation
   mAnimationTimer = Timer::New( BACKGROUND_ANIMATION_DURATION );

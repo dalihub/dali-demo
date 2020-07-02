@@ -173,7 +173,7 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
     winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
-    winHandle.ResizedSignal().Connect( this, &MotionStretchExampleApp::OnWindowResized );
+    winHandle.ResizeSignal().Connect( this, &MotionStretchExampleApp::OnWindowResized );
 
     // set initial orientation
     Rotate( PORTRAIT );
@@ -204,7 +204,7 @@ public:
   //
   //
 
-  void OnWindowResized( Window::WindowSize size )
+  void OnWindowResized( Window window, Window::WindowSize size )
   {
     Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
   }
