@@ -288,9 +288,6 @@ public:
 
     // The Init signal is received once (only) during the Application lifetime
 
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
-
     mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
     mGeometry = CreateGeometry();
     mRenderer = Renderer::New( mGeometry, mShader );

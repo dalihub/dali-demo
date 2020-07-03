@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,9 +92,6 @@ private:
     mStage = Stage::GetCurrent();
     mStage.SetBackgroundColor( Color::WHITE );
     mStage.KeyEventSignal().Connect( this, &PreRenderCallbackController::OnKeyEvent );
-
-    // Hide the indicator bar.
-    mApplication.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
     // Detect taps on the root layer.
     mTapDetector = TapGestureDetector::New();

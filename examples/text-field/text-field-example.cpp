@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,9 +71,6 @@ public:
 
     stage.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
     stage.KeyEventSignal().Connect(this, &TextFieldExample::OnKeyEvent);
-
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
     mButton = CreateFolderButton();
     mButton.ClickedSignal().Connect( this, &TextFieldExample::OnButtonClicked );

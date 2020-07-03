@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,9 +74,6 @@ private:
    */
   void Create( Application& application )
   {
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
-
     // Connect to the stage's key signal to allow Back and Escape to exit.
     Stage stage = Dali::Stage::GetCurrent();
     stage.KeyEventSignal().Connect( this, &ClippingExample::OnKeyEvent );

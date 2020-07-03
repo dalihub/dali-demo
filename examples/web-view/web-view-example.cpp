@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,7 +82,7 @@ public:
     mAddressLabel.SetProperty( Toolkit::TextLabel::Property::POINT_SIZE, fontSize );
     mAddressLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
     mAddressLabel.SetBackgroundColor( Vector4( 0, 0, 0, 0.5f ) );
-    mAddressLabel.TouchedSignal().Connect( this, &WebViewController::OnTouchText );
+    mAddressLabel.TouchSignal().Connect( this, &WebViewController::OnTouchText );
     stage.Add( mAddressLabel );
 
     // Respond to key events
@@ -100,9 +100,9 @@ public:
     mAddressLabel.SetProperty( Toolkit::TextLabel::Property::TEXT, url.c_str() );
   }
 
-  bool OnTouchText( Actor actor, const TouchEvent& event )
+  bool OnTouchText( Actor actor, const TouchData& touch )
   {
-    if ( event.GetPoint( 0 ).state == TouchPoint::Up )
+    if ( touch.GetState( 0 ) == PointState::UP )
     {
       std::string url = GetNextUrl();
       mAddressLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, "Waiting" );
