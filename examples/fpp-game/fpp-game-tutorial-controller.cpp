@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ FppGameTutorialController::~FppGameTutorialController()
 
 void FppGameTutorialController::OnTouch( const TouchData& touchEvent )
 {
-  Vector2 size( mStage.GetSize() );
+  Vector2 size( mWindow.GetSize() );
 
   bool isLandscape( size.x > size.y );
 
@@ -94,26 +94,26 @@ void FppGameTutorialController::OnTouch( const TouchData& touchEvent )
   }
 }
 
-void FppGameTutorialController::DisplayTutorial()
+void FppGameTutorialController::DisplayTutorial( Dali::Window window )
 {
-  mStage = Stage::GetCurrent();
+  mWindow = window;
 
-  Vector2 stageSize( mStage.GetSize() );
-  bool isLandscape( stageSize.x > stageSize.y );
+  Vector2 windowSize( mWindow.GetSize() );
+  bool isLandscape( windowSize.x > windowSize.y );
   if( !isLandscape )
   {
-    std::swap( stageSize.x, stageSize.y );
+    std::swap( windowSize.x, windowSize.y );
   }
 
   mUiRoot = Actor::New();
-  mStage.Add( mUiRoot );
+  mWindow.Add( mUiRoot );
 
   // left tutorial text label
   mLeftLabel = Toolkit::TextLabel::New("Touch here to walk");
   mLeftLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mLeftLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mLeftLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-  mLeftLabel.SetProperty( Actor::Property::SIZE, Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
+  mLeftLabel.SetProperty( Actor::Property::SIZE, Vector3( windowSize.x*0.5, windowSize.y, 1.0f ) );
   mLeftLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,
                           Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
                                          .Add( ColorVisual::Property::MIX_COLOR, Vector4( 0.0, 0.0, 0.7, 0.2 ) ) );
@@ -126,7 +126,7 @@ void FppGameTutorialController::DisplayTutorial()
   mRightLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mRightLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mRightLabel.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-  mRightLabel.SetProperty( Actor::Property::SIZE, Vector3( stageSize.x*0.5, stageSize.y, 1.0f ) );
+  mRightLabel.SetProperty( Actor::Property::SIZE, Vector3( windowSize.x*0.5, windowSize.y, 1.0f ) );
   mRightLabel.SetProperty( Toolkit::Control::Property::BACKGROUND,
                            Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::COLOR )
                                           .Add( ColorVisual::Property::MIX_COLOR, Vector4( 0.5, 0.0, 0.0, 0.2 ) ) );
@@ -136,7 +136,7 @@ void FppGameTutorialController::DisplayTutorial()
 
   // create camera dedicated to be used with UI controls
   CameraActor uiCamera = CameraActor::New();
-  mTutorialRenderTask = mStage.GetRenderTaskList().CreateTask();
+  mTutorialRenderTask = mWindow.GetRenderTaskList().CreateTask();
   mTutorialRenderTask.SetCameraActor( uiCamera );
   mTutorialRenderTask.SetClearEnabled( false );
   mTutorialRenderTask.SetSourceActor( mUiRoot );
@@ -147,12 +147,12 @@ void FppGameTutorialController::DisplayTutorial()
     uiCamera.RotateBy( Degree(90.0f), Vector3( 0.0f, 0.0f, 1.0f ));
   }
 
-  mLeftLabel.SetProperty( Actor::Property::POSITION, Vector3( -stageSize.x*0.25f, 0.0, 0.0 ) );
-  mRightLabel.SetProperty( Actor::Property::POSITION, Vector3( stageSize.x*0.25f, 0.0, 0.0 ) );
+  mLeftLabel.SetProperty( Actor::Property::POSITION, Vector3( -windowSize.x*0.25f, 0.0, 0.0 ) );
+  mRightLabel.SetProperty( Actor::Property::POSITION, Vector3( windowSize.x*0.25f, 0.0, 0.0 ) );
 
   mUiRoot.Add( mLeftLabel );
   mUiRoot.Add( mRightLabel );
-  mStage.Add( uiCamera );
+  mWindow.Add( uiCamera );
 
   Animation animation = Animation::New( 1.0f );
   animation.AnimateTo( Property( mLeftLabel, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::EASE_OUT );
@@ -166,13 +166,13 @@ void FppGameTutorialController::DisplayTutorial()
 void FppGameTutorialController::OnTutorialAnimationFinished( Animation& animation )
 {
   // touch signal will wait for a single touch on each side of screen
-  mStage.TouchSignal().Connect( this, &FppGameTutorialController::OnTouch );
+  mWindow.TouchSignal().Connect( this, &FppGameTutorialController::OnTouch );
 }
 
 void FppGameTutorialController::OnTutorialComplete( Animation& animation )
 {
-  mStage.Remove( mUiRoot );
+  mWindow.Remove( mUiRoot );
   mUiRoot.Reset();
-  mStage.GetRenderTaskList().RemoveTask( mTutorialRenderTask );
+  mWindow.GetRenderTaskList().RemoveTask( mTutorialRenderTask );
 }
 

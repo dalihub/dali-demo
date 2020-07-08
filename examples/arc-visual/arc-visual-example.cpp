@@ -98,15 +98,15 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     mControl = Control::New();
     mControl.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mControl.SetProperty( Actor::Property::SIZE, Vector2( 300.0f, 300.0f ) );
     mControl.SetProperty( Control::Property::BACKGROUND, BACKGROUND );
-    stage.Add( mControl );
+    window.Add( mControl );
 
     mStartAngleLabel = TextLabel::New( "1" );
     mStartAngleLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -117,7 +117,7 @@ private:
     mStartAngleLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mStartAngleLabel.SetProperty( Control::Property::PADDING, Extents( 20.0f, 20.0f, 10.0f, 10.0f ) );
     mStartAngleLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
-    stage.Add( mStartAngleLabel );
+    window.Add( mStartAngleLabel );
 
     mSweepAngleLabel = TextLabel::New( "2" );
     mSweepAngleLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -128,7 +128,7 @@ private:
     mSweepAngleLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mSweepAngleLabel.SetProperty( Control::Property::PADDING, Extents( 20.0f, 20.0f, 10.0f, 10.0f ) );
     mSweepAngleLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
-    stage.Add( mSweepAngleLabel );
+    window.Add( mSweepAngleLabel );
 
     mThicknessLabel = TextLabel::New( "3" );
     mThicknessLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -139,7 +139,7 @@ private:
     mThicknessLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mThicknessLabel.SetProperty( Control::Property::PADDING, Extents( 20.0f, 20.0f, 10.0f, 10.0f ) );
     mThicknessLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
-    stage.Add( mThicknessLabel );
+    window.Add( mThicknessLabel );
 
     mPlusTextLabel = TextLabel::New( "+" );
     mPlusTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -150,7 +150,7 @@ private:
     mPlusTextLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mPlusTextLabel.SetProperty( Control::Property::PADDING, Extents( 20.0f, 20.0f, 10.0f, 10.0f ) );
     mPlusTextLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
-    stage.Add( mPlusTextLabel );
+    window.Add( mPlusTextLabel );
 
     mMinusTextLabel = TextLabel::New( "-" );
     mMinusTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -161,13 +161,13 @@ private:
     mMinusTextLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mMinusTextLabel.SetProperty( Control::Property::PADDING, Extents( 25.0f, 25.0f, 10.0f, 10.0f ) );
     mMinusTextLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
-    stage.Add( mMinusTextLabel );
+    window.Add( mMinusTextLabel );
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &ArcVisualExample::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &ArcVisualExample::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &ArcVisualExample::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &ArcVisualExample::OnKeyEvent );
   }
 
   bool OnButtonTouch( Actor actor, const TouchData& touch )

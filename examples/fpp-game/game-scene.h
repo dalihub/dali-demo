@@ -2,7 +2,7 @@
 #define GAME_SCENE_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
 #include "game-camera.h"
 
 #include <dali/public-api/actors/actor.h>
+#include <dali/public-api/adaptor-framework/window.h>
 
 class GameCamera;
 class GameEntity;
@@ -57,10 +58,11 @@ public:
   /**
    * Loads scene from formatted JSON file, returns true on success
    *
+   * @param[in] window The window to load the scene on
    * @param[in] filename Path to the scene file
    * @return true if suceess
    */
-  bool Load( const char* filename );
+  bool Load( Dali::Window window, const char* filename );
 
   /**
    * Loads resource ( model or texture ) or gets if from cache if already loaded

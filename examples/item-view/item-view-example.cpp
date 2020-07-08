@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -196,14 +196,14 @@ public:
    */
   void OnInit(Application& app)
   {
-    Stage stage = Dali::Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
-    stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
+    Window window = app.GetWindow();
+    window.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
+    window.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
+    Vector2 windowSize = window.GetSize();
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
 
     Layer contents = DemoHelper::CreateView( mApplication,
                                              mView,
@@ -237,11 +237,11 @@ public:
     mDeleteButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DELETE_IMAGE );
     mDeleteButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DELETE_IMAGE_SELECTED );
     mDeleteButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
-    mDeleteButton.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mDeleteButton.SetProperty( Actor::Property::SIZE, Vector2( windowSize.width * 0.15f, windowSize.width * 0.15f ) );
     mDeleteButton.ClickedSignal().Connect( this, &ItemViewExample::OnDeleteButtonClicked);
     mDeleteButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mDeleteButton.SetProperty( Actor::Property::VISIBLE, false );
-    stage.Add( mDeleteButton );
+    window.Add( mDeleteButton );
 
     // Create an insert button (bottom right of screen)
     mInsertButton = Toolkit::PushButton::New();
@@ -252,11 +252,11 @@ public:
     mInsertButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, INSERT_IMAGE );
     mInsertButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, INSERT_IMAGE_SELECTED );
     mInsertButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
-    mInsertButton.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mInsertButton.SetProperty( Actor::Property::SIZE, Vector2( windowSize.width * 0.15f, windowSize.width * 0.15f ) );
     mInsertButton.ClickedSignal().Connect( this, &ItemViewExample::OnInsertButtonClicked);
     mInsertButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mInsertButton.SetProperty( Actor::Property::VISIBLE, false );
-    stage.Add( mInsertButton );
+    window.Add( mInsertButton );
 
     // Create an replace button (bottom right of screen)
     mReplaceButton = Toolkit::PushButton::New();
@@ -267,20 +267,20 @@ public:
     mReplaceButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE );
     mReplaceButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE_SELECTED );
     mReplaceButton.SetProperty( Toolkit::Control::Property::BACKGROUND, TOOLBAR_IMAGE );
-    mReplaceButton.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width * 0.15f, stageSize.width * 0.15f ) );
+    mReplaceButton.SetProperty( Actor::Property::SIZE, Vector2( windowSize.width * 0.15f, windowSize.width * 0.15f ) );
     mReplaceButton.ClickedSignal().Connect( this, &ItemViewExample::OnReplaceButtonClicked);
     mReplaceButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
     mReplaceButton.SetProperty( Actor::Property::VISIBLE, false );
-    stage.Add( mReplaceButton );
+    window.Add( mReplaceButton );
 
     // Create the item view actor
     mItemView = ItemView::New(*this);
     mItemView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mItemView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
 
-    // Display item view on the stage
-    stage.Add( mItemView );
-    stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
+    // Display item view on the window
+    window.Add( mItemView );
+    window.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
     // Create the layouts
     mSpiralLayout = DefaultItemLayout::New( DefaultItemLayout::SPIRAL );
@@ -344,18 +344,18 @@ public:
    */
   void SetLayout( int layoutId )
   {
-    Stage stage = Dali::Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
     switch( mCurrentLayout )
     {
       case SPIRAL_LAYOUT:
       case DEPTH_LAYOUT:
       {
-        stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
+        window.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
         break;
       }
       case GRID_LAYOUT:
       {
-        stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_UI );
+        window.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_UI );
         break;
       }
     }
@@ -363,18 +363,18 @@ public:
     // Set the new orientation to the layout
     mItemView.GetLayout(layoutId)->SetOrientation(static_cast<ControlOrientation::Type>(mOrientation / 90));
 
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
+    Vector2 windowSize = window.GetSize();
 
     if(layoutId == DEPTH_LAYOUT)
     {
       // Set up the depth layout according to the new orientation
       if(Toolkit::IsVertical(mDepthLayout->GetOrientation()))
       {
-        mDepthLayout->SetItemSize( DepthLayoutItemSizeFunctionPortrait( stageSize.width ) );
+        mDepthLayout->SetItemSize( DepthLayoutItemSizeFunctionPortrait( windowSize.width ) );
       }
       else
       {
-        mDepthLayout->SetItemSize( DepthLayoutItemSizeFunctionLandscape( stageSize.height ) );
+        mDepthLayout->SetItemSize( DepthLayoutItemSizeFunctionLandscape( windowSize.height ) );
       }
     }
 
@@ -382,7 +382,7 @@ public:
     mItemView.SetAnchoring(layoutId == DEPTH_LAYOUT);
 
     // Activate the layout
-    mItemView.ActivateLayout( layoutId, Vector3(stageSize.x, stageSize.y, stageSize.x), 0.0f );
+    mItemView.ActivateLayout( layoutId, Vector3(windowSize.x, windowSize.y, windowSize.x), 0.0f );
   }
 
   bool OnLayoutButtonClicked( Toolkit::Button button )
@@ -553,7 +553,7 @@ public:
     {
       case Gesture::Started:
       {
-        const Size& size = Stage::GetCurrent().GetSize();
+        const Size& size = mApplication.GetWindow().GetSize();
 
         ItemRange range( 0u, 0u );
         mItemView.GetItemsRange( range );
@@ -895,7 +895,8 @@ public: // From ItemFactory
     actor.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE, true );
 
     Vector3 spiralItemSize;
-    static_cast<ItemLayout&>(*mSpiralLayout).GetItemSize( 0u, Vector3( Stage::GetCurrent().GetSize() ), spiralItemSize );
+    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    static_cast<ItemLayout&>(*mSpiralLayout).GetItemSize( 0u, Vector3( windowSize ), spiralItemSize );
 
     // Add a checkbox child actor; invisible until edit-mode is enabled
     ImageView checkbox = ImageView::New();

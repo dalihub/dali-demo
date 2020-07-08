@@ -113,17 +113,17 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
+    // Get a handle to the window
+    Window window = application.GetWindow();
 
-    stage.GetRootLayer().TouchSignal().Connect( this, &RayMarchingExample::OnTouch );
+    window.GetRootLayer().TouchSignal().Connect( this, &RayMarchingExample::OnTouch );
 
-    stage.KeyEventSignal().Connect(this, &RayMarchingExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &RayMarchingExample::OnKeyEvent);
 
-    stage.SetBackgroundColor( Color::YELLOW );
+    window.SetBackgroundColor( Color::YELLOW );
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     mContentLayer = DemoHelper::CreateView( application,
                                             mView,
                                             mToolBar,
@@ -203,7 +203,7 @@ public:
 
   void AddContentLayer()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
 
      //Create all the renderers
     Renderer renderer = CreateQuadRenderer();

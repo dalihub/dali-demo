@@ -25,10 +25,10 @@ TextOverlapController::TextOverlapController( Application& app )
 
 void TextOverlapController::Create( Application& app )
 {
-  Stage stage = Stage::GetCurrent();
-  stage.KeyEventSignal().Connect( this, &TextOverlapController::OnKeyEvent );
+  Window window = app.GetWindow();
+  window.KeyEventSignal().Connect( this, &TextOverlapController::OnKeyEvent );
 
-  Vector2 stageSize = stage.GetSize();
+  Vector2 windowSize = window.GetSize();
 
   mLabels[0] = TextLabel::New("Text Label 1");
   mLabels[1] = TextLabel::New("Text Label 2");
@@ -47,11 +47,11 @@ void TextOverlapController::Create( Application& app )
     mLabels[i].SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mLabels[i].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mLabels[i].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    mLabels[i].SetProperty( Actor::Property::POSITION, Vector2( 0, (i*2+1) * stageSize.height * 0.25f ));
+    mLabels[i].SetProperty( Actor::Property::POSITION, Vector2( 0, (i*2+1) * windowSize.height * 0.25f ));
   }
 
-  stage.Add( mLabels[0] );
-  stage.Add( mLabels[1] );
+  window.Add( mLabels[0] );
+  window.Add( mLabels[1] );
 
   mSwapButton = PushButton::New();
   mSwapButton.SetProperty( Button::Property::LABEL, "Swap depth order");
@@ -60,10 +60,10 @@ void TextOverlapController::Create( Application& app )
   mSwapButton.ClickedSignal().Connect( this, &TextOverlapController::OnClicked );
   mSwapButton.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
   mSwapButton.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-  stage.Add( mSwapButton );
+  window.Add( mSwapButton );
 
 
-  Layer rootLayer = stage.GetRootLayer();
+  Layer rootLayer = window.GetRootLayer();
   rootLayer.SetProperty( Dali::Actor::Property::NAME,"RootLayer");
 
   mPanDetector = PanGestureDetector::New();
@@ -91,9 +91,9 @@ void TextOverlapController::OnPan( Actor actor, const PanGesture& gesture )
   }
   else if( mGrabbedActor && gesture.state == PanGesture::Continuing )
   {
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
+    Vector2 windowSize = mApplication.GetWindow().GetSize();
     Vector3 size = mGrabbedActor.GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
-    float y = Clamp( gesture.position.y, size.y * 0.5f, stageSize.y - size.y*0.5f );
+    float y = Clamp( gesture.position.y, size.y * 0.5f, windowSize.y - size.y*0.5f );
     mGrabbedActor.SetProperty( Actor::Property::POSITION, Vector2( 0, y ));
   }
   else
@@ -128,7 +128,7 @@ void TextOverlapController::OnKeyEvent( const KeyEvent& keyEvent )
   }
   else
   {
-    Dali::Layer l = Dali::Stage::GetCurrent().GetRootLayer();
+    Dali::Layer l = mApplication.GetWindow().GetRootLayer();
     int so = l.GetProperty<int>(Dali::DevelActor::Property::SIBLING_ORDER);
     l.SetProperty(Dali::DevelActor::Property::SIBLING_ORDER, so+1);
   }

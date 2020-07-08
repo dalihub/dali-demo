@@ -106,8 +106,8 @@ public:
     label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
     label.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
 
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
-    label.SetProperty( Actor::Property::POSITION, Vector3( Random::Range( 0.0f, stageSize.x ), Random::Range( 0.0f, stageSize.y ), 0.0f) );
+    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    label.SetProperty( Actor::Property::POSITION, Vector3( Random::Range( 0.0f, windowSize.x ), Random::Range( 0.0f, windowSize.y ), 0.0f) );
 
     switch ( type )
     {
@@ -181,7 +181,7 @@ public:
 
         shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
         label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
-        label.SetProperty( Actor::Property::SIZE, Vector2(stageSize.x, stageSize.y * 0.25f) ); // Set the text label in larger size
+        label.SetProperty( Actor::Property::SIZE, Vector2(windowSize.x, windowSize.y * 0.25f) ); // Set the text label in larger size
         break;
       }
       default:
@@ -196,8 +196,7 @@ public:
    */
   void CreateMainMenu()
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Vector2 windowSize = mApplication.GetWindow().GetSize();
 
     mTapDetector = TapGestureDetector::New();
     mTapDetector.DetectedSignal().Connect( this, &TextMemoryProfilingExample::OnTap );
@@ -209,12 +208,12 @@ public:
     mItemView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
     mLayout = DefaultItemLayout::New( DefaultItemLayout::LIST );
-    mLayout->SetItemSize( Vector3( stageSize.width, 60.0f, 0.0f ) );
+    mLayout->SetItemSize( Vector3( windowSize.width, 60.0f, 0.0f ) );
 
     mItemView.AddLayout( *mLayout );
 
     // Activate the layout
-    mItemView.ActivateLayout( 0, Vector3( stageSize ), 0.0f );
+    mItemView.ActivateLayout( 0, Vector3( windowSize ), 0.0f );
   }
 
   /**
@@ -245,8 +244,6 @@ public:
    */
   void CreateTextLabels( int type )
   {
-    Stage stage = Stage::GetCurrent();
-
     // Delete any existing text labels
     unsigned int numChildren = mLayer.GetChildCount();
 
@@ -278,9 +275,9 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
-    stage.KeyEventSignal().Connect(this, &TextMemoryProfilingExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &TextMemoryProfilingExample::OnKeyEvent);
 
     Layer contents = DemoHelper::CreateView( mApplication,
                                              mView,
@@ -316,7 +313,7 @@ public:
     mNavigationView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNavigationView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mNavigationView.SetBackgroundColor( Color::WHITE );
-    stage.Add( mNavigationView );
+    window.Add( mNavigationView );
 
     CreateMainMenu();
     mNavigationView.Push( mItemView );

@@ -126,11 +126,11 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
-    stage.KeyEventSignal().Connect(this, &NativeImageSourceController::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &NativeImageSourceController::OnKeyEvent);
 
     CreateButtonArea();
 
@@ -139,21 +139,21 @@ public:
 
   void CreateButtonArea()
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
     mButtonArea = Layer::New();
-    mButtonArea.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x, BUTTON_HEIGHT ) );
+    mButtonArea.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x, BUTTON_HEIGHT ) );
     mButtonArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mButtonArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    stage.Add( mButtonArea );
+    window.Add( mButtonArea );
 
     mButtonShow = PushButton::New();
     mButtonShow.SetProperty( Button::Property::TOGGLABLE, true );
     mButtonShow.SetProperty( Toolkit::Button::Property::LABEL, "SHOW" );
     mButtonShow.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonShow.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonShow.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
+    mButtonShow.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
     mButtonShow.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonShow );
 
@@ -162,8 +162,8 @@ public:
     mButtonRefreshAlways.SetProperty( Toolkit::Button::Property::LABEL, "ALWAYS" );
     mButtonRefreshAlways.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonRefreshAlways.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonRefreshAlways.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
-    mButtonRefreshAlways.SetProperty( Actor::Property::POSITION, Vector2( (stageSize.x / BUTTON_COUNT)*1.0f, 0.0f ));
+    mButtonRefreshAlways.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
+    mButtonRefreshAlways.SetProperty( Actor::Property::POSITION, Vector2( (windowSize.x / BUTTON_COUNT)*1.0f, 0.0f ));
     mButtonRefreshAlways.StateChangedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonRefreshAlways );
 
@@ -171,8 +171,8 @@ public:
     mButtonRefreshOnce.SetProperty( Toolkit::Button::Property::LABEL, "ONCE" );
     mButtonRefreshOnce.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonRefreshOnce.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonRefreshOnce.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
-    mButtonRefreshOnce.SetProperty( Actor::Property::POSITION, Vector2( (stageSize.x / BUTTON_COUNT)*2.0f, 0.0f ));
+    mButtonRefreshOnce.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
+    mButtonRefreshOnce.SetProperty( Actor::Property::POSITION, Vector2( (windowSize.x / BUTTON_COUNT)*2.0f, 0.0f ));
     mButtonRefreshOnce.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonRefreshOnce );
 
@@ -180,8 +180,8 @@ public:
     mButtonCapture.SetProperty( Toolkit::Button::Property::LABEL, "CAPTURE" );
     mButtonCapture.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonCapture.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonCapture.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
-    mButtonCapture.SetProperty( Actor::Property::POSITION, Vector2( (stageSize.x / BUTTON_COUNT)*3.0f, 0.0f ));
+    mButtonCapture.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
+    mButtonCapture.SetProperty( Actor::Property::POSITION, Vector2( (windowSize.x / BUTTON_COUNT)*3.0f, 0.0f ));
     mButtonCapture.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonCapture );
 
@@ -189,31 +189,31 @@ public:
     mButtonReset.SetProperty( Toolkit::Button::Property::LABEL, "RESET" );
     mButtonReset.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mButtonReset.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonReset.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
-    mButtonReset.SetProperty( Actor::Property::POSITION, Vector2( (stageSize.x / BUTTON_COUNT)*4.0f, 0.0f ));
+    mButtonReset.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
+    mButtonReset.SetProperty( Actor::Property::POSITION, Vector2( (windowSize.x / BUTTON_COUNT)*4.0f, 0.0f ));
     mButtonReset.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
     mButtonArea.Add( mButtonReset );
   }
 
   void CreateContentAreas()
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
-    float contentHeight( (stageSize.y - BUTTON_HEIGHT)/2.0f );
+    float contentHeight( (windowSize.y - BUTTON_HEIGHT)/2.0f );
 
     mTopContentArea = Actor::New();
-    mTopContentArea.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x, contentHeight ) );
+    mTopContentArea.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x, contentHeight ) );
     mTopContentArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mTopContentArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mTopContentArea.SetProperty( Actor::Property::POSITION_Y,  BUTTON_HEIGHT );
-    stage.Add( mTopContentArea );
+    window.Add( mTopContentArea );
 
     mBottomContentArea = Actor::New();
-    mBottomContentArea.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x, contentHeight ) );
+    mBottomContentArea.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x, contentHeight ) );
     mBottomContentArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mBottomContentArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    stage.Add( mBottomContentArea );
+    window.Add( mBottomContentArea );
 
     mSourceActor = ImageView::New(JPG_FILENAME);
     mSourceActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -247,11 +247,11 @@ public:
   {
     if( ! mOffscreenRenderTask )
     {
-      Stage stage = Stage::GetCurrent();
-      Vector2 stageSize = stage.GetSize();
+      Window window = mApplication.GetWindow();
+      Vector2 windowSize = window.GetSize();
 
-      float contentHeight( (stageSize.y - BUTTON_HEIGHT)/2.0f );
-      Vector2 imageSize( stageSize.x, contentHeight );
+      float contentHeight( (windowSize.y - BUTTON_HEIGHT)/2.0f );
+      Vector2 imageSize( windowSize.x, contentHeight );
 
       mNativeImageSourcePtr = NativeImageSource::New( imageSize.width, imageSize.height, NativeImageSource::COLOR_DEPTH_DEFAULT );
       mNativeTexture = Texture::New( *mNativeImageSourcePtr );
@@ -264,7 +264,7 @@ public:
       mCameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, AnchorPoint::CENTER );
       mTopContentArea.Add( mCameraActor );
 
-      RenderTaskList taskList = stage.GetRenderTaskList();
+      RenderTaskList taskList = window.GetRenderTaskList();
       mOffscreenRenderTask = taskList.CreateTask();
       mOffscreenRenderTask.SetSourceActor( mSourceActor );
       mOffscreenRenderTask.SetClearColor( Color::WHITE );
@@ -338,8 +338,8 @@ public:
   {
     SetupDisplayActor( false );
 
-    Stage stage = Stage::GetCurrent();
-    RenderTaskList taskList = stage.GetRenderTaskList();
+    Window window = mApplication.GetWindow();
+    RenderTaskList taskList = window.GetRenderTaskList();
     taskList.RemoveTask( mOffscreenRenderTask );
     mOffscreenRenderTask.Reset();
     mCameraActor.Reset();

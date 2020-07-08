@@ -83,9 +83,9 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     //Set up layer to place UI on.
     Layer layer = Layer::New();
@@ -94,7 +94,7 @@ public:
     layer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     layer.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_UI ); //We use a 2D layer as this is closer to UI work than full 3D scene creation.
     layer.SetProperty( Layer::Property::DEPTH_TEST, true ); //Enable depth testing, as otherwise the 2D layer would not do so.
-    stage.Add( layer );
+    window.Add( layer );
 
     //Set up model selection buttons.
     SetupButtons( layer );
@@ -106,7 +106,7 @@ public:
     SetupModel( layer );
 
     //Allow for exiting of the application via key presses.
-    stage.KeyEventSignal().Connect( this, &PrimitiveShapesController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &PrimitiveShapesController::OnKeyEvent );
   }
 
   //Place buttons on the top of the screen, which allow for selection of the shape to be displayed.
@@ -268,7 +268,7 @@ public:
     }
   }
 
-  //Adds a control to the centre of the stage to display the 3D shapes.
+  //Adds a control to the centre of the window to display the 3D shapes.
   //The model is placed in the center of the screen, like so:
   //
   //           +--------------------------------+

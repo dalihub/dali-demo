@@ -51,20 +51,11 @@ const float                   DEFAULT_TEXT_STYLE_POINT_SIZE( 8.0f );
 const Dali::Toolkit::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
 const Dali::Toolkit::Alignment::Padding DEFAULT_MODE_SWITCH_PADDING(8.0f, 8.0f, 8.0f, 8.0f);
 
-float ScalePointSize(int pointSize)
-{
-  Dali::Vector2 dpi = Dali::Stage::GetCurrent().GetDpi();
-  float meanDpi = (dpi.height + dpi.width) * 0.5f;
-  return pointSize * 220.0f / meanDpi;        // 220 is the default horizontal DPI defined in adaptor Application
-}
-
 Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
                            const std::string& toolbarImagePath,
                            const std::string& title,
                            const ViewStyle& style )
 {
-  Dali::Stage stage = Dali::Stage::GetCurrent();
-
   Dali::Layer toolBarLayer = Dali::Layer::New();
   toolBarLayer.SetProperty( Dali::Actor::Property::NAME, "TOOLBAR_LAYER" );
   toolBarLayer.SetProperty( Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_CENTER );
@@ -115,7 +106,7 @@ Dali::Layer CreateView( Dali::Application& application,
                         const std::string& title,
                         const ViewStyle& style = DEFAULT_VIEW_STYLE )
 {
-  Dali::Stage stage = Dali::Stage::GetCurrent();
+  Dali::Window window = application.GetWindow();
 
   // Create default View.
   view = Dali::Toolkit::Control::New();
@@ -123,8 +114,8 @@ Dali::Layer CreateView( Dali::Application& application,
   view.SetProperty( Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
   view.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
 
-  // Add the view to the stage before setting the background.
-  stage.Add( view );
+  // Add the view to the window before setting the background.
+  window.Add( view );
 
   // Set background image, loading it at screen resolution:
   if ( !backgroundImagePath.empty() )
@@ -132,17 +123,13 @@ Dali::Layer CreateView( Dali::Application& application,
     Dali::Property::Map map;
     map[Dali::Toolkit::Visual::Property::TYPE] = Dali::Toolkit::Visual::IMAGE;
     map[Dali::Toolkit::ImageVisual::Property::URL] = backgroundImagePath;
-    map[Dali::Toolkit::ImageVisual::Property::DESIRED_WIDTH] = stage.GetSize().x;
-    map[Dali::Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = stage.GetSize().y;
+    map[Dali::Toolkit::ImageVisual::Property::DESIRED_WIDTH] = window.GetSize().GetWidth();
+    map[Dali::Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = window.GetSize().GetHeight();
     map[Dali::Toolkit::ImageVisual::Property::FITTING_MODE] = Dali::FittingMode::SCALE_TO_FILL;
     map[Dali::Toolkit::ImageVisual::Property::SAMPLING_MODE] = Dali::SamplingMode::BOX_THEN_LINEAR;
     map[Dali::Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
     view.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
   }
-
-  // FIXME
-  // Connects the orientation signal with the View::OrientationChanged method.
-  //application.GetOrientation().ChangedSignal().Connect( &view, &Dali::Toolkit::View::OrientationChanged );
 
   // Create default ToolBar
   Dali::Layer toolBarLayer = CreateToolbar( toolBar, toolbarImagePath, title, style );

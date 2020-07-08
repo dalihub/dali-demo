@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,12 +63,12 @@ private:
   /**
    * @brief The Init signal is received once (only) during the Application lifetime.
    */
-  void Create( Application& /* application */ )
+  void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
-    stage.KeyEventSignal().Connect( this, &PivotController::OnKeyEvent );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
+    window.KeyEventSignal().Connect( this, &PivotController::OnKeyEvent );
 
     // Create a table view.
     TableView tableView = TableView::New( TABLE_VIEW_ROWS, TABLE_VIEW_COLUMNS );
@@ -76,7 +76,7 @@ private:
     tableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     tableView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     tableView.SetProperty( Actor::Property::SIZE_MODE_FACTOR, TABLE_VIEW_SIZE_MODE_FACTOR );
-    stage.Add( tableView );
+    window.Add( tableView );
 
     // Create a tap detector - we are going to rotate an actor round our anchor-point (pivot) when one of our controls is tapped.
     mTapDetector = TapGestureDetector::New();

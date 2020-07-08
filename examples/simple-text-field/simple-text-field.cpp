@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,9 +52,9 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &SimpleTextFieldExample::OnKeyEvent);
-    stage.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
+    Window window = application.GetWindow();
+    window.KeyEventSignal().Connect(this, &SimpleTextFieldExample::OnKeyEvent);
+    window.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
 
     TextField field = TextField::New();
     field.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -66,7 +66,7 @@ public:
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
 
-    stage.Add( field );
+    window.Add( field );
   }
 
   /**

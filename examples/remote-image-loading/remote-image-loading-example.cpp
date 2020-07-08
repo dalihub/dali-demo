@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,10 +56,10 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application &application)
   {
-    stage = Stage::GetCurrent();
-    stage.SetBackgroundColor(Color::BLACK);
-    stage.KeyEventSignal().Connect(this, &MyTester::OnKey);
-    stage.TouchSignal().Connect(this, &MyTester::OnTouch);
+    mWindow = application.GetWindow();
+    mWindow.SetBackgroundColor(Color::BLACK);
+    mWindow.KeyEventSignal().Connect(this, &MyTester::OnKey);
+    mWindow.TouchSignal().Connect(this, &MyTester::OnTouch);
 
     TextLabel rubric = TextLabel::New( "You will need a working internet connection to see the images below");
     rubric.SetProperty( TextLabel::Property::MULTI_LINE, true );
@@ -68,7 +68,7 @@ public:
     rubric.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
     rubric.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     rubric.SetProperty( Actor::Property::ANCHOR_POINT, ParentOrigin::TOP_CENTER );
-    stage.Add( rubric );
+    mWindow.Add( rubric );
 
     mImageView1 = Toolkit::ImageView::New("http://static.midomi.com/s/s/images/000/000/000/000/293/259/19/520_000000000000293259191500x1500_72dpi_RGB_q70.jpg");
 
@@ -78,7 +78,7 @@ public:
     mImageView1.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView1.SetProperty( Actor::Property::POSITION, Vector2(0, 100));
     mImageView1.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
-    stage.Add(mImageView1);
+    mWindow.Add(mImageView1);
 
     mImageView2 = Toolkit::ImageView::New("http://static.midomi.com/s/s/images/000/000/000/000/212/651/88/520_000000000000212651881500x1500_72dpi_RGB_q70.jpg");
     mImageView2.SetProperty( Dali::Actor::Property::NAME,"mImageView2");
@@ -87,7 +87,7 @@ public:
     mImageView2.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView2.SetProperty( Actor::Property::POSITION, Vector2(400, 100));
     mImageView2.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
-    stage.Add(mImageView2);
+    mWindow.Add(mImageView2);
 
     mImageView3 = Toolkit::ImageView::New("http://static.midomi.com/s/s/images/000/000/000/000/212/353/21/520_000000000000212353211500x1500_72dpi_RGB_q70.jpg");
     mImageView3.SetProperty( Dali::Actor::Property::NAME,"mImageView3");
@@ -96,7 +96,7 @@ public:
     mImageView3.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView3.SetProperty( Actor::Property::POSITION, Vector2(0, 400));
     mImageView3.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
-    stage.Add(mImageView3);
+    mWindow.Add(mImageView3);
 
     mImageView4 = Toolkit::ImageView::New("http://d2k43l0oslhof9.cloudfront.net/platform/image/contents/vc/20/01/58/20170629100630071189_0bf6b911-a847-cba4-e518-be40fe2f579420170629192203240.jpg");
     mImageView4.SetProperty( Dali::Actor::Property::NAME,"mImageView4");
@@ -105,7 +105,7 @@ public:
     mImageView4.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView4.SetProperty( Actor::Property::POSITION, Vector2(400, 400));
     mImageView4.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
-    stage.Add(mImageView4);
+    mWindow.Add(mImageView4);
 
     mImageView5 = Toolkit::ImageView::New("http://static.midomi.com/h/images/w/weather_sunny.png");
     mImageView5.SetProperty( Dali::Actor::Property::NAME,"mImageView5");
@@ -114,10 +114,10 @@ public:
     mImageView5.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView5.SetProperty( Actor::Property::POSITION, Vector2(800, 100));
     mImageView5.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
-    stage.Add(mImageView5);
+    mWindow.Add(mImageView5);
 
     // Tie-in input event handlers:
-    stage.KeyEventSignal().Connect( this, &MyTester::OnKeyEvent );
+    mWindow.KeyEventSignal().Connect( this, &MyTester::OnKeyEvent );
   }
 
   void OnAnimationEnd(Animation &source)
@@ -140,7 +140,7 @@ public:
   {
     if (event.state == KeyEvent::Down)
     {
-      std::cout<<"Stage key : " << event.keyCode << std::endl;
+      std::cout<<"Window key : " << event.keyCode << std::endl;
     }
   }
 
@@ -148,7 +148,7 @@ public:
   {
     if (touch.GetState(0) == PointState::DOWN)
     {
-      std::cout<<"Stage touch" << std::endl;
+      std::cout<<"Window touch" << std::endl;
     }
   }
 
@@ -187,7 +187,7 @@ public:
   }
 
 private:
-  Stage stage;
+  Window mWindow;
   Application &mApplication;
 
   Control mControl1;

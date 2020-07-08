@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 #include "look-camera.h"
 
-#include <dali/public-api/common/stage.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/render-tasks/render-task.h>
 #include <dali/public-api/events/touch-data.h>
@@ -68,8 +67,10 @@ LookCamera::~LookCamera()
   mCameraActor.Remove( mInterceptorActor );
 }
 
-void LookCamera::Initialise( const Vector3& position, float fovY, float near, float far )
+void LookCamera::Initialise( Window window, const Vector3& position, float fovY, float near, float far )
 {
+  mWindow = window;
+
   mFovY = fovY;
   mNear = near;
   mFar = far;
@@ -91,15 +92,15 @@ void LookCamera::Initialise( const Vector3& position, float fovY, float near, fl
 
 bool LookCamera::OnTick()
 {
-  Vector2 stageSize = Stage::GetCurrent().GetSize();
+  Vector2 windowSize = mWindow.GetSize();
 
   // ---------------------------------------------------------------------
   // update rotation
   Vector2 tmp( mScreenLookDelta );
   mScreenLookDelta = Vector2::ZERO;
 
-  float yaw = ( (tmp.y / stageSize.x ) * CAMERA_SENSITIVITY );
-  float pitch = ( (tmp.x / stageSize.y ) * CAMERA_SENSITIVITY );
+  float yaw = ( (tmp.y / windowSize.x ) * CAMERA_SENSITIVITY );
+  float pitch = ( (tmp.x / windowSize.y ) * CAMERA_SENSITIVITY );
   mCameraYawPitch.x -= yaw;
   mCameraYawPitch.y -= pitch;
   if( abs( mCameraYawPitch.x ) > CAMERA_VERTICAL_LIMIT )
@@ -119,8 +120,7 @@ bool LookCamera::OnTick()
 
 void LookCamera::InitialiseDefaultCamera()
 {
-  Stage stage = Stage::GetCurrent();
-  mCameraActor = stage.GetRenderTaskList().GetTask(0).GetCameraActor();
+  mCameraActor = mWindow.GetRenderTaskList().GetTask(0).GetCameraActor();
   mCameraActor.SetProperty( Dali::Actor::Property::NAME, "LookCamera" );
   mCameraActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mCameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -134,11 +134,11 @@ void LookCamera::InitialiseDefaultCamera()
 
 void LookCamera::CreateInterceptorActor()
 {
-  Stage stage = Stage::GetCurrent();
+  Vector2 windowSize = mWindow.GetSize();
 
   mInterceptorActor = Actor::New();
   mInterceptorActor.SetProperty( Dali::Actor::Property::NAME, "InputInterceptor" );
-  mInterceptorActor.SetProperty( Actor::Property::SIZE, Vector3( stage.GetSize().x, stage.GetSize().y, 1 ) );
+  mInterceptorActor.SetProperty( Actor::Property::SIZE, Vector3( windowSize.width, windowSize.height, 1 ) );
   mInterceptorActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0, 0.0, 1.0  ) );
   mInterceptorActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mInterceptorActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -150,8 +150,6 @@ void LookCamera::CreateInterceptorActor()
 
 bool LookCamera::OnTouch( Actor actor, const TouchData& touch )
 {
-  Stage stage = Stage::GetCurrent();
-
   for( int i = 0; i < (int)touch.GetPointCount() && i < 3; ++i )
   {
     Vector2 position( touch.GetScreenPosition( i ) );

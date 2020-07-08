@@ -68,22 +68,22 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     mImageView = ImageView::New( IMAGE_FILE );
     mImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mImageView.SetProperty( Actor::Property::SIZE, Vector2( 200.0f, 200.0f ) );
     mImageView.SetProperty( DevelControl::Property::SHADOW, SHADOW );
 
-    stage.Add( mImageView );
+    window.Add( mImageView );
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &ColorVisualExample::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &ColorVisualExample::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &ColorVisualExample::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &ColorVisualExample::OnKeyEvent );
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )

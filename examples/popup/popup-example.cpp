@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,13 +113,13 @@ public:
   void Create( Application& application )
   {
     // The Init signal is received once (only) during the Application lifetime
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
     // Respond to key events if not handled
-    stage.KeyEventSignal().Connect( this, &PopupExample::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &PopupExample::OnKeyEvent );
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     mContentLayer = DemoHelper::CreateView( application,
                                             mView,
                                             mToolBar,
@@ -157,15 +157,15 @@ public:
     mItemView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Use a grid layout for tests
-    Vector2 stageSize = stage.GetSize();
+    Vector2 windowSize = window.GetSize();
     Toolkit::ItemLayoutPtr gridLayout = Toolkit::DefaultItemLayout::New( Toolkit::DefaultItemLayout::LIST );
     Vector3 itemSize;
-    gridLayout->GetItemSize( 0, Vector3( stageSize ), itemSize );
-    itemSize.height = stageSize.y / 10;
+    gridLayout->GetItemSize( 0, Vector3( windowSize ), itemSize );
+    itemSize.height = windowSize.y / 10;
     gridLayout->SetItemSize( itemSize );
     mItemView.AddLayout( *gridLayout );
 
-    mItemView.ActivateLayout( 0, Vector3(stageSize.x, stageSize.y, stageSize.x), 0.0f );
+    mItemView.ActivateLayout( 0, Vector3(windowSize.x, windowSize.y, windowSize.x), 0.0f );
 
     mContentLayer.Add( mItemView );
   }
@@ -195,27 +195,27 @@ public:
    */
   void SetupContextualResizePolicy( Toolkit::Popup& popup )
   {
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
+    Vector2 windowSize = mApplication.GetWindow().GetSize();
     // Some defaults when creating a new fixed size.
     // This is NOT a Vector2 so we can modify each dimension in a for-loop.
-    float newSize[ Dimension::DIMENSION_COUNT ] = { stageSize.x * 0.75f, stageSize.y * 0.75f };
+    float newSize[ Dimension::DIMENSION_COUNT ] = { windowSize.x * 0.75f, windowSize.y * 0.75f };
     bool modifySize = false;
 
     // Loop through each of two dimensions to process them.
     for( unsigned int dimension = 0; dimension < 2; ++dimension )
     {
-      float stageDimensionSize, sizeModeFactor;
+      float windowDimensionSize, sizeModeFactor;
       Dimension::Type policyDimension = dimension == 0 ? Dimension::WIDTH : Dimension::HEIGHT;
 
       // Setup information related to the current dimension we are processing.
       if( policyDimension == Dimension::WIDTH )
       {
-        stageDimensionSize = stageSize.x;
+        windowDimensionSize = windowSize.x;
         sizeModeFactor = popup.GetProperty< Vector3 >( Actor::Property::SIZE_MODE_FACTOR ).x;
       }
       else
       {
-        stageDimensionSize = stageSize.y;
+        windowDimensionSize = windowSize.y;
         sizeModeFactor = popup.GetProperty< Vector3 >( Actor::Property::SIZE_MODE_FACTOR ).y;
       }
 
@@ -247,7 +247,7 @@ public:
         case ResizePolicy::FILL_TO_PARENT:
         {
           newPolicy = ResizePolicy::FIXED;
-          newSize[ dimension ] = stageDimensionSize;
+          newSize[ dimension ] = windowDimensionSize;
           modifyPolicy = true;
           break;
         }
@@ -255,7 +255,7 @@ public:
         case ResizePolicy::SIZE_RELATIVE_TO_PARENT:
         {
           newPolicy = ResizePolicy::FIXED;
-          newSize[ dimension ] = stageDimensionSize * sizeModeFactor;
+          newSize[ dimension ] = windowDimensionSize * sizeModeFactor;
           modifyPolicy = true;
           break;
         }
@@ -263,7 +263,7 @@ public:
         case ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT:
         {
           newPolicy = ResizePolicy::FIXED;
-          newSize[ dimension ] = stageDimensionSize + sizeModeFactor;
+          newSize[ dimension ] = windowDimensionSize + sizeModeFactor;
           modifyPolicy = true;
           break;
         }
@@ -306,7 +306,7 @@ public:
     }
     else
     {
-      Stage::GetCurrent().Add( popup );
+      mApplication.GetWindow().Add( popup );
     }
 
     mPopup.SetDisplayState( Toolkit::Popup::SHOWN );
@@ -331,8 +331,8 @@ public:
 
   Toolkit::Popup CreatePopup()
   {
-    Stage stage = Stage::GetCurrent();
-    const float POPUP_WIDTH_DP = stage.GetSize().width * 0.75f;
+    Window window = mApplication.GetWindow();
+    const float POPUP_WIDTH_DP = window.GetSize().GetWidth() * 0.75f;
 
     Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty( Dali::Actor::Property::NAME, "popup" );
@@ -484,7 +484,7 @@ public:
           mPopup = Toolkit::Popup::DownCast( baseHandle );
           mPopup.SetTitle( CreateTitle( "This is a Toast Popup.\nIt will auto-hide itself" ) );
 
-          Stage::GetCurrent().Add( mPopup );
+          mApplication.GetWindow().Add( mPopup );
           mPopup.SetDisplayState( Toolkit::Popup::SHOWN );
         }
       }

@@ -104,14 +104,14 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::BLACK );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::BLACK );
     mAnimation = Animation::New( 1.0f );
     mLabel = TextLabel::New( "R:1 M:0" );
     mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-    mLabel.SetProperty( Actor::Property::SIZE, Vector2( stage.GetSize().width * 0.5f, stage.GetSize().height * 0.083f ) );
+    mLabel.SetProperty( Actor::Property::SIZE, Vector2( window.GetSize().GetWidth() * 0.5f, window.GetSize().GetHeight() * 0.083f ) );
     mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::WHITE );
@@ -125,11 +125,11 @@ public:
     // Step 3. Initialise Main Actor
     InitActors();
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &BasicPbrController::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &BasicPbrController::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &BasicPbrController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &BasicPbrController::OnKeyEvent );
 
     mDoubleTapTime = Timer::New(150);
     mDoubleTapTime.TickSignal().Connect( this, &BasicPbrController::OnDoubleTapTime );
@@ -168,8 +168,8 @@ public:
       }
       case PointState::MOTION:
       {
-        const Stage stage = Stage::GetCurrent();
-        const Size size = stage.GetSize();
+        const Window window = mApplication.GetWindow();
+        const Size size = window.GetSize();
         const float scaleX = size.width;
         const float scaleY = size.height;
         const Vector2 point = touch.GetScreenPosition(0);
@@ -266,7 +266,8 @@ public:
    */
   void InitActors()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
     mSkybox.Init( SKYBOX_SCALE );
     mModel[0].Init( mShader, SPHERE_URL, Vector3::ZERO, SPHERE_SCALE );
@@ -279,40 +280,40 @@ public:
     // Creating root and camera actor for rendertask for 3D Scene rendering
     mUiRoot = Actor::New();
     m3dRoot = Actor::New();
-    CameraActor cameraUi = CameraActor::New(stage.GetSize());
+    CameraActor cameraUi = CameraActor::New(window.GetSize());
     cameraUi.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     cameraUi.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
-    RenderTask rendertask = Stage::GetCurrent().GetRenderTaskList().CreateTask();
+    RenderTask rendertask = window.GetRenderTaskList().CreateTask();
     rendertask.SetCameraActor( cameraUi );
     rendertask.SetSourceActor( mUiRoot );
 
-    mUiRoot.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
-    mUiRoot.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
-    mUiRoot.SetProperty( Actor::Property::SIZE, stage.GetSize());
+    mUiRoot.SetProperty(Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
+    mUiRoot.SetProperty(Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+    mUiRoot.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize()) );
 
-    m3dRoot.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
-    m3dRoot.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    m3dRoot.SetProperty(Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
+    m3dRoot.SetProperty(Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
 
     // Setting camera parameters for 3D Scene
     mSkybox.GetActor().SetProperty( Actor::Property::POSITION, CAMERA_DEFAULT_POSITION );
-    CameraActor camera3d = stage.GetRenderTaskList().GetTask(0).GetCameraActor();
+    CameraActor camera3d = window.GetRenderTaskList().GetTask(0).GetCameraActor();
     camera3d.SetInvertYAxis( true );
     camera3d.SetProperty( Actor::Property::POSITION, CAMERA_DEFAULT_POSITION );
     camera3d.SetNearClippingPlane( CAMERA_DEFAULT_NEAR );
     camera3d.SetFarClippingPlane( CAMERA_DEFAULT_FAR );
     camera3d.SetFieldOfView( Radian( Degree( CAMERA_DEFAULT_FOV ) ) );
 
-    stage.Add( cameraUi );
-    stage.Add( mUiRoot );
-    stage.Add( m3dRoot );
+    window.Add( cameraUi );
+    window.Add( mUiRoot );
+    window.Add( m3dRoot );
 
     m3dRoot.Add( mSkybox.GetActor() );
     m3dRoot.Add( mModel[0].GetActor() );
     m3dRoot.Add( mModel[1].GetActor() );
 
 
-    if( (stage.GetSize().x > 360.0f) && (stage.GetSize().y > 360.0f) )
+    if( (windowSize.x > 360.0f) && (windowSize.y > 360.0f) )
     {
       mUiRoot.Add( mLabel );
     }

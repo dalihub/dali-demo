@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,10 +56,10 @@ public:
    */
   void Create( Application& application )
   {
-    // Set the stage background color and connect to the stage's key signal to allow Back and Escape to exit.
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
-    stage.KeyEventSignal().Connect( this, &PropertyNotificationController::OnKeyEvent );
+    // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
+    window.KeyEventSignal().Connect( this, &PropertyNotificationController::OnKeyEvent );
 
     // Create a text label and set the text color to black
     mTextLabel = TextLabel::New( "Black to Red Animation\nNew opacity animation at 50% Red" );
@@ -68,7 +68,7 @@ public:
     mTextLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
     mTextLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
-    stage.Add( mTextLabel );
+    window.Add( mTextLabel );
 
     // Create an animation and animate the text color to red
     Animation animation = Animation::New( COLOR_ANIMATION_DURATION );

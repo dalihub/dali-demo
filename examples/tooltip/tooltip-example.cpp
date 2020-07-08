@@ -24,7 +24,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const Vector4 STAGE_COLOR( 211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f ); ///< The color of the stage
+const Vector4 WINDOW_COLOR( 211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f ); ///< The color of the window
 const char * const THEME_PATH( DEMO_STYLE_DIR "tooltip-example-theme.json" ); ///< The theme used for this example
 const float POSITION_INCREMENTER( 0.2f ); ///< The position difference between the controls along the Y-Axis.
 } // unnamed namespace
@@ -52,44 +52,44 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Set the stage background color and connect to the stage's key signal to allow Back and Escape to exit.
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( STAGE_COLOR );
-    stage.KeyEventSignal().Connect( this, &TooltipController::OnKeyEvent );
-    const Vector2 stageSize = stage.GetSize();
+    // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( WINDOW_COLOR );
+    window.KeyEventSignal().Connect( this, &TooltipController::OnKeyEvent );
+    const Vector2 windowSize = window.GetSize();
 
     // Add a text label at the top for information purposes
     Control label = TextLabel::New( "Hover over buttons to see tooltip" );
     label.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     label.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "Center" );
-    stage.Add( label );
+    window.Add( label );
 
     // Simple tooltip from stylesheet
     Control simple = PushButton::New();
     simple.SetStyleName( "TooltipTextOnly" );
     SetLabel( simple, "Simple" );
-    Layout( simple, stageSize );
-    stage.Add( simple );
+    Layout( simple, windowSize );
+    window.Add( simple );
 
     // Tooltip with icon and text, from stylesheet
     Control iconWithText = PushButton::New();
     iconWithText.SetStyleName( "TooltipArray" );
     SetLabel( iconWithText, "Icon with Text" );
-    Layout( iconWithText, stageSize );
-    stage.Add( iconWithText );
+    Layout( iconWithText, windowSize );
+    window.Add( iconWithText );
 
     // Tooltip with custom style, from stylesheet
     Control customFromStylesheet = PushButton::New();
     customFromStylesheet.SetStyleName( "TooltipCustom" );
     SetLabel( customFromStylesheet, "Custom From Stylesheet" );
-    Layout( customFromStylesheet, stageSize );
-    stage.Add( customFromStylesheet );
+    Layout( customFromStylesheet, windowSize );
+    window.Add( customFromStylesheet );
 
     // Tooltip with custom style, from code
     Control customFromCode = PushButton::New();
     SetLabel( customFromCode, "Custom From Code" );
-    Layout( customFromCode, stageSize );
+    Layout( customFromCode, windowSize );
     customFromCode.SetProperty( DevelControl::Property::TOOLTIP,
                                 { { Tooltip::Property::CONTENT,
                                     Property::Array{ { { { Toolkit::Visual::Property::TYPE, Visual::IMAGE },
@@ -106,7 +106,7 @@ private:
                                     { { Tooltip::Background::Property::VISUAL, DEMO_IMAGE_DIR "tooltip.9.png" },
                                       { Tooltip::Background::Property::BORDER, Rect< int >( 1, 5, 5, 1 ) } } }
                                 } );
-    stage.Add( customFromCode );
+    window.Add( customFromCode );
   }
 
   /**
@@ -143,9 +143,9 @@ private:
   /**
    * @brief Lays out the control in the appropriate location.
    * @param[in]  control    The control to layout.
-   * @param[in]  stageSize  The size of the stage, passing it in so we don't have to retrieve it every time.
+   * @param[in]  windowSize  The size of the window, passing it in so we don't have to retrieve it every time.
    */
-  void Layout( Control control, const Vector2& stageSize )
+  void Layout( Control control, const Vector2& windowSize )
   {
     if( control )
     {
@@ -154,7 +154,7 @@ private:
       control.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75, 0.1, 1.0 ) );
       control.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
       control.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-      control.SetProperty( Actor::Property::POSITION_Y,  stageSize.height * previousPosition );
+      control.SetProperty( Actor::Property::POSITION_Y,  windowSize.height * previousPosition );
     }
   }
 

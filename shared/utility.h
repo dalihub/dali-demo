@@ -2,7 +2,7 @@
 #define DALI_DEMO_UTILITY_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 #include <dali/dali.h>
 #include <dali/public-api/rendering/geometry.h>
 #include <dali/public-api/rendering/texture.h>
+#include <dali/public-api/math/uint-16-pair.h>
 #include <dali/devel-api/adaptor-framework/image-loading.h>
 
 namespace DemoHelper
@@ -44,10 +45,9 @@ Dali::Texture LoadTexture( const char* imagePath,
   return texture;
 }
 
-Dali::Texture LoadStageFillingTexture( const char* imagePath )
+Dali::Texture LoadWindowFillingTexture( Dali::Uint16Pair size, const char* imagePath )
 {
-  Dali::Vector2 stageSize = Dali::Stage::GetCurrent().GetSize();
-  return LoadTexture( imagePath, Dali::ImageDimensions( stageSize.x, stageSize.y ), Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
+  return LoadTexture( imagePath, size, Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
 }
 
 Dali::Geometry CreateTexturedQuad()

@@ -203,9 +203,9 @@ PageTurnExample::~PageTurnExample()
  */
 void PageTurnExample::OnInit( Application& app )
 {
-  Stage::GetCurrent().KeyEventSignal().Connect(this, &PageTurnExample::OnKeyEvent);
-
   Window window = app.GetWindow();
+  window.KeyEventSignal().Connect(this, &PageTurnExample::OnKeyEvent);
+
   window.AddAvailableOrientation( Window::PORTRAIT );
   window.AddAvailableOrientation( Window::LANDSCAPE );
   window.AddAvailableOrientation( Window::PORTRAIT_INVERSE  );
@@ -223,8 +223,8 @@ void PageTurnExample::OnWindowResized( Window window, Window::WindowSize size )
 
 void PageTurnExample::Rotate( DemoOrientation orientation )
 {
-  Stage stage = Stage::GetCurrent();
-  Vector2 stageSize = stage.GetSize();
+  Window window = mApplication.GetWindow();
+  Vector2 windowSize = window.GetSize();
 
   if( mOrientation != orientation )
   {
@@ -234,30 +234,30 @@ void PageTurnExample::Rotate( DemoOrientation orientation )
     {
       if( !mPageTurnPortraitView )
       {
-        mPageTurnPortraitView = PageTurnPortraitView::New( mPortraitPageFactory, stageSize );
+        mPageTurnPortraitView = PageTurnPortraitView::New( mPortraitPageFactory, windowSize );
         mPageTurnPortraitView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       }
 
       if( mPageTurnLandscapeView )
       {
-        stage.Remove( mPageTurnLandscapeView );
+        window.Remove( mPageTurnLandscapeView );
       }
-      stage.Add( mPageTurnPortraitView );
+      window.Add( mPageTurnPortraitView );
     }
     else if( LANDSCAPE == orientation )
     {
       if( !mPageTurnLandscapeView )
       {
-        mPageTurnLandscapeView = PageTurnLandscapeView::New( mLandscapePageFactory, Vector2(stageSize.x*0.5f, stageSize.y) );
+        mPageTurnLandscapeView = PageTurnLandscapeView::New( mLandscapePageFactory, Vector2(windowSize.x*0.5f, windowSize.y) );
         mPageTurnLandscapeView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       }
 
       if( mPageTurnPortraitView )
       {
-        stage.Remove( mPageTurnPortraitView );
+        window.Remove( mPageTurnPortraitView );
       }
 
-      stage.Add( mPageTurnLandscapeView );
+      window.Add( mPageTurnLandscapeView );
     }
   }
 }

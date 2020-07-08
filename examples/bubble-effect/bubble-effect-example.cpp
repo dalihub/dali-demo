@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ const unsigned int DEFAULT_NUMBER_OF_BUBBLES( 1000 );
 
 }// end LOCAL_STUFF
 
-// This example shows the usage of BubbleEmitter which displays lots of moving bubbles on the stage.
+// This example shows the usage of BubbleEmitter which displays lots of moving bubbles on the window.
 class BubbleEffectExample : public ConnectionTracker
 {
 public:
@@ -91,13 +91,13 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application& app)
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = app.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
-    stage.KeyEventSignal().Connect(this, &BubbleEffectExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &BubbleEffectExample::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     Toolkit::ToolBar toolBar;
     Layer content = DemoHelper::CreateView( app,
                                             mBackground,
@@ -126,14 +126,14 @@ private:
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create and initialize the BubbleEmitter object
-    mBubbleEmitter = Toolkit::BubbleEmitter::New( stageSize,
+    mBubbleEmitter = Toolkit::BubbleEmitter::New( windowSize,
                                                   DemoHelper::LoadTexture( BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId] ),
                                                   DEFAULT_NUMBER_OF_BUBBLES,
                                                   DEFAULT_BUBBLE_SIZE);
 
-    mBubbleEmitter.SetBackground( DemoHelper::LoadStageFillingTexture( BACKGROUND_IMAGES[mCurrentBackgroundImageId] ), mHSVDelta );
+    mBubbleEmitter.SetBackground( DemoHelper::LoadWindowFillingTexture( window.GetSize(), BACKGROUND_IMAGES[mCurrentBackgroundImageId] ), mHSVDelta );
 
-    // Get the root actor of all bubbles, and add it to stage.
+    // Get the root actor of all bubbles, and add it to window.
     Actor bubbleRoot = mBubbleEmitter.GetRootActor();
     bubbleRoot.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     bubbleRoot.SetProperty( Actor::Property::POSITION_Z, 0.1f); // Make sure the bubbles displayed on top og the background.
@@ -253,7 +253,7 @@ private:
       mCurrentBackgroundImageId = (mCurrentBackgroundImageId+1) % NUM_BACKGROUND_IMAGES;
 
       //Update bubble emitter background
-      mBubbleEmitter.SetBackground( DemoHelper::LoadStageFillingTexture( BACKGROUND_IMAGES[ mCurrentBackgroundImageId  ] ), mHSVDelta );
+      mBubbleEmitter.SetBackground( DemoHelper::LoadWindowFillingTexture( mApp.GetWindow().GetSize(), BACKGROUND_IMAGES[ mCurrentBackgroundImageId  ] ), mHSVDelta );
 
       // Set the application background
       mBackground.SetProperty( Toolkit::Control::Property::BACKGROUND, BACKGROUND_IMAGES[ mCurrentBackgroundImageId ] );

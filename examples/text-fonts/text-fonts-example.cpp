@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -115,10 +115,10 @@ public:
     if ( !mContainer4 )
     {
       CreateContainer ( mContainer4 , mLayoutSize);
-      Stage stage = Stage::GetCurrent();
-      Vector2 stageSize = stage.GetSize();
-      mContainer4.SetProperty( Actor::Property::POSITION, Vector2( 0, stageSize.height*0.25f*3 ));
-      stage.Add( mContainer4 );
+      Window window = mApplication.GetWindow();
+      Vector2 windowSize = window.GetSize();
+      mContainer4.SetProperty( Actor::Property::POSITION, Vector2( 0, windowSize.height*0.25f*3 ));
+      window.Add( mContainer4 );
       // Info
       CreateContainer ( mContainer4Info , mLayoutSize );
       mContainer4Info.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
@@ -148,17 +148,17 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = application.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
-    stage.KeyEventSignal().Connect(this, &TextFontsExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &TextFontsExample::OnKeyEvent);
 
     CreateFolderButton ( mButton );
     mButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mButton.ClickedSignal().Connect( this, &TextFontsExample::OnButtonClicked );
-    stage.Add( mButton );
+    window.Add( mButton );
 
-    mLayoutSize = Vector2( stageSize.width*0.5f, stageSize.height*0.10f );
+    mLayoutSize = Vector2( windowSize.width*0.5f, windowSize.height*0.10f );
     CreateContainer ( mContainer , mLayoutSize);
     CreateContainer ( mContainer2 , mLayoutSize );
     CreateContainer ( mContainer3 , mLayoutSize );
@@ -180,9 +180,9 @@ public:
     mContainer2Info.Add( mLabel2Info );
     mContainer3Info.Add( mLabel3Info );
 
-    stage.Add( mContainer );
-    stage.Add( mContainer2 );
-    stage.Add( mContainer3 );
+    window.Add( mContainer );
+    window.Add( mContainer2 );
+    window.Add( mContainer3 );
 
     CreateTextLabel ( mLabel, LABEL_TEXT, Color::WHITE  );
 
@@ -193,8 +193,8 @@ public:
     mLabel3.SetProperty( TextLabel::Property::FONT_FAMILY, "SamsungOneUI" );
 
     mContainer.SetProperty( Actor::Property::POSITION, Vector2( 0, 0 ));
-    mContainer2.SetProperty( Actor::Property::POSITION, Vector2( 0, stageSize.height*0.25f ));
-    mContainer3.SetProperty( Actor::Property::POSITION, Vector2( 0, stageSize.height*0.25f*2 ));
+    mContainer2.SetProperty( Actor::Property::POSITION, Vector2( 0, windowSize.height*0.25f ));
+    mContainer3.SetProperty( Actor::Property::POSITION, Vector2( 0, windowSize.height*0.25f*2 ));
 
     mContainer.Add( mLabel );
     mContainer2.Add( mLabel2 );

@@ -501,24 +501,22 @@ public:
 private:
   void Create(Application& app)
   {
-    // Grab stage, configure layer
-    Stage stage = Stage::GetCurrent();
-    auto rootLayer = stage.GetRootLayer();
+    // Grab window, configure layer
+    Window window = app.GetWindow();
+    auto rootLayer = window.GetRootLayer();
     rootLayer.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
-    auto stageSize = stage.GetSize();
-    auto stageHalfSize = stageSize * .5f;
-    auto invStageHalfSize = Vector2::ONE / stageHalfSize;
+    Vector2 windowSize = window.GetSize();
 
-    float unit = stageSize.y / 24.f;
+    float unit = windowSize.y / 24.f;
 
     // Get camera - we'll be re-using the same old camera in the two passes.
-    RenderTaskList tasks = stage.GetRenderTaskList();
+    RenderTaskList tasks = window.GetRenderTaskList();
     CameraActor camera = tasks.GetTask(0).GetCameraActor();
 
     auto zCameraPos = camera.GetProperty(Actor::Property::POSITION_Z).Get<float>();
-    camera.SetFarClippingPlane(zCameraPos + stageSize.y * .5f);
-    camera.SetNearClippingPlane(zCameraPos - stageSize.y * .5f);
+    camera.SetFarClippingPlane(zCameraPos + windowSize.y * .5f);
+    camera.SetNearClippingPlane(zCameraPos - windowSize.y * .5f);
 
     const float zNear = camera.GetNearClippingPlane();
     const float zFar = camera.GetFarClippingPlane();
@@ -529,7 +527,7 @@ private:
     CenterActor(sceneRoot);
 
     mSceneRoot = sceneRoot;
-    stage.Add(sceneRoot);
+    window.Add(sceneRoot);
 
     // Create an axis to spin our actors around.
     auto axis = Actor::New();
@@ -546,7 +544,6 @@ private:
     Renderer meshRenderer = CreateRenderer(noTexturesThanks, mesh, preShader,
         OPTION_DEPTH_TEST | OPTION_DEPTH_WRITE);
     meshRenderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
-    meshRenderer.RegisterProperty("uInvStageHalfSize", invStageHalfSize);
     RegisterDepthProperties(depth, zNear, meshRenderer);
     float c = 1.f;
     for (auto v: {
@@ -595,8 +592,8 @@ private:
     }
 
     // Create off-screen textures, fbo and render task.
-    uint32_t width = static_cast<uint32_t>(stageSize.x);
-    uint32_t height = static_cast<uint32_t>(stageSize.y);
+    uint32_t width = static_cast<uint32_t>(windowSize.x);
+    uint32_t height = static_cast<uint32_t>(windowSize.y);
 
     Texture rttNormal = Texture::New(TextureType::TEXTURE_2D, Pixel::Format::RGB888,
         width, height);
@@ -610,7 +607,7 @@ private:
     fbo.AttachColorTexture(rttColor);
 
     RenderTask sceneRender = tasks.CreateTask();
-    sceneRender.SetViewportSize(stageSize);
+    sceneRender.SetViewportSize(windowSize);
     sceneRender.SetFrameBuffer(fbo);
     sceneRender.SetCameraActor(camera);
     sceneRender.SetSourceActor(sceneRoot);
@@ -625,7 +622,7 @@ private:
     // Create final image for deferred shading
     auto finalImage = Actor::New();
     CenterActor(finalImage);
-    finalImage.SetProperty( Actor::Property::SIZE, stageSize);
+    finalImage.SetProperty( Actor::Property::SIZE, windowSize);
 
     TextureSet finalImageTextures = TextureSet::New();
     finalImageTextures.SetTexture(0, rttNormal);
@@ -641,7 +638,6 @@ private:
     Shader shdMain = Shader::New(MAINPASS_VSH, MAINPASS_FSH);
     Geometry finalImageGeom = CreateTexturedQuadGeometry(true);
     Renderer finalImageRenderer = CreateRenderer(finalImageTextures, finalImageGeom, shdMain);
-    finalImageRenderer.RegisterProperty("uStageHalfSize", stageHalfSize);
     RegisterDepthProperties(depth, zNear, finalImageRenderer);
 
     auto propInvProjection = finalImageRenderer.RegisterProperty("uInvProjection", Matrix::IDENTITY);
@@ -657,7 +653,7 @@ private:
     finalImage.AddRenderer(finalImageRenderer);
 
     mFinalImage = finalImage;
-    stage.Add(finalImage);
+    window.Add(finalImage);
 
     // Create a node for our lights
     auto lights = Actor::New();
@@ -704,16 +700,16 @@ private:
     animLights.Play();
 
     // Event handling
-    stage.KeyEventSignal().Connect(this, &DeferredShadingExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &DeferredShadingExample::OnKeyEvent);
 
     mPanDetector = PanGestureDetector::New();
     mPanDetector.DetectedSignal().Connect(this, &DeferredShadingExample::OnPan);
-    mPanDetector.Attach(stage.GetRootLayer());
+    mPanDetector.Attach(window.GetRootLayer());
   }
 
   void Destroy(Application& app)
   {
-    Stage::GetCurrent().GetRenderTaskList().RemoveTask(mSceneRender);
+    app.GetWindow().GetRenderTaskList().RemoveTask(mSceneRender);
     mSceneRender.Reset();
 
     UnparentAndReset(mSceneRoot);

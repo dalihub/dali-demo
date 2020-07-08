@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -116,13 +116,13 @@ private:
    */
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     // Text Label filling the entire screen, with a background
     mTextLabel = DevelHandle::New< TextLabel >( TEXT_LABEL_PROPERTIES );
-    stage.Add( mTextLabel );
+    window.Add( mTextLabel );
 
     // We want to change the padding when tapping
     mTapDetector = TapGestureDetector::New();
@@ -132,7 +132,7 @@ private:
     // Create an ImageView with the default behaviour, i.e. image fills to control size
     mFillImage = ImageView::New( IMAGE_NAME );
     DevelHandle::SetProperties( mFillImage, FILL_IMAGE_PROPERTIES );
-    stage.Add( mFillImage );
+    window.Add( mFillImage );
 
     // Create an ImageView that Keeps the aspect ratio while fitting within the given size
     mFitKeepAspectRatioImage = DevelHandle::New< ImageView >( FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES );
@@ -143,22 +143,22 @@ private:
                                             { ImageVisual::Property::URL, IMAGE_NAME },
                                             { DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FIT_KEEP_ASPECT_RATIO }
                                           } );
-    stage.Add( mFitKeepAspectRatioImage );
+    window.Add( mFitKeepAspectRatioImage );
 
     // Create an overlay label for fill image
     Actor fillLabel = TextLabel::New( FILL_LABEL );
     DevelHandle::SetProperties( fillLabel, FILL_IMAGE_PROPERTIES );
     DevelHandle::SetProperties( fillLabel, OVERLAY_LABEL_PROPERTIES );
-    stage.Add( fillLabel );
+    window.Add( fillLabel );
 
     // Create an overlay label for the Fit/Keep Aspect image
     Actor fitLabel = TextLabel::New( FIT_KEEP_ASPECT_LABEL );
     DevelHandle::SetProperties( fitLabel, FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES );
     DevelHandle::SetProperties( fitLabel, OVERLAY_LABEL_PROPERTIES );
-    stage.Add( fitLabel );
+    window.Add( fitLabel );
 
     // Respond to key events, exit if ESC/Back, change the padding if anything else
-    stage.KeyEventSignal().Connect( this, &VisualFittingModeController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &VisualFittingModeController::OnKeyEvent );
 
     // Set the initial padding
     ChangePadding();

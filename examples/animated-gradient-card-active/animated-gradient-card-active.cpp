@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2018 Samsung Electronics Co., Ltd.
+* Copyright (c) 2020 Samsung Electronics Co., Ltd.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -30,9 +30,9 @@ namespace
 {
 // The value for scale-change between wearable-mobile
 // Can be changed on App-Create time
-Vector2 STAGE_SIZE = Vector2( 360.0f, 360.0f );
-Vector2 SCALED_STAGE_SIZE = Vector2( 1.0f, 1.0f );
-Vector3 SCALED_STAGE_SIZE_3 = Vector3( 1.0f, 1.0f, 0.0f );
+Vector2 WINDOW_SIZE = Vector2( 360.0f, 360.0f );
+Vector2 SCALED_WINDOW_SIZE = Vector2( 1.0f, 1.0f );
+Vector3 SCALED_WINDOW_SIZE_3 = Vector3( 1.0f, 1.0f, 0.0f );
 float SCALED_WIDTH = 1.0f;
 float SCALED_HEIGHT = 1.0f;
 float FONT_SCALE = 0.25f;
@@ -122,7 +122,7 @@ public:
   }
   ~CardManager() {}
 
-  void Init(Stage& stage)
+  void Init(Window& window)
   {
     mSize = CARD_SIZE * SCALED_WIDTH;
     mOffset = CARD_OFFSET * SCALED_WIDTH;
@@ -156,7 +156,7 @@ public:
       mCard[k].SetProperty( Actor::Property::SIZE, Vector2( mSize.x, mSize.y ) );
       mCard[k].SetProperty( Actor::Property::POSITION, Vector2( mPosition[k].x, mPosition[k].y ));
 
-      stage.Add( mCard[k] );
+      window.Add( mCard[k] );
     }
   }
 
@@ -280,26 +280,27 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application& application)
   {
-    // Get a handle to the stage
-    mStage = Stage::GetCurrent();
-    mStage.KeyEventSignal().Connect( this, &CardController::OnKeyEvent );
+    // Get a handle to the window
+    mWindow = application.GetWindow();
+    mWindow.KeyEventSignal().Connect( this, &CardController::OnKeyEvent );
 
     // Get current device's width and height.
-    STAGE_SIZE = mStage.GetSize();
-    SCALED_STAGE_SIZE = STAGE_SIZE / 360.0f;
-    SCALED_STAGE_SIZE_3 = Vector3( SCALED_STAGE_SIZE.x, SCALED_STAGE_SIZE.y, 0.0f );
-    SCALED_WIDTH = SCALED_STAGE_SIZE.x < SCALED_STAGE_SIZE.y ? SCALED_STAGE_SIZE.x : SCALED_STAGE_SIZE.y;
+    const Window::WindowSize windowSize = mWindow.GetSize();
+    WINDOW_SIZE = Vector2(windowSize.GetWidth(), windowSize.GetHeight() );
+    SCALED_WINDOW_SIZE = WINDOW_SIZE / 360.0f;
+    SCALED_WINDOW_SIZE_3 = Vector3( SCALED_WINDOW_SIZE.x, SCALED_WINDOW_SIZE.y, 0.0f );
+    SCALED_WIDTH = SCALED_WINDOW_SIZE.x < SCALED_WINDOW_SIZE.y ? SCALED_WINDOW_SIZE.x : SCALED_WINDOW_SIZE.y;
     SCALED_HEIGHT = SCALED_WIDTH;
 
     // Note that this is heuristic value
-    FONT_SCALE = 0.25f * STAGE_SIZE.y / STAGE_SIZE.x;
+    FONT_SCALE = 0.25f * WINDOW_SIZE.y / WINDOW_SIZE.x;
 
     mBackground = Control::New();
     mBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mBackground.SetProperty( Actor::Property::SIZE, STAGE_SIZE );
+    mBackground.SetProperty( Actor::Property::SIZE, WINDOW_SIZE );
 
-    mStage.Add( mBackground );
+    mWindow.Add( mBackground );
 
     BuildParameter();
     InitMap();
@@ -307,7 +308,7 @@ public:
     SetupActors();
     SetupAnimation();
 
-    mStage.GetRootLayer().TouchSignal().Connect( this, &CardController::OnTouchLayer );
+    mWindow.GetRootLayer().TouchSignal().Connect( this, &CardController::OnTouchLayer );
     Reset();
   }
 
@@ -379,8 +380,9 @@ public:
     {
       Vector2 diff = (mLastTouchPos - mFirstTouchPos);
       float offset = PSEUDO_SCROLL_OFFSET;
+      const float windowWidth = mWindow.GetSize().GetWidth();
       // Scroll to right
-      if( diff.x > mStage.GetSize().x * offset )
+      if( diff.x > windowWidth * offset )
       {
         mCards.mCurState = 2;
         MoveRight();
@@ -389,7 +391,7 @@ public:
         mCardChanger.Start();
       }
       // Scroll to left
-      else if( diff.x < -mStage.GetSize().x * offset )
+      else if( diff.x < -windowWidth * offset )
       {
         mCards.mCurState = 2;
         MoveLeft();
@@ -578,7 +580,7 @@ private:
 
   void SetupCards()
   {
-    mCards.Init( mStage );
+    mCards.Init( mWindow );
     for( int k = 0; k < CARD_NUM; k++ )
     {
       mCards[k].TouchSignal().Connect( this, &CardController::OnTouchCards );
@@ -587,7 +589,7 @@ private:
     mNormalEndColor = mCards.GetColorBackground( mCards.mCurIndex );
   }
 
-  // Create and Add to stage
+  // Create and Add to window
   void SetupActors()
   {
     mAddButton = ImageView::New();
@@ -630,10 +632,10 @@ private:
     mLabel3.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mLabel3.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
 
-    mStage.Add( mAddButton );
-    mStage.Add( mLabel1 );
-    mStage.Add( mLabel2 );
-    mStage.Add( mLabel3 );
+    mWindow.Add( mAddButton );
+    mWindow.Add( mLabel1 );
+    mWindow.Add( mLabel2 );
+    mWindow.Add( mLabel3 );
   }
 
   void SetupAnimation()
@@ -776,7 +778,7 @@ private:
 
 private:
   Application&  mApplication;
-  Stage mStage;
+  Window mWindow;
 
   CardManager mCards;
 

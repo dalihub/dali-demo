@@ -38,7 +38,7 @@ const char * const BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-gradient.jpg" );
 const char * const CUBE_TEXTURE( DEMO_IMAGE_DIR "people-medium-1.jpg" );
 const char * const FLOOR_TEXTURE( DEMO_IMAGE_DIR "wood.png" );
 
-// Scale dimensions: These values are relative to the stage size. EG. width = 0.32f * stageSize.
+// Scale dimensions: These values are relative to the window size. EG. width = 0.32f * windowSize.
 const float   CUBE_WIDTH_SCALE( 0.32f );                   ///< The width (and height + depth) of the main and reflection cubes.
 const Vector2 FLOOR_DIMENSION_SCALE( 0.67f, 0.017f );      ///< The width and height of the floor object.
 
@@ -113,7 +113,7 @@ private:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
     // Use a gradient visual to render the background gradient.
     Toolkit::Control background = Dali::Toolkit::Control::New();
@@ -128,17 +128,17 @@ private:
     Property::Array stopColors;
     stopColors.PushBack( Vector4( 0.17f, 0.24f, 0.35f, 1.0f ) ); // Dark, medium saturated blue  ( top   of screen)
     stopColors.PushBack( Vector4( 0.45f, 0.70f, 0.80f, 1.0f ) ); // Medium bright, pastel blue   (bottom of screen)
-    const float percentageStageHeight = stage.GetSize().height * 0.7f;
+    const float percentageWindowHeight = window.GetSize().GetHeight() * 0.7f;
 
     background.SetProperty( Toolkit::Control::Property::BACKGROUND, Dali::Property::Map()
       .Add( Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT )
       .Add( Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets )
       .Add( Toolkit::GradientVisual::Property::STOP_COLOR, stopColors )
-      .Add( Toolkit::GradientVisual::Property::START_POSITION, Vector2( 0.0f, -percentageStageHeight ) )
-      .Add( Toolkit::GradientVisual::Property::END_POSITION, Vector2( 0.0f, percentageStageHeight ) )
+      .Add( Toolkit::GradientVisual::Property::START_POSITION, Vector2( 0.0f, -percentageWindowHeight ) )
+      .Add( Toolkit::GradientVisual::Property::END_POSITION, Vector2( 0.0f, percentageWindowHeight ) )
       .Add( Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE ) );
 
-    stage.Add( background );
+    window.Add( background );
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label = Toolkit::TextLabel::New( APPLICATION_TITLE );
@@ -148,7 +148,7 @@ private:
     label.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, TEXT_COLOR );
-    stage.Add( label );
+    window.Add( label );
 
     // Layer to hold the 3D scene.
     Layer layer = Layer::New();
@@ -157,12 +157,13 @@ private:
     layer.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.58f, 0.5f ) );
     layer.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_UI );
     layer.SetProperty( Layer::Property::DEPTH_TEST, true );
-    stage.Add( layer );
+    window.Add( layer );
 
     // Main cube:
     // Make the demo scalable with different resolutions by basing
-    // the cube size on a percentage of the stage size.
-    float scaleSize( std::min( stage.GetSize().width, stage.GetSize().height ) );
+    // the cube size on a percentage of the window size.
+    Vector2 windowSize = window.GetSize();
+    float scaleSize( std::min( windowSize.width, windowSize.height ) );
     float cubeWidth( scaleSize * CUBE_WIDTH_SCALE );
     Vector3 cubeSize( cubeWidth, cubeWidth, cubeWidth );
     // Create the geometry for the cube, and the texture.
@@ -253,10 +254,10 @@ private:
     mRotationAnimation.Play();
     mBounceAnimation.Play();
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &RendererStencilExample::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &RendererStencilExample::OnTouch );
     // Connect signals to allow Back and Escape to exit.
-    stage.KeyEventSignal().Connect( this, &RendererStencilExample::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &RendererStencilExample::OnKeyEvent );
   }
 
 private:
@@ -480,7 +481,8 @@ private:
    */
   Renderer CreateRenderer( Geometry geometry, Vector3 dimensions, bool textured, Vector4 color )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
     Shader shader;
 
     if( textured )
@@ -492,9 +494,9 @@ private:
       shader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
     }
 
-    // Here we modify the light position based on half the stage size as a pre-calculation step.
+    // Here we modify the light position based on half the window size as a pre-calculation step.
     // This avoids the work having to be done in the shader.
-    shader.RegisterProperty( LIGHT_POSITION_UNIFORM_NAME, Vector3( -stage.GetSize().width / 2.0f, -stage.GetSize().width / 2.0f, 1000.0f ) );
+    shader.RegisterProperty( LIGHT_POSITION_UNIFORM_NAME, Vector3( -windowSize.width / 2.0f, -windowSize.width / 2.0f, 1000.0f ) );
     shader.RegisterProperty( COLOR_UNIFORM_NAME, color );
     shader.RegisterProperty( OBJECT_DIMENSIONS_UNIFORM_NAME, dimensions );
 

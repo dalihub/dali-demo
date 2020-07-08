@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -157,17 +157,17 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::BLACK );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::BLACK );
     mLabel = TextLabel::New( material[MaterialID].name );
     mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mLabel.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.0f, 0.5f ) );
-    mLabel.SetProperty( Actor::Property::SIZE, Vector2( stage.GetSize().x * 0.5f, stage.GetSize().y * 0.083f ) );
+    mLabel.SetProperty( Actor::Property::SIZE, Vector2( window.GetSize().GetWidth() * 0.5f, window.GetSize().GetHeight() * 0.083f ) );
     mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ));
-    stage.Add( mLabel );
+    window.Add( mLabel );
     mButton = PushButton::New();
     mButton.SetProperty( Button::Property::LABEL, "Exit" );
     mButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -176,7 +176,7 @@ public:
     mButton.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.1f, 0.5f ) );
     mButton.SetStyleName(CUSTOM_BASIC_LIGHT_THEME);
     mButton.SetProperty( Actor::Property::COLOR, Vector4( material[MaterialID].diffuse) + Vector4( 0.0f, 0.0f, 0.0f, 1.0f ) );
-    stage.Add(mButton);
+    window.Add(mButton);
 
     // Step 1. Create shader
     CreateCubeShader();
@@ -193,11 +193,11 @@ public:
     // Step 5. Play animation to rotate the cube
     PlayAnimation();
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &BasicLightController::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &BasicLightController::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &BasicLightController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &BasicLightController::OnKeyEvent );
   }
 
   /**
@@ -373,16 +373,16 @@ public:
    */
   void CreateActor()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
 
-    float quarterStageWidth = stage.GetSize().x * 0.25f;
+    float quarterWindowWidth = window.GetSize().GetWidth() * 0.25f;
     mActor = Actor::New();
     mActor.SetProperty( Actor::Property::COLOR, Vector4( 1.0f, 1.0f, 0.6f, 1.0f ) );
     mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mActor.SetProperty( Actor::Property::SIZE, Vector3( quarterStageWidth, quarterStageWidth, quarterStageWidth ) );
+    mActor.SetProperty( Actor::Property::SIZE, Vector3( quarterWindowWidth, quarterWindowWidth, quarterWindowWidth ) );
     mActor.AddRenderer( mRenderer );
-    stage.Add( mActor );
+    window.Add( mActor );
   }
 
   /**

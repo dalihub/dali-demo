@@ -2,7 +2,7 @@
 #define CONTACT_CARD_H
 
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 // EXTERNAL INCLUDES
 #include <string>
 #include <dali/public-api/actors/actor.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/events/tap-gesture-detector.h>
 #include <dali/public-api/object/ref-object.h>
@@ -47,22 +48,23 @@ public:
   /**
    * @brief Constructor.
    *
-   * This will create all the controls and add them to the stage so should only be called after the init-signal from the Application has been received.
+   * This will create all the controls and add them to the window so should only be called after the init-signal from the Application has been received.
    *
+   * @param[in]  window                 The window to add the contact card to.
    * @param[in]  contactCardLayoutInfo  Reference to the common data used by all contact cards.
    * @param[in]  contactName            The name of the contact to display.
    * @param[in]  contactAddress         The address of the contact to display.
    * @param[in]  imagePath              The path to the image to display.
    * @param[in]  position               The unique folded position of this particular contact-card.
    */
-  ContactCard( const ContactCardLayoutInfo& contactCardLayoutInfo, const std::string& contactName, const std::string& contactAddress, const std::string& imagePath, const Dali::Vector2& position );
+  ContactCard( Dali::Window window, const ContactCardLayoutInfo& contactCardLayoutInfo, const std::string& contactName, const std::string& contactAddress, const std::string& imagePath, const Dali::Vector2& position );
 
 private:
 
   /**
    * @brief Private Destructor. Will only be deleted when ref-count goes to 0.
    *
-   * Unparent the created contact card (i.e. remove from stage).
+   * Unparent the created contact card (i.e. remove from window).
    */
   ~ContactCard();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,16 +107,16 @@ private:
    */
   void Create( Application& application )
   {
-    // Set the stage background color and connect to the stage's key signal to allow Back and Escape to exit.
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
-    stage.KeyEventSignal().Connect( this, &AnimatedImageController::OnKeyEvent );
+    // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
+    window.KeyEventSignal().Connect( this, &AnimatedImageController::OnKeyEvent );
 
     // Create the animated image-views
-    CreateAnimatedImageViews();
+    CreateAnimatedImageViews(window);
 
     // Create radio buttons to change between Animated images and Image Arrays
-    CreateRadioButtonLayout();
+    CreateRadioButtonLayout(window);
 
     // Create a tap gesture detector to use to pause the animated images
     mTapDetector = TapGestureDetector::New();
@@ -126,7 +126,7 @@ private:
   /**
    * @brief Creates and lays out radio buttons to allow changing between the different image types.
    */
-  void CreateRadioButtonLayout()
+  void CreateRadioButtonLayout(Window& window)
   {
     mAnimatedImageButton = CreateRadioButton( ANIMATION_RADIO_BUTTON_NAME, true );
     mArrayButton = CreateRadioButton( ARRAY_RADIO_BUTTON_NAME, false );
@@ -148,7 +148,7 @@ private:
                                         VerticalAlignment::CENTER );
     radioButtonLayout.SetProperty( Actor::Property::POSITION_Y,  -10.0f );
 
-    Stage::GetCurrent().Add( radioButtonLayout );
+    window.Add( radioButtonLayout );
   }
 
   /**
@@ -168,16 +168,14 @@ private:
   /**
    * @brief Creates the required animated image views.
    */
-  void CreateAnimatedImageViews()
+  void CreateAnimatedImageViews(Window window)
   {
     for( unsigned int index = 0; index < ANIMATED_IMAGE_COUNT; ++index )
     {
-      Stage stage = Stage::GetCurrent();
-
       Control& control = ( index == 0 ) ? mActorDog : mActorLogo;
       if( control )
       {
-        // Remove the previous control from the stage, it's resources (and children) will be deleted automatically
+        // Remove the previous control from the window, it's resources (and children) will be deleted automatically
         control.Unparent();
       }
 
@@ -190,10 +188,10 @@ private:
 
       control.SetProperty( Actor::Property::SIZE, Vector2(300, 300) );
 
-      // We do not want the animated image playing when it's added to the stage.
+      // We do not want the animated image playing when it's added to the window.
       PauseAnimatedImage( control );
 
-      stage.Add( control );
+      window.Add( control );
     }
   }
 
@@ -281,7 +279,7 @@ private:
   {
     mImageType = ( button == mAnimatedImageButton ) ? ImageType::ANIMATED_IMAGE : ImageType::IMAGE_ARRAY;
 
-    CreateAnimatedImageViews();
+    CreateAnimatedImageViews(mApplication.GetWindow());
     return true;
   }
 

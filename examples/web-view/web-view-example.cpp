@@ -57,12 +57,12 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Vector4(0.2, 0.6, 1, 1) );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Vector4(0.2, 0.6, 1, 1) );
 
-    float width = stage.GetSize().width;
-    float height = stage.GetSize().height;
+    float width = window.GetSize().GetWidth();
+    float height = window.GetSize().GetHeight();
     float fontSize = width * 0.02f;
 
     mWebView = Toolkit::WebView::New( "ko-KR", "Asia/Seoul" );
@@ -75,7 +75,7 @@ public:
 
     std::string url = GetNextUrl();
     mWebView.LoadUrl( url );
-    stage.Add(mWebView);
+    window.Add(mWebView);
 
     mAddressLabel = Toolkit::TextLabel::New( url );
     mAddressLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
@@ -83,10 +83,10 @@ public:
     mAddressLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
     mAddressLabel.SetBackgroundColor( Vector4( 0, 0, 0, 0.5f ) );
     mAddressLabel.TouchSignal().Connect( this, &WebViewController::OnTouchText );
-    stage.Add( mAddressLabel );
+    window.Add( mAddressLabel );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &WebViewController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &WebViewController::OnKeyEvent );
     Toolkit::KeyboardFocusManager::Get().SetCurrentFocusActor( mWebView );
   }
 

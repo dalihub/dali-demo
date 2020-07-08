@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const float STAGE_HEIGHT_MULTIPLIER( 1.5f );
+const float WINDOW_HEIGHT_MULTIPLIER( 1.5f );
 const Vector2 BOX_SIZE( Vector2(330.0f, 80.0f ) );
 const Vector2 SCROLLING_BOX_SIZE( Vector2(330.0f, 40.0f ) );
 const float MAX_OFFSCREEN_RENDERING_SIZE = 2048.f;
@@ -119,23 +119,23 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    mStageSize = stage.GetSize();
+    Window window = application.GetWindow();
+    mWindowSize = window.GetSize();
 
-    stage.KeyEventSignal().Connect(this, &TextScrollingExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &TextScrollingExample::OnKeyEvent);
 
     // Create Root actor
     Actor rootActor = Actor::New();
     rootActor.SetProperty( Dali::Actor::Property::NAME,"rootActor");
     rootActor.SetResizePolicy( ResizePolicy::FIXED,  Dimension::ALL_DIMENSIONS );
-    rootActor.SetProperty( Actor::Property::SIZE, mStageSize );
+    rootActor.SetProperty( Actor::Property::SIZE, mWindowSize );
     rootActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
 
-    stage.Add( rootActor );
+    window.Add( rootActor );
 
     mAnimation = Animation::New( 1.0f );
 
-    const Size mTargetActorSize( mStageSize.width, mStageSize.height * STAGE_HEIGHT_MULTIPLIER );
+    const Size mTargetActorSize( mWindowSize.width, mWindowSize.height * WINDOW_HEIGHT_MULTIPLIER );
 
     // Create Desktop
     Control desktop = Control::New();
@@ -163,7 +163,7 @@ public:
     field.SetProperty( Actor::Property::PADDING, Padding( 1.0f, 1.0f, 1.0f, 1.0f ) );
     field.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Enter Folder Name" );
-    field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( SCREEN_BORDER, SCREEN_BORDER, mStageSize.width - SCREEN_BORDER*2, mStageSize.height - SCREEN_BORDER*2 ) );
+    field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( SCREEN_BORDER, SCREEN_BORDER, mWindowSize.width - SCREEN_BORDER*2, mWindowSize.height - SCREEN_BORDER*2 ) );
     boxA.Add( field );
     boxA.SetProperty( Actor::Property::SIZE, BOX_SIZE);
 
@@ -382,7 +382,7 @@ public:
       Vector2 position = Vector2( gesture.displacement );
       mTargetActorPosition.y = mTargetActorPosition.y + position.y;
       mTargetActorPosition.y = std::min( mTargetActorPosition.y, -mTargetActorSize.height );
-      mTargetActorPosition.y = std::max( mTargetActorPosition.y, ( mTargetActorSize.height - mStageSize.height*0.25f ) );
+      mTargetActorPosition.y = std::max( mTargetActorPosition.y, ( mTargetActorSize.height - mWindowSize.height*0.25f ) );
       actor.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, mTargetActorPosition.y ));
     }
   }
@@ -394,7 +394,7 @@ private:
 
   Vector2 mTargetActorPosition;
   Vector2 mTargetActorSize;
-  Vector2 mStageSize;
+  Vector2 mWindowSize;
 
   TextLabel mLargeLabel;
   TextLabel mSmallLabel;

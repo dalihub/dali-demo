@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,20 +71,20 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    auto window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     mDragAndDropDetector = Dali::Toolkit::DragAndDropDetector::New();
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &DragAndDropExample::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &DragAndDropExample::OnKeyEvent );
 
     TextLabel hintText = TextLabel::New("please drag one textlabel, move and drop on other textlabel");
     hintText.SetProperty( Actor::Property::POSITION, Vector2(0.0f, 700.0f));
     hintText.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     hintText.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     hintText.SetProperty(TextLabel::Property::MULTI_LINE, true);
-    stage.Add(hintText);
+    window.Add(hintText);
 
     for(unsigned int i = 0 ; i < TEXT_LABEL_NUM; i++)
     {
@@ -105,7 +105,7 @@ public:
       mRect[i] = Rect<float>(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * i, TEXT_LABEL_WIDTH, TEXT_LABEL_HEIGHT);
       mOrder[i] = i;
 
-      stage.Add(mTextLabel[i]);
+      window.Add(mTextLabel[i]);
     }
 
     mDragAndDropDetector.StartedSignal().Connect(this, &DragAndDropExample::OnStart);

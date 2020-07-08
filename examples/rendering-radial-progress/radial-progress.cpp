@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -124,11 +124,11 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::BLACK );
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::BLACK );
 
-    // Connect to the stage's key signal to allow Back and Escape to exit.
-    stage.KeyEventSignal().Connect( this, &RadialProgressController::OnKeyEvent );
+    // Connect to the window's key signal to allow Back and Escape to exit.
+    window.KeyEventSignal().Connect( this, &RadialProgressController::OnKeyEvent );
 
     // 1. Create actor to show the effect
     mActor = Actor::New();
@@ -136,7 +136,7 @@ public:
     mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mActor.SetProperty( Actor::Property::SIZE, Vector2( TEXTURE_WIDTH, TEXTURE_HEIGHT ) );
     mActor.RegisterProperty("uProgress", float(1.0f) );
-    stage.Add( mActor );
+    window.Add( mActor );
 
     // 1. Create stencil renderer i.e. a triangle fan in the shape of a circle
     Renderer stencilRenderer = CreatePolygon( NUMBER_OF_SIDES );
@@ -152,7 +152,7 @@ public:
     animation.Play();
 
     // 6. Exit the application when touched
-    stage.GetRootLayer().TouchSignal().Connect( this, &RadialProgressController::OnTouch );
+    window.GetRootLayer().TouchSignal().Connect( this, &RadialProgressController::OnTouch );
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )

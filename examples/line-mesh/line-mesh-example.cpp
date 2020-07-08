@@ -121,7 +121,7 @@ public:
    */
   ExampleController( Application& application )
   : mApplication( application ),
-    mStageSize(),
+    mWindowSize(),
     mShader(),
     mGeometry(),
     mRenderer(),
@@ -152,7 +152,7 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
     // initial settings
     mPrimitiveType = Geometry::LINES;
@@ -161,13 +161,13 @@ public:
 
     CreateRadioButtons();
 
-    stage.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
-    mStageSize = stage.GetSize();
+    mWindowSize = window.GetSize();
 
     Initialise();
 
-    stage.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));
+    window.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));
   }
 
   /**
@@ -175,12 +175,12 @@ public:
    */
   void Initialise()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
 
     // destroy mesh actor and its resources if already exists
     if( mMeshActor )
     {
-      stage.Remove( mMeshActor );
+      window.Remove( mMeshActor );
       mMeshActor.Reset();
     }
 
@@ -202,7 +202,7 @@ public:
 
     mMeshActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mMeshActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    stage.Add( mMeshActor );
+    window.Add( mMeshActor );
 
     Animation  animation = Animation::New(5);
     KeyFrames keyFrames = KeyFrames::New();
@@ -219,7 +219,7 @@ public:
    */
   void CreateRadioButtons()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
 
     Toolkit::TableView modeSelectTableView = Toolkit::TableView::New( 4, 1 );
     modeSelectTableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
@@ -293,8 +293,8 @@ public:
     elementCountTableView.AddChild( mIndicesCountLabel, Toolkit::TableView::CellPosition( 0,  1 ) );
     elementCountTableView.AddChild( mPlusButton, Toolkit::TableView::CellPosition( 0,  2 ) );
 
-    stage.Add(modeSelectTableView);
-    stage.Add(elementCountTableView);
+    window.Add(modeSelectTableView);
+    window.Add(elementCountTableView);
   }
 
   /**
@@ -376,7 +376,7 @@ public:
 private:
 
   Application&  mApplication;                             ///< Application instance
-  Vector3 mStageSize;                                     ///< The size of the stage
+  Vector3 mWindowSize;                                     ///< The size of the window
 
   Shader   mShader;
   Geometry mGeometry;

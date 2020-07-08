@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,12 +49,12 @@ public:
   // The Init signal is received once (only) during the Application lifetime.
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
-    // Connect to the stage's key signal to allow Back and Escape to exit.
-    stage.KeyEventSignal().Connect( this, &ClippingDrawOrderVerification::OnKeyEvent );
+    // Connect to the window's key signal to allow Back and Escape to exit.
+    window.KeyEventSignal().Connect( this, &ClippingDrawOrderVerification::OnKeyEvent );
 
     // Create the title label.
     TextLabel title = TextLabel::New( "Clipping draw order verification" );
@@ -69,7 +69,7 @@ public:
     description.SetProperty( TextLabel::Property::MULTI_LINE, true );
     description.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
     description.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 1.0f, 0.5f ) );
-    stage.Add( description );
+    window.Add( description );
 
     /*
      * Create a 4-row TableView.
@@ -194,11 +194,11 @@ public:
       view.AddChild( container, TableView::CellPosition( 1u + tree, 0u ) );
     }
 
-    // Add the finished TableView to the stage.
-    stage.Add( view );
+    // Add the finished TableView to the window.
+    window.Add( view );
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &ClippingDrawOrderVerification::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &ClippingDrawOrderVerification::OnTouch );
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )

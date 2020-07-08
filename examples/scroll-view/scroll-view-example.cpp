@@ -164,11 +164,11 @@ public:
    */
   void OnInit(Application& app)
   {
-    Stage stage = Dali::Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
+    Window window = app.GetWindow();
+    window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     mContentLayer = DemoHelper::CreateView( app,
                                             mView,
                                             mToolBar,
@@ -207,14 +207,14 @@ private:
    */
   void AddContentLayer()
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
     mScrollView = ScrollView::New();
     mScrollView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mScrollView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mContentLayer.Add( mScrollView );
-    mScrollView.SetProperty( Actor::Property::SIZE, stageSize );
+    mScrollView.SetProperty( Actor::Property::SIZE, windowSize );
     mScrollView.SetAxisAutoLock( true );
     mScrollView.SetAxisAutoLockGradient( 1.0f );
 
@@ -227,7 +227,7 @@ private:
       {
         Actor page = CreatePage();
 
-        page.SetProperty( Actor::Property::POSITION, Vector2( column * stageSize.x, row * stageSize.y ));
+        page.SetProperty( Actor::Property::POSITION, Vector2( column * windowSize.x, row * windowSize.y ));
         mScrollView.Add( page );
 
         mPages.push_back(page);
@@ -276,14 +276,14 @@ private:
     page.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     page.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
     const float margin = 10.0f;
 
-    // Calculate the number of images going across (columns) within a page, according to the screen resolution and dpi.
-    int imageColumns = round(IMAGE_ROWS * (stageSize.x / stage.GetDpi().x) / (stageSize.y / stage.GetDpi().y));
-    const Vector3 imageSize((stageSize.x / imageColumns) - margin, (stageSize.y / IMAGE_ROWS) - margin, 0.0f);
+    // Calculate the number of images going across (columns) within a page, according to the screen resolution
+    int imageColumns = round(IMAGE_ROWS * (windowSize.x / windowSize.y));
+    const Vector3 imageSize((windowSize.x / imageColumns) - margin, (windowSize.y / IMAGE_ROWS) - margin, 0.0f);
 
     for(int row = 0;row<IMAGE_ROWS;row++)
     {
@@ -294,8 +294,8 @@ private:
         image.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
         image.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
-        Vector3 position( margin * 0.5f + (imageSize.x + margin) * column - stageSize.width * 0.5f,
-                         margin * 0.5f + (imageSize.y + margin) * row - stageSize.height * 0.5f,
+        Vector3 position( margin * 0.5f + (imageSize.x + margin) * column - windowSize.width * 0.5f,
+                         margin * 0.5f + (imageSize.y + margin) * row - windowSize.height * 0.5f,
                           0.0f);
         image.SetProperty( Actor::Property::POSITION, position + imageSize * 0.5f );
         image.SetProperty( Actor::Property::SIZE, imageSize );
@@ -314,12 +314,12 @@ private:
   {
     bool snap(true);
 
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
-    RulerPtr rulerX = CreateRuler(snap ? stageSize.width : 0.0f);
+    RulerPtr rulerX = CreateRuler(snap ? windowSize.width : 0.0f);
     RulerPtr rulerY = new DefaultRuler;
-    rulerX->SetDomain(RulerDomain(0.0f, stageSize.x * PAGE_COLUMNS, false));
+    rulerX->SetDomain(RulerDomain(0.0f, windowSize.x * PAGE_COLUMNS, false));
     rulerY->Disable();
 
     Dali::Path path = Dali::Path::New();
@@ -331,74 +331,74 @@ private:
     if( mEffectMode == PageCarouselEffect)
     {
 
-      points[0] = Vector3( stageSize.x*0.75, 0.0f,  -stageSize.x*0.75f);
+      points[0] = Vector3( windowSize.x*0.75, 0.0f,  -windowSize.x*0.75f);
       points[1] = Vector3( 0.0f, 0.0f, 0.0f );
-      points[2] = Vector3( -stageSize.x*0.75f, 0.0f,  -stageSize.x*0.75f);
+      points[2] = Vector3( -windowSize.x*0.75f, 0.0f,  -windowSize.x*0.75f);
       path.SetProperty( Path::Property::POINTS, points );
 
-      controlPoints[0] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
-      controlPoints[1] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
-      controlPoints[2] = Vector3(-stageSize.x*0.5f, 0.0f, 0.0f );
-      controlPoints[3] = Vector3(-stageSize.x*0.5f, 0.0f, 0.0f );
+      controlPoints[0] = Vector3( windowSize.x*0.5f, 0.0f, 0.0f );
+      controlPoints[1] = Vector3( windowSize.x*0.5f, 0.0f, 0.0f );
+      controlPoints[2] = Vector3(-windowSize.x*0.5f, 0.0f, 0.0f );
+      controlPoints[3] = Vector3(-windowSize.x*0.5f, 0.0f, 0.0f );
       path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
 
       forward = Vector3::ZERO;
     }
     else if( mEffectMode == PageCubeEffect)
     {
-      points[0] = Vector3( stageSize.x*0.5, 0.0f,  stageSize.x*0.5f);
+      points[0] = Vector3( windowSize.x*0.5, 0.0f,  windowSize.x*0.5f);
       points[1] = Vector3( 0.0f, 0.0f, 0.0f );
-      points[2] = Vector3( -stageSize.x*0.5f, 0.0f, stageSize.x*0.5f);
+      points[2] = Vector3( -windowSize.x*0.5f, 0.0f, windowSize.x*0.5f);
       path.SetProperty( Path::Property::POINTS, points );
 
-      controlPoints[0] = Vector3( stageSize.x*0.5f, 0.0f, stageSize.x*0.3f );
-      controlPoints[1] = Vector3( stageSize.x*0.3f, 0.0f, 0.0f );
-      controlPoints[2] = Vector3(-stageSize.x*0.3f, 0.0f, 0.0f );
-      controlPoints[3] = Vector3(-stageSize.x*0.5f, 0.0f,  stageSize.x*0.3f );
+      controlPoints[0] = Vector3( windowSize.x*0.5f, 0.0f, windowSize.x*0.3f );
+      controlPoints[1] = Vector3( windowSize.x*0.3f, 0.0f, 0.0f );
+      controlPoints[2] = Vector3(-windowSize.x*0.3f, 0.0f, 0.0f );
+      controlPoints[3] = Vector3(-windowSize.x*0.5f, 0.0f,  windowSize.x*0.3f );
       path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
 
       forward = Vector3(-1.0f,0.0f,0.0f);
     }
     else if( mEffectMode == PageSpiralEffect)
     {
-      points[0] = Vector3( stageSize.x*0.5, 0.0f,  -stageSize.x*0.5f);
+      points[0] = Vector3( windowSize.x*0.5, 0.0f,  -windowSize.x*0.5f);
       points[1] = Vector3( 0.0f, 0.0f, 0.0f );
-      points[2] = Vector3( -stageSize.x*0.5f, 0.0f, -stageSize.x*0.5f);
+      points[2] = Vector3( -windowSize.x*0.5f, 0.0f, -windowSize.x*0.5f);
       path.SetProperty( Path::Property::POINTS, points );
 
-      controlPoints[0] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
-      controlPoints[1] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
-      controlPoints[2] = Vector3(-stageSize.x*0.5f, 0.0f, 0.0f );
-      controlPoints[3] = Vector3(-stageSize.x*0.5f, 0.0f, 0.0f );
+      controlPoints[0] = Vector3( windowSize.x*0.5f, 0.0f, 0.0f );
+      controlPoints[1] = Vector3( windowSize.x*0.5f, 0.0f, 0.0f );
+      controlPoints[2] = Vector3(-windowSize.x*0.5f, 0.0f, 0.0f );
+      controlPoints[3] = Vector3(-windowSize.x*0.5f, 0.0f, 0.0f );
       path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
 
       forward = Vector3(-1.0f,0.0f,0.0f);
     }
     else if( mEffectMode == PageWaveEffect)
     {
-      points[0] = Vector3( stageSize.x, 0.0f,  -stageSize.x);
+      points[0] = Vector3( windowSize.x, 0.0f,  -windowSize.x);
       points[1] = Vector3( 0.0f, 0.0f, 0.0f );
-      points[2] = Vector3( -stageSize.x, 0.0f, -stageSize.x);
+      points[2] = Vector3( -windowSize.x, 0.0f, -windowSize.x);
       path.SetProperty( Path::Property::POINTS, points );
 
-      controlPoints[0] = Vector3( 0.0f, 0.0f, -stageSize.x );
-      controlPoints[1] = Vector3( stageSize.x*0.5f, 0.0f, 0.0f );
-      controlPoints[2] = Vector3( -stageSize.x*0.5f, 0.0f, 0.0f);
-      controlPoints[3] = Vector3(0.0f, 0.0f,-stageSize.x  );
+      controlPoints[0] = Vector3( 0.0f, 0.0f, -windowSize.x );
+      controlPoints[1] = Vector3( windowSize.x*0.5f, 0.0f, 0.0f );
+      controlPoints[2] = Vector3( -windowSize.x*0.5f, 0.0f, 0.0f);
+      controlPoints[3] = Vector3(0.0f, 0.0f,-windowSize.x  );
       path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
 
       forward = Vector3(-1.0f,0.0f,0.0f);
     }
 
-    mScrollViewEffect = ScrollViewPagePathEffect::New(path, forward,Toolkit::ScrollView::Property::SCROLL_FINAL_X, Vector3(stageSize.x,stageSize.y,0.0f),PAGE_COLUMNS);
+    mScrollViewEffect = ScrollViewPagePathEffect::New(path, forward,Toolkit::ScrollView::Property::SCROLL_FINAL_X, Vector3(windowSize.x,windowSize.y,0.0f),PAGE_COLUMNS);
     mScrollView.SetScrollSnapDuration(EFFECT_SNAP_DURATION);
     mScrollView.SetScrollFlickDuration(EFFECT_FLICK_DURATION);
     mScrollView.SetScrollSnapAlphaFunction(AlphaFunction::EASE_OUT);
     mScrollView.SetScrollFlickAlphaFunction(AlphaFunction::EASE_OUT);
     mScrollView.RemoveConstraintsFromChildren();
 
-    rulerX = CreateRuler(snap ? stageSize.width * 0.5f : 0.0f);
-    rulerX->SetDomain( RulerDomain( 0.0f, stageSize.x * 0.5f * PAGE_COLUMNS, false ) );
+    rulerX = CreateRuler(snap ? windowSize.width * 0.5f : 0.0f);
+    rulerX->SetDomain( RulerDomain( 0.0f, windowSize.x * 0.5f * PAGE_COLUMNS, false ) );
 
     unsigned int currentPage = mScrollView.GetCurrentPage();
     if( mScrollViewEffect )

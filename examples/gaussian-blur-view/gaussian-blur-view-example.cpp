@@ -54,15 +54,15 @@ private:
 
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
-    stage.KeyEventSignal().Connect(this, &GaussianBlurViewExample::OnKeyEvent);
+    auto window = application.GetWindow();
+    Vector2 windowSize = window.GetSize();
+    window.KeyEventSignal().Connect(this, &GaussianBlurViewExample::OnKeyEvent);
 
     mImageView = Toolkit::ImageView::New( BACKGROUND_IMAGE );
     mImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mImageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
-    float excessWidth = std::max( 0.0f, (BACKGROUND_IMAGE_WIDTH - stageSize.width) * 0.5f );
+    float excessWidth = std::max( 0.0f, (BACKGROUND_IMAGE_WIDTH - windowSize.width) * 0.5f );
 
     if( excessWidth > 0.0f )
     {
@@ -85,8 +85,8 @@ private:
     Layer onTop = Layer::New();
     onTop.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     onTop.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    onTop.SetProperty( Actor::Property::SIZE, stageSize );
-    stage.Add( onTop );
+    onTop.SetProperty( Actor::Property::SIZE, windowSize );
+    window.Add( onTop );
     onTop.RaiseToTop();
 
     mOnLabel = TextLabel::New( "Blur ON" );
@@ -104,13 +104,13 @@ private:
     mGaussianBlurView = GaussianBlurView::New( 30, 8.0f, Pixel::RGBA8888, 0.5f, 0.5f, false );
     mGaussianBlurView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mGaussianBlurView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mGaussianBlurView.SetProperty( Actor::Property::SIZE, stage.GetSize() );
-    stage.Add( mGaussianBlurView );
+    mGaussianBlurView.SetProperty( Actor::Property::SIZE, windowSize );
+    window.Add( mGaussianBlurView );
 
     mGaussianBlurView.Add( mImageView );
     mGaussianBlurView.SetProperty( mGaussianBlurView.GetBlurStrengthPropertyIndex(), mStrength );
 
-    stage.GetRootLayer().TouchSignal().Connect( this, &GaussianBlurViewExample::OnTouch );
+    window.GetRootLayer().TouchSignal().Connect( this, &GaussianBlurViewExample::OnTouch );
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )

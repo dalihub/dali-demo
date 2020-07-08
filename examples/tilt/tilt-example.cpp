@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,9 +41,9 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::BLUE);
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::BLUE);
 
     mTextLabel = TextLabel::New( "Tilt Sensor Demo" );
     mTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -53,15 +53,15 @@ public:
     mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::WHITE );
     mTextLabel.SetProperty( TextLabel::Property::POINT_SIZE, 15.0f );
     mTextLabel.SetProperty( Dali::Actor::Property::NAME, "tiltLabel" );
-    stage.Add( mTextLabel );
+    window.Add( mTextLabel );
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &TiltController::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &TiltController::OnTouch );
 
     CreateSensor();
 
     // Connect signals to allow Back and Escape to exit.
-    stage.KeyEventSignal().Connect( this, &TiltController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &TiltController::OnKeyEvent );
   }
 
   void CreateSensor()

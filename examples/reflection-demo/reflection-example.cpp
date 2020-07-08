@@ -185,15 +185,15 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    uint32_t stageWidth  = uint32_t(stage.GetSize().x);
-    uint32_t stageHeight = uint32_t(stage.GetSize().y);
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    uint32_t windowWidth  = uint32_t(window.GetSize().GetWidth());
+    uint32_t windowHeight = uint32_t(window.GetSize().GetHeight());
 
-    stage.GetRenderTaskList().GetTask(0).SetClearEnabled(false);
+    window.GetRenderTaskList().GetTask(0).SetClearEnabled(false);
     mLayer3D = Layer::New();
-    mLayer3D.SetProperty( Actor::Property::SIZE, Vector2( stageWidth, stageHeight ) );
-    stage.Add(mLayer3D);
+    mLayer3D.SetProperty( Actor::Property::SIZE, Vector2( windowWidth, windowHeight ) );
+    window.Add(mLayer3D);
 
     mLayer3D.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mLayer3D.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -219,7 +219,7 @@ private:
     /**
      * Create scene nodes
      */
-    CreateSceneFromGLTF( stage, &gltf );
+    CreateSceneFromGLTF( window, &gltf );
 
     auto planeActor = mLayer3D.FindChildByName( "Plane" );
     auto solarActor = mLayer3D.FindChildByName( "solar_root" );
@@ -256,9 +256,9 @@ private:
     cameraRefActor.SetProperty( DevelCameraActor::Property::REFLECTION_PLANE, Vector4(0.0f, -1.0f, 0.0f, 0.0f));
     mReflectionCamera3D = cameraRefActor;
 
-    auto task3D = stage.GetRenderTaskList().CreateTask();
+    auto task3D = window.GetRenderTaskList().CreateTask();
     task3D.SetSourceActor( mLayer3D );
-    task3D.SetViewport( Rect<int>(0, 0, stageWidth, stageHeight ) );
+    task3D.SetViewport( Rect<int>(0, 0, windowWidth, windowHeight ) );
     task3D.SetCameraActor( cameraActor );
     task3D.SetClearColor( Color::BLACK );
     task3D.SetClearEnabled( true );
@@ -269,23 +269,23 @@ private:
      * Change shader to textured
      */
     Shader texShader = CreateShader( VERTEX_SHADER, TEX_FRAGMENT_SHADER );
-    planeActor.RegisterProperty( "uScreenSize", Vector2(stageWidth, stageHeight) );
+    planeActor.RegisterProperty( "uScreenSize", Vector2(windowWidth, windowHeight) );
     auto renderer = planeActor.GetRendererAt(0);
     auto textureSet = renderer.GetTextures();
     renderer.SetShader( texShader );
 
-    Texture fbTexture = Texture::New(TextureType::TEXTURE_2D, Pixel::Format::RGBA8888, stageWidth, stageHeight );
+    Texture fbTexture = Texture::New(TextureType::TEXTURE_2D, Pixel::Format::RGBA8888, windowWidth, windowHeight );
     textureSet.SetTexture( 1u, fbTexture );
 
-    auto fb = FrameBuffer::New(stageWidth, stageHeight,
+    auto fb = FrameBuffer::New(windowWidth, windowHeight,
                                FrameBuffer::Attachment::DEPTH );
 
     fb.AttachColorTexture( fbTexture );
 
-    auto renderTask = stage.GetRenderTaskList().CreateTask();
+    auto renderTask = window.GetRenderTaskList().CreateTask();
     renderTask.SetFrameBuffer( fb );
     renderTask.SetSourceActor( renderTaskSourceActor );
-    renderTask.SetViewport( Rect<int>(0, 0, stageWidth, stageHeight ) );
+    renderTask.SetViewport( Rect<int>(0, 0, windowWidth, windowHeight ) );
     renderTask.SetCameraActor( cameraRefActor );
     renderTask.SetClearColor( Color::BLACK );
     renderTask.SetClearEnabled( true );
@@ -300,11 +300,11 @@ private:
     mAnimation.Play();
 
     Actor panScreen = Actor::New();
-    auto stageSize = stage.GetSize();
-    panScreen.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width, stageSize.height ) );
+    Vector2 windowSize = window.GetSize();
+    panScreen.SetProperty( Actor::Property::SIZE, windowSize );
     panScreen.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     panScreen.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    auto camera2d = stage.GetRenderTaskList().GetTask(0).GetCameraActor();
+    auto camera2d = window.GetRenderTaskList().GetTask(0).GetCameraActor();
     panScreen.SetProperty( Actor::Property::POSITION, Vector3( 0, 0, camera2d.GetNearClippingPlane() ));
     camera2d.Add(panScreen);
     camera2d.RotateBy( Degree(180.0f), Vector3( 0.0, 1.0, 0.0 ) );
@@ -313,12 +313,12 @@ private:
     mPanGestureDetector.DetectedSignal().Connect( this, &ReflectionExample::OnPan );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &ReflectionExample::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &ReflectionExample::OnKeyEvent );
 
     mTickTimer.Start();
   }
 
-  void CreateSceneFromGLTF( Stage stage, glTF* gltf )
+  void CreateSceneFromGLTF( Window window, glTF* gltf )
   {
     const auto& nodes = gltf->GetNodes();
 
@@ -328,7 +328,7 @@ private:
     actors.reserve( nodes.size() );
     for( const auto& node : nodes )
     {
-      auto actor = node.cameraId != 0xffffffff ? CameraActor::New( stage.GetSize() ) : Actor::New();
+      auto actor = node.cameraId != 0xffffffff ? CameraActor::New( window.GetSize() ) : Actor::New();
 
       actor.SetProperty( Actor::Property::SIZE, Vector3( 1, 1, 1 ) );
       actor.SetProperty( Dali::Actor::Property::NAME, node.name );
@@ -411,7 +411,7 @@ private:
 
     mActors = std::move(actors);
 
-    // Add root actor to the stage
+    // Add root actor to the window
     mLayer3D.Add( mActors[0] );
 
     for( auto& actor : mActors )

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,13 +112,13 @@ public:
   void Create( Application& application )
   {
     // The Init signal is received once (only) during the Application lifetime
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
     // Respond to key events if not handled
-    stage.KeyEventSignal().Connect(this, &SizeNegotiationController::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &SizeNegotiationController::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     mContentLayer = DemoHelper::CreateView( application,
                                             mView,
                                             mToolBar,
@@ -139,22 +139,22 @@ public:
     mItemView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Use a grid layout for tests
-    Vector2 stageSize = stage.GetSize();
+    Vector2 windowSize = window.GetSize();
     Toolkit::ItemLayoutPtr gridLayout = Toolkit::DefaultItemLayout::New( Toolkit::DefaultItemLayout::LIST );
     Vector3 itemSize;
-    gridLayout->GetItemSize( 0, Vector3( stageSize ), itemSize );
-    itemSize.height = stageSize.y / 10;
+    gridLayout->GetItemSize( 0, Vector3( windowSize ), itemSize );
+    itemSize.height = windowSize.y / 10;
     gridLayout->SetItemSize( itemSize );
     mItemView.AddLayout( *gridLayout );
 
-    mItemView.ActivateLayout( 0, Vector3(stageSize.x, stageSize.y, stageSize.x), 0.0f );
+    mItemView.ActivateLayout( 0, Vector3(windowSize.x, windowSize.y, windowSize.x), 0.0f );
 
     mContentLayer.Add( mItemView );
   }
 
-  void StagePopup( Toolkit::Popup popup )
+  void ShowPopup( Toolkit::Popup popup )
   {
-    Stage::GetCurrent().Add( popup );
+    mApplication.GetWindow().Add( popup );
     popup.SetDisplayState( Toolkit::Popup::SHOWN );
   }
 
@@ -177,8 +177,8 @@ public:
 
   Toolkit::Popup CreatePopup()
   {
-    Stage stage = Stage::GetCurrent();
-    const float POPUP_WIDTH_DP = stage.GetSize().width * 0.75f;
+    Window window = mApplication.GetWindow();
+    const float POPUP_WIDTH_DP = window.GetSize().GetWidth() * 0.75f;
 
     Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty( Dali::Actor::Property::NAME, "popup" );
@@ -211,7 +211,7 @@ public:
 
       mPopup.Add( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_3CELL_ID )
     {
@@ -240,7 +240,7 @@ public:
 
       mPopup.SetContent( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_3X3CELL_ID )
     {
@@ -304,7 +304,7 @@ public:
 
       mPopup.Add( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_FIXED1_ID )
     {
@@ -355,7 +355,7 @@ public:
 
       mPopup.Add( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_FIXED2_ID )
     {
@@ -413,7 +413,7 @@ public:
 
       mPopup.Add( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_FIT1_ID )
     {
@@ -479,7 +479,7 @@ public:
 
       mPopup.Add( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_FIT2_ID )
     {
@@ -543,7 +543,7 @@ public:
 
       mPopup.Add( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_NATURAL1_ID )
     {
@@ -613,7 +613,7 @@ public:
 
       mPopup.Add( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_NATURAL2_ID )
     {
@@ -666,7 +666,7 @@ public:
 
       mPopup.Add( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == TABLEVIEW_BUTTON_NATURAL3_ID )
     {
@@ -716,7 +716,7 @@ public:
       }
       mPopup.Add( table );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_CONTENT_IMAGE_SCALE_ID )
     {
@@ -729,7 +729,7 @@ public:
 
       mPopup.Add( image );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_CONTENT_IMAGE_FIT_ID )
     {
@@ -743,7 +743,7 @@ public:
 
       mPopup.Add( image );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == POPUP_BUTTON_CONTENT_IMAGE_FILL_ID )
     {
@@ -757,7 +757,7 @@ public:
 
       mPopup.Add( image );
 
-      StagePopup( mPopup );
+      ShowPopup( mPopup );
     }
 
     return true;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -215,37 +215,34 @@ class Benchmark : public ConnectionTracker
 public:
 
   Benchmark( Application& application )
-: mApplication( application ),
-  mRowsPerPage( gRowsPerPage ),
-  mColumnsPerPage( gColumnsPerPage ),
-  mPageCount( gPageCount )
-{
+  : mApplication( application ),
+    mRowsPerPage( gRowsPerPage ),
+    mColumnsPerPage( gColumnsPerPage ),
+    mPageCount( gPageCount )
+  {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect( this, &Benchmark::Create );
-}
-
-  ~Benchmark()
-  {
-    // Nothing to do here;
   }
+
+  ~Benchmark() = default;
 
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
-    Vector2 stageSize = stage.GetSize();
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
+    Vector2 windowSize = window.GetSize();
 
-    stage.GetRootLayer().SetProperty( Layer::Property::DEPTH_TEST, false );
+    window.GetRootLayer().SetProperty( Layer::Property::DEPTH_TEST, false );
 
-    mSize = Vector3( stageSize.x / mColumnsPerPage, stageSize.y / mRowsPerPage, 0.0f );
+    mSize = Vector3( windowSize.x / mColumnsPerPage, windowSize.y / mRowsPerPage, 0.0f );
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &Benchmark::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &Benchmark::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &Benchmark::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &Benchmark::OnKeyEvent );
 
     if( gUseMesh )
     {
@@ -273,7 +270,7 @@ public:
 
   void CreateImageViews()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
     unsigned int actorCount(mRowsPerPage*mColumnsPerPage * mPageCount);
     mImageView.resize(actorCount);
 
@@ -282,7 +279,7 @@ public:
       mImageView[i] = ImageView::New(ImagePath(i));
       mImageView[i].SetProperty( Actor::Property::SIZE, Vector3(0.0f,0.0f,0.0f) );
       mImageView[i].SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-      stage.Add(mImageView[i]);
+      window.Add(mImageView[i]);
     }
   }
 
@@ -300,7 +297,7 @@ public:
     }
 
     //Create the actors
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
     unsigned int actorCount(mRowsPerPage*mColumnsPerPage * mPageCount);
     mActor.resize(actorCount);
     for( size_t i(0); i<actorCount; ++i )
@@ -308,7 +305,7 @@ public:
       mActor[i] = Actor::New();
       mActor[i].AddRenderer( renderers[i % numImages] );
       mActor[i].SetProperty( Actor::Property::SIZE, Vector3(0.0f,0.0f,0.0f) );
-      stage.Add(mActor[i]);
+      window.Add(mActor[i]);
     }
   }
 
@@ -330,8 +327,9 @@ public:
 
   void ShowAnimation()
   {
-    Stage stage = Stage::GetCurrent();
-    Vector3 initialPosition( stage.GetSize().x * 0.5f, stage.GetSize().y*0.5f, 1000.0f );
+    Window window = mApplication.GetWindow();
+    const Vector2 windowSize(window.GetSize());
+    Vector3 initialPosition( windowSize.width * 0.5f, windowSize.height * 0.5f, 1000.0f );
 
     unsigned int totalColumns = mColumnsPerPage * mPageCount;
 
@@ -383,8 +381,8 @@ public:
 
   void ScrollAnimation()
   {
-    Stage stage = Stage::GetCurrent();
-    Vector3 stageSize( stage.GetSize() );
+    Window window = mApplication.GetWindow();
+    Vector3 windowSize( window.GetSize() );
 
     mScroll = Animation::New(10.0f);
     size_t actorCount( static_cast< size_t >( mRowsPerPage ) * mColumnsPerPage * mPageCount );
@@ -392,17 +390,17 @@ public:
     {
       if( gUseMesh )
       {
-        mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(0.0f,3.0f));
-        mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(3.0f,3.0f));
-        mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(6.0f,2.0f));
-        mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3( 12.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(8.0f,2.0f));
+        mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*windowSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(0.0f,3.0f));
+        mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*windowSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(3.0f,3.0f));
+        mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3(-4.0f*windowSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(6.0f,2.0f));
+        mScroll.AnimateBy( Property( mActor[i], Actor::Property::POSITION), Vector3( 12.0f*windowSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(8.0f,2.0f));
       }
       else
       {
-        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(0.0f,3.0f));
-        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(3.0f,3.0f));
-        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(6.0f,2.0f));
-        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3( 12.0f*stageSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(8.0f,2.0f));
+        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*windowSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(0.0f,3.0f));
+        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*windowSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(3.0f,3.0f));
+        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3(-4.0f*windowSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(6.0f,2.0f));
+        mScroll.AnimateBy( Property( mImageView[i], Actor::Property::POSITION), Vector3( 12.0f*windowSize.x,0.0f, 0.0f), AlphaFunction::EASE_OUT, TimePeriod(8.0f,2.0f));
       }
     }
     mScroll.Play();
@@ -417,7 +415,7 @@ public:
 
     unsigned int totalColumns = mColumnsPerPage * mPageCount;
 
-    float finalZ = Dali::Stage::GetCurrent().GetRenderTaskList().GetTask(0).GetCameraActor().GetCurrentProperty< Vector3 >( Actor::Property::WORLD_POSITION ).z;
+    float finalZ = mApplication.GetWindow().GetRenderTaskList().GetTask(0).GetCameraActor().GetCurrentProperty< Vector3 >( Actor::Property::WORLD_POSITION ).z;
     float totalDuration( 5.0f);
     float durationPerActor( 0.5f );
     float delayBetweenActors = ( totalDuration - durationPerActor) / (mRowsPerPage*mColumnsPerPage);
