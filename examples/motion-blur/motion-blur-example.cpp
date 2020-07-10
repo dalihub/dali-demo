@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -193,7 +193,7 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
     winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
-    winHandle.ResizedSignal().Connect( this, &MotionBlurExampleApp::OnWindowResized );
+    winHandle.ResizeSignal().Connect( this, &MotionBlurExampleApp::OnWindowResized );
 
     // set initial orientation
     Rotate( PORTRAIT );
@@ -231,7 +231,7 @@ public:
   //
   //
 
-  void OnWindowResized( Window::WindowSize size )
+  void OnWindowResized( Window window, Window::WindowSize size )
   {
     Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
   }

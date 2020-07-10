@@ -177,9 +177,6 @@ public:
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
 
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
-
     // Background image:
     Dali::Property::Map backgroundImage;
     backgroundImage.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );

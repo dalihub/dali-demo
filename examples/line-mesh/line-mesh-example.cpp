@@ -167,9 +167,6 @@ public:
 
     Initialise();
 
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
-
     stage.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));
   }
 

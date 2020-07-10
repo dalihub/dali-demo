@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,9 +72,6 @@ void TransitionApplication::Create( Application& application )
   Stage stage = Stage::GetCurrent();
   stage.KeyEventSignal().Connect(this, &TransitionApplication::OnKeyEvent);
   stage.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
-
-  // Hide the indicator bar
-  application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
   // Content panes:
   TableView contentLayout = TableView::New( 4, 1 );

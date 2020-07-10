@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -199,9 +199,6 @@ public:
     mStageSize = Stage::GetCurrent().GetSize();
 
     // The Init signal is received once (only) during the Application lifetime
-
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
     // Creates a default view with a default tool bar.
     // The view is added to the stage.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -106,9 +106,6 @@ void SimpleVisualsApplication::Create( Application& application )
 
   // Connect to key events so can quit application
   stage.KeyEventSignal().Connect(this, &SimpleVisualsApplication::OnKeyEvent);
-
-  // Hide the indicator bar
-  application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
 
   // Create a table view to parent the 2 MyControls
   TableView contentLayout = TableView::New( 2, 2 );

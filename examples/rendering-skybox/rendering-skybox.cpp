@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -147,11 +147,6 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Disable indicator.
-    // It avoids reposition the camera to fit with the indicator height.
-    Dali::Window winHandle = application.GetWindow();
-    winHandle.ShowIndicator( Dali::Window::INVISIBLE );
-
     // Get a handle to the stage
     Stage stage = Stage::GetCurrent();
     stage.SetBackgroundColor( Color::WHITE );
