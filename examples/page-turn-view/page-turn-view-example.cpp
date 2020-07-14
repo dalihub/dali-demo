@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -169,7 +169,7 @@ public:
 private:
 
 
-  void OnWindowResized( Window::WindowSize size );
+  void OnWindowResized( Window window, Window::WindowSize size );
 
   void Rotate( DemoOrientation orientation );
 
@@ -203,28 +203,28 @@ PageTurnExample::~PageTurnExample()
  */
 void PageTurnExample::OnInit( Application& app )
 {
-  Stage::GetCurrent().KeyEventSignal().Connect(this, &PageTurnExample::OnKeyEvent);
-
   Window window = app.GetWindow();
+  window.KeyEventSignal().Connect(this, &PageTurnExample::OnKeyEvent);
+
   window.AddAvailableOrientation( Window::PORTRAIT );
   window.AddAvailableOrientation( Window::LANDSCAPE );
   window.AddAvailableOrientation( Window::PORTRAIT_INVERSE  );
   window.AddAvailableOrientation( Window::LANDSCAPE_INVERSE );
-  window.ResizedSignal().Connect( this, &PageTurnExample::OnWindowResized );
+  window.ResizeSignal().Connect( this, &PageTurnExample::OnWindowResized );
 
   Window::WindowSize size = window.GetSize();
   Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
 }
 
-void PageTurnExample::OnWindowResized( Window::WindowSize size )
+void PageTurnExample::OnWindowResized( Window window, Window::WindowSize size )
 {
   Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
 }
 
 void PageTurnExample::Rotate( DemoOrientation orientation )
 {
-  Stage stage = Stage::GetCurrent();
-  Vector2 stageSize = stage.GetSize();
+  Window window = mApplication.GetWindow();
+  Vector2 windowSize = window.GetSize();
 
   if( mOrientation != orientation )
   {
@@ -234,30 +234,30 @@ void PageTurnExample::Rotate( DemoOrientation orientation )
     {
       if( !mPageTurnPortraitView )
       {
-        mPageTurnPortraitView = PageTurnPortraitView::New( mPortraitPageFactory, stageSize );
+        mPageTurnPortraitView = PageTurnPortraitView::New( mPortraitPageFactory, windowSize );
         mPageTurnPortraitView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       }
 
       if( mPageTurnLandscapeView )
       {
-        stage.Remove( mPageTurnLandscapeView );
+        window.Remove( mPageTurnLandscapeView );
       }
-      stage.Add( mPageTurnPortraitView );
+      window.Add( mPageTurnPortraitView );
     }
     else if( LANDSCAPE == orientation )
     {
       if( !mPageTurnLandscapeView )
       {
-        mPageTurnLandscapeView = PageTurnLandscapeView::New( mLandscapePageFactory, Vector2(stageSize.x*0.5f, stageSize.y) );
+        mPageTurnLandscapeView = PageTurnLandscapeView::New( mLandscapePageFactory, Vector2(windowSize.x*0.5f, windowSize.y) );
         mPageTurnLandscapeView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       }
 
       if( mPageTurnPortraitView )
       {
-        stage.Remove( mPageTurnPortraitView );
+        window.Remove( mPageTurnPortraitView );
       }
 
-      stage.Add( mPageTurnLandscapeView );
+      window.Add( mPageTurnLandscapeView );
     }
   }
 }

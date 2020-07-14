@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,15 +52,15 @@ private:
 
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect( this, &SuperBlurViewExample::OnKeyEvent );
+    Window window = application.GetWindow();
+    window.KeyEventSignal().Connect( this, &SuperBlurViewExample::OnKeyEvent );
 
     mSuperBlurView = SuperBlurView::New( DEFAULT_BLUR_LEVEL );
     mSuperBlurView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mSuperBlurView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mSuperBlurView.SetProperty( Actor::Property::SIZE, Vector2( 800, 1280 ) );
     mSuperBlurView.SetProperty( SuperBlurView::Property::IMAGE_URL, BACKGROUND_IMAGE );
-    stage.Add( mSuperBlurView );
+    window.Add( mSuperBlurView );
 
     mBlurAnimation = Animation::New(1.0f);
     mBlurAnimation.AnimateTo( Property(mSuperBlurView, mSuperBlurView.GetBlurStrengthPropertyIndex()), 1.0f );
@@ -74,7 +74,7 @@ private:
     mPushButton.SetProperty( Button::Property::LABEL, "Blur" );
     mPushButton.PressedSignal().Connect( this, &SuperBlurViewExample::OnButtonPressed );
     mPushButton.ReleasedSignal().Connect( this, &SuperBlurViewExample::OnButtonReleased );
-    stage.Add( mPushButton );
+    window.Add( mPushButton );
   }
 
   bool OnButtonPressed( Button button )

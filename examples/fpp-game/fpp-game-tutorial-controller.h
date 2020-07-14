@@ -2,7 +2,7 @@
 #define FPPGAMETUTORIAL_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@
 
 #include <dali/public-api/actors/actor.h>
 #include <dali/public-api/render-tasks/render-task.h>
-#include <dali/public-api/common/stage.h>
 #include <dali/public-api/signals/connection-tracker.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali-toolkit/public-api/controls/text-controls/text-label.h>
 
 class FppGameTutorialController : public Dali::ConnectionTracker
@@ -40,8 +40,9 @@ public:
 
   /**
    * Displays UI with tutorial
+   * @param[in] window The window to display the tutorial on
    */
-  void DisplayTutorial();
+  void DisplayTutorial( Dali::Window window );
 
   /**
    * Handles tutorial touch input
@@ -56,7 +57,7 @@ public:
   void OnTutorialAnimationFinished( Dali::Animation& animation );
 
   /**
-   * Handles tutorial completion stage
+   * Handles tutorial completion window
    * @param animation Animation object
    */
   void OnTutorialComplete( Dali::Animation& animation );
@@ -69,7 +70,7 @@ private:
   Dali::Toolkit::TextLabel      mRightLabel; /// Text label displaying right message
   bool                          mLeftTutorialComplete; /// Flag indicating the walk (left) tutorial action has been performed
   bool                          mRightTutorialComplete; /// Flag indicating the look (right) tutorial action has been performed
-  Dali::Stage                   mStage;
+  Dali::Window                  mWindow;
 };
 
 #endif // FPPGAMETUTORIAL_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,15 +80,15 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    Vector2 screenSize = stage.GetSize();
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    Vector2 screenSize = window.GetSize();
 
     //Add background
     Toolkit::ImageView backView = Toolkit::ImageView::New( BACKGROUND_IMAGE );
     backView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     backView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    stage.Add( backView );
+    window.Add( backView );
 
     mModelCounter = 0;
 
@@ -109,7 +109,7 @@ public:
     mButtonLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mButtonLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mButtonLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    stage.Add(mButtonLayer);
+    window.Add(mButtonLayer);
 
     // Create button for model changing
     Toolkit::PushButton editButton = Toolkit::PushButton::New();
@@ -153,8 +153,8 @@ public:
     mPlaying = true;
     mScaled = false;
 
-    // Respond to a click anywhere on the stage
-    stage.KeyEventSignal().Connect(this, &Model3dViewController::OnKeyEvent);
+    // Respond to a click anywhere on the window
+    window.KeyEventSignal().Connect(this, &Model3dViewController::OnKeyEvent);
 
     //Create a tap gesture detector for zoom
     mTapDetector = TapGestureDetector::New( 2 );
@@ -176,8 +176,8 @@ public:
     }
     else
     {
-      Stage stage = Stage::GetCurrent();
-      Vector2 screenSize = stage.GetSize();
+      Window window = mApplication.GetWindow();
+      Vector2 screenSize = window.GetSize();
 
       Vector2 position;
       position.x = tap.screenPoint.x - screenSize.x * 0.5;

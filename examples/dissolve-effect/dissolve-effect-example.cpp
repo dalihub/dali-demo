@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,21 +81,20 @@ const float TRANSITION_DURATION = 2.5f; //2.5 second
 const float INITIAL_DEPTH = 10.0f;
 
 /**
- * @brief Create an image view with an image which would be scaled-down to no more than the stage dimensions.
+ * @brief Create an image view with an image which would be scaled-down to no more than the window dimensions.
  *
  * Uses image scaling mode SCALE_TO_FILL to resize the image at
- * load time to cover the entire stage with pixels with no borders,
+ * load time to cover the entire window with pixels with no borders,
  * and filter mode BOX_THEN_LINEAR to sample the image with maximum quality.
  */
-Toolkit::ImageView CreateStageFillingImageView( const char * const imagePath )
+Toolkit::ImageView CreateWindowFillingImageView( const Vector2& windowSize, const char * const imagePath )
 {
-  Size stageSize = Stage::GetCurrent().GetSize();
   Toolkit::ImageView imageView = Toolkit::ImageView::New();
   Property::Map map;
   map[Toolkit::Visual::Property::TYPE] = Toolkit::Visual::IMAGE;
   map[Toolkit::ImageVisual::Property::URL] = imagePath;
-  map[Toolkit::ImageVisual::Property::DESIRED_WIDTH] = stageSize.x;
-  map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = stageSize.y;
+  map[Toolkit::ImageVisual::Property::DESIRED_WIDTH] = windowSize.x;
+  map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = windowSize.y;
   map[Toolkit::ImageVisual::Property::FITTING_MODE] = FittingMode::SCALE_TO_FILL;
   map[Toolkit::ImageVisual::Property::SAMPLING_MODE] = SamplingMode::BOX_THEN_LINEAR;
   map[Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
@@ -215,9 +214,11 @@ DissolveEffectApp::~DissolveEffectApp()
 
 void DissolveEffectApp::OnInit( Application& application )
 {
-  Stage::GetCurrent().KeyEventSignal().Connect(this, &DissolveEffectApp::OnKeyEvent);
+  auto window = application.GetWindow();
+  Vector2 windowSize = window.GetSize();
+  window.KeyEventSignal().Connect(this, &DissolveEffectApp::OnKeyEvent);
 
-  // Creates a default view with a default tool bar, the view is added to the stage.
+  // Creates a default view with a default tool bar, the view is added to the window.
   mContent = DemoHelper::CreateView( application, mView,mToolBar, "", TOOLBAR_IMAGE, "" );
 
   // Add an effect-changing button on the right of the tool bar.
@@ -246,14 +247,14 @@ void DissolveEffectApp::OnInit( Application& application )
   mViewTimer.TickSignal().Connect( this, &DissolveEffectApp::OnTimerTick );
   mTimerReady = true;
 
-  // Set size to stage size to avoid seeing a black border on transition
+  // Set size to window size to avoid seeing a black border on transition
   mParent = Actor::New();
-  mParent.SetProperty( Actor::Property::SIZE, Stage::GetCurrent().GetSize() );
+  mParent.SetProperty( Actor::Property::SIZE, windowSize );
   mParent.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mContent.Add( mParent );
 
   // show the first image
-  mCurrentImage = CreateStageFillingImageView( IMAGES[mIndex] );
+  mCurrentImage = CreateWindowFillingImageView( windowSize, IMAGES[mIndex] );
   mCurrentImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCurrentImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
   mCurrentImage.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
@@ -286,7 +287,7 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
       mIndex = (mIndex + NUM_IMAGES -1)%NUM_IMAGES;
     }
 
-    mNextImage = CreateStageFillingImageView( IMAGES[ mIndex ] );
+    mNextImage = CreateWindowFillingImageView( mApplication.GetWindow().GetSize(), IMAGES[ mIndex ] );
     mNextImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNextImage.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
@@ -401,7 +402,7 @@ bool DissolveEffectApp::OnTimerTick()
   if(mSlideshow)
   {
     mIndex = (mIndex + 1)%NUM_IMAGES;
-    mNextImage = CreateStageFillingImageView( IMAGES[ mIndex ] );
+    mNextImage = CreateWindowFillingImageView( mApplication.GetWindow().GetSize(), IMAGES[ mIndex ] );
     mNextImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNextImage.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );

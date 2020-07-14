@@ -19,6 +19,7 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
@@ -69,7 +70,7 @@ unsigned int GetButtonIndex( Toolkit::Button button )
 const unsigned int NUMBER_OF_RESOURCES = sizeof(IMAGE_PATH) / sizeof(char*);
 
 std::string EXAMPLE_INSTRUCTIONS = "Instructions: Change button cycles through different image visuals, "
-                           "on/off takes the ImageView and it's current visual on or off stage.";
+                           "on/off takes the ImageView and it's current visual on or off window.";
 
 const float CORNER_RADIUS_VALUE( 20.0f );
 
@@ -98,7 +99,7 @@ class ImageViewController: public ConnectionTracker
     // The Init signal is received once (only) during the Application lifetime
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     mContentLayer = DemoHelper::CreateView( application,
                                             mView,
                                             mToolBar,
@@ -133,7 +134,7 @@ class ImageViewController: public ConnectionTracker
       button.SetProperty( Toolkit::Button::Property::LABEL, "on/off" );
       button.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
       button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-      button.ClickedSignal().Connect( this, &ImageViewController::ToggleImageOnStage );
+      button.ClickedSignal().Connect( this, &ImageViewController::ToggleImageOnWindow );
       button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
       button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
       std::string s = std::to_string(x);
@@ -178,7 +179,7 @@ class ImageViewController: public ConnectionTracker
       mImageViewRoundedCornerStatus[x] = false;
     }
 
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &ImageViewController::OnKeyEvent);
+    application.GetWindow().KeyEventSignal().Connect(this, &ImageViewController::OnKeyEvent);
   }
 
 private:
@@ -192,7 +193,7 @@ private:
     visual.Reset();
   }
 
-  bool ToggleImageOnStage( Toolkit::Button button )
+  bool ToggleImageOnWindow( Toolkit::Button button )
   {
     unsigned int buttonIndex = GetButtonIndex( button );
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 
 // INTERNAL INCLUDES
 #include "shared/multi-language-strings.h"
@@ -56,10 +57,10 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
-    stage.KeyEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnKeyEvent);
-    stage.SetBackgroundColor( Color::WHITE );
+    window.KeyEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnKeyEvent);
+    window.SetBackgroundColor( Color::WHITE );
 
     mTableView = Toolkit::TableView::New( NUMBER_OF_LANGUAGES, 1 );
     mTableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
@@ -67,7 +68,7 @@ public:
     mTableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mTableView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mTableView.TouchSignal().Connect( this, &TextLabelMultiLanguageExample::OnTouch );
-    stage.Add( mTableView );
+    window.Add( mTableView );
 
     for( unsigned int index = 0u; index < NUMBER_OF_LANGUAGES; ++index )
     {

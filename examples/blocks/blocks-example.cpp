@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,12 +60,12 @@ const Vector3 INITIAL_BALL_DIRECTION(1.0f, 1.0f, 0.0f);                     ///<
 const std::string WOBBLE_PROPERTY_NAME("wobbleProperty");                  ///< Wobble property name.
 const std::string COLLISION_PROPERTY_NAME("collisionProperty");            ///< Collision property name.
 
-const Vector2 BRICK_SIZE(0.1f, 0.05f );                                     ///< Brick size relative to width of stage.
-const Vector2 BALL_SIZE( 0.05f, 0.05f );                                    ///< Ball size relative to width of stage.
-const Vector2 PADDLE_SIZE( 0.2f, 0.05f );                                   ///< Paddle size relative to width of stage.
-const Vector2 PADDLE_HANDLE_SIZE( 0.3f, 0.3f );                             ///< Paddle handle size relative to width of stage.
-const Vector2 BALL_START_POSITION(0.5f, 0.8f);                              ///< Ball start position relative to stage size.
-const Vector2 PADDLE_START_POSITION(0.5f, 0.9f);                            ///< Paddler start position relative to stage size.
+const Vector2 BRICK_SIZE(0.1f, 0.05f );                                     ///< Brick size relative to width of window.
+const Vector2 BALL_SIZE( 0.05f, 0.05f );                                    ///< Ball size relative to width of window.
+const Vector2 PADDLE_SIZE( 0.2f, 0.05f );                                   ///< Paddle size relative to width of window.
+const Vector2 PADDLE_HANDLE_SIZE( 0.3f, 0.3f );                             ///< Paddle handle size relative to width of window.
+const Vector2 BALL_START_POSITION(0.5f, 0.8f);                              ///< Ball start position relative to window size.
+const Vector2 PADDLE_START_POSITION(0.5f, 0.9f);                            ///< Paddler start position relative to window size.
 const Vector2 PADDLE_HIT_MARGIN( 0.1, 0.15f );                              ///< Extra hit Area for Paddle when touching.
 
 const int TOTAL_LIVES(3);                                                   ///< Total lives in game before it's game over!
@@ -249,13 +249,10 @@ public:
    */
   void Create(Application& application)
   {
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
-
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+    application.GetWindow().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     Toolkit::ToolBar toolBar;
     mContentLayer = DemoHelper::CreateView( application,
                                             mView,
@@ -274,23 +271,23 @@ public:
 private:
 
   /**
-   * Adds a new layer to the stage, containing game actors.
+   * Adds a new layer to the window, containing game actors.
    */
   void AddContentLayer()
   {
-    Stage stage = Stage::GetCurrent();
-    const Vector3 stageSize(stage.GetSize());
+    Window window = mApplication.GetWindow();
+    const Vector3 windowSize(window.GetSize());
 
     // Ball setup
-    mBallStartPosition = stageSize * Vector3( BALL_START_POSITION );
+    mBallStartPosition = windowSize * Vector3( BALL_START_POSITION );
     mBall = CreateImage(BALL_IMAGE);
     mBall.SetProperty( Actor::Property::POSITION, mBallStartPosition );
-    mBall.SetProperty( Actor::Property::SIZE, BALL_SIZE * stageSize.width );
+    mBall.SetProperty( Actor::Property::SIZE, BALL_SIZE * windowSize.width );
     mContentLayer.Add(mBall);
     mBallVelocity = Vector3::ZERO;
 
     // Paddle setup
-    mPaddleHitMargin = Vector2(stageSize) * PADDLE_HIT_MARGIN;
+    mPaddleHitMargin = Vector2(windowSize) * PADDLE_HIT_MARGIN;
     mPaddle = Actor::New();
     mPaddleHandle = CreateImage(PADDLE_HANDLE_IMAGE);
     mPaddleImage = CreateImage(PADDLE_IMAGE);
@@ -298,14 +295,14 @@ private:
     mPaddle.Add( mPaddleImage );
     mPaddleHandle.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mPaddleHandle.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mPaddleHandle.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, stageSize.width * 0.0125f ));
+    mPaddleHandle.SetProperty( Actor::Property::POSITION, Vector2( 0.0f, windowSize.width * 0.0125f ));
     mPaddleImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
     mPaddleImage.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
     mPaddle.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mPaddle.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mPaddleFullSize = PADDLE_SIZE * stageSize.width;
+    mPaddleFullSize = PADDLE_SIZE * windowSize.width;
     mPaddle.SetProperty( Actor::Property::SIZE, mPaddleFullSize + mPaddleHitMargin );
-    mPaddleHandle.SetProperty( Actor::Property::SIZE, PADDLE_HANDLE_SIZE * stageSize.width );
+    mPaddleHandle.SetProperty( Actor::Property::SIZE, PADDLE_HANDLE_SIZE * windowSize.width );
     mPaddleImage.SetProperty( Actor::Property::SIZE, mPaddleFullSize );
 
     mWobbleProperty = mPaddle.RegisterProperty(WOBBLE_PROPERTY_NAME, 0.0f);
@@ -313,29 +310,29 @@ private:
     wobbleConstraint.AddSource( LocalSource(mWobbleProperty) );
     wobbleConstraint.Apply();
 
-    mPaddle.SetProperty( Actor::Property::POSITION, stageSize * Vector3( PADDLE_START_POSITION ) );
+    mPaddle.SetProperty( Actor::Property::POSITION, windowSize * Vector3( PADDLE_START_POSITION ) );
     mContentLayer.Add(mPaddle);
     mPaddle.TouchSignal().Connect(this, &ExampleController::OnTouchPaddle);
     mContentLayer.TouchSignal().Connect(this, &ExampleController::OnTouchLayer);
 
-    const float margin(BALL_SIZE.width * stageSize.width * 0.5f);
+    const float margin(BALL_SIZE.width * windowSize.width * 0.5f);
 
     // Set up notifications for ball's collisions against walls.
     PropertyNotification leftNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_X, LessThanCondition(margin) );
     leftNotification.NotifySignal().Connect( this, &ExampleController::OnHitLeftWall );
 
-    PropertyNotification rightNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_X, GreaterThanCondition(stageSize.width - margin) );
+    PropertyNotification rightNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_X, GreaterThanCondition(windowSize.width - margin) );
     rightNotification.NotifySignal().Connect( this, &ExampleController::OnHitRightWall );
 
     PropertyNotification topNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_Y, LessThanCondition(margin) );
     topNotification.NotifySignal().Connect( this, &ExampleController::OnHitTopWall );
 
-    PropertyNotification bottomNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_Y, GreaterThanCondition(stageSize.height + margin) );
+    PropertyNotification bottomNotification = mBall.AddPropertyNotification( Actor::Property::POSITION_Y, GreaterThanCondition(windowSize.height + margin) );
     bottomNotification.NotifySignal().Connect( this, &ExampleController::OnHitBottomWall );
 
     // Set up notification for ball colliding against paddle.
     Actor delegate = Actor::New();
-    stage.Add(delegate);
+    window.Add(delegate);
     Property::Index property = delegate.RegisterProperty(COLLISION_PROPERTY_NAME, Vector3::ZERO);
     Constraint constraint = Constraint::New<Vector3>( delegate, property, CollisionCircleRectangleConstraint( -Vector3(0.0f, mPaddleHitMargin.height * 0.575f, 0.0f),-Vector3(mPaddleHitMargin) ) );
     constraint.AddSource( Source(mBall, Actor::Property::POSITION) );
@@ -390,8 +387,8 @@ private:
 
     if( mBrickImageMap.Empty() )
     {
-      Vector2 stageSize(Stage::GetCurrent().GetSize());
-      const Vector2 brickSize(BRICK_SIZE * Vector2(stageSize.x, stageSize.x));
+      Vector2 windowSize(mApplication.GetWindow().GetSize());
+      const Vector2 brickSize(BRICK_SIZE * Vector2(windowSize.x, windowSize.x));
 
       mBrickImageMap["desiredWidth"] = static_cast<int>( brickSize.width );
       mBrickImageMap["desiredHeight"] = static_cast<int>( brickSize.height );
@@ -428,13 +425,13 @@ private:
    */
   void GenerateLevel0()
   {
-    Vector2 stageSize(Stage::GetCurrent().GetSize());
-    const Vector2 brickSize(BRICK_SIZE * stageSize.width);
+    Vector2 windowSize(mApplication.GetWindow().GetSize());
+    const Vector2 brickSize(BRICK_SIZE * windowSize.width);
 
-    const int columns = (0.85f * stageSize.width) / brickSize.width; // 85 percent of the width of the screen covered with bricks.
-    const int rows = (0.3f * stageSize.height) / brickSize.height;   // 30 percent of the height of the screen covered with bricks.
-    const Vector2 offset( (stageSize.x - (columns * brickSize.width)) * 0.5f,
-                           stageSize.y * 0.125f );
+    const int columns = (0.85f * windowSize.width) / brickSize.width; // 85 percent of the width of the screen covered with bricks.
+    const int rows = (0.3f * windowSize.height) / brickSize.height;   // 30 percent of the height of the screen covered with bricks.
+    const Vector2 offset( (windowSize.x - (columns * brickSize.width)) * 0.5f,
+                           windowSize.y * 0.125f );
 
     for(int j = 0; j < rows; j++)
     {
@@ -452,13 +449,13 @@ private:
    */
   void GenerateLevel1()
   {
-    Vector2 stageSize(Stage::GetCurrent().GetSize());
-    const Vector2 brickSize(BRICK_SIZE * stageSize.width);
+    Vector2 windowSize(mApplication.GetWindow().GetSize());
+    const Vector2 brickSize(BRICK_SIZE * windowSize.width);
 
-    const int columns = (0.85f * stageSize.width) / brickSize.width; // 85 percent of the width of the screen covered with bricks.
-    const int rows = (0.3f * stageSize.height) / brickSize.height;   // 30 percent of the height of the screen covered with bricks.
-    const Vector2 offset( (stageSize.x - (columns * brickSize.width)) * 0.5f,
-                           stageSize.y * 0.125f );
+    const int columns = (0.85f * windowSize.width) / brickSize.width; // 85 percent of the width of the screen covered with bricks.
+    const int rows = (0.3f * windowSize.height) / brickSize.height;   // 30 percent of the height of the screen covered with bricks.
+    const Vector2 offset( (windowSize.x - (columns * brickSize.width)) * 0.5f,
+                           windowSize.y * 0.125f );
 
     for(int j = 0; j < rows; j++)
     {
@@ -481,13 +478,13 @@ private:
    */
   void GenerateLevel2()
   {
-    Vector2 stageSize(Stage::GetCurrent().GetSize());
-    const Vector2 brickSize(BRICK_SIZE * stageSize.width);
+    Vector2 windowSize(mApplication.GetWindow().GetSize());
+    const Vector2 brickSize(BRICK_SIZE * windowSize.width);
 
-    const int columns = (0.85f * stageSize.width) / brickSize.width; // 85 percent of the width of the screen covered with bricks.
-    const int rows = (0.3f * stageSize.height) / brickSize.height;   // 30 percent of the height of the screen covered with bricks.
-    const Vector2 offset( (stageSize.x - (columns * brickSize.width)) * 0.5f,
-                           stageSize.y * 0.125f );
+    const int columns = (0.85f * windowSize.width) / brickSize.width; // 85 percent of the width of the screen covered with bricks.
+    const int rows = (0.3f * windowSize.height) / brickSize.height;   // 30 percent of the height of the screen covered with bricks.
+    const Vector2 offset( (windowSize.x - (columns * brickSize.width)) * 0.5f,
+                           windowSize.y * 0.125f );
 
     // lays down bricks in a spiral formation starting at i,j = (0,0) top left corner
     // travelling right di,dj = (1,0) initially
@@ -549,7 +546,7 @@ private:
 
 
   /**
-   * Creates a brick at a specified position on the stage
+   * Creates a brick at a specified position on the window
    * @param[in] position the position for the brick
    * @param[in] type the type of brick
    * @return The Brick Actor is returned.
@@ -811,7 +808,7 @@ private:
    */
   void OnBrickDestroyed( Animation& source )
   {
-    // Remove brick from stage, it's constraint and property notification should also remove themselves.
+    // Remove brick from window, it's constraint and property notification should also remove themselves.
     Actor brick = mDestroyAnimationMap[source];
     mDestroyAnimationMap.erase(source);
     brick.GetParent().Remove(brick);

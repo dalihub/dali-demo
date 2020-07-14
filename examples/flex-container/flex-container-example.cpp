@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,14 +119,14 @@ public:
    */
   void OnInit(Application& app)
   {
-    Stage stage = Dali::Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &FlexContainerExample::OnKeyEvent);
-    stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR,Layer::LAYER_3D );
+    auto window = app.GetWindow();
+    window.KeyEventSignal().Connect(this, &FlexContainerExample::OnKeyEvent);
+    window.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR,Layer::LAYER_3D );
 
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
+    Vector2 windowSize = window.GetSize();
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     Layer contents = DemoHelper::CreateView( mApplication,
                                              mView,
                                              mToolBar,
@@ -192,7 +192,7 @@ public:
     mFlexContainer = FlexContainer::New();
     mFlexContainer.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
     mFlexContainer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
-    mFlexContainer.SetProperty( Actor::Property::SIZE, Vector2( stageSize.width, stageSize.height - VIEW_STYLE.mToolBarHeight ) );
+    mFlexContainer.SetProperty( Actor::Property::SIZE, Vector2( windowSize.width, windowSize.height - VIEW_STYLE.mToolBarHeight ) );
     mFlexContainer.SetProperty( Actor::Property::POSITION_Y, VIEW_STYLE.mToolBarHeight);
     mFlexContainer.SetProperty(FlexContainer::Property::FLEX_DIRECTION, FlexContainer::COLUMN); // column as main axis
     contents.Add(mFlexContainer);
@@ -237,7 +237,7 @@ public:
       // flex properties that only work when there are multiple lines in the layout
       flexItem.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
       // Make sure there are still extra space in the line after wrapping
-      flexItem.SetProperty( Actor::Property::SIZE, Vector2(stageSize.width / NUM_FLEX_ITEMS * 1.25f, (stageSize.height - VIEW_STYLE.mToolBarHeight) * 0.95f / NUM_FLEX_ITEMS * 1.25f) );
+      flexItem.SetProperty( Actor::Property::SIZE, Vector2(windowSize.width / NUM_FLEX_ITEMS * 1.25f, (windowSize.height - VIEW_STYLE.mToolBarHeight) * 0.95f / NUM_FLEX_ITEMS * 1.25f) );
 
       mFlexItemContainer.Add( flexItem );
     }

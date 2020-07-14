@@ -266,7 +266,7 @@ public:
 
   void SetUpItemView()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApp.GetWindow();
 
     mTapDetector = TapGestureDetector::New();
     mTapDetector.DetectedSignal().Connect( this, &ExampleApp::OnTap );
@@ -279,7 +279,7 @@ public:
     mItemView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
     mLayout = DefaultItemLayout::New( DefaultItemLayout::LIST );
 
-    mLayout->SetItemSize( Vector3( stage.GetSize().width, 50, 1 ) );
+    mLayout->SetItemSize( Vector3( window.GetSize().GetWidth(), 50, 1 ) );
 
     mItemView.AddLayout( *mLayout );
 
@@ -343,7 +343,7 @@ public:
     }
 
     // Activate the layout
-    Vector3 size(stage.GetSize());
+    Vector3 size(window.GetSize());
     mItemView.ActivateLayout(0, size, 0.0f/*immediate*/);
   }
 
@@ -379,7 +379,7 @@ public:
 
   void ReloadJsonFile(const std::string& filename, Builder& builder, Layer& layer)
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApp.GetWindow();
 
     builder = Builder::New();
     builder.QuitSignal().Connect( this, &ExampleApp::OnQuitOrBack );
@@ -392,7 +392,7 @@ public:
     builder.AddConstants( defaultDirs );
 
     // render tasks may have been setup last load so remove them
-    RenderTaskList taskList = stage.GetRenderTaskList();
+    RenderTaskList taskList = window.GetRenderTaskList();
     if( taskList.GetTaskCount() > 1 )
     {
       typedef std::vector<RenderTask> Collection;
@@ -410,7 +410,7 @@ public:
       }
 
       RenderTask defaultTask = taskList.GetTask(0);
-      defaultTask.SetSourceActor( stage.GetRootLayer() );
+      defaultTask.SetSourceActor( window.GetRootLayer() );
       defaultTask.SetFrameBuffer( FrameBuffer() );
     }
 
@@ -452,7 +452,7 @@ public:
 
     mBuilderLayer.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_CENTER);
     mBuilderLayer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::BOTTOM_CENTER);
-    Dali::Vector3 size = Stage::GetCurrent().GetRootLayer().GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
+    Dali::Vector3 size = mApp.GetWindow().GetRootLayer().GetCurrentProperty< Vector3 >( Actor::Property::SIZE );
     size.y -= DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight;
     mBuilderLayer.SetProperty( Actor::Property::SIZE, size );
 
@@ -461,9 +461,9 @@ public:
 
   void Create(Application& app)
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = app.GetWindow();
 
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleApp::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &ExampleApp::OnKeyEvent);
 
     Layer contents = DemoHelper::CreateView( app,
                                              mView,
@@ -488,7 +488,7 @@ public:
     mNavigationView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mNavigationView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
 
-    stage.Add( mNavigationView );
+    window.Add( mNavigationView );
 
     // Set up the background gradient.
     Property::Array stopOffsets;
@@ -497,14 +497,14 @@ public:
     Property::Array stopColors;
     stopColors.PushBack( Color::WHITE );
     stopColors.PushBack( Vector4( 0.45f, 0.70f, 0.80f, 1.0f ) ); // Medium bright, pastel blue
-    const float percentageStageHeight = stage.GetSize().height * 0.6f;
+    const float percentageWindowHeight = window.GetSize().GetHeight() * 0.6f;
 
     mNavigationView.SetProperty( Toolkit::Control::Property::BACKGROUND, Dali::Property::Map()
       .Add( Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT )
       .Add( Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets )
       .Add( Toolkit::GradientVisual::Property::STOP_COLOR, stopColors )
-      .Add( Toolkit::GradientVisual::Property::START_POSITION, Vector2( 0.0f, -percentageStageHeight ) )
-      .Add( Toolkit::GradientVisual::Property::END_POSITION, Vector2( 0.0f, percentageStageHeight ) )
+      .Add( Toolkit::GradientVisual::Property::START_POSITION, Vector2( 0.0f, -percentageWindowHeight ) )
+      .Add( Toolkit::GradientVisual::Property::END_POSITION, Vector2( 0.0f, percentageWindowHeight ) )
       .Add( Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE ) );
 
     SetUpItemView();

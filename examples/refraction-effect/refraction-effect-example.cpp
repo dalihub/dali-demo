@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -243,13 +243,13 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application& application)
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = application.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
-    stage.KeyEventSignal().Connect(this, &RefractionEffectExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &RefractionEffectExample::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     Toolkit::ToolBar toolBar;
     Toolkit::Control    view;
     mContent = DemoHelper::CreateView( application,
@@ -284,7 +284,7 @@ private:
     mShaderFlat = Shader::New( VERTEX_SHADER_FLAT, FRAGMENT_SHADER_FLAT );
     mGeometry = CreateGeometry( MESH_FILES[mCurrentMeshId] );
 
-    Texture texture = DemoHelper::LoadStageFillingTexture( TEXTURE_IMAGES[mCurrentTextureId] );
+    Texture texture = DemoHelper::LoadWindowFillingTexture( window.GetSize(), TEXTURE_IMAGES[mCurrentTextureId] );
     mTextureSet = TextureSet::New();
     mTextureSet.SetTexture( 0u, texture );
 
@@ -293,7 +293,7 @@ private:
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer( mRenderer );
-    mMeshActor.SetProperty( Actor::Property::SIZE, stageSize );
+    mMeshActor.SetProperty( Actor::Property::SIZE, windowSize );
     mMeshActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     mContent.Add( mMeshActor );
 
@@ -310,13 +310,13 @@ private:
 
     mEffectStrengthIndex = mMeshActor.RegisterProperty( "uEffectStrength",  0.f );
 
-    Vector3 lightPosition( -stageSize.x*0.5f, -stageSize.y*0.5f, stageSize.x*0.5f ); // top_left
+    Vector3 lightPosition( -windowSize.x*0.5f, -windowSize.y*0.5f, windowSize.x*0.5f ); // top_left
     mMeshActor.RegisterProperty( "uLightPosition", lightPosition );
 
     Property::Index lightSpinOffsetIndex = mMeshActor.RegisterProperty( "uLightSpinOffset", Vector2::ZERO );
 
     mSpinAngleIndex = mMeshActor.RegisterProperty("uSpinAngle", 0.f );
-    Constraint constraint = Constraint::New<Vector2>( mMeshActor, lightSpinOffsetIndex, LightOffsetConstraint(stageSize.x*0.1f) );
+    Constraint constraint = Constraint::New<Vector2>( mMeshActor, lightSpinOffsetIndex, LightOffsetConstraint(windowSize.x*0.1f) );
     constraint.AddSource( LocalSource(mSpinAngleIndex) );
     constraint.Apply();
 
@@ -347,7 +347,7 @@ private:
   bool OnChangeTexture( Toolkit::Button button )
   {
     mCurrentTextureId = ( mCurrentTextureId + 1 ) % NUM_TEXTURE_IMAGES;
-    Texture texture = DemoHelper::LoadStageFillingTexture( TEXTURE_IMAGES[mCurrentTextureId] );
+    Texture texture = DemoHelper::LoadWindowFillingTexture( mApplication.GetWindow().GetSize(), TEXTURE_IMAGES[mCurrentTextureId] );
     mTextureSet.SetTexture( 0u, texture );
     return true;
   }
@@ -537,8 +537,8 @@ private:
     Vector3 bBoxSize( boundingBox[1] - boundingBox[0], boundingBox[3] - boundingBox[2], boundingBox[5] - boundingBox[4]);
     Vector3 bBoxMinCorner( boundingBox[0], boundingBox[2], boundingBox[4] );
 
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
-    Vector3 scale( stageSize.x / bBoxSize.x, stageSize.y / bBoxSize.y, 1.f );
+    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    Vector3 scale( windowSize.x / bBoxSize.x, windowSize.y / bBoxSize.y, 1.f );
     scale.z = (scale.x + scale.y)/2.f;
 
     textureCoordinates.reserve(vertexPositions.size());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -87,6 +87,7 @@ const Vector4 HEADER_COLOR( 231.0f/255.0f, 231.0f/255.0f, 231.0f/255.0f, 1.0f );
 } // unnamed namespace
 
 ContactCard::ContactCard(
+    Dali::Window window,
     const ContactCardLayoutInfo& contactCardLayoutInfo,
     const std::string& contactName,
     const std::string& contactAddress,
@@ -106,9 +107,8 @@ ContactCard::ContactCard(
   mClippedImagePropertyIndex( Property::INVALID_INDEX ),
   mFolded( true )
 {
-  // Connect to the stage's key signal to allow Back and Escape to fold a contact card if it is unfolded
-  Stage stage = Stage::GetCurrent();
-  stage.KeyEventSignal().Connect( mSlotDelegate, &ContactCard::OnKeyEvent );
+  // Connect to the window's key signal to allow Back and Escape to fold a contact card if it is unfolded
+  window.KeyEventSignal().Connect( mSlotDelegate, &ContactCard::OnKeyEvent );
 
   // Create a control which will be used for the background and to clip the contents
   mContactCard = Control::New();
@@ -120,7 +120,7 @@ ContactCard::ContactCard(
   mContactCard.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
   mContactCard.SetProperty( Actor::Property::POSITION, Vector2( foldedPosition.x, foldedPosition.y ));
   mContactCard.SetProperty( Actor::Property::SIZE, mContactCardLayoutInfo.foldedSize );
-  stage.Add( mContactCard );
+  window.Add( mContactCard );
 
   // Create the header which will be shown only when the contact is unfolded
   mHeader = Control::New();

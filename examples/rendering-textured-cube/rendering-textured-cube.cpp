@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,9 +82,9 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     // Step 1. Create shader
     CreateCubeShader();
@@ -104,11 +104,11 @@ public:
     // Step 6. Play animation to rotate the cube
     PlayAnimation();
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &TexturedCubeController::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &TexturedCubeController::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &TexturedCubeController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &TexturedCubeController::OnKeyEvent );
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )
@@ -261,16 +261,16 @@ public:
    */
   void CreateActor()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
 
-    float quarterStageWidth = stage.GetSize().x * 0.25f;
+    float quarterWindowWidth = window.GetSize().GetWidth() * 0.25f;
     mActor = Actor::New();
     mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 0.0f ) );
-    mActor.SetProperty( Actor::Property::SIZE, Vector3( quarterStageWidth, quarterStageWidth, quarterStageWidth ) );
+    mActor.SetProperty( Actor::Property::SIZE, Vector3( quarterWindowWidth, quarterWindowWidth, quarterWindowWidth ) );
     mActor.AddRenderer( mRenderer );
-    stage.Add( mActor );
+    window.Add( mActor );
   }
 
   /**

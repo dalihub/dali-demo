@@ -2,7 +2,7 @@
 #define DEMO_FRAME_CALLBACK_H
 
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,10 +39,10 @@ public:
   FrameCallback();
 
   /**
-   * @brief Sets the stage width.
-   * @param[in]  stageWidth  The stage width.
+   * @brief Sets the window width.
+   * @param[in]  windowWidth  The window width.
    */
-  void SetStageWidth( float stageWidth );
+  void SetWindowWidth( float windowWidth );
 
   /**
    * @brief The actor with the specified ID will be changed when Update() is called.
@@ -62,7 +62,7 @@ private:
 private:
 
   Dali::Vector< uint32_t > mActorIdContainer; ///< Container of Actor IDs.
-  float stageHalfWidth; ///< Half the width of the stage. Center is 0,0 in the world matrix.
+  float windowHalfWidth; ///< Half the width of the window. Center is 0,0 in the world matrix.
 
   constexpr static float SIZE_MULTIPLIER = 2.0f; ///< Multiplier for the size to set as the actors hit the edge.
 };

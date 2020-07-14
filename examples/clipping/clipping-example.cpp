@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,12 +74,9 @@ private:
    */
   void Create( Application& application )
   {
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
-
-    // Connect to the stage's key signal to allow Back and Escape to exit.
-    Stage stage = Dali::Stage::GetCurrent();
-    stage.KeyEventSignal().Connect( this, &ClippingExample::OnKeyEvent );
+    // Connect to the window's key signal to allow Back and Escape to exit.
+    Window window = application.GetWindow();
+    window.KeyEventSignal().Connect( this, &ClippingExample::OnKeyEvent );
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label = Toolkit::TextLabel::New( APPLICATION_TITLE );
@@ -88,22 +85,22 @@ private:
     label.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-    stage.Add( label );
+    window.Add( label );
 
     // Create an item-view which clips its children.
     mItemView = ItemView::New( mClippingItemFactory );
     mItemView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mItemView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mItemView.SetProperty( Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN ); // Enable clipping. No need to create any renderers.
-    stage.Add( mItemView );
+    window.Add( mItemView );
 
     // Create a Spiral Layout and add it to the Item View.
     mItemView.AddLayout( * DefaultItemLayout::New( DefaultItemLayout::SPIRAL ) );
-    stage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D ); // The item-view spiral layout requires Layer 3D behaviour.
+    window.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D ); // The item-view spiral layout requires Layer 3D behaviour.
 
     // Calculate the size we would like our item-view layout to be, and then activate the layout.
-    const Vector2 stageSize = stage.GetSize();
-    const Vector3 itemViewLayoutSize( ITEM_VIEW_LAYOUT_SIZE_SCALE.x * stageSize.x, ITEM_VIEW_LAYOUT_SIZE_SCALE.y * stageSize.y, ITEM_VIEW_LAYOUT_SIZE_SCALE.z * stageSize.x );
+    const Vector2 windowSize = window.GetSize();
+    const Vector3 itemViewLayoutSize( ITEM_VIEW_LAYOUT_SIZE_SCALE.x * windowSize.x, ITEM_VIEW_LAYOUT_SIZE_SCALE.y * windowSize.y, ITEM_VIEW_LAYOUT_SIZE_SCALE.z * windowSize.x );
     mItemView.ActivateLayout( 0, itemViewLayoutSize, 0.0f );
 
     // Connect to the scroll started and completed signals to apply orientation constraints & animations.
@@ -124,7 +121,7 @@ private:
                                        .Add( BorderVisual::Property::SIZE, 2.0f )
                                        .Add( BorderVisual::Property::ANTI_ALIASING, true ) );
     border.SetProperty( Actor::Property::SIZE, Vector3( itemViewLayoutSize.x + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.y + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.z + ITEM_VIEW_BORDER_SIZE * 2.0f ) );
-    stage.Add( border );
+    window.Add( border );
 
     // Constrain the border's orientation to the orientation of item-view.
     Constraint constraint = Constraint::New< Quaternion >( border, Actor::Property::ORIENTATION, EqualToConstraint() );
@@ -140,7 +137,7 @@ private:
     button.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
     button.SetProperty( Button::Property::LABEL, BUTTON_LABEL );
     button.ClickedSignal().Connect( this, &ClippingExample::OnButtonClicked );
-    stage.Add( button );
+    window.Add( button );
   }
 
   /**

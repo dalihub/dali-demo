@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include "shadow-button.h"
 #include <cstdio>
 #include <sstream>
@@ -68,12 +69,9 @@ TransitionApplication::~TransitionApplication()
 
 void TransitionApplication::Create( Application& application )
 {
-  Stage stage = Stage::GetCurrent();
-  stage.KeyEventSignal().Connect(this, &TransitionApplication::OnKeyEvent);
-  stage.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
-
-  // Hide the indicator bar
-  application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+  Window window = application.GetWindow();
+  window.KeyEventSignal().Connect(this, &TransitionApplication::OnKeyEvent);
+  window.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
 
   // Content panes:
   TableView contentLayout = TableView::New( 3, 1 );
@@ -85,7 +83,7 @@ void TransitionApplication::Create( Application& application )
   contentLayout.SetBackgroundColor( Vector4(0.949, 0.949, 0.949, 1.0) );
   // Assign all rows the size negotiation property of fitting to children
 
-  stage.Add( contentLayout );
+  window.Add( contentLayout );
 
   mTitle = TextLabel::New( "Custom Control Transition Example" );
   mTitle.SetProperty( Dali::Actor::Property::NAME, "Title" );

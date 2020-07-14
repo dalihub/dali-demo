@@ -129,11 +129,12 @@ public:
   void OnInit(Application& app)
   {
     // The Init signal is received once (only) during the Application lifetime
+    Window window = app.GetWindow();
 
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &MotionStretchExampleApp::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &MotionStretchExampleApp::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     mContentLayer = DemoHelper::CreateView( mApplication,
                                             mView,
                                             mToolBar,
@@ -142,8 +143,8 @@ public:
                                             APPLICATION_TITLE );
 
     // Ensure the content layer is a square so the touch area works in all orientations
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
-    float size = std::max( stageSize.width, stageSize.height );
+    Vector2 windowSize = window.GetSize();
+    float size = std::max( windowSize.width, windowSize.height );
     mContentLayer.SetProperty( Actor::Property::SIZE, Vector2( size, size ) );
 
     //Add an slideshow icon on the right of the title
@@ -173,7 +174,7 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
     winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
-    winHandle.ResizedSignal().Connect( this, &MotionStretchExampleApp::OnWindowResized );
+    winHandle.ResizeSignal().Connect( this, &MotionStretchExampleApp::OnWindowResized );
 
     // set initial orientation
     Rotate( PORTRAIT );
@@ -204,7 +205,7 @@ public:
   //
   //
 
-  void OnWindowResized( Window::WindowSize size )
+  void OnWindowResized( Window window, Window::WindowSize size )
   {
     Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
   }
@@ -212,16 +213,16 @@ public:
   void Rotate( DeviceOrientation orientation )
   {
     // Resize the root actor
-    const Vector2 targetSize = Stage::GetCurrent().GetSize();
+    const Vector2 targetSize = mApplication.GetWindow().GetSize();
 
     if( mOrientation != orientation )
     {
       mOrientation = orientation;
 
-      // check if actor is on stage
+      // check if actor is on window
       if( mView.GetParent() )
       {
-        // has parent so we expect it to be on stage, start animation
+        // has parent so we expect it to be on window, start animation
         mRotateAnimation = Animation::New( ORIENTATION_DURATION );
         mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_WIDTH ), targetSize.width );
         mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_HEIGHT ), targetSize.height );
@@ -252,8 +253,8 @@ public:
     float originOffsetX, originOffsetY;
 
     // rotate offset (from top left origin to centre) into actor space
-    Vector2 stageSize = Dali::Stage::GetCurrent().GetSize();
-    actor.ScreenToLocal(originOffsetX, originOffsetY, stageSize.width * 0.5f, stageSize.height * 0.5f);
+    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    actor.ScreenToLocal(originOffsetX, originOffsetY, windowSize.width * 0.5f, windowSize.height * 0.5f);
 
     // get dest point in local actor space
     destPos.x = tapGesture.localPoint.x - originOffsetX;

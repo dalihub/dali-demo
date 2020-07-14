@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,14 +72,14 @@ public:
 
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
-    Vector2 viewSize( stageSize );
+    Window window = application.GetWindow();
+    Vector2 windowSize = window.GetSize();
+    Vector2 viewSize( windowSize );
 
     mRootActor = Actor::New();
     mRootActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mRootActor.SetProperty( Actor::Property::SIZE, stageSize );
-    stage.Add( mRootActor );
+    mRootActor.SetProperty( Actor::Property::SIZE, windowSize );
+    window.Add( mRootActor );
 
     // Create the object that will perform the blooming work
     mBloomView = Dali::Toolkit::BloomView::New();
@@ -117,7 +117,7 @@ public:
 
     imageView = ImageView::New( UI_DIFFUSE_IMAGE );
     imageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView.SetProperty( Actor::Property::SIZE, stageSize * 0.5f );
+    imageView.SetProperty( Actor::Property::SIZE, windowSize * 0.5f );
     imageView.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 100.0f ) );
     mObjectRootActor.Add( imageView );
 
@@ -125,7 +125,7 @@ public:
     PulseBloomIntensity();
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &BloomExample::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &BloomExample::OnKeyEvent );
   }
 
   void OnKeyEvent( const KeyEvent& event )

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <iostream>
 
 // INTERNAL INCLUDES
@@ -55,9 +56,9 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
-    stage.KeyEventSignal().Connect(this, &EmojiExample::OnKeyEvent);
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
+    window.KeyEventSignal().Connect(this, &EmojiExample::OnKeyEvent);
 
     mTableView = Toolkit::TableView::New( NUMBER_OF_EMOJIS, 1 );
     mTableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
@@ -65,7 +66,7 @@ public:
     mTableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mTableView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     mTableView.TouchSignal().Connect( this, &EmojiExample::OnTouch );
-    stage.Add( mTableView );
+    window.Add( mTableView );
 
     for( unsigned int index = 0u; index < NUMBER_OF_EMOJIS; ++index )
     {

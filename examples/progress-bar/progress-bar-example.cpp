@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #include "shared/view.h"
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/progress-bar/progress-bar-devel.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -66,10 +67,10 @@ private:
     // The Init signal is received once (only) during the Application lifetime
 
     // Respond to key events
-    Stage::GetCurrent().KeyEventSignal().Connect( this, &ProgressBarExample::OnKeyEvent );
+    application.GetWindow().KeyEventSignal().Connect( this, &ProgressBarExample::OnKeyEvent );
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
 
     mContentLayer = DemoHelper::CreateView( application,
                                             mView,

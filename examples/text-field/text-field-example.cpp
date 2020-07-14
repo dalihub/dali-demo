@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,17 +67,14 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
-    stage.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
-    stage.KeyEventSignal().Connect(this, &TextFieldExample::OnKeyEvent);
-
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+    window.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
+    window.KeyEventSignal().Connect(this, &TextFieldExample::OnKeyEvent);
 
     mButton = CreateFolderButton();
     mButton.ClickedSignal().Connect( this, &TextFieldExample::OnButtonClicked );
-    stage.Add( mButton );
+    window.Add( mButton );
   }
 
   PushButton CreateFolderButton()
@@ -91,24 +88,24 @@ public:
 
   bool OnButtonClicked( Toolkit::Button button )
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
     // Remove previously hidden pop-up
     UnparentAndReset(mPopup);
 
     // Launch a pop-up containing TextField
-    mField = CreateTextField( stageSize, mButtonLabel );
+    mField = CreateTextField( windowSize, mButtonLabel );
     mPopup = CreatePopup();
     mPopup.Add( mField );
     mPopup.OutsideTouchedSignal().Connect( this, &TextFieldExample::OnPopupOutsideTouched );
-    stage.Add( mPopup );
+    window.Add( mPopup );
     mPopup.SetDisplayState( Popup::SHOWN );
 
     return true;
   }
 
-  TextField CreateTextField( const Vector2& stageSize, const std::string& text )
+  TextField CreateTextField( const Vector2& windowSize, const std::string& text )
   {
     TextField field = TextField::New();
     field.SetProperty( Dali::Actor::Property::NAME,"textField");
@@ -119,7 +116,7 @@ public:
     field.SetProperty( TextField::Property::TEXT_COLOR, Vector4( 0.0f, 1.0f, 1.0f, 1.0f ) ); // CYAN
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
     field.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
-    field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, stageSize.width - BORDER_WIDTH*2, stageSize.height - BORDER_WIDTH*2 ) );
+    field.SetProperty( TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>( BORDER_WIDTH, BORDER_WIDTH, windowSize.width - BORDER_WIDTH*2, windowSize.height - BORDER_WIDTH*2 ) );
 
     return field;
   }

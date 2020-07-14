@@ -2,7 +2,7 @@
 #define CONTACT_CARD_LAYOUTER_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 // EXTERNAL INCLUDES
 #include <vector>
 #include <string>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/common/intrusive-ptr.h>
 #include <dali/public-api/math/vector2.h>
 
@@ -32,7 +33,7 @@ class ContactCard;
 /**
  * @brief This class lays out contact cards on the screen appropriately.
  *
- * The contact cards are added to the stage directly and it uses the stage size to figure out exactly how to layout them.
+ * The contact cards are added to the passed in window directly and it uses the window size to figure out exactly how to layout them.
  * It supports a minimum of 3 items on each row or column.
  *
  * Relayouting is not supported.
@@ -53,11 +54,12 @@ public:
 
   /**
    * @brief Creates a contact card with the given information.
+   * @param[in]  window          The window to add the contact to.
    * @param[in]  contactName     The name of the contact to display.
    * @param[in]  contactAddress  The address of the contact to display.
    * @param[in]  imagePath       The path to the image to display.
    */
-  void AddContact( const std::string& contactName, const std::string& contactAddress, const std::string& imagePath );
+  void AddContact( Dali::Window window, const std::string& contactName, const std::string& contactAddress, const std::string& imagePath );
 
 private:
 

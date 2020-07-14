@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -91,22 +91,17 @@ public:
   AnimatedShapesExample( Application& application )
 : mApplication( application )
 {
-    // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &AnimatedShapesExample::Create );
+  // Connect to the Application's Init signal
+  mApplication.InitSignal().Connect( this, &AnimatedShapesExample::Create );
 }
 
-  ~AnimatedShapesExample()
-  {
-    // Nothing to do here;
-  }
+  ~AnimatedShapesExample() = default;
 
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
-
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
+    const Vector2 windowSize = window.GetSize();
 
     // Creates the background gradient
     Toolkit::Control background = Dali::Toolkit::Control::New();
@@ -123,12 +118,12 @@ public:
     stopColors.PushBack( Vector4( 0.0f,0.0f,1.0f,1.0f ) );
     stopColors.PushBack( Vector4( 1.0f,1.0f,1.0f,1.0f ) );
     map.Insert( GradientVisual::Property::STOP_COLOR, stopColors );
-    Vector2 halfStageSize = Stage::GetCurrent().GetSize()*0.5f;
-    map.Insert( GradientVisual::Property::START_POSITION,  Vector2(0.0f,-halfStageSize.y) );
-    map.Insert( GradientVisual::Property::END_POSITION,  Vector2(0.0f,halfStageSize.y)  );
+    Vector2 halfWindowSize = windowSize * 0.5f;
+    map.Insert( GradientVisual::Property::START_POSITION,  Vector2(0.0f,-halfWindowSize.y) );
+    map.Insert( GradientVisual::Property::END_POSITION,  Vector2(0.0f,halfWindowSize.y)  );
     map.Insert( GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE );
     background.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
-    stage.Add( background );
+    window.Add( background );
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label = Toolkit::TextLabel::New( APPLICATION_TITLE );
@@ -137,13 +132,13 @@ public:
     label.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     label.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) );
-    stage.Add( label );
+    window.Add( label );
 
-    CreateTriangleMorph(Vector3( stage.GetSize().x*0.5f, stage.GetSize().y*0.15f, 0.0f), 100.0f );
-    CreateCircleMorph( Vector3( stage.GetSize().x*0.5f, stage.GetSize().y*0.5f, 0.0f), 55.0f );
-    CreateQuadMorph( Vector3( stage.GetSize().x*0.5f, stage.GetSize().y*0.85f, 0.0f), 60.0f );
+    CreateTriangleMorph(Vector3( windowSize.x*0.5f, windowSize.y*0.15f, 0.0f), 100.0f );
+    CreateCircleMorph( Vector3( windowSize.x*0.5f, windowSize.y*0.5f, 0.0f), 55.0f );
+    CreateQuadMorph( Vector3( windowSize.x*0.5f, windowSize.y*0.85f, 0.0f), 60.0f );
 
-    stage.KeyEventSignal().Connect( this, &AnimatedShapesExample::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &AnimatedShapesExample::OnKeyEvent );
   }
 
   void CreateTriangleMorph( Vector3 center, float side )
@@ -217,8 +212,8 @@ public:
     actor.SetProperty( Actor::Property::COLOR,Vector4(1.0f,1.0f,0.0f,1.0f) );
     actor.AddRenderer( renderer );
 
-    Stage stage = Stage::GetCurrent();
-    stage.Add( actor );
+    Window window = mApplication.GetWindow();
+    window.Add( actor );
 
     //Animation
     Animation animation = Animation::New(5.0f);
@@ -308,8 +303,8 @@ public:
     actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     actor.AddRenderer( renderer );
 
-    Stage stage = Stage::GetCurrent();
-    stage.Add( actor );
+    Window window = mApplication.GetWindow();
+    window.Add( actor );
 
     //Animation
     Animation animation = Animation::New(5.0f);
@@ -410,8 +405,8 @@ public:
     actor.SetProperty( Actor::Property::COLOR,Vector4(1.0f,0.0f,0.0f,1.0f) );
     actor.AddRenderer( renderer );
 
-    Stage stage = Stage::GetCurrent();
-    stage.Add( actor );
+    Window window = mApplication.GetWindow();
+    window.Add( actor );
 
     //Animation
     Animation animation = Animation::New( 5.0f );

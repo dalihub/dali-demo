@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@
 #include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali-toolkit/devel-api/accessibility-manager/accessibility-manager.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 
 // INTERNAL INCLUDES
 #include "shared/execute-process.h"
@@ -103,7 +105,6 @@ const char * const DEMO_BUILD_DATE    = __DATE__ " " __TIME__;
 Control CreateBackground( std::string stylename )
 {
   Control background = Control::New();
-  Stage::GetCurrent().Add( background );
   background.SetStyleName( stylename );
   background.SetProperty( Actor::Property::NAME, "BACKGROUND" );
   background.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
@@ -227,12 +228,13 @@ void DaliTableView::SortAlphabetically( bool sortAlphabetically )
 
 void DaliTableView::Initialize( Application& application )
 {
-  Stage::GetCurrent().KeyEventSignal().Connect( this, &DaliTableView::OnKeyEvent );
-  const Vector2 stageSize = Stage::GetCurrent().GetSize();
+  Window window = application.GetWindow();
+  window.KeyEventSignal().Connect( this, &DaliTableView::OnKeyEvent );
+  const Window::WindowSize windowSize = window.GetSize();
 
   // Background
   mRootActor = CreateBackground( "LauncherBackground" );
-  Stage::GetCurrent().Add( mRootActor );
+  window.Add( mRootActor );
 
   // Add logo
   ImageView logo = ImageView::New( LOGO_PATH );
@@ -257,7 +259,7 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
   mScrollView.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.0f, 0.6f, 0.0f ) );
 
-  const float buttonsPageMargin = ( 1.0f - TABLE_RELATIVE_SIZE.x ) * 0.5f * stageSize.width;
+  const float buttonsPageMargin = ( 1.0f - TABLE_RELATIVE_SIZE.x ) * 0.5f * windowSize.GetWidth();
   mScrollView.SetProperty( Actor::Property::PADDING, Padding( buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f ) );
 
   mScrollView.SetAxisAutoLock( true );
@@ -265,7 +267,7 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.ScrollStartedSignal().Connect( this, &DaliTableView::OnScrollStart );
   mScrollView.TouchSignal().Connect( this, &DaliTableView::OnScrollTouched );
 
-  mPageWidth = stageSize.width * TABLE_RELATIVE_SIZE.x * 0.5f;
+  mPageWidth = windowSize.GetWidth() * TABLE_RELATIVE_SIZE.x * 0.5f;
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
   Actor bubbleContainer = Actor::New();
@@ -288,7 +290,7 @@ void DaliTableView::Initialize( Application& application )
 
   Dali::Window winHandle = application.GetWindow();
 
-  if( stageSize.width <= stageSize.height )
+  if( windowSize.GetWidth() <= windowSize.GetHeight() )
   {
     winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT );
     winHandle.RemoveAvailableOrientation( Dali::Window::LANDSCAPE );
@@ -306,8 +308,6 @@ void DaliTableView::Initialize( Application& application )
   // Set initial orientation
   unsigned int degrees = 0;
   Rotate( degrees );
-
-  winHandle.ShowIndicator( Dali::Window::INVISIBLE );
 
   // Background animation
   mAnimationTimer = Timer::New( BACKGROUND_ANIMATION_DURATION );
@@ -398,7 +398,7 @@ void DaliTableView::OnButtonsPageRelayout( const Dali::Actor& actor )
 
 void DaliTableView::Populate()
 {
-  const Vector2 stageSize = Stage::GetCurrent().GetSize();
+  const Window::WindowSize windowSize = mApplication.GetWindow().GetSize();
 
   mTotalPages = ( mExampleList.size() + EXAMPLES_PER_PAGE - 1 ) / EXAMPLES_PER_PAGE;
 
@@ -472,7 +472,7 @@ void DaliTableView::Populate()
   // Update Ruler info.
   mScrollRulerX = new FixedRuler( mPageWidth );
   mScrollRulerY = new DefaultRuler();
-  mScrollRulerX->SetDomain( RulerDomain( 0.0f, (mTotalPages+1) * stageSize.width * TABLE_RELATIVE_SIZE.x * 0.5f, true ) );
+  mScrollRulerX->SetDomain( RulerDomain( 0.0f, (mTotalPages+1) * windowSize.GetWidth() * TABLE_RELATIVE_SIZE.x * 0.5f, true ) );
   mScrollRulerY->Disable();
   mScrollView.SetRulerX( mScrollRulerX );
   mScrollView.SetRulerY( mScrollRulerY );
@@ -481,12 +481,13 @@ void DaliTableView::Populate()
 void DaliTableView::Rotate( unsigned int degrees )
 {
   // Resize the root actor
-  Vector2 stageSize = Stage::GetCurrent().GetSize();
-  Vector3 targetSize( stageSize.x, stageSize.y, 1.0f );
+  const Window::WindowSize windowSize = mApplication.GetWindow().GetSize();
+  const Vector2 originalSize( windowSize.GetWidth(), windowSize.GetHeight() );
+  Vector3 targetSize( originalSize.x, originalSize.y, 1.0f );
 
   if( degrees == 90 || degrees == 270 )
   {
-    targetSize = Vector3( stageSize.y, stageSize.x, 1.0f );
+    targetSize = Vector3( originalSize.y, originalSize.x, 1.0f );
   }
 
   if( mRotateAnimation )
@@ -670,29 +671,30 @@ void DaliTableView::ApplyScrollViewEffect()
 
 void DaliTableView::SetupInnerPageCubeEffect()
 {
-  const Vector2 stageSize = Stage::GetCurrent().GetSize();
+  const Window::WindowSize windowDimensions = mApplication.GetWindow().GetSize();
+  const Vector2 windowSize(windowDimensions.GetWidth(), windowDimensions.GetHeight());
 
   Dali::Path path = Dali::Path::New();
   Dali::Property::Array points;
   points.Resize(3);
-  points[0] = Vector3( stageSize.x*0.5, 0.0f,  stageSize.x*0.5f);
+  points[0] = Vector3( windowSize.x*0.5, 0.0f,  windowSize.x*0.5f);
   points[1] = Vector3( 0.0f, 0.0f, 0.0f );
-  points[2] = Vector3( -stageSize.x*0.5f, 0.0f, stageSize.x*0.5f);
+  points[2] = Vector3( -windowSize.x*0.5f, 0.0f, windowSize.x*0.5f);
   path.SetProperty( Path::Property::POINTS, points );
 
   Dali::Property::Array controlPoints;
   controlPoints.Resize(4);
-  controlPoints[0] = Vector3( stageSize.x*0.5f, 0.0f, stageSize.x*0.3f );
-  controlPoints[1] = Vector3( stageSize.x*0.3f, 0.0f, 0.0f );
-  controlPoints[2] = Vector3(-stageSize.x*0.3f, 0.0f, 0.0f );
-  controlPoints[3] = Vector3(-stageSize.x*0.5f, 0.0f,  stageSize.x*0.3f );
+  controlPoints[0] = Vector3( windowSize.x*0.5f, 0.0f, windowSize.x*0.3f );
+  controlPoints[1] = Vector3( windowSize.x*0.3f, 0.0f, 0.0f );
+  controlPoints[2] = Vector3(-windowSize.x*0.3f, 0.0f, 0.0f );
+  controlPoints[3] = Vector3(-windowSize.x*0.5f, 0.0f,  windowSize.x*0.3f );
   path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
 
 
   mScrollViewEffect = ScrollViewPagePathEffect::New(path,
                                                     Vector3(-1.0f,0.0f,0.0f),
                                                     Toolkit::ScrollView::Property::SCROLL_FINAL_X,
-                                                    Vector3(stageSize.x*TABLE_RELATIVE_SIZE.x,stageSize.y*TABLE_RELATIVE_SIZE.y,0.0f),mTotalPages);
+                                                    Vector3(windowSize.x*TABLE_RELATIVE_SIZE.x,windowSize.y*TABLE_RELATIVE_SIZE.y,0.0f),mTotalPages);
 }
 
 void DaliTableView::OnKeyEvent( const KeyEvent& event )
@@ -935,7 +937,7 @@ void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap
       mVersionPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
 
       mVersionPopup.OutsideTouchedSignal().Connect( this, &DaliTableView::HideVersionPopup );
-      Stage::GetCurrent().Add( mVersionPopup );
+      mApplication.GetWindow().Add( mVersionPopup );
     }
 
     mVersionPopup.SetDisplayState( Popup::SHOWN );

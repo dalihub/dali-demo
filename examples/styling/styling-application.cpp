@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include "image-channel-control.h"
 #include <cstdio>
 #include <sstream>
@@ -104,16 +105,13 @@ StylingApplication::~StylingApplication()
 
 void StylingApplication::Create( Application& application )
 {
-  Stage stage = Stage::GetCurrent();
-  stage.KeyEventSignal().Connect(this, &StylingApplication::OnKeyEvent);
-  stage.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
-
-  // Hide the indicator bar
-  application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+  Window window = application.GetWindow();
+  window.KeyEventSignal().Connect(this, &StylingApplication::OnKeyEvent);
+  window.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
 
   mContentPane = CreateContentPane();
-  stage.Add( mContentPane );
-  mContentPane.SetProperty( Actor::Property::SIZE, stage.GetSize() );
+  window.Add( mContentPane );
+  mContentPane.SetProperty( Actor::Property::SIZE, Vector2(window.GetSize()) );
 
   // Content panes:
   TableView contentLayout = TableView::New( 5, 1 );
@@ -398,14 +396,14 @@ Actor StylingApplication::CreateResizableContentPane()
 
 Popup StylingApplication::CreateResetPopup()
 {
-  Stage stage = Stage::GetCurrent();
+  Window window = mApplication.GetWindow();
 
   Popup popup= Popup::New();
   popup.SetProperty( Dali::Actor::Property::NAME,"ResetPopup");
   popup.SetStyleName("ResetPopup");
   popup.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  popup.SetProperty( Actor::Property::SIZE, Vector2( stage.GetSize().width * 0.75f, 0.0f ) );
+  popup.SetProperty( Actor::Property::SIZE, Vector2( window.GetSize().GetWidth() * 0.75f, 0.0f ) );
   popup.SetProperty( Popup::Property::TAIL_VISIBILITY, false );
   popup.OutsideTouchedSignal().Connect( this, &StylingApplication::HidePopup );
   popup.HiddenSignal().Connect( this, &StylingApplication::PopupHidden );
@@ -570,7 +568,7 @@ bool StylingApplication::OnResetClicked( Button button )
     mResetPopup = CreateResetPopup ();
   }
 
-  Stage::GetCurrent().Add( mResetPopup );
+  mApplication.GetWindow().Add( mResetPopup );
 
   mResetPopup.SetDisplayState( Popup::SHOWN );
   return true;

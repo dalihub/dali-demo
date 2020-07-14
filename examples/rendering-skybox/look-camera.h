@@ -2,7 +2,7 @@
 #define LOOK_CAMERA_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 #include <dali/public-api/actors/camera-actor.h>
 #include <dali/public-api/adaptor-framework/timer.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/math/vector2.h>
 
 /**
@@ -43,12 +44,13 @@ public:
 
   /**
    * Initialise with given position, fovY, near, far
-   * @param[in] position Position of the camera.
+   * @param[in] window The window the camera is for
+   * @param[in] position Position of the camera
    * @param[in] fovY Field of view in degrees
    * @param[in] near Near plane
    * @param[in] far Far Plane
    */
-  void Initialise( const Dali::Vector3& position, float fov, float near, float far );
+  void Initialise( Dali::Window window, const Dali::Vector3& position, float fov, float near, float far );
 
   /**
    * Retrieves actor associated with camera object
@@ -84,6 +86,8 @@ private:
   bool OnTick();
 
 private:
+
+  Dali::Window mWindow; /// The window the camera belongs to
 
   Dali::CameraActor mCameraActor; /// Camera actor
   Dali::Actor mInterceptorActor; /// Actor intercepting user input

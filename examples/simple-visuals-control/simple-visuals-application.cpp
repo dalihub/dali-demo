@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali/integration-api/events/touch-event-integ.h>
 #include <cstdio>
@@ -100,14 +101,11 @@ void SimpleVisualsApplication::OnKeyEvent( const KeyEvent& keyEvent )
 
 void SimpleVisualsApplication::Create( Application& application )
 {
-  Stage stage = Stage::GetCurrent();
-  stage.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
+  Window window = application.GetWindow();
+  window.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
 
   // Connect to key events so can quit application
-  stage.KeyEventSignal().Connect(this, &SimpleVisualsApplication::OnKeyEvent);
-
-  // Hide the indicator bar
-  application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+  window.KeyEventSignal().Connect(this, &SimpleVisualsApplication::OnKeyEvent);
 
   // Create a table view to parent the 2 MyControls
   TableView contentLayout = TableView::New( 2, 2 );
@@ -123,7 +121,7 @@ void SimpleVisualsApplication::Create( Application& application )
   // Listen to focus change so can see Visual change from NORMAL to FOCUSED state
   KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &SimpleVisualsApplication::OnKeyboardPreFocusChange );
 
-  stage.Add( contentLayout );
+  window.Add( contentLayout );
 
   // Create 2 MyControls and add to table view.
   mMyControl = MyControl::New();

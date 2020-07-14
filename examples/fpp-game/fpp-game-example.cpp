@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ const char* SCENE_URL =
    It contains following modules:
 
    GameScene  - responsible for loading and managing the scene data,
-                it wraps around stage. Owns list of entities. Scene can be deserialised
+                it wraps around window. Owns list of entities. Scene can be deserialised
                 from json file ( see scene.json )
    GameEntity - the renderable object that has also a transformation. It wraps DALi actors.
 
@@ -93,26 +93,22 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Disable indicator
-    Dali::Window winHandle = application.GetWindow();
-    winHandle.ShowIndicator( Dali::Window::INVISIBLE );
+    // Get a handle to the window
+    mWindow = application.GetWindow();
 
-    // Get a handle to the stage
-    mStage = Stage::GetCurrent();
-
-    mStage.SetBackgroundColor( Color::BLACK );
+    mWindow.SetBackgroundColor( Color::BLACK );
 
     // Use 3D layer
-    mStage.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
+    mWindow.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
     // Load game scene
-    mScene.Load( SCENE_URL );
+    mScene.Load( mWindow, SCENE_URL );
 
     // Display tutorial
-    mTutorialController.DisplayTutorial();
+    mTutorialController.DisplayTutorial( mWindow );
 
     // Connect OnKeyEvent signal
-    mStage.KeyEventSignal().Connect( this, &GameController::OnKeyEvent );
+    mWindow.KeyEventSignal().Connect( this, &GameController::OnKeyEvent );
   }
 
   // Handle a quit key event
@@ -131,7 +127,7 @@ private:
 
   Application&              mApplication;
   GameScene                 mScene;
-  Stage                     mStage;
+  Window                    mWindow;
   FppGameTutorialController mTutorialController;
 };
 

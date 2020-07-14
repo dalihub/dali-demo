@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,9 +54,9 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &ImageViewPixelAreaApp::OnKeyEvent);
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.KeyEventSignal().Connect(this, &ImageViewPixelAreaApp::OnKeyEvent);
 
     Toolkit::ToolBar toolBar;
     Toolkit::Control background;

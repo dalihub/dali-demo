@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,7 @@ private:
   EffectsView            mDropShadowView;
   EffectsView            mEmbossView;
   Toolkit::TextLabel     mTitleActor; ///< The title on the toolbar
-  Vector2                mStageSize;
+  Vector2                mWindowSize;
   int                    mEffectSize;
 };
 
@@ -120,14 +120,14 @@ void EffectsViewApp::OnAppInitialize( Application& application )
 {
   // The Init signal is received once (only) during the Application lifetime
 
-  Stage stage = Stage::GetCurrent();
-  stage.KeyEventSignal().Connect(this, &EffectsViewApp::OnKeyEvent);
-  stage.SetBackgroundColor( Color::WHITE );
+  auto window = application.GetWindow();
+  window.KeyEventSignal().Connect(this, &EffectsViewApp::OnKeyEvent);
+  window.SetBackgroundColor( Color::WHITE );
 
-  mStageSize = stage.GetSize();
+  mWindowSize = window.GetSize();
 
   // Creates a default view with a default tool bar.
-  // The view is added to the stage.
+  // The view is added to the window.
   mContents = DemoHelper::CreateView( application, mView, mToolBar, "", TOOLBAR_IMAGE, "" );
 
   // Creates view change button.
@@ -138,17 +138,17 @@ void EffectsViewApp::OnAppInitialize( Application& application )
   viewButton.ClickedSignal().Connect( this, &EffectsViewApp::ChangeEffectSize );
   mToolBar.AddControl( viewButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
-  Vector2 effectsViewSize( mStageSize.width, mStageSize.height * 0.25f );
+  Vector2 effectsViewSize( mWindowSize.width, mWindowSize.height * 0.25f );
   mDropShadowView = CreateEffectsView( EffectsView::DROP_SHADOW, effectsViewSize, mEffectSize );
   mDropShadowView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mDropShadowView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-  mDropShadowView.SetProperty( Actor::Property::POSITION_Z,  -mStageSize.height * 0.1f );
+  mDropShadowView.SetProperty( Actor::Property::POSITION_Z,  -mWindowSize.height * 0.1f );
   mContents.Add( mDropShadowView );
 
   mEmbossView = CreateEffectsView( EffectsView::EMBOSS, effectsViewSize, mEffectSize );
   mEmbossView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mEmbossView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-  mEmbossView.SetProperty( Actor::Property::POSITION_Z,  mStageSize.height * 0.1f );
+  mEmbossView.SetProperty( Actor::Property::POSITION_Z,  mWindowSize.height * 0.1f );
   mContents.Add( mEmbossView );
 
   SetTitle( mEffectSize );
@@ -171,7 +171,7 @@ EffectsView EffectsViewApp::CreateEffectsView( EffectsView::EffectType type, con
   textActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT );
   textActor.SetProperty( Actor::Property::SIZE, viewSize );
   textActor.SetProperty( Actor::Property::POSITION, Vector2( viewSize.width*0.4f, viewSize.height*0.3f ));
-  textActor.SetProperty(  TextLabel::Property::POINT_SIZE, DemoHelper::ScalePointSize(14.f) );
+  textActor.SetProperty(  TextLabel::Property::POINT_SIZE, 14.f );
   effectsView.Add( textActor );
 
   // image

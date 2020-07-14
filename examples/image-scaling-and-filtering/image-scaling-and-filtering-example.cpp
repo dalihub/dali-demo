@@ -19,6 +19,7 @@
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include "shared/view.h"
 #include <iostream>
 
@@ -154,7 +155,7 @@ public:
   ImageScalingAndFilteringController( Application& application )
   : mApplication( application ),
     mLastPinchScale( 1.0f ),
-    mImageStageScale( 0.5f, 0.5f ),
+    mImageWindowScale( 0.5f, 0.5f ),
     mCurrentPath( 0 ),
     mFittingMode( FittingMode::FIT_WIDTH ),
     mSamplingMode( SamplingMode::BOX_THEN_LINEAR),
@@ -173,31 +174,29 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-
-    // Hide the indicator bar
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
     // Background image:
     Dali::Property::Map backgroundImage;
     backgroundImage.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
     backgroundImage.Insert( Toolkit::ImageVisual::Property::URL,  BACKGROUND_IMAGE );
-    backgroundImage.Insert( Toolkit::ImageVisual::Property::DESIRED_WIDTH, stage.GetSize().width );
-    backgroundImage.Insert( Toolkit::ImageVisual::Property::DESIRED_HEIGHT, stage.GetSize().height );
+    backgroundImage.Insert( Toolkit::ImageVisual::Property::DESIRED_WIDTH, windowSize.width );
+    backgroundImage.Insert( Toolkit::ImageVisual::Property::DESIRED_HEIGHT, windowSize.height );
     backgroundImage.Insert( Toolkit::ImageVisual::Property::FITTING_MODE,   FittingMode::SCALE_TO_FILL );
     backgroundImage.Insert( Toolkit::ImageVisual::Property::SAMPLING_MODE,   SamplingMode::BOX_THEN_NEAREST );
 
     Toolkit::ImageView background = Toolkit::ImageView::New();
     background.SetProperty( Toolkit::ImageView::Property::IMAGE, backgroundImage );
     background.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    background.SetProperty( Actor::Property::SIZE, stage.GetSize() );
-    stage.Add( background );
+    background.SetProperty( Actor::Property::SIZE, windowSize );
+    window.Add( background );
 
     mDesiredBox = Toolkit::ImageView::New( BORDER_IMAGE );
     background.Add( mDesiredBox );
 
-    mDesiredBox.SetProperty( Actor::Property::SIZE, stage.GetSize() * mImageStageScale );
+    mDesiredBox.SetProperty( Actor::Property::SIZE, windowSize * mImageWindowScale );
     mDesiredBox.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mDesiredBox.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
@@ -208,10 +207,10 @@ public:
     mImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mImageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
-    // Display the actor on the stage
+    // Display the actor on the window
     mDesiredBox.Add( mImageView );
 
-    mImageView.SetProperty( Actor::Property::SIZE, stage.GetSize() * mImageStageScale );
+    mImageView.SetProperty( Actor::Property::SIZE, windowSize * mImageWindowScale );
 
     // Setup the pinch detector for scaling the desired image load dimensions:
     mPinchDetector = PinchGestureDetector::New();
@@ -237,7 +236,7 @@ public:
     mPanGestureDetector.DetectedSignal().Connect( this, &ImageScalingAndFilteringController::OnPan );
 
     // Tie-in input event handlers:
-    stage.KeyEventSignal().Connect( this, &ImageScalingAndFilteringController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &ImageScalingAndFilteringController::OnKeyEvent );
 
     CreateControls();
 
@@ -249,17 +248,18 @@ public:
    */
   void CreateControls()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
     Dali::Layer controlsLayer = Dali::Layer::New();
     controlsLayer.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
     controlsLayer.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 1.0f, 1.0f, 1.0f ) );
     controlsLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     controlsLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    stage.Add( controlsLayer );
+    window.Add( controlsLayer );
 
-    // Back and next image buttons in corners of stage:
-    unsigned int playWidth = std::min( stage.GetSize().x * (1 / 5.0f), 58.0f );
+    // Back and next image buttons in corners of window:
+    unsigned int playWidth = std::min( windowSize.x * (1 / 5.0f), 58.0f );
     Toolkit::ImageView imagePrevious = Toolkit::ImageView::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ) );
 
     // Last image button:
@@ -276,7 +276,7 @@ public:
     Toolkit::ImageView imageNext = Toolkit::ImageView::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ) );
     imageNext.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
     imageNext.SetProperty( Actor::Property::POSITION_Y,  playWidth * 0.5f );
-    imageNext.SetProperty( Actor::Property::POSITION_X,  stage.GetSize().x - playWidth * 0.5f );
+    imageNext.SetProperty( Actor::Property::POSITION_X,  windowSize.x - playWidth * 0.5f );
     imageNext.SetProperty( Actor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imageNext );
     imageNext.SetProperty( Dali::Actor::Property::NAME, NEXT_BUTTON_ID );
@@ -355,8 +355,8 @@ public:
 
   Toolkit::Popup CreatePopup()
   {
-    Stage stage = Stage::GetCurrent();
-    const float POPUP_WIDTH_DP = stage.GetSize().width * 0.75f;
+    Window window = mApplication.GetWindow();
+    const float POPUP_WIDTH_DP = window.GetSize().GetWidth() * 0.75f;
 
     Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty( Dali::Actor::Property::NAME, "POPUP" );
@@ -408,7 +408,7 @@ public:
       CreatePopupButton( fittingModes, StringFromScalingMode( FittingMode::FIT_HEIGHT ) );
 
       mPopup.SetContent( fittingModes );
-      Stage::GetCurrent().Add( mPopup );
+      mApplication.GetWindow().Add( mPopup );
       mPopup.SetDisplayState( Toolkit::Popup::SHOWN );
     }
     else if( button.GetProperty< std::string >( Dali::Actor::Property::NAME ) == SAMPLING_BUTTON_ID )
@@ -435,7 +435,7 @@ public:
       CreatePopupButton( samplingModes, StringFromFilterMode( SamplingMode::NO_FILTER ) );
 
       mPopup.SetContent( samplingModes );
-      Stage::GetCurrent().Add( mPopup );
+      mApplication.GetWindow().Add( mPopup );
       mPopup.SetDisplayState( Toolkit::Popup::SHOWN );
     }
     else if( CheckFittingModeButton( button, FittingMode::SCALE_TO_FILL) ||
@@ -540,13 +540,13 @@ public:
     {
       if ( scale < mLastPinchScale )
       {
-        mImageStageScale.x = std::max( 0.05f, mImageStageScale.x * 0.9f );
-        mImageStageScale.y = std::max( 0.05f, mImageStageScale.y * 0.9f );
+        mImageWindowScale.x = std::max( 0.05f, mImageWindowScale.x * 0.9f );
+        mImageWindowScale.y = std::max( 0.05f, mImageWindowScale.y * 0.9f );
       }
       else
       {
-        mImageStageScale.x = std::max( 0.05f, std::min( 1.0f, mImageStageScale.x * 1.1f ) );
-        mImageStageScale.y = std::max( 0.05f, std::min( 1.0f, mImageStageScale.y * 1.1f ) );
+        mImageWindowScale.x = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.x * 1.1f ) );
+        mImageWindowScale.y = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.y * 1.1f ) );
       }
       ResizeImage();
     }
@@ -555,10 +555,11 @@ public:
 
   void OnPan( Actor actor, const PanGesture& gesture )
   {
-    Stage stage = Stage::GetCurrent();
-    // 1.0f and 0.75f are the maximum size caps of the resized image, as a factor of stage-size.
-    mImageStageScale.x = std::max( 0.05f, std::min( 0.95f,  mImageStageScale.x + ( gesture.displacement.x * 2.0f / stage.GetSize().width ) ) );
-    mImageStageScale.y = std::max( 0.05f, std::min( 0.70f, mImageStageScale.y + ( gesture.displacement.y * 2.0f / stage.GetSize().height ) ) );
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
+    // 1.0f and 0.75f are the maximum size caps of the resized image, as a factor of window-size.
+    mImageWindowScale.x = std::max( 0.05f, std::min( 0.95f,  mImageWindowScale.x + ( gesture.displacement.x * 2.0f / windowSize.width ) ) );
+    mImageWindowScale.y = std::max( 0.05f, std::min( 0.70f, mImageWindowScale.y + ( gesture.displacement.y * 2.0f / windowSize.height ) ) );
 
     ResizeImage();
   }
@@ -581,29 +582,29 @@ public:
       }
       else if ( event.keyPressedName == "Right" )
       {
-        mImageStageScale.x = std::max( 0.05f, std::min( 1.0f, mImageStageScale.x * 1.1f ) );
+        mImageWindowScale.x = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.x * 1.1f ) );
       }
       else if ( event.keyPressedName == "Left" )
       {
-        mImageStageScale.x = std::max( 0.05f, mImageStageScale.x * 0.9f );
+        mImageWindowScale.x = std::max( 0.05f, mImageWindowScale.x * 0.9f );
       }
       else if ( event.keyPressedName == "Up" )
       {
-        mImageStageScale.y = std::max( 0.05f, std::min( 1.0f, mImageStageScale.y * 1.1f ) );
+        mImageWindowScale.y = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.y * 1.1f ) );
       }
       else if ( event.keyPressedName == "Down" )
       {
-        mImageStageScale.y = std::max( 0.05f, mImageStageScale.y * 0.9f );
+        mImageWindowScale.y = std::max( 0.05f, mImageWindowScale.y * 0.9f );
       }
       else if ( event.keyPressedName == "o" )
       {
-        mImageStageScale.x = std::max( 0.05f, mImageStageScale.x * 0.9f );
-        mImageStageScale.y = std::max( 0.05f, mImageStageScale.y * 0.9f );
+        mImageWindowScale.x = std::max( 0.05f, mImageWindowScale.x * 0.9f );
+        mImageWindowScale.y = std::max( 0.05f, mImageWindowScale.y * 0.9f );
       }
       else if ( event.keyPressedName == "p" )
       {
-        mImageStageScale.x = std::max( 0.05f, std::min( 1.0f, mImageStageScale.x * 1.1f ) );
-        mImageStageScale.y = std::max( 0.05f, std::min( 1.0f, mImageStageScale.y * 1.1f ) );
+        mImageWindowScale.x = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.x * 1.1f ) );
+        mImageWindowScale.y = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.y * 1.1f ) );
       }
       else if ( event.keyPressedName == "n" )
       {
@@ -643,8 +644,8 @@ private:
     mImageLoading = true;
 
     const char * const path = IMAGE_PATHS[ mCurrentPath ];
-    Stage stage = Stage::GetCurrent();
-    Size imageSize = stage.GetSize() * mImageStageScale;
+    Window window = mApplication.GetWindow();
+    Size imageSize = Vector2(window.GetSize()) * mImageWindowScale;
     mImageView.SetProperty( Actor::Property::SIZE, imageSize );
 
     Property::Map map;
@@ -661,14 +662,15 @@ private:
   void ResizeImage()
   {
 
-    Stage stage = Stage::GetCurrent();
-    Size imageSize = stage.GetSize() * mImageStageScale;
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
+    Size imageSize = windowSize * mImageWindowScale;
 
     LoadImage();
 
     // Border size needs to be modified to take into account the width of the frame.
-    Vector2 borderScale( ( imageSize + Vector2( BORDER_WIDTH * 2.0f, BORDER_WIDTH * 2.0f ) ) / stage.GetSize() );
-    mDesiredBox.SetProperty( Actor::Property::SIZE, stage.GetSize() * borderScale );
+    Vector2 borderScale( ( imageSize + Vector2( BORDER_WIDTH * 2.0f, BORDER_WIDTH * 2.0f ) ) / windowSize );
+    mDesiredBox.SetProperty( Actor::Property::SIZE, windowSize * borderScale );
   }
 
 private:
@@ -682,7 +684,7 @@ private:
   Toolkit::ImageView mGrabCorner;
   PanGestureDetector mPanGestureDetector;
   Toolkit::ImageView mImageView;
-  Vector2 mImageStageScale;
+  Vector2 mImageWindowScale;
   int mCurrentPath;
   FittingMode::Type mFittingMode;
   SamplingMode::Type mSamplingMode;

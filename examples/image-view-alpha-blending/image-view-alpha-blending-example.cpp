@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,9 +46,9 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &ImageViewAlphaBlendApp::OnKeyEvent);
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.KeyEventSignal().Connect(this, &ImageViewAlphaBlendApp::OnKeyEvent);
 
     auto green0 = Vector4( 0.f, 1.f, 0.f, 0.25f );
     auto green1 = Vector4( 0.f, 0.25f, 0.f, 0.25f );
@@ -60,7 +60,7 @@ private:
     imageView0.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
     imageView0.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     imageView0.SetProperty( Actor::Property::POSITION_Y,  -imageSize*0.5f );
-    stage.Add(imageView0);
+    window.Add(imageView0);
     Toolkit::ImageView imageView1 = CreateImageView( redGreen0 );
     imageView1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     imageView1.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
@@ -70,7 +70,7 @@ private:
     imageView2.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
     imageView2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     imageView2.SetProperty( Actor::Property::POSITION_Y,  imageSize*0.5f );
-    stage.Add(imageView2);
+    window.Add(imageView2);
     Toolkit::ImageView imageView3 = CreateImageView( redGreen1);
     imageView3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     imageView3.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );

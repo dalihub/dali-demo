@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 #include "shared/view.h"
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -52,7 +53,8 @@ public:
 
   void Create( Application& application )
   {
-    mStage = Stage::GetCurrent();
+    mWindow = application.GetWindow();
+    Vector2 windowSize = mWindow.GetSize();
     mContentLayer = DemoHelper::CreateView( application,
                                             mView,
                                             mToolBar,
@@ -77,7 +79,7 @@ public:
 
     // Create label to display which control's KeyEvent callback is called
     mEventLabel = TextLabel::New("Controls don't get KeyEvent yet");
-    mEventLabel.SetProperty( Actor::Property::SIZE, Vector2( mStage.GetSize().width, mStage.GetSize().height*0.1f ) );
+    mEventLabel.SetProperty( Actor::Property::SIZE, Vector2( windowSize.width, windowSize.height*0.1f ) );
     mEventLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mEventLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mEventLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
@@ -85,7 +87,7 @@ public:
     contentTable.Add( mEventLabel );
 
     mContainer = TableView::New( 4, 3 );
-    mContainer.SetProperty( Actor::Property::SIZE, Vector2( mStage.GetSize().width, mStage.GetSize().height*0.4f ) );
+    mContainer.SetProperty( Actor::Property::SIZE, Vector2( windowSize.width, windowSize.height*0.4f ) );
     mContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mContainer.SetBackgroundColor( BACKGROUND_COLOUR );
     mContainer.SetCellPadding( Size( MARGIN_SIZE, MARGIN_SIZE ) );
@@ -143,7 +145,7 @@ public:
     KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &FocusIntegrationExample::OnPreFocusChange );
 
     // Respond to key events
-    mStage.KeyEventSignal().Connect( this, &FocusIntegrationExample::OnKeyEvent );
+    mWindow.KeyEventSignal().Connect( this, &FocusIntegrationExample::OnKeyEvent );
   }
 
   // Callback for KeyboardFocusManager
@@ -185,7 +187,7 @@ private:
 private:
 
   Application&  mApplication;
-  Stage mStage;
+  Window mWindow;
   TableView mContainer;
   TextLabel mEventLabel;
   Toolkit::Control  mView;                              ///< The View instance.

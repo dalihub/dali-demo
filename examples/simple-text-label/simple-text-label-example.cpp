@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,9 +50,9 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
-    stage.KeyEventSignal().Connect(this, &SimpleTextLabelExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &SimpleTextLabelExample::OnKeyEvent);
 
     mLabel = TextLabel::New( "A Quick Brown Fox Jumps Over The Lazy Dog" );
     mLabel.SetProperty( Dali::Actor::Property::NAME, "SimpleTextLabel" );
@@ -63,7 +63,7 @@ public:
     mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
     mLabel.SetBackgroundColor( Color::WHITE );
 
-    stage.Add( mLabel );
+    window.Add( mLabel );
   }
 
   /**

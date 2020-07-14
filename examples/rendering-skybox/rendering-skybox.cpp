@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -147,14 +147,9 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Disable indicator.
-    // It avoids reposition the camera to fit with the indicator height.
-    Dali::Window winHandle = application.GetWindow();
-    winHandle.ShowIndicator( Dali::Window::INVISIBLE );
-
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     // Step 1. Setup camera
     SetupCamera();
@@ -180,7 +175,7 @@ public:
     PlayAnimation();
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &TexturedCubeController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &TexturedCubeController::OnKeyEvent );
   }
 
   /**
@@ -205,12 +200,12 @@ public:
    */
   void SetupCamera()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
 
-    RenderTask renderTask = stage.GetRenderTaskList().GetTask( 0 );
+    RenderTask renderTask = window.GetRenderTaskList().GetTask( 0 );
     renderTask.SetCullMode( false ); // avoid frustum culling affecting the skybox
 
-    mCamera.Initialise( CAMERA_DEFAULT_POSITION, CAMERA_DEFAULT_FOV, CAMERA_DEFAULT_NEAR, CAMERA_DEFAULT_FAR );
+    mCamera.Initialise( window, CAMERA_DEFAULT_POSITION, CAMERA_DEFAULT_FOV, CAMERA_DEFAULT_NEAR, CAMERA_DEFAULT_FAR );
   }
 
   /**
@@ -409,8 +404,8 @@ public:
 
     mActor.SetProperty( Actor::Property::SIZE, Vector3( 10.f, 10.f, 10.f ) );
 
-    Stage stage = Stage::GetCurrent();
-    stage.Add( mActor );
+    Window window = mApplication.GetWindow();
+    window.Add( mActor );
   }
 
   /**
@@ -440,7 +435,7 @@ public:
     // The fragment shader will run only is those pixels that have the max depth value.
     mSkyboxRenderer.SetProperty( Renderer::Property::DEPTH_FUNCTION, DepthFunction::LESS_EQUAL );
 
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
 
     mSkyboxActor = Actor::New();
     mSkyboxActor.SetProperty( Dali::Actor::Property::NAME, "SkyBox" );
@@ -448,7 +443,7 @@ public:
     mSkyboxActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mSkyboxActor.SetProperty( Actor::Property::POSITION, CAMERA_DEFAULT_POSITION );
     mSkyboxActor.AddRenderer( mSkyboxRenderer );
-    stage.Add( mSkyboxActor );
+    window.Add( mSkyboxActor );
   }
 
   /**

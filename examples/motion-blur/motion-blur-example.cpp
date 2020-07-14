@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -149,12 +149,13 @@ public:
   void OnInit(Application& app)
   {
     // The Init signal is received once (only) during the Application lifetime
+    Window window = app.GetWindow();
 
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &MotionBlurExampleApp::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &MotionBlurExampleApp::OnKeyEvent);
 
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     mContentLayer = DemoHelper::CreateView( mApplication,
                                             mView,
                                             mToolBar,
@@ -163,8 +164,8 @@ public:
                                             APPLICATION_TITLE );
 
     // Ensure the content layer is a square so the touch area works in all orientations
-    Vector2 stageSize = Stage::GetCurrent().GetSize();
-    float size = std::max( stageSize.width, stageSize.height );
+    Vector2 windowSize = window.GetSize();
+    float size = std::max( windowSize.width, windowSize.height );
     mContentLayer.SetProperty( Actor::Property::SIZE, Vector2( size, size ) );
 
     //Add an effects icon on the right of the title
@@ -193,7 +194,7 @@ public:
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
     winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
     winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
-    winHandle.ResizedSignal().Connect( this, &MotionBlurExampleApp::OnWindowResized );
+    winHandle.ResizeSignal().Connect( this, &MotionBlurExampleApp::OnWindowResized );
 
     // set initial orientation
     Rotate( PORTRAIT );
@@ -204,7 +205,7 @@ public:
     //
 
     // Scale down actor to fit on very low resolution screens with space to interact:
-    mMotionBlurActorSize = Size( std::min( stageSize.x * 0.3f, MOTION_BLUR_ACTOR_WIDTH ), std::min( stageSize.y * 0.3f, MOTION_BLUR_ACTOR_HEIGHT ) );
+    mMotionBlurActorSize = Size( std::min( windowSize.x * 0.3f, MOTION_BLUR_ACTOR_WIDTH ), std::min( windowSize.y * 0.3f, MOTION_BLUR_ACTOR_HEIGHT ) );
     mMotionBlurActorUpdateSize = Size( std::max( mMotionBlurActorSize.x, mMotionBlurActorSize.y ), std::max( mMotionBlurActorSize.x, mMotionBlurActorSize.y ) );
     mMotionBlurActorSize = Size( std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ), std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ) );
 
@@ -231,7 +232,7 @@ public:
   //
   //
 
-  void OnWindowResized( Window::WindowSize size )
+  void OnWindowResized( Window window, Window::WindowSize size )
   {
     Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
   }
@@ -239,16 +240,16 @@ public:
   void Rotate( DeviceOrientation orientation )
   {
     // Resize the root actor
-    const Vector2 targetSize = Stage::GetCurrent().GetSize();
+    const Vector2 targetSize = mApplication.GetWindow().GetSize();
 
     if( mOrientation != orientation )
     {
       mOrientation = orientation;
 
-      // check if actor is on stage
+      // check if actor is on window
       if( mView.GetParent() )
       {
-        // has parent so we expect it to be on stage, start animation
+        // has parent so we expect it to be on window, start animation
         mRotateAnimation = Animation::New( ORIENTATION_DURATION );
         mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_WIDTH ), targetSize.width );
         mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_HEIGHT ), targetSize.height );
@@ -280,8 +281,8 @@ public:
     float originOffsetX, originOffsetY;
 
     // rotate offset (from top left origin to centre) into actor space
-    Vector2 stageSize = Dali::Stage::GetCurrent().GetSize();
-    actor.ScreenToLocal(originOffsetX, originOffsetY, stageSize.width * 0.5f, stageSize.height * 0.5f);
+    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    actor.ScreenToLocal(originOffsetX, originOffsetY, windowSize.width * 0.5f, windowSize.height * 0.5f);
 
     // get dest point in local actor space
     destPos.x = tapGesture.localPoint.x - originOffsetX;

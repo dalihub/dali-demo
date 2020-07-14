@@ -22,6 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <sstream>
 
 // INTERNAL INCLUDES
@@ -38,10 +39,10 @@ const Vector4 BACKGROUND_COLOR( 0.04f, 0.345f, 0.392f, 1.0f );      ///< The bac
 const char*   TOOLBAR_IMAGE = DEMO_IMAGE_DIR "top-bar.png";         ///< The tool-bar image.
 const float   TOOLBAR_BUTTON_PERCENTAGE = 0.1f;                     ///< The button's space width as a percentage of the toolbar's width.
 const float   TOOLBAR_TITLE_PERCENTAGE = 0.7f;                      ///< The title's width as a percentage of the toolbar's width.
-const float   TOOLBAR_HEIGHT_PERCENTAGE = 0.05f;                    ///< The toolbar's height as a percentage of the stage's height.
+const float   TOOLBAR_HEIGHT_PERCENTAGE = 0.05f;                    ///< The toolbar's height as a percentage of the window's height.
 const float   TOOLBAR_PADDING = 4.f;                                ///< The padding in pixels.
 const float   BUTTON_PERCENTAGE = 0.8f;                             ///< The button's height as a percentage of the space for the buttons in the toolbar.
-const Vector3 TEXT_EDITOR_RELATIVE_SIZE( 0.9f, 0.5f, 1.0f );        ///< The size of the text editor as a percentage of the stage's size.
+const Vector3 TEXT_EDITOR_RELATIVE_SIZE( 0.9f, 0.5f, 1.0f );        ///< The size of the text editor as a percentage of the window's size.
 const Vector4 TEXT_EDITOR_BACKGROUND_COLOR( 1.f, 1.f, 1.f, 0.15f ); ///< The background color of the text editor.
 
 const Vector4 COLORS[] = { Color::RED,
@@ -79,22 +80,22 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
     // Respond to key events
-    stage.KeyEventSignal().Connect(this, &TextEditorExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &TextEditorExample::OnKeyEvent);
 
     // Set a background color.
-    stage.SetBackgroundColor( BACKGROUND_COLOR );
+    window.SetBackgroundColor( BACKGROUND_COLOR );
 
-    // The stage size.
-    const Vector2 stageSize = stage.GetSize();
+    // The window size.
+    const Vector2 windowSize = window.GetSize();
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
 
     // Set the toolbar style
-    const float toolBarHeight = TOOLBAR_HEIGHT_PERCENTAGE * stageSize.height;
+    const float toolBarHeight = TOOLBAR_HEIGHT_PERCENTAGE * windowSize.height;
     const DemoHelper::ViewStyle viewStyle( TOOLBAR_BUTTON_PERCENTAGE,
                                            TOOLBAR_TITLE_PERCENTAGE,
                                            toolBarHeight,
@@ -158,7 +159,7 @@ public:
 
     mEditor.SetBackgroundColor( TEXT_EDITOR_BACKGROUND_COLOR );
 
-    const Size boundingBoxSize( stageSize * TEXT_EDITOR_RELATIVE_SIZE.GetVectorXY() );
+    const Size boundingBoxSize( windowSize * TEXT_EDITOR_RELATIVE_SIZE.GetVectorXY() );
     Rect<int> boundingBox( 0,
                            static_cast<int>( toolBarHeight ),
                            static_cast<int>( boundingBoxSize.width ),

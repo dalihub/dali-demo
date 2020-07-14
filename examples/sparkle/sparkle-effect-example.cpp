@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,21 +85,21 @@ private:
    */
   void OnInit( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &SparkleEffectExample::OnKeyEvent);
-    stage.SetBackgroundColor( BACKGROUND_COLOR );
+    Window window = application.GetWindow();
+    window.KeyEventSignal().Connect(this, &SparkleEffectExample::OnKeyEvent);
+    window.SetBackgroundColor( BACKGROUND_COLOR );
 
     mCircleBackground = ImageView::New( CIRCLE_BACKGROUND_IMAGE );
     mCircleBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mCircleBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
-    stage.Add( mCircleBackground );
+    window.Add( mCircleBackground );
 
     mEffect = SparkleEffect::New();
 
     mMeshActor = CreateMeshActor();
 
-    stage.Add( mMeshActor );
+    window.Add( mMeshActor );
 
     mMeshActor.SetProperty( Actor::Property::POSITION, ACTOR_POSITION );
     mMeshActor.SetProperty( Actor::Property::SCALE, ACTOR_SCALE );

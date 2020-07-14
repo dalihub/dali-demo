@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,6 @@
 
 // CLASS HEADER
 #include "contact-card-layouter.h"
-
-// EXTERNAL INCLUDES
-#include <dali/public-api/common/stage.h>
 
 // INTERNAL INCLUDES
 #include "contact-card.h"
@@ -57,14 +54,14 @@ ContactCardLayouter::~ContactCardLayouter()
   // Nothing to do as ContactCardContainer uses intrusive pointers so they will be automatically deleted
 }
 
-void ContactCardLayouter::AddContact( const std::string& contactName, const std::string& contactAddress, const std::string& imagePath )
+void ContactCardLayouter::AddContact( Dali::Window window, const std::string& contactName, const std::string& contactAddress, const std::string& imagePath )
 {
   if( ! mInitialized )
   {
     // Set up the common layouting info shared between all contact cards when first called
 
     mContactCardLayoutInfo.unfoldedPosition = mContactCardLayoutInfo.padding = Vector2( DEFAULT_PADDING, DEFAULT_PADDING );
-    mContactCardLayoutInfo.unfoldedSize = Stage::GetCurrent().GetSize() - mContactCardLayoutInfo.padding * ( MINIMUM_ITEMS_PER_ROW_OR_COLUMN - 1.0f );
+    mContactCardLayoutInfo.unfoldedSize = Vector2( window.GetSize() ) - mContactCardLayoutInfo.padding * ( MINIMUM_ITEMS_PER_ROW_OR_COLUMN - 1.0f );
 
     // Calculate the size of the folded card (use the minimum of width/height as size)
     mContactCardLayoutInfo.foldedSize = ( mContactCardLayoutInfo.unfoldedSize - ( mContactCardLayoutInfo.padding * ( MINIMUM_ITEMS_PER_ROW_OR_COLUMN - 1.0f ) ) ) / MINIMUM_ITEMS_PER_ROW_OR_COLUMN;
@@ -98,7 +95,7 @@ void ContactCardLayouter::AddContact( const std::string& contactName, const std:
   }
 
   // Create a new contact card and add to our container
-  mContactCards.push_back( new ContactCard( mContactCardLayoutInfo, contactName, contactAddress, imagePath, NextCardPosition() ) );
+  mContactCards.push_back( new ContactCard( window, mContactCardLayoutInfo, contactName, contactAddress, imagePath, NextCardPosition() ) );
 }
 
 const Vector2& ContactCardLayouter::NextCardPosition()

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,12 +59,11 @@ class VideoViewController: public ConnectionTracker
 
   void Create( Application& application )
   {
-    application.GetWindow().ShowIndicator( Dali::Window::INVISIBLE );
-
-    mStageSize = Stage::GetCurrent().GetSize();
+    Window window = application.GetWindow();
+    mWindowSize = window.GetSize();
 
     mVideoView = Toolkit::VideoView::New();
-    Stage::GetCurrent().Add( mVideoView );
+    window.Add( mVideoView );
     mVideoView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mVideoView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mVideoView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
@@ -167,8 +166,7 @@ class VideoViewController: public ConnectionTracker
     mRotationAnimation.AnimateBy( Property(mVideoView, Actor::Property::ORIENTATION), Quaternion(Degree(0.f), Degree(360.f), Degree(0.f)) );
     mRotationAnimation.SetLooping(false);
 
-    Stage::GetCurrent().KeyEventSignal().Connect( this, &VideoViewController::OnKeyEvent );
-
+    window.KeyEventSignal().Connect( this, &VideoViewController::OnKeyEvent );
   }
 
   bool OnButtonClicked( Button button )
@@ -247,7 +245,7 @@ class VideoViewController: public ConnectionTracker
   {
     if( !mIsFullScreen )
     {
-      mVideoView.SetProperty( Actor::Property::SIZE, mStageSize );
+      mVideoView.SetProperty( Actor::Property::SIZE, mWindowSize );
       mIsFullScreen = true;
     }
     else
@@ -277,7 +275,7 @@ private:
   Application&  mApplication;
   VideoView mVideoView;
   Layer mMenu;
-  Vector2 mStageSize;
+  Vector2 mWindowSize;
 
   bool mIsPlay;
   bool mIsFullScreen;

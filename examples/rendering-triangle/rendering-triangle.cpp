@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,9 +75,9 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     // Step 1. Create shader
     CreateTriangleShader();
@@ -91,11 +91,11 @@ public:
     // Step 4. Create an Actor
     CreateActor();
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &DrawTriangleController::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &DrawTriangleController::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &DrawTriangleController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &DrawTriangleController::OnKeyEvent );
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )
@@ -166,8 +166,8 @@ public:
    */
   void CreateActor()
   {
-    Stage stage = Stage::GetCurrent();
-    Size size = stage.GetSize() * 0.25f;
+    Window window = mApplication.GetWindow();
+    Size size = Vector2(window.GetSize()) * 0.25f;
     mActor = Actor::New();
     mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -175,7 +175,7 @@ public:
     mActor.SetProperty( Actor::Property::COLOR, Color::RED );
     mActor.SetProperty( Actor::Property::SIZE, Vector3( size.x, size.x, size.x ) );
     mActor.AddRenderer( mRenderer );
-    stage.Add( mActor );
+    window.Add( mActor );
   }
 
 private:

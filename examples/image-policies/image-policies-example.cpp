@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include "shared/view.h"
 #include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-base.h>
@@ -164,7 +165,7 @@ class ImagePolicies: public ConnectionTracker
 
   /**
    * Part One of the Immediate loading example, displays instructions on what will be shown and starts loading of the Immediate image before it
-   * is staged.
+   * is windowd.
    */
   void LoadPolicyImmediateExampleInstructions()
   {
@@ -192,7 +193,7 @@ class ImagePolicies: public ConnectionTracker
   }
 
   /**
-   * Part Two of the Immediate loading example and here the Image is staged, shown to be instant (if previously step gave enough time to load).
+   * Part Two of the Immediate loading example and here the Image is windowd, shown to be instant (if previously step gave enough time to load).
    */
   void LoadPolicyImmediateExample()
   {
@@ -246,7 +247,7 @@ class ImagePolicies: public ConnectionTracker
   }
 
   /**
-   * Part two of the Destroyed example, the image is staged again but to the second column, it shows the loading takes the same amount of time as
+   * Part two of the Destroyed example, the image is windowd again but to the second column, it shows the loading takes the same amount of time as
    * when first loaded.
    */
   void LoadPolicyDestroyedExample02()
@@ -332,7 +333,7 @@ class ImagePolicies: public ConnectionTracker
   }
 
   /**
-   * Part two of the Detached example, the image is staged again but to the second column, it shows the loading takes the same amount of time as
+   * Part two of the Detached example, the image is windowd again but to the second column, it shows the loading takes the same amount of time as
    * when first loaded.
    */
   void ReleasePolicyDestroyedExample06()
@@ -381,8 +382,8 @@ class ImagePolicies: public ConnectionTracker
     Property::Map gradientBackground;
     CreateGradient( gradientBackground );
 
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
+    // Get a handle to the window
+    Window window = application.GetWindow();
 
     // Create default View.
     Toolkit::Control view = Toolkit::Control::New();
@@ -390,7 +391,7 @@ class ImagePolicies: public ConnectionTracker
     view.SetProperty( Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
     view.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
     view.SetProperty( Toolkit::Control::Property::BACKGROUND , gradientBackground );
-    stage.Add( view );
+    window.Add( view );
 
     // Create a table view to show a pair of buttons above each image.
     mTable = TableView::New( TableRowPlacement::NUMBER_OF_ROWS, 1 );
@@ -422,7 +423,7 @@ class ImagePolicies: public ConnectionTracker
     mTable.AddChild( mNextButton, TableView::CellPosition( TableRowPlacement::NEXT_BUTTON, 0 ) );
     mTable.SetCellPadding( Vector2( 2.0f, 2.0f ) );
 
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &ImagePolicies::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &ImagePolicies::OnKeyEvent);
 
     // Outline Map for Labels
     Property::Map outlineMap;

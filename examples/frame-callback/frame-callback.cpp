@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +23,13 @@ using namespace std;
 
 FrameCallback::FrameCallback()
 : mActorIdContainer(),
-  stageHalfWidth( 0.0f )
+  windowHalfWidth( 0.0f )
 {
 }
 
-void FrameCallback::SetStageWidth( float stageWidth )
+void FrameCallback::SetWindowWidth( float windowWidth )
 {
-  stageHalfWidth = stageWidth * 0.5f;
+  windowHalfWidth = windowWidth * 0.5f;
 }
 
 void FrameCallback::AddId( uint32_t id )
@@ -46,7 +46,7 @@ void FrameCallback::Update( Dali::UpdateProxy& updateProxy, float /* elapsedSeco
     Vector3 size;
     if( updateProxy.GetPositionAndSize( i, position, size ) ) // Retrieve the position and size using the Actor ID.
     {
-      float halfWidthPoint = stageHalfWidth - size.width * 0.5f;
+      float halfWidthPoint = windowHalfWidth - size.width * 0.5f;
       float xTranslation = abs( position.x );
       if( xTranslation > halfWidthPoint )
       {

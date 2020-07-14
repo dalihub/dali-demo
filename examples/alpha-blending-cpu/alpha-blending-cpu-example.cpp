@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,34 +53,34 @@ private:
     // This creates an image view with one of 3 images, and one of 2 masks.
     // Clicking the screen will cycle through each combination of mask and image.
 
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &ImageViewAlphaBlendApp::OnKeyEvent);
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.KeyEventSignal().Connect(this, &ImageViewAlphaBlendApp::OnKeyEvent);
+    window.SetBackgroundColor( Color::WHITE );
 
     mImageView = Toolkit::ImageView::New();
 
     mImageView.SetProperty( Actor::Property::SIZE, Vector2(200, 200) );
     mImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    stage.Add(mImageView);
+    window.Add(mImageView);
 
     mImageLabel = Toolkit::TextLabel::New();
     mImageLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mImageLabel.SetProperty( Actor::Property::ANCHOR_POINT, ParentOrigin::BOTTOM_CENTER );
     mImageLabel.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, -50.0f, 0.0f ) );
     mImageLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::BLACK );
-    stage.Add(mImageLabel);
+    window.Add(mImageLabel);
 
     mMaskLabel = Toolkit::TextLabel::New();
     mMaskLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mMaskLabel.SetProperty( Actor::Property::ANCHOR_POINT, ParentOrigin::BOTTOM_CENTER );
     mMaskLabel.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 0.0f ) );
     mMaskLabel.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::BLACK );
-    stage.Add(mMaskLabel);
+    window.Add(mMaskLabel);
 
     LoadImages();
 
-    stage.TouchSignal().Connect( this, &ImageViewAlphaBlendApp::OnTouched );
+    window.TouchSignal().Connect( this, &ImageViewAlphaBlendApp::OnTouched );
   }
 
   void OnTouched( const TouchData& touchData )

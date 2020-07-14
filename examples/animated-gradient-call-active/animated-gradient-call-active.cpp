@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2019 Samsung Electronics Co., Ltd.
+* Copyright (c) 2020 Samsung Electronics Co., Ltd.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -30,9 +30,9 @@ namespace
 {
 // The value for scale-change between wearable-mobile
 // Can be changed on App-Create time
-Vector2 STAGE_SIZE = Vector2( 360.0f, 360.0f );
-Vector2 SCALED_STAGE_SIZE = Vector2( 1.0f, 1.0f );
-Vector3 SCALED_STAGE_SIZE_3 = Vector3( 1.0f, 1.0f, 0.0f );
+Vector2 WINDOW_SIZE = Vector2( 360.0f, 360.0f );
+Vector2 SCALED_WINDOW_SIZE = Vector2( 1.0f, 1.0f );
+Vector3 SCALED_WINDOW_SIZE_3 = Vector3( 1.0f, 1.0f, 0.0f );
 float SCALED_WIDTH = 1.0f;
 float SCALED_HEIGHT = 1.0f;
 float FONT_SCALE = 0.25f;
@@ -129,29 +129,30 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application& application)
   {
-    // Get a handle to the stage
-    mStage = Stage::GetCurrent();
-    mStage.KeyEventSignal().Connect( this, &CallController::OnKeyEvent );
+    // Get a handle to the main window
+    mWindow = application.GetWindow();
+    mWindow.KeyEventSignal().Connect( this, &CallController::OnKeyEvent );
 
     // Apply custom style for background and button.
     StyleManager::Get().ApplyTheme( BACKGROUND_STYLE_JSON );
 
     // Get current device's width and height.
-    STAGE_SIZE = mStage.GetSize();
-    SCALED_STAGE_SIZE = STAGE_SIZE / 360.0f;
-    SCALED_STAGE_SIZE_3 = Vector3( SCALED_STAGE_SIZE.x, SCALED_STAGE_SIZE.y, 0.0f );
-    SCALED_WIDTH = SCALED_STAGE_SIZE.x < SCALED_STAGE_SIZE.y ? SCALED_STAGE_SIZE.x : SCALED_STAGE_SIZE.y;
+    const Window::WindowSize windowSize = mWindow.GetSize();
+    WINDOW_SIZE = Vector2(windowSize.GetWidth(), windowSize.GetHeight());
+    SCALED_WINDOW_SIZE = WINDOW_SIZE / 360.0f;
+    SCALED_WINDOW_SIZE_3 = Vector3( SCALED_WINDOW_SIZE.x, SCALED_WINDOW_SIZE.y, 0.0f );
+    SCALED_WIDTH = SCALED_WINDOW_SIZE.x < SCALED_WINDOW_SIZE.y ? SCALED_WINDOW_SIZE.x : SCALED_WINDOW_SIZE.y;
     SCALED_HEIGHT = SCALED_WIDTH;
 
     // Note that this is heuristic value
-    FONT_SCALE = 0.25f * STAGE_SIZE.y / STAGE_SIZE.x;
+    FONT_SCALE = 0.25f * WINDOW_SIZE.y / WINDOW_SIZE.x;
 
     mBackground = Control::New();
     mBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mBackground.SetProperty( Actor::Property::SIZE, STAGE_SIZE );
+    mBackground.SetProperty( Actor::Property::SIZE, WINDOW_SIZE );
 
-    mStage.Add( mBackground );
+    mWindow.Add( mBackground );
 
     BuildParameter();
     SetupActors();
@@ -185,7 +186,7 @@ private:
     SetupActiveActors();
   }
 
-  // Create and Add to stage when visible at call incomming
+  // Create and Add to window when visible at call incomming
   void SetupComingActors()
   {
     mButtonIconDecall = ImageView::New();
@@ -213,15 +214,15 @@ private:
     mCallStartButton.SetProperty( Control::Property::BACKGROUND, ICON_CALL_IMAGE );
     mCallStartButton.SetProperty( Button::Property::LABEL, "" );
 
-    mStage.Add( mCallStartButton );
-    mStage.Add( mButtonIconDecall );
-    mStage.Add( mButtonIconBattery );
+    mWindow.Add( mCallStartButton );
+    mWindow.Add( mButtonIconDecall );
+    mWindow.Add( mButtonIconBattery );
 
     mLabelIncoming = TextLabel::New( LABEL_INCOMING_STR );
     mLabelIncoming.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabelIncoming.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabelIncoming.SetProperty( Actor::Property::SIZE, LABEL_INCOMING_SIZE * SCALED_STAGE_SIZE );
-    mLabelIncoming.SetProperty( Actor::Property::POSITION, LABEL_INCOMING_POSITION * SCALED_STAGE_SIZE_3 );
+    mLabelIncoming.SetProperty( Actor::Property::SIZE, LABEL_INCOMING_SIZE * SCALED_WINDOW_SIZE );
+    mLabelIncoming.SetProperty( Actor::Property::POSITION, LABEL_INCOMING_POSITION * SCALED_WINDOW_SIZE_3 );
     mLabelIncoming.SetProperty( Actor::Property::VISIBLE, true );
     mLabelIncoming.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_INCOMING_FONT_COLOR );
     mLabelIncoming.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_INCOMING_FONT_SIZE * FONT_SCALE );
@@ -231,8 +232,8 @@ private:
     mLabelName = TextLabel::New( LABEL_NAME_STR );
     mLabelName.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabelName.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabelName.SetProperty( Actor::Property::SIZE, LABEL_NAME_SIZE * SCALED_STAGE_SIZE );
-    mLabelName.SetProperty( Actor::Property::POSITION, LABEL_NAME_POSITION * SCALED_STAGE_SIZE_3 );
+    mLabelName.SetProperty( Actor::Property::SIZE, LABEL_NAME_SIZE * SCALED_WINDOW_SIZE );
+    mLabelName.SetProperty( Actor::Property::POSITION, LABEL_NAME_POSITION * SCALED_WINDOW_SIZE_3 );
     mLabelName.SetProperty( Actor::Property::VISIBLE, true );
     mLabelName.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_NAME_FONT_COLOR );
     mLabelName.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_NAME_FONT_SIZE * FONT_SCALE );
@@ -242,8 +243,8 @@ private:
     mLabelNumber = TextLabel::New( LABEL_NUMBER_STR );
     mLabelNumber.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabelNumber.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabelNumber.SetProperty( Actor::Property::SIZE, LABEL_NUMBER_SIZE * SCALED_STAGE_SIZE );
-    mLabelNumber.SetProperty( Actor::Property::POSITION, LABEL_NUMBER_POSITION * SCALED_STAGE_SIZE_3 );
+    mLabelNumber.SetProperty( Actor::Property::SIZE, LABEL_NUMBER_SIZE * SCALED_WINDOW_SIZE );
+    mLabelNumber.SetProperty( Actor::Property::POSITION, LABEL_NUMBER_POSITION * SCALED_WINDOW_SIZE_3 );
     mLabelNumber.SetProperty( Actor::Property::VISIBLE, true );
     mLabelNumber.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_NUMBER_FONT_COLOR );
     mLabelNumber.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_NUMBER_FONT_SIZE * FONT_SCALE );
@@ -253,7 +254,7 @@ private:
     mLabelDecline = TextLabel::New( LABEL_DECLINE_STR );
     mLabelDecline.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
     mLabelDecline.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    mLabelDecline.SetProperty( Actor::Property::SIZE, LABEL_DECLINE_SIZE * SCALED_STAGE_SIZE );
+    mLabelDecline.SetProperty( Actor::Property::SIZE, LABEL_DECLINE_SIZE * SCALED_WINDOW_SIZE );
     mLabelDecline.SetProperty( Actor::Property::POSITION, LABEL_DECLINE_POSITION * SCALED_WIDTH );
     mLabelDecline.SetProperty( Actor::Property::VISIBLE, true );
     mLabelDecline.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_DECLINE_FONT_COLOR );
@@ -261,13 +262,13 @@ private:
     mLabelDecline.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mLabelDecline.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
 
-    mStage.Add( mLabelIncoming );
-    mStage.Add( mLabelName );
-    mStage.Add( mLabelNumber );
-    mStage.Add( mLabelDecline );
+    mWindow.Add( mLabelIncoming );
+    mWindow.Add( mLabelName );
+    mWindow.Add( mLabelNumber );
+    mWindow.Add( mLabelDecline );
   }
 
-  // Create and Add to stage when visible at call active
+  // Create and Add to window when visible at call active
   void SetupActiveActors()
   {
     mButtonClip = Control::New();
@@ -300,15 +301,15 @@ private:
     mLabelTime = TextLabel::New( LABEL_TIME_STR );
     mLabelTime.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mLabelTime.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabelTime.SetProperty( Actor::Property::SIZE, LABEL_TIME_SIZE * SCALED_STAGE_SIZE );
-    mLabelTime.SetProperty( Actor::Property::POSITION, LABEL_TIME_POSITION * SCALED_STAGE_SIZE_3 );
+    mLabelTime.SetProperty( Actor::Property::SIZE, LABEL_TIME_SIZE * SCALED_WINDOW_SIZE );
+    mLabelTime.SetProperty( Actor::Property::POSITION, LABEL_TIME_POSITION * SCALED_WINDOW_SIZE_3 );
     mLabelTime.SetProperty( Actor::Property::VISIBLE, false );
     mLabelTime.SetProperty( TextLabel::Property::TEXT_COLOR, LABEL_TIME_FONT_COLOR );
     mLabelTime.SetProperty( TextLabel::Property::POINT_SIZE, LABEL_TIME_FONT_SIZE * FONT_SCALE );
     mLabelTime.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
     mLabelTime.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
 
-    mStage.Add( mLabelTime );
+    mWindow.Add( mLabelTime );
   }
 
   void SetupAnimation()
@@ -337,7 +338,7 @@ private:
     if( button == mCallStartButton )
     {
       mBackground.SetStyleName( BACKGROUND_ACTIVE_STYLE_STR );
-      mStage.Add( mButtonClip );
+      mWindow.Add( mButtonClip );
       mMoveFront.Play();
     }
     else if( button == mCallEndButton )
@@ -363,7 +364,7 @@ private:
 
 private:
   Application&  mApplication;
-  Stage mStage;
+  Window mWindow;
 
   Control mBackground;
 
