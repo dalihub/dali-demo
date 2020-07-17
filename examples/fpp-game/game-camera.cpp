@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 #include "game-camera.h"
 
-#include <dali/public-api/common/stage.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/render-tasks/render-task.h>
 #include <dali/public-api/events/touch-data.h>
@@ -69,14 +68,16 @@ GameCamera::~GameCamera()
   mCameraActor.Remove( mInterceptorActor );
 }
 
-void GameCamera::Initialise( float fovY, float near, float far )
+void GameCamera::Initialise( CameraActor defaultCamera, float fovY, float near, float far, const Vector2& sceneSize )
 {
+  mCameraActor = defaultCamera;
+
   mFovY = fovY;
   mNear = near;
   mFar = far;
 
-  Vector2 stageSize = Stage::GetCurrent().GetSize();
-  mPortraitMode = stageSize.x < stageSize.y ? true : false;
+  mSceneSize = sceneSize;
+  mPortraitMode = mSceneSize.x < mSceneSize.y ? true : false;
 
   // Initialise default camera
   InitialiseDefaultCamera();
@@ -92,8 +93,6 @@ void GameCamera::Initialise( float fovY, float near, float far )
 
 bool GameCamera::OnTick()
 {
-  Vector2 stageSize = Stage::GetCurrent().GetSize();
-
   // ---------------------------------------------------------------------
   // update rotation
   Vector2 tmp( mScreenLookDelta );
@@ -101,8 +100,8 @@ bool GameCamera::OnTick()
 
   if( mPortraitMode )
   {
-    float yaw = ( (tmp.y / stageSize.y ) * CAMERA_SENSITIVITY );
-    float pitch = ( (tmp.x / stageSize.x ) * CAMERA_SENSITIVITY );
+    float yaw = ( (tmp.y / mSceneSize.y ) * CAMERA_SENSITIVITY );
+    float pitch = ( (tmp.x / mSceneSize.x ) * CAMERA_SENSITIVITY );
     mCameraYawPitch.y -= yaw;
     mCameraYawPitch.x -= pitch;
     if( abs( mCameraYawPitch.y ) > CAMERA_VERTICAL_LIMIT )
@@ -112,8 +111,8 @@ bool GameCamera::OnTick()
   }
   else
   {
-    float yaw = ( (tmp.y / stageSize.x ) * CAMERA_SENSITIVITY );
-    float pitch = ( (tmp.x / stageSize.y ) * CAMERA_SENSITIVITY );
+    float yaw = ( (tmp.y / mSceneSize.x ) * CAMERA_SENSITIVITY );
+    float pitch = ( (tmp.x / mSceneSize.y ) * CAMERA_SENSITIVITY );
     mCameraYawPitch.x -= yaw;
     mCameraYawPitch.y -= pitch;
     if( abs( mCameraYawPitch.x ) > CAMERA_VERTICAL_LIMIT )
@@ -154,8 +153,8 @@ bool GameCamera::OnTick()
 
   sidewaysVector.Normalize();
 
-  const float forwardSpeed( mScreenWalkDelta.y / stageSize.y );
-  const float sidewaysSpeed( mScreenWalkDelta.x / stageSize.x );
+  const float forwardSpeed( mScreenWalkDelta.y / mSceneSize.y );
+  const float sidewaysSpeed( mScreenWalkDelta.x / mSceneSize.x );
 
   // Adjust walking speed
   if ( mPortraitMode )
@@ -178,8 +177,6 @@ bool GameCamera::OnTick()
 
 void GameCamera::InitialiseDefaultCamera()
 {
-  Stage stage = Stage::GetCurrent();
-  mCameraActor = stage.GetRenderTaskList().GetTask(0).GetCameraActor();
   mCameraActor.SetProperty( Dali::Actor::Property::NAME, "GameCamera" );
   mCameraActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mCameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -196,11 +193,9 @@ void GameCamera::InitialiseDefaultCamera()
 
 void GameCamera::CreateInterceptorActor()
 {
-  Stage stage = Stage::GetCurrent();
-
   mInterceptorActor = Actor::New();
   mInterceptorActor.SetProperty( Dali::Actor::Property::NAME, "GameInputInterceptor" );
-  mInterceptorActor.SetProperty( Actor::Property::SIZE, Vector3( stage.GetSize().x, stage.GetSize().y, 1 ) );
+  mInterceptorActor.SetProperty( Actor::Property::SIZE, Vector3( mSceneSize.x, mSceneSize.y, 1 ) );
   mInterceptorActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0, 0.0, 1.0  ) );
   mInterceptorActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mInterceptorActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -212,8 +207,6 @@ void GameCamera::CreateInterceptorActor()
 
 bool GameCamera::OnTouch( Actor actor, const TouchData& touch )
 {
-  Stage stage = Stage::GetCurrent();
-
   for( int i = 0; i < (int)touch.GetPointCount() && i < 3; ++i )
   {
     int id = touch.GetDeviceId( i );
@@ -224,13 +217,13 @@ bool GameCamera::OnTouch( Actor actor, const TouchData& touch )
     {
       position.x = tmp.y;
       position.y = tmp.x;
-      halfWindowSize = stage.GetSize().y / 2;
+      halfWindowSize = mSceneSize.y / 2;
     }
     else
     {
       position.x = tmp.x;
       position.y = tmp.y;
-      halfWindowSize = stage.GetSize().x / 2;
+      halfWindowSize = mSceneSize.x / 2;
     }
 
     // touch started

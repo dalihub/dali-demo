@@ -63,7 +63,7 @@ const int MODEL_TAG = 0;
 const int LIGHT_TAG = 1;
 const int LAYER_TAG = 2;
 
-const Vector4 STAGE_COLOR( 211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f ); ///< The color of the stage
+const Vector4 WINDOW_COLOR( 211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f ); ///< The color of the window
 
 } // unnamed namespace
 
@@ -92,12 +92,12 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( STAGE_COLOR );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( WINDOW_COLOR );
 
     //Set up root layer to receive touch gestures.
-    Layer rootLayer = stage.GetRootLayer();
+    Layer rootLayer = window.GetRootLayer();
     rootLayer.RegisterProperty( "Tag", LAYER_TAG ); //Used to differentiate between different kinds of actor.
     rootLayer.TouchSignal().Connect( this, &MeshVisualController::OnTouch );
 
@@ -111,7 +111,7 @@ public:
     SetupLight( rootLayer );
 
     //Allow for exiting of the application via key presses.
-    stage.KeyEventSignal().Connect( this, &MeshVisualController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &MeshVisualController::OnKeyEvent );
   }
 
   //Loads and adds the models to the scene, inside containers for hit detection.
@@ -254,8 +254,9 @@ public:
     mLightSource.RegisterProperty( "Tag", LIGHT_TAG );
 
     //Set size of control based on screen dimensions.
-    Stage stage = Stage::GetCurrent();
-    if( stage.GetSize().width < stage.GetSize().height )
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
+    if( windowSize.width < windowSize.height )
     {
       //Scale to width.
       mLightSource.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
@@ -273,7 +274,7 @@ public:
     //Set position relative to top left, as the light source property is also relative to the top left.
     mLightSource.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mLightSource.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLightSource.SetProperty( Actor::Property::POSITION, Vector2( Stage::GetCurrent().GetSize().x * 0.85f, Stage::GetCurrent().GetSize().y * 0.125 ));
+    mLightSource.SetProperty( Actor::Property::POSITION, Vector2( windowSize.width * 0.85f, windowSize.height * 0.125 ));
 
     //Supply an image to represent the light.
     SetLightImage();
@@ -348,16 +349,16 @@ public:
     }
   }
 
-  //Make the models use a fixed, invisible light above the center of the stage.
+  //Make the models use a fixed, invisible light above the center of the window.
   void UseFixedLight()
   {
     //Hide draggable source
     mLightSource.SetProperty( Actor::Property::VISIBLE, false );
 
-    //Use stage dimensions to place light at center, offset in z axis.
-    Stage stage = Stage::GetCurrent();
-    float width = stage.GetSize().width;
-    float height = stage.GetSize().height;
+    //Use window dimensions to place light at center, offset in z axis.
+    Window window = mApplication.GetWindow();
+    float width = window.GetSize().GetWidth();
+    float height = window.GetSize().GetHeight();
     Vector3 lightPosition = Vector3( width / 2.0f, height / 2.0f,
                                      ( mLightFront ? 1 : -1 ) * std::max( width, height ) * 5.0f );
 
@@ -384,7 +385,7 @@ public:
     //Set light position to the x and y of the light control, offset into/out of the screen.
     Vector3 controlPosition = mLightSource.GetCurrentProperty< Vector3 >( Actor::Property::POSITION );
     Vector3 lightPosition = Vector3( controlPosition.x, controlPosition.y,
-                                     ( mLightFront ? 1 : -1 ) * Stage::GetCurrent().GetSize().x / 2.0f );
+                                     ( mLightFront ? 1 : -1 ) * mApplication.GetWindow().GetSize().GetWidth() / 2.0f );
 
     for( int i = 0; i < NUM_MESHES; ++i )
     {

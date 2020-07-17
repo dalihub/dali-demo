@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,7 +84,7 @@ class AnimatedVectorImageViewController: public ConnectionTracker
     // The Init signal is received once (only) during the Application lifetime
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     mContentLayer = DemoHelper::CreateView( application,
                                             mView,
                                             mToolBar,
@@ -144,7 +144,7 @@ class AnimatedVectorImageViewController: public ConnectionTracker
       mTable.AddChild( mImageViews[x], TableView::CellPosition( CellPlacement::IMAGE, x ) );
     }
 
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &AnimatedVectorImageViewController::OnKeyEvent);
+    application.GetWindow().KeyEventSignal().Connect(this, &AnimatedVectorImageViewController::OnKeyEvent);
   }
 
 private:

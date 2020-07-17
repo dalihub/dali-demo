@@ -49,7 +49,7 @@ public:
    */
   PreRenderCallbackController ( Application& application )
   : mApplication( application ),
-    mStage(),
+    mWindow(),
     mTapDetector(),
     mKeepPreRender(false),
     mRotateTextCharacter(0),
@@ -89,13 +89,13 @@ private:
    */
   void Create( Application& application )
   {
-    mStage = Stage::GetCurrent();
-    mStage.SetBackgroundColor( Color::WHITE );
-    mStage.KeyEventSignal().Connect( this, &PreRenderCallbackController::OnKeyEvent );
+    mWindow = application.GetWindow();
+    mWindow.SetBackgroundColor( Color::WHITE );
+    mWindow.KeyEventSignal().Connect( this, &PreRenderCallbackController::OnKeyEvent );
 
     // Detect taps on the root layer.
     mTapDetector = TapGestureDetector::New();
-    mTapDetector.Attach( mStage.GetRootLayer() );
+    mTapDetector.Attach( mWindow.GetRootLayer() );
     mTapDetector.DetectedSignal().Connect( this, &PreRenderCallbackController::OnTap );
 
     CreateAnimatingScene();
@@ -113,8 +113,8 @@ private:
     mSpinner.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
     mSpinner.SetProperty( Actor::Property::SIZE, Vector2(100,100) );
 
-    mStage.Add(mSpinner);
-    mStage.Add(textContainer);
+    mWindow.Add(mSpinner);
+    mWindow.Add(textContainer);
 
     DevelApplication::AddIdleWithReturnValue( application, MakeCallback( this, &PreRenderCallbackController::OnIdle ) );
   }
@@ -171,7 +171,7 @@ private:
     Quaternion q( Degree( 20.0f ), Vector3::YAXIS );
     mSceneActor.SetProperty( Actor::Property::ORIENTATION, p * q );
 
-    mStage.Add( mSceneActor );
+    mWindow.Add( mSceneActor );
   }
 
   void OnTap( Actor /* actor */, const TapGesture& /* tap */ )
@@ -231,7 +231,7 @@ private:
 
 private:
   Application& mApplication;
-  Stage mStage;
+  Window mWindow;
   TapGestureDetector  mTapDetector;          ///< Tap detector to enable the PreRenderCallback
   bool mKeepPreRender;
   int mRotateTextCharacter;

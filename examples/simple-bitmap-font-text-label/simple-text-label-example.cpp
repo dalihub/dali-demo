@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,9 +54,9 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
-    stage.KeyEventSignal().Connect(this, &SimpleTextLabelExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &SimpleTextLabelExample::OnKeyEvent);
 
     TextAbstraction::FontClient fontClient = TextAbstraction::FontClient::Get();
 
@@ -119,7 +119,7 @@ public:
 
     label01.SetBackgroundColor( Color::BLACK );
 
-    stage.Add( label01 );
+    window.Add( label01 );
 
 
     TextLabel  label02 = TextLabel::New();
@@ -135,7 +135,7 @@ public:
 
     label02.SetBackgroundColor( Color::BLACK );
 
-    stage.Add( label02 );
+    window.Add( label02 );
 
     TextLabel  label03 = TextLabel::New();
     label03.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
@@ -149,7 +149,7 @@ public:
 
     label03.SetBackgroundColor( Color::WHITE );
 
-    stage.Add( label03 );
+    window.Add( label03 );
 
     TextLabel  label04 = TextLabel::New();
     label04.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
@@ -164,7 +164,7 @@ public:
 
     label04.SetBackgroundColor( Color::BLACK );
 
-    stage.Add( label04 );
+    window.Add( label04 );
  }
 
   /**

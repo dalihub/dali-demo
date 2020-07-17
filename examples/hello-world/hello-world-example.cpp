@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,28 +33,25 @@ public:
     mApplication.InitSignal().Connect( this, &HelloWorldController::Create );
   }
 
-  ~HelloWorldController()
-  {
-    // Nothing to do here;
-  }
+  ~HelloWorldController() = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     TextLabel textLabel = TextLabel::New( "Hello World" );
     textLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     textLabel.SetProperty( Dali::Actor::Property::NAME, "helloWorldLabel" );
-    stage.Add( textLabel );
+    window.Add( textLabel );
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &HelloWorldController::OnTouch );
+    // Respond to a touch anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &HelloWorldController::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &HelloWorldController::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &HelloWorldController::OnKeyEvent );
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )

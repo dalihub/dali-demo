@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ GameScene::~GameScene()
 {
 }
 
-bool GameScene::Load(const char *filename)
+bool GameScene::Load(Window window, const char *filename)
 {
   ByteArray bytes;
   if( !LoadFile( filename, bytes ) )
@@ -150,12 +150,11 @@ bool GameScene::Load(const char *filename)
     return false;
   }
 
-  // add all to the stage
-  Stage stage = Stage::GetCurrent();
+  // add all to the window
   mRootActor = Actor::New();
   mRootActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
   mRootActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  stage.GetRootLayer().Add( mRootActor );
+  window.GetRootLayer().Add( mRootActor );
   mRootActor.SetProperty( Actor::Property::SCALE, Vector3( -1.0, 1.0, 1.0 ) );
   mRootActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0, 0.0, 0.0 ) );
   mRootActor.SetProperty( Actor::Property::ORIENTATION, Quaternion( Degree( 90 ), Vector3( 1.0, 0.0, 0.0 ) ) );
@@ -169,7 +168,7 @@ bool GameScene::Load(const char *filename)
   }
 
   // update camera
-  mCamera.Initialise( 60.0f, 0.1f, 100.0f );
+  mCamera.Initialise( window.GetRenderTaskList().GetTask(0).GetCameraActor(), 60.0f, 0.1f, 100.0f, window.GetSize() );
 
   return true;
 }

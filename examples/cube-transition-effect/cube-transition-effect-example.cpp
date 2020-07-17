@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -159,11 +159,11 @@ private:
   bool OnTimerTick();
 
   /**
-   * Loads image, resizes it to the size of stage and creates a textue out of it
+   * Loads image, resizes it to the size of window and creates a textue out of it
    * @param[in] filepath Path to the image file
    * @return New texture object
    */
-  Texture LoadStageFillingTexture( const char* filepath );
+  Texture LoadWindowFillingTexture( const char* filepath );
 
 private:
   Application&                    mApplication;
@@ -210,9 +210,9 @@ CubeTransitionApp::~CubeTransitionApp()
 
 void CubeTransitionApp::OnInit( Application& application )
 {
-  Stage::GetCurrent().KeyEventSignal().Connect(this, &CubeTransitionApp::OnKeyEvent);
+  application.GetWindow().KeyEventSignal().Connect(this, &CubeTransitionApp::OnKeyEvent);
 
-  // Creates a default view with a default tool bar, the view is added to the stage.
+  // Creates a default view with a default tool bar, the view is added to the window.
   mContent = DemoHelper::CreateView( application, mView, mToolBar, "", TOOLBAR_IMAGE, "" );
   mContent.SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
 
@@ -240,11 +240,11 @@ void CubeTransitionApp::OnInit( Application& application )
   mSlideshowButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnSildeshowButtonClicked );
   mToolBar.AddControl( mSlideshowButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
 
-  // Set size to stage size to avoid seeing a black border on transition
-  mViewSize = Stage::GetCurrent().GetSize();
+  // Set size to window size to avoid seeing a black border on transition
+  mViewSize = application.GetWindow().GetSize();
 
   // show the first image
-  mCurrentTexture = LoadStageFillingTexture( IMAGES[mIndex] );
+  mCurrentTexture = LoadWindowFillingTexture( IMAGES[mIndex] );
 
   //use small cubes
   mCubeWaveEffect = Toolkit::CubeTransitionWaveEffect::New( NUM_ROWS_WAVE, NUM_COLUMNS_WAVE );
@@ -315,7 +315,7 @@ void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
 
 void CubeTransitionApp::GoToNextImage()
 {
-  mNextTexture = LoadStageFillingTexture( IMAGES[ mIndex ] );
+  mNextTexture = LoadWindowFillingTexture( IMAGES[ mIndex ] );
   mCurrentEffect.SetTargetTexture( mNextTexture );
   mIsImageLoading = false;
   mCurrentEffect.StartTransition( mPanPosition, mPanDisplacement );
@@ -390,9 +390,9 @@ bool CubeTransitionApp::OnTimerTick()
   return false;
 }
 
-Texture CubeTransitionApp::LoadStageFillingTexture( const char* filepath )
+Texture CubeTransitionApp::LoadWindowFillingTexture( const char* filepath )
 {
-  ImageDimensions dimensions( Stage::GetCurrent().GetSize().x, Stage::GetCurrent().GetSize().y );
+  ImageDimensions dimensions( mApplication.GetWindow().GetSize() );
   Devel::PixelBuffer pixelBuffer = LoadImageFromFile( filepath, dimensions, FittingMode::SCALE_TO_FILL );
   PixelData pixelData = Devel::PixelBuffer::Convert(pixelBuffer);
 

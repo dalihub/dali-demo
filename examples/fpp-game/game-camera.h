@@ -2,7 +2,7 @@
 #define GAME_CAMERA_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@
  * Additionally it handles simple user input by attaching fullscreen
  * sized 'interceptor' Actor to the front of the CameraActor ( to be always
  * parallel to the view ). It is necessary, as with changing camera orientation
- * the the stage cannot be used as a touch signal receiver ( it will simply
+ * the the window cannot be used as a touch signal receiver ( it will simply
  * go offscreen with camera rotation ).
  *
  * DALi camera uses left-handed coordinate system.
@@ -54,17 +54,13 @@ public:
 
   /**
    * Initialise with given fovY, near, far
+   * @param[in] defaultCamera The default camera used by the scene
    * @param[in] fovY Field of view in degrees
    * @param[in] near Near plane
    * @param[in] far Far Plane
+   * @param[in] sceneSize The size of the scene this is looking at
    */
-  void Initialise( float fov, float near, float far );
-
-  /**
-   * Retrieves actor associated with camera object
-   * @return Returns camera actor
-   */
-  Dali::CameraActor GetCameraActor();
+  void Initialise( Dali::CameraActor defaultCamera, float fov, float near, float far, const Dali::Vector2& sceneSize );
 
 private:
 
@@ -115,8 +111,9 @@ private:
   int mLookingTouchId; /// Touch device id bound to the looking action
 
   Dali::Vector3 mCameraPosition; /// Current camera position ( shadowing the actor position )
+  Dali::Vector2 mSceneSize; /// The size of the scene we are looking at
 
-  bool mPortraitMode; /// flag if window is in portrait mode ( physically stage width < height )
+  bool mPortraitMode; /// flag if window is in portrait mode ( physically window width < height )
 };
 
 #endif

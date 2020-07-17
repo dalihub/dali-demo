@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,12 +58,13 @@ private:
    */
   void OnInit(Application& app)
   {
-    Stage stage = Dali::Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
-    stage.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
+    Window window = app.GetWindow();
+    Vector2 windowSize = window.GetSize();
+    window.SetBackgroundColor( Color::WHITE );
+    window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
-    // Make the scroll view's size a certain percentage of the stage
-    const Vector2 pageSize = stage.GetSize() * 0.75f;
+    // Make the scroll view's size a certain percentage of the window
+    const Vector2 pageSize = windowSize * 0.75f;
 
     // Create a scroll view and set our desired properties
     ScrollView scrollView = ScrollView::New();
@@ -71,7 +72,7 @@ private:
     scrollView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     scrollView.SetProperty( Actor::Property::SIZE, pageSize );
     scrollView.SetAxisAutoLock( true );
-    stage.Add( scrollView );
+    window.Add( scrollView );
 
     // We want to the scroll-view so only one page is shown
     scrollView.SetProperty( Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_TO_BOUNDING_BOX );
@@ -108,7 +109,7 @@ private:
     page.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     page.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
 
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
 
     // Calculate the number of images going across (columns) within a page, the image size and the size of the text
     const int imageColumns = round( ROWS_PER_PAGE * ( pageSize.width ) / ( pageSize.height ) );

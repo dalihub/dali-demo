@@ -187,7 +187,7 @@ public:
     mTimer.Start();
 
     // Connect to key events in order to exit
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleApp::OnKeyEvent);
+    app.GetWindow().KeyEventSignal().Connect(this, &ExampleApp::OnKeyEvent);
   }
 
 private:
@@ -199,8 +199,8 @@ private:
 
   void ReloadJsonFile(Builder& builder, Layer& layer)
   {
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    Window window = mApp.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     builder = Builder::New();
     builder.QuitSignal().Connect( this, &ExampleApp::OnBuilderQuit );
@@ -217,11 +217,11 @@ private:
       layer = Layer::New();
       layer.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
       layer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
-      layer.SetProperty( Actor::Property::SIZE, stage.GetRootLayer().GetCurrentProperty< Vector3 >( Actor::Property::SIZE ) );
-      stage.GetRootLayer().Add(layer);
+      layer.SetProperty( Actor::Property::SIZE, window.GetRootLayer().GetCurrentProperty< Vector3 >( Actor::Property::SIZE ) );
+      window.GetRootLayer().Add(layer);
 
       // render tasks may have been setup last load so remove them
-      RenderTaskList taskList = stage.GetRenderTaskList();
+      RenderTaskList taskList = window.GetRenderTaskList();
       if( taskList.GetTaskCount() > 1 )
       {
         typedef std::vector<RenderTask> Collection;
@@ -239,7 +239,7 @@ private:
         }
 
         RenderTask defaultTask = taskList.GetTask(0);
-        defaultTask.SetSourceActor( stage.GetRootLayer() );
+        defaultTask.SetSourceActor( window.GetRootLayer() );
         defaultTask.SetFrameBuffer( FrameBuffer() );
       }
     }

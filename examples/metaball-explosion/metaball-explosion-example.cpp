@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -337,15 +337,15 @@ MetaballExplosionController::~MetaballExplosionController()
 
 void MetaballExplosionController::Create( Application& app )
 {
-  Stage stage = Stage::GetCurrent();
+  Window window = app.GetWindow();
 
-  stage.KeyEventSignal().Connect( this, &MetaballExplosionController::OnKeyEvent );
+  window.KeyEventSignal().Connect( this, &MetaballExplosionController::OnKeyEvent );
 
-  mScreenSize = stage.GetSize();
+  mScreenSize = window.GetSize();
 
   mTimeMultiplier = 1.0f;
 
-  stage.SetBackgroundColor(Color::BLACK);
+  window.SetBackgroundColor(Color::BLACK);
 
   // Load background texture
   mBackgroundTexture = DemoHelper::LoadTexture( BACKGROUND_IMAGE );
@@ -364,7 +364,7 @@ void MetaballExplosionController::Create( Application& app )
   mTimerDispersion.TickSignal().Connect( this, &MetaballExplosionController::OnTimerDispersionTick );
 
   // Connect the callback to the touch signal on the mesh actor
-  stage.GetRootLayer().TouchSignal().Connect( this, &MetaballExplosionController::OnTouch );
+  window.GetRootLayer().TouchSignal().Connect( this, &MetaballExplosionController::OnTouch );
 }
 
 Geometry MetaballExplosionController::CreateGeometry( bool aspectMappedTexture )
@@ -470,14 +470,14 @@ void MetaballExplosionController::CreateMetaballActors()
 void MetaballExplosionController::CreateMetaballImage()
 {
   // Create an FBO and a render task to create to render the metaballs with a fragment shader
-  Stage stage = Stage::GetCurrent();
+  Window window = mApplication.GetWindow();
 
   mMetaballFBO = FrameBuffer::New( mScreenSize.x, mScreenSize.y );
 
-  stage.Add(mMetaballRoot);
+  window.Add(mMetaballRoot);
 
   // Create the render task used to render the metaballs
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = window.GetRenderTaskList();
   RenderTask task = taskList.CreateTask();
   task.SetRefreshRate( RenderTask::REFRESH_ALWAYS );
   task.SetSourceActor( mMetaballRoot );
@@ -519,8 +519,8 @@ void MetaballExplosionController::CreateComposition()
 
   mCompositionActor.SetProperty( Actor::Property::SIZE, Vector2(mScreenSize.x, mScreenSize.y) );
 
-  Stage stage = Stage::GetCurrent();
-  stage.Add( mCompositionActor );
+  Window window = mApplication.GetWindow();
+  window.Add( mCompositionActor );
 }
 
 void MetaballExplosionController::CreateAnimations()

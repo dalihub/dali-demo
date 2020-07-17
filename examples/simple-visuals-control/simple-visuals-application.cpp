@@ -101,11 +101,11 @@ void SimpleVisualsApplication::OnKeyEvent( const KeyEvent& keyEvent )
 
 void SimpleVisualsApplication::Create( Application& application )
 {
-  Stage stage = Stage::GetCurrent();
-  stage.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
+  Window window = application.GetWindow();
+  window.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
 
   // Connect to key events so can quit application
-  stage.KeyEventSignal().Connect(this, &SimpleVisualsApplication::OnKeyEvent);
+  window.KeyEventSignal().Connect(this, &SimpleVisualsApplication::OnKeyEvent);
 
   // Create a table view to parent the 2 MyControls
   TableView contentLayout = TableView::New( 2, 2 );
@@ -121,7 +121,7 @@ void SimpleVisualsApplication::Create( Application& application )
   // Listen to focus change so can see Visual change from NORMAL to FOCUSED state
   KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &SimpleVisualsApplication::OnKeyboardPreFocusChange );
 
-  stage.Add( contentLayout );
+  window.Add( contentLayout );
 
   // Create 2 MyControls and add to table view.
   mMyControl = MyControl::New();

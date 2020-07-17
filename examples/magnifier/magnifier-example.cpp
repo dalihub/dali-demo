@@ -29,30 +29,30 @@ namespace
 const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-magnifier.jpg" );
 const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
 const char* APPLICATION_TITLE( "Magnifier Example" );
-const Vector3 MAGNIFIER_SIZE(0.25f, 0.25f, 0.0f);       ///< Magnifier sides should be 25% of the width of the stage
+const Vector3 MAGNIFIER_SIZE(0.25f, 0.25f, 0.0f);       ///< Magnifier sides should be 25% of the width of the window
 const float ANIMATION_DURATION(60.0f);                  ///< Run animation for a minute before repeating.
 const float MAGNIFIER_DISPLAY_DURATION(0.125f);         ///< Duration in seconds for show/hide manual magnifier animation
 
 const float MAGNIFICATION_FACTOR(2.0f);                 ///< Amount to magnify by.
-const float MAGNIFIER_INDENT(10.0f);                    ///< Indentation around edge of stage to define where magnifiers may move.
+const float MAGNIFIER_INDENT(10.0f);                    ///< Indentation around edge of window to define where magnifiers may move.
 const float FINGER_RADIUS_INCHES(0.25f);                ///< Average finger radius in inches from the center of index finger to edge.
 
 /**
  * MagnifierPathConstraint
  * This constraint governs the position of the
  * animating magnifier in a swirly pattern around
- * the stage.
+ * the window.
  */
 struct MagnifierPathConstraint
 {
   /**
    * Constraint constructor
-   * @param[in] stageSize The stage size so that the constraint can create a path
-   * within stage bounds.
+   * @param[in] windowSize The window size so that the constraint can create a path
+   * within window bounds.
    */
-  MagnifierPathConstraint(const Vector3& stageSize,
+  MagnifierPathConstraint(const Vector3& windowSize,
                           Vector3 offset = Vector3::ZERO)
-  : mStageSize(stageSize),
+  : mWindowSize(windowSize),
     mOffset(offset)
   {
   }
@@ -64,12 +64,12 @@ struct MagnifierPathConstraint
 
     current = mOffset;
 
-    Vector3 range( mStageSize - size - Vector3::ONE * MAGNIFIER_INDENT * 2.0f );
+    Vector3 range( mWindowSize - size - Vector3::ONE * MAGNIFIER_INDENT * 2.0f );
     current.x += 0.5f * sinf(time * 0.471f) * range.width;
     current.y += 0.5f * sinf(time * 0.8739f) * range.height;
   }
 
-  Vector3 mStageSize;     ///< Keep track of the stage size for determining path within stage bounds
+  Vector3 mWindowSize;     ///< Keep track of the window size for determining path within window bounds
   Vector3 mOffset;        ///< Amount to offset magnifier path
 };
 
@@ -194,14 +194,14 @@ public:
    */
   void Create( Application& application )
   {
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
-
-    mStageSize = Stage::GetCurrent().GetSize();
+    Window window = application.GetWindow();
+    window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
+    mWindowSize = window.GetSize();
 
     // The Init signal is received once (only) during the Application lifetime
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     Toolkit::ToolBar toolBar;
     mContent = DemoHelper::CreateView( application,
                                        mView,
@@ -217,12 +217,12 @@ public:
     Layer overlay = Layer::New();
     overlay.SetProperty( Actor::Property::SENSITIVE,false);
     overlay.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    overlay.SetProperty( Actor::Property::SIZE, mStageSize);
-    Stage::GetCurrent().Add(overlay);
+    overlay.SetProperty( Actor::Property::SIZE, mWindowSize);
+    window.Add(overlay);
 
     mMagnifier = Toolkit::Magnifier::New();
     mMagnifier.SetSourceActor( mView );
-    mMagnifier.SetProperty( Actor::Property::SIZE, MAGNIFIER_SIZE * mStageSize.width );  // Size of magnifier is in relation to stage width
+    mMagnifier.SetProperty( Actor::Property::SIZE, MAGNIFIER_SIZE * mWindowSize.width );  // Size of magnifier is in relation to window width
     mMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
     mMagnifier.SetProperty( Actor::Property::SCALE,Vector3::ZERO);
     overlay.Add( mMagnifier );
@@ -239,7 +239,7 @@ public:
     // Create bouncing magnifier automatically bounces around screen.
     mBouncingMagnifier = Toolkit::Magnifier::New();
     mBouncingMagnifier.SetSourceActor( mView );
-    mBouncingMagnifier.SetProperty( Actor::Property::SIZE, MAGNIFIER_SIZE * mStageSize.width ); // Size of magnifier is in relation to stage width
+    mBouncingMagnifier.SetProperty( Actor::Property::SIZE, MAGNIFIER_SIZE * mWindowSize.width ); // Size of magnifier is in relation to window width
     mBouncingMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
     overlay.Add( mBouncingMagnifier );
 
@@ -247,13 +247,13 @@ public:
     ContinueAnimation();
 
     // Apply constraint to animate the position of the magnifier.
-    constraint = Constraint::New<Vector3>( mBouncingMagnifier, Actor::Property::POSITION, MagnifierPathConstraint(mStageSize, mStageSize * 0.5f) );
+    constraint = Constraint::New<Vector3>( mBouncingMagnifier, Actor::Property::POSITION, MagnifierPathConstraint(mWindowSize, mWindowSize * 0.5f) );
     constraint.AddSource( LocalSource(Actor::Property::SIZE) );
     constraint.AddSource( LocalSource(mAnimationTimeProperty) );
     constraint.Apply();
 
     // Apply constraint to animate the source of the magnifier.
-    constraint = Constraint::New<Vector3>( mBouncingMagnifier, Toolkit::Magnifier::Property::SOURCE_POSITION, MagnifierPathConstraint(mStageSize) );
+    constraint = Constraint::New<Vector3>( mBouncingMagnifier, Toolkit::Magnifier::Property::SOURCE_POSITION, MagnifierPathConstraint(mWindowSize) );
     constraint.AddSource( LocalSource(Actor::Property::SIZE) );
     constraint.AddSource( LocalSource(mAnimationTimeProperty) );
     constraint.Apply();
@@ -325,7 +325,7 @@ public:
 
       Vector3 touchPoint( event.GetScreenPosition( 0 ) );
 
-      SetMagnifierPosition(touchPoint - mStageSize * 0.5f);
+      SetMagnifierPosition(touchPoint - mWindowSize * 0.5f);
     }
 
     return false;
@@ -361,7 +361,7 @@ public:
 
   /**
    * Manually sets the magnifier position
-   * @param[in] position The magnifier's position relative to center of stage
+   * @param[in] position The magnifier's position relative to center of window
    */
   void SetMagnifierPosition(const Vector3 position)
   {
@@ -369,7 +369,7 @@ public:
 
     // position magnifier glass such that bottom edge is touching/near top of finger.
     Vector3 glassPosition(position);
-    glassPosition.y -= mStageSize.width * MAGNIFIER_SIZE.height * 0.5f + Stage::GetCurrent().GetDpi().height * FINGER_RADIUS_INCHES;
+    glassPosition.y -= mWindowSize.width * MAGNIFIER_SIZE.height * 0.5f + mApplication.GetWindow().GetDpi().GetHeight() * FINGER_RADIUS_INCHES;
 
     mMagnifier.SetProperty( Actor::Property::POSITION, glassPosition );
   }
@@ -392,7 +392,7 @@ private:
   Layer mContent;                                         ///< The content layer
   Toolkit::Magnifier mMagnifier;                          ///< The manually controlled magnifier
   Toolkit::Magnifier mBouncingMagnifier;                  ///< The animating magnifier (swirly animation)
-  Vector3 mStageSize;                                     ///< The size of the stage
+  Vector3 mWindowSize;                                     ///< The size of the window
   float mAnimationTime;                                   ///< Keep track of start animation time.
   Property::Index mAnimationTimeProperty;                 ///< Animation time property (responsible for swirly animation)
   bool mMagnifierShown;                                   ///< Flag indicating whether the magnifier is being shown or not.

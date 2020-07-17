@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ const Vector3 LEFT_POINT( -R3_2, 0.5f,  0.0f);
 const Vector3 RIGHT_POINT( R3_2, 0.5f,  0.0f);
 const Vector3 FRONT_POINT( 0.0f, 0.0f, 20.0f);
 
-const Vector2 DEFAULT_STAGE_SIZE( 480.0f, 800.0f );
+const Vector2 DEFAULT_WINDOW_SIZE( 480.0f, 800.0f );
 
 const float X_ROTATION_DISPLACEMENT_FACTOR = 60.f;
 const float Y_ROTATION_DISPLACEMENT_FACTOR = 60.f;
@@ -145,7 +145,7 @@ public:
   {
     srand(0); // Want repeatable path
 
-    Stage::GetCurrent().KeyEventSignal().Connect(this, &TestApp::OnKeyEvent);
+    app.GetWindow().KeyEventSignal().Connect(this, &TestApp::OnKeyEvent);
 
     CreateToolbarAndView(app);
     CreateShadowViewAndLights();
@@ -155,7 +155,7 @@ public:
   void CreateToolbarAndView(Application& app)
   {
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     Toolkit::ToolBar toolBar;
     mContents = DemoHelper::CreateView( app,
                                         mView,
@@ -235,9 +235,9 @@ public:
     mLightAnchor.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
 
     // Work out a scaling factor as the initial light position was calculated for desktop
-    // Need to scale light position as scene actor size is based on stage size (i.e. much bigger on device)
-    Vector2 stageSize( Stage::GetCurrent().GetSize() );
-    float scaleFactor = stageSize.x / DEFAULT_STAGE_SIZE.x;
+    // Need to scale light position as scene actor size is based on window size (i.e. much bigger on device)
+    Vector2 windowSize( mApp.GetWindow().GetSize() );
+    float scaleFactor = windowSize.x / DEFAULT_WINDOW_SIZE.x;
 
     mCastingLight = Actor::New();
     mCastingLight.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
@@ -403,11 +403,11 @@ public:
   {
     if( mSceneActor )
     {
-      Stage::GetCurrent().Remove(mSceneActor);
+      mApp.GetWindow().Remove(mSceneActor);
     }
     if( mView )
     {
-      Stage::GetCurrent().Remove(mView);
+      mApp.GetWindow().Remove(mView);
     }
   }
 

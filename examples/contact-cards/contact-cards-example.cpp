@@ -19,7 +19,6 @@
 #include <vector>
 #include <dali/public-api/adaptor-framework/application.h>
 #include <dali/public-api/adaptor-framework/key.h>
-#include <dali/public-api/common/stage.h>
 #include <dali/public-api/events/key-event.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 
@@ -32,7 +31,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const Vector4 STAGE_COLOR( 211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f ); ///< The color of the stage
+const Vector4 WINDOW_COLOR( 211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f ); ///< The color of the window
 const char * const THEME_PATH( DEMO_STYLE_DIR "contact-cards-example-theme.json" ); ///< The theme used for this example
 } // unnamed namespace
 
@@ -43,7 +42,7 @@ const char * const THEME_PATH( DEMO_STYLE_DIR "contact-cards-example-theme.json"
  * Additionally, this also shows how to morph between two different geometries.
  *
  * ContactCardLayouter: This class is used to lay out the different contact cards on the screen.
- *                      This takes stage size into account but does not support relayouting.
+ *                      This takes window size into account but does not support relayouting.
  * ContactCard: This class represents each contact card on the screen.
  *              Two animations are set up in this class which animate several properties with multiple start and stop times.
  *              An overview of the two animations can be found in contact-card.cpp.
@@ -79,15 +78,15 @@ private:
    */
   void Create( Application& application )
   {
-    // Set the stage background color and connect to the stage's key signal to allow Back and Escape to exit.
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( STAGE_COLOR );
-    stage.KeyEventSignal().Connect( this, &ContactCardController::OnKeyEvent );
+    // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( WINDOW_COLOR );
+    window.KeyEventSignal().Connect( this, &ContactCardController::OnKeyEvent );
 
     // Add all the contacts to the layouter
     for( size_t i = 0; i < ContactData::TABLE_SIZE; ++i )
     {
-      mContactCardLayouter.AddContact( ContactData::TABLE[ i ].name, ContactData::TABLE[ i ].address, ContactData::TABLE[ i ].imagePath );
+      mContactCardLayouter.AddContact( window, ContactData::TABLE[ i ].name, ContactData::TABLE[ i ].address, ContactData::TABLE[ i ].imagePath );
     }
   }
 

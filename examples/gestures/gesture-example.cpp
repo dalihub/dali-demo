@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,10 +81,10 @@ const float ROTATE_BACK_ANIMATION_DURATION( 0.25f );
  * @param[in]  startTime  When to start the animators
  * @param[in]  endTime    When to end the animators
  */
-void AddHelpInfo( const std::string&& string, Actor parent, Animation animation, float startTime, float endTime )
+void AddHelpInfo( const std::string&& string, const Vector2& windowSize, Actor parent, Animation animation, float startTime, float endTime )
 {
   Actor text = TextLabel::New( std::move( string ) );
-  Vector3 position( Stage::GetCurrent().GetSize() * HELP_TEXT_POSITION_MULTIPLIER );
+  Vector3 position( windowSize * HELP_TEXT_POSITION_MULTIPLIER );
 
   text.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
   text.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
@@ -141,20 +141,21 @@ private:
    */
   void Create( Application& application )
   {
-    // Get a handle to the stage & connect to the key event signal
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &GestureExample::OnKeyEvent);
+    // Get a handle to the window & connect to the key event signal
+    auto window = application.GetWindow();
+    Vector2 windowSize = window.GetSize();
+    window.KeyEventSignal().Connect(this, &GestureExample::OnKeyEvent);
 
     // Create a background with a linear gradient which matches parent size & is placed in the center.
     Actor background = Control::New();
     background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     background.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     background.SetProperty( Control::Property::BACKGROUND, BACKGROUND );
-    stage.Add( background );
+    window.Add( background );
 
-    // Create a control with a circular gradient that we'll use for the gestures and be a quarter of the size of the stage.
+    // Create a control with a circular gradient that we'll use for the gestures and be a quarter of the size of the window.
     Actor touchControl = Control::New();
-    touchControl.SetProperty( Actor::Property::SIZE, stage.GetSize() * 0.25f );
+    touchControl.SetProperty( Actor::Property::SIZE, windowSize * 0.25f );
     touchControl.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     touchControl.SetProperty( Control::Property::BACKGROUND, CONTROL_BACKGROUND );
     background.Add( touchControl );
@@ -206,10 +207,10 @@ private:
     float startTime( 0.0f );
     float endTime( startTime + HELP_ANIMATION_SEGMENT_TIME );
 
-    AddHelpInfo( "Tap image for animation",                              background, helpAnimation, startTime, endTime );
-    AddHelpInfo( "Press & Hold image to drag",                           background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
-    AddHelpInfo( "Pinch image to resize",                                background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
-    AddHelpInfo( "Move fingers in a circular motion on image to rotate", background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
+    AddHelpInfo( "Tap image for animation",                              windowSize, background, helpAnimation, startTime, endTime );
+    AddHelpInfo( "Press & Hold image to drag",                           windowSize, background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
+    AddHelpInfo( "Pinch image to resize",                                windowSize, background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
+    AddHelpInfo( "Move fingers in a circular motion on image to rotate", windowSize, background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME );
     helpAnimation.SetLooping( true );
     helpAnimation.Play();
   }
@@ -323,9 +324,9 @@ private:
         anim.AnimateTo( Property( actor, Actor::Property::SCALE ), actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ) * PAN_MODE_END_ANIMATION_SCALE, AlphaFunction::BOUNCE );
 
         // Move actor back to center if we're out of bounds
-        Vector2 halfStageSize = Stage::GetCurrent().GetSize() * 0.5f;
-        if( ( abs( newPosition.x ) > halfStageSize.width  ) ||
-            ( abs( newPosition.y ) > halfStageSize.height ) )
+        Vector2 halfWindowSize = Vector2(mApplication.GetWindow().GetSize()) * 0.5f;
+        if( ( abs( newPosition.x ) > halfWindowSize.width  ) ||
+            ( abs( newPosition.y ) > halfWindowSize.height ) )
         {
           anim.AnimateTo( Property( actor, Actor::Property::POSITION ), Vector3::ZERO, AlphaFunction::EASE_IN );
         }

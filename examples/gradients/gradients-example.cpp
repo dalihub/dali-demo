@@ -59,12 +59,12 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &GradientController::OnKeyEvent);
+    // Get a handle to the window
+    auto window = application.GetWindow();
+    window.KeyEventSignal().Connect(this, &GradientController::OnKeyEvent);
 
     // Creates a default view with a default tool bar.
-    // The view is added to the stage.
+    // The view is added to the window.
     Toolkit::ToolBar toolBar;
     Layer content = DemoHelper::CreateView( application,
                                             mView,
@@ -155,9 +155,9 @@ public:
       }
       case 1: // linear gradient with units as userSpaceOnUse
       {
-        Vector2 halfStageSize = Stage::GetCurrent().GetSize()*0.5f;
-        gradientMap.Insert( GradientVisual::Property::START_POSITION,  halfStageSize );
-        gradientMap.Insert( GradientVisual::Property::END_POSITION,   -halfStageSize );
+        Vector2 halfWindowSize = Vector2(mApplication.GetWindow().GetSize())*0.5f;
+        gradientMap.Insert( GradientVisual::Property::START_POSITION,  halfWindowSize );
+        gradientMap.Insert( GradientVisual::Property::END_POSITION,   -halfWindowSize );
         gradientMap.Insert( GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE );
         break;
       }
@@ -169,9 +169,9 @@ public:
       }
       default: // radial gradient with units as userSpaceOnUse
       {
-        Vector2 stageSize = Stage::GetCurrent().GetSize();
-        gradientMap.Insert( GradientVisual::Property::CENTER, stageSize * 0.5f );
-        gradientMap.Insert( GradientVisual::Property::RADIUS, stageSize.Length());
+        Vector2 windowSize = mApplication.GetWindow().GetSize();
+        gradientMap.Insert( GradientVisual::Property::CENTER, windowSize * 0.5f );
+        gradientMap.Insert( GradientVisual::Property::RADIUS, windowSize.Length());
         gradientMap.Insert( GradientVisual::Property::UNITS,  GradientVisual::Units::USER_SPACE );
         break;
       }

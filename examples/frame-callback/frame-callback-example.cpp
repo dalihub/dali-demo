@@ -55,7 +55,6 @@ public:
    */
   FrameCallbackController( Application& application )
   : mApplication( application ),
-    mStage(),
     mFrameCallback(),
     mTextLabel(),
     mTapDetector(),
@@ -72,35 +71,35 @@ private:
    *
    * Creates several image-views and places them appropriately.
    * Animate all image-views.
-   * Set the FrameCallbackInterface on the stage.
-   * Tapping on the stage enables/disables the FrameCallback.
+   * Set the FrameCallbackInterface on the window.
+   * Tapping on the window enables/disables the FrameCallback.
    */
-  void Create( Application& /* application */ )
+  void Create( Application& application )
   {
-    // Set the stage background color and connect to the stage's key signal to allow Back and Escape to exit.
-    mStage = Stage::GetCurrent();
-    mStage.SetBackgroundColor( Color::WHITE );
-    mStage.KeyEventSignal().Connect( this, &FrameCallbackController::OnKeyEvent );
+    // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
+    window.KeyEventSignal().Connect( this, &FrameCallbackController::OnKeyEvent );
 
-    // Notify mFrameCallback about the stage width.
-    // Can call methods in mFrameCallback directly as we have not set it on the stage yet.
-    Vector2 stageSize = mStage.GetSize();
-    mFrameCallback.SetStageWidth( stageSize.width );
+    // Notify mFrameCallback about the window width.
+    // Can call methods in mFrameCallback directly as we have not set it on the window yet.
+    Vector2 windowSize = window.GetSize();
+    mFrameCallback.SetWindowWidth( windowSize.width );
 
     // Detect taps on the root layer.
     mTapDetector = TapGestureDetector::New();
-    mTapDetector.Attach( mStage.GetRootLayer() );
+    mTapDetector.Attach( window.GetRootLayer() );
     mTapDetector.DetectedSignal().Connect( this, &FrameCallbackController::OnTap );
 
     // Create some key-frames to be used by all animations.
     KeyFrames keyFrames = KeyFrames::New();
     keyFrames.Add( 0.0f,   0.0f );
-    keyFrames.Add( 0.25f,  stageSize.width * 0.5f );
-    keyFrames.Add( 0.75f, -stageSize.width * 0.5f );
+    keyFrames.Add( 0.25f,  windowSize.width * 0.5f );
+    keyFrames.Add( 0.75f, -windowSize.width * 0.5f );
     keyFrames.Add( 1.0f,   0.0f );
 
     float yPos = 0.0f;
-    for( int i = 0; yPos < stageSize.height; ++i )
+    for( int i = 0; yPos < windowSize.height; ++i )
     {
       ImageView imageView = ImageView::New( IMAGE_NAME );
       imageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
@@ -109,10 +108,10 @@ private:
       yPos += imageView.GetNaturalSize().height;
 
       // Add the ID of the created ImageView to mFrameCallback.
-      // Again, can call methods in mFrameCallback directly as we have not set it on the stage yet.
+      // Again, can call methods in mFrameCallback directly as we have not set it on the window yet.
       mFrameCallback.AddId( imageView.GetProperty< int >( Actor::Property::ID ) );
 
-      mStage.Add( imageView );
+      window.Add( imageView );
 
       // Create an animation and set the progress so that each image starts at a different point.
       Animation animation = Animation::New( ANIMATION_TIME );
@@ -128,29 +127,29 @@ private:
     mTextLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
     mTextLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     mTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mStage.Add( mTextLabel );
+    window.Add( mTextLabel );
 
     // Set the FrameCallbackInterface on the root layer.
-    DevelStage::AddFrameCallback( mStage, mFrameCallback, mStage.GetRootLayer() );
+    DevelStage::AddFrameCallback( Stage::GetCurrent(), mFrameCallback, window.GetRootLayer() );
     mFrameCallbackEnabled = true;
   }
 
   /**
-   * @brief Called when a tap on the stage occurs.
+   * @brief Called when a tap on the window occurs.
    *
    * Toggle enabling/disabling of the FrameCallbackInterface
    */
-  void OnTap( Actor /* actor */, const TapGesture& /* tap */ )
+  void OnTap( Actor actor, const TapGesture& /* tap */ )
   {
     if( mFrameCallbackEnabled )
     {
-      DevelStage::RemoveFrameCallback( mStage, mFrameCallback );
+      DevelStage::RemoveFrameCallback( Stage::GetCurrent(), mFrameCallback );
       mTextLabel.SetProperty( TextLabel::Property::TEXT, TEXT_DISABLED );
       mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, TEXT_COLOR_DISABLED );
     }
     else
     {
-      DevelStage::AddFrameCallback( mStage, mFrameCallback, mStage.GetRootLayer() );
+      DevelStage::AddFrameCallback( Stage::GetCurrent(), mFrameCallback, actor );
       mTextLabel.SetProperty( TextLabel::Property::TEXT, TEXT_ENABLED );
       mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, TEXT_COLOR_ENABLED );
     }
@@ -177,7 +176,6 @@ private:
 
 private:
   Application&        mApplication;          ///< A reference to the application instance.
-  Stage               mStage;                ///< The stage we enable the FrameCallback on.
   FrameCallback       mFrameCallback;        ///< An instance of our implementation of the FrameCallbackInterface.
   TextLabel           mTextLabel;            ///< Text label which shows whether the frame-callback is enabled/disabled.
   TapGestureDetector  mTapDetector;          ///< Tap detector to enable/disable the FrameCallbackInterface.

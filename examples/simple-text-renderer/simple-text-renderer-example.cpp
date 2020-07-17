@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -274,11 +274,11 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
-    stage.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
+    window.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
 
-    stage.KeyEventSignal().Connect(this, &SimpleTextRendererExample::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &SimpleTextRendererExample::OnKeyEvent);
 
     const std::string image1 = "<item 'width'=26 'height'=26 'url'='" + IMAGE1 + "'/>";
     const std::string image2 = "<item 'width'=26 'height'=26/>";
@@ -319,7 +319,7 @@ public:
 
     actor.AddRenderer( renderer );
 
-    stage.Add( actor );
+    window.Add( actor );
   }
 
   /**

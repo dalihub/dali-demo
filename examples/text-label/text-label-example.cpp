@@ -132,8 +132,8 @@ struct HSVColorConstraint
   float value;
 };
 
-const float STYLE_BUTTON_POSTION_RELATIVE_TO_STAGE = 0.9f;
-const float BUTTON_SIZE_RATIO_TO_STAGE = 0.1f;
+const float STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW = 0.9f;
+const float BUTTON_SIZE_RATIO_TO_WINDOW = 0.1f;
 const float OUTLINE_WIDTH = 2.0f;
 const Vector2 SHADOW_OFFSET = Vector2( 2.0f, 2.0f );
 const int GAP_BETWEEN_BUTTONS = 3;
@@ -185,7 +185,7 @@ public:
   void SetUpExpandingStyleButtons( Vector2 position )
   {
     mExpandingButtons = Demo::ExpandingButtons::New();
-    mExpandingButtons.SetProperty( Actor::Property::POSITION, Vector2( mButtonSize.width, mStageSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_STAGE ));
+    mExpandingButtons.SetProperty( Actor::Property::POSITION, Vector2( mButtonSize.width, mWindowSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW ));
     mExpandingButtons.CollapsingSignal().Connect( this, &TextLabelExample::OnExpandingButtonCollapsing );
     mExpandingButtons.SetProperty( Actor::Property::SIZE, mButtonSize );
     // Creates the buttons to be expanded
@@ -203,18 +203,18 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = application.GetWindow();
 
-    stage.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
-    mStageSize = stage.GetSize();
-    mButtonSize = Size( mStageSize.height * 0.1, mStageSize.height * 0.1 ); // Button size 1/10 of stage height
+    window.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
+    mWindowSize = window.GetSize();
+    mButtonSize = Size( mWindowSize.height * 0.1, mWindowSize.height * 0.1 ); // Button size 1/10 of window height
 
     mContainer = Control::New();
     mContainer.SetProperty( Dali::Actor::Property::NAME, "Container" );
     mContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mLayoutSize = Vector2(mStageSize.width*0.6f, mStageSize.width*0.6f);
+    mLayoutSize = Vector2(mWindowSize.width*0.6f, mWindowSize.width*0.6f);
     mContainer.SetProperty( Actor::Property::SIZE, mLayoutSize );
-    stage.Add( mContainer );
+    window.Add( mContainer );
 
     // Resize the center layout when the corner is grabbed
     mGrabCorner = ImageView::New( BACKGROUND_IMAGE );
@@ -239,9 +239,9 @@ public:
     mContainer.Add( mLabel );
 
     // Clicking ExpandingButton shows the Registered Style buttons, clicking again hides them.
-    Vector2 expandingButtonPosition( mButtonSize.width, mStageSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_STAGE );
+    Vector2 expandingButtonPosition( mButtonSize.width, mWindowSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW );
     SetUpExpandingStyleButtons( expandingButtonPosition );
-    stage.Add( mExpandingButtons );
+    window.Add( mExpandingButtons );
 
     // Add a border for the container so you can see the container is being resized while grabbing the handle.
     mBorder = Control::New();
@@ -596,8 +596,8 @@ public:
     if( mLayoutSize.x >= 2.0f ||
         mLayoutSize.y >= 2.0f )
     {
-      mLayoutSize.x = std::min ( mLayoutSize.x, mStageSize.width );
-      mLayoutSize.y = std::min ( mLayoutSize.y, mStageSize.height*.9f );
+      mLayoutSize.x = std::min ( mLayoutSize.x, mWindowSize.width );
+      mLayoutSize.y = std::min ( mLayoutSize.y, mWindowSize.height*.9f );
 
       // Avoid pixel mis-alignment issue
       Vector2 clampedSize = Vector2( std::max( ConvertToEven( static_cast<int>( mLayoutSize.x )), 2 ),
@@ -776,7 +776,7 @@ private:
 
   Animation mColorButtonsAnimation;
 
-  Size mStageSize;
+  Size mWindowSize;
   Size mButtonSize;
 
   unsigned int mLanguageId;

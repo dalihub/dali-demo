@@ -281,11 +281,11 @@ public:
   void ResourceReadySignal( Toolkit::Control control )
   {
     mImagesLoaded++;
-    // To allow fast startup, we only place a small number of ImageViews on stage first
+    // To allow fast startup, we only place a small number of ImageViews on window first
     if ( mImagesLoaded == INITIAL_IMAGES_TO_LOAD )
     {
-      // Adding the ImageViews to the stage will trigger loading of the Images
-      mGridActor.Add( mOffStageImageViews );
+      // Adding the ImageViews to the window will trigger loading of the Images
+      mGridActor.Add( mOffWindowImageViews );
     }
   }
 
@@ -297,11 +297,11 @@ public:
   {
     std::cout << "ImageScalingIrregularGridController::Create" << std::endl;
 
-    // Get a handle to the stage:
-    Stage stage = Stage::GetCurrent();
+    // Get a handle to the window:
+    Window window = application.GetWindow();
 
     // Connect to input event signals:
-    stage.KeyEventSignal().Connect(this, &ImageScalingIrregularGridController::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &ImageScalingIrregularGridController::OnKeyEvent);
 
     // Create a default view with a default tool bar:
     mContentLayer = DemoHelper::CreateView( mApplication,
@@ -320,10 +320,10 @@ public:
 
     SetTitle( APPLICATION_TITLE );
 
-    mOffStageImageViews = Actor::New();
-    mOffStageImageViews.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mOffStageImageViews.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
-    mOffStageImageViews.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    mOffWindowImageViews = Actor::New();
+    mOffWindowImageViews.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mOffWindowImageViews.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    mOffWindowImageViews.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
 
     // Build the main content of the widow:
     PopulateContentLayer( DEFAULT_SCALING_MODE );
@@ -334,11 +334,11 @@ public:
    */
   void PopulateContentLayer( const Dali::FittingMode::Type fittingMode )
   {
-    Stage stage = Stage::GetCurrent();
-    Vector2 stageSize = stage.GetSize();
+    Window window = mApplication.GetWindow();
+    Vector2 windowSize = window.GetSize();
 
     float fieldHeight;
-    Actor imageField = BuildImageField( stageSize.x, GRID_WIDTH, GRID_MAX_HEIGHT, fittingMode, fieldHeight );
+    Actor imageField = BuildImageField( windowSize.x, GRID_WIDTH, GRID_MAX_HEIGHT, fittingMode, fieldHeight );
 
     mScrollView = ScrollView::New();
 
@@ -355,12 +355,12 @@ public:
 
     // Restrict scrolling to mostly vertical only, but with some horizontal wiggle-room:
 
-    RulerPtr rulerX = new FixedRuler( stageSize.width ); //< Pull the view back to the grid's centre-line when touch is release using a snapping ruler.
-    rulerX->SetDomain( RulerDomain( stageSize.width * -0.125f, stageSize.width * 1.125f ) ); //< Scroll slightly left/right of image field.
+    RulerPtr rulerX = new FixedRuler( windowSize.width ); //< Pull the view back to the grid's centre-line when touch is release using a snapping ruler.
+    rulerX->SetDomain( RulerDomain( windowSize.width * -0.125f, windowSize.width * 1.125f ) ); //< Scroll slightly left/right of image field.
     mScrollView.SetRulerX ( rulerX );
 
-    RulerPtr rulerY = new DefaultRuler(); //< Snap in multiples of a screen / stage height
-    rulerY->SetDomain( RulerDomain( - fieldHeight * 0.5f + stageSize.height * 0.5f - GRID_CELL_PADDING, fieldHeight * 0.5f + stageSize.height * 0.5f + GRID_CELL_PADDING ) );
+    RulerPtr rulerY = new DefaultRuler(); //< Snap in multiples of a screen / window height
+    rulerY->SetDomain( RulerDomain( - fieldHeight * 0.5f + windowSize.height * 0.5f - GRID_CELL_PADDING, fieldHeight * 0.5f + windowSize.height * 0.5f + GRID_CELL_PADDING ) );
     mScrollView.SetRulerY ( rulerY );
 
     mContentLayer.Add( mScrollView );
@@ -484,9 +484,9 @@ public:
       }
       else
       {
-        // Store the ImageView in an offstage actor until the inital batch of ImageViews have finished loading their images
+        // Store the ImageView in an offwindow actor until the inital batch of ImageViews have finished loading their images
         // Required
-        mOffStageImageViews.Add( image );
+        mOffWindowImageViews.Add( image );
       }
     }
 
@@ -630,7 +630,7 @@ private:
   Toolkit::ToolBar mToolBar;          ///< The View's Toolbar.
   TextLabel mTitleActor;               ///< The Toolbar's Title.
   Actor mGridActor;                   ///< The container for the grid of images
-  Actor mOffStageImageViews;          ///< ImageViews held off stage until the inital batch have loaded their images
+  Actor mOffWindowImageViews;          ///< ImageViews held off window until the inital batch have loaded their images
   ScrollView mScrollView;             ///< ScrollView UI Component
   ScrollBar mScrollBarVertical;
   ScrollBar mScrollBarHorizontal;

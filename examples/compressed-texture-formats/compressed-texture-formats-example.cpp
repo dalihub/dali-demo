@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,9 +107,9 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
 
     // Setup a TableView to hold a grid of images and labels.
     Toolkit::TableView table = Toolkit::TableView::New( 3u, 2u );
@@ -174,11 +174,11 @@ public:
     table.AddChild( actor, Toolkit::TableView::CellPosition( 2u, 1u ) );
     table.SetCellAlignment( Toolkit::TableView::CellPosition( 2u, 1u ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
 
-    stage.Add( table );
+    window.Add( table );
 
     // Respond to touch and key signals
-    stage.GetRootLayer().TouchSignal().Connect( this, &CompressedTextureFormatsController::OnTouch );
-    stage.KeyEventSignal().Connect(this, &CompressedTextureFormatsController::OnKeyEvent);
+    window.GetRootLayer().TouchSignal().Connect( this, &CompressedTextureFormatsController::OnTouch );
+    window.KeyEventSignal().Connect(this, &CompressedTextureFormatsController::OnKeyEvent);
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )

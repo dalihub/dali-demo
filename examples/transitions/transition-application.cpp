@@ -69,9 +69,9 @@ TransitionApplication::~TransitionApplication()
 
 void TransitionApplication::Create( Application& application )
 {
-  Stage stage = Stage::GetCurrent();
-  stage.KeyEventSignal().Connect(this, &TransitionApplication::OnKeyEvent);
-  stage.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
+  Window window = application.GetWindow();
+  window.KeyEventSignal().Connect(this, &TransitionApplication::OnKeyEvent);
+  window.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
 
   // Content panes:
   TableView contentLayout = TableView::New( 3, 1 );
@@ -83,7 +83,7 @@ void TransitionApplication::Create( Application& application )
   contentLayout.SetBackgroundColor( Vector4(0.949, 0.949, 0.949, 1.0) );
   // Assign all rows the size negotiation property of fitting to children
 
-  stage.Add( contentLayout );
+  window.Add( contentLayout );
 
   mTitle = TextLabel::New( "Custom Control Transition Example" );
   mTitle.SetProperty( Dali::Actor::Property::NAME, "Title" );

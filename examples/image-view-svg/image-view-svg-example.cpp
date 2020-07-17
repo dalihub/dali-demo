@@ -63,27 +63,27 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
-    Vector2 stageSize = stage.GetSize();
-    mActorSize = stageSize/2.f;
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
+    Vector2 windowSize = window.GetSize();
+    mActorSize = windowSize/2.f;
 
-    stage.KeyEventSignal().Connect(this, &ImageSvgController::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &ImageSvgController::OnKeyEvent);
 
     // Background, for receiving gestures
-    mStageBackground = Actor::New();
-    mStageBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mStageBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-    mStageBackground.SetProperty( Actor::Property::SIZE, Vector2( stageSize.x, stageSize.y ) );
-    stage.Add(mStageBackground);
+    mWindowBackground = Actor::New();
+    mWindowBackground.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+    mWindowBackground.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
+    mWindowBackground.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x, windowSize.y ) );
+    window.Add(mWindowBackground);
 
     // Push button,  for changing the image set for displaying
     Toolkit::PushButton changeButton = Toolkit::PushButton::New();
     changeButton.SetProperty( Toolkit::Button::Property::LABEL, "Next" );
     changeButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT );
     changeButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
-    stage.Add( changeButton );
+    window.Add( changeButton );
     changeButton.ClickedSignal().Connect( this, &ImageSvgController::OnChangeButtonClicked );
 
     // Push button, for resetting the actor size and position
@@ -91,16 +91,16 @@ public:
     resetButton.SetProperty( Toolkit::Button::Property::LABEL, "Reset" );
     resetButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
     resetButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    stage.Add( resetButton );
+    window.Add( resetButton );
     resetButton.ClickedSignal().Connect( this, &ImageSvgController::OnResetButtonClicked );
 
-    // Create and put imageViews to stage
+    // Create and put imageViews to window
     for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
     {
       mSvgActor[i] = Toolkit::ImageView::New(SVG_IMAGES[mIndex+i]);
       mSvgActor[i].SetProperty( Actor::Property::SIZE, mActorSize );
-      mSvgActor[i].TranslateBy( Vector3( 0.0, stageSize.height * 0.05, 0.0f ) );
-      stage.Add( mSvgActor[i] );
+      mSvgActor[i].TranslateBy( Vector3( 0.0, windowSize.height * 0.05, 0.0f ) );
+      window.Add( mSvgActor[i] );
     }
     mSvgActor[0].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mSvgActor[0].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT );
@@ -114,11 +114,11 @@ public:
     // Connect pan gesture for moving the actors
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.DetectedSignal().Connect( this, &ImageSvgController::OnPanGesture );
-    mPanGestureDetector.Attach( mStageBackground );
+    mPanGestureDetector.Attach( mWindowBackground );
 
     // Connect pinch gesture for resizing the actors
     mPinchGestureDetector = PinchGestureDetector::New();
-    mPinchGestureDetector.Attach( mStageBackground);
+    mPinchGestureDetector.Attach( mWindowBackground);
     mPinchGestureDetector.DetectedSignal().Connect(this, &ImageSvgController::OnPinch);
 
     changeButton.RaiseToTop();
@@ -246,7 +246,7 @@ public:
 
 private:
   Application&         mApplication;
-  Actor                mStageBackground;
+  Actor                mWindowBackground;
   PanGestureDetector   mPanGestureDetector;
   PinchGestureDetector mPinchGestureDetector;
 

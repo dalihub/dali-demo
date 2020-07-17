@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -230,24 +230,24 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
-    stage.SetBackgroundColor( Color::WHITE );
-    Vector2 stageSize = stage.GetSize();
+    // Get a handle to the window
+    Window window = application.GetWindow();
+    window.SetBackgroundColor( Color::WHITE );
+    Vector2 windowSize = window.GetSize();
 
-    stage.GetRootLayer().SetProperty( Layer::Property::DEPTH_TEST, false );
+    window.GetRootLayer().SetProperty( Layer::Property::DEPTH_TEST, false );
 
-    mSize = Vector3( stageSize.x / mColumnsPerPage, stageSize.y / mRowsPerPage, 0.0f );
+    mSize = Vector3( windowSize.x / mColumnsPerPage, windowSize.y / mRowsPerPage, 0.0f );
 
-    // Respond to a click anywhere on the stage
-    stage.GetRootLayer().TouchSignal().Connect( this, &PerfScroll::OnTouch );
+    // Respond to a click anywhere on the window
+    window.GetRootLayer().TouchSignal().Connect( this, &PerfScroll::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &PerfScroll::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &PerfScroll::OnKeyEvent );
 
     mParent = Actor::New();
     mParent.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    stage.Add(mParent);
+    window.Add(mParent);
 
     if( gUseMesh )
     {
@@ -275,7 +275,7 @@ public:
 
   void CreateImageViews()
   {
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
     unsigned int actorCount( mRowsPerPage*mColumnsPerPage * mPageCount );
     mImageView.resize( actorCount );
 
@@ -308,7 +308,7 @@ public:
     }
 
     //Create the actors
-    Stage stage = Stage::GetCurrent();
+    Window window = mApplication.GetWindow();
     unsigned int actorCount(mRowsPerPage*mColumnsPerPage * mPageCount);
     mActor.resize(actorCount);
     for( size_t i(0); i<actorCount; ++i )
@@ -338,8 +338,8 @@ public:
 
   void ShowAnimation()
   {
-    Stage stage = Stage::GetCurrent();
-    Vector3 initialPosition( stage.GetSize().x * 0.5f, stage.GetSize().y*0.5f, 1000.0f );
+    Window window = mApplication.GetWindow();
+    Vector3 initialPosition( window.GetSize().GetWidth() * 0.5f, window.GetSize().GetHeight() * 0.5f, 1000.0f );
 
     unsigned int totalColumns = mColumnsPerPage * mPageCount;
 
@@ -392,12 +392,12 @@ public:
 
   void ScrollAnimation()
   {
-    Stage stage = Stage::GetCurrent();
-    Vector3 stageSize( stage.GetSize() );
+    Window window = mApplication.GetWindow();
+    Vector3 windowSize( window.GetSize() );
 
     mScroll = Animation::New( gDuration );
 
-    mScroll.AnimateBy( Property( mParent, Actor::Property::POSITION ), Vector3( -(gPageCount-1.)*stageSize.x,0.0f, 0.0f) );
+    mScroll.AnimateBy( Property( mParent, Actor::Property::POSITION ), Vector3( -(gPageCount-1.)*windowSize.x,0.0f, 0.0f) );
     mScroll.Play();
     mScroll.FinishedSignal().Connect( this, &PerfScroll::OnAnimationEnd );
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -164,8 +164,8 @@ public:
     // Create benchmark script
     CreateScript();
 
-    // Get a handle to the stage
-    Stage stage = Stage::GetCurrent();
+    // Get a handle to the window
+    Window window = application.GetWindow();
 
     mScrollParent = Actor::New();
     mScrollParent.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -174,20 +174,20 @@ public:
 
     // create background
     Toolkit::ImageView background = Toolkit::ImageView::New( BACKGROUND_IMAGE );
-    Stage::GetCurrent().Add( background );
+    window.Add( background );
     background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     background.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     background.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
 
     PopulatePages();
 
-    stage.Add( mScrollParent );
+    window.Add( mScrollParent );
 
-    // Respond to a click anywhere on the stage.
-    stage.GetRootLayer().TouchSignal().Connect( this, &HomescreenBenchmark::OnTouch );
+    // Respond to a click anywhere on the window.
+    window.GetRootLayer().TouchSignal().Connect( this, &HomescreenBenchmark::OnTouch );
 
     // Respond to key events
-    stage.KeyEventSignal().Connect( this, &HomescreenBenchmark::OnKeyEvent );
+    window.KeyEventSignal().Connect( this, &HomescreenBenchmark::OnKeyEvent );
   }
 
   bool OnTouch( Actor actor, const TouchData& touch )
@@ -254,14 +254,16 @@ public:
 
   void AddIconsToPage( Actor page, bool useTextLabel )
   {
-    Size stageSize( Stage::GetCurrent().GetSize() );
-    const float scaledHeight = stageSize.y * PAGE_SCALE_FACTOR_Y;
-    const float scaledWidth = stageSize.x * PAGE_SCALE_FACTOR_X;
-    const float PADDING = stageSize.y / 64.0f;
+    Window window = mApplication.GetWindow();
+
+    Size windowSize( window.GetSize() );
+    const float scaledHeight = windowSize.y * PAGE_SCALE_FACTOR_Y;
+    const float scaledWidth = windowSize.x * PAGE_SCALE_FACTOR_X;
+    const float PADDING = windowSize.y / 64.0f;
     const float ROW_HEIGHT = ( scaledHeight - (PADDING*2.0f) ) / static_cast<float>( mConfig.mRows );
     const float COL_WIDTH = ( scaledWidth - (PADDING*2.0f) ) / static_cast<float>( mConfig.mCols );
 
-    Vector2 dpi = Stage::GetCurrent().GetDpi();
+    Vector2 dpi = window.GetDpi();
 
     static int currentIconIndex = 0;
 
@@ -373,7 +375,7 @@ public:
 
   void PopulatePages()
   {
-    Vector3 stageSize( Stage::GetCurrent().GetSize() );
+    Vector3 windowSize( mApplication.GetWindow().GetSize() );
 
     for( int i = 0; i < mConfig.mPageCount; ++i )
     {
@@ -386,7 +388,7 @@ public:
       // Move page 'a little bit up'.
       page.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
       page.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-      page.SetProperty( Actor::Property::POSITION, Vector3( stageSize.x * i, 0.0f, 0.0f ) );
+      page.SetProperty( Actor::Property::POSITION, Vector3( windowSize.x * i, 0.0f, 0.0f ) );
       mScrollParent.Add( page );
     }
 
@@ -409,18 +411,18 @@ public:
   void ScrollPages(int pages, float duration, bool flick)
   {
     duration *= PAGE_DURATION_SCALE_FACTOR;
-    Vector3 stageSize( Stage::GetCurrent().GetSize() );
+    Vector3 windowSize( mApplication.GetWindow().GetSize() );
     mScrollAnimation = Animation::New( duration );
     if( flick )
     {
-      mScrollAnimation.AnimateBy( Property( mScrollParent, Actor::Property::POSITION ), Vector3( -stageSize.x * pages, 0.0f, 0.0f ), AlphaFunction::EASE_IN_OUT );
+      mScrollAnimation.AnimateBy( Property( mScrollParent, Actor::Property::POSITION ), Vector3( -windowSize.x * pages, 0.0f, 0.0f ), AlphaFunction::EASE_IN_OUT );
     }
     else
     {
       int totalPages = abs( pages );
       for( int i = 0; i < totalPages; ++i )
       {
-        mScrollAnimation.AnimateBy( Property( mScrollParent, Actor::Property::POSITION ), Vector3( pages < 0 ? stageSize.x : -stageSize.x, 0.0f, 0.0f ), AlphaFunction::EASE_IN_OUT, TimePeriod( duration * i, duration ) );
+        mScrollAnimation.AnimateBy( Property( mScrollParent, Actor::Property::POSITION ), Vector3( pages < 0 ? windowSize.x : -windowSize.x, 0.0f, 0.0f ), AlphaFunction::EASE_IN_OUT, TimePeriod( duration * i, duration ) );
       }
     }
     mScrollAnimation.FinishedSignal().Connect( this, &HomescreenBenchmark::OnAnimationEnd );

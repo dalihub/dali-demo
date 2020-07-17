@@ -2,7 +2,7 @@
 #define DALI_DEMO_RENDERER_STENCIL_SHADERS_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 // Shader uniforms:
 const char * const COLOR_UNIFORM_NAME( "uColor" );
 const char * const OBJECT_DIMENSIONS_UNIFORM_NAME( "uObjectDimensions" );
-const char * const STAGE_SIZE_UNIFORM_NAME( "uStageSize" );
 const char * const LIGHT_POSITION_UNIFORM_NAME = "uLightPosition";
 const char * const POSITION( "aPosition");
 const char * const NORMAL( "aNormal" );

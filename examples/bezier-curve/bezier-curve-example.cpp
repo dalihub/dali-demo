@@ -149,10 +149,10 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect( this, &BezierCurveExample::OnKeyEvent );
+    Window window = mApplication.GetWindow();
+    window.KeyEventSignal().Connect( this, &BezierCurveExample::OnKeyEvent );
 
-    CreateBackground(stage);
+    CreateBackground(window);
 
     mControlPointScale = 0.5f;
     mControlPointZoomScale = mControlPointScale * 2.0f;
@@ -161,7 +161,7 @@ public:
     mContentLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
     mContentLayer.TouchSignal().Connect(this, &BezierCurveExample::OnTouchLayer);
     mContentLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    stage.Add( mContentLayer );
+    window.Add( mContentLayer );
 
     // 6 rows: title, grid, coords, play, anim1, anim2
     TableView contentLayout = TableView::New(5, 1);
@@ -275,7 +275,7 @@ public:
     UpdateCurve();
   }
 
-  void CreateBackground( Stage stage )
+  void CreateBackground( Window window )
   {
     Toolkit::Control background = Dali::Toolkit::Control::New();
     background.SetProperty( Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
@@ -286,7 +286,7 @@ public:
     map.Insert( Visual::Property::TYPE,  Visual::COLOR );
     map.Insert( ColorVisual::Property::MIX_COLOR, Vector4( 253/255.0f, 245/255.0f, 230/255.0f, 1.0f ) );
     background.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
-    stage.Add( background );
+    window.Add( background );
   }
 
   void CreateCubic(Actor parent)

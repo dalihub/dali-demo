@@ -142,10 +142,10 @@ public:
    */
   void Create( Application& application )
   {
-    Stage stage = Stage::GetCurrent();
-    stage.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
+    Window window = application.GetWindow();
+    window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
-    mStageSize = stage.GetSize();
+    mWindowSize = window.GetSize();
 
     // The Init signal is received once (only) during the Application lifetime
 
@@ -175,7 +175,7 @@ public:
 
     mMeshActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     mMeshActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    stage.Add( mMeshActor );
+    window.Add( mMeshActor );
 
     Animation  animation = Animation::New(15);
     KeyFrames keyFrames = KeyFrames::New();
@@ -187,7 +187,7 @@ public:
     animation.SetLooping(true);
     animation.Play();
 
-    stage.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));
+    window.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));
   }
 
   /**
@@ -215,7 +215,7 @@ public:
 private:
 
   Application&  mApplication;                             ///< Application instance
-  Vector3 mStageSize;                                     ///< The size of the stage
+  Vector3 mWindowSize;                                     ///< The size of the window
 
   Renderer mRenderer;
   Actor    mMeshActor;
