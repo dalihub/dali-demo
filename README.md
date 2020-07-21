@@ -77,15 +77,12 @@ Before running make install as normal:
 ### Requirements
 
  - Ubuntu 16.04 or later
- - GCC version 6
  - Android DALi dependencies
+ - If you are behind a proxy, please set up the "http_proxy" and "https_proxy" environment variables appropriately
+ - Clone dali-core, dali-adaptor, dali-toolkit & android-dependencies to the same folder as dali-demo
+   - Android dependencies can be cloned from: https://github.com/dalihub/android-dependencies
 
 ### Building the Repository
-To download Android DALi dependencies clone https://github.com/dalihub/android-dependencies
-in your DALi folder (folder containing dali-demo).
-
-         $ git clone https://github.com/dalihub/android-dependencies.git
-
 To build the repository enter the 'build/android' folder:
 
          $ cd dali-demo/build/android
