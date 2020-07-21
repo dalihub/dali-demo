@@ -26,6 +26,9 @@
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
 
+namespace
+{
+
 const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
   attribute mediump vec3 aPosition;\n
   attribute mediump vec3 aNormal;\n
@@ -164,6 +167,115 @@ struct Model
   Shader    shader;
   Geometry  geometry;
 };
+
+template<class T>
+bool LoadFile( const std::string& filename, std::vector<T>& bytes )
+{
+  Dali::FileStream fileStream( filename, Dali::FileStream::READ | Dali::FileStream::BINARY );
+  FILE* fin = fileStream.GetFile();
+
+  if( fin )
+  {
+    if( fseek( fin, 0, SEEK_END ) )
+    {
+      return false;
+    }
+    bytes.resize( uint32_t(ftell( fin )) );
+    std::fill( bytes.begin(), bytes.end(), 0 );
+    if( fseek( fin, 0, SEEK_SET ) )
+    {
+      return false;
+    }
+    size_t result = fread( bytes.data(), 1, bytes.size(), fin );
+    return ( result != 0 );
+  }
+
+  return false;
+}
+
+Shader CreateShader( const std::string& vsh, const std::string& fsh )
+{
+  std::vector<char> vshShaderSource;
+  std::vector<char> fshShaderSource;
+
+  // VSH
+  if(vsh[0] == '/')
+  {
+    std::string vshPath( DEMO_GAME_DIR );
+    vshPath += '/';
+    vshPath += vsh;
+    LoadFile( vshPath, vshShaderSource );
+  }
+  else
+  {
+    vshShaderSource.insert(vshShaderSource.end(), vsh.begin(), vsh.end());
+  }
+
+  // FSH
+  if(fsh[0] == '/')
+  {
+    std::string fshPath( DEMO_GAME_DIR );
+    fshPath += '/';
+    fshPath += fsh;
+    LoadFile( fshPath, fshShaderSource );
+  }
+  else
+  {
+    fshShaderSource.insert(fshShaderSource.end(), fsh.begin(), fsh.end());
+  }
+
+  vshShaderSource.emplace_back(0);
+  fshShaderSource.emplace_back(0);
+  return Shader::New( std::string(vshShaderSource.data()), std::string(fshShaderSource.data()) );
+}
+
+std::unique_ptr<Model> CreateModel( glTF& gltf,
+                                    const glTF_Mesh* mesh,
+                                    const std::string& vertexShaderSource,
+                                    const std::string& fragmentShaderSource )
+{
+  /*
+   * Obtain interleaved buffer for first mesh with position and normal attributes
+   */
+  auto positionBuffer = gltf.GetMeshAttributeBuffer( *mesh,
+                                                     {
+                                                       glTFAttributeType::POSITION,
+                                                       glTFAttributeType::NORMAL,
+                                                       glTFAttributeType::TEXCOORD_0
+                                                     } );
+
+  auto attributeCount = gltf.GetMeshAttributeCount( mesh );
+  /**
+   * Create matching property buffer
+   */
+  auto vertexBuffer = PropertyBuffer::New( Property::Map()
+                                             .Add("aPosition", Property::VECTOR3 )
+                                             .Add("aNormal", Property::VECTOR3)
+                                             .Add("aTexCoord", Property::VECTOR2)
+  );
+
+  // set vertex data
+  vertexBuffer.SetData( positionBuffer.data(), attributeCount );
+
+  auto geometry = Geometry::New();
+  geometry.AddVertexBuffer( vertexBuffer );
+  auto indexBuffer = gltf.GetMeshIndexBuffer( mesh );
+  geometry.SetIndexBuffer( indexBuffer.data(), indexBuffer.size() );
+  geometry.SetType( Geometry::Type::TRIANGLES );
+  std::unique_ptr<Model> retval( new Model() );
+  retval->shader = CreateShader( vertexShaderSource, fragmentShaderSource );
+  retval->geometry = geometry;
+  return retval;
+}
+
+void ReplaceShader( Actor& actor, const std::string& vsh, const std::string& fsh )
+{
+  auto renderer = actor.GetRendererAt(0);
+  auto shader = CreateShader(vsh, fsh);
+  renderer.SetShader( shader );
+}
+
+} // unnamed namespace
 
 // This example shows how to create and display mirrored reflection using CameraActor
 //
@@ -483,113 +595,6 @@ private:
       }
       mTextureSets.emplace_back( textureSet );
     }
-  }
-
-  template<class T>
-  bool LoadFile( const std::string& filename, std::vector<T>& bytes )
-  {
-    Dali::FileStream fileStream( filename, Dali::FileStream::READ | Dali::FileStream::BINARY );
-    FILE* fin = fileStream.GetFile();
-
-    if( fin )
-    {
-      if( fseek( fin, 0, SEEK_END ) )
-      {
-        return false;
-      }
-      bytes.resize( uint32_t(ftell( fin )) );
-      std::fill( bytes.begin(), bytes.end(), 0 );
-      if( fseek( fin, 0, SEEK_SET ) )
-      {
-        return false;
-      }
-      size_t result = fread( bytes.data(), 1, bytes.size(), fin );
-      return ( result != 0 );
-    }
-
-    return false;
-  }
-
-  Shader CreateShader( const std::string& vsh, const std::string& fsh )
-  {
-    std::vector<char> vshShaderSource;
-    std::vector<char> fshShaderSource;
-
-    // VSH
-    if(vsh[0] == '/')
-    {
-      std::string vshPath( DEMO_GAME_DIR );
-      vshPath += '/';
-      vshPath += vsh;
-      LoadFile( vshPath, vshShaderSource );
-    }
-    else
-    {
-      vshShaderSource.insert(vshShaderSource.end(), vsh.begin(), vsh.end());
-    }
-
-    // FSH
-    if(fsh[0] == '/')
-    {
-      std::string fshPath( DEMO_GAME_DIR );
-      fshPath += '/';
-      fshPath += fsh;
-      LoadFile( fshPath, fshShaderSource );
-    }
-    else
-    {
-      fshShaderSource.insert(fshShaderSource.end(), fsh.begin(), fsh.end());
-    }
-
-    vshShaderSource.emplace_back(0);
-    fshShaderSource.emplace_back(0);
-    return Shader::New( std::string(vshShaderSource.data()), std::string(fshShaderSource.data()) );
-  }
-
-  std::unique_ptr<Model> CreateModel( glTF& gltf,
-                                      const glTF_Mesh* mesh,
-                                      const std::string& vertexShaderSource,
-                                      const std::string& fragmentShaderSource )
-  {
-    /*
-     * Obtain interleaved buffer for first mesh with position and normal attributes
-     */
-    auto positionBuffer = gltf.GetMeshAttributeBuffer( *mesh,
-                                                       {
-                                                         glTFAttributeType::POSITION,
-                                                         glTFAttributeType::NORMAL,
-                                                         glTFAttributeType::TEXCOORD_0
-                                                       } );
-
-    auto attributeCount = gltf.GetMeshAttributeCount( mesh );
-    /**
-     * Create matching property buffer
-     */
-    auto vertexBuffer = PropertyBuffer::New( Property::Map()
-                                               .Add("aPosition", Property::VECTOR3 )
-                                               .Add("aNormal", Property::VECTOR3)
-                                               .Add("aTexCoord", Property::VECTOR2)
-    );
-
-    // set vertex data
-    vertexBuffer.SetData( positionBuffer.data(), attributeCount );
-
-    auto geometry = Geometry::New();
-    geometry.AddVertexBuffer( vertexBuffer );
-    auto indexBuffer = gltf.GetMeshIndexBuffer( mesh );
-    geometry.SetIndexBuffer( indexBuffer.data(), indexBuffer.size() );
-    geometry.SetType( Geometry::Type::TRIANGLES );
-    std::unique_ptr<Model> retval( new Model() );
-    retval->shader = CreateShader( vertexShaderSource, fragmentShaderSource );
-    retval->geometry = geometry;
-    return retval;
-  }
-
-  void ReplaceShader( Actor& actor, const std::string& vsh, const std::string& fsh )
-  {
-    auto renderer = actor.GetRendererAt(0);
-    auto shader = CreateShader(vsh, fsh);
-    renderer.SetShader( shader );
   }
 
   void OnPan( Actor actor, const PanGesture& panGesture )
