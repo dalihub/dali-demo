@@ -17,7 +17,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali/dali.h>
-#include <dali/devel-api/images/native-image-interface-extension.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <cstring>
 
@@ -38,10 +37,10 @@ const std::string CAPTURE_FILENAME = "/tmp/native-image-capture.png";
 
 /**
  * @brief Creates a shader used to render a native image
- * @param[in] nativeImageInterface The native image interface
+ * @param[in] nativeImage The native image
  * @return A shader to render the native image
  */
-Shader CreateShader( NativeImageInterface& nativeImageInterface )
+Shader CreateShader( NativeImageInterface& nativeImage )
 {
   static const char* DEFAULT_SAMPLER_TYPENAME = "sampler2D";
 
@@ -70,36 +69,29 @@ Shader CreateShader( NativeImageInterface& nativeImageInterface )
       }\n
   );
 
-  NativeImageInterface::Extension* extension( nativeImageInterface.GetExtension() );
-  if( extension )
+
+  std::string fragmentShader;
+
+  //Get custom fragment shader prefix
+  const char* fragmentPrefix = nativeImage.GetCustomFragmentPrefix();
+  if( fragmentPrefix )
   {
-    std::string fragmentShader;
-
-    //Get custom fragment shader prefix
-    const char* fragmentPreFix = extension->GetCustomFragmentPreFix();
-    if( fragmentPreFix )
-    {
-      fragmentShader = fragmentPreFix;
-      fragmentShader += FRAGMENT_SHADER_TEXTURE;
-    }
-    else
-    {
-      fragmentShader = FRAGMENT_SHADER_TEXTURE;
-    }
-
-    //Get custom sampler type name
-    const char* customSamplerTypename = extension->GetCustomSamplerTypename();
-    if( customSamplerTypename )
-    {
-      fragmentShader.replace( fragmentShader.find( DEFAULT_SAMPLER_TYPENAME ), strlen(DEFAULT_SAMPLER_TYPENAME), customSamplerTypename );
-    }
-
-    return Shader::New( VERTEX_SHADER_TEXTURE, fragmentShader );
+    fragmentShader = fragmentPrefix;
+    fragmentShader += FRAGMENT_SHADER_TEXTURE;
   }
   else
   {
-    return Shader::New( VERTEX_SHADER_TEXTURE, FRAGMENT_SHADER_TEXTURE );
+    fragmentShader = FRAGMENT_SHADER_TEXTURE;
   }
+
+  //Get custom sampler type name
+  const char* customSamplerTypename = nativeImage.GetCustomSamplerTypename();
+  if( customSamplerTypename )
+  {
+    fragmentShader.replace( fragmentShader.find( DEFAULT_SAMPLER_TYPENAME ), strlen(DEFAULT_SAMPLER_TYPENAME), customSamplerTypename );
+  }
+
+  return Shader::New( VERTEX_SHADER_TEXTURE, fragmentShader );
 }
 
 }
