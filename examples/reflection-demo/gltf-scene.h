@@ -24,7 +24,7 @@
 
 #include "pico-json.h"
 
-#define GLTF_LOG(...) {DALI_LOG_ERROR( __VA_ARGS__ );}
+#define GLTF_LOG(...) {Dali::Integration::Log::LogMessage( Dali::Integration::Log::DebugInfo, __VA_ARGS__ );}
 
 enum class glTFAttributeType
 {
