@@ -480,6 +480,8 @@ private:
         return;
     }
 
+    fileBuffer.PushBack( '\0' );
+
     std::stringstream iss( &fileBuffer[0], std::ios::in );
 
     boundingBox.Resize( 6 );
