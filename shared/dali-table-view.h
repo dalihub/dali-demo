@@ -332,10 +332,10 @@ private: // Application callbacks & implementation
  void OnButtonsPageRelayout( const Dali::Actor& actor );
 
  /**
-  * @brief The is connected to the keyboard focus highlight actor, and called when it is placed on stage.
-  * @param[in] actor The actor that has been placed on stage.
+  * @brief The is connected to the keyboard focus highlight actor, and called when it is placed on the scene.
+  * @param[in] actor The actor that has been placed on the scene.
   */
- void OnStageConnect( Dali::Actor actor );
+ void OnSceneConnect( Dali::Actor actor );
 
  /**
   * @brief Callback called to set up background actors
