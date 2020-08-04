@@ -39,7 +39,7 @@
       },
       "signals": [
         {
-          "name": "onStage",
+          "name": "onScene",
           "action": "play",
           "animation": "Animation_1"
         }

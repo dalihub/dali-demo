@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -160,14 +160,14 @@ void ImageChannelControl::OnInitialize()
   mChannelIndex = self.RegisterProperty( "uChannels", Vector3(1.0f, 1.0f, 1.0f) );
 }
 
-void ImageChannelControl::OnStageConnection( int depth )
+void ImageChannelControl::OnSceneConnection( int depth )
 {
-  Control::OnStageConnection( depth );
+  Control::OnSceneConnection( depth );
 }
 
-void ImageChannelControl::OnStageDisconnection()
+void ImageChannelControl::OnSceneDisconnection()
 {
-  Control::OnStageDisconnection();
+  Control::OnSceneDisconnection();
 }
 
 void ImageChannelControl::OnSizeSet( const Vector3& targetSize )
