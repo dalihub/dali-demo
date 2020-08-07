@@ -2,7 +2,7 @@
 #define DALI_DEMO_INTERNAL_SHADOW_BUTTON_IMPL_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,14 +90,14 @@ private: // From Control
   virtual void OnInitialize();
 
   /**
-   * @copydoc Toolkit::Button::OnStageConnect()
+   * @copydoc Toolkit::Button::OnSceneConnection()
    */
-  virtual void OnStageConnection( int depth );
+  virtual void OnSceneConnection( int depth );
 
   /**
-   * @copydoc Toolkit::Button::OnStageDisconnection()
+   * @copydoc Toolkit::Button::OnSceneDisconnection()
    */
-  virtual void OnStageDisconnection();
+  virtual void OnSceneDisconnection();
 
   /**
    * @copydoc Toolkit::Button::OnSizeSet()

@@ -358,9 +358,9 @@ void DaliTableView::CreateFocusEffect()
 
   keyboardFocusManager.SetFocusIndicatorActor( mFocusEffect[0].actor );
 
-  // Connect to the on & off stage signals of the indicator which represents when it is enabled & disabled respectively
-  mFocusEffect[0].actor.OnStageSignal().Connect( this, &DaliTableView::OnFocusIndicatorEnabled );
-  mFocusEffect[0].actor.OffStageSignal().Connect( this, &DaliTableView::OnFocusIndicatorDisabled );
+  // Connect to the on & off scene signals of the indicator which represents when it is enabled & disabled respectively
+  mFocusEffect[0].actor.OnSceneSignal().Connect( this, &DaliTableView::OnFocusIndicatorEnabled );
+  mFocusEffect[0].actor.OffSceneSignal().Connect( this, &DaliTableView::OnFocusIndicatorDisabled );
 }
 
 void DaliTableView::OnFocusIndicatorEnabled( Actor /* actor */ )

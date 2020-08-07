@@ -14,7 +14,7 @@
       "selected": false,
       "signals": [
       {
-        "name": "onStage",
+        "name": "onScene",
         "action": "play",
         "animation": "animate-seconds"
       }]
@@ -32,7 +32,7 @@
       },
       "signals": [
       {
-        "name": "onStage",
+        "name": "onScene",
         "action": "play",
         "animation": "animate-minutes"
       }]
@@ -50,7 +50,7 @@
       },
       "signals": [
       {
-        "name": "onStage",
+        "name": "onScene",
         "action": "play",
         "animation": "animate-hours"
       }]
