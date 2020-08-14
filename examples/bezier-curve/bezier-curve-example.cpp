@@ -492,7 +492,7 @@ public:
     }
   }
 
-  bool OnTouchControlPoint( Actor controlPoint, const TouchData& event )
+  bool OnTouchControlPoint( Actor controlPoint, const TouchEvent& event )
   {
     if( event.GetPointCount() > 0 )
     {
@@ -510,7 +510,7 @@ public:
     return false; // Don't mark this as consumed - let the layer get the touch
   }
 
-  bool OnTouchLayer( Actor actor, const TouchData& event )
+  bool OnTouchLayer( Actor actor, const TouchEvent& event )
   {
     if( event.GetPointCount() > 0 )
     {

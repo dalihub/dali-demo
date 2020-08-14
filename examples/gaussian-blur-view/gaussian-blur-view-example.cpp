@@ -113,7 +113,7 @@ private:
     window.GetRootLayer().TouchSignal().Connect( this, &GaussianBlurViewExample::OnTouch );
   }
 
-  bool OnTouch( Actor actor, const TouchData& touch )
+  bool OnTouch( Actor actor, const TouchEvent& touch )
   {
     const PointState::Type state = touch.GetState( 0 );
 

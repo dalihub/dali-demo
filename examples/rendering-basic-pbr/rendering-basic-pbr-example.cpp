@@ -145,7 +145,7 @@ public:
   /**
    * This function will change the material Roughness, Metalness or the model orientation when touched
    */
-  bool OnTouch( Actor actor, const TouchData& touch )
+  bool OnTouch( Actor actor, const TouchEvent& touch )
   {
     const PointState::Type state = touch.GetState( 0 );
 

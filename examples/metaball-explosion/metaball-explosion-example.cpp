@@ -204,7 +204,7 @@ public:
    * Touch event handler to center metaballs at touch position
    * and start explosion animation on release
    */
-  bool OnTouch( Actor actor, const TouchData& touch );
+  bool OnTouch( Actor actor, const TouchEvent& touch );
 
   /**
    * Key event handler to quit application on escape or back key
@@ -629,7 +629,7 @@ void MetaballExplosionController::SetPositionToMetaballs( const Vector2& metabal
   mCompositionActor.SetProperty( mPositionIndex, metaballCenter );
 }
 
-bool MetaballExplosionController::OnTouch( Actor actor, const TouchData& touch )
+bool MetaballExplosionController::OnTouch( Actor actor, const TouchEvent& touch )
 {
   float aspectR = mScreenSize.y / mScreenSize.x;
 

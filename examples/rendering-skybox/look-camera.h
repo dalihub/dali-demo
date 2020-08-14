@@ -77,7 +77,7 @@ private:
    * @param[in] actor Actor receiving signal
    * @param[in] touch Touch data
    */
-  bool OnTouch( Dali::Actor actor, const Dali::TouchData& touch );
+  bool OnTouch( Dali::Actor actor, const Dali::TouchEvent& touch );
 
   /**
    * Handles camera tick() update

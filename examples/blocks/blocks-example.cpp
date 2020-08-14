@@ -615,7 +615,7 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The touch event
    */
-  bool OnTouchPaddle(Actor actor, const TouchData& event)
+  bool OnTouchPaddle(Actor actor, const TouchEvent& event)
   {
     if(event.GetPointCount()>0)
     {
@@ -641,7 +641,7 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The touch event
    */
-  bool OnTouchLayer(Actor actor, const TouchData& event)
+  bool OnTouchLayer(Actor actor, const TouchEvent& event)
   {
     if(event.GetPointCount()>0)
     {

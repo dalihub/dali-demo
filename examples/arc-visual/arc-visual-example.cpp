@@ -171,7 +171,7 @@ private:
     window.KeyEventSignal().Connect( this, &ArcVisualExample::OnKeyEvent );
   }
 
-  bool OnButtonTouch( Actor actor, const TouchData& touch )
+  bool OnButtonTouch( Actor actor, const TouchEvent& touch )
   {
     if( touch.GetState( 0 ) == PointState::UP )
     {
@@ -212,7 +212,7 @@ private:
     return true;
   }
 
-  bool OnTouch( Actor actor, const TouchData& touch )
+  bool OnTouch( Actor actor, const TouchEvent& touch )
   {
     if( touch.GetState( 0 ) == PointState::UP )
     {
