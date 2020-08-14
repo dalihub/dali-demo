@@ -48,6 +48,8 @@
 #include <iostream>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/scroll-bar/scroll-bar.h>
+#include <random>       // std::default_random_engine
+#include <chrono>       // std::chrono::system_clock
 
 // INTERNAL INCLUDES
 #include "grid-flags.h"
@@ -417,8 +419,10 @@ public:
       }
     }
     // Stir-up the list to get some nice irregularity in the generated field:
-    std::random_shuffle( configurations.begin(), configurations.end() );
-    std::random_shuffle( configurations.begin(), configurations.end() );
+    unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle( configurations.begin(), configurations.end(), std::default_random_engine(seed) );
+    seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle( configurations.begin(), configurations.end(), std::default_random_engine(seed) );
 
     // Place the images in the grid:
 
