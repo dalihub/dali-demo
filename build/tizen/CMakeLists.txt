@@ -1,6 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 SET(CMAKE_C_STANDARD 99)
+SET(CMAKE_CXX_STANDARD 14)
 PROJECT(dali-demo C CXX)
 
 SET(dali-demo_VERSION_MAJOR 1)
@@ -306,10 +307,8 @@ ENDIF(INTERNATIONALIZATION)
 IF( WIN32 )
   ADD_COMPILE_OPTIONS( /FIdali-windows-dependencies.h ) # Adds missing definitions.
   ADD_COMPILE_OPTIONS( /vmg )                           # Avoids a 'reinterpret_cast' compile error while compiling signals and callbacks.
-  ADD_COMPILE_OPTIONS( /std:c++17 )                     # c++17 support
   ADD_COMPILE_OPTIONS( /wd4251 )                        # Ignores warning C4251: "'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'"
 ELSE()
-  ADD_COMPILE_OPTIONS( -std=c++17 )                     # c++17 support
   SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -Werror -Wall -fPIE")
 
   IF( NOT ${ENABLE_EXPORTALL} )
