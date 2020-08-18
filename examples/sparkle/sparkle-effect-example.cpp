@@ -21,6 +21,8 @@
 #include <sstream>
 #include <algorithm>
 #include <map>
+#include <random>       // std::default_random_engine
+#include <chrono>       // std::chrono::system_clock
 
 #include "shared/utility.h"
 #include "sparkle-effect.h"
@@ -126,7 +128,8 @@ private:
     {
       shuffleArray[i] = i;
     }
-    std::random_shuffle(&shuffleArray[0],&shuffleArray[NUM_PARTICLE]);
+    const unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle(&shuffleArray[0],&shuffleArray[NUM_PARTICLE], std::default_random_engine(seed));
 
     // Create vertices
 

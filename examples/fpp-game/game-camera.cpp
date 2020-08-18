@@ -19,7 +19,6 @@
 
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/render-tasks/render-task.h>
-#include <dali/public-api/events/touch-data.h>
 #include <dali/public-api/events/touch-event.h>
 
 using namespace Dali;
@@ -205,7 +204,7 @@ void GameCamera::CreateInterceptorActor()
   mInterceptorActor.TouchSignal().Connect( this, &GameCamera::OnTouch );
 }
 
-bool GameCamera::OnTouch( Actor actor, const TouchData& touch )
+bool GameCamera::OnTouch( Actor actor, const TouchEvent& touch )
 {
   for( int i = 0; i < (int)touch.GetPointCount() && i < 3; ++i )
   {

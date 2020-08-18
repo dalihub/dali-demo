@@ -203,7 +203,7 @@ public:
   /**
    * This function will change the material of the cube when touched
    */
-  bool OnTouch( Actor actor, const TouchData& touch )
+  bool OnTouch( Actor actor, const TouchEvent& touch )
   {
     if(touch.GetState(0) == PointState::UP)
     {

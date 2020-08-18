@@ -557,7 +557,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   return focusableTile;
 }
 
-bool DaliTableView::OnTilePressed( Actor actor, const TouchData& event )
+bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
 {
   return DoTilePress( actor, event.GetState( 0 ) );
 }
@@ -644,7 +644,7 @@ void DaliTableView::OnScrollComplete( const Dali::Vector2& position )
   accessibilityManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
 }
 
-bool DaliTableView::OnScrollTouched( Actor actor, const TouchData& event )
+bool DaliTableView::OnScrollTouched( Actor actor, const TouchEvent& event )
 {
   if( PointState::DOWN == event.GetState( 0 ) )
   {

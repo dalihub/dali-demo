@@ -144,7 +144,7 @@ public:
     }
   }
 
-  void OnTouch(const TouchData &touch)
+  void OnTouch(const TouchEvent &touch)
   {
     if (touch.GetState(0) == PointState::DOWN)
     {
@@ -165,7 +165,7 @@ public:
     return false;
   }
 
-  bool OnControlTouch(Actor actor, const TouchData &touch)
+  bool OnControlTouch(Actor actor, const TouchEvent &touch)
   {
     if (touch.GetState(0) == PointState::DOWN)
     {

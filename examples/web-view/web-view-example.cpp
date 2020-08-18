@@ -100,7 +100,7 @@ public:
     mAddressLabel.SetProperty( Toolkit::TextLabel::Property::TEXT, url.c_str() );
   }
 
-  bool OnTouchText( Actor actor, const TouchData& touch )
+  bool OnTouchText( Actor actor, const TouchEvent& touch )
   {
     if ( touch.GetState( 0 ) == PointState::UP )
     {
