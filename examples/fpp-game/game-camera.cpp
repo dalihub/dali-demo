@@ -20,6 +20,7 @@
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/render-tasks/render-task.h>
 #include <dali/public-api/events/touch-data.h>
+#include <dali/public-api/events/touch-event.h>
 
 using namespace Dali;
 
