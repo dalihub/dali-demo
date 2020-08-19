@@ -201,7 +201,7 @@ public:
     window.GetRootLayer().TouchSignal().Connect( this, &ClippingDrawOrderVerification::OnTouch );
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
     // Quit the application.
     mApplication.Quit();

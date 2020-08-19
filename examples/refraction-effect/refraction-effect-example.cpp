@@ -352,7 +352,7 @@ private:
     return true;
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& event )
+  bool OnTouch( Actor actor, const TouchData& event )
   {
     switch( event.GetState( 0 ) )
     {

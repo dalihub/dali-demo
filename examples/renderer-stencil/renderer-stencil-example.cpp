@@ -718,7 +718,7 @@ private:
    * @param[in] touch The touch information
    * @return True if the event has been handled
    */
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
     // Quit the application.
     mApplication.Quit();

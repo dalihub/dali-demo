@@ -196,7 +196,7 @@ public:
   /**
    * Touch handler, start the grow animation and creates additional metaballs
    */
-  bool OnTouch( Actor actor, const TouchEvent& touch );
+  bool OnTouch( Actor actor, const TouchData& touch );
 
   /**
    * Key event callback to quit the application on escape or back key
@@ -680,7 +680,7 @@ void MetaballRefracController::SetPositionToMetaballs( const Vector2& metaballCe
   }
 }
 
-bool MetaballRefracController::OnTouch( Actor actor, const TouchEvent& touch )
+bool MetaballRefracController::OnTouch( Actor actor, const TouchData& touch )
 {
   const float aspect = mScreenSize.y / mScreenSize.x;
   switch( touch.GetState( 0 ) )

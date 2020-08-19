@@ -298,7 +298,7 @@ public:
    * @param[in] actor The actor that received the touch
    * @param[in] event The touch-event information
    */
-  bool OnTouched( Actor actor, const TouchEvent& event )
+  bool OnTouched( Actor actor, const TouchData& event )
   {
     if(event.GetPointCount() > 0)
     {

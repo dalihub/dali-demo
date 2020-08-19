@@ -276,9 +276,9 @@ void TransitionApplication::CreateVisualMap( int index, Property::Map& map )
   }
 }
 
-bool TransitionApplication::OnVisualButtonClicked( Actor actor, const TouchEvent& touch )
+bool TransitionApplication::OnVisualButtonClicked( Actor actor, const TouchData& touchData )
 {
-  if( touch.GetState(0) == PointState::FINISHED )
+  if( touchData.GetState(0) == PointState::FINISHED )
   {
     int visual = actor.GetProperty<int>( mVisualIndex );
     Property::Map map;

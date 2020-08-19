@@ -190,7 +190,7 @@ public:
     window.KeyEventSignal().Connect( this, &HomescreenBenchmark::OnKeyEvent );
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
     // Quit the application.
     mApplication.Quit();

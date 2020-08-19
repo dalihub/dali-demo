@@ -499,7 +499,7 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The touch information.
    */
-  bool OnTouchImage( Actor actor, const TouchEvent& event )
+  bool OnTouchImage( Actor actor, const TouchData& event )
   {
     if( (event.GetPointCount() > 0) && (!mScrolling) )
     {

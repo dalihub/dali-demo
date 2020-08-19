@@ -202,7 +202,7 @@ private:
   }
 
   // Callback function of the touch signal on the background
-  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& event)
+  bool OnTouch(Dali::Actor actor, const Dali::TouchData& event)
   {
     switch( event.GetState( 0 ) )
     {

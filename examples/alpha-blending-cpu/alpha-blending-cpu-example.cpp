@@ -83,15 +83,15 @@ private:
     window.TouchSignal().Connect( this, &ImageViewAlphaBlendApp::OnTouched );
   }
 
-  void OnTouched( const TouchEvent& touch )
+  void OnTouched( const TouchData& touchData )
   {
     static bool touched = false;
-    if( touch.GetState( 0 ) == PointState::DOWN )
+    if( touchData.GetState( 0 ) == PointState::DOWN )
     {
       touched = true;
     }
 
-    if( touch.GetState( 0 ) == PointState::UP && touched )
+    if( touchData.GetState( 0 ) == PointState::UP && touched)
     {
       mImageCombinationIndex++;
       touched = false;

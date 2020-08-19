@@ -312,7 +312,7 @@ public:
     Reset();
   }
 
-  bool OnTouchCards(Actor actor, const TouchEvent &data)
+  bool OnTouchCards(Actor actor, const TouchData &data)
   {
     if( data.GetPointCount() > 0 )
     {
@@ -347,7 +347,7 @@ public:
     return true;
   }
 
-  bool OnTouchLayer(Actor actor, const TouchEvent &data)
+  bool OnTouchLayer(Actor actor, const TouchData &data)
   {
     if( data.GetPointCount() > 0 )
     {

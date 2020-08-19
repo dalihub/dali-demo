@@ -86,7 +86,7 @@ public:
     window.KeyEventSignal().Connect( this, &ColorVisualExample::OnKeyEvent );
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
     if( touch.GetState( 0 ) == PointState::UP )
     {

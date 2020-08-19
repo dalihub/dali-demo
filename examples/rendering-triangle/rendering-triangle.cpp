@@ -98,7 +98,7 @@ public:
     window.KeyEventSignal().Connect( this, &DrawTriangleController::OnKeyEvent );
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch( Actor actor, const TouchData& touch )
   {
     // quit the application
     mApplication.Quit();

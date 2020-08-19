@@ -83,7 +83,7 @@ public:
     }
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& event )
+  bool OnTouch( Actor actor, const TouchData& event )
   {
     if( 1u == event.GetPointCount() )
     {

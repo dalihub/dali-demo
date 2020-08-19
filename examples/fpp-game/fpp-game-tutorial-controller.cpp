@@ -17,7 +17,7 @@
 
 #include "fpp-game-tutorial-controller.h"
 
-#include <dali/public-api/events/touch-event.h>
+#include <dali/public-api/events/touch-data.h>
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/actors/camera-actor.h>
 #include <dali/public-api/object/property-map.h>
@@ -40,7 +40,7 @@ FppGameTutorialController::~FppGameTutorialController()
 
 }
 
-void FppGameTutorialController::OnTouch( const TouchEvent& touchEvent )
+void FppGameTutorialController::OnTouch( const TouchData& touchEvent )
 {
   Vector2 size( mWindow.GetSize() );
 

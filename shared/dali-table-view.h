@@ -2,7 +2,7 @@
 #define DALI_DEMO_TABLEVIEW_H
 
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -150,7 +150,7 @@ private: // Application callbacks & implementation
    *
    * @return Consume flag
    */
-  bool OnTilePressed( Dali::Actor actor, const Dali::TouchEvent& event );
+  bool OnTilePressed( Dali::Actor actor, const Dali::TouchData& event );
 
   /**
    * Called by OnTilePressed & Accessibility to do the appropriate action.
@@ -211,7 +211,7 @@ private: // Application callbacks & implementation
    *
    * @return Consume flag
    */
-  bool OnScrollTouched( Dali::Actor actor, const Dali::TouchEvent& event );
+  bool OnScrollTouched( Dali::Actor actor, const Dali::TouchData& event );
 
   /**
    * Setup the effect on the scroll view
