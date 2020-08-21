@@ -151,7 +151,7 @@ public:
     mField.Reset();
   }
 
-  bool OnPopupTouched( Actor actor, const TouchData& event )
+  bool OnPopupTouched( Actor actor, const TouchEvent& event )
   {
     // End edit mode for TextField if parent Popup touched.
     if((event.GetPointCount() > 0) && (mPopup == event.GetHitActor(0)))

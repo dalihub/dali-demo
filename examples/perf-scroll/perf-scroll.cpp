@@ -261,7 +261,7 @@ public:
     ShowAnimation();
   }
 
-  bool OnTouch( Actor actor, const TouchData& touch )
+  bool OnTouch( Actor actor, const TouchEvent& touch )
   {
     // quit the application
     mApplication.Quit();
