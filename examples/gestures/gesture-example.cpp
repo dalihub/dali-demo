@@ -221,7 +221,7 @@ private:
    * @param[in]  actor  The touched actor
    * @param[in]  touch  The touch event
    */
-  bool OnTouch( Actor actor, const TouchData& touch )
+  bool OnTouch( Actor actor, const TouchEvent& touch )
   {
     switch( touch.GetState( 0 ) )
     {

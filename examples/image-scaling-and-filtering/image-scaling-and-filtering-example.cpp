@@ -495,7 +495,7 @@ public:
     }
   }
 
-  bool OnControlTouched( Actor actor, const TouchData& event )
+  bool OnControlTouched( Actor actor, const TouchEvent& event )
   {
     if(event.GetPointCount() > 0)
     {

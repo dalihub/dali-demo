@@ -395,7 +395,7 @@ public:
 
   //If the light source is touched, move it by dragging it.
   //If a model is touched, rotate it by panning around.
-  bool OnTouch( Actor actor, const TouchData& touch )
+  bool OnTouch( Actor actor, const TouchEvent& touch )
   {
     switch( touch.GetState( 0 ) )
     {
