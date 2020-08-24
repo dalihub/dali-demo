@@ -121,7 +121,7 @@ private:
     window.SetBackgroundColor( Color::WHITE );
 
     // Text Label filling the entire screen, with a background
-    mTextLabel = DevelHandle::New< TextLabel >( TEXT_LABEL_PROPERTIES );
+    mTextLabel = Handle::New< TextLabel >( TEXT_LABEL_PROPERTIES );
     window.Add( mTextLabel );
 
     // We want to change the padding when tapping
@@ -131,11 +131,11 @@ private:
 
     // Create an ImageView with the default behaviour, i.e. image fills to control size
     mFillImage = ImageView::New( IMAGE_NAME );
-    DevelHandle::SetProperties( mFillImage, FILL_IMAGE_PROPERTIES );
+    mFillImage.SetProperties( FILL_IMAGE_PROPERTIES );
     window.Add( mFillImage );
 
     // Create an ImageView that Keeps the aspect ratio while fitting within the given size
-    mFitKeepAspectRatioImage = DevelHandle::New< ImageView >( FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES );
+    mFitKeepAspectRatioImage = Handle::New< ImageView >( FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES );
     mFitKeepAspectRatioImage.SetProperty( ImageView::Property::IMAGE,
                                           Property::Map
                                           {
@@ -147,14 +147,14 @@ private:
 
     // Create an overlay label for fill image
     Actor fillLabel = TextLabel::New( FILL_LABEL );
-    DevelHandle::SetProperties( fillLabel, FILL_IMAGE_PROPERTIES );
-    DevelHandle::SetProperties( fillLabel, OVERLAY_LABEL_PROPERTIES );
+    fillLabel.SetProperties( FILL_IMAGE_PROPERTIES );
+    fillLabel.SetProperties( OVERLAY_LABEL_PROPERTIES );
     window.Add( fillLabel );
 
     // Create an overlay label for the Fit/Keep Aspect image
     Actor fitLabel = TextLabel::New( FIT_KEEP_ASPECT_LABEL );
-    DevelHandle::SetProperties( fitLabel, FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES );
-    DevelHandle::SetProperties( fitLabel, OVERLAY_LABEL_PROPERTIES );
+    fitLabel.SetProperties( FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES );
+    fitLabel.SetProperties( OVERLAY_LABEL_PROPERTIES );
     window.Add( fitLabel );
 
     // Respond to key events, exit if ESC/Back, change the padding if anything else
