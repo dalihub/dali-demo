@@ -596,7 +596,7 @@ bool DaliTableView::DoTilePress( Actor actor, PointState::Type pointState )
     if( consumed )
     {
       mPressedAnimation = Animation::New( BUTTON_PRESS_ANIMATION_TIME );
-      mPressedAnimation.SetEndAction( Animation::Discard );
+      mPressedAnimation.SetEndAction( Animation::DISCARD );
 
       // scale the content actor within the Tile, as to not affect the placement within the Table.
       Actor content = actor.GetChildAt(0);
