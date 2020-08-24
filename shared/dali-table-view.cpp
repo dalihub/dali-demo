@@ -19,6 +19,11 @@
 #include "dali-table-view.h"
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/images/distance-field.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
+#include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/accessibility-manager/accessibility-manager.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
@@ -321,7 +326,6 @@ void DaliTableView::CreateFocusEffect()
   auto keyboardFocusManager = KeyboardFocusManager::Get();
   keyboardFocusManager.PreFocusChangeSignal().Connect(this, &DaliTableView::OnKeyboardPreFocusChange);
   keyboardFocusManager.FocusedActorEnterKeySignal().Connect(this, &DaliTableView::OnFocusedActorActivated);
-  AccessibilityManager::Get().FocusedActorActivatedSignal().Connect(this, &DaliTableView::OnFocusedActorActivated);
 
   // Loop to create both actors for the focus highlight effect.
   for(unsigned int i = 0; i < FOCUS_ANIMATION_ACTOR_NUMBER; ++i)
@@ -529,6 +533,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   borderImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   borderImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   borderImage.SetProperty(Actor::Property::OPACITY, 0.8f);
+  DevelControl::AppendAccessibilityRelation(borderImage, focusableTile, Accessibility::RelationType::CONTROLLED_BY);
   focusableTile.Add(borderImage);
 
   TextLabel label = TextLabel::New();
@@ -543,11 +548,17 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
 
   // Pad around the label as its size is the same as the 9-patch border. It will overlap it without padding.
   label.SetProperty(Actor::Property::PADDING, Padding(TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING));
+  DevelControl::AppendAccessibilityRelation(label, focusableTile, Accessibility::RelationType::CONTROLLED_BY);
   focusableTile.Add(label);
 
   // Connect to the touch events
   focusableTile.TouchedSignal().Connect(this, &DaliTableView::OnTilePressed);
   focusableTile.HoveredSignal().Connect(this, &DaliTableView::OnTileHovered);
+  focusableTile.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::PUSH_BUTTON);
+  DevelControl::AccessibilityActivateSignal(focusableTile).Connect(this, [=](){
+    DoTilePress(focusableTile, PointState::DOWN);
+    DoTilePress(focusableTile, PointState::UP);
+  });
 
   return focusableTile;
 }
