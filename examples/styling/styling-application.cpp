@@ -519,9 +519,9 @@ bool StylingApplication::OnCheckButtonChange( Button button )
   Property::Index index = button.GetPropertyIndex("channel");
   if( index != Property::INVALID_INDEX )
   {
-    int channel = button.GetProperty<int>( index );
-    float value = mChannelSliders[channel].GetProperty<float>( Slider::Property::VALUE );
-    if( !button.GetProperty<bool>(Button::Property::SELECTED) )
+    int channel = button["channel"];
+    float value = mChannelSliders[channel][Slider::Property::VALUE];
+    if( !button[Button::Property::SELECTED] )
     {
       // "Turn off" the channel's contribution
       value = 0.0f;
@@ -597,8 +597,8 @@ bool StylingApplication::OnSliderChanged( Slider slider, float value )
   Property::Index index = slider.GetPropertyIndex("channel");
   if( index != Property::INVALID_INDEX )
   {
-    int channel = slider.GetProperty<int>( index );
-    if( mCheckButtons[channel].GetProperty<bool>(Button::Property::SELECTED) )
+    int channel = slider["channel"];
+    if( mCheckButtons[channel]["selected"])
     {
       Property::Index channelIndex = GetChannelProperty( channel );
       mImageChannelControl.SetProperty(channelIndex, value/100.0f);

@@ -105,9 +105,10 @@ public:
 
     // Creates the background gradient
     Toolkit::Control background = Dali::Toolkit::Control::New();
-    background.SetProperty( Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER );
-    background.SetProperty( Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER );
+    background[Actor::Property::ANCHOR_POINT]  = Dali::AnchorPoint::CENTER;
+    background[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::CENTER;
     background.SetResizePolicy( Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS );
+
     Dali::Property::Map map;
     map.Insert( Toolkit::Visual::Property::TYPE,  Visual::GRADIENT );
     Property::Array stopOffsets;
@@ -122,16 +123,16 @@ public:
     map.Insert( GradientVisual::Property::START_POSITION,  Vector2(0.0f,-halfWindowSize.y) );
     map.Insert( GradientVisual::Property::END_POSITION,  Vector2(0.0f,halfWindowSize.y)  );
     map.Insert( GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE );
-    background.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
+    background[ Dali::Toolkit::Control::Property::BACKGROUND ] = map;
     window.Add( background );
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label = Toolkit::TextLabel::New( APPLICATION_TITLE );
-    label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    label.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.0f, 0.5f ) );
-    label.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    label.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
-    label.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Vector4( 1.0f, 1.0f, 1.0f, 1.0f ) );
+    label[ Actor::Property::ANCHOR_POINT] = AnchorPoint::TOP_CENTER ;
+    label[ Actor::Property::PARENT_ORIGIN] = Vector3( 0.5f, 0.0f, 0.5f );
+    label[ Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT ] = "CENTER";
+    label[ Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT] = "CENTER";
+    label[ Toolkit::TextLabel::Property::TEXT_COLOR ] = Color::WHITE;
     window.Add( label );
 
     CreateTriangleMorph(Vector3( windowSize.x*0.5f, windowSize.y*0.15f, 0.0f), 100.0f );
@@ -154,21 +155,21 @@ public:
     Vector3 v5 = v2 + ( ( v0 - v2 ) * 0.5f );
 
     Shader shader = CreateShader( 12 );
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[0]"), v0 );
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[1]"), v3 );
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[2]"), v1 );
+    shader[ "uPosition[0]"] = v0;
+    shader[ "uPosition[1]"] = v3;
+    shader[ "uPosition[2]"] = v1;
 
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[3]"), v1 );
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[4]"), v4 );
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[5]"), v2 );
+    shader[ "uPosition[3]"] = v1;
+    shader[ "uPosition[4]"] = v4;
+    shader[ "uPosition[5]"] = v2;
 
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[6]"), v2 );
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[7]"), v5 );
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[8]"), v0 );
+    shader[ "uPosition[6]"] = v2;
+    shader[ "uPosition[7]"] = v5;
+    shader[ "uPosition[8]"] = v0;
 
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[9]"),  v0 );
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[10]"), v1 );
-    shader.SetProperty( shader.GetPropertyIndex( "uPosition[11]"), v2 );
+    shader[ "uPosition[9]"] =  v0;
+    shader[ "uPosition[10]"] = v1;
+    shader[ "uPosition[11]"] = v2;
 
 
     //Create geometry
@@ -203,13 +204,13 @@ public:
     geometry.SetIndexBuffer( indexData, sizeof(indexData)/sizeof(indexData[0]) );
 
     Renderer renderer = Renderer::New( geometry, shader );
-    renderer.SetProperty( Renderer::Property::BLEND_MODE, BlendMode::ON );
+    renderer[Renderer::Property::BLEND_MODE] = BlendMode::ON;
 
     Actor actor = Actor::New();
-    actor.SetProperty( Actor::Property::SIZE, Vector2( 400.0f, 400.0f ) );
-    actor.SetProperty( Actor::Property::POSITION, center );
-    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    actor.SetProperty( Actor::Property::COLOR,Vector4(1.0f,1.0f,0.0f,1.0f) );
+    actor[Actor::Property::SIZE ] = Vector2( 400.0f, 400.0f );
+    actor[Actor::Property::POSITION ] = center;
+    actor[Actor::Property::ANCHOR_POINT] = AnchorPoint::CENTER;
+    actor[Actor::Property::COLOR] = Color::WHITE;
     actor.AddRenderer( renderer );
 
     Window window = mApplication.GetWindow();
@@ -241,28 +242,28 @@ public:
   void CreateCircleMorph( Vector3 center, float radius )
   {
     Shader shader = CreateShader( 16 );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[0]"), Vector3( -radius, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[1]"), Vector3( 0.0f, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[2]"), Vector3( radius, -radius, 0.0f ) );
+    shader["uPosition[0]"] = Vector3( -radius, -radius, 0.0f );
+    shader["uPosition[1]"] = Vector3( 0.0f, -radius, 0.0f );
+    shader["uPosition[2]"] = Vector3( radius, -radius, 0.0f );
 
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[3]"), Vector3( radius, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[4]"), Vector3( radius, 0.0f, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[5]"), Vector3( radius, radius, 0.0f ) );
+    shader["uPosition[3]"] = Vector3( radius, -radius, 0.0f );
+    shader["uPosition[4]"] = Vector3( radius, 0.0f, 0.0f );
+    shader["uPosition[5]"] = Vector3( radius, radius, 0.0f );
 
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[6]"), Vector3( radius, radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[7]"), Vector3( 0.0f, radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[8]"), Vector3( -radius, radius, 0.0f ) );
+    shader["uPosition[6]"] = Vector3( radius, radius, 0.0f );
+    shader["uPosition[7]"] = Vector3( 0.0f, radius, 0.0f );
+    shader["uPosition[8]"] = Vector3( -radius, radius, 0.0f );
 
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[9]"),  Vector3( -radius, radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[10]"), Vector3( -radius, 0.0f, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[11]"), Vector3( -radius, -radius, 0.0f ) );
+    shader["uPosition[9]"] =  Vector3( -radius, radius, 0.0f );
+    shader["uPosition[10]"] = Vector3( -radius, 0.0f, 0.0f );
+    shader["uPosition[11]"] = Vector3( -radius, -radius, 0.0f );
 
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[12]"), Vector3( -radius, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[13]"),  Vector3( radius, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[14]"), Vector3( radius, radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[15]"), Vector3( -radius, radius, 0.0f ) );
+    shader["uPosition[12]"] = Vector3( -radius, -radius, 0.0f );
+    shader["uPosition[13]"] =  Vector3( radius, -radius, 0.0f );
+    shader["uPosition[14]"] = Vector3( radius, radius, 0.0f );
+    shader["uPosition[15]"] = Vector3( -radius, radius, 0.0f );
 
-    //shader.SetProperty( shader.GetPropertyIndex("uLineWidth"), 2.0f );
+    //shader["uLineWidth"), 2.0] ;
 
     static const Vector3 vertexData[] = { Vector3( 0.0f, 0.0f, 0.0f ),
                                           Vector3( 0.5f, 0.0f, 1.0f ),
@@ -295,12 +296,12 @@ public:
     geometry.SetIndexBuffer( indexData, sizeof(indexData)/sizeof(indexData[0]) );
 
     Renderer renderer = Renderer::New( geometry, shader );
-    renderer.SetProperty( Renderer::Property::BLEND_MODE, BlendMode::ON );
+    renderer[ Renderer::Property::BLEND_MODE ] = BlendMode::ON;
 
     Actor actor = Actor::New();
-    actor.SetProperty( Actor::Property::SIZE, Vector2( 400.0f, 400.0f ) );
-    actor.SetProperty( Actor::Property::POSITION, center );
-    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    actor[ Actor::Property::SIZE] = Vector2( 400.0f, 400.0f );
+    actor[ Actor::Property::POSITION] = center;
+    actor[ Actor::Property::ANCHOR_POINT] = AnchorPoint::CENTER;
     actor.AddRenderer( renderer );
 
     Window window = mApplication.GetWindow();
@@ -340,26 +341,26 @@ public:
   void CreateQuadMorph( Vector3 center, float radius )
   {
     Shader shader = CreateShader( 16 );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[0]"), Vector3( -radius, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[1]"), Vector3( 0.0f, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[2]"), Vector3( radius, -radius, 0.0f ) );
+    shader["uPosition[0]"] = Vector3( -radius, -radius, 0.0f );
+    shader["uPosition[1]"] = Vector3( 0.0f, -radius, 0.0f );
+    shader["uPosition[2]"] = Vector3( radius, -radius, 0.0f );
 
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[3]"), Vector3( radius, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[4]"), Vector3( radius, 0.0f, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[5]"), Vector3( radius, radius, 0.0f ) );
+    shader["uPosition[3]"] = Vector3( radius, -radius, 0.0f );
+    shader["uPosition[4]"] = Vector3( radius, 0.0f, 0.0f );
+    shader["uPosition[5]"] = Vector3( radius, radius, 0.0f );
 
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[6]"), Vector3( radius, radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[7]"), Vector3( 0.0f, radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[8]"), Vector3( -radius, radius, 0.0f ) );
+    shader["uPosition[6]"] = Vector3( radius, radius, 0.0f );
+    shader["uPosition[7]"] = Vector3( 0.0f, radius, 0.0f );
+    shader["uPosition[8]"] = Vector3( -radius, radius, 0.0f );
 
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[9]"), Vector3( -radius, radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[10]"), Vector3( -radius, 0.0f, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[11]"), Vector3( -radius, -radius, 0.0f ) );
+    shader["uPosition[9]"] = Vector3( -radius, radius, 0.0f );
+    shader["uPosition[10]"] = Vector3( -radius, 0.0f, 0.0f );
+    shader["uPosition[11]"] = Vector3( -radius, -radius, 0.0f );
 
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[12]"), Vector3( -radius, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[13]"), Vector3( radius, -radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[14]"), Vector3( radius, radius, 0.0f ) );
-    shader.SetProperty( shader.GetPropertyIndex("uPosition[15]"), Vector3( -radius, radius, 0.0f ) );
+    shader["uPosition[12]"] = Vector3( -radius, -radius, 0.0f );
+    shader["uPosition[13]"] = Vector3( radius, -radius, 0.0f );
+    shader["uPosition[14]"] = Vector3( radius, radius, 0.0f );
+    shader["uPosition[15]"] = Vector3( -radius, radius, 0.0f );
 
     static const Vector3 vertexData[] = { Dali::Vector3( 0.0f, 0.0f, 0.0f ),
                                           Dali::Vector3( 0.5f, 0.0f, 1.0f ),
@@ -396,13 +397,13 @@ public:
     geometry.SetIndexBuffer( indexData, sizeof(indexData)/sizeof(indexData[0]) );
 
     Renderer renderer = Renderer::New( geometry, shader );
-    renderer.SetProperty( Renderer::Property::BLEND_MODE, BlendMode::ON );
+    renderer[Renderer::Property::BLEND_MODE] = BlendMode::ON;
 
     Actor actor = Actor::New();
-    actor.SetProperty( Actor::Property::SIZE, Vector2( 400.0f, 400.0f ) );
-    actor.SetProperty( Actor::Property::POSITION, center );
-    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    actor.SetProperty( Actor::Property::COLOR,Vector4(1.0f,0.0f,0.0f,1.0f) );
+    actor[Actor::Property::SIZE] = Vector2( 400.0f, 400.0f );
+    actor[Actor::Property::POSITION] = center;
+    actor[Actor::Property::ANCHOR_POINT] = AnchorPoint::CENTER;
+    actor[Actor::Property::COLOR] = Vector4(1.0f,0.0f,0.0f,1.0f);
     actor.AddRenderer( renderer );
 
     Window window = mApplication.GetWindow();
