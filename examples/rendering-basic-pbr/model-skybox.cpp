@@ -183,8 +183,8 @@ Geometry ModelSkybox::CreateGeometry()
       { Vector3(   1.0f, -1.0f,  1.0f ) }
   };
 
-  PropertyBuffer vertexBuffer = PropertyBuffer::New( Property::Map()
-                                                     .Add( "aPosition", Property::VECTOR3 ) );
+  VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
+                                                 .Add( "aPosition", Property::VECTOR3 ) );
   vertexBuffer.SetData( skyboxVertices, sizeof(skyboxVertices) / sizeof(Vertex) );
 
   geometry = Geometry::New();

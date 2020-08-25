@@ -19,7 +19,7 @@
  */
 
 #include <dali/public-api/rendering/geometry.h>
-#include <dali/public-api/rendering/property-buffer.h>
+#include <dali/public-api/rendering/vertex-buffer.h>
 
 #include <inttypes.h>
 
@@ -44,7 +44,7 @@ struct ModelHeader
 /**
  * @brief The GameModel class
  * GameModel represents model geometry. It loads model data from external model file ( .mod file ).
- * Such data is ready to be used as GL buffer so it can be copied directly into the PropertyBuffer
+ * Such data is ready to be used as GL buffer so it can be copied directly into the VertexBuffer
  * object.
  *
  * Model file is multi-architecture so can be loaded on little and big endian architectures
@@ -85,7 +85,7 @@ public:
 private:
 
   Dali::Geometry        mGeometry;
-  Dali::PropertyBuffer  mVertexBuffer;
+  Dali::VertexBuffer    mVertexBuffer;
 
   ModelHeader           mHeader;
 
