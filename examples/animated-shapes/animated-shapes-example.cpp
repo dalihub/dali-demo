@@ -195,7 +195,7 @@ public:
     //Create a vertex buffer for vertex positions and texture coordinates
     Dali::Property::Map vertexFormat;
     vertexFormat["aCoefficient"] = Dali::Property::VECTOR3;
-    Dali::PropertyBuffer vertexBuffer = Dali::PropertyBuffer::New( vertexFormat );
+    Dali::VertexBuffer vertexBuffer = Dali::VertexBuffer::New( vertexFormat );
     vertexBuffer.SetData( vertexData, sizeof(vertexData)/sizeof(vertexData[0]));
 
     //Create the geometry
@@ -287,7 +287,7 @@ public:
     //Create a vertex buffer for vertex positions and texture coordinates
     Dali::Property::Map vertexFormat;
     vertexFormat["aCoefficient"] = Dali::Property::VECTOR3;
-    Dali::PropertyBuffer vertexBuffer = Dali::PropertyBuffer::New( vertexFormat );
+    Dali::VertexBuffer vertexBuffer = Dali::VertexBuffer::New( vertexFormat );
     vertexBuffer.SetData( vertexData, sizeof(vertexData)/sizeof(vertexData[0]));
 
     //Create the geometry
@@ -388,7 +388,7 @@ public:
     //Create a vertex buffer for vertex positions and texture coordinates
     Dali::Property::Map vertexFormat;
     vertexFormat["aCoefficient"] = Dali::Property::VECTOR3;
-    Dali::PropertyBuffer vertexBuffer = Dali::PropertyBuffer::New( vertexFormat );
+    Dali::VertexBuffer vertexBuffer = Dali::VertexBuffer::New( vertexFormat );
     vertexBuffer.SetData( vertexData, sizeof(vertexData)/sizeof(vertexData[0]));
 
     //Create the geometry

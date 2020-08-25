@@ -168,7 +168,7 @@ public:
 
     Property::Map vertexFormat;
     vertexFormat["aPosition"] = Property::VECTOR2;
-    PropertyBuffer vertexBuffer = PropertyBuffer::New( vertexFormat );
+    VertexBuffer vertexBuffer = VertexBuffer::New( vertexFormat );
 
     const float P( 0.5f );
     const Vector2 vertices[] = {

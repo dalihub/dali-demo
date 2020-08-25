@@ -95,7 +95,7 @@ Renderer CreateRenderer()
   Property::Map property;
   property.Add("aPosition", Property::VECTOR2).Add("aTexCoord", Property::VECTOR2);
 
-  PropertyBuffer vertexBuffer = PropertyBuffer::New(property);
+  VertexBuffer vertexBuffer = VertexBuffer::New(property);
 
   vertexBuffer.SetData(vertices, sizeof(vertices) / sizeof(Vertex));
 
