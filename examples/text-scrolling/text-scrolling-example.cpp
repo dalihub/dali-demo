@@ -354,7 +354,7 @@ public:
    */
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.state == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::Down)
     {
       if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
       {
@@ -362,7 +362,7 @@ public:
       }
       else
       {
-        if ( event.keyPressedName == "2" )
+        if ( event.GetKeyName() == "2" )
         {
           mAnimation.AnimateTo( Property( mSmallLabel, Actor::Property::SCALE ), Vector3(1.2f, 1.2f, 0.0f), AlphaFunction::BOUNCE, TimePeriod( 1.0f, 1.0f ) );
           mAnimation.AnimateTo( Property( mLargeLabel, Actor::Property::SCALE ), Vector3(1.2f, 1.2f, 0.0f), AlphaFunction::BOUNCE, TimePeriod( 1.0f, 1.0f ) );

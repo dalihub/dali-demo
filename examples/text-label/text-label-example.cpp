@@ -619,7 +619,7 @@ public:
    */
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.state == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::Down)
     {
       if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
       {
@@ -627,13 +627,13 @@ public:
       }
       else if( event.IsCtrlModifier() )
       {
-        switch( event.keyCode )
+        switch( event.GetKeyCode() )
         {
           // Select rendering back-end
           case KEY_ZERO: // fall through
           case KEY_ONE:
           {
-            mLabel.SetProperty( DevelTextLabel::Property::RENDERING_BACKEND, event.keyCode - 10 );
+            mLabel.SetProperty( DevelTextLabel::Property::RENDERING_BACKEND, event.GetKeyCode() - 10 );
             break;
           }
           case KEY_A: // Animate text colour
