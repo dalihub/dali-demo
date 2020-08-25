@@ -210,7 +210,7 @@ public:
     actor[Actor::Property::SIZE ] = Vector2( 400.0f, 400.0f );
     actor[Actor::Property::POSITION ] = center;
     actor[Actor::Property::ANCHOR_POINT] = AnchorPoint::CENTER;
-    actor[Actor::Property::COLOR] = Color::WHITE;
+    actor[Actor::Property::COLOR] = Color::YELLOW;
     actor.AddRenderer( renderer );
 
     Window window = mApplication.GetWindow();
@@ -259,7 +259,7 @@ public:
     shader["uPosition[11]"] = Vector3( -radius, -radius, 0.0f );
 
     shader["uPosition[12]"] = Vector3( -radius, -radius, 0.0f );
-    shader["uPosition[13]"] =  Vector3( radius, -radius, 0.0f );
+    shader["uPosition[13]"] = Vector3( radius, -radius, 0.0f );
     shader["uPosition[14]"] = Vector3( radius, radius, 0.0f );
     shader["uPosition[15]"] = Vector3( -radius, radius, 0.0f );
 
@@ -403,7 +403,7 @@ public:
     actor[Actor::Property::SIZE] = Vector2( 400.0f, 400.0f );
     actor[Actor::Property::POSITION] = center;
     actor[Actor::Property::ANCHOR_POINT] = AnchorPoint::CENTER;
-    actor[Actor::Property::COLOR] = Vector4(1.0f,0.0f,0.0f,1.0f);
+    actor[Actor::Property::COLOR] = Color::RED;
     actor.AddRenderer( renderer );
 
     Window window = mApplication.GetWindow();
