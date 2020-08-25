@@ -98,7 +98,7 @@ private:
    */
   void OnKeyEvent( const KeyEvent& event )
   {
-    if( event.state == KeyEvent::Down )
+    if( event.GetState() == KeyEvent::Down )
     {
       KeyInputFocusManager keyInputFocusManager = KeyInputFocusManager::Get();
       if( ! keyInputFocusManager.GetCurrentFocusControl() ) // Don't quit if a control has focus

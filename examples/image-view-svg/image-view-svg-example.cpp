@@ -209,7 +209,7 @@ public:
     */
    void OnKeyEvent(const KeyEvent& event)
    {
-     if(event.state == KeyEvent::Down)
+     if(event.GetState() == KeyEvent::Down)
      {
        if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
        {
@@ -217,7 +217,7 @@ public:
        }
        else
        {
-         const char* keyName = event.keyPressedName.c_str();
+         const char* keyName = event.GetKeyName().c_str();
          if( strcmp(keyName, "Left") == 0 )
          {
            if( mScale > MIN_SCALE )

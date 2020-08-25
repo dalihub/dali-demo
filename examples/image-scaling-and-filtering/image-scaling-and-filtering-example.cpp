@@ -566,7 +566,7 @@ public:
 
   void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.state == KeyEvent::Down )
+    if( event.GetState() == KeyEvent::Down )
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
@@ -580,50 +580,50 @@ public:
           mApplication.Quit();
         }
       }
-      else if ( event.keyPressedName == "Right" )
+      else if ( event.GetKeyName() == "Right" )
       {
         mImageWindowScale.x = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.x * 1.1f ) );
       }
-      else if ( event.keyPressedName == "Left" )
+      else if ( event.GetKeyName() == "Left" )
       {
         mImageWindowScale.x = std::max( 0.05f, mImageWindowScale.x * 0.9f );
       }
-      else if ( event.keyPressedName == "Up" )
+      else if ( event.GetKeyName() == "Up" )
       {
         mImageWindowScale.y = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.y * 1.1f ) );
       }
-      else if ( event.keyPressedName == "Down" )
+      else if ( event.GetKeyName() == "Down" )
       {
         mImageWindowScale.y = std::max( 0.05f, mImageWindowScale.y * 0.9f );
       }
-      else if ( event.keyPressedName == "o" )
+      else if ( event.GetKeyName() == "o" )
       {
         mImageWindowScale.x = std::max( 0.05f, mImageWindowScale.x * 0.9f );
         mImageWindowScale.y = std::max( 0.05f, mImageWindowScale.y * 0.9f );
       }
-      else if ( event.keyPressedName == "p" )
+      else if ( event.GetKeyName() == "p" )
       {
         mImageWindowScale.x = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.x * 1.1f ) );
         mImageWindowScale.y = std::max( 0.05f, std::min( 1.0f, mImageWindowScale.y * 1.1f ) );
       }
-      else if ( event.keyPressedName == "n" )
+      else if ( event.GetKeyName() == "n" )
       {
         mCurrentPath = mCurrentPath + 1;
         mCurrentPath = mCurrentPath <  NUM_IMAGE_PATHS ? mCurrentPath : 0;
       }
-      else if ( event.keyPressedName == "b" )
+      else if ( event.GetKeyName() == "b" )
       {
         mCurrentPath = mCurrentPath - 1;
         mCurrentPath = mCurrentPath >= 0 ? mCurrentPath : NUM_IMAGE_PATHS - 1;
       }
       // Cycle filter and scaling modes:
-      else if ( event.keyPressedName == "f" )
+      else if ( event.GetKeyName() == "f" )
       {
         mSamplingMode = NextFilterMode( mSamplingMode );
         mSamplingModeButton.SetProperty( Toolkit::Button::Property::LABEL, StringFromFilterMode( mSamplingMode ) );
       }
       // Cycle filter and scaling modes:
-      else if ( event.keyPressedName == "s" )
+      else if ( event.GetKeyName() == "s" )
       {
         mFittingMode = NextScalingMode( mFittingMode );
         mFittingModeButton.SetProperty( Toolkit::Button::Property::LABEL, StringFromScalingMode( mFittingMode ) );
