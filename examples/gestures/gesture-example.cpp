@@ -18,9 +18,6 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <string>
-#include <dali/devel-api/actors/actor-devel.h>
-#include <dali/devel-api/events/rotation-gesture.h>
-#include <dali/devel-api/events/rotation-gesture-detector.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
