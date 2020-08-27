@@ -573,7 +573,7 @@ public:
   void OnKeyEvent(const KeyEvent& event)
   {
 
-    if( event.GetState() == KeyEvent::Down && (IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ))  )
+    if( event.GetState() == KeyEvent::DOWN && (IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ))  )
     {
       mApplication.Quit();
     }
