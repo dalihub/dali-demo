@@ -148,13 +148,6 @@ struct VertexWithTexture
   Vector2 texCoord;
 };
 
-VertexWithTexture gQuadWithTexture[] = {
-                                        { Vector2( -0.5f, -0.5f ), Vector2( 0.0f, 0.0f ) },
-                                        { Vector2(  0.5f, -0.5f ), Vector2( 1.0f, 0.0f ) },
-                                        { Vector2( -0.5f,  0.5f ), Vector2( 0.0f, 1.0f ) },
-                                        { Vector2(  0.5f,  0.5f ), Vector2( 1.0f, 1.0f ) }
-};
-
 const char* VERTEX_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
     attribute mediump vec2 aPosition;\n
     attribute mediump vec2 aTexCoord;\n
