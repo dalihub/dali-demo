@@ -150,13 +150,6 @@ struct VertexWithTexture
   Vector2 texCoord;
 };
 
-VertexWithTexture gQuadWithTexture[] = {
-                                        { Vector2( -0.5f, -0.5f ), Vector2( 0.0f, 0.0f ) },
-                                        { Vector2(  0.5f, -0.5f ), Vector2( 1.0f, 0.0f ) },
-                                        { Vector2( -0.5f,  0.5f ), Vector2( 0.0f, 1.0f ) },
-                                        { Vector2(  0.5f,  0.5f ), Vector2( 1.0f, 1.0f ) }
-};
-
 const char* VERTEX_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
     attribute mediump vec2 aPosition;\n
     attribute mediump vec2 aTexCoord;\n
@@ -451,7 +444,7 @@ public:
 
   void OnKeyEvent( const KeyEvent& event )
   {
-    if( event.state == KeyEvent::Down )
+    if( event.GetState() == KeyEvent::DOWN )
     {
       if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {

@@ -149,7 +149,7 @@ public:
    */
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.state == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::DOWN)
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
       {
@@ -168,7 +168,7 @@ public:
 
     Property::Map vertexFormat;
     vertexFormat["aPosition"] = Property::VECTOR2;
-    PropertyBuffer vertexBuffer = PropertyBuffer::New( vertexFormat );
+    VertexBuffer vertexBuffer = VertexBuffer::New( vertexFormat );
 
     const float P( 0.5f );
     const Vector2 vertices[] = {

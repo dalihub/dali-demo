@@ -519,9 +519,9 @@ bool StylingApplication::OnCheckButtonChange( Button button )
   Property::Index index = button.GetPropertyIndex("channel");
   if( index != Property::INVALID_INDEX )
   {
-    int channel = button.GetProperty<int>( index );
-    float value = mChannelSliders[channel].GetProperty<float>( Slider::Property::VALUE );
-    if( !button.GetProperty<bool>(Button::Property::SELECTED) )
+    int channel = button["channel"];
+    float value = mChannelSliders[channel][Slider::Property::VALUE];
+    if( !button[Button::Property::SELECTED] )
     {
       // "Turn off" the channel's contribution
       value = 0.0f;
@@ -597,8 +597,8 @@ bool StylingApplication::OnSliderChanged( Slider slider, float value )
   Property::Index index = slider.GetPropertyIndex("channel");
   if( index != Property::INVALID_INDEX )
   {
-    int channel = slider.GetProperty<int>( index );
-    if( mCheckButtons[channel].GetProperty<bool>(Button::Property::SELECTED) )
+    int channel = slider["channel"];
+    if( mCheckButtons[channel]["selected"])
     {
       Property::Index channelIndex = GetChannelProperty( channel );
       mImageChannelControl.SetProperty(channelIndex, value/100.0f);
@@ -635,17 +635,17 @@ void StylingApplication::OnKeyEvent( const KeyEvent& keyEvent )
 {
   static int keyPressed = 0;
 
-  if( keyEvent.state == KeyEvent::Down)
+  if( keyEvent.GetState() == KeyEvent::DOWN)
   {
     if( keyPressed == 0 ) // Is this the first down event?
     {
-      printf("Key pressed: %s %d\n", keyEvent.keyPressedName.c_str(), keyEvent.keyCode );
+      printf("Key pressed: %s %d\n", keyEvent.GetKeyName().c_str(), keyEvent.GetKeyCode() );
 
       if( IsKey( keyEvent, DALI_KEY_ESCAPE) || IsKey( keyEvent, DALI_KEY_BACK ) )
       {
         mApplication.Quit();
       }
-      else if( keyEvent.keyPressedName.compare("Return") == 0 )
+      else if( keyEvent.GetKeyName().compare("Return") == 0 )
       {
         mCurrentTheme++;
         mCurrentTheme %= NUMBER_OF_THEMES;
@@ -676,7 +676,7 @@ void StylingApplication::OnKeyEvent( const KeyEvent& keyEvent )
     }
     keyPressed = 1;
   }
-  else if( keyEvent.state == KeyEvent::Up )
+  else if( keyEvent.GetState() == KeyEvent::UP )
   {
     keyPressed = 0;
   }

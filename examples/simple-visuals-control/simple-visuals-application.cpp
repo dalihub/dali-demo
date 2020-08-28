@@ -77,23 +77,23 @@ void SimpleVisualsApplication::OnKeyEvent( const KeyEvent& keyEvent )
 {
   static int keyPressed = 0;
 
-  if( keyEvent.state == KeyEvent::Down)
+  if( keyEvent.GetState() == KeyEvent::DOWN)
   {
     if( keyPressed == 0 ) // Is this the first down event?
     {
-      printf("Key pressed: %s %d\n", keyEvent.keyPressedName.c_str(), keyEvent.keyCode );
+      printf("Key pressed: %s %d\n", keyEvent.GetKeyName().c_str(), keyEvent.GetKeyCode() );
 
       if( IsKey( keyEvent, DALI_KEY_ESCAPE) || IsKey( keyEvent, DALI_KEY_BACK ) )
       {
         mApplication.Quit();
       }
-      else if( keyEvent.keyPressedName.compare("Return") == 0 )
+      else if( keyEvent.GetKeyName().compare("Return") == 0 )
       {
       }
     }
     keyPressed = 1;
   }
-  else if( keyEvent.state == KeyEvent::Up )
+  else if( keyEvent.GetState() == KeyEvent::UP )
   {
     keyPressed = 0;
   }

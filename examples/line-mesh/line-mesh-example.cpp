@@ -95,7 +95,7 @@ Geometry CreateGeometry()
   pentagonVertexFormat["aPosition1"] = Property::VECTOR2;
   pentagonVertexFormat["aPosition2"] = Property::VECTOR2;
   pentagonVertexFormat["aColor"] = Property::VECTOR3;
-  PropertyBuffer pentagonVertices = PropertyBuffer::New( pentagonVertexFormat );
+  VertexBuffer pentagonVertices = VertexBuffer::New( pentagonVertexFormat );
   pentagonVertices.SetData(pentagonVertexData, 5);
 
 
@@ -310,7 +310,7 @@ public:
 
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.state == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::DOWN)
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
       {

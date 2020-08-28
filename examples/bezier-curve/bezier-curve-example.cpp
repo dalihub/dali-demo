@@ -300,7 +300,7 @@ public:
 
     Property::Map curveVertexFormat;
     curveVertexFormat["aPosition"] = Property::VECTOR2;
-    mCurveVertices = PropertyBuffer::New( curveVertexFormat );
+    mCurveVertices = VertexBuffer::New( curveVertexFormat );
     Vector2 vertexData[2] = { Vector2(-0.5f, 0.5f), Vector2( 0.5f, -0.5f ) };
     mCurveVertices.SetData( vertexData, 2 );
 
@@ -334,7 +334,7 @@ public:
     return actor;
   }
 
-  Actor CreateControlLine( PropertyBuffer vertexBuffer )
+  Actor CreateControlLine( VertexBuffer vertexBuffer )
   {
     Actor line = Actor::New();
     line.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
@@ -364,8 +364,8 @@ public:
 
     Property::Map lineVertexFormat;
     lineVertexFormat["aPosition"] = Property::VECTOR2;
-    mLine1Vertices = PropertyBuffer::New( lineVertexFormat );
-    mLine2Vertices = PropertyBuffer::New( lineVertexFormat );
+    mLine1Vertices = VertexBuffer::New( lineVertexFormat );
+    mLine2Vertices = VertexBuffer::New( lineVertexFormat );
 
     mControlLine1 = CreateControlLine( mLine1Vertices );
     mControlLine2 = CreateControlLine( mLine2Vertices );
@@ -573,7 +573,7 @@ public:
   void OnKeyEvent(const KeyEvent& event)
   {
 
-    if( event.state == KeyEvent::Down && (IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ))  )
+    if( event.GetState() == KeyEvent::DOWN && (IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ))  )
     {
       mApplication.Quit();
     }
@@ -595,9 +595,9 @@ private:
   Timer mTimer;
   Animation mDragAnimation;
   Animation mBezierAnimation;
-  PropertyBuffer mCurveVertices;
-  PropertyBuffer mLine1Vertices;
-  PropertyBuffer mLine2Vertices;
+  VertexBuffer mCurveVertices;
+  VertexBuffer mLine1Vertices;
+  VertexBuffer mLine2Vertices;
   Vector2 mRelativeDragPoint;
   Vector2 mLastControlPointPosition1;
   Vector2 mLastControlPointPosition2;

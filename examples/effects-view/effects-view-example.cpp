@@ -234,7 +234,7 @@ bool EffectsViewApp::ChangeEffectSize( Button button )
 
 void EffectsViewApp::OnKeyEvent(const KeyEvent& event)
 {
-  if(event.state == KeyEvent::Down)
+  if(event.GetState() == KeyEvent::DOWN)
   {
     if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
     {

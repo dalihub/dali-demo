@@ -98,7 +98,7 @@ Geometry CreateGeometry()
   Property::Map polyhedraVertexFormat;
   polyhedraVertexFormat["aPosition"] = Property::VECTOR2;
   polyhedraVertexFormat["aHue"] = Property::FLOAT;
-  PropertyBuffer polyhedraVertices = PropertyBuffer::New( polyhedraVertexFormat );
+  VertexBuffer polyhedraVertices = VertexBuffer::New( polyhedraVertexFormat );
   polyhedraVertices.SetData( polyhedraVertexData, numSides );
 
   // Create the geometry object
@@ -203,7 +203,7 @@ public:
 
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.state == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::DOWN)
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
       {
