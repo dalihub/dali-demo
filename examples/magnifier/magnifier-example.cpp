@@ -233,7 +233,7 @@ public:
     constraint.AddSource( LocalSource(Actor::Property::PARENT_ORIGIN) );
     constraint.AddSource( LocalSource(Actor::Property::ANCHOR_POINT) );
     constraint.AddSource( ParentSource(Actor::Property::SIZE) );
-    constraint.SetRemoveAction(Constraint::Discard);
+    constraint.SetRemoveAction(Constraint::DISCARD);
     constraint.Apply();
 
     // Create bouncing magnifier automatically bounces around screen.

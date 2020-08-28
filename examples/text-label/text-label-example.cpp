@@ -264,7 +264,7 @@ public:
 
     Constraint constraint = Constraint::New<Vector3>( bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
     constraint.AddSource( Source( mLabel, mHueAngleIndex ) );
-    constraint.SetRemoveAction( Constraint::Discard );
+    constraint.SetRemoveAction( Constraint::DISCARD );
     constraint.Apply();
 
     Animation anim = Animation::New(50.0f);

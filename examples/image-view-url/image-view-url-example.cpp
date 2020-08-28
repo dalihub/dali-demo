@@ -92,7 +92,7 @@ private:
     switchButton.ClickedSignal().Connect( this, &ImageViewUrlApp::OnButtonClicked );
     toolBar.AddControl( switchButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                        Toolkit::Alignment::HorizontalRight,
+                        Toolkit::Alignment::HORIZONTAL_RIGHT,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     std::string url = mUrl;

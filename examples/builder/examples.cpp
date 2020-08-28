@@ -252,7 +252,7 @@ public:
     {
       mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
-      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER );
     }
 
     mTitleActor.SetProperty( TextLabel::Property::TEXT, title );
@@ -482,7 +482,7 @@ public:
     backButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EDIT_IMAGE_SELECTED );
     backButton.ClickedSignal().Connect( this, &ExampleApp::OnBackButtonPressed);
     backButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
-    mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     mNavigationView = Toolkit::NavigationView::New();
     mNavigationView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );

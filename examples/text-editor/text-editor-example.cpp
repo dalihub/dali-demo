@@ -147,7 +147,7 @@ public:
     mColorContainer.Add( mColorButtonOption );
 
     //Add label to toolbar, which will also add the color button next to it.
-    mToolBar.AddControl( colorLabel, viewStyle.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    mToolBar.AddControl( colorLabel, viewStyle.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create the text editor.
     mEditor = TextEditor::New();

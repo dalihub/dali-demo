@@ -169,11 +169,11 @@ public:
     effectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE );
     effectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE_SELECTED );
     effectChangeButton.ClickedSignal().Connect( this, &TestApp::OnEffectButtonClicked );
-    toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+    toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Add title to the tool bar.
     mTitleActor = DemoHelper::CreateToolBarLabel( "" );
-    toolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
+    toolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER );
 
     // Set Title text
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT) );
@@ -183,7 +183,7 @@ public:
     resetButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, RESET_ICON );
     resetButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, RESET_ICON_SELECTED );
     resetButton.ClickedSignal().Connect( this, &TestApp::OnResetPressed );
-    toolBar.AddControl( resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
+    toolBar.AddControl( resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING );
 
     // Setup
     mView.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 0.0f ) );

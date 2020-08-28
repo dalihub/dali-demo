@@ -132,7 +132,7 @@ public:
                                             APPLICATION_TITLE );
 
     // Add an extra space on the right to center the title text.
-    mToolBar.AddControl( Actor::New(), DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight );
+    mToolBar.AddControl( Actor::New(), DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT );
 
     AddContentLayer();
 

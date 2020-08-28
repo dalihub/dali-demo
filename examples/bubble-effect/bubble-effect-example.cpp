@@ -113,7 +113,7 @@ private:
     mChangeBackgroundButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
     toolBar.AddControl( mChangeBackgroundButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                        Toolkit::Alignment::HorizontalRight,
+                        Toolkit::Alignment::HORIZONTAL_RIGHT,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change bubble shape. ( left of bar )
     mChangeBubbleShapeButton = Toolkit::PushButton::New();
@@ -122,7 +122,7 @@ private:
     mChangeBubbleShapeButton.ClickedSignal().Connect( this, &BubbleEffectExample::OnChangeIconClicked );
     toolBar.AddControl( mChangeBubbleShapeButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                        Toolkit::Alignment::HorizontalLeft,
+                        Toolkit::Alignment::HORIZONTAL_LEFT,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create and initialize the BubbleEmitter object

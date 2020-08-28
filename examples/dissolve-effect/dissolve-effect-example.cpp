@@ -226,18 +226,18 @@ void DissolveEffectApp::OnInit( Application& application )
   mEffectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE );
   mEffectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE_SELECTED );
   mEffectChangeButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnEffectButtonClicked );
-  mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+  mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
   mTitleActor = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_HIGHP );
-  mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
+  mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER );
 
   // Add an slide-show button on the right of the title
   mPlayStopButton = Toolkit::PushButton::New();
   mPlayStopButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON );
   mPlayStopButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED );
   mPlayStopButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnSildeshowButtonClicked );
-  mToolBar.AddControl( mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
+  mToolBar.AddControl( mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING );
 
   // use pan gesture to detect the cursor or finger movement
   mPanGestureDetector = PanGestureDetector::New();
