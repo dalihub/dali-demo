@@ -95,7 +95,7 @@ Geometry CreateGeometry()
   pentagonVertexFormat["aPosition1"] = Property::VECTOR2;
   pentagonVertexFormat["aPosition2"] = Property::VECTOR2;
   pentagonVertexFormat["aColor"] = Property::VECTOR3;
-  VertexBuffer pentagonVertices = VertexBuffer::New( pentagonVertexFormat );
+  PropertyBuffer pentagonVertices = PropertyBuffer::New( pentagonVertexFormat );
   pentagonVertices.SetData(pentagonVertexData, 5);
 
 

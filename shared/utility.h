@@ -63,13 +63,13 @@ Dali::Geometry CreateTexturedQuad()
                                 { Dali::Vector2( -0.5f,  0.5f ), Dali::Vector2( 0.0f, 1.0f ) },
                                 { Dali::Vector2(  0.5f,  0.5f ), Dali::Vector2( 1.0f, 1.0f ) }};
 
-  Dali::VertexBuffer vertexBuffer;
+  Dali::PropertyBuffer vertexBuffer;
   Dali::Property::Map vertexFormat;
   vertexFormat["aPosition"] = Dali::Property::VECTOR2;
   vertexFormat["aTexCoord"] = Dali::Property::VECTOR2;
 
   //Create a vertex buffer for vertex positions and texture coordinates
-  vertexBuffer = Dali::VertexBuffer::New( vertexFormat );
+  vertexBuffer = Dali::PropertyBuffer::New( vertexFormat );
   vertexBuffer.SetData( data, 4u );
 
   //Create the geometry

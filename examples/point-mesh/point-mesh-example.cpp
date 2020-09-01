@@ -98,7 +98,7 @@ Geometry CreateGeometry()
   Property::Map polyhedraVertexFormat;
   polyhedraVertexFormat["aPosition"] = Property::VECTOR2;
   polyhedraVertexFormat["aHue"] = Property::FLOAT;
-  VertexBuffer polyhedraVertices = VertexBuffer::New( polyhedraVertexFormat );
+  PropertyBuffer polyhedraVertices = PropertyBuffer::New( polyhedraVertexFormat );
   polyhedraVertices.SetData( polyhedraVertexData, numSides );
 
   // Create the geometry object

@@ -460,7 +460,7 @@ private:
     vertexFormat[NORMAL] =   Property::VECTOR3;
     vertexFormat[TEXTURE] =  Property::VECTOR2;
 
-    VertexBuffer surfaceVertices = VertexBuffer::New( vertexFormat );
+    PropertyBuffer surfaceVertices = PropertyBuffer::New( vertexFormat );
     surfaceVertices.SetData( &vertices[0u], vertices.Size() );
 
     Geometry geometry = Geometry::New();

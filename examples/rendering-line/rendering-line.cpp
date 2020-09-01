@@ -133,8 +133,8 @@ public:
       Vector2(  1.0f,  1.0f )
     };
 
-    VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
-                                                   .Add( "aPosition", Property::VECTOR2 ) );
+    PropertyBuffer vertexBuffer = PropertyBuffer::New( Property::Map()
+                                                       .Add( "aPosition", Property::VECTOR2 ) );
     vertexBuffer.SetData( vertices, sizeof(vertices) / sizeof(Vector2) );
 
     mGeometry = Geometry::New();

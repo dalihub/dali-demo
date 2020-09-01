@@ -45,11 +45,11 @@ GameModel::GameModel( const char *filename )
     mHeader = *(reinterpret_cast<ModelHeader*>( bytes.data() + bytes.size()/2 ));
   }
 
-  mVertexBuffer = Dali::VertexBuffer::New( Dali::Property::Map().
-                                           Add( "aPosition", Dali::Property::VECTOR3 ).
-                                           Add( "aNormal", Dali::Property::VECTOR3 ).
-                                           Add( "aTexCoord", Dali::Property::VECTOR2 )
-                                           );
+  mVertexBuffer = Dali::PropertyBuffer::New( Dali::Property::Map().
+                                             Add( "aPosition", Dali::Property::VECTOR3 ).
+                                             Add( "aNormal", Dali::Property::VECTOR3 ).
+                                             Add( "aTexCoord", Dali::Property::VECTOR2 )
+                                             );
 
   mVertexBuffer.SetData( bytes.data() + mHeader.dataBeginOffset, mHeader.vertexBufferSize/mHeader.vertexStride );
 

@@ -308,7 +308,7 @@ public:
     property.Insert( "aPosition", Property::VECTOR3 );
     property.Insert( "aNormal", Property::VECTOR3 );
 
-    VertexBuffer vertexBuffer = VertexBuffer::New( property );
+    PropertyBuffer vertexBuffer = PropertyBuffer::New( property );
 
     vertexBuffer.SetData( vertices, sizeof(vertices) / sizeof(Vertex) );
 

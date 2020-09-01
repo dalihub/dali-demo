@@ -400,13 +400,13 @@ Geometry MetaballExplosionController::CreateGeometry( bool aspectMappedTexture )
   // Vertices
   Property::Map positionVertexFormat;
   positionVertexFormat["aPosition"] = Property::VECTOR2;
-  VertexBuffer positionVertices = VertexBuffer::New( positionVertexFormat );
+  PropertyBuffer positionVertices = PropertyBuffer::New( positionVertexFormat );
   positionVertices.SetData( vertices, numberOfVertices );
 
   // Textures
   Property::Map textureVertexFormat;
   textureVertexFormat["aTexture"] = Property::VECTOR2;
-  VertexBuffer textureVertices = VertexBuffer::New( textureVertexFormat );
+  PropertyBuffer textureVertices = PropertyBuffer::New( textureVertexFormat );
   textureVertices.SetData( textures, numberOfVertices );
 
   // Indices

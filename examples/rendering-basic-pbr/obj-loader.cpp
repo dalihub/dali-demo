@@ -617,12 +617,12 @@ Geometry ObjLoader::CreateGeometry( int objectProperties, bool useSoftNormals )
 
   Property::Map positionMap;
   positionMap["aPosition"] = Property::VECTOR3;
-  VertexBuffer positionBuffer = VertexBuffer::New( positionMap );
+  PropertyBuffer positionBuffer = PropertyBuffer::New( positionMap );
   positionBuffer.SetData( positions.Begin(), positions.Count() );
 
   Property::Map normalMap;
   normalMap["aNormal"] = Property::VECTOR3;
-  VertexBuffer normalBuffer = VertexBuffer::New( normalMap );
+  PropertyBuffer normalBuffer = PropertyBuffer::New( normalMap );
   normalBuffer.SetData( normals.Begin(), normals.Count() );
 
   surface.AddVertexBuffer( positionBuffer );
@@ -633,7 +633,7 @@ Geometry ObjLoader::CreateGeometry( int objectProperties, bool useSoftNormals )
   {
     Property::Map tangentMap;
     tangentMap["aTangent"] = Property::VECTOR3;
-    VertexBuffer tangentBuffer = VertexBuffer::New( tangentMap );
+    PropertyBuffer tangentBuffer = PropertyBuffer::New( tangentMap );
     tangentBuffer.SetData( tangents.Begin(), tangents.Count() );
 
     surface.AddVertexBuffer( tangentBuffer );
@@ -644,7 +644,7 @@ Geometry ObjLoader::CreateGeometry( int objectProperties, bool useSoftNormals )
   {
     Property::Map textCoordMap;
     textCoordMap["aTexCoord"] = Property::VECTOR2;
-    VertexBuffer texCoordBuffer = VertexBuffer::New( textCoordMap );
+    PropertyBuffer texCoordBuffer = PropertyBuffer::New( textCoordMap );
     texCoordBuffer.SetData( textures.Begin(), textures.Count() );
 
     surface.AddVertexBuffer( texCoordBuffer );

@@ -64,7 +64,7 @@ in vec3 aNormal;
 out vec4 vPosition;
 out vec3 vNormal;
 
-vec4 Map(vec4 v)    // projection space -> texture
+vec4 Map(vec4 v)	// projection space -> texture
 {
   return vec4(v.xyz / (2.f * v.w) + vec3(.5f), (v.w - NEAR) * INV_DEPTH);
 }
@@ -149,7 +149,7 @@ uniform vec3 uDepth_InvDepth_Near;\n)
 // Light source uniforms
 struct Light
 {
-  vec3 position;    // view space
+  vec3 position;	// view space
   float radius;
   vec3 color;
 };
@@ -160,7 +160,7 @@ in vec2 vUv;
 
 out vec4 oColor;
 
-vec4 Unmap(vec4 m)  // texture -> projection
+vec4 Unmap(vec4 m)	// texture -> projection
 {
   m.w = m.w * DEPTH + NEAR;
   m.xyz = (m.xyz - vec3(.5)) * (2.f * m.w);
@@ -180,10 +180,10 @@ vec3 CalculateLighting(vec3 pos, vec3 normal)
     rel /= distance;
 
     float a = uLights[i].radius / (kAttenuationConst + kAttenuationLinear * distance +
-      kAttenuationQuadratic * distance * distance);     // attenuation
+      kAttenuationQuadratic * distance * distance);	// attenuation
 
-    float l = max(0.f, dot(normal, rel));   // lambertian
-    float s = pow(max(0.f, dot(viewDirRefl, rel)), 256.f);  // specular
+    float l = max(0.f, dot(normal, rel));	// lambertian
+    float s = pow(max(0.f, dot(viewDirRefl, rel)), 256.f);	// specular
 
     light += (uLights[i].color * (l + s)) * a;
   }
@@ -324,7 +324,7 @@ Geometry CreateTexturedQuadGeometry(bool flipV)
     std::swap(vertexData[1].aTexCoord, vertexData[3].aTexCoord);
   }
 
-  VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
+  PropertyBuffer vertexBuffer = PropertyBuffer::New( Property::Map()
     .Add( "aPosition", Property::VECTOR3 )
     .Add( "aTexCoord", Property::VECTOR2 ) );
   vertexBuffer.SetData( vertexData, std::extent<decltype(vertexData)>::value );
@@ -402,7 +402,7 @@ Geometry CreateOctahedron(bool invertNormals)
   }
 
   // Configure property buffers and create geometry.
-  VertexBuffer vertexBuffer = VertexBuffer::New(Property::Map()
+  PropertyBuffer vertexBuffer = PropertyBuffer::New(Property::Map()
     .Add("aPosition", Property::VECTOR3)
     .Add("aNormal", Property::VECTOR3));
   vertexBuffer.SetData(vertexData, std::extent<decltype(vertexData)>::value);

@@ -218,17 +218,17 @@ Geometry CreateGeometry()
 
   Property::Map initialPositionVertexFormat;
   initialPositionVertexFormat["aInitPos"] = Property::VECTOR2;
-  VertexBuffer initialPositionVertices = VertexBuffer::New( initialPositionVertexFormat );
+  PropertyBuffer initialPositionVertices = PropertyBuffer::New( initialPositionVertexFormat );
   initialPositionVertices.SetData( quad, numberOfVertices );
 
   Property::Map finalPositionVertexFormat;
   finalPositionVertexFormat["aFinalPos"] = Property::VECTOR2;
-  VertexBuffer finalPositionVertices = VertexBuffer::New( finalPositionVertexFormat );
+  PropertyBuffer finalPositionVertices = PropertyBuffer::New( finalPositionVertexFormat );
   finalPositionVertices.SetData( cat, numberOfVertices );
 
   Property::Map colorVertexFormat;
   colorVertexFormat["aColor"] = Property::VECTOR3;
-  VertexBuffer colorVertices = VertexBuffer::New( colorVertexFormat );
+  PropertyBuffer colorVertices = PropertyBuffer::New( colorVertexFormat );
   colorVertices.SetData( colors, numberOfVertices );
 
   // Create the geometry object

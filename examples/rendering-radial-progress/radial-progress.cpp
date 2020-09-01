@@ -188,7 +188,7 @@ public:
     vertexFormat[ "aPosition" ] = Property::VECTOR3;
 
     // describe vertex format ( only 2-dimensional positions )
-    VertexBuffer vertexBuffer = VertexBuffer::New( vertexFormat );
+    PropertyBuffer vertexBuffer = PropertyBuffer::New( vertexFormat );
     vertexBuffer.SetData( vertices.data(), vertices.size() );
 
     // create geometry
@@ -238,7 +238,7 @@ public:
 
     Property::Map vertexFormat;
     vertexFormat["aPosition"] = Property::VECTOR2;
-    VertexBuffer vertexBuffer = VertexBuffer::New( vertexFormat );
+    PropertyBuffer vertexBuffer = PropertyBuffer::New( vertexFormat );
 
     const float P( 0.5f );
     const Vector2 vertices[] = {

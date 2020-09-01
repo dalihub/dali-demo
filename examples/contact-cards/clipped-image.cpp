@@ -131,7 +131,7 @@ Geometry& CreateGeometry()
 
     Property::Map circleVertexFormat;
     circleVertexFormat["aPositionCircle"] = Property::VECTOR2;
-    VertexBuffer circleVertices = VertexBuffer::New( circleVertexFormat );
+    PropertyBuffer circleVertices = PropertyBuffer::New( circleVertexFormat );
     circleVertices.SetData( circleBuffer, vertexCount );
 
     // Create the Quad Geometry
@@ -176,7 +176,7 @@ Geometry& CreateGeometry()
 
     Property::Map vertexFormat;
     vertexFormat["aPositionQuad"] = Property::VECTOR2;
-    VertexBuffer quadVertices2 = VertexBuffer::New( vertexFormat );
+    PropertyBuffer quadVertices2 = PropertyBuffer::New( vertexFormat );
     quadVertices2.SetData( quadBuffer, vertexCount );
 
     // Create the geometry object itself
