@@ -130,7 +130,7 @@ public:
 
   void OnKeyEvent( const KeyEvent& event )
   {
-    if( event.state == KeyEvent::Down )
+    if( event.GetState() == KeyEvent::DOWN )
     {
       if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
@@ -161,7 +161,7 @@ public:
     // ROTATE
     mRotationAnimation = Animation::New( 5.0f );
     mRotationAnimation.AnimateBy( Property( mObjectRootActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 )), Vector3::YAXIS ), AlphaFunction::EASE_IN_OUT );
-    mRotationAnimation.SetEndAction( Animation::Discard );
+    mRotationAnimation.SetEndAction( Animation::DISCARD );
     mRotationAnimation.SetLooping( true );
     mRotationAnimation.Play();
 
@@ -170,7 +170,7 @@ public:
     mTranslationAnimation.AnimateBy( Property(mObjectRootActor, Actor::Property::POSITION), Vector3(100.0f, 0.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod(2.5f) );
     mTranslationAnimation.AnimateBy( Property(mObjectRootActor, Actor::Property::POSITION), Vector3(300.0f, 0.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod(2.5f, 2.5f) );
     mTranslationAnimation.AnimateBy( Property(mObjectRootActor, Actor::Property::POSITION), Vector3(0.0f, 0.0f, 0.0f),   AlphaFunction::BOUNCE, TimePeriod(5.0f, 2.5f) );
-    mTranslationAnimation.SetEndAction( Animation::Discard );
+    mTranslationAnimation.SetEndAction( Animation::DISCARD );
     mTranslationAnimation.SetLooping( true );
     //mTranslationAnimation.Play();
 
@@ -178,7 +178,7 @@ public:
     mBlurAnimation = Animation::New( 4.0f );
     mBlurAnimation.AnimateTo( Property( mBloomView, mBloomView.GetBlurStrengthPropertyIndex() ), 0.0f, AlphaFunction::LINEAR, TimePeriod(0.0f, 0.5f) );
     mBlurAnimation.AnimateTo( Property( mBloomView, mBloomView.GetBlurStrengthPropertyIndex() ), 1.0f, AlphaFunction::LINEAR, TimePeriod(2.0f, 0.5f) );
-    mBlurAnimation.SetEndAction( Animation::Discard );
+    mBlurAnimation.SetEndAction( Animation::DISCARD );
     mBlurAnimation.SetLooping( true );
     mBlurAnimation.Play();
   }
@@ -187,7 +187,7 @@ public:
   {
     mPulseBloomIntensityAnim = Animation::New( 2.5f );
     mPulseBloomIntensityAnim.AnimateTo( Property(mBloomView, mBloomView.GetBloomIntensityPropertyIndex()), 3.0f, AlphaFunction::BOUNCE, TimePeriod(2.5f) );
-    mPulseBloomIntensityAnim.SetEndAction( Animation::Discard );
+    mPulseBloomIntensityAnim.SetEndAction( Animation::DISCARD );
     mPulseBloomIntensityAnim.SetLooping( true );
     mPulseBloomIntensityAnim.Play();
   }

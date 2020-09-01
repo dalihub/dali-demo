@@ -153,11 +153,11 @@ private:
     vertexFormat["aParticlePath4"] = Property::VECTOR2;
     vertexFormat["aParticlePath5"] = Property::VECTOR2;
 
-    PropertyBuffer propertyBuffer = PropertyBuffer::New( vertexFormat );
-    propertyBuffer.SetData( &vertices[0], vertices.size() );
+    VertexBuffer vertexBuffer = VertexBuffer::New( vertexFormat );
+    vertexBuffer.SetData( &vertices[0], vertices.size() );
 
     Geometry geometry = Geometry::New();
-    geometry.AddVertexBuffer( propertyBuffer );
+    geometry.AddVertexBuffer( vertexBuffer );
     geometry.SetIndexBuffer( &faces[0], faces.size() );
     geometry.SetType( Geometry::TRIANGLES );
 
@@ -248,7 +248,7 @@ private:
    */
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.state == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::DOWN)
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
       {
@@ -558,4 +558,3 @@ int DALI_EXPORT_API main( int argc, char **argv )
   application.MainLoop();
   return 0;
 }
-

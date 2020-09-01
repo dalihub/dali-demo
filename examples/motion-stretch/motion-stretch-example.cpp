@@ -267,7 +267,7 @@ public:
     {
       mActorTapMovementAnimation.AnimateTo( Property(mMotionStretchImageView, Actor::Property::POSITION), destPos, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(animDuration) );
     }
-    mActorTapMovementAnimation.SetEndAction( Animation::Bake );
+    mActorTapMovementAnimation.SetEndAction( Animation::BAKE );
     mActorTapMovementAnimation.Play();
 
 
@@ -282,7 +282,7 @@ public:
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
           mActorAnimation.AnimateBy( Property( mMotionStretchImageView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunction::EASE_IN_OUT );
-          mActorAnimation.SetEndAction( Animation::Bake );
+          mActorAnimation.SetEndAction( Animation::BAKE );
           mActorAnimation.Play();
         }
         break;
@@ -293,7 +293,7 @@ public:
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
           mActorAnimation.AnimateBy( Property( mMotionStretchImageView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunction::EASE_IN_OUT );
-          mActorAnimation.SetEndAction( Animation::Bake );
+          mActorAnimation.SetEndAction( Animation::BAKE );
           mActorAnimation.Play();
         }
         break;
@@ -305,7 +305,7 @@ public:
           mActorAnimation = Animation::New(animDuration);
           mActorAnimation.AnimateBy( Property( mMotionStretchImageView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunction::EASE_IN_OUT );
           mActorAnimation.AnimateBy( Property( mMotionStretchImageView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunction::EASE_IN_OUT );
-          mActorAnimation.SetEndAction( Animation::Bake );
+          mActorAnimation.SetEndAction( Animation::BAKE );
           mActorAnimation.Play();
         }
         break;
@@ -316,7 +316,7 @@ public:
           float animDuration = 1.0f;
           mActorAnimation = Animation::New(animDuration);
           mActorAnimation.AnimateBy( Property( mMotionStretchImageView, Actor::Property::SCALE ), Vector3(2.0f, 2.0f, 2.0f), AlphaFunction::BOUNCE, TimePeriod( 0.0f, 1.0f ) );
-          mActorAnimation.SetEndAction( Animation::Bake );
+          mActorAnimation.SetEndAction( Animation::BAKE );
           mActorAnimation.Play();
         }
         break;
@@ -372,7 +372,7 @@ public:
    */
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.state == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::DOWN)
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
       {

@@ -95,7 +95,7 @@ Renderer CreateRenderer()
   Property::Map property;
   property.Add("aPosition", Property::VECTOR2).Add("aTexCoord", Property::VECTOR2);
 
-  PropertyBuffer vertexBuffer = PropertyBuffer::New(property);
+  VertexBuffer vertexBuffer = VertexBuffer::New(property);
 
   vertexBuffer.SetData(vertices, sizeof(vertices) / sizeof(Vertex));
 
@@ -327,7 +327,7 @@ public:
    */
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.state == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::DOWN)
     {
       if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
       {

@@ -113,7 +113,7 @@ public:
    */
   void OnKeyEvent( const KeyEvent& event )
   {
-    if( event.state == KeyEvent::Down )
+    if( event.GetState() == KeyEvent::DOWN )
     {
       if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
@@ -133,8 +133,8 @@ public:
       Vector2(  1.0f,  1.0f )
     };
 
-    PropertyBuffer vertexBuffer = PropertyBuffer::New( Property::Map()
-                                                       .Add( "aPosition", Property::VECTOR2 ) );
+    VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
+                                                   .Add( "aPosition", Property::VECTOR2 ) );
     vertexBuffer.SetData( vertices, sizeof(vertices) / sizeof(Vector2) );
 
     mGeometry = Geometry::New();

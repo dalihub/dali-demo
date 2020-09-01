@@ -260,7 +260,7 @@ public:
 
     mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
     Renderer bgRenderer = mLabel.GetRendererAt(0);
-    mOverrideMixColorIndex = DevelHandle::GetPropertyIndex( bgRenderer, ColorVisual::Property::MIX_COLOR );
+    mOverrideMixColorIndex = bgRenderer.GetPropertyIndex( ColorVisual::Property::MIX_COLOR );
 
     Constraint constraint = Constraint::New<Vector3>( bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
     constraint.AddSource( Source( mLabel, mHueAngleIndex ) );
@@ -619,7 +619,7 @@ public:
    */
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.state == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::DOWN)
     {
       if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
       {
@@ -627,13 +627,13 @@ public:
       }
       else if( event.IsCtrlModifier() )
       {
-        switch( event.keyCode )
+        switch( event.GetKeyCode() )
         {
           // Select rendering back-end
           case KEY_ZERO: // fall through
           case KEY_ONE:
           {
-            mLabel.SetProperty( DevelTextLabel::Property::RENDERING_BACKEND, event.keyCode - 10 );
+            mLabel.SetProperty( DevelTextLabel::Property::RENDERING_BACKEND, event.GetKeyCode() - 10 );
             break;
           }
           case KEY_A: // Animate text colour

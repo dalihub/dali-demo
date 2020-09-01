@@ -256,7 +256,7 @@ ModelPtr CreateModel(
   /**
    * Create matching property buffer
    */
-  auto vertexBuffer = PropertyBuffer::New( Property::Map()
+  auto vertexBuffer = VertexBuffer::New( Property::Map()
                                              .Add("aPosition", Property::VECTOR3 )
                                              .Add("aNormal", Property::VECTOR3)
                                              .Add("aTexCoord", Property::VECTOR2)
@@ -625,7 +625,7 @@ private:
 
   void OnKeyEvent( const KeyEvent& event )
   {
-    if( event.state == KeyEvent::Down )
+    if( event.GetState() == KeyEvent::DOWN )
     {
       if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
