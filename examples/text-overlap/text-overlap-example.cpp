@@ -120,7 +120,7 @@ bool TextOverlapController::OnClicked( Button button )
 
 void TextOverlapController::OnKeyEvent( const KeyEvent& keyEvent )
 {
-  if( keyEvent.GetState() == KeyEvent::Down &&
+  if( keyEvent.state == KeyEvent::Down &&
       ( IsKey( keyEvent, DALI_KEY_BACK ) ||
         IsKey( keyEvent, DALI_KEY_ESCAPE ) ) )
   {

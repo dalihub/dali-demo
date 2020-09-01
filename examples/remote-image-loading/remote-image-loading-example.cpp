@@ -127,7 +127,7 @@ public:
 
   void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::Down )
+    if( event.state == KeyEvent::Down )
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
@@ -138,9 +138,9 @@ public:
 
   void OnKey(const KeyEvent &event)
   {
-    if (event.GetState() == KeyEvent::Down)
+    if (event.state == KeyEvent::Down)
     {
-      std::cout<<"Window key : " << event.GetKeyCode() << std::endl;
+      std::cout<<"Window key : " << event.keyCode << std::endl;
     }
   }
 
@@ -154,13 +154,13 @@ public:
 
   bool OnControlKeyEvent(Toolkit::Control control, const KeyEvent &event)
   {
-    if (event.GetState() == KeyEvent::Down)
+    if (event.state == KeyEvent::Down)
     {
-      std::cout<<"Control down key : " << control.GetProperty< std::string >( Dali::Actor::Property::NAME ) << ", keyCode : " << event.GetKeyCode() << std::endl;
+      std::cout<<"Control down key : " << control.GetProperty< std::string >( Dali::Actor::Property::NAME ) << ", keyCode : " << event.keyCode << std::endl;
     }
     else
     {
-      std::cout<<"Control up key : " << control.GetProperty< std::string >( Dali::Actor::Property::NAME ) << ", keyCode : " << event.GetKeyCode() << std::endl;
+      std::cout<<"Control up key : " << control.GetProperty< std::string >( Dali::Actor::Property::NAME ) << ", keyCode : " << event.keyCode << std::endl;
     }
     return false;
   }

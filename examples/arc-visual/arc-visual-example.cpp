@@ -229,7 +229,7 @@ private:
 
   void OnKeyEvent( const KeyEvent& event )
   {
-    if( event.GetState() == KeyEvent::Up )
+    if( event.state == KeyEvent::Up )
     {
       if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
       {

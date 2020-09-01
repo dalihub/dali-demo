@@ -187,21 +187,21 @@ private:
    */
   void OnKeyEvent( const KeyEvent& event )
   {
-    if( event.GetState() == KeyEvent::Down )
+    if( event.state == KeyEvent::Down )
     {
       if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
         mApplication.Quit();
       }
-      else if( event.GetKeyName().compare("1") == 0)
+      else if( event.keyPressedName.compare("1") == 0)
       {
         Adaptor::Get().SetPreRenderCallback( MakeCallback( this, &PreRenderCallbackController::OnPreRender ) );
       }
-      else if( event.GetKeyName().compare("2") == 0)
+      else if( event.keyPressedName.compare("2") == 0)
       {
         Adaptor::Get().SetPreRenderCallback( NULL );
       }
-      else if( event.GetKeyName().compare("3") == 0)
+      else if( event.keyPressedName.compare("3") == 0)
       {
         mKeepPreRender = !mKeepPreRender;
       }

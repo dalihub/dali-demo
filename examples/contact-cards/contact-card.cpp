@@ -327,7 +327,7 @@ void ContactCard::OnAnimationFinished( Animation& animation )
 void ContactCard::OnKeyEvent( const KeyEvent& event )
 {
   if( ( ! mFolded ) && // If we're folded then there's no need to do any more checking
-      ( event.GetState() == KeyEvent::Down ) )
+      ( event.state == KeyEvent::Down ) )
   {
     if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
     {
