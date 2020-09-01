@@ -77,7 +77,7 @@ void SimpleVisualsApplication::OnKeyEvent( const KeyEvent& keyEvent )
 {
   static int keyPressed = 0;
 
-  if( keyEvent.GetState() == KeyEvent::DOWN)
+  if( keyEvent.GetState() == KeyEvent::Down)
   {
     if( keyPressed == 0 ) // Is this the first down event?
     {
@@ -93,7 +93,7 @@ void SimpleVisualsApplication::OnKeyEvent( const KeyEvent& keyEvent )
     }
     keyPressed = 1;
   }
-  else if( keyEvent.GetState() == KeyEvent::UP )
+  else if( keyEvent.GetState() == KeyEvent::Up )
   {
     keyPressed = 0;
   }

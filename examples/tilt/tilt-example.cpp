@@ -97,7 +97,7 @@ public:
    */
   void OnKeyEvent( const KeyEvent& event )
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if( event.GetState() == KeyEvent::Down )
     {
       if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
       {
