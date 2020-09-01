@@ -255,7 +255,7 @@ private:
         break;
       }
     }
-    return false;
+    return true;
   }
 
   /**
