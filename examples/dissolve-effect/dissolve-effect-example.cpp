@@ -276,7 +276,7 @@ void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     return;
   }
 
-  if( gesture.GetState() == Gesture::Continuing )
+  if( gesture.GetState() == GestureState::CONTINUING )
   {
     const Vector2& displacement = gesture.GetDisplacement();
     if( displacement.x < 0)

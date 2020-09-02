@@ -75,8 +75,8 @@ void TextOverlapController::Create( Application& app )
 
 void TextOverlapController::OnPan( Actor actor, const PanGesture& gesture )
 {
-  const Gesture::State state = gesture.GetState();
-  if( ! mGrabbedActor || state == PanGesture::Started )
+  const GestureState state = gesture.GetState();
+  if( ! mGrabbedActor || state == GestureState::STARTED )
   {
     const Vector2& gesturePosition = gesture.GetPosition();
     for( int i=0; i<NUMBER_OF_LABELS; ++i )
@@ -91,7 +91,7 @@ void TextOverlapController::OnPan( Actor actor, const PanGesture& gesture )
       }
     }
   }
-  else if( mGrabbedActor && state == PanGesture::Continuing )
+  else if( mGrabbedActor && state == GestureState::CONTINUING )
   {
     Vector2 windowSize = mApplication.GetWindow().GetSize();
     Vector3 size = mGrabbedActor.GetCurrentProperty< Vector3 >( Actor::Property::SIZE );

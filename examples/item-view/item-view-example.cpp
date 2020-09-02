@@ -551,7 +551,7 @@ public:
   {
     switch( gesture.GetState() )
     {
-      case Gesture::Started:
+      case GestureState::STARTED:
       {
         const Size& size = mApplication.GetWindow().GetSize();
 
@@ -563,7 +563,7 @@ public:
 
         break;
       }
-      case Gesture::Finished:
+      case GestureState::FINISHED:
       {
         Property::Map attributes;
         mItemView.DoAction( "stopScrolling", attributes );

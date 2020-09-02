@@ -266,7 +266,7 @@ private:
    */
   void OnLongPress( Actor actor, const LongPressGesture& longPress )
   {
-    if( longPress.GetState() == Gesture::Started )
+    if( longPress.GetState() == GestureState::STARTED )
     {
       // When we first receive a long press, attach the actor to the pan detector.
       mPanDetector.Attach( actor );
@@ -305,14 +305,14 @@ private:
 
     switch( pan.GetState() )
     {
-      case Gesture::Started:
+      case GestureState::STARTED:
       {
         mPanStarted = true;
         break;
       }
 
-      case Gesture::Finished:
-      case Gesture::Cancelled:
+      case GestureState::FINISHED:
+      case GestureState::CANCELLED:
       {
         // If we cancel or finish the pan, do an animation to indicate this and stop the shake animation.
 
@@ -371,15 +371,15 @@ private:
   {
     switch( pinch.GetState() )
     {
-      case Gesture::Started:
+      case GestureState::STARTED:
       {
         // Starting scale is required so that we know what to multiply the pinch.scale by.
         mStartingScale = actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE );
         break;
       }
 
-      case Gesture::Finished:
-      case Gesture::Cancelled:
+      case GestureState::FINISHED:
+      case GestureState::CANCELLED:
       {
         Vector3 scale( actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ) );
 
@@ -419,15 +419,15 @@ private:
   {
     switch( rotation.GetState() )
     {
-      case Gesture::Started:
+      case GestureState::STARTED:
       {
         // Starting orientation is required so that we know what to multiply the rotation.rotation by.
         mStartingOrientation = actor.GetCurrentProperty< Quaternion >( Actor::Property::ORIENTATION );
         break;
       }
 
-      case Gesture::Finished:
-      case Gesture::Cancelled:
+      case GestureState::FINISHED:
+      case GestureState::CANCELLED:
       {
         // Do an animation to come back to go back to the original orientation.
         Animation anim = Animation::New( ROTATE_BACK_ANIMATION_DURATION );

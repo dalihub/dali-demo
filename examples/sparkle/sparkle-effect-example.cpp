@@ -272,7 +272,7 @@ private:
    */
   void OnPan( Actor actor, const PanGesture& gesture )
   {
-    if( gesture.GetState() == Gesture::Finished )
+    if( gesture.GetState() == GestureState::FINISHED )
     {
       switch(mAnimationIndex)
       {
