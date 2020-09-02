@@ -256,7 +256,7 @@ ModelPtr CreateModel(
   /**
    * Create matching property buffer
    */
-  auto vertexBuffer = PropertyBuffer::New( Property::Map()
+  auto vertexBuffer = VertexBuffer::New( Property::Map()
                                              .Add("aPosition", Property::VECTOR3 )
                                              .Add("aNormal", Property::VECTOR3)
                                              .Add("aTexCoord", Property::VECTOR2)

@@ -272,9 +272,9 @@ public:
       { Vector3( -1.0f, 1.0f, 1.0f ), Vector2( 0.0, 0.0 ) },
     };
 
-    PropertyBuffer vertexBuffer = PropertyBuffer::New( Property::Map()
-                                                       .Add( "aPosition", Property::VECTOR3 )
-                                                       .Add( "aTexCoord", Property::VECTOR2 ) );
+    VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
+                                                   .Add( "aPosition", Property::VECTOR3 )
+                                                   .Add( "aTexCoord", Property::VECTOR2 ) );
     vertexBuffer.SetData( vertices, sizeof(vertices) / sizeof(Vertex) );
 
     // create indices
@@ -362,8 +362,8 @@ public:
         { Vector3(   1.0f, -1.0f,  1.0f ) }
     };
 
-    PropertyBuffer vertexBuffer = PropertyBuffer::New( Property::Map()
-                                                       .Add( "aPosition", Property::VECTOR3 ) );
+    VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
+                                                   .Add( "aPosition", Property::VECTOR3 ) );
     vertexBuffer.SetData( skyboxVertices, sizeof(skyboxVertices) / sizeof(Vertex) );
 
     mSkyboxGeometry = Geometry::New();
