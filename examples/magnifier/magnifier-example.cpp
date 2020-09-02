@@ -211,7 +211,7 @@ public:
                                        APPLICATION_TITLE );
 
     mContent.SetProperty( Actor::Property::LEAVE_REQUIRED,true);
-    mContent.TouchSignal().Connect( this, &ExampleController::OnTouched );
+    mContent.TouchedSignal().Connect( this, &ExampleController::OnTouched );
 
     // Create magnifier (controlled by human touch)
     Layer overlay = Layer::New();

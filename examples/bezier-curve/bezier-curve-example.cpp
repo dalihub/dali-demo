@@ -159,7 +159,7 @@ public:
 
     mContentLayer = Layer::New();
     mContentLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mContentLayer.TouchSignal().Connect(this, &BezierCurveExample::OnTouchLayer);
+    mContentLayer.TouchedSignal().Connect(this, &BezierCurveExample::OnTouchLayer);
     mContentLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
     window.Add( mContentLayer );
 
@@ -330,7 +330,7 @@ public:
     constraint.AddSource( Source( parent, Actor::Property::SIZE ) );
     constraint.Apply();
 
-    actor.TouchSignal().Connect(this, &BezierCurveExample::OnTouchControlPoint);
+    actor.TouchedSignal().Connect(this, &BezierCurveExample::OnTouchControlPoint);
     return actor;
   }
 

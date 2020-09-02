@@ -270,7 +270,7 @@ public:
     imagePrevious.SetProperty( Actor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imagePrevious );
     imagePrevious.SetProperty( Dali::Actor::Property::NAME, PREVIOUS_BUTTON_ID );
-    imagePrevious.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
+    imagePrevious.TouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Next image button:
     Toolkit::ImageView imageNext = Toolkit::ImageView::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ) );
@@ -280,7 +280,7 @@ public:
     imageNext.SetProperty( Actor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imageNext );
     imageNext.SetProperty( Dali::Actor::Property::NAME, NEXT_BUTTON_ID );
-    imageNext.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
+    imageNext.TouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Buttons to popup selectors for fitting and sampling modes:
 

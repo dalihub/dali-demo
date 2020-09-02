@@ -110,7 +110,7 @@ private:
     mGaussianBlurView.Add( mImageView );
     mGaussianBlurView.SetProperty( mGaussianBlurView.GetBlurStrengthPropertyIndex(), mStrength );
 
-    window.GetRootLayer().TouchSignal().Connect( this, &GaussianBlurViewExample::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &GaussianBlurViewExample::OnTouch );
   }
 
   bool OnTouch( Actor actor, const TouchEvent& touch )

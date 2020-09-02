@@ -184,7 +184,7 @@ public:
     window.Add( mScrollParent );
 
     // Respond to a click anywhere on the window.
-    window.GetRootLayer().TouchSignal().Connect( this, &HomescreenBenchmark::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &HomescreenBenchmark::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &HomescreenBenchmark::OnKeyEvent );

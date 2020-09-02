@@ -469,7 +469,7 @@ private:
     actor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     actor.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
 
-    actor.TouchSignal().Connect( this, &ExampleController::OnTouchImage );
+    actor.TouchedSignal().Connect( this, &ExampleController::OnTouchImage );
     return actor;
   }
 

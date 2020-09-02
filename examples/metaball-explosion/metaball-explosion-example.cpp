@@ -364,7 +364,7 @@ void MetaballExplosionController::Create( Application& app )
   mTimerDispersion.TickSignal().Connect( this, &MetaballExplosionController::OnTimerDispersionTick );
 
   // Connect the callback to the touch signal on the mesh actor
-  window.GetRootLayer().TouchSignal().Connect( this, &MetaballExplosionController::OnTouch );
+  window.GetRootLayer().TouchedSignal().Connect( this, &MetaballExplosionController::OnTouch );
 }
 
 Geometry MetaballExplosionController::CreateGeometry( bool aspectMappedTexture )

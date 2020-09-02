@@ -166,7 +166,7 @@ void FppGameTutorialController::DisplayTutorial( Dali::Window window )
 void FppGameTutorialController::OnTutorialAnimationFinished( Animation& animation )
 {
   // touch signal will wait for a single touch on each side of screen
-  mWindow.TouchSignal().Connect( this, &FppGameTutorialController::OnTouch );
+  mWindow.TouchedSignal().Connect( this, &FppGameTutorialController::OnTouch );
 }
 
 void FppGameTutorialController::OnTutorialComplete( Animation& animation )

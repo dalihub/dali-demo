@@ -116,7 +116,7 @@ public:
     // Get a handle to the window
     Window window = application.GetWindow();
 
-    window.GetRootLayer().TouchSignal().Connect( this, &RayMarchingExample::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &RayMarchingExample::OnTouch );
 
     window.KeyEventSignal().Connect(this, &RayMarchingExample::OnKeyEvent);
 

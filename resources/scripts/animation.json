@@ -92,7 +92,7 @@
     "size": [200, 200, 1],
     "orientation": [0, 0, 30],
     "signals": [{
-      "name": "touch",
+      "name": "touched",
       "action": "play",
       "animation": "animate"
     }]
@@ -106,7 +106,7 @@
     "position": [-150, -50, 0],
     "text": "or me",
     "signals": [{
-      "name": "touch",
+      "name": "touched",
       "action": "play",
       "animation": "pathAnimation"
     }]
@@ -124,7 +124,7 @@
     "position": [0, 200, 0],
     "size": [200, 200, 1],
     "signals": [{
-      "name": "touch",
+      "name": "touched",
       "action": "play",
       "animation": "rotate"
     }],

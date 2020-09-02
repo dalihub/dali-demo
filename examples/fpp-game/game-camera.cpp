@@ -200,8 +200,8 @@ void GameCamera::CreateInterceptorActor()
   mInterceptorActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCameraActor.Add( mInterceptorActor );
 
-  // Connect TouchSignal to interceptor actor
-  mInterceptorActor.TouchSignal().Connect( this, &GameCamera::OnTouch );
+  // Connect TouchedSignal to interceptor actor
+  mInterceptorActor.TouchedSignal().Connect( this, &GameCamera::OnTouch );
 }
 
 bool GameCamera::OnTouch( Actor actor, const TouchEvent& touch )

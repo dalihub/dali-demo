@@ -158,7 +158,7 @@ private:
     background.Add( touchControl );
 
     // Connect to the touch signal
-    touchControl.TouchSignal().Connect( this, &GestureExample::OnTouch );
+    touchControl.TouchedSignal().Connect( this, &GestureExample::OnTouch );
     touchControl.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
 
     // Create a long press gesture detector, attach the actor & connect

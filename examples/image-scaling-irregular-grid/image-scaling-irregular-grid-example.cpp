@@ -477,7 +477,7 @@ public:
       ImageView image = CreateImageView( imageSource.configuration.path, imageSize.x, imageSize.y, fittingMode );
       image.SetProperty( Actor::Property::POSITION, Vector3( imagePosition.x, imagePosition.y, 0 ) );
       image.SetProperty( Actor::Property::SIZE, imageSize );
-      image.TouchSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
+      image.TouchedSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
       image.ResourceReadySignal().Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal );
       mFittingModes[image.GetProperty< int >( Actor::Property::ID )] = fittingMode;
       mResourceUrls[image.GetProperty< int >( Actor::Property::ID )] = imageSource.configuration.path;

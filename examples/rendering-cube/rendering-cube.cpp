@@ -99,7 +99,7 @@ public:
     PlayAnimation();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &DrawCubeController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &DrawCubeController::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &DrawCubeController::OnKeyEvent );
