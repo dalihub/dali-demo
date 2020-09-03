@@ -337,7 +337,7 @@ public:
   {
     switch (gesture.GetState())
     {
-      case Gesture::Continuing:
+      case GestureState::CONTINUING:
       {
         const Vector2& displacement = gesture.GetDisplacement();
         switch(mPanState)
@@ -380,7 +380,7 @@ public:
       }
       break;
 
-      case Gesture::Finished:
+      case GestureState::FINISHED:
         // Start animation at last known speed
         break;
 
@@ -391,7 +391,7 @@ public:
 
   void OnPinch(Actor actor, const PinchGesture& gesture)
   {
-    if (gesture.GetState() == Gesture::Started)
+    if (gesture.GetState() == GestureState::STARTED)
     {
       mScaleAtPinchStart = mContents.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ).x;
     }

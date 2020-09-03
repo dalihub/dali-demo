@@ -633,14 +633,14 @@ public:
   {
     switch( gesture.GetState() )
     {
-      case Gesture::Started:
+      case GestureState::STARTED:
       {
         //Pause animation, as the gesture will be used to manually rotate the model
         mRotationAnimation.Pause();
 
         break;
       }
-      case Gesture::Continuing:
+      case GestureState::CONTINUING:
       {
         //Rotate based off the gesture.
         const Vector2& displacement = gesture.GetDisplacement();
@@ -653,14 +653,14 @@ public:
 
         break;
       }
-      case Gesture::Finished:
+      case GestureState::FINISHED:
       {
         //Return to automatic animation
         mRotationAnimation.Play();
 
         break;
       }
-      case Gesture::Cancelled:
+      case GestureState::CANCELLED:
       {
         //Return to automatic animation
         mRotationAnimation.Play();

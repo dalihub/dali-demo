@@ -530,7 +530,7 @@ public:
 
   void OnPinch( Actor actor, const PinchGesture& pinch )
   {
-    if( pinch.GetState() == Gesture::Started )
+    if( pinch.GetState() == GestureState::STARTED )
     {
       mLastPinchScale = pinch.GetScale();
     }

@@ -572,8 +572,8 @@ public:
   void OnPan( Actor actor, const PanGesture& gesture )
   {
     // Reset mLayoutSize when the pan starts
-    Gesture::State state = gesture.GetState();
-    if( state == Gesture::Started )
+    GestureState state = gesture.GetState();
+    if( state == GestureState::STARTED )
     {
       if( mLayoutSize.x < 2.0f )
       {
@@ -608,7 +608,7 @@ public:
       mContainer.SetProperty( Actor::Property::SIZE, clampedSize );
     }
 
-    if( state == Gesture::Cancelled || state == Gesture::Finished )
+    if( state == GestureState::CANCELLED || state == GestureState::FINISHED )
     {
       // Resize the text label to match the container size when panning is finished
       mLabel.SetProperty( Actor::Property::SIZE, mLayoutSize );
