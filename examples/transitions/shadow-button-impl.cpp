@@ -80,7 +80,7 @@ Toolkit::TransitionData ConvertPropertyToTransition( const Property::Value& valu
 
 
 Internal::ShadowButton::ShadowButton()
-: Control( ControlBehaviour( REQUIRES_STYLE_CHANGE_SIGNALS ) ),
+: Control( ControlBehaviour( CONTROL_BEHAVIOUR_DEFAULT ) ),
   mCheckState(false),
   mActiveState(false)
 {

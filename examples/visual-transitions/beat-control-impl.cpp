@@ -75,7 +75,7 @@ Toolkit::TransitionData ConvertPropertyToTransition( const Property::Value& valu
 
 
 Internal::BeatControl::BeatControl()
-: Control( ControlBehaviour( REQUIRES_STYLE_CHANGE_SIGNALS ) ),
+: Control( ControlBehaviour( CONTROL_BEHAVIOUR_DEFAULT ) ),
   mTransformSize(1.0f, 1.0f),
   mTransformOrigin(Align::CENTER),
   mTransformAnchorPoint(Align::CENTER),
