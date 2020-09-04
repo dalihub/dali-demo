@@ -128,7 +128,7 @@ public:
     popup.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
     popup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH );
     popup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
-    popup.TouchSignal().Connect( this, &TextFieldExample::OnPopupTouched );
+    popup.TouchedSignal().Connect( this, &TextFieldExample::OnPopupTouched );
 
     return popup;
   }

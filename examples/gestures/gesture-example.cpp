@@ -158,7 +158,7 @@ private:
     background.Add( touchControl );
 
     // Connect to the touch signal
-    touchControl.TouchSignal().Connect( this, &GestureExample::OnTouch );
+    touchControl.TouchedSignal().Connect( this, &GestureExample::OnTouch );
     touchControl.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
 
     // Create a long press gesture detector, attach the actor & connect
@@ -266,7 +266,7 @@ private:
    */
   void OnLongPress( Actor actor, const LongPressGesture& longPress )
   {
-    if( longPress.state == Gesture::Started )
+    if( longPress.GetState() == GestureState::STARTED )
     {
       // When we first receive a long press, attach the actor to the pan detector.
       mPanDetector.Attach( actor );
@@ -294,7 +294,7 @@ private:
 
     // As the displacement is in local actor coords, we will have to multiply the displacement by the
     // actor's scale so that it moves the correct amount in the parent's coordinate system.
-    Vector3 scaledDisplacement( pan.displacement );
+    Vector3 scaledDisplacement( pan.GetDisplacement() );
     scaledDisplacement *= actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE );
 
     Vector3 currentPosition;
@@ -303,16 +303,16 @@ private:
     Vector3 newPosition = currentPosition + scaledDisplacement;
     actor.SetProperty( Actor::Property::POSITION, newPosition );
 
-    switch( pan.state )
+    switch( pan.GetState() )
     {
-      case Gesture::Started:
+      case GestureState::STARTED:
       {
         mPanStarted = true;
         break;
       }
 
-      case Gesture::Finished:
-      case Gesture::Cancelled:
+      case GestureState::FINISHED:
+      case GestureState::CANCELLED:
       {
         // If we cancel or finish the pan, do an animation to indicate this and stop the shake animation.
 
@@ -369,17 +369,17 @@ private:
    */
   void OnPinch( Actor actor, const PinchGesture& pinch )
   {
-    switch( pinch.state )
+    switch( pinch.GetState() )
     {
-      case Gesture::Started:
+      case GestureState::STARTED:
       {
         // Starting scale is required so that we know what to multiply the pinch.scale by.
         mStartingScale = actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE );
         break;
       }
 
-      case Gesture::Finished:
-      case Gesture::Cancelled:
+      case GestureState::FINISHED:
+      case GestureState::CANCELLED:
       {
         Vector3 scale( actor.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ) );
 
@@ -406,7 +406,7 @@ private:
       }
     }
 
-    actor.SetProperty( Actor::Property::SCALE, mStartingScale * pinch.scale );
+    actor.SetProperty( Actor::Property::SCALE, mStartingScale * pinch.GetScale() );
   }
 
   /**
@@ -417,17 +417,17 @@ private:
    */
   void OnRotation( Actor actor, const RotationGesture& rotation )
   {
-    switch( rotation.state )
+    switch( rotation.GetState() )
     {
-      case Gesture::Started:
+      case GestureState::STARTED:
       {
         // Starting orientation is required so that we know what to multiply the rotation.rotation by.
         mStartingOrientation = actor.GetCurrentProperty< Quaternion >( Actor::Property::ORIENTATION );
         break;
       }
 
-      case Gesture::Finished:
-      case Gesture::Cancelled:
+      case GestureState::FINISHED:
+      case GestureState::CANCELLED:
       {
         // Do an animation to come back to go back to the original orientation.
         Animation anim = Animation::New( ROTATE_BACK_ANIMATION_DURATION );
@@ -442,7 +442,7 @@ private:
       }
     }
 
-    actor.SetProperty( Actor::Property::ORIENTATION, Quaternion( mStartingOrientation * Quaternion( rotation.rotation, Vector3::ZAXIS ) ) );
+    actor.SetProperty( Actor::Property::ORIENTATION, Quaternion( mStartingOrientation * Quaternion( rotation.GetRotation(), Vector3::ZAXIS ) ) );
   }
 
   /**

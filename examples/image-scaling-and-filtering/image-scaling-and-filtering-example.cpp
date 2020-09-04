@@ -270,7 +270,7 @@ public:
     imagePrevious.SetProperty( Actor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imagePrevious );
     imagePrevious.SetProperty( Dali::Actor::Property::NAME, PREVIOUS_BUTTON_ID );
-    imagePrevious.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
+    imagePrevious.TouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Next image button:
     Toolkit::ImageView imageNext = Toolkit::ImageView::New( DALI_ICON_PLAY, ImageDimensions( playWidth, playWidth ) );
@@ -280,7 +280,7 @@ public:
     imageNext.SetProperty( Actor::Property::OPACITY, 0.6f );
     controlsLayer.Add( imageNext );
     imageNext.SetProperty( Dali::Actor::Property::NAME, NEXT_BUTTON_ID );
-    imageNext.TouchSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
+    imageNext.TouchedSignal().Connect( this, &ImageScalingAndFilteringController::OnControlTouched );
 
     // Buttons to popup selectors for fitting and sampling modes:
 
@@ -530,11 +530,11 @@ public:
 
   void OnPinch( Actor actor, const PinchGesture& pinch )
   {
-    if( pinch.state == Gesture::Started )
+    if( pinch.GetState() == GestureState::STARTED )
     {
-      mLastPinchScale = pinch.scale;
+      mLastPinchScale = pinch.GetScale();
     }
-    const float scale = pinch.scale;
+    const float scale = pinch.GetScale();
 
     if( ! Equals( scale, mLastPinchScale ) )
     {
@@ -557,9 +557,11 @@ public:
   {
     Window window = mApplication.GetWindow();
     Vector2 windowSize = window.GetSize();
+    const Vector2& displacement = gesture.GetDisplacement();
+
     // 1.0f and 0.75f are the maximum size caps of the resized image, as a factor of window-size.
-    mImageWindowScale.x = std::max( 0.05f, std::min( 0.95f,  mImageWindowScale.x + ( gesture.displacement.x * 2.0f / windowSize.width ) ) );
-    mImageWindowScale.y = std::max( 0.05f, std::min( 0.70f, mImageWindowScale.y + ( gesture.displacement.y * 2.0f / windowSize.height ) ) );
+    mImageWindowScale.x = std::max( 0.05f, std::min( 0.95f,  mImageWindowScale.x + ( displacement.x * 2.0f / windowSize.width ) ) );
+    mImageWindowScale.y = std::max( 0.05f, std::min( 0.70f, mImageWindowScale.y + ( displacement.y * 2.0f / windowSize.height ) ) );
 
     ResizeImage();
   }

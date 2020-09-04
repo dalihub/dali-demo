@@ -290,7 +290,7 @@ public:
     mTitle.SetProperty( TextLabel::Property::TEXT, "Select the type of text" );
 
     // Add title to the tool bar.
-    mToolBar.AddControl( mTitle, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+    mToolBar.AddControl( mTitle, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER );
 
     // Create a layer to contain dynamically created text labels
     mLayer = Layer::New();
@@ -306,7 +306,7 @@ public:
     backButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, BACK_IMAGE_SELECTED );
     backButton.ClickedSignal().Connect( this, &TextMemoryProfilingExample::OnBackButtonPressed );
     backButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
-    mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+    mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Create a navigation view to navigate different types of text labels
     mNavigationView = NavigationView::New();

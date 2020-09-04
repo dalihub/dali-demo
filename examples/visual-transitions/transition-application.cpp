@@ -129,7 +129,7 @@ void TransitionApplication::Create( Application& application )
     mVisualButtons[i].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
     mVisualButtons[i].SetResizePolicy( ResizePolicy::FIXED, Dimension::HEIGHT );
     mVisualIndex = mVisualButtons[i].RegisterProperty( "visualId", i, Property::READ_WRITE );
-    mVisualButtons[i].TouchSignal().Connect( this, &TransitionApplication::OnVisualButtonClicked );
+    mVisualButtons[i].TouchedSignal().Connect( this, &TransitionApplication::OnVisualButtonClicked );
     visualTypeLayout.AddChild( mVisualButtons[i], TableView::CellPosition( 0, i ) );
   }
 

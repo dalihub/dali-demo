@@ -263,7 +263,7 @@ private:
   void OnTap( Actor actor, const TapGesture& tap )
   {
     {
-      PlayTapAnimation(5.f, tap.localPoint);
+      PlayTapAnimation(5.f, tap.GetLocalPoint());
     }
   }
 
@@ -272,7 +272,7 @@ private:
    */
   void OnPan( Actor actor, const PanGesture& gesture )
   {
-    if( gesture.state == Gesture::Finished )
+    if( gesture.GetState() == GestureState::FINISHED )
     {
       switch(mAnimationIndex)
       {

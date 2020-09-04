@@ -136,7 +136,7 @@ void EffectsViewApp::OnAppInitialize( Application& application )
   viewButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, VIEW_SWAP_SELECTED_IMAGE );
   // Connects the view change button clicked signal to the OnView method.
   viewButton.ClickedSignal().Connect( this, &EffectsViewApp::ChangeEffectSize );
-  mToolBar.AddControl( viewButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+  mToolBar.AddControl( viewButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
   Vector2 effectsViewSize( mWindowSize.width, mWindowSize.height * 0.25f );
   mDropShadowView = CreateEffectsView( EffectsView::DROP_SHADOW, effectsViewSize, mEffectSize );
@@ -216,7 +216,7 @@ void EffectsViewApp::SetTitle(int effectSize)
   {
     mTitleActor = DemoHelper::CreateToolBarLabel( title.str() );
     // Add title to the tool bar.
-    mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
+    mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER );
   }
   mTitleActor.SetProperty( Toolkit::TextLabel::Property::TEXT, title.str() );
 }

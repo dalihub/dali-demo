@@ -188,7 +188,7 @@ public:
     // Create a effect change button. (right of toolbar)
     mEffectChangeButton = Toolkit::PushButton::New();
     mEffectChangeButton.ClickedSignal().Connect( this, &ExampleController::OnEffectTouched );
-    mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create the content layer.
     AddContentLayer();
@@ -469,7 +469,7 @@ private:
     actor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
     actor.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
 
-    actor.TouchSignal().Connect( this, &ExampleController::OnTouchImage );
+    actor.TouchedSignal().Connect( this, &ExampleController::OnTouchImage );
     return actor;
   }
 
@@ -536,7 +536,7 @@ private:
     {
       mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
-      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER );
     }
 
     mTitleActor.SetProperty( Toolkit::TextLabel::Property::TEXT, title );

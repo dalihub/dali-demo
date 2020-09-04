@@ -262,7 +262,7 @@ public:
                                             APPLICATION_TITLE );
 
     // Add an extra space on the right to center the title text.
-    toolBar.AddControl( Actor::New(), DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight );
+    toolBar.AddControl( Actor::New(), DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT );
 
     // Create the content layer, which is where game actors appear.
     AddContentLayer();
@@ -312,8 +312,8 @@ private:
 
     mPaddle.SetProperty( Actor::Property::POSITION, windowSize * Vector3( PADDLE_START_POSITION ) );
     mContentLayer.Add(mPaddle);
-    mPaddle.TouchSignal().Connect(this, &ExampleController::OnTouchPaddle);
-    mContentLayer.TouchSignal().Connect(this, &ExampleController::OnTouchLayer);
+    mPaddle.TouchedSignal().Connect(this, &ExampleController::OnTouchPaddle);
+    mContentLayer.TouchedSignal().Connect(this, &ExampleController::OnTouchLayer);
 
     const float margin(BALL_SIZE.width * windowSize.width * 0.5f);
 

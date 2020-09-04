@@ -143,8 +143,8 @@ void LookCamera::CreateInterceptorActor()
   mInterceptorActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
   mCameraActor.Add( mInterceptorActor );
 
-  // Connect TouchSignal to interceptor actor
-  mInterceptorActor.TouchSignal().Connect( this, &LookCamera::OnTouch );
+  // Connect TouchedSignal to interceptor actor
+  mInterceptorActor.TouchedSignal().Connect( this, &LookCamera::OnTouch );
 }
 
 bool LookCamera::OnTouch( Actor actor, const TouchEvent& touch )

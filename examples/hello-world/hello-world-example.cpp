@@ -48,7 +48,7 @@ public:
     window.Add( textLabel );
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &HelloWorldController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &HelloWorldController::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &HelloWorldController::OnKeyEvent );

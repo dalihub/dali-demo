@@ -92,7 +92,7 @@ public:
     CreateActor();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &DrawTriangleController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &DrawTriangleController::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &DrawTriangleController::OnKeyEvent );

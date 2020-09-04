@@ -265,7 +265,7 @@ void DaliTableView::Initialize( Application& application )
   mScrollView.SetAxisAutoLock( true );
   mScrollView.ScrollCompletedSignal().Connect( this, &DaliTableView::OnScrollComplete );
   mScrollView.ScrollStartedSignal().Connect( this, &DaliTableView::OnScrollStart );
-  mScrollView.TouchSignal().Connect( this, &DaliTableView::OnScrollTouched );
+  mScrollView.TouchedSignal().Connect( this, &DaliTableView::OnScrollTouched );
 
   mPageWidth = windowSize.GetWidth() * TABLE_RELATIVE_SIZE.x * 0.5f;
 
@@ -523,7 +523,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   // and pass it to the shader uniform, along with the tile's position.
   Constraint shaderPosition = Constraint::New < Vector3 > ( focusableTile, propertyIndex, TileShaderPositionConstraint( mPageWidth, position.x ) );
   shaderPosition.AddSource( Source( mScrollView, ScrollView::Property::SCROLL_POSITION ) );
-  shaderPosition.SetRemoveAction( Constraint::Discard );
+  shaderPosition.SetRemoveAction( Constraint::DISCARD );
   shaderPosition.Apply();
   //focusableTile.Add( tileContent );
 
@@ -551,7 +551,7 @@ Actor DaliTableView::CreateTile( const std::string& name, const std::string& tit
   focusableTile.Add( label );
 
   // Connect to the touch events
-  focusableTile.TouchSignal().Connect( this, &DaliTableView::OnTilePressed );
+  focusableTile.TouchedSignal().Connect( this, &DaliTableView::OnTilePressed );
   focusableTile.HoveredSignal().Connect( this, &DaliTableView::OnTileHovered );
 
   return focusableTile;
@@ -748,7 +748,7 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
     animConstraint.AddSource( Source( mScrollView, ScrollView::Property::SCROLL_POSITION ) );
     animConstraint.AddSource( Dali::ParentSource( Dali::Actor::Property::SIZE ) );
     animConstraint.AddSource( Dali::LocalSource( Dali::Actor::Property::SIZE ) );
-    animConstraint.SetRemoveAction( Constraint::Discard );
+    animConstraint.SetRemoveAction( Constraint::DISCARD );
     animConstraint.Apply();
 
     // Kickoff animation

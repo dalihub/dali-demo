@@ -80,7 +80,7 @@ public:
     window.Add( mImageView );
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &ColorVisualExample::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &ColorVisualExample::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &ColorVisualExample::OnKeyEvent );

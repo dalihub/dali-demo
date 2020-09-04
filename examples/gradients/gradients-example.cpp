@@ -79,7 +79,7 @@ public:
     changeButton.ClickedSignal().Connect( this, &GradientController::OnChangeIconClicked );
     toolBar.AddControl( changeButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                        Toolkit::Alignment::HorizontalRight,
+                        Toolkit::Alignment::HORIZONTAL_RIGHT,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     PushButton roundedCornerButton = Toolkit::PushButton::New();
@@ -88,7 +88,7 @@ public:
     roundedCornerButton.ClickedSignal().Connect( this, &GradientController::OnRoundedCornerClicked );
     toolBar.AddControl( roundedCornerButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                        Toolkit::Alignment::HorizontalCenter,
+                        Toolkit::Alignment::HORIZONTAL_CENTER,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     mGradientControl = Control::New();

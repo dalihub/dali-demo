@@ -610,7 +610,7 @@ private:
 
   void OnPan( Actor actor, const PanGesture& panGesture )
   {
-    auto displacement = panGesture.screenDisplacement;
+    const auto& displacement = panGesture.GetScreenDisplacement();
     mCenterActor.RotateBy( Degree( displacement.y *0.1f ), Vector3( 0.0, 0.0, 1.0) );
     mCenterActor.RotateBy( Degree( displacement.x *0.1f ), Vector3( 0.0, 1.0, 0.0) );
     Quaternion q;

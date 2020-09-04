@@ -80,7 +80,7 @@ private:
 
     LoadImages();
 
-    window.TouchSignal().Connect( this, &ImageViewAlphaBlendApp::OnTouched );
+    window.TouchedSignal().Connect( this, &ImageViewAlphaBlendApp::OnTouched );
   }
 
   void OnTouched( const TouchEvent& touch )

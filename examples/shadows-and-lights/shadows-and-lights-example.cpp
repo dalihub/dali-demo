@@ -169,11 +169,11 @@ public:
     effectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE );
     effectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE_SELECTED );
     effectChangeButton.ClickedSignal().Connect( this, &TestApp::OnEffectButtonClicked );
-    toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+    toolBar.AddControl( effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
     // Add title to the tool bar.
     mTitleActor = DemoHelper::CreateToolBarLabel( "" );
-    toolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
+    toolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER );
 
     // Set Title text
     mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT) );
@@ -183,7 +183,7 @@ public:
     resetButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, RESET_ICON );
     resetButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, RESET_ICON_SELECTED );
     resetButton.ClickedSignal().Connect( this, &TestApp::OnResetPressed );
-    toolBar.AddControl( resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
+    toolBar.AddControl( resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING );
 
     // Setup
     mView.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 0.0f ) );
@@ -335,17 +335,18 @@ public:
 
   void OnPan(Actor actor, const PanGesture& gesture)
   {
-    switch (gesture.state)
+    switch (gesture.GetState())
     {
-      case Gesture::Continuing:
+      case GestureState::CONTINUING:
       {
+        const Vector2& displacement = gesture.GetDisplacement();
         switch(mPanState)
         {
           case PAN_LIGHT:
           {
-            mLightXRotation = mLightXRotation - gesture.displacement.y * LIGHT_PAN_X_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mLightXRotation = mLightXRotation - displacement.y * LIGHT_PAN_X_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
             mLightXRotation = Clamp(mLightXRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
-            mLightYRotation = mLightYRotation + gesture.displacement.x * LIGHT_PAN_Y_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mLightYRotation = mLightYRotation + displacement.x * LIGHT_PAN_Y_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
             mLightYRotation = Clamp(mLightYRotation, -Dali::ANGLE_45, Dali::ANGLE_45 );
             mLightAnchor.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mLightXRotation, mLightYRotation ) );
             break;
@@ -353,16 +354,16 @@ public:
 
           case PAN_SCENE:
           {
-            mTranslation += Vector3(gesture.displacement.x, gesture.displacement.y, 0.f);
+            mTranslation += Vector3(displacement.x, displacement.y, 0.f);
             mContents.SetProperty( Actor::Property::POSITION, mTranslation );
             break;
           }
 
           case ROTATE_SCENE:
           {
-            mSceneXRotation = mSceneXRotation - gesture.displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mSceneXRotation = mSceneXRotation - displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
             mSceneXRotation = Clamp( mSceneXRotation, -Dali::ANGLE_90, Dali::ANGLE_90 );
-            mSceneYRotation = mSceneYRotation + gesture.displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mSceneYRotation = mSceneYRotation + displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
             mSceneYRotation = Clamp( mSceneYRotation, -Dali::ANGLE_90, Dali::ANGLE_90 );
             mContents.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mSceneXRotation, mSceneYRotation ) );
             break;
@@ -370,8 +371,8 @@ public:
 
           case ROTATE_OBJECT:
           {
-            mObjectXRotation = mObjectXRotation - gesture.displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
-            mObjectYRotation = mObjectYRotation + gesture.displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
+            mObjectXRotation = mObjectXRotation - displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
+            mObjectYRotation = mObjectYRotation + displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
             mSceneActor.SetProperty( Actor::Property::ORIENTATION, CalculateWorldRotation( mObjectXRotation, mObjectYRotation ) );
             break;
           }
@@ -379,7 +380,7 @@ public:
       }
       break;
 
-      case Gesture::Finished:
+      case GestureState::FINISHED:
         // Start animation at last known speed
         break;
 
@@ -390,11 +391,11 @@ public:
 
   void OnPinch(Actor actor, const PinchGesture& gesture)
   {
-    if (gesture.state == Gesture::Started)
+    if (gesture.GetState() == GestureState::STARTED)
     {
       mScaleAtPinchStart = mContents.GetCurrentProperty< Vector3 >( Actor::Property::SCALE ).x;
     }
-    mPinchScale = Clamp(mScaleAtPinchStart * gesture.scale, MIN_PINCH_SCALE, MAX_PINCH_SCALE);
+    mPinchScale = Clamp(mScaleAtPinchStart * gesture.GetScale(), MIN_PINCH_SCALE, MAX_PINCH_SCALE);
 
     mContents.SetProperty( Actor::Property::SCALE, Vector3( mPinchScale, mPinchScale, mPinchScale ) );
   }

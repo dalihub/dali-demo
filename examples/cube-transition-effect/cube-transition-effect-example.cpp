@@ -227,18 +227,18 @@ void CubeTransitionApp::OnInit( Application& application )
                                       );
 
   effectChangeToggleButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnEffectButtonClicked );
-  mToolBar.AddControl( effectChangeToggleButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+  mToolBar.AddControl( effectChangeToggleButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
 
   // Add title to the tool bar.
   mTitle = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_WAVE );
-  mToolBar.AddControl( mTitle, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter );
+  mToolBar.AddControl( mTitle, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER );
 
   //Add an slideshow icon on the right of the title
   mSlideshowButton = Toolkit::PushButton::New();
   mSlideshowButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON );
   mSlideshowButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON_SELECTED );
   mSlideshowButton.ClickedSignal().Connect( this, &CubeTransitionApp::OnSildeshowButtonClicked );
-  mToolBar.AddControl( mSlideshowButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalCenter, DemoHelper::DEFAULT_PLAY_PADDING );
+  mToolBar.AddControl( mSlideshowButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING );
 
   // Set size to window size to avoid seeing a black border on transition
   mViewSize = application.GetWindow().GetSize();
@@ -296,9 +296,10 @@ void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
     return;
   }
 
-  if( gesture.state == Gesture::Continuing )
+  if( gesture.GetState() == GestureState::CONTINUING )
   {
-    if( gesture.displacement.x < 0)
+    const Vector2& displacement = gesture.GetDisplacement();
+    if( displacement.x < 0)
     {
       mIndex = (mIndex + 1)%NUM_IMAGES;
     }
@@ -307,8 +308,8 @@ void CubeTransitionApp::OnPanGesture( Actor actor, const PanGesture& gesture )
       mIndex = (mIndex + NUM_IMAGES -1)%NUM_IMAGES;
     }
 
-    mPanPosition = gesture.position;
-    mPanDisplacement = gesture.displacement;
+    mPanPosition = gesture.GetPosition();
+    mPanDisplacement = displacement;
     GoToNextImage();
   }
 }
