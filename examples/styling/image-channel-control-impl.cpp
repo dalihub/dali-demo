@@ -68,7 +68,7 @@ DALI_TYPE_REGISTRATION_END();
 
 
 Internal::ImageChannelControl::ImageChannelControl()
-: Control( ControlBehaviour( REQUIRES_STYLE_CHANGE_SIGNALS ) ),
+: Control( ControlBehaviour( CONTROL_BEHAVIOUR_DEFAULT ) ),
   mChannels( 1.0f, 1.0f, 1.0f ),
   mChannelIndex( Property::INVALID_INDEX ),
   mVisibility(true),

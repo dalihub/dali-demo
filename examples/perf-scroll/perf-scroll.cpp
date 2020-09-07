@@ -233,7 +233,7 @@ public:
     mSize = Vector3( windowSize.x / mColumnsPerPage, windowSize.y / mRowsPerPage, 0.0f );
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &PerfScroll::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &PerfScroll::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &PerfScroll::OnKeyEvent );

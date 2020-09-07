@@ -116,7 +116,7 @@ public:
     // Get a handle to the window
     Window window = application.GetWindow();
 
-    window.GetRootLayer().TouchSignal().Connect( this, &RayMarchingExample::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &RayMarchingExample::OnTouch );
 
     window.KeyEventSignal().Connect(this, &RayMarchingExample::OnKeyEvent);
 
@@ -132,7 +132,7 @@ public:
                                             APPLICATION_TITLE );
 
     // Add an extra space on the right to center the title text.
-    mToolBar.AddControl( Actor::New(), DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight );
+    mToolBar.AddControl( Actor::New(), DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT );
 
     AddContentLayer();
 

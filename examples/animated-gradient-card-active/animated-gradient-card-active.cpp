@@ -308,7 +308,7 @@ public:
     SetupActors();
     SetupAnimation();
 
-    mWindow.GetRootLayer().TouchSignal().Connect( this, &CardController::OnTouchLayer );
+    mWindow.GetRootLayer().TouchedSignal().Connect( this, &CardController::OnTouchLayer );
     Reset();
   }
 
@@ -583,7 +583,7 @@ private:
     mCards.Init( mWindow );
     for( int k = 0; k < CARD_NUM; k++ )
     {
-      mCards[k].TouchSignal().Connect( this, &CardController::OnTouchCards );
+      mCards[k].TouchedSignal().Connect( this, &CardController::OnTouchCards );
     }
     mNormalStartColor = mCards.GetColorBackground( mCards.mCurIndex );
     mNormalEndColor = mCards.GetColorBackground( mCards.mCurIndex );

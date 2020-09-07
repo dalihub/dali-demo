@@ -318,7 +318,7 @@ public:
     toggleScalingButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, TOGGLE_SCALING_IMAGE );
     toggleScalingButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, TOGGLE_SCALING_IMAGE_SELECTED );
     toggleScalingButton.ClickedSignal().Connect( this, &ImageScalingIrregularGridController::OnToggleScalingTouched );
-    mToolBar.AddControl( toggleScalingButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    mToolBar.AddControl( toggleScalingButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     SetTitle( APPLICATION_TITLE );
 
@@ -370,14 +370,14 @@ public:
     mGridActor = imageField;
 
     // Create the scroll bar
-    mScrollBarVertical = ScrollBar::New(Toolkit::ScrollBar::Vertical);
+    mScrollBarVertical = ScrollBar::New(Toolkit::ScrollBar::VERTICAL);
     mScrollBarVertical.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_RIGHT);
     mScrollBarVertical.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_RIGHT);
     mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
     mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
     mScrollView.Add(mScrollBarVertical);
 
-    mScrollBarHorizontal = ScrollBar::New(Toolkit::ScrollBar::Horizontal);
+    mScrollBarHorizontal = ScrollBar::New(Toolkit::ScrollBar::HORIZONTAL);
     mScrollBarHorizontal.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_LEFT);
     mScrollBarHorizontal.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::TOP_LEFT);
     mScrollBarHorizontal.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
@@ -477,7 +477,7 @@ public:
       ImageView image = CreateImageView( imageSource.configuration.path, imageSize.x, imageSize.y, fittingMode );
       image.SetProperty( Actor::Property::POSITION, Vector3( imagePosition.x, imagePosition.y, 0 ) );
       image.SetProperty( Actor::Property::SIZE, imageSize );
-      image.TouchSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
+      image.TouchedSignal().Connect( this, &ImageScalingIrregularGridController::OnTouchImage );
       image.ResourceReadySignal().Connect( this, &ImageScalingIrregularGridController::ResourceReadySignal );
       mFittingModes[image.GetProperty< int >( Actor::Property::ID )] = fittingMode;
       mResourceUrls[image.GetProperty< int >( Actor::Property::ID )] = imageSource.configuration.path;
@@ -600,7 +600,7 @@ public:
     {
       mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
-      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER );
     }
 
     mTitleActor.SetProperty( TextLabel::Property::TEXT, title );

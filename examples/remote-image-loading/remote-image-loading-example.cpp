@@ -45,7 +45,7 @@ public:
 
   void ConnectEventSignal(Control control)
   {
-    control.TouchSignal().Connect(this, &MyTester::OnControlTouch);
+    control.TouchedSignal().Connect(this, &MyTester::OnControlTouch);
 
     control.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE,true);
     control.KeyEventSignal().Connect(this, &MyTester::OnControlKeyEvent);
@@ -59,7 +59,7 @@ public:
     mWindow = application.GetWindow();
     mWindow.SetBackgroundColor(Color::BLACK);
     mWindow.KeyEventSignal().Connect(this, &MyTester::OnKey);
-    mWindow.TouchSignal().Connect(this, &MyTester::OnTouch);
+    mWindow.TouchedSignal().Connect(this, &MyTester::OnTouch);
 
     TextLabel rubric = TextLabel::New( "You will need a working internet connection to see the images below");
     rubric.SetProperty( TextLabel::Property::MULTI_LINE, true );

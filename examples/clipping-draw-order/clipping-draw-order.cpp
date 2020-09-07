@@ -198,7 +198,7 @@ public:
     window.Add( view );
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &ClippingDrawOrderVerification::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &ClippingDrawOrderVerification::OnTouch );
   }
 
   bool OnTouch( Actor actor, const TouchEvent& touch )

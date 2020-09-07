@@ -255,7 +255,7 @@ private:
     mBounceAnimation.Play();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &RendererStencilExample::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &RendererStencilExample::OnTouch );
     // Connect signals to allow Back and Escape to exit.
     window.KeyEventSignal().Connect( this, &RendererStencilExample::OnKeyEvent );
   }

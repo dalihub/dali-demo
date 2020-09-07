@@ -105,7 +105,7 @@ public:
     PlayAnimation();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &TexturedCubeController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &TexturedCubeController::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &TexturedCubeController::OnKeyEvent );

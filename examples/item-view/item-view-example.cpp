@@ -218,7 +218,7 @@ public:
     editButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EDIT_IMAGE_SELECTED );
     editButton.ClickedSignal().Connect( this, &ItemViewExample::OnModeButtonClicked);
     editButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
-    mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    mToolBar.AddControl( editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create a layout toggle button. (right of toolbar)
     mLayoutButton = Toolkit::PushButton::New();
@@ -226,7 +226,7 @@ public:
     mLayoutButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, SPIRAL_LAYOUT_IMAGE_SELECTED );
     mLayoutButton.ClickedSignal().Connect( this, &ItemViewExample::OnLayoutButtonClicked);
     mLayoutButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
-    mToolBar.AddControl( mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalRight, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    mToolBar.AddControl( mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create a delete button (bottom right of screen)
     mDeleteButton = Toolkit::PushButton::New();
@@ -549,21 +549,21 @@ public:
 
   void OnLongPress( Actor actor, const LongPressGesture& gesture )
   {
-    switch( gesture.state )
+    switch( gesture.GetState() )
     {
-      case Gesture::Started:
+      case GestureState::STARTED:
       {
         const Size& size = mApplication.GetWindow().GetSize();
 
         ItemRange range( 0u, 0u );
         mItemView.GetItemsRange( range );
 
-        const unsigned int item = ( gesture.screenPoint.y < 0.5f * size.height ) ? range.begin : range.end;
+        const unsigned int item = ( gesture.GetScreenPoint().y < 0.5f * size.height ) ? range.begin : range.end;
         mItemView.ScrollToItem( item, SCROLL_TO_ITEM_ANIMATION_TIME );
 
         break;
       }
-      case Gesture::Finished:
+      case GestureState::FINISHED:
       {
         Property::Map attributes;
         mItemView.DoAction( "stopScrolling", attributes );
@@ -952,7 +952,7 @@ private:
     {
       mTitleActor = DemoHelper::CreateToolBarLabel( "" );
       // Add title to the tool bar.
-      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HorizontalCenter );
+      mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER );
     }
 
     mTitleActor.SetProperty( TextLabel::Property::TEXT, title );

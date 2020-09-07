@@ -338,7 +338,7 @@ void MetaballRefracController::Create( Application& app )
   CreateAnimations();
 
   // Connect the callback to the touch signal on the mesh actor
-  window.GetRootLayer().TouchSignal().Connect( this, &MetaballRefracController::OnTouch );
+  window.GetRootLayer().TouchedSignal().Connect( this, &MetaballRefracController::OnTouch );
 }
 
 Geometry MetaballRefracController::CreateGeometry( bool aspectMappedTexture )

@@ -126,7 +126,7 @@ public:
     InitActors();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &BasicPbrController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &BasicPbrController::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &BasicPbrController::OnKeyEvent );

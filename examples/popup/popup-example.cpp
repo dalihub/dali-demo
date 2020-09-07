@@ -132,7 +132,7 @@ public:
 
     // Add title to the tool bar.
     const float padding( DemoHelper::DEFAULT_VIEW_STYLE.mToolBarPadding );
-    mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::Padding( padding, padding, padding, padding ) );
+    mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER, Toolkit::Alignment::Padding( padding, padding, padding, padding ) );
 
     // Create animation button.
     mAnimationButton = Toolkit::PushButton::New();
@@ -140,7 +140,7 @@ public:
     mAnimationButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, ANIMATION_ZOOM_ICON_IMAGE );
     mAnimationButton.SetProperty( Toolkit::Button::Property::TOGGLABLE, true );
     mAnimationButton.ClickedSignal().Connect( this, &PopupExample::OnAnimationClicked );
-    mToolBar.AddControl( mAnimationButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    mToolBar.AddControl( mAnimationButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Create context button.
     mContextButton = Toolkit::PushButton::New();
@@ -148,7 +148,7 @@ public:
     mContextButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CONTEXT_ENABLED_ICON_IMAGE );
     mContextButton.SetProperty( Toolkit::Button::Property::TOGGLABLE, true );
     mContextButton.ClickedSignal().Connect( this, &PopupExample::OnContextClicked );
-    mToolBar.AddControl( mContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HorizontalLeft, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    mToolBar.AddControl( mContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
     // Add title to the tool bar.
     mItemView = Toolkit::ItemView::New( *this );

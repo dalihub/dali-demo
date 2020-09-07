@@ -131,7 +131,7 @@ public:
 
     // Add title to the tool bar.
     const float padding( DemoHelper::DEFAULT_VIEW_STYLE.mToolBarPadding );
-    mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HorizontalCenter, Toolkit::Alignment::Padding( padding, padding, padding, padding ) );
+    mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER, Toolkit::Alignment::Padding( padding, padding, padding, padding ) );
 
     mItemView = Toolkit::ItemView::New( *this );
     mItemView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );

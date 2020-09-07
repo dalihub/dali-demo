@@ -152,7 +152,7 @@ public:
     animation.Play();
 
     // 6. Exit the application when touched
-    window.GetRootLayer().TouchSignal().Connect( this, &RadialProgressController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &RadialProgressController::OnTouch );
   }
 
   bool OnTouch( Actor actor, const TouchEvent& touch )

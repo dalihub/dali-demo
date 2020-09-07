@@ -92,7 +92,7 @@ Dali::Layer CreateToolbar( Dali::Toolkit::ToolBar& toolBar,
 
     // Add title to the tool bar.
     const float padding( style.mToolBarPadding );
-    toolBar.AddControl( label, style.mToolBarTitlePercentage, Dali::Toolkit::Alignment::HorizontalCenter, Dali::Toolkit::Alignment::Padding( padding, padding, padding, padding ) );
+    toolBar.AddControl( label, style.mToolBarTitlePercentage, Dali::Toolkit::Alignment::HORIZONTAL_CENTER, Dali::Toolkit::Alignment::Padding( padding, padding, padding, padding ) );
   }
 
   return toolBarLayer;

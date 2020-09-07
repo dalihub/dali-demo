@@ -117,7 +117,7 @@ private:
     mStartAngleLabel.SetProperty( Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mStartAngleLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mStartAngleLabel.SetProperty( Control::Property::PADDING, Extents( 20.0f, 20.0f, 10.0f, 10.0f ) );
-    mStartAngleLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
+    mStartAngleLabel.TouchedSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
     window.Add( mStartAngleLabel );
 
     mSweepAngleLabel = TextLabel::New( "2" );
@@ -128,7 +128,7 @@ private:
     mSweepAngleLabel.SetProperty( Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mSweepAngleLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mSweepAngleLabel.SetProperty( Control::Property::PADDING, Extents( 20.0f, 20.0f, 10.0f, 10.0f ) );
-    mSweepAngleLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
+    mSweepAngleLabel.TouchedSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
     window.Add( mSweepAngleLabel );
 
     mThicknessLabel = TextLabel::New( "3" );
@@ -139,7 +139,7 @@ private:
     mThicknessLabel.SetProperty( Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mThicknessLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mThicknessLabel.SetProperty( Control::Property::PADDING, Extents( 20.0f, 20.0f, 10.0f, 10.0f ) );
-    mThicknessLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
+    mThicknessLabel.TouchedSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
     window.Add( mThicknessLabel );
 
     mPlusTextLabel = TextLabel::New( "+" );
@@ -150,7 +150,7 @@ private:
     mPlusTextLabel.SetProperty( Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mPlusTextLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mPlusTextLabel.SetProperty( Control::Property::PADDING, Extents( 20.0f, 20.0f, 10.0f, 10.0f ) );
-    mPlusTextLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
+    mPlusTextLabel.TouchedSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
     window.Add( mPlusTextLabel );
 
     mMinusTextLabel = TextLabel::New( "-" );
@@ -161,11 +161,11 @@ private:
     mMinusTextLabel.SetProperty( Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mMinusTextLabel.SetProperty( Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE );
     mMinusTextLabel.SetProperty( Control::Property::PADDING, Extents( 25.0f, 25.0f, 10.0f, 10.0f ) );
-    mMinusTextLabel.TouchSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
+    mMinusTextLabel.TouchedSignal().Connect( this, &ArcVisualExample::OnButtonTouch );
     window.Add( mMinusTextLabel );
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &ArcVisualExample::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &ArcVisualExample::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &ArcVisualExample::OnKeyEvent );

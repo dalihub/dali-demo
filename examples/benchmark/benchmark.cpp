@@ -232,7 +232,7 @@ public:
     mSize = Vector3( windowSize.x / mColumnsPerPage, windowSize.y / mRowsPerPage, 0.0f );
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &Benchmark::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &Benchmark::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &Benchmark::OnKeyEvent );

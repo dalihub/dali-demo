@@ -179,9 +179,10 @@ public:
       Window window = mApplication.GetWindow();
       Vector2 screenSize = window.GetSize();
 
+      const Vector2& screenPoint = tap.GetScreenPoint();
       Vector2 position;
-      position.x = tap.screenPoint.x - screenSize.x * 0.5;
-      position.y = tap.screenPoint.y - screenSize.y * 0.5;
+      position.x = screenPoint.x - screenSize.x * 0.5;
+      position.y = screenPoint.y - screenSize.y * 0.5;
 
       float size = 2.5;
 

@@ -153,11 +153,11 @@ public:
   // Callback of pan gesture, for moving the actors
   void OnPanGesture( Actor actor, const PanGesture& gesture )
   {
-    if( gesture.state == Gesture::Continuing )
+    if( gesture.GetState() == GestureState::CONTINUING )
     {
       for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
       {
-        mSvgActor[i].TranslateBy(Vector3(gesture.displacement));
+        mSvgActor[i].TranslateBy(Vector3(gesture.GetDisplacement()));
       }
     }
   }
@@ -165,14 +165,14 @@ public:
   // Callback of pinch gesture, for resizing the actors
   void OnPinch(Actor actor, const PinchGesture& gesture)
   {
-    switch( gesture.state )
+    switch( gesture.GetState() )
     {
       // Only scale the image when we start or continue pinching
 
-      case Gesture::Started:
-      case Gesture::Continuing:
+      case GestureState::STARTED:
+      case GestureState::CONTINUING:
       {
-        float scale = std::max( gesture.scale, MIN_SCALE / mScale );
+        float scale = std::max( gesture.GetScale(), MIN_SCALE / mScale );
         scale = std::min( MAX_SCALE / mScale, scale );
 
         for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
@@ -182,11 +182,11 @@ public:
         break;
       }
 
-      case Gesture::Finished:
+      case GestureState::FINISHED:
       {
         // Resize the image when pinching is complete, this will rasterize the SVG to the new size
 
-        mScale = mScale * gesture.scale;
+        mScale = mScale * gesture.GetScale();
         mScale = mScale > MAX_SCALE ? MAX_SCALE : mScale;
         mScale = mScale < MIN_SCALE ? MIN_SCALE : mScale;
         for( unsigned int i = 0; i < NUM_IMAGES_DISPLAYED; i++ )
@@ -197,9 +197,9 @@ public:
         break;
       }
 
-      case Gesture::Cancelled:
-      case Gesture::Clear:
-      case Gesture::Possible:
+      case GestureState::CANCELLED:
+      case GestureState::CLEAR:
+      case GestureState::POSSIBLE:
         break;
     }
   }

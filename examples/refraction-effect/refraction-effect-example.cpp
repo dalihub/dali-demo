@@ -266,7 +266,7 @@ private:
     mChangeTextureButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeTexture );
     toolBar.AddControl( mChangeTextureButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                        Toolkit::Alignment::HorizontalRight,
+                        Toolkit::Alignment::HORIZONTAL_RIGHT,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
     // Add a button to change mesh pattern. ( left of bar )
     mChangeMeshButton = Toolkit::PushButton::New();
@@ -275,7 +275,7 @@ private:
     mChangeMeshButton.ClickedSignal().Connect( this, &RefractionEffectExample::OnChangeMesh );
     toolBar.AddControl( mChangeMeshButton,
                         DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                        Toolkit::Alignment::HorizontalLeft,
+                        Toolkit::Alignment::HORIZONTAL_LEFT,
                         DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
 
 
@@ -298,7 +298,7 @@ private:
     mContent.Add( mMeshActor );
 
     // Connect the callback to the touch signal on the mesh actor
-    mContent.TouchSignal().Connect( this, &RefractionEffectExample::OnTouch );
+    mContent.TouchedSignal().Connect( this, &RefractionEffectExample::OnTouch );
 
     // shader used when the finger is touching the screen. render refraction effect
     mShaderRefraction = Shader::New( VERTEX_SHADER_REFRACTION, FRAGMENT_SHADER_REFRACTION );

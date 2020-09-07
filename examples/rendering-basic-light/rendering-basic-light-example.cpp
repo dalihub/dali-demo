@@ -194,7 +194,7 @@ public:
     PlayAnimation();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchSignal().Connect( this, &BasicLightController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect( this, &BasicLightController::OnTouch );
 
     // Respond to key events
     window.KeyEventSignal().Connect( this, &BasicLightController::OnKeyEvent );

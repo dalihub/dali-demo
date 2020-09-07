@@ -264,7 +264,7 @@ public:
 
     Constraint constraint = Constraint::New<Vector3>( bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
     constraint.AddSource( Source( mLabel, mHueAngleIndex ) );
-    constraint.SetRemoveAction( Constraint::Discard );
+    constraint.SetRemoveAction( Constraint::DISCARD );
     constraint.Apply();
 
     Animation anim = Animation::New(50.0f);
@@ -572,7 +572,8 @@ public:
   void OnPan( Actor actor, const PanGesture& gesture )
   {
     // Reset mLayoutSize when the pan starts
-    if( gesture.state == Gesture::Started )
+    GestureState state = gesture.GetState();
+    if( state == GestureState::STARTED )
     {
       if( mLayoutSize.x < 2.0f )
       {
@@ -590,8 +591,9 @@ public:
       HideStyleAndColorButtons();
     }
 
-    mLayoutSize.x += gesture.displacement.x * 2.0f;
-    mLayoutSize.y += gesture.displacement.y * 2.0f;
+    const Vector2& displacement = gesture.GetDisplacement();
+    mLayoutSize.x += displacement.x * 2.0f;
+    mLayoutSize.y += displacement.y * 2.0f;
 
     if( mLayoutSize.x >= 2.0f ||
         mLayoutSize.y >= 2.0f )
@@ -606,7 +608,7 @@ public:
       mContainer.SetProperty( Actor::Property::SIZE, clampedSize );
     }
 
-    if( gesture.state == Gesture::Cancelled || gesture.state == Gesture::Finished )
+    if( state == GestureState::CANCELLED || state == GestureState::FINISHED )
     {
       // Resize the text label to match the container size when panning is finished
       mLabel.SetProperty( Actor::Property::SIZE, mLayoutSize );
