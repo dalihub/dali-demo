@@ -114,7 +114,7 @@ public:
   // Handle a quit key event
   void OnKeyEvent(const KeyEvent& event)
   {
-    if(event.GetState() == KeyEvent::Down)
+    if(event.GetState() == KeyEvent::DOWN)
     {
       if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
       {
