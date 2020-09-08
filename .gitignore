@@ -72,4 +72,5 @@ simple-image-wall.js
 /build/tizen/tests-reel/*.dir
 /build/tizen/tests-reel/*.vcxproj
 /build/tizen/tests-reel/*.vcxproj.filters
-
+.clangd/
+compile_commands.json

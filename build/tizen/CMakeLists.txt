@@ -25,6 +25,10 @@ SET(DEMO_SHARED ${CMAKE_SOURCE_DIR}/../../shared)
 
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 
+IF (APPLE)
+  SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+ENDIF()
+
 IF(DEFINED DALI_APP_DIR)
   SET(BINDIR ${DALI_APP_DIR})
 ELSE()
@@ -227,10 +231,11 @@ ENDIF()
 
 SET( VCPKG_INCLUDE_DIR "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
 
-IF( WIN32 ) # WIN32 includes x64 as well according to the cmake doc.
-  FIND_PACKAGE( pthreads REQUIRED )
+IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
+  IF ( WIN32 )
+    FIND_PACKAGE( pthreads REQUIRED )
+  ENDIF()
   FIND_PACKAGE( curl REQUIRED )
-  FIND_LIBRARY( GETOPT_LIBRARY NAMES getopt )
   FIND_LIBRARY( EXIF_LIBRARY NAMES libexif )
 
   FIND_PACKAGE( png REQUIRED )
@@ -238,17 +243,20 @@ IF( WIN32 ) # WIN32 includes x64 as well according to the cmake doc.
   FIND_PACKAGE( jpeg REQUIRED )
   FIND_LIBRARY( TURBO_JPEG_LIBRARY NAMES turbojpeg )
 
-  FIND_PACKAGE( unofficial-fontconfig REQUIRED )
   FIND_PACKAGE( freetype REQUIRED )
   FIND_PACKAGE( harfbuzz REQUIRED )
   FIND_LIBRARY( FRIBIDI_LIBRARY NAMES fribidi )
 
   FIND_PACKAGE( unofficial-angle REQUIRED )
-  FIND_PACKAGE( unofficial-cairo REQUIRED )
 
   FIND_PACKAGE( WebP REQUIRED )
 
-  FIND_PACKAGE( dali-windows-dependencies REQUIRED )
+  IF ( WIN32 )
+    FIND_LIBRARY( GETOPT_LIBRARY NAMES getopt )
+    FIND_PACKAGE( dali-windows-dependencies REQUIRED )
+    FIND_PACKAGE( unofficial-cairo REQUIRED )
+    FIND_PACKAGE( unofficial-fontconfig REQUIRED )
+  ENDIF()
   FIND_PACKAGE( dali2-core REQUIRED )
   FIND_PACKAGE( dali2-adaptor REQUIRED )
   FIND_PACKAGE( dali2-toolkit REQUIRED )
@@ -273,28 +281,34 @@ IF( WIN32 ) # WIN32 includes x64 as well according to the cmake doc.
   ENDIF()
 
   SET( REQUIRED_LIBS
-    PThreads4W::PThreads4W
     CURL::libcurl
-    ${GETOPT_LIBRARY}
     ${EXIF_LIBRARY}
     ${PNG_LIBRARIES}
     ${GIF_LIBRARIES}
     JPEG::JPEG
     ${TURBO_JPEG_LIBRARY}
-    unofficial::fontconfig::fontconfig
     Freetype::Freetype
     harfbuzz::harfbuzz
     ${FRIBIDI_LIBRARY}
     unofficial::angle::libEGL
     unofficial::angle::libGLESv2
-    unofficial::cairo::cairo
     WebP::webp
     WebP::webpdemux
-    dali-windows-dependencies::dali-windows-dependencies
     dali2-core::dali2-core
     dali2-adaptor::dali2-adaptor
     dali2-toolkit::dali2-toolkit
   )
+
+  IF ( WIN32 )
+    SET( REQUIRED_LIBS
+      ${REQUIRED_LIBS}
+      ${GETOPT_LIBRARY}
+      unofficial::fontconfig::fontconfig
+      unofficial::cairo::cairo
+      PThreads4W::PThreads4W
+      dali-windows-dependencies::dali-windows-dependencies
+    )
+  ENDIF()
 
   IF (dali2_scene_loader_FOUND)
     SET( REQUIRED_LIBS "${REQUIRED_LIBS} dali2-scene-loader::dali2-scene-loader" )
@@ -331,7 +345,7 @@ IF (UNIX)
 
   FILE(GLOB PO_FILES RELATIVE "${PO_DIR}" "${PO_DIR}/*.po")
 
-  SET(MSGFMT "/usr/bin/msgfmt")
+  SET(MSGFMT "msgfmt")
   SET(MO_FILES_DIR ${CMAKE_BINARY_DIR}/mo)
   FILE(MAKE_DIRECTORY ${MO_FILES_DIR})
 
@@ -363,7 +377,11 @@ IF( WIN32 )
   ADD_COMPILE_OPTIONS( /vmg )                           # Avoids a 'reinterpret_cast' compile error while compiling signals and callbacks.
   ADD_COMPILE_OPTIONS( /wd4251 )                        # Ignores warning C4251: "'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'"
 ELSE()
-  SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -Werror -Wall -fPIE")
+  SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -Wall -fPIE")
+  # -Werror is disable for clang in dali-adaptor
+  IF ( NOT ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" )
+    SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -Werror")
+  ENDIF()
 
   IF( NOT ${ENABLE_EXPORTALL} )
     SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -fvisibility=hidden")
