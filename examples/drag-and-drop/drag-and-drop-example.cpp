@@ -44,6 +44,8 @@ const float TEXT_LABEL_WIDTH = 250.0f;
 const float TEXT_LABEL_HEIGHT = 70.0f;
 const unsigned int TEXT_LABEL_NUM = sizeof(TEXT_LABEL_COLOR) / sizeof(TEXT_LABEL_COLOR[0]);
 
+const float DROP_ANIMATION_DURATION_S = 0.5f;
+
 #if defined(DEBUG_ENABLED)
   Debug::Filter* gDragAndDropFilter = Debug::Filter::New(Debug::NoLogging, false, "LOG_DRAG_AND_DROP_EXAMPLE");
 #endif
@@ -183,14 +185,14 @@ public:
       }
     }
 
-    Animation mAnimation = Animation::New(0.5f);
+    Animation mAnimation = Animation::New(DROP_ANIMATION_DURATION_S);
 
     if(droppedIndex > mDragIndex)
     {
       for(int i = mDragIndex + 1; i <= droppedIndex; i++)
       {
-        float y = mTextLabel[mOrder[i]].GetCurrentProperty< Vector3 >( Actor::Property::POSITION ).y;
-        mAnimation.AnimateTo(Property(mTextLabel[mOrder[i]], Actor::Property::POSITION), Vector3(TEXT_LABEL_POSITION_X, y - TEXT_LABEL_HEIGHT, 0.0f), AlphaFunction::EASE_OUT);
+        mAnimation.AnimateTo(Property(mTextLabel[mOrder[i]], Actor::Property::POSITION),
+         Vector3(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * (i - 1), 0.0f), AlphaFunction::EASE_OUT);
         mAnimation.Play();
       }
 
@@ -204,11 +206,10 @@ public:
     }
     else if(droppedIndex < mDragIndex)
     {
-
       for(int i = mDragIndex - 1; i >= droppedIndex; i--)
       {
-        float y = mTextLabel[mOrder[i]].GetCurrentProperty< Vector3 >( Actor::Property::POSITION ).y;
-        mAnimation.AnimateTo(Property(mTextLabel[mOrder[i]], Actor::Property::POSITION), Vector3(TEXT_LABEL_POSITION_X, y + TEXT_LABEL_HEIGHT, 0.0f), AlphaFunction::EASE_OUT);
+        mAnimation.AnimateTo(Property(mTextLabel[mOrder[i]], Actor::Property::POSITION),
+          Vector3(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * (i + 1), 0.0f), AlphaFunction::EASE_OUT);
         mAnimation.Play();
       }
 
@@ -219,9 +220,7 @@ public:
       }
 
       mOrder[droppedIndex] = tmpId;
-
     }
-
 
     Vector2 pos = detector.GetCurrentScreenPosition();
     Vector2 localPos;
@@ -229,13 +228,13 @@ public:
 
     KeyFrames k0 = KeyFrames::New();
     k0.Add(0.0f, Vector3(localPos.x - mDragLocalPos.x, localPos.y - mDragLocalPos.y, 0.0f));
-    k0.Add(1.0f, Vector3(control.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ).x, control.GetCurrentProperty< Vector3 >( Actor::Property::POSITION ).y, 0.0f));
+    k0.Add(1.0f, Vector3(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * droppedIndex, 0.0f));
 
     KeyFrames k1 = KeyFrames::New();
     k1.Add(0.0f, 0.1f);
     k1.Add(1.0f, 1.0f);
 
-    Animation dropAnimation = Animation::New(0.5f);
+    Animation dropAnimation = Animation::New(DROP_ANIMATION_DURATION_S);
     dropAnimation.AnimateBetween(Property(mTextLabel[mDragRealIndex], Actor::Property::POSITION), k0, AlphaFunction::EASE_OUT);
     dropAnimation.AnimateBetween(Property(mTextLabel[mDragRealIndex], Actor::Property::OPACITY), k1, AlphaFunction::EASE_OUT);
     dropAnimation.Play();
