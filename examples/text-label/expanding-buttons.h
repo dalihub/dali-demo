@@ -2,7 +2,7 @@
 #define DALI_DEMO_EXPANDING_BUTTONS_CONTROL_H
 
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@
 
 namespace Demo
 {
-
 namespace Internal
 {
 class ExpandingButtons;
@@ -32,10 +31,7 @@ class ExpandingButtons;
  */
 class ExpandingButtons : public Dali::Toolkit::Control
 {
-
-
 public: // Construction / destruction
-
   /**
    * Create an uninitialized handle
    */
@@ -55,24 +51,23 @@ public: // Construction / destruction
   /**
    * Copy Constructor
    */
-  ExpandingButtons( const ExpandingButtons& expandingButtons );
+  ExpandingButtons(const ExpandingButtons& expandingButtons);
 
   /**
    * Assignment Operator
    */
-  ExpandingButtons& operator=( const ExpandingButtons& expandingButtons );
+  ExpandingButtons& operator=(const ExpandingButtons& expandingButtons);
 
   /**
    * Downcast
    */
-  static ExpandingButtons DownCast( BaseHandle handle );
+  static ExpandingButtons DownCast(BaseHandle handle);
 
 public: // API
-
   /**
    * Add a control (button) to the Expanding button bar. Will be displayed in order of addition.
    */
-  void RegisterButton( Control& control );
+  void RegisterButton(Control& control);
 
   /**
    * Expand the registered buttons out from the main button.
@@ -85,11 +80,10 @@ public: // API
   void Collapse();
 
 public: // Signals
-
-  /**
+        /**
    * ExpandingButtons signal type
    */
-   typedef Dali::Signal< bool ( ExpandingButtons ) > ExpandingButtonsSignalType;
+  typedef Dali::Signal<bool(ExpandingButtons)> ExpandingButtonsSignalType;
 
   /**
    * This signal is emitted when the button is going to collapse.
@@ -97,16 +91,15 @@ public: // Signals
   ExpandingButtonsSignalType& CollapsingSignal();
 
 public: // Not for public use
-
   /**
    * Create a handle from an implementation
    */
-  ExpandingButtons( Internal::ExpandingButtons& implementation );
+  ExpandingButtons(Internal::ExpandingButtons& implementation);
 
   /**
    * Allow the creation of an ExpandingButtons handle from an internal CustomActor pointer
    */
-  ExpandingButtons( Dali::Internal::CustomActor* internal );
+  ExpandingButtons(Dali::Internal::CustomActor* internal);
 };
 
 } // namespace Demo

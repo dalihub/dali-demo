@@ -2,7 +2,7 @@
 #define GAME_ENTITY_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,12 +31,11 @@
 class GameEntity
 {
 public:
-
   /**
    * Creates an instance of GameEntity with given name
    * @param[in] name Name of created entity
    */
-  GameEntity( const char* name );
+  GameEntity(const char* name);
 
   /**
    * Destroys an instance of GameEntity
@@ -58,25 +57,25 @@ public:
    * Sets location of entity
    * @param[in] location Local position of entity
    */
-  void SetLocation( const Dali::Vector3& location );
+  void SetLocation(const Dali::Vector3& location);
 
   /**
    * Sets rotation of entity
    * @param[in] rotation Local rotation of entity
    */
-  void SetRotation( const Dali::Quaternion& rotation );
+  void SetRotation(const Dali::Quaternion& rotation);
 
   /**
    * Sets scale of entity
    * @param[in] scale Local scale of entity
    */
-  void SetScale( const Dali::Vector3& scale );
+  void SetScale(const Dali::Vector3& scale);
 
   /**
    * Sets size of entity
    * @param[in] size Bounding box of entity
    */
-  void SetSize( const Dali::Vector3& size );
+  void SetSize(const Dali::Vector3& size);
 
   /**
    * Updates Dali::Renderer in case if anything changed ( geometry, texture, etc. )
@@ -84,9 +83,8 @@ public:
   void UpdateRenderer();
 
 private:
-
-  Dali::Actor   mActor;
-  GameRenderer  mGameRenderer;
+  Dali::Actor  mActor;
+  GameRenderer mGameRenderer;
 };
 
 #endif

@@ -40,10 +40,10 @@ using namespace MultiLanguageStrings;
 
 namespace
 {
-  const char* const LABEL_TEXT = "A Quick Fox";
-  const char* const LABEL_TEXT_MIXED = "Fox 구미호";
-  const char* const LABEL_TEXT_KOREAN = "구미호";
-}
+const char* const LABEL_TEXT        = "A Quick Fox";
+const char* const LABEL_TEXT_MIXED  = "Fox 구미호";
+const char* const LABEL_TEXT_KOREAN = "구미호";
+} // namespace
 
 /**
  * @brief The main class of the demo.
@@ -51,13 +51,12 @@ namespace
 class TextFontsExample : public ConnectionTracker
 {
 public:
-
-  TextFontsExample( Application& application )
-  : mApplication( application ),
+  TextFontsExample(Application& application)
+  : mApplication(application),
     mToggle(true)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &TextFontsExample::Create );
+    mApplication.InitSignal().Connect(this, &TextFontsExample::Create);
   }
 
   ~TextFontsExample()
@@ -65,80 +64,80 @@ public:
     // Nothing to do here.
   }
 
-  void CreateTextLabel( TextLabel& textLabel, std::string textString, const Vector4& color, bool infoLabel=false )
+  void CreateTextLabel(TextLabel& textLabel, std::string textString, const Vector4& color, bool infoLabel = false)
   {
-    textLabel = TextLabel::New( textString );
-    textLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    textLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
-    textLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    if ( infoLabel )
+    textLabel = TextLabel::New(textString);
+    textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
+    textLabel.SetProperty(TextLabel::Property::MULTI_LINE, true);
+    if(infoLabel)
     {
-      textLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::WHITE );
-      textLabel.SetProperty( TextLabel::Property::POINT_SIZE, 12.0f );
-      textLabel.SetProperty( TextLabel::Property::FONT_FAMILY, "SamsungOneUI" );
+      textLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
+      textLabel.SetProperty(TextLabel::Property::POINT_SIZE, 12.0f);
+      textLabel.SetProperty(TextLabel::Property::FONT_FAMILY, "SamsungOneUI");
     }
     else
     {
       Property::Map shadowMap;
-      shadowMap.Insert( "color", Color::BLACK );
-      shadowMap.Insert( "offset", Vector2( 0.3f, 0.3f ) );
-      textLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
-      textLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLUE );
+      shadowMap.Insert("color", Color::BLACK);
+      shadowMap.Insert("offset", Vector2(0.3f, 0.3f));
+      textLabel.SetProperty(TextLabel::Property::SHADOW, shadowMap);
+      textLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLUE);
     }
-    textLabel.SetBackgroundColor( color );
+    textLabel.SetBackgroundColor(color);
   }
 
-  void CreateContainer( Control& container, const Vector2 size )
+  void CreateContainer(Control& container, const Vector2 size)
   {
     container = Control::New();
-    container.SetProperty( Actor::Property::SIZE, size );
-    container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    container.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
+    container.SetProperty(Actor::Property::SIZE, size);
+    container.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    container.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
   }
 
-  void CreateFolderButton( PushButton& button )
+  void CreateFolderButton(PushButton& button)
   {
     button = PushButton::New();
-    button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    button.SetResizePolicy( ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS );
-    button.SetProperty( Actor::Property::SIZE, Vector2( 50.0f, 50.0f ) );
+    button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    button.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    button.SetProperty(Actor::Property::SIZE, Vector2(50.0f, 50.0f));
   }
 
-  bool OnButtonClicked( Toolkit::Button button )
+  bool OnButtonClicked(Toolkit::Button button)
   {
-    if ( mLabel4 )
+    if(mLabel4)
     {
-      UnparentAndReset( mLabel4 );
+      UnparentAndReset(mLabel4);
     }
 
-    if ( !mContainer4 )
+    if(!mContainer4)
     {
-      CreateContainer ( mContainer4 , mLayoutSize);
-      Window window = mApplication.GetWindow();
+      CreateContainer(mContainer4, mLayoutSize);
+      Window  window     = mApplication.GetWindow();
       Vector2 windowSize = window.GetSize();
-      mContainer4.SetProperty( Actor::Property::POSITION, Vector2( 0, windowSize.height*0.25f*3 ));
-      window.Add( mContainer4 );
+      mContainer4.SetProperty(Actor::Property::POSITION, Vector2(0, windowSize.height * 0.25f * 3));
+      window.Add(mContainer4);
       // Info
-      CreateContainer ( mContainer4Info , mLayoutSize );
-      mContainer4Info.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
-      mContainer4.Add( mContainer4Info );
-      CreateTextLabel ( mLabel4Info, "system free", Color::BLACK, true  );
-      mContainer4Info.Add ( mLabel4Info );
+      CreateContainer(mContainer4Info, mLayoutSize);
+      mContainer4Info.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
+      mContainer4.Add(mContainer4Info);
+      CreateTextLabel(mLabel4Info, "system free", Color::BLACK, true);
+      mContainer4Info.Add(mLabel4Info);
     }
 
-    if ( mToggle )
+    if(mToggle)
     {
-      CreateTextLabel ( mLabel4, LABEL_TEXT_KOREAN, Color::WHITE );
+      CreateTextLabel(mLabel4, LABEL_TEXT_KOREAN, Color::WHITE);
       mToggle = false;
     }
     else
     {
-      CreateTextLabel ( mLabel4, LABEL_TEXT_MIXED, Color::WHITE );
+      CreateTextLabel(mLabel4, LABEL_TEXT_MIXED, Color::WHITE);
       mToggle = true;
     }
 
-    mContainer4.Add( mLabel4 );
+    mContainer4.Add(mLabel4);
 
     return true;
   }
@@ -146,59 +145,59 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
-    Window window = application.GetWindow();
+    Window  window     = application.GetWindow();
     Vector2 windowSize = window.GetSize();
 
     window.KeyEventSignal().Connect(this, &TextFontsExample::OnKeyEvent);
 
-    CreateFolderButton ( mButton );
-    mButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-    mButton.ClickedSignal().Connect( this, &TextFontsExample::OnButtonClicked );
-    window.Add( mButton );
+    CreateFolderButton(mButton);
+    mButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+    mButton.ClickedSignal().Connect(this, &TextFontsExample::OnButtonClicked);
+    window.Add(mButton);
 
-    mLayoutSize = Vector2( windowSize.width*0.5f, windowSize.height*0.10f );
-    CreateContainer ( mContainer , mLayoutSize);
-    CreateContainer ( mContainer2 , mLayoutSize );
-    CreateContainer ( mContainer3 , mLayoutSize );
+    mLayoutSize = Vector2(windowSize.width * 0.5f, windowSize.height * 0.10f);
+    CreateContainer(mContainer, mLayoutSize);
+    CreateContainer(mContainer2, mLayoutSize);
+    CreateContainer(mContainer3, mLayoutSize);
 
     // Info about Text Label and if font should be fixed or free to change with system
-    CreateContainer ( mContainerInfo , mLayoutSize );
-    CreateContainer ( mContainer2Info , mLayoutSize );
-    CreateContainer ( mContainer3Info , mLayoutSize );
-    mContainerInfo.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
-    mContainer2Info.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
-    mContainer3Info.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT );
-    mContainer.Add( mContainerInfo );
-    mContainer2.Add( mContainer2Info );
-    mContainer3.Add( mContainer3Info );
-    CreateTextLabel ( mLabelInfo, "system free", Color::BLACK, true  );
-    CreateTextLabel ( mLabel2Info, "json fixed", Color::BLACK, true  );
-    CreateTextLabel ( mLabel3Info, "SetProp fixed", Color::BLACK, true  );
-    mContainerInfo.Add( mLabelInfo );
-    mContainer2Info.Add( mLabel2Info );
-    mContainer3Info.Add( mLabel3Info );
+    CreateContainer(mContainerInfo, mLayoutSize);
+    CreateContainer(mContainer2Info, mLayoutSize);
+    CreateContainer(mContainer3Info, mLayoutSize);
+    mContainerInfo.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
+    mContainer2Info.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
+    mContainer3Info.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
+    mContainer.Add(mContainerInfo);
+    mContainer2.Add(mContainer2Info);
+    mContainer3.Add(mContainer3Info);
+    CreateTextLabel(mLabelInfo, "system free", Color::BLACK, true);
+    CreateTextLabel(mLabel2Info, "json fixed", Color::BLACK, true);
+    CreateTextLabel(mLabel3Info, "SetProp fixed", Color::BLACK, true);
+    mContainerInfo.Add(mLabelInfo);
+    mContainer2Info.Add(mLabel2Info);
+    mContainer3Info.Add(mLabel3Info);
 
-    window.Add( mContainer );
-    window.Add( mContainer2 );
-    window.Add( mContainer3 );
+    window.Add(mContainer);
+    window.Add(mContainer2);
+    window.Add(mContainer3);
 
-    CreateTextLabel ( mLabel, LABEL_TEXT, Color::WHITE  );
+    CreateTextLabel(mLabel, LABEL_TEXT, Color::WHITE);
 
-    CreateTextLabel ( mLabel2, LABEL_TEXT, Color::WHITE  );
+    CreateTextLabel(mLabel2, LABEL_TEXT, Color::WHITE);
     mLabel2.SetStyleName("TextLabelRosemary");
 
-    CreateTextLabel ( mLabel3, LABEL_TEXT, Color::WHITE  );
-    mLabel3.SetProperty( TextLabel::Property::FONT_FAMILY, "SamsungOneUI" );
+    CreateTextLabel(mLabel3, LABEL_TEXT, Color::WHITE);
+    mLabel3.SetProperty(TextLabel::Property::FONT_FAMILY, "SamsungOneUI");
 
-    mContainer.SetProperty( Actor::Property::POSITION, Vector2( 0, 0 ));
-    mContainer2.SetProperty( Actor::Property::POSITION, Vector2( 0, windowSize.height*0.25f ));
-    mContainer3.SetProperty( Actor::Property::POSITION, Vector2( 0, windowSize.height*0.25f*2 ));
+    mContainer.SetProperty(Actor::Property::POSITION, Vector2(0, 0));
+    mContainer2.SetProperty(Actor::Property::POSITION, Vector2(0, windowSize.height * 0.25f));
+    mContainer3.SetProperty(Actor::Property::POSITION, Vector2(0, windowSize.height * 0.25f * 2));
 
-    mContainer.Add( mLabel );
-    mContainer2.Add( mLabel2 );
-    mContainer3.Add( mLabel3 );
+    mContainer.Add(mLabel);
+    mContainer2.Add(mLabel2);
+    mContainer3.Add(mLabel3);
   }
 
   /**
@@ -208,7 +207,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -216,7 +215,6 @@ public:
   }
 
 private:
-
   Application& mApplication;
 
   PushButton mButton;
@@ -247,10 +245,10 @@ private:
   bool mToggle;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-  TextFontsExample test( application );
+  Application      application = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  TextFontsExample test(application);
   application.MainLoop();
   return 0;
 }

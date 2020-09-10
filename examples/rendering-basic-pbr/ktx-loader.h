@@ -2,7 +2,7 @@
 #define KTX_LOADER_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,13 +26,12 @@ using namespace Dali;
 
 namespace PbrDemo
 {
-
 /**
  * @brief Stores the pixel data objects for each face of the cube texture and their mipmaps.
  */
 struct CubeData
 {
-  std::vector< std::vector<Dali::PixelData> > img;
+  std::vector<std::vector<Dali::PixelData> > img;
 };
 
 /**
@@ -41,7 +40,7 @@ struct CubeData
  * @param[in] path The file path.
  * @param[out] cubedata The data structure with all pixel data objects.
  */
-bool LoadCubeMapFromKtxFile( const std::string& path, CubeData& cubedata );
+bool LoadCubeMapFromKtxFile(const std::string& path, CubeData& cubedata);
 
 } // namespace PbrDemo
 

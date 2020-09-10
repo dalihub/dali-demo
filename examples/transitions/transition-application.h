@@ -2,7 +2,7 @@
 #define DALI_DEMO_TRANSITION_APPLICATION_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
-#include "shadow-button.h"
 #include <cstdio>
 #include <sstream>
+#include "shadow-button.h"
 
 // Internal includes
 
@@ -30,51 +30,48 @@ using namespace Dali::Toolkit;
 
 namespace Demo
 {
-
 class TransitionApplication : public ConnectionTracker
 {
 public:
-  static const int NUMBER_OF_ACTION_BUTTONS=2;
+  static const int NUMBER_OF_ACTION_BUTTONS = 2;
 
 public:
   // Constructor
-  TransitionApplication( Application& application );
+  TransitionApplication(Application& application);
 
   // Destructor
   ~TransitionApplication();
 
   // Init signal handler
-  void Create( Application& application );
+  void Create(Application& application);
 
   // Create the GUI components
-  Toolkit::TextLabel CreateTitle( std::string title );
-  Actor CreateContentPane();
+  Toolkit::TextLabel CreateTitle(std::string title);
+  Actor              CreateContentPane();
 
   // Key event handler
-  void OnKeyEvent( const KeyEvent& event );
+  void OnKeyEvent(const KeyEvent& event);
 
-  bool OnActionButtonClicked( Button button );
+  bool OnActionButtonClicked(Button button);
 
   static const char* DEMO_THEME_ONE_PATH;
   static const char* DEMO_THEME_TWO_PATH;
 
 private:
-
   /** Create a visual map
    *
    * @param[in] index The index of the visual to create
    * @param[out] map The map to generate
    */
 
-  Application& mApplication;
-  TextLabel mTitle;
-  ShadowButton mShadowButton;
-  PushButton mActionButtons[NUMBER_OF_ACTION_BUTTONS];
+  Application&    mApplication;
+  TextLabel       mTitle;
+  ShadowButton    mShadowButton;
+  PushButton      mActionButtons[NUMBER_OF_ACTION_BUTTONS];
   Property::Index mVisualIndex;
   Property::Index mActionIndex;
 };
 
 } // Namespace Demo
-
 
 #endif // DALI_DEMO_TRANSITION_APPLICATION_H

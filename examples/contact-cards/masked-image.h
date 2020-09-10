@@ -2,7 +2,7 @@
 #define MASKED_IMAGE_H
 
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@
  */
 
 // EXTERNAL INCLUDES
-#include <string>
 #include <dali-toolkit/public-api/controls/control.h>
+#include <string>
 
 /**
  * @brief This namespace provides a helper function which creates an ImageView with a mask that matches the Circle geometry provided by ClippedImage.
@@ -30,15 +30,14 @@
  */
 namespace MaskedImage
 {
-
 /**
  * @brief Creates an image with a circular mask.
  *
  * @param[in]  imagePath  The path to the image to show.
  * @return The ImageView with a mask control.
  */
-Dali::Toolkit::Control Create( const std::string& imagePath );
+Dali::Toolkit::Control Create(const std::string& imagePath);
 
-} // namespace ClippedImage
+} // namespace MaskedImage
 
 #endif // MASKED_IMAGE_H

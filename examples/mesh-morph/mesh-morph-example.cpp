@@ -16,8 +16,8 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -26,225 +26,226 @@ using namespace Dali;
 
 namespace
 {
-
-#define MAKE_SHADER(A)#A
+#define MAKE_SHADER(A) #A
 
 const char* VERTEX_SHADER = MAKE_SHADER(
-attribute mediump vec2    aInitPos;
-attribute mediump vec2    aFinalPos;
-attribute mediump vec3    aColor;
-uniform   mediump mat4    uMvpMatrix;
-uniform   mediump vec3    uSize;
-uniform   mediump float   uDelta;
-uniform   lowp    vec4    uColor;
-varying   lowp    vec4    vColor;
+  attribute mediump vec2 aInitPos;
+  attribute mediump vec2 aFinalPos;
+  attribute mediump vec3 aColor;
+  uniform mediump mat4   uMvpMatrix;
+  uniform mediump vec3   uSize;
+  uniform mediump float  uDelta;
+  uniform lowp vec4      uColor;
+  varying lowp vec4      vColor;
 
-void main()
-{
-  mediump vec4 vertexPosition = vec4(mix(aInitPos, aFinalPos, uDelta), 0.0, 1.0);
-  vertexPosition.xyz *= uSize;
-  vertexPosition = uMvpMatrix * vertexPosition;
-  gl_Position = vertexPosition;
-  vColor = vec4(aColor, 0.) * uColor;
-}
-);
+  void main() {
+    mediump vec4 vertexPosition = vec4(mix(aInitPos, aFinalPos, uDelta), 0.0, 1.0);
+    vertexPosition.xyz *= uSize;
+    vertexPosition = uMvpMatrix * vertexPosition;
+    gl_Position    = vertexPosition;
+    vColor         = vec4(aColor, 0.) * uColor;
+  });
 
 const char* FRAGMENT_SHADER = MAKE_SHADER(
-varying   lowp    vec4    vColor;
+  varying lowp vec4 vColor;
 
-void main()
-{
-  gl_FragColor = vColor;
-}
-);
+  void main() {
+    gl_FragColor = vColor;
+  });
 
 Geometry CreateGeometry()
 {
   // Create vertices
-  struct VertexPosition { Vector2 position; };
-  struct VertexColor { Vector3 color; };
+  struct VertexPosition
+  {
+    Vector2 position;
+  };
+  struct VertexColor
+  {
+    Vector3 color;
+  };
 
   VertexPosition quad[] = {
     // yellow
-    { Vector2(-.5, -.5) },
-    { Vector2( .0,  .0) },
-    { Vector2(-.5,  .5) },
+    {Vector2(-.5, -.5)},
+    {Vector2(.0, .0)},
+    {Vector2(-.5, .5)},
 
     // green
-    { Vector2(-.5, -.5) },
-    { Vector2( .5, -.5) },
-    { Vector2( .0,  .0) },
+    {Vector2(-.5, -.5)},
+    {Vector2(.5, -.5)},
+    {Vector2(.0, .0)},
 
     // blue
-    { Vector2(.5,  -.5)  },
-    { Vector2(.5,   .0)  },
-    { Vector2(.25, -.25) },
+    {Vector2(.5, -.5)},
+    {Vector2(.5, .0)},
+    {Vector2(.25, -.25)},
 
     // red
-    { Vector2(.25, -.25) },
-    { Vector2(.5,   .0)  },
-    { Vector2(.25,  .25) },
-    { Vector2(.25,  .25) },
-    { Vector2(.0,   .0)  },
-    { Vector2(.25, -.25) },
+    {Vector2(.25, -.25)},
+    {Vector2(.5, .0)},
+    {Vector2(.25, .25)},
+    {Vector2(.25, .25)},
+    {Vector2(.0, .0)},
+    {Vector2(.25, -.25)},
 
     // cyan
-    { Vector2( .0,  .0)  },
-    { Vector2( .25, .25) },
-    { Vector2(-.25, .25) },
+    {Vector2(.0, .0)},
+    {Vector2(.25, .25)},
+    {Vector2(-.25, .25)},
 
     // magenta
-    { Vector2(-.25, .25) },
-    { Vector2( .25, .25) },
-    { Vector2( .0,  .5)  },
-    { Vector2( .0,  .5)  },
-    { Vector2(-.5,  .5)  },
-    { Vector2(-.25, .25) },
+    {Vector2(-.25, .25)},
+    {Vector2(.25, .25)},
+    {Vector2(.0, .5)},
+    {Vector2(.0, .5)},
+    {Vector2(-.5, .5)},
+    {Vector2(-.25, .25)},
 
     // orange
-    { Vector2( .5, .0) },
-    { Vector2( .5, .5) },
-    { Vector2( .0, .5) },
+    {Vector2(.5, .0)},
+    {Vector2(.5, .5)},
+    {Vector2(.0, .5)},
   };
 
   float bigSide = 0.707106781;
-  float side = bigSide * .5f;
- // float smallSide = side * .5f;
+  float side    = bigSide * .5f;
+  // float smallSide = side * .5f;
 
-  Vector2 pA = Vector2( side, .25 );
-  Vector2 pB = pA + Vector2( 0., bigSide );
-  Vector2 pC = pB + Vector2( -bigSide, 0. );
-  Vector2 pD = pA + Vector2(-.5, -.5 );
-  Vector2 pE = pD + Vector2( .0, 1. );
-  Vector2 pF = pD + Vector2(-side, side );
-  Vector2 pF2 = pD + Vector2( 0., bigSide );
-  Vector2 pG = pD + Vector2(-.25, .25 );
-  Vector2 pH = pD + Vector2( -.5, .0 );
-  Vector2 pI = pD + Vector2(-.25, -.25 );
-  Vector2 pJ = pD + Vector2( 0., -.5);
-  Vector2 pK = pD + Vector2(-.5, -.5);
-  Vector2 pL = pB + Vector2(0, -side);
-  Vector2 pM = pL + Vector2(side, -side);
-  Vector2 pN = pB + Vector2(side, -side);
+  Vector2 pA  = Vector2(side, .25);
+  Vector2 pB  = pA + Vector2(0., bigSide);
+  Vector2 pC  = pB + Vector2(-bigSide, 0.);
+  Vector2 pD  = pA + Vector2(-.5, -.5);
+  Vector2 pE  = pD + Vector2(.0, 1.);
+  Vector2 pF  = pD + Vector2(-side, side);
+  Vector2 pF2 = pD + Vector2(0., bigSide);
+  Vector2 pG  = pD + Vector2(-.25, .25);
+  Vector2 pH  = pD + Vector2(-.5, .0);
+  Vector2 pI  = pD + Vector2(-.25, -.25);
+  Vector2 pJ  = pD + Vector2(0., -.5);
+  Vector2 pK  = pD + Vector2(-.5, -.5);
+  Vector2 pL  = pB + Vector2(0, -side);
+  Vector2 pM  = pL + Vector2(side, -side);
+  Vector2 pN  = pB + Vector2(side, -side);
 
   VertexPosition cat[] = {
     // yellow
-    { pA },
-    { pB },
-    { pC },
+    {pA},
+    {pB},
+    {pC},
 
     // green
-    { pD },
-    { pA },
-    { pE },
+    {pD},
+    {pA},
+    {pE},
 
     // blue
-    { pJ },
-    { pD },
-    { pI },
+    {pJ},
+    {pD},
+    {pI},
 
     // red
-    { pI },
-    { pD },
-    { pG },
-    { pG },
-    { pH },
-    { pI },
+    {pI},
+    {pD},
+    {pG},
+    {pG},
+    {pH},
+    {pI},
 
     // cyan
-    { pI },
-    { pH },
-    { pK },
+    {pI},
+    {pH},
+    {pK},
 
     // magenta
-    { pL },
-    { pM },
-    { pN },
-    { pN },
-    { pB },
-    { pL },
+    {pL},
+    {pM},
+    {pN},
+    {pN},
+    {pB},
+    {pL},
 
     // orange
-    { pD },
-    { pF2 },
-    { pF },
+    {pD},
+    {pF2},
+    {pF},
   };
 
   VertexColor colors[] = {
     // yellow
-    { Vector3( 1., 1., 0. ) },
-    { Vector3( 1., 1., 0. ) },
-    { Vector3( 1., 1., 0. ) },
+    {Vector3(1., 1., 0.)},
+    {Vector3(1., 1., 0.)},
+    {Vector3(1., 1., 0.)},
 
     // green
-    { Vector3( 0., 1., 0. ) },
-    { Vector3( 0., 1., 0. ) },
-    { Vector3( 0., 1., 0. ) },
+    {Vector3(0., 1., 0.)},
+    {Vector3(0., 1., 0.)},
+    {Vector3(0., 1., 0.)},
 
     // blue
-    { Vector3( 0., 0., 1. ) },
-    { Vector3( 0., 0., 1. ) },
-    { Vector3( 0., 0., 1. ) },
+    {Vector3(0., 0., 1.)},
+    {Vector3(0., 0., 1.)},
+    {Vector3(0., 0., 1.)},
 
     // red
-    { Vector3( 1., 0., 0. ) },
-    { Vector3( 1., 0., 0. ) },
-    { Vector3( 1., 0., 0. ) },
-    { Vector3( 1., 0., 0. ) },
-    { Vector3( 1., 0., 0. ) },
-    { Vector3( 1., 0., 0. ) },
+    {Vector3(1., 0., 0.)},
+    {Vector3(1., 0., 0.)},
+    {Vector3(1., 0., 0.)},
+    {Vector3(1., 0., 0.)},
+    {Vector3(1., 0., 0.)},
+    {Vector3(1., 0., 0.)},
 
     // cyan
-    { Vector3( 0., 1., 1. ) },
-    { Vector3( 0., 1., 1. ) },
-    { Vector3( 0., 1., 1. ) },
+    {Vector3(0., 1., 1.)},
+    {Vector3(0., 1., 1.)},
+    {Vector3(0., 1., 1.)},
 
     // magenta
-    { Vector3( 1., 0., 1. ) },
-    { Vector3( 1., 0., 1. ) },
-    { Vector3( 1., 0., 1. ) },
-    { Vector3( 1., 0., 1. ) },
-    { Vector3( 1., 0., 1. ) },
-    { Vector3( 1., 0., 1. ) },
+    {Vector3(1., 0., 1.)},
+    {Vector3(1., 0., 1.)},
+    {Vector3(1., 0., 1.)},
+    {Vector3(1., 0., 1.)},
+    {Vector3(1., 0., 1.)},
+    {Vector3(1., 0., 1.)},
 
     // orange
-    { Vector3( 1., 0.5, 0. ) },
-    { Vector3( 1., 0.5, 0. ) },
-    { Vector3( 1., 0.5, 0. ) },
+    {Vector3(1., 0.5, 0.)},
+    {Vector3(1., 0.5, 0.)},
+    {Vector3(1., 0.5, 0.)},
 
   };
 
-  unsigned int numberOfVertices = sizeof(quad)/sizeof(VertexPosition);
+  unsigned int numberOfVertices = sizeof(quad) / sizeof(VertexPosition);
 
   Property::Map initialPositionVertexFormat;
   initialPositionVertexFormat["aInitPos"] = Property::VECTOR2;
-  VertexBuffer initialPositionVertices = VertexBuffer::New( initialPositionVertexFormat );
-  initialPositionVertices.SetData( quad, numberOfVertices );
+  VertexBuffer initialPositionVertices    = VertexBuffer::New(initialPositionVertexFormat);
+  initialPositionVertices.SetData(quad, numberOfVertices);
 
   Property::Map finalPositionVertexFormat;
   finalPositionVertexFormat["aFinalPos"] = Property::VECTOR2;
-  VertexBuffer finalPositionVertices = VertexBuffer::New( finalPositionVertexFormat );
-  finalPositionVertices.SetData( cat, numberOfVertices );
+  VertexBuffer finalPositionVertices     = VertexBuffer::New(finalPositionVertexFormat);
+  finalPositionVertices.SetData(cat, numberOfVertices);
 
   Property::Map colorVertexFormat;
   colorVertexFormat["aColor"] = Property::VECTOR3;
-  VertexBuffer colorVertices = VertexBuffer::New( colorVertexFormat );
-  colorVertices.SetData( colors, numberOfVertices );
+  VertexBuffer colorVertices  = VertexBuffer::New(colorVertexFormat);
+  colorVertices.SetData(colors, numberOfVertices);
 
   // Create the geometry object
   Geometry texturedQuadGeometry = Geometry::New();
-  texturedQuadGeometry.AddVertexBuffer( initialPositionVertices );
-  texturedQuadGeometry.AddVertexBuffer( finalPositionVertices );
-  texturedQuadGeometry.AddVertexBuffer( colorVertices );
+  texturedQuadGeometry.AddVertexBuffer(initialPositionVertices);
+  texturedQuadGeometry.AddVertexBuffer(finalPositionVertices);
+  texturedQuadGeometry.AddVertexBuffer(colorVertices);
 
   return texturedQuadGeometry;
 }
 
-inline float StationarySin( float progress ) ///< Single revolution
+inline float StationarySin(float progress) ///< Single revolution
 {
   float val = cosf(progress * 2.0f * Math::PI) + .5f;
-  val = val > 1.f ? 1.f : val;
-  val = val < 0.f ? 0.f : val;
+  val       = val > 1.f ? 1.f : val;
+  val       = val < 0.f ? 0.f : val;
   return val;
 }
 
@@ -255,16 +256,15 @@ inline float StationarySin( float progress ) ///< Single revolution
 class ExampleController : public ConnectionTracker
 {
 public:
-
   /**
    * The example controller constructor.
    * @param[in] application The application instance
    */
-  ExampleController( Application& application )
-  : mApplication( application )
+  ExampleController(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &ExampleController::Create );
+    mApplication.InitSignal().Connect(this, &ExampleController::Create);
   }
 
   /**
@@ -279,7 +279,7 @@ public:
    * Invoked upon creation of application
    * @param[in] application The application instance
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
@@ -288,26 +288,26 @@ public:
 
     // The Init signal is received once (only) during the Application lifetime
 
-    mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
+    mShader   = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
     mGeometry = CreateGeometry();
-    mRenderer = Renderer::New( mGeometry, mShader );
+    mRenderer = Renderer::New(mGeometry, mShader);
 
     mMeshActor = Actor::New();
-    mMeshActor.AddRenderer( mRenderer );
-    mMeshActor.SetProperty( Actor::Property::SIZE, Vector2(400, 400) );
-    mMeshActor.SetProperty( DevelActor::Property::UPDATE_SIZE_HINT, Vector2(480, 700) );
+    mMeshActor.AddRenderer(mRenderer);
+    mMeshActor.SetProperty(Actor::Property::SIZE, Vector2(400, 400));
+    mMeshActor.SetProperty(DevelActor::Property::UPDATE_SIZE_HINT, Vector2(480, 700));
 
-    Property::Index morphDeltaIndex = mMeshActor.RegisterProperty( "uDelta", 0.f );
+    Property::Index morphDeltaIndex = mMeshActor.RegisterProperty("uDelta", 0.f);
 
-    mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 0 );
+    mRenderer.SetProperty(Renderer::Property::DEPTH_INDEX, 0);
 
-    mMeshActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mMeshActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    window.Add( mMeshActor );
+    mMeshActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mMeshActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    window.Add(mMeshActor);
 
-    Animation  animation = Animation::New(10);
-    animation.AnimateTo( Property( mMeshActor, morphDeltaIndex ), 1.f, StationarySin );
-    animation.SetLooping( true );
+    Animation animation = Animation::New(10);
+    animation.AnimateTo(Property(mMeshActor, morphDeltaIndex), 1.f, StationarySin);
+    animation.SetLooping(true);
     animation.Play();
 
     window.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));
@@ -317,7 +317,7 @@ public:
    * Invoked whenever the quit button is clicked
    * @param[in] button the quit button
    */
-  bool OnQuitButtonClicked( Toolkit::Button button )
+  bool OnQuitButtonClicked(Toolkit::Button button)
   {
     // quit the application
     mApplication.Quit();
@@ -328,7 +328,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -336,9 +336,8 @@ public:
   }
 
 private:
-
-  Application&  mApplication;                             ///< Application instance
-  Vector3 mWindowSize;                                     ///< The size of the window
+  Application& mApplication; ///< Application instance
+  Vector3      mWindowSize;  ///< The size of the window
 
   Shader   mShader;
   Geometry mGeometry;
@@ -347,10 +346,10 @@ private:
   Timer    mMorphTimer;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  ExampleController test( application );
+  Application       application = Application::New(&argc, &argv);
+  ExampleController test(application);
   application.MainLoop();
   return 0;
 }

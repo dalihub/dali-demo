@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,21 +19,20 @@
 
 namespace Demo
 {
-
 ShadowButton::ShadowButton()
 {
 }
 
-ShadowButton::ShadowButton( const ShadowButton& control )
-: Control( control )
+ShadowButton::ShadowButton(const ShadowButton& control)
+: Control(control)
 {
 }
 
-ShadowButton& ShadowButton::operator= ( const ShadowButton& rhs )
+ShadowButton& ShadowButton::operator=(const ShadowButton& rhs)
 {
-  if( &rhs != this )
+  if(&rhs != this)
   {
-    Control::operator=( rhs );
+    Control::operator=(rhs);
   }
   return *this;
 }
@@ -48,20 +47,20 @@ ShadowButton ShadowButton::New()
   return control;
 }
 
-ShadowButton ShadowButton::New( const std::string& url )
+ShadowButton ShadowButton::New(const std::string& url)
 {
   ShadowButton control = Internal::ShadowButton::New();
   return control;
 }
 
-ShadowButton ShadowButton::DownCast( BaseHandle handle )
+ShadowButton ShadowButton::DownCast(BaseHandle handle)
 {
-  return Control::DownCast< ShadowButton, Internal::ShadowButton > ( handle );
+  return Control::DownCast<ShadowButton, Internal::ShadowButton>(handle);
 }
 
-void ShadowButton::SetActiveState( bool active )
+void ShadowButton::SetActiveState(bool active)
 {
-  GetImpl(*this).SetActiveState( active );
+  GetImpl(*this).SetActiveState(active);
 }
 
 bool ShadowButton::GetActiveState()
@@ -69,9 +68,9 @@ bool ShadowButton::GetActiveState()
   return GetImpl(*this).GetActiveState();
 }
 
-void ShadowButton::SetCheckState( bool checkState )
+void ShadowButton::SetCheckState(bool checkState)
 {
-  GetImpl(*this).SetCheckState( checkState );
+  GetImpl(*this).SetCheckState(checkState);
 }
 
 bool ShadowButton::GetCheckState()
@@ -79,16 +78,15 @@ bool ShadowButton::GetCheckState()
   return GetImpl(*this).GetCheckState();
 }
 
-ShadowButton::ShadowButton( Internal::ShadowButton& implementation )
-: Control( implementation )
+ShadowButton::ShadowButton(Internal::ShadowButton& implementation)
+: Control(implementation)
 {
 }
 
-ShadowButton::ShadowButton( Dali::Internal::CustomActor* internal )
-: Control( internal )
+ShadowButton::ShadowButton(Dali::Internal::CustomActor* internal)
+: Control(internal)
 {
-  VerifyCustomActorPointer< Internal::ShadowButton >( internal ) ;
+  VerifyCustomActorPointer<Internal::ShadowButton>(internal);
 }
-
 
 } //namespace Demo

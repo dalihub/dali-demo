@@ -15,16 +15,16 @@
  *
  */
 
-#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 namespace
 {
-const float COLOR_ANIMATION_DURATION( 5.0f );
-const float OPACITY_ANIMATION_DURATION( 1.0f );
+const float COLOR_ANIMATION_DURATION(5.0f);
+const float OPACITY_ANIMATION_DURATION(1.0f);
 } // unnamed namespace
 
 /**
@@ -38,46 +38,45 @@ const float OPACITY_ANIMATION_DURATION( 1.0f );
 class PropertyNotificationController : public ConnectionTracker
 {
 public:
-
   /**
    * @brief Constructor.
    * @param[in] application A reference to the Application class.
    */
-  PropertyNotificationController( Application& application )
-  : mApplication( application )
+  PropertyNotificationController(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &PropertyNotificationController::Create );
+    mApplication.InitSignal().Connect(this, &PropertyNotificationController::Create);
   }
 
   /**
    * @brief Called to initialise the application content
    * @param[in] application A reference to the Application class.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
     Window window = application.GetWindow();
-    window.SetBackgroundColor( Color::WHITE );
-    window.KeyEventSignal().Connect( this, &PropertyNotificationController::OnKeyEvent );
+    window.SetBackgroundColor(Color::WHITE);
+    window.KeyEventSignal().Connect(this, &PropertyNotificationController::OnKeyEvent);
 
     // Create a text label and set the text color to black
-    mTextLabel = TextLabel::New( "Black to Red Animation\nNew opacity animation at 50% Red" );
-    mTextLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mTextLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    mTextLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
-    window.Add( mTextLabel );
+    mTextLabel = TextLabel::New("Black to Red Animation\nNew opacity animation at 50% Red");
+    mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mTextLabel.SetProperty(TextLabel::Property::MULTI_LINE, true);
+    mTextLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
+    mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
+    window.Add(mTextLabel);
 
     // Create an animation and animate the text color to red
-    Animation animation = Animation::New( COLOR_ANIMATION_DURATION );
-    animation.AnimateTo( Property( mTextLabel, TextLabel::Property::TEXT_COLOR ), Color::RED );
+    Animation animation = Animation::New(COLOR_ANIMATION_DURATION);
+    animation.AnimateTo(Property(mTextLabel, TextLabel::Property::TEXT_COLOR), Color::RED);
     animation.Play();
 
     // Set up a property notification so we are notified when the red component of the text-color reaches 50%
-    PropertyNotification notification = mTextLabel.AddPropertyNotification( TextLabel::Property::TEXT_COLOR_RED, GreaterThanCondition( 0.5f ) );
-    notification.NotifySignal().Connect( this, &PropertyNotificationController::RedComponentNotification );
+    PropertyNotification notification = mTextLabel.AddPropertyNotification(TextLabel::Property::TEXT_COLOR_RED, GreaterThanCondition(0.5f));
+    notification.NotifySignal().Connect(this, &PropertyNotificationController::RedComponentNotification);
   }
 
   /**
@@ -86,11 +85,11 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -103,22 +102,22 @@ public:
    * In our case, it's when the red component is greater than 50%.
    * Will use this notification to animate the opacity of the text-label to transparent.
    */
-  void RedComponentNotification( PropertyNotification& /* source */ )
+  void RedComponentNotification(PropertyNotification& /* source */)
   {
-    Animation animation = Animation::New( OPACITY_ANIMATION_DURATION );
-    animation.AnimateTo( Property( mTextLabel, Actor::Property::OPACITY ), 0.0f );
+    Animation animation = Animation::New(OPACITY_ANIMATION_DURATION);
+    animation.AnimateTo(Property(mTextLabel, Actor::Property::OPACITY), 0.0f);
     animation.Play();
   }
 
 private:
   Application& mApplication;
-  TextLabel mTextLabel;
+  TextLabel    mTextLabel;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  PropertyNotificationController test( application );
+  Application                    application = Application::New(&argc, &argv);
+  PropertyNotificationController test(application);
   application.MainLoop();
   return 0;
 }

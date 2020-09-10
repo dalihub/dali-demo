@@ -15,14 +15,15 @@
  *
  */
 
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/dali.h>
 
 using namespace Dali;
 using namespace Toolkit;
 
 namespace
 {
+// clang-format off
 
 /*
  * Vertex shader
@@ -51,20 +52,20 @@ void main()\n
   gl_FragColor = uColor;\n
 }\n
 );
+// clang-format on
 
-}
+} // namespace
 
 // This example shows how to draw a line in actor's color
 //
 class DrawLineController : public ConnectionTracker
 {
 public:
-
-  DrawLineController( Application& application )
-  : mApplication( application )
+  DrawLineController(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &DrawLineController::Create );
+    mApplication.InitSignal().Connect(this, &DrawLineController::Create);
   }
 
   ~DrawLineController()
@@ -73,11 +74,11 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
-    window.SetBackgroundColor( Color::WHITE );
+    window.SetBackgroundColor(Color::WHITE);
 
     // Step 1. Create shader
     CreateLineShader();
@@ -92,13 +93,13 @@ public:
     CreateActor();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect( this, &DrawLineController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect(this, &DrawLineController::OnTouch);
 
     // Respond to key events
-    window.KeyEventSignal().Connect( this, &DrawLineController::OnKeyEvent );
+    window.KeyEventSignal().Connect(this, &DrawLineController::OnKeyEvent);
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch(Actor actor, const TouchEvent& touch)
   {
     // quit the application
     mApplication.Quit();
@@ -111,11 +112,11 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -129,17 +130,16 @@ public:
   void CreateLineGeometry()
   {
     Vector2 vertices[] = {
-      Vector2( -1.0f, -1.0f ),
-      Vector2(  1.0f,  1.0f )
-    };
+      Vector2(-1.0f, -1.0f),
+      Vector2(1.0f, 1.0f)};
 
-    VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
-                                                   .Add( "aPosition", Property::VECTOR2 ) );
-    vertexBuffer.SetData( vertices, sizeof(vertices) / sizeof(Vector2) );
+    VertexBuffer vertexBuffer = VertexBuffer::New(Property::Map()
+                                                    .Add("aPosition", Property::VECTOR2));
+    vertexBuffer.SetData(vertices, sizeof(vertices) / sizeof(Vector2));
 
     mGeometry = Geometry::New();
-    mGeometry.AddVertexBuffer( vertexBuffer );
-    mGeometry.SetType( Geometry::LINES );
+    mGeometry.AddVertexBuffer(vertexBuffer);
+    mGeometry.SetType(Geometry::LINES);
   }
 
   /**
@@ -149,7 +149,7 @@ public:
    */
   void CreateLineShader()
   {
-    mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
+    mShader = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
   }
 
   /**
@@ -157,7 +157,7 @@ public:
    */
   void CreateRenderer()
   {
-    mRenderer = Renderer::New( mGeometry, mShader );
+    mRenderer = Renderer::New(mGeometry, mShader);
   }
 
   /**
@@ -166,30 +166,30 @@ public:
   void CreateActor()
   {
     Window window = mApplication.GetWindow();
-    Size size = Vector2(window.GetSize()) * 0.25f;
-    mActor = Actor::New();
-    mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 0.0f ) );
-    mActor.SetProperty( Actor::Property::COLOR, Color::BLACK );
-    mActor.SetProperty( Actor::Property::SIZE, Vector3( size.x, size.x, size.x ) );
-    mActor.AddRenderer( mRenderer );
-    window.Add( mActor );
+    Size   size   = Vector2(window.GetSize()) * 0.25f;
+    mActor        = Actor::New();
+    mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mActor.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
+    mActor.SetProperty(Actor::Property::COLOR, Color::BLACK);
+    mActor.SetProperty(Actor::Property::SIZE, Vector3(size.x, size.x, size.x));
+    mActor.AddRenderer(mRenderer);
+    window.Add(mActor);
   }
 
 private:
-  Application&  mApplication;
+  Application& mApplication;
 
   Renderer mRenderer;
-  Shader mShader;
+  Shader   mShader;
   Geometry mGeometry;
-  Actor mActor;
+  Actor    mActor;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  DrawLineController test( application );
+  Application        application = Application::New(&argc, &argv);
+  DrawLineController test(application);
   application.MainLoop();
   return 0;
 }

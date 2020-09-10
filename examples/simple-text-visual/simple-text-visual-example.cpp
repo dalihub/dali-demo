@@ -32,12 +32,11 @@ using namespace Dali::Toolkit;
 class TextVisualExample : public ConnectionTracker
 {
 public:
-
-  TextVisualExample( Application& application )
-  : mApplication( application )
+  TextVisualExample(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &TextVisualExample::Create );
+    mApplication.InitSignal().Connect(this, &TextVisualExample::Create);
   }
 
   ~TextVisualExample()
@@ -48,31 +47,24 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
 
     window.KeyEventSignal().Connect(this, &TextVisualExample::OnKeyEvent);
-    window.SetBackgroundColor( Color::WHITE );
+    window.SetBackgroundColor(Color::WHITE);
 
     Dali::Toolkit::Control control = Dali::Toolkit::ImageView::New();
-    control.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
-    const std::string markupText( "<color value='blue'><font size='50'>H</font></color>ello <color value='blue'><font size='50'>w</font></color>orld" );
+    const std::string markupText("<color value='blue'><font size='50'>H</font></color>ello <color value='blue'><font size='50'>w</font></color>orld");
 
     Dali::Property::Map map;
-    map.Add( Dali::Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::TEXT ).
-      Add( Dali::Toolkit::TextVisual::Property::ENABLE_MARKUP, true ).
-      Add( Dali::Toolkit::TextVisual::Property::TEXT, markupText ).
-      Add( Dali::Toolkit::TextVisual::Property::TEXT_COLOR, Dali::Vector4( 0.25f, 0.25f, 0.5f, 1.f ) ).
-      Add( Dali::Toolkit::TextVisual::Property::FONT_FAMILY, "TizenSansRegular" ).
-      Add( Dali::Toolkit::TextVisual::Property::POINT_SIZE, 30.f ).
-      Add( Dali::Toolkit::TextVisual::Property::HORIZONTAL_ALIGNMENT, "END" ).
-      Add( Dali::Toolkit::TextVisual::Property::VERTICAL_ALIGNMENT, "CENTER" );
+    map.Add(Dali::Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::TEXT).Add(Dali::Toolkit::TextVisual::Property::ENABLE_MARKUP, true).Add(Dali::Toolkit::TextVisual::Property::TEXT, markupText).Add(Dali::Toolkit::TextVisual::Property::TEXT_COLOR, Dali::Vector4(0.25f, 0.25f, 0.5f, 1.f)).Add(Dali::Toolkit::TextVisual::Property::FONT_FAMILY, "TizenSansRegular").Add(Dali::Toolkit::TextVisual::Property::POINT_SIZE, 30.f).Add(Dali::Toolkit::TextVisual::Property::HORIZONTAL_ALIGNMENT, "END").Add(Dali::Toolkit::TextVisual::Property::VERTICAL_ALIGNMENT, "CENTER");
 
-    control.SetProperty( Dali::Toolkit::Control::Property::BACKGROUND, map );
+    control.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, map);
 
-    window.Add( control );
+    window.Add(control);
   }
 
   /**
@@ -82,7 +74,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -90,25 +82,24 @@ public:
   }
 
 private:
-
   Application& mApplication;
 
   TextLabel mLabel;
 };
 
-void RunTest( Application& application )
+void RunTest(Application& application)
 {
-  TextVisualExample test( application );
+  TextVisualExample test(application);
 
   application.MainLoop();
 }
 
 /** Entry point for Linux & Tizen applications */
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New(&argc, &argv);
 
-  RunTest( application );
+  RunTest(application);
 
   return 0;
 }

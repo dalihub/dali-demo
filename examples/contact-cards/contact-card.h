@@ -19,13 +19,13 @@
  */
 
 // EXTERNAL INCLUDES
-#include <string>
+#include <dali-toolkit/public-api/controls/control.h>
 #include <dali/public-api/actors/actor.h>
 #include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/events/tap-gesture-detector.h>
 #include <dali/public-api/object/ref-object.h>
-#include <dali-toolkit/public-api/controls/control.h>
+#include <string>
 
 struct ContactCardLayoutInfo;
 
@@ -44,7 +44,6 @@ struct ContactCardLayoutInfo;
 class ContactCard : public Dali::RefObject
 {
 public:
-
   /**
    * @brief Constructor.
    *
@@ -57,10 +56,9 @@ public:
    * @param[in]  imagePath              The path to the image to display.
    * @param[in]  position               The unique folded position of this particular contact-card.
    */
-  ContactCard( Dali::Window window, const ContactCardLayoutInfo& contactCardLayoutInfo, const std::string& contactName, const std::string& contactAddress, const std::string& imagePath, const Dali::Vector2& position );
+  ContactCard(Dali::Window window, const ContactCardLayoutInfo& contactCardLayoutInfo, const std::string& contactName, const std::string& contactAddress, const std::string& imagePath, const Dali::Vector2& position);
 
 private:
-
   /**
    * @brief Private Destructor. Will only be deleted when ref-count goes to 0.
    *
@@ -73,7 +71,7 @@ private:
    * @param[in]  actor    The tapped actor.
    * @param[in]  gesture  The tap gesture.
    */
-  void OnTap( Dali::Actor actor, const Dali::TapGesture& gesture );
+  void OnTap(Dali::Actor actor, const Dali::TapGesture& gesture);
 
   /**
    * @brief Animates the fold/unfold animation as required.
@@ -84,7 +82,7 @@ private:
    * @brief Called when the animation finishes.
    * @param[in]  animation  The animation which has just finished.
    */
-  void OnAnimationFinished( Dali::Animation& animation );
+  void OnAnimationFinished(Dali::Animation& animation);
 
   /**
    * @brief Called when any key event is received
@@ -92,24 +90,24 @@ private:
    * Will use this to fold a contact card if it is unfolded.
    * @param[in]  event  The key event information
    */
-  void OnKeyEvent( const Dali::KeyEvent& event );
+  void OnKeyEvent(const Dali::KeyEvent& event);
 
-  Dali::TapGestureDetector mTapDetector; ///< Used for tap detection.
-  Dali::Toolkit::Control mContactCard; ///< Used for the background and to clip the contents.
-  Dali::Toolkit::Control mHeader; ///< Header shown when unfolded.
-  Dali::Toolkit::Control mClippedImage; ///< The image representing the contact (whose clipping can be animated).
-  Dali::Toolkit::Control mMaskedImage; ///< The image with a mask (better quality around the edges than the clipped image when folded).
-  Dali::Toolkit::Control mNameText; ///< The text shown when folded.
-  Dali::Toolkit::Control mDetailText; ///< The text shown when unfolded.
+  Dali::TapGestureDetector mTapDetector;  ///< Used for tap detection.
+  Dali::Toolkit::Control   mContactCard;  ///< Used for the background and to clip the contents.
+  Dali::Toolkit::Control   mHeader;       ///< Header shown when unfolded.
+  Dali::Toolkit::Control   mClippedImage; ///< The image representing the contact (whose clipping can be animated).
+  Dali::Toolkit::Control   mMaskedImage;  ///< The image with a mask (better quality around the edges than the clipped image when folded).
+  Dali::Toolkit::Control   mNameText;     ///< The text shown when folded.
+  Dali::Toolkit::Control   mDetailText;   ///< The text shown when unfolded.
 
   Dali::Animation mAnimation; ///< The fold/unfold animation.
 
-  Dali::SlotDelegate< ContactCard > mSlotDelegate; ///< Used to automatically disconnect our member functions from signals that this class connects to upon destruction. Can be used instead of inheriting from ConnectionTracker.
+  Dali::SlotDelegate<ContactCard> mSlotDelegate; ///< Used to automatically disconnect our member functions from signals that this class connects to upon destruction. Can be used instead of inheriting from ConnectionTracker.
 
-  const ContactCardLayoutInfo& mContactCardLayoutInfo; ///< Reference to the common data used by all contact cards.
-  const Dali::Vector2 foldedPosition; ///< The unique position of this card when it is folded.
-  Dali::Property::Index mClippedImagePropertyIndex; ///< Index used to animate the clipping of mClippedImage.
-  bool mFolded; ///< Whether the contact card is folded or not.
+  const ContactCardLayoutInfo& mContactCardLayoutInfo;     ///< Reference to the common data used by all contact cards.
+  const Dali::Vector2          foldedPosition;             ///< The unique position of this card when it is folded.
+  Dali::Property::Index        mClippedImagePropertyIndex; ///< Index used to animate the clipping of mClippedImage.
+  bool                         mFolded;                    ///< Whether the contact card is folded or not.
 };
 
 #endif // CONTACT_CARD_H

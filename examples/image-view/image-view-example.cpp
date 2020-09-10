@@ -15,78 +15,74 @@
  *
  */
 
-#include <string>
-#include "shared/view.h"
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
-#include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali/dali.h>
+#include <string>
+#include "shared/view.h"
 
 using namespace Dali;
 
 namespace
 {
-
-const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-gradient.jpg" );
-const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
-const char* APPLICATION_TITLE( "Image view" );
+const char* BACKGROUND_IMAGE(DEMO_IMAGE_DIR "background-gradient.jpg");
+const char* TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
+const char* APPLICATION_TITLE("Image view");
 
 const char* IMAGE_PATH[] = {
-    DEMO_IMAGE_DIR "gallery-small-23.jpg",
-    DEMO_IMAGE_DIR "woodEffect.jpg",
-    DEMO_IMAGE_DIR "wood.png",       // 32bits image
-    DEMO_IMAGE_DIR "heartsframe.9.png",
-    DEMO_IMAGE_DIR "World.svg"
-};
+  DEMO_IMAGE_DIR "gallery-small-23.jpg",
+  DEMO_IMAGE_DIR "woodEffect.jpg",
+  DEMO_IMAGE_DIR "wood.png", // 32bits image
+  DEMO_IMAGE_DIR "heartsframe.9.png",
+  DEMO_IMAGE_DIR "World.svg"};
 
 const unsigned int NUMBER_OF_IMAGES = 3;
 
 enum CellPlacement
 {
-   TOP_BUTTON,
-   MID_BUTTON,
-   LOWER_BUTTON,
-   IMAGE,
-   NUMBER_OF_ROWS
+  TOP_BUTTON,
+  MID_BUTTON,
+  LOWER_BUTTON,
+  IMAGE,
+  NUMBER_OF_ROWS
 };
 
-
-unsigned int GetButtonIndex( Toolkit::Button button )
+unsigned int GetButtonIndex(Toolkit::Button button)
 {
-  std::string buttonName = button.GetProperty< std::string >( Dali::Actor::Property::NAME );
-  unsigned int index = 0;
+  std::string  buttonName = button.GetProperty<std::string>(Dali::Actor::Property::NAME);
+  unsigned int index      = 0;
 
-  if ( buttonName != "")
+  if(buttonName != "")
   {
-    index = std::stoul( buttonName );
+    index = std::stoul(buttonName);
   }
 
   return index;
 }
 
-
 const unsigned int NUMBER_OF_RESOURCES = sizeof(IMAGE_PATH) / sizeof(char*);
 
-std::string EXAMPLE_INSTRUCTIONS = "Instructions: Change button cycles through different image visuals, "
-                           "on/off takes the ImageView and it's current visual on or off window.";
+std::string EXAMPLE_INSTRUCTIONS =
+  "Instructions: Change button cycles through different image visuals, "
+  "on/off takes the ImageView and it's current visual on or off window.";
 
-const float CORNER_RADIUS_VALUE( 20.0f );
+const float CORNER_RADIUS_VALUE(20.0f);
 
-}  // namespace
+} // namespace
 
-class ImageViewController: public ConnectionTracker
+class ImageViewController : public ConnectionTracker
 {
- public:
-
-  ImageViewController( Application& application )
-    : mApplication( application ),
-      mCurrentPositionToggle( 0, 0 ),
-      mCurrentPositionImage( 0, 0 )
+public:
+  ImageViewController(Application& application)
+  : mApplication(application),
+    mCurrentPositionToggle(0, 0),
+    mCurrentPositionImage(0, 0)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &ImageViewController::Create );
+    mApplication.InitSignal().Connect(this, &ImageViewController::Create);
   }
 
   ~ImageViewController()
@@ -94,88 +90,86 @@ class ImageViewController: public ConnectionTracker
     // Nothing to do here
   }
 
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // The Init signal is received once (only) during the Application lifetime
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.
-    mContentLayer = DemoHelper::CreateView( application,
-                                            mView,
-                                            mToolBar,
-                                            BACKGROUND_IMAGE,
-                                            TOOLBAR_IMAGE,
-                                            APPLICATION_TITLE );
-
+    mContentLayer = DemoHelper::CreateView(application,
+                                           mView,
+                                           mToolBar,
+                                           BACKGROUND_IMAGE,
+                                           TOOLBAR_IMAGE,
+                                           APPLICATION_TITLE);
 
     // Create a table view to show a pair of buttons above each image.
-    mTable = Toolkit::TableView::New( CellPlacement::NUMBER_OF_ROWS, NUMBER_OF_IMAGES );
-    mTable.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mTable.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mTable.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    Vector3 offset( 0.9f, 0.70f, 0.0f );
-    mTable.SetProperty( Actor::Property::SIZE_MODE_FACTOR, offset );
+    mTable = Toolkit::TableView::New(CellPlacement::NUMBER_OF_ROWS, NUMBER_OF_IMAGES);
+    mTable.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mTable.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    Vector3 offset(0.9f, 0.70f, 0.0f);
+    mTable.SetProperty(Actor::Property::SIZE_MODE_FACTOR, offset);
     mTable.SetFitHeight(CellPlacement::TOP_BUTTON);
     mTable.SetFitHeight(CellPlacement::MID_BUTTON);
     mTable.SetFitHeight(CellPlacement::LOWER_BUTTON);
-    mContentLayer.Add( mTable );
+    mContentLayer.Add(mTable);
 
-    Toolkit::TextLabel instructions = Toolkit::TextLabel::New( EXAMPLE_INSTRUCTIONS );
-    instructions.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    instructions.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::BOTTOM_CENTER);
-    instructions.SetProperty( Actor::Property::POSITION_Y, -50.0f);
-    instructions.SetProperty( Toolkit::TextLabel::Property::ENABLE_AUTO_SCROLL, true  );
-    instructions.SetProperty( Toolkit::TextLabel::Property::AUTO_SCROLL_LOOP_COUNT, 10  );
+    Toolkit::TextLabel instructions = Toolkit::TextLabel::New(EXAMPLE_INSTRUCTIONS);
+    instructions.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    instructions.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+    instructions.SetProperty(Actor::Property::POSITION_Y, -50.0f);
+    instructions.SetProperty(Toolkit::TextLabel::Property::ENABLE_AUTO_SCROLL, true);
+    instructions.SetProperty(Toolkit::TextLabel::Property::AUTO_SCROLL_LOOP_COUNT, 10);
     mContentLayer.Add(instructions);
 
-    for( unsigned int x = 0; x < NUMBER_OF_IMAGES; x++ )
+    for(unsigned int x = 0; x < NUMBER_OF_IMAGES; x++)
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
-      button.SetProperty( Toolkit::Button::Property::LABEL, "on/off" );
-      button.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-      button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-      button.ClickedSignal().Connect( this, &ImageViewController::ToggleImageOnWindow );
-      button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-      button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
+      button.SetProperty(Toolkit::Button::Property::LABEL, "on/off");
+      button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
+      button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+      button.ClickedSignal().Connect(this, &ImageViewController::ToggleImageOnWindow);
+      button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       std::string s = std::to_string(x);
-      button.SetProperty( Dali::Actor::Property::NAME, s );
-      mTable.AddChild( button, Toolkit::TableView::CellPosition( CellPlacement::TOP_BUTTON, x )  );
+      button.SetProperty(Dali::Actor::Property::NAME, s);
+      mTable.AddChild(button, Toolkit::TableView::CellPosition(CellPlacement::TOP_BUTTON, x));
 
       Toolkit::PushButton button2 = Toolkit::PushButton::New();
-      button2.SetProperty( Toolkit::Button::Property::LABEL, "Change" );
-      button2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-      button2.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-      button2.ClickedSignal().Connect( this, &ImageViewController::ChangeImageClicked );
-      button2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-      button2.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-      button2.SetProperty( Dali::Actor::Property::NAME, s );
-      mTable.AddChild( button2, Toolkit::TableView::CellPosition( CellPlacement::MID_BUTTON, x )  );
+      button2.SetProperty(Toolkit::Button::Property::LABEL, "Change");
+      button2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+      button2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+      button2.ClickedSignal().Connect(this, &ImageViewController::ChangeImageClicked);
+      button2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      button2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      button2.SetProperty(Dali::Actor::Property::NAME, s);
+      mTable.AddChild(button2, Toolkit::TableView::CellPosition(CellPlacement::MID_BUTTON, x));
 
       Toolkit::PushButton button3 = Toolkit::PushButton::New();
-      button3.SetProperty( Toolkit::Button::Property::LABEL, "Round" );
-      button3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-      button3.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-      button3.ClickedSignal().Connect( this, &ImageViewController::RoundedCornerClicked );
-      button3.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-      button3.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-      button3.SetProperty( Dali::Actor::Property::NAME, s );
-      mTable.AddChild( button3, Toolkit::TableView::CellPosition( CellPlacement::LOWER_BUTTON, x )  );
+      button3.SetProperty(Toolkit::Button::Property::LABEL, "Round");
+      button3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+      button3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+      button3.ClickedSignal().Connect(this, &ImageViewController::RoundedCornerClicked);
+      button3.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      button3.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      button3.SetProperty(Dali::Actor::Property::NAME, s);
+      mTable.AddChild(button3, Toolkit::TableView::CellPosition(CellPlacement::LOWER_BUTTON, x));
 
-      mImageViews[x] = Toolkit::ImageView::New( );
+      mImageViews[x] = Toolkit::ImageView::New();
       Property::Map imagePropertyMap;
-      imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
-      imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL,  IMAGE_PATH[ 0 ]  );
-      mImageViews[x].SetProperty(Toolkit::ImageView::Property::IMAGE , imagePropertyMap );
+      imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
+      imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, IMAGE_PATH[0]);
+      mImageViews[x].SetProperty(Toolkit::ImageView::Property::IMAGE, imagePropertyMap);
 
-
-      mImageViews[x].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-      mImageViews[x].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-      mImageViews[x].SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mTable.AddChild( mImageViews[x], Toolkit::TableView::CellPosition( CellPlacement::IMAGE, x ) );
+      mImageViews[x].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+      mImageViews[x].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      mImageViews[x].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      mTable.AddChild(mImageViews[x], Toolkit::TableView::CellPosition(CellPlacement::IMAGE, x));
 
       // Set changeable counter and toggle for each ImageView
-      mImageViewImageIndexStatus[x] = 0;
-      mImageViewToggleStatus[x] = true;
+      mImageViewImageIndexStatus[x]    = 0;
+      mImageViewToggleStatus[x]        = true;
       mImageViewRoundedCornerStatus[x] = false;
     }
 
@@ -183,45 +177,44 @@ class ImageViewController: public ConnectionTracker
   }
 
 private:
-
-  void ImmediateLoadImage( const char* urlToLoad )
+  void ImmediateLoadImage(const char* urlToLoad)
   {
     Property::Map imagePropertyMap;
-    imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
-    imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL, urlToLoad );
-    Toolkit::Visual::Base visual =  Toolkit::VisualFactory::Get().CreateVisual( imagePropertyMap );
+    imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
+    imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, urlToLoad);
+    Toolkit::Visual::Base visual = Toolkit::VisualFactory::Get().CreateVisual(imagePropertyMap);
     visual.Reset();
   }
 
-  bool ToggleImageOnWindow( Toolkit::Button button )
+  bool ToggleImageOnWindow(Toolkit::Button button)
   {
-    unsigned int buttonIndex = GetButtonIndex( button );
+    unsigned int buttonIndex = GetButtonIndex(button);
 
-    Toolkit::ImageView imageView =  mImageViews[ buttonIndex ];
+    Toolkit::ImageView imageView = mImageViews[buttonIndex];
 
-    if( mImageViewToggleStatus[ buttonIndex ] )
+    if(mImageViewToggleStatus[buttonIndex])
     {
       imageView.Unparent();
     }
     else
     {
-      mTable.AddChild( imageView, Toolkit::TableView::CellPosition( CellPlacement::IMAGE, GetButtonIndex( button ) ) );
+      mTable.AddChild(imageView, Toolkit::TableView::CellPosition(CellPlacement::IMAGE, GetButtonIndex(button)));
     }
 
-    mImageViewToggleStatus[ buttonIndex ] = !mImageViewToggleStatus[ buttonIndex ];
+    mImageViewToggleStatus[buttonIndex] = !mImageViewToggleStatus[buttonIndex];
 
     return true;
   }
 
-  bool ChangeImageClicked( Toolkit::Button button )
+  bool ChangeImageClicked(Toolkit::Button button)
   {
-    unsigned int buttonIndex = GetButtonIndex( button );
+    unsigned int buttonIndex = GetButtonIndex(button);
 
-    if( mImageViews[buttonIndex].GetProperty< bool >( Actor::Property::CONNECTED_TO_SCENE ) )
+    if(mImageViews[buttonIndex].GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE))
     {
       ++mImageViewImageIndexStatus[buttonIndex];
 
-      if( mImageViewImageIndexStatus[buttonIndex] == NUMBER_OF_RESOURCES )
+      if(mImageViewImageIndexStatus[buttonIndex] == NUMBER_OF_RESOURCES)
       {
         mImageViewImageIndexStatus[buttonIndex] = 0;
       }
@@ -230,27 +223,27 @@ private:
       mImageViewRoundedCornerStatus[buttonIndex] = false;
 
       Property::Map imagePropertyMap;
-      imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE,  Toolkit::Visual::IMAGE );
-      imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL,  IMAGE_PATH[ mImageViewImageIndexStatus[buttonIndex] ]  );
-      mImageViews[buttonIndex].SetProperty(Toolkit::ImageView::Property::IMAGE , imagePropertyMap );
+      imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
+      imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, IMAGE_PATH[mImageViewImageIndexStatus[buttonIndex]]);
+      mImageViews[buttonIndex].SetProperty(Toolkit::ImageView::Property::IMAGE, imagePropertyMap);
     }
     return true;
   }
 
-  bool RoundedCornerClicked( Toolkit::Button button )
+  bool RoundedCornerClicked(Toolkit::Button button)
   {
-    unsigned int buttonIndex = GetButtonIndex( button );
+    unsigned int buttonIndex = GetButtonIndex(button);
 
-    if( mImageViews[buttonIndex].GetProperty< bool >( Actor::Property::CONNECTED_TO_SCENE ) )
+    if(mImageViews[buttonIndex].GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE))
     {
-      mImageViewRoundedCornerStatus[ buttonIndex ] = !mImageViewRoundedCornerStatus[ buttonIndex ];
+      mImageViewRoundedCornerStatus[buttonIndex] = !mImageViewRoundedCornerStatus[buttonIndex];
 
       Property::Map imagePropertyMap;
-      imagePropertyMap.Insert( Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE );
-      imagePropertyMap.Insert( Toolkit::ImageVisual::Property::URL, IMAGE_PATH[ mImageViewImageIndexStatus[buttonIndex] ]  );
-      imagePropertyMap.Insert( Toolkit::DevelVisual::Property::CORNER_RADIUS, mImageViewRoundedCornerStatus[buttonIndex] ? CORNER_RADIUS_VALUE : 0.0f );
+      imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
+      imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, IMAGE_PATH[mImageViewImageIndexStatus[buttonIndex]]);
+      imagePropertyMap.Insert(Toolkit::DevelVisual::Property::CORNER_RADIUS, mImageViewRoundedCornerStatus[buttonIndex] ? CORNER_RADIUS_VALUE : 0.0f);
 
-      mImageViews[buttonIndex].SetProperty( Toolkit::ImageView::Property::IMAGE, imagePropertyMap );
+      mImageViews[buttonIndex].SetProperty(Toolkit::ImageView::Property::IMAGE, imagePropertyMap);
     }
     return true;
   }
@@ -262,7 +255,7 @@ private:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -270,26 +263,25 @@ private:
   }
 
 private:
-  Application&  mApplication;
+  Application& mApplication;
 
-  Toolkit::Control           mView;                              ///< The View instance.
-  Toolkit::ToolBar           mToolBar;                           ///< The View's Toolbar.
-  Layer                      mContentLayer;                      ///< Content layer
-  Toolkit::TableView         mTable;
-  Toolkit::ImageView         mImageViews[ NUMBER_OF_IMAGES ];
-  bool                       mImageViewToggleStatus[ NUMBER_OF_IMAGES ];
-  bool                       mImageViewRoundedCornerStatus[ NUMBER_OF_IMAGES ];
-  unsigned int               mImageViewImageIndexStatus[ NUMBER_OF_IMAGES ];
+  Toolkit::Control   mView;         ///< The View instance.
+  Toolkit::ToolBar   mToolBar;      ///< The View's Toolbar.
+  Layer              mContentLayer; ///< Content layer
+  Toolkit::TableView mTable;
+  Toolkit::ImageView mImageViews[NUMBER_OF_IMAGES];
+  bool               mImageViewToggleStatus[NUMBER_OF_IMAGES];
+  bool               mImageViewRoundedCornerStatus[NUMBER_OF_IMAGES];
+  unsigned int       mImageViewImageIndexStatus[NUMBER_OF_IMAGES];
 
   Toolkit::TableView::CellPosition mCurrentPositionToggle;
   Toolkit::TableView::CellPosition mCurrentPositionImage;
-
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-  ImageViewController test( application );
+  Application         application = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  ImageViewController test(application);
   application.MainLoop();
   return 0;
 }

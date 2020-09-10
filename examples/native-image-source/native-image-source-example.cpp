@@ -16,8 +16,8 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/dali.h>
 #include <cstring>
 
 // INTERNAL INCLUDES
@@ -28,11 +28,10 @@ using namespace Toolkit;
 
 namespace
 {
-
 const float BUTTON_HEIGHT = 100.0f;
 const float BUTTON_COUNT  = 5.0f;
 
-const std::string JPG_FILENAME = DEMO_IMAGE_DIR "gallery-medium-4.jpg";
+const std::string JPG_FILENAME     = DEMO_IMAGE_DIR "gallery-medium-4.jpg";
 const std::string CAPTURE_FILENAME = "/tmp/native-image-capture.png";
 
 /**
@@ -40,10 +39,11 @@ const std::string CAPTURE_FILENAME = "/tmp/native-image-capture.png";
  * @param[in] nativeImage The native image
  * @return A shader to render the native image
  */
-Shader CreateShader( NativeImageInterface& nativeImage )
+Shader CreateShader(NativeImageInterface& nativeImage)
 {
   static const char* DEFAULT_SAMPLER_TYPENAME = "sampler2D";
 
+  // clang-format off
   static const char* VERTEX_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
       attribute mediump vec2 aPosition;\n
       attribute mediump vec2 aTexCoord;\n
@@ -68,13 +68,13 @@ Shader CreateShader( NativeImageInterface& nativeImage )
         gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
       }\n
   );
-
+  // clang-format on
 
   std::string fragmentShader;
 
   //Get custom fragment shader prefix
   const char* fragmentPrefix = nativeImage.GetCustomFragmentPrefix();
-  if( fragmentPrefix )
+  if(fragmentPrefix)
   {
     fragmentShader = fragmentPrefix;
     fragmentShader += FRAGMENT_SHADER_TEXTURE;
@@ -86,28 +86,27 @@ Shader CreateShader( NativeImageInterface& nativeImage )
 
   //Get custom sampler type name
   const char* customSamplerTypename = nativeImage.GetCustomSamplerTypename();
-  if( customSamplerTypename )
+  if(customSamplerTypename)
   {
-    fragmentShader.replace( fragmentShader.find( DEFAULT_SAMPLER_TYPENAME ), strlen(DEFAULT_SAMPLER_TYPENAME), customSamplerTypename );
+    fragmentShader.replace(fragmentShader.find(DEFAULT_SAMPLER_TYPENAME), strlen(DEFAULT_SAMPLER_TYPENAME), customSamplerTypename);
   }
 
-  return Shader::New( VERTEX_SHADER_TEXTURE, fragmentShader );
+  return Shader::New(VERTEX_SHADER_TEXTURE, fragmentShader);
 }
 
-}
+} // namespace
 
 // This example shows how to create and use a NativeImageSource as the target of the render task.
 //
 class NativeImageSourceController : public ConnectionTracker
 {
 public:
-
-  NativeImageSourceController( Application& application )
-  : mApplication( application ),
-    mRefreshAlways( true )
+  NativeImageSourceController(Application& application)
+  : mApplication(application),
+    mRefreshAlways(true)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &NativeImageSourceController::Create );
+    mApplication.InitSignal().Connect(this, &NativeImageSourceController::Create);
   }
 
   ~NativeImageSourceController()
@@ -116,11 +115,11 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
-    window.SetBackgroundColor( Color::WHITE );
+    window.SetBackgroundColor(Color::WHITE);
 
     window.KeyEventSignal().Connect(this, &NativeImageSourceController::OnKeyEvent);
 
@@ -131,183 +130,183 @@ public:
 
   void CreateButtonArea()
   {
-    Window window = mApplication.GetWindow();
+    Window  window     = mApplication.GetWindow();
     Vector2 windowSize = window.GetSize();
 
     mButtonArea = Layer::New();
-    mButtonArea.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x, BUTTON_HEIGHT ) );
-    mButtonArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-    mButtonArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    window.Add( mButtonArea );
+    mButtonArea.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x, BUTTON_HEIGHT));
+    mButtonArea.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
+    mButtonArea.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    window.Add(mButtonArea);
 
     mButtonShow = PushButton::New();
-    mButtonShow.SetProperty( Button::Property::TOGGLABLE, true );
-    mButtonShow.SetProperty( Toolkit::Button::Property::LABEL, "SHOW" );
-    mButtonShow.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    mButtonShow.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonShow.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
-    mButtonShow.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
-    mButtonArea.Add( mButtonShow );
+    mButtonShow.SetProperty(Button::Property::TOGGLABLE, true);
+    mButtonShow.SetProperty(Toolkit::Button::Property::LABEL, "SHOW");
+    mButtonShow.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+    mButtonShow.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonShow.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
+    mButtonShow.ClickedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonArea.Add(mButtonShow);
 
     mButtonRefreshAlways = PushButton::New();
-    mButtonRefreshAlways.SetProperty( Button::Property::TOGGLABLE, true );
-    mButtonRefreshAlways.SetProperty( Toolkit::Button::Property::LABEL, "ALWAYS" );
-    mButtonRefreshAlways.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    mButtonRefreshAlways.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonRefreshAlways.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
-    mButtonRefreshAlways.SetProperty( Actor::Property::POSITION, Vector2( (windowSize.x / BUTTON_COUNT)*1.0f, 0.0f ));
-    mButtonRefreshAlways.StateChangedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
-    mButtonArea.Add( mButtonRefreshAlways );
+    mButtonRefreshAlways.SetProperty(Button::Property::TOGGLABLE, true);
+    mButtonRefreshAlways.SetProperty(Toolkit::Button::Property::LABEL, "ALWAYS");
+    mButtonRefreshAlways.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+    mButtonRefreshAlways.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonRefreshAlways.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
+    mButtonRefreshAlways.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 1.0f, 0.0f));
+    mButtonRefreshAlways.StateChangedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonArea.Add(mButtonRefreshAlways);
 
     mButtonRefreshOnce = PushButton::New();
-    mButtonRefreshOnce.SetProperty( Toolkit::Button::Property::LABEL, "ONCE" );
-    mButtonRefreshOnce.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    mButtonRefreshOnce.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonRefreshOnce.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
-    mButtonRefreshOnce.SetProperty( Actor::Property::POSITION, Vector2( (windowSize.x / BUTTON_COUNT)*2.0f, 0.0f ));
-    mButtonRefreshOnce.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
-    mButtonArea.Add( mButtonRefreshOnce );
+    mButtonRefreshOnce.SetProperty(Toolkit::Button::Property::LABEL, "ONCE");
+    mButtonRefreshOnce.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+    mButtonRefreshOnce.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonRefreshOnce.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
+    mButtonRefreshOnce.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 2.0f, 0.0f));
+    mButtonRefreshOnce.ClickedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonArea.Add(mButtonRefreshOnce);
 
     mButtonCapture = PushButton::New();
-    mButtonCapture.SetProperty( Toolkit::Button::Property::LABEL, "CAPTURE" );
-    mButtonCapture.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    mButtonCapture.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonCapture.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
-    mButtonCapture.SetProperty( Actor::Property::POSITION, Vector2( (windowSize.x / BUTTON_COUNT)*3.0f, 0.0f ));
-    mButtonCapture.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
-    mButtonArea.Add( mButtonCapture );
+    mButtonCapture.SetProperty(Toolkit::Button::Property::LABEL, "CAPTURE");
+    mButtonCapture.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+    mButtonCapture.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonCapture.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
+    mButtonCapture.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 3.0f, 0.0f));
+    mButtonCapture.ClickedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonArea.Add(mButtonCapture);
 
     mButtonReset = PushButton::New();
-    mButtonReset.SetProperty( Toolkit::Button::Property::LABEL, "RESET" );
-    mButtonReset.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    mButtonReset.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mButtonReset.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT ) );
-    mButtonReset.SetProperty( Actor::Property::POSITION, Vector2( (windowSize.x / BUTTON_COUNT)*4.0f, 0.0f ));
-    mButtonReset.ClickedSignal().Connect( this, &NativeImageSourceController::OnButtonSelected );
-    mButtonArea.Add( mButtonReset );
+    mButtonReset.SetProperty(Toolkit::Button::Property::LABEL, "RESET");
+    mButtonReset.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+    mButtonReset.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonReset.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
+    mButtonReset.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 4.0f, 0.0f));
+    mButtonReset.ClickedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonArea.Add(mButtonReset);
   }
 
   void CreateContentAreas()
   {
-    Window window = mApplication.GetWindow();
+    Window  window     = mApplication.GetWindow();
     Vector2 windowSize = window.GetSize();
 
-    float contentHeight( (windowSize.y - BUTTON_HEIGHT)/2.0f );
+    float contentHeight((windowSize.y - BUTTON_HEIGHT) / 2.0f);
 
     mTopContentArea = Actor::New();
-    mTopContentArea.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x, contentHeight ) );
-    mTopContentArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-    mTopContentArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mTopContentArea.SetProperty( Actor::Property::POSITION_Y,  BUTTON_HEIGHT );
-    window.Add( mTopContentArea );
+    mTopContentArea.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x, contentHeight));
+    mTopContentArea.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
+    mTopContentArea.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mTopContentArea.SetProperty(Actor::Property::POSITION_Y, BUTTON_HEIGHT);
+    window.Add(mTopContentArea);
 
     mBottomContentArea = Actor::New();
-    mBottomContentArea.SetProperty( Actor::Property::SIZE, Vector2( windowSize.x, contentHeight ) );
-    mBottomContentArea.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-    mBottomContentArea.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    window.Add( mBottomContentArea );
+    mBottomContentArea.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x, contentHeight));
+    mBottomContentArea.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+    mBottomContentArea.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    window.Add(mBottomContentArea);
 
     mSourceActor = ImageView::New(JPG_FILENAME);
-    mSourceActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mSourceActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mTopContentArea.Add( mSourceActor );
+    mSourceActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mSourceActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTopContentArea.Add(mSourceActor);
 
     Animation animation = Animation::New(2.f);
-    Degree relativeRotationDegrees(90.0f);
-    Radian relativeRotationRadians(relativeRotationDegrees);
-    animation.AnimateTo( Property( mSourceActor, Actor::Property::ORIENTATION ), Quaternion( relativeRotationRadians, Vector3::ZAXIS ), AlphaFunction::LINEAR, TimePeriod(0.f, 0.5f));
-    animation.AnimateBy( Property( mSourceActor, Actor::Property::ORIENTATION ), Quaternion( relativeRotationRadians, Vector3::ZAXIS ), AlphaFunction::LINEAR, TimePeriod(0.5f, 0.5f));
-    animation.AnimateBy( Property( mSourceActor, Actor::Property::ORIENTATION ), Quaternion( relativeRotationRadians, Vector3::ZAXIS ), AlphaFunction::LINEAR, TimePeriod(1.f, 0.5f));
-    animation.AnimateBy( Property( mSourceActor, Actor::Property::ORIENTATION ), Quaternion( relativeRotationRadians, Vector3::ZAXIS ), AlphaFunction::LINEAR, TimePeriod(1.5f, 0.5f));
+    Degree    relativeRotationDegrees(90.0f);
+    Radian    relativeRotationRadians(relativeRotationDegrees);
+    animation.AnimateTo(Property(mSourceActor, Actor::Property::ORIENTATION), Quaternion(relativeRotationRadians, Vector3::ZAXIS), AlphaFunction::LINEAR, TimePeriod(0.f, 0.5f));
+    animation.AnimateBy(Property(mSourceActor, Actor::Property::ORIENTATION), Quaternion(relativeRotationRadians, Vector3::ZAXIS), AlphaFunction::LINEAR, TimePeriod(0.5f, 0.5f));
+    animation.AnimateBy(Property(mSourceActor, Actor::Property::ORIENTATION), Quaternion(relativeRotationRadians, Vector3::ZAXIS), AlphaFunction::LINEAR, TimePeriod(1.f, 0.5f));
+    animation.AnimateBy(Property(mSourceActor, Actor::Property::ORIENTATION), Quaternion(relativeRotationRadians, Vector3::ZAXIS), AlphaFunction::LINEAR, TimePeriod(1.5f, 0.5f));
     animation.SetLooping(true);
     animation.Play();
 
-    TextLabel textLabel1 = TextLabel::New( "Image" );
-    textLabel1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-    textLabel1.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    mTopContentArea.Add( textLabel1 );
+    TextLabel textLabel1 = TextLabel::New("Image");
+    textLabel1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+    textLabel1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mTopContentArea.Add(textLabel1);
 
     // Wait until button press before creating mOffscreenRenderTask
 
-    TextLabel textLabel2 = TextLabel::New( "Native Image" );
-    textLabel2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-    textLabel2.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    mBottomContentArea.Add( textLabel2 );
+    TextLabel textLabel2 = TextLabel::New("Native Image");
+    textLabel2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+    textLabel2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mBottomContentArea.Add(textLabel2);
   }
 
   void SetupNativeImage()
   {
-    if( ! mOffscreenRenderTask )
+    if(!mOffscreenRenderTask)
     {
-      Window window = mApplication.GetWindow();
+      Window  window     = mApplication.GetWindow();
       Vector2 windowSize = window.GetSize();
 
-      float contentHeight( (windowSize.y - BUTTON_HEIGHT)/2.0f );
-      Vector2 imageSize( windowSize.x, contentHeight );
+      float   contentHeight((windowSize.y - BUTTON_HEIGHT) / 2.0f);
+      Vector2 imageSize(windowSize.x, contentHeight);
 
-      mNativeImageSourcePtr = NativeImageSource::New( imageSize.width, imageSize.height, NativeImageSource::COLOR_DEPTH_DEFAULT );
-      mNativeTexture = Texture::New( *mNativeImageSourcePtr );
+      mNativeImageSourcePtr = NativeImageSource::New(imageSize.width, imageSize.height, NativeImageSource::COLOR_DEPTH_DEFAULT);
+      mNativeTexture        = Texture::New(*mNativeImageSourcePtr);
 
-      mFrameBuffer = FrameBuffer::New( mNativeTexture.GetWidth(), mNativeTexture.GetHeight(), FrameBuffer::Attachment::NONE );
-      mFrameBuffer.AttachColorTexture( mNativeTexture );
+      mFrameBuffer = FrameBuffer::New(mNativeTexture.GetWidth(), mNativeTexture.GetHeight(), FrameBuffer::Attachment::NONE);
+      mFrameBuffer.AttachColorTexture(mNativeTexture);
 
-      mCameraActor = CameraActor::New( imageSize );
-      mCameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-      mCameraActor.SetProperty( Actor::Property::PARENT_ORIGIN, AnchorPoint::CENTER );
-      mTopContentArea.Add( mCameraActor );
+      mCameraActor = CameraActor::New(imageSize);
+      mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+      mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, AnchorPoint::CENTER);
+      mTopContentArea.Add(mCameraActor);
 
       RenderTaskList taskList = window.GetRenderTaskList();
-      mOffscreenRenderTask = taskList.CreateTask();
-      mOffscreenRenderTask.SetSourceActor( mSourceActor );
-      mOffscreenRenderTask.SetClearColor( Color::WHITE );
-      mOffscreenRenderTask.SetClearEnabled( true );
-      mOffscreenRenderTask.SetCameraActor( mCameraActor );
-      mOffscreenRenderTask.GetCameraActor().SetInvertYAxis( true );
-      mOffscreenRenderTask.SetFrameBuffer( mFrameBuffer );
+      mOffscreenRenderTask    = taskList.CreateTask();
+      mOffscreenRenderTask.SetSourceActor(mSourceActor);
+      mOffscreenRenderTask.SetClearColor(Color::WHITE);
+      mOffscreenRenderTask.SetClearEnabled(true);
+      mOffscreenRenderTask.SetCameraActor(mCameraActor);
+      mOffscreenRenderTask.GetCameraActor().SetInvertYAxis(true);
+      mOffscreenRenderTask.SetFrameBuffer(mFrameBuffer);
     }
 
-    if( mRefreshAlways )
+    if(mRefreshAlways)
     {
-      mOffscreenRenderTask.SetRefreshRate( RenderTask::REFRESH_ALWAYS );
+      mOffscreenRenderTask.SetRefreshRate(RenderTask::REFRESH_ALWAYS);
     }
     else
     {
-      mOffscreenRenderTask.SetRefreshRate( RenderTask::REFRESH_ONCE );
+      mOffscreenRenderTask.SetRefreshRate(RenderTask::REFRESH_ONCE);
     }
   }
 
-  void SetupDisplayActor( bool show )
+  void SetupDisplayActor(bool show)
   {
-    if( show )
+    if(show)
     {
-      if( ! mDisplayActor )
+      if(!mDisplayActor)
       {
         // Make sure we have something to display
         SetupNativeImage();
 
         mDisplayActor = Actor::New();
-        mDisplayActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-        mDisplayActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+        mDisplayActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+        mDisplayActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
 
         Geometry geometry = DemoHelper::CreateTexturedQuad();
 
-        Shader shader = CreateShader( *mNativeImageSourcePtr );
+        Shader shader = CreateShader(*mNativeImageSourcePtr);
 
-        Renderer renderer = Renderer::New( geometry, shader );
+        Renderer renderer = Renderer::New(geometry, shader);
 
         TextureSet textureSet = TextureSet::New();
-        textureSet.SetTexture( 0u, mNativeTexture );
-        renderer.SetTextures( textureSet );
+        textureSet.SetTexture(0u, mNativeTexture);
+        renderer.SetTextures(textureSet);
 
-        mDisplayActor.AddRenderer( renderer );
-        mDisplayActor.SetProperty( Actor::Property::SIZE, Vector2( mNativeTexture.GetWidth(), mNativeTexture.GetHeight() ) );
+        mDisplayActor.AddRenderer(renderer);
+        mDisplayActor.SetProperty(Actor::Property::SIZE, Vector2(mNativeTexture.GetWidth(), mNativeTexture.GetHeight()));
 
-        mBottomContentArea.Add( mDisplayActor );
+        mBottomContentArea.Add(mDisplayActor);
       }
     }
     else
     {
-      UnparentAndReset( mDisplayActor );
+      UnparentAndReset(mDisplayActor);
     }
   }
 
@@ -316,23 +315,23 @@ public:
     mRefreshAlways = false;
     SetupNativeImage();
 
-    mOffscreenRenderTask.FinishedSignal().Connect( this, &NativeImageSourceController::DoCapture );
+    mOffscreenRenderTask.FinishedSignal().Connect(this, &NativeImageSourceController::DoCapture);
   }
 
   void DoCapture(RenderTask& task)
   {
-    task.FinishedSignal().Disconnect( this, &NativeImageSourceController::DoCapture );
+    task.FinishedSignal().Disconnect(this, &NativeImageSourceController::DoCapture);
 
-    mNativeImageSourcePtr->EncodeToFile( CAPTURE_FILENAME );
+    mNativeImageSourcePtr->EncodeToFile(CAPTURE_FILENAME);
   }
 
   void Reset()
   {
-    SetupDisplayActor( false );
+    SetupDisplayActor(false);
 
-    Window window = mApplication.GetWindow();
+    Window         window   = mApplication.GetWindow();
     RenderTaskList taskList = window.GetRenderTaskList();
-    taskList.RemoveTask( mOffscreenRenderTask );
+    taskList.RemoveTask(mOffscreenRenderTask);
     mOffscreenRenderTask.Reset();
     mCameraActor.Reset();
 
@@ -341,40 +340,40 @@ public:
     mNativeImageSourcePtr.Reset();
   }
 
-  bool OnButtonSelected( Toolkit::Button button )
+  bool OnButtonSelected(Toolkit::Button button)
   {
-    Toolkit::PushButton pushButton = Toolkit::PushButton::DownCast( button );
+    Toolkit::PushButton pushButton = Toolkit::PushButton::DownCast(button);
 
-    if( pushButton == mButtonShow )
+    if(pushButton == mButtonShow)
     {
-      bool isSelected = mButtonShow.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
+      bool isSelected = mButtonShow.GetProperty(Toolkit::Button::Property::SELECTED).Get<bool>();
 
-      SetupDisplayActor( isSelected );
+      SetupDisplayActor(isSelected);
     }
-    else if( pushButton == mButtonRefreshAlways )
+    else if(pushButton == mButtonRefreshAlways)
     {
-      bool isSelected = mButtonRefreshAlways.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
+      bool isSelected = mButtonRefreshAlways.GetProperty(Toolkit::Button::Property::SELECTED).Get<bool>();
 
       mRefreshAlways = isSelected;
       SetupNativeImage();
     }
-    else if( pushButton == mButtonRefreshOnce )
+    else if(pushButton == mButtonRefreshOnce)
     {
-      bool isSelected = mButtonRefreshAlways.GetProperty( Toolkit::Button::Property::SELECTED ).Get<bool>();
+      bool isSelected = mButtonRefreshAlways.GetProperty(Toolkit::Button::Property::SELECTED).Get<bool>();
 
-      if( isSelected )
+      if(isSelected)
       {
-        mButtonRefreshAlways.SetProperty( Button::Property::SELECTED, false );
+        mButtonRefreshAlways.SetProperty(Button::Property::SELECTED, false);
       }
 
       mRefreshAlways = false;
       SetupNativeImage();
     }
-    else if( pushButton == mButtonCapture )
+    else if(pushButton == mButtonCapture)
     {
       Capture();
     }
-    else if( pushButton == mButtonReset )
+    else if(pushButton == mButtonReset)
     {
       Reset();
     }
@@ -386,7 +385,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -394,8 +393,7 @@ public:
   }
 
 private:
-
-  Application&  mApplication;
+  Application& mApplication;
 
   Layer mButtonArea;
   Actor mTopContentArea;
@@ -413,7 +411,7 @@ private:
   Texture              mNativeTexture;
   FrameBuffer          mFrameBuffer;
 
-  RenderTask mOffscreenRenderTask;
+  RenderTask  mOffscreenRenderTask;
   CameraActor mCameraActor;
 
   Actor mDisplayActor;
@@ -421,10 +419,10 @@ private:
   bool mRefreshAlways;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  NativeImageSourceController test( application );
+  Application                 application = Application::New(&argc, &argv);
+  NativeImageSourceController test(application);
   application.MainLoop();
   return 0;
 }

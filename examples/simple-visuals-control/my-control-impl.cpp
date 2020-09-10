@@ -20,11 +20,11 @@
 
 // EXTERNAL INCLUDES
 
-#include <dali/devel-api/scripting/enum-helper.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
-#include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali/devel-api/scripting/enum-helper.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -33,11 +33,8 @@ namespace Demo
 {
 namespace Internal
 {
-
 namespace
 {
-
-
 Dali::BaseHandle Create()
 {
   return Demo::MyControl::New();
@@ -45,31 +42,29 @@ Dali::BaseHandle Create()
 
 // Required code for Property set up.
 
-DALI_TYPE_REGISTRATION_BEGIN( MyControl, Dali::Toolkit::Control, Create );
+DALI_TYPE_REGISTRATION_BEGIN(MyControl, Dali::Toolkit::Control, Create);
 
-DALI_PROPERTY_REGISTRATION( Demo, MyControl, "iconVisual", MAP, ICON_VISUAL )
+DALI_PROPERTY_REGISTRATION(Demo, MyControl, "iconVisual", MAP, ICON_VISUAL)
 
 DALI_TYPE_REGISTRATION_END();
 
 // Add an enum to string conversion entry for the control's visuals.  In this case just the icon visual.
 // Enables Setting of the property using enums or strings.
-DALI_ENUM_TO_STRING_TABLE_BEGIN( VISUAL_PROPERTIES )
-{ "iconVisual", Demo::MyControl::Property::ICON_VISUAL },
-DALI_ENUM_TO_STRING_TABLE_END( VISUAL_PROPERTIES )
-
+DALI_ENUM_TO_STRING_TABLE_BEGIN(VISUAL_PROPERTIES)
+  {"iconVisual", Demo::MyControl::Property::ICON_VISUAL},
+DALI_ENUM_TO_STRING_TABLE_END(VISUAL_PROPERTIES)
 
 } // anonymous namespace
 
-
 Internal::MyControl::MyControl()
-: Control( ControlBehaviour( CONTROL_BEHAVIOUR_DEFAULT ) )
+: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT))
 {
 }
 
 Demo::MyControl Internal::MyControl::New()
 {
-  IntrusivePtr<Internal::MyControl> impl = new Internal::MyControl();
-  Demo::MyControl handle = Demo::MyControl( *impl );
+  IntrusivePtr<Internal::MyControl> impl   = new Internal::MyControl();
+  Demo::MyControl                   handle = Demo::MyControl(*impl);
   impl->Initialize();
   return handle;
 }
@@ -77,31 +72,31 @@ Demo::MyControl Internal::MyControl::New()
 void MyControl::OnInitialize()
 {
   Dali::Actor self = Self();
-  self.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE, true );
+  self.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
 }
 
-void MyControl::SetProperty( BaseObject* object, Property::Index index, const Property::Value& value )
+void MyControl::SetProperty(BaseObject* object, Property::Index index, const Property::Value& value)
 {
-  Demo::MyControl myControl = Demo::MyControl::DownCast( Dali::BaseHandle( object ) );
+  Demo::MyControl myControl = Demo::MyControl::DownCast(Dali::BaseHandle(object));
 
-  if( myControl )
+  if(myControl)
   {
-    MyControl& impl = GetImpl( myControl );
-    switch ( index )
+    MyControl& impl = GetImpl(myControl);
+    switch(index)
     {
       case Demo::MyControl::Property::ICON_VISUAL:
       {
-        Toolkit::Visual::Base iconVisual;
+        Toolkit::Visual::Base  iconVisual;
         Toolkit::VisualFactory visualFactory = Toolkit::VisualFactory::Get();
-        Property::Map *map = value.GetMap();
-        if( map && !map->Empty() )
+        Property::Map*         map           = value.GetMap();
+        if(map && !map->Empty())
         {
-          iconVisual = visualFactory.CreateVisual( *map );
+          iconVisual = visualFactory.CreateVisual(*map);
         }
 
-        if ( iconVisual )
+        if(iconVisual)
         {
-          DevelControl::RegisterVisual( impl, index, iconVisual );
+          DevelControl::RegisterVisual(impl, index, iconVisual);
         }
         break;
       }
@@ -109,24 +104,24 @@ void MyControl::SetProperty( BaseObject* object, Property::Index index, const Pr
   }
 }
 
-Property::Value MyControl::GetProperty( BaseObject* object, Property::Index propertyIndex )
+Property::Value MyControl::GetProperty(BaseObject* object, Property::Index propertyIndex)
 {
   Property::Value value;
 
-  Demo::MyControl myControl = Demo::MyControl::DownCast( Dali::BaseHandle( object ) );
+  Demo::MyControl myControl = Demo::MyControl::DownCast(Dali::BaseHandle(object));
 
-  if ( myControl )
+  if(myControl)
   {
-    switch ( propertyIndex )
+    switch(propertyIndex)
     {
       case Demo::MyControl::Property::ICON_VISUAL:
       {
-        Property::Map map;
-        MyControl& impl = GetImpl( myControl );
-        Toolkit::Visual::Base visual =  DevelControl::GetVisual( impl, propertyIndex );
-        if ( visual )
+        Property::Map         map;
+        MyControl&            impl   = GetImpl(myControl);
+        Toolkit::Visual::Base visual = DevelControl::GetVisual(impl, propertyIndex);
+        if(visual)
         {
-          visual.CreatePropertyMap( map ); // Creates a Property map containing the Visual that ICON_VISUAL currently is. Can change if state changes.
+          visual.CreatePropertyMap(map); // Creates a Property map containing the Visual that ICON_VISUAL currently is. Can change if state changes.
           value = map;
         }
         break;
@@ -139,5 +134,5 @@ Property::Value MyControl::GetProperty( BaseObject* object, Property::Index prop
   return value;
 }
 
-} // Internal
-} // Demo
+} // namespace Internal
+} // namespace Demo

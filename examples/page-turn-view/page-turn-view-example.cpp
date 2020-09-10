@@ -15,48 +15,45 @@
  *
  */
 
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/page-turn-view/page-factory.h>
 #include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-landscape-view.h>
 #include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-portrait-view.h>
 #include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-view.h>
+#include <dali/dali.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 namespace
 {
-
-const char* BOOK_COVER_PORTRAIT = ( DEMO_IMAGE_DIR "book-portrait-cover.jpg" );
-const char* BOOK_COVER_LANDSCAPE = ( DEMO_IMAGE_DIR "book-landscape-cover.jpg" );
-const char* BOOK_COVER_BACK_LANDSCAPE = ( DEMO_IMAGE_DIR "book-landscape-cover-back.jpg" );
+const char* BOOK_COVER_PORTRAIT       = (DEMO_IMAGE_DIR "book-portrait-cover.jpg");
+const char* BOOK_COVER_LANDSCAPE      = (DEMO_IMAGE_DIR "book-landscape-cover.jpg");
+const char* BOOK_COVER_BACK_LANDSCAPE = (DEMO_IMAGE_DIR "book-landscape-cover-back.jpg");
 
 const char* PAGE_IMAGES_PORTRAIT[] =
-{
-  DEMO_IMAGE_DIR "book-portrait-p1.jpg",
-  DEMO_IMAGE_DIR "book-portrait-p2.jpg",
-  DEMO_IMAGE_DIR "book-portrait-p3.jpg",
-  DEMO_IMAGE_DIR "book-portrait-p4.jpg",
-  DEMO_IMAGE_DIR "book-portrait-p5.jpg",
-  DEMO_IMAGE_DIR "book-portrait-p6.jpg",
-  DEMO_IMAGE_DIR "book-portrait-p7.jpg",
-  DEMO_IMAGE_DIR "book-portrait-p8.jpg"
-};
-const unsigned int NUMBER_OF_PORTRAIT_IMAGE( sizeof(PAGE_IMAGES_PORTRAIT) / sizeof(PAGE_IMAGES_PORTRAIT[0]) );
+  {
+    DEMO_IMAGE_DIR "book-portrait-p1.jpg",
+    DEMO_IMAGE_DIR "book-portrait-p2.jpg",
+    DEMO_IMAGE_DIR "book-portrait-p3.jpg",
+    DEMO_IMAGE_DIR "book-portrait-p4.jpg",
+    DEMO_IMAGE_DIR "book-portrait-p5.jpg",
+    DEMO_IMAGE_DIR "book-portrait-p6.jpg",
+    DEMO_IMAGE_DIR "book-portrait-p7.jpg",
+    DEMO_IMAGE_DIR "book-portrait-p8.jpg"};
+const unsigned int NUMBER_OF_PORTRAIT_IMAGE(sizeof(PAGE_IMAGES_PORTRAIT) / sizeof(PAGE_IMAGES_PORTRAIT[0]));
 
 const char* PAGE_IMAGES_LANDSCAPE[] =
-{
-  DEMO_IMAGE_DIR "book-landscape-p1.jpg",
-  DEMO_IMAGE_DIR "book-landscape-p2.jpg",
-  DEMO_IMAGE_DIR "book-landscape-p3.jpg",
-  DEMO_IMAGE_DIR "book-landscape-p4.jpg",
-  DEMO_IMAGE_DIR "book-landscape-p5.jpg",
-  DEMO_IMAGE_DIR "book-landscape-p6.jpg",
-  DEMO_IMAGE_DIR "book-landscape-p7.jpg",
-  DEMO_IMAGE_DIR "book-landscape-p8.jpg"
-};
-const unsigned int NUMBER_OF_LANDSCAPE_IMAGE( sizeof(PAGE_IMAGES_LANDSCAPE) / sizeof(PAGE_IMAGES_LANDSCAPE[0]) );
+  {
+    DEMO_IMAGE_DIR "book-landscape-p1.jpg",
+    DEMO_IMAGE_DIR "book-landscape-p2.jpg",
+    DEMO_IMAGE_DIR "book-landscape-p3.jpg",
+    DEMO_IMAGE_DIR "book-landscape-p4.jpg",
+    DEMO_IMAGE_DIR "book-landscape-p5.jpg",
+    DEMO_IMAGE_DIR "book-landscape-p6.jpg",
+    DEMO_IMAGE_DIR "book-landscape-p7.jpg",
+    DEMO_IMAGE_DIR "book-landscape-p8.jpg"};
+const unsigned int NUMBER_OF_LANDSCAPE_IMAGE(sizeof(PAGE_IMAGES_LANDSCAPE) / sizeof(PAGE_IMAGES_LANDSCAPE[0]));
 
 enum DemoOrientation
 {
@@ -65,7 +62,7 @@ enum DemoOrientation
   UNKNOWN
 };
 
-}
+} // namespace
 
 class PortraitPageFactory : public PageFactory
 {
@@ -75,7 +72,7 @@ class PortraitPageFactory : public PageFactory
    */
   virtual unsigned int GetNumberOfPages()
   {
-    return 5*NUMBER_OF_PORTRAIT_IMAGE + 1;
+    return 5 * NUMBER_OF_PORTRAIT_IMAGE + 1;
   }
 
   /**
@@ -83,24 +80,24 @@ class PortraitPageFactory : public PageFactory
    * @param[in] pageId The ID of the page to create.
    * @return The texture.
    */
-  virtual Texture NewPage( unsigned int pageId )
+  virtual Texture NewPage(unsigned int pageId)
   {
     Texture texture;
 
     PixelData pixels;
-    if( pageId == 0 )
+    if(pageId == 0)
     {
-      pixels = SyncImageLoader::Load( BOOK_COVER_PORTRAIT );
+      pixels = SyncImageLoader::Load(BOOK_COVER_PORTRAIT);
     }
     else
     {
-      pixels = SyncImageLoader::Load( PAGE_IMAGES_PORTRAIT[ (pageId-1) % NUMBER_OF_PORTRAIT_IMAGE ] );
+      pixels = SyncImageLoader::Load(PAGE_IMAGES_PORTRAIT[(pageId - 1) % NUMBER_OF_PORTRAIT_IMAGE]);
     }
 
-    if( pixels )
+    if(pixels)
     {
-      texture = Texture::New( TextureType::TEXTURE_2D, pixels.GetPixelFormat(), pixels.GetWidth(), pixels.GetHeight() );
-      texture.Upload( pixels, 0, 0, 0, 0, pixels.GetWidth(), pixels.GetHeight() );
+      texture = Texture::New(TextureType::TEXTURE_2D, pixels.GetPixelFormat(), pixels.GetWidth(), pixels.GetHeight());
+      texture.Upload(pixels, 0, 0, 0, 0, pixels.GetWidth(), pixels.GetHeight());
     }
 
     return texture;
@@ -115,7 +112,7 @@ class LandscapePageFactory : public PageFactory
    */
   virtual unsigned int GetNumberOfPages()
   {
-    return 5*NUMBER_OF_LANDSCAPE_IMAGE / 2 + 1;
+    return 5 * NUMBER_OF_LANDSCAPE_IMAGE / 2 + 1;
   }
 
   /**
@@ -123,30 +120,30 @@ class LandscapePageFactory : public PageFactory
    * @param[in] pageId The ID of the page to create.
    * @return The texture.
    */
-  virtual Texture NewPage( unsigned int pageId )
+  virtual Texture NewPage(unsigned int pageId)
   {
     Texture texture;
 
     PixelData pixelsFront;
     PixelData pixelsBack;
 
-    if( pageId == 0 )
+    if(pageId == 0)
     {
-       pixelsFront = SyncImageLoader::Load( BOOK_COVER_LANDSCAPE );
-       pixelsBack  = SyncImageLoader::Load( BOOK_COVER_BACK_LANDSCAPE );
+      pixelsFront = SyncImageLoader::Load(BOOK_COVER_LANDSCAPE);
+      pixelsBack  = SyncImageLoader::Load(BOOK_COVER_BACK_LANDSCAPE);
     }
     else
     {
-      unsigned int imageId = (pageId-1)*2;
-      pixelsFront = SyncImageLoader::Load( PAGE_IMAGES_LANDSCAPE[ imageId     % NUMBER_OF_LANDSCAPE_IMAGE ] );
-      pixelsBack  = SyncImageLoader::Load( PAGE_IMAGES_LANDSCAPE[ (imageId+1) % NUMBER_OF_LANDSCAPE_IMAGE ] );
+      unsigned int imageId = (pageId - 1) * 2;
+      pixelsFront          = SyncImageLoader::Load(PAGE_IMAGES_LANDSCAPE[imageId % NUMBER_OF_LANDSCAPE_IMAGE]);
+      pixelsBack           = SyncImageLoader::Load(PAGE_IMAGES_LANDSCAPE[(imageId + 1) % NUMBER_OF_LANDSCAPE_IMAGE]);
     }
 
-    if( pixelsFront && pixelsBack )
+    if(pixelsFront && pixelsBack)
     {
-      texture = Texture::New( TextureType::TEXTURE_2D, pixelsFront.GetPixelFormat(), pixelsFront.GetWidth()*2, pixelsFront.GetHeight() );
-      texture.Upload( pixelsFront, 0, 0, 0, 0, pixelsFront.GetWidth(), pixelsFront.GetHeight() );
-      texture.Upload( pixelsBack,  0, 0, pixelsFront.GetWidth(), 0, pixelsBack.GetWidth(), pixelsBack.GetHeight() );
+      texture = Texture::New(TextureType::TEXTURE_2D, pixelsFront.GetPixelFormat(), pixelsFront.GetWidth() * 2, pixelsFront.GetHeight());
+      texture.Upload(pixelsFront, 0, 0, 0, 0, pixelsFront.GetWidth(), pixelsFront.GetHeight());
+      texture.Upload(pixelsBack, 0, 0, pixelsFront.GetWidth(), 0, pixelsBack.GetWidth(), pixelsBack.GetHeight());
     }
 
     return texture;
@@ -159,39 +156,35 @@ class LandscapePageFactory : public PageFactory
 class PageTurnExample : public ConnectionTracker
 {
 public:
-
-  PageTurnExample( Application &app );
+  PageTurnExample(Application& app);
 
   ~PageTurnExample();
 
-  void OnInit( Application& app );
+  void OnInit(Application& app);
 
 private:
+  void OnWindowResized(Window window, Window::WindowSize size);
 
-
-  void OnWindowResized( Window window, Window::WindowSize size );
-
-  void Rotate( DemoOrientation orientation );
+  void Rotate(DemoOrientation orientation);
 
   void OnKeyEvent(const KeyEvent& event);
 
 private:
+  Application& mApplication;
 
-  Application&                mApplication;
+  PageTurnView         mPageTurnPortraitView;
+  PageTurnView         mPageTurnLandscapeView;
+  PortraitPageFactory  mPortraitPageFactory;
+  LandscapePageFactory mLandscapePageFactory;
 
-  PageTurnView                mPageTurnPortraitView;
-  PageTurnView                mPageTurnLandscapeView;
-  PortraitPageFactory         mPortraitPageFactory;
-  LandscapePageFactory        mLandscapePageFactory;
-
-  DemoOrientation             mOrientation;
+  DemoOrientation mOrientation;
 };
 
-PageTurnExample::PageTurnExample( Application &app )
-: mApplication( app ),
-  mOrientation( UNKNOWN )
+PageTurnExample::PageTurnExample(Application& app)
+: mApplication(app),
+  mOrientation(UNKNOWN)
 {
-  app.InitSignal().Connect( this, &PageTurnExample::OnInit );
+  app.InitSignal().Connect(this, &PageTurnExample::OnInit);
 }
 
 PageTurnExample::~PageTurnExample()
@@ -201,63 +194,63 @@ PageTurnExample::~PageTurnExample()
 /**
  * The Init signal is received once (only) during the Application lifetime
  */
-void PageTurnExample::OnInit( Application& app )
+void PageTurnExample::OnInit(Application& app)
 {
   Window window = app.GetWindow();
   window.KeyEventSignal().Connect(this, &PageTurnExample::OnKeyEvent);
 
-  window.AddAvailableOrientation( Window::PORTRAIT );
-  window.AddAvailableOrientation( Window::LANDSCAPE );
-  window.AddAvailableOrientation( Window::PORTRAIT_INVERSE  );
-  window.AddAvailableOrientation( Window::LANDSCAPE_INVERSE );
-  window.ResizeSignal().Connect( this, &PageTurnExample::OnWindowResized );
+  window.AddAvailableOrientation(Window::PORTRAIT);
+  window.AddAvailableOrientation(Window::LANDSCAPE);
+  window.AddAvailableOrientation(Window::PORTRAIT_INVERSE);
+  window.AddAvailableOrientation(Window::LANDSCAPE_INVERSE);
+  window.ResizeSignal().Connect(this, &PageTurnExample::OnWindowResized);
 
   Window::WindowSize size = window.GetSize();
-  Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
+  Rotate(size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT);
 }
 
-void PageTurnExample::OnWindowResized( Window window, Window::WindowSize size )
+void PageTurnExample::OnWindowResized(Window window, Window::WindowSize size)
 {
-  Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
+  Rotate(size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT);
 }
 
-void PageTurnExample::Rotate( DemoOrientation orientation )
+void PageTurnExample::Rotate(DemoOrientation orientation)
 {
-  Window window = mApplication.GetWindow();
+  Window  window     = mApplication.GetWindow();
   Vector2 windowSize = window.GetSize();
 
-  if( mOrientation != orientation )
+  if(mOrientation != orientation)
   {
     mOrientation = orientation;
 
-    if( PORTRAIT == orientation )
+    if(PORTRAIT == orientation)
     {
-      if( !mPageTurnPortraitView )
+      if(!mPageTurnPortraitView)
       {
-        mPageTurnPortraitView = PageTurnPortraitView::New( mPortraitPageFactory, windowSize );
-        mPageTurnPortraitView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+        mPageTurnPortraitView = PageTurnPortraitView::New(mPortraitPageFactory, windowSize);
+        mPageTurnPortraitView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       }
 
-      if( mPageTurnLandscapeView )
+      if(mPageTurnLandscapeView)
       {
-        window.Remove( mPageTurnLandscapeView );
+        window.Remove(mPageTurnLandscapeView);
       }
-      window.Add( mPageTurnPortraitView );
+      window.Add(mPageTurnPortraitView);
     }
-    else if( LANDSCAPE == orientation )
+    else if(LANDSCAPE == orientation)
     {
-      if( !mPageTurnLandscapeView )
+      if(!mPageTurnLandscapeView)
       {
-        mPageTurnLandscapeView = PageTurnLandscapeView::New( mLandscapePageFactory, Vector2(windowSize.x*0.5f, windowSize.y) );
-        mPageTurnLandscapeView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+        mPageTurnLandscapeView = PageTurnLandscapeView::New(mLandscapePageFactory, Vector2(windowSize.x * 0.5f, windowSize.y));
+        mPageTurnLandscapeView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       }
 
-      if( mPageTurnPortraitView )
+      if(mPageTurnPortraitView)
       {
-        window.Remove( mPageTurnPortraitView );
+        window.Remove(mPageTurnPortraitView);
       }
 
-      window.Add( mPageTurnLandscapeView );
+      window.Add(mPageTurnLandscapeView);
     }
   }
 }
@@ -269,7 +262,7 @@ void PageTurnExample::OnKeyEvent(const KeyEvent& event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {
-    if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+    if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
     {
       mApplication.Quit();
     }
@@ -277,13 +270,12 @@ void PageTurnExample::OnKeyEvent(const KeyEvent& event)
 }
 
 // Entry point for applications
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application app = Application::New(&argc, &argv);
-  PageTurnExample test ( app );
+  Application     app = Application::New(&argc, &argv);
+  PageTurnExample test(app);
 
   app.MainLoop();
 
   return 0;
 }
-

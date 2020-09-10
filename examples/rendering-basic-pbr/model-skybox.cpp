@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,16 @@
 
 // EXTERNAL INCLUDES
 #include <dali/devel-api/adaptor-framework/file-loader.h>
-#include <cstdio>
 #include <string.h>
+#include <cstdio>
 
 // INTERNAL INCLUDES
 #include "obj-loader.h"
 
 namespace
 {
+// clang-format off
+
 /*
  * Vertex shader for a skybox
  */
@@ -61,9 +63,9 @@ void main()\n
   gl_FragColor = texColor;\n
 }\n
 );
+// clang-format on
 
 } // namespace
-
 
 ModelSkybox::ModelSkybox()
 {
@@ -73,31 +75,30 @@ ModelSkybox::~ModelSkybox()
 {
 }
 
-void ModelSkybox::Init( const Vector3& size )
+void ModelSkybox::Init(const Vector3& size)
 {
-
   Geometry geometry = CreateGeometry();
-  Shader shader = Shader::New( VERTEX_SHADER_SKYBOX, FRAGMENT_SHADER_SKYBOX );
+  Shader   shader   = Shader::New(VERTEX_SHADER_SKYBOX, FRAGMENT_SHADER_SKYBOX);
 
-  Renderer renderer = Renderer::New( geometry, shader );
+  Renderer renderer = Renderer::New(geometry, shader);
 
-  if( mTextureSet )
+  if(mTextureSet)
   {
-    renderer.SetTextures( mTextureSet );
+    renderer.SetTextures(mTextureSet);
   }
 
   // Face culling is enabled to hide the backwards facing sides of the model
   // This is sufficient to render a single object; for more complex scenes depth-testing might be required
-  renderer.SetProperty( Renderer::Property::DEPTH_TEST_MODE, DepthTestMode::ON );
-  renderer.SetProperty( Renderer::Property::DEPTH_WRITE_MODE, DepthWriteMode::ON );
-  renderer.SetProperty( Renderer::Property::DEPTH_FUNCTION, DepthFunction::LESS_EQUAL );
-  renderer.SetProperty( Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK );
+  renderer.SetProperty(Renderer::Property::DEPTH_TEST_MODE, DepthTestMode::ON);
+  renderer.SetProperty(Renderer::Property::DEPTH_WRITE_MODE, DepthWriteMode::ON);
+  renderer.SetProperty(Renderer::Property::DEPTH_FUNCTION, DepthFunction::LESS_EQUAL);
+  renderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
 
   mActor = Actor::New();
-  mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  mActor.SetProperty( Actor::Property::SIZE, size );
-  mActor.AddRenderer( renderer );
+  mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  mActor.SetProperty(Actor::Property::SIZE, size);
+  mActor.AddRenderer(renderer);
 }
 
 /**
@@ -106,19 +107,18 @@ void ModelSkybox::Init( const Vector3& size )
 void ModelSkybox::InitTexture(Texture texSkybox)
 {
   mTextureSet = TextureSet::New();
-  mTextureSet.SetTexture( 0u, texSkybox );
+  mTextureSet.SetTexture(0u, texSkybox);
 
   Sampler sampler = Sampler::New();
-  sampler.SetWrapMode(WrapMode::CLAMP_TO_EDGE,WrapMode::CLAMP_TO_EDGE,WrapMode::CLAMP_TO_EDGE);
-  sampler.SetFilterMode(FilterMode::LINEAR_MIPMAP_LINEAR,FilterMode::LINEAR);
-  mTextureSet.SetSampler(0,sampler);
+  sampler.SetWrapMode(WrapMode::CLAMP_TO_EDGE, WrapMode::CLAMP_TO_EDGE, WrapMode::CLAMP_TO_EDGE);
+  sampler.SetFilterMode(FilterMode::LINEAR_MIPMAP_LINEAR, FilterMode::LINEAR);
+  mTextureSet.SetSampler(0, sampler);
 }
 
 Actor& ModelSkybox::GetActor()
 {
   return mActor;
 }
-
 
 /**
  * @brief CreateGeometry
@@ -134,61 +134,60 @@ Geometry ModelSkybox::CreateGeometry()
   };
 
   Vertex skyboxVertices[] = {
-      // back
-      { Vector3(  -1.0f,  1.0f, -1.0f ) },
-      { Vector3(  -1.0f, -1.0f, -1.0f ) },
-      { Vector3(   1.0f, -1.0f, -1.0f ) },
-      { Vector3(   1.0f, -1.0f, -1.0f ) },
-      { Vector3(   1.0f,  1.0f, -1.0f ) },
-      { Vector3(  -1.0f,  1.0f, -1.0f ) },
+    // back
+    {Vector3(-1.0f, 1.0f, -1.0f)},
+    {Vector3(-1.0f, -1.0f, -1.0f)},
+    {Vector3(1.0f, -1.0f, -1.0f)},
+    {Vector3(1.0f, -1.0f, -1.0f)},
+    {Vector3(1.0f, 1.0f, -1.0f)},
+    {Vector3(-1.0f, 1.0f, -1.0f)},
 
-      // left
-      { Vector3(  -1.0f, -1.0f,  1.0f ) },
-      { Vector3(  -1.0f, -1.0f, -1.0f ) },
-      { Vector3(  -1.0f,  1.0f, -1.0f ) },
-      { Vector3(  -1.0f,  1.0f, -1.0f ) },
-      { Vector3(  -1.0f,  1.0f,  1.0f ) },
-      { Vector3(  -1.0f, -1.0f,  1.0f ) },
+    // left
+    {Vector3(-1.0f, -1.0f, 1.0f)},
+    {Vector3(-1.0f, -1.0f, -1.0f)},
+    {Vector3(-1.0f, 1.0f, -1.0f)},
+    {Vector3(-1.0f, 1.0f, -1.0f)},
+    {Vector3(-1.0f, 1.0f, 1.0f)},
+    {Vector3(-1.0f, -1.0f, 1.0f)},
 
-      // right
-      { Vector3(   1.0f, -1.0f, -1.0f ) },
-      { Vector3(   1.0f, -1.0f,  1.0f ) },
-      { Vector3(   1.0f,  1.0f,  1.0f ) },
-      { Vector3(   1.0f,  1.0f,  1.0f ) },
-      { Vector3(   1.0f,  1.0f, -1.0f ) },
-      { Vector3(   1.0f, -1.0f, -1.0f ) },
+    // right
+    {Vector3(1.0f, -1.0f, -1.0f)},
+    {Vector3(1.0f, -1.0f, 1.0f)},
+    {Vector3(1.0f, 1.0f, 1.0f)},
+    {Vector3(1.0f, 1.0f, 1.0f)},
+    {Vector3(1.0f, 1.0f, -1.0f)},
+    {Vector3(1.0f, -1.0f, -1.0f)},
 
-      // front
-      { Vector3(  -1.0f, -1.0f,  1.0f ) },
-      { Vector3(  -1.0f,  1.0f,  1.0f ) },
-      { Vector3(   1.0f,  1.0f,  1.0f ) },
-      { Vector3(   1.0f,  1.0f,  1.0f ) },
-      { Vector3(   1.0f, -1.0f,  1.0f ) },
-      { Vector3(  -1.0f, -1.0f,  1.0f ) },
+    // front
+    {Vector3(-1.0f, -1.0f, 1.0f)},
+    {Vector3(-1.0f, 1.0f, 1.0f)},
+    {Vector3(1.0f, 1.0f, 1.0f)},
+    {Vector3(1.0f, 1.0f, 1.0f)},
+    {Vector3(1.0f, -1.0f, 1.0f)},
+    {Vector3(-1.0f, -1.0f, 1.0f)},
 
-      // botton
-      { Vector3(  -1.0f,  1.0f, -1.0f ) },
-      { Vector3(   1.0f,  1.0f, -1.0f ) },
-      { Vector3(   1.0f,  1.0f,  1.0f ) },
-      { Vector3(   1.0f,  1.0f,  1.0f ) },
-      { Vector3(  -1.0f,  1.0f,  1.0f ) },
-      { Vector3(  -1.0f,  1.0f, -1.0f ) },
+    // botton
+    {Vector3(-1.0f, 1.0f, -1.0f)},
+    {Vector3(1.0f, 1.0f, -1.0f)},
+    {Vector3(1.0f, 1.0f, 1.0f)},
+    {Vector3(1.0f, 1.0f, 1.0f)},
+    {Vector3(-1.0f, 1.0f, 1.0f)},
+    {Vector3(-1.0f, 1.0f, -1.0f)},
 
-      // top
-      { Vector3(  -1.0f, -1.0f, -1.0f ) },
-      { Vector3(  -1.0f, -1.0f,  1.0f ) },
-      { Vector3(   1.0f, -1.0f, -1.0f ) },
-      { Vector3(   1.0f, -1.0f, -1.0f ) },
-      { Vector3(  -1.0f, -1.0f,  1.0f ) },
-      { Vector3(   1.0f, -1.0f,  1.0f ) }
-  };
+    // top
+    {Vector3(-1.0f, -1.0f, -1.0f)},
+    {Vector3(-1.0f, -1.0f, 1.0f)},
+    {Vector3(1.0f, -1.0f, -1.0f)},
+    {Vector3(1.0f, -1.0f, -1.0f)},
+    {Vector3(-1.0f, -1.0f, 1.0f)},
+    {Vector3(1.0f, -1.0f, 1.0f)}};
 
-  VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
-                                                 .Add( "aPosition", Property::VECTOR3 ) );
-  vertexBuffer.SetData( skyboxVertices, sizeof(skyboxVertices) / sizeof(Vertex) );
+  VertexBuffer vertexBuffer = VertexBuffer::New(Property::Map()
+                                                  .Add("aPosition", Property::VECTOR3));
+  vertexBuffer.SetData(skyboxVertices, sizeof(skyboxVertices) / sizeof(Vertex));
 
   geometry = Geometry::New();
-  geometry.AddVertexBuffer( vertexBuffer );
-  geometry.SetType( Geometry::TRIANGLES );
+  geometry.AddVertexBuffer(vertexBuffer);
+  geometry.SetType(Geometry::TRIANGLES);
   return geometry;
 }

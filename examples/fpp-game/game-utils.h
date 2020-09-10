@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@
 #ifndef GAME_UTILS_H
 #define GAME_UTILS_H
 
-#include <vector>
 #include <inttypes.h>
 #include <stdlib.h>
+#include <vector>
 
 namespace GameUtils
 {
@@ -29,14 +29,13 @@ typedef std::vector<char> ByteArray;
 /**
  * Loads file from the storage and returns byte array
  */
-bool LoadFile( const char* filename, ByteArray& out );
+bool LoadFile(const char* filename, ByteArray& out);
 
 /**
  * Computes hash value from string using djb2 algorithm
  * @return hash value
  */
-size_t HashString( const char* str );
-}
+size_t HashString(const char* str);
+} // namespace GameUtils
 
 #endif
-

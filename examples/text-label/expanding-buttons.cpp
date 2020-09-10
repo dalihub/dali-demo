@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,25 @@
  * limitations under the License.
  */
 
-#include "expanding-buttons-impl.h"
 #include "expanding-buttons.h"
+#include "expanding-buttons-impl.h"
 
 namespace Demo
 {
-
 ExpandingButtons::ExpandingButtons()
 {
 }
 
-ExpandingButtons::ExpandingButtons( const ExpandingButtons& expandingButtons )
-: Control( expandingButtons )
+ExpandingButtons::ExpandingButtons(const ExpandingButtons& expandingButtons)
+: Control(expandingButtons)
 {
 }
 
-ExpandingButtons& ExpandingButtons::operator= ( const ExpandingButtons& rhs )
+ExpandingButtons& ExpandingButtons::operator=(const ExpandingButtons& rhs)
 {
-  if( &rhs != this )
+  if(&rhs != this)
   {
-    Control::operator=( rhs );
+    Control::operator=(rhs);
   }
   return *this;
 }
@@ -48,14 +47,14 @@ ExpandingButtons ExpandingButtons::New()
   return expandingButtons;
 }
 
-ExpandingButtons ExpandingButtons::DownCast( BaseHandle handle )
+ExpandingButtons ExpandingButtons::DownCast(BaseHandle handle)
 {
-  return Control::DownCast< ExpandingButtons, Internal::ExpandingButtons > ( handle );
+  return Control::DownCast<ExpandingButtons, Internal::ExpandingButtons>(handle);
 }
 
-void ExpandingButtons::RegisterButton( Control& control )
+void ExpandingButtons::RegisterButton(Control& control)
 {
-  GetImpl(*this).RegisterButton( control );
+  GetImpl(*this).RegisterButton(control);
 }
 
 void ExpandingButtons::Expand()
@@ -72,16 +71,15 @@ Demo::ExpandingButtons::ExpandingButtonsSignalType& ExpandingButtons::Collapsing
   return GetImpl(*this).CollapsingSignal();
 }
 
-ExpandingButtons::ExpandingButtons( Internal::ExpandingButtons& implementation )
-: Control( implementation )
+ExpandingButtons::ExpandingButtons(Internal::ExpandingButtons& implementation)
+: Control(implementation)
 {
 }
 
-ExpandingButtons::ExpandingButtons( Dali::Internal::CustomActor* internal )
-: Control( internal )
+ExpandingButtons::ExpandingButtons(Dali::Internal::CustomActor* internal)
+: Control(internal)
 {
-  VerifyCustomActorPointer< Internal::ExpandingButtons >( internal ) ;
+  VerifyCustomActorPointer<Internal::ExpandingButtons>(internal);
 }
-
 
 } //namespace Demo

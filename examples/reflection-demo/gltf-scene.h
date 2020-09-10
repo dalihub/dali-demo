@@ -24,12 +24,15 @@
 
 #include "pico-json.h"
 
-#define GLTF_LOG(...) {Dali::Integration::Log::LogMessage( Dali::Integration::Log::DebugInfo, __VA_ARGS__ );}
+#define GLTF_LOG(...)                                                                   \
+  {                                                                                     \
+    Dali::Integration::Log::LogMessage(Dali::Integration::Log::DebugInfo, __VA_ARGS__); \
+  }
 
 enum class glTFAttributeType
 {
-  POSITION = 0,
-  NORMAL = 1,
+  POSITION   = 0,
+  NORMAL     = 1,
   TEXCOORD_0 = 2,
   UNDEFINED,
 };
@@ -56,19 +59,19 @@ struct glTF_BufferView
 
 struct glTF_Accessor
 {
-  uint32_t bufferView;
-  uint32_t componentType;
-  uint32_t count;
-  uint32_t componentSize;
+  uint32_t    bufferView;
+  uint32_t    componentType;
+  uint32_t    count;
+  uint32_t    componentSize;
   std::string type;
 };
 
 struct glTF_Mesh
 {
-  std::string name;
+  std::string                                         name;
   std::vector<std::pair<glTFAttributeType, uint32_t>> attributes;
-  uint32_t indices;
-  uint32_t material;
+  uint32_t                                            indices;
+  uint32_t                                            material;
 };
 
 struct glTF_Texture
@@ -79,11 +82,11 @@ struct glTF_Texture
 
 struct glTF_Material
 {
-  bool doubleSided;
+  bool        doubleSided;
   std::string name;
   struct pbrMetallicRoughness
   {
-    bool enabled {false};
+    bool enabled{false};
     struct baseTextureColor
     {
       uint32_t index;
@@ -94,17 +97,17 @@ struct glTF_Material
 
 struct glTF_Node
 {
-  uint32_t index{0u};
-  std::string  name{};
-  uint32_t     meshId { 0xffffffff };
-  uint32_t     cameraId{ 0xffffffff };
-  glTF_Node*   parent { nullptr };
-  std::vector<uint32_t> children {};
+  uint32_t              index{0u};
+  std::string           name{};
+  uint32_t              meshId{0xffffffff};
+  uint32_t              cameraId{0xffffffff};
+  glTF_Node*            parent{nullptr};
+  std::vector<uint32_t> children{};
 
   // Transform
-  float        rotationQuaternion[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-  float        translation[3] = { 0.0f, 0.0f, 0.0f };
-  float        scale[3] = { 1.0f, 1.0f, 1.0f };
+  float rotationQuaternion[4] = {0.0f, 0.0f, 0.0f, 1.0f};
+  float translation[3]        = {0.0f, 0.0f, 0.0f};
+  float scale[3]              = {1.0f, 1.0f, 1.0f};
 };
 
 using glTF_Buffer = std::vector<unsigned char>;
@@ -116,8 +119,7 @@ using glTF_Buffer = std::vector<unsigned char>;
  */
 struct glTF
 {
-
-  glTF( const std::string& filename );
+  glTF(const std::string& filename);
   ~glTF() = default;
 
   std::vector<const glTF_Mesh*> GetMeshes() const;
@@ -140,39 +142,37 @@ struct glTF
    * Returns a copy of attribute buffer
    * @return
    */
-  std::vector<unsigned char> GetMeshAttributeBuffer( const glTF_Mesh& mesh, const std::vector<glTFAttributeType>& attrTypes );
-  uint32_t GetMeshAttributeCount( const glTF_Mesh* mesh ) const;
-  const glTF_Mesh* FindMeshByName( const std::string& name ) const;
+  std::vector<unsigned char> GetMeshAttributeBuffer(const glTF_Mesh& mesh, const std::vector<glTFAttributeType>& attrTypes);
+  uint32_t                   GetMeshAttributeCount(const glTF_Mesh* mesh) const;
+  const glTF_Mesh*           FindMeshByName(const std::string& name) const;
 
   /**
    * Returns a copy of index buffer
    * @return
    */
-  std::vector<uint16_t> GetMeshIndexBuffer( const glTF_Mesh* mesh ) const;
+  std::vector<uint16_t> GetMeshIndexBuffer(const glTF_Mesh* mesh) const;
 
-  const glTF_Node* FindNodeByName( const std::string& name ) const;
+  const glTF_Node* FindNodeByName(const std::string& name) const;
 
 private:
+  void LoadFromFile(const std::string& filename);
 
-  void LoadFromFile( const std::string& filename );
-
-  glTF_Buffer LoadFile( const std::string& filename );
+  glTF_Buffer LoadFile(const std::string& filename);
 
   bool ParseJSON();
 
-  std::vector<glTF_Mesh>        mMeshes;
-  std::vector<glTF_Camera>      mCameras;
-  std::vector<glTF_BufferView>  mBufferViews;
-  std::vector<glTF_Accessor>    mAccessors;
-  std::vector<glTF_Node>        mNodes;
-  std::vector<glTF_Material>    mMaterials;
-  std::vector<glTF_Texture>     mTextures;
-  glTF_Buffer mBuffer;
-  glTF_Buffer jsonBuffer;
+  std::vector<glTF_Mesh>       mMeshes;
+  std::vector<glTF_Camera>     mCameras;
+  std::vector<glTF_BufferView> mBufferViews;
+  std::vector<glTF_Accessor>   mAccessors;
+  std::vector<glTF_Node>       mNodes;
+  std::vector<glTF_Material>   mMaterials;
+  std::vector<glTF_Texture>    mTextures;
+  glTF_Buffer                  mBuffer;
+  glTF_Buffer                  jsonBuffer;
 
   // json nodes
   picojson::value jsonNode;
 };
-
 
 #endif //DALI_CMAKE_GLTF_SCENE_H

@@ -22,23 +22,21 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 
 const char* images[] = {
-    DEMO_IMAGE_DIR "gallery-small-1.jpg",
-    DEMO_IMAGE_DIR "gallery-small-2.jpg",
-    DEMO_IMAGE_DIR "gallery-small-3.jpg",
-    DEMO_IMAGE_DIR "gallery-small-4.jpg",
-    DEMO_IMAGE_DIR "gallery-small-5.jpg"
-};
+  DEMO_IMAGE_DIR "gallery-small-1.jpg",
+  DEMO_IMAGE_DIR "gallery-small-2.jpg",
+  DEMO_IMAGE_DIR "gallery-small-3.jpg",
+  DEMO_IMAGE_DIR "gallery-small-4.jpg",
+  DEMO_IMAGE_DIR "gallery-small-5.jpg"};
 
 // This verification example confirms drawing order is the same, with or without clipping enabled.
 class ClippingDrawOrderVerification : public ConnectionTracker
 {
 public:
-
-  ClippingDrawOrderVerification( Application& application )
-  : mApplication( application )
+  ClippingDrawOrderVerification(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal.
-    mApplication.InitSignal().Connect( this, &ClippingDrawOrderVerification::Create );
+    mApplication.InitSignal().Connect(this, &ClippingDrawOrderVerification::Create);
   }
 
   ~ClippingDrawOrderVerification()
@@ -47,29 +45,29 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime.
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
-    window.SetBackgroundColor( Color::WHITE );
+    window.SetBackgroundColor(Color::WHITE);
 
     // Connect to the window's key signal to allow Back and Escape to exit.
-    window.KeyEventSignal().Connect( this, &ClippingDrawOrderVerification::OnKeyEvent );
+    window.KeyEventSignal().Connect(this, &ClippingDrawOrderVerification::OnKeyEvent);
 
     // Create the title label.
-    TextLabel title = TextLabel::New( "Clipping draw order verification" );
-    title.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    title.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
-    title.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    title.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    TextLabel title = TextLabel::New("Clipping draw order verification");
+    title.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
+    title.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
+    title.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    title.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     // Create the description label.
-    TextLabel description = TextLabel::New( "The bottom tree should have the same draw order as the top tree.\nThey should look identical except \"C\" is clipped on the bottom tree." );
-    description.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    description.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    description.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    description.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 1.0f, 0.5f ) );
-    window.Add( description );
+    TextLabel description = TextLabel::New("The bottom tree should have the same draw order as the top tree.\nThey should look identical except \"C\" is clipped on the bottom tree.");
+    description.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
+    description.SetProperty(TextLabel::Property::MULTI_LINE, true);
+    description.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    description.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 1.0f, 0.5f));
+    window.Add(description);
 
     /*
      * Create a 4-row TableView.
@@ -89,28 +87,28 @@ public:
      *    |  Explanation  |
      *    +---------------+
      */
-    TableView view = TableView::New( 4, 1 );
-    view.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    view.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    view.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+    TableView view = TableView::New(4, 1);
+    view.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    view.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    view.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
-    view.SetCellAlignment( Toolkit::TableView::CellPosition( 0, 0 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
-    view.SetCellAlignment( Toolkit::TableView::CellPosition( 1, 0 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
-    view.SetCellAlignment( Toolkit::TableView::CellPosition( 2, 0 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
-    view.SetCellAlignment( Toolkit::TableView::CellPosition( 3, 0 ), HorizontalAlignment::CENTER, VerticalAlignment::CENTER );
+    view.SetCellAlignment(Toolkit::TableView::CellPosition(0, 0), HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
+    view.SetCellAlignment(Toolkit::TableView::CellPosition(1, 0), HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
+    view.SetCellAlignment(Toolkit::TableView::CellPosition(2, 0), HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
+    view.SetCellAlignment(Toolkit::TableView::CellPosition(3, 0), HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
 
-    view.SetCellPadding( Vector2( 14.0f, 7.0f ) );
+    view.SetCellPadding(Vector2(14.0f, 7.0f));
 
-    view.SetRelativeWidth( 0u, 1.0f );
+    view.SetRelativeWidth(0u, 1.0f);
 
-    view.SetFitHeight( 0u );
-    view.SetRelativeHeight( 1u, 0.5f );
-    view.SetRelativeHeight( 2u, 0.5f );
-    view.SetFitHeight( 3u );
+    view.SetFitHeight(0u);
+    view.SetRelativeHeight(1u, 0.5f);
+    view.SetRelativeHeight(2u, 0.5f);
+    view.SetFitHeight(3u);
 
     // Add the title and description to the TableView.
-    view.AddChild( title, TableView::CellPosition( 0u, 0u ) );
-    view.AddChild( description, TableView::CellPosition( 3u, 0u ) );
+    view.AddChild(title, TableView::CellPosition(0u, 0u));
+    view.AddChild(description, TableView::CellPosition(3u, 0u));
 
     /*
        For each of the 2 tree views, we create a small tree of actors as follows:
@@ -125,83 +123,83 @@ public:
        The correct draw order is "ABCDE" (the same as if clipping was not enabled).
     */
     const float treeYStart = 0.12f;
-    const float depthGap = 0.35f;
+    const float depthGap   = 0.35f;
 
-    for( int tree = 0; tree < 2; ++tree )
+    for(int tree = 0; tree < 2; ++tree)
     {
       Control container = Control::New();
-      container.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-      container.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-      container.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      Vector4 backgroundColor = tree == 0 ? Vector4( 0.77f, 1.0f, 0.77f, 1.0f ) : Vector4( 0.8f, 0.8f, 1.0f, 1.0f );
-      container.SetProperty( Control::Property::BACKGROUND, backgroundColor );
+      container.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+      container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
+      container.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      Vector4 backgroundColor = tree == 0 ? Vector4(0.77f, 1.0f, 0.77f, 1.0f) : Vector4(0.8f, 0.8f, 1.0f, 1.0f);
+      container.SetProperty(Control::Property::BACKGROUND, backgroundColor);
       ImageView image[5];
 
       // Loop for each of the 5 images & labels.
-      for( int i = 0; i < 5; ++i )
+      for(int i = 0; i < 5; ++i)
       {
         std::stringstream labelStream;
-        labelStream << static_cast<char>( static_cast<char>( i ) + 'A' );
-        TextLabel textLabel = TextLabel::New( labelStream.str() );
-        textLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+        labelStream << static_cast<char>(static_cast<char>(i) + 'A');
+        TextLabel textLabel = TextLabel::New(labelStream.str());
+        textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
 
-        image[i] = ImageView::New( images[i] );
-        image[i].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
+        image[i] = ImageView::New(images[i]);
+        image[i].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
 
         // Calculate the relative positioning for the images and labels.
-        float depth = static_cast<float>( i == 0 ? 0 : ( ( i - 1 ) % 2 ) + 1 );
+        float depth = static_cast<float>(i == 0 ? 0 : ((i - 1) % 2) + 1);
 
-        if( i == 0 )
+        if(i == 0)
         {
-          image[i].SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, treeYStart, 0.5f ) );
-          textLabel.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 1.0f, 0.05f * depth, 0.5f ) );
+          image[i].SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, treeYStart, 0.5f));
+          textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(1.0f, 0.05f * depth, 0.5f));
         }
         else
         {
           float b = i > 2 ? 1.0f : -1.0f;
-          image[i].SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f + ( 0.2f * b ), depthGap, 0.5f ) );
-          textLabel.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.98f + 0.215f * b + ( 0.04f * b * depth ), treeYStart + 0.02f + ( 0.16f * depth ), 0.5f ) );
+          image[i].SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f + (0.2f * b), depthGap, 0.5f));
+          textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.98f + 0.215f * b + (0.04f * b * depth), treeYStart + 0.02f + (0.16f * depth), 0.5f));
         }
 
-        container.Add( textLabel );
+        container.Add(textLabel);
       }
 
       // Create the title label.
-      std::string treeText = tree == 0 ? "Without Clipping" : "With Clipping";
-      TextLabel treeLabel = TextLabel::New( treeText );
-      treeLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-      treeLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "BOTTOM" );
-      treeLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-      treeLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-      container.Add( treeLabel );
+      std::string treeText  = tree == 0 ? "Without Clipping" : "With Clipping";
+      TextLabel   treeLabel = TextLabel::New(treeText);
+      treeLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
+      treeLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "BOTTOM");
+      treeLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+      treeLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+      container.Add(treeLabel);
 
       // Enable clipping for the 2nd tree.
-      if( tree == 1 )
+      if(tree == 1)
       {
-        image[1].SetProperty( Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN );
+        image[1].SetProperty(Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN);
       }
 
       // Build the tree structure.
-      container.Add( image[0] );
+      container.Add(image[0]);
 
-      image[0].Add( image[1] );
-      image[1].Add( image[2] );
+      image[0].Add(image[1]);
+      image[1].Add(image[2]);
 
-      image[0].Add( image[3] );
-      image[3].Add( image[4] );
+      image[0].Add(image[3]);
+      image[3].Add(image[4]);
 
       // Add the finished tree to the TableView.
-      view.AddChild( container, TableView::CellPosition( 1u + tree, 0u ) );
+      view.AddChild(container, TableView::CellPosition(1u + tree, 0u));
     }
 
     // Add the finished TableView to the window.
-    window.Add( view );
+    window.Add(view);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect( this, &ClippingDrawOrderVerification::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect(this, &ClippingDrawOrderVerification::OnTouch);
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch(Actor actor, const TouchEvent& touch)
   {
     // Quit the application.
     mApplication.Quit();
@@ -214,11 +212,11 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -226,13 +224,13 @@ public:
   }
 
 private:
-  Application&  mApplication;
+  Application& mApplication;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  ClippingDrawOrderVerification verification( application );
+  Application                   application = Application::New(&argc, &argv);
+  ClippingDrawOrderVerification verification(application);
   application.MainLoop();
   return 0;
 }

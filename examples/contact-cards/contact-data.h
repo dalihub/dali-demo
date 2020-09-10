@@ -2,7 +2,7 @@
 #define CONTACT_DATA_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,18 +23,17 @@
 
 namespace ContactData
 {
-
 /**
  * @brief The information for an individual contact.
  */
 struct Item
 {
-  const char * const name; ///< The name of the contact.
-  const char * const address; ///< The address of the contact.
-  const char * const imagePath; ///< The path to the image that represents the contact.
+  const char* const name;      ///< The name of the contact.
+  const char* const address;   ///< The address of the contact.
+  const char* const imagePath; ///< The path to the image that represents the contact.
 };
 
-extern const Item TABLE[]; ///< The table that has the information for all the contacts.
+extern const Item   TABLE[];    ///< The table that has the information for all the contacts.
 extern const size_t TABLE_SIZE; ///< The size of TABLE. Can use this to iterate through TABLE.
 
 } // namespace ContactData

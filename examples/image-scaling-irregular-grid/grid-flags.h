@@ -16,9 +16,9 @@
  * limitations under the License.
  *
  */
+#include <dali/dali.h>
 #include <algorithm>
 #include <cassert>
-#include <dali/dali.h>
 
 /** Controls the output of application logging. */
 //#define DEBUG_PRINT_GRID_DIAGNOSTICS
@@ -36,23 +36,27 @@ public:
   /**
    * Create grid of specified dimensions.
    */
-  GridFlags( unsigned width, unsigned height ) :  mCells( width * height ), mWidth( width ), mHeight( height ), mHighestUsedRow( 0 )
+  GridFlags(unsigned width, unsigned height)
+  : mCells(width * height),
+    mWidth(width),
+    mHeight(height),
+    mHighestUsedRow(0)
   {
 #ifdef DEBUG_PRINT_GRID_DIAGNOSTICS
-      fprintf(stderr, "Grid created with dimensions: (%u, %u).\n", mWidth, mHeight );
+    fprintf(stderr, "Grid created with dimensions: (%u, %u).\n", mWidth, mHeight);
 #endif
   }
 
-  void Set( const unsigned x, const unsigned y )
+  void Set(const unsigned x, const unsigned y)
   {
-    const unsigned index = CellIndex( x, y );
+    const unsigned index = CellIndex(x, y);
     mCells[index] += 1u; ///< += To allow a debug check of the number of times a cell is set.
-    mHighestUsedRow = std::max( mHighestUsedRow, y );
+    mHighestUsedRow = std::max(mHighestUsedRow, y);
   }
 
-  bool Get( unsigned x, unsigned y ) const
+  bool Get(unsigned x, unsigned y) const
   {
-    return mCells[ CellIndex( x, y ) ] != 0;
+    return mCells[CellIndex(x, y)] != 0;
   }
 
   unsigned GetHighestUsedRow() const
@@ -70,47 +74,47 @@ public:
    *             or the largest area rectangular region no greater than the requested
    *             region in x or y. Undefined if false is returned.
    */
-  bool AllocateRegion( const Vector2& region, unsigned& outCellX, unsigned& outCellY, Vector2& outRegion )
+  bool AllocateRegion(const Vector2& region, unsigned& outCellX, unsigned& outCellY, Vector2& outRegion)
   {
-    const unsigned regionWidth = (region.x + 0.5f);
+    const unsigned regionWidth  = (region.x + 0.5f);
     const unsigned regionHeight = (region.y + 0.5f);
 #ifdef DEBUG_PRINT_GRID_DIAGNOSTICS
-      fprintf( stderr, "Allocation requested for region (%u, %u). Result: ", regionWidth, regionHeight );
+    fprintf(stderr, "Allocation requested for region (%u, %u). Result: ", regionWidth, regionHeight);
 #endif
-    unsigned bestRegionWidth = 0;
+    unsigned bestRegionWidth  = 0;
     unsigned bestRegionHeight = 0;
-    unsigned bestCellX = 0;
-    unsigned bestCellY = 0;
+    unsigned bestCellX        = 0;
+    unsigned bestCellY        = 0;
 
     // Look for a non-set cell:
-    for( unsigned y = 0; y < mHeight; ++y )
+    for(unsigned y = 0; y < mHeight; ++y)
     {
-      for( unsigned x = 0; x < mWidth; ++x )
+      for(unsigned x = 0; x < mWidth; ++x)
       {
-        if ( !Get( x, y) )
+        if(!Get(x, y))
         {
           // Look for clear grid cells under the desired region:
 
-          const unsigned clampedRegionHeight = std::min( regionHeight, mHeight - y);
-          const unsigned clampedRegionWidth = std::min( regionWidth, mWidth - x);
-          const unsigned regionLimitY = y + clampedRegionHeight;
-          const unsigned regionLimitX = x + clampedRegionWidth;
+          const unsigned clampedRegionHeight = std::min(regionHeight, mHeight - y);
+          const unsigned clampedRegionWidth  = std::min(regionWidth, mWidth - x);
+          const unsigned regionLimitY        = y + clampedRegionHeight;
+          const unsigned regionLimitX        = x + clampedRegionWidth;
 
-          for( unsigned regionY = y; regionY < regionLimitY; ++regionY )
+          for(unsigned regionY = y; regionY < regionLimitY; ++regionY)
           {
-            for( unsigned regionX = x; regionX < regionLimitX; ++regionX )
+            for(unsigned regionX = x; regionX < regionLimitX; ++regionX)
             {
-              if( Get( regionX, regionY ) )
+              if(Get(regionX, regionY))
               {
                 // The region of clear cells is not big enough but remember it
                 // anyway in case there is no region that fits:
-                const unsigned clearRegionWidth = regionX - x;
+                const unsigned clearRegionWidth  = regionX - x;
                 const unsigned clearRegionHeight = (regionY + 1) - y;
-                if( clearRegionWidth * clearRegionHeight > bestRegionWidth * bestRegionHeight )
+                if(clearRegionWidth * clearRegionHeight > bestRegionWidth * bestRegionHeight)
                 {
-                  bestCellX = x;
-                  bestCellY = y;
-                  bestRegionWidth = clearRegionWidth;
+                  bestCellX        = x;
+                  bestCellY        = y;
+                  bestRegionWidth  = clearRegionWidth;
                   bestRegionHeight = clearRegionHeight;
                 }
                 goto whole_region_not_found;
@@ -119,21 +123,21 @@ public:
           }
 
           // Every cell in the region is clear so check if it is the best one yet:
-          if( clampedRegionWidth * clampedRegionHeight > bestRegionWidth * bestRegionHeight )
+          if(clampedRegionWidth * clampedRegionHeight > bestRegionWidth * bestRegionHeight)
           {
-            bestCellX = x;
-            bestCellY = y;
-            bestRegionWidth = clampedRegionWidth;
+            bestCellX        = x;
+            bestCellY        = y;
+            bestRegionWidth  = clampedRegionWidth;
             bestRegionHeight = clampedRegionHeight;
           }
 
           // If a big-enough region was found, end the search early and greedily allocate it:
-          if( clampedRegionHeight == regionHeight && clampedRegionWidth == regionWidth )
+          if(clampedRegionHeight == regionHeight && clampedRegionWidth == regionWidth)
           {
             x = mWidth;
             y = mHeight;
           }
-whole_region_not_found:
+        whole_region_not_found:
           continue;
         }
       }
@@ -141,31 +145,31 @@ whole_region_not_found:
 
     // Allocate and return the best cell region found:
 
-    if( bestRegionWidth == 0 || bestRegionHeight == 0 )
+    if(bestRegionWidth == 0 || bestRegionHeight == 0)
     {
 #ifdef DEBUG_PRINT_GRID_DIAGNOSTICS
-        fputs( "false.\n", stderr );
+      fputs("false.\n", stderr);
 #endif
       return false;
     }
 
     // Allocate the found region:
 #ifdef DEBUG_PRINT_GRID_DIAGNOSTICS
-      fprintf( stderr, " - bestCellX = %u, bestCellY = %u, bestRegionWidth = %u, bestRegionHeight = %u - ", bestCellX, bestCellY, bestRegionWidth, bestRegionHeight );
+    fprintf(stderr, " - bestCellX = %u, bestCellY = %u, bestRegionWidth = %u, bestRegionHeight = %u - ", bestCellX, bestCellY, bestRegionWidth, bestRegionHeight);
 #endif
-    for( unsigned y = bestCellY; y < bestCellY + bestRegionHeight; ++y )
+    for(unsigned y = bestCellY; y < bestCellY + bestRegionHeight; ++y)
     {
-      for( unsigned x = bestCellX; x < bestCellX + bestRegionWidth; ++x )
+      for(unsigned x = bestCellX; x < bestCellX + bestRegionWidth; ++x)
       {
-        Set( x, y );
+        Set(x, y);
       }
     }
 
-    outCellX = bestCellX;
-    outCellY = bestCellY;
-    outRegion = Vector2( bestRegionWidth, bestRegionHeight );
+    outCellX  = bestCellX;
+    outCellY  = bestCellY;
+    outRegion = Vector2(bestRegionWidth, bestRegionHeight);
 #ifdef DEBUG_PRINT_GRID_DIAGNOSTICS
-      fputs( "true.\n", stderr );
+    fputs("true.\n", stderr);
 #endif
     return true;
   }
@@ -173,9 +177,9 @@ whole_region_not_found:
   /** @return True if every cell was set one or zero times, else false. */
   bool DebugCheckGridValid()
   {
-    for( unsigned cell = 0; cell < mWidth * mHeight; ++cell )
+    for(unsigned cell = 0; cell < mWidth * mHeight; ++cell)
     {
-      if( mCells[cell] > 1 )
+      if(mCells[cell] > 1)
       {
         return false;
       }
@@ -184,17 +188,17 @@ whole_region_not_found:
   }
 
 private:
-  unsigned CellIndex( unsigned x, unsigned y ) const
+  unsigned CellIndex(unsigned x, unsigned y) const
   {
     const unsigned offset = mWidth * y + x;
-    assert( offset < mCells.size() && "Out of range access to grid." );
+    assert(offset < mCells.size() && "Out of range access to grid.");
     return offset;
   }
 
   std::vector<unsigned char> mCells;
-  const unsigned mWidth;
-  const unsigned mHeight;
-  unsigned mHighestUsedRow;
+  const unsigned             mWidth;
+  const unsigned             mHeight;
+  unsigned                   mHighestUsedRow;
 };
 
 } // namespace Demo

@@ -21,10 +21,10 @@
 // INTERNAL INCLUDES
 #include "shared/view.h"
 
-#include <dali/dali.h>
-#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/shader-effects/dissolve-effect.h>
+#include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 using namespace Dali;
 
@@ -33,45 +33,44 @@ using Dali::Toolkit::TextLabel;
 // LOCAL STUFF
 namespace
 {
-
-const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
-const char * const APPLICATION_TITLE_HIGHP( "Dissolve Effect(highp)" );
-const char * const APPLICATION_TITLE_MEDIUMP( "Dissolve Effect(mediump)" );
-const char * const EFFECT_HIGHP_IMAGE( DEMO_IMAGE_DIR "icon-highp.png" );
-const char * const EFFECT_HIGHP_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-highp-selected.png" );
-const char * const EFFECT_MEDIUMP_IMAGE( DEMO_IMAGE_DIR "icon-mediump.png" );
-const char * const EFFECT_MEDIUMP_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-mediump-selected.png" );
-const char * const PLAY_ICON( DEMO_IMAGE_DIR "icon-play.png" );
-const char * const PLAY_ICON_SELECTED( DEMO_IMAGE_DIR "icon-play-selected.png" );
-const char * const STOP_ICON( DEMO_IMAGE_DIR "icon-stop.png" );
-const char * const STOP_ICON_SELECTED( DEMO_IMAGE_DIR "icon-stop-selected.png" );
+const char* const TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
+const char* const APPLICATION_TITLE_HIGHP("Dissolve Effect(highp)");
+const char* const APPLICATION_TITLE_MEDIUMP("Dissolve Effect(mediump)");
+const char* const EFFECT_HIGHP_IMAGE(DEMO_IMAGE_DIR "icon-highp.png");
+const char* const EFFECT_HIGHP_IMAGE_SELECTED(DEMO_IMAGE_DIR "icon-highp-selected.png");
+const char* const EFFECT_MEDIUMP_IMAGE(DEMO_IMAGE_DIR "icon-mediump.png");
+const char* const EFFECT_MEDIUMP_IMAGE_SELECTED(DEMO_IMAGE_DIR "icon-mediump-selected.png");
+const char* const PLAY_ICON(DEMO_IMAGE_DIR "icon-play.png");
+const char* const PLAY_ICON_SELECTED(DEMO_IMAGE_DIR "icon-play-selected.png");
+const char* const STOP_ICON(DEMO_IMAGE_DIR "icon-stop.png");
+const char* const STOP_ICON_SELECTED(DEMO_IMAGE_DIR "icon-stop-selected.png");
 
 const char* IMAGES[] =
-{
-  DEMO_IMAGE_DIR "gallery-large-1.jpg",
-  DEMO_IMAGE_DIR "gallery-large-2.jpg",
-  DEMO_IMAGE_DIR "gallery-large-3.jpg",
-  DEMO_IMAGE_DIR "gallery-large-4.jpg",
-  DEMO_IMAGE_DIR "gallery-large-5.jpg",
-  DEMO_IMAGE_DIR "gallery-large-6.jpg",
-  DEMO_IMAGE_DIR "gallery-large-7.jpg",
-  DEMO_IMAGE_DIR "gallery-large-8.jpg",
-  DEMO_IMAGE_DIR "gallery-large-9.jpg",
-  DEMO_IMAGE_DIR "gallery-large-10.jpg",
-  DEMO_IMAGE_DIR "gallery-large-11.jpg",
-  DEMO_IMAGE_DIR "gallery-large-12.jpg",
-  DEMO_IMAGE_DIR "gallery-large-13.jpg",
-  DEMO_IMAGE_DIR "gallery-large-14.jpg",
-  DEMO_IMAGE_DIR "gallery-large-15.jpg",
-  DEMO_IMAGE_DIR "gallery-large-16.jpg",
-  DEMO_IMAGE_DIR "gallery-large-17.jpg",
-  DEMO_IMAGE_DIR "gallery-large-18.jpg",
-  DEMO_IMAGE_DIR "gallery-large-19.jpg",
-  DEMO_IMAGE_DIR "gallery-large-20.jpg",
-  DEMO_IMAGE_DIR "gallery-large-21.jpg",
+  {
+    DEMO_IMAGE_DIR "gallery-large-1.jpg",
+    DEMO_IMAGE_DIR "gallery-large-2.jpg",
+    DEMO_IMAGE_DIR "gallery-large-3.jpg",
+    DEMO_IMAGE_DIR "gallery-large-4.jpg",
+    DEMO_IMAGE_DIR "gallery-large-5.jpg",
+    DEMO_IMAGE_DIR "gallery-large-6.jpg",
+    DEMO_IMAGE_DIR "gallery-large-7.jpg",
+    DEMO_IMAGE_DIR "gallery-large-8.jpg",
+    DEMO_IMAGE_DIR "gallery-large-9.jpg",
+    DEMO_IMAGE_DIR "gallery-large-10.jpg",
+    DEMO_IMAGE_DIR "gallery-large-11.jpg",
+    DEMO_IMAGE_DIR "gallery-large-12.jpg",
+    DEMO_IMAGE_DIR "gallery-large-13.jpg",
+    DEMO_IMAGE_DIR "gallery-large-14.jpg",
+    DEMO_IMAGE_DIR "gallery-large-15.jpg",
+    DEMO_IMAGE_DIR "gallery-large-16.jpg",
+    DEMO_IMAGE_DIR "gallery-large-17.jpg",
+    DEMO_IMAGE_DIR "gallery-large-18.jpg",
+    DEMO_IMAGE_DIR "gallery-large-19.jpg",
+    DEMO_IMAGE_DIR "gallery-large-20.jpg",
+    DEMO_IMAGE_DIR "gallery-large-21.jpg",
 };
 
-const int NUM_IMAGES( sizeof(IMAGES) / sizeof(IMAGES[0]) );
+const int NUM_IMAGES(sizeof(IMAGES) / sizeof(IMAGES[0]));
 
 // The duration of the current image staying on screen when slideshow is on
 const int VIEWINGTIME = 2000; // 2 seconds
@@ -87,18 +86,18 @@ const float INITIAL_DEPTH = 10.0f;
  * load time to cover the entire window with pixels with no borders,
  * and filter mode BOX_THEN_LINEAR to sample the image with maximum quality.
  */
-Toolkit::ImageView CreateWindowFillingImageView( const Vector2& windowSize, const char * const imagePath )
+Toolkit::ImageView CreateWindowFillingImageView(const Vector2& windowSize, const char* const imagePath)
 {
   Toolkit::ImageView imageView = Toolkit::ImageView::New();
-  Property::Map map;
-  map[Toolkit::Visual::Property::TYPE] = Toolkit::Visual::IMAGE;
-  map[Toolkit::ImageVisual::Property::URL] = imagePath;
-  map[Toolkit::ImageVisual::Property::DESIRED_WIDTH] = windowSize.x;
-  map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = windowSize.y;
-  map[Toolkit::ImageVisual::Property::FITTING_MODE] = FittingMode::SCALE_TO_FILL;
-  map[Toolkit::ImageVisual::Property::SAMPLING_MODE] = SamplingMode::BOX_THEN_LINEAR;
+  Property::Map      map;
+  map[Toolkit::Visual::Property::TYPE]                     = Toolkit::Visual::IMAGE;
+  map[Toolkit::ImageVisual::Property::URL]                 = imagePath;
+  map[Toolkit::ImageVisual::Property::DESIRED_WIDTH]       = windowSize.x;
+  map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT]      = windowSize.y;
+  map[Toolkit::ImageVisual::Property::FITTING_MODE]        = FittingMode::SCALE_TO_FILL;
+  map[Toolkit::ImageVisual::Property::SAMPLING_MODE]       = SamplingMode::BOX_THEN_LINEAR;
   map[Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
-  imageView.SetProperty( Toolkit::ImageView::Property::IMAGE, map );
+  imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
 
   return imageView;
 }
@@ -108,27 +107,25 @@ Toolkit::ImageView CreateWindowFillingImageView( const Vector2& windowSize, cons
 class DissolveEffectApp : public ConnectionTracker
 {
 public:
-
   /**
    * Constructor
    * @param application class, stored as reference
    */
-  DissolveEffectApp( Application& application );
+  DissolveEffectApp(Application& application);
 
   ~DissolveEffectApp();
 
 private:
-
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void OnInit( Application& application );
+  void OnInit(Application& application);
   /**
    * PanGesture callback. This method gets called when the pan gesture is detected.
    * @param[in] actor The actor receiving the pan gesture.
    * @param[in] gesture The detected pan gesture.
    */
-  void OnPanGesture( Actor actor, const PanGesture& gesture );
+  void OnPanGesture(Actor actor, const PanGesture& gesture);
 
   /**
    * Set up the animations for transition
@@ -141,13 +138,13 @@ private:
    * Change the precision of the effect shader when the effect button is clicked
    * @param[in] button The handle of the clicked button
    */
-  bool OnEffectButtonClicked( Toolkit::Button button );
+  bool OnEffectButtonClicked(Toolkit::Button button);
   /**
    * Callback function of slideshow button
    * Start or stop the automatical image display when the slideshow button is clicked
    * @param[in] button The handle of the clicked button
    */
-  bool OnSildeshowButtonClicked( Toolkit::Button button );
+  bool OnSildeshowButtonClicked(Toolkit::Button button);
   /**
    * Callback function of cube transition completed signal
    * @param[in] effect The cube effect used for the transition
@@ -166,45 +163,45 @@ private:
   void OnKeyEvent(const KeyEvent& event);
 
 private:
-  Application&                    mApplication;
-  Toolkit::Control                mView;
-  Toolkit::ToolBar                mToolBar;
-  Layer                           mContent;
-  Toolkit::TextLabel              mTitleActor;
-  Actor                           mParent;
+  Application&       mApplication;
+  Toolkit::Control   mView;
+  Toolkit::ToolBar   mToolBar;
+  Layer              mContent;
+  Toolkit::TextLabel mTitleActor;
+  Actor              mParent;
 
-  Toolkit::ImageView              mCurrentImage;
-  Toolkit::ImageView              mNextImage;
-  unsigned int                    mIndex;
+  Toolkit::ImageView mCurrentImage;
+  Toolkit::ImageView mNextImage;
+  unsigned int       mIndex;
 
-  Property::Map                   mDissolveEffect;
-  Property::Map                   mEmptyEffect;
+  Property::Map mDissolveEffect;
+  Property::Map mEmptyEffect;
 
-  bool                            mUseHighPrecision;
-  Animation                       mAnimation;
+  bool      mUseHighPrecision;
+  Animation mAnimation;
 
-  PanGestureDetector              mPanGestureDetector;
-  bool                            mIsTransiting;
+  PanGestureDetector mPanGestureDetector;
+  bool               mIsTransiting;
 
-  bool                            mSlideshow;
-  Timer                           mViewTimer;
-  bool                            mTimerReady;
-  unsigned int                    mCentralLineIndex;
+  bool         mSlideshow;
+  Timer        mViewTimer;
+  bool         mTimerReady;
+  unsigned int mCentralLineIndex;
 
-  Toolkit::PushButton             mPlayStopButton;
-  Toolkit::PushButton             mEffectChangeButton;
+  Toolkit::PushButton mPlayStopButton;
+  Toolkit::PushButton mEffectChangeButton;
 };
 
-DissolveEffectApp::DissolveEffectApp( Application& application )
-: mApplication( application ),
-  mIndex( 0 ),
+DissolveEffectApp::DissolveEffectApp(Application& application)
+: mApplication(application),
+  mIndex(0),
   mUseHighPrecision(true),
-  mIsTransiting( false ),
-  mSlideshow( false ),
-  mTimerReady( false ),
-  mCentralLineIndex( 0 )
+  mIsTransiting(false),
+  mSlideshow(false),
+  mTimerReady(false),
+  mCentralLineIndex(0)
 {
-  mApplication.InitSignal().Connect( this, &DissolveEffectApp::OnInit );
+  mApplication.InitSignal().Connect(this, &DissolveEffectApp::OnInit);
 }
 
 DissolveEffectApp::~DissolveEffectApp()
@@ -212,90 +209,90 @@ DissolveEffectApp::~DissolveEffectApp()
   //Nothing to do
 }
 
-void DissolveEffectApp::OnInit( Application& application )
+void DissolveEffectApp::OnInit(Application& application)
 {
-  auto window = application.GetWindow();
+  auto    window     = application.GetWindow();
   Vector2 windowSize = window.GetSize();
   window.KeyEventSignal().Connect(this, &DissolveEffectApp::OnKeyEvent);
 
   // Creates a default view with a default tool bar, the view is added to the window.
-  mContent = DemoHelper::CreateView( application, mView,mToolBar, "", TOOLBAR_IMAGE, "" );
+  mContent = DemoHelper::CreateView(application, mView, mToolBar, "", TOOLBAR_IMAGE, "");
 
   // Add an effect-changing button on the right of the tool bar.
   mEffectChangeButton = Toolkit::PushButton::New();
-  mEffectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE );
-  mEffectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE_SELECTED );
-  mEffectChangeButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnEffectButtonClicked );
-  mToolBar.AddControl( mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+  mEffectChangeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE);
+  mEffectChangeButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE_SELECTED);
+  mEffectChangeButton.ClickedSignal().Connect(this, &DissolveEffectApp::OnEffectButtonClicked);
+  mToolBar.AddControl(mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
   // Add title to the tool bar.
-  mTitleActor = DemoHelper::CreateToolBarLabel( APPLICATION_TITLE_HIGHP );
-  mToolBar.AddControl( mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER );
+  mTitleActor = DemoHelper::CreateToolBarLabel(APPLICATION_TITLE_HIGHP);
+  mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER);
 
   // Add an slide-show button on the right of the title
   mPlayStopButton = Toolkit::PushButton::New();
-  mPlayStopButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON );
-  mPlayStopButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED );
-  mPlayStopButton.ClickedSignal().Connect( this, &DissolveEffectApp::OnSildeshowButtonClicked );
-  mToolBar.AddControl( mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING );
+  mPlayStopButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON);
+  mPlayStopButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED);
+  mPlayStopButton.ClickedSignal().Connect(this, &DissolveEffectApp::OnSildeshowButtonClicked);
+  mToolBar.AddControl(mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
 
   // use pan gesture to detect the cursor or finger movement
   mPanGestureDetector = PanGestureDetector::New();
-  mPanGestureDetector.DetectedSignal().Connect( this, &DissolveEffectApp::OnPanGesture );
+  mPanGestureDetector.DetectedSignal().Connect(this, &DissolveEffectApp::OnPanGesture);
 
-  mViewTimer = Timer::New( VIEWINGTIME );
-  mViewTimer.TickSignal().Connect( this, &DissolveEffectApp::OnTimerTick );
+  mViewTimer = Timer::New(VIEWINGTIME);
+  mViewTimer.TickSignal().Connect(this, &DissolveEffectApp::OnTimerTick);
   mTimerReady = true;
 
   // Set size to window size to avoid seeing a black border on transition
   mParent = Actor::New();
-  mParent.SetProperty( Actor::Property::SIZE, windowSize );
-  mParent.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  mContent.Add( mParent );
+  mParent.SetProperty(Actor::Property::SIZE, windowSize);
+  mParent.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  mContent.Add(mParent);
 
   // show the first image
-  mCurrentImage = CreateWindowFillingImageView( windowSize, IMAGES[mIndex] );
-  mCurrentImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  mCurrentImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  mCurrentImage.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-  mParent.Add( mCurrentImage );
+  mCurrentImage = CreateWindowFillingImageView(windowSize, IMAGES[mIndex]);
+  mCurrentImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  mCurrentImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  mCurrentImage.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+  mParent.Add(mCurrentImage);
 
-  mPanGestureDetector.Attach( mCurrentImage );
+  mPanGestureDetector.Attach(mCurrentImage);
 
-  mDissolveEffect = Dali::Toolkit::CreateDissolveEffect( mUseHighPrecision );
+  mDissolveEffect = Dali::Toolkit::CreateDissolveEffect(mUseHighPrecision);
   Property::Map emptyShaderMap;
-  mEmptyEffect.Insert( "shader", emptyShaderMap );
+  mEmptyEffect.Insert("shader", emptyShaderMap);
 }
 
 // signal handler, called when the pan gesture is detected
-void DissolveEffectApp::OnPanGesture( Actor actor, const PanGesture& gesture )
+void DissolveEffectApp::OnPanGesture(Actor actor, const PanGesture& gesture)
 {
   // does not response when the animation has not finished
-  if( mIsTransiting || mSlideshow )
+  if(mIsTransiting || mSlideshow)
   {
     return;
   }
 
-  if( gesture.GetState() == GestureState::CONTINUING )
+  if(gesture.GetState() == GestureState::CONTINUING)
   {
     const Vector2& displacement = gesture.GetDisplacement();
-    if( displacement.x < 0)
+    if(displacement.x < 0)
     {
-      mIndex = (mIndex + 1)%NUM_IMAGES;
+      mIndex = (mIndex + 1) % NUM_IMAGES;
     }
     else
     {
-      mIndex = (mIndex + NUM_IMAGES -1)%NUM_IMAGES;
+      mIndex = (mIndex + NUM_IMAGES - 1) % NUM_IMAGES;
     }
 
-    mNextImage = CreateWindowFillingImageView( mApplication.GetWindow().GetSize(), IMAGES[ mIndex ] );
-    mNextImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mNextImage.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-    mNextImage.SetProperty( Actor::Property::POSITION_Z, INITIAL_DEPTH);
-    mParent.Add( mNextImage );
-    Vector2 size = Vector2( mCurrentImage.GetCurrentProperty< Vector3 >( Actor::Property::SIZE ) );
-    StartTransition( gesture.GetPosition() / size, displacement * Vector2(1.0, size.x/size.y));
+    mNextImage = CreateWindowFillingImageView(mApplication.GetWindow().GetSize(), IMAGES[mIndex]);
+    mNextImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mNextImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    mNextImage.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+    mNextImage.SetProperty(Actor::Property::POSITION_Z, INITIAL_DEPTH);
+    mParent.Add(mNextImage);
+    Vector2 size = Vector2(mCurrentImage.GetCurrentProperty<Vector3>(Actor::Property::SIZE));
+    StartTransition(gesture.GetPosition() / size, displacement * Vector2(1.0, size.x / size.y));
   }
 }
 
@@ -303,25 +300,25 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
 {
   mAnimation = Animation::New(TRANSITION_DURATION);
 
-  Dali::Toolkit::DissolveEffectSetCentralLine( mCurrentImage, position, displacement, 0.0f );
-  mCurrentImage.SetProperty( Toolkit::ImageView::Property::IMAGE, mDissolveEffect );
-  mAnimation.AnimateTo( Property( mCurrentImage, "uPercentage" ), 1.0f, AlphaFunction::LINEAR );
+  Dali::Toolkit::DissolveEffectSetCentralLine(mCurrentImage, position, displacement, 0.0f);
+  mCurrentImage.SetProperty(Toolkit::ImageView::Property::IMAGE, mDissolveEffect);
+  mAnimation.AnimateTo(Property(mCurrentImage, "uPercentage"), 1.0f, AlphaFunction::LINEAR);
 
-  mNextImage.SetProperty( Actor::Property::OPACITY,0.0f);
-  mAnimation.AnimateTo( Property( mNextImage, Actor::Property::COLOR_ALPHA ), 1.0f, AlphaFunction::LINEAR );
+  mNextImage.SetProperty(Actor::Property::OPACITY, 0.0f);
+  mAnimation.AnimateTo(Property(mNextImage, Actor::Property::COLOR_ALPHA), 1.0f, AlphaFunction::LINEAR);
 
   if(mUseHighPrecision)
   {
-    Dali::Toolkit::DissolveEffectSetCentralLine( mNextImage, position, displacement, 1.0f );
-    mNextImage.SetProperty( Toolkit::ImageView::Property::IMAGE, mDissolveEffect );
-    mAnimation.AnimateTo( Property( mNextImage, "uPercentage" ), 0.0f, AlphaFunction::LINEAR );
+    Dali::Toolkit::DissolveEffectSetCentralLine(mNextImage, position, displacement, 1.0f);
+    mNextImage.SetProperty(Toolkit::ImageView::Property::IMAGE, mDissolveEffect);
+    mAnimation.AnimateTo(Property(mNextImage, "uPercentage"), 0.0f, AlphaFunction::LINEAR);
   }
   else
   {
-    mAnimation.AnimateTo( Property( mNextImage, Actor::Property::POSITION ), Vector3( 0.0f, 0.0f, 0.0f ), AlphaFunction::LINEAR );
+    mAnimation.AnimateTo(Property(mNextImage, Actor::Property::POSITION), Vector3(0.0f, 0.0f, 0.0f), AlphaFunction::LINEAR);
   }
 
-  mAnimation.FinishedSignal().Connect( this, &DissolveEffectApp::OnTransitionCompleted );
+  mAnimation.FinishedSignal().Connect(this, &DissolveEffectApp::OnTransitionCompleted);
   mAnimation.Play();
   mIsTransiting = true;
 }
@@ -330,67 +327,67 @@ void DissolveEffectApp::OnKeyEvent(const KeyEvent& event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {
-    if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+    if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
     {
       mApplication.Quit();
     }
   }
 }
 
-bool DissolveEffectApp::OnEffectButtonClicked( Toolkit::Button button )
+bool DissolveEffectApp::OnEffectButtonClicked(Toolkit::Button button)
 {
   mUseHighPrecision = !mUseHighPrecision;
-  mDissolveEffect = Dali::Toolkit::CreateDissolveEffect(mUseHighPrecision);
+  mDissolveEffect   = Dali::Toolkit::CreateDissolveEffect(mUseHighPrecision);
   if(mUseHighPrecision)
   {
-    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP) );
-    mEffectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE );
-    mEffectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE_SELECTED );
+    mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP));
+    mEffectChangeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE);
+    mEffectChangeButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE_SELECTED);
   }
   else
   {
-    mTitleActor.SetProperty( TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_MEDIUMP) );
-    mEffectChangeButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_MEDIUMP_IMAGE );
-    mEffectChangeButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_MEDIUMP_IMAGE_SELECTED );
+    mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_MEDIUMP));
+    mEffectChangeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_MEDIUMP_IMAGE);
+    mEffectChangeButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_MEDIUMP_IMAGE_SELECTED);
   }
 
   return true;
 }
 
-bool DissolveEffectApp::OnSildeshowButtonClicked( Toolkit::Button button )
+bool DissolveEffectApp::OnSildeshowButtonClicked(Toolkit::Button button)
 {
   mSlideshow = !mSlideshow;
-  if( mSlideshow )
+  if(mSlideshow)
   {
-    mPlayStopButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, STOP_ICON );
-    mPlayStopButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, STOP_ICON_SELECTED );
-    mPanGestureDetector.Detach( mParent );
+    mPlayStopButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, STOP_ICON);
+    mPlayStopButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, STOP_ICON_SELECTED);
+    mPanGestureDetector.Detach(mParent);
     mViewTimer.Start();
     mTimerReady = false;
   }
   else
   {
-    mPlayStopButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON );
-    mPlayStopButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED );
+    mPlayStopButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON);
+    mPlayStopButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED);
     mTimerReady = true;
-    mPanGestureDetector.Attach( mParent );
+    mPanGestureDetector.Attach(mParent);
   }
   return true;
 }
 
-void DissolveEffectApp::OnTransitionCompleted( Animation& source )
+void DissolveEffectApp::OnTransitionCompleted(Animation& source)
 {
   if(mUseHighPrecision)
   {
-    mNextImage.SetProperty( Toolkit::ImageView::Property::IMAGE, mEmptyEffect );
+    mNextImage.SetProperty(Toolkit::ImageView::Property::IMAGE, mEmptyEffect);
   }
-  mParent.Remove( mCurrentImage );
-  mPanGestureDetector.Detach( mCurrentImage );
+  mParent.Remove(mCurrentImage);
+  mPanGestureDetector.Detach(mCurrentImage);
   mCurrentImage = mNextImage;
-  mPanGestureDetector.Attach( mCurrentImage );
+  mPanGestureDetector.Attach(mCurrentImage);
   mIsTransiting = false;
 
-  if( mSlideshow)
+  if(mSlideshow)
   {
     mViewTimer.Start();
     mTimerReady = false;
@@ -402,46 +399,45 @@ bool DissolveEffectApp::OnTimerTick()
   mTimerReady = true;
   if(mSlideshow)
   {
-    mIndex = (mIndex + 1)%NUM_IMAGES;
-    mNextImage = CreateWindowFillingImageView( mApplication.GetWindow().GetSize(), IMAGES[ mIndex ] );
-    mNextImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mNextImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mNextImage.SetProperty( Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO );
-    mNextImage.SetProperty( Actor::Property::POSITION_Z, INITIAL_DEPTH);
-    mParent.Add( mNextImage );
-    switch( mCentralLineIndex%4 )
+    mIndex     = (mIndex + 1) % NUM_IMAGES;
+    mNextImage = CreateWindowFillingImageView(mApplication.GetWindow().GetSize(), IMAGES[mIndex]);
+    mNextImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mNextImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    mNextImage.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+    mNextImage.SetProperty(Actor::Property::POSITION_Z, INITIAL_DEPTH);
+    mParent.Add(mNextImage);
+    switch(mCentralLineIndex % 4)
     {
       case 0:
       {
-        StartTransition(Vector2(1.0f,0.5f), Vector2(-1.0f, 0.0f));
+        StartTransition(Vector2(1.0f, 0.5f), Vector2(-1.0f, 0.0f));
         break;
       }
       case 1:
       {
-        StartTransition(Vector2(0.5f,0.0f), Vector2(0.0f, 1.0f));
+        StartTransition(Vector2(0.5f, 0.0f), Vector2(0.0f, 1.0f));
         break;
       }
       case 2:
       {
-        StartTransition(Vector2(0.0f,0.5f), Vector2(1.0f, 0.0f));
+        StartTransition(Vector2(0.0f, 0.5f), Vector2(1.0f, 0.0f));
         break;
       }
       default:
       {
-        StartTransition(Vector2(0.5f,1.0f), Vector2(0.0f, -1.0f));
+        StartTransition(Vector2(0.5f, 1.0f), Vector2(0.0f, -1.0f));
         break;
       }
-
     }
     mCentralLineIndex++;
   }
-  return false;   //return false to stop the timer
+  return false; //return false to stop the timer
 }
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-  DissolveEffectApp test( application );
+  Application       application = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  DissolveEffectApp test(application);
   application.MainLoop();
 
   return 0;

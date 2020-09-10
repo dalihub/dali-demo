@@ -15,24 +15,24 @@
  *
  */
 
- // FILE HEADER
+// FILE HEADER
 #include "execute-process.h"
 
- // EXTERNAL INCLUDES
-#include <sstream>
+// EXTERNAL INCLUDES
 #include <unistd.h>
+#include <sstream>
 
-#include <dali/public-api/common/dali-common.h>
-#include <dali/integration-api/debug.h>
 #include <dali/integration-api/adaptor-framework/android/android-framework.h>
+#include <dali/integration-api/debug.h>
+#include <dali/public-api/common/dali-common.h>
 
 #include <android_native_app_glue.h>
 #include <dali-demo-native-activity-jni.h>
 
-void ExecuteProcess( const std::string& processName, Dali::Application& application )
+void ExecuteProcess(const std::string& processName, Dali::Application& application)
 {
   struct android_app* nativeApp = Dali::Integration::AndroidFramework::Get().GetNativeApplication();
-  if (!nativeApp)
+  if(!nativeApp)
   {
     DALI_LOG_ERROR("Couldn't get native app.");
     return;
