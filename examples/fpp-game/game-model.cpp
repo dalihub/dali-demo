@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,41 +23,37 @@ using namespace GameUtils;
 namespace
 {
 // 'MODV' tag stored in the big-endian (network) order
-const uint32_t MODV_TAG( 0x4D4F4456 );
-}
+const uint32_t MODV_TAG(0x4D4F4456);
+} // namespace
 
-GameModel::GameModel( const char *filename )
-  : mUniqueId( false ),
-    mIsReady( false )
+GameModel::GameModel(const char* filename)
+: mUniqueId(false),
+  mIsReady(false)
 {
   ByteArray bytes;
-  if( !LoadFile( filename, bytes ) )
+  if(!LoadFile(filename, bytes))
   {
     return;
   }
 
-  mHeader = *(reinterpret_cast<ModelHeader*>( bytes.data() ));
+  mHeader = *(reinterpret_cast<ModelHeader*>(bytes.data()));
 
   // expect big-endian
-  if( MODV_TAG != mHeader.tag )
+  if(MODV_TAG != mHeader.tag)
   {
     // jump to little-endian variant
-    mHeader = *(reinterpret_cast<ModelHeader*>( bytes.data() + bytes.size()/2 ));
+    mHeader = *(reinterpret_cast<ModelHeader*>(bytes.data() + bytes.size() / 2));
   }
 
-  mVertexBuffer = Dali::VertexBuffer::New( Dali::Property::Map().
-                                           Add( "aPosition", Dali::Property::VECTOR3 ).
-                                           Add( "aNormal", Dali::Property::VECTOR3 ).
-                                           Add( "aTexCoord", Dali::Property::VECTOR2 )
-                                           );
+  mVertexBuffer = Dali::VertexBuffer::New(Dali::Property::Map().Add("aPosition", Dali::Property::VECTOR3).Add("aNormal", Dali::Property::VECTOR3).Add("aTexCoord", Dali::Property::VECTOR2));
 
-  mVertexBuffer.SetData( bytes.data() + mHeader.dataBeginOffset, mHeader.vertexBufferSize/mHeader.vertexStride );
+  mVertexBuffer.SetData(bytes.data() + mHeader.dataBeginOffset, mHeader.vertexBufferSize / mHeader.vertexStride);
 
   mGeometry = Dali::Geometry::New();
-  mGeometry.AddVertexBuffer( mVertexBuffer );
-  mGeometry.SetType( Dali::Geometry::TRIANGLES );
+  mGeometry.AddVertexBuffer(mVertexBuffer);
+  mGeometry.SetType(Dali::Geometry::TRIANGLES);
 
-  mUniqueId = HashString( filename );
+  mUniqueId = HashString(filename);
 
   mIsReady = true;
 }

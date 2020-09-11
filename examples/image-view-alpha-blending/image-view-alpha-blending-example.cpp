@@ -23,18 +23,18 @@ using namespace Dali;
 
 namespace
 {
-const char* const IMAGE_PATH ( DEMO_IMAGE_DIR "gallery-large-20.jpg" );
+const char* const IMAGE_PATH(DEMO_IMAGE_DIR "gallery-large-20.jpg");
 }
 
 class ImageViewAlphaBlendApp : public ConnectionTracker
 {
 public:
-  ImageViewAlphaBlendApp( Application& application )
-  : mApplication( application ),
+  ImageViewAlphaBlendApp(Application& application)
+  : mApplication(application),
     mIndex(0u)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &ImageViewAlphaBlendApp::Create );
+    mApplication.InitSignal().Connect(this, &ImageViewAlphaBlendApp::Create);
   }
 
   ~ImageViewAlphaBlendApp()
@@ -44,45 +44,45 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ImageViewAlphaBlendApp::OnKeyEvent);
 
-    auto green0 = Vector4( 0.f, 1.f, 0.f, 0.25f );
-    auto green1 = Vector4( 0.f, 0.25f, 0.f, 0.25f );
-    auto redGreen0 = CreateTexture( Color::RED, green0 );
-    auto redGreen1 = CreateTexture( Color::RED, green1 );
+    auto  green0    = Vector4(0.f, 1.f, 0.f, 0.25f);
+    auto  green1    = Vector4(0.f, 0.25f, 0.f, 0.25f);
+    auto  redGreen0 = CreateTexture(Color::RED, green0);
+    auto  redGreen1 = CreateTexture(Color::RED, green1);
     float imageSize = 512.f;
 
-    Toolkit::ImageView imageView0 = CreateImageView( IMAGE_PATH );
-    imageView0.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
-    imageView0.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView0.SetProperty( Actor::Property::POSITION_Y,  -imageSize*0.5f );
+    Toolkit::ImageView imageView0 = CreateImageView(IMAGE_PATH);
+    imageView0.SetProperty(Actor::Property::SIZE, Vector2(imageSize, imageSize));
+    imageView0.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    imageView0.SetProperty(Actor::Property::POSITION_Y, -imageSize * 0.5f);
     window.Add(imageView0);
-    Toolkit::ImageView imageView1 = CreateImageView( redGreen0 );
-    imageView1.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView1.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
+    Toolkit::ImageView imageView1 = CreateImageView(redGreen0);
+    imageView1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    imageView1.SetProperty(Actor::Property::SIZE, Vector2(imageSize, imageSize));
     imageView0.Add(imageView1);
 
-    Toolkit::ImageView imageView2 = CreateImageView( IMAGE_PATH );
-    imageView2.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
-    imageView2.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView2.SetProperty( Actor::Property::POSITION_Y,  imageSize*0.5f );
+    Toolkit::ImageView imageView2 = CreateImageView(IMAGE_PATH);
+    imageView2.SetProperty(Actor::Property::SIZE, Vector2(imageSize, imageSize));
+    imageView2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    imageView2.SetProperty(Actor::Property::POSITION_Y, imageSize * 0.5f);
     window.Add(imageView2);
-    Toolkit::ImageView imageView3 = CreateImageView( redGreen1);
-    imageView3.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    imageView3.SetProperty( Actor::Property::SIZE, Vector2(imageSize, imageSize) );
+    Toolkit::ImageView imageView3 = CreateImageView(redGreen1);
+    imageView3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    imageView3.SetProperty(Actor::Property::SIZE, Vector2(imageSize, imageSize));
     imageView2.Add(imageView3);
 
-    imageView2.SetProperty( Toolkit::ImageView::Property::PRE_MULTIPLIED_ALPHA, true );
-    imageView3.SetProperty( Toolkit::ImageView::Property::PRE_MULTIPLIED_ALPHA, true );
+    imageView2.SetProperty(Toolkit::ImageView::Property::PRE_MULTIPLIED_ALPHA, true);
+    imageView3.SetProperty(Toolkit::ImageView::Property::PRE_MULTIPLIED_ALPHA, true);
 
-    Animation animation = Animation::New( 10.f );
-    animation.AnimateTo(Property(imageView0, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod( 2.f, 8.f ));
-    animation.AnimateTo(Property(imageView2, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod( 2.f, 8.f ));
-    animation.SetLooping( true );
+    Animation animation = Animation::New(10.f);
+    animation.AnimateTo(Property(imageView0, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod(2.f, 8.f));
+    animation.AnimateTo(Property(imageView2, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod(2.f, 8.f));
+    animation.SetLooping(true);
     animation.Play();
   }
 
@@ -90,30 +90,30 @@ private:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
     }
   }
 
-  std::string CreateTexture( const Vector4& color1, const Vector4& color2 )
+  std::string CreateTexture(const Vector4& color1, const Vector4& color2)
   {
-    const auto width = 2u;
-    const auto height = 1u;
-    auto size = width * height * 4;
-    auto pixelBuffer = new unsigned char[size];
-    pixelBuffer[0] = 0xFF * color1.x;
-    pixelBuffer[1] = 0xFF * color1.y;
-    pixelBuffer[2] = 0xFF * color1.z;
-    pixelBuffer[3] = 0xFF * color1.w;
-    pixelBuffer[4] = 0xFF * color2.x;
-    pixelBuffer[5] = 0xFF * color2.y;
-    pixelBuffer[6] = 0xFF * color2.z;
-    pixelBuffer[7] = 0xFF * color2.w;
+    const auto width       = 2u;
+    const auto height      = 1u;
+    auto       size        = width * height * 4;
+    auto       pixelBuffer = new unsigned char[size];
+    pixelBuffer[0]         = 0xFF * color1.x;
+    pixelBuffer[1]         = 0xFF * color1.y;
+    pixelBuffer[2]         = 0xFF * color1.z;
+    pixelBuffer[3]         = 0xFF * color1.w;
+    pixelBuffer[4]         = 0xFF * color2.x;
+    pixelBuffer[5]         = 0xFF * color2.y;
+    pixelBuffer[6]         = 0xFF * color2.z;
+    pixelBuffer[7]         = 0xFF * color2.w;
 
     auto pixelData = PixelData::New(pixelBuffer, size, width, height, Pixel::RGBA8888, PixelData::ReleaseFunction::DELETE_ARRAY);
-    auto texture = Texture::New( TextureType::TEXTURE_2D, Pixel::RGBA8888, width, height );
+    auto texture   = Texture::New(TextureType::TEXTURE_2D, Pixel::RGBA8888, width, height);
     texture.Upload(pixelData);
 
     return Toolkit::TextureManager::AddTexture(texture);
@@ -128,20 +128,20 @@ private:
     propertyMap.Insert(Toolkit::ImageVisual::Property::URL, std::forward<TextT>(filename));
     propertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
     propertyMap.Insert(Toolkit::DevelVisual::Property::VISUAL_FITTING_MODE, Toolkit::DevelVisual::FILL);
-    imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap );
+    imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
 
     return imageView;
   }
 
 private:
-  Application&  mApplication;
+  Application& mApplication;
   unsigned int mIndex;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  ImageViewAlphaBlendApp test( application );
+  Application            application = Application::New(&argc, &argv);
+  ImageViewAlphaBlendApp test(application);
   application.MainLoop();
   return 0;
 }

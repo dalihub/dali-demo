@@ -26,19 +26,19 @@
 //
 //------------------------------------------------------------------------------
 
-#include <dali/dali.h>
-#include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/builder/builder.h>
 #include <dali-toolkit/devel-api/builder/tree-node.h>
+#include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/file-loader.h>
+#include <fstream>
 #include <iostream>
 #include <map>
-#include <string>
-#include <fstream>
 #include <streambuf>
+#include <string>
 
-#include "sys/stat.h"
 #include <ctime>
+#include "sys/stat.h"
 
 #include <dali/integration-api/debug.h>
 
@@ -49,8 +49,8 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-
-std::string JSON_BROKEN("                                      \
+std::string JSON_BROKEN(
+  "                                      \
 {                                                              \
   'stage':                                                     \
   [                                                            \
@@ -64,7 +64,7 @@ std::string JSON_BROKEN("                                      \
 }                                                              \
 ");
 
-std::string ReplaceQuotes(const std::string &single_quoted)
+std::string ReplaceQuotes(const std::string& single_quoted)
 {
   std::string s(single_quoted);
 
@@ -74,8 +74,7 @@ std::string ReplaceQuotes(const std::string &single_quoted)
   return s;
 }
 
-} // anon namespace
-
+} // namespace
 
 //------------------------------------------------------------------------------
 //
@@ -87,13 +86,20 @@ class FileWatcher
 public:
   FileWatcher(void);
   ~FileWatcher(void);
-  explicit FileWatcher(const std::string &fn): mLastTime(0) { SetFilename(fn) ; };
+  explicit FileWatcher(const std::string& fn)
+  : mLastTime(0)
+  {
+    SetFilename(fn);
+  };
 
-  void SetFilename(const std::string &fn);
+  void        SetFilename(const std::string& fn);
   std::string GetFilename();
 
-  bool FileHasChanged(void);
-  std::string GetFileContents(void) { return GetFileContents(mstringPath) ; };
+  bool        FileHasChanged(void);
+  std::string GetFileContents(void)
+  {
+    return GetFileContents(mstringPath);
+  };
 
 private:
   // compiler does
@@ -103,20 +109,21 @@ private:
   std::time_t mLastTime;
   std::string mstringPath;
 
-  std::string GetFileContents(const std::string &filename)
+  std::string GetFileContents(const std::string& filename)
   {
-    std::streampos bufferSize = 0;
+    std::streampos     bufferSize = 0;
     Dali::Vector<char> fileBuffer;
-    if( !Dali::FileLoader::ReadFile( filename, bufferSize, fileBuffer, FileLoader::FileType::BINARY ) )
+    if(!Dali::FileLoader::ReadFile(filename, bufferSize, fileBuffer, FileLoader::FileType::BINARY))
     {
       return std::string();
     }
 
-    return std::string( &fileBuffer[0], bufferSize );
+    return std::string(&fileBuffer[0], bufferSize);
   };
 };
 
-FileWatcher::FileWatcher(void) : mLastTime(0)
+FileWatcher::FileWatcher(void)
+: mLastTime(0)
 {
 }
 
@@ -150,7 +157,7 @@ FileWatcher::~FileWatcher()
 {
 }
 
-void FileWatcher::SetFilename(const std::string &fn)
+void FileWatcher::SetFilename(const std::string& fn)
 {
   mstringPath = fn;
 }
@@ -160,7 +167,6 @@ std::string FileWatcher::GetFilename(void)
   return mstringPath;
 }
 
-
 //------------------------------------------------------------------------------
 //
 //
@@ -169,21 +175,26 @@ std::string FileWatcher::GetFilename(void)
 class ExampleApp : public ConnectionTracker
 {
 public:
-  ExampleApp(Application &app) : mApp(app)
+  ExampleApp(Application& app)
+  : mApp(app)
   {
     app.InitSignal().Connect(this, &ExampleApp::Create);
-
   }
 
-  ~ExampleApp() {}
+  ~ExampleApp()
+  {
+  }
 
 public:
-  void SetJSONFilename(std::string const &fn) { fw.SetFilename(fn) ; };
+  void SetJSONFilename(std::string const& fn)
+  {
+    fw.SetFilename(fn);
+  };
 
   void Create(Application& app)
   {
-    mTimer = Timer::New( 500 ); // ms
-    mTimer.TickSignal().Connect( this, &ExampleApp::OnTimer);
+    mTimer = Timer::New(500); // ms
+    mTimer.TickSignal().Connect(this, &ExampleApp::OnTimer);
     mTimer.Start();
 
     // Connect to key events in order to exit
@@ -192,45 +203,45 @@ public:
 
 private:
   Application& mApp;
-  Layer mRootLayer;
+  Layer        mRootLayer;
 
   FileWatcher fw;
-  Timer mTimer;
+  Timer       mTimer;
 
   void ReloadJsonFile(Builder& builder, Layer& layer)
   {
     Window window = mApp.GetWindow();
-    window.SetBackgroundColor( Color::WHITE );
+    window.SetBackgroundColor(Color::WHITE);
 
     builder = Builder::New();
-    builder.QuitSignal().Connect( this, &ExampleApp::OnBuilderQuit );
+    builder.QuitSignal().Connect(this, &ExampleApp::OnBuilderQuit);
 
     Property::Map defaultDirs;
-    defaultDirs[ TOKEN_STRING(DEMO_IMAGE_DIR) ]  = DEMO_IMAGE_DIR;
-    defaultDirs[ TOKEN_STRING(DEMO_MODEL_DIR) ]  = DEMO_MODEL_DIR;
-    defaultDirs[ TOKEN_STRING(DEMO_SCRIPT_DIR) ] = DEMO_SCRIPT_DIR;
+    defaultDirs[TOKEN_STRING(DEMO_IMAGE_DIR)]  = DEMO_IMAGE_DIR;
+    defaultDirs[TOKEN_STRING(DEMO_MODEL_DIR)]  = DEMO_MODEL_DIR;
+    defaultDirs[TOKEN_STRING(DEMO_SCRIPT_DIR)] = DEMO_SCRIPT_DIR;
 
-    builder.AddConstants( defaultDirs );
+    builder.AddConstants(defaultDirs);
 
     if(!layer)
     {
       layer = Layer::New();
-      layer.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
-      layer.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
-      layer.SetProperty( Actor::Property::SIZE, window.GetRootLayer().GetCurrentProperty< Vector3 >( Actor::Property::SIZE ) );
+      layer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+      layer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      layer.SetProperty(Actor::Property::SIZE, window.GetRootLayer().GetCurrentProperty<Vector3>(Actor::Property::SIZE));
       window.GetRootLayer().Add(layer);
 
       // render tasks may have been setup last load so remove them
       RenderTaskList taskList = window.GetRenderTaskList();
-      if( taskList.GetTaskCount() > 1 )
+      if(taskList.GetTaskCount() > 1)
       {
         typedef std::vector<RenderTask> Collection;
-        typedef Collection::iterator ColIter;
-        Collection tasks;
+        typedef Collection::iterator    ColIter;
+        Collection                      tasks;
 
         for(unsigned int i = 1; i < taskList.GetTaskCount(); ++i)
         {
-          tasks.push_back( taskList.GetTask(i) );
+          tasks.push_back(taskList.GetTask(i));
         }
 
         for(ColIter iter = tasks.begin(); iter != tasks.end(); ++iter)
@@ -239,16 +250,16 @@ private:
         }
 
         RenderTask defaultTask = taskList.GetTask(0);
-        defaultTask.SetSourceActor( window.GetRootLayer() );
-        defaultTask.SetFrameBuffer( FrameBuffer() );
+        defaultTask.SetSourceActor(window.GetRootLayer());
+        defaultTask.SetFrameBuffer(FrameBuffer());
       }
     }
 
     unsigned int numChildren = layer.GetChildCount();
 
-    for(unsigned int i=0; i<numChildren; ++i)
+    for(unsigned int i = 0; i < numChildren; ++i)
     {
-      layer.Remove( layer.GetChildAt(0) );
+      layer.Remove(layer.GetChildAt(0));
     }
 
     std::string data(fw.GetFileContents());
@@ -262,27 +273,25 @@ private:
       builder.LoadFromString(ReplaceQuotes(JSON_BROKEN));
     }
 
-    builder.AddActors( layer );
-
+    builder.AddActors(layer);
   }
-
 
   bool OnTimer(void)
   {
     if(fw.FileHasChanged())
     {
-      ReloadJsonFile( mBuilder, mRootLayer );
+      ReloadJsonFile(mBuilder, mRootLayer);
     }
 
     return true;
   }
 
   // Process Key events to Quit on back-key
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApp.Quit();
       }
@@ -302,11 +311,10 @@ private:
 //
 //
 //------------------------------------------------------------------------------
-int DALI_EXPORT_API main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-
   Application dali_app = Application::New(&argc, &argv, DEMO_THEME_PATH);
-  ExampleApp app(dali_app);
+  ExampleApp  app(dali_app);
 
   if(argc > 1)
   {

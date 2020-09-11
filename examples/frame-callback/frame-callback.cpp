@@ -23,47 +23,47 @@ using namespace std;
 
 FrameCallback::FrameCallback()
 : mActorIdContainer(),
-  windowHalfWidth( 0.0f )
+  windowHalfWidth(0.0f)
 {
 }
 
-void FrameCallback::SetWindowWidth( float windowWidth )
+void FrameCallback::SetWindowWidth(float windowWidth)
 {
   windowHalfWidth = windowWidth * 0.5f;
 }
 
-void FrameCallback::AddId( uint32_t id )
+void FrameCallback::AddId(uint32_t id)
 {
-  mActorIdContainer.PushBack( id );
+  mActorIdContainer.PushBack(id);
 }
 
-void FrameCallback::Update( Dali::UpdateProxy& updateProxy, float /* elapsedSeconds */ )
+void FrameCallback::Update(Dali::UpdateProxy& updateProxy, float /* elapsedSeconds */)
 {
   // Go through Actor ID container and check if we've hit the sides.
-  for( auto&& i : mActorIdContainer )
+  for(auto&& i : mActorIdContainer)
   {
     Vector3 position;
     Vector3 size;
-    if( updateProxy.GetPositionAndSize( i, position, size ) ) // Retrieve the position and size using the Actor ID.
+    if(updateProxy.GetPositionAndSize(i, position, size)) // Retrieve the position and size using the Actor ID.
     {
       float halfWidthPoint = windowHalfWidth - size.width * 0.5f;
-      float xTranslation = abs( position.x );
-      if( xTranslation > halfWidthPoint )
+      float xTranslation   = abs(position.x);
+      if(xTranslation > halfWidthPoint)
       {
         // Actor has hit the edge, adjust the size accordingly.
         float adjustment = xTranslation - halfWidthPoint;
         size.width += adjustment * SIZE_MULTIPLIER;
         size.height += adjustment * SIZE_MULTIPLIER;
 
-        updateProxy.SetSize( i, size ); // Set the size using the UpdateProxy.
+        updateProxy.SetSize(i, size); // Set the size using the UpdateProxy.
       }
 
       // Retrieve the actor's position and set make it more transparent the closer it is to the middle.
       Vector4 color;
-      if( updateProxy.GetColor( i, color ) )
+      if(updateProxy.GetColor(i, color))
       {
         color.a = xTranslation / halfWidthPoint;
-        updateProxy.SetColor( i, color );
+        updateProxy.SetColor(i, color);
       }
     }
   }

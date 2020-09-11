@@ -2,7 +2,7 @@
 #define DALI_DEMO_MY_CONTROL_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@
 
 namespace Demo
 {
-
 namespace Internal
 {
 class MyControl;
@@ -42,7 +41,6 @@ class MyControl;
 class MyControl : public Dali::Toolkit::Control
 {
 public:
-
   /**
    * The start and end property ranges for this Control
    * My control can use properties from Toolkit::Control as it is derived from it. As control is derived from Actor, MyControl can also use Dali::Actor Properties.
@@ -58,10 +56,10 @@ public:
    */
   enum PropertyRange
   {
-    PROPERTY_START_INDEX = Dali::Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1,
-    PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000,
+    PROPERTY_START_INDEX            = Dali::Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1,
+    PROPERTY_END_INDEX              = PROPERTY_START_INDEX + 1000,
     ANIMATABLE_PROPERTY_START_INDEX = Dali::ANIMATABLE_PROPERTY_REGISTRATION_START_INDEX,
-    ANIMATABLE_PROPERTY_END_INDEX = ANIMATABLE_PROPERTY_START_INDEX+1000
+    ANIMATABLE_PROPERTY_END_INDEX   = ANIMATABLE_PROPERTY_START_INDEX + 1000
   };
 
   struct Property
@@ -77,7 +75,6 @@ public:
   };
 
 public: // Construction / destruction
-
   /**
    * @brief Create an uninitialized handle
    */
@@ -98,35 +95,33 @@ public: // Construction / destruction
    *
    * @param[in] shadowButton the handle of the control to copy
    */
-  MyControl( const MyControl& shadowButton );
+  MyControl(const MyControl& shadowButton);
 
   /**
    * @brief Assignment Operator
    *
    * @param[in] shadowButton the source of the assignment
    */
-  MyControl& operator=( const MyControl& shadowButton );
+  MyControl& operator=(const MyControl& shadowButton);
 
   /**
    * @brief Downcast
    *
    * @param[in] shadowButton the handle of control to downcast to MyControl
    */
-  static MyControl DownCast( BaseHandle handle );
-
+  static MyControl DownCast(BaseHandle handle);
 
 public: //  // Not intended for application developers
-
   /// @cond internal
   /**
    * @brief Create a handle from an implementation
    */
-  MyControl( Internal::MyControl& implementation );
+  MyControl(Internal::MyControl& implementation);
 
   /**
    * @brief Allow the creation of an ShadowButton handle from an internal CustomActor pointer
    */
-  MyControl( Dali::Internal::CustomActor* internal );
+  MyControl(Dali::Internal::CustomActor* internal);
   /// @endcond
 };
 

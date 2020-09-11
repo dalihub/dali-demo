@@ -2,7 +2,7 @@
 #define CLIPPING_ITEM_FACTORY_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,12 @@
 class ClippingItemFactory : public Dali::Toolkit::ItemFactory
 {
 public:
-
   /**
    * @brief Constructor
    */
   ClippingItemFactory();
 
 private: // From ItemFactory
-
   /**
    * Query the number of items available from the factory.
    * The maximum available item has an ID of GetNumberOfItems() - 1.
@@ -45,12 +43,11 @@ private: // From ItemFactory
    * @param itemId
    * @return the created actor.
    */
-  virtual Dali::Actor NewItem( unsigned int itemId );
+  virtual Dali::Actor NewItem(unsigned int itemId);
 
 private:
-
-  ClippingItemFactory( const ClippingItemFactory& ); ///< Undefined
-  ClippingItemFactory& operator=( const ClippingItemFactory& ); ///< Undefined
+  ClippingItemFactory(const ClippingItemFactory&);            ///< Undefined
+  ClippingItemFactory& operator=(const ClippingItemFactory&); ///< Undefined
 };
 
 #endif // CLIPPING_ITEM_FACTORY_H

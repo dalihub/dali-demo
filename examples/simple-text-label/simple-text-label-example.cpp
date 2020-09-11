@@ -32,12 +32,11 @@ using namespace Dali::Toolkit;
 class SimpleTextLabelExample : public ConnectionTracker
 {
 public:
-
-  SimpleTextLabelExample( Application& application )
-  : mApplication( application )
+  SimpleTextLabelExample(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &SimpleTextLabelExample::Create );
+    mApplication.InitSignal().Connect(this, &SimpleTextLabelExample::Create);
   }
 
   ~SimpleTextLabelExample()
@@ -48,22 +47,22 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
 
     window.KeyEventSignal().Connect(this, &SimpleTextLabelExample::OnKeyEvent);
 
-    mLabel = TextLabel::New( "A Quick Brown Fox Jumps Over The Lazy Dog" );
-    mLabel.SetProperty( Dali::Actor::Property::NAME, "SimpleTextLabel" );
-    mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mLabel.SetProperty( Actor::Property::SIZE, Vector2( 400.f, 400.f ) );
-    mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
-    mLabel.SetBackgroundColor( Color::WHITE );
+    mLabel = TextLabel::New("A Quick Brown Fox Jumps Over The Lazy Dog");
+    mLabel.SetProperty(Dali::Actor::Property::NAME, "SimpleTextLabel");
+    mLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mLabel.SetProperty(Actor::Property::SIZE, Vector2(400.f, 400.f));
+    mLabel.SetProperty(TextLabel::Property::MULTI_LINE, true);
+    mLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
+    mLabel.SetBackgroundColor(Color::WHITE);
 
-    window.Add( mLabel );
+    window.Add(mLabel);
   }
 
   /**
@@ -73,7 +72,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -81,25 +80,24 @@ public:
   }
 
 private:
-
   Application& mApplication;
 
   TextLabel mLabel;
 };
 
-void RunTest( Application& application )
+void RunTest(Application& application)
 {
-  SimpleTextLabelExample test( application );
+  SimpleTextLabelExample test(application);
 
   application.MainLoop();
 }
 
 /** Entry point for Linux & Tizen applications */
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New(&argc, &argv);
 
-  RunTest( application );
+  RunTest(application);
 
   return 0;
 }

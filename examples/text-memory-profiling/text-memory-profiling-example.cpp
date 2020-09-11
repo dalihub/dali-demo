@@ -21,9 +21,9 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/navigation-view/navigation-view.h>
+#include <dali/dali.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
@@ -33,7 +33,6 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-
 enum TextType
 {
   SINGLE_COLOR_TEXT,
@@ -48,26 +47,25 @@ enum TextType
   NUMBER_OF_TYPES
 };
 
-std::string TEXT_TYPE_STRING[ NUMBER_OF_TYPES ] =
-{
-  "Single color text",
-  "Single color text with style",
-  "Single color text with emoji",
-  "Single color text with style and emoji",
-  "Multi color text",
-  "Multi color text with style",
-  "Multi color text with emoji",
-  "Multi color text with style and emoji",
-  "Small text in large Text Label"
-};
+std::string TEXT_TYPE_STRING[NUMBER_OF_TYPES] =
+  {
+    "Single color text",
+    "Single color text with style",
+    "Single color text with emoji",
+    "Single color text with style and emoji",
+    "Multi color text",
+    "Multi color text with style",
+    "Multi color text with emoji",
+    "Multi color text with style and emoji",
+    "Small text in large Text Label"};
 
 const int NUMBER_OF_LABELS = 500;
 
-const char* BACKGROUND_IMAGE( "" );
-const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
-const char* BACK_IMAGE( DEMO_IMAGE_DIR "icon-change.png" );
-const char* BACK_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
-const char* INDICATOR_IMAGE( DEMO_IMAGE_DIR "loading.png" );
+const char* BACKGROUND_IMAGE("");
+const char* TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
+const char* BACK_IMAGE(DEMO_IMAGE_DIR "icon-change.png");
+const char* BACK_IMAGE_SELECTED(DEMO_IMAGE_DIR "icon-change-selected.png");
+const char* INDICATOR_IMAGE(DEMO_IMAGE_DIR "loading.png");
 
 } // anonymous namespace
 
@@ -77,13 +75,12 @@ const char* INDICATOR_IMAGE( DEMO_IMAGE_DIR "loading.png" );
 class TextMemoryProfilingExample : public ConnectionTracker, public Toolkit::ItemFactory
 {
 public:
-
-  TextMemoryProfilingExample( Application& application )
-  : mApplication( application ),
-    mCurrentTextStyle( SINGLE_COLOR_TEXT )
+  TextMemoryProfilingExample(Application& application)
+  : mApplication(application),
+    mCurrentTextStyle(SINGLE_COLOR_TEXT)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &TextMemoryProfilingExample::Create );
+    mApplication.InitSignal().Connect(this, &TextMemoryProfilingExample::Create);
   }
 
   ~TextMemoryProfilingExample()
@@ -94,94 +91,94 @@ public:
   /**
    * @brief Create a text label in the given type
    */
-  TextLabel SetupTextLabel( int type )
+  TextLabel SetupTextLabel(int type)
   {
     TextLabel label = TextLabel::New();
-    label.SetProperty( Actor::Property::ANCHOR_POINT, ParentOrigin::TOP_LEFT );
-    label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    label.SetProperty( TextLabel::Property::TEXT_COLOR, Color::BLACK );
-    label.SetProperty( TextLabel::Property::POINT_SIZE, 12.0f );
+    label.SetProperty(Actor::Property::ANCHOR_POINT, ParentOrigin::TOP_LEFT);
+    label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    label.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
+    label.SetProperty(TextLabel::Property::POINT_SIZE, 12.0f);
     Property::Map shadowMap;
-    shadowMap.Insert( "color", Color::YELLOW );
-    label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
-    label.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
+    shadowMap.Insert("color", Color::YELLOW);
+    label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
+    label.SetProperty(TextLabel::Property::ENABLE_MARKUP, true);
 
     Vector2 windowSize = mApplication.GetWindow().GetSize();
-    label.SetProperty( Actor::Property::POSITION, Vector3( Random::Range( 0.0f, windowSize.x ), Random::Range( 0.0f, windowSize.y ), 0.0f) );
+    label.SetProperty(Actor::Property::POSITION, Vector3(Random::Range(0.0f, windowSize.x), Random::Range(0.0f, windowSize.y), 0.0f));
 
-    switch ( type )
+    switch(type)
     {
       case SINGLE_COLOR_TEXT:
       {
-        label.SetProperty( TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
+        label.SetProperty(TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog");
 
-        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
-        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+        shadowMap.Insert("offset", Vector2(0.0f, 0.0f));
+        label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
         break;
       }
       case SINGLE_COLOR_TEXT_WITH_STYLE:
       {
-        label.SetProperty( TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
+        label.SetProperty(TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog");
 
-        shadowMap.Insert( "offset", Vector2( 2.0f, 2.0f ) );
-        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+        shadowMap.Insert("offset", Vector2(2.0f, 2.0f));
+        label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
         break;
       }
       case SINGLE_COLOR_TEXT_WITH_EMOJI:
       {
-        label.SetProperty( TextLabel::Property::TEXT, "\xF0\x9F\x98\x81 A Quick Brown Fox Jumps Over The Lazy Dog" );
+        label.SetProperty(TextLabel::Property::TEXT, "\xF0\x9F\x98\x81 A Quick Brown Fox Jumps Over The Lazy Dog");
 
-        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
-        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+        shadowMap.Insert("offset", Vector2(0.0f, 0.0f));
+        label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
         break;
       }
       case SINGLE_COLOR_TEXT_WITH_STYLE_EMOJI:
       {
-        label.SetProperty( TextLabel::Property::TEXT, "\xF0\x9F\x98\x81 A Quick Brown Fox Jumps Over The Lazy Dog" );
+        label.SetProperty(TextLabel::Property::TEXT, "\xF0\x9F\x98\x81 A Quick Brown Fox Jumps Over The Lazy Dog");
 
-        shadowMap.Insert( "offset", Vector2( 2.0f, 2.0f ) );
-        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+        shadowMap.Insert("offset", Vector2(2.0f, 2.0f));
+        label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
         break;
       }
       case MULTI_COLOR_TEXT:
       {
-        label.SetProperty( TextLabel::Property::TEXT, "A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>" );
+        label.SetProperty(TextLabel::Property::TEXT, "A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>");
 
-        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
-        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+        shadowMap.Insert("offset", Vector2(0.0f, 0.0f));
+        label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
         break;
       }
       case MULTI_COLOR_TEXT_WITH_STYLE:
       {
-        label.SetProperty( TextLabel::Property::TEXT, "A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>" );
+        label.SetProperty(TextLabel::Property::TEXT, "A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>");
 
-        shadowMap.Insert( "offset", Vector2( 2.0f, 2.0f ) );
-        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+        shadowMap.Insert("offset", Vector2(2.0f, 2.0f));
+        label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
         break;
       }
       case MULTI_COLOR_TEXT_WITH_EMOJI:
       {
-        label.SetProperty( TextLabel::Property::TEXT, " \xF0\x9F\x98\x81 A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>" );
+        label.SetProperty(TextLabel::Property::TEXT, " \xF0\x9F\x98\x81 A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>");
 
-        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
-        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+        shadowMap.Insert("offset", Vector2(0.0f, 0.0f));
+        label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
         break;
       }
       case MULTI_COLOR_TEXT_WITH_STYLE_EMOJI:
       {
-        label.SetProperty( TextLabel::Property::TEXT, " \xF0\x9F\x98\x81 A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>" );
+        label.SetProperty(TextLabel::Property::TEXT, " \xF0\x9F\x98\x81 A <color value='cyan'>Quick Brown Fox</color> Jumps Over The <color value='yellow'>Lazy Dog</color>");
 
-        shadowMap.Insert( "offset", Vector2( 2.0f, 2.0f ) );
-        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+        shadowMap.Insert("offset", Vector2(2.0f, 2.0f));
+        label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
         break;
       }
       case SMALL_TEXT_IN_LARGE_TEXT_LABEL:
       {
-        label.SetProperty( TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog" );
+        label.SetProperty(TextLabel::Property::TEXT, "A Quick Brown Fox Jumps Over The Lazy Dog");
 
-        shadowMap.Insert( "offset", Vector2( 0.0f, 0.0f ) );
-        label.SetProperty( TextLabel::Property::SHADOW, shadowMap );
-        label.SetProperty( Actor::Property::SIZE, Vector2(windowSize.x, windowSize.y * 0.25f) ); // Set the text label in larger size
+        shadowMap.Insert("offset", Vector2(0.0f, 0.0f));
+        label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
+        label.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x, windowSize.y * 0.25f)); // Set the text label in larger size
         break;
       }
       default:
@@ -199,21 +196,21 @@ public:
     Vector2 windowSize = mApplication.GetWindow().GetSize();
 
     mTapDetector = TapGestureDetector::New();
-    mTapDetector.DetectedSignal().Connect( this, &TextMemoryProfilingExample::OnTap );
+    mTapDetector.DetectedSignal().Connect(this, &TextMemoryProfilingExample::OnTap);
 
     // Create an item view for the main menu
-    mItemView = ItemView::New( *this );
+    mItemView = ItemView::New(*this);
 
-    mItemView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mItemView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+    mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mItemView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
 
-    mLayout = DefaultItemLayout::New( DefaultItemLayout::LIST );
-    mLayout->SetItemSize( Vector3( windowSize.width, 60.0f, 0.0f ) );
+    mLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
+    mLayout->SetItemSize(Vector3(windowSize.width, 60.0f, 0.0f));
 
-    mItemView.AddLayout( *mLayout );
+    mItemView.AddLayout(*mLayout);
 
     // Activate the layout
-    mItemView.ActivateLayout( 0, Vector3( windowSize ), 0.0f );
+    mItemView.ActivateLayout(0, Vector3(windowSize), 0.0f);
   }
 
   /**
@@ -227,14 +224,14 @@ public:
   /**
    * @brief Create new item for the main menu
    */
-  virtual Actor NewItem( unsigned int itemId )
+  virtual Actor NewItem(unsigned int itemId)
   {
-    TextLabel label = TextLabel::New( TEXT_TYPE_STRING[itemId] );
-    label.SetStyleName( "BuilderLabel" );
-    label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
+    TextLabel label = TextLabel::New(TEXT_TYPE_STRING[itemId]);
+    label.SetStyleName("BuilderLabel");
+    label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
 
     // Hook up tap detector
-    mTapDetector.Attach( label );
+    mTapDetector.Attach(label);
 
     return label;
   }
@@ -242,96 +239,96 @@ public:
   /**
    * @brief Create text labels for memory profiling
    */
-  void CreateTextLabels( int type )
+  void CreateTextLabels(int type)
   {
     // Delete any existing text labels
     unsigned int numChildren = mLayer.GetChildCount();
 
-    for( unsigned int i = 0; i < numChildren; ++i )
+    for(unsigned int i = 0; i < numChildren; ++i)
     {
-      mLayer.Remove( mLayer.GetChildAt( 0 ) );
+      mLayer.Remove(mLayer.GetChildAt(0));
     }
 
-    mLayer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-    mLayer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    mLayer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    mLayer.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::HEIGHT );
-    mLayer.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.0f, -DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight, 0.0f ) );
+    mLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+    mLayer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mLayer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    mLayer.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::HEIGHT);
+    mLayer.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, -DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight, 0.0f));
 
-    mNavigationView.Push( mLayer );
+    mNavigationView.Push(mLayer);
 
     // Create new text labels
-    for ( int i = 0; i < NUMBER_OF_LABELS; i++ )
+    for(int i = 0; i < NUMBER_OF_LABELS; i++)
     {
-      TextLabel label = SetupTextLabel( type );
-      mLayer.Add( label );
+      TextLabel label = SetupTextLabel(type);
+      mLayer.Add(label);
     }
 
-    mTitle.SetProperty( TextLabel::Property::TEXT, "Run memps on target" );
+    mTitle.SetProperty(TextLabel::Property::TEXT, "Run memps on target");
   }
 
   /**
    * @brief One-time setup in response to Application InitSignal.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
 
     window.KeyEventSignal().Connect(this, &TextMemoryProfilingExample::OnKeyEvent);
 
-    Layer contents = DemoHelper::CreateView( mApplication,
-                                             mView,
-                                             mToolBar,
-                                             BACKGROUND_IMAGE,
-                                             TOOLBAR_IMAGE,
-                                             "" );
+    Layer contents = DemoHelper::CreateView(mApplication,
+                                            mView,
+                                            mToolBar,
+                                            BACKGROUND_IMAGE,
+                                            TOOLBAR_IMAGE,
+                                            "");
 
-    mTitle = DemoHelper::CreateToolBarLabel( "" );
-    mTitle.SetProperty( TextLabel::Property::TEXT, "Select the type of text" );
+    mTitle = DemoHelper::CreateToolBarLabel("");
+    mTitle.SetProperty(TextLabel::Property::TEXT, "Select the type of text");
 
     // Add title to the tool bar.
-    mToolBar.AddControl( mTitle, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER );
+    mToolBar.AddControl(mTitle, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER);
 
     // Create a layer to contain dynamically created text labels
     mLayer = Layer::New();
 
     mIndicator = Toolkit::ImageView::New(INDICATOR_IMAGE);
-    mIndicator.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mIndicator.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mIndicator.SetProperty( Actor::Property::VISIBLE, false );
+    mIndicator.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mIndicator.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mIndicator.SetProperty(Actor::Property::VISIBLE, false);
 
     // Create a back button in the left of toolbar
     PushButton backButton = PushButton::New();
-    backButton.SetProperty( Button::Property::UNSELECTED_BACKGROUND_VISUAL, BACK_IMAGE );
-    backButton.SetProperty( Button::Property::SELECTED_BACKGROUND_VISUAL, BACK_IMAGE_SELECTED );
-    backButton.ClickedSignal().Connect( this, &TextMemoryProfilingExample::OnBackButtonPressed );
-    backButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
-    mToolBar.AddControl( backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+    backButton.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, BACK_IMAGE);
+    backButton.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, BACK_IMAGE_SELECTED);
+    backButton.ClickedSignal().Connect(this, &TextMemoryProfilingExample::OnBackButtonPressed);
+    backButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
+    mToolBar.AddControl(backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create a navigation view to navigate different types of text labels
     mNavigationView = NavigationView::New();
-    mNavigationView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mNavigationView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mNavigationView.SetBackgroundColor( Color::WHITE );
-    window.Add( mNavigationView );
+    mNavigationView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    mNavigationView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mNavigationView.SetBackgroundColor(Color::WHITE);
+    window.Add(mNavigationView);
 
     CreateMainMenu();
-    mNavigationView.Push( mItemView );
+    mNavigationView.Push(mItemView);
 
     mItemView.Add(mIndicator);
 
-    PropertyNotification notification = mIndicator.AddPropertyNotification( Actor::Property::VISIBLE, GreaterThanCondition(0.01f) );
-    notification.NotifySignal().Connect( this, &TextMemoryProfilingExample::OnIndicatorVisible );
+    PropertyNotification notification = mIndicator.AddPropertyNotification(Actor::Property::VISIBLE, GreaterThanCondition(0.01f));
+    notification.NotifySignal().Connect(this, &TextMemoryProfilingExample::OnIndicatorVisible);
   }
 
   /**
    * @brief Main key event handler
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         ReturnToPreviousScreen();
       }
@@ -341,41 +338,41 @@ public:
   /**
    * @brief Tap gesture handler
    */
-  void OnTap( Actor actor, const TapGesture& tap )
+  void OnTap(Actor actor, const TapGesture& tap)
   {
-    mCurrentTextStyle = mItemView.GetItemId( actor );
+    mCurrentTextStyle = mItemView.GetItemId(actor);
 
     // Show the loading indicator
-    mIndicator.SetProperty( Actor::Property::VISIBLE, true );
+    mIndicator.SetProperty(Actor::Property::VISIBLE, true);
 
-    if ( mAnimation )
+    if(mAnimation)
     {
       mAnimation.Clear();
       mAnimation.Reset();
     }
 
-    mAnimation = Animation::New( 0.8f );
-    mAnimation.AnimateBy( Property( mIndicator, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(180.0f) ), Vector3::ZAXIS ) );
-    mAnimation.SetLooping( true );
+    mAnimation = Animation::New(0.8f);
+    mAnimation.AnimateBy(Property(mIndicator, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(180.0f)), Vector3::ZAXIS));
+    mAnimation.SetLooping(true);
     mAnimation.Play();
   }
 
   /**
    * @brief Property notification handler
    */
-  void OnIndicatorVisible( PropertyNotification& source )
+  void OnIndicatorVisible(PropertyNotification& source)
   {
-    CreateTextLabels( mCurrentTextStyle );
+    CreateTextLabels(mCurrentTextStyle);
 
     // Hide the loading indicator
     mAnimation.Stop();
-    mIndicator.SetProperty( Actor::Property::VISIBLE, false );
+    mIndicator.SetProperty(Actor::Property::VISIBLE, false);
   }
 
   /**
    * @brief Button signal handler
    */
-  bool OnBackButtonPressed( Toolkit::Button button )
+  bool OnBackButtonPressed(Toolkit::Button button)
   {
     ReturnToPreviousScreen();
     return true;
@@ -386,7 +383,7 @@ public:
    */
   void ReturnToPreviousScreen()
   {
-    if ( mItemView.GetProperty< bool >( Actor::Property::CONNECTED_TO_SCENE ) )
+    if(mItemView.GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE))
     {
       // Quit the application if it is in the main menu
       mApplication.Quit();
@@ -396,20 +393,19 @@ public:
       // Return to the main menu
       mNavigationView.Pop();
 
-      mTitle.SetProperty( TextLabel::Property::TEXT, "Select type of text to test" );
+      mTitle.SetProperty(TextLabel::Property::TEXT, "Select type of text to test");
     }
   }
 
 private:
-
   Application& mApplication;
 
-  ItemLayoutPtr mLayout;
-  ItemView mItemView;
+  ItemLayoutPtr  mLayout;
+  ItemView       mItemView;
   NavigationView mNavigationView;
 
-  Control mView;
-  ToolBar mToolBar;
+  Control   mView;
+  ToolBar   mToolBar;
   TextLabel mTitle;
   ImageView mIndicator;
   Animation mAnimation;
@@ -421,10 +417,10 @@ private:
   unsigned int mCurrentTextStyle;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-  TextMemoryProfilingExample test( application );
+  Application                application = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  TextMemoryProfilingExample test(application);
   application.MainLoop();
   return 0;
 }

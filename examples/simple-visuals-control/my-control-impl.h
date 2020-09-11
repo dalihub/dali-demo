@@ -2,7 +2,7 @@
 #define DALI_DEMO_INTERNAL_MY_CONTROL_IMPL_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,15 +21,13 @@
 #include "my-control.h"
 
 // EXTERNAL INCLUDES
-#include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-base.h>
+#include <dali-toolkit/public-api/controls/control-impl.h>
 
 namespace Demo
 {
-
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
-
 /**
  * @brief A Simple Control to show use of visuals with a style sheet and changing visuals with a state change
  */
@@ -47,7 +45,7 @@ public:
    */
   MyControl();
 
-public:  // Properties
+public: // Properties
   /**
    * @brief Called when a property of an object of this type is set.
    *
@@ -55,7 +53,7 @@ public:  // Properties
    * @param[in] index The property index.
    * @param[in] value The new property value.
    */
-  static void SetProperty( Dali::BaseObject* object, Dali::Property::Index index, const Dali::Property::Value& value );
+  static void SetProperty(Dali::BaseObject* object, Dali::Property::Index index, const Dali::Property::Value& value);
 
   /**
    * @brief Called to retrieve a property of an object of this type.
@@ -64,7 +62,7 @@ public:  // Properties
    * @param[in] index The property index.
    * @return The current value of the property.
    */
-  static Dali::Property::Value GetProperty( Dali::BaseObject* object, Dali::Property::Index propertyIndex );
+  static Dali::Property::Value GetProperty(Dali::BaseObject* object, Dali::Property::Index propertyIndex);
 
 private: // From Control
   /**
@@ -76,28 +74,28 @@ private:
   /**
    *  undefined constructor and operator=
    */
-  MyControl( const MyControl& );
-  MyControl& operator=( const MyControl& );
+  MyControl(const MyControl&);
+  MyControl& operator=(const MyControl&);
 
 private:
 };
 
-} // Internal
+} // namespace Internal
 
-inline Internal::MyControl& GetImpl( Demo::MyControl& handle )
+inline Internal::MyControl& GetImpl(Demo::MyControl& handle)
 {
-  DALI_ASSERT_ALWAYS( handle );
+  DALI_ASSERT_ALWAYS(handle);
   Dali::RefObject& object = handle.GetImplementation();
   return static_cast<Internal::MyControl&>(object);
 }
 
-inline const Internal::MyControl& GetImpl( const Demo::MyControl& handle )
+inline const Internal::MyControl& GetImpl(const Demo::MyControl& handle)
 {
-  DALI_ASSERT_ALWAYS( handle );
+  DALI_ASSERT_ALWAYS(handle);
   const Dali::RefObject& object = handle.GetImplementation();
   return static_cast<const Internal::MyControl&>(object);
 }
 
-} // Demo
+} // namespace Demo
 
 #endif //  DALI_DEMO_INTERNAL_MY_CONTROL_IMPL_H

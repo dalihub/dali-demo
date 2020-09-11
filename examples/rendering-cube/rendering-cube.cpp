@@ -15,14 +15,15 @@
  *
  */
 
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/dali.h>
 
 using namespace Dali;
 using namespace Toolkit;
 
 namespace
 {
+// clang-format off
 
 /*
  * Vertex shader
@@ -55,20 +56,20 @@ void main()\n
   gl_FragColor = vColor;\n
 }\n
 );
+// clang-format on
 
-}
+} // namespace
 
 // This example shows how to create a cube with colors on each side
 //
 class DrawCubeController : public ConnectionTracker
 {
 public:
-
-  DrawCubeController( Application& application )
-  : mApplication( application )
+  DrawCubeController(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &DrawCubeController::Create );
+    mApplication.InitSignal().Connect(this, &DrawCubeController::Create);
   }
 
   ~DrawCubeController()
@@ -77,11 +78,11 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
-    window.SetBackgroundColor( Color::WHITE );
+    window.SetBackgroundColor(Color::WHITE);
 
     // Step 1. Create shader
     CreateCubeShader();
@@ -99,13 +100,13 @@ public:
     PlayAnimation();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect( this, &DrawCubeController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect(this, &DrawCubeController::OnTouch);
 
     // Respond to key events
-    window.KeyEventSignal().Connect( this, &DrawCubeController::OnKeyEvent );
+    window.KeyEventSignal().Connect(this, &DrawCubeController::OnKeyEvent);
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch(Actor actor, const TouchEvent& touch)
   {
     // quit the application
     mApplication.Quit();
@@ -118,11 +119,11 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -141,78 +142,65 @@ public:
       Vector3 aColor;
     };
 
-    const Vector3 COLOR0( 1.0f, 1.0f, 0.0f );
-    const Vector3 COLOR1( 0.0f, 1.0f, 1.0f );
-    const Vector3 COLOR2( 1.0f, 0.0f, 1.0f );
-    const Vector3 COLOR3( 0.0f, 1.0f, 0.0f );
-    const Vector3 COLOR4( 0.0f, 0.0f, 1.0f );
-    const Vector3 COLOR5( 1.0f, 0.0f, 0.0f );
+    const Vector3 COLOR0(1.0f, 1.0f, 0.0f);
+    const Vector3 COLOR1(0.0f, 1.0f, 1.0f);
+    const Vector3 COLOR2(1.0f, 0.0f, 1.0f);
+    const Vector3 COLOR3(0.0f, 1.0f, 0.0f);
+    const Vector3 COLOR4(0.0f, 0.0f, 1.0f);
+    const Vector3 COLOR5(1.0f, 0.0f, 0.0f);
 
     Vertex vertices[] = {
-      { Vector3(  1.0f,-1.0f,-1.0f ), COLOR5 },
-      { Vector3( -1.0f, 1.0f,-1.0f ), COLOR5 },
-      { Vector3(  1.0f, 1.0f,-1.0f ), COLOR5 },
-      { Vector3( -1.0f, 1.0f, 1.0f ), COLOR3 },
-      { Vector3(  1.0f,-1.0f, 1.0f ), COLOR3 },
-      { Vector3(  1.0f, 1.0f, 1.0f ), COLOR3 },
-      { Vector3(  1.0f, 1.0f, 1.0f ), COLOR4 },
-      { Vector3(  1.0f,-1.0f,-1.0f ), COLOR4 },
-      { Vector3(  1.0f, 1.0f,-1.0f ), COLOR4 },
-      { Vector3(  1.0f,-1.0f, 1.0f ), COLOR1 },
-      { Vector3( -1.0f,-1.0f,-1.0f ), COLOR1 },
-      { Vector3(  1.0f,-1.0f,-1.0f ), COLOR1 },
-      { Vector3( -1.0f,-1.0f,-1.0f ), COLOR0 },
-      { Vector3( -1.0f, 1.0f, 1.0f ), COLOR0 },
-      { Vector3( -1.0f, 1.0f,-1.0f ), COLOR0 },
-      { Vector3(  1.0f, 1.0f,-1.0f ), COLOR2 },
-      { Vector3( -1.0f, 1.0f, 1.0f ), COLOR2 },
-      { Vector3(  1.0f, 1.0f, 1.0f ), COLOR2 },
-      { Vector3(  1.0f,-1.0f,-1.0f ), COLOR5 },
-      { Vector3( -1.0f,-1.0f,-1.0f ), COLOR5 },
-      { Vector3( -1.0f, 1.0f,-1.0f ), COLOR5 },
-      { Vector3( -1.0f, 1.0f, 1.0f ), COLOR3 },
-      { Vector3( -1.0f,-1.0f, 1.0f ), COLOR3 },
-      { Vector3(  1.0f,-1.0f, 1.0f ), COLOR3 },
-      { Vector3(  1.0f, 1.0f, 1.0f ), COLOR4 },
-      { Vector3(  1.0f,-1.0f, 1.0f ), COLOR4 },
-      { Vector3(  1.0f,-1.0f,-1.0f ), COLOR4 },
-      { Vector3(  1.0f,-1.0f, 1.0f ), COLOR1 },
-      { Vector3( -1.0f,-1.0f, 1.0f ), COLOR1 },
-      { Vector3( -1.0f,-1.0f,-1.0f ), COLOR1 },
-      { Vector3( -1.0f,-1.0f,-1.0f ), COLOR0 },
-      { Vector3( -1.0f,-1.0f, 1.0f ), COLOR0 },
-      { Vector3( -1.0f, 1.0f, 1.0f ), COLOR0 },
-      { Vector3(  1.0f, 1.0f,-1.0f ), COLOR2 },
-      { Vector3( -1.0f, 1.0f,-1.0f ), COLOR2 },
-      { Vector3( -1.0f, 1.0f, 1.0f ), COLOR2 },
+      {Vector3(1.0f, -1.0f, -1.0f), COLOR5},
+      {Vector3(-1.0f, 1.0f, -1.0f), COLOR5},
+      {Vector3(1.0f, 1.0f, -1.0f), COLOR5},
+      {Vector3(-1.0f, 1.0f, 1.0f), COLOR3},
+      {Vector3(1.0f, -1.0f, 1.0f), COLOR3},
+      {Vector3(1.0f, 1.0f, 1.0f), COLOR3},
+      {Vector3(1.0f, 1.0f, 1.0f), COLOR4},
+      {Vector3(1.0f, -1.0f, -1.0f), COLOR4},
+      {Vector3(1.0f, 1.0f, -1.0f), COLOR4},
+      {Vector3(1.0f, -1.0f, 1.0f), COLOR1},
+      {Vector3(-1.0f, -1.0f, -1.0f), COLOR1},
+      {Vector3(1.0f, -1.0f, -1.0f), COLOR1},
+      {Vector3(-1.0f, -1.0f, -1.0f), COLOR0},
+      {Vector3(-1.0f, 1.0f, 1.0f), COLOR0},
+      {Vector3(-1.0f, 1.0f, -1.0f), COLOR0},
+      {Vector3(1.0f, 1.0f, -1.0f), COLOR2},
+      {Vector3(-1.0f, 1.0f, 1.0f), COLOR2},
+      {Vector3(1.0f, 1.0f, 1.0f), COLOR2},
+      {Vector3(1.0f, -1.0f, -1.0f), COLOR5},
+      {Vector3(-1.0f, -1.0f, -1.0f), COLOR5},
+      {Vector3(-1.0f, 1.0f, -1.0f), COLOR5},
+      {Vector3(-1.0f, 1.0f, 1.0f), COLOR3},
+      {Vector3(-1.0f, -1.0f, 1.0f), COLOR3},
+      {Vector3(1.0f, -1.0f, 1.0f), COLOR3},
+      {Vector3(1.0f, 1.0f, 1.0f), COLOR4},
+      {Vector3(1.0f, -1.0f, 1.0f), COLOR4},
+      {Vector3(1.0f, -1.0f, -1.0f), COLOR4},
+      {Vector3(1.0f, -1.0f, 1.0f), COLOR1},
+      {Vector3(-1.0f, -1.0f, 1.0f), COLOR1},
+      {Vector3(-1.0f, -1.0f, -1.0f), COLOR1},
+      {Vector3(-1.0f, -1.0f, -1.0f), COLOR0},
+      {Vector3(-1.0f, -1.0f, 1.0f), COLOR0},
+      {Vector3(-1.0f, 1.0f, 1.0f), COLOR0},
+      {Vector3(1.0f, 1.0f, -1.0f), COLOR2},
+      {Vector3(-1.0f, 1.0f, -1.0f), COLOR2},
+      {Vector3(-1.0f, 1.0f, 1.0f), COLOR2},
     };
 
-    VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
-                                                       .Add( "aPosition", Property::VECTOR3 )
-                                                       .Add( "aColor", Property::VECTOR3 ) );
-    vertexBuffer.SetData( vertices, sizeof(vertices) / sizeof(Vertex) );
+    VertexBuffer vertexBuffer = VertexBuffer::New(Property::Map()
+                                                    .Add("aPosition", Property::VECTOR3)
+                                                    .Add("aColor", Property::VECTOR3));
+    vertexBuffer.SetData(vertices, sizeof(vertices) / sizeof(Vertex));
 
     // create indices
     const unsigned short INDEX_CUBE[] = {
-      2, 1, 0,
-      5, 4, 3,
-      8, 7, 6,
-      11, 10, 9,
-      14, 13, 12,
-      17, 16, 15,
-      20, 19, 18,
-      23, 22, 21,
-      26, 25, 24,
-      29, 28, 27,
-      32, 31, 30,
-      35, 34, 33
-    };
+      2, 1, 0, 5, 4, 3, 8, 7, 6, 11, 10, 9, 14, 13, 12, 17, 16, 15, 20, 19, 18, 23, 22, 21, 26, 25, 24, 29, 28, 27, 32, 31, 30, 35, 34, 33};
     mGeometry = Geometry::New();
-    mGeometry.AddVertexBuffer( vertexBuffer );
-    mGeometry.SetIndexBuffer( INDEX_CUBE,
-                              sizeof(INDEX_CUBE)/sizeof(INDEX_CUBE[0])
-        );
-    mGeometry.SetType( Geometry::TRIANGLES );
+    mGeometry.AddVertexBuffer(vertexBuffer);
+    mGeometry.SetIndexBuffer(INDEX_CUBE,
+                             sizeof(INDEX_CUBE) / sizeof(INDEX_CUBE[0]));
+    mGeometry.SetType(Geometry::TRIANGLES);
   }
 
   /**
@@ -223,7 +211,7 @@ public:
    */
   void CreateCubeShader()
   {
-    mShader = Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
+    mShader = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
   }
 
   /**
@@ -231,11 +219,11 @@ public:
    */
   void CreateRenderer()
   {
-    mRenderer = Renderer::New( mGeometry, mShader );
+    mRenderer = Renderer::New(mGeometry, mShader);
 
     // Face culling is enabled to hide the backwards facing sides of the cube
     // This is sufficient to render a single object; for more complex scenes depth-testing might be required
-    mRenderer.SetProperty( Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK );
+    mRenderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
   }
 
   /**
@@ -246,13 +234,13 @@ public:
     Window window = mApplication.GetWindow();
 
     float quarterWindowWidth = window.GetSize().GetWidth() * 0.25f;
-    mActor = Actor::New();
-    mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0f, 0.0f, 0.0f ) );
-    mActor.SetProperty( Actor::Property::SIZE, Vector3( quarterWindowWidth, quarterWindowWidth, quarterWindowWidth ) );
-    mActor.AddRenderer( mRenderer );
-    window.Add( mActor );
+    mActor                   = Actor::New();
+    mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mActor.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
+    mActor.SetProperty(Actor::Property::SIZE, Vector3(quarterWindowWidth, quarterWindowWidth, quarterWindowWidth));
+    mActor.AddRenderer(mRenderer);
+    window.Add(mActor);
   }
 
   /**
@@ -260,28 +248,28 @@ public:
    */
   void PlayAnimation()
   {
-    mAnimation = Animation::New( 5.0f );
-    mAnimation.SetLooping( true );
-    mAnimation.AnimateBy( Property( mActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 )), Vector3::ZAXIS ) );
-    mAnimation.AnimateBy( Property( mActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 )), Vector3::YAXIS ) );
-    mAnimation.AnimateBy( Property( mActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 )), Vector3::XAXIS ) );
+    mAnimation = Animation::New(5.0f);
+    mAnimation.SetLooping(true);
+    mAnimation.AnimateBy(Property(mActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::ZAXIS));
+    mAnimation.AnimateBy(Property(mActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::YAXIS));
+    mAnimation.AnimateBy(Property(mActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::XAXIS));
     mAnimation.Play();
   }
 
 private:
-  Application&  mApplication;
+  Application& mApplication;
 
-  Renderer mRenderer;
-  Shader mShader;
-  Geometry mGeometry;
-  Actor mActor;
+  Renderer  mRenderer;
+  Shader    mShader;
+  Geometry  mGeometry;
+  Actor     mActor;
   Animation mAnimation;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  DrawCubeController test( application );
+  Application        application = Application::New(&argc, &argv);
+  DrawCubeController test(application);
   application.MainLoop();
   return 0;
 }

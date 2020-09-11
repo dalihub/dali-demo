@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@
 
 // EXTERNAL INCLUDES
 #include <dali/devel-api/adaptor-framework/file-loader.h>
-#include <cstdio>
 #include <string.h>
+#include <cstdio>
 
 // INTERNAL INCLUDES
 #include "obj-loader.h"
@@ -40,7 +40,6 @@ struct Vertices
 
 } // namespace
 
-
 ModelPbr::ModelPbr()
 {
 }
@@ -49,32 +48,32 @@ ModelPbr::~ModelPbr()
 {
 }
 
-void ModelPbr::Init( Shader shader, const std::string& modelUrl, const Vector3& position, const Vector3& size )
+void ModelPbr::Init(Shader shader, const std::string& modelUrl, const Vector3& position, const Vector3& size)
 {
   Geometry geometry;
 
-  geometry = CreateGeometry( modelUrl );
+  geometry = CreateGeometry(modelUrl);
 
-  Renderer renderer = Renderer::New( geometry, shader );
+  Renderer renderer = Renderer::New(geometry, shader);
 
-  if( mTextureSet )
+  if(mTextureSet)
   {
-    renderer.SetTextures( mTextureSet );
+    renderer.SetTextures(mTextureSet);
   }
 
   // Face culling is enabled to hide the backwards facing sides of the model
   // This is sufficient to render a single object; for more complex scenes depth-testing might be required
-  renderer.SetProperty( Renderer::Property::DEPTH_TEST_MODE, DepthTestMode::ON );
-  renderer.SetProperty( Renderer::Property::DEPTH_WRITE_MODE, DepthWriteMode::ON );
-  renderer.SetProperty( Renderer::Property::DEPTH_FUNCTION, DepthFunction::LESS_EQUAL );
-  renderer.SetProperty( Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK );
+  renderer.SetProperty(Renderer::Property::DEPTH_TEST_MODE, DepthTestMode::ON);
+  renderer.SetProperty(Renderer::Property::DEPTH_WRITE_MODE, DepthWriteMode::ON);
+  renderer.SetProperty(Renderer::Property::DEPTH_FUNCTION, DepthFunction::LESS_EQUAL);
+  renderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
 
   mActor = Actor::New();
-  mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  mActor.SetProperty( Actor::Property::POSITION, position );
-  mActor.SetProperty( Actor::Property::SIZE, size );
-  mActor.AddRenderer( renderer );
+  mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  mActor.SetProperty(Actor::Property::POSITION, position);
+  mActor.SetProperty(Actor::Property::SIZE, size);
+  mActor.AddRenderer(renderer);
 }
 
 /**
@@ -83,15 +82,15 @@ void ModelPbr::Init( Shader shader, const std::string& modelUrl, const Vector3& 
 void ModelPbr::InitTexture(Texture albedoM, Texture normalR, Texture texDiffuse, Texture texSpecular)
 {
   mTextureSet = TextureSet::New();
-  mTextureSet.SetTexture( 0u, albedoM );
-  mTextureSet.SetTexture( 1u, normalR );
-  mTextureSet.SetTexture( 2u, texDiffuse );
-  mTextureSet.SetTexture( 3u, texSpecular );
+  mTextureSet.SetTexture(0u, albedoM);
+  mTextureSet.SetTexture(1u, normalR);
+  mTextureSet.SetTexture(2u, texDiffuse);
+  mTextureSet.SetTexture(3u, texSpecular);
 
   Sampler sampler = Sampler::New();
-  sampler.SetWrapMode(WrapMode::CLAMP_TO_EDGE,WrapMode::CLAMP_TO_EDGE,WrapMode::CLAMP_TO_EDGE);
-  sampler.SetFilterMode(FilterMode::LINEAR_MIPMAP_LINEAR,FilterMode::LINEAR);
-  mTextureSet.SetSampler(3,sampler);
+  sampler.SetWrapMode(WrapMode::CLAMP_TO_EDGE, WrapMode::CLAMP_TO_EDGE, WrapMode::CLAMP_TO_EDGE);
+  sampler.SetFilterMode(FilterMode::LINEAR_MIPMAP_LINEAR, FilterMode::LINEAR);
+  mTextureSet.SetSampler(3, sampler);
 }
 
 Actor& ModelPbr::GetActor()
@@ -102,21 +101,21 @@ Actor& ModelPbr::GetActor()
 /**
  * Create geometry from OBJ path file
  */
-Geometry ModelPbr::CreateGeometry( const std::string& url )
+Geometry ModelPbr::CreateGeometry(const std::string& url)
 {
-  std::streampos fileSize;
+  std::streampos     fileSize;
   Dali::Vector<char> fileContent;
 
   Geometry geometry;
 
-  if( FileLoader::ReadFile( url, fileSize, fileContent, FileLoader::TEXT ) )
+  if(FileLoader::ReadFile(url, fileSize, fileContent, FileLoader::TEXT))
   {
     PbrDemo::ObjLoader objLoader;
 
     objLoader.ClearArrays();
-    objLoader.LoadObject( fileContent.Begin(), fileSize );
+    objLoader.LoadObject(fileContent.Begin(), fileSize);
 
-    geometry = objLoader.CreateGeometry( PbrDemo::ObjLoader::TEXTURE_COORDINATES | PbrDemo::ObjLoader::TANGENTS, true );
+    geometry = objLoader.CreateGeometry(PbrDemo::ObjLoader::TEXTURE_COORDINATES | PbrDemo::ObjLoader::TANGENTS, true);
   }
 
   return geometry;

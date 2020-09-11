@@ -18,11 +18,10 @@
  *
  */
 
- // EXTERNAL INCLUDES
-#include <string>
+// EXTERNAL INCLUDES
 #include <dali/public-api/adaptor-framework/application.h>
+#include <string>
 
-void ExecuteProcess( const std::string& processName, Dali::Application& application );
-
+void ExecuteProcess(const std::string& processName, Dali::Application& application);
 
 #endif // DALI_DEMO_EXECUTE_PROCESS_H

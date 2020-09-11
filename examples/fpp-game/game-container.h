@@ -2,7 +2,7 @@
 #define GAME_CONTAINER_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@
 
 #include <dali/public-api/common/dali-vector.h>
 
-
 /**
  * GameContainer is a vector which owns heap-allocated objects.
  * Unlike vector this will call delete on the stored pointers during destruction.
@@ -34,12 +33,12 @@
  *
  * @endcode
  */
-template< class T > class GameContainer : public Dali::Vector< T >
+template<class T>
+class GameContainer : public Dali::Vector<T>
 {
 public:
-
-  typedef typename Dali::Vector< T >::Iterator Iterator;
-  typedef typename Dali::Vector< T >::ConstIterator ConstIterator;
+  typedef typename Dali::Vector<T>::Iterator      Iterator;
+  typedef typename Dali::Vector<T>::ConstIterator ConstIterator;
 
   /**
    * Create a owner container.
@@ -62,21 +61,20 @@ public:
    */
   void Clear()
   {
-    ConstIterator end = Dali::Vector< T >::End();
-    for( Iterator iter = Dali::Vector< T >::Begin(); iter != end; ++iter )
+    ConstIterator end = Dali::Vector<T>::End();
+    for(Iterator iter = Dali::Vector<T>::Begin(); iter != end; ++iter)
     {
-      delete (*iter);
+      delete(*iter);
     }
-    Dali::Vector< T >::Clear();
+    Dali::Vector<T>::Clear();
   }
 
 private:
-
   // Undefined copy constructor.
-  GameContainer( const GameContainer& );
+  GameContainer(const GameContainer&);
 
   // Undefined assignment operator.
-  GameContainer& operator=( const GameContainer& );
+  GameContainer& operator=(const GameContainer&);
 };
 
 #endif // GAMECACHE_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,25 +23,23 @@
 
 namespace MaskedImage
 {
-
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 namespace
 {
-const char* const IMAGE_MASK ( DEMO_IMAGE_DIR "contact-cards-mask.png" );
+const char* const IMAGE_MASK(DEMO_IMAGE_DIR "contact-cards-mask.png");
 } // unnamed namespace
 
-Dali::Toolkit::Control Create( const std::string& imagePath )
+Dali::Toolkit::Control Create(const std::string& imagePath)
 {
   Control maskedImage = ImageView::New();
   maskedImage.SetProperty(
     Toolkit::ImageView::Property::IMAGE,
-    Property::Map{ { Visual::Property::TYPE, Toolkit::Visual::Type::IMAGE },
-                   { ImageVisual::Property::URL, imagePath },
-                   { ImageVisual::Property::ALPHA_MASK_URL, IMAGE_MASK } }
-  );
+    Property::Map{{Visual::Property::TYPE, Toolkit::Visual::Type::IMAGE},
+                  {ImageVisual::Property::URL, imagePath},
+                  {ImageVisual::Property::ALPHA_MASK_URL, IMAGE_MASK}});
   return maskedImage;
 }
 
-} // namespace ClippedImage
+} // namespace MaskedImage

@@ -18,13 +18,13 @@
  *
  */
 
-#include <vector>
-#include <stdint.h>
 #include <inttypes.h>
+#include <stdint.h>
+#include <vector>
 
+#include "game-camera.h"
 #include "game-container.h"
 #include "game-utils.h"
-#include "game-camera.h"
 
 #include <dali/public-api/actors/actor.h>
 #include <dali/public-api/adaptor-framework/window.h>
@@ -37,14 +37,13 @@ class GameModel;
 /**
  * Container based types owning heap allocated data of specifed types
  */
-typedef GameContainer< GameEntity* > EntityArray;
-typedef GameContainer< GameTexture* > TextureArray;
-typedef GameContainer< GameModel* > ModelArray;
+typedef GameContainer<GameEntity*>  EntityArray;
+typedef GameContainer<GameTexture*> TextureArray;
+typedef GameContainer<GameModel*>   ModelArray;
 
 class GameScene
 {
 public:
-
   /**
    * Creates an instance of the GameScene
    */
@@ -62,7 +61,7 @@ public:
    * @param[in] filename Path to the scene file
    * @return true if suceess
    */
-  bool Load( Dali::Window window, const char* filename );
+  bool Load(Dali::Window window, const char* filename);
 
   /**
    * Loads resource ( model or texture ) or gets if from cache if already loaded
@@ -70,8 +69,8 @@ public:
    * @param[in] cache Reference to the cache array to be used
    * @return Pointer to the resource or NULL otherwise
    */
-  template <typename T>
-  T* GetResource( const char* filename, GameContainer<T*>& cache );
+  template<typename T>
+  T* GetResource(const char* filename, GameContainer<T*>& cache);
 
   /**
    * Returns scene root actor
@@ -80,46 +79,43 @@ public:
   Dali::Actor& GetRootActor();
 
 private:
-
-  EntityArray     mEntities;
-  GameCamera      mCamera;
+  EntityArray mEntities;
+  GameCamera  mCamera;
 
   // internal scene cache
-  ModelArray      mModelCache;
-  TextureArray    mTextureCache;
+  ModelArray   mModelCache;
+  TextureArray mTextureCache;
 
-  Dali::Actor     mRootActor;
+  Dali::Actor mRootActor;
 };
 
-
 template<typename T>
-T* GameScene::GetResource( const char* filename, GameContainer<T*>& cache )
+T* GameScene::GetResource(const char* filename, GameContainer<T*>& cache)
 {
-  std::string path( DEMO_GAME_DIR );
+  std::string path(DEMO_GAME_DIR);
   path += "/";
   path += filename;
 
-  uint32_t hash( GameUtils::HashString( path.c_str() ) );
+  uint32_t hash(GameUtils::HashString(path.c_str()));
 
-  for( typename GameContainer<T*>::Iterator iter = cache.Begin(); iter != cache.End(); ++iter )
+  for(typename GameContainer<T*>::Iterator iter = cache.Begin(); iter != cache.End(); ++iter)
   {
-    if( (*iter)->GetUniqueId() == hash )
+    if((*iter)->GetUniqueId() == hash)
     {
       return (*iter);
     }
   }
 
   // load resource
-  T* resource = new T( path.c_str() );
-  if( !resource->IsReady() )
+  T* resource = new T(path.c_str());
+  if(!resource->IsReady())
   {
     return NULL;
   }
 
-  cache.PushBack( resource );
+  cache.PushBack(resource);
 
   return resource;
 }
-
 
 #endif

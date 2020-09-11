@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@
 #include <dali-toolkit/public-api/image-loader/sync-image-loader.h>
 
 GameTexture::GameTexture()
-: mUniqueId( 0 ),
-  mIsReady( false )
+: mUniqueId(0),
+  mIsReady(false)
 {
 }
 
@@ -32,40 +32,40 @@ GameTexture::~GameTexture()
 {
 }
 
-GameTexture::GameTexture( const char* filename )
-: mUniqueId( 0 ),
-  mIsReady( false )
+GameTexture::GameTexture(const char* filename)
+: mUniqueId(0),
+  mIsReady(false)
 {
-  Load( filename );
+  Load(filename);
 }
 
-bool GameTexture::Load( const char* filename )
+bool GameTexture::Load(const char* filename)
 {
-  Dali::PixelData pixelData = Dali::Toolkit::SyncImageLoader::Load( filename );
+  Dali::PixelData pixelData = Dali::Toolkit::SyncImageLoader::Load(filename);
 
-  if( !pixelData )
+  if(!pixelData)
   {
     return false;
   }
 
-  Dali::Texture texture = Dali::Texture::New( Dali::TextureType::TEXTURE_2D,
-                                  pixelData.GetPixelFormat(),
-                                  pixelData.GetWidth(),
-                                  pixelData.GetHeight() );
-  texture.Upload( pixelData );
+  Dali::Texture texture = Dali::Texture::New(Dali::TextureType::TEXTURE_2D,
+                                             pixelData.GetPixelFormat(),
+                                             pixelData.GetWidth(),
+                                             pixelData.GetHeight());
+  texture.Upload(pixelData);
   texture.GenerateMipmaps();
   Dali::TextureSet textureSet = Dali::TextureSet::New();
-  textureSet.SetTexture( 0, texture );
+  textureSet.SetTexture(0, texture);
   Dali::Sampler sampler = Dali::Sampler::New();
-  sampler.SetWrapMode( Dali::WrapMode::REPEAT, Dali::WrapMode::REPEAT, Dali::WrapMode::REPEAT );
-  sampler.SetFilterMode( Dali::FilterMode::LINEAR_MIPMAP_LINEAR, Dali::FilterMode::LINEAR );
-  textureSet.SetSampler( 0, sampler );
+  sampler.SetWrapMode(Dali::WrapMode::REPEAT, Dali::WrapMode::REPEAT, Dali::WrapMode::REPEAT);
+  sampler.SetFilterMode(Dali::FilterMode::LINEAR_MIPMAP_LINEAR, Dali::FilterMode::LINEAR);
+  textureSet.SetSampler(0, sampler);
 
-  mTexture = texture;
-  mSampler = sampler;
+  mTexture    = texture;
+  mSampler    = sampler;
   mTextureSet = textureSet;
 
-  mUniqueId = GameUtils::HashString( filename );
+  mUniqueId = GameUtils::HashString(filename);
 
   mIsReady = true;
 

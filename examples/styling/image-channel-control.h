@@ -2,7 +2,7 @@
 #define DALI_DEMO_IMAGE_CHANNEL_CONTROL_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,12 +22,11 @@
 
 namespace Demo
 {
-
 namespace Internal
 {
 // All type registered types need to have the same name for the body and the handle
 class ImageChannelControl;
-}
+} // namespace Internal
 
 /**
  * Control that allows the RGB channels of an image to be altered.
@@ -40,10 +39,10 @@ public:
    */
   enum PropertyRange
   {
-    PROPERTY_START_INDEX = Dali::Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1,
-    PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000,
+    PROPERTY_START_INDEX            = Dali::Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1,
+    PROPERTY_END_INDEX              = PROPERTY_START_INDEX + 1000,
     ANIMATABLE_PROPERTY_START_INDEX = Dali::ANIMATABLE_PROPERTY_REGISTRATION_START_INDEX,
-    ANIMATABLE_PROPERTY_END_INDEX = ANIMATABLE_PROPERTY_START_INDEX+1000
+    ANIMATABLE_PROPERTY_END_INDEX   = ANIMATABLE_PROPERTY_START_INDEX + 1000
   };
 
   struct Property
@@ -62,7 +61,6 @@ public:
   };
 
 public: // Construction / destruction
-
   /**
    * Create an uninitialized handle
    */
@@ -77,7 +75,7 @@ public: // Construction / destruction
   /**
    * Create a new image channel control from a given URL
    */
-  static ImageChannelControl New( const std::string& url );
+  static ImageChannelControl New(const std::string& url);
 
   /**
    * Destructor. This is non-virtual since derived Handle types must not
@@ -88,41 +86,40 @@ public: // Construction / destruction
   /**
    * Copy Constructor
    */
-  ImageChannelControl( const ImageChannelControl& imageChannelControl );
+  ImageChannelControl(const ImageChannelControl& imageChannelControl);
 
   /**
    * Assignment Operator
    */
-  ImageChannelControl& operator=( const ImageChannelControl& imageChannelControl );
+  ImageChannelControl& operator=(const ImageChannelControl& imageChannelControl);
 
   /**
    * Downcast
    */
-  static ImageChannelControl DownCast( BaseHandle handle );
+  static ImageChannelControl DownCast(BaseHandle handle);
 
 public: // API
-
   /**
    * Set the image for this ImageChannelControl
    * @param[in] url The url of the image resource
    */
-  void SetImage( const std::string& url );
+  void SetImage(const std::string& url);
 
   /**
    * Set the visibility of this control
    */
-  void SetVisibility( bool visibility );
+  void SetVisibility(bool visibility);
 
 public: // Not for public use
   /**
    * Create a handle from an implementation
    */
-  ImageChannelControl( Internal::ImageChannelControl& implementation );
+  ImageChannelControl(Internal::ImageChannelControl& implementation);
 
   /**
    * Allow the creation of an ImageChannelControl handle from an internal CustomActor pointer
    */
-  ImageChannelControl( Dali::Internal::CustomActor* internal );
+  ImageChannelControl(Dali::Internal::CustomActor* internal);
 };
 
 } // namespace Demo

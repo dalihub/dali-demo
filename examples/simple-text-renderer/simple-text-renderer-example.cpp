@@ -21,10 +21,10 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/adaptor-framework/pixel-buffer.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/text/text-utils-devel.h>
 #include <dali/devel-api/adaptor-framework/image-loading.h>
+#include <dali/devel-api/adaptor-framework/pixel-buffer.h>
 
 using namespace std;
 using namespace Dali;
@@ -32,11 +32,10 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-
 const std::string IMAGE1 = DEMO_IMAGE_DIR "application-icon-1.png";
 const std::string IMAGE2 = DEMO_IMAGE_DIR "application-icon-6.png";
 
-#define MAKE_SHADER(A)#A
+#define MAKE_SHADER(A) #A
 
 const std::string VERSION_3_ES = "#version 300 es\n";
 
@@ -51,15 +50,13 @@ const char* VERTEX_SHADER = MAKE_SHADER(
   uniform vec3 uSize;
   uniform mat4 uMvpMatrix;
 
-  void main()
-  {
+  void main() {
     vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);
     vertexPosition.xyz *= uSize;
     gl_Position = uMvpMatrix * vertexPosition;
 
     vUV = aTexCoord;
-  }
-);
+  });
 
 const char* FRAGMENT_SHADER = MAKE_SHADER(
   precision mediump float;
@@ -69,14 +66,12 @@ const char* FRAGMENT_SHADER = MAKE_SHADER(
   out vec4 FragColor;
 
   uniform sampler2D sAlbedo;
-  uniform vec4 uColor;
+  uniform vec4      uColor;
 
-  void main()
-  {
-    vec4 color = texture( sAlbedo, vUV );
-    FragColor = vec4( color.rgb, uColor.a * color.a );
-  }
-);
+  void main() {
+    vec4 color = texture(sAlbedo, vUV);
+    FragColor  = vec4(color.rgb, uColor.a * color.a);
+  });
 
 Renderer CreateRenderer()
 {
@@ -87,10 +82,10 @@ Renderer CreateRenderer()
     Dali::Vector2 texCoord;
   };
 
-  static const Vertex vertices[] = {{ Dali::Vector2( -0.5f, -0.5f ), Dali::Vector2( 0.0f, 0.0f ) },
-                                    { Dali::Vector2(  0.5f, -0.5f ), Dali::Vector2( 1.0f, 0.0f ) },
-                                    { Dali::Vector2( -0.5f,  0.5f ), Dali::Vector2( 0.0f, 1.0f ) },
-                                    { Dali::Vector2(  0.5f,  0.5f ), Dali::Vector2( 1.0f, 1.0f ) }};
+  static const Vertex vertices[] = {{Dali::Vector2(-0.5f, -0.5f), Dali::Vector2(0.0f, 0.0f)},
+                                    {Dali::Vector2(0.5f, -0.5f), Dali::Vector2(1.0f, 0.0f)},
+                                    {Dali::Vector2(-0.5f, 0.5f), Dali::Vector2(0.0f, 1.0f)},
+                                    {Dali::Vector2(0.5f, 0.5f), Dali::Vector2(1.0f, 1.0f)}};
 
   Property::Map property;
   property.Add("aPosition", Property::VECTOR2).Add("aTexCoord", Property::VECTOR2);
@@ -105,123 +100,121 @@ Renderer CreateRenderer()
   geometry.SetType(Geometry::TRIANGLE_STRIP);
 
   // Create the shader
-  Shader shader = Shader::New( VERSION_3_ES + VERTEX_SHADER, VERSION_3_ES + FRAGMENT_SHADER );
+  Shader shader = Shader::New(VERSION_3_ES + VERTEX_SHADER, VERSION_3_ES + FRAGMENT_SHADER);
 
   // Create the renderer
 
-  Renderer renderer = Renderer::New( geometry, shader );
+  Renderer renderer = Renderer::New(geometry, shader);
 
   return renderer;
 }
 
-TextureSet CreateTextureSet( const Dali::Toolkit::DevelText::RendererParameters& textParameters, const std::vector<std::string>& embeddedItems )
+TextureSet CreateTextureSet(const Dali::Toolkit::DevelText::RendererParameters& textParameters, const std::vector<std::string>& embeddedItems)
 {
-
   Dali::Vector<Dali::Toolkit::DevelText::EmbeddedItemInfo> embeddedItemLayout;
 
-  Devel::PixelBuffer pixelBuffer = Toolkit::DevelText::Render( textParameters, embeddedItemLayout );
+  Devel::PixelBuffer pixelBuffer = Toolkit::DevelText::Render(textParameters, embeddedItemLayout);
 
-
-  const int dstWidth = static_cast<int>( pixelBuffer.GetWidth() );
-  const int dstHeight = static_cast<int>( pixelBuffer.GetHeight() );
+  const int dstWidth  = static_cast<int>(pixelBuffer.GetWidth());
+  const int dstHeight = static_cast<int>(pixelBuffer.GetHeight());
 
   unsigned int index = 0u;
-  for( const auto& itemLayout : embeddedItemLayout )
+  for(const auto& itemLayout : embeddedItemLayout)
   {
-    int width = static_cast<int>( itemLayout.size.width );
-    int height = static_cast<int>( itemLayout.size.height );
-    int x = static_cast<int>( itemLayout.position.x );
-    int y = static_cast<int>( itemLayout.position.y );
+    int width  = static_cast<int>(itemLayout.size.width);
+    int height = static_cast<int>(itemLayout.size.height);
+    int x      = static_cast<int>(itemLayout.position.x);
+    int y      = static_cast<int>(itemLayout.position.y);
 
-    Dali::Devel::PixelBuffer itemPixelBuffer = Dali::LoadImageFromFile( embeddedItems[index++] );
-    itemPixelBuffer.Resize( width, height );
-    itemPixelBuffer.Rotate( itemLayout.angle );
+    Dali::Devel::PixelBuffer itemPixelBuffer = Dali::LoadImageFromFile(embeddedItems[index++]);
+    itemPixelBuffer.Resize(width, height);
+    itemPixelBuffer.Rotate(itemLayout.angle);
 
-    width = static_cast<int>( itemPixelBuffer.GetWidth() );
-    height = static_cast<int>( itemPixelBuffer.GetHeight() );
+    width  = static_cast<int>(itemPixelBuffer.GetWidth());
+    height = static_cast<int>(itemPixelBuffer.GetHeight());
 
     Dali::Pixel::Format itemPixelFormat = itemPixelBuffer.GetPixelFormat();
 
     // Check if the item is out of the buffer.
 
-    if( ( x + width < 0 ) ||
-        ( x > dstWidth ) ||
-        ( y < 0 ) ||
-        ( y - height > dstHeight ) )
+    if((x + width < 0) ||
+       (x > dstWidth) ||
+       (y < 0) ||
+       (y - height > dstHeight))
     {
       // The embedded item is completely out of the buffer.
       continue;
     }
 
     // Crop if it exceeds the boundaries of the destination buffer.
-    int layoutX = 0;
-    int layoutY = 0;
-    int cropX = 0;
-    int cropY = 0;
-    int newWidth = width;
+    int layoutX   = 0;
+    int layoutY   = 0;
+    int cropX     = 0;
+    int cropY     = 0;
+    int newWidth  = width;
     int newHeight = height;
 
     bool crop = false;
 
-    if( 0 > x )
+    if(0 > x)
     {
       newWidth += x;
-      cropX = std::abs( x );
-      crop = true;
+      cropX = std::abs(x);
+      crop  = true;
     }
     else
     {
       layoutX = x;
     }
 
-    if( cropX + newWidth > dstWidth )
+    if(cropX + newWidth > dstWidth)
     {
       crop = true;
-      newWidth -= ( ( cropX + newWidth ) - dstWidth );
+      newWidth -= ((cropX + newWidth) - dstWidth);
     }
 
     layoutY = y;
-    if( 0.f > layoutY )
+    if(0.f > layoutY)
     {
       newHeight += layoutY;
       cropY = std::abs(layoutY);
-      crop = true;
+      crop  = true;
     }
 
-    if( cropY + newHeight > dstHeight )
+    if(cropY + newHeight > dstHeight)
     {
       crop = true;
-      newHeight -= ( ( cropY + newHeight ) - dstHeight );
+      newHeight -= ((cropY + newHeight) - dstHeight);
     }
 
-    uint16_t uiCropX = static_cast<uint16_t>(cropX);
-    uint16_t uiCropY = static_cast<uint16_t>(cropY);
-    uint16_t uiNewWidth = static_cast<uint16_t>(newWidth);
+    uint16_t uiCropX     = static_cast<uint16_t>(cropX);
+    uint16_t uiCropY     = static_cast<uint16_t>(cropY);
+    uint16_t uiNewWidth  = static_cast<uint16_t>(newWidth);
     uint16_t uiNewHeight = static_cast<uint16_t>(newHeight);
 
-    if( crop )
+    if(crop)
     {
-      itemPixelBuffer.Crop( uiCropX, uiCropY, uiNewWidth, uiNewHeight );
+      itemPixelBuffer.Crop(uiCropX, uiCropY, uiNewWidth, uiNewHeight);
     }
 
     // Blend the item pixel buffer with the text's color according its blending mode.
-    if( Dali::TextAbstraction::ColorBlendingMode::MULTIPLY == itemLayout.colorBlendingMode )
+    if(Dali::TextAbstraction::ColorBlendingMode::MULTIPLY == itemLayout.colorBlendingMode)
     {
-      Dali::Devel::PixelBuffer buffer = Dali::Devel::PixelBuffer::New( uiNewWidth,
-                                                                       uiNewHeight,
-                                                                       itemPixelFormat );
+      Dali::Devel::PixelBuffer buffer = Dali::Devel::PixelBuffer::New(uiNewWidth,
+                                                                      uiNewHeight,
+                                                                      itemPixelFormat);
 
-      unsigned char* bufferPtr = buffer.GetBuffer();
+      unsigned char*       bufferPtr     = buffer.GetBuffer();
       const unsigned char* itemBufferPtr = itemPixelBuffer.GetBuffer();
-      const unsigned int bytesPerPixel = Dali::Pixel::GetBytesPerPixel(itemPixelFormat);
-      const unsigned int size = uiNewWidth * uiNewHeight * bytesPerPixel;
+      const unsigned int   bytesPerPixel = Dali::Pixel::GetBytesPerPixel(itemPixelFormat);
+      const unsigned int   size          = uiNewWidth * uiNewHeight * bytesPerPixel;
 
-      for (unsigned int i = 0u; i < size; i += bytesPerPixel)
+      for(unsigned int i = 0u; i < size; i += bytesPerPixel)
       {
-        *(bufferPtr + 0u) = static_cast<unsigned char>( static_cast<float>( *(itemBufferPtr + 0u) ) * textParameters.textColor.r );
-        *(bufferPtr + 1u) = static_cast<unsigned char>( static_cast<float>( *(itemBufferPtr + 1u) ) * textParameters.textColor.g );
-        *(bufferPtr + 2u) = static_cast<unsigned char>( static_cast<float>( *(itemBufferPtr + 2u) ) * textParameters.textColor.b );
-        *(bufferPtr + 3u) = static_cast<unsigned char>( static_cast<float>( *(itemBufferPtr + 3u) ) * textParameters.textColor.a );
+        *(bufferPtr + 0u) = static_cast<unsigned char>(static_cast<float>(*(itemBufferPtr + 0u)) * textParameters.textColor.r);
+        *(bufferPtr + 1u) = static_cast<unsigned char>(static_cast<float>(*(itemBufferPtr + 1u)) * textParameters.textColor.g);
+        *(bufferPtr + 2u) = static_cast<unsigned char>(static_cast<float>(*(itemBufferPtr + 2u)) * textParameters.textColor.b);
+        *(bufferPtr + 3u) = static_cast<unsigned char>(static_cast<float>(*(itemBufferPtr + 3u)) * textParameters.textColor.a);
 
         itemBufferPtr += bytesPerPixel;
         bufferPtr += bytesPerPixel;
@@ -233,22 +226,21 @@ TextureSet CreateTextureSet( const Dali::Toolkit::DevelText::RendererParameters&
     Dali::Toolkit::DevelText::UpdateBuffer(itemPixelBuffer, pixelBuffer, layoutX, layoutY, true);
   }
 
-  PixelData pixelData = Devel::PixelBuffer::Convert( pixelBuffer );
+  PixelData pixelData = Devel::PixelBuffer::Convert(pixelBuffer);
 
-  Texture texture = Texture::New( TextureType::TEXTURE_2D,
-                                  pixelData.GetPixelFormat(),
-                                  pixelData.GetWidth(),
-                                  pixelData.GetHeight() );
+  Texture texture = Texture::New(TextureType::TEXTURE_2D,
+                                 pixelData.GetPixelFormat(),
+                                 pixelData.GetWidth(),
+                                 pixelData.GetHeight());
   texture.Upload(pixelData);
 
   TextureSet textureSet = TextureSet::New();
-  textureSet.SetTexture( 0u, texture );
+  textureSet.SetTexture(0u, texture);
 
   return textureSet;
 }
 
 } // namespace
-
 
 /**
  * @brief The main class of the demo.
@@ -256,12 +248,11 @@ TextureSet CreateTextureSet( const Dali::Toolkit::DevelText::RendererParameters&
 class SimpleTextRendererExample : public ConnectionTracker
 {
 public:
-
-  SimpleTextRendererExample( Application& application )
-  : mApplication( application )
+  SimpleTextRendererExample(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &SimpleTextRendererExample::Create );
+    mApplication.InitSignal().Connect(this, &SimpleTextRendererExample::Create);
   }
 
   ~SimpleTextRendererExample()
@@ -272,11 +263,11 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
-    window.SetBackgroundColor( Color::WHITE );
-    window.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
+    window.SetBackgroundColor(Color::WHITE);
+    window.SetBackgroundColor(Vector4(0.04f, 0.345f, 0.392f, 1.0f));
 
     window.KeyEventSignal().Connect(this, &SimpleTextRendererExample::OnKeyEvent);
 
@@ -284,42 +275,42 @@ public:
     const std::string image2 = "<item 'width'=26 'height'=26/>";
 
     Dali::Toolkit::DevelText::RendererParameters textParameters;
-    textParameters.text = "Hello " + image1 + " world " + image2 + " this " + image1 + " is " + image2 + " a " + image1 + " demo " + image2 + " of " + image1 + " circular " + image2 + " text " + image1 + " width " + image2 + " icons.";
+    textParameters.text                = "Hello " + image1 + " world " + image2 + " this " + image1 + " is " + image2 + " a " + image1 + " demo " + image2 + " of " + image1 + " circular " + image2 + " text " + image1 + " width " + image2 + " icons.";
     textParameters.horizontalAlignment = "center";
-    textParameters.verticalAlignment = "center";
-    textParameters.circularAlignment = "center";
-    textParameters.fontFamily = "SamsungUI";
-    textParameters.fontWeight = "";
-    textParameters.fontWidth = "";
-    textParameters.fontSlant = "";
-    textParameters.layout = "circular";
-    textParameters.textColor = Color::BLACK;
-    textParameters.fontSize = 25.f;
-    textParameters.textWidth = 360u;
-    textParameters.textHeight = 360u;
-    textParameters.radius = 180u;
-    textParameters.beginAngle = 15.f;
-    textParameters.incrementAngle = 360.f;
-    textParameters.ellipsisEnabled = true;
-    textParameters.markupEnabled = true;
+    textParameters.verticalAlignment   = "center";
+    textParameters.circularAlignment   = "center";
+    textParameters.fontFamily          = "SamsungUI";
+    textParameters.fontWeight          = "";
+    textParameters.fontWidth           = "";
+    textParameters.fontSlant           = "";
+    textParameters.layout              = "circular";
+    textParameters.textColor           = Color::BLACK;
+    textParameters.fontSize            = 25.f;
+    textParameters.textWidth           = 360u;
+    textParameters.textHeight          = 360u;
+    textParameters.radius              = 180u;
+    textParameters.beginAngle          = 15.f;
+    textParameters.incrementAngle      = 360.f;
+    textParameters.ellipsisEnabled     = true;
+    textParameters.markupEnabled       = true;
 
-    std::vector<std::string> embeddedItems = { IMAGE2, IMAGE2, IMAGE2, IMAGE2, IMAGE2 };
+    std::vector<std::string> embeddedItems = {IMAGE2, IMAGE2, IMAGE2, IMAGE2, IMAGE2};
 
-    TextureSet textureSet = CreateTextureSet( textParameters, embeddedItems );
+    TextureSet textureSet = CreateTextureSet(textParameters, embeddedItems);
 
     Renderer renderer = CreateRenderer();
-    renderer.SetTextures( textureSet );
+    renderer.SetTextures(textureSet);
 
     Actor actor = Actor::New();
-    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    actor.SetProperty( Actor::Property::POSITION, Vector2( 0.f, 0.f));
-    actor.SetProperty( Actor::Property::SIZE, Vector2( 360.f, 360.f ) );
-    actor.SetProperty( Actor::Property::COLOR, Color::WHITE );
+    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    actor.SetProperty(Actor::Property::POSITION, Vector2(0.f, 0.f));
+    actor.SetProperty(Actor::Property::SIZE, Vector2(360.f, 360.f));
+    actor.SetProperty(Actor::Property::COLOR, Color::WHITE);
 
-    actor.AddRenderer( renderer );
+    actor.AddRenderer(renderer);
 
-    window.Add( actor );
+    window.Add(actor);
   }
 
   /**
@@ -329,7 +320,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -337,16 +328,15 @@ public:
   }
 
 private:
-
   Application& mApplication;
 };
 
 /** Entry point for Linux & Tizen applications */
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New(&argc, &argv);
 
-  SimpleTextRendererExample test( application );
+  SimpleTextRendererExample test(application);
 
   application.MainLoop();
 

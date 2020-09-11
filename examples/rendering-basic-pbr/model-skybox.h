@@ -2,7 +2,7 @@
 #define DALI_DEMO_MODELSKYBOX_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ public:
    * @param[in] position The position of the actor.
    * @param[in] size The size of the actor.
    */
-  void Init( const Vector3& size );
+  void Init(const Vector3& size);
 
   /**
    * @brief Initializes the @p mTextureSet member with the needed textures for Physically Based Rendering.
@@ -67,17 +67,16 @@ public:
    * @param[in] diffuseTexture The diffuse texture.
    * @param[in] specularTexture The specular texture.
    */
-  void InitTexture( Texture texSkybox );
+  void InitTexture(Texture texSkybox);
 
   /**
    * @brief Retrieves the actor created by calling the Init() method.
    *
    * @return The Actor for the Physically Based Rendering.
    */
-  Actor &GetActor();
+  Actor& GetActor();
 
 private:
-
   /**
    * @brief Creates a geometry from a @e obj model.
    *
@@ -87,9 +86,8 @@ private:
    */
   Geometry CreateGeometry();
 
-  Actor mActor;
+  Actor      mActor;
   TextureSet mTextureSet;
 };
 
 #endif // DALI_DEMO_MODELSKYBOX_H
-

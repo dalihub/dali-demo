@@ -17,18 +17,16 @@
  * limitations under the License.
  */
 
-#include "shadow-button.h"
-#include <dali/public-api/animation/animation.h>
-#include <dali-toolkit/public-api/controls/control-impl.h>
-#include <dali-toolkit/devel-api/visual-factory/visual-base.h>
 #include <dali-toolkit/devel-api/visual-factory/transition-data.h>
+#include <dali-toolkit/devel-api/visual-factory/visual-base.h>
+#include <dali-toolkit/public-api/controls/control-impl.h>
+#include <dali/public-api/animation/animation.h>
+#include "shadow-button.h"
 
 namespace Demo
 {
-
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
-
 class ShadowButton : public Dali::Toolkit::Internal::Control
 {
 public:
@@ -46,7 +44,7 @@ public: // API
    * The button will perform a transition if there is a state change.
    * @param[in] active The active state
    */
-  void SetActiveState( bool active );
+  void SetActiveState(bool active);
 
   /**
    * Get the active state
@@ -58,7 +56,7 @@ public: // API
    * Set the check state
    * @param[in] checkState The state of the checkbox
    */
-  void SetCheckState( bool checkState );
+  void SetCheckState(bool checkState);
 
   /**
    * Get the check state
@@ -66,14 +64,14 @@ public: // API
    */
   bool GetCheckState();
 
-public:  // Properties
+public: // Properties
   /**
    * Called when a property of an object of this type is set.
    * @param[in] object The object whose property is set.
    * @param[in] index The property index.
    * @param[in] value The new property value.
    */
-  static void SetProperty( Dali::BaseObject* object, Dali::Property::Index index, const Dali::Property::Value& value );
+  static void SetProperty(Dali::BaseObject* object, Dali::Property::Index index, const Dali::Property::Value& value);
 
   /**
    * Called to retrieve a property of an object of this type.
@@ -81,7 +79,7 @@ public:  // Properties
    * @param[in] index The property index.
    * @return The current value of the property.
    */
-  static Dali::Property::Value GetProperty( Dali::BaseObject* object, Dali::Property::Index propertyIndex );
+  static Dali::Property::Value GetProperty(Dali::BaseObject* object, Dali::Property::Index propertyIndex);
 
 private: // From Control
   /**
@@ -92,7 +90,7 @@ private: // From Control
   /**
    * @copydoc Toolkit::Button::OnSceneConnection()
    */
-  virtual void OnSceneConnection( int depth );
+  virtual void OnSceneConnection(int depth);
 
   /**
    * @copydoc Toolkit::Button::OnSceneDisconnection()
@@ -102,12 +100,12 @@ private: // From Control
   /**
    * @copydoc Toolkit::Button::OnSizeSet()
    */
-  virtual void OnSizeSet( const Dali::Vector3& targetSize );
+  virtual void OnSizeSet(const Dali::Vector3& targetSize);
 
   /**
    * @copydoc Toolkit::Button::OnRelayout()
    */
-  virtual void OnRelayout( const Dali::Vector2& targetSize, Dali::RelayoutContainer& container );
+  virtual void OnRelayout(const Dali::Vector2& targetSize, Dali::RelayoutContainer& container);
   /**
    * @copydoc Toolkit::Button::GetNaturalSize
    */
@@ -116,22 +114,23 @@ private: // From Control
   /**
    * @copydoc Toolkit::Button::OnStyleChange
    */
-  virtual void OnStyleChange( Dali::Toolkit::StyleManager styleManager, Dali::StyleChange::Type change );
+  virtual void OnStyleChange(Dali::Toolkit::StyleManager styleManager, Dali::StyleChange::Type change);
 
 private:
   struct Transition
   {
-    Dali::Property::Index mTransitionId;
+    Dali::Property::Index         mTransitionId;
     Dali::Toolkit::TransitionData mTransitionData;
-    Dali::Animation mAnimation;
-    bool mPlaying;
+    Dali::Animation               mAnimation;
+    bool                          mPlaying;
 
-    Transition( Dali::Property::Index index, Dali::Toolkit::TransitionData transitionData )
-    : mTransitionId( index ),
-      mTransitionData( transitionData ),
+    Transition(Dali::Property::Index index, Dali::Toolkit::TransitionData transitionData)
+    : mTransitionId(index),
+      mTransitionData(transitionData),
       mPlaying(false)
     {
     }
+
   private:
     Transition();
   };
@@ -143,48 +142,48 @@ private:
     Dali::Property::Index mTransformId;
     Dali::Property::Map   mTransform;
 
-    Transform( Dali::Property::Index index, Dali::Property::Map& map )
+    Transform(Dali::Property::Index index, Dali::Property::Map& map)
     : mTransformId(index),
-      mTransform( map )
+      mTransform(map)
     {
     }
   };
   typedef std::vector<Transform> Transforms;
 
 private:
-  void StartTransition( Dali::Property::Index transitionId );
+  void StartTransition(Dali::Property::Index transitionId);
 
-  void OnTransitionFinished( Dali::Animation& handle );
+  void OnTransitionFinished(Dali::Animation& handle);
 
-  Transitions::iterator FindTransition( Dali::Property::Index index );
+  Transitions::iterator FindTransition(Dali::Property::Index index);
 
-  Transforms::iterator FindTransform( Dali::Property::Index index );
+  Transforms::iterator FindTransform(Dali::Property::Index index);
 
   /**
    * Relayout the visuals as a result of size negotiation using
    * the transforms provided in the stylesheet
    */
-  void RelayoutVisuals( const Dali::Vector2& targetSize );
+  void RelayoutVisuals(const Dali::Vector2& targetSize);
 
   /**
    * Relayout the visuals as a result of size negotiation using
    * programmatically generated transforms
    */
-  void RelayoutVisualsManually( const Dali::Vector2& targetSize );
+  void RelayoutVisualsManually(const Dali::Vector2& targetSize);
 
-  void ResetVisual( Dali::Property::Index        index,
-                    Dali::Toolkit::Visual::Base& visual,
-                    const Dali::Property::Value& value );
+  void ResetVisual(Dali::Property::Index        index,
+                   Dali::Toolkit::Visual::Base& visual,
+                   const Dali::Property::Value& value);
 
-  void ResetTransition( Dali::Property::Index        index,
-                        const Dali::Property::Value& value );
+  void ResetTransition(Dali::Property::Index        index,
+                       const Dali::Property::Value& value);
 
-  void StoreTargetLayouts( Dali::Toolkit::TransitionData transitionData );
+  void StoreTargetLayouts(Dali::Toolkit::TransitionData transitionData);
 
 private:
   // undefined
-  ShadowButton( const ShadowButton& );
-  ShadowButton& operator=( const ShadowButton& );
+  ShadowButton(const ShadowButton&);
+  ShadowButton& operator=(const ShadowButton&);
 
 private:
   // Data
@@ -199,22 +198,22 @@ private:
   bool        mActiveState;
 };
 
-} // Internal
+} // namespace Internal
 
-inline Internal::ShadowButton& GetImpl( Demo::ShadowButton& handle )
+inline Internal::ShadowButton& GetImpl(Demo::ShadowButton& handle)
 {
-  DALI_ASSERT_ALWAYS( handle );
+  DALI_ASSERT_ALWAYS(handle);
   Dali::RefObject& object = handle.GetImplementation();
   return static_cast<Internal::ShadowButton&>(object);
 }
 
-inline const Internal::ShadowButton& GetImpl( const Demo::ShadowButton& handle )
+inline const Internal::ShadowButton& GetImpl(const Demo::ShadowButton& handle)
 {
-  DALI_ASSERT_ALWAYS( handle );
+  DALI_ASSERT_ALWAYS(handle);
   const Dali::RefObject& object = handle.GetImplementation();
   return static_cast<const Internal::ShadowButton&>(object);
 }
 
-} // Demo
+} // namespace Demo
 
 #endif //  DALI_DEMO_SHADOW_BUTTON_IMPL_H

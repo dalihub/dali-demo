@@ -17,8 +17,8 @@
 #ifndef ANDROID_DALI_DEMO_NATIVE_ACTIVITY_JNI_H
 #define ANDROID_DALI_DEMO_NATIVE_ACTIVITY_JNI_H
 
-#include <string>
 #include <android_native_app_glue.h>
+#include <string>
 
 class DaliDemoNativeActivity
 {
@@ -46,10 +46,10 @@ public:
     std::string ToString()
     {
       std::string out;
-      if (string)
+      if(string)
       {
         const char* utf = env->GetStringUTFChars(string, 0);
-        out = std::string(utf);
+        out             = std::string(utf);
         env->ReleaseStringUTFChars(string, utf);
       }
       return out;
@@ -57,7 +57,7 @@ public:
 
     ~JString()
     {
-      if (string)
+      if(string)
       {
         env->DeleteLocalRef(string);
       }
@@ -87,22 +87,22 @@ public:
     std::string CallStringMethod(const std::string& name, const std::string& arg)
     {
       jmethodID methodID = env->GetMethodID(clazz, name.c_str(), "(Ljava/lang/String;)Ljava/lang/String;");
-      JString argument(env, arg);
-      JString returnValue(env, (jstring)env->CallObjectMethod(activity->clazz, methodID, argument.string));
+      JString   argument(env, arg);
+      JString   returnValue(env, (jstring)env->CallObjectMethod(activity->clazz, methodID, argument.string));
       return returnValue.ToString();
     }
 
     void CallVoidMethod(const std::string& name, const std::string& arg)
     {
       jmethodID methodID = env->GetMethodID(clazz, name.c_str(), "(Ljava/lang/String;)V");
-      JString argument(env, arg);
+      JString   argument(env, arg);
       env->CallVoidMethod(activity->clazz, methodID, argument.string);
     }
 
   private:
     ANativeActivity* activity;
-    JNIEnv* env;
-    jclass clazz;
+    JNIEnv*          env;
+    jclass           clazz;
   };
 
   std::string GetMetaData(const std::string& key)

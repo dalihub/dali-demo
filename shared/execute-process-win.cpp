@@ -15,47 +15,47 @@
  *
  */
 
- // FILE HEADER
+// FILE HEADER
 #include "execute-process.h"
 
- // EXTERNAL INCLUDES
-#include <windows.h>
+// EXTERNAL INCLUDES
 #include <dali/public-api/common/dali-common.h>
+#include <windows.h>
 
 namespace
 {
-const std::string PATH_SEPARATOR( "\\" );
+const std::string PATH_SEPARATOR("\\");
 }
 
-void ExecuteProcess( const std::string& processName, Dali::Application& application )
+void ExecuteProcess(const std::string& processName, Dali::Application& application)
 {
   std::string processPathName;
 
   const bool isRelativePath = '.' == DEMO_EXAMPLE_BIN[0];
-  if (isRelativePath)
+  if(isRelativePath)
   {
-    char currentPath[MAX_PATH];
-    DWORD numberOfCharacters = GetCurrentDirectory( MAX_PATH, currentPath );
+    char  currentPath[MAX_PATH];
+    DWORD numberOfCharacters = GetCurrentDirectory(MAX_PATH, currentPath);
 
-    if( 0u == numberOfCharacters )
+    if(0u == numberOfCharacters)
     {
-      DALI_ASSERT_ALWAYS( !"Failed to retrieve the current working directory" );
+      DALI_ASSERT_ALWAYS(!"Failed to retrieve the current working directory");
     }
 
     currentPath[numberOfCharacters] = '\0';
-    processPathName = std::string(currentPath) + PATH_SEPARATOR + DEMO_EXAMPLE_BIN + PATH_SEPARATOR + processName + ".exe";
+    processPathName                 = std::string(currentPath) + PATH_SEPARATOR + DEMO_EXAMPLE_BIN + PATH_SEPARATOR + processName + ".exe";
   }
   else
   {
     processPathName = DEMO_EXAMPLE_BIN + PATH_SEPARATOR + processName + ".exe";
   }
 
-  STARTUPINFO info = { sizeof( info ) };
+  STARTUPINFO         info = {sizeof(info)};
   PROCESS_INFORMATION processInfo;
-  if( CreateProcess( processPathName.c_str(), nullptr, nullptr, nullptr, TRUE, 0, nullptr, nullptr, &info, &processInfo ) )
+  if(CreateProcess(processPathName.c_str(), nullptr, nullptr, nullptr, TRUE, 0, nullptr, nullptr, &info, &processInfo))
   {
-    WaitForSingleObject( processInfo.hProcess, INFINITE );
-    CloseHandle( processInfo.hProcess );
-    CloseHandle( processInfo.hThread );
+    WaitForSingleObject(processInfo.hProcess, INFINITE);
+    CloseHandle(processInfo.hProcess);
+    CloseHandle(processInfo.hThread);
   }
 }

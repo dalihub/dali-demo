@@ -27,15 +27,15 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const char * IMAGE_NAME = DEMO_IMAGE_DIR "application-icon-1.png";
+const char* IMAGE_NAME = DEMO_IMAGE_DIR "application-icon-1.png";
 
-const char * TEXT_ENABLED( "FrameCallback: ON" );
-const char * TEXT_DISABLED( "FrameCallback: OFF" );
-Vector4 TEXT_COLOR_ENABLED( Color::BLACK );
-Vector4 TEXT_COLOR_DISABLED( Color::RED );
+const char* TEXT_ENABLED("FrameCallback: ON");
+const char* TEXT_DISABLED("FrameCallback: OFF");
+Vector4     TEXT_COLOR_ENABLED(Color::BLACK);
+Vector4     TEXT_COLOR_DISABLED(Color::RED);
 
-float ANIMATION_TIME( 4.0f );
-float ANIMATION_PROGRESS_MULTIPLIER( 0.02f );
+float ANIMATION_TIME(4.0f);
+float ANIMATION_PROGRESS_MULTIPLIER(0.02f);
 } // unnamed namespace
 
 /**
@@ -48,24 +48,22 @@ float ANIMATION_PROGRESS_MULTIPLIER( 0.02f );
 class FrameCallbackController : public ConnectionTracker
 {
 public:
-
   /**
    * @brief Constructor.
    * @param[in]  application  The application.
    */
-  FrameCallbackController( Application& application )
-  : mApplication( application ),
+  FrameCallbackController(Application& application)
+  : mApplication(application),
     mFrameCallback(),
     mTextLabel(),
     mTapDetector(),
-    mFrameCallbackEnabled( false )
+    mFrameCallbackEnabled(false)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &FrameCallbackController::Create );
+    mApplication.InitSignal().Connect(this, &FrameCallbackController::Create);
   }
 
 private:
-
   /**
    * @brief Creates the scene.
    *
@@ -74,63 +72,63 @@ private:
    * Set the FrameCallbackInterface on the window.
    * Tapping on the window enables/disables the FrameCallback.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
     Window window = application.GetWindow();
-    window.SetBackgroundColor( Color::WHITE );
-    window.KeyEventSignal().Connect( this, &FrameCallbackController::OnKeyEvent );
+    window.SetBackgroundColor(Color::WHITE);
+    window.KeyEventSignal().Connect(this, &FrameCallbackController::OnKeyEvent);
 
     // Notify mFrameCallback about the window width.
     // Can call methods in mFrameCallback directly as we have not set it on the window yet.
     Vector2 windowSize = window.GetSize();
-    mFrameCallback.SetWindowWidth( windowSize.width );
+    mFrameCallback.SetWindowWidth(windowSize.width);
 
     // Detect taps on the root layer.
     mTapDetector = TapGestureDetector::New();
-    mTapDetector.Attach( window.GetRootLayer() );
-    mTapDetector.DetectedSignal().Connect( this, &FrameCallbackController::OnTap );
+    mTapDetector.Attach(window.GetRootLayer());
+    mTapDetector.DetectedSignal().Connect(this, &FrameCallbackController::OnTap);
 
     // Create some key-frames to be used by all animations.
     KeyFrames keyFrames = KeyFrames::New();
-    keyFrames.Add( 0.0f,   0.0f );
-    keyFrames.Add( 0.25f,  windowSize.width * 0.5f );
-    keyFrames.Add( 0.75f, -windowSize.width * 0.5f );
-    keyFrames.Add( 1.0f,   0.0f );
+    keyFrames.Add(0.0f, 0.0f);
+    keyFrames.Add(0.25f, windowSize.width * 0.5f);
+    keyFrames.Add(0.75f, -windowSize.width * 0.5f);
+    keyFrames.Add(1.0f, 0.0f);
 
     float yPos = 0.0f;
-    for( int i = 0; yPos < windowSize.height; ++i )
+    for(int i = 0; yPos < windowSize.height; ++i)
     {
-      ImageView imageView = ImageView::New( IMAGE_NAME );
-      imageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-      imageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-      imageView.SetProperty( Actor::Property::POSITION_Y,  yPos );
+      ImageView imageView = ImageView::New(IMAGE_NAME);
+      imageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+      imageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
+      imageView.SetProperty(Actor::Property::POSITION_Y, yPos);
       yPos += imageView.GetNaturalSize().height;
 
       // Add the ID of the created ImageView to mFrameCallback.
       // Again, can call methods in mFrameCallback directly as we have not set it on the window yet.
-      mFrameCallback.AddId( imageView.GetProperty< int >( Actor::Property::ID ) );
+      mFrameCallback.AddId(imageView.GetProperty<int>(Actor::Property::ID));
 
-      window.Add( imageView );
+      window.Add(imageView);
 
       // Create an animation and set the progress so that each image starts at a different point.
-      Animation animation = Animation::New( ANIMATION_TIME );
-      animation.SetLooping( true );
-      animation.AnimateBetween( Property( imageView, Actor::Property::POSITION_X ), keyFrames );
-      animation.SetCurrentProgress( std::min( 1.0f, ANIMATION_PROGRESS_MULTIPLIER * i ) );
+      Animation animation = Animation::New(ANIMATION_TIME);
+      animation.SetLooping(true);
+      animation.AnimateBetween(Property(imageView, Actor::Property::POSITION_X), keyFrames);
+      animation.SetCurrentProgress(std::min(1.0f, ANIMATION_PROGRESS_MULTIPLIER * i));
       animation.Play();
     }
 
     // Create a text-label to display whether the FrameCallback is enabled/disabled.
-    mTextLabel = TextLabel::New( TEXT_ENABLED );
-    mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, TEXT_COLOR_ENABLED );
-    mTextLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    mTextLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    window.Add( mTextLabel );
+    mTextLabel = TextLabel::New(TEXT_ENABLED);
+    mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, TEXT_COLOR_ENABLED);
+    mTextLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
+    mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    window.Add(mTextLabel);
 
     // Set the FrameCallbackInterface on the root layer.
-    DevelStage::AddFrameCallback( Stage::GetCurrent(), mFrameCallback, window.GetRootLayer() );
+    DevelStage::AddFrameCallback(Stage::GetCurrent(), mFrameCallback, window.GetRootLayer());
     mFrameCallbackEnabled = true;
   }
 
@@ -139,19 +137,19 @@ private:
    *
    * Toggle enabling/disabling of the FrameCallbackInterface
    */
-  void OnTap( Actor actor, const TapGesture& /* tap */ )
+  void OnTap(Actor actor, const TapGesture& /* tap */)
   {
-    if( mFrameCallbackEnabled )
+    if(mFrameCallbackEnabled)
     {
-      DevelStage::RemoveFrameCallback( Stage::GetCurrent(), mFrameCallback );
-      mTextLabel.SetProperty( TextLabel::Property::TEXT, TEXT_DISABLED );
-      mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, TEXT_COLOR_DISABLED );
+      DevelStage::RemoveFrameCallback(Stage::GetCurrent(), mFrameCallback);
+      mTextLabel.SetProperty(TextLabel::Property::TEXT, TEXT_DISABLED);
+      mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, TEXT_COLOR_DISABLED);
     }
     else
     {
-      DevelStage::AddFrameCallback( Stage::GetCurrent(), mFrameCallback, actor );
-      mTextLabel.SetProperty( TextLabel::Property::TEXT, TEXT_ENABLED );
-      mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, TEXT_COLOR_ENABLED );
+      DevelStage::AddFrameCallback(Stage::GetCurrent(), mFrameCallback, actor);
+      mTextLabel.SetProperty(TextLabel::Property::TEXT, TEXT_ENABLED);
+      mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, TEXT_COLOR_ENABLED);
     }
 
     mFrameCallbackEnabled = !mFrameCallbackEnabled;
@@ -163,11 +161,11 @@ private:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -175,17 +173,17 @@ private:
   }
 
 private:
-  Application&        mApplication;          ///< A reference to the application instance.
-  FrameCallback       mFrameCallback;        ///< An instance of our implementation of the FrameCallbackInterface.
-  TextLabel           mTextLabel;            ///< Text label which shows whether the frame-callback is enabled/disabled.
-  TapGestureDetector  mTapDetector;          ///< Tap detector to enable/disable the FrameCallbackInterface.
-  bool                mFrameCallbackEnabled; ///< Stores whether the FrameCallbackInterface is enabled/disabled.
+  Application&       mApplication;          ///< A reference to the application instance.
+  FrameCallback      mFrameCallback;        ///< An instance of our implementation of the FrameCallbackInterface.
+  TextLabel          mTextLabel;            ///< Text label which shows whether the frame-callback is enabled/disabled.
+  TapGestureDetector mTapDetector;          ///< Tap detector to enable/disable the FrameCallbackInterface.
+  bool               mFrameCallbackEnabled; ///< Stores whether the FrameCallbackInterface is enabled/disabled.
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  FrameCallbackController controller( application );
+  Application             application = Application::New(&argc, &argv);
+  FrameCallbackController controller(application);
   application.MainLoop();
   return 0;
 }

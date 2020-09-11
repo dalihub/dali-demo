@@ -26,46 +26,42 @@ namespace Demo
 {
 namespace Internal
 {
-
 namespace
 {
-
 const int BOUNCE_ANIMATION_RUNNING(0x0001);
-const int FADE_ANIMATION_RUNNING  (0x0002);
-const int X_ANIMATION_RUNNING     (0x0004);
-const int Y_ANIMATION_RUNNING     (0x0008);
-
+const int FADE_ANIMATION_RUNNING(0x0002);
+const int X_ANIMATION_RUNNING(0x0004);
+const int Y_ANIMATION_RUNNING(0x0008);
 
 Dali::BaseHandle Create()
 {
   return Demo::BeatControl::New();
 }
 
-DALI_TYPE_REGISTRATION_BEGIN( BeatControl, Dali::Toolkit::Control, Create );
+DALI_TYPE_REGISTRATION_BEGIN(BeatControl, Dali::Toolkit::Control, Create);
 
-DALI_PROPERTY_REGISTRATION( Demo, BeatControl, "bounceTransition", STRING, BOUNCE_TRANSITION );
-DALI_PROPERTY_REGISTRATION( Demo, BeatControl, "leftTransition", STRING, LEFT_TRANSITION );
-DALI_PROPERTY_REGISTRATION( Demo, BeatControl, "upTransition", STRING, UP_TRANSITION );
-DALI_PROPERTY_REGISTRATION( Demo, BeatControl, "fadeTransition", STRING, FADE_TRANSITION );
-DALI_PROPERTY_REGISTRATION( Demo, BeatControl, "beatVisual", MAP, BEAT_VISUAL );
+DALI_PROPERTY_REGISTRATION(Demo, BeatControl, "bounceTransition", STRING, BOUNCE_TRANSITION);
+DALI_PROPERTY_REGISTRATION(Demo, BeatControl, "leftTransition", STRING, LEFT_TRANSITION);
+DALI_PROPERTY_REGISTRATION(Demo, BeatControl, "upTransition", STRING, UP_TRANSITION);
+DALI_PROPERTY_REGISTRATION(Demo, BeatControl, "fadeTransition", STRING, FADE_TRANSITION);
+DALI_PROPERTY_REGISTRATION(Demo, BeatControl, "beatVisual", MAP, BEAT_VISUAL);
 DALI_TYPE_REGISTRATION_END();
 
-
-Toolkit::TransitionData ConvertPropertyToTransition( const Property::Value& value )
+Toolkit::TransitionData ConvertPropertyToTransition(const Property::Value& value)
 {
   Toolkit::TransitionData transitionData;
 
   const Property::Array* array = value.GetArray();
-  if( array )
+  if(array)
   {
-    transitionData = Toolkit::TransitionData::New( *array );
+    transitionData = Toolkit::TransitionData::New(*array);
   }
   else
   {
     const Property::Map* map = value.GetMap();
-    if( map )
+    if(map)
     {
-      transitionData = Toolkit::TransitionData::New( *map );
+      transitionData = Toolkit::TransitionData::New(*map);
     }
   }
   return transitionData;
@@ -73,9 +69,8 @@ Toolkit::TransitionData ConvertPropertyToTransition( const Property::Value& valu
 
 } // anonymous namespace
 
-
 Internal::BeatControl::BeatControl()
-: Control( ControlBehaviour( CONTROL_BEHAVIOUR_DEFAULT ) ),
+: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mTransformSize(1.0f, 1.0f),
   mTransformOrigin(Align::CENTER),
   mTransformAnchorPoint(Align::CENTER),
@@ -89,87 +84,85 @@ Internal::BeatControl::~BeatControl()
 
 Demo::BeatControl Internal::BeatControl::New()
 {
-  IntrusivePtr<Internal::BeatControl> impl = new Internal::BeatControl();
-  Demo::BeatControl handle = Demo::BeatControl( *impl );
+  IntrusivePtr<Internal::BeatControl> impl   = new Internal::BeatControl();
+  Demo::BeatControl                   handle = Demo::BeatControl(*impl);
   impl->Initialize();
   return handle;
 }
 
-
 void BeatControl::StartBounceAnimation()
 {
-  if( mAnimation )
+  if(mAnimation)
   {
     mAnimation.Stop();
-    mAnimation.FinishedSignal().Disconnect( this, &BeatControl::OnBounceAnimationFinished );
+    mAnimation.FinishedSignal().Disconnect(this, &BeatControl::OnBounceAnimationFinished);
     OnBounceAnimationFinished(mAnimation);
   }
 
-  mAnimation = DevelControl::CreateTransition( *this, mBounceTransition );
-  mAnimation.FinishedSignal().Connect( this, &BeatControl::OnBounceAnimationFinished );
+  mAnimation = DevelControl::CreateTransition(*this, mBounceTransition);
+  mAnimation.FinishedSignal().Connect(this, &BeatControl::OnBounceAnimationFinished);
   mAnimation.Play();
   mAnimationPlaying |= BOUNCE_ANIMATION_RUNNING;
 }
 
-
 void BeatControl::StartXAnimation()
 {
-  if( mXAnimation )
+  if(mXAnimation)
   {
     mXAnimation.Stop();
-    mXAnimation.FinishedSignal().Disconnect( this, &BeatControl::OnXAnimationFinished );
+    mXAnimation.FinishedSignal().Disconnect(this, &BeatControl::OnXAnimationFinished);
     OnXAnimationFinished(mXAnimation);
   }
 
-  mXAnimation = DevelControl::CreateTransition( *this, mLeftTransition );
-  mXAnimation.FinishedSignal().Connect( this, &BeatControl::OnXAnimationFinished );
+  mXAnimation = DevelControl::CreateTransition(*this, mLeftTransition);
+  mXAnimation.FinishedSignal().Connect(this, &BeatControl::OnXAnimationFinished);
   mXAnimation.Play();
   mAnimationPlaying |= X_ANIMATION_RUNNING;
 }
 
 void BeatControl::StartYAnimation()
 {
-  if( mYAnimation )
+  if(mYAnimation)
   {
     mYAnimation.Stop();
-    mYAnimation.FinishedSignal().Disconnect( this, &BeatControl::OnYAnimationFinished );
+    mYAnimation.FinishedSignal().Disconnect(this, &BeatControl::OnYAnimationFinished);
     OnYAnimationFinished(mYAnimation);
   }
 
-  mYAnimation = DevelControl::CreateTransition( *this, mUpTransition );
-  mYAnimation.FinishedSignal().Connect( this, &BeatControl::OnYAnimationFinished );
+  mYAnimation = DevelControl::CreateTransition(*this, mUpTransition);
+  mYAnimation.FinishedSignal().Connect(this, &BeatControl::OnYAnimationFinished);
   mYAnimation.Play();
   mAnimationPlaying |= Y_ANIMATION_RUNNING;
 }
 
 void BeatControl::StartFadeAnimation()
 {
-  if( mFadeAnimation )
+  if(mFadeAnimation)
   {
     mFadeAnimation.Stop();
-    mFadeAnimation.FinishedSignal().Disconnect( this, &BeatControl::OnFadeAnimationFinished );
+    mFadeAnimation.FinishedSignal().Disconnect(this, &BeatControl::OnFadeAnimationFinished);
     OnFadeAnimationFinished(mFadeAnimation);
   }
 
-  mFadeAnimation = DevelControl::CreateTransition( *this, mFadeTransition );
-  mFadeAnimation.FinishedSignal().Connect( this, &BeatControl::OnFadeAnimationFinished );
+  mFadeAnimation = DevelControl::CreateTransition(*this, mFadeTransition);
+  mFadeAnimation.FinishedSignal().Connect(this, &BeatControl::OnFadeAnimationFinished);
   mFadeAnimation.Play();
   mAnimationPlaying |= FADE_ANIMATION_RUNNING;
 }
 
-void BeatControl::OnBounceAnimationFinished( Animation& src )
+void BeatControl::OnBounceAnimationFinished(Animation& src)
 {
   mAnimationPlaying &= ~BOUNCE_ANIMATION_RUNNING;
 }
-void BeatControl::OnXAnimationFinished( Animation& src )
+void BeatControl::OnXAnimationFinished(Animation& src)
 {
   mAnimationPlaying &= ~X_ANIMATION_RUNNING;
 }
-void BeatControl::OnYAnimationFinished( Animation& src )
+void BeatControl::OnYAnimationFinished(Animation& src)
 {
   mAnimationPlaying &= ~Y_ANIMATION_RUNNING;
 }
-void BeatControl::OnFadeAnimationFinished( Animation& src )
+void BeatControl::OnFadeAnimationFinished(Animation& src)
 {
   mAnimationPlaying &= ~FADE_ANIMATION_RUNNING;
 }
@@ -179,9 +172,9 @@ void BeatControl::OnInitialize()
   Actor self = Self();
 }
 
-void BeatControl::OnSceneConnection( int depth )
+void BeatControl::OnSceneConnection(int depth)
 {
-  Control::OnSceneConnection( depth );
+  Control::OnSceneConnection(depth);
 }
 
 void BeatControl::OnSceneDisconnection()
@@ -189,38 +182,38 @@ void BeatControl::OnSceneDisconnection()
   Control::OnSceneDisconnection();
 }
 
-void BeatControl::OnSizeSet( const Vector3& targetSize )
+void BeatControl::OnSizeSet(const Vector3& targetSize)
 {
-  Control::OnSizeSet( targetSize );
-  RelayoutVisuals( Vector2( targetSize ) );
+  Control::OnSizeSet(targetSize);
+  RelayoutVisuals(Vector2(targetSize));
 }
 
-void BeatControl::OnRelayout( const Vector2& targetSize, RelayoutContainer& container )
+void BeatControl::OnRelayout(const Vector2& targetSize, RelayoutContainer& container)
 {
-  RelayoutVisuals( targetSize );
+  RelayoutVisuals(targetSize);
 }
 
-void BeatControl::RelayoutVisuals( const Vector2& targetSize )
+void BeatControl::RelayoutVisuals(const Vector2& targetSize)
 {
-  if( mVisual )
+  if(mVisual)
   {
-    if( (mAnimationPlaying & (X_ANIMATION_RUNNING | Y_ANIMATION_RUNNING)) == 0)
+    if((mAnimationPlaying & (X_ANIMATION_RUNNING | Y_ANIMATION_RUNNING)) == 0)
     {
-      Vector2 size( targetSize );
+      Vector2       size(targetSize);
       Property::Map transformMap;
       // Make the visual half the size of the control, but leave
       // origin and anchor point at center, position is relative, but Zer0
-      transformMap[ Visual::Transform::Property::SIZE ] = mTransformSize;
-      transformMap[ Visual::Transform::Property::ORIGIN ] = mTransformOrigin;
-      transformMap[ Visual::Transform::Property::ANCHOR_POINT ] = mTransformAnchorPoint;
-      mVisual.SetTransformAndSize( transformMap, size );
+      transformMap[Visual::Transform::Property::SIZE]         = mTransformSize;
+      transformMap[Visual::Transform::Property::ORIGIN]       = mTransformOrigin;
+      transformMap[Visual::Transform::Property::ANCHOR_POINT] = mTransformAnchorPoint;
+      mVisual.SetTransformAndSize(transformMap, size);
     }
   }
 }
 
 Vector3 BeatControl::GetNaturalSize()
 {
-  if( mVisual )
+  if(mVisual)
   {
     Vector2 naturalSize;
     mVisual.GetNaturalSize(naturalSize);
@@ -229,27 +222,26 @@ Vector3 BeatControl::GetNaturalSize()
   return Vector3::ZERO;
 }
 
-void BeatControl::OnStyleChange( Toolkit::StyleManager styleManager, StyleChange::Type change )
+void BeatControl::OnStyleChange(Toolkit::StyleManager styleManager, StyleChange::Type change)
 {
   // Chain up.
-  Control::OnStyleChange( styleManager, change );
+  Control::OnStyleChange(styleManager, change);
 }
-
 
 ///////////////////////////////////////////////////////////
 //
 // Properties
 //
 
-void BeatControl::SetProperty( BaseObject* object, Property::Index index, const Property::Value& value )
+void BeatControl::SetProperty(BaseObject* object, Property::Index index, const Property::Value& value)
 {
-  Demo::BeatControl beatControl = Demo::BeatControl::DownCast( Dali::BaseHandle( object ) );
+  Demo::BeatControl beatControl = Demo::BeatControl::DownCast(Dali::BaseHandle(object));
 
-  if( beatControl )
+  if(beatControl)
   {
-    BeatControl& impl = GetImpl( beatControl );
-    Actor self = impl.Self();
-    switch ( index )
+    BeatControl& impl = GetImpl(beatControl);
+    Actor        self = impl.Self();
+    switch(index)
     {
       case Demo::BeatControl::Property::BEAT_VISUAL:
       {
@@ -258,59 +250,59 @@ void BeatControl::SetProperty( BaseObject* object, Property::Index index, const 
         // Determine if a transform.size property exists in the map, and
         // save it.
         Property::Map* map = value.GetMap();
-        if( map )
+        if(map)
         {
-          Property::Value* value = map->Find( Visual::Property::TRANSFORM, "transform" );
-          if( value )
+          Property::Value* value = map->Find(Visual::Property::TRANSFORM, "transform");
+          if(value)
           {
             Property::Map* transformMap = value->GetMap();
-            if( transformMap )
+            if(transformMap)
             {
               // We'll increment this whenever SIZE, ORIGIN or ANCHOR_POINT's are modified as we won't need to create a new visual if only these properties are used
               // If there are more properties in the transform map, then we need to create a new visual
               unsigned int sizeAndPositionPropertyCount = 0;
 
-              Property::Value* sizeValue = transformMap->Find( Visual::Transform::Property::SIZE, "size" );
-              if( sizeValue )
+              Property::Value* sizeValue = transformMap->Find(Visual::Transform::Property::SIZE, "size");
+              if(sizeValue)
               {
-                sizeValue->Get( impl.mTransformSize );
+                sizeValue->Get(impl.mTransformSize);
                 ++sizeAndPositionPropertyCount;
               }
 
-              Property::Value* originValue = transformMap->Find( Visual::Transform::Property::ORIGIN, "origin" );
-              if( originValue )
+              Property::Value* originValue = transformMap->Find(Visual::Transform::Property::ORIGIN, "origin");
+              if(originValue)
               {
                 int intValue = 0;
-                if( originValue->Get( intValue ) )
+                if(originValue->Get(intValue))
                 {
-                  impl.mTransformOrigin = static_cast< Toolkit::Align::Type >( intValue );
+                  impl.mTransformOrigin = static_cast<Toolkit::Align::Type>(intValue);
                   ++sizeAndPositionPropertyCount;
                 }
               }
 
-              Property::Value* anchorPointValue = transformMap->Find( Visual::Transform::Property::ANCHOR_POINT, "anchorPoint" );
-              if( anchorPointValue )
+              Property::Value* anchorPointValue = transformMap->Find(Visual::Transform::Property::ANCHOR_POINT, "anchorPoint");
+              if(anchorPointValue)
               {
                 int intValue = 0;
-                if( anchorPointValue->Get( intValue ) )
+                if(anchorPointValue->Get(intValue))
                 {
-                  impl.mTransformAnchorPoint = static_cast< Toolkit::Align::Type >( intValue );
+                  impl.mTransformAnchorPoint = static_cast<Toolkit::Align::Type>(intValue);
                   ++sizeAndPositionPropertyCount;
                 }
               }
 
               // If the only properties that the application is overriding are the size and the position properties, then we do not need to create another visual.
-              if( map->Count() == 1 && transformMap->Count() == sizeAndPositionPropertyCount )
+              if(map->Count() == 1 && transformMap->Count() == sizeAndPositionPropertyCount)
               {
                 sizeAndPositionOnly = true;
               }
             }
           }
-          if( ! sizeAndPositionOnly )
+          if(!sizeAndPositionOnly)
           {
             // Only register a visual if there is more than just a size setting
-            impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual( *map );
-            DevelControl::RegisterVisual( impl, Demo::BeatControl::Property::BEAT_VISUAL, impl.mVisual );
+            impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual(*map);
+            DevelControl::RegisterVisual(impl, Demo::BeatControl::Property::BEAT_VISUAL, impl.mVisual);
 
             // We have registered a new visual: must trigger size negotiation
             // in order to call SetTransformAndSize on the visual with the right size:
@@ -321,42 +313,42 @@ void BeatControl::SetProperty( BaseObject* object, Property::Index index, const 
       }
       case Demo::BeatControl::Property::BOUNCE_TRANSITION:
       {
-        impl.mBounceTransition = ConvertPropertyToTransition( value );
+        impl.mBounceTransition = ConvertPropertyToTransition(value);
         break;
       }
       case Demo::BeatControl::Property::LEFT_TRANSITION:
       {
-        impl.mLeftTransition = ConvertPropertyToTransition( value );
+        impl.mLeftTransition = ConvertPropertyToTransition(value);
         break;
       }
       case Demo::BeatControl::Property::UP_TRANSITION:
       {
-        impl.mUpTransition = ConvertPropertyToTransition( value );
+        impl.mUpTransition = ConvertPropertyToTransition(value);
         break;
       }
       case Demo::BeatControl::Property::FADE_TRANSITION:
       {
-        impl.mFadeTransition = ConvertPropertyToTransition( value );
+        impl.mFadeTransition = ConvertPropertyToTransition(value);
         break;
       }
     }
   }
 }
 
-Property::Value BeatControl::GetProperty( BaseObject* object, Property::Index propertyIndex )
+Property::Value BeatControl::GetProperty(BaseObject* object, Property::Index propertyIndex)
 {
   Property::Value value;
 
-  Demo::BeatControl beatControl = Demo::BeatControl::DownCast( Dali::BaseHandle( object ) );
+  Demo::BeatControl beatControl = Demo::BeatControl::DownCast(Dali::BaseHandle(object));
 
-  if ( beatControl )
+  if(beatControl)
   {
-    BeatControl& impl = GetImpl( beatControl );
-    switch ( propertyIndex )
+    BeatControl& impl = GetImpl(beatControl);
+    switch(propertyIndex)
     {
       case Demo::BeatControl::Property::BEAT_VISUAL:
       {
-        if( impl.mVisual )
+        if(impl.mVisual)
         {
           Property::Map map;
           impl.mVisual.CreatePropertyMap(map);
@@ -376,6 +368,5 @@ Property::Value BeatControl::GetProperty( BaseObject* object, Property::Index pr
   return value;
 }
 
-
-} // Internal
-} // Demo
+} // namespace Internal
+} // namespace Demo

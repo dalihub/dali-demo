@@ -15,15 +15,15 @@
  *
  */
 
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 
-#include "game-scene.h"
-#include "game-model.h"
-#include "game-texture.h"
-#include "game-entity.h"
-#include "game-renderer.h"
 #include "game-camera.h"
+#include "game-entity.h"
+#include "game-model.h"
+#include "game-renderer.h"
+#include "game-scene.h"
+#include "game-texture.h"
 
 #include "third-party/picojson.h"
 
@@ -44,131 +44,127 @@ GameScene::~GameScene()
 {
 }
 
-bool GameScene::Load(Window window, const char *filename)
+bool GameScene::Load(Window window, const char* filename)
 {
   ByteArray bytes;
-  if( !LoadFile( filename, bytes ) )
+  if(!LoadFile(filename, bytes))
   {
     return false;
   }
 
   // add EOL
-  bytes.push_back( '\0');
+  bytes.push_back('\0');
 
   picojson::value root;
-  picojson::parse( root, bytes.data() );
+  picojson::parse(root, bytes.data());
 
-  bool failed( false );
+  bool failed(false);
 
-  if( root.is<object>() )
+  if(root.is<object>())
   {
     object rootObject = root.get<object>();
-    for( object::iterator it = rootObject.begin(); it != rootObject.end(); ++it )
+    for(object::iterator it = rootObject.begin(); it != rootObject.end(); ++it)
     {
-      std::string entityName( (*it).first );
+      std::string entityName((*it).first);
 
-      GameEntity* entity = new GameEntity( entityName.c_str() );
-      mEntities.PushBack( entity );
+      GameEntity* entity = new GameEntity(entityName.c_str());
+      mEntities.PushBack(entity);
 
-      value& val( (*it).second );
-      value& vLocation = val.get( "location" );
-      value& vRotation = val.get( "rotation" );
-      value& vScale = val.get( "scale" );
-      value& vSize = val.get( "size" );
-      value& vModel = val.get( "model" );
-      value& vTexture = val.get( "texture" );
+      value& val((*it).second);
+      value& vLocation = val.get("location");
+      value& vRotation = val.get("rotation");
+      value& vScale    = val.get("scale");
+      value& vSize     = val.get("size");
+      value& vModel    = val.get("model");
+      value& vTexture  = val.get("texture");
 
-      if( !vLocation.is<null>() )
+      if(!vLocation.is<null>())
       {
         array& location = vLocation.get<array>();
-        entity->SetLocation( Vector3(
-                              location.at(0).get<double>(),
-                              location.at(1).get<double>(),
-                              location.at(2).get<double>()
-                              ));
+        entity->SetLocation(Vector3(
+          location.at(0).get<double>(),
+          location.at(1).get<double>(),
+          location.at(2).get<double>()));
       }
 
-      if( !vRotation.is<null>() )
+      if(!vRotation.is<null>())
       {
         array& rotation = vRotation.get<array>();
-        entity->SetRotation( Quaternion( Vector4(
-                              -rotation.at(0).get<double>(),
-                              rotation.at(1).get<double>(),
-                              -rotation.at(2).get<double>(),
-                              rotation.at(3).get<double>()
-                              )) );
+        entity->SetRotation(Quaternion(Vector4(
+          -rotation.at(0).get<double>(),
+          rotation.at(1).get<double>(),
+          -rotation.at(2).get<double>(),
+          rotation.at(3).get<double>())));
       }
 
-      if( !vScale.is<null>() )
+      if(!vScale.is<null>())
       {
         array& scale = vScale.get<array>();
-        entity->SetScale( Vector3(
-                              scale.at(0).get<double>(),
-                              scale.at(1).get<double>(),
-                              scale.at(2).get<double>()
-                              ));
+        entity->SetScale(Vector3(
+          scale.at(0).get<double>(),
+          scale.at(1).get<double>(),
+          scale.at(2).get<double>()));
       }
 
-      if( !vSize.is<null>() )
+      if(!vSize.is<null>())
       {
         array& size = vSize.get<array>();
-        entity->SetSize( Vector3(
-                              size.at(0).get<double>(),
-                              size.at(1).get<double>(),
-                              size.at(2).get<double>()
-                              ));
+        entity->SetSize(Vector3(
+          size.at(0).get<double>(),
+          size.at(1).get<double>(),
+          size.at(2).get<double>()));
       }
 
-      GameModel* model( NULL );
-      GameTexture* texture( NULL );
+      GameModel*   model(NULL);
+      GameTexture* texture(NULL);
 
-      if( !vModel.is<null>() )
+      if(!vModel.is<null>())
       {
         std::string& strModel = vModel.get<std::string>();
-        model = GetResource( strModel.c_str(), mModelCache );
+        model                 = GetResource(strModel.c_str(), mModelCache);
       }
 
-      if( !vTexture.is<null>() )
+      if(!vTexture.is<null>())
       {
         std::string& strTexture = vTexture.get<std::string>();
-        texture = GetResource( strTexture.c_str(), mTextureCache );
+        texture                 = GetResource(strTexture.c_str(), mTextureCache);
       }
 
-      if( !model || !texture )
+      if(!model || !texture)
       {
         failed = true;
         break;
       }
 
-      entity->GetGameRenderer().SetModel( model );
-      entity->GetGameRenderer().SetMainTexture( texture );
+      entity->GetGameRenderer().SetModel(model);
+      entity->GetGameRenderer().SetMainTexture(texture);
     }
   }
 
-  if( failed )
+  if(failed)
   {
     return false;
   }
 
   // add all to the window
   mRootActor = Actor::New();
-  mRootActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  mRootActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  window.GetRootLayer().Add( mRootActor );
-  mRootActor.SetProperty( Actor::Property::SCALE, Vector3( -1.0, 1.0, 1.0 ) );
-  mRootActor.SetProperty( Actor::Property::POSITION, Vector3( 0.0, 0.0, 0.0 ) );
-  mRootActor.SetProperty( Actor::Property::ORIENTATION, Quaternion( Degree( 90 ), Vector3( 1.0, 0.0, 0.0 ) ) );
-  for( size_t i = 0; i < mEntities.Size(); ++i )
+  mRootActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mRootActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  window.GetRootLayer().Add(mRootActor);
+  mRootActor.SetProperty(Actor::Property::SCALE, Vector3(-1.0, 1.0, 1.0));
+  mRootActor.SetProperty(Actor::Property::POSITION, Vector3(0.0, 0.0, 0.0));
+  mRootActor.SetProperty(Actor::Property::ORIENTATION, Quaternion(Degree(90), Vector3(1.0, 0.0, 0.0)));
+  for(size_t i = 0; i < mEntities.Size(); ++i)
   {
-    Actor actor( mEntities[i]->GetActor() );
-    actor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mRootActor.Add( actor );
+    Actor actor(mEntities[i]->GetActor());
+    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mRootActor.Add(actor);
     mEntities[i]->UpdateRenderer();
   }
 
   // update camera
-  mCamera.Initialise( window.GetRenderTaskList().GetTask(0).GetCameraActor(), 60.0f, 0.1f, 100.0f, window.GetSize() );
+  mCamera.Initialise(window.GetRenderTaskList().GetTask(0).GetCameraActor(), 60.0f, 0.1f, 100.0f, window.GetSize());
 
   return true;
 }

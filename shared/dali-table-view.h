@@ -18,18 +18,18 @@
  *
  */
 
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali/dali.h>
 
 class Example;
 
-typedef std::vector<Example> ExampleList;
-typedef ExampleList::iterator ExampleListIter;
+typedef std::vector<Example>        ExampleList;
+typedef ExampleList::iterator       ExampleListIter;
 typedef ExampleList::const_iterator ExampleListConstIter;
 
-typedef std::vector<Dali::Animation> AnimationList;
-typedef AnimationList::iterator AnimationListIter;
+typedef std::vector<Dali::Animation>  AnimationList;
+typedef AnimationList::iterator       AnimationListIter;
 typedef AnimationList::const_iterator AnimationListConstIter;
 
 /**
@@ -57,11 +57,9 @@ struct Example
 
   // Data
 
-  std::string name;                       ///< unique name of example
-  std::string title;                      ///< title (caption) of example to appear on tile button.
+  std::string name;  ///< unique name of example
+  std::string title; ///< title (caption) of example to appear on tile button.
 };
-
-
 
 /**
  * Dali-Demo instance
@@ -69,12 +67,10 @@ struct Example
 class DaliTableView : public Dali::ConnectionTracker
 {
 public:
-
   DaliTableView(Dali::Application& application);
   ~DaliTableView();
 
 public:
-
   /**
    * Adds an Example to our demo showcase
    *
@@ -92,10 +88,9 @@ public:
    * @note Should be called before the Application MainLoop is started.
    * @note By default the examples are NOT sorted alphabetically by Title.
    */
-  void SortAlphabetically( bool sortAlphabetically );
+  void SortAlphabetically(bool sortAlphabetically);
 
-private: // Application callbacks & implementation
-
+private:                                                      // Application callbacks & implementation
   static const unsigned int FOCUS_ANIMATION_ACTOR_NUMBER = 2; ///< The number of elements used to form the custom focus effect
 
   /**
@@ -112,7 +107,7 @@ private: // Application callbacks & implementation
    *
    * @param[in] app Application instance
    */
-  void Initialize( Dali::Application& app );
+  void Initialize(Dali::Application& app);
 
   /**
    * Populates the contents (ScrollView) with all the
@@ -126,7 +121,7 @@ private: // Application callbacks & implementation
    *
    * @param[in] degrees The requested angle.
    */
-  void Rotate( unsigned int degrees );
+  void Rotate(unsigned int degrees);
 
   /**
    * Creates a tile for the main menu.
@@ -138,7 +133,7 @@ private: // Application callbacks & implementation
    *
    * @return The Actor for the created tile.
    */
-  Dali::Actor CreateTile( const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, Dali::Vector2& position );
+  Dali::Actor CreateTile(const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, Dali::Vector2& position);
 
   // Signal handlers
 
@@ -150,7 +145,7 @@ private: // Application callbacks & implementation
    *
    * @return Consume flag
    */
-  bool OnTilePressed( Dali::Actor actor, const Dali::TouchEvent& event );
+  bool OnTilePressed(Dali::Actor actor, const Dali::TouchEvent& event);
 
   /**
    * Called by OnTilePressed & Accessibility to do the appropriate action.
@@ -160,7 +155,7 @@ private: // Application callbacks & implementation
    *
    * @return Consume flag
    */
-  bool DoTilePress( Dali::Actor actor, Dali::PointState::Type state );
+  bool DoTilePress(Dali::Actor actor, Dali::PointState::Type state);
 
   /**
    * Signal emitted when any tile has been hovered
@@ -170,7 +165,7 @@ private: // Application callbacks & implementation
    *
    * @return Consume flag
    */
-  bool OnTileHovered( Dali::Actor actor, const Dali::HoverEvent& event );
+  bool OnTileHovered(Dali::Actor actor, const Dali::HoverEvent& event);
 
   /**
    * Signal emitted when the pressed animation has completed.
@@ -186,7 +181,7 @@ private: // Application callbacks & implementation
    *
    * @return Consume flag
    */
-  bool OnButtonClicked( Dali::Toolkit::Button& button );
+  bool OnButtonClicked(Dali::Toolkit::Button& button);
 
   /**
    * Signal emitted when scrolling has started.
@@ -211,7 +206,7 @@ private: // Application callbacks & implementation
    *
    * @return Consume flag
    */
-  bool OnScrollTouched( Dali::Actor actor, const Dali::TouchEvent& event );
+  bool OnScrollTouched(Dali::Actor actor, const Dali::TouchEvent& event);
 
   /**
    * Setup the effect on the scroll view
@@ -241,14 +236,14 @@ private: // Application callbacks & implementation
   /**
    * Key event handler
    */
-  void OnKeyEvent( const Dali::KeyEvent& event );
+  void OnKeyEvent(const Dali::KeyEvent& event);
 
   /**
    * Create a depth field background
    *
    * @param[in] bubbleLayer Add the graphics to this layer
    */
-  void SetupBackground( Dali::Actor bubbleLayer );
+  void SetupBackground(Dali::Actor bubbleLayer);
 
   /**
    * Create background actors for the given layer
@@ -256,7 +251,7 @@ private: // Application callbacks & implementation
    * @param[in] layer The layer to add the actors to
    * @param[in] count The number of actors to generate
    */
-  void AddBackgroundActors( Dali::Actor layer, int count );
+  void AddBackgroundActors(Dali::Actor layer, int count);
 
   /**
    * Timer handler for ending background animation
@@ -288,28 +283,28 @@ private: // Application callbacks & implementation
    * @param[in] direction The direction to move the focus
    * @return The actor to move the keyboard focus to.
    */
-  Dali::Actor OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction );
+  Dali::Actor OnKeyboardPreFocusChange(Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction);
 
   /**
    * Callback when the keyboard focused actor is activated.
    *
    * @param[in] activatedActor The activated actor
    */
-  void OnFocusedActorActivated( Dali::Actor activatedActor );
+  void OnFocusedActorActivated(Dali::Actor activatedActor);
 
   /**
    * Callback when the keyboard focus indicator is enabled.
    *
    * @param[in] actor The keyboard focus indicator.
    */
-  void OnFocusIndicatorEnabled( Dali::Actor actor );
+  void OnFocusIndicatorEnabled(Dali::Actor actor);
 
   /**
    * Callback when the keyboard focus indicator is disabled.
    *
    * @param[in] actor The keyboard focus indicator.
    */
-  void OnFocusIndicatorDisabled( Dali::Actor actor );
+  void OnFocusIndicatorDisabled(Dali::Actor actor);
 
   /**
    * Called when the logo is tapped
@@ -317,69 +312,67 @@ private: // Application callbacks & implementation
    * @param[in]  actor  The tapped actor
    * @param[in]  tap    The tap information.
    */
-  void OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap );
+  void OnLogoTapped(Dali::Actor actor, const Dali::TapGesture& tap);
 
   /**
    * Hides the popup
    */
   void HideVersionPopup();
 
- /*
+  /*
   * @brief Callback called when the buttons page actor is relaid out
   *
   * @param[in] actor The page actor
   */
- void OnButtonsPageRelayout( const Dali::Actor& actor );
+  void OnButtonsPageRelayout(const Dali::Actor& actor);
 
- /**
+  /**
   * @brief The is connected to the keyboard focus highlight actor, and called when it is placed on the scene.
   * @param[in] actor The actor that has been placed on the scene.
   */
- void OnSceneConnect( Dali::Actor actor );
+  void OnSceneConnect(Dali::Actor actor);
 
- /**
+  /**
   * @brief Callback called to set up background actors
   *
   * @param[in] actor The actor raising the callback
   */
- void InitialiseBackgroundActors( Dali::Actor actor );
+  void InitialiseBackgroundActors(Dali::Actor actor);
 
 private:
-
-  Dali::Application&              mApplication;              ///< Application instance.
-  Dali::Toolkit::Control          mRootActor;                ///< All content (excluding background is anchored to this Actor)
-  Dali::Animation                 mRotateAnimation;          ///< Animation to rotate and resize mRootActor.
-  Dali::Animation                 mPressedAnimation;         ///< Button press scaling animation.
-  Dali::Toolkit::ScrollView       mScrollView;               ///< ScrollView container (for all Examples)
-  Dali::Toolkit::ScrollViewEffect mScrollViewEffect;         ///< Effect to be applied to the scroll view
-  Dali::Toolkit::RulerPtr         mScrollRulerX;             ///< ScrollView X (horizontal) ruler
-  Dali::Toolkit::RulerPtr         mScrollRulerY;             ///< ScrollView Y (vertical) ruler
-  Dali::Actor                     mPressedActor;             ///< The currently pressed actor.
-  Dali::Timer                     mAnimationTimer;           ///< Timer used to turn off animation after a specific time period
-  Dali::TapGestureDetector        mLogoTapDetector;          ///< To detect taps on the logo
-  Dali::Toolkit::Popup            mVersionPopup;             ///< Displays DALi library version information
+  Dali::Application&              mApplication;      ///< Application instance.
+  Dali::Toolkit::Control          mRootActor;        ///< All content (excluding background is anchored to this Actor)
+  Dali::Animation                 mRotateAnimation;  ///< Animation to rotate and resize mRootActor.
+  Dali::Animation                 mPressedAnimation; ///< Button press scaling animation.
+  Dali::Toolkit::ScrollView       mScrollView;       ///< ScrollView container (for all Examples)
+  Dali::Toolkit::ScrollViewEffect mScrollViewEffect; ///< Effect to be applied to the scroll view
+  Dali::Toolkit::RulerPtr         mScrollRulerX;     ///< ScrollView X (horizontal) ruler
+  Dali::Toolkit::RulerPtr         mScrollRulerY;     ///< ScrollView Y (vertical) ruler
+  Dali::Actor                     mPressedActor;     ///< The currently pressed actor.
+  Dali::Timer                     mAnimationTimer;   ///< Timer used to turn off animation after a specific time period
+  Dali::TapGestureDetector        mLogoTapDetector;  ///< To detect taps on the logo
+  Dali::Toolkit::Popup            mVersionPopup;     ///< Displays DALi library version information
 
   /**
    * This struct encapsulates all data relevant to each of the elements used within the custom keyboard focus effect.
    */
   struct FocusEffect
   {
-    Dali::Toolkit::ImageView        actor;                   ///< The parent keyboard focus highlight actor
-    Dali::Animation                 animation;               ///< The animation for the parent keyboard focus highlight actor
+    Dali::Toolkit::ImageView actor;     ///< The parent keyboard focus highlight actor
+    Dali::Animation          animation; ///< The animation for the parent keyboard focus highlight actor
   };
-  FocusEffect mFocusEffect[FOCUS_ANIMATION_ACTOR_NUMBER];    ///< The elements used to create the custom focus effect
+  FocusEffect mFocusEffect[FOCUS_ANIMATION_ACTOR_NUMBER]; ///< The elements used to create the custom focus effect
 
-  std::vector< Dali::Actor >      mPages;                    ///< List of pages.
-  AnimationList                   mBackgroundAnimations;     ///< List of background bubble animations
-  ExampleList                     mExampleList;              ///< List of examples.
+  std::vector<Dali::Actor> mPages;                ///< List of pages.
+  AnimationList            mBackgroundAnimations; ///< List of background bubble animations
+  ExampleList              mExampleList;          ///< List of examples.
 
-  float                           mPageWidth;                ///< The width of a page within the scroll-view, used to calculate the domain
-  int                             mTotalPages;               ///< Total pages within scrollview.
+  float mPageWidth;  ///< The width of a page within the scroll-view, used to calculate the domain
+  int   mTotalPages; ///< Total pages within scrollview.
 
-  bool                            mScrolling:1;              ///< Flag indicating whether view is currently being scrolled
-  bool                            mSortAlphabetically:1;     ///< Sort examples alphabetically.
-  bool                            mBackgroundAnimsPlaying:1; ///< Are background animations playing
-
+  bool mScrolling : 1;              ///< Flag indicating whether view is currently being scrolled
+  bool mSortAlphabetically : 1;     ///< Sort examples alphabetically.
+  bool mBackgroundAnimsPlaying : 1; ///< Are background animations playing
 };
 
 #endif // DALI_DEMO_TABLEVIEW_H

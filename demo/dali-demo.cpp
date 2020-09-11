@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@
 #include <dali/dali.h>
 
 // INTERNAL INCLUDES
-#include "shared/dali-table-view.h"
 #include "shared/dali-demo-strings.h"
+#include "shared/dali-table-view.h"
 
 using namespace Dali;
 
-int DALI_EXPORT_API main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char** argv)
 {
   // Configure gettext for internalization
 #ifdef INTERNATIONALIZATION_ENABLED
@@ -60,7 +60,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("animated-gradient-call-active.example", DALI_DEMO_STR_TITLE_CALL_ACTIVE));
   demo.AddExample(Example("animated-gradient-card-active.example", DALI_DEMO_STR_TITLE_CARD_ACTIVE));
 
-  demo.SortAlphabetically( true );
+  demo.SortAlphabetically(true);
 
   // Start the event loop
   app.MainLoop();

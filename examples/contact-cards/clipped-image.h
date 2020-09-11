@@ -2,7 +2,7 @@
 #define CLIPPED_IMAGE_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@
  */
 
 // EXTERNAL INCLUDES
-#include <string>
 #include <dali-toolkit/public-api/controls/control.h>
+#include <string>
 
 /**
  * @brief This namespace provides a helper function to create a control that clips an image either as a quad or a circle.
@@ -29,9 +29,8 @@
  */
 namespace ClippedImage
 {
-
 extern const float CIRCLE_GEOMETRY; ///< Setting or animating the returned propertyIndex in Create() to this value will provide a circle geometry on the image @see Create
-extern const float QUAD_GEOMETRY; ///< Setting or animating the returned propertyIndex in Create() to this value will provide a quad geometry on the image @see Create
+extern const float QUAD_GEOMETRY;   ///< Setting or animating the returned propertyIndex in Create() to this value will provide a quad geometry on the image @see Create
 
 /**
  * @brief Creates a clipping image whose geometry (i.e. clip area) can be morphed between a circle and a quad by animating the propertyIndex out parameter.
@@ -43,7 +42,7 @@ extern const float QUAD_GEOMETRY; ///< Setting or animating the returned propert
  * @param[out]  propertyIndex  Gets set with the property index which the caller can animate using the CIRCLE_GEOMETRY & QUAD_GEOMETRY values.
  * @return The image-mesh control
  */
-Dali::Toolkit::Control Create( const std::string& imagePath, Dali::Property::Index& propertyIndex );
+Dali::Toolkit::Control Create(const std::string& imagePath, Dali::Property::Index& propertyIndex);
 
 } // namespace ClippedImage
 

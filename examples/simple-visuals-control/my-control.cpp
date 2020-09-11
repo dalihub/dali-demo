@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,21 +22,20 @@
 
 namespace Demo
 {
-
 MyControl::MyControl()
 {
 }
 
-MyControl::MyControl( const MyControl& control )
-: Control( control )
+MyControl::MyControl(const MyControl& control)
+: Control(control)
 {
 }
 
-MyControl& MyControl::operator= ( const MyControl& rhs )
+MyControl& MyControl::operator=(const MyControl& rhs)
 {
-  if( &rhs != this )
+  if(&rhs != this)
   {
-    Control::operator=( rhs );
+    Control::operator=(rhs);
   }
   return *this;
 }
@@ -51,21 +50,20 @@ MyControl MyControl::New()
   return control;
 }
 
-MyControl MyControl::DownCast( BaseHandle handle )
+MyControl MyControl::DownCast(BaseHandle handle)
 {
-  return Control::DownCast< MyControl, Internal::MyControl > ( handle );
+  return Control::DownCast<MyControl, Internal::MyControl>(handle);
 }
 
-MyControl::MyControl( Internal::MyControl& implementation )
-: Control( implementation )
+MyControl::MyControl(Internal::MyControl& implementation)
+: Control(implementation)
 {
 }
 
-MyControl::MyControl( Dali::Internal::CustomActor* internal )
-: Control( internal )
+MyControl::MyControl(Dali::Internal::CustomActor* internal)
+: Control(internal)
 {
-  VerifyCustomActorPointer< Internal::MyControl >( internal ) ;
+  VerifyCustomActorPointer<Internal::MyControl>(internal);
 }
-
 
 } //namespace Demo

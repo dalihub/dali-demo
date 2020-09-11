@@ -26,11 +26,11 @@ using Dali::Toolkit::TextLabel;
 class TiltController : public ConnectionTracker
 {
 public:
-  TiltController( Application& application )
-  : mApplication( application )
+  TiltController(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &TiltController::Create );
+    mApplication.InitSignal().Connect(this, &TiltController::Create);
   }
 
   ~TiltController()
@@ -39,42 +39,42 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
-    window.SetBackgroundColor( Color::BLUE);
+    window.SetBackgroundColor(Color::BLUE);
 
-    mTextLabel = TextLabel::New( "Tilt Sensor Demo" );
-    mTextLabel.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mTextLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mTextLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    mTextLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
-    mTextLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::WHITE );
-    mTextLabel.SetProperty( TextLabel::Property::POINT_SIZE, 15.0f );
-    mTextLabel.SetProperty( Dali::Actor::Property::NAME, "tiltLabel" );
-    window.Add( mTextLabel );
+    mTextLabel = TextLabel::New("Tilt Sensor Demo");
+    mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTextLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
+    mTextLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
+    mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
+    mTextLabel.SetProperty(TextLabel::Property::POINT_SIZE, 15.0f);
+    mTextLabel.SetProperty(Dali::Actor::Property::NAME, "tiltLabel");
+    window.Add(mTextLabel);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect( this, &TiltController::OnTouch );
+    window.GetRootLayer().TouchedSignal().Connect(this, &TiltController::OnTouch);
 
     CreateSensor();
 
     // Connect signals to allow Back and Escape to exit.
-    window.KeyEventSignal().Connect( this, &TiltController::OnKeyEvent );
+    window.KeyEventSignal().Connect(this, &TiltController::OnKeyEvent);
   }
 
   void CreateSensor()
   {
     mTiltSensor = TiltSensor::Get();
-    if ( mTiltSensor.Start() )
+    if(mTiltSensor.Start())
     {
       // Get notifications when the device is tilted
-      mTiltSensor.TiltedSignal().Connect( this, &TiltController::OnTilted );
+      mTiltSensor.TiltedSignal().Connect(this, &TiltController::OnTilted);
     }
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& touch )
+  bool OnTouch(Actor actor, const TouchEvent& touch)
   {
     // quit the application
     mApplication.Quit();
@@ -86,20 +86,21 @@ public:
     Quaternion pitchRot(Radian(Degree(sensor.GetPitch() * 90.0f)), Vector3(1, 0, 0));
     Quaternion rollRot(Radian(Degree(sensor.GetRoll() * 90.0f)), Vector3(0, 1, 0));
 
-    mTextLabel.SetProperty( Actor::Property::ORIENTATION, Quaternion() );
+    mTextLabel.SetProperty(Actor::Property::ORIENTATION, Quaternion());
     mTextLabel.RotateBy(rollRot);
-    mTextLabel.RotateBy(pitchRot);;
+    mTextLabel.RotateBy(pitchRot);
+    ;
   }
 
   /**
    * @brief OnKeyEvent signal handler.
    * @param[in] event The key event information
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -107,15 +108,15 @@ public:
   }
 
 private:
-  Application&  mApplication;
-  TiltSensor mTiltSensor;
-  TextLabel mTextLabel;
+  Application& mApplication;
+  TiltSensor   mTiltSensor;
+  TextLabel    mTextLabel;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  TiltController test( application );
+  Application    application = Application::New(&argc, &argv);
+  TiltController test(application);
 
   application.MainLoop();
   return 0;

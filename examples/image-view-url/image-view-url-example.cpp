@@ -24,52 +24,51 @@ using namespace Dali;
 
 namespace
 {
-const char* BIG_TEST_IMAGE( DEMO_IMAGE_DIR "book-landscape-cover.jpg" );
+const char* BIG_TEST_IMAGE(DEMO_IMAGE_DIR "book-landscape-cover.jpg");
 
-const char * const APPLICATION_TITLE( "Image View URL" );
-const char * const TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
-const char * const BUTTON_ICON( DEMO_IMAGE_DIR "icon-change.png" );
-const char * const BUTTON_ICON_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
+const char* const APPLICATION_TITLE("Image View URL");
+const char* const TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
+const char* const BUTTON_ICON(DEMO_IMAGE_DIR "icon-change.png");
+const char* const BUTTON_ICON_SELECTED(DEMO_IMAGE_DIR "icon-change-selected.png");
 
 const char* FILTER_FRAGMENT_SOURCE =
-{
- "precision highp float;\n"
- "varying mediump vec2 vTexCoord;\n"
- "uniform sampler2D sTexture;\n"
- "uniform mediump float uDelta;\n"
- "void main()\n"
- "{\n"
- "  vec4 color = vec4(0.0);\n"
- "  vec2 texCoord = vTexCoord * 2. - 1.;\n"
- "  mat2 rotation = mat2(cos(uDelta), -sin(uDelta), sin(uDelta), cos(uDelta));"
- "  texCoord = (rotation * texCoord) * .5 + .5;\n"
- "  color += texture2D( sTexture, texCoord );\n"
- "  gl_FragColor = color;\n"
- "}\n"
-};
+  {
+    "precision highp float;\n"
+    "varying mediump vec2 vTexCoord;\n"
+    "uniform sampler2D sTexture;\n"
+    "uniform mediump float uDelta;\n"
+    "void main()\n"
+    "{\n"
+    "  vec4 color = vec4(0.0);\n"
+    "  vec2 texCoord = vTexCoord * 2. - 1.;\n"
+    "  mat2 rotation = mat2(cos(uDelta), -sin(uDelta), sin(uDelta), cos(uDelta));"
+    "  texCoord = (rotation * texCoord) * .5 + .5;\n"
+    "  color += texture2D( sTexture, texCoord );\n"
+    "  gl_FragColor = color;\n"
+    "}\n"};
 
 const char* DELTA_UNIFORM_NAME = "uDelta";
 
 const Vector2 TARGET_SIZE(800.f, 800.f);
-}
+} // namespace
 
 class ImageViewUrlApp : public ConnectionTracker
 {
 public:
-  ImageViewUrlApp( Application& application, std::string url )
-  : mApplication( application ),
-    mUrl( url ),
-    mDeltaPropertyIndex( Property::INVALID_INDEX )
+  ImageViewUrlApp(Application& application, std::string url)
+  : mApplication(application),
+    mUrl(url),
+    mDeltaPropertyIndex(Property::INVALID_INDEX)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &ImageViewUrlApp::Create );
+    mApplication.InitSignal().Connect(this, &ImageViewUrlApp::Create);
   }
 
   ~ImageViewUrlApp() = default;
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -78,47 +77,47 @@ private:
     Toolkit::ToolBar toolBar;
     Toolkit::Control background;
     // Creates a default view with a default tool bar.
-    mContent = DemoHelper::CreateView( application,
-                                            background,
-                                            toolBar,
-                                            "",
-                                            TOOLBAR_IMAGE,
-                                            APPLICATION_TITLE );
+    mContent = DemoHelper::CreateView(application,
+                                      background,
+                                      toolBar,
+                                      "",
+                                      TOOLBAR_IMAGE,
+                                      APPLICATION_TITLE);
 
     // Add a button to switch the scene. (right of toolbar)
     Toolkit::PushButton switchButton = Toolkit::PushButton::New();
-    switchButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_ICON );
-    switchButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, BUTTON_ICON_SELECTED );
-    switchButton.ClickedSignal().Connect( this, &ImageViewUrlApp::OnButtonClicked );
-    toolBar.AddControl( switchButton,
-                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                        Toolkit::Alignment::HORIZONTAL_RIGHT,
-                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING  );
+    switchButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_ICON);
+    switchButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, BUTTON_ICON_SELECTED);
+    switchButton.ClickedSignal().Connect(this, &ImageViewUrlApp::OnButtonClicked);
+    toolBar.AddControl(switchButton,
+                       DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
+                       Toolkit::Alignment::HORIZONTAL_RIGHT,
+                       DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     std::string url = mUrl;
-    if( url.empty() )
+    if(url.empty())
     {
       url = BIG_TEST_IMAGE;
     }
 
-    CreateRenderTask( url );
-    CreateScene( );
+    CreateRenderTask(url);
+    CreateScene();
   }
 
-  void CreateRenderTask( const std::string& url )
+  void CreateRenderTask(const std::string& url)
   {
     auto rootActor = mApplication.GetWindow().GetRootLayer();
 
     auto cameraActor = CameraActor::New(TARGET_SIZE);
-    cameraActor.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+    cameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     cameraActor.SetInvertYAxis(true);
     rootActor.Add(cameraActor);
 
     {
       // create actor to render input with applied shader
-      mActorForInput = Toolkit::ImageView::New( url );
-      mActorForInput.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
-      mActorForInput.SetProperty( Actor::Property::SIZE, TARGET_SIZE);
+      mActorForInput = Toolkit::ImageView::New(url);
+      mActorForInput.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+      mActorForInput.SetProperty(Actor::Property::SIZE, TARGET_SIZE);
       Property::Map customShader;
       customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = FILTER_FRAGMENT_SOURCE;
       Property::Map visualMap;
@@ -137,15 +136,15 @@ private:
       renderTask.SetSourceActor(mActorForInput);
       renderTask.SetExclusive(true);
       renderTask.SetInputEnabled(false);
-      renderTask.SetClearColor(Vector4(1.,0.,0.,1.));
+      renderTask.SetClearColor(Vector4(1., 0., 0., 1.));
       renderTask.SetClearEnabled(true);
       renderTask.SetCameraActor(cameraActor);
 
-      mOutputTexture = Texture::New(TextureType::TEXTURE_2D,
+      mOutputTexture   = Texture::New(TextureType::TEXTURE_2D,
                                     Pixel::RGB888,
                                     unsigned(TARGET_SIZE.width),
                                     unsigned(TARGET_SIZE.height));
-      auto framebuffer = FrameBuffer::New(TARGET_SIZE.width, TARGET_SIZE.height, FrameBuffer::Attachment::NONE );
+      auto framebuffer = FrameBuffer::New(TARGET_SIZE.width, TARGET_SIZE.height, FrameBuffer::Attachment::NONE);
       framebuffer.AttachColorTexture(mOutputTexture);
 
       renderTask.SetFrameBuffer(framebuffer);
@@ -154,20 +153,20 @@ private:
       // animate the shader uniform
       mAnimation = Animation::New(10.f);
 
-      mActorForInput.SetProperty( mDeltaPropertyIndex, 0.f );
-      mAnimation.AnimateTo( Property( mActorForInput, mDeltaPropertyIndex ), Math::PI * 2.f );
+      mActorForInput.SetProperty(mDeltaPropertyIndex, 0.f);
+      mAnimation.AnimateTo(Property(mActorForInput, mDeltaPropertyIndex), Math::PI * 2.f);
       mAnimation.SetLooping(true);
       mAnimation.Play();
     }
   }
 
-  void CreateScene( )
+  void CreateScene()
   {
-    auto url = Dali::Toolkit::TextureManager::AddTexture(mOutputTexture);
+    auto url   = Dali::Toolkit::TextureManager::AddTexture(mOutputTexture);
     mImageView = Toolkit::ImageView::New(url);
 
-    mImageView.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
-    mImageView.SetProperty( Actor::Property::ANCHOR_POINT,AnchorPoint::CENTER);
+    mImageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mImageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mContent.Add(mImageView);
   }
 
@@ -188,7 +187,7 @@ private:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -196,27 +195,27 @@ private:
   }
 
 private:
-  Application&  mApplication;
-  std::string mUrl;
-  Layer mContent;
+  Application&       mApplication;
+  std::string        mUrl;
+  Layer              mContent;
   Toolkit::ImageView mImageView;
-  Animation mAnimation;
-  Actor mActorForInput;
-  Property::Index mDeltaPropertyIndex;
-  Texture mOutputTexture;
+  Animation          mAnimation;
+  Actor              mActorForInput;
+  Property::Index    mDeltaPropertyIndex;
+  Texture            mOutputTexture;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New(&argc, &argv);
 
   std::string url;
-  if( argc > 1 )
+  if(argc > 1)
   {
     url = argv[1];
   }
 
-  ImageViewUrlApp test( application, url );
+  ImageViewUrlApp test(application, url);
   application.MainLoop();
   return 0;
 }

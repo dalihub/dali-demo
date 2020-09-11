@@ -15,38 +15,35 @@
  *
  */
 
-#include <sstream>
 #include <iomanip>
+#include <sstream>
 
-#include "shared/view.h"
-#include <dali/dali.h>
-#include <dali/devel-api/actors/actor-devel.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/shader-effects/motion-blur-effect.h>
+#include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
+#include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
 
-
-
 namespace // unnamed namespace
 {
-
 ////////////////////////////////////////////////////
 //
 // Demo setup parameters
 //
 
-const float MOTION_BLUR_ACTOR_WIDTH = 256;                                          // actor size on screen
-const float MOTION_BLUR_ACTOR_HEIGHT = 256;                                         // ""
-const unsigned int MOTION_BLUR_NUM_SAMPLES = 8;
+const float        MOTION_BLUR_ACTOR_WIDTH  = 256; // actor size on screen
+const float        MOTION_BLUR_ACTOR_HEIGHT = 256; // ""
+const unsigned int MOTION_BLUR_NUM_SAMPLES  = 8;
 
-const int MOTION_BLUR_NUM_ACTOR_IMAGES = 5;
-const char* MOTION_BLUR_ACTOR_IMAGE1( DEMO_IMAGE_DIR "image-with-border-1.jpg" );
-const char* MOTION_BLUR_ACTOR_IMAGE2( DEMO_IMAGE_DIR "image-with-border-2.jpg" );
-const char* MOTION_BLUR_ACTOR_IMAGE3( DEMO_IMAGE_DIR "image-with-border-3.jpg" );
-const char* MOTION_BLUR_ACTOR_IMAGE4( DEMO_IMAGE_DIR "image-with-border-4.jpg" );
-const char* MOTION_BLUR_ACTOR_IMAGE5( DEMO_IMAGE_DIR "image-with-border-1.jpg" );
+const int   MOTION_BLUR_NUM_ACTOR_IMAGES = 5;
+const char* MOTION_BLUR_ACTOR_IMAGE1(DEMO_IMAGE_DIR "image-with-border-1.jpg");
+const char* MOTION_BLUR_ACTOR_IMAGE2(DEMO_IMAGE_DIR "image-with-border-2.jpg");
+const char* MOTION_BLUR_ACTOR_IMAGE3(DEMO_IMAGE_DIR "image-with-border-3.jpg");
+const char* MOTION_BLUR_ACTOR_IMAGE4(DEMO_IMAGE_DIR "image-with-border-4.jpg");
+const char* MOTION_BLUR_ACTOR_IMAGE5(DEMO_IMAGE_DIR "image-with-border-1.jpg");
 
 const char* MOTION_BLUR_ACTOR_IMAGES[] = {
   MOTION_BLUR_ACTOR_IMAGE1,
@@ -56,31 +53,30 @@ const char* MOTION_BLUR_ACTOR_IMAGES[] = {
   MOTION_BLUR_ACTOR_IMAGE5,
 };
 
-const int NUM_ACTOR_ANIMATIONS = 4;
+const int NUM_ACTOR_ANIMATIONS  = 4;
 const int NUM_CAMERA_ANIMATIONS = 2;
-
 
 const char* BACKGROUND_IMAGE_PATH = DEMO_IMAGE_DIR "background-default.png";
 
-const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
-const char* LAYOUT_IMAGE( DEMO_IMAGE_DIR "icon-change.png" );
-const char* LAYOUT_IMAGE_SELECTED( DEMO_IMAGE_DIR "icon-change-selected.png" );
-const char* APPLICATION_TITLE( "Motion Blur" );
-const char* EFFECTS_OFF_ICON( DEMO_IMAGE_DIR "icon-effects-off.png" );
-const char* EFFECTS_OFF_ICON_SELECTED( DEMO_IMAGE_DIR "icon-effects-off-selected.png" );
-const char* EFFECTS_ON_ICON( DEMO_IMAGE_DIR "icon-effects-on.png" );
-const char* EFFECTS_ON_ICON_SELECTED( DEMO_IMAGE_DIR "icon-effects-on-selected.png" );
+const char* TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
+const char* LAYOUT_IMAGE(DEMO_IMAGE_DIR "icon-change.png");
+const char* LAYOUT_IMAGE_SELECTED(DEMO_IMAGE_DIR "icon-change-selected.png");
+const char* APPLICATION_TITLE("Motion Blur");
+const char* EFFECTS_OFF_ICON(DEMO_IMAGE_DIR "icon-effects-off.png");
+const char* EFFECTS_OFF_ICON_SELECTED(DEMO_IMAGE_DIR "icon-effects-off-selected.png");
+const char* EFFECTS_ON_ICON(DEMO_IMAGE_DIR "icon-effects-on.png");
+const char* EFFECTS_ON_ICON_SELECTED(DEMO_IMAGE_DIR "icon-effects-on-selected.png");
 
-const float UI_MARGIN = 4.0f;                              ///< Screen Margin for placement of UI buttons
+const float UI_MARGIN = 4.0f; ///< Screen Margin for placement of UI buttons
 
-const Vector3 BUTTON_SIZE_CONSTRAINT( 0.24f, 0.09f, 1.0f );
-const Vector3 BUTTON_TITLE_LABEL_TAP_HERE_SIZE_CONSTRAINT( 0.55f, 0.06f, 1.0f );
-const Vector3 BUTTON_TITLE_LABEL_INSTRUCTIONS_POPUP_SIZE_CONSTRAINT( 1.0f, 1.0f, 1.0f );
+const Vector3 BUTTON_SIZE_CONSTRAINT(0.24f, 0.09f, 1.0f);
+const Vector3 BUTTON_TITLE_LABEL_TAP_HERE_SIZE_CONSTRAINT(0.55f, 0.06f, 1.0f);
+const Vector3 BUTTON_TITLE_LABEL_INSTRUCTIONS_POPUP_SIZE_CONSTRAINT(1.0f, 1.0f, 1.0f);
 
 // move this button down a bit so it is visible on target and not covered up by toolbar
 const float BUTTON_TITLE_LABEL_Y_OFFSET = 0.05f;
 
-const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to new orientation.
+const float ORIENTATION_DURATION = 0.5f; ///< Time to rotate to new orientation.
 
 /**
  * @brief Set an image to image view, scaled-down to no more than the dimensions passed in.
@@ -88,38 +84,36 @@ const float ORIENTATION_DURATION = 0.5f;                  ///< Time to rotate to
  * Uses SHRINK_TO_FIT which ensures the resulting image is
  * smaller than or equal to the specified dimensions while preserving its original aspect ratio.
  */
-void SetImageFittedInBox( ImageView& imageView, Property::Map& shaderEffect, const char * const imagePath, int maxWidth, int maxHeight )
+void SetImageFittedInBox(ImageView& imageView, Property::Map& shaderEffect, const char* const imagePath, int maxWidth, int maxHeight)
 {
   Property::Map map;
-  map[Visual::Property::TYPE] = Visual::IMAGE;
+  map[Visual::Property::TYPE]     = Visual::IMAGE;
   map[ImageVisual::Property::URL] = imagePath;
   // Load the image nicely scaled-down to fit within the specified max width and height:
-  map[ImageVisual::Property::DESIRED_WIDTH] = maxWidth;
+  map[ImageVisual::Property::DESIRED_WIDTH]  = maxWidth;
   map[ImageVisual::Property::DESIRED_HEIGHT] = maxHeight;
-  map[ImageVisual::Property::FITTING_MODE] = FittingMode::SHRINK_TO_FIT;
-  map[ImageVisual::Property::SAMPLING_MODE] = SamplingMode::BOX_THEN_LINEAR;
-  map.Merge( shaderEffect );
+  map[ImageVisual::Property::FITTING_MODE]   = FittingMode::SHRINK_TO_FIT;
+  map[ImageVisual::Property::SAMPLING_MODE]  = SamplingMode::BOX_THEN_LINEAR;
+  map.Merge(shaderEffect);
 
-  imageView.SetProperty( ImageView::Property::IMAGE, map );
+  imageView.SetProperty(ImageView::Property::IMAGE, map);
 }
 
 } // unnamed namespace
-
 
 //
 class MotionBlurExampleApp : public ConnectionTracker
 {
 public:
-
   /**
      * DeviceOrientation describes the four different
      * orientations the device can be in based on accelerometer reports.
      */
   enum DeviceOrientation
   {
-    PORTRAIT = 0,
-    LANDSCAPE = 90,
-    PORTRAIT_INVERSE = 180,
+    PORTRAIT          = 0,
+    LANDSCAPE         = 90,
+    PORTRAIT_INVERSE  = 180,
     LANDSCAPE_INVERSE = 270
   };
 
@@ -127,12 +121,12 @@ public:
    * Constructor
    * @param application class, stored as reference
    */
-  MotionBlurExampleApp(Application &app)
+  MotionBlurExampleApp(Application& app)
   : mApplication(app),
     mActorEffectsEnabled(false),
     mCurrentActorAnimation(0),
     mCurrentImage(0),
-    mOrientation( PORTRAIT )
+    mOrientation(PORTRAIT)
   {
     // Connect to the Application's Init signal
     app.InitSignal().Connect(this, &MotionBlurExampleApp::OnInit);
@@ -153,51 +147,50 @@ public:
 
     window.KeyEventSignal().Connect(this, &MotionBlurExampleApp::OnKeyEvent);
 
-
     // Creates a default view with a default tool bar.
     // The view is added to the window.
-    mContentLayer = DemoHelper::CreateView( mApplication,
-                                            mView,
-                                            mToolBar,
-                                            BACKGROUND_IMAGE_PATH,
-                                            TOOLBAR_IMAGE,
-                                            APPLICATION_TITLE );
+    mContentLayer = DemoHelper::CreateView(mApplication,
+                                           mView,
+                                           mToolBar,
+                                           BACKGROUND_IMAGE_PATH,
+                                           TOOLBAR_IMAGE,
+                                           APPLICATION_TITLE);
 
     // Ensure the content layer is a square so the touch area works in all orientations
     Vector2 windowSize = window.GetSize();
-    float size = std::max( windowSize.width, windowSize.height );
-    mContentLayer.SetProperty( Actor::Property::SIZE, Vector2( size, size ) );
+    float   size       = std::max(windowSize.width, windowSize.height);
+    mContentLayer.SetProperty(Actor::Property::SIZE, Vector2(size, size));
 
     //Add an effects icon on the right of the title
     mActorEffectsButton = Toolkit::PushButton::New();
-    mActorEffectsButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON );
-    mActorEffectsButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON_SELECTED );
-    mActorEffectsButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnEffectButtonClicked );
-    mToolBar.AddControl( mActorEffectsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING );
+    mActorEffectsButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON);
+    mActorEffectsButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON_SELECTED);
+    mActorEffectsButton.ClickedSignal().Connect(this, &MotionBlurExampleApp::OnEffectButtonClicked);
+    mToolBar.AddControl(mActorEffectsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
 
     // Creates a mode button.
     // Create a effect toggle button. (right of toolbar)
     Toolkit::PushButton layoutButton = Toolkit::PushButton::New();
-    layoutButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE );
-    layoutButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE_SELECTED );
-    layoutButton.ClickedSignal().Connect( this, &MotionBlurExampleApp::OnLayoutButtonClicked);
-    layoutButton.SetProperty( Actor::Property::LEAVE_REQUIRED, true );
-    mToolBar.AddControl( layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING );
+    layoutButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE);
+    layoutButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE_SELECTED);
+    layoutButton.ClickedSignal().Connect(this, &MotionBlurExampleApp::OnLayoutButtonClicked);
+    layoutButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
+    mToolBar.AddControl(layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Input
     mTapGestureDetector = TapGestureDetector::New();
-    mTapGestureDetector.Attach( mContentLayer );
-    mTapGestureDetector.DetectedSignal().Connect( this, &MotionBlurExampleApp::OnTap );
+    mTapGestureDetector.Attach(mContentLayer);
+    mTapGestureDetector.DetectedSignal().Connect(this, &MotionBlurExampleApp::OnTap);
 
     Dali::Window winHandle = app.GetWindow();
-    winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT );
-    winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
-    winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE  );
-    winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
-    winHandle.ResizeSignal().Connect( this, &MotionBlurExampleApp::OnWindowResized );
+    winHandle.AddAvailableOrientation(Dali::Window::PORTRAIT);
+    winHandle.AddAvailableOrientation(Dali::Window::LANDSCAPE);
+    winHandle.AddAvailableOrientation(Dali::Window::PORTRAIT_INVERSE);
+    winHandle.AddAvailableOrientation(Dali::Window::LANDSCAPE_INVERSE);
+    winHandle.ResizeSignal().Connect(this, &MotionBlurExampleApp::OnWindowResized);
 
     // set initial orientation
-    Rotate( PORTRAIT );
+    Rotate(PORTRAIT);
 
     ///////////////////////////////////////////////////////
     //
@@ -205,25 +198,24 @@ public:
     //
 
     // Scale down actor to fit on very low resolution screens with space to interact:
-    mMotionBlurActorSize = Size( std::min( windowSize.x * 0.3f, MOTION_BLUR_ACTOR_WIDTH ), std::min( windowSize.y * 0.3f, MOTION_BLUR_ACTOR_HEIGHT ) );
-    mMotionBlurActorUpdateSize = Size( std::max( mMotionBlurActorSize.x, mMotionBlurActorSize.y ), std::max( mMotionBlurActorSize.x, mMotionBlurActorSize.y ) );
-    mMotionBlurActorSize = Size( std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ), std::min( mMotionBlurActorSize.x, mMotionBlurActorSize.y ) );
+    mMotionBlurActorSize       = Size(std::min(windowSize.x * 0.3f, MOTION_BLUR_ACTOR_WIDTH), std::min(windowSize.y * 0.3f, MOTION_BLUR_ACTOR_HEIGHT));
+    mMotionBlurActorUpdateSize = Size(std::max(mMotionBlurActorSize.x, mMotionBlurActorSize.y), std::max(mMotionBlurActorSize.x, mMotionBlurActorSize.y));
+    mMotionBlurActorSize       = Size(std::min(mMotionBlurActorSize.x, mMotionBlurActorSize.y), std::min(mMotionBlurActorSize.x, mMotionBlurActorSize.y));
 
-    mMotionBlurEffect = CreateMotionBlurEffect();
+    mMotionBlurEffect    = CreateMotionBlurEffect();
     mMotionBlurImageView = ImageView::New();
-    SetImageFittedInBox( mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y );
-    mMotionBlurImageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mMotionBlurImageView.SetProperty( Actor::Property::SIZE, mMotionBlurActorUpdateSize );
-    mMotionBlurImageView.SetProperty( DevelActor::Property::UPDATE_SIZE_HINT, mMotionBlurActorUpdateSize );
+    SetImageFittedInBox(mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y);
+    mMotionBlurImageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mMotionBlurImageView.SetProperty(Actor::Property::SIZE, mMotionBlurActorUpdateSize);
+    mMotionBlurImageView.SetProperty(DevelActor::Property::UPDATE_SIZE_HINT, mMotionBlurActorUpdateSize);
 
-    mContentLayer.Add( mMotionBlurImageView );
+    mContentLayer.Add(mMotionBlurImageView);
 
     // Create shader used for doing motion blur
     mMotionBlurEffect = CreateMotionBlurEffect();
 
     // set actor shader to the blur one
-    Toolkit::SetMotionBlurProperties( mMotionBlurImageView, MOTION_BLUR_NUM_SAMPLES );
-
+    Toolkit::SetMotionBlurProperties(mMotionBlurImageView, MOTION_BLUR_NUM_SAMPLES);
   }
 
   //////////////////////////////////////////////////////////////
@@ -232,41 +224,40 @@ public:
   //
   //
 
-  void OnWindowResized( Window window, Window::WindowSize size )
+  void OnWindowResized(Window window, Window::WindowSize size)
   {
-    Rotate( size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT );
+    Rotate(size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT);
   }
 
-  void Rotate( DeviceOrientation orientation )
+  void Rotate(DeviceOrientation orientation)
   {
     // Resize the root actor
     const Vector2 targetSize = mApplication.GetWindow().GetSize();
 
-    if( mOrientation != orientation )
+    if(mOrientation != orientation)
     {
       mOrientation = orientation;
 
       // check if actor is on window
-      if( mView.GetParent() )
+      if(mView.GetParent())
       {
         // has parent so we expect it to be on window, start animation
-        mRotateAnimation = Animation::New( ORIENTATION_DURATION );
-        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_WIDTH ), targetSize.width );
-        mRotateAnimation.AnimateTo( Property( mView, Actor::Property::SIZE_HEIGHT ), targetSize.height );
+        mRotateAnimation = Animation::New(ORIENTATION_DURATION);
+        mRotateAnimation.AnimateTo(Property(mView, Actor::Property::SIZE_WIDTH), targetSize.width);
+        mRotateAnimation.AnimateTo(Property(mView, Actor::Property::SIZE_HEIGHT), targetSize.height);
         mRotateAnimation.Play();
       }
       else
       {
-        mView.SetProperty( Actor::Property::SIZE, targetSize );
+        mView.SetProperty(Actor::Property::SIZE, targetSize);
       }
     }
     else
     {
       // for first time just set size
-      mView.SetProperty( Actor::Property::SIZE, targetSize );
+      mView.SetProperty(Actor::Property::SIZE, targetSize);
     }
   }
-
 
   //////////////////////////////////////////////////////////////
   //
@@ -275,10 +266,10 @@ public:
   //
 
   // move to point on screen that was tapped
-  void OnTap( Actor actor, const TapGesture& tapGesture )
+  void OnTap(Actor actor, const TapGesture& tapGesture)
   {
     Vector3 destPos;
-    float originOffsetX, originOffsetY;
+    float   originOffsetX, originOffsetY;
 
     // rotate offset (from top left origin to centre) into actor space
     Vector2 windowSize = mApplication.GetWindow().GetSize();
@@ -286,19 +277,18 @@ public:
 
     // get dest point in local actor space
     const Vector2& localPoint = tapGesture.GetLocalPoint();
-    destPos.x = localPoint.x - originOffsetX;
-    destPos.y = localPoint.y - originOffsetY;
-    destPos.z = 0.0f;
+    destPos.x                 = localPoint.x - originOffsetX;
+    destPos.y                 = localPoint.y - originOffsetY;
+    destPos.z                 = 0.0f;
 
-    float animDuration = 0.5f;
-    mActorTapMovementAnimation = Animation::New( animDuration );
-    if ( mMotionBlurImageView )
+    float animDuration         = 0.5f;
+    mActorTapMovementAnimation = Animation::New(animDuration);
+    if(mMotionBlurImageView)
     {
-      mActorTapMovementAnimation.AnimateTo( Property(mMotionBlurImageView, Actor::Property::POSITION), destPos, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(animDuration) );
+      mActorTapMovementAnimation.AnimateTo(Property(mMotionBlurImageView, Actor::Property::POSITION), destPos, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(animDuration));
     }
-    mActorTapMovementAnimation.SetEndAction( Animation::BAKE );
+    mActorTapMovementAnimation.SetEndAction(Animation::BAKE);
     mActorTapMovementAnimation.Play();
-
 
     // perform some spinning etc
     if(mActorEffectsEnabled)
@@ -309,9 +299,9 @@ public:
         case 0:
         {
           float animDuration = 1.0f;
-          mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.AnimateBy( Property( mMotionBlurImageView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunction::EASE_IN_OUT );
-          mActorAnimation.SetEndAction( Animation::BAKE );
+          mActorAnimation    = Animation::New(animDuration);
+          mActorAnimation.AnimateBy(Property(mMotionBlurImageView, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360.0f)), Vector3::YAXIS), AlphaFunction::EASE_IN_OUT);
+          mActorAnimation.SetEndAction(Animation::BAKE);
           mActorAnimation.Play();
         }
         break;
@@ -320,9 +310,9 @@ public:
         case 1:
         {
           float animDuration = 1.0f;
-          mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.AnimateBy( Property( mMotionBlurImageView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunction::EASE_IN_OUT );
-          mActorAnimation.SetEndAction( Animation::BAKE );
+          mActorAnimation    = Animation::New(animDuration);
+          mActorAnimation.AnimateBy(Property(mMotionBlurImageView, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360.0f)), Vector3::ZAXIS), AlphaFunction::EASE_IN_OUT);
+          mActorAnimation.SetEndAction(Animation::BAKE);
           mActorAnimation.Play();
         }
         break;
@@ -331,10 +321,10 @@ public:
         case 2:
         {
           float animDuration = 1.0f;
-          mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.AnimateBy( Property( mMotionBlurImageView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::YAXIS ), AlphaFunction::EASE_IN_OUT );
-          mActorAnimation.AnimateBy( Property( mMotionBlurImageView, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree(360.0f) ), Vector3::ZAXIS ), AlphaFunction::EASE_IN_OUT );
-          mActorAnimation.SetEndAction( Animation::BAKE );
+          mActorAnimation    = Animation::New(animDuration);
+          mActorAnimation.AnimateBy(Property(mMotionBlurImageView, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360.0f)), Vector3::YAXIS), AlphaFunction::EASE_IN_OUT);
+          mActorAnimation.AnimateBy(Property(mMotionBlurImageView, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360.0f)), Vector3::ZAXIS), AlphaFunction::EASE_IN_OUT);
+          mActorAnimation.SetEndAction(Animation::BAKE);
           mActorAnimation.Play();
         }
         break;
@@ -343,9 +333,9 @@ public:
         case 3:
         {
           float animDuration = 1.0f;
-          mActorAnimation = Animation::New(animDuration);
-          mActorAnimation.AnimateBy( Property( mMotionBlurImageView, Actor::Property::SCALE ), Vector3(2.0f, 2.0f, 2.0f), AlphaFunction::BOUNCE, TimePeriod( 0.0f, 1.0f ) );
-          mActorAnimation.SetEndAction( Animation::BAKE );
+          mActorAnimation    = Animation::New(animDuration);
+          mActorAnimation.AnimateBy(Property(mMotionBlurImageView, Actor::Property::SCALE), Vector3(2.0f, 2.0f, 2.0f), AlphaFunction::BOUNCE, TimePeriod(0.0f, 1.0f));
+          mActorAnimation.SetEndAction(Animation::BAKE);
           mActorAnimation.Play();
         }
         break;
@@ -367,14 +357,14 @@ public:
     if(!mActorEffectsEnabled)
     {
       mActorEffectsEnabled = true;
-      mActorEffectsButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_ON_ICON );
-      mActorEffectsButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_ON_ICON_SELECTED );
+      mActorEffectsButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_ON_ICON);
+      mActorEffectsButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_ON_ICON_SELECTED);
     }
     else
     {
       mActorEffectsEnabled = false;
-      mActorEffectsButton.SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON );
-      mActorEffectsButton.SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON_SELECTED );
+      mActorEffectsButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON);
+      mActorEffectsButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON_SELECTED);
     }
   }
 
@@ -384,13 +374,13 @@ public:
   //
   //
 
-  bool OnLayoutButtonClicked( Toolkit::Button button )
+  bool OnLayoutButtonClicked(Toolkit::Button button)
   {
     ChangeImage();
     return true;
   }
 
-  bool OnEffectButtonClicked( Toolkit::Button button )
+  bool OnEffectButtonClicked(Toolkit::Button button)
   {
     ToggleActorEffects();
     return true;
@@ -403,7 +393,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -416,7 +406,6 @@ public:
   //
   //
 
-
   void ChangeImage()
   {
     mCurrentImage++;
@@ -424,46 +413,44 @@ public:
     {
       mCurrentImage = 0;
     }
-    SetImageFittedInBox( mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGES[mCurrentImage], mMotionBlurActorSize.x, mMotionBlurActorSize.y );
-
+    SetImageFittedInBox(mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGES[mCurrentImage], mMotionBlurActorSize.x, mMotionBlurActorSize.y);
   }
 
-
 private:
-  Application&               mApplication;            ///< Application instance
-  Toolkit::Control           mView;
-  Toolkit::ToolBar           mToolBar;
+  Application&     mApplication; ///< Application instance
+  Toolkit::Control mView;
+  Toolkit::ToolBar mToolBar;
 
-  Layer                      mContentLayer;           ///< Content layer (contains actor for this blur demo)
+  Layer mContentLayer; ///< Content layer (contains actor for this blur demo)
 
-  PushButton                 mActorEffectsButton;     ///< The actor effects toggling Button.
+  PushButton mActorEffectsButton; ///< The actor effects toggling Button.
 
   // Motion blur
   Property::Map mMotionBlurEffect;
-  ImageView mMotionBlurImageView;
-  Size mMotionBlurActorSize;
-  Size mMotionBlurActorUpdateSize;
+  ImageView     mMotionBlurImageView;
+  Size          mMotionBlurActorSize;
+  Size          mMotionBlurActorUpdateSize;
 
   // animate actor to position where user taps screen
   Animation mActorTapMovementAnimation;
 
   // show different animations to demonstrate blur effect working on an object only movement basis
-  bool mActorEffectsEnabled;
+  bool      mActorEffectsEnabled;
   Animation mActorAnimation;
-  int mCurrentActorAnimation;
+  int       mCurrentActorAnimation;
 
   // offer a selection of images that user can cycle between
   int mCurrentImage;
 
   TapGestureDetector mTapGestureDetector;
 
-  DeviceOrientation mOrientation;               ///< Current Device orientation
-  Animation mRotateAnimation;                   ///< Animation for rotating between landscape and portrait.
+  DeviceOrientation mOrientation;     ///< Current Device orientation
+  Animation         mRotateAnimation; ///< Animation for rotating between landscape and portrait.
 };
 
-int DALI_EXPORT_API main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  Application          app = Application::New(&argc, &argv, DEMO_THEME_PATH);
   MotionBlurExampleApp test(app);
   app.MainLoop();
   return 0;

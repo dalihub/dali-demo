@@ -15,9 +15,9 @@
  *
  */
 
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/super-blur-view/super-blur-view.h>
+#include <dali/dali.h>
 
 using namespace Dali;
 using Dali::Toolkit::Button;
@@ -26,12 +26,11 @@ using Dali::Toolkit::SuperBlurView;
 
 namespace
 {
-
-const char* const BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-4.jpg" );
+const char* const BACKGROUND_IMAGE(DEMO_IMAGE_DIR "background-4.jpg");
 
 const unsigned int DEFAULT_BLUR_LEVEL(5u); ///< The default blur level when creating SuperBlurView from the type registry
 
-}
+} // namespace
 
 /**
  * This example shows a background image which is "super blurred" while the push-button control is pressed.
@@ -39,61 +38,59 @@ const unsigned int DEFAULT_BLUR_LEVEL(5u); ///< The default blur level when crea
 class SuperBlurViewExample : public ConnectionTracker
 {
 public:
-
-  SuperBlurViewExample( Application& application )
-  : mApplication( application )
+  SuperBlurViewExample(Application& application)
+  : mApplication(application)
   {
-    mApplication.InitSignal().Connect( this, &SuperBlurViewExample::Create );
+    mApplication.InitSignal().Connect(this, &SuperBlurViewExample::Create);
   }
 
   ~SuperBlurViewExample() = default;
 
 private:
-
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
-    window.KeyEventSignal().Connect( this, &SuperBlurViewExample::OnKeyEvent );
+    window.KeyEventSignal().Connect(this, &SuperBlurViewExample::OnKeyEvent);
 
-    mSuperBlurView = SuperBlurView::New( DEFAULT_BLUR_LEVEL );
-    mSuperBlurView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mSuperBlurView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mSuperBlurView.SetProperty( Actor::Property::SIZE, Vector2( 800, 1280 ) );
-    mSuperBlurView.SetProperty( SuperBlurView::Property::IMAGE_URL, BACKGROUND_IMAGE );
-    window.Add( mSuperBlurView );
+    mSuperBlurView = SuperBlurView::New(DEFAULT_BLUR_LEVEL);
+    mSuperBlurView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mSuperBlurView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mSuperBlurView.SetProperty(Actor::Property::SIZE, Vector2(800, 1280));
+    mSuperBlurView.SetProperty(SuperBlurView::Property::IMAGE_URL, BACKGROUND_IMAGE);
+    window.Add(mSuperBlurView);
 
     mBlurAnimation = Animation::New(1.0f);
-    mBlurAnimation.AnimateTo( Property(mSuperBlurView, mSuperBlurView.GetBlurStrengthPropertyIndex()), 1.0f );
+    mBlurAnimation.AnimateTo(Property(mSuperBlurView, mSuperBlurView.GetBlurStrengthPropertyIndex()), 1.0f);
 
     mClearAnimation = Animation::New(1.0f);
-    mClearAnimation.AnimateTo( Property(mSuperBlurView, mSuperBlurView.GetBlurStrengthPropertyIndex()), 0.0f );
+    mClearAnimation.AnimateTo(Property(mSuperBlurView, mSuperBlurView.GetBlurStrengthPropertyIndex()), 0.0f);
 
     mPushButton = PushButton::New();
-    mPushButton.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-    mPushButton.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    mPushButton.SetProperty( Button::Property::LABEL, "Blur" );
-    mPushButton.PressedSignal().Connect( this, &SuperBlurViewExample::OnButtonPressed );
-    mPushButton.ReleasedSignal().Connect( this, &SuperBlurViewExample::OnButtonReleased );
-    window.Add( mPushButton );
+    mPushButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+    mPushButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mPushButton.SetProperty(Button::Property::LABEL, "Blur");
+    mPushButton.PressedSignal().Connect(this, &SuperBlurViewExample::OnButtonPressed);
+    mPushButton.ReleasedSignal().Connect(this, &SuperBlurViewExample::OnButtonReleased);
+    window.Add(mPushButton);
   }
 
-  bool OnButtonPressed( Button button )
+  bool OnButtonPressed(Button button)
   {
     mBlurAnimation.Play();
     return true;
   }
 
-  bool OnButtonReleased( Button button )
+  bool OnButtonReleased(Button button)
   {
     mClearAnimation.Play();
     return true;
   }
 
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if ( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -101,8 +98,7 @@ private:
   }
 
 private:
-
-  Application&  mApplication;
+  Application& mApplication;
 
   SuperBlurView mSuperBlurView;
 
@@ -112,11 +108,11 @@ private:
   Animation mClearAnimation;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New(&argc, &argv);
 
-  SuperBlurViewExample test( application );
+  SuperBlurViewExample test(application);
 
   application.MainLoop();
 

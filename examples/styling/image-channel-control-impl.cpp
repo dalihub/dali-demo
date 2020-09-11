@@ -21,16 +21,15 @@
 
 #include <cstdio>
 
-
 using namespace Dali; // Needed for macros
 
 namespace Demo
 {
 namespace Internal
 {
-
 namespace
 {
+// clang-format off
 
 const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
   varying mediump vec2 vTexCoord;\n
@@ -44,33 +43,33 @@ const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
       gl_FragColor = texture2D( sTexture, vTexCoord ) * vec4(mixColor,1.0) * uColor * vec4(uChannels, 1.0) ;\n
   }\n
 );
+// clang-format on
 
 Dali::BaseHandle Create()
 {
   return Demo::ImageChannelControl::New();
 }
 
-DALI_TYPE_REGISTRATION_BEGIN( ImageChannelControl, Dali::Toolkit::Control, Create );
+DALI_TYPE_REGISTRATION_BEGIN(ImageChannelControl, Dali::Toolkit::Control, Create);
 
-DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "url", STRING, RESOURCE_URL );
-DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "redChannel", FLOAT, RED_CHANNEL );
-DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "greenChannel", FLOAT, GREEN_CHANNEL );
-DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "blueChannel", FLOAT, BLUE_CHANNEL );
+DALI_PROPERTY_REGISTRATION(Demo, ImageChannelControl, "url", STRING, RESOURCE_URL);
+DALI_PROPERTY_REGISTRATION(Demo, ImageChannelControl, "redChannel", FLOAT, RED_CHANNEL);
+DALI_PROPERTY_REGISTRATION(Demo, ImageChannelControl, "greenChannel", FLOAT, GREEN_CHANNEL);
+DALI_PROPERTY_REGISTRATION(Demo, ImageChannelControl, "blueChannel", FLOAT, BLUE_CHANNEL);
 
-DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "visibility", BOOLEAN, VISIBILITY );
-DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "enableVisibilityTransition", ARRAY, ENABLE_VISIBILITY_TRANSITION );
-DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "disableVisibilityTransition", ARRAY, DISABLE_VISIBILITY_TRANSITION );
+DALI_PROPERTY_REGISTRATION(Demo, ImageChannelControl, "visibility", BOOLEAN, VISIBILITY);
+DALI_PROPERTY_REGISTRATION(Demo, ImageChannelControl, "enableVisibilityTransition", ARRAY, ENABLE_VISIBILITY_TRANSITION);
+DALI_PROPERTY_REGISTRATION(Demo, ImageChannelControl, "disableVisibilityTransition", ARRAY, DISABLE_VISIBILITY_TRANSITION);
 
-DALI_PROPERTY_REGISTRATION( Demo, ImageChannelControl, "imageVisual", MAP, IMAGE_VISUAL );
+DALI_PROPERTY_REGISTRATION(Demo, ImageChannelControl, "imageVisual", MAP, IMAGE_VISUAL);
 DALI_TYPE_REGISTRATION_END();
 
 } // anonymous namespace
 
-
 Internal::ImageChannelControl::ImageChannelControl()
-: Control( ControlBehaviour( CONTROL_BEHAVIOUR_DEFAULT ) ),
-  mChannels( 1.0f, 1.0f, 1.0f ),
-  mChannelIndex( Property::INVALID_INDEX ),
+: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+  mChannels(1.0f, 1.0f, 1.0f),
+  mChannelIndex(Property::INVALID_INDEX),
   mVisibility(true),
   mTargetVisibility(true)
 {
@@ -82,13 +81,13 @@ Internal::ImageChannelControl::~ImageChannelControl()
 
 Demo::ImageChannelControl Internal::ImageChannelControl::New()
 {
-  IntrusivePtr<Internal::ImageChannelControl> impl = new Internal::ImageChannelControl();
-  Demo::ImageChannelControl handle = Demo::ImageChannelControl( *impl );
+  IntrusivePtr<Internal::ImageChannelControl> impl   = new Internal::ImageChannelControl();
+  Demo::ImageChannelControl                   handle = Demo::ImageChannelControl(*impl);
   impl->Initialize();
   return handle;
 }
 
-void ImageChannelControl::SetImage( const std::string& url )
+void ImageChannelControl::SetImage(const std::string& url)
 {
   mUrl = url;
 
@@ -97,49 +96,49 @@ void ImageChannelControl::SetImage( const std::string& url )
   Property::Map properties;
   Property::Map shader;
   shader[Dali::Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = FRAGMENT_SHADER;
-  properties[Dali::Toolkit::Visual::Property::TYPE] = Dali::Toolkit::Visual::IMAGE;
-  properties[Dali::Toolkit::Visual::Property::SHADER]=shader;
-  properties[Dali::Toolkit::ImageVisual::Property::URL] = url;
+  properties[Dali::Toolkit::Visual::Property::TYPE]                = Dali::Toolkit::Visual::IMAGE;
+  properties[Dali::Toolkit::Visual::Property::SHADER]              = shader;
+  properties[Dali::Toolkit::ImageVisual::Property::URL]            = url;
 
-  mVisual = Toolkit::VisualFactory::Get().CreateVisual( properties );
-  Toolkit::DevelControl::RegisterVisual( *this, Demo::ImageChannelControl::Property::IMAGE_VISUAL, mVisual );
+  mVisual = Toolkit::VisualFactory::Get().CreateVisual(properties);
+  Toolkit::DevelControl::RegisterVisual(*this, Demo::ImageChannelControl::Property::IMAGE_VISUAL, mVisual);
   mVisual.SetName("imageVisual");
 
   RelayoutRequest();
 }
 
-void ImageChannelControl::SetVisibility( bool visibility )
+void ImageChannelControl::SetVisibility(bool visibility)
 {
-  printf("ImageChannelControl %s: SetVisibility( %s )\n", Self().GetProperty< std::string >( Dali::Actor::Property::NAME ).c_str(), visibility?"T":"F" );
+  printf("ImageChannelControl %s: SetVisibility( %s )\n", Self().GetProperty<std::string>(Dali::Actor::Property::NAME).c_str(), visibility ? "T" : "F");
 
-  if( mAnimation )
+  if(mAnimation)
   {
     mAnimation.Stop();
-    mAnimation.FinishedSignal().Disconnect( this, &ImageChannelControl::OnStateChangeAnimationFinished );
+    mAnimation.FinishedSignal().Disconnect(this, &ImageChannelControl::OnStateChangeAnimationFinished);
     OnStateChangeAnimationFinished(mAnimation);
   }
 
-  if( mVisibility != visibility )
+  if(mVisibility != visibility)
   {
-    if( mVisibility )
+    if(mVisibility)
     {
-      if( mDisableVisibilityTransition.Count() > 0 )
+      if(mDisableVisibilityTransition.Count() > 0)
       {
-        mAnimation = Toolkit::DevelControl::CreateTransition( *this, mDisableVisibilityTransition );
+        mAnimation = Toolkit::DevelControl::CreateTransition(*this, mDisableVisibilityTransition);
       }
     }
     else
     {
-      if( mEnableVisibilityTransition.Count() > 0 )
+      if(mEnableVisibilityTransition.Count() > 0)
       {
-        mAnimation = Toolkit::DevelControl::CreateTransition( *this, mEnableVisibilityTransition );
+        mAnimation = Toolkit::DevelControl::CreateTransition(*this, mEnableVisibilityTransition);
       }
     }
   }
 
-  if( mAnimation )
+  if(mAnimation)
   {
-    mAnimation.FinishedSignal().Connect( this, &ImageChannelControl::OnStateChangeAnimationFinished );
+    mAnimation.FinishedSignal().Connect(this, &ImageChannelControl::OnStateChangeAnimationFinished);
     mAnimation.Play();
     mTargetVisibility = visibility;
   }
@@ -149,20 +148,20 @@ void ImageChannelControl::SetVisibility( bool visibility )
   }
 }
 
-void ImageChannelControl::OnStateChangeAnimationFinished( Animation& src )
+void ImageChannelControl::OnStateChangeAnimationFinished(Animation& src)
 {
   mVisibility = mTargetVisibility;
 }
 
 void ImageChannelControl::OnInitialize()
 {
-  Actor self = Self();
-  mChannelIndex = self.RegisterProperty( "uChannels", Vector3(1.0f, 1.0f, 1.0f) );
+  Actor self    = Self();
+  mChannelIndex = self.RegisterProperty("uChannels", Vector3(1.0f, 1.0f, 1.0f));
 }
 
-void ImageChannelControl::OnSceneConnection( int depth )
+void ImageChannelControl::OnSceneConnection(int depth)
 {
-  Control::OnSceneConnection( depth );
+  Control::OnSceneConnection(depth);
 }
 
 void ImageChannelControl::OnSceneDisconnection()
@@ -170,29 +169,29 @@ void ImageChannelControl::OnSceneDisconnection()
   Control::OnSceneDisconnection();
 }
 
-void ImageChannelControl::OnSizeSet( const Vector3& targetSize )
+void ImageChannelControl::OnSizeSet(const Vector3& targetSize)
 {
-  Control::OnSizeSet( targetSize );
+  Control::OnSizeSet(targetSize);
 
-  if( mVisual )
+  if(mVisual)
   {
-    Vector2 size( targetSize );
+    Vector2       size(targetSize);
     Property::Map transformMap;
     transformMap
-      .Add( Toolkit::Visual::Transform::Property::OFFSET, Vector2(0.0f, 0.0f) )
-      .Add( Toolkit::Visual::Transform::Property::SIZE, Vector2(1.0f, 1.0f) )
-      .Add( Toolkit::Visual::Transform::Property::ORIGIN, Toolkit::Align::CENTER )
-      .Add( Toolkit::Visual::Transform::Property::ANCHOR_POINT, Toolkit::Align::CENTER )
-      .Add( Toolkit::Visual::Transform::Property::OFFSET_POLICY, Vector2( Toolkit::Visual::Transform::Policy::RELATIVE, Toolkit::Visual::Transform::Policy::RELATIVE ) )
-      .Add( Toolkit::Visual::Transform::Property::SIZE_POLICY, Vector2( Toolkit::Visual::Transform::Policy::RELATIVE, Toolkit::Visual::Transform::Policy::RELATIVE ) );
+      .Add(Toolkit::Visual::Transform::Property::OFFSET, Vector2(0.0f, 0.0f))
+      .Add(Toolkit::Visual::Transform::Property::SIZE, Vector2(1.0f, 1.0f))
+      .Add(Toolkit::Visual::Transform::Property::ORIGIN, Toolkit::Align::CENTER)
+      .Add(Toolkit::Visual::Transform::Property::ANCHOR_POINT, Toolkit::Align::CENTER)
+      .Add(Toolkit::Visual::Transform::Property::OFFSET_POLICY, Vector2(Toolkit::Visual::Transform::Policy::RELATIVE, Toolkit::Visual::Transform::Policy::RELATIVE))
+      .Add(Toolkit::Visual::Transform::Property::SIZE_POLICY, Vector2(Toolkit::Visual::Transform::Policy::RELATIVE, Toolkit::Visual::Transform::Policy::RELATIVE));
 
-    mVisual.SetTransformAndSize( transformMap, size );
+    mVisual.SetTransformAndSize(transformMap, size);
   }
 }
 
 Vector3 ImageChannelControl::GetNaturalSize()
 {
-  if( mVisual )
+  if(mVisual)
   {
     Vector2 naturalSize;
     mVisual.GetNaturalSize(naturalSize);
@@ -201,104 +200,103 @@ Vector3 ImageChannelControl::GetNaturalSize()
   return Vector3::ZERO;
 }
 
-void ImageChannelControl::OnStyleChange( Toolkit::StyleManager styleManager, StyleChange::Type change )
+void ImageChannelControl::OnStyleChange(Toolkit::StyleManager styleManager, StyleChange::Type change)
 {
   // Chain up.
-  Control::OnStyleChange( styleManager, change );
+  Control::OnStyleChange(styleManager, change);
 }
-
 
 ///////////////////////////////////////////////////////////
 //
 // Properties
 //
 
-void ImageChannelControl::SetProperty( BaseObject* object, Property::Index index, const Property::Value& value )
+void ImageChannelControl::SetProperty(BaseObject* object, Property::Index index, const Property::Value& value)
 {
-  Demo::ImageChannelControl imageChannelControl = Demo::ImageChannelControl::DownCast( Dali::BaseHandle( object ) );
+  Demo::ImageChannelControl imageChannelControl = Demo::ImageChannelControl::DownCast(Dali::BaseHandle(object));
 
-  if( imageChannelControl )
+  if(imageChannelControl)
   {
-    ImageChannelControl& impl = GetImpl( imageChannelControl );
-    Actor self = impl.Self();
-    switch ( index )
+    ImageChannelControl& impl = GetImpl(imageChannelControl);
+    Actor                self = impl.Self();
+    switch(index)
     {
       case Demo::ImageChannelControl::Property::RESOURCE_URL:
       {
-        impl.SetImage( value.Get<std::string>() );
+        impl.SetImage(value.Get<std::string>());
         break;
       }
       case Demo::ImageChannelControl::Property::IMAGE_VISUAL:
       {
         Property::Map* map = value.GetMap();
-        if( map )
+        if(map)
         {
-          impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual( *map );
-          Toolkit::DevelControl::RegisterVisual( impl, Demo::ImageChannelControl::Property::IMAGE_VISUAL, impl.mVisual );
+          impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual(*map);
+          Toolkit::DevelControl::RegisterVisual(impl, Demo::ImageChannelControl::Property::IMAGE_VISUAL, impl.mVisual);
         }
         break;
       }
       case Demo::ImageChannelControl::Property::VISIBILITY:
       {
-        impl.SetVisibility( value.Get<bool>() );
+        impl.SetVisibility(value.Get<bool>());
         break;
       }
       case Demo::ImageChannelControl::Property::ENABLE_VISIBILITY_TRANSITION:
       {
-        if( value.GetType() == Property::ARRAY )
+        if(value.GetType() == Property::ARRAY)
         {
-          impl.mEnableVisibilityTransition = Toolkit::TransitionData::New( *value.GetArray());
+          impl.mEnableVisibilityTransition = Toolkit::TransitionData::New(*value.GetArray());
         }
-        else if( value.GetType() == Property::MAP )
+        else if(value.GetType() == Property::MAP)
         {
-          impl.mEnableVisibilityTransition = Toolkit::TransitionData::New( *value.GetMap() );
+          impl.mEnableVisibilityTransition = Toolkit::TransitionData::New(*value.GetMap());
         }
         break;
       }
       case Demo::ImageChannelControl::Property::DISABLE_VISIBILITY_TRANSITION:
       {
-        if( value.GetType() == Property::ARRAY )
+        if(value.GetType() == Property::ARRAY)
         {
-          impl.mDisableVisibilityTransition = Toolkit::TransitionData::New( *value.GetArray());
+          impl.mDisableVisibilityTransition = Toolkit::TransitionData::New(*value.GetArray());
         }
-        else if( value.GetType() == Property::MAP )
+        else if(value.GetType() == Property::MAP)
         {
-          impl.mDisableVisibilityTransition = Toolkit::TransitionData::New( *value.GetMap() );
+          impl.mDisableVisibilityTransition = Toolkit::TransitionData::New(*value.GetMap());
         }
         break;
       }
       case Demo::ImageChannelControl::Property::RED_CHANNEL:
       {
         impl.mChannels[0] = value.Get<float>();
-        self.SetProperty( impl.mChannelIndex, impl.mChannels );
+        self.SetProperty(impl.mChannelIndex, impl.mChannels);
         break;
       }
       case Demo::ImageChannelControl::Property::GREEN_CHANNEL:
       {
         impl.mChannels[1] = value.Get<float>();
-        self.SetProperty( impl.mChannelIndex, impl.mChannels );
+        self.SetProperty(impl.mChannelIndex, impl.mChannels);
         break;
       }
       case Demo::ImageChannelControl::Property::BLUE_CHANNEL:
       {
         impl.mChannels[2] = value.Get<float>();
-        self.SetProperty( impl.mChannelIndex, impl.mChannels );
+        self.SetProperty(impl.mChannelIndex, impl.mChannels);
         break;
       }
     }
   }
 }
 
-Property::Value ImageChannelControl::GetProperty( BaseObject* object, Property::Index propertyIndex )
+Property::Value ImageChannelControl::GetProperty(BaseObject* object, Property::Index propertyIndex)
 {
   Property::Value value;
 
-  Demo::ImageChannelControl imageChannelControl = Demo::ImageChannelControl::DownCast( Dali::BaseHandle( object ) );
+  Demo::ImageChannelControl imageChannelControl = Demo::ImageChannelControl::DownCast(Dali::BaseHandle(object));
 
-  if ( imageChannelControl )
+  if(imageChannelControl)
   {
-    ImageChannelControl& impl = GetImpl( imageChannelControl );
-    switch ( propertyIndex )
+    ImageChannelControl& impl = GetImpl(imageChannelControl);
+    switch(propertyIndex)
     {
       case Demo::ImageChannelControl::Property::RED_CHANNEL:
       {
@@ -328,5 +326,5 @@ Property::Value ImageChannelControl::GetProperty( BaseObject* object, Property::
   return value;
 }
 
-} // Internal
-} // Demo
+} // namespace Internal
+} // namespace Demo
