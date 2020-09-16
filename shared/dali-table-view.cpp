@@ -19,15 +19,15 @@
 #include "dali-table-view.h"
 
 // EXTERNAL INCLUDES
-#include <algorithm>
-#include <dali/devel-api/actors/actor-devel.h>
-#include <dali/devel-api/images/distance-field.h>
-#include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
-#include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/accessibility-manager/accessibility-manager.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
+#include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
+#include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/images/distance-field.h>
+#include <algorithm>
 
 // INTERNAL INCLUDES
 #include "shared/execute-process.h"
@@ -41,55 +41,52 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-
-const std::string LOGO_PATH( DEMO_IMAGE_DIR "Logo-for-demo.png" );
+const std::string LOGO_PATH(DEMO_IMAGE_DIR "Logo-for-demo.png");
 
 // Keyboard focus effect constants.
-const float KEYBOARD_FOCUS_ANIMATION_DURATION = 1.0f;           ///< The total duration of the keyboard focus animation
-const int32_t KEYBOARD_FOCUS_ANIMATION_LOOP_COUNT = 5;          ///< The number of loops for the keyboard focus animation
-const float KEYBOARD_FOCUS_FINAL_SCALE_FLOAT = 1.05f;           ///< The final scale of the focus highlight
-const float KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT = 1.18f;        ///< The scale of the focus highlight during the animation
-const float KEYBOARD_FOCUS_FINAL_ALPHA = 0.7f;                  ///< The final alpha of the focus highlight
-const float KEYBOARD_FOCUS_ANIMATING_ALPHA = 0.0f;              ///< The alpha of the focus highlight during the animation
-const float KEYBOARD_FOCUS_FADE_PERCENTAGE = 0.16f;             ///< The duration of the fade (from translucent to the final-alpha) as a percentage of the overall animation duration
-const Vector3 KEYBOARD_FOCUS_FINAL_SCALE( KEYBOARD_FOCUS_FINAL_SCALE_FLOAT, KEYBOARD_FOCUS_FINAL_SCALE_FLOAT, KEYBOARD_FOCUS_FINAL_SCALE_FLOAT );  ///< @see KEYBOARD_FOCUS_START_SCALE_FLOAT
-const Vector3 FOCUS_INDICATOR_ANIMATING_SCALE( KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT, KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT, KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT );   ///< @see KEYBOARD_FOCUS_END_SCALE_FLOAT
-const float KEYBOARD_FOCUS_MID_KEY_FRAME_TIME = KEYBOARD_FOCUS_ANIMATION_DURATION - ( KEYBOARD_FOCUS_ANIMATION_DURATION * KEYBOARD_FOCUS_FADE_PERCENTAGE ); ///< Time of the mid key-frame
+const float   KEYBOARD_FOCUS_ANIMATION_DURATION   = 1.0f;                                                                                                     ///< The total duration of the keyboard focus animation
+const int32_t KEYBOARD_FOCUS_ANIMATION_LOOP_COUNT = 5;                                                                                                        ///< The number of loops for the keyboard focus animation
+const float   KEYBOARD_FOCUS_FINAL_SCALE_FLOAT    = 1.05f;                                                                                                    ///< The final scale of the focus highlight
+const float   KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT = 1.18f;                                                                                                    ///< The scale of the focus highlight during the animation
+const float   KEYBOARD_FOCUS_FINAL_ALPHA          = 0.7f;                                                                                                     ///< The final alpha of the focus highlight
+const float   KEYBOARD_FOCUS_ANIMATING_ALPHA      = 0.0f;                                                                                                     ///< The alpha of the focus highlight during the animation
+const float   KEYBOARD_FOCUS_FADE_PERCENTAGE      = 0.16f;                                                                                                    ///< The duration of the fade (from translucent to the final-alpha) as a percentage of the overall animation duration
+const Vector3 KEYBOARD_FOCUS_FINAL_SCALE(KEYBOARD_FOCUS_FINAL_SCALE_FLOAT, KEYBOARD_FOCUS_FINAL_SCALE_FLOAT, KEYBOARD_FOCUS_FINAL_SCALE_FLOAT);               ///< @see KEYBOARD_FOCUS_START_SCALE_FLOAT
+const Vector3 FOCUS_INDICATOR_ANIMATING_SCALE(KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT, KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT, KEYBOARD_FOCUS_ANIMATED_SCALE_FLOAT); ///< @see KEYBOARD_FOCUS_END_SCALE_FLOAT
+const float   KEYBOARD_FOCUS_MID_KEY_FRAME_TIME = KEYBOARD_FOCUS_ANIMATION_DURATION - (KEYBOARD_FOCUS_ANIMATION_DURATION * KEYBOARD_FOCUS_FADE_PERCENTAGE);   ///< Time of the mid key-frame
 
-const float TILE_LABEL_PADDING = 8.0f;                          ///< Border between edge of tile and the example text
-const float BUTTON_PRESS_ANIMATION_TIME = 0.35f;                ///< Time to perform button scale effect.
-const float ROTATE_ANIMATION_TIME = 0.5f;                       ///< Time to perform rotate effect.
-const int MAX_PAGES = 256;                                      ///< Maximum pages (arbitrary safety limit)
-const int EXAMPLES_PER_ROW = 3;
-const int ROWS_PER_PAGE = 3;
-const int EXAMPLES_PER_PAGE = EXAMPLES_PER_ROW * ROWS_PER_PAGE;
-const float LOGO_MARGIN_RATIO = 0.1f / 0.3f;
-const float BOTTOM_PADDING_RATIO = 0.4f / 0.9f;
-const Vector3 SCROLLVIEW_RELATIVE_SIZE(0.9f, 1.0f, 0.8f );      ///< ScrollView's relative size to its parent
-const Vector3 TABLE_RELATIVE_SIZE(0.95f, 0.9f, 0.8f );          ///< TableView's relative size to the entire stage. The Y value means sum of the logo and table relative heights.
-const float STENCIL_RELATIVE_SIZE = 1.0f;
+const float   TILE_LABEL_PADDING          = 8.0f;  ///< Border between edge of tile and the example text
+const float   BUTTON_PRESS_ANIMATION_TIME = 0.35f; ///< Time to perform button scale effect.
+const float   ROTATE_ANIMATION_TIME       = 0.5f;  ///< Time to perform rotate effect.
+const int     MAX_PAGES                   = 256;   ///< Maximum pages (arbitrary safety limit)
+const int     EXAMPLES_PER_ROW            = 3;
+const int     ROWS_PER_PAGE               = 3;
+const int     EXAMPLES_PER_PAGE           = EXAMPLES_PER_ROW * ROWS_PER_PAGE;
+const float   LOGO_MARGIN_RATIO           = 0.1f / 0.3f;
+const float   BOTTOM_PADDING_RATIO        = 0.4f / 0.9f;
+const Vector3 SCROLLVIEW_RELATIVE_SIZE(0.9f, 1.0f, 0.8f); ///< ScrollView's relative size to its parent
+const Vector3 TABLE_RELATIVE_SIZE(0.95f, 0.9f, 0.8f);     ///< TableView's relative size to the entire stage. The Y value means sum of the logo and table relative heights.
+const float   STENCIL_RELATIVE_SIZE = 1.0f;
 
-const float EFFECT_SNAP_DURATION = 0.66f;                       ///< Scroll Snap Duration for Effects
-const float EFFECT_FLICK_DURATION = 0.5f;                       ///< Scroll Flick Duration for Effects
+const float   EFFECT_SNAP_DURATION  = 0.66f; ///< Scroll Snap Duration for Effects
+const float   EFFECT_FLICK_DURATION = 0.5f;  ///< Scroll Flick Duration for Effects
 const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.5f, Math::PI * 0.5f, 0.0f);
 
-const char * const BUBBLE_COLOR_STYLE_NAME[] =
-{
-  "BubbleColor1",
-  "BubbleColor2",
-  "BubbleColor3",
-  "BubbleColor4"
-};
-const int NUMBER_OF_BUBBLE_COLORS( sizeof( BUBBLE_COLOR_STYLE_NAME ) / sizeof( BUBBLE_COLOR_STYLE_NAME[ 0 ] ) );
+const char* const BUBBLE_COLOR_STYLE_NAME[] =
+  {
+    "BubbleColor1",
+    "BubbleColor2",
+    "BubbleColor3",
+    "BubbleColor4"};
+const int NUMBER_OF_BUBBLE_COLORS(sizeof(BUBBLE_COLOR_STYLE_NAME) / sizeof(BUBBLE_COLOR_STYLE_NAME[0]));
 
-const char * const SHAPE_IMAGE_TABLE[] =
-{
-  DEMO_IMAGE_DIR "shape-circle.png",
-  DEMO_IMAGE_DIR "shape-bubble.png"
-};
-const int NUMBER_OF_SHAPE_IMAGES( sizeof( SHAPE_IMAGE_TABLE ) / sizeof( SHAPE_IMAGE_TABLE[0] ) );
+const char* const SHAPE_IMAGE_TABLE[] =
+  {
+    DEMO_IMAGE_DIR "shape-circle.png",
+    DEMO_IMAGE_DIR "shape-bubble.png"};
+const int NUMBER_OF_SHAPE_IMAGES(sizeof(SHAPE_IMAGE_TABLE) / sizeof(SHAPE_IMAGE_TABLE[0]));
 
-const int NUM_BACKGROUND_IMAGES = 18;
+const int   NUM_BACKGROUND_IMAGES   = 18;
 const float BACKGROUND_SPREAD_SCALE = 1.5f;
 
 const unsigned int BACKGROUND_ANIMATION_DURATION = 15000; // 15 secs
@@ -97,19 +94,19 @@ const unsigned int BACKGROUND_ANIMATION_DURATION = 15000; // 15 secs
 const float BUBBLE_MIN_Z = -1.0;
 const float BUBBLE_MAX_Z = 0.0f;
 
-const char * const DEMO_BUILD_DATE    = __DATE__ " " __TIME__;
+const char* const DEMO_BUILD_DATE = __DATE__ " " __TIME__;
 
 /**
  * Creates the background image
  */
-Control CreateBackground( std::string stylename )
+Control CreateBackground(std::string stylename)
 {
   Control background = Control::New();
-  background.SetStyleName( stylename );
-  background.SetProperty( Actor::Property::NAME, "BACKGROUND" );
-  background.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  background.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  background.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
+  background.SetStyleName(stylename);
+  background.SetProperty(Actor::Property::NAME, "BACKGROUND");
+  background.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  background.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  background.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   return background;
 }
 
@@ -119,25 +116,25 @@ Control CreateBackground( std::string stylename )
 struct AnimateBubbleConstraint
 {
 public:
-  AnimateBubbleConstraint( const Vector3& initialPos, float scale )
-  : mInitialX( initialPos.x ),
-    mScale( scale )
+  AnimateBubbleConstraint(const Vector3& initialPos, float scale)
+  : mInitialX(initialPos.x),
+    mScale(scale)
   {
   }
 
-  void operator()( Vector3& position, const PropertyInputContainer& inputs )
+  void operator()(Vector3& position, const PropertyInputContainer& inputs)
   {
     const Vector3& parentSize = inputs[1]->GetVector3();
-    const Vector3& childSize = inputs[2]->GetVector3();
+    const Vector3& childSize  = inputs[2]->GetVector3();
 
     // Wrap bubbles vertically.
     float range = parentSize.y + childSize.y;
     // This performs a float mod (we don't use fmod as we want the arithmetic modulus as opposed to the remainder).
-    position.y -= range * ( floor( position.y / range ) + 0.5f );
+    position.y -= range * (floor(position.y / range) + 0.5f);
 
     // Bubbles X position moves parallax to horizontal
     // panning by a scale factor unique to each bubble.
-    position.x = mInitialX + ( inputs[0]->GetVector2().x * mScale );
+    position.x = mInitialX + (inputs[0]->GetVector2().x * mScale);
   }
 
 private:
@@ -151,21 +148,21 @@ private:
  */
 struct TileShaderPositionConstraint
 {
-  TileShaderPositionConstraint( float pageWidth, float tileXOffset )
-  : mPageWidth( pageWidth ),
-    mTileXOffset( tileXOffset )
+  TileShaderPositionConstraint(float pageWidth, float tileXOffset)
+  : mPageWidth(pageWidth),
+    mTileXOffset(tileXOffset)
   {
   }
 
-  void operator()( Vector3& position, const PropertyInputContainer& inputs )
+  void operator()(Vector3& position, const PropertyInputContainer& inputs)
   {
     // Set up position.x as the tiles X offset (0.0 -> 1.0).
     position.x = mTileXOffset;
     // Set up position.z as the linear scroll-view X offset (0.0 -> 1.0).
-    position.z = 1.0f * ( -fmod( inputs[0]->GetVector2().x, mPageWidth ) / mPageWidth );
+    position.z = 1.0f * (-fmod(inputs[0]->GetVector2().x, mPageWidth) / mPageWidth);
     // Set up position.y as a rectified version of the scroll-views X offset.
     // IE. instead of 0.0 -> 1.0, it moves between 0.0 -> 0.5 -> 0.0 within the same span.
-    if( position.z > 0.5f )
+    if(position.z > 0.5f)
     {
       position.y = 1.0f - position.z;
     }
@@ -180,15 +177,15 @@ private:
   float mTileXOffset;
 };
 
-bool CompareByTitle( const Example& lhs, const Example& rhs )
+bool CompareByTitle(const Example& lhs, const Example& rhs)
 {
   return lhs.title < rhs.title;
 }
 
 } // namespace
 
-DaliTableView::DaliTableView( Application& application )
-: mApplication( application ),
+DaliTableView::DaliTableView(Application& application)
+: mApplication(application),
   mRootActor(),
   mRotateAnimation(),
   mPressedAnimation(),
@@ -203,81 +200,81 @@ DaliTableView::DaliTableView( Application& application )
   mPages(),
   mBackgroundAnimations(),
   mExampleList(),
-  mPageWidth( 0.0f ),
+  mPageWidth(0.0f),
   mTotalPages(),
-  mScrolling( false ),
-  mSortAlphabetically( false ),
-  mBackgroundAnimsPlaying( false )
+  mScrolling(false),
+  mSortAlphabetically(false),
+  mBackgroundAnimsPlaying(false)
 {
-  application.InitSignal().Connect( this, &DaliTableView::Initialize );
+  application.InitSignal().Connect(this, &DaliTableView::Initialize);
 }
 
 DaliTableView::~DaliTableView()
 {
 }
 
-void DaliTableView::AddExample( Example example )
+void DaliTableView::AddExample(Example example)
 {
-  mExampleList.push_back( example );
+  mExampleList.push_back(example);
 }
 
-void DaliTableView::SortAlphabetically( bool sortAlphabetically )
+void DaliTableView::SortAlphabetically(bool sortAlphabetically)
 {
   mSortAlphabetically = sortAlphabetically;
 }
 
-void DaliTableView::Initialize( Application& application )
+void DaliTableView::Initialize(Application& application)
 {
   Window window = application.GetWindow();
-  window.KeyEventSignal().Connect( this, &DaliTableView::OnKeyEvent );
+  window.KeyEventSignal().Connect(this, &DaliTableView::OnKeyEvent);
   const Window::WindowSize windowSize = window.GetSize();
 
   // Background
-  mRootActor = CreateBackground( "LauncherBackground" );
-  window.Add( mRootActor );
+  mRootActor = CreateBackground("LauncherBackground");
+  window.Add(mRootActor);
 
   // Add logo
-  ImageView logo = ImageView::New( LOGO_PATH );
-  logo.SetProperty( Actor::Property::NAME, "LOGO_IMAGE" );
-  logo.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-  logo.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 0.1f, 0.5f ) );
-  logo.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
+  ImageView logo = ImageView::New(LOGO_PATH);
+  logo.SetProperty(Actor::Property::NAME, "LOGO_IMAGE");
+  logo.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+  logo.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.1f, 0.5f));
+  logo.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   // The logo should appear on top of everything.
-  logo.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
-  mRootActor.Add( logo );
+  logo.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
+  mRootActor.Add(logo);
 
   // Show version in a popup when log is tapped
   mLogoTapDetector = TapGestureDetector::New();
-  mLogoTapDetector.Attach( logo );
-  mLogoTapDetector.DetectedSignal().Connect( this, &DaliTableView::OnLogoTapped );
+  mLogoTapDetector.Attach(logo);
+  mLogoTapDetector.DetectedSignal().Connect(this, &DaliTableView::OnLogoTapped);
 
   // Scrollview occupying the majority of the screen
   mScrollView = ScrollView::New();
-  mScrollView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-  mScrollView.SetProperty( Actor::Property::PARENT_ORIGIN, Vector3( 0.5f, 1.0f - 0.05f, 0.5f ) );
-  mScrollView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-  mScrollView.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
-  mScrollView.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.0f, 0.6f, 0.0f ) );
+  mScrollView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+  mScrollView.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 1.0f - 0.05f, 0.5f));
+  mScrollView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  mScrollView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
+  mScrollView.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, 0.6f, 0.0f));
 
-  const float buttonsPageMargin = ( 1.0f - TABLE_RELATIVE_SIZE.x ) * 0.5f * windowSize.GetWidth();
-  mScrollView.SetProperty( Actor::Property::PADDING, Padding( buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f ) );
+  const float buttonsPageMargin = (1.0f - TABLE_RELATIVE_SIZE.x) * 0.5f * windowSize.GetWidth();
+  mScrollView.SetProperty(Actor::Property::PADDING, Padding(buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f));
 
-  mScrollView.SetAxisAutoLock( true );
-  mScrollView.ScrollCompletedSignal().Connect( this, &DaliTableView::OnScrollComplete );
-  mScrollView.ScrollStartedSignal().Connect( this, &DaliTableView::OnScrollStart );
-  mScrollView.TouchedSignal().Connect( this, &DaliTableView::OnScrollTouched );
+  mScrollView.SetAxisAutoLock(true);
+  mScrollView.ScrollCompletedSignal().Connect(this, &DaliTableView::OnScrollComplete);
+  mScrollView.ScrollStartedSignal().Connect(this, &DaliTableView::OnScrollStart);
+  mScrollView.TouchedSignal().Connect(this, &DaliTableView::OnScrollTouched);
 
   mPageWidth = windowSize.GetWidth() * TABLE_RELATIVE_SIZE.x * 0.5f;
 
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
   Actor bubbleContainer = Actor::New();
-  bubbleContainer.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  bubbleContainer.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  bubbleContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  SetupBackground( bubbleContainer );
+  bubbleContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  bubbleContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  bubbleContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  SetupBackground(bubbleContainer);
 
-  mRootActor.Add( bubbleContainer );
-  mRootActor.Add( mScrollView );
+  mRootActor.Add(bubbleContainer);
+  mRootActor.Add(mScrollView);
 
   // Add scroll view effect and setup constraints on pages
   ApplyScrollViewEffect();
@@ -290,28 +287,28 @@ void DaliTableView::Initialize( Application& application )
 
   Dali::Window winHandle = application.GetWindow();
 
-  if( windowSize.GetWidth() <= windowSize.GetHeight() )
+  if(windowSize.GetWidth() <= windowSize.GetHeight())
   {
-    winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT );
-    winHandle.RemoveAvailableOrientation( Dali::Window::LANDSCAPE );
-    winHandle.AddAvailableOrientation( Dali::Window::PORTRAIT_INVERSE );
-    winHandle.RemoveAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
+    winHandle.AddAvailableOrientation(Dali::Window::PORTRAIT);
+    winHandle.RemoveAvailableOrientation(Dali::Window::LANDSCAPE);
+    winHandle.AddAvailableOrientation(Dali::Window::PORTRAIT_INVERSE);
+    winHandle.RemoveAvailableOrientation(Dali::Window::LANDSCAPE_INVERSE);
   }
   else
   {
-    winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE );
-    winHandle.RemoveAvailableOrientation( Dali::Window::PORTRAIT );
-    winHandle.AddAvailableOrientation( Dali::Window::LANDSCAPE_INVERSE );
-    winHandle.RemoveAvailableOrientation( Dali::Window::PORTRAIT_INVERSE );
+    winHandle.AddAvailableOrientation(Dali::Window::LANDSCAPE);
+    winHandle.RemoveAvailableOrientation(Dali::Window::PORTRAIT);
+    winHandle.AddAvailableOrientation(Dali::Window::LANDSCAPE_INVERSE);
+    winHandle.RemoveAvailableOrientation(Dali::Window::PORTRAIT_INVERSE);
   }
 
   // Set initial orientation
   unsigned int degrees = 0;
-  Rotate( degrees );
+  Rotate(degrees);
 
   // Background animation
-  mAnimationTimer = Timer::New( BACKGROUND_ANIMATION_DURATION );
-  mAnimationTimer.TickSignal().Connect( this, &DaliTableView::PauseBackgroundAnimation );
+  mAnimationTimer = Timer::New(BACKGROUND_ANIMATION_DURATION);
+  mAnimationTimer.TickSignal().Connect(this, &DaliTableView::PauseBackgroundAnimation);
   mAnimationTimer.Start();
   mBackgroundAnimsPlaying = true;
 
@@ -322,77 +319,77 @@ void DaliTableView::CreateFocusEffect()
 {
   // Hook the required signals to manage the focus.
   auto keyboardFocusManager = KeyboardFocusManager::Get();
-  keyboardFocusManager.PreFocusChangeSignal().Connect( this, &DaliTableView::OnKeyboardPreFocusChange );
-  keyboardFocusManager.FocusedActorEnterKeySignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
-  AccessibilityManager::Get().FocusedActorActivatedSignal().Connect( this, &DaliTableView::OnFocusedActorActivated );
+  keyboardFocusManager.PreFocusChangeSignal().Connect(this, &DaliTableView::OnKeyboardPreFocusChange);
+  keyboardFocusManager.FocusedActorEnterKeySignal().Connect(this, &DaliTableView::OnFocusedActorActivated);
+  AccessibilityManager::Get().FocusedActorActivatedSignal().Connect(this, &DaliTableView::OnFocusedActorActivated);
 
   // Loop to create both actors for the focus highlight effect.
-  for( unsigned int i = 0; i < FOCUS_ANIMATION_ACTOR_NUMBER; ++i )
+  for(unsigned int i = 0; i < FOCUS_ANIMATION_ACTOR_NUMBER; ++i)
   {
     mFocusEffect[i].actor = ImageView::New();
-    mFocusEffect[i].actor.SetStyleName( "FocusActor" );
-    mFocusEffect[i].actor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mFocusEffect[i].actor.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-    mFocusEffect[i].actor.SetProperty( Actor::Property::INHERIT_SCALE, false );
-    mFocusEffect[i].actor.SetProperty( Actor::Property::COLOR_MODE, USE_OWN_COLOR );
+    mFocusEffect[i].actor.SetStyleName("FocusActor");
+    mFocusEffect[i].actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mFocusEffect[i].actor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    mFocusEffect[i].actor.SetProperty(Actor::Property::INHERIT_SCALE, false);
+    mFocusEffect[i].actor.SetProperty(Actor::Property::COLOR_MODE, USE_OWN_COLOR);
 
     KeyFrames alphaKeyFrames = KeyFrames::New();
-    alphaKeyFrames.Add( 0.0f, KEYBOARD_FOCUS_FINAL_ALPHA );
-    alphaKeyFrames.Add( KEYBOARD_FOCUS_MID_KEY_FRAME_TIME, KEYBOARD_FOCUS_ANIMATING_ALPHA );
-    alphaKeyFrames.Add( KEYBOARD_FOCUS_ANIMATION_DURATION, KEYBOARD_FOCUS_FINAL_ALPHA );
+    alphaKeyFrames.Add(0.0f, KEYBOARD_FOCUS_FINAL_ALPHA);
+    alphaKeyFrames.Add(KEYBOARD_FOCUS_MID_KEY_FRAME_TIME, KEYBOARD_FOCUS_ANIMATING_ALPHA);
+    alphaKeyFrames.Add(KEYBOARD_FOCUS_ANIMATION_DURATION, KEYBOARD_FOCUS_FINAL_ALPHA);
 
     KeyFrames scaleKeyFrames = KeyFrames::New();
-    scaleKeyFrames.Add( 0.0f, KEYBOARD_FOCUS_FINAL_SCALE );
-    scaleKeyFrames.Add( KEYBOARD_FOCUS_MID_KEY_FRAME_TIME, FOCUS_INDICATOR_ANIMATING_SCALE );
-    scaleKeyFrames.Add( KEYBOARD_FOCUS_ANIMATION_DURATION, KEYBOARD_FOCUS_FINAL_SCALE );
+    scaleKeyFrames.Add(0.0f, KEYBOARD_FOCUS_FINAL_SCALE);
+    scaleKeyFrames.Add(KEYBOARD_FOCUS_MID_KEY_FRAME_TIME, FOCUS_INDICATOR_ANIMATING_SCALE);
+    scaleKeyFrames.Add(KEYBOARD_FOCUS_ANIMATION_DURATION, KEYBOARD_FOCUS_FINAL_SCALE);
 
-    mFocusEffect[i].animation = Animation::New( KEYBOARD_FOCUS_ANIMATION_DURATION );
-    mFocusEffect[i].animation.AnimateBetween( Property( mFocusEffect[i].actor, Actor::Property::COLOR_ALPHA ), alphaKeyFrames );
-    mFocusEffect[i].animation.AnimateBetween( Property( mFocusEffect[i].actor, Actor::Property::SCALE ), scaleKeyFrames );
+    mFocusEffect[i].animation = Animation::New(KEYBOARD_FOCUS_ANIMATION_DURATION);
+    mFocusEffect[i].animation.AnimateBetween(Property(mFocusEffect[i].actor, Actor::Property::COLOR_ALPHA), alphaKeyFrames);
+    mFocusEffect[i].animation.AnimateBetween(Property(mFocusEffect[i].actor, Actor::Property::SCALE), scaleKeyFrames);
 
-    mFocusEffect[i].animation.SetLoopCount( KEYBOARD_FOCUS_ANIMATION_LOOP_COUNT );
+    mFocusEffect[i].animation.SetLoopCount(KEYBOARD_FOCUS_ANIMATION_LOOP_COUNT);
   }
 
   // Parent the secondary effect from the primary.
-  mFocusEffect[0].actor.Add( mFocusEffect[1].actor );
+  mFocusEffect[0].actor.Add(mFocusEffect[1].actor);
 
-  keyboardFocusManager.SetFocusIndicatorActor( mFocusEffect[0].actor );
+  keyboardFocusManager.SetFocusIndicatorActor(mFocusEffect[0].actor);
 
   // Connect to the on & off scene signals of the indicator which represents when it is enabled & disabled respectively
-  mFocusEffect[0].actor.OnSceneSignal().Connect( this, &DaliTableView::OnFocusIndicatorEnabled );
-  mFocusEffect[0].actor.OffSceneSignal().Connect( this, &DaliTableView::OnFocusIndicatorDisabled );
+  mFocusEffect[0].actor.OnSceneSignal().Connect(this, &DaliTableView::OnFocusIndicatorEnabled);
+  mFocusEffect[0].actor.OffSceneSignal().Connect(this, &DaliTableView::OnFocusIndicatorDisabled);
 }
 
-void DaliTableView::OnFocusIndicatorEnabled( Actor /* actor */ )
+void DaliTableView::OnFocusIndicatorEnabled(Actor /* actor */)
 {
   // Play the animation on the 1st glow object.
   mFocusEffect[0].animation.Play();
 
   // Stagger the animation on the 2nd glow object half way through.
-  mFocusEffect[1].animation.PlayFrom( KEYBOARD_FOCUS_ANIMATION_DURATION / 2.0f );
+  mFocusEffect[1].animation.PlayFrom(KEYBOARD_FOCUS_ANIMATION_DURATION / 2.0f);
 }
 
-void DaliTableView::OnFocusIndicatorDisabled( Dali::Actor /* actor */ )
+void DaliTableView::OnFocusIndicatorDisabled(Dali::Actor /* actor */)
 {
   // Stop the focus effect animations
-  for( auto i = 0u; i < FOCUS_ANIMATION_ACTOR_NUMBER; ++i )
+  for(auto i = 0u; i < FOCUS_ANIMATION_ACTOR_NUMBER; ++i)
   {
-    mFocusEffect[ i ].animation.Stop();
+    mFocusEffect[i].animation.Stop();
   }
 }
 
 void DaliTableView::ApplyCubeEffectToPages()
 {
-  ScrollViewPagePathEffect effect = ScrollViewPagePathEffect::DownCast( mScrollViewEffect );
-  unsigned int pageCount(0);
-  for( std::vector< Actor >::iterator pageIter = mPages.begin(); pageIter != mPages.end(); ++pageIter )
+  ScrollViewPagePathEffect effect = ScrollViewPagePathEffect::DownCast(mScrollViewEffect);
+  unsigned int             pageCount(0);
+  for(std::vector<Actor>::iterator pageIter = mPages.begin(); pageIter != mPages.end(); ++pageIter)
   {
     Actor page = *pageIter;
-    effect.ApplyToPage( page, pageCount++ );
+    effect.ApplyToPage(page, pageCount++);
   }
 }
 
-void DaliTableView::OnButtonsPageRelayout( const Dali::Actor& actor )
+void DaliTableView::OnButtonsPageRelayout(const Dali::Actor& actor)
 {
 }
 
@@ -400,69 +397,67 @@ void DaliTableView::Populate()
 {
   const Window::WindowSize windowSize = mApplication.GetWindow().GetSize();
 
-  mTotalPages = ( mExampleList.size() + EXAMPLES_PER_PAGE - 1 ) / EXAMPLES_PER_PAGE;
+  mTotalPages = (mExampleList.size() + EXAMPLES_PER_PAGE - 1) / EXAMPLES_PER_PAGE;
 
   // Populate ScrollView.
-  if( mExampleList.size() > 0 )
+  if(mExampleList.size() > 0)
   {
-    if( mSortAlphabetically )
+    if(mSortAlphabetically)
     {
-      sort( mExampleList.begin(), mExampleList.end(), CompareByTitle );
+      sort(mExampleList.begin(), mExampleList.end(), CompareByTitle);
     }
 
-    unsigned int exampleCount = 0;
-    ExampleListConstIter iter = mExampleList.begin();
+    unsigned int         exampleCount = 0;
+    ExampleListConstIter iter         = mExampleList.begin();
 
-    for( int t = 0; t < mTotalPages; t++ )
+    for(int t = 0; t < mTotalPages; t++)
     {
       // Create Table
-      TableView page = TableView::New( ROWS_PER_PAGE, EXAMPLES_PER_ROW );
-      page.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-      page.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-      page.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-      mScrollView.Add( page );
+      TableView page = TableView::New(ROWS_PER_PAGE, EXAMPLES_PER_ROW);
+      page.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      page.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+      page.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      mScrollView.Add(page);
 
       // Calculate the number of images going across (columns) within a page, according to the screen resolution and dpi.
-      const float margin = 2.0f;
+      const float margin               = 2.0f;
       const float tileParentMultiplier = 1.0f / EXAMPLES_PER_ROW;
 
       for(int row = 0; row < ROWS_PER_PAGE; row++)
       {
         for(int column = 0; column < EXAMPLES_PER_ROW; column++)
         {
-          const Example& example = ( *iter );
+          const Example& example = (*iter);
 
           // Calculate the tiles relative position on the page (between 0 & 1 in each dimension).
-          Vector2 position( static_cast<float>( column ) / ( EXAMPLES_PER_ROW - 1.0f ), static_cast<float>( row ) / ( EXAMPLES_PER_ROW - 1.0f ) );
-          Actor tile = CreateTile( example.name, example.title, Vector3( tileParentMultiplier, tileParentMultiplier, 1.0f ), position );
+          Vector2              position(static_cast<float>(column) / (EXAMPLES_PER_ROW - 1.0f), static_cast<float>(row) / (EXAMPLES_PER_ROW - 1.0f));
+          Actor                tile                 = CreateTile(example.name, example.title, Vector3(tileParentMultiplier, tileParentMultiplier, 1.0f), position);
           AccessibilityManager accessibilityManager = AccessibilityManager::Get();
-          accessibilityManager.SetFocusOrder( tile, ++exampleCount );
-          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_LABEL,
-                                                  example.title );
-          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_TRAIT, "Tile" );
-          accessibilityManager.SetAccessibilityAttribute( tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_HINT,
-                                                  "You can run this example" );
+          accessibilityManager.SetFocusOrder(tile, ++exampleCount);
+          accessibilityManager.SetAccessibilityAttribute(tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_LABEL, example.title);
+          accessibilityManager.SetAccessibilityAttribute(tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_TRAIT, "Tile");
+          accessibilityManager.SetAccessibilityAttribute(tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_HINT, "You can run this example");
 
-          tile.SetProperty( Actor::Property::PADDING, Padding( margin, margin, margin, margin ) );
-          page.AddChild( tile, TableView::CellPosition( row, column ) );
+          tile.SetProperty(Actor::Property::PADDING, Padding(margin, margin, margin, margin));
+          page.AddChild(tile, TableView::CellPosition(row, column));
 
           iter++;
 
-          if( iter == mExampleList.end() )
+          if(iter == mExampleList.end())
           {
             break;
           }
         }
 
-        if( iter == mExampleList.end() )
+        if(iter == mExampleList.end())
         {
           break;
         }
       }
 
-      mPages.push_back( page );
+      mPages.push_back(page);
 
-      if( iter == mExampleList.end() )
+      if(iter == mExampleList.end())
       {
         break;
       }
@@ -470,121 +465,121 @@ void DaliTableView::Populate()
   }
 
   // Update Ruler info.
-  mScrollRulerX = new FixedRuler( mPageWidth );
+  mScrollRulerX = new FixedRuler(mPageWidth);
   mScrollRulerY = new DefaultRuler();
-  mScrollRulerX->SetDomain( RulerDomain( 0.0f, (mTotalPages+1) * windowSize.GetWidth() * TABLE_RELATIVE_SIZE.x * 0.5f, true ) );
+  mScrollRulerX->SetDomain(RulerDomain(0.0f, (mTotalPages + 1) * windowSize.GetWidth() * TABLE_RELATIVE_SIZE.x * 0.5f, true));
   mScrollRulerY->Disable();
-  mScrollView.SetRulerX( mScrollRulerX );
-  mScrollView.SetRulerY( mScrollRulerY );
+  mScrollView.SetRulerX(mScrollRulerX);
+  mScrollView.SetRulerY(mScrollRulerY);
 }
 
-void DaliTableView::Rotate( unsigned int degrees )
+void DaliTableView::Rotate(unsigned int degrees)
 {
   // Resize the root actor
   const Window::WindowSize windowSize = mApplication.GetWindow().GetSize();
-  const Vector2 originalSize( windowSize.GetWidth(), windowSize.GetHeight() );
-  Vector3 targetSize( originalSize.x, originalSize.y, 1.0f );
+  const Vector2            originalSize(windowSize.GetWidth(), windowSize.GetHeight());
+  Vector3                  targetSize(originalSize.x, originalSize.y, 1.0f);
 
-  if( degrees == 90 || degrees == 270 )
+  if(degrees == 90 || degrees == 270)
   {
-    targetSize = Vector3( originalSize.y, originalSize.x, 1.0f );
+    targetSize = Vector3(originalSize.y, originalSize.x, 1.0f);
   }
 
-  if( mRotateAnimation )
+  if(mRotateAnimation)
   {
     mRotateAnimation.Stop();
     mRotateAnimation.Clear();
   }
 
-  mRotateAnimation = Animation::New( ROTATE_ANIMATION_TIME );
-  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 - degrees ) ), Vector3::ZAXIS ), AlphaFunction::EASE_OUT );
-  mRotateAnimation.AnimateTo( Property( mRootActor, Actor::Property::SIZE ), targetSize, AlphaFunction::EASE_OUT );
+  mRotateAnimation = Animation::New(ROTATE_ANIMATION_TIME);
+  mRotateAnimation.AnimateTo(Property(mRootActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360 - degrees)), Vector3::ZAXIS), AlphaFunction::EASE_OUT);
+  mRotateAnimation.AnimateTo(Property(mRootActor, Actor::Property::SIZE), targetSize, AlphaFunction::EASE_OUT);
   mRotateAnimation.Play();
 }
 
-Actor DaliTableView::CreateTile( const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, Vector2& position )
+Actor DaliTableView::CreateTile(const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, Vector2& position)
 {
   Toolkit::ImageView focusableTile = ImageView::New();
 
-  focusableTile.SetStyleName( "DemoTile" );
-  focusableTile.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  focusableTile.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  focusableTile.SetProperty( Actor::Property::SIZE_MODE_FACTOR, sizeMultiplier );
-  focusableTile.SetProperty( Actor::Property::NAME, name );
+  focusableTile.SetStyleName("DemoTile");
+  focusableTile.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  focusableTile.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  focusableTile.SetProperty(Actor::Property::SIZE_MODE_FACTOR, sizeMultiplier);
+  focusableTile.SetProperty(Actor::Property::NAME, name);
 
   // Set the tile to be keyboard focusable
-  focusableTile.SetProperty( Actor::Property::KEYBOARD_FOCUSABLE, true );
+  focusableTile.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
 
   // Register a property with the ImageView. This allows us to inject the scroll-view position into the shader.
-  Property::Value value = Vector3( 0.0f, 0.0f, 0.0f );
-  Property::Index propertyIndex = focusableTile.RegisterProperty( "uCustomPosition", value );
+  Property::Value value         = Vector3(0.0f, 0.0f, 0.0f);
+  Property::Index propertyIndex = focusableTile.RegisterProperty("uCustomPosition", value);
 
   // We create a constraint to perform a precalculation on the scroll-view X offset
   // and pass it to the shader uniform, along with the tile's position.
-  Constraint shaderPosition = Constraint::New < Vector3 > ( focusableTile, propertyIndex, TileShaderPositionConstraint( mPageWidth, position.x ) );
-  shaderPosition.AddSource( Source( mScrollView, ScrollView::Property::SCROLL_POSITION ) );
-  shaderPosition.SetRemoveAction( Constraint::DISCARD );
+  Constraint shaderPosition = Constraint::New<Vector3>(focusableTile, propertyIndex, TileShaderPositionConstraint(mPageWidth, position.x));
+  shaderPosition.AddSource(Source(mScrollView, ScrollView::Property::SCROLL_POSITION));
+  shaderPosition.SetRemoveAction(Constraint::DISCARD);
   shaderPosition.Apply();
   //focusableTile.Add( tileContent );
 
   // Create an ImageView for the 9-patch border around the tile.
   ImageView borderImage = ImageView::New();
   borderImage.SetStyleName("DemoTileBorder");
-  borderImage.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  borderImage.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  borderImage.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  borderImage.SetProperty( Actor::Property::OPACITY, 0.8f );
-  focusableTile.Add( borderImage );
+  borderImage.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  borderImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  borderImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  borderImage.SetProperty(Actor::Property::OPACITY, 0.8f);
+  focusableTile.Add(borderImage);
 
   TextLabel label = TextLabel::New();
-  label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  label.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  label.SetStyleName( "LauncherLabel" );
-  label.SetProperty( TextLabel::Property::MULTI_LINE, true );
-  label.SetProperty( TextLabel::Property::TEXT, title );
-  label.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-  label.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
-  label.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+  label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  label.SetStyleName("LauncherLabel");
+  label.SetProperty(TextLabel::Property::MULTI_LINE, true);
+  label.SetProperty(TextLabel::Property::TEXT, title);
+  label.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
+  label.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
+  label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
 
   // Pad around the label as its size is the same as the 9-patch border. It will overlap it without padding.
-  label.SetProperty( Actor::Property::PADDING, Padding( TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING ) );
-  focusableTile.Add( label );
+  label.SetProperty(Actor::Property::PADDING, Padding(TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING));
+  focusableTile.Add(label);
 
   // Connect to the touch events
-  focusableTile.TouchedSignal().Connect( this, &DaliTableView::OnTilePressed );
-  focusableTile.HoveredSignal().Connect( this, &DaliTableView::OnTileHovered );
+  focusableTile.TouchedSignal().Connect(this, &DaliTableView::OnTilePressed);
+  focusableTile.HoveredSignal().Connect(this, &DaliTableView::OnTileHovered);
 
   return focusableTile;
 }
 
-bool DaliTableView::OnTilePressed( Actor actor, const TouchEvent& event )
+bool DaliTableView::OnTilePressed(Actor actor, const TouchEvent& event)
 {
-  return DoTilePress( actor, event.GetState( 0 ) );
+  return DoTilePress(actor, event.GetState(0));
 }
 
-bool DaliTableView::DoTilePress( Actor actor, PointState::Type pointState )
+bool DaliTableView::DoTilePress(Actor actor, PointState::Type pointState)
 {
   bool consumed = false;
 
-  if( PointState::DOWN == pointState )
+  if(PointState::DOWN == pointState)
   {
     mPressedActor = actor;
-    consumed = true;
+    consumed      = true;
   }
 
   // A button press is only valid if the Down & Up events
   // both occurred within the button.
-  if( ( PointState::UP == pointState ) &&
-      ( mPressedActor == actor ) )
+  if((PointState::UP == pointState) &&
+     (mPressedActor == actor))
   {
     // ignore Example button presses when scrolling or button animating.
-    if( ( !mScrolling ) && ( !mPressedAnimation ) )
+    if((!mScrolling) && (!mPressedAnimation))
     {
-      std::string name = actor.GetProperty< std::string >( Dali::Actor::Property::NAME );
-      const ExampleListIter end = mExampleList.end();
-      for( ExampleListIter iter = mExampleList.begin(); iter != end; ++iter )
+      std::string           name = actor.GetProperty<std::string>(Dali::Actor::Property::NAME);
+      const ExampleListIter end  = mExampleList.end();
+      for(ExampleListIter iter = mExampleList.begin(); iter != end; ++iter)
       {
-        if( (*iter).name == name )
+        if((*iter).name == name)
         {
           // do nothing, until pressed animation finished.
           consumed = true;
@@ -593,60 +588,58 @@ bool DaliTableView::DoTilePress( Actor actor, PointState::Type pointState )
       }
     }
 
-    if( consumed )
+    if(consumed)
     {
-      mPressedAnimation = Animation::New( BUTTON_PRESS_ANIMATION_TIME );
-      mPressedAnimation.SetEndAction( Animation::DISCARD );
+      mPressedAnimation = Animation::New(BUTTON_PRESS_ANIMATION_TIME);
+      mPressedAnimation.SetEndAction(Animation::DISCARD);
 
       // scale the content actor within the Tile, as to not affect the placement within the Table.
       Actor content = actor.GetChildAt(0);
-      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3( 0.7f, 0.7f, 1.0f ), AlphaFunction::EASE_IN_OUT,
-                                 TimePeriod( 0.0f, BUTTON_PRESS_ANIMATION_TIME * 0.5f ) );
-      mPressedAnimation.AnimateTo( Property( content, Actor::Property::SCALE ), Vector3::ONE, AlphaFunction::EASE_IN_OUT,
-                                 TimePeriod( BUTTON_PRESS_ANIMATION_TIME * 0.5f, BUTTON_PRESS_ANIMATION_TIME * 0.5f ) );
+      mPressedAnimation.AnimateTo(Property(content, Actor::Property::SCALE), Vector3(0.7f, 0.7f, 1.0f), AlphaFunction::EASE_IN_OUT, TimePeriod(0.0f, BUTTON_PRESS_ANIMATION_TIME * 0.5f));
+      mPressedAnimation.AnimateTo(Property(content, Actor::Property::SCALE), Vector3::ONE, AlphaFunction::EASE_IN_OUT, TimePeriod(BUTTON_PRESS_ANIMATION_TIME * 0.5f, BUTTON_PRESS_ANIMATION_TIME * 0.5f));
 
       // Rotate button on the Y axis when pressed.
-      mPressedAnimation.AnimateBy( Property( content, Actor::Property::ORIENTATION ), Quaternion( Degree( 0.0f ), Degree( 180.0f ), Degree( 0.0f ) ) );
+      mPressedAnimation.AnimateBy(Property(content, Actor::Property::ORIENTATION), Quaternion(Degree(0.0f), Degree(180.0f), Degree(0.0f)));
 
       mPressedAnimation.Play();
-      mPressedAnimation.FinishedSignal().Connect( this, &DaliTableView::OnPressedAnimationFinished );
+      mPressedAnimation.FinishedSignal().Connect(this, &DaliTableView::OnPressedAnimationFinished);
     }
   }
   return consumed;
 }
 
-void DaliTableView::OnPressedAnimationFinished( Dali::Animation& source )
+void DaliTableView::OnPressedAnimationFinished(Dali::Animation& source)
 {
   mPressedAnimation.Reset();
-  if( mPressedActor )
+  if(mPressedActor)
   {
-    std::string name = mPressedActor.GetProperty< std::string >( Dali::Actor::Property::NAME );
+    std::string name = mPressedActor.GetProperty<std::string>(Dali::Actor::Property::NAME);
 
-    ExecuteProcess( name, mApplication );
+    ExecuteProcess(name, mApplication);
 
     mPressedActor.Reset();
   }
 }
 
-void DaliTableView::OnScrollStart( const Dali::Vector2& position )
+void DaliTableView::OnScrollStart(const Dali::Vector2& position)
 {
   mScrolling = true;
 
   PlayAnimation();
 }
 
-void DaliTableView::OnScrollComplete( const Dali::Vector2& position )
+void DaliTableView::OnScrollComplete(const Dali::Vector2& position)
 {
   mScrolling = false;
 
   // move focus to 1st item of new page
   AccessibilityManager accessibilityManager = AccessibilityManager::Get();
-  accessibilityManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0) );
+  accessibilityManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0));
 }
 
-bool DaliTableView::OnScrollTouched( Actor actor, const TouchEvent& event )
+bool DaliTableView::OnScrollTouched(Actor actor, const TouchEvent& event)
 {
-  if( PointState::DOWN == event.GetState( 0 ) )
+  if(PointState::DOWN == event.GetState(0))
   {
     mPressedActor = actor;
   }
@@ -658,56 +651,56 @@ void DaliTableView::ApplyScrollViewEffect()
 {
   // Remove old effect if exists.
 
-  if( mScrollViewEffect )
+  if(mScrollViewEffect)
   {
-    mScrollView.RemoveEffect( mScrollViewEffect );
+    mScrollView.RemoveEffect(mScrollViewEffect);
   }
 
   // Just one effect for now
   SetupInnerPageCubeEffect();
 
-  mScrollView.ApplyEffect( mScrollViewEffect );
+  mScrollView.ApplyEffect(mScrollViewEffect);
 }
 
 void DaliTableView::SetupInnerPageCubeEffect()
 {
   const Window::WindowSize windowDimensions = mApplication.GetWindow().GetSize();
-  const Vector2 windowSize(windowDimensions.GetWidth(), windowDimensions.GetHeight());
+  const Vector2            windowSize(windowDimensions.GetWidth(), windowDimensions.GetHeight());
 
-  Dali::Path path = Dali::Path::New();
+  Dali::Path            path = Dali::Path::New();
   Dali::Property::Array points;
   points.Resize(3);
-  points[0] = Vector3( windowSize.x*0.5, 0.0f,  windowSize.x*0.5f);
-  points[1] = Vector3( 0.0f, 0.0f, 0.0f );
-  points[2] = Vector3( -windowSize.x*0.5f, 0.0f, windowSize.x*0.5f);
-  path.SetProperty( Path::Property::POINTS, points );
+  points[0] = Vector3(windowSize.x * 0.5, 0.0f, windowSize.x * 0.5f);
+  points[1] = Vector3(0.0f, 0.0f, 0.0f);
+  points[2] = Vector3(-windowSize.x * 0.5f, 0.0f, windowSize.x * 0.5f);
+  path.SetProperty(Path::Property::POINTS, points);
 
   Dali::Property::Array controlPoints;
   controlPoints.Resize(4);
-  controlPoints[0] = Vector3( windowSize.x*0.5f, 0.0f, windowSize.x*0.3f );
-  controlPoints[1] = Vector3( windowSize.x*0.3f, 0.0f, 0.0f );
-  controlPoints[2] = Vector3(-windowSize.x*0.3f, 0.0f, 0.0f );
-  controlPoints[3] = Vector3(-windowSize.x*0.5f, 0.0f,  windowSize.x*0.3f );
-  path.SetProperty( Path::Property::CONTROL_POINTS, controlPoints );
-
+  controlPoints[0] = Vector3(windowSize.x * 0.5f, 0.0f, windowSize.x * 0.3f);
+  controlPoints[1] = Vector3(windowSize.x * 0.3f, 0.0f, 0.0f);
+  controlPoints[2] = Vector3(-windowSize.x * 0.3f, 0.0f, 0.0f);
+  controlPoints[3] = Vector3(-windowSize.x * 0.5f, 0.0f, windowSize.x * 0.3f);
+  path.SetProperty(Path::Property::CONTROL_POINTS, controlPoints);
 
   mScrollViewEffect = ScrollViewPagePathEffect::New(path,
-                                                    Vector3(-1.0f,0.0f,0.0f),
+                                                    Vector3(-1.0f, 0.0f, 0.0f),
                                                     Toolkit::ScrollView::Property::SCROLL_FINAL_X,
-                                                    Vector3(windowSize.x*TABLE_RELATIVE_SIZE.x,windowSize.y*TABLE_RELATIVE_SIZE.y,0.0f),mTotalPages);
+                                                    Vector3(windowSize.x * TABLE_RELATIVE_SIZE.x, windowSize.y * TABLE_RELATIVE_SIZE.y, 0.0f),
+                                                    mTotalPages);
 }
 
-void DaliTableView::OnKeyEvent( const KeyEvent& event )
+void DaliTableView::OnKeyEvent(const KeyEvent& event)
 {
-  if( event.GetState() == KeyEvent::DOWN )
+  if(event.GetState() == KeyEvent::DOWN)
   {
-    if ( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+    if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
     {
       // If there's a Popup, Hide it if it's contributing to the display in any way (EG. transitioning in or out).
       // Otherwise quit.
-      if ( mVersionPopup && ( mVersionPopup.GetDisplayState() != Toolkit::Popup::HIDDEN ) )
+      if(mVersionPopup && (mVersionPopup.GetDisplayState() != Toolkit::Popup::HIDDEN))
       {
-        mVersionPopup.SetDisplayState( Popup::HIDDEN );
+        mVersionPopup.SetDisplayState(Popup::HIDDEN);
       }
       else
       {
@@ -717,14 +710,14 @@ void DaliTableView::OnKeyEvent( const KeyEvent& event )
   }
 }
 
-void DaliTableView::SetupBackground( Actor bubbleContainer )
+void DaliTableView::SetupBackground(Actor bubbleContainer)
 {
   // Add bubbles to the bubbleContainer.
   // Note: The bubbleContainer is parented externally to this function.
-  AddBackgroundActors( bubbleContainer, NUM_BACKGROUND_IMAGES );
+  AddBackgroundActors(bubbleContainer, NUM_BACKGROUND_IMAGES);
 }
 
-void DaliTableView::InitialiseBackgroundActors( Actor actor )
+void DaliTableView::InitialiseBackgroundActors(Actor actor)
 {
   // Delete current animations
   mBackgroundAnimations.clear();
@@ -732,59 +725,59 @@ void DaliTableView::InitialiseBackgroundActors( Actor actor )
   // Create new animations
   const Vector3 size = actor.GetTargetSize();
 
-  for( unsigned int i = 0, childCount = actor.GetChildCount(); i < childCount; ++i )
+  for(unsigned int i = 0, childCount = actor.GetChildCount(); i < childCount; ++i)
   {
-    Actor child = actor.GetChildAt( i );
+    Actor child = actor.GetChildAt(i);
 
     // Calculate a random position
-    Vector3 childPos( Random::Range( -size.x * 0.5f * BACKGROUND_SPREAD_SCALE, size.x * 0.85f * BACKGROUND_SPREAD_SCALE ),
-                      Random::Range( -size.y, size.y ),
-                      Random::Range( BUBBLE_MIN_Z, BUBBLE_MAX_Z ) );
+    Vector3 childPos(Random::Range(-size.x * 0.5f * BACKGROUND_SPREAD_SCALE, size.x * 0.85f * BACKGROUND_SPREAD_SCALE),
+                     Random::Range(-size.y, size.y),
+                     Random::Range(BUBBLE_MIN_Z, BUBBLE_MAX_Z));
 
-    child.SetProperty( Actor::Property::POSITION, childPos );
+    child.SetProperty(Actor::Property::POSITION, childPos);
 
     // Define bubble horizontal parallax and vertical wrapping
-    Constraint animConstraint = Constraint::New < Vector3 > ( child, Actor::Property::POSITION, AnimateBubbleConstraint( childPos, Random::Range( -0.85f, 0.25f ) ) );
-    animConstraint.AddSource( Source( mScrollView, ScrollView::Property::SCROLL_POSITION ) );
-    animConstraint.AddSource( Dali::ParentSource( Dali::Actor::Property::SIZE ) );
-    animConstraint.AddSource( Dali::LocalSource( Dali::Actor::Property::SIZE ) );
-    animConstraint.SetRemoveAction( Constraint::DISCARD );
+    Constraint animConstraint = Constraint::New<Vector3>(child, Actor::Property::POSITION, AnimateBubbleConstraint(childPos, Random::Range(-0.85f, 0.25f)));
+    animConstraint.AddSource(Source(mScrollView, ScrollView::Property::SCROLL_POSITION));
+    animConstraint.AddSource(Dali::ParentSource(Dali::Actor::Property::SIZE));
+    animConstraint.AddSource(Dali::LocalSource(Dali::Actor::Property::SIZE));
+    animConstraint.SetRemoveAction(Constraint::DISCARD);
     animConstraint.Apply();
 
     // Kickoff animation
-    Animation animation = Animation::New( Random::Range( 30.0f, 160.0f ) );
-    animation.AnimateBy( Property( child, Actor::Property::POSITION ), Vector3( 0.0f, -2000.0f, 0.0f ), AlphaFunction::LINEAR );
-    animation.SetLooping( true );
+    Animation animation = Animation::New(Random::Range(30.0f, 160.0f));
+    animation.AnimateBy(Property(child, Actor::Property::POSITION), Vector3(0.0f, -2000.0f, 0.0f), AlphaFunction::LINEAR);
+    animation.SetLooping(true);
     animation.Play();
-    mBackgroundAnimations.push_back( animation );
+    mBackgroundAnimations.push_back(animation);
   }
 }
 
-void DaliTableView::AddBackgroundActors( Actor layer, int count )
+void DaliTableView::AddBackgroundActors(Actor layer, int count)
 {
-  for( int i = 0; i < count; ++i )
+  for(int i = 0; i < count; ++i)
   {
-    float randSize = Random::Range( 10.0f, 400.0f );
-    int shapeType = static_cast<int>( Random::Range( 0.0f, NUMBER_OF_SHAPE_IMAGES - 1 ) + 0.5f );
+    float randSize  = Random::Range(10.0f, 400.0f);
+    int   shapeType = static_cast<int>(Random::Range(0.0f, NUMBER_OF_SHAPE_IMAGES - 1) + 0.5f);
 
     ImageView dfActor = ImageView::New();
-    dfActor.SetProperty( Actor::Property::SIZE, Vector2( randSize, randSize ) );
-    dfActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    dfActor.SetProperty(Actor::Property::SIZE, Vector2(randSize, randSize));
+    dfActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     // Set the Image URL and the custom shader at the same time
     Dali::Property::Map effect = Toolkit::CreateDistanceFieldEffect();
-    Property::Map imageMap;
-    imageMap.Add( ImageVisual::Property::URL, SHAPE_IMAGE_TABLE[ shapeType ] );
-    imageMap.Add( Toolkit::Visual::Property::SHADER, effect );
-    dfActor.SetProperty( Toolkit::ImageView::Property::IMAGE, imageMap );
+    Property::Map       imageMap;
+    imageMap.Add(ImageVisual::Property::URL, SHAPE_IMAGE_TABLE[shapeType]);
+    imageMap.Add(Toolkit::Visual::Property::SHADER, effect);
+    dfActor.SetProperty(Toolkit::ImageView::Property::IMAGE, imageMap);
 
-    dfActor.SetStyleName( BUBBLE_COLOR_STYLE_NAME[ i%NUMBER_OF_BUBBLE_COLORS ] );
+    dfActor.SetStyleName(BUBBLE_COLOR_STYLE_NAME[i % NUMBER_OF_BUBBLE_COLORS]);
 
-    layer.Add( dfActor );
+    layer.Add(dfActor);
   }
 
   // Positioning will occur when the layer is relaid out
-  layer.OnRelayoutSignal().Connect( this, &DaliTableView::InitialiseBackgroundActors );
+  layer.OnRelayoutSignal().Connect(this, &DaliTableView::InitialiseBackgroundActors);
 }
 
 bool DaliTableView::PauseBackgroundAnimation()
@@ -796,9 +789,9 @@ bool DaliTableView::PauseBackgroundAnimation()
 
 void DaliTableView::PauseAnimation()
 {
-  if( mBackgroundAnimsPlaying )
+  if(mBackgroundAnimsPlaying)
   {
-    for( AnimationListIter animIter = mBackgroundAnimations.begin(); animIter != mBackgroundAnimations.end(); ++animIter )
+    for(AnimationListIter animIter = mBackgroundAnimations.begin(); animIter != mBackgroundAnimations.end(); ++animIter)
     {
       Animation anim = *animIter;
 
@@ -811,9 +804,9 @@ void DaliTableView::PauseAnimation()
 
 void DaliTableView::PlayAnimation()
 {
-  if ( !mBackgroundAnimsPlaying )
+  if(!mBackgroundAnimsPlaying)
   {
-    for( AnimationListIter animIter = mBackgroundAnimations.begin(); animIter != mBackgroundAnimations.end(); ++animIter )
+    for(AnimationListIter animIter = mBackgroundAnimations.begin(); animIter != mBackgroundAnimations.end(); ++animIter)
     {
       Animation anim = *animIter;
 
@@ -823,40 +816,41 @@ void DaliTableView::PlayAnimation()
     mBackgroundAnimsPlaying = true;
   }
 
-  mAnimationTimer.SetInterval( BACKGROUND_ANIMATION_DURATION );
+  mAnimationTimer.SetInterval(BACKGROUND_ANIMATION_DURATION);
 }
 
-Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction )
+Dali::Actor DaliTableView::OnKeyboardPreFocusChange(Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction)
 {
   Actor nextFocusActor = proposed;
 
-  if( !current && !proposed  )
+  if(!current && !proposed)
   {
     // Set the initial focus to the first tile in the current page should be focused.
     nextFocusActor = mPages[mScrollView.GetCurrentPage()].GetChildAt(0);
   }
-  else if( !proposed )
+  else if(!proposed)
   {
     // ScrollView is being focused but nothing in the current page can be focused further
     // in the given direction. We should work out which page to scroll to next.
     int currentPage = mScrollView.GetCurrentPage();
-    int newPage = currentPage;
-    if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
+    int newPage     = currentPage;
+    if(direction == Dali::Toolkit::Control::KeyboardFocus::LEFT)
     {
       newPage--;
     }
-    else if( direction == Dali::Toolkit::Control::KeyboardFocus::RIGHT )
+    else if(direction == Dali::Toolkit::Control::KeyboardFocus::RIGHT)
     {
       newPage++;
     }
 
     newPage = std::max(0, std::min(mTotalPages - 1, newPage));
-    if( newPage == currentPage )
+    if(newPage == currentPage)
     {
-      if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
+      if(direction == Dali::Toolkit::Control::KeyboardFocus::LEFT)
       {
         newPage = mTotalPages - 1;
-      } else if( direction == Dali::Toolkit::Control::KeyboardFocus::RIGHT )
+      }
+      else if(direction == Dali::Toolkit::Control::KeyboardFocus::RIGHT)
       {
         newPage = 0;
       }
@@ -865,12 +859,12 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
     // Scroll to the page in the given direction
     mScrollView.ScrollTo(newPage);
 
-    if( direction == Dali::Toolkit::Control::KeyboardFocus::LEFT )
+    if(direction == Dali::Toolkit::Control::KeyboardFocus::LEFT)
     {
       // Work out the cell position for the last tile
       int remainingExamples = mExampleList.size() - newPage * EXAMPLES_PER_PAGE;
-      int rowPos = (remainingExamples >= EXAMPLES_PER_PAGE) ? ROWS_PER_PAGE - 1 : ( (remainingExamples % EXAMPLES_PER_PAGE + EXAMPLES_PER_ROW) / EXAMPLES_PER_ROW - 1 );
-      int colPos = remainingExamples >= EXAMPLES_PER_PAGE ? EXAMPLES_PER_ROW - 1 : ( remainingExamples % EXAMPLES_PER_PAGE - rowPos * EXAMPLES_PER_ROW - 1 );
+      int rowPos            = (remainingExamples >= EXAMPLES_PER_PAGE) ? ROWS_PER_PAGE - 1 : ((remainingExamples % EXAMPLES_PER_PAGE + EXAMPLES_PER_ROW) / EXAMPLES_PER_ROW - 1);
+      int colPos            = remainingExamples >= EXAMPLES_PER_PAGE ? EXAMPLES_PER_ROW - 1 : (remainingExamples % EXAMPLES_PER_PAGE - rowPos * EXAMPLES_PER_ROW - 1);
 
       // Move the focus to the last tile in the new page.
       nextFocusActor = mPages[newPage].GetChildAt(rowPos * EXAMPLES_PER_ROW + colPos);
@@ -885,70 +879,74 @@ Dali::Actor DaliTableView::OnKeyboardPreFocusChange( Dali::Actor current, Dali::
   return nextFocusActor;
 }
 
-void DaliTableView::OnFocusedActorActivated( Dali::Actor activatedActor )
+void DaliTableView::OnFocusedActorActivated(Dali::Actor activatedActor)
 {
   if(activatedActor)
   {
     mPressedActor = activatedActor;
 
     // Activate the current focused actor;
-    DoTilePress( mPressedActor, PointState::UP );
+    DoTilePress(mPressedActor, PointState::UP);
   }
 }
 
-bool DaliTableView::OnTileHovered( Actor actor, const HoverEvent& event )
+bool DaliTableView::OnTileHovered(Actor actor, const HoverEvent& event)
 {
-  KeyboardFocusManager::Get().SetCurrentFocusActor( actor );
+  KeyboardFocusManager::Get().SetCurrentFocusActor(actor);
   return true;
 }
 
-void DaliTableView::OnLogoTapped( Dali::Actor actor, const Dali::TapGesture& tap )
+void DaliTableView::OnLogoTapped(Dali::Actor actor, const Dali::TapGesture& tap)
 {
   // Only show if currently fully hidden. If transitioning-out, the transition will not be interrupted.
-  if ( !mVersionPopup || ( mVersionPopup.GetDisplayState() == Toolkit::Popup::HIDDEN ) )
+  if(!mVersionPopup || (mVersionPopup.GetDisplayState() == Toolkit::Popup::HIDDEN))
   {
-    if ( !mVersionPopup )
+    if(!mVersionPopup)
     {
       std::ostringstream stream;
-      stream << "DALi Core: "    << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl << "(" << CORE_BUILD_DATE << ")\n";
-      stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl << "(" << ADAPTOR_BUILD_DATE << ")\n";
-      stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl << "(" << TOOLKIT_BUILD_DATE << ")\n";
-      stream << "DALi Demo:" << "\n(" << DEMO_BUILD_DATE << ")\n";
+      stream << "DALi Core: " << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl
+             << "(" << CORE_BUILD_DATE << ")\n";
+      stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl
+             << "(" << ADAPTOR_BUILD_DATE << ")\n";
+      stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl
+             << "(" << TOOLKIT_BUILD_DATE << ")\n";
+      stream << "DALi Demo:"
+             << "\n(" << DEMO_BUILD_DATE << ")\n";
 
       mVersionPopup = Dali::Toolkit::Popup::New();
 
-      Toolkit::TextLabel titleActor = Toolkit::TextLabel::New( "Version information" );
-      titleActor.SetProperty( Actor::Property::NAME, "titleActor" );
-      titleActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER );
-      titleActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
+      Toolkit::TextLabel titleActor = Toolkit::TextLabel::New("Version information");
+      titleActor.SetProperty(Actor::Property::NAME, "titleActor");
+      titleActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
+      titleActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
 
-      Toolkit::TextLabel contentActor = Toolkit::TextLabel::New( stream.str() );
-      contentActor.SetProperty( Actor::Property::NAME, "contentActor" );
-      contentActor.SetProperty( Toolkit::TextLabel::Property::MULTI_LINE, true );
-      contentActor.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER );
-      contentActor.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-      contentActor.SetProperty( Actor::Property::PADDING, Padding( 0.0f, 0.0f, 20.0f, 0.0f ) );
+      Toolkit::TextLabel contentActor = Toolkit::TextLabel::New(stream.str());
+      contentActor.SetProperty(Actor::Property::NAME, "contentActor");
+      contentActor.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
+      contentActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
+      contentActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
+      contentActor.SetProperty(Actor::Property::PADDING, Padding(0.0f, 0.0f, 20.0f, 0.0f));
 
-      mVersionPopup.SetTitle( titleActor );
-      mVersionPopup.SetContent( contentActor );
+      mVersionPopup.SetTitle(titleActor);
+      mVersionPopup.SetContent(contentActor);
 
-      mVersionPopup.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH );
-      mVersionPopup.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 0.75f, 1.0f, 1.0f ) );
-      mVersionPopup.SetResizePolicy( ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT );
+      mVersionPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
+      mVersionPopup.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.75f, 1.0f, 1.0f));
+      mVersionPopup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
 
-      mVersionPopup.OutsideTouchedSignal().Connect( this, &DaliTableView::HideVersionPopup );
-      mApplication.GetWindow().Add( mVersionPopup );
+      mVersionPopup.OutsideTouchedSignal().Connect(this, &DaliTableView::HideVersionPopup);
+      mApplication.GetWindow().Add(mVersionPopup);
     }
 
-    mVersionPopup.SetDisplayState( Popup::SHOWN );
+    mVersionPopup.SetDisplayState(Popup::SHOWN);
   }
 }
 
 void DaliTableView::HideVersionPopup()
 {
   // Only hide if currently fully shown. If transitioning-in, the transition will not be interrupted.
-  if ( mVersionPopup && ( mVersionPopup.GetDisplayState() == Toolkit::Popup::SHOWN ) )
+  if(mVersionPopup && (mVersionPopup.GetDisplayState() == Toolkit::Popup::SHOWN))
   {
-    mVersionPopup.SetDisplayState( Popup::HIDDEN );
+    mVersionPopup.SetDisplayState(Popup::HIDDEN);
   }
 }

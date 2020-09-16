@@ -21,17 +21,17 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/object/handle-devel.h>
-#include <dali/devel-api/actors/actor-devel.h>
+#include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 #include <dali-toolkit/devel-api/text/text-enumerations-devel.h>
-#include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/object/handle-devel.h>
 #include <iostream>
 
 // INTERNAL INCLUDES
+#include "expanding-buttons.h"
 #include "shared/multi-language-strings.h"
 #include "shared/view.h"
-#include "expanding-buttons.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -39,47 +39,44 @@ using namespace MultiLanguageStrings;
 
 namespace
 {
-const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "grab-handle.png";
+const char* const BACKGROUND_IMAGE     = DEMO_IMAGE_DIR "grab-handle.png";
 const char* const STYLE_SELECTED_IMAGE = DEMO_IMAGE_DIR "FontStyleButton_OK_03.png";
 
 const char* BUTTON_IMAGES[] =
-{
-  DEMO_IMAGE_DIR "FontStyleButton_Colour.png",
-  DEMO_IMAGE_DIR "FontStyleButton_Outline.png",
-  DEMO_IMAGE_DIR "FontStyleButton_Shadow.png",
-  DEMO_IMAGE_DIR "FontStyleButton_Background.png"
-};
+  {
+    DEMO_IMAGE_DIR "FontStyleButton_Colour.png",
+    DEMO_IMAGE_DIR "FontStyleButton_Outline.png",
+    DEMO_IMAGE_DIR "FontStyleButton_Shadow.png",
+    DEMO_IMAGE_DIR "FontStyleButton_Background.png"};
 
-const unsigned int KEY_ZERO = 10;
-const unsigned int KEY_ONE = 11;
-const unsigned int KEY_A = 38;
-const unsigned int KEY_F = 41;
-const unsigned int KEY_H = 43;
-const unsigned int KEY_U = 30;
-const unsigned int KEY_V = 55;
-const unsigned int KEY_M = 58;
-const unsigned int KEY_L = 46;
-const unsigned int KEY_S = 39;
-const unsigned int KEY_PLUS = 21;
+const unsigned int KEY_ZERO  = 10;
+const unsigned int KEY_ONE   = 11;
+const unsigned int KEY_A     = 38;
+const unsigned int KEY_F     = 41;
+const unsigned int KEY_H     = 43;
+const unsigned int KEY_U     = 30;
+const unsigned int KEY_V     = 55;
+const unsigned int KEY_M     = 58;
+const unsigned int KEY_L     = 46;
+const unsigned int KEY_S     = 39;
+const unsigned int KEY_PLUS  = 21;
 const unsigned int KEY_MINUS = 20;
 
 const char* H_ALIGNMENT_STRING_TABLE[] =
-{
-  "BEGIN",
-  "CENTER",
-  "END"
-};
+  {
+    "BEGIN",
+    "CENTER",
+    "END"};
 
-const unsigned int H_ALIGNMENT_STRING_COUNT = sizeof( H_ALIGNMENT_STRING_TABLE ) / sizeof( H_ALIGNMENT_STRING_TABLE[0u] );
+const unsigned int H_ALIGNMENT_STRING_COUNT = sizeof(H_ALIGNMENT_STRING_TABLE) / sizeof(H_ALIGNMENT_STRING_TABLE[0u]);
 
 const char* V_ALIGNMENT_STRING_TABLE[] =
-{
-  "TOP",
-  "CENTER",
-  "BOTTOM"
-};
+  {
+    "TOP",
+    "CENTER",
+    "BOTTOM"};
 
-const unsigned int V_ALIGNMENT_STRING_COUNT = sizeof( V_ALIGNMENT_STRING_TABLE ) / sizeof( V_ALIGNMENT_STRING_TABLE[0u] );
+const unsigned int V_ALIGNMENT_STRING_COUNT = sizeof(V_ALIGNMENT_STRING_TABLE) / sizeof(V_ALIGNMENT_STRING_TABLE[0u]);
 
 enum StyleType
 {
@@ -91,15 +88,15 @@ enum StyleType
 };
 
 const Vector4 AVAILABLE_COLORS[] =
-{
-  Color::GREEN,
-  Color::BLUE,
-  Color::RED,
-  Color::CYAN,
-  Color::WHITE // Used as clear
+  {
+    Color::GREEN,
+    Color::BLUE,
+    Color::RED,
+    Color::CYAN,
+    Color::WHITE // Used as clear
 };
 
-const unsigned int NUMBER_OF_COLORS = sizeof( AVAILABLE_COLORS ) / sizeof( AVAILABLE_COLORS[0u] );
+const unsigned int NUMBER_OF_COLORS = sizeof(AVAILABLE_COLORS) / sizeof(AVAILABLE_COLORS[0u]);
 
 int ConvertToEven(int value)
 {
@@ -115,16 +112,16 @@ struct HSVColorConstraint
   {
   }
 
-  void operator()(Vector3& current, const PropertyInputContainer& inputs )
+  void operator()(Vector3& current, const PropertyInputContainer& inputs)
   {
     current = hsv2rgb(Vector3(inputs[0]->GetFloat(), saturation, value));
   }
 
   Vector3 hsv2rgb(Vector3 colorHSV)
   {
-    float r=colorHSV.z*(1+colorHSV.y*(cos(colorHSV.x)-1));
-    float g=colorHSV.z*(1+colorHSV.y*(cos(colorHSV.x-2.09439)-1));
-    float b=colorHSV.z*(1+colorHSV.y*(cos(colorHSV.x+2.09439)-1));
+    float r = colorHSV.z * (1 + colorHSV.y * (cos(colorHSV.x) - 1));
+    float g = colorHSV.z * (1 + colorHSV.y * (cos(colorHSV.x - 2.09439) - 1));
+    float b = colorHSV.z * (1 + colorHSV.y * (cos(colorHSV.x + 2.09439) - 1));
     return Vector3(r, g, b);
   }
   float hue;
@@ -132,12 +129,11 @@ struct HSVColorConstraint
   float value;
 };
 
-const float STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW = 0.9f;
-const float BUTTON_SIZE_RATIO_TO_WINDOW = 0.1f;
-const float OUTLINE_WIDTH = 2.0f;
-const Vector2 SHADOW_OFFSET = Vector2( 2.0f, 2.0f );
-const int GAP_BETWEEN_BUTTONS = 3;
-
+const float   STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW = 0.9f;
+const float   BUTTON_SIZE_RATIO_TO_WINDOW             = 0.1f;
+const float   OUTLINE_WIDTH                           = 2.0f;
+const Vector2 SHADOW_OFFSET                           = Vector2(2.0f, 2.0f);
+const int     GAP_BETWEEN_BUTTONS                     = 3;
 
 } // anonymous namespace
 
@@ -147,32 +143,31 @@ const int GAP_BETWEEN_BUTTONS = 3;
 class TextLabelExample : public ConnectionTracker
 {
 public:
-
-  TextLabelExample( Application& application )
-  : mApplication( application ),
+  TextLabelExample(Application& application)
+  : mApplication(application),
     mLabel(),
     mSelectedColor(AVAILABLE_COLORS[0]),
-    mStyleActivatedForColor( NUMBER_OF_STYLES ),
+    mStyleActivatedForColor(NUMBER_OF_STYLES),
     mContainer(),
     mGrabCorner(),
     mBorder(),
     mPanGestureDetector(),
     mLayoutSize(),
-    mLanguageId( 0u ),
-    mAlignment( 0u ),
-    mHueAngleIndex( Property::INVALID_INDEX ),
-    mOverrideMixColorIndex( Property::INVALID_INDEX ),
-    mColorButtonsHidden( true ),
-    mCollapseColorsAndStyles( false )
+    mLanguageId(0u),
+    mAlignment(0u),
+    mHueAngleIndex(Property::INVALID_INDEX),
+    mOverrideMixColorIndex(Property::INVALID_INDEX),
+    mColorButtonsHidden(true),
+    mCollapseColorsAndStyles(false)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &TextLabelExample::Create );
+    mApplication.InitSignal().Connect(this, &TextLabelExample::Create);
 
     // Set Style flags to inactive
-    for ( unsigned int i = TEXT_COLOR; i < NUMBER_OF_STYLES; i++ )
+    for(unsigned int i = TEXT_COLOR; i < NUMBER_OF_STYLES; i++)
     {
-      mStyleActiveState[ i ] = false;
-      mCurrentStyleColor[i] = AVAILABLE_COLORS[ NUMBER_OF_COLORS - 1 ];
+      mStyleActiveState[i]  = false;
+      mCurrentStyleColor[i] = AVAILABLE_COLORS[NUMBER_OF_COLORS - 1];
     }
   }
 
@@ -182,89 +177,89 @@ public:
   }
 
   // Clicking the expanding button shows the registered style buttons.
-  void SetUpExpandingStyleButtons( Vector2 position )
+  void SetUpExpandingStyleButtons(Vector2 position)
   {
     mExpandingButtons = Demo::ExpandingButtons::New();
-    mExpandingButtons.SetProperty( Actor::Property::POSITION, Vector2( mButtonSize.width, mWindowSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW ));
-    mExpandingButtons.CollapsingSignal().Connect( this, &TextLabelExample::OnExpandingButtonCollapsing );
-    mExpandingButtons.SetProperty( Actor::Property::SIZE, mButtonSize );
+    mExpandingButtons.SetProperty(Actor::Property::POSITION, Vector2(mButtonSize.width, mWindowSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW));
+    mExpandingButtons.CollapsingSignal().Connect(this, &TextLabelExample::OnExpandingButtonCollapsing);
+    mExpandingButtons.SetProperty(Actor::Property::SIZE, mButtonSize);
     // Creates the buttons to be expanded
     CreateStyleButtons();
 
     // Register the created buttons with the ExpandingButtons.
-    for ( unsigned int index = 0; index < NUMBER_OF_STYLES; index++ )
+    for(unsigned int index = 0; index < NUMBER_OF_STYLES; index++)
     {
-      mExpandingButtons.RegisterButton( mStyleButtons[index] );
+      mExpandingButtons.RegisterButton(mStyleButtons[index]);
     }
   }
 
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
 
     window.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
     mWindowSize = window.GetSize();
-    mButtonSize = Size( mWindowSize.height * 0.1, mWindowSize.height * 0.1 ); // Button size 1/10 of window height
+    mButtonSize = Size(mWindowSize.height * 0.1, mWindowSize.height * 0.1); // Button size 1/10 of window height
 
     mContainer = Control::New();
-    mContainer.SetProperty( Dali::Actor::Property::NAME, "Container" );
-    mContainer.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mLayoutSize = Vector2(mWindowSize.width*0.6f, mWindowSize.width*0.6f);
-    mContainer.SetProperty( Actor::Property::SIZE, mLayoutSize );
-    window.Add( mContainer );
+    mContainer.SetProperty(Dali::Actor::Property::NAME, "Container");
+    mContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mLayoutSize = Vector2(mWindowSize.width * 0.6f, mWindowSize.width * 0.6f);
+    mContainer.SetProperty(Actor::Property::SIZE, mLayoutSize);
+    window.Add(mContainer);
 
     // Resize the center layout when the corner is grabbed
-    mGrabCorner = ImageView::New( BACKGROUND_IMAGE );
-    mGrabCorner.SetProperty( Dali::Actor::Property::NAME, "GrabCorner" );
-    mGrabCorner.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    mGrabCorner.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT );
-    mGrabCorner.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS );
-    mContainer.Add( mGrabCorner );
+    mGrabCorner = ImageView::New(BACKGROUND_IMAGE);
+    mGrabCorner.SetProperty(Dali::Actor::Property::NAME, "GrabCorner");
+    mGrabCorner.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mGrabCorner.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
+    mGrabCorner.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    mContainer.Add(mGrabCorner);
 
     mPanGestureDetector = PanGestureDetector::New();
-    mPanGestureDetector.Attach( mGrabCorner );
-    mPanGestureDetector.DetectedSignal().Connect( this, &TextLabelExample::OnPan );
+    mPanGestureDetector.Attach(mGrabCorner);
+    mPanGestureDetector.DetectedSignal().Connect(this, &TextLabelExample::OnPan);
 
-    mLabel = TextLabel::New( "\xF0\x9F\x98\x89 A Quick Brown Fox Jumps Over The Lazy Dog" );
+    mLabel = TextLabel::New("\xF0\x9F\x98\x89 A Quick Brown Fox Jumps Over The Lazy Dog");
 
-    mLabel.SetProperty( Dali::Actor::Property::NAME, "TextLabel" );
-    mLabel.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mLabel.SetProperty( Actor::Property::SIZE, mLayoutSize );
-    mLabel.SetProperty( TextLabel::Property::MULTI_LINE, true );
-    mLabel.SetProperty( TextLabel::Property::TEXT_COLOR, Color::GREEN );
-    mLabel.SetBackgroundColor( Color::WHITE );
-    mContainer.Add( mLabel );
+    mLabel.SetProperty(Dali::Actor::Property::NAME, "TextLabel");
+    mLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mLabel.SetProperty(Actor::Property::SIZE, mLayoutSize);
+    mLabel.SetProperty(TextLabel::Property::MULTI_LINE, true);
+    mLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::GREEN);
+    mLabel.SetBackgroundColor(Color::WHITE);
+    mContainer.Add(mLabel);
 
     // Clicking ExpandingButton shows the Registered Style buttons, clicking again hides them.
-    Vector2 expandingButtonPosition( mButtonSize.width, mWindowSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW );
-    SetUpExpandingStyleButtons( expandingButtonPosition );
-    window.Add( mExpandingButtons );
+    Vector2 expandingButtonPosition(mButtonSize.width, mWindowSize.height * STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW);
+    SetUpExpandingStyleButtons(expandingButtonPosition);
+    window.Add(mExpandingButtons);
 
     // Add a border for the container so you can see the container is being resized while grabbing the handle.
     mBorder = Control::New();
-    mBorder.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    mBorder.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+    mBorder.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mBorder.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    mBorder.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
 
     Dali::Property::Map border;
-    border.Insert( Toolkit::Visual::Property::TYPE,  Visual::BORDER );
-    border.Insert( BorderVisual::Property::COLOR,  Color::WHITE );
-    border.Insert( BorderVisual::Property::SIZE,  3.f );
-    mBorder.SetProperty( Control::Property::BACKGROUND, border );
-    mContainer.Add( mBorder );
-    mBorder.SetProperty( Actor::Property::VISIBLE,false);
+    border.Insert(Toolkit::Visual::Property::TYPE, Visual::BORDER);
+    border.Insert(BorderVisual::Property::COLOR, Color::WHITE);
+    border.Insert(BorderVisual::Property::SIZE, 3.f);
+    mBorder.SetProperty(Control::Property::BACKGROUND, border);
+    mContainer.Add(mBorder);
+    mBorder.SetProperty(Actor::Property::VISIBLE, false);
     mGrabCorner.RaiseToTop();
 
-    mHueAngleIndex = mLabel.RegisterProperty( "hue", 0.0f );
-    Renderer bgRenderer = mLabel.GetRendererAt(0);
-    mOverrideMixColorIndex = bgRenderer.GetPropertyIndex( ColorVisual::Property::MIX_COLOR );
+    mHueAngleIndex         = mLabel.RegisterProperty("hue", 0.0f);
+    Renderer bgRenderer    = mLabel.GetRendererAt(0);
+    mOverrideMixColorIndex = bgRenderer.GetPropertyIndex(ColorVisual::Property::MIX_COLOR);
 
-    Constraint constraint = Constraint::New<Vector3>( bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
-    constraint.AddSource( Source( mLabel, mHueAngleIndex ) );
-    constraint.SetRemoveAction( Constraint::DISCARD );
+    Constraint constraint = Constraint::New<Vector3>(bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
+    constraint.AddSource(Source(mLabel, mHueAngleIndex));
+    constraint.SetRemoveAction(Constraint::DISCARD);
     constraint.Apply();
 
     Animation anim = Animation::New(50.0f);
@@ -275,12 +270,12 @@ public:
     mContainer.RaiseToTop();
     mGrabCorner.RaiseToTop();
 
-    Property::Value labelText = mLabel.GetProperty( TextLabel::Property::TEXT );
-    std::cout << "Displaying text: \"" << labelText.Get< std::string >() << "\"" << std::endl;
+    Property::Value labelText = mLabel.GetProperty(TextLabel::Property::TEXT);
+    std::cout << "Displaying text: \"" << labelText.Get<std::string>() << "\"" << std::endl;
   }
 
   // If the styling buttons should colapse (hide) then the color buttons should also hide.
-  bool OnExpandingButtonCollapsing( Demo::ExpandingButtons button )
+  bool OnExpandingButtonCollapsing(Demo::ExpandingButtons button)
   {
     mCollapseColorsAndStyles = true;
     HideColorButtons();
@@ -288,19 +283,19 @@ public:
   }
 
   // Get the style type from the given button
-  StyleType GetStyleTypeFromButton( Toolkit::Button button )
+  StyleType GetStyleTypeFromButton(Toolkit::Button button)
   {
     StyleType style = StyleType::TEXT_COLOR;
 
-    if( button == mStyleButtons[ StyleType::OUTLINE ] )
+    if(button == mStyleButtons[StyleType::OUTLINE])
     {
       style = StyleType::OUTLINE;
     }
-    else if( button == mStyleButtons[ StyleType::SHADOW ] )
+    else if(button == mStyleButtons[StyleType::SHADOW])
     {
       style = StyleType::SHADOW;
     }
-    else if( button == mStyleButtons[ StyleType::BACKGROUND ] )
+    else if(button == mStyleButtons[StyleType::BACKGROUND])
     {
       style = StyleType::BACKGROUND;
     }
@@ -308,101 +303,101 @@ public:
   }
 
   // Style selected, show color buttons
-  bool OnStyleButtonClicked( Toolkit::Button button )
+  bool OnStyleButtonClicked(Toolkit::Button button)
   {
-    StyleType selectedStyle = GetStyleTypeFromButton( button );
-    if ( mStyleActivatedForColor == selectedStyle )
+    StyleType selectedStyle = GetStyleTypeFromButton(button);
+    if(mStyleActivatedForColor == selectedStyle)
     {
       HideColorButtons();
     }
     else
     {
-      ResetColorButtons( mColorButtons, NUMBER_OF_COLORS );
-      ShowColorButtons( selectedStyle);
+      ResetColorButtons(mColorButtons, NUMBER_OF_COLORS);
+      ShowColorButtons(selectedStyle);
     }
     return true;
   }
 
   // Set style to selected color
-  bool OnColorSelected( Toolkit::Button button )
+  bool OnColorSelected(Toolkit::Button button)
   {
-    for( unsigned int index = 0; index < NUMBER_OF_COLORS; index++)
+    for(unsigned int index = 0; index < NUMBER_OF_COLORS; index++)
     {
-      if ( mColorButtons[index] == button )
+      if(mColorButtons[index] == button)
       {
-        mSelectedColor = AVAILABLE_COLORS[ index ];
+        mSelectedColor = AVAILABLE_COLORS[index];
       }
     }
 
-    switch ( mStyleActivatedForColor )
+    switch(mStyleActivatedForColor)
     {
-      case TEXT_COLOR :
+      case TEXT_COLOR:
       {
-        Animation animation = Animation::New( 1.f );
-        animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), mSelectedColor, AlphaFunction::LINEAR );
-        mCurrentStyleColor[ TEXT_COLOR ] = mSelectedColor;
+        Animation animation = Animation::New(1.f);
+        animation.AnimateTo(Property(mLabel, TextLabel::Property::TEXT_COLOR), mSelectedColor, AlphaFunction::LINEAR);
+        mCurrentStyleColor[TEXT_COLOR] = mSelectedColor;
         animation.Play();
         break;
       }
-      case OUTLINE :
+      case OUTLINE:
       {
         Property::Map outlineMap;
-        float outlineWidth = OUTLINE_WIDTH;
+        float         outlineWidth = OUTLINE_WIDTH;
 
-        if( mStyleActiveState[ OUTLINE ] )
+        if(mStyleActiveState[OUTLINE])
         {
-          outlineWidth = ( Color::WHITE == mSelectedColor ) ? 0.0f : OUTLINE_WIDTH ;  // toggles outline on/off
+          outlineWidth = (Color::WHITE == mSelectedColor) ? 0.0f : OUTLINE_WIDTH; // toggles outline on/off
         }
-        mStyleActiveState[ OUTLINE ] = ( outlineWidth > 0.0f ) ? true : false;
+        mStyleActiveState[OUTLINE] = (outlineWidth > 0.0f) ? true : false;
 
-        outlineMap["color"] = mSelectedColor;
-        outlineMap["width"] = outlineWidth;
-        mCurrentStyleColor[ OUTLINE ] = mSelectedColor;
-        mLabel.SetProperty( TextLabel::Property::OUTLINE, outlineMap );
+        outlineMap["color"]         = mSelectedColor;
+        outlineMap["width"]         = outlineWidth;
+        mCurrentStyleColor[OUTLINE] = mSelectedColor;
+        mLabel.SetProperty(TextLabel::Property::OUTLINE, outlineMap);
         break;
       }
-      case SHADOW :
+      case SHADOW:
       {
-        Vector2 shadowOffset( SHADOW_OFFSET ); // Will be set to zeros if color already set
-        Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW );
-        Vector4 currentShadowColor;
-        value.Get( currentShadowColor );
+        Vector2         shadowOffset(SHADOW_OFFSET); // Will be set to zeros if color already set
+        Property::Value value = mLabel.GetProperty(TextLabel::Property::SHADOW);
+        Vector4         currentShadowColor;
+        value.Get(currentShadowColor);
 
-        if ( mStyleActiveState[ SHADOW ] )
+        if(mStyleActiveState[SHADOW])
         {
           // toggle shadow off ( zero offset ) if color is already set
-          shadowOffset = (  Color::WHITE == mSelectedColor ) ? Vector2::ZERO : Vector2( SHADOW_OFFSET );
+          shadowOffset = (Color::WHITE == mSelectedColor) ? Vector2::ZERO : Vector2(SHADOW_OFFSET);
         }
 
-        mStyleActiveState[ SHADOW ] = ( shadowOffset == Vector2::ZERO ) ? false : true;
-        mCurrentStyleColor[ SHADOW ] = mSelectedColor;
+        mStyleActiveState[SHADOW]  = (shadowOffset == Vector2::ZERO) ? false : true;
+        mCurrentStyleColor[SHADOW] = mSelectedColor;
 
         Property::Map shadowMap;
-        shadowMap.Insert( "offset", shadowOffset );
-        shadowMap.Insert( "color", mSelectedColor );
-        mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+        shadowMap.Insert("offset", shadowOffset);
+        shadowMap.Insert("color", mSelectedColor);
+        mLabel.SetProperty(TextLabel::Property::SHADOW, shadowMap);
 
         break;
       }
-      case BACKGROUND :
+      case BACKGROUND:
       {
         Property::Map backgroundMap;
-        auto backgroundEnabled(true);
+        auto          backgroundEnabled(true);
 
-        if( mStyleActiveState[ BACKGROUND ] )
+        if(mStyleActiveState[BACKGROUND])
         {
-          backgroundEnabled = ( Color::WHITE != mSelectedColor );  // toggles background on/off
+          backgroundEnabled = (Color::WHITE != mSelectedColor); // toggles background on/off
         }
-        mStyleActiveState[ BACKGROUND ] = backgroundEnabled;
+        mStyleActiveState[BACKGROUND] = backgroundEnabled;
 
-        backgroundMap["color"] = mSelectedColor;
-        backgroundMap["enable"] = backgroundEnabled;
-        mCurrentStyleColor[ BACKGROUND ] = mSelectedColor;
-        mLabel.SetProperty( DevelTextLabel::Property::BACKGROUND, backgroundMap );
+        backgroundMap["color"]         = mSelectedColor;
+        backgroundMap["enable"]        = backgroundEnabled;
+        mCurrentStyleColor[BACKGROUND] = mSelectedColor;
+        mLabel.SetProperty(DevelTextLabel::Property::BACKGROUND, backgroundMap);
 
         break;
       }
-      default :
+      default:
         break;
     }
 
@@ -411,17 +406,17 @@ public:
 
   // Set the inital color button that should be be selected.
   // If the style already has a color set then that should be used
-  void SetInitialSelectedColorButton( StyleType styleButtonIndex )
+  void SetInitialSelectedColorButton(StyleType styleButtonIndex)
   {
-    Vector4 selectedColor = mCurrentStyleColor[ styleButtonIndex ];
+    Vector4 selectedColor = mCurrentStyleColor[styleButtonIndex];
 
-    for ( unsigned int i = 0; i < NUMBER_OF_COLORS; i++ )
+    for(unsigned int i = 0; i < NUMBER_OF_COLORS; i++)
     {
-      if ( AVAILABLE_COLORS[i] == selectedColor )
+      if(AVAILABLE_COLORS[i] == selectedColor)
       {
-        if ( mColorButtons[i] )
+        if(mColorButtons[i])
         {
-          mColorButtons[ i ].SetProperty( Toolkit::Button::Property::SELECTED, true );
+          mColorButtons[i].SetProperty(Toolkit::Button::Property::SELECTED, true);
         }
         break;
       }
@@ -429,70 +424,63 @@ public:
   }
 
   // Create a bar of color buttons that the user can select.
-  void ShowColorButtons( StyleType styleButtonIndex )
+  void ShowColorButtons(StyleType styleButtonIndex)
   {
     mCollapseColorsAndStyles = false; // Request to show colors so reset flag
-    mStyleActivatedForColor = styleButtonIndex;
+    mStyleActivatedForColor  = styleButtonIndex;
 
-    for( unsigned int index = 0; index < NUMBER_OF_COLORS; index++)
+    for(unsigned int index = 0; index < NUMBER_OF_COLORS; index++)
     {
-      if( !mColorButtonsAnimation )
+      if(!mColorButtonsAnimation)
       {
-        mColorButtonsAnimation = Animation::New( 0.15f );
-        mColorButtonsAnimation.FinishedSignal().Connect( this, &TextLabelExample::OnColorButtonAnimationFinished );
+        mColorButtonsAnimation = Animation::New(0.15f);
+        mColorButtonsAnimation.FinishedSignal().Connect(this, &TextLabelExample::OnColorButtonAnimationFinished);
       }
 
       // Create a color button
-      if ( ! mColorButtons[index] )
+      if(!mColorButtons[index])
       {
         mColorButtons[index] = RadioButton::New();
-        mColorButtons[index].SetProperty( Actor::Property::SIZE, mButtonSize );
-        mColorButtons[index].ClickedSignal().Connect( this, &TextLabelExample::OnColorSelected );
-        mColorButtons[index].SetProperty( Button::Property::TOGGLABLE, true );
+        mColorButtons[index].SetProperty(Actor::Property::SIZE, mButtonSize);
+        mColorButtons[index].ClickedSignal().Connect(this, &TextLabelExample::OnColorSelected);
+        mColorButtons[index].SetProperty(Button::Property::TOGGLABLE, true);
         Property::Map propertyMap;
-        propertyMap.Insert(Visual::Property::TYPE,  Visual::COLOR);
-        propertyMap.Insert(ColorVisual::Property::MIX_COLOR, AVAILABLE_COLORS[ index ]);
-        mColorButtons[index].SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, propertyMap );
-        mColorButtons[index].SetProperty( Toolkit::Button::Property::UNSELECTED_VISUAL, propertyMap );
-        mColorButtons[index].SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER );
-        mColorButtons[index].SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
+        propertyMap.Insert(Visual::Property::TYPE, Visual::COLOR);
+        propertyMap.Insert(ColorVisual::Property::MIX_COLOR, AVAILABLE_COLORS[index]);
+        mColorButtons[index].SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, propertyMap);
+        mColorButtons[index].SetProperty(Toolkit::Button::Property::UNSELECTED_VISUAL, propertyMap);
+        mColorButtons[index].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
+        mColorButtons[index].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
 
+        propertyMap.Insert(Visual::Property::TYPE, Visual::COLOR);
+        propertyMap.Insert(ColorVisual::Property::MIX_COLOR, AVAILABLE_COLORS[index]);
+        mColorButtons[index].SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, propertyMap);
 
-        propertyMap.Insert(Visual::Property::TYPE,  Visual::COLOR);
-        propertyMap.Insert(ColorVisual::Property::MIX_COLOR, AVAILABLE_COLORS[ index ]);
-        mColorButtons[index].SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, propertyMap );
-
-        mColorButtons[index].SetProperty( Toolkit::Button::Property::SELECTED_VISUAL,
-                            Property::Map().Add( Visual::Property::TYPE, Visual::BORDER )
-                                           .Add( BorderVisual::Property::COLOR, Color::WHITE )
-                                           .Add( BorderVisual::Property::SIZE, 4.0f )
-                                           .Add( BorderVisual::Property::ANTI_ALIASING, true ) );
+        mColorButtons[index].SetProperty(Toolkit::Button::Property::SELECTED_VISUAL,
+                                         Property::Map().Add(Visual::Property::TYPE, Visual::BORDER).Add(BorderVisual::Property::COLOR, Color::WHITE).Add(BorderVisual::Property::SIZE, 4.0f).Add(BorderVisual::Property::ANTI_ALIASING, true));
 
         // Use a white button with 50% transparency as a clear color button
-        if ( Color::WHITE == AVAILABLE_COLORS[ index ] && styleButtonIndex != StyleType::TEXT_COLOR )
+        if(Color::WHITE == AVAILABLE_COLORS[index] && styleButtonIndex != StyleType::TEXT_COLOR)
         {
-          mColorButtons[index].SetProperty( Actor::Property::OPACITY,0.5f);
+          mColorButtons[index].SetProperty(Actor::Property::OPACITY, 0.5f);
 
-          mColorButtons[index].SetProperty( Toolkit::Button::Property::LABEL,
-                                            Property::Map().Add( Toolkit::Visual::Property::TYPE, Toolkit::Visual::TEXT )
-                                                           .Add( Toolkit::TextVisual::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER )
-                                                           .Add( Toolkit::TextVisual::Property::TEXT, "off") );
-
+          mColorButtons[index].SetProperty(Toolkit::Button::Property::LABEL,
+                                           Property::Map().Add(Toolkit::Visual::Property::TYPE, Toolkit::Visual::TEXT).Add(Toolkit::TextVisual::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER).Add(Toolkit::TextVisual::Property::TEXT, "off"));
         }
       }
 
-      SetInitialSelectedColorButton( mStyleActivatedForColor );
+      SetInitialSelectedColorButton(mStyleActivatedForColor);
 
       mColorButtons[index].Unparent();
 
-      mStyleButtons[styleButtonIndex].Add( mColorButtons[index] );
+      mStyleButtons[styleButtonIndex].Add(mColorButtons[index]);
       mColorButtons[index].Lower();
 
       // Position button using nice animation
-      mColorButtons[index].SetProperty( Actor::Property::POSITION_Y,  -GAP_BETWEEN_BUTTONS );
-      float desiredPosition = -( mButtonSize.height + GAP_BETWEEN_BUTTONS ) * (index);
-      AlphaFunction focusedAlphaFunction = AlphaFunction( Vector2 ( 0.32f, 0.08f ), Vector2( 0.38f, 1.72f ) );
-      mColorButtonsAnimation.AnimateBy( Property( mColorButtons[index], Actor::Property::POSITION_Y ), desiredPosition, focusedAlphaFunction );
+      mColorButtons[index].SetProperty(Actor::Property::POSITION_Y, -GAP_BETWEEN_BUTTONS);
+      float         desiredPosition      = -(mButtonSize.height + GAP_BETWEEN_BUTTONS) * (index);
+      AlphaFunction focusedAlphaFunction = AlphaFunction(Vector2(0.32f, 0.08f), Vector2(0.38f, 1.72f));
+      mColorButtonsAnimation.AnimateBy(Property(mColorButtons[index], Actor::Property::POSITION_Y), desiredPosition, focusedAlphaFunction);
     }
 
     mColorButtonsHidden = false;
@@ -500,22 +488,22 @@ public:
   }
 
   // Remove the color buttons when not being shown.
-  void ResetColorButtons( Button buttons[], unsigned int numberOfButtons )
+  void ResetColorButtons(Button buttons[], unsigned int numberOfButtons)
   {
-    for( unsigned int index = 0; index < numberOfButtons; index++)
+    for(unsigned int index = 0; index < numberOfButtons; index++)
     {
-      UnparentAndReset( buttons[index] );
+      UnparentAndReset(buttons[index]);
     }
   }
 
-  void OnColorButtonAnimationFinished( Animation& animation )
+  void OnColorButtonAnimationFinished(Animation& animation)
   {
     animation.Clear();
-    if ( mColorButtonsHidden )
+    if(mColorButtonsHidden)
     {
-      ResetColorButtons( mColorButtons, NUMBER_OF_COLORS );
+      ResetColorButtons(mColorButtons, NUMBER_OF_COLORS);
       animation.Reset(); // Handle reset
-      if ( mCollapseColorsAndStyles )
+      if(mCollapseColorsAndStyles)
       {
         mExpandingButtons.Collapse();
       }
@@ -525,16 +513,16 @@ public:
   // Create the style buttons that will expand from the expanding button.
   void CreateStyleButtons()
   {
-    for ( unsigned int index = 0; index < NUMBER_OF_STYLES; index++ )
+    for(unsigned int index = 0; index < NUMBER_OF_STYLES; index++)
     {
-      if ( ! mStyleButtons[index] )
+      if(!mStyleButtons[index])
       {
         mStyleButtons[index] = PushButton::New();
-        mStyleButtons[index].SetProperty( Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGES[ index ] );
-        mStyleButtons[index].SetProperty( Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, STYLE_SELECTED_IMAGE );
-        mStyleButtons[index].SetProperty( Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-        mStyleButtons[index].SetProperty( Actor::Property::SIZE, mButtonSize );
-        mStyleButtons[index].ClickedSignal().Connect( this, &TextLabelExample::OnStyleButtonClicked );
+        mStyleButtons[index].SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGES[index]);
+        mStyleButtons[index].SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, STYLE_SELECTED_IMAGE);
+        mStyleButtons[index].SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+        mStyleButtons[index].SetProperty(Actor::Property::SIZE, mButtonSize);
+        mStyleButtons[index].ClickedSignal().Connect(this, &TextLabelExample::OnStyleButtonClicked);
       }
     }
   }
@@ -542,11 +530,11 @@ public:
   // Animate away the color bar.
   void HideColorButtons()
   {
-    if ( ! mColorButtonsHidden )
+    if(!mColorButtonsHidden)
     {
-      for( unsigned int index = 0; index < NUMBER_OF_COLORS; index++)
+      for(unsigned int index = 0; index < NUMBER_OF_COLORS; index++)
       {
-        mColorButtonsAnimation.AnimateTo( Property( mColorButtons[index], Actor::Property::POSITION_Y ), 0.0f );
+        mColorButtonsAnimation.AnimateTo(Property(mColorButtons[index], Actor::Property::POSITION_Y), 0.0f);
       }
       mColorButtonsHidden = true;
       mColorButtonsAnimation.Play();
@@ -558,7 +546,7 @@ public:
   void HideStyleAndColorButtons()
   {
     mCollapseColorsAndStyles = true;
-    if ( mColorButtonsHidden )
+    if(mColorButtonsHidden)
     {
       mExpandingButtons.Collapse();
     }
@@ -569,24 +557,24 @@ public:
   }
 
   // Resize the text-label with pan gesture
-  void OnPan( Actor actor, const PanGesture& gesture )
+  void OnPan(Actor actor, const PanGesture& gesture)
   {
     // Reset mLayoutSize when the pan starts
     GestureState state = gesture.GetState();
-    if( state == GestureState::STARTED )
+    if(state == GestureState::STARTED)
     {
-      if( mLayoutSize.x < 2.0f )
+      if(mLayoutSize.x < 2.0f)
       {
         mLayoutSize.x = 2.0f;
       }
 
-      if( mLayoutSize.y < 2.0f )
+      if(mLayoutSize.y < 2.0f)
       {
         mLayoutSize.y = 2.0f;
       }
 
       // Only show the border during the panning
-      mBorder.SetProperty( Actor::Property::VISIBLE,true);
+      mBorder.SetProperty(Actor::Property::VISIBLE, true);
 
       HideStyleAndColorButtons();
     }
@@ -595,24 +583,24 @@ public:
     mLayoutSize.x += displacement.x * 2.0f;
     mLayoutSize.y += displacement.y * 2.0f;
 
-    if( mLayoutSize.x >= 2.0f ||
-        mLayoutSize.y >= 2.0f )
+    if(mLayoutSize.x >= 2.0f ||
+       mLayoutSize.y >= 2.0f)
     {
-      mLayoutSize.x = std::min ( mLayoutSize.x, mWindowSize.width );
-      mLayoutSize.y = std::min ( mLayoutSize.y, mWindowSize.height*.9f );
+      mLayoutSize.x = std::min(mLayoutSize.x, mWindowSize.width);
+      mLayoutSize.y = std::min(mLayoutSize.y, mWindowSize.height * .9f);
 
       // Avoid pixel mis-alignment issue
-      Vector2 clampedSize = Vector2( std::max( ConvertToEven( static_cast<int>( mLayoutSize.x )), 2 ),
-                                     std::max( ConvertToEven( static_cast<int>( mLayoutSize.y )), 2 ) );
+      Vector2 clampedSize = Vector2(std::max(ConvertToEven(static_cast<int>(mLayoutSize.x)), 2),
+                                    std::max(ConvertToEven(static_cast<int>(mLayoutSize.y)), 2));
 
-      mContainer.SetProperty( Actor::Property::SIZE, clampedSize );
+      mContainer.SetProperty(Actor::Property::SIZE, clampedSize);
     }
 
-    if( state == GestureState::CANCELLED || state == GestureState::FINISHED )
+    if(state == GestureState::CANCELLED || state == GestureState::FINISHED)
     {
       // Resize the text label to match the container size when panning is finished
-      mLabel.SetProperty( Actor::Property::SIZE, mLayoutSize );
-      mBorder.SetProperty( Actor::Property::VISIBLE,false);
+      mLabel.SetProperty(Actor::Property::SIZE, mLayoutSize);
+      mBorder.SetProperty(Actor::Property::VISIBLE, false);
     }
   }
 
@@ -623,74 +611,74 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
-      else if( event.IsCtrlModifier() )
+      else if(event.IsCtrlModifier())
       {
-        switch( event.GetKeyCode() )
+        switch(event.GetKeyCode())
         {
           // Select rendering back-end
           case KEY_ZERO: // fall through
           case KEY_ONE:
           {
-            mLabel.SetProperty( DevelTextLabel::Property::RENDERING_BACKEND, event.GetKeyCode() - 10 );
+            mLabel.SetProperty(DevelTextLabel::Property::RENDERING_BACKEND, event.GetKeyCode() - 10);
             break;
           }
           case KEY_A: // Animate text colour
           {
-            Animation animation = Animation::New( 2.f );
-            animation.AnimateTo( Property( mLabel, TextLabel::Property::TEXT_COLOR ), Color::RED, AlphaFunction::SIN );
-            animation.SetLoopCount( 3 );
+            Animation animation = Animation::New(2.f);
+            animation.AnimateTo(Property(mLabel, TextLabel::Property::TEXT_COLOR), Color::RED, AlphaFunction::SIN);
+            animation.SetLoopCount(3);
             animation.Play();
             break;
           }
           case KEY_F: // Fill vertically
           {
-            if( ResizePolicy::DIMENSION_DEPENDENCY == mLabel.GetResizePolicy(Dimension::HEIGHT) )
+            if(ResizePolicy::DIMENSION_DEPENDENCY == mLabel.GetResizePolicy(Dimension::HEIGHT))
             {
-              mLabel.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT );
+              mLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
             }
             else
             {
-              mLabel.SetResizePolicy( ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT );
+              mLabel.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
             }
             break;
           }
           case KEY_H: // Horizontal alignment
           {
-            if( ++mAlignment >= H_ALIGNMENT_STRING_COUNT )
+            if(++mAlignment >= H_ALIGNMENT_STRING_COUNT)
             {
               mAlignment = 0u;
             }
 
-            mLabel.SetProperty( TextLabel::Property::HORIZONTAL_ALIGNMENT, H_ALIGNMENT_STRING_TABLE[ mAlignment ] );
+            mLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, H_ALIGNMENT_STRING_TABLE[mAlignment]);
             break;
           }
           case KEY_V: // Vertical alignment
           {
-            if( ++mAlignment >= V_ALIGNMENT_STRING_COUNT )
+            if(++mAlignment >= V_ALIGNMENT_STRING_COUNT)
             {
               mAlignment = 0u;
             }
 
-            mLabel.SetProperty( TextLabel::Property::VERTICAL_ALIGNMENT, V_ALIGNMENT_STRING_TABLE[ mAlignment ] );
+            mLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, V_ALIGNMENT_STRING_TABLE[mAlignment]);
             break;
           }
           case KEY_M: // Multi-line
           {
-            bool multiLine = mLabel.GetProperty<bool>( TextLabel::Property::MULTI_LINE );
-            mLabel.SetProperty( TextLabel::Property::MULTI_LINE, !multiLine );
+            bool multiLine = mLabel.GetProperty<bool>(TextLabel::Property::MULTI_LINE);
+            mLabel.SetProperty(TextLabel::Property::MULTI_LINE, !multiLine);
             break;
           }
           case KEY_L: // Language
           {
-            const Language& language = LANGUAGES[ mLanguageId ];
+            const Language& language = LANGUAGES[mLanguageId];
 
-            mLabel.SetProperty( TextLabel::Property::TEXT, language.text );
+            mLabel.SetProperty(TextLabel::Property::TEXT, language.text);
 
-            if( ++mLanguageId >= NUMBER_OF_LANGUAGES )
+            if(++mLanguageId >= NUMBER_OF_LANGUAGES)
             {
               mLanguageId = 0u;
             }
@@ -698,73 +686,71 @@ public:
           }
           case KEY_S: // Shadow color
           {
-            Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW );
-            Vector4 shadowColor;
-            value.Get( shadowColor );
+            Property::Value value = mLabel.GetProperty(TextLabel::Property::SHADOW);
+            Vector4         shadowColor;
+            value.Get(shadowColor);
             Property::Map shadowMap;
-            if( Color::BLACK == shadowColor )
+            if(Color::BLACK == shadowColor)
             {
-              shadowMap.Insert( "color", Color::RED );
-              mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+              shadowMap.Insert("color", Color::RED);
+              mLabel.SetProperty(TextLabel::Property::SHADOW, shadowMap);
             }
             else
             {
-              shadowMap.Insert( "color", Color::BLACK );
-              mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+              shadowMap.Insert("color", Color::BLACK);
+              mLabel.SetProperty(TextLabel::Property::SHADOW, shadowMap);
             }
             break;
           }
           case KEY_U: // Markup
           {
-            mLabel.SetProperty( TextLabel::Property::ENABLE_MARKUP, true );
-            mLabel.SetProperty( TextLabel::Property::TEXT, "<font family='DejaVuSerif' size='18'>H<color value='blue'>ello</color> <font weight='bold'>world</font> demo</font>" );
+            mLabel.SetProperty(TextLabel::Property::ENABLE_MARKUP, true);
+            mLabel.SetProperty(TextLabel::Property::TEXT, "<font family='DejaVuSerif' size='18'>H<color value='blue'>ello</color> <font weight='bold'>world</font> demo</font>");
             break;
           }
           case KEY_PLUS: // Increase shadow offset
           {
-            Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW );
-            Vector2 shadowOffset;
-            value.Get( shadowOffset );
-            shadowOffset += Vector2( 1.0f, 1.0f );
+            Property::Value value = mLabel.GetProperty(TextLabel::Property::SHADOW);
+            Vector2         shadowOffset;
+            value.Get(shadowOffset);
+            shadowOffset += Vector2(1.0f, 1.0f);
 
             Property::Map shadowMap;
-            shadowMap.Insert( "offset", shadowOffset );
-            mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+            shadowMap.Insert("offset", shadowOffset);
+            mLabel.SetProperty(TextLabel::Property::SHADOW, shadowMap);
             break;
           }
           case KEY_MINUS: // Decrease shadow offset
           {
-            Property::Value value = mLabel.GetProperty( TextLabel::Property::SHADOW );
-            Vector2 shadowOffset;
-            value.Get( shadowOffset );
-            shadowOffset -= Vector2( 1.0f, 1.0f );
+            Property::Value value = mLabel.GetProperty(TextLabel::Property::SHADOW);
+            Vector2         shadowOffset;
+            value.Get(shadowOffset);
+            shadowOffset -= Vector2(1.0f, 1.0f);
 
             Property::Map shadowMap;
-            shadowMap.Insert( "offset", shadowOffset );
-            mLabel.SetProperty( TextLabel::Property::SHADOW, shadowMap );
+            shadowMap.Insert("offset", shadowOffset);
+            mLabel.SetProperty(TextLabel::Property::SHADOW, shadowMap);
             break;
           }
-
         }
       }
     }
   }
 
 private:
-
   Application& mApplication;
 
   TextLabel mLabel;
 
   Demo::ExpandingButtons mExpandingButtons;
-  PushButton mStyleButtons[ NUMBER_OF_STYLES ];
-  bool mStyleActiveState[ NUMBER_OF_STYLES ];
+  PushButton             mStyleButtons[NUMBER_OF_STYLES];
+  bool                   mStyleActiveState[NUMBER_OF_STYLES];
 
-  Vector4 mCurrentStyleColor[NUMBER_OF_STYLES ];
+  Vector4 mCurrentStyleColor[NUMBER_OF_STYLES];
 
   Vector4 mSelectedColor;
 
-  Button mColorButtons[ NUMBER_OF_COLORS ];
+  Button mColorButtons[NUMBER_OF_COLORS];
 
   StyleType mStyleActivatedForColor; // The style that the color bar is connected to
 
@@ -781,8 +767,8 @@ private:
   Size mWindowSize;
   Size mButtonSize;
 
-  unsigned int mLanguageId;
-  unsigned int mAlignment;
+  unsigned int    mLanguageId;
+  unsigned int    mAlignment;
   Property::Index mHueAngleIndex;
   Property::Index mOverrideMixColorIndex;
 
@@ -790,10 +776,10 @@ private:
   bool mCollapseColorsAndStyles;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-  TextLabelExample test( application );
+  Application      application = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  TextLabelExample test(application);
   application.MainLoop();
   return 0;
 }

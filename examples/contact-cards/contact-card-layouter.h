@@ -19,11 +19,11 @@
  */
 
 // EXTERNAL INCLUDES
-#include <vector>
-#include <string>
 #include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/common/intrusive-ptr.h>
 #include <dali/public-api/math/vector2.h>
+#include <string>
+#include <vector>
 
 // INTERNAL INCLUDES
 #include "contact-card-layout-info.h"
@@ -41,7 +41,6 @@ class ContactCard;
 class ContactCardLayouter
 {
 public:
-
   /**
    * @brief Constructor.
    */
@@ -59,10 +58,9 @@ public:
    * @param[in]  contactAddress  The address of the contact to display.
    * @param[in]  imagePath       The path to the image to display.
    */
-  void AddContact( Dali::Window window, const std::string& contactName, const std::string& contactAddress, const std::string& imagePath );
+  void AddContact(Dali::Window window, const std::string& contactName, const std::string& contactAddress, const std::string& imagePath);
 
 private:
-
   /**
    * @brief Calculates the next position of the contact card that's about to be added to our container.
    * @return A reference to the next position.
@@ -71,17 +69,15 @@ private:
 
   ContactCardLayoutInfo mContactCardLayoutInfo; ///< The common layouting information used by all contact cards. Set up when AddContact is first called.
 
-  typedef Dali::IntrusivePtr< ContactCard > ContactCardPtr; ///< Better than raw pointers as these are ref counted and the memory is released when the count reduces to 0.
-  typedef std::vector< ContactCardPtr > ContactCardContainer;
-  ContactCardContainer mContactCards; ///< Contains all the contact cards.
+  typedef Dali::IntrusivePtr<ContactCard> ContactCardPtr; ///< Better than raw pointers as these are ref counted and the memory is released when the count reduces to 0.
+  typedef std::vector<ContactCardPtr>     ContactCardContainer;
+  ContactCardContainer                    mContactCards; ///< Contains all the contact cards.
 
-  Dali::Vector2 mLastPosition; ///< The last position a contact card was added.
+  Dali::Vector2 mLastPosition;        ///< The last position a contact card was added.
   Dali::Vector2 mPositionIncrementer; ///< Calculated once when AddContact is first called.
-  size_t mItemsPerRow; ///< Calculated once when AddContact is first called and stores the number of items we have in a row.
+  size_t        mItemsPerRow;         ///< Calculated once when AddContact is first called and stores the number of items we have in a row.
 
   bool mInitialized; ///< Whether initialization has taken place or not.
 };
-
-
 
 #endif // CONTACT_CARD_LAYOUTER_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,21 +19,20 @@
 
 namespace Demo
 {
-
 ImageChannelControl::ImageChannelControl()
 {
 }
 
-ImageChannelControl::ImageChannelControl( const ImageChannelControl& imageChannelControl )
-: Control( imageChannelControl )
+ImageChannelControl::ImageChannelControl(const ImageChannelControl& imageChannelControl)
+: Control(imageChannelControl)
 {
 }
 
-ImageChannelControl& ImageChannelControl::operator= ( const ImageChannelControl& rhs )
+ImageChannelControl& ImageChannelControl::operator=(const ImageChannelControl& rhs)
 {
-  if( &rhs != this )
+  if(&rhs != this)
   {
-    Control::operator=( rhs );
+    Control::operator=(rhs);
   }
   return *this;
 }
@@ -48,38 +47,37 @@ ImageChannelControl ImageChannelControl::New()
   return imageChannelControl;
 }
 
-ImageChannelControl ImageChannelControl::New( const std::string& url )
+ImageChannelControl ImageChannelControl::New(const std::string& url)
 {
   ImageChannelControl imageChannelControl = Internal::ImageChannelControl::New();
-  imageChannelControl.SetImage( url );
+  imageChannelControl.SetImage(url);
   return imageChannelControl;
 }
 
-ImageChannelControl ImageChannelControl::DownCast( BaseHandle handle )
+ImageChannelControl ImageChannelControl::DownCast(BaseHandle handle)
 {
-  return Control::DownCast< ImageChannelControl, Internal::ImageChannelControl > ( handle );
+  return Control::DownCast<ImageChannelControl, Internal::ImageChannelControl>(handle);
 }
 
-void ImageChannelControl::SetImage( const std::string& url )
+void ImageChannelControl::SetImage(const std::string& url)
 {
-  GetImpl( *this ).SetImage( url );
+  GetImpl(*this).SetImage(url);
 }
 
-void ImageChannelControl::SetVisibility( bool visibility )
+void ImageChannelControl::SetVisibility(bool visibility)
 {
-  GetImpl( *this ).SetVisibility( visibility );
+  GetImpl(*this).SetVisibility(visibility);
 }
 
-ImageChannelControl::ImageChannelControl( Internal::ImageChannelControl& implementation )
-: Control( implementation )
+ImageChannelControl::ImageChannelControl(Internal::ImageChannelControl& implementation)
+: Control(implementation)
 {
 }
 
-ImageChannelControl::ImageChannelControl( Dali::Internal::CustomActor* internal )
-: Control( internal )
+ImageChannelControl::ImageChannelControl(Dali::Internal::CustomActor* internal)
+: Control(internal)
 {
-  VerifyCustomActorPointer< Internal::ImageChannelControl >( internal ) ;
+  VerifyCustomActorPointer<Internal::ImageChannelControl>(internal);
 }
-
 
 } //namespace Demo

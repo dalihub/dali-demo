@@ -2,7 +2,7 @@
 #define GAME_TEXTURE_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,15 @@
  *
  */
 
-#include <dali/public-api/rendering/texture.h>
-#include <dali/public-api/rendering/texture-set.h>
 #include <dali/public-api/rendering/sampler.h>
+#include <dali/public-api/rendering/texture-set.h>
+#include <dali/public-api/rendering/texture.h>
 
 #include <inttypes.h>
 
 class GameTexture
 {
 public:
-
   /**
    * Creates an instance of the GameTexture
    */
@@ -36,7 +35,7 @@ public:
   /**
    * Creates an instance of the GameTexture with given filename
    */
-  GameTexture( const char* filename );
+  GameTexture(const char* filename);
 
   /**
    * Destroys an instance of the GameTexture
@@ -47,7 +46,7 @@ public:
    * @brief Loads texture from file
    * @return Returns true if success
    */
-  bool Load( const char* filename );
+  bool Load(const char* filename);
 
   /**
    * Checks status of texture, returns false if failed to load
@@ -68,14 +67,13 @@ public:
   uint32_t GetUniqueId();
 
 private:
+  Dali::Texture    mTexture;
+  Dali::Sampler    mSampler;
+  Dali::TextureSet mTextureSet;
 
-  Dali::Texture     mTexture;
-  Dali::Sampler     mSampler;
-  Dali::TextureSet  mTextureSet;
+  uint32_t mUniqueId;
 
-  uint32_t          mUniqueId;
-
-  bool              mIsReady;
+  bool mIsReady;
 };
 
 #endif

@@ -31,7 +31,6 @@
 class LookCamera : public Dali::ConnectionTracker
 {
 public:
-
   /**
    * Creates an instance of LookCamera
    */
@@ -50,7 +49,7 @@ public:
    * @param[in] near Near plane
    * @param[in] far Far Plane
    */
-  void Initialise( Dali::Window window, const Dali::Vector3& position, float fov, float near, float far );
+  void Initialise(Dali::Window window, const Dali::Vector3& position, float fov, float near, float far);
 
   /**
    * Retrieves actor associated with camera object
@@ -59,7 +58,6 @@ public:
   Dali::CameraActor GetCameraActor();
 
 private:
-
   /**
    * Sets up a perspective camera using Dali default camera
    */
@@ -77,7 +75,7 @@ private:
    * @param[in] actor Actor receiving signal
    * @param[in] touch Touch data
    */
-  bool OnTouch( Dali::Actor actor, const Dali::TouchEvent& touch );
+  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& touch);
 
   /**
    * Handles camera tick() update
@@ -86,22 +84,21 @@ private:
   bool OnTick();
 
 private:
-
   Dali::Window mWindow; /// The window the camera belongs to
 
-  Dali::CameraActor mCameraActor; /// Camera actor
-  Dali::Actor mInterceptorActor; /// Actor intercepting user input
+  Dali::CameraActor mCameraActor;      /// Camera actor
+  Dali::Actor       mInterceptorActor; /// Actor intercepting user input
 
   Dali::Timer mTimer; /// Per-frame timer
 
-  Dali::Vector2 mScreenLookDelta; /// Look delta vector in screen space
+  Dali::Vector2 mScreenLookDelta;      /// Look delta vector in screen space
   Dali::Vector2 mOldTouchLookPosition; /// Previous look vector in screen space
 
   Dali::Vector2 mCameraYawPitch; /// Camera yaw-pitch angles
 
   float mFovY; /// Camera field-of-view
   float mNear; /// Near plane
-  float mFar; /// Far plane
+  float mFar;  /// Far plane
 
   Dali::Vector3 mCameraPosition; /// Current camera position ( shadowing the actor position )
 };

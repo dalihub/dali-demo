@@ -15,22 +15,22 @@
  *
  */
 
- // FILE HEADER
+// FILE HEADER
 #include "execute-process.h"
 
- // EXTERNAL INCLUDES
-#include <sstream>
-#include <unistd.h>
+// EXTERNAL INCLUDES
 #include <dali/public-api/common/dali-common.h>
+#include <unistd.h>
+#include <sstream>
 
-void ExecuteProcess( const std::string& processName, Dali::Application& application )
+void ExecuteProcess(const std::string& processName, Dali::Application& application)
 {
   std::stringstream stream;
   stream << DEMO_EXAMPLE_BIN << processName.c_str();
   pid_t pid = fork();
-  if( pid == 0 )
+  if(pid == 0)
   {
-    execlp( stream.str().c_str(), processName.c_str(), NULL );
+    execlp(stream.str().c_str(), processName.c_str(), NULL);
     DALI_ASSERT_ALWAYS(false && "exec failed!");
   }
 }

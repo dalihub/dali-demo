@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,21 +19,20 @@
 
 namespace Demo
 {
-
 BeatControl::BeatControl()
 {
 }
 
-BeatControl::BeatControl( const BeatControl& beatControl )
-: Control( beatControl )
+BeatControl::BeatControl(const BeatControl& beatControl)
+: Control(beatControl)
 {
 }
 
-BeatControl& BeatControl::operator= ( const BeatControl& rhs )
+BeatControl& BeatControl::operator=(const BeatControl& rhs)
 {
-  if( &rhs != this )
+  if(&rhs != this)
   {
-    Control::operator=( rhs );
+    Control::operator=(rhs);
   }
   return *this;
 }
@@ -48,15 +47,15 @@ BeatControl BeatControl::New()
   return beatControl;
 }
 
-BeatControl BeatControl::New( const std::string& url )
+BeatControl BeatControl::New(const std::string& url)
 {
   BeatControl beatControl = Internal::BeatControl::New();
   return beatControl;
 }
 
-BeatControl BeatControl::DownCast( BaseHandle handle )
+BeatControl BeatControl::DownCast(BaseHandle handle)
 {
-  return Control::DownCast< BeatControl, Internal::BeatControl > ( handle );
+  return Control::DownCast<BeatControl, Internal::BeatControl>(handle);
 }
 
 void BeatControl::StartBounceAnimation()
@@ -77,16 +76,15 @@ void BeatControl::StartFadeAnimation()
   GetImpl(*this).StartFadeAnimation();
 }
 
-BeatControl::BeatControl( Internal::BeatControl& implementation )
-: Control( implementation )
+BeatControl::BeatControl(Internal::BeatControl& implementation)
+: Control(implementation)
 {
 }
 
-BeatControl::BeatControl( Dali::Internal::CustomActor* internal )
-: Control( internal )
+BeatControl::BeatControl(Dali::Internal::CustomActor* internal)
+: Control(internal)
 {
-  VerifyCustomActorPointer< Internal::BeatControl >( internal ) ;
+  VerifyCustomActorPointer<Internal::BeatControl>(internal);
 }
-
 
 } //namespace Demo

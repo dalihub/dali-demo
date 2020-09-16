@@ -2,7 +2,7 @@
 #define DALI_DEMO_PBR_OBJ_LOADER_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,9 @@ using namespace Dali;
 
 namespace PbrDemo
 {
-
 class ObjLoader
 {
 public:
-
   struct TriIndex
   {
     int pointIndex[3];
@@ -42,19 +40,19 @@ public:
   {
     void Init()
     {
-      pointMin = Vector3( std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max() );
-      pointMax = Vector3( std::numeric_limits<float>::min(), std::numeric_limits<float>::min(), std::numeric_limits<float>::min() );
+      pointMin = Vector3(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+      pointMax = Vector3(std::numeric_limits<float>::min(), std::numeric_limits<float>::min(), std::numeric_limits<float>::min());
     }
 
-    void ConsiderNewPointInVolume( const Vector3& position )
+    void ConsiderNewPointInVolume(const Vector3& position)
     {
-      pointMin.x = std::min( position.x, pointMin.x );
-      pointMin.y = std::min( position.y, pointMin.y );
-      pointMin.z = std::min( position.z, pointMin.z );
+      pointMin.x = std::min(position.x, pointMin.x);
+      pointMin.y = std::min(position.y, pointMin.y);
+      pointMin.z = std::min(position.z, pointMin.z);
 
-      pointMax.x = std::max( position.x, pointMax.x );
-      pointMax.y = std::max( position.y, pointMax.y );
-      pointMax.z = std::max( position.z, pointMax.z );
+      pointMax.x = std::max(position.x, pointMax.x);
+      pointMax.y = std::max(position.y, pointMax.y);
+      pointMax.z = std::max(position.z, pointMax.z);
     }
 
     Vector3 pointMin;
@@ -65,35 +63,33 @@ public:
   enum ObjectProperties
   {
     TEXTURE_COORDINATES = 1 << 0,
-    TANGENTS = 1 << 1,
-    BINORMALS = 1 << 2
+    TANGENTS            = 1 << 1,
+    BINORMALS           = 1 << 2
   };
 
   ObjLoader();
   virtual ~ObjLoader();
 
-  bool      IsSceneLoaded();
-  bool      IsMaterialLoaded();
+  bool IsSceneLoaded();
+  bool IsMaterialLoaded();
 
-  bool      LoadObject( char* objBuffer, std::streampos fileSize );
+  bool LoadObject(char* objBuffer, std::streampos fileSize);
 
-  void      LoadMaterial( char* objBuffer, std::streampos fileSize, std::string& diffuseTextureUrl,
-                          std::string& normalTextureUrl, std::string& glossTextureUrl );
+  void LoadMaterial(char* objBuffer, std::streampos fileSize, std::string& diffuseTextureUrl, std::string& normalTextureUrl, std::string& glossTextureUrl);
 
-  Geometry  CreateGeometry( int objectProperties, bool useSoftNormals );
+  Geometry CreateGeometry(int objectProperties, bool useSoftNormals);
 
-  Vector3   GetCenter();
-  Vector3   GetSize();
+  Vector3 GetCenter();
+  Vector3 GetSize();
 
-  void      ClearArrays();
+  void ClearArrays();
 
-  bool      IsTexturePresent();
-  bool      IsDiffuseMapPresent();
-  bool      IsNormalMapPresent();
-  bool      IsSpecularMapPresent();
+  bool IsTexturePresent();
+  bool IsDiffuseMapPresent();
+  bool IsNormalMapPresent();
+  bool IsSpecularMapPresent();
 
 private:
-
   Dali::Vector<Vector3>  mPoints;
   Dali::Vector<Vector2>  mTextureUv;
   Dali::Vector<Vector2>  mTextureUv2;
@@ -122,9 +118,9 @@ private:
    * @param[in, out] triangles The triangles that form the faces. The normals of each triangle will be updated.
    * @param[in, out] normals The normals to be calculated.
    */
-  void CalculateHardFaceNormals( const Dali::Vector<Vector3>& vertices,
-                                 Dali::Vector<TriIndex>& triangles,
-                                 Dali::Vector<Vector3>& normals );
+  void CalculateHardFaceNormals(const Dali::Vector<Vector3>& vertices,
+                                Dali::Vector<TriIndex>&      triangles,
+                                Dali::Vector<Vector3>&       normals);
 
   /**
    * @brief Calculates smoothed normals for each point.
@@ -135,9 +131,9 @@ private:
    * @param[in, out] triangles The triangles that form the faces. The normals of each triangle will be updated.
    * @param[in, out] normals The normals to be calculated.
    */
-  void CalculateSoftFaceNormals( const Dali::Vector<Vector3>& vertices,
-                                 Dali::Vector<TriIndex>& triangles,
-                                 Dali::Vector<Vector3>& normals );
+  void CalculateSoftFaceNormals(const Dali::Vector<Vector3>& vertices,
+                                Dali::Vector<TriIndex>&      triangles,
+                                Dali::Vector<Vector3>&       normals);
 
   /**
    * @brief Calculates tangents and bitangents for each point of the object.
@@ -146,7 +142,7 @@ private:
    */
   void CalculateTangentFrame();
 
-  void CenterAndScale( bool center, Dali::Vector<Vector3>& points );
+  void CenterAndScale(bool center, Dali::Vector<Vector3>& points);
 
   /**
    * @brief Using the data loaded from the file, create arrays of data to be used in creating the geometry.
@@ -158,13 +154,12 @@ private:
    * @param[out] indices Indices of corresponding values to match triangles to their respective data.
    * @param[in] useSoftNormals Indicates whether we should average the normals at each point to smooth the surface or not.
    */
-  void CreateGeometryArray( Dali::Vector<Vector3>& positions,
-                            Dali::Vector<Vector3>& normals,
-                            Dali::Vector<Vector3>& tangents,
-                            Dali::Vector<Vector2>& textures,
-                            Dali::Vector<unsigned short>& indices,
-                            bool useSoftNormals );
-
+  void CreateGeometryArray(Dali::Vector<Vector3>&        positions,
+                           Dali::Vector<Vector3>&        normals,
+                           Dali::Vector<Vector3>&        tangents,
+                           Dali::Vector<Vector2>&        textures,
+                           Dali::Vector<unsigned short>& indices,
+                           bool                          useSoftNormals);
 };
 
 } // namespace PbrDemo

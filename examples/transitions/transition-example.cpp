@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,12 @@
 // Internal includes
 #include "transition-application.h"
 
-
-int DALI_EXPORT_API main( int argc, char** argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
   const char* themeName = Demo::TransitionApplication::DEMO_THEME_ONE_PATH;
 
-  Application application = Application::New( &argc, &argv, themeName );
-  Demo::TransitionApplication transitionApplication( application );
+  Application                 application = Application::New(&argc, &argv, themeName);
+  Demo::TransitionApplication transitionApplication(application);
   application.MainLoop();
   return 0;
 }

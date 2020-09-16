@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,19 +19,19 @@
 #include "clipping-item-factory.h"
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/object/property-map.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali-toolkit/public-api/controls/image-view/image-view.h>
 #include <dali-toolkit/public-api/visuals/border-visual-properties.h>
-#include <dali-toolkit/public-api/visuals/visual-properties.h>
 #include <dali-toolkit/public-api/visuals/image-visual-properties.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/public-api/object/property-map.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 namespace
 {
-const char * IMAGE_PATHS[] = {
+const char* IMAGE_PATHS[] = {
   DEMO_IMAGE_DIR "gallery-medium-1.jpg",
   DEMO_IMAGE_DIR "gallery-medium-2.jpg",
   DEMO_IMAGE_DIR "gallery-medium-3.jpg",
@@ -86,7 +86,7 @@ const char * IMAGE_PATHS[] = {
   DEMO_IMAGE_DIR "gallery-medium-52.jpg",
   DEMO_IMAGE_DIR "gallery-medium-53.jpg",
 };
-const unsigned int NUM_IMAGES = sizeof( IMAGE_PATHS ) / sizeof( char * );
+const unsigned int NUM_IMAGES            = sizeof(IMAGE_PATHS) / sizeof(char*);
 const unsigned int NUM_IMAGES_MULTIPLIER = 10;
 
 const float ITEM_BORDER_SIZE = 2.0f;
@@ -101,28 +101,25 @@ unsigned int ClippingItemFactory::GetNumberOfItems()
   return NUM_IMAGES * NUM_IMAGES_MULTIPLIER;
 }
 
-Actor ClippingItemFactory::NewItem( unsigned int itemId )
+Actor ClippingItemFactory::NewItem(unsigned int itemId)
 {
   // Create an image view for this item
   Property::Map propertyMap;
-  propertyMap.Insert(Visual::Property::TYPE,  Visual::IMAGE);
-  propertyMap.Insert(ImageVisual::Property::URL, IMAGE_PATHS[ itemId % NUM_IMAGES ] );
+  propertyMap.Insert(Visual::Property::TYPE, Visual::IMAGE);
+  propertyMap.Insert(ImageVisual::Property::URL, IMAGE_PATHS[itemId % NUM_IMAGES]);
   propertyMap.Insert(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FILL);
   ImageView actor = ImageView::New();
   actor.SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
 
   // Add a border image child actor
   ImageView borderActor = ImageView::New();
-  borderActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  borderActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  borderActor.SetResizePolicy( ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS );
-  borderActor.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f ) );
-  borderActor.SetProperty( Actor::Property::COLOR_MODE, USE_PARENT_COLOR );
-  borderActor.SetProperty( ImageView::Property::IMAGE,
-                           Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::BORDER )
-                                          .Add( BorderVisual::Property::COLOR, Color::WHITE )
-                                          .Add( BorderVisual::Property::SIZE, ITEM_BORDER_SIZE )
-                                          .Add( BorderVisual::Property::ANTI_ALIASING, true ) );
+  borderActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  borderActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  borderActor.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
+  borderActor.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f));
+  borderActor.SetProperty(Actor::Property::COLOR_MODE, USE_PARENT_COLOR);
+  borderActor.SetProperty(ImageView::Property::IMAGE,
+                          Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::BORDER).Add(BorderVisual::Property::COLOR, Color::WHITE).Add(BorderVisual::Property::SIZE, ITEM_BORDER_SIZE).Add(BorderVisual::Property::ANTI_ALIASING, true));
   actor.Add(borderActor);
 
   return actor;

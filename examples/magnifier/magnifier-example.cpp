@@ -26,16 +26,16 @@ using namespace Dali;
 
 namespace
 {
-const char* BACKGROUND_IMAGE( DEMO_IMAGE_DIR "background-magnifier.jpg" );
-const char* TOOLBAR_IMAGE( DEMO_IMAGE_DIR "top-bar.png" );
-const char* APPLICATION_TITLE( "Magnifier Example" );
-const Vector3 MAGNIFIER_SIZE(0.25f, 0.25f, 0.0f);       ///< Magnifier sides should be 25% of the width of the window
-const float ANIMATION_DURATION(60.0f);                  ///< Run animation for a minute before repeating.
-const float MAGNIFIER_DISPLAY_DURATION(0.125f);         ///< Duration in seconds for show/hide manual magnifier animation
+const char*   BACKGROUND_IMAGE(DEMO_IMAGE_DIR "background-magnifier.jpg");
+const char*   TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
+const char*   APPLICATION_TITLE("Magnifier Example");
+const Vector3 MAGNIFIER_SIZE(0.25f, 0.25f, 0.0f); ///< Magnifier sides should be 25% of the width of the window
+const float   ANIMATION_DURATION(60.0f);          ///< Run animation for a minute before repeating.
+const float   MAGNIFIER_DISPLAY_DURATION(0.125f); ///< Duration in seconds for show/hide manual magnifier animation
 
-const float MAGNIFICATION_FACTOR(2.0f);                 ///< Amount to magnify by.
-const float MAGNIFIER_INDENT(10.0f);                    ///< Indentation around edge of window to define where magnifiers may move.
-const float FINGER_RADIUS_INCHES(0.25f);                ///< Average finger radius in inches from the center of index finger to edge.
+const float MAGNIFICATION_FACTOR(2.0f);  ///< Amount to magnify by.
+const float MAGNIFIER_INDENT(10.0f);     ///< Indentation around edge of window to define where magnifiers may move.
+const float FINGER_RADIUS_INCHES(0.25f); ///< Average finger radius in inches from the center of index finger to edge.
 
 /**
  * MagnifierPathConstraint
@@ -51,26 +51,26 @@ struct MagnifierPathConstraint
    * within window bounds.
    */
   MagnifierPathConstraint(const Vector3& windowSize,
-                          Vector3 offset = Vector3::ZERO)
+                          Vector3        offset = Vector3::ZERO)
   : mWindowSize(windowSize),
     mOffset(offset)
   {
   }
 
-  void operator()( Vector3& current, const PropertyInputContainer& inputs )
+  void operator()(Vector3& current, const PropertyInputContainer& inputs)
   {
-    float time = inputs[1]->GetFloat();
+    float          time = inputs[1]->GetFloat();
     const Vector3& size = inputs[0]->GetVector3();
 
     current = mOffset;
 
-    Vector3 range( mWindowSize - size - Vector3::ONE * MAGNIFIER_INDENT * 2.0f );
+    Vector3 range(mWindowSize - size - Vector3::ONE * MAGNIFIER_INDENT * 2.0f);
     current.x += 0.5f * sinf(time * 0.471f) * range.width;
     current.y += 0.5f * sinf(time * 0.8739f) * range.height;
   }
 
-  Vector3 mWindowSize;     ///< Keep track of the window size for determining path within window bounds
-  Vector3 mOffset;        ///< Amount to offset magnifier path
+  Vector3 mWindowSize; ///< Keep track of the window size for determining path within window bounds
+  Vector3 mOffset;     ///< Amount to offset magnifier path
 };
 
 /**
@@ -99,11 +99,11 @@ struct ConfinementConstraint
   {
   }
 
-  void operator()( Vector3& current, const PropertyInputContainer& inputs )
+  void operator()(Vector3& current, const PropertyInputContainer& inputs)
   {
-    const Vector3& size = inputs[0]->GetVector3();
-    const Vector3 origin = inputs[1]->GetVector3();
-    const Vector3& anchor = inputs[2]->GetVector3();
+    const Vector3& size          = inputs[0]->GetVector3();
+    const Vector3  origin        = inputs[1]->GetVector3();
+    const Vector3& anchor        = inputs[2]->GetVector3();
     const Vector3& referenceSize = inputs[3]->GetVector3();
 
     Vector3 offset(mOffsetOrigin * referenceSize);
@@ -150,34 +150,33 @@ struct ConfinementConstraint
     current.y -= std::max(corner.y, 0.0f);
   }
 
-  Vector3 mOffsetOrigin;                                ///< Manual Parent Offset Origin.
-  Vector3 mMinIndent;                                   ///< Top-Left Margin
-  Vector3 mMaxIndent;                                   ///< Bottom-Right Margin.
-  bool mFlipHorizontal;                                 ///< Whether to flip actor's position if exceeds horizontal screen bounds
-  bool mFlipVertical;                                   ///< Whether to flip actor's position if exceeds vertical screen bounds
+  Vector3 mOffsetOrigin;   ///< Manual Parent Offset Origin.
+  Vector3 mMinIndent;      ///< Top-Left Margin
+  Vector3 mMaxIndent;      ///< Bottom-Right Margin.
+  bool    mFlipHorizontal; ///< Whether to flip actor's position if exceeds horizontal screen bounds
+  bool    mFlipVertical;   ///< Whether to flip actor's position if exceeds vertical screen bounds
 };
 
-}
+} // namespace
 
 // This example shows how to use the Magnifier component.
 //
 class ExampleController : public ConnectionTracker
 {
 public:
-
   /**
    * The example controller constructor.
    * @param[in] application The application instance
    */
-  ExampleController( Application& application )
-  : mApplication( application ),
+  ExampleController(Application& application)
+  : mApplication(application),
     mView(),
     mAnimationTime(0.0f),
-    mAnimationTimeProperty( Property::INVALID_INDEX ),
+    mAnimationTimeProperty(Property::INVALID_INDEX),
     mMagnifierShown(false)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &ExampleController::Create );
+    mApplication.InitSignal().Connect(this, &ExampleController::Create);
   }
 
   /**
@@ -192,7 +191,7 @@ public:
    * Invoked upon creation of application
    * @param[in] application The application instance
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
@@ -203,59 +202,59 @@ public:
     // Creates a default view with a default tool bar.
     // The view is added to the window.
     Toolkit::ToolBar toolBar;
-    mContent = DemoHelper::CreateView( application,
-                                       mView,
-                                       toolBar,
-                                       BACKGROUND_IMAGE,
-                                       TOOLBAR_IMAGE,
-                                       APPLICATION_TITLE );
+    mContent = DemoHelper::CreateView(application,
+                                      mView,
+                                      toolBar,
+                                      BACKGROUND_IMAGE,
+                                      TOOLBAR_IMAGE,
+                                      APPLICATION_TITLE);
 
-    mContent.SetProperty( Actor::Property::LEAVE_REQUIRED,true);
-    mContent.TouchedSignal().Connect( this, &ExampleController::OnTouched );
+    mContent.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
+    mContent.TouchedSignal().Connect(this, &ExampleController::OnTouched);
 
     // Create magnifier (controlled by human touch)
     Layer overlay = Layer::New();
-    overlay.SetProperty( Actor::Property::SENSITIVE,false);
-    overlay.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    overlay.SetProperty( Actor::Property::SIZE, mWindowSize);
+    overlay.SetProperty(Actor::Property::SENSITIVE, false);
+    overlay.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    overlay.SetProperty(Actor::Property::SIZE, mWindowSize);
     window.Add(overlay);
 
     mMagnifier = Toolkit::Magnifier::New();
-    mMagnifier.SetSourceActor( mView );
-    mMagnifier.SetProperty( Actor::Property::SIZE, MAGNIFIER_SIZE * mWindowSize.width );  // Size of magnifier is in relation to window width
-    mMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
-    mMagnifier.SetProperty( Actor::Property::SCALE,Vector3::ZERO);
-    overlay.Add( mMagnifier );
+    mMagnifier.SetSourceActor(mView);
+    mMagnifier.SetProperty(Actor::Property::SIZE, MAGNIFIER_SIZE * mWindowSize.width); // Size of magnifier is in relation to window width
+    mMagnifier.SetProperty(Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR);
+    mMagnifier.SetProperty(Actor::Property::SCALE, Vector3::ZERO);
+    overlay.Add(mMagnifier);
 
     // Apply constraint to animate the position of the magnifier.
-    Constraint constraint = Constraint::New<Vector3>( mMagnifier, Actor::Property::POSITION, ConfinementConstraint(Vector3( 0.5f, 0.5f, 0.0f ), Vector2::ONE * MAGNIFIER_INDENT, Vector2::ONE * MAGNIFIER_INDENT) );
-    constraint.AddSource( LocalSource(Actor::Property::SIZE) );
-    constraint.AddSource( LocalSource(Actor::Property::PARENT_ORIGIN) );
-    constraint.AddSource( LocalSource(Actor::Property::ANCHOR_POINT) );
-    constraint.AddSource( ParentSource(Actor::Property::SIZE) );
+    Constraint constraint = Constraint::New<Vector3>(mMagnifier, Actor::Property::POSITION, ConfinementConstraint(Vector3(0.5f, 0.5f, 0.0f), Vector2::ONE * MAGNIFIER_INDENT, Vector2::ONE * MAGNIFIER_INDENT));
+    constraint.AddSource(LocalSource(Actor::Property::SIZE));
+    constraint.AddSource(LocalSource(Actor::Property::PARENT_ORIGIN));
+    constraint.AddSource(LocalSource(Actor::Property::ANCHOR_POINT));
+    constraint.AddSource(ParentSource(Actor::Property::SIZE));
     constraint.SetRemoveAction(Constraint::DISCARD);
     constraint.Apply();
 
     // Create bouncing magnifier automatically bounces around screen.
     mBouncingMagnifier = Toolkit::Magnifier::New();
-    mBouncingMagnifier.SetSourceActor( mView );
-    mBouncingMagnifier.SetProperty( Actor::Property::SIZE, MAGNIFIER_SIZE * mWindowSize.width ); // Size of magnifier is in relation to window width
-    mBouncingMagnifier.SetProperty( Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR );
-    overlay.Add( mBouncingMagnifier );
+    mBouncingMagnifier.SetSourceActor(mView);
+    mBouncingMagnifier.SetProperty(Actor::Property::SIZE, MAGNIFIER_SIZE * mWindowSize.width); // Size of magnifier is in relation to window width
+    mBouncingMagnifier.SetProperty(Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR);
+    overlay.Add(mBouncingMagnifier);
 
-    mAnimationTimeProperty = mBouncingMagnifier.RegisterProperty("animationTime",  0.0f);
+    mAnimationTimeProperty = mBouncingMagnifier.RegisterProperty("animationTime", 0.0f);
     ContinueAnimation();
 
     // Apply constraint to animate the position of the magnifier.
-    constraint = Constraint::New<Vector3>( mBouncingMagnifier, Actor::Property::POSITION, MagnifierPathConstraint(mWindowSize, mWindowSize * 0.5f) );
-    constraint.AddSource( LocalSource(Actor::Property::SIZE) );
-    constraint.AddSource( LocalSource(mAnimationTimeProperty) );
+    constraint = Constraint::New<Vector3>(mBouncingMagnifier, Actor::Property::POSITION, MagnifierPathConstraint(mWindowSize, mWindowSize * 0.5f));
+    constraint.AddSource(LocalSource(Actor::Property::SIZE));
+    constraint.AddSource(LocalSource(mAnimationTimeProperty));
     constraint.Apply();
 
     // Apply constraint to animate the source of the magnifier.
-    constraint = Constraint::New<Vector3>( mBouncingMagnifier, Toolkit::Magnifier::Property::SOURCE_POSITION, MagnifierPathConstraint(mWindowSize) );
-    constraint.AddSource( LocalSource(Actor::Property::SIZE) );
-    constraint.AddSource( LocalSource(mAnimationTimeProperty) );
+    constraint = Constraint::New<Vector3>(mBouncingMagnifier, Toolkit::Magnifier::Property::SOURCE_POSITION, MagnifierPathConstraint(mWindowSize));
+    constraint.AddSource(LocalSource(Actor::Property::SIZE));
+    constraint.AddSource(LocalSource(mAnimationTimeProperty));
     constraint.Apply();
   }
 
@@ -263,7 +262,7 @@ public:
    * Invoked whenever the animation finishes (every 60 seconds)
    * @param[in] animation The animation
    */
-  void OnAnimationFinished( Animation& animation )
+  void OnAnimationFinished(Animation& animation)
   {
     animation.FinishedSignal().Disconnect(this, &ExampleController::OnAnimationFinished);
     animation.Clear();
@@ -277,7 +276,7 @@ public:
   {
     Animation animation = Animation::New(ANIMATION_DURATION);
     mAnimationTime += ANIMATION_DURATION;
-    animation.AnimateTo( Property(mBouncingMagnifier, mAnimationTimeProperty), mAnimationTime );
+    animation.AnimateTo(Property(mBouncingMagnifier, mAnimationTimeProperty), mAnimationTime);
     animation.Play();
     animation.FinishedSignal().Connect(this, &ExampleController::OnAnimationFinished);
   }
@@ -286,7 +285,7 @@ public:
    * Invoked whenever the quit button is clicked
    * @param[in] button the quit button
    */
-  bool OnQuitButtonClicked( Toolkit::Button button )
+  bool OnQuitButtonClicked(Toolkit::Button button)
   {
     // quit the application
     mApplication.Quit();
@@ -298,11 +297,11 @@ public:
    * @param[in] actor The actor that received the touch
    * @param[in] event The touch-event information
    */
-  bool OnTouched( Actor actor, const TouchEvent& event )
+  bool OnTouched(Actor actor, const TouchEvent& event)
   {
     if(event.GetPointCount() > 0)
     {
-      switch( event.GetState( 0 ) )
+      switch(event.GetState(0))
       {
         case PointState::DOWN:
         case PointState::MOTION:
@@ -323,7 +322,7 @@ public:
         }
       } // end switch
 
-      Vector3 touchPoint( event.GetScreenPosition( 0 ) );
+      Vector3 touchPoint(event.GetScreenPosition(0));
 
       SetMagnifierPosition(touchPoint - mWindowSize * 0.5f);
     }
@@ -365,20 +364,20 @@ public:
    */
   void SetMagnifierPosition(const Vector3 position)
   {
-    mMagnifier.SetProperty( Toolkit::Magnifier::Property::SOURCE_POSITION, position );
+    mMagnifier.SetProperty(Toolkit::Magnifier::Property::SOURCE_POSITION, position);
 
     // position magnifier glass such that bottom edge is touching/near top of finger.
     Vector3 glassPosition(position);
     glassPosition.y -= mWindowSize.width * MAGNIFIER_SIZE.height * 0.5f + mApplication.GetWindow().GetDpi().GetHeight() * FINGER_RADIUS_INCHES;
 
-    mMagnifier.SetProperty( Actor::Property::POSITION, glassPosition );
+    mMagnifier.SetProperty(Actor::Property::POSITION, glassPosition);
   }
 
   void OnKeyEvent(const KeyEvent& event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -386,23 +385,21 @@ public:
   }
 
 private:
-
-  Application&  mApplication;                             ///< Application instance
-  Toolkit::Control mView;                                 ///< The view
-  Layer mContent;                                         ///< The content layer
-  Toolkit::Magnifier mMagnifier;                          ///< The manually controlled magnifier
-  Toolkit::Magnifier mBouncingMagnifier;                  ///< The animating magnifier (swirly animation)
-  Vector3 mWindowSize;                                     ///< The size of the window
-  float mAnimationTime;                                   ///< Keep track of start animation time.
-  Property::Index mAnimationTimeProperty;                 ///< Animation time property (responsible for swirly animation)
-  bool mMagnifierShown;                                   ///< Flag indicating whether the magnifier is being shown or not.
-
+  Application&       mApplication;           ///< Application instance
+  Toolkit::Control   mView;                  ///< The view
+  Layer              mContent;               ///< The content layer
+  Toolkit::Magnifier mMagnifier;             ///< The manually controlled magnifier
+  Toolkit::Magnifier mBouncingMagnifier;     ///< The animating magnifier (swirly animation)
+  Vector3            mWindowSize;            ///< The size of the window
+  float              mAnimationTime;         ///< Keep track of start animation time.
+  Property::Index    mAnimationTimeProperty; ///< Animation time property (responsible for swirly animation)
+  bool               mMagnifierShown;        ///< Flag indicating whether the magnifier is being shown or not.
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-  ExampleController test( application );
+  Application       application = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  ExampleController test(application);
   application.MainLoop();
   return 0;
 }

@@ -41,7 +41,6 @@
 class GameCamera : public Dali::ConnectionTracker
 {
 public:
-
   /**
    * Creates an instance of GameCamera
    */
@@ -60,10 +59,9 @@ public:
    * @param[in] far Far Plane
    * @param[in] sceneSize The size of the scene this is looking at
    */
-  void Initialise( Dali::CameraActor defaultCamera, float fov, float near, float far, const Dali::Vector2& sceneSize );
+  void Initialise(Dali::CameraActor defaultCamera, float fov, float near, float far, const Dali::Vector2& sceneSize);
 
 private:
-
   /**
    * Sets up a perspective camera using Dali default camera
    */
@@ -81,7 +79,7 @@ private:
    * @param[in] actor Actor receiving signal
    * @param[in] touch Touch data
    */
-  bool OnTouch( Dali::Actor actor, const Dali::TouchEvent& touch );
+  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& touch);
 
   /**
    * Handles camera tick() update
@@ -90,14 +88,13 @@ private:
   bool OnTick();
 
 private:
-
-  Dali::CameraActor mCameraActor; /// Camera actor
-  Dali::Actor mInterceptorActor; /// Actor intercepting user input
+  Dali::CameraActor mCameraActor;      /// Camera actor
+  Dali::Actor       mInterceptorActor; /// Actor intercepting user input
 
   Dali::Timer mTimer; /// Per-frame timer
 
-  Dali::Vector2 mScreenLookDelta; /// Look delta vector in screen space
-  Dali::Vector2 mScreenWalkDelta; /// Walk delta vector in screen space
+  Dali::Vector2 mScreenLookDelta;      /// Look delta vector in screen space
+  Dali::Vector2 mScreenWalkDelta;      /// Walk delta vector in screen space
   Dali::Vector2 mOldTouchLookPosition; /// Previous look vector in screen space
   Dali::Vector2 mOldTouchWalkPosition; /// Previuus walk vector in screen space
 
@@ -105,13 +102,13 @@ private:
 
   float mFovY; /// Camera field-of-view
   float mNear; /// Near plane
-  float mFar; /// Far plane
+  float mFar;  /// Far plane
 
   int mWalkingTouchId; /// Touch device id bound to the walking action
   int mLookingTouchId; /// Touch device id bound to the looking action
 
   Dali::Vector3 mCameraPosition; /// Current camera position ( shadowing the actor position )
-  Dali::Vector2 mSceneSize; /// The size of the scene we are looking at
+  Dali::Vector2 mSceneSize;      /// The size of the scene we are looking at
 
   bool mPortraitMode; /// flag if window is in portrait mode ( physically window width < height )
 };

@@ -33,33 +33,31 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-
 }
 
 namespace Demo
 {
+const char* ICON_IMAGE(DEMO_IMAGE_DIR "application-icon-13.png");
 
-const char* ICON_IMAGE( DEMO_IMAGE_DIR  "application-icon-13.png" );
-
-SimpleVisualsApplication::SimpleVisualsApplication( Application& application )
-: mApplication( application ),
+SimpleVisualsApplication::SimpleVisualsApplication(Application& application)
+: mApplication(application),
   mMyControl()
 {
-  application.InitSignal().Connect( this, &SimpleVisualsApplication::Create );
+  application.InitSignal().Connect(this, &SimpleVisualsApplication::Create);
 }
 
-Dali::Actor SimpleVisualsApplication::OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction )
+Dali::Actor SimpleVisualsApplication::OnKeyboardPreFocusChange(Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction)
 {
   Actor nextFocusActor = proposed;
 
-  if( !current && !proposed  )
+  if(!current && !proposed)
   {
     // Set the initial focus to the first tile in the current page should be focused.
     nextFocusActor = mMyControl;
   }
   else
   {
-    if ( current == mMyControl )
+    if(current == mMyControl)
     {
       nextFocusActor = mMyControl2;
     }
@@ -72,68 +70,67 @@ Dali::Actor SimpleVisualsApplication::OnKeyboardPreFocusChange( Dali::Actor curr
   return nextFocusActor;
 }
 
-
-void SimpleVisualsApplication::OnKeyEvent( const KeyEvent& keyEvent )
+void SimpleVisualsApplication::OnKeyEvent(const KeyEvent& keyEvent)
 {
   static int keyPressed = 0;
 
-  if( keyEvent.GetState() == KeyEvent::DOWN)
+  if(keyEvent.GetState() == KeyEvent::DOWN)
   {
-    if( keyPressed == 0 ) // Is this the first down event?
+    if(keyPressed == 0) // Is this the first down event?
     {
-      printf("Key pressed: %s %d\n", keyEvent.GetKeyName().c_str(), keyEvent.GetKeyCode() );
+      printf("Key pressed: %s %d\n", keyEvent.GetKeyName().c_str(), keyEvent.GetKeyCode());
 
-      if( IsKey( keyEvent, DALI_KEY_ESCAPE) || IsKey( keyEvent, DALI_KEY_BACK ) )
+      if(IsKey(keyEvent, DALI_KEY_ESCAPE) || IsKey(keyEvent, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
-      else if( keyEvent.GetKeyName().compare("Return") == 0 )
+      else if(keyEvent.GetKeyName().compare("Return") == 0)
       {
       }
     }
     keyPressed = 1;
   }
-  else if( keyEvent.GetState() == KeyEvent::UP )
+  else if(keyEvent.GetState() == KeyEvent::UP)
   {
     keyPressed = 0;
   }
 }
 
-void SimpleVisualsApplication::Create( Application& application )
+void SimpleVisualsApplication::Create(Application& application)
 {
   Window window = application.GetWindow();
-  window.SetBackgroundColor( Vector4( 0.1f, 0.1f, 0.1f, 1.0f ) );
+  window.SetBackgroundColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
 
   // Connect to key events so can quit application
   window.KeyEventSignal().Connect(this, &SimpleVisualsApplication::OnKeyEvent);
 
   // Create a table view to parent the 2 MyControls
-  TableView contentLayout = TableView::New( 2, 2 );
-  contentLayout.SetProperty( Dali::Actor::Property::NAME,"ContentLayout");
-  contentLayout.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-  contentLayout.SetResizePolicy( ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT );
-  contentLayout.SetProperty( Actor::Property::SIZE_MODE_FACTOR, Vector3( 1.0f, .5f, 1.0f ) );
-  contentLayout.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-  contentLayout.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-  contentLayout.SetCellPadding( Vector2( 50.0f, 15.0f ) );
-  contentLayout.SetBackgroundColor( Vector4(0.949, 0.949, 0.949, 1.0) );
+  TableView contentLayout = TableView::New(2, 2);
+  contentLayout.SetProperty(Dali::Actor::Property::NAME, "ContentLayout");
+  contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  contentLayout.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
+  contentLayout.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(1.0f, .5f, 1.0f));
+  contentLayout.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  contentLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  contentLayout.SetCellPadding(Vector2(50.0f, 15.0f));
+  contentLayout.SetBackgroundColor(Vector4(0.949, 0.949, 0.949, 1.0));
 
   // Listen to focus change so can see Visual change from NORMAL to FOCUSED state
-  KeyboardFocusManager::Get().PreFocusChangeSignal().Connect( this, &SimpleVisualsApplication::OnKeyboardPreFocusChange );
+  KeyboardFocusManager::Get().PreFocusChangeSignal().Connect(this, &SimpleVisualsApplication::OnKeyboardPreFocusChange);
 
-  window.Add( contentLayout );
+  window.Add(contentLayout);
 
   // Create 2 MyControls and add to table view.
   mMyControl = MyControl::New();
-  mMyControl.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  mMyControl.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::TOP_LEFT);
+  mMyControl.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  mMyControl.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
 
   mMyControl2 = MyControl::New();
-  mMyControl2.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS );
-  mMyControl2.SetProperty( Actor::Property::PARENT_ORIGIN,ParentOrigin::CENTER);
+  mMyControl2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  mMyControl2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
-  contentLayout.AddChild( mMyControl2, TableView::CellPosition(0, 0) );
-  contentLayout.AddChild( mMyControl, TableView::CellPosition(0, 1) );
+  contentLayout.AddChild(mMyControl2, TableView::CellPosition(0, 0));
+  contentLayout.AddChild(mMyControl, TableView::CellPosition(0, 1));
 }
 
 } // namespace Demo

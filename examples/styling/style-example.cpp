@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,27 +25,26 @@
 // Internal includes
 #include "styling-application.h"
 
-
-int DALI_EXPORT_API main( int argc, char** argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
   const char* themeName = Demo::StylingApplication::DEMO_THEME_ONE_PATH;
 
-  if( argc > 1 )
+  if(argc > 1)
   {
     int theme = atoi(argv[1]);
-    if( theme == 2 )
+    if(theme == 2)
     {
       themeName = Demo::StylingApplication::DEMO_THEME_TWO_PATH;
     }
-    else if( theme == 3 )
+    else if(theme == 3)
     {
       themeName = Demo::StylingApplication::DEMO_THEME_THREE_PATH;
     }
   }
 
-  Application application = Application::New( &argc, &argv, themeName );
+  Application application = Application::New(&argc, &argv, themeName);
   {
-    Demo::StylingApplication stylingApplication( application );
+    Demo::StylingApplication stylingApplication(application);
     application.MainLoop();
   }
   return 0;

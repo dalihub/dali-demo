@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,13 +28,13 @@
 namespace
 {
 // Style sheet to be used by this application
-const char* SIMPLE_DEMO_THEME( DEMO_STYLE_DIR "simple-example-theme.json" );
-}
+const char* SIMPLE_DEMO_THEME(DEMO_STYLE_DIR "simple-example-theme.json");
+} // namespace
 
-int DALI_EXPORT_API main( int argc, char** argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, SIMPLE_DEMO_THEME ); // Use the above defined style sheet for this application.
-  Demo::SimpleVisualsApplication simpleVisualsApplication( application );
+  Application                    application = Application::New(&argc, &argv, SIMPLE_DEMO_THEME); // Use the above defined style sheet for this application.
+  Demo::SimpleVisualsApplication simpleVisualsApplication(application);
   application.MainLoop();
   return 0;
 }

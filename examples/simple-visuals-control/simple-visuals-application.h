@@ -2,7 +2,7 @@
 #define DALI_DEMO_SIMPLE_VISUALS_APPLICATION_H
 
 /*
- * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ using namespace Dali::Toolkit;
 
 namespace Demo
 {
-
 /**
  * @brief An application that uses the my-control to display 2 icons, if focus is allowed ( by using a keyboard or remote ) then the icons will change
  * depending on which one is focused.
@@ -39,16 +38,13 @@ namespace Demo
  */
 class SimpleVisualsApplication : public ConnectionTracker
 {
-
 public:
-
   /**
    * @brief Constructor.
    *
    * @param[in]  application A reference to the Application class.
    */
-  SimpleVisualsApplication( Application& application );
-
+  SimpleVisualsApplication(Application& application);
 
 private:
   /**
@@ -57,33 +53,29 @@ private:
    *  @param[in] proposed New actor that is requesting to be focused
    *  @param[in] direction The direction of the focus event from current actor
    */
-  Dali::Actor OnKeyboardPreFocusChange( Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction );
+  Dali::Actor OnKeyboardPreFocusChange(Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction);
 
   /**
    * @brief Derived from control, enables capture of key presses
    *
    * @param[in] event In incoming key event
    */
-  void OnKeyEvent( const KeyEvent& event );
+  void OnKeyEvent(const KeyEvent& event);
 
   /**
    * @brief Called to initialise the application content
    *
    * @param[in] application A reference to the Application class.
    */
-  void Create( Application& application );
-
+  void Create(Application& application);
 
 private:
-
-  Application& mApplication;  // Handle to the application that is created and passed in.
+  Application& mApplication; // Handle to the application that is created and passed in.
 
   MyControl mMyControl;  //  Handle to first instance of MyControl
   MyControl mMyControl2; //  Handle to second instance of MyControl
-
 };
 
 } // Namespace Demo
-
 
 #endif // DALI_DEMO_SIMPLE_VISUALS_APPLICATION_H

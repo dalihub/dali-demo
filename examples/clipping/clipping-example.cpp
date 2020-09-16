@@ -16,8 +16,8 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
@@ -29,16 +29,16 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const char * const APPLICATION_TITLE( "Clipping Controls" );
-const Vector3 APPLICATION_TITLE_PARENT_ORIGIN( 0.5f, 0.03f, 0.5f ); // Set the parent origin to a small percentage below the top (so the demo will scale for different resolutions).
+const char* const APPLICATION_TITLE("Clipping Controls");
+const Vector3     APPLICATION_TITLE_PARENT_ORIGIN(0.5f, 0.03f, 0.5f); // Set the parent origin to a small percentage below the top (so the demo will scale for different resolutions).
 
-const Vector3 ITEM_VIEW_LAYOUT_SIZE_SCALE( 0.75f, 0.5f, 0.75f );
-const float ITEM_VIEW_BORDER_SIZE = 2.0f;
-const float ITEM_VIEW_MAXIMUM_ROTATION_IN_DEGREES = 20.0f;
-const float ITEM_VIEW_LAYOUT_POSITION_CHANGE_MULTIPLIER = 3.0f;
-const float ITEM_VIEW_ROTATION_ANIMATION_TIME = 0.2f;
+const Vector3 ITEM_VIEW_LAYOUT_SIZE_SCALE(0.75f, 0.5f, 0.75f);
+const float   ITEM_VIEW_BORDER_SIZE                       = 2.0f;
+const float   ITEM_VIEW_MAXIMUM_ROTATION_IN_DEGREES       = 20.0f;
+const float   ITEM_VIEW_LAYOUT_POSITION_CHANGE_MULTIPLIER = 3.0f;
+const float   ITEM_VIEW_ROTATION_ANIMATION_TIME           = 0.2f;
 
-const char * const BUTTON_LABEL( "Toggle Clipping Mode" );
+const char* const BUTTON_LABEL("Toggle Clipping Mode");
 } // unnamed namespace
 
 /**
@@ -54,90 +54,85 @@ const char * const BUTTON_LABEL( "Toggle Clipping Mode" );
 class ClippingExample : public ConnectionTracker
 {
 public:
-
   /**
    * @brief Constructor.
    * @param[in] application A reference to the Application class.
    */
-  ClippingExample( Application& application )
-  : mApplication( application )
+  ClippingExample(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &ClippingExample::Create );
+    mApplication.InitSignal().Connect(this, &ClippingExample::Create);
   }
 
 private:
-
   /**
    * @brief Called to initialise the application content.
    * @param[in] application A reference to the Application class.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Connect to the window's key signal to allow Back and Escape to exit.
     Window window = application.GetWindow();
-    window.KeyEventSignal().Connect( this, &ClippingExample::OnKeyEvent );
+    window.KeyEventSignal().Connect(this, &ClippingExample::OnKeyEvent);
 
     // Create a TextLabel for the application title.
-    Toolkit::TextLabel label = Toolkit::TextLabel::New( APPLICATION_TITLE );
-    label.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER );
-    label.SetProperty( Actor::Property::PARENT_ORIGIN, APPLICATION_TITLE_PARENT_ORIGIN );
-    label.SetProperty( Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER" );
-    label.SetProperty( Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER" );
-    label.SetProperty( Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE );
-    window.Add( label );
+    Toolkit::TextLabel label = Toolkit::TextLabel::New(APPLICATION_TITLE);
+    label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    label.SetProperty(Actor::Property::PARENT_ORIGIN, APPLICATION_TITLE_PARENT_ORIGIN);
+    label.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
+    label.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
+    label.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
+    window.Add(label);
 
     // Create an item-view which clips its children.
-    mItemView = ItemView::New( mClippingItemFactory );
-    mItemView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mItemView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mItemView.SetProperty( Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN ); // Enable clipping. No need to create any renderers.
-    window.Add( mItemView );
+    mItemView = ItemView::New(mClippingItemFactory);
+    mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mItemView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mItemView.SetProperty(Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN); // Enable clipping. No need to create any renderers.
+    window.Add(mItemView);
 
     // Create a Spiral Layout and add it to the Item View.
-    mItemView.AddLayout( * DefaultItemLayout::New( DefaultItemLayout::SPIRAL ) );
-    window.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D ); // The item-view spiral layout requires Layer 3D behaviour.
+    mItemView.AddLayout(*DefaultItemLayout::New(DefaultItemLayout::SPIRAL));
+    window.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D); // The item-view spiral layout requires Layer 3D behaviour.
 
     // Calculate the size we would like our item-view layout to be, and then activate the layout.
     const Vector2 windowSize = window.GetSize();
-    const Vector3 itemViewLayoutSize( ITEM_VIEW_LAYOUT_SIZE_SCALE.x * windowSize.x, ITEM_VIEW_LAYOUT_SIZE_SCALE.y * windowSize.y, ITEM_VIEW_LAYOUT_SIZE_SCALE.z * windowSize.x );
-    mItemView.ActivateLayout( 0, itemViewLayoutSize, 0.0f );
+    const Vector3 itemViewLayoutSize(ITEM_VIEW_LAYOUT_SIZE_SCALE.x * windowSize.x, ITEM_VIEW_LAYOUT_SIZE_SCALE.y * windowSize.y, ITEM_VIEW_LAYOUT_SIZE_SCALE.z * windowSize.x);
+    mItemView.ActivateLayout(0, itemViewLayoutSize, 0.0f);
 
     // Connect to the scroll started and completed signals to apply orientation constraints & animations.
-    mItemView.ScrollStartedSignal().Connect( this, &ClippingExample::ScrollStarted );
-    mItemView.ScrollCompletedSignal().Connect( this, &ClippingExample::ScrollCompleted );
+    mItemView.ScrollStartedSignal().Connect(this, &ClippingExample::ScrollStarted);
+    mItemView.ScrollCompletedSignal().Connect(this, &ClippingExample::ScrollCompleted);
 
     // Create a constraint for the item-view which we apply when we start scrolling and remove when we stop.
-    mItemViewOrientationConstraint = Constraint::New< Quaternion >( mItemView, Actor::Property::ORIENTATION, ItemViewOrientationConstraint( ITEM_VIEW_MAXIMUM_ROTATION_IN_DEGREES, ITEM_VIEW_LAYOUT_POSITION_CHANGE_MULTIPLIER ) );
-    mItemViewOrientationConstraint.AddSource( LocalSource( ItemView::Property::LAYOUT_POSITION ) );
+    mItemViewOrientationConstraint = Constraint::New<Quaternion>(mItemView, Actor::Property::ORIENTATION, ItemViewOrientationConstraint(ITEM_VIEW_MAXIMUM_ROTATION_IN_DEGREES, ITEM_VIEW_LAYOUT_POSITION_CHANGE_MULTIPLIER));
+    mItemViewOrientationConstraint.AddSource(LocalSource(ItemView::Property::LAYOUT_POSITION));
 
     // Create a border around item-view (as item-view is clipping its children, we should NOT add this as a child of item-view).
     Control border = Control::New();
-    border.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    border.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    border.SetProperty( Control::Property::BACKGROUND,
-                        Property::Map().Add( Toolkit::Visual::Property::TYPE, Visual::BORDER )
-                                       .Add( BorderVisual::Property::COLOR, Color::WHITE )
-                                       .Add( BorderVisual::Property::SIZE, 2.0f )
-                                       .Add( BorderVisual::Property::ANTI_ALIASING, true ) );
-    border.SetProperty( Actor::Property::SIZE, Vector3( itemViewLayoutSize.x + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.y + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.z + ITEM_VIEW_BORDER_SIZE * 2.0f ) );
-    window.Add( border );
+    border.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    border.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    border.SetProperty(Control::Property::BACKGROUND,
+                       Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::BORDER).Add(BorderVisual::Property::COLOR, Color::WHITE).Add(BorderVisual::Property::SIZE, 2.0f).Add(BorderVisual::Property::ANTI_ALIASING, true));
+    border.SetProperty(Actor::Property::SIZE, Vector3(itemViewLayoutSize.x + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.y + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.z + ITEM_VIEW_BORDER_SIZE * 2.0f));
+    window.Add(border);
 
     // Constrain the border's orientation to the orientation of item-view.
-    Constraint constraint = Constraint::New< Quaternion >( border, Actor::Property::ORIENTATION, EqualToConstraint() );
-    constraint.AddSource( Source( mItemView, Actor::Property::ORIENTATION ) );
+    Constraint constraint = Constraint::New<Quaternion>(border, Actor::Property::ORIENTATION, EqualToConstraint());
+    constraint.AddSource(Source(mItemView, Actor::Property::ORIENTATION));
     constraint.Apply();
 
     // Create a button to toggle the clipping mode
     PushButton button = Toolkit::PushButton::New();
-    button.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER );
-    button.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER );
-    button.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    button.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-    button.SetProperty( Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D );
-    button.SetProperty( Button::Property::LABEL, BUTTON_LABEL );
-    button.ClickedSignal().Connect( this, &ClippingExample::OnButtonClicked );
-    window.Add( button );
+    button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
+    button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    button.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
+    button.SetProperty(Button::Property::LABEL, BUTTON_LABEL);
+    button.ClickedSignal().Connect(this, &ClippingExample::OnButtonClicked);
+    window.Add(button);
   }
 
   /**
@@ -145,7 +140,7 @@ private:
    *
    * Here we want to apply the item-view constraint.
    */
-  void ScrollStarted( const Vector2& /* currentScrollPosition */ )
+  void ScrollStarted(const Vector2& /* currentScrollPosition */)
   {
     mItemViewOrientationConstraint.Apply();
   }
@@ -155,10 +150,10 @@ private:
    *
    * Here we remove the item-view orientation constraint and perform an animation to return the item-view back to base-rotation.
    */
-  void ScrollCompleted( const Vector2& /* currentScrollPosition */ )
+  void ScrollCompleted(const Vector2& /* currentScrollPosition */)
   {
-    Animation animation = Animation::New( ITEM_VIEW_ROTATION_ANIMATION_TIME );
-    animation.AnimateTo( Property( mItemView, Actor::Property::ORIENTATION ), Quaternion( Degree( 0.0f ), Vector3::XAXIS ), AlphaFunction::EASE_IN_SINE );
+    Animation animation = Animation::New(ITEM_VIEW_ROTATION_ANIMATION_TIME);
+    animation.AnimateTo(Property(mItemView, Actor::Property::ORIENTATION), Quaternion(Degree(0.0f), Vector3::XAXIS), AlphaFunction::EASE_IN_SINE);
     animation.Play();
 
     mItemViewOrientationConstraint.Remove();
@@ -170,11 +165,11 @@ private:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -187,27 +182,27 @@ private:
    * Will use this to toggle between the clipping modes.
    * @param[in] button The button that has been clicked.
    */
-  bool OnButtonClicked( Toolkit::Button button )
+  bool OnButtonClicked(Toolkit::Button button)
   {
-    if( mItemView )
+    if(mItemView)
     {
-      ClippingMode::Type currentMode = static_cast< ClippingMode::Type >( mItemView.GetProperty( Actor::Property::CLIPPING_MODE ).Get< int >() );
-      mItemView.SetProperty( Actor::Property::CLIPPING_MODE, ( currentMode == ClippingMode::CLIP_CHILDREN ) ? ClippingMode::DISABLED : ClippingMode::CLIP_CHILDREN );
+      ClippingMode::Type currentMode = static_cast<ClippingMode::Type>(mItemView.GetProperty(Actor::Property::CLIPPING_MODE).Get<int>());
+      mItemView.SetProperty(Actor::Property::CLIPPING_MODE, (currentMode == ClippingMode::CLIP_CHILDREN) ? ClippingMode::DISABLED : ClippingMode::CLIP_CHILDREN);
     }
     return true;
   }
 
   // Data
 
-  Application& mApplication; ///< Reference to the application class.
-  ItemView mItemView; ///< The item view which whose children we would like to clip.
-  ClippingItemFactory mClippingItemFactory; ///< The ItemFactory used to create our items.
-  Constraint mItemViewOrientationConstraint; ///< The constraint used to control the orientation of item-view.
+  Application&        mApplication;                   ///< Reference to the application class.
+  ItemView            mItemView;                      ///< The item view which whose children we would like to clip.
+  ClippingItemFactory mClippingItemFactory;           ///< The ItemFactory used to create our items.
+  Constraint          mItemViewOrientationConstraint; ///< The constraint used to control the orientation of item-view.
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application app = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  Application     app = Application::New(&argc, &argv, DEMO_THEME_PATH);
   ClippingExample test(app);
   app.MainLoop();
   return 0;

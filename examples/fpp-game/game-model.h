@@ -2,7 +2,7 @@
 #define GAME_MODEL_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,16 +29,16 @@
  */
 struct ModelHeader
 {
-  uint32_t tag;                   /// 'MODV' tag
-  uint32_t version;               /// File version
-  uint32_t vertexBufferSize;      /// total size of the vertex buffer to allocate
-  uint32_t attributeCount;        /// number of stored attributes
-  uint32_t attributeFormat[16];   /// format encoded as ((type << 16)|(count)); 'type' represents primitive type, 'count' represents number of components ( 1-4 )
-  uint32_t attributeOffset[16];   /// attribute offsets
-  uint32_t attributeSize[16];     /// attribute size in bytes
-  uint32_t vertexStride;          /// vertex stride
-  uint32_t reserved;              /// reserved, may point at additional structure
-  uint32_t dataBeginOffset;       /// start of actual vertex data
+  uint32_t tag;                 /// 'MODV' tag
+  uint32_t version;             /// File version
+  uint32_t vertexBufferSize;    /// total size of the vertex buffer to allocate
+  uint32_t attributeCount;      /// number of stored attributes
+  uint32_t attributeFormat[16]; /// format encoded as ((type << 16)|(count)); 'type' represents primitive type, 'count' represents number of components ( 1-4 )
+  uint32_t attributeOffset[16]; /// attribute offsets
+  uint32_t attributeSize[16];   /// attribute size in bytes
+  uint32_t vertexStride;        /// vertex stride
+  uint32_t reserved;            /// reserved, may point at additional structure
+  uint32_t dataBeginOffset;     /// start of actual vertex data
 };
 
 /**
@@ -52,12 +52,11 @@ struct ModelHeader
 class GameModel
 {
 public:
-
   /**
    * Creates an instance of GameModel and loads the '.mod' file
    * @param[in] filename Name of file to load
    */
-  GameModel( const char* filename );
+  GameModel(const char* filename);
 
   /**
    * Destroys an instance of GameModel
@@ -83,14 +82,13 @@ public:
   uint32_t GetUniqueId();
 
 private:
+  Dali::Geometry     mGeometry;
+  Dali::VertexBuffer mVertexBuffer;
 
-  Dali::Geometry        mGeometry;
-  Dali::VertexBuffer    mVertexBuffer;
+  ModelHeader mHeader;
 
-  ModelHeader           mHeader;
-
-  uint32_t              mUniqueId;
-  bool                  mIsReady;
+  uint32_t mUniqueId;
+  bool     mIsReady;
 };
 
 #endif

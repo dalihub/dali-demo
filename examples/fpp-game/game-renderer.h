@@ -2,7 +2,7 @@
 #define GAME_RENDERER_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ class GameTexture;
 class GameRenderer
 {
 public:
-
   /**
    * Creates an instance of the GameRenderer
    */
@@ -47,14 +46,14 @@ public:
    * Resets the Dali::Renderer or creates new one on first time setup
    * @param[in] model Pointer to the GameModel object
    */
-  void SetModel( GameModel* model );
+  void SetModel(GameModel* model);
 
   /**
    * Sets main texture on the renderer
    * Resets the Dali::Renderer or creates new one on first time setup
    * @param[in] texture Pointer to the GameTexture object
    */
-  void SetMainTexture( GameTexture* texture );
+  void SetMainTexture(GameTexture* texture);
 
   /**
    * Retrieves DALi renderer object
@@ -62,17 +61,15 @@ public:
   Dali::Renderer& GetRenderer();
 
 private:
-
   /**
    * Initialises rendering data
    */
   void Setup();
 
 private:
-
-  Dali::Renderer  mRenderer;
-  GameModel*      mModel;
-  GameTexture*    mTexture;
+  Dali::Renderer mRenderer;
+  GameModel*     mModel;
+  GameTexture*   mTexture;
 };
 
 #endif

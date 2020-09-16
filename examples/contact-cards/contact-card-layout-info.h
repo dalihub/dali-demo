@@ -2,7 +2,7 @@
 #define CONTACT_CARD_LAYOUT_INFO_H
 
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,4 +51,3 @@ struct ContactCardLayoutInfo
 };
 
 #endif // CONTACT_CARD_LAYOUT_INFO_H
-

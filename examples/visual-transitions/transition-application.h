@@ -21,9 +21,9 @@
 #include <dali-toolkit/dali-toolkit.h>
 //#include <dali-toolkit/devel-api/controls/slider/slider.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
-#include "beat-control.h"
 #include <cstdio>
 #include <sstream>
+#include "beat-control.h"
 
 // Internal includes
 
@@ -32,54 +32,51 @@ using namespace Dali::Toolkit;
 
 namespace Demo
 {
-
 class TransitionApplication : public ConnectionTracker
 {
 public:
-  static const int NUMBER_OF_ACTION_BUTTONS=4;
-  static const int NUMBER_OF_VISUAL_BUTTONS=10;
+  static const int NUMBER_OF_ACTION_BUTTONS = 4;
+  static const int NUMBER_OF_VISUAL_BUTTONS = 10;
 
 public:
   // Constructor
-  TransitionApplication( Application& application );
+  TransitionApplication(Application& application);
 
   // Destructor
   ~TransitionApplication();
 
   // Init signal handler
-  void Create( Application& application );
+  void Create(Application& application);
 
   // Create the GUI components
-  Toolkit::TextLabel CreateTitle( std::string title );
-  Actor CreateContentPane();
+  Toolkit::TextLabel CreateTitle(std::string title);
+  Actor              CreateContentPane();
 
   // Key event handler
-  void OnKeyEvent( const KeyEvent& event );
+  void OnKeyEvent(const KeyEvent& event);
 
-  bool OnActionButtonClicked( Button button );
-  bool OnVisualButtonClicked( Actor actor, const TouchEvent& touch );
+  bool OnActionButtonClicked(Button button);
+  bool OnVisualButtonClicked(Actor actor, const TouchEvent& touch);
 
   static const char* DEMO_THEME_ONE_PATH;
 
 private:
-
   /** Create a visual map
    *
    * @param[in] index The index of the visual to create
    * @param[out] map The map to generate
    */
-  void CreateVisualMap( int index, Property::Map& map );
+  void CreateVisualMap(int index, Property::Map& map);
 
-  Application& mApplication;
-  TextLabel mTitle;
-  BeatControl mBeatControl;
-  PushButton mActionButtons[NUMBER_OF_ACTION_BUTTONS];
-  BeatControl mVisualButtons[NUMBER_OF_VISUAL_BUTTONS];
+  Application&    mApplication;
+  TextLabel       mTitle;
+  BeatControl     mBeatControl;
+  PushButton      mActionButtons[NUMBER_OF_ACTION_BUTTONS];
+  BeatControl     mVisualButtons[NUMBER_OF_VISUAL_BUTTONS];
   Property::Index mVisualIndex;
   Property::Index mActionIndex;
 };
 
 } // Namespace Demo
-
 
 #endif // DALI_DEMO_TRANSITION_APPLICATION_H

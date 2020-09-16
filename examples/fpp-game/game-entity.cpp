@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@
 #include "game-entity.h"
 #include "game-renderer.h"
 
-GameEntity::GameEntity( const char* name )
+GameEntity::GameEntity(const char* name)
 {
   mActor = Dali::Actor::New();
-  mActor.SetProperty( Dali::Actor::Property::NAME, name );
+  mActor.SetProperty(Dali::Actor::Property::NAME, name);
 }
 
 GameEntity::~GameEntity()
@@ -30,18 +30,18 @@ GameEntity::~GameEntity()
 
 void GameEntity::UpdateRenderer()
 {
-  if( mActor.GetRendererCount() )
+  if(mActor.GetRendererCount())
   {
-    Dali::Renderer currentRenderer = mActor.GetRendererAt( 0 );
-    if( currentRenderer == mGameRenderer.GetRenderer() )
+    Dali::Renderer currentRenderer = mActor.GetRendererAt(0);
+    if(currentRenderer == mGameRenderer.GetRenderer())
     {
       return;
     }
-    mActor.RemoveRenderer( currentRenderer );
+    mActor.RemoveRenderer(currentRenderer);
   }
-  if( mGameRenderer.GetRenderer() )
+  if(mGameRenderer.GetRenderer())
   {
-    mActor.AddRenderer( mGameRenderer.GetRenderer() );
+    mActor.AddRenderer(mGameRenderer.GetRenderer());
   }
 }
 
@@ -55,22 +55,22 @@ Dali::Actor& GameEntity::GetActor()
   return mActor;
 }
 
-void GameEntity::SetLocation( const Dali::Vector3& loc )
+void GameEntity::SetLocation(const Dali::Vector3& loc)
 {
-  mActor.SetProperty( Dali::Actor::Property::POSITION, loc );
+  mActor.SetProperty(Dali::Actor::Property::POSITION, loc);
 }
 
-void GameEntity::SetRotation( const Dali::Quaternion& rot )
+void GameEntity::SetRotation(const Dali::Quaternion& rot)
 {
-  mActor.SetProperty( Dali::Actor::Property::ORIENTATION, rot );
+  mActor.SetProperty(Dali::Actor::Property::ORIENTATION, rot);
 }
 
-void GameEntity::SetScale( const Dali::Vector3& scale )
+void GameEntity::SetScale(const Dali::Vector3& scale)
 {
-  mActor.SetProperty( Dali::Actor::Property::SCALE, scale );
+  mActor.SetProperty(Dali::Actor::Property::SCALE, scale);
 }
 
-void GameEntity::SetSize( const Dali::Vector3& size )
+void GameEntity::SetSize(const Dali::Vector3& size)
 {
-  mActor.SetProperty( Dali::Actor::Property::SIZE, size );
+  mActor.SetProperty(Dali::Actor::Property::SIZE, size);
 }

@@ -38,13 +38,12 @@ using namespace MultiLanguageStrings;
 class TextLabelMultiLanguageExample : public ConnectionTracker
 {
 public:
-
-  TextLabelMultiLanguageExample( Application& application )
-  : mApplication( application ),
-    mLastPoint( 0.f )
+  TextLabelMultiLanguageExample(Application& application)
+  : mApplication(application),
+    mLastPoint(0.f)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &TextLabelMultiLanguageExample::Create );
+    mApplication.InitSignal().Connect(this, &TextLabelMultiLanguageExample::Create);
   }
 
   ~TextLabelMultiLanguageExample()
@@ -55,55 +54,55 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
 
     window.KeyEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnKeyEvent);
-    window.SetBackgroundColor( Color::WHITE );
+    window.SetBackgroundColor(Color::WHITE);
 
-    mTableView = Toolkit::TableView::New( NUMBER_OF_LANGUAGES, 1 );
-    mTableView.SetResizePolicy( ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH );
-    mTableView.SetResizePolicy( ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT );
-    mTableView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT );
-    mTableView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT );
-    mTableView.TouchedSignal().Connect( this, &TextLabelMultiLanguageExample::OnTouch );
-    window.Add( mTableView );
+    mTableView = Toolkit::TableView::New(NUMBER_OF_LANGUAGES, 1);
+    mTableView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    mTableView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    mTableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+    mTableView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mTableView.TouchedSignal().Connect(this, &TextLabelMultiLanguageExample::OnTouch);
+    window.Add(mTableView);
 
-    for( unsigned int index = 0u; index < NUMBER_OF_LANGUAGES; ++index )
+    for(unsigned int index = 0u; index < NUMBER_OF_LANGUAGES; ++index)
     {
       const Language& language = LANGUAGES[index];
 
       TextLabel label = TextLabel::New();
-      label.SetProperty( TextLabel::Property::MULTI_LINE, true );
+      label.SetProperty(TextLabel::Property::MULTI_LINE, true);
 
       const std::string text = language.languageName + " " + language.languageRomanName + " " + language.text;
-      label.SetProperty( TextLabel::Property::TEXT, text );
+      label.SetProperty(TextLabel::Property::TEXT, text);
 
-      mTableView.SetFitHeight( index );
-      mTableView.AddChild( label, Toolkit::TableView::CellPosition( index, 0 ) );
+      mTableView.SetFitHeight(index);
+      mTableView.AddChild(label, Toolkit::TableView::CellPosition(index, 0));
     }
   }
 
-  bool OnTouch( Actor actor, const TouchEvent& event )
+  bool OnTouch(Actor actor, const TouchEvent& event)
   {
-    if( 1u == event.GetPointCount() )
+    if(1u == event.GetPointCount())
     {
-      const PointState::Type state = event.GetState( 0 );
+      const PointState::Type state = event.GetState(0);
 
       // Clamp to integer values; this is to reduce flicking due to pixel misalignment
-      const float localPoint = static_cast<float>( static_cast<int>( event.GetLocalPosition( 0 ).y ) );
+      const float localPoint = static_cast<float>(static_cast<int>(event.GetLocalPosition(0).y));
 
-      if( PointState::DOWN == state )
+      if(PointState::DOWN == state)
       {
         mLastPoint = localPoint;
-        mAnimation = Animation::New( 0.25f );
+        mAnimation = Animation::New(0.25f);
       }
-      else if( PointState::MOTION == state )
+      else if(PointState::MOTION == state)
       {
-        if( mAnimation )
+        if(mAnimation)
         {
-          mAnimation.AnimateBy( Property(mTableView, Actor::Property::POSITION), Vector3( 0.f, localPoint - mLastPoint, 0.f ), AlphaFunction::LINEAR );
+          mAnimation.AnimateBy(Property(mTableView, Actor::Property::POSITION), Vector3(0.f, localPoint - mLastPoint, 0.f), AlphaFunction::LINEAR);
           mAnimation.Play();
           mLastPoint = localPoint;
         }
@@ -120,7 +119,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -128,17 +127,16 @@ public:
   }
 
 private:
-
-  Application&   mApplication;
-  TableView      mTableView;
-  Animation      mAnimation;
-  float          mLastPoint;
+  Application& mApplication;
+  TableView    mTableView;
+  Animation    mAnimation;
+  float        mLastPoint;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-  TextLabelMultiLanguageExample test( application );
+  Application                   application = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  TextLabelMultiLanguageExample test(application);
   application.MainLoop();
   return 0;
 }

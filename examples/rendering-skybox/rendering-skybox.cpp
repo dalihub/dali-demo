@@ -15,8 +15,8 @@
  *
  */
 
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/dali.h>
 
 #include "look-camera.h"
 
@@ -25,7 +25,7 @@ using namespace Toolkit;
 
 namespace
 {
-
+// clang-format off
 /*
  * Vertex shader for a textured cube
  */
@@ -94,15 +94,16 @@ void main()\n
   gl_FragColor = texColor;\n
 }\n
 );
+// clang-format on
 
-const float CAMERA_DEFAULT_FOV(    60.0f );
-const float CAMERA_DEFAULT_NEAR(    0.1f );
-const float CAMERA_DEFAULT_FAR(  1000.0f );
-const Vector3 CAMERA_DEFAULT_POSITION( 0.0f, 0.0f, 100.0f );
+const float   CAMERA_DEFAULT_FOV(60.0f);
+const float   CAMERA_DEFAULT_NEAR(0.1f);
+const float   CAMERA_DEFAULT_FAR(1000.0f);
+const Vector3 CAMERA_DEFAULT_POSITION(0.0f, 0.0f, 100.0f);
 
 const char* TEXTURE_URL = DEMO_IMAGE_DIR "wood.png";
 
-const unsigned int SKYBOX_FACE_COUNT = 6;
+const unsigned int SKYBOX_FACE_COUNT  = 6;
 const unsigned int SKYBOX_FACE_WIDTH  = 2048;
 const unsigned int SKYBOX_FACE_HEIGHT = 2048;
 
@@ -112,17 +113,16 @@ const unsigned int SKYBOX_FACE_HEIGHT = 2048;
  * The images are licensed under the terms of the CC BY 4.0 license:
  * https://creativecommons.org/licenses/by/4.0/
  */
-const char* SKYBOX_FACES[ SKYBOX_FACE_COUNT ] =
-{
-  DEMO_IMAGE_DIR "lake_right.jpg",
-  DEMO_IMAGE_DIR "lake_left.jpg",
-  DEMO_IMAGE_DIR "lake_top.jpg",
-  DEMO_IMAGE_DIR "lake_bottom.jpg",
-  DEMO_IMAGE_DIR "lake_back.jpg",
-  DEMO_IMAGE_DIR "lake_front.jpg"
-};
+const char* SKYBOX_FACES[SKYBOX_FACE_COUNT] =
+  {
+    DEMO_IMAGE_DIR "lake_right.jpg",
+    DEMO_IMAGE_DIR "lake_left.jpg",
+    DEMO_IMAGE_DIR "lake_top.jpg",
+    DEMO_IMAGE_DIR "lake_bottom.jpg",
+    DEMO_IMAGE_DIR "lake_back.jpg",
+    DEMO_IMAGE_DIR "lake_front.jpg"};
 
-}
+} // namespace
 
 // This example shows how to create a skybox
 //
@@ -131,12 +131,11 @@ const char* SKYBOX_FACES[ SKYBOX_FACE_COUNT ] =
 class TexturedCubeController : public ConnectionTracker
 {
 public:
-
-  TexturedCubeController( Application& application )
-  : mApplication( application )
+  TexturedCubeController(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &TexturedCubeController::Create );
+    mApplication.InitSignal().Connect(this, &TexturedCubeController::Create);
   }
 
   ~TexturedCubeController()
@@ -145,11 +144,11 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
-    window.SetBackgroundColor( Color::WHITE );
+    window.SetBackgroundColor(Color::WHITE);
 
     // Step 1. Setup camera
     SetupCamera();
@@ -175,7 +174,7 @@ public:
     PlayAnimation();
 
     // Respond to key events
-    window.KeyEventSignal().Connect( this, &TexturedCubeController::OnKeyEvent );
+    window.KeyEventSignal().Connect(this, &TexturedCubeController::OnKeyEvent);
   }
 
   /**
@@ -184,11 +183,11 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -202,10 +201,10 @@ public:
   {
     Window window = mApplication.GetWindow();
 
-    RenderTask renderTask = window.GetRenderTaskList().GetTask( 0 );
-    renderTask.SetCullMode( false ); // avoid frustum culling affecting the skybox
+    RenderTask renderTask = window.GetRenderTaskList().GetTask(0);
+    renderTask.SetCullMode(false); // avoid frustum culling affecting the skybox
 
-    mCamera.Initialise( window, CAMERA_DEFAULT_POSITION, CAMERA_DEFAULT_FOV, CAMERA_DEFAULT_NEAR, CAMERA_DEFAULT_FAR );
+    mCamera.Initialise(window, CAMERA_DEFAULT_POSITION, CAMERA_DEFAULT_FOV, CAMERA_DEFAULT_NEAR, CAMERA_DEFAULT_FAR);
   }
 
   /**
@@ -216,8 +215,8 @@ public:
    */
   void CreateShaders()
   {
-    mShaderCube   = Shader::New( VERTEX_SHADER_CUBE, FRAGMENT_SHADER_CUBE );
-    mShaderSkybox = Shader::New( VERTEX_SHADER_SKYBOX, FRAGMENT_SHADER_SKYBOX );
+    mShaderCube   = Shader::New(VERTEX_SHADER_CUBE, FRAGMENT_SHADER_CUBE);
+    mShaderSkybox = Shader::New(VERTEX_SHADER_SKYBOX, FRAGMENT_SHADER_SKYBOX);
   }
 
   /**
@@ -234,70 +233,58 @@ public:
     };
 
     Vertex vertices[] = {
-      { Vector3(  1.0f,-1.0f,-1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3( -1.0f, 1.0f,-1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3(  1.0f, 1.0f,-1.0f ), Vector2( 0.0, 1.0 ) },
-      { Vector3( -1.0f, 1.0f, 1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3(  1.0f,-1.0f, 1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3(  1.0f, 1.0f, 1.0f ), Vector2( 0.0, 1.0 ) },
-      { Vector3(  1.0f, 1.0f, 1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3(  1.0f,-1.0f,-1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3(  1.0f, 1.0f,-1.0f ), Vector2( 0.0, 1.0 ) },
-      { Vector3(  1.0f,-1.0f, 1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3( -1.0f,-1.0f,-1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3(  1.0f,-1.0f,-1.0f ), Vector2( 0.0, 1.0 ) },
-      { Vector3( -1.0f,-1.0f,-1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3( -1.0f, 1.0f, 1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3( -1.0f, 1.0f,-1.0f ), Vector2( 0.0, 1.0 ) },
-      { Vector3(  1.0f, 1.0f,-1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3( -1.0f, 1.0f, 1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3(  1.0f, 1.0f, 1.0f ), Vector2( 0.0, 1.0 ) },
-      { Vector3(  1.0f,-1.0f,-1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3( -1.0f,-1.0f,-1.0f ), Vector2( 1.0, 0.0 ) },
-      { Vector3( -1.0f, 1.0f,-1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3( -1.0f, 1.0f, 1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3( -1.0f,-1.0f, 1.0f ), Vector2( 1.0, 0.0 ) },
-      { Vector3(  1.0f,-1.0f, 1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3(  1.0f, 1.0f, 1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3(  1.0f,-1.0f, 1.0f ), Vector2( 1.0, 0.0 ) },
-      { Vector3(  1.0f,-1.0f,-1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3(  1.0f,-1.0f, 1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3( -1.0f,-1.0f, 1.0f ), Vector2( 1.0, 0.0 ) },
-      { Vector3( -1.0f,-1.0f,-1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3( -1.0f,-1.0f,-1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3( -1.0f,-1.0f, 1.0f ), Vector2( 1.0, 0.0 ) },
-      { Vector3( -1.0f, 1.0f, 1.0f ), Vector2( 0.0, 0.0 ) },
-      { Vector3(  1.0f, 1.0f,-1.0f ), Vector2( 1.0, 1.0 ) },
-      { Vector3( -1.0f, 1.0f,-1.0f ), Vector2( 1.0, 0.0 ) },
-      { Vector3( -1.0f, 1.0f, 1.0f ), Vector2( 0.0, 0.0 ) },
+      {Vector3(1.0f, -1.0f, -1.0f), Vector2(1.0, 1.0)},
+      {Vector3(-1.0f, 1.0f, -1.0f), Vector2(0.0, 0.0)},
+      {Vector3(1.0f, 1.0f, -1.0f), Vector2(0.0, 1.0)},
+      {Vector3(-1.0f, 1.0f, 1.0f), Vector2(1.0, 1.0)},
+      {Vector3(1.0f, -1.0f, 1.0f), Vector2(0.0, 0.0)},
+      {Vector3(1.0f, 1.0f, 1.0f), Vector2(0.0, 1.0)},
+      {Vector3(1.0f, 1.0f, 1.0f), Vector2(1.0, 1.0)},
+      {Vector3(1.0f, -1.0f, -1.0f), Vector2(0.0, 0.0)},
+      {Vector3(1.0f, 1.0f, -1.0f), Vector2(0.0, 1.0)},
+      {Vector3(1.0f, -1.0f, 1.0f), Vector2(1.0, 1.0)},
+      {Vector3(-1.0f, -1.0f, -1.0f), Vector2(0.0, 0.0)},
+      {Vector3(1.0f, -1.0f, -1.0f), Vector2(0.0, 1.0)},
+      {Vector3(-1.0f, -1.0f, -1.0f), Vector2(1.0, 1.0)},
+      {Vector3(-1.0f, 1.0f, 1.0f), Vector2(0.0, 0.0)},
+      {Vector3(-1.0f, 1.0f, -1.0f), Vector2(0.0, 1.0)},
+      {Vector3(1.0f, 1.0f, -1.0f), Vector2(1.0, 1.0)},
+      {Vector3(-1.0f, 1.0f, 1.0f), Vector2(0.0, 0.0)},
+      {Vector3(1.0f, 1.0f, 1.0f), Vector2(0.0, 1.0)},
+      {Vector3(1.0f, -1.0f, -1.0f), Vector2(1.0, 1.0)},
+      {Vector3(-1.0f, -1.0f, -1.0f), Vector2(1.0, 0.0)},
+      {Vector3(-1.0f, 1.0f, -1.0f), Vector2(0.0, 0.0)},
+      {Vector3(-1.0f, 1.0f, 1.0f), Vector2(1.0, 1.0)},
+      {Vector3(-1.0f, -1.0f, 1.0f), Vector2(1.0, 0.0)},
+      {Vector3(1.0f, -1.0f, 1.0f), Vector2(0.0, 0.0)},
+      {Vector3(1.0f, 1.0f, 1.0f), Vector2(1.0, 1.0)},
+      {Vector3(1.0f, -1.0f, 1.0f), Vector2(1.0, 0.0)},
+      {Vector3(1.0f, -1.0f, -1.0f), Vector2(0.0, 0.0)},
+      {Vector3(1.0f, -1.0f, 1.0f), Vector2(1.0, 1.0)},
+      {Vector3(-1.0f, -1.0f, 1.0f), Vector2(1.0, 0.0)},
+      {Vector3(-1.0f, -1.0f, -1.0f), Vector2(0.0, 0.0)},
+      {Vector3(-1.0f, -1.0f, -1.0f), Vector2(1.0, 1.0)},
+      {Vector3(-1.0f, -1.0f, 1.0f), Vector2(1.0, 0.0)},
+      {Vector3(-1.0f, 1.0f, 1.0f), Vector2(0.0, 0.0)},
+      {Vector3(1.0f, 1.0f, -1.0f), Vector2(1.0, 1.0)},
+      {Vector3(-1.0f, 1.0f, -1.0f), Vector2(1.0, 0.0)},
+      {Vector3(-1.0f, 1.0f, 1.0f), Vector2(0.0, 0.0)},
     };
 
-    VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
-                                                   .Add( "aPosition", Property::VECTOR3 )
-                                                   .Add( "aTexCoord", Property::VECTOR2 ) );
-    vertexBuffer.SetData( vertices, sizeof(vertices) / sizeof(Vertex) );
+    VertexBuffer vertexBuffer = VertexBuffer::New(Property::Map()
+                                                    .Add("aPosition", Property::VECTOR3)
+                                                    .Add("aTexCoord", Property::VECTOR2));
+    vertexBuffer.SetData(vertices, sizeof(vertices) / sizeof(Vertex));
 
     // create indices
     const unsigned short INDEX_CUBE[] = {
-      2, 1, 0,
-      5, 4, 3,
-      8, 7, 6,
-      11, 10, 9,
-      14, 13, 12,
-      17, 16, 15,
-      20, 19, 18,
-      23, 22, 21,
-      26, 25, 24,
-      29, 28, 27,
-      32, 31, 30,
-      35, 34, 33
-    };
+      2, 1, 0, 5, 4, 3, 8, 7, 6, 11, 10, 9, 14, 13, 12, 17, 16, 15, 20, 19, 18, 23, 22, 21, 26, 25, 24, 29, 28, 27, 32, 31, 30, 35, 34, 33};
 
     mGeometry = Geometry::New();
-    mGeometry.AddVertexBuffer( vertexBuffer );
-    mGeometry.SetIndexBuffer( INDEX_CUBE,
-                              sizeof(INDEX_CUBE)/sizeof(INDEX_CUBE[0]) );
-    mGeometry.SetType( Geometry::TRIANGLES );
+    mGeometry.AddVertexBuffer(vertexBuffer);
+    mGeometry.SetIndexBuffer(INDEX_CUBE,
+                             sizeof(INDEX_CUBE) / sizeof(INDEX_CUBE[0]));
+    mGeometry.SetType(Geometry::TRIANGLES);
   }
 
   /**
@@ -313,62 +300,61 @@ public:
     };
 
     Vertex skyboxVertices[] = {
-        // back
-        { Vector3(  -1.0f,  1.0f, -1.0f ) },
-        { Vector3(  -1.0f, -1.0f, -1.0f ) },
-        { Vector3(   1.0f, -1.0f, -1.0f ) },
-        { Vector3(   1.0f, -1.0f, -1.0f ) },
-        { Vector3(   1.0f,  1.0f, -1.0f ) },
-        { Vector3(  -1.0f,  1.0f, -1.0f ) },
+      // back
+      {Vector3(-1.0f, 1.0f, -1.0f)},
+      {Vector3(-1.0f, -1.0f, -1.0f)},
+      {Vector3(1.0f, -1.0f, -1.0f)},
+      {Vector3(1.0f, -1.0f, -1.0f)},
+      {Vector3(1.0f, 1.0f, -1.0f)},
+      {Vector3(-1.0f, 1.0f, -1.0f)},
 
-        // left
-        { Vector3(  -1.0f, -1.0f,  1.0f ) },
-        { Vector3(  -1.0f, -1.0f, -1.0f ) },
-        { Vector3(  -1.0f,  1.0f, -1.0f ) },
-        { Vector3(  -1.0f,  1.0f, -1.0f ) },
-        { Vector3(  -1.0f,  1.0f,  1.0f ) },
-        { Vector3(  -1.0f, -1.0f,  1.0f ) },
+      // left
+      {Vector3(-1.0f, -1.0f, 1.0f)},
+      {Vector3(-1.0f, -1.0f, -1.0f)},
+      {Vector3(-1.0f, 1.0f, -1.0f)},
+      {Vector3(-1.0f, 1.0f, -1.0f)},
+      {Vector3(-1.0f, 1.0f, 1.0f)},
+      {Vector3(-1.0f, -1.0f, 1.0f)},
 
-        // right
-        { Vector3(   1.0f, -1.0f, -1.0f ) },
-        { Vector3(   1.0f, -1.0f,  1.0f ) },
-        { Vector3(   1.0f,  1.0f,  1.0f ) },
-        { Vector3(   1.0f,  1.0f,  1.0f ) },
-        { Vector3(   1.0f,  1.0f, -1.0f ) },
-        { Vector3(   1.0f, -1.0f, -1.0f ) },
+      // right
+      {Vector3(1.0f, -1.0f, -1.0f)},
+      {Vector3(1.0f, -1.0f, 1.0f)},
+      {Vector3(1.0f, 1.0f, 1.0f)},
+      {Vector3(1.0f, 1.0f, 1.0f)},
+      {Vector3(1.0f, 1.0f, -1.0f)},
+      {Vector3(1.0f, -1.0f, -1.0f)},
 
-        // front
-        { Vector3(  -1.0f, -1.0f,  1.0f ) },
-        { Vector3(  -1.0f,  1.0f,  1.0f ) },
-        { Vector3(   1.0f,  1.0f,  1.0f ) },
-        { Vector3(   1.0f,  1.0f,  1.0f ) },
-        { Vector3(   1.0f, -1.0f,  1.0f ) },
-        { Vector3(  -1.0f, -1.0f,  1.0f ) },
+      // front
+      {Vector3(-1.0f, -1.0f, 1.0f)},
+      {Vector3(-1.0f, 1.0f, 1.0f)},
+      {Vector3(1.0f, 1.0f, 1.0f)},
+      {Vector3(1.0f, 1.0f, 1.0f)},
+      {Vector3(1.0f, -1.0f, 1.0f)},
+      {Vector3(-1.0f, -1.0f, 1.0f)},
 
-        // botton
-        { Vector3(  -1.0f,  1.0f, -1.0f ) },
-        { Vector3(   1.0f,  1.0f, -1.0f ) },
-        { Vector3(   1.0f,  1.0f,  1.0f ) },
-        { Vector3(   1.0f,  1.0f,  1.0f ) },
-        { Vector3(  -1.0f,  1.0f,  1.0f ) },
-        { Vector3(  -1.0f,  1.0f, -1.0f ) },
+      // botton
+      {Vector3(-1.0f, 1.0f, -1.0f)},
+      {Vector3(1.0f, 1.0f, -1.0f)},
+      {Vector3(1.0f, 1.0f, 1.0f)},
+      {Vector3(1.0f, 1.0f, 1.0f)},
+      {Vector3(-1.0f, 1.0f, 1.0f)},
+      {Vector3(-1.0f, 1.0f, -1.0f)},
 
-        // top
-        { Vector3(  -1.0f, -1.0f, -1.0f ) },
-        { Vector3(  -1.0f, -1.0f,  1.0f ) },
-        { Vector3(   1.0f, -1.0f, -1.0f ) },
-        { Vector3(   1.0f, -1.0f, -1.0f ) },
-        { Vector3(  -1.0f, -1.0f,  1.0f ) },
-        { Vector3(   1.0f, -1.0f,  1.0f ) }
-    };
+      // top
+      {Vector3(-1.0f, -1.0f, -1.0f)},
+      {Vector3(-1.0f, -1.0f, 1.0f)},
+      {Vector3(1.0f, -1.0f, -1.0f)},
+      {Vector3(1.0f, -1.0f, -1.0f)},
+      {Vector3(-1.0f, -1.0f, 1.0f)},
+      {Vector3(1.0f, -1.0f, 1.0f)}};
 
-    VertexBuffer vertexBuffer = VertexBuffer::New( Property::Map()
-                                                   .Add( "aPosition", Property::VECTOR3 ) );
-    vertexBuffer.SetData( skyboxVertices, sizeof(skyboxVertices) / sizeof(Vertex) );
+    VertexBuffer vertexBuffer = VertexBuffer::New(Property::Map()
+                                                    .Add("aPosition", Property::VECTOR3));
+    vertexBuffer.SetData(skyboxVertices, sizeof(skyboxVertices) / sizeof(Vertex));
 
     mSkyboxGeometry = Geometry::New();
-    mSkyboxGeometry.AddVertexBuffer( vertexBuffer );
-    mSkyboxGeometry.SetType( Geometry::TRIANGLES );
+    mSkyboxGeometry.AddVertexBuffer(vertexBuffer);
+    mSkyboxGeometry.SetType(Geometry::TRIANGLES);
   }
 
   /**
@@ -377,35 +363,35 @@ public:
   void DisplayCube()
   {
     // Load image from file
-    PixelData pixels = SyncImageLoader::Load( TEXTURE_URL );
+    PixelData pixels = SyncImageLoader::Load(TEXTURE_URL);
 
-    Texture texture = Texture::New( TextureType::TEXTURE_2D, pixels.GetPixelFormat(), pixels.GetWidth(), pixels.GetHeight() );
-    texture.Upload( pixels, 0, 0, 0, 0, pixels.GetWidth(), pixels.GetHeight() );
+    Texture texture = Texture::New(TextureType::TEXTURE_2D, pixels.GetPixelFormat(), pixels.GetWidth(), pixels.GetHeight());
+    texture.Upload(pixels, 0, 0, 0, 0, pixels.GetWidth(), pixels.GetHeight());
 
     // create TextureSet
     mTextureSet = TextureSet::New();
-    mTextureSet.SetTexture( 0, texture );
+    mTextureSet.SetTexture(0, texture);
 
-    mRenderer = Renderer::New( mGeometry, mShaderCube );
-    mRenderer.SetTextures( mTextureSet );
-    mRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 1.0f );
+    mRenderer = Renderer::New(mGeometry, mShaderCube);
+    mRenderer.SetTextures(mTextureSet);
+    mRenderer.SetProperty(Renderer::Property::DEPTH_INDEX, 1.0f);
 
     // A further optimization would be to enable debug testing instead
-    mRenderer.SetProperty( Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK );
+    mRenderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
 
     // Enables the write on the depth buffer.
-    mRenderer.SetProperty( Renderer::Property::DEPTH_WRITE_MODE, DepthWriteMode::ON );
+    mRenderer.SetProperty(Renderer::Property::DEPTH_WRITE_MODE, DepthWriteMode::ON);
 
     mActor = Actor::New();
-    mActor.SetProperty( Dali::Actor::Property::NAME, "Cube" );
-    mActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mActor.AddRenderer( mRenderer );
+    mActor.SetProperty(Dali::Actor::Property::NAME, "Cube");
+    mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mActor.AddRenderer(mRenderer);
 
-    mActor.SetProperty( Actor::Property::SIZE, Vector3( 10.f, 10.f, 10.f ) );
+    mActor.SetProperty(Actor::Property::SIZE, Vector3(10.f, 10.f, 10.f));
 
     Window window = mApplication.GetWindow();
-    window.Add( mActor );
+    window.Add(mActor);
   }
 
   /**
@@ -414,36 +400,36 @@ public:
   void DisplaySkybox()
   {
     // Load skybox faces from file
-    Texture texture = Texture::New( TextureType::TEXTURE_CUBE, Pixel::RGBA8888, SKYBOX_FACE_WIDTH, SKYBOX_FACE_HEIGHT );
-    for (unsigned int i = 0; i < SKYBOX_FACE_COUNT; i++)
+    Texture texture = Texture::New(TextureType::TEXTURE_CUBE, Pixel::RGBA8888, SKYBOX_FACE_WIDTH, SKYBOX_FACE_HEIGHT);
+    for(unsigned int i = 0; i < SKYBOX_FACE_COUNT; i++)
     {
-      PixelData pixels = SyncImageLoader::Load( SKYBOX_FACES[i] );
-      texture.Upload( pixels, CubeMapLayer::POSITIVE_X + i, 0, 0, 0, SKYBOX_FACE_WIDTH, SKYBOX_FACE_HEIGHT );
+      PixelData pixels = SyncImageLoader::Load(SKYBOX_FACES[i]);
+      texture.Upload(pixels, CubeMapLayer::POSITIVE_X + i, 0, 0, 0, SKYBOX_FACE_WIDTH, SKYBOX_FACE_HEIGHT);
     }
 
     // create TextureSet
     mSkyboxTextures = TextureSet::New();
-    mSkyboxTextures.SetTexture( 0, texture );
+    mSkyboxTextures.SetTexture(0, texture);
 
-    mSkyboxRenderer = Renderer::New( mSkyboxGeometry, mShaderSkybox );
-    mSkyboxRenderer.SetTextures( mSkyboxTextures );
-    mSkyboxRenderer.SetProperty( Renderer::Property::DEPTH_INDEX, 2.0f );
+    mSkyboxRenderer = Renderer::New(mSkyboxGeometry, mShaderSkybox);
+    mSkyboxRenderer.SetTextures(mSkyboxTextures);
+    mSkyboxRenderer.SetProperty(Renderer::Property::DEPTH_INDEX, 2.0f);
 
     // Enables the depth test.
-    mSkyboxRenderer.SetProperty( Renderer::Property::DEPTH_TEST_MODE, DepthTestMode::ON );
+    mSkyboxRenderer.SetProperty(Renderer::Property::DEPTH_TEST_MODE, DepthTestMode::ON);
 
     // The fragment shader will run only is those pixels that have the max depth value.
-    mSkyboxRenderer.SetProperty( Renderer::Property::DEPTH_FUNCTION, DepthFunction::LESS_EQUAL );
+    mSkyboxRenderer.SetProperty(Renderer::Property::DEPTH_FUNCTION, DepthFunction::LESS_EQUAL);
 
     Window window = mApplication.GetWindow();
 
     mSkyboxActor = Actor::New();
-    mSkyboxActor.SetProperty( Dali::Actor::Property::NAME, "SkyBox" );
-    mSkyboxActor.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
-    mSkyboxActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    mSkyboxActor.SetProperty( Actor::Property::POSITION, CAMERA_DEFAULT_POSITION );
-    mSkyboxActor.AddRenderer( mSkyboxRenderer );
-    window.Add( mSkyboxActor );
+    mSkyboxActor.SetProperty(Dali::Actor::Property::NAME, "SkyBox");
+    mSkyboxActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mSkyboxActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mSkyboxActor.SetProperty(Actor::Property::POSITION, CAMERA_DEFAULT_POSITION);
+    mSkyboxActor.AddRenderer(mSkyboxRenderer);
+    window.Add(mSkyboxActor);
   }
 
   /**
@@ -451,38 +437,38 @@ public:
    */
   void PlayAnimation()
   {
-    mAnimation = Animation::New( 5.0f );
-    mAnimation.SetLooping( true );
-    mAnimation.AnimateBy( Property( mActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 )), Vector3::ZAXIS ) );
-    mAnimation.AnimateBy( Property( mActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 )), Vector3::YAXIS ) );
-    mAnimation.AnimateBy( Property( mActor, Actor::Property::ORIENTATION ), Quaternion( Radian( Degree( 360 )), Vector3::XAXIS ) );
+    mAnimation = Animation::New(5.0f);
+    mAnimation.SetLooping(true);
+    mAnimation.AnimateBy(Property(mActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::ZAXIS));
+    mAnimation.AnimateBy(Property(mActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::YAXIS));
+    mAnimation.AnimateBy(Property(mActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::XAXIS));
     mAnimation.Play();
   }
 
 private:
-  Application&  mApplication;
+  Application& mApplication;
 
   LookCamera mCamera;
 
   Shader mShaderCube;
   Shader mShaderSkybox;
 
-  Geometry mGeometry;
+  Geometry   mGeometry;
   TextureSet mTextureSet;
-  Renderer mRenderer;
-  Actor mActor;
-  Animation mAnimation;
+  Renderer   mRenderer;
+  Actor      mActor;
+  Animation  mAnimation;
 
-  Geometry mSkyboxGeometry;
+  Geometry   mSkyboxGeometry;
   TextureSet mSkyboxTextures;
-  Renderer mSkyboxRenderer;
-  Actor mSkyboxActor;
+  Renderer   mSkyboxRenderer;
+  Actor      mSkyboxActor;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  TexturedCubeController test( application );
+  Application            application = Application::New(&argc, &argv);
+  TexturedCubeController test(application);
   application.MainLoop();
   return 0;
 }

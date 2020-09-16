@@ -19,35 +19,34 @@
  */
 
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/image-loading.h>
+#include <dali/public-api/math/uint-16-pair.h>
 #include <dali/public-api/rendering/geometry.h>
 #include <dali/public-api/rendering/texture.h>
-#include <dali/public-api/math/uint-16-pair.h>
-#include <dali/devel-api/adaptor-framework/image-loading.h>
 
 namespace DemoHelper
 {
-
-Dali::Texture LoadTexture( const char* imagePath,
-                           Dali::ImageDimensions size = Dali::ImageDimensions(),
-                           Dali::FittingMode::Type fittingMode = Dali::FittingMode::DEFAULT,
-                           Dali::SamplingMode::Type samplingMode = Dali::SamplingMode::DEFAULT,
-                           bool orientationCorrection = true )
+Dali::Texture LoadTexture(const char*              imagePath,
+                          Dali::ImageDimensions    size                  = Dali::ImageDimensions(),
+                          Dali::FittingMode::Type  fittingMode           = Dali::FittingMode::DEFAULT,
+                          Dali::SamplingMode::Type samplingMode          = Dali::SamplingMode::DEFAULT,
+                          bool                     orientationCorrection = true)
 {
-  Dali::Devel::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, fittingMode, samplingMode, orientationCorrection );
-  Dali::Texture texture  = Dali::Texture::New( Dali::TextureType::TEXTURE_2D,
-                                               pixelBuffer.GetPixelFormat(),
-                                               pixelBuffer.GetWidth(),
-                                               pixelBuffer.GetHeight() );
+  Dali::Devel::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, fittingMode, samplingMode, orientationCorrection);
+  Dali::Texture            texture     = Dali::Texture::New(Dali::TextureType::TEXTURE_2D,
+                                             pixelBuffer.GetPixelFormat(),
+                                             pixelBuffer.GetWidth(),
+                                             pixelBuffer.GetHeight());
 
   Dali::PixelData pixelData = Dali::Devel::PixelBuffer::Convert(pixelBuffer);
-  texture.Upload( pixelData );
+  texture.Upload(pixelData);
 
   return texture;
 }
 
-Dali::Texture LoadWindowFillingTexture( Dali::Uint16Pair size, const char* imagePath )
+Dali::Texture LoadWindowFillingTexture(Dali::Uint16Pair size, const char* imagePath)
 {
-  return LoadTexture( imagePath, size, Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR );
+  return LoadTexture(imagePath, size, Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR);
 }
 
 Dali::Geometry CreateTexturedQuad()
@@ -58,27 +57,27 @@ Dali::Geometry CreateTexturedQuad()
     Dali::Vector2 texCoord;
   };
 
-  static const Vertex data[] = {{ Dali::Vector2( -0.5f, -0.5f ), Dali::Vector2( 0.0f, 0.0f ) },
-                                { Dali::Vector2(  0.5f, -0.5f ), Dali::Vector2( 1.0f, 0.0f ) },
-                                { Dali::Vector2( -0.5f,  0.5f ), Dali::Vector2( 0.0f, 1.0f ) },
-                                { Dali::Vector2(  0.5f,  0.5f ), Dali::Vector2( 1.0f, 1.0f ) }};
+  static const Vertex data[] = {{Dali::Vector2(-0.5f, -0.5f), Dali::Vector2(0.0f, 0.0f)},
+                                {Dali::Vector2(0.5f, -0.5f), Dali::Vector2(1.0f, 0.0f)},
+                                {Dali::Vector2(-0.5f, 0.5f), Dali::Vector2(0.0f, 1.0f)},
+                                {Dali::Vector2(0.5f, 0.5f), Dali::Vector2(1.0f, 1.0f)}};
 
-  Dali::VertexBuffer vertexBuffer;
+  Dali::VertexBuffer  vertexBuffer;
   Dali::Property::Map vertexFormat;
   vertexFormat["aPosition"] = Dali::Property::VECTOR2;
   vertexFormat["aTexCoord"] = Dali::Property::VECTOR2;
 
   //Create a vertex buffer for vertex positions and texture coordinates
-  vertexBuffer = Dali::VertexBuffer::New( vertexFormat );
-  vertexBuffer.SetData( data, 4u );
+  vertexBuffer = Dali::VertexBuffer::New(vertexFormat);
+  vertexBuffer.SetData(data, 4u);
 
   //Create the geometry
   Dali::Geometry geometry = Dali::Geometry::New();
-  geometry.AddVertexBuffer( vertexBuffer );
-  geometry.SetType(Dali::Geometry::TRIANGLE_STRIP );
+  geometry.AddVertexBuffer(vertexBuffer);
+  geometry.SetType(Dali::Geometry::TRIANGLE_STRIP);
 
   return geometry;
 }
-} // DemoHelper
+} // namespace DemoHelper
 
 #endif // DALI_DEMO_UTILITY_H

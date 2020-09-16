@@ -32,7 +32,6 @@
 class FrameCallback : public Dali::FrameCallbackInterface
 {
 public:
-
   /**
    * @brief Constructor.
    */
@@ -42,27 +41,25 @@ public:
    * @brief Sets the window width.
    * @param[in]  windowWidth  The window width.
    */
-  void SetWindowWidth( float windowWidth );
+  void SetWindowWidth(float windowWidth);
 
   /**
    * @brief The actor with the specified ID will be changed when Update() is called.
    * @param[in]  id  Actor ID of actor which should be changed by the FrameCallback.
    */
-  void AddId( uint32_t id );
+  void AddId(uint32_t id);
 
 private:
-
   /**
    * @brief Called when every frame is updated.
    * @param[in]  updateProxy     Used to set the world-matrix and sizes.
    * @param[in]  elapsedSeconds  Time elapsed time since the last frame (in seconds)
    */
-  virtual void Update( Dali::UpdateProxy& updateProxy, float elapsedSeconds );
+  virtual void Update(Dali::UpdateProxy& updateProxy, float elapsedSeconds);
 
 private:
-
-  Dali::Vector< uint32_t > mActorIdContainer; ///< Container of Actor IDs.
-  float windowHalfWidth; ///< Half the width of the window. Center is 0,0 in the world matrix.
+  Dali::Vector<uint32_t> mActorIdContainer; ///< Container of Actor IDs.
+  float                  windowHalfWidth;   ///< Half the width of the window. Center is 0,0 in the world matrix.
 
   constexpr static float SIZE_MULTIPLIER = 2.0f; ///< Multiplier for the size to set as the actors hit the edge.
 };

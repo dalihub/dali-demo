@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@
 #include <dali/dali.h>
 
 // INTERNAL INCLUDES
-#include "shared/dali-table-view.h"
 #include "shared/dali-demo-strings.h"
+#include "shared/dali-table-view.h"
 
 using namespace Dali;
 
-int DALI_EXPORT_API main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char** argv)
 {
   // Configure gettext for internalization
 #ifdef INTERNATIONALIZATION_ENABLED
@@ -33,7 +33,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   setlocale(LC_ALL, DEMO_LANG);
 #endif
 
-  Application app = Application::New( &argc, &argv, DEMO_STYLE_DIR "/examples-theme.json" );
+  Application app = Application::New(&argc, &argv, DEMO_STYLE_DIR "/examples-theme.json");
 
   // Create the demo launcher
   DaliTableView demo(app);
@@ -101,7 +101,7 @@ int DALI_EXPORT_API main(int argc, char **argv)
   demo.AddExample(Example("transitions.example", DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS));
   demo.AddExample(Example("web-view.example", DALI_DEMO_STR_TITLE_WEB_VIEW));
 
-  demo.SortAlphabetically( true );
+  demo.SortAlphabetically(true);
 
   // Start the event loop
   app.MainLoop();

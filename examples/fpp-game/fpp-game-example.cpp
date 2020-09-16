@@ -15,10 +15,10 @@
  *
  */
 
-#include "game-renderer.h"
 #include "game-model.h"
-#include "game-texture.h"
+#include "game-renderer.h"
 #include "game-scene.h"
+#include "game-texture.h"
 
 #include "fpp-game-tutorial-controller.h"
 
@@ -28,11 +28,9 @@ using namespace Dali;
 
 namespace
 {
-
 const char* SCENE_URL =
-{
-  DEMO_GAME_DIR "/scene.json"
-};
+  {
+    DEMO_GAME_DIR "/scene.json"};
 
 }
 /* This example creates 3D environment with first person camera control
@@ -78,12 +76,11 @@ const char* SCENE_URL =
 class GameController : public ConnectionTracker
 {
 public:
-
-  GameController( Application& application )
-  : mApplication( application )
+  GameController(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &GameController::Create );
+    mApplication.InitSignal().Connect(this, &GameController::Create);
   }
 
   ~GameController()
@@ -91,24 +88,24 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Get a handle to the window
     mWindow = application.GetWindow();
 
-    mWindow.SetBackgroundColor( Color::BLACK );
+    mWindow.SetBackgroundColor(Color::BLACK);
 
     // Use 3D layer
-    mWindow.GetRootLayer().SetProperty( Layer::Property::BEHAVIOR, Layer::LAYER_3D );
+    mWindow.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
 
     // Load game scene
-    mScene.Load( mWindow, SCENE_URL );
+    mScene.Load(mWindow, SCENE_URL);
 
     // Display tutorial
-    mTutorialController.DisplayTutorial( mWindow );
+    mTutorialController.DisplayTutorial(mWindow);
 
     // Connect OnKeyEvent signal
-    mWindow.KeyEventSignal().Connect( this, &GameController::OnKeyEvent );
+    mWindow.KeyEventSignal().Connect(this, &GameController::OnKeyEvent);
   }
 
   // Handle a quit key event
@@ -116,7 +113,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, Dali::DALI_KEY_ESCAPE) || IsKey( event, Dali::DALI_KEY_BACK) )
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -124,17 +121,16 @@ public:
   }
 
 private:
-
   Application&              mApplication;
   GameScene                 mScene;
   Window                    mWindow;
   FppGameTutorialController mTutorialController;
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv );
-  GameController test( application );
+  Application    application = Application::New(&argc, &argv);
+  GameController test(application);
   application.MainLoop();
   return 0;
 }

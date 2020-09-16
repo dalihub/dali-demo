@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,15 @@
  *
  */
 
+#include "game-renderer.h"
 #include "game-model.h"
 #include "game-texture.h"
-#include "game-renderer.h"
 
 #include <dali/dali.h>
 
 namespace
 {
+// clang-format off
 
 const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
     attribute highp vec3 aPosition;\n
@@ -46,12 +47,13 @@ const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
       gl_FragColor = texture2D( sTexture, vTexCoord ) * vec4(1.2, 1.2, 1.2, 1.0);\n
     }\n
 );
+// clang-format on
 
-}
+} // namespace
 
 GameRenderer::GameRenderer()
-  : mModel( NULL ),
-    mTexture( NULL )
+: mModel(NULL),
+  mTexture(NULL)
 {
 }
 
@@ -59,13 +61,13 @@ GameRenderer::~GameRenderer()
 {
 }
 
-void GameRenderer::SetModel( GameModel* model )
+void GameRenderer::SetModel(GameModel* model)
 {
   mModel = model;
   Setup();
 }
 
-void GameRenderer::SetMainTexture( GameTexture* texture )
+void GameRenderer::SetMainTexture(GameTexture* texture)
 {
   mTexture = texture;
   Setup();
@@ -73,32 +75,32 @@ void GameRenderer::SetMainTexture( GameTexture* texture )
 
 void GameRenderer::Setup()
 {
-  if( !mRenderer && mModel )
+  if(!mRenderer && mModel)
   {
-    Dali::Shader shader = Dali::Shader::New( VERTEX_SHADER, FRAGMENT_SHADER );
-    mRenderer = Dali::Renderer::New( mModel->GetGeometry(), shader );
-    mRenderer.SetProperty( Dali::Renderer::Property::DEPTH_WRITE_MODE, Dali::DepthWriteMode::ON );
-    mRenderer.SetProperty( Dali::Renderer::Property::DEPTH_FUNCTION, Dali::DepthFunction::LESS_EQUAL );
-    mRenderer.SetProperty( Dali::Renderer::Property::DEPTH_TEST_MODE, Dali::DepthTestMode::ON );
+    Dali::Shader shader = Dali::Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    mRenderer           = Dali::Renderer::New(mModel->GetGeometry(), shader);
+    mRenderer.SetProperty(Dali::Renderer::Property::DEPTH_WRITE_MODE, Dali::DepthWriteMode::ON);
+    mRenderer.SetProperty(Dali::Renderer::Property::DEPTH_FUNCTION, Dali::DepthFunction::LESS_EQUAL);
+    mRenderer.SetProperty(Dali::Renderer::Property::DEPTH_TEST_MODE, Dali::DepthTestMode::ON);
   }
 
   Dali::TextureSet textureSet;
-  Dali::Geometry geometry;
+  Dali::Geometry   geometry;
 
-  if( mModel )
+  if(mModel)
   {
     geometry = mModel->GetGeometry();
   }
 
-  if( mTexture && mTexture->GetTextureSet() )
+  if(mTexture && mTexture->GetTextureSet())
   {
     textureSet = mTexture->GetTextureSet();
   }
 
-  if( textureSet && geometry )
+  if(textureSet && geometry)
   {
-    mRenderer.SetGeometry( geometry );
-    mRenderer.SetTextures( textureSet );
+    mRenderer.SetGeometry(geometry);
+    mRenderer.SetTextures(textureSet);
   }
 }
 
@@ -106,6 +108,3 @@ Dali::Renderer& GameRenderer::GetRenderer()
 {
   return mRenderer;
 }
-
-
-

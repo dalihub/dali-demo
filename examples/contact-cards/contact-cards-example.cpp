@@ -16,11 +16,11 @@
  */
 
 // EXTERNAL INCLUDES
-#include <vector>
+#include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali/public-api/adaptor-framework/application.h>
 #include <dali/public-api/adaptor-framework/key.h>
 #include <dali/public-api/events/key-event.h>
-#include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
+#include <vector>
 
 // INTERNAL INCLUDES
 #include "contact-card-layouter.h"
@@ -31,8 +31,8 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-const Vector4 WINDOW_COLOR( 211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f ); ///< The color of the window
-const char * const THEME_PATH( DEMO_STYLE_DIR "contact-cards-example-theme.json" ); ///< The theme used for this example
+const Vector4     WINDOW_COLOR(211.0f / 255.0f, 211.0f / 255.0f, 211.0f / 255.0f, 1.0f); ///< The color of the window
+const char* const THEME_PATH(DEMO_STYLE_DIR "contact-cards-example-theme.json");         ///< The theme used for this example
 } // unnamed namespace
 
 /**
@@ -58,35 +58,33 @@ const char * const THEME_PATH( DEMO_STYLE_DIR "contact-cards-example-theme.json"
 class ContactCardController : public ConnectionTracker // Inherit from ConnectionTracker so that our signals can be automatically disconnected upon our destruction.
 {
 public:
-
   /**
    * @brief Constructor.
    * @param[in]  application A reference to the Application class.
    */
-  ContactCardController( Application& application )
-  : mApplication( application )
+  ContactCardController(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &ContactCardController::Create );
+    mApplication.InitSignal().Connect(this, &ContactCardController::Create);
   }
 
 private:
-
   /**
    * @brief Called to initialise the application content
    * @param[in] application A reference to the Application class.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
     Window window = application.GetWindow();
-    window.SetBackgroundColor( WINDOW_COLOR );
-    window.KeyEventSignal().Connect( this, &ContactCardController::OnKeyEvent );
+    window.SetBackgroundColor(WINDOW_COLOR);
+    window.KeyEventSignal().Connect(this, &ContactCardController::OnKeyEvent);
 
     // Add all the contacts to the layouter
-    for( size_t i = 0; i < ContactData::TABLE_SIZE; ++i )
+    for(size_t i = 0; i < ContactData::TABLE_SIZE; ++i)
     {
-      mContactCardLayouter.AddContact( window, ContactData::TABLE[ i ].name, ContactData::TABLE[ i ].address, ContactData::TABLE[ i ].imagePath );
+      mContactCardLayouter.AddContact(window, ContactData::TABLE[i].name, ContactData::TABLE[i].address, ContactData::TABLE[i].imagePath);
     }
   }
 
@@ -96,14 +94,14 @@ private:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent( const KeyEvent& event )
+  void OnKeyEvent(const KeyEvent& event)
   {
-    if( event.GetState() == KeyEvent::DOWN )
+    if(event.GetState() == KeyEvent::DOWN)
     {
       KeyInputFocusManager keyInputFocusManager = KeyInputFocusManager::Get();
-      if( ! keyInputFocusManager.GetCurrentFocusControl() ) // Don't quit if a control has focus
+      if(!keyInputFocusManager.GetCurrentFocusControl()) // Don't quit if a control has focus
       {
-        if ( IsKey( event, Dali::DALI_KEY_ESCAPE ) || IsKey( event, Dali::DALI_KEY_BACK ) )
+        if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
         {
           mApplication.Quit();
         }
@@ -111,14 +109,14 @@ private:
     }
   }
 
-  Application& mApplication; ///< Reference to the application class.
+  Application&        mApplication;         ///< Reference to the application class.
   ContactCardLayouter mContactCardLayouter; ///< The contact card layouter.
 };
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, THEME_PATH );
-  ContactCardController contactCardController( application );
+  Application           application = Application::New(&argc, &argv, THEME_PATH);
+  ContactCardController contactCardController(application);
   application.MainLoop();
   return 0;
 }

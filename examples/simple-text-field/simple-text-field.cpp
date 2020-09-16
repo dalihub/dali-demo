@@ -27,19 +27,17 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
-
 /**
  * @brief The main class of the demo.
  */
 class SimpleTextFieldExample : public ConnectionTracker
 {
 public:
-
-  SimpleTextFieldExample( Application& application )
-  : mApplication( application )
+  SimpleTextFieldExample(Application& application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect( this, &SimpleTextFieldExample::Create );
+    mApplication.InitSignal().Connect(this, &SimpleTextFieldExample::Create);
   }
 
   ~SimpleTextFieldExample()
@@ -50,23 +48,23 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create( Application& application )
+  void Create(Application& application)
   {
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &SimpleTextFieldExample::OnKeyEvent);
-    window.SetBackgroundColor( Vector4( 0.04f, 0.345f, 0.392f, 1.0f ) );
+    window.SetBackgroundColor(Vector4(0.04f, 0.345f, 0.392f, 1.0f));
 
     TextField field = TextField::New();
-    field.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
-    field.SetProperty( Actor::Property::SIZE, Vector2( 300.f, 60.f ) );
-    field.SetBackgroundColor( Color::WHITE );
-    field.SetBackgroundColor( Vector4( 1.f, 1.f, 1.f, 0.15f ) );
+    field.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    field.SetProperty(Actor::Property::SIZE, Vector2(300.f, 60.f));
+    field.SetBackgroundColor(Color::WHITE);
+    field.SetBackgroundColor(Vector4(1.f, 1.f, 1.f, 0.15f));
 
-    field.SetProperty( TextField::Property::TEXT_COLOR, Color::BLACK );
-    field.SetProperty( TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder" );
-    field.SetProperty( TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name." );
+    field.SetProperty(TextField::Property::TEXT_COLOR, Color::BLACK);
+    field.SetProperty(TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder");
+    field.SetProperty(TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name.");
 
-    window.Add( field );
+    window.Add(field);
   }
 
   /**
@@ -76,7 +74,7 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      if( IsKey( event, DALI_KEY_ESCAPE) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
@@ -84,24 +82,23 @@ public:
   }
 
 private:
-
   Application& mApplication;
 };
 
-void RunTest( Application& application )
+void RunTest(Application& application)
 {
-  SimpleTextFieldExample test( application );
+  SimpleTextFieldExample test(application);
 
   application.MainLoop();
 }
 
 /** Entry point for Linux & Tizen applications */
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
   // DALI_DEMO_THEME_PATH not passed to Application so TextField example uses default Toolkit style sheet.
-  Application application = Application::New( &argc, &argv );
+  Application application = Application::New(&argc, &argv);
 
-  RunTest( application );
+  RunTest(application);
 
   return 0;
 }
