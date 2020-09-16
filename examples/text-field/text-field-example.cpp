@@ -152,7 +152,7 @@ public:
   bool OnPopupTouched(Actor actor, const TouchEvent& event)
   {
     // End edit mode for TextField if parent Popup touched.
-    if((event.GetPointCount() > 0) && (mPopup == event.GetHitActor(0)))
+    if(event.GetPointCount() > 0)
     {
       switch(event.GetState(0))
       {
@@ -175,7 +175,7 @@ public:
       } // end switch
     }
 
-    return false;
+    return true;
   }
 
   /**
