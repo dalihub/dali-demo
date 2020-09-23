@@ -14,11 +14,12 @@
  * limitations under the License.
  *
  */
-#include <dali/devel-api/adaptor-framework/file-stream.h>
 
+// HEADER
 #include "gltf-scene.h"
 
-#include "pico-json.h"
+// EXTERNAL INCLUDES
+#include <dali/devel-api/adaptor-framework/file-stream.h>
 
 namespace
 {

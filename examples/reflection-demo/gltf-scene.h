@@ -1,3 +1,6 @@
+#ifndef GLTF_SCENE_H
+#define GLTF_SCENE_H
+
 /*
  * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
@@ -15,14 +18,13 @@
  *
  */
 
-#ifndef GLTF_SCENE_H
-#define GLTF_SCENE_H
 
+// EXTERNAL INCLUDES
+#include <string>
 #include <dali/integration-api/debug.h>
 
-#include <string>
-
-#include "pico-json.h"
+// INTERNAL INCLUDES
+#include "third-party/pico-json.h"
 
 #define GLTF_LOG(...)                                                                   \
   {                                                                                     \

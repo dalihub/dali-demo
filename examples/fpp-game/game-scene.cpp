@@ -25,7 +25,7 @@
 #include "game-scene.h"
 #include "game-texture.h"
 
-#include "third-party/picojson.h"
+#include "third-party/pico-json.h"
 
 #include <dali/dali.h>
 
