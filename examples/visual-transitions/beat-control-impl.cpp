@@ -249,7 +249,7 @@ void BeatControl::SetProperty(BaseObject* object, Property::Index index, const P
 
         // Determine if a transform.size property exists in the map, and
         // save it.
-        Property::Map* map = value.GetMap();
+        const Property::Map* map = value.GetMap();
         if(map)
         {
           Property::Value* value = map->Find(Visual::Property::TRANSFORM, "transform");
