@@ -88,7 +88,7 @@ void MyControl::SetProperty(BaseObject* object, Property::Index index, const Pro
       {
         Toolkit::Visual::Base  iconVisual;
         Toolkit::VisualFactory visualFactory = Toolkit::VisualFactory::Get();
-        Property::Map*         map           = value.GetMap();
+        const Property::Map*   map           = value.GetMap();
         if(map && !map->Empty())
         {
           iconVisual = visualFactory.CreateVisual(*map);

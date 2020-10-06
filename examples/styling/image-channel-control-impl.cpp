@@ -228,7 +228,7 @@ void ImageChannelControl::SetProperty(BaseObject* object, Property::Index index,
       }
       case Demo::ImageChannelControl::Property::IMAGE_VISUAL:
       {
-        Property::Map* map = value.GetMap();
+        const Property::Map* map = value.GetMap();
         if(map)
         {
           impl.mVisual = Toolkit::VisualFactory::Get().CreateVisual(*map);

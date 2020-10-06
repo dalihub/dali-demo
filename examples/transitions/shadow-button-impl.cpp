@@ -336,7 +336,7 @@ void ShadowButton::ResetVisual(
     // we are replacing an existing visual, so force relayout
     RelayoutRequest();
   }
-  Property::Map* map = value.GetMap();
+  const Property::Map* map = value.GetMap();
   if(map)
   {
     visual = Toolkit::VisualFactory::Get().CreateVisual(*map);
