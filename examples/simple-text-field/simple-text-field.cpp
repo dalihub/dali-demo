@@ -22,6 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/text-controls/text-field-devel.h>
 #include <iostream>
 
 using namespace Dali;
@@ -54,17 +55,56 @@ public:
     window.KeyEventSignal().Connect(this, &SimpleTextFieldExample::OnKeyEvent);
     window.SetBackgroundColor(Vector4(0.04f, 0.345f, 0.392f, 1.0f));
 
-    TextField field = TextField::New();
-    field.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    field.SetProperty(Actor::Property::SIZE, Vector2(300.f, 60.f));
-    field.SetBackgroundColor(Color::WHITE);
-    field.SetBackgroundColor(Vector4(1.f, 1.f, 1.f, 0.15f));
+    mTextField = TextField::New();
+    mTextField.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mTextField.SetProperty(Actor::Property::SIZE, Vector2(300.f, 60.f));
+    mTextField.SetBackgroundColor(Color::WHITE);
+    mTextField.SetBackgroundColor(Vector4(1.f, 1.f, 1.f, 0.15f));
 
-    field.SetProperty(TextField::Property::TEXT_COLOR, Color::BLACK);
-    field.SetProperty(TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder");
-    field.SetProperty(TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name.");
+    mTextField.SetProperty(TextField::Property::TEXT_COLOR, Color::BLACK);
+    mTextField.SetProperty(TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder");
+    mTextField.SetProperty(TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name.");
 
-    window.Add(field);
+    mButtonSelectionStart = PushButton::New();
+    mButtonSelectionEnd = PushButton::New();
+
+    mButtonSelectionStart.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mButtonSelectionStart.SetProperty(Actor::Property::SIZE, Vector2(140.f, 50.f));
+    mButtonSelectionStart.SetProperty(Actor::Property::POSITION, Vector2(0.f, 80.f));
+    mButtonSelectionStart.SetBackgroundColor(Color::BLUE);
+    mButtonSelectionStart.SetProperty(Button::Property::LABEL, "select <--");
+    mButtonSelectionStart.ClickedSignal().Connect(this, &SimpleTextFieldExample::OnButtonClicked);
+
+    mButtonSelectionEnd.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mButtonSelectionEnd.SetProperty(Actor::Property::SIZE, Vector2(140.f, 50.f));
+    mButtonSelectionEnd.SetProperty(Actor::Property::POSITION, Vector2(0.f, 140.f));
+    mButtonSelectionEnd.SetBackgroundColor(Color::BLUE);
+    mButtonSelectionEnd.SetProperty(Button::Property::LABEL, "select -->");
+    mButtonSelectionEnd.ClickedSignal().Connect(this, &SimpleTextFieldExample::OnButtonClicked);
+
+    window.Add(mTextField);
+    window.Add(mButtonSelectionStart);
+    window.Add(mButtonSelectionEnd);
+  }
+
+
+  bool OnButtonClicked(Button button)
+  {
+    if(button == mButtonSelectionStart)
+    {
+      int iStart = mTextField.GetProperty(DevelTextField::Property::SELECTED_TEXT_START).Get<int>() - 1;
+      if (iStart < 0)
+      {
+        iStart = 0;
+      }
+      mTextField.SetProperty(DevelTextField::Property::SELECTED_TEXT_START, iStart);
+    }
+    else if(button == mButtonSelectionEnd)
+    {
+      mTextField.SetProperty(DevelTextField::Property::SELECTED_TEXT_END , mTextField.GetProperty(DevelTextField::Property::SELECTED_TEXT_END).Get<int>() + 1);
+    }
+
+    return true;
   }
 
   /**
@@ -83,6 +123,9 @@ public:
 
 private:
   Application& mApplication;
+  TextField mTextField;
+  PushButton mButtonSelectionStart;
+  PushButton mButtonSelectionEnd;
 };
 
 void RunTest(Application& application)
