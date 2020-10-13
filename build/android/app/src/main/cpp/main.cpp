@@ -29,8 +29,11 @@
 #include <dlfcn.h>
 
 // from android_native_app_glue.c
+
+#define TAG "dalidemo"
+#define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR,   TAG, ##__VA_ARGS__))
 #ifndef NDEBUG
-#define LOGV(...) ((void)__android_log_print(ANDROID_LOG_VERBOSE, "dalidemo", __VA_ARGS__))
+#define LOGV(...) ((void)__android_log_print(ANDROID_LOG_VERBOSE, TAG, ##__VA_ARGS__))
 #else
 #define LOGV(...) ((void)0)
 #endif
@@ -153,6 +156,7 @@ void android_main(struct android_app* state)
   LOGV("android_main() >>");
 
   std::string filesDir = state->activity->internalDataPath;
+  LOGV("filesDir=%s", filesDir.c_str() );
 
   std::string fontconfigPath = filesDir + "/fonts";
   setenv("FONTCONFIG_PATH", fontconfigPath.c_str(), 1);
@@ -198,6 +202,9 @@ void android_main(struct android_app* state)
   void* handle = dlopen(libpath.c_str(), RTLD_LAZY);
   if(!handle)
   {
+    int err = errno;
+    LOGE("Err=%d Fail to open lib %s", err, libpath.c_str());
+    status = err;
     std::exit(status);
   }
 
