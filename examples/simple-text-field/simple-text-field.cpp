@@ -59,7 +59,6 @@ public:
     mTextField.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mTextField.SetProperty(Actor::Property::SIZE, Vector2(300.f, 60.f));
     mTextField.SetBackgroundColor(Color::WHITE);
-    mTextField.SetBackgroundColor(Vector4(1.f, 1.f, 1.f, 0.15f));
 
     mTextField.SetProperty(TextField::Property::TEXT_COLOR, Color::BLACK);
     mTextField.SetProperty(TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder");
@@ -82,11 +81,19 @@ public:
     mButtonSelectionEnd.SetProperty(Button::Property::LABEL, "select -->");
     mButtonSelectionEnd.ClickedSignal().Connect(this, &SimpleTextFieldExample::OnButtonClicked);
 
+    mBtnEditable = PushButton::New();
+    mBtnEditable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mBtnEditable.SetProperty(Actor::Property::SIZE, Vector2(250.f, 80.f));
+    mBtnEditable.SetProperty(Actor::Property::POSITION, Vector2(0, 220.f));
+    mBtnEditable.SetBackgroundColor(Color::RED);
+    mBtnEditable.SetProperty(Button::Property::LABEL, "Non-editable");
+    mBtnEditable.ClickedSignal().Connect(this, &SimpleTextFieldExample::OnButtonClicked);
+
     window.Add(mTextField);
     window.Add(mButtonSelectionStart);
     window.Add(mButtonSelectionEnd);
+    window.Add(mBtnEditable);
   }
-
 
   bool OnButtonClicked(Button button)
   {
@@ -102,6 +109,21 @@ public:
     else if(button == mButtonSelectionEnd)
     {
       mTextField.SetProperty(DevelTextField::Property::SELECTED_TEXT_END , mTextField.GetProperty(DevelTextField::Property::SELECTED_TEXT_END).Get<int>() + 1);
+    }
+    else if (mBtnEditable == button)
+    {
+      bool bEditable = !mTextField.GetProperty( DevelTextField::Property::ENABLE_EDITING).Get<int>();
+      mTextField.SetProperty( DevelTextField::Property::ENABLE_EDITING , bEditable);
+      if (bEditable)
+        {
+          mBtnEditable.SetProperty(Button::Property::LABEL, "Non-editable");
+          mBtnEditable.SetBackgroundColor(Color::RED);
+        }
+      else
+        {
+          mBtnEditable.SetProperty(Button::Property::LABEL, "editable");
+          mBtnEditable.SetBackgroundColor(Color::GREEN);
+        }
     }
 
     return true;
@@ -126,6 +148,7 @@ private:
   TextField mTextField;
   PushButton mButtonSelectionStart;
   PushButton mButtonSelectionEnd;
+  PushButton mBtnEditable;
 };
 
 void RunTest(Application& application)
