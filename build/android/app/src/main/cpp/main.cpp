@@ -29,8 +29,11 @@
 #include <dlfcn.h>
 
 // from android_native_app_glue.c
+
+#define TAG "dalidemo"
+#define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR,   TAG, ##__VA_ARGS__))
 #ifndef NDEBUG
-#define LOGV(...) ((void)__android_log_print(ANDROID_LOG_VERBOSE, "dalidemo", __VA_ARGS__))
+#define LOGV(...) ((void)__android_log_print(ANDROID_LOG_VERBOSE, TAG, ##__VA_ARGS__))
 #else
 #define LOGV(...) ((void)0)
 #endif
@@ -153,6 +156,7 @@ void android_main(struct android_app* state)
   LOGV("android_main() >>");
 
   std::string filesDir = state->activity->internalDataPath;
+  LOGV("filesDir=%s", filesDir.c_str() );
 
   std::string fontconfigPath = filesDir + "/fonts";
   setenv("FONTCONFIG_PATH", fontconfigPath.c_str(), 1);
@@ -183,7 +187,13 @@ void android_main(struct android_app* state)
   DaliDemoNativeActivity nativeActivity(state->activity);
 
   int         status    = 0;
-  std::string libpath   = "/data/data/com.sec.dalidemo/lib/libdali-demo.so";
+
+  //dali requires Android 8 or higher
+  //Android 6+ support loading library directly from apk,
+  //therefore no need to extract to filesystem first then open by specifying full path
+  //unless there is need to do profiling, or export libraries so that other packages can use
+  std::string libpath   = "libdali-demo.so";
+
   std::string callParam = nativeActivity.GetIntentStringExtra("start");
   if(callParam.empty())
   {
@@ -192,12 +202,15 @@ void android_main(struct android_app* state)
 
   if(!callParam.empty())
   {
-    libpath = "/data/data/com.sec.dalidemo/lib/lib" + callParam + ".so";
+    libpath = "lib" + callParam + ".so";
   }
 
   void* handle = dlopen(libpath.c_str(), RTLD_LAZY);
   if(!handle)
   {
+    int err = errno;
+    LOGE("Err=%d Fail to open lib %s", err, libpath.c_str());
+    status = err;
     std::exit(status);
   }
 
