@@ -792,7 +792,7 @@ private:
   PanGestureDetector mPanDetector;
 };
 
-int main(int argc, char** argv)
+int DALI_EXPORT_API main(int argc, char** argv)
 {
   const bool showLights = [](int argc, char** argv) {
     auto endArgs = argv + argc;
