@@ -217,9 +217,16 @@ void android_main(struct android_app* state)
   dlerror(); /* Clear any existing error */
 
   int (*main)(int, char**) = (int (*)(int, char**))dlsym(handle, "main");
+  LOGV("lib=%s handle=%p main=%p", libpath.c_str(), handle, main );
   if(main)
   {
     status = main(0, nullptr);
+  }
+  else
+  {
+      LOGE("lib %s doesn't have main()", libpath.c_str());
+      status = EFAULT;
+      std::exit(status);
   }
 
   if(handle)
