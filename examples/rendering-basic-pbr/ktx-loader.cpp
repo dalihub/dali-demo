@@ -93,26 +93,22 @@ bool ConvertPixelFormat(const uint32_t ktxPixelFormat, Dali::Pixel::Format& form
 
 bool LoadCubeMapFromKtxFile(const std::string& path, CubeData& cubedata)
 {
-  std::unique_ptr<FILE, void (*)(FILE*)> fp(fopen(path.c_str(), "rb"), [](FILE* fp) {
-    if(fp)
-    {
-      fclose(fp);
-    }
-  });
+  Dali::FileStream daliFileStream(path);
+  FILE* fp(daliFileStream.GetFile());
   if(!fp)
   {
     return false;
   }
 
   KtxFileHeader header;
-  int           result = fread(&header, sizeof(KtxFileHeader), 1u, fp.get());
+  int           result = fread(&header, sizeof(KtxFileHeader), 1u, fp);
   if(0 == result)
   {
     return false;
   }
 
   // Skip the key-values:
-  if(fseek(fp.get(), header.bytesOfKeyValueData, SEEK_CUR))
+  if(fseek(fp, header.bytesOfKeyValueData, SEEK_CUR))
   {
     return false;
   }
@@ -151,7 +147,7 @@ bool LoadCubeMapFromKtxFile(const std::string& path, CubeData& cubedata)
   for(unsigned int mipmapLevel = 0; mipmapLevel < header.numberOfMipmapLevels; ++mipmapLevel)
   {
     uint32_t byteSize = 0;
-    if(fread(&byteSize, sizeof(byteSize), 1u, fp.get()) != 1)
+    if(fread(&byteSize, sizeof(byteSize), 1u, fp) != 1)
     {
       return false;
     }
@@ -166,7 +162,7 @@ bool LoadCubeMapFromKtxFile(const std::string& path, CubeData& cubedata)
       for(unsigned int face = 0; face < header.numberOfFaces; ++face)
       {
         std::unique_ptr<uint8_t, void (*)(void*)> img(static_cast<unsigned char*>(malloc(byteSize)), free); // resources will be freed when the PixelData is destroyed.
-        if(fread(img.get(), byteSize, 1u, fp.get()) != 1)
+        if(fread(img.get(), byteSize, 1u, fp) != 1)
         {
           return false;
         }
