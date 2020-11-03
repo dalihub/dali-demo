@@ -6,6 +6,7 @@ SET(EXAMPLES_REEL_SRCS
   ${EXAMPLES_REEL_SRCS}
   "${ROOT_SRC_DIR}/shared/resources-location.cpp"
   "${ROOT_SRC_DIR}/shared/dali-table-view.cpp"
+  "${ROOT_SRC_DIR}/shared/bubble-animator.cpp"
 )
 
 IF(WIN32)

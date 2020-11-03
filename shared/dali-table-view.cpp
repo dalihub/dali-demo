@@ -62,49 +62,17 @@ const float   KEYBOARD_FOCUS_MID_KEY_FRAME_TIME = KEYBOARD_FOCUS_ANIMATION_DURAT
 
 const float   TILE_LABEL_PADDING          = 8.0f;  ///< Border between edge of tile and the example text
 const float   BUTTON_PRESS_ANIMATION_TIME = 0.35f; ///< Time to perform button scale effect.
-const float   ROTATE_ANIMATION_TIME       = 0.5f;  ///< Time to perform rotate effect.
-const int     MAX_PAGES                   = 256;   ///< Maximum pages (arbitrary safety limit)
 const int     EXAMPLES_PER_ROW            = 3;
 const int     ROWS_PER_PAGE               = 3;
 const int     EXAMPLES_PER_PAGE           = EXAMPLES_PER_ROW * ROWS_PER_PAGE;
-const float   LOGO_MARGIN_RATIO           = 0.1f / 0.3f;
-const float   BOTTOM_PADDING_RATIO        = 0.4f / 0.9f;
-const Vector3 SCROLLVIEW_RELATIVE_SIZE(0.9f, 1.0f, 0.8f); ///< ScrollView's relative size to its parent
 const Vector3 TABLE_RELATIVE_SIZE(0.95f, 0.9f, 0.8f);     ///< TableView's relative size to the entire stage. The Y value means sum of the logo and table relative heights.
-const float   STENCIL_RELATIVE_SIZE = 1.0f;
-
-const float   EFFECT_SNAP_DURATION  = 0.66f; ///< Scroll Snap Duration for Effects
-const float   EFFECT_FLICK_DURATION = 0.5f;  ///< Scroll Flick Duration for Effects
-const Vector3 ANGLE_CUBE_PAGE_ROTATE(Math::PI * 0.5f, Math::PI * 0.5f, 0.0f);
-
-const char* const BUBBLE_COLOR_STYLE_NAME[] =
-  {
-    "BubbleColor1",
-    "BubbleColor2",
-    "BubbleColor3",
-    "BubbleColor4"};
-const int NUMBER_OF_BUBBLE_COLORS(sizeof(BUBBLE_COLOR_STYLE_NAME) / sizeof(BUBBLE_COLOR_STYLE_NAME[0]));
-
-const char* const SHAPE_IMAGE_TABLE[] =
-  {
-    DEMO_IMAGE_DIR "shape-circle.png",
-    DEMO_IMAGE_DIR "shape-bubble.png"};
-const int NUMBER_OF_SHAPE_IMAGES(sizeof(SHAPE_IMAGE_TABLE) / sizeof(SHAPE_IMAGE_TABLE[0]));
-
-const int   NUM_BACKGROUND_IMAGES   = 18;
-const float BACKGROUND_SPREAD_SCALE = 1.5f;
-
-const unsigned int BACKGROUND_ANIMATION_DURATION = 15000; // 15 secs
-
-const float BUBBLE_MIN_Z = -1.0;
-const float BUBBLE_MAX_Z = 0.0f;
 
 const char* const DEMO_BUILD_DATE = __DATE__ " " __TIME__;
 
 /**
  * Creates the background image
  */
-Control CreateBackground(std::string stylename)
+Actor CreateBackground(std::string stylename)
 {
   Control background = Control::New();
   background.SetStyleName(stylename);
@@ -114,38 +82,6 @@ Control CreateBackground(std::string stylename)
   background.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   return background;
 }
-
-/**
- * Constraint to return a position for a bubble based on the scroll value and vertical wrapping
- */
-struct AnimateBubbleConstraint
-{
-public:
-  AnimateBubbleConstraint(const Vector3& initialPos, float scale)
-  : mInitialX(initialPos.x),
-    mScale(scale)
-  {
-  }
-
-  void operator()(Vector3& position, const PropertyInputContainer& inputs)
-  {
-    const Vector3& parentSize = inputs[1]->GetVector3();
-    const Vector3& childSize  = inputs[2]->GetVector3();
-
-    // Wrap bubbles vertically.
-    float range = parentSize.y + childSize.y;
-    // This performs a float mod (we don't use fmod as we want the arithmetic modulus as opposed to the remainder).
-    position.y -= range * (floor(position.y / range) + 0.5f);
-
-    // Bubbles X position moves parallax to horizontal
-    // panning by a scale factor unique to each bubble.
-    position.x = mInitialX + (inputs[0]->GetVector2().x * mScale);
-  }
-
-private:
-  float mInitialX;
-  float mScale;
-};
 
 /**
  * Constraint to precalculate values from the scroll-view
@@ -182,9 +118,94 @@ private:
   float mTileXOffset;
 };
 
-bool CompareByTitle(const Example& lhs, const Example& rhs)
+/**
+ * Creates a popup that shows the version information of the DALi libraries and demo
+ */
+Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrackerInterface& connectionTracker)
 {
-  return lhs.title < rhs.title;
+  std::ostringstream stream;
+  stream << "DALi Core: " << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl
+         << "(" << CORE_BUILD_DATE << ")\n";
+  stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl
+         << "(" << ADAPTOR_BUILD_DATE << ")\n";
+  stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl
+         << "(" << TOOLKIT_BUILD_DATE << ")\n";
+  stream << "DALi Demo:"
+         << "\n(" << DEMO_BUILD_DATE << ")\n";
+
+  Dali::Toolkit::Popup popup = Dali::Toolkit::Popup::New();
+
+  Toolkit::TextLabel titleActor = Toolkit::TextLabel::New("Version information");
+  titleActor.SetProperty(Actor::Property::NAME, "titleActor");
+  titleActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
+  titleActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
+
+  Toolkit::TextLabel contentActor = Toolkit::TextLabel::New(stream.str());
+  contentActor.SetProperty(Actor::Property::NAME, "contentActor");
+  contentActor.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
+  contentActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
+  contentActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
+  contentActor.SetProperty(Actor::Property::PADDING, Padding(0.0f, 0.0f, 20.0f, 0.0f));
+
+  popup.SetTitle(titleActor);
+  popup.SetContent(contentActor);
+
+  popup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
+  popup.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.75f, 1.0f, 1.0f));
+  popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+
+  application.GetWindow().Add(popup);
+
+  // Hide the popup when touched outside
+  popup.OutsideTouchedSignal().Connect(
+    &connectionTracker,
+    [popup]() mutable
+    {
+      if(popup && (popup.GetDisplayState() == Toolkit::Popup::SHOWN))
+      {
+        popup.SetDisplayState(Popup::HIDDEN);
+      }
+    });
+
+  return popup;
+}
+
+/// Sets up the inner cube effect
+Dali::Toolkit::ScrollViewEffect SetupInnerPageCubeEffect(const Vector2 windowSize, int totalPages)
+{
+  Dali::Path            path = Dali::Path::New();
+  Dali::Property::Array points;
+  points.Resize(3);
+  points[0] = Vector3(windowSize.x * 0.5, 0.0f, windowSize.x * 0.5f);
+  points[1] = Vector3(0.0f, 0.0f, 0.0f);
+  points[2] = Vector3(-windowSize.x * 0.5f, 0.0f, windowSize.x * 0.5f);
+  path.SetProperty(Path::Property::POINTS, points);
+
+  Dali::Property::Array controlPoints;
+  controlPoints.Resize(4);
+  controlPoints[0] = Vector3(windowSize.x * 0.5f, 0.0f, windowSize.x * 0.3f);
+  controlPoints[1] = Vector3(windowSize.x * 0.3f, 0.0f, 0.0f);
+  controlPoints[2] = Vector3(-windowSize.x * 0.3f, 0.0f, 0.0f);
+  controlPoints[3] = Vector3(-windowSize.x * 0.5f, 0.0f, windowSize.x * 0.3f);
+  path.SetProperty(Path::Property::CONTROL_POINTS, controlPoints);
+
+  return ScrollViewPagePathEffect::New(path,
+                                       Vector3(-1.0f, 0.0f, 0.0f),
+                                       Toolkit::ScrollView::Property::SCROLL_FINAL_X,
+                                       Vector3(windowSize.x * TABLE_RELATIVE_SIZE.x, windowSize.y * TABLE_RELATIVE_SIZE.y, 0.0f),
+                                       totalPages);
+}
+
+/// Sets up the scroll view rulers
+void SetupScrollViewRulers(ScrollView& scrollView, const uint16_t windowWidth, const float pageWidth, const int totalPages)
+{
+  // Update Ruler info. for the scroll-view
+  Dali::Toolkit::RulerPtr rulerX = new FixedRuler(pageWidth);
+  Dali::Toolkit::RulerPtr rulerY = new DefaultRuler();
+  rulerX->SetDomain(RulerDomain(0.0f, (totalPages + 1) * windowWidth * TABLE_RELATIVE_SIZE.x * 0.5f, true));
+  rulerY->Disable();
+  scrollView.SetRulerX(rulerX);
+  scrollView.SetRulerY(rulerY);
 }
 
 } // namespace
@@ -192,30 +213,20 @@ bool CompareByTitle(const Example& lhs, const Example& rhs)
 DaliTableView::DaliTableView(Application& application)
 : mApplication(application),
   mRootActor(),
-  mRotateAnimation(),
   mPressedAnimation(),
   mScrollView(),
   mScrollViewEffect(),
-  mScrollRulerX(),
-  mScrollRulerY(),
   mPressedActor(),
-  mAnimationTimer(),
   mLogoTapDetector(),
   mVersionPopup(),
   mPages(),
-  mBackgroundAnimations(),
   mExampleList(),
   mPageWidth(0.0f),
   mTotalPages(),
   mScrolling(false),
-  mSortAlphabetically(false),
-  mBackgroundAnimsPlaying(false)
+  mSortAlphabetically(false)
 {
   application.InitSignal().Connect(this, &DaliTableView::Initialize);
-}
-
-DaliTableView::~DaliTableView()
-{
 }
 
 void DaliTableView::AddExample(Example example)
@@ -271,14 +282,8 @@ void DaliTableView::Initialize(Application& application)
 
   mPageWidth = windowSize.GetWidth() * TABLE_RELATIVE_SIZE.x * 0.5f;
 
-  // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
-  Actor bubbleContainer = Actor::New();
-  bubbleContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-  bubbleContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
-  bubbleContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  SetupBackground(bubbleContainer);
+  mBubbleAnimator.Initialize(mRootActor, mScrollView);
 
-  mRootActor.Add(bubbleContainer);
   mRootActor.Add(mScrollView);
 
   // Add scroll view effect and setup constraints on pages
@@ -306,16 +311,6 @@ void DaliTableView::Initialize(Application& application)
     winHandle.AddAvailableOrientation(Dali::Window::LANDSCAPE_INVERSE);
     winHandle.RemoveAvailableOrientation(Dali::Window::PORTRAIT_INVERSE);
   }
-
-  // Set initial orientation
-  unsigned int degrees = 0;
-  Rotate(degrees);
-
-  // Background animation
-  mAnimationTimer = Timer::New(BACKGROUND_ANIMATION_DURATION);
-  mAnimationTimer.TickSignal().Connect(this, &DaliTableView::PauseBackgroundAnimation);
-  mAnimationTimer.Start();
-  mBackgroundAnimsPlaying = true;
 
   CreateFocusEffect();
 }
@@ -393,10 +388,6 @@ void DaliTableView::ApplyCubeEffectToPages()
   }
 }
 
-void DaliTableView::OnButtonsPageRelayout(const Dali::Actor& actor)
-{
-}
-
 void DaliTableView::Populate()
 {
   const Window::WindowSize windowSize = mApplication.GetWindow().GetSize();
@@ -408,13 +399,13 @@ void DaliTableView::Populate()
   {
     if(mSortAlphabetically)
     {
-      sort(mExampleList.begin(), mExampleList.end(), CompareByTitle);
+      sort(mExampleList.begin(), mExampleList.end(), [](auto& lhs, auto& rhs)->bool { return lhs.title < rhs.title; } );
     }
 
     unsigned int         exampleCount = 0;
     ExampleListConstIter iter         = mExampleList.begin();
 
-    for(int t = 0; t < mTotalPages; t++)
+    for(int t = 0; t < mTotalPages && iter != mExampleList.end(); t++)
     {
       // Create Table
       TableView page = TableView::New(ROWS_PER_PAGE, EXAMPLES_PER_ROW);
@@ -427,9 +418,9 @@ void DaliTableView::Populate()
       const float margin               = 2.0f;
       const float tileParentMultiplier = 1.0f / EXAMPLES_PER_ROW;
 
-      for(int row = 0; row < ROWS_PER_PAGE; row++)
+      for(int row = 0; row < ROWS_PER_PAGE && iter != mExampleList.end(); row++)
       {
-        for(int column = 0; column < EXAMPLES_PER_ROW; column++)
+        for(int column = 0; column < EXAMPLES_PER_ROW && iter != mExampleList.end(); column++)
         {
           const Example& example = (*iter);
 
@@ -446,59 +437,14 @@ void DaliTableView::Populate()
           page.AddChild(tile, TableView::CellPosition(row, column));
 
           iter++;
-
-          if(iter == mExampleList.end())
-          {
-            break;
-          }
-        }
-
-        if(iter == mExampleList.end())
-        {
-          break;
         }
       }
 
       mPages.push_back(page);
-
-      if(iter == mExampleList.end())
-      {
-        break;
-      }
     }
   }
 
-  // Update Ruler info.
-  mScrollRulerX = new FixedRuler(mPageWidth);
-  mScrollRulerY = new DefaultRuler();
-  mScrollRulerX->SetDomain(RulerDomain(0.0f, (mTotalPages + 1) * windowSize.GetWidth() * TABLE_RELATIVE_SIZE.x * 0.5f, true));
-  mScrollRulerY->Disable();
-  mScrollView.SetRulerX(mScrollRulerX);
-  mScrollView.SetRulerY(mScrollRulerY);
-}
-
-void DaliTableView::Rotate(unsigned int degrees)
-{
-  // Resize the root actor
-  const Window::WindowSize windowSize = mApplication.GetWindow().GetSize();
-  const Vector2            originalSize(windowSize.GetWidth(), windowSize.GetHeight());
-  Vector3                  targetSize(originalSize.x, originalSize.y, 1.0f);
-
-  if(degrees == 90 || degrees == 270)
-  {
-    targetSize = Vector3(originalSize.y, originalSize.x, 1.0f);
-  }
-
-  if(mRotateAnimation)
-  {
-    mRotateAnimation.Stop();
-    mRotateAnimation.Clear();
-  }
-
-  mRotateAnimation = Animation::New(ROTATE_ANIMATION_TIME);
-  mRotateAnimation.AnimateTo(Property(mRootActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360 - degrees)), Vector3::ZAXIS), AlphaFunction::EASE_OUT);
-  mRotateAnimation.AnimateTo(Property(mRootActor, Actor::Property::SIZE), targetSize, AlphaFunction::EASE_OUT);
-  mRotateAnimation.Play();
+  SetupScrollViewRulers(mScrollView, windowSize.GetWidth(), mPageWidth, mTotalPages);
 }
 
 Actor DaliTableView::CreateTile(const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, Vector2& position)
@@ -587,10 +533,9 @@ bool DaliTableView::DoTilePress(Actor actor, PointState::Type pointState)
     if((!mScrolling) && (!mPressedAnimation))
     {
       std::string           name = actor.GetProperty<std::string>(Dali::Actor::Property::NAME);
-      const ExampleListIter end  = mExampleList.end();
-      for(ExampleListIter iter = mExampleList.begin(); iter != end; ++iter)
+      for(Example& example : mExampleList)
       {
-        if((*iter).name == name)
+        if(example.name == name)
         {
           // do nothing, until pressed animation finished.
           consumed = true;
@@ -636,7 +581,7 @@ void DaliTableView::OnScrollStart(const Dali::Vector2& position)
 {
   mScrolling = true;
 
-  PlayAnimation();
+  mBubbleAnimator.PlayAnimation();
 }
 
 void DaliTableView::OnScrollComplete(const Dali::Vector2& position)
@@ -668,37 +613,9 @@ void DaliTableView::ApplyScrollViewEffect()
   }
 
   // Just one effect for now
-  SetupInnerPageCubeEffect();
+  mScrollViewEffect = SetupInnerPageCubeEffect(mApplication.GetWindow().GetSize(), mTotalPages);
 
   mScrollView.ApplyEffect(mScrollViewEffect);
-}
-
-void DaliTableView::SetupInnerPageCubeEffect()
-{
-  const Window::WindowSize windowDimensions = mApplication.GetWindow().GetSize();
-  const Vector2            windowSize(windowDimensions.GetWidth(), windowDimensions.GetHeight());
-
-  Dali::Path            path = Dali::Path::New();
-  Dali::Property::Array points;
-  points.Resize(3);
-  points[0] = Vector3(windowSize.x * 0.5, 0.0f, windowSize.x * 0.5f);
-  points[1] = Vector3(0.0f, 0.0f, 0.0f);
-  points[2] = Vector3(-windowSize.x * 0.5f, 0.0f, windowSize.x * 0.5f);
-  path.SetProperty(Path::Property::POINTS, points);
-
-  Dali::Property::Array controlPoints;
-  controlPoints.Resize(4);
-  controlPoints[0] = Vector3(windowSize.x * 0.5f, 0.0f, windowSize.x * 0.3f);
-  controlPoints[1] = Vector3(windowSize.x * 0.3f, 0.0f, 0.0f);
-  controlPoints[2] = Vector3(-windowSize.x * 0.3f, 0.0f, 0.0f);
-  controlPoints[3] = Vector3(-windowSize.x * 0.5f, 0.0f, windowSize.x * 0.3f);
-  path.SetProperty(Path::Property::CONTROL_POINTS, controlPoints);
-
-  mScrollViewEffect = ScrollViewPagePathEffect::New(path,
-                                                    Vector3(-1.0f, 0.0f, 0.0f),
-                                                    Toolkit::ScrollView::Property::SCROLL_FINAL_X,
-                                                    Vector3(windowSize.x * TABLE_RELATIVE_SIZE.x, windowSize.y * TABLE_RELATIVE_SIZE.y, 0.0f),
-                                                    mTotalPages);
 }
 
 void DaliTableView::OnKeyEvent(const KeyEvent& event)
@@ -719,115 +636,6 @@ void DaliTableView::OnKeyEvent(const KeyEvent& event)
       }
     }
   }
-}
-
-void DaliTableView::SetupBackground(Actor bubbleContainer)
-{
-  // Add bubbles to the bubbleContainer.
-  // Note: The bubbleContainer is parented externally to this function.
-  AddBackgroundActors(bubbleContainer, NUM_BACKGROUND_IMAGES);
-}
-
-void DaliTableView::InitialiseBackgroundActors(Actor actor)
-{
-  // Delete current animations
-  mBackgroundAnimations.clear();
-
-  // Create new animations
-  const Vector3 size = actor.GetTargetSize();
-
-  for(unsigned int i = 0, childCount = actor.GetChildCount(); i < childCount; ++i)
-  {
-    Actor child = actor.GetChildAt(i);
-
-    // Calculate a random position
-    Vector3 childPos(Random::Range(-size.x * 0.5f * BACKGROUND_SPREAD_SCALE, size.x * 0.85f * BACKGROUND_SPREAD_SCALE),
-                     Random::Range(-size.y, size.y),
-                     Random::Range(BUBBLE_MIN_Z, BUBBLE_MAX_Z));
-
-    child.SetProperty(Actor::Property::POSITION, childPos);
-
-    // Define bubble horizontal parallax and vertical wrapping
-    Constraint animConstraint = Constraint::New<Vector3>(child, Actor::Property::POSITION, AnimateBubbleConstraint(childPos, Random::Range(-0.85f, 0.25f)));
-    animConstraint.AddSource(Source(mScrollView, ScrollView::Property::SCROLL_POSITION));
-    animConstraint.AddSource(Dali::ParentSource(Dali::Actor::Property::SIZE));
-    animConstraint.AddSource(Dali::LocalSource(Dali::Actor::Property::SIZE));
-    animConstraint.SetRemoveAction(Constraint::DISCARD);
-    animConstraint.Apply();
-
-    // Kickoff animation
-    Animation animation = Animation::New(Random::Range(30.0f, 160.0f));
-    animation.AnimateBy(Property(child, Actor::Property::POSITION), Vector3(0.0f, -2000.0f, 0.0f), AlphaFunction::LINEAR);
-    animation.SetLooping(true);
-    animation.Play();
-    mBackgroundAnimations.push_back(animation);
-  }
-}
-
-void DaliTableView::AddBackgroundActors(Actor layer, int count)
-{
-  for(int i = 0; i < count; ++i)
-  {
-    float randSize  = Random::Range(10.0f, 400.0f);
-    int   shapeType = static_cast<int>(Random::Range(0.0f, NUMBER_OF_SHAPE_IMAGES - 1) + 0.5f);
-
-    ImageView dfActor = ImageView::New();
-    dfActor.SetProperty(Actor::Property::SIZE, Vector2(randSize, randSize));
-    dfActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-
-    // Set the Image URL and the custom shader at the same time
-    Dali::Property::Map effect = Toolkit::CreateDistanceFieldEffect();
-    Property::Map       imageMap;
-    imageMap.Add(ImageVisual::Property::URL, SHAPE_IMAGE_TABLE[shapeType]);
-    imageMap.Add(Toolkit::Visual::Property::SHADER, effect);
-    dfActor.SetProperty(Toolkit::ImageView::Property::IMAGE, imageMap);
-
-    dfActor.SetStyleName(BUBBLE_COLOR_STYLE_NAME[i % NUMBER_OF_BUBBLE_COLORS]);
-
-    layer.Add(dfActor);
-  }
-
-  // Positioning will occur when the layer is relaid out
-  layer.OnRelayoutSignal().Connect(this, &DaliTableView::InitialiseBackgroundActors);
-}
-
-bool DaliTableView::PauseBackgroundAnimation()
-{
-  PauseAnimation();
-
-  return false;
-}
-
-void DaliTableView::PauseAnimation()
-{
-  if(mBackgroundAnimsPlaying)
-  {
-    for(AnimationListIter animIter = mBackgroundAnimations.begin(); animIter != mBackgroundAnimations.end(); ++animIter)
-    {
-      Animation anim = *animIter;
-
-      anim.Stop();
-    }
-
-    mBackgroundAnimsPlaying = false;
-  }
-}
-
-void DaliTableView::PlayAnimation()
-{
-  if(!mBackgroundAnimsPlaying)
-  {
-    for(AnimationListIter animIter = mBackgroundAnimations.begin(); animIter != mBackgroundAnimations.end(); ++animIter)
-    {
-      Animation anim = *animIter;
-
-      anim.Play();
-    }
-
-    mBackgroundAnimsPlaying = true;
-  }
-
-  mAnimationTimer.SetInterval(BACKGROUND_ANIMATION_DURATION);
 }
 
 Dali::Actor DaliTableView::OnKeyboardPreFocusChange(Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction)
@@ -914,50 +722,9 @@ void DaliTableView::OnLogoTapped(Dali::Actor actor, const Dali::TapGesture& tap)
   {
     if(!mVersionPopup)
     {
-      std::ostringstream stream;
-      stream << "DALi Core: " << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl
-             << "(" << CORE_BUILD_DATE << ")\n";
-      stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl
-             << "(" << ADAPTOR_BUILD_DATE << ")\n";
-      stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl
-             << "(" << TOOLKIT_BUILD_DATE << ")\n";
-      stream << "DALi Demo:"
-             << "\n(" << DEMO_BUILD_DATE << ")\n";
-
-      mVersionPopup = Dali::Toolkit::Popup::New();
-
-      Toolkit::TextLabel titleActor = Toolkit::TextLabel::New("Version information");
-      titleActor.SetProperty(Actor::Property::NAME, "titleActor");
-      titleActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
-      titleActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-
-      Toolkit::TextLabel contentActor = Toolkit::TextLabel::New(stream.str());
-      contentActor.SetProperty(Actor::Property::NAME, "contentActor");
-      contentActor.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
-      contentActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
-      contentActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-      contentActor.SetProperty(Actor::Property::PADDING, Padding(0.0f, 0.0f, 20.0f, 0.0f));
-
-      mVersionPopup.SetTitle(titleActor);
-      mVersionPopup.SetContent(contentActor);
-
-      mVersionPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
-      mVersionPopup.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.75f, 1.0f, 1.0f));
-      mVersionPopup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
-
-      mVersionPopup.OutsideTouchedSignal().Connect(this, &DaliTableView::HideVersionPopup);
-      mApplication.GetWindow().Add(mVersionPopup);
+      mVersionPopup = CreateVersionPopup(mApplication, *this);
     }
 
     mVersionPopup.SetDisplayState(Popup::SHOWN);
-  }
-}
-
-void DaliTableView::HideVersionPopup()
-{
-  // Only hide if currently fully shown. If transitioning-in, the transition will not be interrupted.
-  if(mVersionPopup && (mVersionPopup.GetDisplayState() == Toolkit::Popup::SHOWN))
-  {
-    mVersionPopup.SetDisplayState(Popup::HIDDEN);
   }
 }
