@@ -294,17 +294,17 @@ void DaliTableView::Initialize(Application& application)
 
   if(windowSize.GetWidth() <= windowSize.GetHeight())
   {
-    winHandle.AddAvailableOrientation(Dali::Window::PORTRAIT);
-    winHandle.RemoveAvailableOrientation(Dali::Window::LANDSCAPE);
-    winHandle.AddAvailableOrientation(Dali::Window::PORTRAIT_INVERSE);
-    winHandle.RemoveAvailableOrientation(Dali::Window::LANDSCAPE_INVERSE);
+    winHandle.AddAvailableOrientation(Dali::WindowOrientation::PORTRAIT);
+    winHandle.RemoveAvailableOrientation(Dali::WindowOrientation::LANDSCAPE);
+    winHandle.AddAvailableOrientation(Dali::WindowOrientation::PORTRAIT_INVERSE);
+    winHandle.RemoveAvailableOrientation(Dali::WindowOrientation::LANDSCAPE_INVERSE);
   }
   else
   {
-    winHandle.AddAvailableOrientation(Dali::Window::LANDSCAPE);
-    winHandle.RemoveAvailableOrientation(Dali::Window::PORTRAIT);
-    winHandle.AddAvailableOrientation(Dali::Window::LANDSCAPE_INVERSE);
-    winHandle.RemoveAvailableOrientation(Dali::Window::PORTRAIT_INVERSE);
+    winHandle.AddAvailableOrientation(Dali::WindowOrientation::LANDSCAPE);
+    winHandle.RemoveAvailableOrientation(Dali::WindowOrientation::PORTRAIT);
+    winHandle.AddAvailableOrientation(Dali::WindowOrientation::LANDSCAPE_INVERSE);
+    winHandle.RemoveAvailableOrientation(Dali::WindowOrientation::PORTRAIT_INVERSE);
   }
 
   // Set initial orientation
