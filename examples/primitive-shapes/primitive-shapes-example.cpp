@@ -639,10 +639,13 @@ public:
       {
         //Rotate based off the gesture.
         Vector2 displacement = gesture.GetDisplacement();
-        Quaternion q0 = mModel.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
-        Vector2 rotation { displacement.y / X_ROTATION_DISPLACEMENT_FACTOR, // Y displacement rotates around X axis
-          displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR }; // X displacement rotates around Y axis
+        Vector2 rotation {
+          -displacement.y / X_ROTATION_DISPLACEMENT_FACTOR, // Y displacement rotates around X axis
+          displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR // X displacement rotates around Y axis
+        };
+
         Quaternion q = Quaternion(Radian(rotation.x), Radian(rotation.y), Radian(0.f));
+        Quaternion q0 = mModel.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
 
         mModel.SetProperty(Actor::Property::ORIENTATION, q * q0);
 
