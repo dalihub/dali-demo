@@ -199,10 +199,10 @@ void PageTurnExample::OnInit(Application& app)
   Window window = app.GetWindow();
   window.KeyEventSignal().Connect(this, &PageTurnExample::OnKeyEvent);
 
-  window.AddAvailableOrientation(Window::PORTRAIT);
-  window.AddAvailableOrientation(Window::LANDSCAPE);
-  window.AddAvailableOrientation(Window::PORTRAIT_INVERSE);
-  window.AddAvailableOrientation(Window::LANDSCAPE_INVERSE);
+  window.AddAvailableOrientation(WindowOrientation::PORTRAIT);
+  window.AddAvailableOrientation(WindowOrientation::LANDSCAPE);
+  window.AddAvailableOrientation(WindowOrientation::PORTRAIT_INVERSE);
+  window.AddAvailableOrientation(WindowOrientation::LANDSCAPE_INVERSE);
   window.ResizeSignal().Connect(this, &PageTurnExample::OnWindowResized);
 
   Window::WindowSize size = window.GetSize();

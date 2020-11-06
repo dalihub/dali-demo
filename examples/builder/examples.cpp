@@ -201,16 +201,9 @@ bool FileWatcher::FileHasChanged(void)
   }
   else
   {
-    if(buf.st_mtime > mLastTime)
-    {
-      mLastTime = buf.st_mtime;
-      return true;
-    }
-    else
-    {
-      mLastTime = buf.st_mtime;
-      return false;
-    }
+    const bool result = buf.st_mtime > mLastTime;
+    mLastTime = buf.st_mtime;
+    return result;
   }
 
   return false;
@@ -305,7 +298,6 @@ public:
 
     std::sort(files.begin(), files.end());
 
-    ItemId itemId = 0;
     for(FileList::iterator iter = files.begin(); iter != files.end(); ++iter)
     {
       JsonParser parser = JsonParser::New();
@@ -329,12 +321,6 @@ public:
           if(node->Size())
           {
             mFiles.push_back(*iter);
-
-            mItemView.InsertItem(Item(itemId,
-                                      MenuItem(ShortName(*iter))),
-                                 0.5f);
-
-            itemId++;
           }
           else
           {

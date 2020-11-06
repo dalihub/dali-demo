@@ -169,6 +169,9 @@
 	<ui-application appid="page-turn-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/page-turn-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Page Turn</label>
 	</ui-application>
+	<ui-application appid="particles.example" exec="/usr/apps/com.samsung.dali-demo/bin/particles.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Particles</label>
+	</ui-application>
 	<ui-application appid="perf-scroll.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-scroll.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>perf-scroll</label>
 	</ui-application>

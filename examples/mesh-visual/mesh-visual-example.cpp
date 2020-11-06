@@ -9,7 +9,6 @@ namespace
 struct Model
 {
   Control   control;           // Control housing the mesh visual of the model.
-  Vector2   rotation;          // Keeps track of rotation about x and y axis for manual rotation.
   Animation rotationAnimation; // Automatically rotates when left alone.
 };
 
@@ -156,8 +155,6 @@ public:
 
       //Store model information in corresponding structs.
       mModels[i].control           = control;
-      mModels[i].rotation.x        = 0.0f;
-      mModels[i].rotation.y        = 0.0f;
       mModels[i].rotationAnimation = rotationAnimation;
     }
 
@@ -403,11 +400,10 @@ public:
           actor.GetProperty(actor.GetPropertyIndex("Model")).Get(mSelectedModelIndex);
 
           //Pause current animation, as the touch gesture will be used to manually rotate the model
-          mModels[mSelectedModelIndex].rotationAnimation.Pause();
+          mModels[mSelectedModelIndex].rotationAnimation.Stop();
 
           //Store start points.
-          mPanStart      = touch.GetScreenPosition(0);
-          mRotationStart = mModels[mSelectedModelIndex].rotation;
+          mLastTouchPosition = touch.GetScreenPosition(0);
         }
 
         break;
@@ -420,14 +416,15 @@ public:
           case MODEL_TAG: //Rotate model
           {
             //Calculate displacement and corresponding rotation.
-            Vector2 displacement                  = touch.GetScreenPosition(0) - mPanStart;
-            mModels[mSelectedModelIndex].rotation = Vector2(mRotationStart.x - displacement.y / Y_ROTATION_DISPLACEMENT_FACTOR,  // Y displacement rotates around X axis
-                                                            mRotationStart.y + displacement.x / X_ROTATION_DISPLACEMENT_FACTOR); // X displacement rotates around Y axis
-            Quaternion rotation                   = Quaternion(Radian(mModels[mSelectedModelIndex].rotation.x), Vector3::XAXIS) *
-                                  Quaternion(Radian(mModels[mSelectedModelIndex].rotation.y), Vector3::YAXIS);
+            const Vector2 touchPosition = touch.GetScreenPosition(0);
+            const Vector2 displacement = touchPosition - mLastTouchPosition;
+            mLastTouchPosition = touchPosition;
+
+            const Quaternion q(Radian(displacement.y / -Y_ROTATION_DISPLACEMENT_FACTOR), Radian(displacement.x / X_ROTATION_DISPLACEMENT_FACTOR), Radian(0.f));
+            const Quaternion q0 = mModels[mSelectedModelIndex].control.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
 
             //Apply rotation.
-            mModels[mSelectedModelIndex].control.SetProperty(Actor::Property::ORIENTATION, rotation);
+            mModels[mSelectedModelIndex].control.SetProperty(Actor::Property::ORIENTATION, q * q0);
 
             break;
           }
@@ -584,7 +581,7 @@ private:
   Control mLightSource;
 
   //Used to detect panning to rotate the selected model.
-  Vector2 mPanStart;
+  Vector2 mLastTouchPosition;
   Vector2 mRotationStart;
 
   int  mModelIndex;         //Index of model to load.
@@ -598,7 +595,7 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application          application = Application::New(&argc, &argv);
+  Application          application = Application::New(&argc, &argv, DEMO_THEME_PATH);
   MeshVisualController test(application);
   application.MainLoop();
   return 0;
