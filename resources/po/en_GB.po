@@ -283,6 +283,9 @@ msgstr "Skybox"
 msgid "DALI_DEMO_STR_TITLE_PBR"
 msgstr "PBR"
 
+msgid "DALI_DEMO_STR_TITLE_WAVES"
+msgstr "Waves"
+
 msgid "DALI_DEMO_STR_TITLE_WEB_VIEW"
 msgstr "Web View"
 
