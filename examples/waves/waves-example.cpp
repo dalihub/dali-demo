@@ -280,16 +280,16 @@ private:
   Actor mWaves;
   Shader mWaveShader;
 
-  Property::Index mUInvLightDir;
-  Property::Index mULightColorSqr;
-  Property::Index mUAmbientColor;
-  Property::Index mUWaveRate;
-  Property::Index mUWaveAmplitude;
-  Property::Index mUScrollScale;
-  Property::Index mUNormalMapWeight;
-  Property::Index mUSpecularity;
-  Property::Index mUParallaxAmount;
-  Property::Index mUTime;
+  Property::Index mUInvLightDir{Property::INVALID_INDEX};
+  Property::Index mULightColorSqr{Property::INVALID_INDEX};
+  Property::Index mUAmbientColor{Property::INVALID_INDEX};
+  Property::Index mUWaveRate{Property::INVALID_INDEX};
+  Property::Index mUWaveAmplitude{Property::INVALID_INDEX};
+  Property::Index mUScrollScale{Property::INVALID_INDEX};
+  Property::Index mUNormalMapWeight{Property::INVALID_INDEX};
+  Property::Index mUSpecularity{Property::INVALID_INDEX};
+  Property::Index mUParallaxAmount{Property::INVALID_INDEX};
+  Property::Index mUTime{Property::INVALID_INDEX};
 
   TapGestureDetector mDoubleTapGesture;
 
