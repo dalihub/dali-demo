@@ -300,3 +300,6 @@ msgstr "Text Visual"
 
 msgid "DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT"
 msgstr "Text Bitmap Font"
+
+msgid "DALI_DEMO_STR_TITLE_WAVES"
+msgstr "Waves"
