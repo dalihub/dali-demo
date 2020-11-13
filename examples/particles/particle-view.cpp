@@ -262,18 +262,18 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
 
   // scatter variables
   char nameBuffer[64];
-  char* writep = nameBuffer + sprintf(nameBuffer, "uScatter[");
+  char* writep = nameBuffer + snprintf(nameBuffer, sizeof(nameBuffer), "uScatter[");
   for (uint32_t i = 0; i < std::extent<decltype(mScatterProps)>::value; ++i)
   {
-    char* writep2 = writep + sprintf(writep, "%d].", i);
+    char* writep2 = writep + snprintf(writep, sizeof(nameBuffer) - std::distance(nameBuffer, writep), "%d].", i);
 
-    sprintf(writep2, "radiusSqr");
+    snprintf(writep2, sizeof(nameBuffer) - std::distance(nameBuffer, writep2), "radiusSqr");
     mScatterProps[i].mPropRadius = particleShader.RegisterProperty(nameBuffer, 0.f);
 
-    sprintf(writep2, "amount");
+    snprintf(writep2, sizeof(nameBuffer) - std::distance(nameBuffer, writep2), "amount");
     mScatterProps[i].mPropAmount = particleShader.RegisterProperty(nameBuffer, 0.f);
 
-    sprintf(writep2, "ray");
+    snprintf(writep2, sizeof(nameBuffer) - std::distance(nameBuffer, writep2), "ray");
     mScatterProps[i].mPropRay = particleShader.RegisterProperty(nameBuffer, Vector3::ZERO);
   }
 
@@ -285,7 +285,7 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
   const uint32_t skip = GetSkipValue(POPULATION_GRANULARITY, prime);
   uint32_t next = 0;
 
-  writep = nameBuffer + sprintf(nameBuffer, "uOrderLookUp[");
+  writep = nameBuffer + snprintf(nameBuffer, sizeof(nameBuffer), "uOrderLookUp[");
   for (uint32_t i = 0; i < POPULATION_GRANULARITY; ++i)
   {
     do {
@@ -294,7 +294,7 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
     }
     while (next == 0 || next > POPULATION_GRANULARITY);
 
-    sprintf(writep, "%d]", i);
+    snprintf(writep, sizeof(nameBuffer) - std::distance(nameBuffer, writep), "%d]", i);
     particleShader.RegisterProperty(nameBuffer, float(next - 1));
   }
 

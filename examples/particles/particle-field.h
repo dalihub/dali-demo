@@ -93,7 +93,10 @@ struct ParticleField
     for (size_t i = 0; i < numParticles; ++i)
     {
       Vertex v;
-      v.aPosition = Vector3((i % nx) * spacing.x, (i / nx) % ny * spacing.y, (i / nxy) * spacing.z) - offset;
+      float x = float(i % nx);
+      float y = float((i / nx) % ny);
+      float z = float(i / nxy);
+      v.aPosition = Vector3(x, y, z) * spacing - offset;
 
       Vector3 disperseDir(frandDisperse() - .5, frandDisperse() - .5, frandDisperse() - .5);
       disperseDir.Normalize();
