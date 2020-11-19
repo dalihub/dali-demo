@@ -18,48 +18,14 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali/dali.h>
 
-class Example;
-
-typedef std::vector<Example>        ExampleList;
-typedef ExampleList::iterator       ExampleListIter;
-typedef ExampleList::const_iterator ExampleListConstIter;
-
-typedef std::vector<Dali::Animation>  AnimationList;
-typedef AnimationList::iterator       AnimationListIter;
-typedef AnimationList::const_iterator AnimationListConstIter;
-
-/**
- * Example information
- *
- * Represents a single Example.
- */
-struct Example
-{
-  // Constructors
-
-  /**
-   * @param[in] name unique name of example
-   * @param[in] title The caption for the example to appear on a tile button.
-   */
-  Example(std::string name, std::string title)
-  : name(name),
-    title(title)
-  {
-  }
-
-  Example()
-  {
-  }
-
-  // Data
-
-  std::string name;  ///< unique name of example
-  std::string title; ///< title (caption) of example to appear on tile button.
-};
+// INTERNAL INCLUDES
+#include "bubble-animator.h"
+#include "example.h"
 
 /**
  * Dali-Demo instance
@@ -67,8 +33,18 @@ struct Example
 class DaliTableView : public Dali::ConnectionTracker
 {
 public:
+
+  /**
+   * Constructor
+   *
+   * @param application A reference to the application class
+   */
   DaliTableView(Dali::Application& application);
-  ~DaliTableView();
+
+  /**
+   * Destructor
+   */
+  ~DaliTableView() = default;
 
 public:
   /**
@@ -90,17 +66,8 @@ public:
    */
   void SortAlphabetically(bool sortAlphabetically);
 
-private:                                                      // Application callbacks & implementation
-  static const unsigned int FOCUS_ANIMATION_ACTOR_NUMBER = 2; ///< The number of elements used to form the custom focus effect
-
-  /**
-   * Shape enum for create function
-   */
-  enum ShapeType
-  {
-    CIRCLE,
-    BUBBLE
-  };
+private: // Application callbacks & implementation
+  static constexpr unsigned int FOCUS_ANIMATION_ACTOR_NUMBER = 2; ///< The number of elements used to form the custom focus effect
 
   /**
    * Initialize application.
@@ -115,13 +82,6 @@ private:                                                      // Application cal
    * call
    */
   void Populate();
-
-  /**
-   * Rotates RootActor orientation to that specified.
-   *
-   * @param[in] degrees The requested angle.
-   */
-  void Rotate(unsigned int degrees);
 
   /**
    * Creates a tile for the main menu.
@@ -175,15 +135,6 @@ private:                                                      // Application cal
   void OnPressedAnimationFinished(Dali::Animation& source);
 
   /**
-   * Signal emitted when the button has been clicked
-   *
-   * @param[in] button The Button that is clicked.
-   *
-   * @return Consume flag
-   */
-  bool OnButtonClicked(Dali::Toolkit::Button& button);
-
-  /**
    * Signal emitted when scrolling has started.
    *
    * @param[in] position The current position of the scroll contents.
@@ -219,56 +170,9 @@ private:                                                      // Application cal
   void ApplyCubeEffectToPages();
 
   /**
-   * Setup the inner cube effect
-   */
-  void SetupInnerPageCubeEffect();
-
-  /**
-   * Apply a shader effect to a table tile
-   */
-  void ApplyEffectToTile(Dali::Actor tile);
-
-  /**
-   * Apply effect to the content of a tile
-   */
-  void ApplyEffectToTileContent(Dali::Actor tileContent);
-
-  /**
    * Key event handler
    */
   void OnKeyEvent(const Dali::KeyEvent& event);
-
-  /**
-   * Create a depth field background
-   *
-   * @param[in] bubbleLayer Add the graphics to this layer
-   */
-  void SetupBackground(Dali::Actor bubbleLayer);
-
-  /**
-   * Create background actors for the given layer
-   *
-   * @param[in] layer The layer to add the actors to
-   * @param[in] count The number of actors to generate
-   */
-  void AddBackgroundActors(Dali::Actor layer, int count);
-
-  /**
-   * Timer handler for ending background animation
-   *
-   * @return Return value for timer handler
-   */
-  bool PauseBackgroundAnimation();
-
-  /**
-   * Pause all animations
-   */
-  void PauseAnimation();
-
-  /**
-   * Resume all animations
-   */
-  void PlayAnimation();
 
   /**
    * @brief Creates and sets up the custom effect used for the keyboard (and mouse) focus.
@@ -314,44 +218,16 @@ private:                                                      // Application cal
    */
   void OnLogoTapped(Dali::Actor actor, const Dali::TapGesture& tap);
 
-  /**
-   * Hides the popup
-   */
-  void HideVersionPopup();
-
-  /*
-  * @brief Callback called when the buttons page actor is relaid out
-  *
-  * @param[in] actor The page actor
-  */
-  void OnButtonsPageRelayout(const Dali::Actor& actor);
-
-  /**
-  * @brief The is connected to the keyboard focus highlight actor, and called when it is placed on the scene.
-  * @param[in] actor The actor that has been placed on the scene.
-  */
-  void OnSceneConnect(Dali::Actor actor);
-
-  /**
-  * @brief Callback called to set up background actors
-  *
-  * @param[in] actor The actor raising the callback
-  */
-  void InitialiseBackgroundActors(Dali::Actor actor);
-
 private:
   Dali::Application&              mApplication;      ///< Application instance.
-  Dali::Toolkit::Control          mRootActor;        ///< All content (excluding background is anchored to this Actor)
-  Dali::Animation                 mRotateAnimation;  ///< Animation to rotate and resize mRootActor.
+  Dali::Actor                     mRootActor;        ///< All content (excluding background is anchored to this Actor)
   Dali::Animation                 mPressedAnimation; ///< Button press scaling animation.
   Dali::Toolkit::ScrollView       mScrollView;       ///< ScrollView container (for all Examples)
   Dali::Toolkit::ScrollViewEffect mScrollViewEffect; ///< Effect to be applied to the scroll view
-  Dali::Toolkit::RulerPtr         mScrollRulerX;     ///< ScrollView X (horizontal) ruler
-  Dali::Toolkit::RulerPtr         mScrollRulerY;     ///< ScrollView Y (vertical) ruler
   Dali::Actor                     mPressedActor;     ///< The currently pressed actor.
-  Dali::Timer                     mAnimationTimer;   ///< Timer used to turn off animation after a specific time period
   Dali::TapGestureDetector        mLogoTapDetector;  ///< To detect taps on the logo
   Dali::Toolkit::Popup            mVersionPopup;     ///< Displays DALi library version information
+  BubbleAnimator                  mBubbleAnimator;   ///< Provides bubble animations.
 
   /**
    * This struct encapsulates all data relevant to each of the elements used within the custom keyboard focus effect.
@@ -364,7 +240,6 @@ private:
   FocusEffect mFocusEffect[FOCUS_ANIMATION_ACTOR_NUMBER]; ///< The elements used to create the custom focus effect
 
   std::vector<Dali::Actor> mPages;                ///< List of pages.
-  AnimationList            mBackgroundAnimations; ///< List of background bubble animations
   ExampleList              mExampleList;          ///< List of examples.
 
   float mPageWidth;  ///< The width of a page within the scroll-view, used to calculate the domain
@@ -372,7 +247,6 @@ private:
 
   bool mScrolling : 1;              ///< Flag indicating whether view is currently being scrolled
   bool mSortAlphabetically : 1;     ///< Sort examples alphabetically.
-  bool mBackgroundAnimsPlaying : 1; ///< Are background animations playing
 };
 
 #endif // DALI_DEMO_TABLEVIEW_H

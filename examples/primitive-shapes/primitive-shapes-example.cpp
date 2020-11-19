@@ -67,8 +67,7 @@ class PrimitiveShapesController : public ConnectionTracker
 public:
   PrimitiveShapesController(Application& application)
   : mApplication(application),
-    mColor(Vector4(0.3f, 0.7f, 1.0f, 1.0f)),
-    mRotation(Vector2::ZERO)
+    mColor(Vector4(0.3f, 0.7f, 1.0f, 1.0f))
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &PrimitiveShapesController::Create);
@@ -639,13 +638,16 @@ public:
       case GestureState::CONTINUING:
       {
         //Rotate based off the gesture.
-        const Vector2& displacement = gesture.GetDisplacement();
-        mRotation.x -= displacement.y / X_ROTATION_DISPLACEMENT_FACTOR; // Y displacement rotates around X axis
-        mRotation.y += displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR; // X displacement rotates around Y axis
-        Quaternion rotation = Quaternion(Radian(mRotation.x), Vector3::XAXIS) *
-                              Quaternion(Radian(mRotation.y), Vector3::YAXIS);
+        Vector2 displacement = gesture.GetDisplacement();
+        Vector2 rotation {
+          -displacement.y / X_ROTATION_DISPLACEMENT_FACTOR, // Y displacement rotates around X axis
+          displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR // X displacement rotates around Y axis
+        };
 
-        mModel.SetProperty(Actor::Property::ORIENTATION, rotation);
+        Quaternion q = Quaternion(Radian(rotation.x), Radian(rotation.y), Radian(0.f));
+        Quaternion q0 = mModel.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
+
+        mModel.SetProperty(Actor::Property::ORIENTATION, q * q0);
 
         break;
       }
@@ -697,12 +699,11 @@ private:
   Animation          mRotationAnimation;  ///< Automatically rotates the model, unless it is being panned.
 
   Vector4 mColor;    ///< Color to set all shapes.
-  Vector2 mRotation; ///< Keeps track of model rotation.
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application               application = Application::New(&argc, &argv);
+  Application               application = Application::New(&argc, &argv, DEMO_THEME_PATH);
   PrimitiveShapesController test(application);
   application.MainLoop();
   return 0;

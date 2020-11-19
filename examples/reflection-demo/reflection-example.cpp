@@ -595,13 +595,18 @@ private:
 
   void OnPan(Actor actor, const PanGesture& panGesture)
   {
-    const auto& displacement = panGesture.GetScreenDisplacement();
-    mCenterActor.RotateBy(Degree(displacement.y * 0.1f), Vector3(0.0, 0.0, 1.0));
-    mCenterActor.RotateBy(Degree(displacement.x * 0.1f), Vector3(0.0, 1.0, 0.0));
-    Quaternion q;
-    mCenterActor.GetProperty(Actor::Property::ORIENTATION).Get(q);
+    Vector2 displacement = panGesture.GetScreenDisplacement();
+    Vector2 rotation{
+      displacement.y * -0.1f,
+      displacement.x * 0.1f
+    };
+
+    Quaternion q(Degree(0.f), Degree(rotation.y), Degree(rotation.x));
+    Quaternion q0 = mCenterActor.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
+    mCenterActor.SetProperty(Actor::Property::ORIENTATION, q * q0);
+
     Matrix m = Matrix::IDENTITY;
-    m.SetTransformComponents(Vector3::ONE, q, Vector3::ZERO);
+    m.SetTransformComponents(Vector3::ONE, q0, Vector3::ZERO);
     auto yAxis = m.GetYAxis() * -1.0f;
 
     yAxis.Normalize();

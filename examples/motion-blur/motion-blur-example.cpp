@@ -183,10 +183,10 @@ public:
     mTapGestureDetector.DetectedSignal().Connect(this, &MotionBlurExampleApp::OnTap);
 
     Dali::Window winHandle = app.GetWindow();
-    winHandle.AddAvailableOrientation(Dali::Window::PORTRAIT);
-    winHandle.AddAvailableOrientation(Dali::Window::LANDSCAPE);
-    winHandle.AddAvailableOrientation(Dali::Window::PORTRAIT_INVERSE);
-    winHandle.AddAvailableOrientation(Dali::Window::LANDSCAPE_INVERSE);
+    winHandle.AddAvailableOrientation(Dali::WindowOrientation::PORTRAIT);
+    winHandle.AddAvailableOrientation(Dali::WindowOrientation::LANDSCAPE);
+    winHandle.AddAvailableOrientation(Dali::WindowOrientation::PORTRAIT_INVERSE);
+    winHandle.AddAvailableOrientation(Dali::WindowOrientation::LANDSCAPE_INVERSE);
     winHandle.ResizeSignal().Connect(this, &MotionBlurExampleApp::OnWindowResized);
 
     // set initial orientation
