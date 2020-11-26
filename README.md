@@ -110,6 +110,10 @@ To install apks:
          $ adb install -r ./app/build/outputs/apk/debug/dali-demo-debug.apk
          $ adb install -r ./app/build/outputs/apk/release/dali-demo-release.apk
 
+Manually granting permission for accessing Storage before running the demo
+         1. Long press the DALi demo app icon => App Info
+         2. Permissions => Storage => Enable
+
 ## 4. Building for MS Windows
 
 Third party dependencies are built using vcpkg. Instructions on how to install vcpkg can be found in the

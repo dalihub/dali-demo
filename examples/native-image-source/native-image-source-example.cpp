@@ -32,7 +32,7 @@ const float BUTTON_HEIGHT = 100.0f;
 const float BUTTON_COUNT  = 5.0f;
 
 const std::string JPG_FILENAME     = DEMO_IMAGE_DIR "gallery-medium-4.jpg";
-const std::string CAPTURE_FILENAME = "/tmp/native-image-capture.png";
+const std::string CAPTURE_FILENAME = DEMO_DATA_PUBLIC_RW_DIR "native-image-capture.png";
 
 /**
  * @brief Creates a shader used to render a native image
