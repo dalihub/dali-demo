@@ -38,6 +38,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   // Create the demo launcher
   DaliTableView demo(app);
 
+  demo.AddExample(Example("animated-gradient-call-active.example", DALI_DEMO_STR_TITLE_CALL_ACTIVE));
   demo.AddExample(Example("animated-gradient-card-active.example", DALI_DEMO_STR_TITLE_CARD_ACTIVE));
   demo.AddExample(Example("blocks.example", DALI_DEMO_STR_TITLE_BLOCKS));
   demo.AddExample(Example("bezier-curve.example", DALI_DEMO_STR_TITLE_BEZIER_CURVE));
