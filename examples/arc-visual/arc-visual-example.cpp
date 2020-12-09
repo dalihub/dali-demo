@@ -47,23 +47,6 @@ const Property::Value TEXT_BACKGROUND{
   {DevelVisual::Property::CORNER_RADIUS, 0.5f},
   {DevelVisual::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::RELATIVE}};
 
-const Property::Value TRANSITION_ANIMATOR{
-  {"timePeriod", Property::Map().Add("duration", ANIMATION_DURATION)}};
-
-const Property::Value TRANSITION_START_ANGLE{
-  {"target", "background"},
-  {"property", "startAngle"},
-  {"initialValue", START_ANGLE_INITIAL_VALUE},
-  {"targetValue", START_ANGLE_TARGET_VALUE},
-  {"animator", TRANSITION_ANIMATOR}};
-
-const Property::Value TRANSITION_SWEEP_ANGLE{
-  {"target", "background"},
-  {"property", "sweepAngle"},
-  {"initialValue", SWEEP_ANGLE_INITIAL_VALUE},
-  {"targetValue", SWEEP_ANGLE_TARGET_VALUE},
-  {"animator", TRANSITION_ANIMATOR}};
-
 } // namespace
 
 // This example shows the properties of the arc visual - thickness, startAngle and sweepAngle and animates them.
@@ -200,12 +183,13 @@ private:
   {
     if(touch.GetState(0) == PointState::UP)
     {
-      Property::Array array;
-      array.PushBack(TRANSITION_START_ANGLE);
-      array.PushBack(TRANSITION_SWEEP_ANGLE);
+      DevelControl::DoAction(mControl, Control::Property::BACKGROUND, DevelArcVisual::Action::UPDATE_PROPERTY,
+                             Property::Map().Add(DevelArcVisual::Property::START_ANGLE, START_ANGLE_INITIAL_VALUE)
+                                            .Add(DevelArcVisual::Property::SWEEP_ANGLE, SWEEP_ANGLE_INITIAL_VALUE));
 
-      TransitionData transitionData = TransitionData::New(array);
-      Animation      animation      = DevelControl::CreateTransition(Toolkit::Internal::GetImplementation(mControl), transitionData);
+      Animation animation = Animation::New(ANIMATION_DURATION);
+      animation.AnimateTo(DevelControl::GetVisualProperty(mControl, Control::Property::BACKGROUND, DevelArcVisual::Property::START_ANGLE), START_ANGLE_TARGET_VALUE);
+      animation.AnimateTo(DevelControl::GetVisualProperty(mControl, Control::Property::BACKGROUND, DevelArcVisual::Property::SWEEP_ANGLE), SWEEP_ANGLE_TARGET_VALUE);
       animation.Play();
     }
     return true;
