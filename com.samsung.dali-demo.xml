@@ -232,6 +232,9 @@
 	<ui-application appid="rendering-triangle.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-triangle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Rendering Triangle</label>
 	</ui-application>
+	<ui-application appid="scene-loader.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene-loader.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Scene Loader</label>
+	</ui-application>
 	<ui-application appid="scripting.example" exec="/usr/apps/com.samsung.dali-demo/bin/scripting.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>
 	</ui-application>

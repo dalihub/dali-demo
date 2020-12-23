@@ -21,6 +21,7 @@ BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(dali2-core)
 BuildRequires:  pkgconfig(dali2-adaptor)
 BuildRequires:  pkgconfig(dali2-toolkit)
+BuildRequires:  pkgconfig(dali2-scene-loader)
 BuildRequires:  pkgconfig(libtzplatform-config)
 
 %description
