@@ -248,15 +248,16 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
   FIND_LIBRARY( FRIBIDI_LIBRARY NAMES fribidi )
 
   FIND_PACKAGE( unofficial-angle REQUIRED )
+  FIND_PACKAGE( unofficial-cairo REQUIRED )
 
   FIND_PACKAGE( WebP REQUIRED )
 
   IF ( WIN32 )
     FIND_LIBRARY( GETOPT_LIBRARY NAMES getopt )
     FIND_PACKAGE( dali-windows-dependencies REQUIRED )
-    FIND_PACKAGE( unofficial-cairo REQUIRED )
     FIND_PACKAGE( unofficial-fontconfig REQUIRED )
   ENDIF()
+
   FIND_PACKAGE( dali2-core REQUIRED )
   FIND_PACKAGE( dali2-adaptor REQUIRED )
   FIND_PACKAGE( dali2-toolkit REQUIRED )
@@ -310,8 +311,11 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     )
   ENDIF()
 
-  IF (dali2_scene_loader_FOUND)
-    SET( REQUIRED_LIBS "${REQUIRED_LIBS} dali2-scene-loader::dali2-scene-loader" )
+  IF (dali2-scene-loader_FOUND)
+    SET(REQUIRED_LIBS
+      ${REQUIRED_LIBS}
+      dali2-scene-loader::dali2-scene-loader
+    )
     SET( ENABLE_SCENE_LOADER "ON" )
   ENDIF()
 ELSEIF( UNIX )
@@ -425,3 +429,4 @@ MESSAGE( " Folder  DEMO_SCRIPT_DIR : [" ${DEMO_SCRIPT_DIR} "]" )
 MESSAGE( " Folder  DEMO_LOCALE_DIR : [" ${DEMO_LOCALE_DIR} "]" )
 MESSAGE( " Folder DEMO_EXAMPLE_BIN : [" ${DEMO_EXAMPLE_BIN} "]" )
 MESSAGE( " Folder        DEMO_LANG : [" ${DEMO_LANG} "]" )
+MESSAGE( " Scene Loader Enabled    : [" ${ENABLE_SCENE_LOADER} "]" )
