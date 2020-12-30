@@ -40,7 +40,7 @@ using namespace Dali::SceneLoader;
 namespace
 {
 
-const float ROTATION_SCALE = 0.05f;
+const float ROTATION_SCALE = 180.f; // the amount of rotation that a swipe whose length is the width of the screen, causes, in degrees.
 
 const float ITEM_HEIGHT = 50.f;
 
@@ -411,11 +411,11 @@ void SceneLoaderExample::OnPan(Actor actor, const PanGesture& pan)
   Vector2 size{ float(windowSize.GetWidth()), float(windowSize.GetHeight()) };
   float aspect = size.y / size.x;
 
-  size *= ROTATION_SCALE;
+  size /= ROTATION_SCALE;
 
   Vector2 rotation{ pan.GetDisplacement().x / size.x, pan.GetDisplacement().y / size.y * aspect };
 
-  Quaternion q = Quaternion(Radian(rotation.y), Radian(rotation.x), Radian(0.f));
+  Quaternion q = Quaternion(Radian(Degree(rotation.y)), Radian(Degree(rotation.x)), Radian(0.f));
   Quaternion q0 = mScene.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
 
   mScene.SetProperty(Actor::Property::ORIENTATION, q * q0);

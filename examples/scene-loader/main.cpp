@@ -20,7 +20,7 @@
 
 using namespace Dali;
 
-int main(int argc, char** argv)
+int DALI_EXPORT_API main(int argc, char** argv)
 {
   auto app = Application::New(&argc, &argv, DEMO_THEME_PATH);
   SceneLoaderExample sceneLoader(app);
