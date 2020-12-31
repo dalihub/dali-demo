@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,6 +48,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("buttons.example", DALI_DEMO_STR_TITLE_BUTTONS));
   demo.AddExample(Example("clipping.example", DALI_DEMO_STR_TITLE_CLIPPING));
   demo.AddExample(Example("clipping-draw-order.example", DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER));
+  demo.AddExample(Example("color-transition.example", DALI_DEMO_STR_TITLE_COLOR_TRANSITION));
   demo.AddExample(Example("color-visual.example", DALI_DEMO_STR_TITLE_COLOR_VISUAL));
   demo.AddExample(Example("deferred-shading.example", DALI_DEMO_STR_TITLE_DEFERRED_SHADING));
   demo.AddExample(Example("dissolve-effect.example", DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION));

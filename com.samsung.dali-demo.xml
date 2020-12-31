@@ -61,6 +61,9 @@
 	<ui-application appid="clipping.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping</label>
 	</ui-application>
+	<ui-application appid="color-transition.example" exec="/usr/apps/com.samsung.dali-demo/bin/color-transition.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Color Transition</label>
+	</ui-application>
 	<ui-application appid="color-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/color-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Color Visual</label>
 	</ui-application>
