@@ -171,20 +171,19 @@ vcpkg-script folder in the windows-dependencies repository.
 
 ## 5. Building for MacOS
 
-Here it is expected that the environment variables are set accordingly to
-`dali-core/README.md`.
+It is assumed that the DALi environment has been set up & that DALi Core, Adaptor & Toolkit have been built accordingly.
 
 To build the repository enter the 'build/tizen' folder:
-```bash
-        $ cd dali-demo/build/tizen
+```zsh
+% cd dali-demo/build/tizen
 ```
 Then run the following command to set up the build:
-```bash
-        $ cmake -DCMAKE_INSTALL_PREFIX=$DESKTOP_PREFIX -DCMAKE_TOOLCHAIN_FILE=$VCPKG_FOLDER/scripts/buildsystems/vcpkg.cmake -DINTERNATIONALIZATION=OFF -DENABLE_PKG_CONFIGURE=OFF
+```zsh
+% cmake -DCMAKE_INSTALL_PREFIX=$DESKTOP_PREFIX -DCMAKE_TOOLCHAIN_FILE=$VCPKG_FOLDER/scripts/buildsystems/vcpkg.cmake -DINTERNATIONALIZATION=OFF
 ```
 If a Debug build is required, then add `-DCMAKE_BUILD_TYPE=Debug`
 
 To build, run:
-```bash
-        $ make install -j8
+```zsh
+% make install -j8
 ```
