@@ -46,6 +46,9 @@ msgstr "Clipping"
 msgid "DALI_DEMO_STR_TITLE_CLIPPING_DRAW_ORDER"
 msgstr "Clipping Draw Order"
 
+msgid "DALI_DEMO_STR_TITLE_COLOR_TRANSITION"
+msgstr "Colour Transition"
+
 msgid "DALI_DEMO_STR_TITLE_COLOR_VISUAL"
 msgstr "Colour Visual"
 
@@ -190,8 +193,8 @@ msgstr "Reflection"
 msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
 msgstr "Renderer Stencil"
 
-msgid "DALI_DEMO_STR_TITLE_SIMPLE_VISUALS_CONTROL"
-msgstr "Simple Visuals Control"
+msgid "DALI_DEMO_STR_TITLE_SCENE_LOADER"
+msgstr "Scene Loader"
 
 msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
 msgstr "Script-based UI"
@@ -201,6 +204,9 @@ msgstr "Scroll View"
 
 msgid "DALI_DEMO_STR_TITLE_SIMPLE_SCROLL_VIEW"
 msgstr "Simple Scroll View"
+
+msgid "DALI_DEMO_STR_TITLE_SIMPLE_VISUALS_CONTROL"
+msgstr "Simple Visuals Control"
 
 msgid "DALI_DEMO_STR_TITLE_SPARKLE"
 msgstr "Sparkle"

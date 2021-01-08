@@ -61,6 +61,9 @@
 	<ui-application appid="clipping.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping</label>
 	</ui-application>
+	<ui-application appid="color-transition.example" exec="/usr/apps/com.samsung.dali-demo/bin/color-transition.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Color Transition</label>
+	</ui-application>
 	<ui-application appid="color-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/color-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Color Visual</label>
 	</ui-application>
@@ -231,6 +234,9 @@
 	</ui-application>
 	<ui-application appid="rendering-triangle.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-triangle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Rendering Triangle</label>
+	</ui-application>
+	<ui-application appid="scene-loader.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene-loader.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Scene Loader</label>
 	</ui-application>
 	<ui-application appid="scripting.example" exec="/usr/apps/com.samsung.dali-demo/bin/scripting.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>

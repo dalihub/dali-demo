@@ -15,6 +15,7 @@
       * [4. Building for MS Windows](#4-windows-builds)
          * Build with the Visual Studio project.
          * Build with CMake.
+      * [5. Building for MacOS](#5-building-for-macos)
    * [Creating an example](#creating-an-example)
 
 # Build Instructions
@@ -167,3 +168,22 @@ vcpkg-script folder in the windows-dependencies repository.
     $ setx DALI_STYLE_DIR $DALI_ENV_FOLDER/share/dali/toolkit/styles/
     $ setx DALI_STYLE_IMAGE_DIR $DALI_ENV_FOLDER/share/dali/toolkit/styles/images/
     $ setx DALI_DATA_READ_ONLY_DIR $DALI_ENV_FOLDER/share/dali/
+
+## 5. Building for MacOS
+
+It is assumed that the DALi environment has been set up & that DALi Core, Adaptor & Toolkit have been built accordingly.
+
+To build the repository enter the 'build/tizen' folder:
+```zsh
+% cd dali-demo/build/tizen
+```
+Then run the following command to set up the build:
+```zsh
+% cmake -DCMAKE_INSTALL_PREFIX=$DESKTOP_PREFIX -DCMAKE_TOOLCHAIN_FILE=$VCPKG_FOLDER/scripts/buildsystems/vcpkg.cmake -DINTERNATIONALIZATION=OFF
+```
+If a Debug build is required, then add `-DCMAKE_BUILD_TYPE=Debug`
+
+To build, run:
+```zsh
+% make install -j8
+```
