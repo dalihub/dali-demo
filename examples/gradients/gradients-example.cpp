@@ -16,6 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include "shared/view.h"
 
@@ -132,10 +133,18 @@ public:
 
   bool OnRoundedCornerClicked(Toolkit::Button button)
   {
-    mRoundedCorner                                     = !mRoundedCorner;
-    mGradientMap[DevelVisual::Property::CORNER_RADIUS] = mRoundedCorner ? CORNER_RADIUS_VALUE : 0.0f;
+    mRoundedCorner = !mRoundedCorner;
 
-    UpdateGradientMap();
+    Animation animation = Animation::New(2.0f);
+    if(mRoundedCorner)
+    {
+      animation.AnimateTo(DevelControl::GetVisualProperty(mGradientControl, Control::Property::BACKGROUND, DevelVisual::Property::CORNER_RADIUS), CORNER_RADIUS_VALUE);
+    }
+    else
+    {
+      animation.AnimateTo(DevelControl::GetVisualProperty(mGradientControl, Control::Property::BACKGROUND, DevelVisual::Property::CORNER_RADIUS), 0.0f);
+    }
+    animation.Play();
 
     return true;
   }

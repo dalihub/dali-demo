@@ -1,0 +1,1266 @@
+{
+  "asset": { "version": "1.0" },
+  "scene": 0,
+  "scenes": [ { "nodes": [ 0 ] } ],
+  "nodes": [
+    {
+      "name": "$ColladaAutoName$_0",
+      "matrix": [ 1.0, 0, 0, 0, 0, 1.0, 0, 0, 0, 0, 1.0, 0, 0, 0, 0, 1 ],
+      "children": [ 1 ]
+    },
+    {
+      "name": "Spine",
+      "matrix": [ -0.171577, 0.985155, -0.00565, 0, -0.000969, 0.005566, 1, 0, 0.98517, 0.17158, 0, 0, 0, -0.782697, 0.001134, 1 ],
+      "children": [ 2, 40, 51, 62, 63, 64 ]
+    },
+    {
+      "name": "Neck",
+      "matrix": [ 0.999282, 0.037887, 0, 0, 0.037887, -0.999282, 0, 0, 0, 0, -1, 0, 1.73609, 0, 0, 1 ],
+      "children": [ 3, 14, 27 ]
+    },
+    {
+      "name": "Head1",
+      "matrix": [ -0.048873, -0.001577, -0.998804, 0, 0.998285, 0.032203, -0.048898, 0, 0.032241, -0.99948, 0, 0, 0.304215, 0, 0, 1 ],
+      "children": [ 4, 5 ]
+    },
+    {
+      "name": "Head",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1.75609, 0.062596, 0, 1 ]
+    },
+    {
+      "name": "Head2",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -1.25743, -0.001134, 1 ],
+      "model": {
+        "mesh": 8
+      },
+      "children": [ 6, 7, 8, 9, 10, 11, 12, 13 ]
+    },
+    {
+      "name": "pCube15",
+      "matrix": [ 0.580968, 0, 0, 0, 0, 0.391873, 0, 0, 0, 0, 1.04858, 0, 0.38687, 1.62435, 0, 1 ],
+      "model": {
+        "mesh": 0
+      }
+    },
+    {
+      "name": "pCube16",
+      "matrix": [ 0.580968, 0, 0, 0, 0, 0.391873, 0, 0, 0, 0, 1.04858, 0, 0.38687, 2.11656, 0, 1 ],
+      "model": {
+        "mesh": 1
+      }
+    },
+    {
+      "name": "pCylinder10",
+      "matrix": [ 0, 0, -0.52708, 0, 0, 0.52708, 0, 0, 0.585644, 0, 0, 0, 0.408816, 2.34025, 0.394094, 1 ],
+      "model": {
+        "mesh": 2
+      }
+    },
+    {
+      "name": "pCylinder10_1",
+      "matrix": [ 0, 0, -0.52708, 0, 0, 0.52708, 0, 0, 0.585644, 0, 0, 0, 0.408816, 2.34025, 0.394094, 1 ],
+      "model": {
+        "mesh": 3
+      }
+    },
+    {
+      "name": "pCylinder12",
+      "matrix": [ 0, 0, -0.202256, 0, 0, 0.202256, 0, 0, 0.224729, 0, 0, 0, 0.633571, 2.34025, 0.333171, 1 ],
+      "model": {
+        "mesh": 4
+      }
+    },
+    {
+      "name": "pCylinder13",
+      "matrix": [ 0, 0, -0.52708, 0, 0, 0.52708, 0, 0, 0.585644, 0, 0, 0, 0.408816, 2.34025, -0.397361, 1 ],
+      "model": {
+        "mesh": 5
+      }
+    },
+    {
+      "name": "pCylinder13_1",
+      "matrix": [ 0, 0, -0.52708, 0, 0, 0.52708, 0, 0, 0.585644, 0, 0, 0, 0.408816, 2.34025, -0.397361, 1 ],
+      "model": {
+        "mesh": 6
+      }
+    },
+    {
+      "name": "pCylinder14",
+      "matrix": [ 0, 0, -0.270309, 0, 0, 0.270309, 0, 0, 0.300343, 0, 0, 0, 0.58518, 2.34025, -0.381515, 1 ],
+      "model": {
+        "mesh": 7
+      }
+    },
+    {
+      "name": "Right_Upperarm",
+      "matrix": [ -0.595968, -0.019225, -0.802778, 0, -0.802361, -0.025883, 0.596278, 0, -0.032241, 0.99948, 0, 0, -0.432337, -1.70723, -0.000403, 1 ],
+      "children": [ 15, 22 ]
+    },
+    {
+      "name": "Right_Forearm",
+      "matrix": [ 0.81362, -0.581397, 0, 0, 0.581397, 0.81362, 0, 0, 0, 0, 1, 0, 1.20009, 0, 0, 1 ],
+      "children": [ 16, 19 ]
+    },
+    {
+      "name": "Right_Hand",
+      "matrix": [ 1, 0.000962, 0, 0, -0.000962, 1, 0, 0, 0, 0, 1, 0, 1.09048, 0, 0, 1 ],
+      "children": [ 17, 18 ]
+    },
+    {
+      "name": "jRight_Fingers",
+      "matrix": [ -0.000966, -1, 0, 0, -1, 0.000966, 0, 0, 0, 0, -1, 0, 1.49049, 0, 0, 1 ]
+    },
+    {
+      "name": "Right_Hand_ncl1_1",
+      "matrix": [ -0.000483, -0.500496, 0, 0, -0.500496, 0.000483, 0, 0, 0, 0, -0.500497, 0, 0.347351, -0.000719, 0.014509, 1 ],
+      "model": {
+        "mesh": 9
+      }
+    },
+    {
+      "name": "Righ_Forearm",
+      "matrix": [ -0, -0.500497, 0, 0, -0.500497, 0, 0, 0, 0, 0, -0.500497, 0, 0.546595, -0.000381, 0.014509, 1 ],
+      "model": {
+        "mesh": 12
+      },
+      "children": [ 20, 21 ]
+    },
+    {
+      "name": "pCylinder5",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.08951, -0.073969, 1 ],
+      "model": {
+        "mesh": 10
+      }
+    },
+    {
+      "name": "pCylinder5_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.08951, -0.073969, 1 ],
+      "model": {
+        "mesh": 11
+      }
+    },
+    {
+      "name": "Right_UpperArm",
+      "matrix": [ -0.000326, -0.500497, 0, 0, -0.500497, 0.000326, 0, 0, 0, 0, -0.500497, 0, 0.342486, 0.00018, 0.014509, 1 ],
+      "model": {
+        "mesh": 17
+      },
+      "children": [ 23, 24, 25, 26 ]
+    },
+    {
+      "name": "pCylinder4",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.71598, -0.073969, 1 ],
+      "model": {
+        "mesh": 13
+      }
+    },
+    {
+      "name": "pCylinder4_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.71598, -0.073969, 1 ],
+      "model": {
+        "mesh": 14
+      }
+    },
+    {
+      "name": "pCylinder3",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, 0.680126, -0.590869, 1 ],
+      "model": {
+        "mesh": 15
+      }
+    },
+    {
+      "name": "pCylinder3_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, 0.680126, -0.590869, 1 ],
+      "model": {
+        "mesh": 16
+      }
+    },
+    {
+      "name": "Left_Upperarm",
+      "matrix": [ -0.567567, -0.015373, -0.823184, 0, -0.341154, 0.914346, 0.218142, 0, 0.749321, 0.404643, -0.524197, 0, -0.543289, 1.67126, -0.000403, 1 ],
+      "children": [ 28, 35 ]
+    },
+    {
+      "name": "Left_Forearm",
+      "matrix": [ 0.702899, -0.272392, 0.657066, 0, 0.273195, 0.9563, 0.104189, 0, -0.656732, 0.106273, 0.746598, 0, 1.19756, 0, 0, 1 ],
+      "children": [ 29, 32 ]
+    },
+    {
+      "name": "Left_Hand",
+      "matrix": [ 1, 0.000366, -0.00089, 0, -0.000962, 0.380273, -0.924874, 0, 0, 0.924874, 0.380273, 0, 1.09358, 0, 0, 1 ],
+      "children": [ 30, 31 ]
+    },
+    {
+      "name": "Left_Finger",
+      "matrix": [ -0.000966, -1, 0, 0, -1, 0.000966, 0, 0, 0, 0, -1, 0, 1.49049, 0, 0, 1 ]
+    },
+    {
+      "name": "LeftHand",
+      "matrix": [ -0.000483, -0.500496, 0, 0, -0.500496, 0.000483, 0, 0, 0, 0, 0.5, 0, 0.344822, 0.00061, -0.030987, 1 ],
+      "model": {
+        "mesh": 18
+      }
+    },
+    {
+      "name": "Left_Forearm_ncl1_1",
+      "matrix": [ 0, 0.190325, -0.462897, 0, -0.500497, 0, -0, 0, 0, 0.462897, 0.190325, 0, 0.547157, -0.028299, -0.012658, 1 ],
+      "model": {
+        "mesh": 21
+      },
+      "children": [ 33, 34 ]
+    },
+    {
+      "name": "pCylinder5_ncl1_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.08951, -0.073969, 1 ],
+      "model": {
+        "mesh": 19
+      }
+    },
+    {
+      "name": "pCylinder5_ncl1_1_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.08951, -0.073969, 1 ],
+      "model": {
+        "mesh": 20
+      }
+    },
+    {
+      "name": "Left_Upperarm_ncl1_1",
+      "matrix": [ 0.000604, 0.190325, -0.462897, 0, -0.500494, 0.001588, 0, 0, 0.001468, 0.462894, 0.190325, 0, 0.340438, -0.02558, -0.01266, 1 ],
+      "model": {
+        "mesh": 26
+      },
+      "children": [ 36, 37, 38, 39 ]
+    },
+    {
+      "name": "pCylinder3_ncl1_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, 0.680126, -0.590869, 1 ],
+      "model": {
+        "mesh": 22
+      }
+    },
+    {
+      "name": "pCylinder3_ncl1_1_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, 0.680126, -0.590869, 1 ],
+      "model": {
+        "mesh": 23
+      }
+    },
+    {
+      "name": "pCylinder4_ncl1_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.71598, -0.073969, 1 ],
+      "model": {
+        "mesh": 24
+      }
+    },
+    {
+      "name": "pCylinder4_ncl1_1_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.71598, -0.073969, 1 ],
+      "model": {
+        "mesh": 25
+      }
+    },
+    {
+      "name": "Left_Thigh",
+      "matrix": [ -0.929044, -0.005249, -0.369932, 0, -0.369926, -0.00209, 0.929059, 0, -0.00565, 1, 0, 0, 0.004042, -0.618058, 0, 1 ],
+      "children": [ 41, 48 ]
+    },
+    {
+      "name": "Left_Shin",
+      "matrix": [ 1, -0.000442, 0, 0, -0.000442, -1, 0, 0, 0, 0, -1, 0, 0.967288, 0, 0, 1 ],
+      "children": [ 42, 45 ]
+    },
+    {
+      "name": "Left_Foot",
+      "matrix": [ -0.211977, -0.977275, 0, 0, -0.977275, 0.211977, 0, 0, 0, 0, -1, 0, 0.961114, 0, 0, 1 ],
+      "children": [ 43, 44 ]
+    },
+    {
+      "name": "Left_Toe",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1.5841, -0.237615, 0, 1 ]
+    },
+    {
+      "name": "Left_Foot_ncl1_1",
+      "matrix": [ 0.500497, 0, 0, 0, 0, 0.500497, 0, 0, 0, 0, 0.500497, 0, -0.000166, -0.34695, 0.018488, 1 ],
+      "model": {
+        "mesh": 27
+      }
+    },
+    {
+      "name": "Left_Shin_ncl1_1",
+      "matrix": [ -0, -0.500497, 0, 0, -0.500497, 0, 0, 0, 0, 0, -0.500497, 0, 0.416823, 0.000247, -0.018488, 1 ],
+      "model": {
+        "mesh": 30
+      },
+      "children": [ 46, 47 ]
+    },
+    {
+      "name": "pCylinder7",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.08951, -0.073969, 1 ],
+      "model": {
+        "mesh": 28
+      }
+    },
+    {
+      "name": "pCylinder7_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.08951, -0.073969, 1 ],
+      "model": {
+        "mesh": 29
+      }
+    },
+    {
+      "name": "Left_Thigh_ncl1_1",
+      "matrix": [ 0.000146, 0.500497, 0, 0, -0.500497, 0.000146, 0, 0, 0, 0, 0.500497, 0, -0.020082, -0, 0.018488, 1 ],
+      "model": {
+        "mesh": 33
+      },
+      "children": [ 49, 50 ]
+    },
+    {
+      "name": "pCylinder6",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.71598, -0.073969, 1 ],
+      "model": {
+        "mesh": 31
+      }
+    },
+    {
+      "name": "pCylinder6_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.71598, -0.073969, 1 ],
+      "model": {
+        "mesh": 32
+      }
+    },
+    {
+      "name": "Right_Thigh",
+      "matrix": [ -0.732731, -0.00414, 0.680505, 0, 0.680495, 0.003845, 0.732743, 0, -0.00565, 1, 0, 0, -0.003002, 0.628649, 0, 1 ],
+      "children": [ 52, 59 ]
+    },
+    {
+      "name": "Right_Shin",
+      "matrix": [ 1, -0.000442, 0, 0, -0.000442, -1, 0, 0, 0, 0, -1, 0, 0.967288, 0, 0, 1 ],
+      "children": [ 53, 56 ]
+    },
+    {
+      "name": "Right_Foot",
+      "matrix": [ -0.00015, -1, 0, 0, -1, 0.00015, 0, 0, 0, 0, -1, 0, 0.961114, 0, 0, 1 ],
+      "children": [ 54, 55 ]
+    },
+    {
+      "name": "Right_Toe",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1.5841, -0.237615, 0, 1 ]
+    },
+    {
+      "name": "Right_Foot_ncl1_1",
+      "matrix": [ 0.500497, 0, 0, 0, 0, 0.500497, 0, 0, 0, 0, 0.500497, 0, -0.000166, -0.34695, -0.029295, 1 ],
+      "model": {
+        "mesh": 34
+      }
+    },
+    {
+      "name": "Right_Shin_ncl1_1",
+      "matrix": [ -0, -0.500497, 0, 0, -0.500497, 0, 0, 0, 0, 0, -0.500497, 0, 0.416823, 0.000247, 0.029295, 1 ],
+      "model": {
+        "mesh": 37
+      },
+      "children": [ 57, 58 ]
+    },
+    {
+      "name": "pCylinder2",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.08951, -0.073969, 1 ],
+      "model": {
+        "mesh": 35
+      }
+    },
+    {
+      "name": "pCylinder2_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.08951, -0.073969, 1 ],
+      "model": {
+        "mesh": 36
+      }
+    },
+    {
+      "name": "Right_Thigh_ncl1_1",
+      "matrix": [ 0.000146, 0.500497, 0, 0, -0.500497, 0.000146, 0, 0, 0, 0, 0.500497, 0, -0.020082, -0, -0.029295, 1 ],
+      "model": {
+        "mesh": 40
+      },
+      "children": [ 60, 61 ]
+    },
+    {
+      "name": "pCylinder1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.71598, -0.073969, 1 ],
+      "model": {
+        "mesh": 38
+      }
+    },
+    {
+      "name": "pCylinder1_1",
+      "matrix": [ 1.79821, 0, 0, 0, 0, 1.79821, 0, 0, 0, 0, 1.99801, 0, 0, -1.71598, -0.073969, 1 ],
+      "model": {
+        "mesh": 39
+      }
+    },
+    {
+      "name": "Body",
+      "matrix": [ 0, 0, 1, 0, 1, 0.00565, 0, 0, -0.00565, 1, 0, 0, 0.782691, 0.003288, 0, 1 ],
+      "model": {
+        "mesh": 58
+      },
+      "children": [ 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81 ]
+    },
+    {
+      "name": "Body_1",
+      "matrix": [ 0, 0, 1, 0, 1, 0.00565, 0, 0, -0.00565, 1, 0, 0, 0.782691, 0.003288, 0, 1 ],
+      "model": {
+        "mesh": 59
+      }
+    },
+    {
+      "name": "Body_2",
+      "matrix": [ 0, 0, 1, 0, 1, 0.00565, 0, 0, -0.00565, 1, 0, 0, 0.782691, 0.003288, 0, 1 ],
+      "model": {
+        "mesh": 60
+      }
+    },
+    {
+      "name": "pCube17",
+      "matrix": [ 0.092455, 0, 0, 0, 0, 0.196238, 0, 0, 0, 0, 0.092455, 0, 1.09881, -0.018808, -0.157063, 1 ],
+      "model": {
+        "mesh": 41
+      }
+    },
+    {
+      "name": "pCube18",
+      "matrix": [ 0.060376, 0, 0, 0, 0, 0.051061, 0, 0, 0, 0, 0.137247, 0, 1.1219, 0.157511, 0.384788, 1 ],
+      "model": {
+        "mesh": 42
+      }
+    },
+    {
+      "name": "pCube20",
+      "matrix": [ 0.060376, 0, 0, 0, 0, 0.051061, 0, 0, 0, 0, 0.137247, 0, 1.1219, -0.046732, 0.384788, 1 ],
+      "model": {
+        "mesh": 43
+      }
+    },
+    {
+      "name": "pCube22",
+      "matrix": [ 0.060376, 0, 0, 0, 0, 0.051061, 0, 0, 0, 0, 0.137247, 0, 1.1219, -0.250975, 0.384788, 1 ],
+      "model": {
+        "mesh": 44
+      }
+    },
+    {
+      "name": "pCube24",
+      "matrix": [ 0.060376, 0, 0, 0, 0, 0.051061, 0, 0, 0, 0, 0.137247, 0, 1.1219, -0.455218, 0.384788, 1 ],
+      "model": {
+        "mesh": 45
+      }
+    },
+    {
+      "name": "pCube26",
+      "matrix": [ 0.060376, 0, 0, 0, 0, 0.051061, 0, 0, 0, 0, 0.137247, 0, 1.1219, -0.659461, 0.384788, 1 ],
+      "model": {
+        "mesh": 46
+      }
+    },
+    {
+      "name": "pCylinder15",
+      "matrix": [ 0, 0, -0.52708, 0, 0, 0.52708, 0, 0, 0.585644, 0, 0, 0, 0.835433, -0.395527, -0.493379, 1 ],
+      "model": {
+        "mesh": 47
+      }
+    },
+    {
+      "name": "pCylinder16",
+      "matrix": [ 0, 0, -0.374965, 0, 0, 0.374965, 0, 0, 0.416628, 0, 0, 0, 0.917221, 0.064661, -0.645405, 1 ],
+      "model": {
+        "mesh": 48
+      }
+    },
+    {
+      "name": "pCube28",
+      "model": {
+        "mesh": 49
+      }
+    },
+    {
+      "name": "pCube29",
+      "matrix": [ 0.02096, 0.014892, 0, 0, -0.049072, 0.069069, 0, 0, 0, 0, 0.037403, 0, 0.918412, 0.876956, -0.195153, 1 ],
+      "model": {
+        "mesh": 50
+      }
+    },
+    {
+      "name": "pCube30",
+      "matrix": [ 0.02096, 0.014892, 0, 0, -0.049072, 0.069069, 0, 0, 0, 0, 0.037403, 0, 0.918412, 0.876956, -0.533602, 1 ],
+      "model": {
+        "mesh": 51
+      }
+    },
+    {
+      "name": "pCube31",
+      "matrix": [ 0.02096, 0.014892, 0, 0, -0.049072, 0.069069, 0, 0, 0, 0, 0.037403, 0, 0.918412, 0.876956, -0.859591, 1 ],
+      "model": {
+        "mesh": 52
+      }
+    },
+    {
+      "name": "pCylinder18",
+      "matrix": [ 0, 0, -0.288926, 0, -0.16734, 0.235532, 0, 0, 0.261702, 0.185934, 0, 0, 0.921682, 0.559763, -0.889644, 1 ],
+      "model": {
+        "mesh": 53
+      }
+    },
+    {
+      "name": "pCube13",
+      "matrix": [ 0.338439, 0, 0, 0, 0, 0.653419, 0, 0, 0, 0, 1.03816, 0, -1.0356, 0.256829, 0, 1 ],
+      "model": {
+        "mesh": 54
+      }
+    },
+    {
+      "name": "pCylinder8",
+      "matrix": [ 0.461704, 0, 0, 0, 0, 0, 0.461704, 0, 0, -0.513005, 0, 0, -1.18371, 1.52539, -0.505625, 1 ],
+      "model": {
+        "mesh": 55
+      }
+    },
+    {
+      "name": "pCylinder9",
+      "matrix": [ 0.461704, 0, 0, 0, 0, 0, 0.461704, 0, 0, -0.513005, 0, 0, -1.18371, 1.52539, 0.489406, 1 ],
+      "model": {
+        "mesh": 56
+      }
+    },
+    {
+      "name": "Neck_ncl1_1",
+      "matrix": [ -0.761271, 0, 0, 0, 0, 0, -0.761271, 0, 0, -0.514956, 0, 0, -0.00199, 1.13774, 0, 1 ],
+      "model": {
+        "mesh": 57
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 0, "byteLength": 264 },
+      "positions": { "byteOffset": 264, "byteLength": 1152 },
+      "normals": { "byteOffset": 1416, "byteLength": 1152 },
+      "textures": { "byteOffset": 2568, "byteLength": 768 },
+      "tangents": { "byteOffset": 3336, "byteLength": 1152 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 4488, "byteLength": 264 },
+      "positions": { "byteOffset": 4752, "byteLength": 1152 },
+      "normals": { "byteOffset": 5904, "byteLength": 1152 },
+      "textures": { "byteOffset": 7056, "byteLength": 768 },
+      "tangents": { "byteOffset": 7824, "byteLength": 1152 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 8976, "byteLength": 744 },
+      "positions": { "byteOffset": 9720, "byteLength": 2892 },
+      "normals": { "byteOffset": 12612, "byteLength": 2892 },
+      "textures": { "byteOffset": 15504, "byteLength": 1928 },
+      "tangents": { "byteOffset": 17432, "byteLength": 2892 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 20324, "byteLength": 744 },
+      "positions": { "byteOffset": 21068, "byteLength": 2892 },
+      "normals": { "byteOffset": 23960, "byteLength": 2892 },
+      "textures": { "byteOffset": 26852, "byteLength": 1928 },
+      "tangents": { "byteOffset": 28780, "byteLength": 2892 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 31672, "byteLength": 360 },
+      "positions": { "byteOffset": 32032, "byteLength": 792 },
+      "normals": { "byteOffset": 32824, "byteLength": 792 },
+      "textures": { "byteOffset": 33616, "byteLength": 528 },
+      "tangents": { "byteOffset": 34144, "byteLength": 792 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 34936, "byteLength": 744 },
+      "positions": { "byteOffset": 35680, "byteLength": 2892 },
+      "normals": { "byteOffset": 38572, "byteLength": 2892 },
+      "textures": { "byteOffset": 41464, "byteLength": 1928 },
+      "tangents": { "byteOffset": 43392, "byteLength": 2892 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 46284, "byteLength": 744 },
+      "positions": { "byteOffset": 47028, "byteLength": 2892 },
+      "normals": { "byteOffset": 49920, "byteLength": 2892 },
+      "textures": { "byteOffset": 52812, "byteLength": 1928 },
+      "tangents": { "byteOffset": 54740, "byteLength": 2892 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 57632, "byteLength": 360 },
+      "positions": { "byteOffset": 57992, "byteLength": 792 },
+      "normals": { "byteOffset": 58784, "byteLength": 792 },
+      "textures": { "byteOffset": 59576, "byteLength": 528 },
+      "tangents": { "byteOffset": 60104, "byteLength": 792 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 60896, "byteLength": 1128 },
+      "positions": { "byteOffset": 62024, "byteLength": 4836 },
+      "normals": { "byteOffset": 66860, "byteLength": 4836 },
+      "textures": { "byteOffset": 71696, "byteLength": 3224 },
+      "tangents": { "byteOffset": 74920, "byteLength": 4836 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 79756, "byteLength": 1380 },
+      "positions": { "byteOffset": 81136, "byteLength": 6492 },
+      "normals": { "byteOffset": 87628, "byteLength": 6492 },
+      "textures": { "byteOffset": 94120, "byteLength": 4328 },
+      "tangents": { "byteOffset": 98448, "byteLength": 6492 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 104940, "byteLength": 744 },
+      "positions": { "byteOffset": 105684, "byteLength": 1560 },
+      "normals": { "byteOffset": 107244, "byteLength": 1560 },
+      "textures": { "byteOffset": 108804, "byteLength": 1040 },
+      "tangents": { "byteOffset": 109844, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 111404, "byteLength": 744 },
+      "positions": { "byteOffset": 112148, "byteLength": 1560 },
+      "normals": { "byteOffset": 113708, "byteLength": 1560 },
+      "textures": { "byteOffset": 115268, "byteLength": 1040 },
+      "tangents": { "byteOffset": 116308, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 117868, "byteLength": 456 },
+      "positions": { "byteOffset": 118324, "byteLength": 1908 },
+      "normals": { "byteOffset": 120232, "byteLength": 1908 },
+      "textures": { "byteOffset": 122140, "byteLength": 1272 },
+      "tangents": { "byteOffset": 123412, "byteLength": 1908 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 125320, "byteLength": 744 },
+      "positions": { "byteOffset": 126064, "byteLength": 1560 },
+      "normals": { "byteOffset": 127624, "byteLength": 1560 },
+      "textures": { "byteOffset": 129184, "byteLength": 1040 },
+      "tangents": { "byteOffset": 130224, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 131784, "byteLength": 744 },
+      "positions": { "byteOffset": 132528, "byteLength": 1560 },
+      "normals": { "byteOffset": 134088, "byteLength": 1560 },
+      "textures": { "byteOffset": 135648, "byteLength": 1040 },
+      "tangents": { "byteOffset": 136688, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 138248, "byteLength": 552 },
+      "positions": { "byteOffset": 138800, "byteLength": 1176 },
+      "normals": { "byteOffset": 139976, "byteLength": 1176 },
+      "textures": { "byteOffset": 141152, "byteLength": 784 },
+      "tangents": { "byteOffset": 141936, "byteLength": 1176 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 143112, "byteLength": 552 },
+      "positions": { "byteOffset": 143664, "byteLength": 1176 },
+      "normals": { "byteOffset": 144840, "byteLength": 1176 },
+      "textures": { "byteOffset": 146016, "byteLength": 784 },
+      "tangents": { "byteOffset": 146800, "byteLength": 1176 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 147976, "byteLength": 456 },
+      "positions": { "byteOffset": 148432, "byteLength": 1872 },
+      "normals": { "byteOffset": 150304, "byteLength": 1872 },
+      "textures": { "byteOffset": 152176, "byteLength": 1248 },
+      "tangents": { "byteOffset": 153424, "byteLength": 1872 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 155296, "byteLength": 1380 },
+      "positions": { "byteOffset": 156676, "byteLength": 6480 },
+      "normals": { "byteOffset": 163156, "byteLength": 6480 },
+      "textures": { "byteOffset": 169636, "byteLength": 4320 },
+      "tangents": { "byteOffset": 173956, "byteLength": 6480 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 180436, "byteLength": 744 },
+      "positions": { "byteOffset": 181180, "byteLength": 1560 },
+      "normals": { "byteOffset": 182740, "byteLength": 1560 },
+      "textures": { "byteOffset": 184300, "byteLength": 1040 },
+      "tangents": { "byteOffset": 185340, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 186900, "byteLength": 744 },
+      "positions": { "byteOffset": 187644, "byteLength": 1560 },
+      "normals": { "byteOffset": 189204, "byteLength": 1560 },
+      "textures": { "byteOffset": 190764, "byteLength": 1040 },
+      "tangents": { "byteOffset": 191804, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 193364, "byteLength": 456 },
+      "positions": { "byteOffset": 193820, "byteLength": 1920 },
+      "normals": { "byteOffset": 195740, "byteLength": 1920 },
+      "textures": { "byteOffset": 197660, "byteLength": 1280 },
+      "tangents": { "byteOffset": 198940, "byteLength": 1920 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 200860, "byteLength": 552 },
+      "positions": { "byteOffset": 201412, "byteLength": 1224 },
+      "normals": { "byteOffset": 202636, "byteLength": 1224 },
+      "textures": { "byteOffset": 203860, "byteLength": 816 },
+      "tangents": { "byteOffset": 204676, "byteLength": 1224 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 205900, "byteLength": 552 },
+      "positions": { "byteOffset": 206452, "byteLength": 1224 },
+      "normals": { "byteOffset": 207676, "byteLength": 1224 },
+      "textures": { "byteOffset": 208900, "byteLength": 816 },
+      "tangents": { "byteOffset": 209716, "byteLength": 1224 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 210940, "byteLength": 744 },
+      "positions": { "byteOffset": 211684, "byteLength": 1560 },
+      "normals": { "byteOffset": 213244, "byteLength": 1560 },
+      "textures": { "byteOffset": 214804, "byteLength": 1040 },
+      "tangents": { "byteOffset": 215844, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 217404, "byteLength": 744 },
+      "positions": { "byteOffset": 218148, "byteLength": 1560 },
+      "normals": { "byteOffset": 219708, "byteLength": 1560 },
+      "textures": { "byteOffset": 221268, "byteLength": 1040 },
+      "tangents": { "byteOffset": 222308, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 223868, "byteLength": 456 },
+      "positions": { "byteOffset": 224324, "byteLength": 1872 },
+      "normals": { "byteOffset": 226196, "byteLength": 1872 },
+      "textures": { "byteOffset": 228068, "byteLength": 1248 },
+      "tangents": { "byteOffset": 229316, "byteLength": 1872 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 231188, "byteLength": 432 },
+      "positions": { "byteOffset": 231620, "byteLength": 1752 },
+      "normals": { "byteOffset": 233372, "byteLength": 1752 },
+      "textures": { "byteOffset": 235124, "byteLength": 1168 },
+      "tangents": { "byteOffset": 236292, "byteLength": 1752 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 238044, "byteLength": 744 },
+      "positions": { "byteOffset": 238788, "byteLength": 1560 },
+      "normals": { "byteOffset": 240348, "byteLength": 1560 },
+      "textures": { "byteOffset": 241908, "byteLength": 1040 },
+      "tangents": { "byteOffset": 242948, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 244508, "byteLength": 744 },
+      "positions": { "byteOffset": 245252, "byteLength": 1560 },
+      "normals": { "byteOffset": 246812, "byteLength": 1560 },
+      "textures": { "byteOffset": 248372, "byteLength": 1040 },
+      "tangents": { "byteOffset": 249412, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 250972, "byteLength": 456 },
+      "positions": { "byteOffset": 251428, "byteLength": 1872 },
+      "normals": { "byteOffset": 253300, "byteLength": 1872 },
+      "textures": { "byteOffset": 255172, "byteLength": 1248 },
+      "tangents": { "byteOffset": 256420, "byteLength": 1872 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 258292, "byteLength": 744 },
+      "positions": { "byteOffset": 259036, "byteLength": 1560 },
+      "normals": { "byteOffset": 260596, "byteLength": 1560 },
+      "textures": { "byteOffset": 262156, "byteLength": 1040 },
+      "tangents": { "byteOffset": 263196, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 264756, "byteLength": 744 },
+      "positions": { "byteOffset": 265500, "byteLength": 1560 },
+      "normals": { "byteOffset": 267060, "byteLength": 1560 },
+      "textures": { "byteOffset": 268620, "byteLength": 1040 },
+      "tangents": { "byteOffset": 269660, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 271220, "byteLength": 456 },
+      "positions": { "byteOffset": 271676, "byteLength": 1932 },
+      "normals": { "byteOffset": 273608, "byteLength": 1932 },
+      "textures": { "byteOffset": 275540, "byteLength": 1288 },
+      "tangents": { "byteOffset": 276828, "byteLength": 1932 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 278760, "byteLength": 432 },
+      "positions": { "byteOffset": 279192, "byteLength": 1752 },
+      "normals": { "byteOffset": 280944, "byteLength": 1752 },
+      "textures": { "byteOffset": 282696, "byteLength": 1168 },
+      "tangents": { "byteOffset": 283864, "byteLength": 1752 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 285616, "byteLength": 744 },
+      "positions": { "byteOffset": 286360, "byteLength": 1560 },
+      "normals": { "byteOffset": 287920, "byteLength": 1560 },
+      "textures": { "byteOffset": 289480, "byteLength": 1040 },
+      "tangents": { "byteOffset": 290520, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 292080, "byteLength": 744 },
+      "positions": { "byteOffset": 292824, "byteLength": 1560 },
+      "normals": { "byteOffset": 294384, "byteLength": 1560 },
+      "textures": { "byteOffset": 295944, "byteLength": 1040 },
+      "tangents": { "byteOffset": 296984, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 298544, "byteLength": 456 },
+      "positions": { "byteOffset": 299000, "byteLength": 1872 },
+      "normals": { "byteOffset": 300872, "byteLength": 1872 },
+      "textures": { "byteOffset": 302744, "byteLength": 1248 },
+      "tangents": { "byteOffset": 303992, "byteLength": 1872 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 305864, "byteLength": 744 },
+      "positions": { "byteOffset": 306608, "byteLength": 1560 },
+      "normals": { "byteOffset": 308168, "byteLength": 1560 },
+      "textures": { "byteOffset": 309728, "byteLength": 1040 },
+      "tangents": { "byteOffset": 310768, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 312328, "byteLength": 744 },
+      "positions": { "byteOffset": 313072, "byteLength": 1560 },
+      "normals": { "byteOffset": 314632, "byteLength": 1560 },
+      "textures": { "byteOffset": 316192, "byteLength": 1040 },
+      "tangents": { "byteOffset": 317232, "byteLength": 1560 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 318792, "byteLength": 456 },
+      "positions": { "byteOffset": 319248, "byteLength": 1932 },
+      "normals": { "byteOffset": 321180, "byteLength": 1932 },
+      "textures": { "byteOffset": 323112, "byteLength": 1288 },
+      "tangents": { "byteOffset": 324400, "byteLength": 1932 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 326332, "byteLength": 168 },
+      "positions": { "byteOffset": 326500, "byteLength": 576 },
+      "normals": { "byteOffset": 327076, "byteLength": 576 },
+      "textures": { "byteOffset": 327652, "byteLength": 384 },
+      "tangents": { "byteOffset": 328036, "byteLength": 576 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 328612, "byteLength": 120 },
+      "positions": { "byteOffset": 328732, "byteLength": 480 },
+      "normals": { "byteOffset": 329212, "byteLength": 480 },
+      "textures": { "byteOffset": 329692, "byteLength": 320 },
+      "tangents": { "byteOffset": 330012, "byteLength": 480 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 330492, "byteLength": 120 },
+      "positions": { "byteOffset": 330612, "byteLength": 480 },
+      "normals": { "byteOffset": 331092, "byteLength": 480 },
+      "textures": { "byteOffset": 331572, "byteLength": 320 },
+      "tangents": { "byteOffset": 331892, "byteLength": 480 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 332372, "byteLength": 120 },
+      "positions": { "byteOffset": 332492, "byteLength": 480 },
+      "normals": { "byteOffset": 332972, "byteLength": 480 },
+      "textures": { "byteOffset": 333452, "byteLength": 320 },
+      "tangents": { "byteOffset": 333772, "byteLength": 480 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 334252, "byteLength": 120 },
+      "positions": { "byteOffset": 334372, "byteLength": 480 },
+      "normals": { "byteOffset": 334852, "byteLength": 480 },
+      "textures": { "byteOffset": 335332, "byteLength": 320 },
+      "tangents": { "byteOffset": 335652, "byteLength": 480 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 336132, "byteLength": 120 },
+      "positions": { "byteOffset": 336252, "byteLength": 480 },
+      "normals": { "byteOffset": 336732, "byteLength": 480 },
+      "textures": { "byteOffset": 337212, "byteLength": 320 },
+      "tangents": { "byteOffset": 337532, "byteLength": 480 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 338012, "byteLength": 744 },
+      "positions": { "byteOffset": 338756, "byteLength": 2604 },
+      "normals": { "byteOffset": 341360, "byteLength": 2604 },
+      "textures": { "byteOffset": 343964, "byteLength": 1736 },
+      "tangents": { "byteOffset": 345700, "byteLength": 2604 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 348304, "byteLength": 744 },
+      "positions": { "byteOffset": 349048, "byteLength": 2508 },
+      "normals": { "byteOffset": 351556, "byteLength": 2508 },
+      "textures": { "byteOffset": 354064, "byteLength": 1672 },
+      "tangents": { "byteOffset": 355736, "byteLength": 2508 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 358244, "byteLength": 180 },
+      "positions": { "byteOffset": 358424, "byteLength": 768 },
+      "normals": { "byteOffset": 359192, "byteLength": 768 },
+      "textures": { "byteOffset": 359960, "byteLength": 512 },
+      "tangents": { "byteOffset": 360472, "byteLength": 768 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 361240, "byteLength": 72 },
+      "positions": { "byteOffset": 361312, "byteLength": 288 },
+      "normals": { "byteOffset": 361600, "byteLength": 288 },
+      "textures": { "byteOffset": 361888, "byteLength": 192 },
+      "tangents": { "byteOffset": 362080, "byteLength": 288 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 362368, "byteLength": 72 },
+      "positions": { "byteOffset": 362440, "byteLength": 288 },
+      "normals": { "byteOffset": 362728, "byteLength": 288 },
+      "textures": { "byteOffset": 363016, "byteLength": 192 },
+      "tangents": { "byteOffset": 363208, "byteLength": 288 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 363496, "byteLength": 72 },
+      "positions": { "byteOffset": 363568, "byteLength": 288 },
+      "normals": { "byteOffset": 363856, "byteLength": 288 },
+      "textures": { "byteOffset": 364144, "byteLength": 192 },
+      "tangents": { "byteOffset": 364336, "byteLength": 288 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 364624, "byteLength": 744 },
+      "positions": { "byteOffset": 365368, "byteLength": 2508 },
+      "normals": { "byteOffset": 367876, "byteLength": 2508 },
+      "textures": { "byteOffset": 370384, "byteLength": 1672 },
+      "tangents": { "byteOffset": 372056, "byteLength": 2508 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 374564, "byteLength": 264 },
+      "positions": { "byteOffset": 374828, "byteLength": 1152 },
+      "normals": { "byteOffset": 375980, "byteLength": 1152 },
+      "textures": { "byteOffset": 377132, "byteLength": 768 },
+      "tangents": { "byteOffset": 377900, "byteLength": 1152 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 379052, "byteLength": 1428 },
+      "positions": { "byteOffset": 380480, "byteLength": 5436 },
+      "normals": { "byteOffset": 385916, "byteLength": 5436 },
+      "textures": { "byteOffset": 391352, "byteLength": 3624 },
+      "tangents": { "byteOffset": 394976, "byteLength": 5436 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 400412, "byteLength": 1428 },
+      "positions": { "byteOffset": 401840, "byteLength": 5436 },
+      "normals": { "byteOffset": 407276, "byteLength": 5436 },
+      "textures": { "byteOffset": 412712, "byteLength": 3624 },
+      "tangents": { "byteOffset": 416336, "byteLength": 5436 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 421772, "byteLength": 276 },
+      "positions": { "byteOffset": 422048, "byteLength": 600 },
+      "normals": { "byteOffset": 422648, "byteLength": 600 },
+      "textures": { "byteOffset": 423248, "byteLength": 400 },
+      "tangents": { "byteOffset": 423648, "byteLength": 600 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 424248, "byteLength": 864 },
+      "positions": { "byteOffset": 425112, "byteLength": 3888 },
+      "normals": { "byteOffset": 429000, "byteLength": 3888 },
+      "textures": { "byteOffset": 432888, "byteLength": 2592 },
+      "tangents": { "byteOffset": 435480, "byteLength": 3888 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 439368, "byteLength": 864 },
+      "positions": { "byteOffset": 440232, "byteLength": 3888 },
+      "normals": { "byteOffset": 444120, "byteLength": 3888 },
+      "textures": { "byteOffset": 448008, "byteLength": 2592 },
+      "tangents": { "byteOffset": 450600, "byteLength": 3888 }
+    },
+    {
+      "uri": "robot/Bob-Walk.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 454488, "byteLength": 864 },
+      "positions": { "byteOffset": 455352, "byteLength": 3888 },
+      "normals": { "byteOffset": 459240, "byteLength": 3888 },
+      "textures": { "byteOffset": 463128, "byteLength": 2592 },
+      "tangents": { "byteOffset": 465720, "byteLength": 3888 }
+    }
+  ],
+  "skeletons": [
+  ],
+  "cameras": [
+    {
+      "fov": 60,
+      "near": 0.1,
+      "far": 100,
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 10, 1 ]
+    }
+  ],
+  "lights": [
+  ],
+  "materials": [
+    {
+      "texture1": "Basic_albedo_metallic.png",
+      "texture2": "Basic_normal_roughness.png",
+      "mipmap": true,
+      "environment": 1
+    }
+  ],
+  "environment": [
+    {
+    },
+    {
+      "cubeSpecular": "Studio/Radiance.ktx",
+      "cubeDiffuse": "Studio/Irradiance.ktx"
+    }
+  ],
+  "shaders": [
+    {
+      "vertex": "dli_pbr.vsh",
+      "fragment": "dli_pbr.fsh",
+      "rendererState": "DEPTH_TEST|DEPTH_WRITE|CULL_BACK|DEPTH_FUNC:LESS_EQUAL",
+      "uCubeMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ],
+      "uMaxLOD": 6
+    }
+  ],
+  "animations": [
+    {
+      "name": "combinedAnim_0",
+      "properties": [
+        {
+          "node": "Spine",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 0, "numKeys": 241 }
+        },
+        {
+          "node": "Spine",
+          "property": "position",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 5061, "numKeys": 241 }
+        },
+        {
+          "node": "Head1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 9158, "numKeys": 241 }
+        },
+        {
+          "node": "Right_Upperarm",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 14219, "numKeys": 241 }
+        },
+        {
+          "node": "Left_Upperarm",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 19280, "numKeys": 241 }
+        },
+        {
+          "node": "Left_Thigh",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 24341, "numKeys": 241 }
+        },
+        {
+          "node": "Left_Shin",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 29402, "numKeys": 241 }
+        },
+        {
+          "node": "Left_Foot",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 34463, "numKeys": 241 }
+        },
+        {
+          "node": "Right_Thigh",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 39524, "numKeys": 241 }
+        },
+        {
+          "node": "Right_Shin",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 44585, "numKeys": 241 }
+        },
+        {
+          "node": "Right_Foot",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 10.0417 },
+          "keyFramesBin": { "url": "robot/combinedAnim_00.ani", "byteOffset": 49646, "numKeys": 241 }
+        }
+      ],
+      "loopCount": 0
+    }
+  ]
+}

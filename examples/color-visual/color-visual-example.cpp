@@ -17,7 +17,6 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
-#include <dali-toolkit/devel-api/visual-factory/transition-data.h>
 #include <dali-toolkit/devel-api/visuals/color-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
@@ -28,15 +27,18 @@ namespace
 {
 const char* IMAGE_FILE(DEMO_IMAGE_DIR "gallery-medium-1.jpg");
 
-const float BLUR_RADIUS_VALUE(10.0f);
-const float NO_BLUR_VALUE(0.0f);
+const float BLUR_RADIUS_VALUE(15.0f);
+const Vector2 BLUR_OFFSET_VALUE(0.05f, 0.05f);
+const Vector2 BLUR_SIZE_VALUE(1.1f, 1.1f);
+const Vector2 NO_BLUR_SIZE_VALUE(1.05f, 1.05f);
 const float ANIMATION_DURATION(2.0f);
 
 const Property::Value SHADOW{
   {Visual::Property::TYPE, Visual::COLOR},
   {Visual::Property::MIX_COLOR, Vector4(0.0f, 0.0f, 0.0f, 0.5f)},
-  {Visual::Property::TRANSFORM, Property::Map{{Visual::Transform::Property::OFFSET, Vector2(0.05f, 0.05f)}, {Visual::Transform::Property::SIZE, Vector2(1.05f, 1.05f)}, {Visual::Transform::Property::ORIGIN, Align::CENTER}, {Visual::Transform::Property::ANCHOR_POINT, Align::CENTER}}},
-  {DevelColorVisual::Property::BLUR_RADIUS, BLUR_RADIUS_VALUE}};
+  {Visual::Property::TRANSFORM, Property::Map{{Visual::Transform::Property::SIZE, NO_BLUR_SIZE_VALUE},
+                                              {Visual::Transform::Property::ORIGIN, Align::CENTER},
+                                              {Visual::Transform::Property::ANCHOR_POINT, Align::CENTER}}}};
 
 } // namespace
 
@@ -47,7 +49,7 @@ class ColorVisualExample : public ConnectionTracker
 public:
   ColorVisualExample(Application& application)
   : mApplication(application),
-    mShadowVisible(true)
+    mBlurEnabled(false)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &ColorVisualExample::Create);
@@ -83,23 +85,31 @@ public:
   {
     if(touch.GetState(0) == PointState::UP)
     {
-      float initialValue, targetValue;
-      if(!mShadowVisible)
+      Animation animation = Animation::New(ANIMATION_DURATION);
+
+      if(!mBlurEnabled)
       {
-        initialValue = NO_BLUR_VALUE;
-        targetValue  = BLUR_RADIUS_VALUE;
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::MIX_COLOR), Vector3(1.0f, 0.0f, 0.0f));
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::OPACITY), 0.5f);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, DevelVisual::Property::CORNER_RADIUS), 30.0f);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, ColorVisual::Property::MIX_COLOR), Vector3(0.0f, 0.0f, 1.0f));
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, DevelColorVisual::Property::BLUR_RADIUS), BLUR_RADIUS_VALUE);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, Visual::Transform::Property::OFFSET), BLUR_OFFSET_VALUE);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, Visual::Transform::Property::SIZE), BLUR_SIZE_VALUE);
       }
       else
       {
-        initialValue = BLUR_RADIUS_VALUE;
-        targetValue  = NO_BLUR_VALUE;
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::MIX_COLOR), Vector3(1.0f, 1.0f, 1.0f));
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::OPACITY), 1.0f);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, DevelVisual::Property::CORNER_RADIUS), 0.0f);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, ColorVisual::Property::MIX_COLOR), Vector3(0.0f, 0.0f, 0.0f));
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, DevelColorVisual::Property::BLUR_RADIUS), 0.0f);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, Visual::Transform::Property::OFFSET), Vector2::ZERO);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, Visual::Transform::Property::SIZE), NO_BLUR_SIZE_VALUE);
       }
-
-      mShadowVisible = !mShadowVisible;
-
-      TransitionData transitionData = TransitionData::New(Property::Map().Add("target", "shadow").Add("property", "blurRadius").Add("initialValue", initialValue).Add("targetValue", targetValue).Add("animator", Property::Map().Add("duration", ANIMATION_DURATION)));
-      Animation      animation      = DevelControl::CreateTransition(Toolkit::Internal::GetImplementation(mImageView), transitionData);
       animation.Play();
+
+      mBlurEnabled = !mBlurEnabled;
     }
     return true;
   }
@@ -118,7 +128,7 @@ public:
 private:
   Application& mApplication;
   ImageView    mImageView;
-  bool         mShadowVisible;
+  bool         mBlurEnabled;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

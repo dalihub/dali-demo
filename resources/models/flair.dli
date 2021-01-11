@@ -1,0 +1,828 @@
+{
+  "asset": { "version": "1.0" },
+  "scene": 0,
+  "scenes": [ { "nodes": [ 70 ] } ],
+  "nodes": [
+    {
+      "name": "RootNode",
+      "matrix": [ 0.01, 0, 0, 0, 0, 0.01, 0, 0, 0, 0, 0.01, 0, 0, 0, 0, 1 ],
+      "children": [ 1, 68, 69 ]
+    },
+    {
+      "name": "mixamorig_Hips",
+      "matrix": [ 0.993922, -0.109704, -0.009112, 0, -0.054715, -0.420492, -0.905645, 0, 0.095522, 0.900639, -0.423939, 0, 0.170038, 35.2548, -3.29966, 1 ],
+      "children": [ 2, 58, 63 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -103.991, -2.07608, 1 ]
+    },
+    {
+      "name": "mixamorig_Spine",
+      "matrix": [ 0.989792, -0.129223, 0.060106, 0, 0.027566, 0.587364, 0.808853, 0, -0.139826, -0.79894, 0.584931, 0, 0, 10.1816, 0.131521, 1 ],
+      "children": [ 3 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0, -114.173, -2.2076, 1 ]
+    },
+    {
+      "name": "mixamorig_Spine1",
+      "matrix": [ 0.997733, 0.038028, 0.055515, 0, -0.05063, 0.967672, 0.247078, 0, -0.044325, -0.249329, 0.967404, 0, 0, 10.0835, -1.0008, 1 ],
+      "children": [ 4 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0, -124.257, -1.20679, 1 ]
+    },
+    {
+      "name": "mixamorig_Spine2",
+      "matrix": [ 0.998271, 0.043996, 0.038981, 0, -0.052343, 0.96711, 0.248913, 0, -0.026747, -0.250523, 0.967741, 0, 0, 9.10001, -1.37342, 1 ],
+      "children": [ 5, 10, 34 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0, -133.357, 0.166624, 1 ]
+    },
+    {
+      "name": "mixamorig_Neck",
+      "matrix": [ 0.999713, 0.023967, 0.000629, 0, -0.023817, 0.989778, 0.140617, 0, 0.002747, -0.140592, 0.990064, 0, 0, 16.6717, -2.51617, 1 ],
+      "children": [ 6 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0, -150.028, 2.68279, 1 ]
+    },
+    {
+      "name": "mixamorig_Head",
+      "matrix": [ 0.992245, 0.124199, 0.005025, 0, -0.111747, 0.873599, 0.473643, 0, 0.054436, -0.470531, 0.880703, 0, 0, 9.61788, 1.68501, 1 ],
+      "children": [ 7, 8, 9 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0, -159.646, 0.997784, 1 ]
+    },
+    {
+      "name": "mixamorig_HeadTop_End",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0, 17.8152, 2.58499, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftEye",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 3.06756, 6.40951, 9.28355, 1 ]
+    },
+    {
+      "name": "mixamorig_RightEye",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -3.06755, 6.4095, 9.28355, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftShoulder",
+      "matrix": [ 0.998736, -0.015656, 0.047773, 0, 0.010721, 0.99474, 0.101866, 0, -0.049116, -0.101225, 0.99365, 0, 4.57045, 10.946, -2.62799, 1 ],
+      "children": [ 11 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -4.57046, -144.303, 2.79461, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftArm",
+      "matrix": [ -0.267645, -0.796531, -0.54213, 0, 0.956453, -0.151627, -0.249413, 0, 0.116463, -0.585276, 0.802427, 0, 10.5924, -0.524583, -2.23212, 1 ],
+      "children": [ 12 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -15.1628, -143.778, 5.02673, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftForeArm",
+      "matrix": [ 0.824786, -0, 0.565445, 0, 0, 1, 0, 0, -0.565445, 0, 0.824786, 0, 27.8415, -0, 0, 1 ],
+      "children": [ 13 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -43.0043, -143.778, 5.02669, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHand",
+      "matrix": [ -0.023267, 0.942263, 0.334065, 0, -0.935231, -0.138595, 0.325783, 0, 0.353273, -0.304848, 0.884458, 0, 28.3288, -0, 0, 1 ],
+      "children": [ 14, 18, 22, 26, 30 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -71.3332, -143.778, 5.02666, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandThumb1",
+      "matrix": [ 0.923885, 0.37441, 0.079077, 0, -0.344295, 0.90349, -0.255276, 0, -0.167023, 0.20862, 0.963629, 0, 2.46614, -1.57505, 2.68241, 1 ],
+      "children": [ 15 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -73.7993, -142.203, 2.34424, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandThumb2",
+      "matrix": [ 0.975473, 0.04614, -0.215227, 0, -0.02286, 0.993732, 0.109429, 0, 0.218927, -0.101825, 0.970414, 0, 3.2298, -1.86469, 1.86468, 1 ],
+      "children": [ 16 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -77.0291, -140.338, 0.479562, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandThumb3",
+      "matrix": [ 0.973758, 0.22652, -0.02201, 0, -0.227471, 0.965605, -0.125954, 0, -0.007278, 0.127656, 0.991792, 0, 2.65257, -1.53149, 1.53147, 1 ],
+      "children": [ 17 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -79.6817, -138.807, -1.05191, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandThumb4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1.95457, -1.1285, 1.12849, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandIndex1",
+      "matrix": [ 0.987986, -0.145331, -0.052565, 0, 0.145353, 0.989374, -0.003426, 0, 0.052505, -0.004256, 0.998612, 0, 9.1093, -0.517083, 2.26007, 1 ],
+      "children": [ 19 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -80.4425, -143.261, 2.76658, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandIndex2",
+      "matrix": [ 1, -0.000799, -0, 0, 0.000799, 1, 0, 0, 0, 0, 1, 0, 3.67641, -0, 0, 1 ],
+      "children": [ 20 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -84.1189, -143.261, 2.76655, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandIndex3",
+      "matrix": [ 1, 0.000494, 0, 0, -0.000494, 1, 0, 0, -0, 0, 1, 0, 2.88306, 0, -0, 1 ],
+      "children": [ 21 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -87.002, -143.261, 2.7666, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandIndex4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2.39272, 0, 0, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandMiddle1",
+      "matrix": [ 0.988358, -0.142802, -0.0525, 0, 0.142694, 0.98975, -0.005822, 0, 0.052793, -0.001737, 0.998604, 0, 9.5334, -0, 0, 1 ],
+      "children": [ 23 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -80.8666, -143.778, 5.02664, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandMiddle2",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 3.69824, 0, 0, 1 ],
+      "children": [ 24 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -84.5648, -143.778, 5.02663, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandMiddle3",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2.95092, -0, 0, 1 ],
+      "children": [ 25 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -87.5157, -143.778, 5.02661, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandMiddle4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2.8339, -0, -0, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandRing1",
+      "matrix": [ 0.991315, -0.12141, -0.050532, 0, 0.12133, 0.992601, -0.004647, 0, 0.050722, -0.001524, 0.998712, 0, 9.10453, -0.04394, -1.86509, 1 ],
+      "children": [ 27 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -80.4377, -143.734, 6.89174, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandRing2",
+      "matrix": [ 1, -0.001159, -0.000118, 0, 0.001159, 1, 0, 0, 0.000118, 0, 1, 0, 3.15403, -0, 0, 1 ],
+      "children": [ 28 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -83.5917, -143.734, 6.89173, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandRing3",
+      "matrix": [ 1, 0.000679, 0, 0, -0.000679, 1, 0, 0, -0, 0, 1, 0, 2.93767, -0, -0, 1 ],
+      "children": [ 29 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -86.5294, -143.734, 6.89174, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandRing4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2.64745, -0, 0, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandPinky1",
+      "matrix": [ 0.994569, -0.092424, -0.047847, 0, 0.092359, 0.995719, -0.003583, 0, 0.047973, -0.000855, 0.998848, 0, 8.07778, -0.488668, -3.80607, 1 ],
+      "children": [ 31 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -79.411, -143.289, 8.83272, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandPinky2",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 3.60003, -0, -0, 1 ],
+      "children": [ 32 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -83.011, -143.289, 8.83275, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandPinky3",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2.11421, 0, -0, 1 ],
+      "children": [ 33 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -85.1252, -143.289, 8.83275, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftHandPinky4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1.97568, 0, -0, 1 ]
+    },
+    {
+      "name": "mixamorig_RightShoulder",
+      "matrix": [ 0.999603, -0.028183, 0, 0, 0.028181, 0.999554, 0.009886, 0, -0.000351, -0.00988, 1, 0, -4.56997, 10.9462, -2.62802, 1 ],
+      "children": [ 35 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 4.56996, -144.303, 2.79464, 1 ]
+    },
+    {
+      "name": "mixamorig_RightArm",
+      "matrix": [ -0.07137, 0.866873, 0.493394, 0, -0.984512, 0.018192, -0.174373, 0, -0.160135, -0.498197, 0.852148, 0, -10.5928, -0.524798, -2.2321, 1 ],
+      "children": [ 36 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 15.1628, -143.778, 5.02674, 1 ]
+    },
+    {
+      "name": "mixamorig_RightForeArm",
+      "matrix": [ 0.747732, 0, -0.664001, 0, 0, 1, 0, 0, 0.664001, 0, 0.747732, 0, -27.8415, -0, 0, 1 ],
+      "children": [ 37 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 43.0043, -143.778, 5.02673, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHand",
+      "matrix": [ 0.207849, -0.829632, -0.51818, 0, 0.787387, -0.172405, 0.591861, 0, -0.580363, -0.531025, 0.617406, 0, -28.3288, 0, 0, 1 ],
+      "children": [ 38, 42, 46, 50, 54 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 71.3332, -143.778, 5.02667, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandPinky1",
+      "matrix": [ 0.996074, 0.07568, 0.045921, 0, -0.075649, 0.997132, -0.002411, 0, -0.045972, -0.001073, 0.998942, 0, -8.07667, -0.488459, -3.80601, 1 ],
+      "children": [ 39 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 79.4098, -143.289, 8.83268, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandPinky2",
+      "matrix": [ 1, 0.000864, 0, 0, -0.000864, 1, 0, 0, -0, 0, 1, 0, -3.60003, 0, 0, 1 ],
+      "children": [ 40 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 83.0099, -143.289, 8.83263, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandPinky3",
+      "matrix": [ 1, -0.000491, -0, 0, 0.000491, 1, 0, 0, 0, 0, 1, 0, -2.11421, 0, 0, 1 ],
+      "children": [ 41 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 85.1241, -143.289, 8.83262, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandPinky4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -1.97568, -0, -0, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandRing1",
+      "matrix": [ 0.991946, 0.116756, 0.049093, 0, -0.116683, 0.99316, -0.004371, 0, -0.049268, -0.001392, 0.998785, 0, -9.10359, -0.043914, -1.86507, 1 ],
+      "children": [ 43 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 80.4368, -143.734, 6.89175, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandRing2",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -3.15403, 0, 0, 1 ],
+      "children": [ 44 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 83.5908, -143.734, 6.8917, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandRing3",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -2.93767, -0, -0, 1 ],
+      "children": [ 45 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 86.5285, -143.734, 6.89174, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandRing4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -2.64745, 0, -0, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandMiddle1",
+      "matrix": [ 0.991448, 0.120786, 0.049404, 0, -0.120708, 0.992678, -0.004571, 0, -0.049594, -0.001431, 0.998768, 0, -9.5325, -0, 0, 1 ],
+      "children": [ 47 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 80.8657, -143.778, 5.02666, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandMiddle2",
+      "matrix": [ 1, 0.001033, 0, 0, -0.001033, 1, 0, 0, -0, 0, 1, 0, -3.69824, 0, -0, 1 ],
+      "children": [ 48 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 84.5639, -143.778, 5.02668, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandMiddle3",
+      "matrix": [ 1, -0.000624, -0, 0, 0.000624, 1, 0, 0, 0, 0, 1, 0, -2.95092, 0, 0, 1 ],
+      "children": [ 49 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 87.5148, -143.778, 5.02668, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandMiddle4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -2.8339, 0, 0, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandIndex1",
+      "matrix": [ 0.99114, 0.123217, 0.04959, 0, -0.123136, 0.992379, -0.004692, 0, -0.049791, -0.001456, 0.998759, 0, -9.10828, -0.516789, 2.26012, 1 ],
+      "children": [ 51 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 80.4414, -143.261, 2.76656, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandIndex2",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -3.67641, 0, 0, 1 ],
+      "children": [ 52 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 84.1179, -143.261, 2.76652, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandIndex3",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -2.88306, -0, 0, 1 ],
+      "children": [ 53 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 87.0009, -143.261, 2.76648, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandIndex4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -2.39272, 0, 0, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandThumb1",
+      "matrix": [ 0.91586, -0.385245, -0.113079, 0, 0.347237, 0.901412, -0.258619, 0, 0.201562, 0.197594, 0.959338, 0, -2.46481, -1.57271, 2.68263, 1 ],
+      "children": [ 55 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 73.798, -142.205, 2.34405, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandThumb2",
+      "matrix": [ 0.967728, -0.064145, 0.243697, 0, 0.035585, 0.992155, 0.119843, 0, -0.249472, -0.107303, 0.962419, 0, -3.22977, -1.86471, 1.86472, 1 ],
+      "children": [ 56 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 77.0277, -140.34, 0.479328, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandThumb3",
+      "matrix": [ 0.962703, -0.243992, 0.116925, 0, 0.252902, 0.96507, -0.068421, 0, -0.096147, 0.09544, 0.990781, 0, -2.65261, -1.53145, 1.53145, 1 ],
+      "children": [ 57 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 79.6803, -138.809, -1.05212, 1 ]
+    },
+    {
+      "name": "mixamorig_RightHandThumb4",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -1.95458, -1.12846, 1.12851, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftUpLeg",
+      "matrix": [ 0.543578, 0.357985, -0.75919, 0, -0.837166, 0.296569, -0.459565, 0, 0.060635, 0.885378, 0.460901, 0, 8.20778, -6.75171, -1.59956, 1 ],
+      "children": [ 59 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -8.20778, -97.2398, -0.476521, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftLeg",
+      "matrix": [ 0.996676, 0.023833, 0.0779, 0, -0.051564, 0.924871, 0.376768, 0, -0.063068, -0.379533, 0.923026, 0, 0, -44.3705, 0.284643, 1 ],
+      "children": [ 60 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -8.20778, -52.8693, -0.761164, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftFoot",
+      "matrix": [ 0.9999, -0.011862, -0.007738, 0, 0.014132, 0.871434, 0.490309, 0, 0.000928, -0.490369, 0.871514, 0, 0, -44.4279, -2.98219, 1 ],
+      "children": [ 61 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -8.20778, -8.44141, 2.22103, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftToeBase",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0.002531, 0, 0, -0.002531, 1, 0, -0, -8.72867, 10.7106, 1 ],
+      "children": [ 62 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -8.20778, 0.28726, -8.48953, 1 ]
+    },
+    {
+      "name": "mixamorig_LeftToe_End",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0, -0.000677, 9.27814, 1 ]
+    },
+    {
+      "name": "mixamorig_RightUpLeg",
+      "matrix": [ 0.66381, -0.467129, 0.584078, 0, 0.745301, 0.47823, -0.464567, 0, -0.06231, 0.743698, 0.665606, 0, -8.2078, -6.75166, -1.59956, 1 ],
+      "children": [ 64 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 8.2078, -97.2398, -0.476517, 1 ]
+    },
+    {
+      "name": "mixamorig_RightLeg",
+      "matrix": [ 0.981097, -0.106816, 0.161363, 0, 0.085276, 0.987171, 0.134985, 0, -0.173712, -0.118673, 0.97762, 0, 0, -44.3705, 0.286156, 1 ],
+      "children": [ 65 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 8.2078, -52.8693, -0.762674, 1 ]
+    },
+    {
+      "name": "mixamorig_RightFoot",
+      "matrix": [ 0.933352, 0.230512, 0.275169, 0, -0.184264, 0.965533, -0.183829, 0, -0.308059, 0.120873, 0.943657, 0, 0, -44.4277, -2.98379, 1 ],
+      "children": [ 66 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 8.2078, -8.44154, 2.22112, 1 ]
+    },
+    {
+      "name": "mixamorig_RightToeBase",
+      "matrix": [ 1, 0, 0, 0, 0, 0.997733, 0.067301, 0, 0, -0.067301, 0.997733, 0, -0, -8.72867, 10.7106, 1 ],
+      "children": [ 67 ],
+      "inverseBindPoseMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 8.2078, 0.287128, -8.48944, 1 ]
+    },
+    {
+      "name": "mixamorig_RightToe_End",
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0, -0.000676, 9.27812, 1 ]
+    },
+    {
+      "name": "Beta_Joints",
+      "model": {
+        "mesh": 0
+      }
+    },
+    {
+      "name": "Beta_Surface",
+      "model": {
+        "mesh": 1
+      }
+    },
+    {
+      "name": "Root",
+      "children": [ 0, 71 ]
+    },
+    {
+      "name": "Cube",
+      "matrix": [ 40, 0, 0, 0, 0, 25, 0, 0, 0, 0, 40, 0, 0, 25, 0, 1 ],
+      "model": {
+        "mesh": 2,
+        "material": 1,
+        "shader": 1
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "uri": "flair/Flair.bin",
+      "attributes": 223,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 0, "byteLength": 125040 },
+      "positions": { "byteOffset": 125040, "byteLength": 152160 },
+      "normals": { "byteOffset": 277200, "byteLength": 152160 },
+      "textures": { "byteOffset": 429360, "byteLength": 101440 },
+      "tangents": { "byteOffset": 530800, "byteLength": 152160 },
+      "joints0": { "byteOffset": 682960, "byteLength": 202880 },
+      "weights0": { "byteOffset": 885840, "byteLength": 202880 },
+      "skeleton": 0
+    },
+    {
+      "uri": "flair/Flair.bin",
+      "attributes": 223,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 1088720, "byteLength": 169632 },
+      "positions": { "byteOffset": 1258352, "byteLength": 192384 },
+      "normals": { "byteOffset": 1450736, "byteLength": 192384 },
+      "textures": { "byteOffset": 1643120, "byteLength": 128256 },
+      "tangents": { "byteOffset": 1771376, "byteLength": 192384 },
+      "joints0": { "byteOffset": 1963760, "byteLength": 256512 },
+      "weights0": { "byteOffset": 2220272, "byteLength": 256512 },
+      "skeleton": 0
+    },
+    {
+      "uri": "flair/cube.bin",
+      "attributes": 31,
+      "primitive": "TRIANGLES",
+      "indices": { "byteOffset": 0, "byteLength": 72 },
+      "positions": { "byteOffset": 72, "byteLength": 288 },
+      "normals": { "byteOffset": 360, "byteLength": 288 },
+      "textures": { "byteOffset": 648, "byteLength": 192 },
+      "tangents": { "byteOffset": 840, "byteLength": 288 }
+    }
+  ],
+  "skeletons": [
+    { "node": "mixamorig_Hips" }
+  ],
+  "cameras": [
+    {
+      "fov": 60,
+      "near": 0.1,
+      "far": 100,
+      "matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1.5, 3.5, 1 ]
+    }
+  ],
+  "lights": [
+  ],
+  "materials": [
+    {
+      "color": [ 0.0, 0.5, 1.0 ],
+      "metallic": 1.0,
+      "roughness": 0.0,
+      "mipmap": true,
+      "environment": 1
+    },
+    {
+      "color": [ 1.0, 1.0, 1.0 ],
+      "metallic": 0.0,
+      "roughness": 1.0,
+      "mipmap": true,
+      "environment": 1
+    }
+  ],
+  "environment": [
+    {
+    },
+    {
+      "cubeSpecular": "Studio/Radiance.ktx",
+      "cubeDiffuse": "Studio/Irradiance.ktx"
+    }
+  ],
+  "shaders": [
+    {
+      "vertex": "dli_pbr.vsh",
+      "fragment": "dli_pbr.fsh",
+      "hints": [ "MODIFIES_GEOMETRY" ],
+      "defines": [ "SKINNING" ],
+      "rendererState": "DEPTH_TEST|DEPTH_WRITE|CULL_BACK",
+      "uCubeMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ],
+      "uMaxLOD": 6
+    },
+    {
+      "vertex": "dli_pbr.vsh",
+      "fragment": "dli_pbr.fsh",
+      "rendererState": "DEPTH_TEST|DEPTH_WRITE|CULL_FRONT",
+      "uCubeMatrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ],
+      "uMaxLOD": 6
+    }
+  ],
+  "animations": [
+    {
+      "name": "autogenerated-name#1",
+      "properties": [
+        {
+          "node": "mixamorig_Hips",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 0, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_Hips",
+          "property": "position",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 651, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_Spine",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 1178, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_Spine1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 1829, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_Spine2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 2480, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_Neck",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 3131, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_Head",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 3782, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftShoulder",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 4433, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftArm",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 5084, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftForeArm",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 5735, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHand",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 6386, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandThumb1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 7037, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandThumb2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 7688, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandThumb3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 8339, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandIndex1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 8990, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandIndex2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 9641, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandIndex3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 10292, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandMiddle1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 10943, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandMiddle2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 11594, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandMiddle3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 12245, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandRing1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 12896, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandRing2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 13547, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandRing3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 14198, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandPinky1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 14849, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandPinky2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 15500, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftHandPinky3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 16151, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightShoulder",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 16802, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightArm",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 17453, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightForeArm",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 18104, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHand",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 18755, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandPinky1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 19406, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandPinky2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 20057, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandPinky3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 20708, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandRing1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 21359, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandRing2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 22010, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandRing3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 22661, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandMiddle1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 23312, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandMiddle2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 23963, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandMiddle3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 24614, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandIndex1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 25265, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandIndex2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 25916, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandIndex3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 26567, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandThumb1",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 27218, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandThumb2",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 27869, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightHandThumb3",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 28520, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftUpLeg",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 29171, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftLeg",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 29822, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftFoot",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 30473, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_LeftToeBase",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 31124, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightUpLeg",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 31775, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightLeg",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 32426, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightFoot",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 33077, "numKeys": 31 }
+        },
+        {
+          "node": "mixamorig_RightToeBase",
+          "property": "orientation",
+          "timePeriod": { "delay": 0, "duration": 1 },
+          "keyFramesBin": { "url": "flair/flair.ani", "byteOffset": 33728, "numKeys": 31 }
+        }
+      ],
+      "loopCount": 0
+    }
+  ]
+}
