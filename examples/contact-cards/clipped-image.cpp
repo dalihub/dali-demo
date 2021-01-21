@@ -21,6 +21,10 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 
+// INTERNAL INCLUDES
+#include "generated/clipped-image-vert.h"
+#include "generated/clipped-image-frag.h"
+
 namespace ClippedImage
 {
 using namespace Dali;
@@ -29,39 +33,6 @@ using namespace Dali::Toolkit;
 namespace
 {
 const char* const DELTA_PROPERTY_NAME("uDelta"); ///< Name of uniform used to mix the Circle and Quad geometries.
-
-/**
- * @brief This vertex-shader mixes in the quad and circle geometry depending on the value of uDelta.
- *
- * uDelta is used to mix in the Circle and the Quad positions.
- * If uDelta is 0.0f, then the circle position is adopted and if it is 1.0f, then the quad position is adopted.
- */
-// clang-format off
-const char * VERTEX_SHADER = DALI_COMPOSE_SHADER(
-  attribute mediump vec2  aPositionCircle;\n
-  attribute mediump vec2  aPositionQuad;\n
-  uniform   mediump float uDelta;
-  uniform mediump mat4    uMvpMatrix;\n
-  uniform mediump vec3    uSize;\n
-  \n
-  void main()\n
-  {\n
-    mediump vec4 vertexPosition = vec4(mix(aPositionCircle,aPositionQuad,uDelta), 0.0, 1.0);\n
-    vertexPosition.xyz *= uSize;\n
-    gl_Position = uMvpMatrix * vertexPosition;\n
-  }\n
-);
-
-/**
- * @brief This fragment-shader does not output anything. It's for a control which is just going to clip as specified in the vertex shader.
- */
-const char * FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-  void main()\n
-  {\n
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);\n
-  }\n
-);
-// clang-format on
 
 /**
  * @brief Creates the shader required for the clipped image
@@ -77,7 +48,7 @@ Shader& CreateShader()
 
   if(!shader)
   {
-    shader = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    shader = Shader::New(SHADER_CLIPPED_IMAGE_VERT, SHADER_CLIPPED_IMAGE_FRAG);
   }
 
   return shader;

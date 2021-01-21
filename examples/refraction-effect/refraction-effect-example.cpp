@@ -28,6 +28,10 @@
 // INTERNAL INCLUDES
 #include "shared/utility.h"
 #include "shared/view.h"
+#include "generated/refraction-effect-flat-vert.h"
+#include "generated/refraction-effect-flat-frag.h"
+#include "generated/refraction-effect-refraction-vert.h"
+#include "generated/refraction-effect-refraction-frag.h"
 
 using namespace Dali;
 
@@ -93,117 +97,6 @@ struct Vertex
   {
   }
 };
-
-/************************************************************************************************
- *** The shader source is used when the MeshActor is not touched***
- ************************************************************************************************/
-// clang-format off
-const char* VERTEX_SHADER_FLAT = DALI_COMPOSE_SHADER(
-attribute mediump vec3    aPosition;\n
-attribute mediump vec3    aNormal;\n
-attribute highp   vec2    aTexCoord;\n
-uniform   mediump mat4    uMvpMatrix;\n
-varying   mediump vec2    vTexCoord;\n
-void main()\n
-{\n
-  gl_Position = uMvpMatrix * vec4( aPosition.xy, 0.0, 1.0 );\n
-  vTexCoord = aTexCoord.xy;\n
-}\n
-);
-
-const char* FRAGMENT_SHADER_FLAT = DALI_COMPOSE_SHADER(
-uniform lowp    vec4  uColor;\n
-uniform sampler2D     sTexture;\n
-varying mediump vec2  vTexCoord;\n
-void main()\n
-{\n
-  gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
-}\n
-);
-
-/************************************************************
- ** Custom refraction effect shader***************************
- ************************************************************/
-const char* VERTEX_SHADER_REFRACTION = DALI_COMPOSE_SHADER(
-attribute mediump vec3    aPosition;\n
-attribute mediump vec3    aNormal;\n
-attribute highp   vec2    aTexCoord;\n
-uniform   mediump mat4    uMvpMatrix;\n
-varying   mediump vec4    vVertex;\n
-varying   mediump vec3    vNormal;\n
-varying   mediump vec2    vTexCoord;\n
-varying   mediump vec2    vTextureOffset;\n
-void main()\n
-{\n
-  gl_Position = uMvpMatrix * vec4( aPosition.xy, 0.0, 1.0 );\n
-  vTexCoord = aTexCoord.xy;\n
-
-  vNormal = aNormal;\n
-  vVertex = vec4( aPosition, 1.0 );\n
-  float length = max(0.01, length(aNormal.xy)) * 40.0;\n
-  vTextureOffset = aNormal.xy / length;\n
-}\n
-);
-
-const char* FRAGMENT_SHADER_REFRACTION = DALI_COMPOSE_SHADER(
-precision mediump float;\n
-uniform   mediump float  uEffectStrength;\n
-uniform   mediump vec3   uLightPosition;\n
-uniform   mediump vec2   uLightXYOffset;\n
-uniform   mediump vec2   uLightSpinOffset;\n
-uniform   mediump float  uLightIntensity;\n
-uniform   lowp    vec4   uColor;\n
-uniform   sampler2D      sTexture;\n
-varying   mediump vec4   vVertex;\n
-varying   mediump vec3   vNormal;\n
-varying   mediump vec2   vTexCoord;\n
-varying   mediump vec2   vTextureOffset;\n
-
-vec3 rgb2hsl(vec3 rgb)\n
-{\n
-  float epsilon = 1.0e-10;\n
-  vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);\n
-  vec4 P = mix(vec4(rgb.bg, K.wz), vec4(rgb.gb, K.xy), step(rgb.b, rgb.g));\n
-  vec4 Q = mix(vec4(P.xyw, rgb.r), vec4(rgb.r, P.yzx), step(P.x, rgb.r));\n
-  \n
-  // RGB -> HCV
-  float value = Q.x;\n
-  float chroma = Q.x - min(Q.w, Q.y);\n
-  float hue = abs(Q.z + (Q.w-Q.y) / (6.0*chroma+epsilon));\n
-  // HCV -> HSL
-  float lightness = value - chroma*0.5;\n
-  return vec3( hue, chroma/max( 1.0-abs(lightness*2.0-1.0), 1.0e-1 ), lightness );\n
-}\n
-
-vec3 hsl2rgb( vec3 hsl )\n
-{\n
-  // pure hue->RGB
-  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n
-  vec3 p = abs(fract(hsl.xxx + K.xyz) * 6.0 - K.www);\n
-  vec3 RGB = clamp(p - K.xxx, 0.0, 1.0);\n
-  \n
-  float chroma = ( 1.0 - abs( hsl.z*2.0-1.0 ) ) * hsl.y;\n
-  return ( RGB - 0.5 ) * chroma + hsl.z;\n
-}\n
-
-void main()\n
-{\n
-  vec3 normal = normalize( vNormal);\n
-
-  vec3 lightPosition = uLightPosition + vec3(uLightXYOffset+uLightSpinOffset, 0.0);\n
-  mediump vec3 vecToLight = normalize( (lightPosition - vVertex.xyz) * 0.01 );\n
-  mediump float spotEffect = pow( max(0.05, vecToLight.z ) - 0.05, 8.0);\n
-
-  spotEffect = spotEffect * uEffectStrength;\n
-  mediump float lightDiffuse = ( ( dot( vecToLight, normal )-0.75 ) *uLightIntensity  ) * spotEffect;\n
-
-  lowp vec4 color = texture2D( sTexture, vTexCoord + vTextureOffset * spotEffect );\n
-  vec3 lightedColor =  hsl2rgb( rgb2hsl(color.rgb) + vec3(0.0,0.0,lightDiffuse) );\n
-
-  gl_FragColor = vec4( lightedColor, color.a ) * uColor;\n
-}\n
-);
-// clang-format on
 
 } // namespace
 
@@ -281,7 +174,7 @@ private:
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // shader used when the screen is not touched, render a flat surface
-    mShaderFlat = Shader::New(VERTEX_SHADER_FLAT, FRAGMENT_SHADER_FLAT);
+    mShaderFlat = Shader::New(SHADER_REFRACTION_EFFECT_FLAT_VERT, SHADER_REFRACTION_EFFECT_FLAT_FRAG);
     mGeometry   = CreateGeometry(MESH_FILES[mCurrentMeshId]);
 
     Texture texture = DemoHelper::LoadWindowFillingTexture(window.GetSize(), TEXTURE_IMAGES[mCurrentTextureId]);
@@ -301,7 +194,7 @@ private:
     mContent.TouchedSignal().Connect(this, &RefractionEffectExample::OnTouch);
 
     // shader used when the finger is touching the screen. render refraction effect
-    mShaderRefraction = Shader::New(VERTEX_SHADER_REFRACTION, FRAGMENT_SHADER_REFRACTION);
+    mShaderRefraction = Shader::New(SHADER_REFRACTION_EFFECT_REFRACTION_VERT, SHADER_REFRACTION_EFFECT_REFRACTION_FRAG);
 
     // register uniforms
     mLightXYOffsetIndex = mMeshActor.RegisterProperty("uLightXYOffset", Vector2::ZERO);

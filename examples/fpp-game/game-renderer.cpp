@@ -19,37 +19,10 @@
 #include "game-model.h"
 #include "game-texture.h"
 
+#include "generated/game-renderer-vert.h"
+#include "generated/game-renderer-frag.h"
+
 #include <dali/dali.h>
-
-namespace
-{
-// clang-format off
-
-const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
-    attribute highp vec3 aPosition;\n
-    attribute highp vec3 aNormal;\n
-    attribute highp vec2 aTexCoord;\n
-    uniform highp mat4 uMvpMatrix;\n
-    varying highp vec2 vTexCoord;\n
-    void main()\n
-    {\n
-      gl_Position = uMvpMatrix * vec4(aPosition, 1.0 );\n
-      vTexCoord = aTexCoord;\n
-      vTexCoord.y = 1.0 - vTexCoord.y;\n
-    }\n
-)
-    ;
-const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-    uniform sampler2D sTexture;\n
-    varying highp vec2 vTexCoord;\n
-    void main()\n
-    {\n
-      gl_FragColor = texture2D( sTexture, vTexCoord ) * vec4(1.2, 1.2, 1.2, 1.0);\n
-    }\n
-);
-// clang-format on
-
-} // namespace
 
 GameRenderer::GameRenderer()
 : mModel(NULL),
@@ -77,7 +50,7 @@ void GameRenderer::Setup()
 {
   if(!mRenderer && mModel)
   {
-    Dali::Shader shader = Dali::Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    Dali::Shader shader = Dali::Shader::New(SHADER_GAME_RENDERER_VERT, SHADER_GAME_RENDERER_FRAG);
     mRenderer           = Dali::Renderer::New(mModel->GetGeometry(), shader);
     mRenderer.SetProperty(Dali::Renderer::Property::DEPTH_WRITE_MODE, Dali::DepthWriteMode::ON);
     mRenderer.SetProperty(Dali::Renderer::Property::DEPTH_FUNCTION, Dali::DepthFunction::LESS_EQUAL);

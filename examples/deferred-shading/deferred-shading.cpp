@@ -21,6 +21,11 @@
 #include "dali/public-api/actors/actor.h"
 #include "dali/public-api/rendering/renderer.h"
 
+#include "generated/deferred-shading-mainpass-vert.h"
+#include "generated/deferred-shading-mainpass-frag.h"
+#include "generated/deferred-shading-prepass-vert.h"
+#include "generated/deferred-shading-prepass-frag.h"
+
 using namespace Dali;
 
 namespace
@@ -37,181 +42,6 @@ namespace
 #define MAX_LIGHTS 32
 
 #define DEFINE_MAX_LIGHTS "const int kMaxLights = " QUOTE(MAX_LIGHTS) ";"
-
-#define DEFINE(x) "#define " DALI_COMPOSE_SHADER(x) DALI_COMPOSE_SHADER(\n)
-
-// clang-format off
-
-//=============================================================================
-// PRE-PASS
-//=============================================================================
-const char* const PREPASS_VSH = DALI_COMPOSE_SHADER(#version 300 es\n
-precision mediump float;)
-  DALI_COMPOSE_SHADER(
-
-// DALI uniforms
-uniform mat4 uMvpMatrix;
-uniform mat3 uNormalMatrix;
-uniform vec3 uSize;
-
-uniform vec3 uDepth_InvDepth_Near;\n)
-  DEFINE(DEPTH uDepth_InvDepth_Near.x)
-  DEFINE(INV_DEPTH uDepth_InvDepth_Near.y)
-  DEFINE(NEAR uDepth_InvDepth_Near.z)
-  DALI_COMPOSE_SHADER(
-
-in vec3 aPosition;
-in vec3 aNormal;
-
-out vec4 vPosition;
-out vec3 vNormal;
-
-vec4 Map(vec4 v)    // projection space -> texture
-{
-  return vec4(v.xyz / (2.f * v.w) + vec3(.5f), (v.w - NEAR) * INV_DEPTH);
-}
-
-void main()
-{
-  vec4 position = uMvpMatrix * vec4(aPosition * uSize, 1.f);
-  vPosition = Map(position);
-  gl_Position = position;
-
-  vNormal = normalize(uNormalMatrix * aNormal);
-});
-
-//=============================================================================
-const char* const PREPASS_FSH = DALI_COMPOSE_SHADER(#version 300 es\n
-precision mediump float;
-
-// DALI uniform
-uniform vec4 uColor;
-
-in vec4 vPosition;
-in vec3 vNormal;
-
-// These are our outputs.
-layout(location = 0) out vec3 oNormal;
-layout(location = 1) out vec4 oPosition;
-layout(location = 2) out vec3 oColor;
-
-void main()
-{
-  oColor = uColor.rgb;
-  oPosition = vPosition;
-  oNormal = normalize(vNormal) * .5f + .5f;
-});
-
-//=============================================================================
-// MAIN (LIGHTING) PASS
-//=============================================================================
-const char* const MAINPASS_VSH = DALI_COMPOSE_SHADER(#version 300 es\n
-precision mediump float;
-
-// DALI uniforms
-uniform mat4 uMvpMatrix;
-uniform vec3 uSize;
-
-in vec3 aPosition;
-in vec2 aTexCoord;
-
-out vec2 vUv;
-
-void main()
-{
-  vec4 position = uMvpMatrix * vec4(aPosition * uSize, 1.f);
-  vUv = aTexCoord;
-
-  gl_Position = position;
-});
-
-//=============================================================================
-const char* const MAINPASS_FSH = DALI_COMPOSE_SHADER(#version 300 es\n
-precision mediump float;\n)
-  DEFINE_MAX_LIGHTS
-  DALI_COMPOSE_SHADER(
-
-const float kAttenuationConst = .05f;
-const float kAttenuationLinear = .1f;
-const float kAttenuationQuadratic = .15f;
-
-// G-buffer
-uniform sampler2D uTextureNormal;
-uniform sampler2D uTexturePosition;
-uniform sampler2D uTextureColor;
-
-uniform mat4 uInvProjection;
-
-uniform vec3 uDepth_InvDepth_Near;\n)
-  DEFINE(DEPTH uDepth_InvDepth_Near.x)
-  DEFINE(INV_DEPTH uDepth_InvDepth_Near.y)
-  DEFINE(NEAR uDepth_InvDepth_Near.z)
-  DALI_COMPOSE_SHADER(
-
-// Light source uniforms
-struct Light
-{
-  vec3 position;    // view space
-  float radius;
-  vec3 color;
-};
-
-uniform Light uLights[kMaxLights];
-
-in vec2 vUv;
-
-out vec4 oColor;
-
-vec4 Unmap(vec4 m)  // texture -> projection
-{
-  m.w = m.w * DEPTH + NEAR;
-  m.xyz = (m.xyz - vec3(.5)) * (2.f * m.w);
-  return m;
-}
-
-vec3 CalculateLighting(vec3 pos, vec3 normal)
-{
-  vec3 viewDir = normalize(pos);
-  vec3 viewDirRefl = -reflect(viewDir, normal);
-
-  vec3 light = vec3(0.04f); // fake ambient term
-  for (int i = 0; i < kMaxLights; ++i)
-  {
-    vec3 rel = pos - uLights[i].position;
-    float distance = length(rel);
-    rel /= distance;
-
-    float a = uLights[i].radius / (kAttenuationConst + kAttenuationLinear * distance +
-      kAttenuationQuadratic * distance * distance);     // attenuation
-
-    float l = max(0.f, dot(normal, rel));   // lambertian
-    float s = pow(max(0.f, dot(viewDirRefl, rel)), 256.f);  // specular
-
-    light += (uLights[i].color * (l + s)) * a;
-  }
-
-  return light;
-}
-
-void main()
-{
-  vec3 normSample = texture(uTextureNormal, vUv).xyz;
-  if (dot(normSample, normSample) == 0.f)
-  {
-    discard;  // if we didn't write this texel, don't bother lighting it.
-  }
-
-  vec3 normal = normalize(normSample - .5f);
-
-  vec4 posSample = texture(uTexturePosition, vUv);
-  vec3 pos = (uInvProjection * Unmap(posSample)).xyz;
-
-  vec3 color = texture(uTextureColor, vUv).rgb;
-  vec3 finalColor = color * CalculateLighting(pos, normal);
-
-  oColor = vec4(finalColor, 1.f);
-});
-// clang-format on
 
 //=============================================================================
 // PRNG for floats.
@@ -542,7 +372,7 @@ private:
     Geometry mesh = CreateOctahedron(false);
 
     // Create main actors
-    Shader     preShader        = Shader::New(PREPASS_VSH, PREPASS_FSH);
+    Shader     preShader        = Shader::New(SHADER_DEFERRED_SHADING_PREPASS_VERT, SHADER_DEFERRED_SHADING_PREPASS_FRAG);
     TextureSet noTexturesThanks = TextureSet::New();
     Renderer   meshRenderer     = CreateRenderer(noTexturesThanks, mesh, preShader, OPTION_DEPTH_TEST | OPTION_DEPTH_WRITE);
     meshRenderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
@@ -631,7 +461,7 @@ private:
     finalImageTextures.SetSampler(1, sampler);
     finalImageTextures.SetSampler(2, sampler);
 
-    Shader   shdMain            = Shader::New(MAINPASS_VSH, MAINPASS_FSH);
+    Shader   shdMain            = Shader::New(SHADER_DEFERRED_SHADING_MAINPASS_VERT, SHADER_DEFERRED_SHADING_MAINPASS_FRAG);
     Geometry finalImageGeom     = CreateTexturedQuadGeometry(true);
     Renderer finalImageRenderer = CreateRenderer(finalImageTextures, finalImageGeom, shdMain);
     RegisterDepthProperties(depth, zNear, finalImageRenderer);

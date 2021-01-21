@@ -25,47 +25,8 @@
 
 // INTERNAL INCLUDES
 #include "obj-loader.h"
-
-namespace
-{
-// clang-format off
-
-/*
- * Vertex shader for a skybox
- */
-const char* VERTEX_SHADER_SKYBOX = DALI_COMPOSE_SHADER(
-attribute mediump vec3 aPosition;\n // DALi shader builtin
-uniform   mediump mat4 uMvpMatrix;\n // DALi shader builtin
-\n
-varying mediump vec3 vTexCoord;\n
-void main()\n
-{\n
-  vTexCoord =  aPosition;\n
-
-  mediump vec4 vertexPosition = vec4(aPosition, 1.0);\n
-  vec4 clipSpacePosition = uMvpMatrix * vertexPosition;\n
-  gl_Position = clipSpacePosition.xyww;\n // Writes 1.0, the maximum depth value, into the depth buffer.
-                                          // This is an optimization to avoid running the fragment shader
-                                          // for the pixels hidden by the scene's objects.
-}\n
-);
-
-/*
- * Fragment shader for a skybox
- */
-const char* FRAGMENT_SHADER_SKYBOX = DALI_COMPOSE_SHADER(
-uniform samplerCube uSkyBoxTexture;\n
-\n
-varying mediump vec3 vTexCoord;\n
-void main()\n
-{\n
-  mediump vec4 texColor = textureCube( uSkyBoxTexture, vTexCoord, 0.0);\n
-  gl_FragColor = texColor;\n
-}\n
-);
-// clang-format on
-
-} // namespace
+#include "generated/skybox-vert.h"
+#include "generated/skybox-frag.h"
 
 ModelSkybox::ModelSkybox()
 {
@@ -78,7 +39,7 @@ ModelSkybox::~ModelSkybox()
 void ModelSkybox::Init(const Vector3& size)
 {
   Geometry geometry = CreateGeometry();
-  Shader   shader   = Shader::New(VERTEX_SHADER_SKYBOX, FRAGMENT_SHADER_SKYBOX);
+  Shader   shader   = Shader::New(SHADER_SKYBOX_VERT, SHADER_SKYBOX_FRAG);
 
   Renderer renderer = Renderer::New(geometry, shader);
 
