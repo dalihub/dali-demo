@@ -18,6 +18,11 @@
 #include "utils.h"
 #include "dali/public-api/animation/constraints.h"
 
+#include "generated/particle-view-vert.h"
+#include "generated/particle-view-frag.h"
+#include "generated/particle-view-simple-vert.h"
+#include "generated/particle-view-simple-frag.h"
+
 //#define ENABLE_DEBUG_VOLUME
 
 #define USE_GLSL_VERSION(version) "#version " #version "\n"
@@ -28,195 +33,6 @@ namespace
 {
 
 const uint32_t POPULATION_GRANULARITY = 128;
-
-///@brief Shader for billboarded particles, where the vertices of the particles
-/// are supplied as vec3 position (particle position) + vec2 sub-position.
-const char* const PARTICLES_VSH = USE_GLSL_VERSION(300 es)
-DALI_COMPOSE_SHADER(
-  precision lowp float;
-  uniform mat4 uModelView; // DALi
-  uniform mat4 uProjection; // DALi
-  uniform vec3 uSize; // DALi
-  uniform vec4 uColor; // DALi
-
-  uniform vec3 uSecondaryColor;
-  uniform vec2 uDepthRange; // x is zNear, y is 1.f / (zFar - zNear)
-  uniform float uTwinkleFrequency;
-  uniform float uTwinkleSizeScale;
-  uniform float uTwinkleOpacityWeight;
-  uniform float uTime;
-  uniform float uFocalLength;
-  uniform float uAperture;
-  uniform float uPopulation;
-
-  struct Scatter
-  {
-    float radiusSqr;
-    float amount;
-    vec3 ray;
-  };
-
-  const int SCATTER_VARS = 6; // Must match ParticleView::mScatterProps' size.
-  uniform Scatter uScatter[SCATTER_VARS];
-
-  const int POPULATION_GRANULARITY = 128;
-  uniform float uOrderLookUp[POPULATION_GRANULARITY];
-
-  in vec3 aPosition;
-  in float aSeed;
-  in vec4 aPath;
-  in vec2 aSubPosition;
-  in float aSize;
-
-  flat out float vDepth;
-  flat out float vFocalDistance;
-  out vec2 vUvUnit;
-  flat out float vOpacity;
-  flat out vec3 vColor; // ignore alpha
-
-  float bezier(vec3 control, float alpha)
-  {
-    return mix(mix(control.x, control.y, alpha), mix(control.y, control.z, alpha), alpha);
-  }
-
-  void main() {
-    // Get random order from the look-up table, based on particle ID.
-    int particleId = gl_VertexID / 6;
-    float order = uOrderLookUp[particleId & (POPULATION_GRANULARITY - 1)];
-
-    // Get twinkle scalar
-    float twinkle = sin(uTime * floor(uTwinkleFrequency * aSeed) + fract(aSeed * 1.17137));
-
-    // Add Motion
-    float s = sin(uTime + aSeed) * .5f + .5f;	// different phase for all
-    // NOTE: you'd think that taking the bezier() calls apart would save 4 mix() calls, since
-    // the mix()es (of xy / yz / zw / wx) are all calculated twice. It turns out that the MALI
-    // compiler is already doing this; leaving it as is for readability.
-    float bx0 = bezier(aPath.xyz, s);
-    float bx1 = bezier(aPath.zwx, s);
-    float by0 = bezier(aPath.yzw, s);
-    float by1 = bezier(aPath.wxy, s);
-    vec3 motion = vec3(mix(bx0, bx1, s), mix(by0, by1, s), 0.f);
-
-    // Model to view position
-    vec3 position3 = aPosition * uSize + motion;
-
-    vec4 position = uModelView * vec4(position3, 1.f);
-
-    // Add scatter - calculated in view space, using view ray
-    vec3 normalizedPos = position.xyz / uSize;
-    for (int i = 0; i < SCATTER_VARS; ++i)
-    {
-      vec2 scatterDist = (normalizedPos - uScatter[i].ray * dot(uScatter[i].ray, normalizedPos)).xy;
-
-      // NOTE: replacing the division with a multiplication (by inverse) oddly results in more instructions (MALI).
-      float scatter = max(0.f, uScatter[i].radiusSqr - dot(scatterDist, scatterDist)) *
-        uScatter[i].amount / aSize;
-      position.xy += scatter * normalize(scatterDist) * uSize.xy;
-    }
-
-    // Calculate normalised depth and distance from focal plane
-    float depth = (position.z - uDepthRange.x) * uDepthRange.y;
-    vDepth = depth;
-
-    float focalDist = (uFocalLength - depth) * uAperture;
-    focalDist *= focalDist;
-    vFocalDistance = max(focalDist, 1e-6f);	// NOTE: was clamp(..., 1.f); side effect: out of focus particles get squashed at higher aperture values.
-
-    // Calculate expiring scale - for size and opacity.
-    float expiringScale = smoothstep(order + 1.f, order, uPopulation);
-
-    // Calculate billboard position and size
-    vec2 subPosition = aSubPosition * aSize *
-      (1.f + twinkle * aSeed * uTwinkleSizeScale) *
-      expiringScale;
-
-    // Insist on hacking the size? Do it here...
-    float sizeHack = depth + .5f;
-    // NOTE: sizeHack *= sizeHack looked slightly better.
-    subPosition *= sizeHack;
-
-    vec3 subPositionView = vec3(subPosition, 0.);
-
-    // Add billboards to view position.
-    position += vec4(subPositionView, 0.f);
-
-    // subPosition doubles as normalized (-1..1) UV.
-    vUvUnit = aSubPosition;
-
-    // Vary opacity (actor alpha) by time as well as expiring scale.
-    vOpacity = uColor.a * expiringScale *
-      (1.0f + aSeed + twinkle * uTwinkleOpacityWeight) / (2.0f + uTwinkleOpacityWeight);
-
-    // Randomize RGB using seed.
-    vec3 mixColor = vec3(fract(aSeed), fract(aSeed * 16.f), fract(aSeed * 256.f));
-    vColor = mix(uColor.rgb, uSecondaryColor, mixColor);
-
-    gl_Position = uProjection * position;
-  });
-
-///@brief Fragment shader for particles, which simulates depth of field
-/// using a combination of procedural texturing, alpha testing and alpha
-/// blending.
-const char* const PARTICLES_FSH = USE_GLSL_VERSION(300 es)
-DALI_COMPOSE_SHADER(
-  precision lowp float;
-  uniform float uAlphaTestRefValue;
-  uniform vec2 uFadeRange; // near, far
-  in vec2 vUvUnit;
-  flat in float vDepth;
-  flat in float vFocalDistance;
-  flat in float vOpacity;
-  flat in vec3 vColor;
-  out vec4 oFragColor;
-
-  const float REF_VALUE_THRESHOLD = 1. / 64.;
-
-  void main() {
-    // Softened disc pattern from normalized UVs
-    float value = 1.f - dot(vUvUnit, vUvUnit);
-
-    // Decrease area of particles 'in-focus'.
-    float refValue = (1.f - vFocalDistance) * .5f;
-    float threshold = REF_VALUE_THRESHOLD * (1.f + vDepth);
-    float alpha = pow(value, vFocalDistance) * smoothstep(refValue - threshold, refValue + threshold, value);
-    if (alpha < uAlphaTestRefValue)
-    {
-      discard;
-    }
-
-    // Apply opacity
-    alpha *= vOpacity;
-    alpha *= alpha;
-
-    // Fade particles out as they get close to the near and far clipping planes
-    alpha *= smoothstep(.0f, uFadeRange.x, vDepth) * smoothstep(1.f, uFadeRange.y, vDepth);
-
-    oFragColor = vec4(vColor, alpha);
-  });
-
-///@brief Shader for simple textured geometry.
-const char* const SIMPLE_VSH = USE_GLSL_VERSION(300 es)
-DALI_COMPOSE_SHADER(
-  precision mediump float;
-  uniform mat4 uMvpMatrix;//by DALi
-  uniform vec3 uSize;  // by DALi
-  in vec3 aPosition;
-  void main() {
-    gl_Position = uMvpMatrix * vec4(aPosition * uSize, 1.f);
-  });
-
-///@brief Shader for an unlit, unfogged, textured mesh.
-const char* const SIMPLE_FSH = USE_GLSL_VERSION(300 es)
-DALI_COMPOSE_SHADER(
-  precision mediump float;
-  uniform vec4 uColor;
-  out vec4 oFragColor;
-
-  void main() {
-    oFragColor = uColor;
-  });
-
 
 uint32_t GetSkipValue(uint32_t count, uint32_t prime)
 {
@@ -243,7 +59,7 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
   }
 
   // create shader
-  Shader particleShader = Shader::New(PARTICLES_VSH, PARTICLES_FSH, Shader::Hint::MODIFIES_GEOMETRY);
+  Shader particleShader = Shader::New(SHADER_PARTICLE_VIEW_VERT, SHADER_PARTICLE_VIEW_FRAG, Shader::Hint::MODIFIES_GEOMETRY);
 
   float zNear = camera.GetNearClippingPlane();
   float zFar = camera.GetFarClippingPlane();
@@ -318,7 +134,7 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
 
 #ifdef ENABLE_DEBUG_VOLUME
   Geometry cubeGeom = CreateCuboidWireframeGeometry();
-  renderer = CreateRenderer(renderer.GetTextures(), cubeGeom, Shader::New(SIMPLE_VSH, SIMPLE_FSH));
+  renderer = CreateRenderer(renderer.GetTextures(), cubeGeom, Shader::New(SHADER_PARTICLE_VIEW_SIMPLE_VERT, SHADER_PARTICLE_VIEW_SIMPLE_FRAG));
   masterParticles.AddRenderer(renderer);
 #endif
 

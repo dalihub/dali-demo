@@ -19,6 +19,8 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 
+#include "generated/image-channel-control-frag.h"
+
 #include <cstdio>
 
 using namespace Dali; // Needed for macros
@@ -29,21 +31,6 @@ namespace Internal
 {
 namespace
 {
-// clang-format off
-
-const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-  varying mediump vec2 vTexCoord;\n
-  uniform sampler2D sTexture;\n
-  uniform mediump vec4 uColor;\n
-  uniform mediump vec3 mixColor;\n
-  uniform mediump vec3 uChannels;\n
-  \n
-  void main()\n
-  {\n
-      gl_FragColor = texture2D( sTexture, vTexCoord ) * vec4(mixColor,1.0) * uColor * vec4(uChannels, 1.0) ;\n
-  }\n
-);
-// clang-format on
 
 Dali::BaseHandle Create()
 {
@@ -95,7 +82,7 @@ void ImageChannelControl::SetImage(const std::string& url)
 
   Property::Map properties;
   Property::Map shader;
-  shader[Dali::Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = FRAGMENT_SHADER;
+  shader[Dali::Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = SHADER_IMAGE_CHANNEL_CONTROL_FRAG.data();
   properties[Dali::Toolkit::Visual::Property::TYPE]                = Dali::Toolkit::Visual::IMAGE;
   properties[Dali::Toolkit::Visual::Property::SHADER]              = shader;
   properties[Dali::Toolkit::ImageVisual::Property::URL]            = url;

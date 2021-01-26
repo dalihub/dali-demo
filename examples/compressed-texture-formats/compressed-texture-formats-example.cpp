@@ -22,6 +22,8 @@
 
 // INTERNAL INCLUDES
 #include "shared/utility.h"
+#include "generated/compressed-texture-formats-example-vert.h"
+#include "generated/compressed-texture-formats-example-frag.h"
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -31,33 +33,6 @@ namespace
 const char* IMAGE_FILENAME_ETC                = DEMO_IMAGE_DIR "tx-etc1.ktx";
 const char* IMAGE_FILENAME_ASTC_LINEAR        = DEMO_IMAGE_DIR "tx-astc-4x4-linear.ktx";
 const char* IMAGE_FILENAME_ASTC_LINEAR_NATIVE = DEMO_IMAGE_DIR "tx-astc-4x4-linear-native.astc";
-
-// clang-format off
-static const char* VERTEX_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
-    attribute mediump vec2 aPosition;\n
-    attribute mediump vec2 aTexCoord;\n
-    uniform mediump mat4 uMvpMatrix;\n
-    uniform mediump vec3 uSize;\n
-    varying mediump vec2 vTexCoord;\n
-    void main()\n
-    {\n
-      vec4 position = vec4(aPosition,0.0,1.0)*vec4(uSize,1.0);\n
-      gl_Position = uMvpMatrix * position;\n
-      vTexCoord = aTexCoord;\n
-    }\n
-);
-
-static const char* FRAGMENT_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
-    uniform lowp vec4 uColor;\n
-    uniform sampler2D sTexture;\n
-    varying mediump vec2 vTexCoord;\n
-
-    void main()\n
-    {\n
-      gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
-    }\n
-);
-// clang-format on
 
 /**
  * @brief Create a renderer to render an image and adds it to an actor
@@ -148,7 +123,7 @@ public:
 
     //Create the geometry and the shader renderers will use
     Geometry geometry = DemoHelper::CreateTexturedQuad();
-    Shader   shader   = Shader::New(VERTEX_SHADER_TEXTURE, FRAGMENT_SHADER_TEXTURE);
+    Shader   shader   = Shader::New(SHADER_COMPRESSED_TEXTURE_FORMATS_EXAMPLE_VERT, SHADER_COMPRESSED_TEXTURE_FORMATS_EXAMPLE_FRAG);
 
     // Add images.
     Actor actor = Actor::New();

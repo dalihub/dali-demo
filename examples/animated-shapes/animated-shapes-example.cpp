@@ -18,6 +18,8 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 #include "shared/view.h"
+#include "generated/animated-shapes-vert.h"
+#include "generated/animated-shapes-frag.h"
 
 #include <sstream>
 
@@ -28,50 +30,16 @@ namespace
 {
 const char* APPLICATION_TITLE("Animated Shapes");
 
-// clang-format off
-const char* VERTEX_SHADER = DALI_COMPOSE_SHADER
-(
-  attribute mediump vec3 aCoefficient;
-  uniform mediump mat4 uMvpMatrix;
-  uniform mediump vec3 uPosition[MAX_POINT_COUNT];
-  varying lowp vec2 vCoefficient;
-  void main()
-  {
-    int vertexId = int(aCoefficient.z);
-    gl_Position = uMvpMatrix * vec4(uPosition[vertexId], 1.0);
-
-    vCoefficient = aCoefficient.xy;
-  }
-);
-
-// Fragment shader.
-const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER
-(
-  uniform lowp vec4 uColor;
-  varying lowp vec2 vCoefficient;
-  void main()
-  {
-    lowp float C = (vCoefficient.x*vCoefficient.x-vCoefficient.y);
-    lowp float Cdx = dFdx(C);
-    lowp float Cdy = dFdy(C);
-
-    lowp float distance = float(C / sqrt(Cdx*Cdx + Cdy*Cdy));
-    lowp float alpha = 0.5 - distance;
-    gl_FragColor = vec4( uColor.rgb, uColor.a * alpha );
-  }
-);
-// clang-format on
-
 Shader CreateShader(unsigned int pointCount)
 {
   std::ostringstream vertexShader;
   vertexShader << "#define MAX_POINT_COUNT " << pointCount << "\n"
-               << VERTEX_SHADER;
+               << SHADER_ANIMATED_SHAPES_VERT;
 
   std::ostringstream fragmentShader;
   fragmentShader << "#extension GL_OES_standard_derivatives : enable "
                  << "\n"
-                 << FRAGMENT_SHADER;
+                 << SHADER_ANIMATED_SHAPES_FRAG;
 
   Shader shader = Shader::New(vertexShader.str(), fragmentShader.str());
   for(unsigned int i(0); i < pointCount; ++i)

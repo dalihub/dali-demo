@@ -20,6 +20,8 @@
 
 // INTERNAL INCLUDES
 #include "shared/utility.h"
+#include "generated/benchmark-vert.h"
+#include "generated/benchmark-frag.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -149,33 +151,6 @@ struct VertexWithTexture
   Vector2 texCoord;
 };
 
-// clang-format off
-const char* VERTEX_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
-    attribute mediump vec2 aPosition;\n
-    attribute mediump vec2 aTexCoord;\n
-    uniform mediump mat4 uMvpMatrix;\n
-    uniform mediump vec3 uSize;\n
-    varying mediump vec2 vTexCoord;\n
-    void main()\n
-    {\n
-      vec4 position = vec4(aPosition,0.0,1.0)*vec4(uSize,1.0);\n
-      gl_Position = uMvpMatrix * position;\n
-      vTexCoord = aTexCoord;\n
-    }\n
-);
-
-const char* FRAGMENT_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
-    uniform lowp vec4 uColor;\n
-    uniform sampler2D sTexture;\n
-    varying mediump vec2 vTexCoord;\n
-
-    void main()\n
-    {\n
-      gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
-    }\n
-);
-// clang-format on
-
 bool         gUseMesh(false);
 bool         gNinePatch(false);
 unsigned int gRowsPerPage(25);
@@ -282,7 +257,7 @@ public:
 
     //Create all the renderers
     std::vector<Renderer> renderers(numImages);
-    Shader                shader   = Shader::New(VERTEX_SHADER_TEXTURE, FRAGMENT_SHADER_TEXTURE);
+    Shader                shader   = Shader::New(SHADER_BENCHMARK_VERT, SHADER_BENCHMARK_FRAG);
     Geometry              geometry = DemoHelper::CreateTexturedQuad();
     for(unsigned int i(0); i < numImages; ++i)
     {

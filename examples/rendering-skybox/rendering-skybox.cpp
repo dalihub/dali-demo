@@ -19,82 +19,16 @@
 #include <dali/dali.h>
 
 #include "look-camera.h"
+#include "generated/rendering-skybox-vert.h"
+#include "generated/rendering-skybox-frag.h"
+#include "generated/rendering-skybox-cube-vert.h"
+#include "generated/rendering-skybox-cube-frag.h"
 
 using namespace Dali;
 using namespace Toolkit;
 
 namespace
 {
-// clang-format off
-/*
- * Vertex shader for a textured cube
- */
-const char* VERTEX_SHADER_CUBE = DALI_COMPOSE_SHADER(
-attribute mediump vec3 aPosition;\n // DALi shader builtin
-attribute mediump vec2 aTexCoord;\n // DALi shader builtin
-uniform   mediump mat4 uMvpMatrix;\n // DALi shader builtin
-uniform   mediump vec3 uSize;\n // DALi shader builtin
-\n
-varying mediump vec2 vTexCoord;\n
-void main()\n
-{\n
-  mediump vec4 vertexPosition = vec4(aPosition, 1.0);\n
-  vertexPosition.xyz *= uSize;\n
-  vTexCoord = aTexCoord;\n
-  gl_Position = uMvpMatrix * vertexPosition;\n
-}\n
-);
-
-/*
- * Fragment shader for a textured cube
- */
-const char* FRAGMENT_SHADER_CUBE = DALI_COMPOSE_SHADER(
-uniform sampler2D uTexture;\n
-\n
-varying mediump vec2 vTexCoord;\n
-void main()\n
-{\n
-  mediump vec4 texColor = texture2D( uTexture, vTexCoord );\n
-  gl_FragColor = texColor;\n
-}\n
-);
-
-/*
- * Vertex shader for a skybox
- */
-const char* VERTEX_SHADER_SKYBOX = DALI_COMPOSE_SHADER(
-attribute mediump vec3 aPosition;\n // DALi shader builtin
-uniform   mediump mat4 uMvpMatrix;\n // DALi shader builtin
-\n
-varying mediump vec3 vTexCoord;\n
-void main()\n
-{\n
-  vTexCoord.x =  aPosition.x;\n
-  vTexCoord.y = -aPosition.y;\n // convert to GL coords
-  vTexCoord.z =  aPosition.z;\n
-
-  mediump vec4 vertexPosition = vec4(aPosition, 1.0);\n
-  vec4 clipSpacePosition = uMvpMatrix * vertexPosition;\n
-  gl_Position = clipSpacePosition.xyww;\n // Writes 1.0, the maximum depth value, into the depth buffer.
-                                          // This is an optimization to avoid running the fragment shader
-                                          // for the pixels hidden by the scene's objects.
-}\n
-);
-
-/*
- * Fragment shader for a skybox
- */
-const char* FRAGMENT_SHADER_SKYBOX = DALI_COMPOSE_SHADER(
-uniform samplerCube uSkyBoxTexture;\n
-\n
-varying mediump vec3 vTexCoord;\n
-void main()\n
-{\n
-  mediump vec4 texColor = textureCube( uSkyBoxTexture, vTexCoord );\n
-  gl_FragColor = texColor;\n
-}\n
-);
-// clang-format on
 
 const float   CAMERA_DEFAULT_FOV(60.0f);
 const float   CAMERA_DEFAULT_NEAR(0.1f);
@@ -215,8 +149,8 @@ public:
    */
   void CreateShaders()
   {
-    mShaderCube   = Shader::New(VERTEX_SHADER_CUBE, FRAGMENT_SHADER_CUBE);
-    mShaderSkybox = Shader::New(VERTEX_SHADER_SKYBOX, FRAGMENT_SHADER_SKYBOX);
+    mShaderCube   = Shader::New(SHADER_RENDERING_SKYBOX_CUBE_VERT, SHADER_RENDERING_SKYBOX_CUBE_FRAG);
+    mShaderSkybox = Shader::New(SHADER_RENDERING_SKYBOX_VERT, SHADER_RENDERING_SKYBOX_FRAG);
   }
 
   /**

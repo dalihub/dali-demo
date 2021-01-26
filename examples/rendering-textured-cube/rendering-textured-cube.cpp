@@ -18,46 +18,14 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include "generated/rendering-textured-cube-vert.h"
+#include "generated/rendering-textured-cube-frag.h"
+
 using namespace Dali;
 using namespace Toolkit;
 
 namespace
 {
-// clang-format off
-
-/*
- * Vertex shader
- */
-const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
-attribute mediump vec3 aPosition;\n // DALi shader builtin
-attribute mediump vec2 aTexCoord;\n // DALi shader builtin
-uniform   mediump mat4 uMvpMatrix;\n // DALi shader builtin
-uniform   mediump vec3 uSize;\n // DALi shader builtin
-\n
-varying mediump vec2 vTexCoord;\n
-void main()\n
-{\n
-  mediump vec4 vertexPosition = vec4(aPosition, 1.0);\n
-  vertexPosition.xyz *= uSize;\n
-  vTexCoord = aTexCoord;\n
-  gl_Position = uMvpMatrix * vertexPosition;\n
-}\n
-);
-
-/*
- * Fragment shader
- */
-const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-uniform sampler2D uTexture;\n
-\n
-varying mediump vec2 vTexCoord;\n
-void main()\n
-{\n
-  mediump vec4 texColor = texture2D( uTexture, vTexCoord );\n
-  gl_FragColor = texColor;\n
-}\n
-);
-// clang-format on
 
 const char* TEXTURE_URL = DEMO_IMAGE_DIR "wood.png";
 
@@ -204,14 +172,14 @@ public:
   }
 
   /**
-   * Creates a shader using inlined variable VERTEX_SHADER and FRAGMENT_SHADER
+   * Creates a shader using SHADER_RENDERING_TEXTURED_CUBE_VERT and SHADER_RENDERING_TEXTURED_CUBE_FRAG
    *
    * Shaders are very basic and all they do is transforming vertices and sampling
    * a texture.
    */
   void CreateCubeShader()
   {
-    mShader = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    mShader = Shader::New(SHADER_RENDERING_TEXTURED_CUBE_VERT, SHADER_RENDERING_TEXTURED_CUBE_FRAG);
   }
 
   /**

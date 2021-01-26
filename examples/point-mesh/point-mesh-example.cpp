@@ -21,6 +21,8 @@
 // INTERNAL INCLUDES
 #include "shared/utility.h"
 #include "shared/view.h"
+#include "generated/point-mesh-vert.h"
+#include "generated/point-mesh-frag.h"
 
 using namespace Dali;
 
@@ -28,49 +30,6 @@ namespace
 {
 const char* MATERIAL_SAMPLE(DEMO_IMAGE_DIR "gallery-small-48.jpg");
 const char* MATERIAL_SAMPLE2(DEMO_IMAGE_DIR "gallery-medium-19.jpg");
-
-#define MAKE_SHADER(A) #A
-
-const char* VERTEX_SHADER = MAKE_SHADER(
-  attribute mediump vec2 aPosition;
-  attribute highp float  aHue;
-  varying mediump vec2   vTexCoord;
-  uniform mediump mat4   uMvpMatrix;
-  uniform mediump vec3   uSize;
-  uniform mediump float  uPointSize;
-  uniform lowp vec4      uFadeColor;
-  varying mediump vec3   vVertexColor;
-  varying mediump float  vHue;
-
-  vec3 hsv2rgb(vec3 c) {
-    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-  }
-
-  void main() {
-    mediump vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);
-    vertexPosition.xyz *= (uSize - uPointSize);
-    vertexPosition = uMvpMatrix * vertexPosition;
-    vVertexColor   = hsv2rgb(vec3(aHue, 0.7, 1.0));
-    vHue           = aHue;
-    gl_PointSize   = uPointSize;
-    gl_Position    = vertexPosition;
-  });
-
-const char* FRAGMENT_SHADER = MAKE_SHADER(
-  varying mediump vec3  vVertexColor;
-  varying mediump float vHue;
-  uniform lowp vec4     uColor;
-  uniform sampler2D     sTexture1;
-  uniform sampler2D     sTexture2;
-  uniform lowp vec4     uFadeColor;
-
-  void main() {
-    mediump vec4 texCol1 = texture2D(sTexture1, gl_PointCoord);
-    mediump vec4 texCol2 = texture2D(sTexture2, gl_PointCoord);
-    gl_FragColor         = vec4(vVertexColor, 1.0) * ((texCol1 * vHue) + (texCol2 * (1.0 - vHue)));
-  });
 
 Geometry CreateGeometry()
 {
@@ -150,7 +109,7 @@ public:
     Texture texture0 = DemoHelper::LoadTexture(MATERIAL_SAMPLE);
     Texture texture1 = DemoHelper::LoadTexture(MATERIAL_SAMPLE2);
 
-    Shader shader = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    Shader shader = Shader::New(SHADER_POINT_MESH_VERT, SHADER_POINT_MESH_FRAG);
 
     TextureSet textureSet = TextureSet::New();
     textureSet.SetTexture(0u, texture0);

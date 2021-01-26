@@ -21,6 +21,8 @@
 // INTERNAL INCLUDES
 #include "shared/utility.h"
 #include "shared/view.h"
+#include "generated/textured-mesh-vert.h"
+#include "generated/textured-mesh-frag.h"
 
 using namespace Dali;
 
@@ -28,34 +30,6 @@ namespace
 {
 const char* MATERIAL_SAMPLE(DEMO_IMAGE_DIR "gallery-small-48.jpg");
 const char* MATERIAL_SAMPLE2(DEMO_IMAGE_DIR "gallery-medium-19.jpg");
-
-#define MAKE_SHADER(A) #A
-
-const char* VERTEX_SHADER = MAKE_SHADER(
-  attribute mediump vec2 aPosition;
-  attribute highp vec2   aTexCoord;
-  varying mediump vec2   vTexCoord;
-  uniform mediump mat4   uMvpMatrix;
-  uniform mediump vec3   uSize;
-  uniform lowp vec4      uFadeColor;
-
-  void main() {
-    mediump vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);
-    vertexPosition.xyz *= uSize;
-    vertexPosition = uMvpMatrix * vertexPosition;
-    vTexCoord      = aTexCoord;
-    gl_Position    = vertexPosition;
-  });
-
-const char* FRAGMENT_SHADER = MAKE_SHADER(
-  varying mediump vec2 vTexCoord;
-  uniform lowp vec4    uColor;
-  uniform sampler2D    sTexture;
-  uniform lowp vec4    uFadeColor;
-
-  void main() {
-    gl_FragColor = texture2D(sTexture, vTexCoord) * uColor * uFadeColor;
-  });
 
 /**
  * Sinusoidal curve starting at zero with 2 cycles
@@ -107,7 +81,7 @@ public:
     Texture texture1 = DemoHelper::LoadTexture(MATERIAL_SAMPLE);
     Texture texture2 = DemoHelper::LoadTexture(MATERIAL_SAMPLE2);
 
-    mShader      = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    mShader      = Shader::New(SHADER_TEXTURED_MESH_VERT, SHADER_TEXTURED_MESH_FRAG);
     mTextureSet1 = TextureSet::New();
     mTextureSet1.SetTexture(0u, texture1);
 

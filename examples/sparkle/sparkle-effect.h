@@ -21,6 +21,9 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include "generated/sparkle-effect-vert.h"
+#include "generated/sparkle-effect-frag.h"
+
 using namespace Dali;
 using Dali::Toolkit::ImageView;
 
@@ -230,126 +233,14 @@ struct Vertex
    */
 Shader New()
 {
-  // clang-format off
-    std::string vertexShader = DALI_COMPOSE_SHADER(
-      precision highp float;\n
-      \n
-      attribute vec2  aTexCoord;\n
-      uniform   mat4  uMvpMatrix;\n
-      varying   vec2  vTexCoord;\n
-      \n
-      attribute vec2  aParticlePath0;\n
-      attribute vec2  aParticlePath1;\n
-      attribute vec2  aParticlePath2;\n
-      attribute vec2  aParticlePath3;\n
-      attribute vec2  aParticlePath4;\n
-      attribute vec2  aParticlePath5;\n
-      \n
-      uniform float uPercentage;\n
-      uniform float uPercentageMarked;\n
-      uniform vec3  uParticleColors[NUM_COLOR];\n
-      uniform float uOpacity[NUM_PARTICLE];\n
-      uniform vec2  uTapIndices;
-      uniform float uTapOffset[MAXIMUM_ANIMATION_COUNT];\n
-      uniform vec2  uTapPoint[MAXIMUM_ANIMATION_COUNT];\n
-      uniform float uAcceleration;\n
-      uniform float uRadius;\n
-      uniform float uScale;\n
-      uniform float uBreak;\n
-      \n
-      varying lowp vec4 vColor;\n
-      \n
-      void main()\n
-      {\n
-        // we store the particle index inside texCoord attribute
-        float idx = abs(aTexCoord.y)-1.0;\n
-        \n
-        // early out if the particle is invisible
-        if(uOpacity[int(idx)]<1e-5)\n
-        {\n
-          gl_Position = vec4(0.0);\n
-          vColor = vec4(0.0);\n
-          return;\n
-        }\n
-        \n
-        // As the movement along the b-curve has nonuniform speed with a uniform increasing parameter 'uPercentage'
-        // we give different particles the different 'percentage' to make them looks more random
-        float increment = idx / float(NUM_PARTICLE)*5.0;
-        float percentage = mod(uPercentage +uAcceleration+increment, 1.0);
-        \n
-        vec2 p0; vec2 p1; vec2 p2; vec2 p3;
-        // calculate the particle position by using the cubic b-curve equation
-        if(percentage<0.5)\n // particle on the first b-curve
-        {\n
-          p0 = aParticlePath0;\n
-          p1 = aParticlePath1;\n
-          p2 = aParticlePath2;\n
-          p3 = aParticlePath3;\n
-        }\n
-        else\n
-        {\n
-          p0 = aParticlePath3;\n
-          p1 = aParticlePath4;\n
-          p2 = aParticlePath5;\n
-          p3 = aParticlePath0;\n
-        }\n
-        float t = mod( percentage*2.0, 1.0);\n
-        vec2 position = (1.0-t)*(1.0-t)*(1.0-t)*p0 + 3.0*(1.0-t)*(1.0-t)*t*p1+3.0*(1.0-t)*t*t*p2 + t*t*t*p3;\n
-        \n
-        vec2 referencePoint = mix(p0,p3,0.5);\n
-        float maxAnimationCount = float(MAXIMUM_ANIMATION_COUNT);\n
-        \n
-        for( float i=uTapIndices.x; i<uTapIndices.y; i+=1.0 )\n
-        {
-          int id = int( mod(i+0.5,maxAnimationCount ) );\n
-          vec2 edgePoint = normalize(referencePoint-uTapPoint[id])*uRadius+vec2(uRadius);\n
-          position = mix( position, edgePoint, uTapOffset[id] ) ;\n
-        }\n
-        \n
-        position = mix( position, vec2( 250.0,250.0 ),uBreak*(1.0-uOpacity[int(idx)]) ) ;
-        \n
-        // vertex position on the mesh: (sign(aTexCoord.x), sign(aTexCoord.y))*PARTICLE_HALF_SIZE
-        gl_Position = uMvpMatrix * vec4( position.x+sign(aTexCoord.x)*PARTICLE_HALF_SIZE/uScale,
-                                         position.y+sign(aTexCoord.y)*PARTICLE_HALF_SIZE/uScale,
-                                         0.0, 1.0 );\n
-        \n
-        // we store the color index inside texCoord attribute
-        float colorIndex = abs(aTexCoord.x);
-        vColor.rgb = uParticleColors[int(colorIndex)-1];\n
-        vColor.a = fract(colorIndex) * uOpacity[int(idx)];\n
-        \n
-        // produce a 'seemingly' random fade in/out
-        percentage = mod(uPercentage+increment+0.15, 1.0);\n
-        float ramdomOpacity = (min(percentage, 0.25)-0.15+0.9-max(percentage,0.9))*10.0;\n
-        vColor.a *=ramdomOpacity;\n
-        \n
-        vTexCoord = clamp(aTexCoord, 0.0, 1.0);\n
-      }\n
-    );
-
-    std::string fragmentShader = DALI_COMPOSE_SHADER(
-        precision highp float;\n
-        uniform sampler2D sTexture;\n
-        varying vec2      vTexCoord;\n
-        \n
-        varying lowp vec4 vColor;\n
-        \n
-        void main()\n
-        {\n
-          gl_FragColor = vColor;\n
-          gl_FragColor.a *= texture2D(sTexture, vTexCoord).a;\n
-        }\n
-    );
-  // clang-format on
-
   std::ostringstream vertexShaderStringStream;
   vertexShaderStringStream << "#define NUM_COLOR " << NUM_COLOR << "\n"
                            << "#define NUM_PARTICLE " << NUM_PARTICLE << "\n"
                            << "#define PARTICLE_HALF_SIZE " << PARTICLE_SIZE * ACTOR_SCALE / 2.f << "\n"
                            << "#define MAXIMUM_ANIMATION_COUNT " << MAXIMUM_ANIMATION_COUNT << "\n"
-                           << vertexShader;
+                           << SHADER_SPARKLE_EFFECT_VERT;
 
-  Shader handle = Shader::New(vertexShaderStringStream.str(), fragmentShader);
+  Shader handle = Shader::New(vertexShaderStringStream.str(), SHADER_SPARKLE_EFFECT_FRAG);
 
   // set the particle colors
   std::ostringstream oss;

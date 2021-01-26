@@ -32,164 +32,13 @@
 #include <iostream>
 #include <numeric>
 
+#include "generated/waves-vert.h"
+#include "generated/waves-frag.h"
+
 using namespace Dali;
 
 namespace
 {
-
-constexpr std::string_view WAVES_VSH =
-  "#define FMA(a, b, c) ((a) * (b) + (c))\n"  // fused multiply-add
-DALI_COMPOSE_SHADER(
-  precision highp float;
-
-  const float kTile = 1.;
-
-  const float kPi = 3.1415926535;
-  const float kEpsilon = 1. / 32.;
-
-  // DALI uniforms
-  uniform vec3 uSize;
-  uniform mat4 uModelView;
-  uniform mat4 uProjection;
-  uniform mat3 uNormalMatrix;
-
-  // our uniforms
-  uniform float uTime;
-  uniform vec2 uScrollScale;
-  uniform float uWaveRate;
-  uniform float uWaveAmplitude;
-  uniform float uParallaxAmount;
-
-  attribute vec2 aPosition;
-  attribute vec2 aTexCoord;
-
-  varying vec2 vUv;
-  varying vec3 vViewPos;
-  varying vec3 vNormal;
-  varying float vHeight;
-
-  float CubicHermite(float B, float C, float t)
-  {
-    float dCB = (C - B) * .5;
-    float A = B - dCB;
-    float D = B + dCB;
-    vec3 p = vec3(D + .5 * (((B - C) * 3.) - A), A - 2.5 * B + 2. * C - D,
-      .5 * (C - A));
-    return FMA(FMA(FMA(p.x, t, p.y), t, p.z), t, B);
-  }
-
-  float Hash(float n)
-  {
-    return fract(sin(n) * 43751.5453123);
-  }
-
-  float HeightAtTile(vec2 pos)
-  {
-    float rate = Hash(Hash(pos.x) * Hash(pos.y));
-
-    return (sin(uTime * rate * uWaveRate) * .5 + .5) * uWaveAmplitude;
- }
-
-  float CalculateHeight(vec2 position)
-  {
-    vec2 tile = floor(position);
-    position = fract(position);
-
-    vec2 cp = vec2(
-      CubicHermite(
-        HeightAtTile(tile + vec2( kTile * -0.5, kTile * -0.5)),
-        HeightAtTile(tile + vec2( kTile * +0.5, kTile * -0.5)),
-        position.x),
-      CubicHermite(
-        HeightAtTile(tile + vec2( kTile * -0.5, kTile * +0.5)),
-        HeightAtTile(tile + vec2( kTile * +0.5, kTile * +0.5)),
-        position.x)
-    );
-
-    return CubicHermite(cp.x, cp.y, position.y);
-  }
-
-  vec3 CalculateNormal(vec2 position)
-  {
-    vec3 normal = vec3(
-      CalculateHeight(vec2(position.x - kEpsilon, position.y)) -
-        CalculateHeight(vec2(position.x + kEpsilon, position.y)),
-      .25,
-      CalculateHeight(vec2(position.x, position.y - kEpsilon)) -
-        CalculateHeight(vec2(position.x, position.y + kEpsilon))
-    );
-    return normal;
-  }
-
-  void main()
-  {
-    vUv = aTexCoord;
-
-    vec2 scrollPosition = aPosition * uScrollScale + vec2(0., uTime * -kPi);
-    vNormal = uNormalMatrix * CalculateNormal(scrollPosition);
-
-    float h = CalculateHeight(scrollPosition);
-    vHeight = h * uParallaxAmount;
-    vec3 position = vec3(aPosition.x, h, aPosition.y);
-
-    vec4 viewPosition = uModelView * vec4(position * uSize, 1.);
-    vViewPos = -viewPosition.xyz;
-
-    gl_Position = uProjection * viewPosition;
-  });
-
-constexpr std::string_view WAVES_FSH = DALI_COMPOSE_SHADER(
-  precision highp float;
-
-  uniform vec4 uColor; // DALi
-  uniform sampler2D uNormalMap; // DALi
-
-  uniform vec3 uInvLightDir;
-  uniform vec3 uLightColorSqr;
-  uniform vec3 uAmbientColor;
-
-  uniform float uNormalMapWeight;
-  uniform float uSpecularity;
-
-  varying vec2 vUv;
-  varying vec3 vNormal;
-  varying vec3 vViewPos;
-  varying float vHeight;
-
-  float Rand(vec2 co)
-  {
-    return fract(sin(dot(co.xy, vec2(12.98981, 78.2331))) * 43758.5453);
-  }
-
-  float Sum(vec3 v)
-  {
-    return v.x + v.y + v.z;
-  }
-
-  void main()
-  {
-    vec3 viewPos = normalize(vViewPos);
-    vec2 uv2 = vUv + vViewPos.xy / vViewPos.z * vHeight + vec2(.5, 0.);
-
-    vec3 perturbNormal = texture2D(uNormalMap, vUv).rgb * 2. - 1.;
-    vec3 perturbNormal2 = texture2D(uNormalMap, uv2).rgb * 2. - 1.;
-    vec3 normal = normalize(vNormal + perturbNormal * uNormalMapWeight);
-    vec3 normal2 = normalize(vNormal + perturbNormal2 * uNormalMapWeight);
-
-    vec3 color = uAmbientColor;
-    float d = max(0., dot(normal, -uInvLightDir));
-    color += uColor.rgb * d;
-
-    vec3 reflected = reflect(uInvLightDir, normal);
-    d = max(0., dot(reflected, viewPos));
-    color += pow(d, uSpecularity) * uLightColorSqr;
-
-    reflected = reflect(uInvLightDir, normal2);
-    d = max(0., dot(reflected, viewPos));
-    color += pow(d, uSpecularity) * uLightColorSqr;
-
-    gl_FragColor = vec4(color, 1.);
-  });
 
 const float TIME_STEP = 0.0952664626;
 
@@ -423,7 +272,7 @@ private:
       specularity = mWaveShader.GetProperty(mUSpecularity).Get<float>();
     }
 
-    Shader shader = Shader::New(WAVES_VSH.data(), WAVES_FSH.data(), Shader::Hint::MODIFIES_GEOMETRY);
+    Shader shader = Shader::New(SHADER_WAVES_VERT, SHADER_WAVES_FRAG, Shader::Hint::MODIFIES_GEOMETRY);
     mULightColorSqr = shader.RegisterProperty(UNIFORM_LIGHT_COLOR_SQR, lightColorSqr);
     mUAmbientColor = shader.RegisterProperty(UNIFORM_AMBIENT_COLOR, ambientColor);
     mUInvLightDir = shader.RegisterProperty(UNIFORM_INV_LIGHT_DIR, invLightDir);

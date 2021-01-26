@@ -26,6 +26,10 @@
 #include <dali/devel-api/adaptor-framework/image-loading.h>
 #include <dali/devel-api/adaptor-framework/pixel-buffer.h>
 
+// INTERNAL INCLUDES
+#include "generated/simple-text-renderer-vert.h"
+#include "generated/simple-text-renderer-frag.h"
+
 using namespace std;
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -34,44 +38,6 @@ namespace
 {
 const std::string IMAGE1 = DEMO_IMAGE_DIR "application-icon-1.png";
 const std::string IMAGE2 = DEMO_IMAGE_DIR "application-icon-6.png";
-
-#define MAKE_SHADER(A) #A
-
-const std::string VERSION_3_ES = "#version 300 es\n";
-
-const char* VERTEX_SHADER = MAKE_SHADER(
-  precision mediump float;
-
-  in vec2 aPosition;
-  in vec2 aTexCoord;
-
-  out vec2 vUV;
-
-  uniform vec3 uSize;
-  uniform mat4 uMvpMatrix;
-
-  void main() {
-    vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);
-    vertexPosition.xyz *= uSize;
-    gl_Position = uMvpMatrix * vertexPosition;
-
-    vUV = aTexCoord;
-  });
-
-const char* FRAGMENT_SHADER = MAKE_SHADER(
-  precision mediump float;
-
-  in vec2 vUV;
-
-  out vec4 FragColor;
-
-  uniform sampler2D sAlbedo;
-  uniform vec4      uColor;
-
-  void main() {
-    vec4 color = texture(sAlbedo, vUV);
-    FragColor  = vec4(color.rgb, uColor.a * color.a);
-  });
 
 Renderer CreateRenderer()
 {
@@ -100,7 +66,7 @@ Renderer CreateRenderer()
   geometry.SetType(Geometry::TRIANGLE_STRIP);
 
   // Create the shader
-  Shader shader = Shader::New(VERSION_3_ES + VERTEX_SHADER, VERSION_3_ES + FRAGMENT_SHADER);
+  Shader shader = Shader::New(SHADER_SIMPLE_TEXT_RENDERER_VERT, SHADER_SIMPLE_TEXT_RENDERER_FRAG);
 
   // Create the renderer
 

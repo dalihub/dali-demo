@@ -16,12 +16,16 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali/public-api/rendering/shader.h>
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
-#include "renderer-stencil-shaders.h"
 #include "shared/utility.h"
 #include "shared/view.h"
+#include "generated/render-stencil-vert.h"
+#include "generated/render-stencil-frag.h"
+#include "generated/render-stencil-textured-vert.h"
+#include "generated/render-stencil-textured-frag.h"
 
 using namespace Dali;
 
@@ -56,6 +60,14 @@ const Vector4 REFLECTION_COLOR(0.6f, 0.6f, 0.6f, 0.6f); ///< Note that alpha is 
 
 // We need to control the draw order as we are controlling both the stencil and depth buffer per renderer.
 const int DEPTH_INDEX_GRANULARITY(10000); ///< This value is the gap in depth-index in-between each renderer.
+
+// Shader uniforms:
+const char* const COLOR_UNIFORM_NAME("uColor");
+const char* const OBJECT_DIMENSIONS_UNIFORM_NAME("uObjectDimensions");
+const char* const LIGHT_POSITION_UNIFORM_NAME = "uLightPosition";
+const char* const POSITION("aPosition");
+const char* const NORMAL("aNormal");
+const char* const TEXTURE("aTexCoord");
 
 } // Anonymous namespace
 
@@ -477,11 +489,11 @@ private:
 
     if(textured)
     {
-      shader = Shader::New(VERTEX_SHADER_TEXTURED, FRAGMENT_SHADER_TEXTURED);
+      shader = Shader::New(SHADER_RENDER_STENCIL_TEXTURED_VERT, SHADER_RENDER_STENCIL_TEXTURED_FRAG);
     }
     else
     {
-      shader = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+      shader = Shader::New(SHADER_RENDER_STENCIL_VERT, SHADER_RENDER_STENCIL_FRAG);
     }
 
     // Here we modify the light position based on half the window size as a pre-calculation step.
