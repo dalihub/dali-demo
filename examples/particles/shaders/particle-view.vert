@@ -1,7 +1,6 @@
+#version 300 es
 // Shader for billboarded particles, where the vertices of the particles
 // are supplied as vec3 position (particle position) + vec2 sub-position.
-
-#version 300 es
 
 precision lowp float;
 uniform mat4 uModelView; // DALi

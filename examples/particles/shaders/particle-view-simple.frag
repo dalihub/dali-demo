@@ -1,6 +1,5 @@
-// Shader for an unlit, unfogged, textured mesh.
-
 #version 300 es
+// Shader for an unlit, unfogged, textured mesh.
 
 precision mediump float;
 uniform vec4 uColor;

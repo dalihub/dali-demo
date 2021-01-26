@@ -1,7 +1,6 @@
+#version 300 es
 // Fragment shader for particles, which simulates depth of field using
 // a combination of procedural texturing, alpha testing and alpha blending.
-
-#version 300 es
 
 precision lowp float;
 uniform float uAlphaTestRefValue;
