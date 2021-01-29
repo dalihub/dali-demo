@@ -18,6 +18,9 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include "generated/rendering-basic-light-vert.h"
+#include "generated/rendering-basic-light-frag.h"
+
 using namespace Dali;
 using namespace Toolkit;
 
@@ -65,75 +68,6 @@ Material material[] =
     {"Yellow rubber", Vector3(0.05f, 0.05f, 0.0f), Vector3(0.5f, 0.5f, 0.4f), Vector3(0.7f, 0.7f, 0.04f), 0.078125f}};
 
 int MaterialID = 0;
-
-// clang-format off
-
-/*
- * Vertex shader
- */
-const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
-attribute mediump vec3 aPosition;\n // DALi shader builtin
-attribute mediump vec3 aNormal;\n // DALi shader builtin
-uniform   mediump mat4 uMvpMatrix;\n // DALi shader builtin
-uniform   mediump vec3 uSize;\n // DALi shader builtin
-uniform   mediump mat4 uModelView;\n // DALi shader builtin
-uniform   mediump mat3 uNormalMatrix;\n // DALi shader builtin
-\n
-varying mediump vec3 vNormal;\n
-varying mediump vec3 vFragPos;\n
-\n
-void main()\n
-{\n
-  mediump vec4 vertexPosition = vec4(aPosition, 1.0);\n
-  vertexPosition.xyz *= uSize;\n
-  vFragPos = vec3(uModelView * vertexPosition);\n
-  vNormal = uNormalMatrix * aNormal;\n
-  \n
-  gl_Position = uMvpMatrix * vertexPosition;\n
-}\n
-);
-
-/*
- * Fragment shader
- */
-const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-varying mediump vec3 vNormal;\n
-varying mediump vec3 vFragPos;\n
-uniform mediump  vec3 viewPos;\n // custom uniform
-\n
-struct Material {\n
-    mediump vec3 ambient;\n
-    mediump vec3 diffuse;\n
-    mediump vec3 specular;\n
-    mediump float shininess;\n
-};\n
-struct Light {\n
-    mediump vec3 position;\n
-    mediump vec3 color;\n
-};\n
-uniform Material material;\n // custom uniform
-uniform Light light;\n  // custom uniform
-\n
-void main()\n
-{\n
-\n    // Ambient
-    mediump vec3 ambient = material.ambient * light.color;\n
-\n    // Diffuse
-    mediump vec3 norm = normalize(vNormal);\n
-    mediump vec3 lightDir = normalize(light.position - vFragPos);\n
-    mediump float diff = max(dot(norm, lightDir), 0.0);\n
-    mediump vec3 diffuse = material.diffuse * diff * light.color;\n
-    \n
-\n    // Specular
-    mediump vec3 viewDir = normalize(viewPos - vFragPos);\n
-    mediump vec3 reflectDir = reflect(-lightDir, norm);  \n
-    mediump float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);\n
-    mediump vec3 specular = material.specular * spec * light.color;  \n
-    mediump vec3 result = (ambient + diffuse + specular);\n
-    gl_FragColor = vec4(result, 1.0);\n
-}\n
-);
-// clang-format on
 
 } // namespace
 
@@ -323,14 +257,14 @@ public:
   }
 
   /**
-   * Creates a shader using inlined variable VERTEX_SHADER and FRAGMENT_SHADER
+   * Creates a shader using inlined variable SHADER_RENDERING_BASIC_LIGHT_VERT and SHADER_RENDERING_BASIC_LIGHT_FRAG
    *
    * Shaders are very basic and all they do is transforming vertices and interpolating
    * input per-vertex color.
    */
   void CreateCubeShader()
   {
-    mShader = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    mShader = Shader::New(SHADER_RENDERING_BASIC_LIGHT_VERT, SHADER_RENDERING_BASIC_LIGHT_FRAG);
 
     float scale = 120.0f;
     mShader.RegisterProperty("light.position", Vector3(1.2 * scale, scale, 2.0 * scale));

@@ -28,6 +28,9 @@
 
 // INTERNAL INCLUDES
 #include "shared/utility.h" // DemoHelper::LoadTexture
+#include "generated/metaball-vert.h"
+#include "generated/metaball-frag.h"
+#include "generated/metaball-refraction-frag.h"
 
 using namespace Dali;
 
@@ -38,127 +41,6 @@ const char* const BACKGROUND_IMAGE(DEMO_IMAGE_DIR "background-2.jpg");
 
 // number of metaballs
 constexpr uint32_t METABALL_NUMBER = 6;
-
-/**
- * Vertex shader code for metaball
- */
-// clang-format off
-const char* const METABALL_VERTEX_SHADER = DALI_COMPOSE_SHADER (
-    attribute mediump vec2    aPosition;\n
-    attribute mediump vec2    aTexture;\n
-    uniform   mediump mat4    uMvpMatrix;\n
-    uniform   mediump vec3    uSize;\n
-    uniform   lowp    vec4    uColor;\n
-    varying   mediump vec2    vTexCoord;\n
-
-    void main()\n
-    {\n
-      vTexCoord = aTexture;\n
-      mediump vec4 vertexPosition = vec4(aPosition.x, aPosition.y, 0.0, 1.0);\n
-      gl_Position = uMvpMatrix * vertexPosition;\n
-    }\n
-);
-
-/**
- * Fragment shader code for metaball
- */
-const char* const METABALL_FRAG_SHADER = DALI_COMPOSE_SHADER (
-  precision mediump float;\n
-  varying vec2 vTexCoord;\n
-  uniform vec2 uPositionMetaball;\n
-  uniform vec2 uPositionVar;\n
-  uniform vec2 uGravityVector;\n
-  uniform float uRadius;\n
-  uniform float uRadiusVar;\n
-  void main()\n
-  {\n
-    vec2 adjustedCoords = vTexCoord * 2.0 - 1.0;\n
-    vec2 finalMetaballPosition = uPositionMetaball + uGravityVector + uPositionVar;\n
-    \n
-    float finalRadius = uRadius + uRadiusVar;\n
-    vec2 distanceVec = adjustedCoords - finalMetaballPosition;\n
-    float result = dot(distanceVec, distanceVec);\n
-    float color = inversesqrt(result) * finalRadius;\n
-    \n
-    gl_FragColor = vec4(color,color,color,1.0);\n
-  }\n
-);
-
-/**
- * Fragment shader code for metaball and background composition with refraction effect
- */
-const char* const REFRACTION_FRAG_SHADER = DALI_COMPOSE_SHADER (
-  precision highp float;\n
-  varying vec2 vTexCoord;\n
-  uniform sampler2D sTexture;\n
-  uniform sampler2D sEffect;\n
-  uniform vec2 uPositionMetaball;\n
-  void main()\n
-  {\n
-    vec2 zoomCoords;\n
-    vec3 normal = vec3(0.0,0.0,1.0);\n
-    vec2 fakePos = vec2(0.0,0.0);\n
-    vec3 color = vec3(1.0, 1.0, 1.0);
-    float ambient = 0.2;
-    \n
-    vec4 metaColor = texture2D(sEffect, vTexCoord);\n
-    \n
-    vec2 adjustedCoords = vTexCoord.xy * vec2(2.0) - vec2(1.0);\n
-    fakePos = adjustedCoords.xy - vec2(uPositionMetaball.x, -uPositionMetaball.y);
-    float len = length(fakePos) + 0.01;\n
-    vec3 colorPos = vec3(0,0,1);
-    \n
-    if (metaColor.r > 0.85)\n
-    {\n
-      zoomCoords = ((vTexCoord - 0.5) * 0.9);\n
-      zoomCoords = zoomCoords + 0.5;\n
-      \n
-      float interpNormal = mix(0.7, 1.0, (metaColor.r - 0.85) * 4.);\n
-      normal.xyz = vec3(fakePos.x * (1.0 - interpNormal) / len, fakePos.y * (1.0 - interpNormal) / len, interpNormal);\n
-      normal.xyz = normalize(normal.xyz);\n
-      color = vec3(0.65, 1.0, 0);\n
-      colorPos = vec3(fakePos.x,fakePos.y,0);
-    }\n
-    else if (metaColor.r > 0.75)\n
-    {\n
-      float interpolation = mix(0.9, 1.15, (0.85 - metaColor.r) * 10.0);\n
-      zoomCoords = ((vTexCoord - 0.5) * interpolation);\n
-      zoomCoords = zoomCoords + 0.5;\n
-      \n
-      float interpNormal = mix(0.7, 0.0, (0.85 - metaColor.r) * 10.0);\n
-      normal.xyz = vec3(fakePos.x * (1.0 - interpNormal) / len, fakePos.y * (1.0 - interpNormal) / len, interpNormal);\n
-      normal.xyz = normalize(normal.xyz);\n
-      color = vec3(0.65, 1.0, 0);\n
-      colorPos = vec3(fakePos.x,fakePos.y,0);
-    }\n
-    else\n
-    {\n
-      zoomCoords = vTexCoord;\n
-      normal = vec3(0,0,0);\n
-      ambient = 0.5;\n
-    }\n
-    \n
-    vec3 lightPosition = vec3(-750.0,-1000.0,2000.0);\n
-    vec3 vertex = vec3(adjustedCoords.x,adjustedCoords.y,0.0);\n
-    \n
-    vec3 vecToLight = normalize( lightPosition - vertex );\n
-    \n
-    float lightDiffuse = dot( vecToLight, normal );\n
-    lightDiffuse = max(0.0,lightDiffuse);\n
-    lightDiffuse = lightDiffuse * 0.5 + 0.5;
-    \n
-    vec3 vertexToEye = vec3(0,0,1) - vertex;\n
-    vertexToEye = normalize(vertexToEye);
-    vec3 lightReflect = normalize(reflect(-vecToLight, normal));\n
-    float specularFactor = max(0.0,dot(vertexToEye, lightReflect));\n
-    specularFactor = pow(specularFactor, 32.0) * 0.7;
-    \n
-    vec4 texColor = texture2D(sTexture, zoomCoords);\n
-    gl_FragColor.rgb = texColor.rgb * ambient + color.rgb * texColor.rgb * lightDiffuse + vec3(specularFactor);\n
-    gl_FragColor.a = 1.0;
-  }\n
- );
-// clang-format on
 
 /**
  * Metadata for each ball
@@ -429,7 +311,7 @@ Geometry MetaballExplosionController::CreateGeometry(bool aspectMappedTexture)
 void MetaballExplosionController::CreateMetaballActors()
 {
   // Create the shader for the metaballs, tell DALi that shader modifies geometry so we dont need to set a meaningless size
-  Shader shader = Shader::New(METABALL_VERTEX_SHADER, METABALL_FRAG_SHADER, Shader::Hint::MODIFIES_GEOMETRY);
+  Shader shader = Shader::New(SHADER_METABALL_VERT, SHADER_METABALL_FRAG, Shader::Hint::MODIFIES_GEOMETRY);
 
   Geometry metaballGeom = CreateGeometry();
   // Reuse same renderer for each actor
@@ -493,7 +375,7 @@ void MetaballExplosionController::CreateMetaballImage()
 void MetaballExplosionController::CreateComposition()
 {
   //Create new shader
-  Shader shader = Shader::New(METABALL_VERTEX_SHADER, REFRACTION_FRAG_SHADER);
+  Shader shader = Shader::New(SHADER_METABALL_VERT, SHADER_METABALL_REFRACTION_FRAG);
 
   // Create new texture set
   auto textureSet = TextureSet::New();

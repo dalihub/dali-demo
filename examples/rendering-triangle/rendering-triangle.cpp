@@ -18,43 +18,11 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include "generated/rendering-triangle-vert.h"
+#include "generated/rendering-triangle-frag.h"
+
 using namespace Dali;
 using namespace Toolkit;
-
-namespace
-{
-// clang-format off
-
-/*
- * Vertex shader
- */
-const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
-attribute mediump vec2 aPosition;\n // DALi shader builtin
-uniform   mediump mat4 uMvpMatrix;\n // DALi shader builtin
-uniform   mediump vec3 uSize;\n // DALi shader builtin
-\n
-void main()\n
-{\n
-  mediump vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);\n
-  vertexPosition.xyz *= uSize;\n
-  gl_Position = uMvpMatrix * vertexPosition;\n
-}\n
-);
-
-/*
- * Fragment shader
- */
-const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-uniform mediump vec4 uColor;\n
-\n
-void main()\n
-{\n
-  gl_FragColor = uColor;\n
-}\n
-);
-// clang-format on
-
-} // namespace
 
 // This example shows how to draw a triangle in actor's color
 //
@@ -150,7 +118,7 @@ public:
    */
   void CreateTriangleShader()
   {
-    mShader = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    mShader = Shader::New(SHADER_RENDERING_TRIANGLE_VERT, SHADER_RENDERING_TRIANGLE_FRAG);
   }
 
   /**

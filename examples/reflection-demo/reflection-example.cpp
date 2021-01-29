@@ -22,146 +22,17 @@
 #include <map>
 
 #include "gltf-scene.h"
+#include "generated/reflection-vert.h"
+#include "generated/reflection-frag.h"
+#include "generated/reflection-simple-frag.h"
+#include "generated/reflection-textured-frag.h"
+#include "generated/reflection-plasma-frag.h"
+#include "generated/reflection-tex-frag.h"
 
 using namespace Dali;
 
 namespace
 {
-// clang-format off
-
-const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
-  attribute mediump vec3 aPosition;\n
-  attribute mediump vec3 aNormal;\n
-  attribute mediump vec2 aTexCoord;\n
-  uniform mediump mat4 uMvpMatrix;\n
-  uniform mediump mat3 uNormalMatrix;\n
-  uniform mediump vec3 uSize;\n
-  \n
-  varying mediump vec2 vTexCoord; \n
-  varying mediump vec3 vNormal; \n
-  varying mediump vec3 vPosition; \n
-  void main()\n
-{\n
-  mediump vec4 vertexPosition = vec4(aPosition, 1.0);\n
-  vertexPosition.xyz *= uSize;\n
-  vTexCoord = aTexCoord;\n
-  vNormal = normalize(uNormalMatrix * aNormal);\n
-  vPosition = aPosition; \n
-  gl_Position = uMvpMatrix * vertexPosition;\n
-}\n
-);
-
-const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-  uniform lowp vec4 uColor;\n
-  uniform sampler2D sTexture; \n
-  varying mediump vec3 vNormal;\n
-  varying mediump vec3 vPosition; \n
-  varying mediump vec2 vTexCoord; \n
-  \n
-  void main()\n
-{\n
-  gl_FragColor = texture2D(sTexture, vTexCoord) * 50.0;\n
-}\n
-);
-
-const char* FRAGMENT_SIMPLE_SHADER = DALI_COMPOSE_SHADER(
-        uniform lowp vec4 uColor;\n
-        uniform sampler2D sTexture; \n
-        varying mediump vec3 vNormal;\n
-        varying mediump vec3 vPosition; \n
-        varying mediump vec2 vTexCoord; \n
-        \n
-        void main()\n
-{\n
-        gl_FragColor = texture2D(sTexture, vTexCoord) * 2.0;\n
-}\n
-);
-
-const char* TEXTURED_FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-  uniform lowp vec4 uColor;\n
-  uniform sampler2D sTexture; \n
-  uniform mediump vec2 uScreenSize;\n
-
-  uniform mediump vec3 eyePos;\n
-  uniform mediump vec3 lightDir;\n
-
-  varying mediump vec3 vNormal;\n
-  varying mediump vec3 vPosition; \n
-  varying mediump vec2 vTexCoord; \n
-  \n
-  void main()\n
-{\n
-  mediump vec3 n = normalize( vNormal );\n
-  mediump vec3 l = normalize( lightDir );\n
-  mediump vec3 e = normalize( eyePos );\n
-  mediump float intensity = max(dot(n,l), 0.0);\n
-  gl_FragColor = texture2D(sTexture, vTexCoord) * intensity;\n
-}\n
-);
-
-const char* PLASMA_FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-  precision mediump float;\n
-  uniform sampler2D sTexture; \n
-
-  uniform float uTime;
-  uniform float uKFactor;
-  uniform mediump vec3 eyePos;\n
-  uniform mediump vec3 lightDir;\n
-  varying mediump vec3 vNormal;\n
-  varying mediump vec3 vPosition; \n
-  varying mediump vec2 vTexCoord; \n
-  \n
-  void main()\n
-{\n
-  mediump vec3 n = normalize( vNormal );\n
-  mediump vec3 l = normalize( lightDir );\n
-  mediump vec3 e = normalize( eyePos );\n
-  mediump float intensity = max(dot(n,l), 0.0);\n
-\n
-  const mediump float PI = 3.1415926535897932384626433832795;\n
-  mediump float v = 0.0;\n
-  mediump vec2 c = vTexCoord * uKFactor - uKFactor/2.0;\n
-  v += sin((c.x+uTime));\n
-  v += sin((c.y+uTime)/2.0);\n
-  v += sin((c.x+c.y+uTime)/2.0);\n
-  c += uKFactor/2.0 * vec2(sin(uTime/3.0), cos(uTime/2.0));\n
-  v += sin(sqrt(c.x*c.x+c.y*c.y+1.0)+uTime);\n
-  v = v/2.0;\n
-  mediump vec3 col = vec3(1, sin(PI*v), cos(PI*v));\n
-  gl_FragColor = (texture2D(sTexture, vTexCoord)) * (((col.r+col.g+col.b)/3.0)+1.0+intensity);\n
-}\n
-);
-
-const char* TEX_FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-  uniform lowp vec4 uColor;\n
-  uniform sampler2D sTexture0; \n
-  uniform sampler2D sTexture1; \n
-  uniform mediump vec3 eyePos;\n
-  uniform mediump vec3 lightDir;\n
-  uniform mediump vec2 uScreenSize;\n
-  varying mediump vec3 vNormal;\n
-  varying mediump vec3 vPosition; \n
-  varying mediump vec2 vTexCoord; \n
-  \n
-
-  mediump float rand(mediump vec2 co){\n
-    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);\n
-  }\n
-  \n
-  void main()\n
-{\n
-  mediump vec2 tx = (gl_FragCoord.xy / uScreenSize.xy);\n
-  mediump vec3 n = normalize( vNormal );\n
-  mediump vec3 l = normalize( lightDir );\n
-  mediump vec3 e = normalize( eyePos );\n
-  mediump float factor = gl_FragCoord.y / uScreenSize.y;\n
-  mediump float intensity = max(dot(n,l), 0.0);\n
-  mediump vec2 uv = tx;\n
-  gl_FragColor = ((texture2D(sTexture0, vTexCoord) * factor ) + \n
-                 (texture2D(sTexture1, uv))) * intensity;\n
-}\n
-);
-// clang-format on
 
 struct Model
 {
@@ -335,11 +206,11 @@ void CreateModelsFromGLTF(glTF* gltf, ModelContainer& models)
     // change shader to use texture if material indicates that
     if(mesh->material != 0xffffffff && gltf->GetMaterials()[mesh->material].pbrMetallicRoughness.enabled)
     {
-      models.emplace_back(CreateModel(*gltf, mesh, VERTEX_SHADER, TEXTURED_FRAGMENT_SHADER));
+      models.emplace_back(CreateModel(*gltf, mesh, SHADER_REFLECTION_VERT.data(), SHADER_REFLECTION_TEXTURED_FRAG.data()));
     }
     else
     {
-      models.emplace_back(CreateModel(*gltf, mesh, VERTEX_SHADER, FRAGMENT_SHADER));
+      models.emplace_back(CreateModel(*gltf, mesh, SHADER_REFLECTION_VERT.data(), SHADER_REFLECTION_FRAG.data()));
     }
   }
 }
@@ -500,13 +371,13 @@ private:
     auto planeActor      = mLayer3D.FindChildByName("Plane");
     auto solarActor      = mLayer3D.FindChildByName("solar_root");
     auto backgroundActor = mLayer3D.FindChildByName("background");
-    ReplaceShader(backgroundActor, VERTEX_SHADER, FRAGMENT_SIMPLE_SHADER);
+    ReplaceShader(backgroundActor, SHADER_REFLECTION_VERT.data(), SHADER_REFLECTION_SIMPLE_FRAG.data());
     mCenterActor      = mLayer3D.FindChildByName("center");
     mCenterHorizActor = mLayer3D.FindChildByName("center2");
 
     // Prepare Sun
     auto sun = mLayer3D.FindChildByName("sun");
-    ReplaceShader(sun, VERTEX_SHADER, PLASMA_FRAGMENT_SHADER);
+    ReplaceShader(sun, SHADER_REFLECTION_VERT.data(), SHADER_REFLECTION_PLASMA_FRAG.data());
     mSunTimeUniformIndex    = sun.RegisterProperty("uTime", 0.0f);
     mSunKFactorUniformIndex = sun.RegisterProperty("uKFactor", 0.0f);
 
@@ -515,7 +386,7 @@ private:
 
     // Milkyway
     auto milkyway = mLayer3D.FindChildByName("milkyway");
-    ReplaceShader(milkyway, VERTEX_SHADER, FRAGMENT_SHADER);
+    ReplaceShader(milkyway, SHADER_REFLECTION_VERT.data(), SHADER_REFLECTION_FRAG.data());
 
     auto renderTaskSourceActor = mLayer3D.FindChildByName("RenderTaskSource");
 
@@ -544,7 +415,7 @@ private:
     /**
      * Change shader to textured
      */
-    Shader texShader = CreateShader(VERTEX_SHADER, TEX_FRAGMENT_SHADER);
+    Shader texShader = CreateShader(SHADER_REFLECTION_VERT.data(), SHADER_REFLECTION_TEX_FRAG.data());
     planeActor.RegisterProperty("uScreenSize", Vector2(windowWidth, windowHeight));
     auto renderer   = planeActor.GetRendererAt(0);
     auto textureSet = renderer.GetTextures();

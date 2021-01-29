@@ -27,6 +27,10 @@
 
 // INTERNAL INCLUDES
 #include "shared/utility.h" // DemoHelper::LoadTexture
+#include "generated/metaball-vert.h"
+#include "generated/metaball-frag.h"
+#include "generated/metaball-refraction-frag.h"
+#include "generated/fragment-frag.h"
 
 using namespace Dali;
 
@@ -38,117 +42,6 @@ const float       GRAVITY_Y(-0.09);
 
 // number of metaballs
 constexpr uint32_t METABALL_NUMBER = 6;
-
-// clang-format off
-
-/**
- * Vertex shader for metaballs
- */
-const char* const METABALL_VERTEX_SHADER = DALI_COMPOSE_SHADER (
-    attribute mediump vec2    aPosition;\n
-    attribute mediump vec2    aTexture;\n
-    uniform   mediump mat4    uMvpMatrix;\n
-    uniform   mediump vec3    uSize;\n
-    uniform   lowp    vec4    uColor;\n
-    varying   mediump vec2    vTexCoord;\n
-
-    void main()\n
-    {\n
-      mediump vec4 vertexPosition = vec4(aPosition.x, aPosition.y, 0.0, 1.0);\n
-      vertexPosition = uMvpMatrix * vertexPosition;\n
-      gl_Position = vertexPosition;\n
-      vTexCoord = aTexture;\n
-    }\n
-);
-
-/**
- * Fragment shader for metaballs
- */
-const char* const METABALL_FRAG_SHADER = DALI_COMPOSE_SHADER (
-  precision mediump float;\n
-  varying vec2 vTexCoord;\n
-  uniform vec2 uPositionMetaball;\n
-  uniform vec2 uPositionVar;\n
-  uniform vec2 uGravityVector;\n
-  uniform float uRadius;\n
-  uniform float uRadiusVar;\n
-  uniform float uAspect;\n
-  void main()\n
-  {\n
-    vec2 adjustedCoords = vTexCoord * 2.0 - 1.0;\n
-    vec2 finalMetaballPosition = uPositionMetaball + uGravityVector + uPositionVar;\n
-
-    float distance = (adjustedCoords.x - finalMetaballPosition.x) * (adjustedCoords.x - finalMetaballPosition.x) +
-                     (adjustedCoords.y - finalMetaballPosition.y) * (adjustedCoords.y - finalMetaballPosition.y);\n
-    float finalRadius = uRadius + uRadiusVar;\n
-    float color = finalRadius / sqrt( distance );\n
-    vec2 bordercolor = vec2(0.0,0.0);\n
-    if (vTexCoord.x < 0.1)\n
-    {\n
-      bordercolor.x = (0.1 - vTexCoord.x) * 0.8;\n
-    }\n
-    if (vTexCoord.x > 0.9)\n
-    {\n
-      bordercolor.x = (vTexCoord.x - 0.9) * 0.8;\n
-    }\n
-    if (vTexCoord.y < 0.1)\n
-    {\n
-      bordercolor.y = (0.1 - vTexCoord.y) * 0.8;\n
-    }\n
-    if (vTexCoord.y > (0.9 * uAspect))\n
-    {\n
-      bordercolor.y = (vTexCoord.y - (0.9 * uAspect)) * 0.8;\n
-    }\n
-    float border = (bordercolor.x + bordercolor.y) * 0.5;\n
-    gl_FragColor = vec4(color + border,color + border,color + border,1.0);\n
-  }\n
-);
-
-/**
- * Fragment shader code for metaball and background composition with refraction effect
- */
-const char* const REFRACTION_FRAG_SHADER = DALI_COMPOSE_SHADER (
-  precision mediump float;\n
-  varying vec2 vTexCoord;\n
-  uniform sampler2D sTexture;\n
-  uniform sampler2D sEffect;\n
-  void main()\n
-  {\n
-    vec4 metaColor = texture2D(sEffect, vTexCoord);\n
-    vec2 zoomCoords;\n
-    float bright = 1.0;\n
-    if (metaColor.r > 0.85)\n
-    {\n
-      zoomCoords = ((vTexCoord - 0.5) * 0.95) + 0.5;\n
-    }\n
-    else if (metaColor.r > 0.78)\n
-    {\n
-      float interpolation = mix(0.95, 1.05, (0.85 - metaColor.r) * 50.0);\n
-      zoomCoords = ((vTexCoord - 0.5) * interpolation) + 0.5;\n
-      bright = 1.2;\n
-    }\n
-    else\n
-    {\n
-      zoomCoords = vTexCoord;\n
-    }\n
-
-    gl_FragColor = texture2D(sTexture, zoomCoords) * bright;\n
-  }\n
- );
-
-/**
- * Fragment shader code when there's no effect
- */
-const char* const FRAG_SHADER = DALI_COMPOSE_SHADER (
-  precision mediump float;\n
-  varying vec2 vTexCoord;\n
-  uniform sampler2D sTexture;\n
-  void main()\n
-  {\n
-    gl_FragColor = texture2D(sTexture, vTexCoord);\n
-  }\n
-);
-// clang-format on
 
 /**
  * Metadata for each ball
@@ -405,7 +298,7 @@ void MetaballRefracController::CreateMetaballActors()
   const float aspect = mScreenSize.y / mScreenSize.x;
 
   // Create the renderer for the metaballs
-  Shader   shader           = Shader::New(METABALL_VERTEX_SHADER, METABALL_FRAG_SHADER, Shader::Hint::MODIFIES_GEOMETRY);
+  Shader   shader           = Shader::New(SHADER_METABALL_VERT, SHADER_METABALL_FRAG, Shader::Hint::MODIFIES_GEOMETRY);
   Geometry metaballGeometry = CreateGeometry();
   Renderer renderer         = Renderer::New(metaballGeometry, shader);
   renderer.SetProperty(Renderer::Property::BLEND_MODE, BlendMode::ON);
@@ -471,7 +364,7 @@ void MetaballRefracController::CreateMetaballImage()
 void MetaballRefracController::CreateComposition()
 {
   // Create Refraction shader and renderer
-  mShaderRefraction = Shader::New(METABALL_VERTEX_SHADER, REFRACTION_FRAG_SHADER);
+  mShaderRefraction = Shader::New(SHADER_METABALL_VERT, SHADER_METABALL_REFRACTION_FRAG);
 
   // Create new texture set
   mTextureSetRefraction = TextureSet::New();
@@ -479,7 +372,7 @@ void MetaballRefracController::CreateComposition()
   mTextureSetRefraction.SetTexture(1u, mMetaballFBO.GetColorTexture());
 
   // Create normal shader
-  mShaderNormal = Shader::New(METABALL_VERTEX_SHADER, FRAG_SHADER);
+  mShaderNormal = Shader::New(SHADER_METABALL_VERT, SHADER_FRAGMENT_FRAG);
 
   // Create new texture set
   mTextureSetNormal = TextureSet::New();

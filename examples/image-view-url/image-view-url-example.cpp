@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include <dali-toolkit/devel-api/image-loader/texture-manager.h>
 
 #include "shared/view.h"
+#include "generated/image-view-url-frag.h"
 
 using namespace Dali;
 
@@ -30,22 +31,6 @@ const char* const APPLICATION_TITLE("Image View URL");
 const char* const TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
 const char* const BUTTON_ICON(DEMO_IMAGE_DIR "icon-change.png");
 const char* const BUTTON_ICON_SELECTED(DEMO_IMAGE_DIR "icon-change-selected.png");
-
-const char* FILTER_FRAGMENT_SOURCE =
-  {
-    "precision highp float;\n"
-    "varying mediump vec2 vTexCoord;\n"
-    "uniform sampler2D sTexture;\n"
-    "uniform mediump float uDelta;\n"
-    "void main()\n"
-    "{\n"
-    "  vec4 color = vec4(0.0);\n"
-    "  vec2 texCoord = vTexCoord * 2. - 1.;\n"
-    "  mat2 rotation = mat2(cos(uDelta), -sin(uDelta), sin(uDelta), cos(uDelta));"
-    "  texCoord = (rotation * texCoord) * .5 + .5;\n"
-    "  color += texture2D( sTexture, texCoord );\n"
-    "  gl_FragColor = color;\n"
-    "}\n"};
 
 const char* DELTA_UNIFORM_NAME = "uDelta";
 
@@ -119,7 +104,7 @@ private:
       mActorForInput.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mActorForInput.SetProperty(Actor::Property::SIZE, TARGET_SIZE);
       Property::Map customShader;
-      customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = FILTER_FRAGMENT_SOURCE;
+      customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = Dali::Shader::GetFragmentShaderPrefix() + SHADER_IMAGE_VIEW_URL_FRAG.data();
       Property::Map visualMap;
       visualMap.Insert(Toolkit::Visual::Property::SHADER, customShader);
       mActorForInput.SetProperty(Toolkit::ImageView::Property::IMAGE, visualMap);

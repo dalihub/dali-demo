@@ -22,6 +22,8 @@
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "generated/line-mesh-vert.h"
+#include "generated/line-mesh-frag.h"
 
 #include <sstream>
 
@@ -29,36 +31,6 @@ using namespace Dali;
 
 namespace
 {
-#define MAKE_SHADER(A) #A
-
-const char* VERTEX_SHADER = MAKE_SHADER(
-  attribute mediump vec2 aPosition1;
-  attribute mediump vec2 aPosition2;
-  attribute lowp vec3    aColor;
-  uniform mediump mat4   uMvpMatrix;
-  uniform mediump vec3   uSize;
-  uniform mediump float  uMorphAmount;
-
-  varying lowp vec3 vColor;
-
-  void main() {
-    mediump vec2 morphPosition  = mix(aPosition1, aPosition2, uMorphAmount);
-    mediump vec4 vertexPosition = vec4(morphPosition, 0.0, 1.0);
-    vColor                      = aColor;
-    vertexPosition.xyz *= uSize;
-    vertexPosition = uMvpMatrix * vertexPosition;
-    gl_Position    = vertexPosition;
-  });
-
-const char* FRAGMENT_SHADER = MAKE_SHADER(
-  uniform lowp vec4 uColor;
-  uniform sampler2D sTexture;
-
-  varying lowp vec3 vColor;
-
-  void main() {
-    gl_FragColor = uColor * vec4(vColor, 1.0);
-  });
 
 const unsigned short  INDEX_LINES[]   = {0, 1, 1, 2, 2, 3, 3, 4, 4, 0};
 const unsigned short  INDEX_LOOP[]    = {0, 1, 2, 3, 4};
@@ -177,7 +149,7 @@ public:
       mMeshActor.Reset();
     }
 
-    mShader   = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    mShader   = Shader::New(SHADER_LINE_MESH_VERT, SHADER_LINE_MESH_FRAG);
     mGeometry = CreateGeometry();
     mRenderer = Renderer::New(mGeometry, mShader);
 

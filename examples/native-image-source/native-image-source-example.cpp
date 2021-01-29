@@ -22,6 +22,8 @@
 
 // INTERNAL INCLUDES
 #include "shared/utility.h"
+#include "generated/native-image-source-texture-vert.h"
+#include "generated/native-image-source-texture-frag.h"
 
 using namespace Dali;
 using namespace Toolkit;
@@ -43,33 +45,6 @@ Shader CreateShader(NativeImageInterface& nativeImage)
 {
   static const char* DEFAULT_SAMPLER_TYPENAME = "sampler2D";
 
-  // clang-format off
-  static const char* VERTEX_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
-      attribute mediump vec2 aPosition;\n
-      attribute mediump vec2 aTexCoord;\n
-      uniform mediump mat4 uMvpMatrix;\n
-      uniform mediump vec3 uSize;\n
-      varying mediump vec2 vTexCoord;\n
-      void main()\n
-      {\n
-        vec4 position = vec4(aPosition,0.0,1.0)*vec4(uSize,1.0);\n
-        gl_Position = uMvpMatrix * position;\n
-        vTexCoord = aTexCoord;\n
-      }\n
-  );
-
-  static const char* FRAGMENT_SHADER_TEXTURE = DALI_COMPOSE_SHADER(
-      uniform lowp vec4 uColor;\n
-      uniform sampler2D sTexture;\n
-      varying mediump vec2 vTexCoord;\n
-
-      void main()\n
-      {\n
-        gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;\n
-      }\n
-  );
-  // clang-format on
-
   std::string fragmentShader;
 
   //Get custom fragment shader prefix
@@ -77,11 +52,11 @@ Shader CreateShader(NativeImageInterface& nativeImage)
   if(fragmentPrefix)
   {
     fragmentShader = fragmentPrefix;
-    fragmentShader += FRAGMENT_SHADER_TEXTURE;
+    fragmentShader += SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_FRAG.data();
   }
   else
   {
-    fragmentShader = FRAGMENT_SHADER_TEXTURE;
+    fragmentShader = SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_FRAG.data();
   }
 
   //Get custom sampler type name
@@ -91,7 +66,7 @@ Shader CreateShader(NativeImageInterface& nativeImage)
     fragmentShader.replace(fragmentShader.find(DEFAULT_SAMPLER_TYPENAME), strlen(DEFAULT_SAMPLER_TYPENAME), customSamplerTypename);
   }
 
-  return Shader::New(VERTEX_SHADER_TEXTURE, fragmentShader);
+  return Shader::New(SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_VERT, fragmentShader);
 }
 
 } // namespace

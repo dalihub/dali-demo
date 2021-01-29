@@ -21,37 +21,13 @@
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "generated/mesh-morph-vert.h"
+#include "generated/mesh-morph-frag.h"
 
 using namespace Dali;
 
 namespace
 {
-#define MAKE_SHADER(A) #A
-
-const char* VERTEX_SHADER = MAKE_SHADER(
-  attribute mediump vec2 aInitPos;
-  attribute mediump vec2 aFinalPos;
-  attribute mediump vec3 aColor;
-  uniform mediump mat4   uMvpMatrix;
-  uniform mediump vec3   uSize;
-  uniform mediump float  uDelta;
-  uniform lowp vec4      uColor;
-  varying lowp vec4      vColor;
-
-  void main() {
-    mediump vec4 vertexPosition = vec4(mix(aInitPos, aFinalPos, uDelta), 0.0, 1.0);
-    vertexPosition.xyz *= uSize;
-    vertexPosition = uMvpMatrix * vertexPosition;
-    gl_Position    = vertexPosition;
-    vColor         = vec4(aColor, 0.) * uColor;
-  });
-
-const char* FRAGMENT_SHADER = MAKE_SHADER(
-  varying lowp vec4 vColor;
-
-  void main() {
-    gl_FragColor = vColor;
-  });
 
 Geometry CreateGeometry()
 {
@@ -288,7 +264,7 @@ public:
 
     // The Init signal is received once (only) during the Application lifetime
 
-    mShader   = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    mShader   = Shader::New(SHADER_MESH_MORPH_VERT, SHADER_MESH_MORPH_FRAG);
     mGeometry = CreateGeometry();
     mRenderer = Renderer::New(mGeometry, mShader);
 

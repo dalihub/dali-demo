@@ -18,47 +18,11 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include "generated/rendering-cube-vert.h"
+#include "generated/rendering-cube-frag.h"
+
 using namespace Dali;
 using namespace Toolkit;
-
-namespace
-{
-// clang-format off
-
-/*
- * Vertex shader
- */
-const char* VERTEX_SHADER = DALI_COMPOSE_SHADER(
-attribute mediump vec3 aPosition;\n // DALi shader builtin
-attribute mediump vec3 aColor;\n // DALi shader builtin
-uniform   mediump mat4 uMvpMatrix;\n // DALi shader builtin
-uniform   mediump vec3 uSize;\n // DALi shader builtin
-\n
-varying mediump vec4 vColor;\n
-\n
-void main()\n
-{\n
-  mediump vec4 vertexPosition = vec4(aPosition, 1.0);\n
-  vertexPosition.xyz *= uSize;\n
-  vColor = vec4( aColor, 1.0 );\n
-  gl_Position = uMvpMatrix * vertexPosition;\n
-}\n
-);
-
-/*
- * Fragment shader
- */
-const char* FRAGMENT_SHADER = DALI_COMPOSE_SHADER(
-varying mediump vec4 vColor;\n
-\n
-void main()\n
-{\n
-  gl_FragColor = vColor;\n
-}\n
-);
-// clang-format on
-
-} // namespace
 
 // This example shows how to create a cube with colors on each side
 //
@@ -204,14 +168,14 @@ public:
   }
 
   /**
-   * Creates a shader using inlined variable VERTEX_SHADER and FRAGMENT_SHADER
+   * Creates a shader using inlined variable SHADER_RENDERING_CUBE_VERT and SHADER_RENDERING_CUBE_FRAG
    *
    * Shaders are very basic and all they do is transforming vertices and interpolating
    * input per-vertex color.
    */
   void CreateCubeShader()
   {
-    mShader = Shader::New(VERTEX_SHADER, FRAGMENT_SHADER);
+    mShader = Shader::New(SHADER_RENDERING_CUBE_VERT, SHADER_RENDERING_CUBE_FRAG);
   }
 
   /**

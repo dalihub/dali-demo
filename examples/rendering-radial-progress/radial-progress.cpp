@@ -18,6 +18,11 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include "generated/radial-progress-basic-vert.h"
+#include "generated/radial-progress-basic-frag.h"
+#include "generated/radial-progress-textured-vert.h"
+#include "generated/radial-progress-textured-frag.h"
+
 using namespace Dali;
 
 namespace // unnamed namespace
@@ -29,77 +34,6 @@ const unsigned int TEXTURE_HEIGHT = 280;
 const int   NUMBER_OF_SIDES(64);     // number of sides of the polygon used as a stencil
 const float INITIAL_DELAY(2.0f);     // initial delay before showing the circle
 const float PROGRESS_DURATION(0.5f); // number of seconds to fully show the circle
-
-// clang-format off
-
-/*
- * Vertex shader for textured quad
- */
-const char* VERTEX_SHADER_TEXTURED = DALI_COMPOSE_SHADER(
-attribute mediump vec2 aPosition;\n
-uniform   mediump mat4 uMvpMatrix;\n // DALi shader builtin
-uniform   mediump vec3 uSize;\n // DALi shader builtin
-\n
-varying mediump vec2 vTexCoord;\n
-void main()\n
-{\n
-  mediump vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);\n
-  vertexPosition.xyz *= uSize;\n
-  vTexCoord = vec2(1.0, 1.0)*(aPosition + vec2(0.5) );\n
-  gl_Position = uMvpMatrix * vertexPosition;\n
-}\n
-);
-
-/*
- * Fragment shaderfor textured quad
- */
-const char* FRAGMENT_SHADER_TEXTURED = DALI_COMPOSE_SHADER(
-uniform sampler2D uTexture;\n
-\n
-varying mediump vec2 vTexCoord;\n
-void main()\n
-{\n
-  mediump vec4 texColor = texture2D( uTexture, vTexCoord );\n
-  gl_FragColor = texColor;\n
-}\n
-);
-
-/*
- * Vertex shader for polygon
- */
-const char* VERTEX_SHADER_BASIC = DALI_COMPOSE_SHADER(
-attribute mediump vec3 aPosition;\n
-uniform   mediump mat4 uMvpMatrix;\n // DALi shader builtin
-uniform   mediump vec3 uSize;\n // DALi shader builtin
-uniform   mediump float uProgress;\n
-\n
-varying mediump vec2 vTexCoord;\n
-void main()\n
-{\n
-  mediump vec4 vertexPosition = vec4(aPosition.x, aPosition.y, 0.0, 1.0);\n
-\n
-  float index = aPosition.z;\n
-  if( uProgress < index )\n
-  {\n
-    vertexPosition = vec4(0.0, 0.0, 0.0, 1.0);\n
-  }\n
-\n
-  vertexPosition.xyz *= uSize;\n
-  gl_Position = uMvpMatrix * vertexPosition;\n
-}\n
-);
-
-/*
- * Fragment shader for polygon
- */
-const char* FRAGMENT_SHADER_BASIC = DALI_COMPOSE_SHADER(
-
-void main()\n
-{\n
-  gl_FragColor = vec4( 1.0, 1.0, 1.0, 1.0 );\n
-}\n
-);
-// clang-format on
 
 } // unnamed namespace
 
@@ -195,7 +129,7 @@ public:
     geometry.AddVertexBuffer(vertexBuffer);
     geometry.SetType(Geometry::TRIANGLE_FAN);
 
-    Shader   shader   = Shader::New(VERTEX_SHADER_BASIC, FRAGMENT_SHADER_BASIC);
+    Shader   shader   = Shader::New(SHADER_RADIAL_PROGRESS_BASIC_VERT, SHADER_RADIAL_PROGRESS_BASIC_FRAG);
     Renderer renderer = Renderer::New(geometry, shader);
 
     // Setting stencil data. We don't want to render to the color buffer so
@@ -233,7 +167,7 @@ public:
   {
     // Create shader & geometry needed by Renderer
 
-    Shader shader = Shader::New(VERTEX_SHADER_TEXTURED, FRAGMENT_SHADER_TEXTURED);
+    Shader shader = Shader::New(SHADER_RADIAL_PROGRESS_TEXTURED_VERT, SHADER_RADIAL_PROGRESS_TEXTURED_FRAG);
 
     Property::Map vertexFormat;
     vertexFormat["aPosition"] = Property::VECTOR2;

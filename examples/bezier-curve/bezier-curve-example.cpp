@@ -19,6 +19,8 @@
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
 #include "shared/view.h"
+#include "generated/bezier-curve-vert.h"
+#include "generated/bezier-curve-frag.h"
 
 #include <sstream>
 
@@ -41,28 +43,6 @@ const float       ANIM_LEFT_FACTOR(0.2f);
 const float       ANIM_RIGHT_FACTOR(0.8f);
 const int         AXIS_LABEL_POINT_SIZE(7);
 const float       AXIS_LINE_SIZE(1.0f);
-
-// clang-format off
-const char* CURVE_VERTEX_SHADER = DALI_COMPOSE_SHADER
-  (
-    attribute mediump vec2 aPosition;
-    uniform mediump mat4 uMvpMatrix;
-    uniform vec3 uSize;
-    void main()
-    {
-      gl_Position = uMvpMatrix * vec4(aPosition*uSize.xy, 0.0, 1.0);
-    }
-   );
-
-const char* CURVE_FRAGMENT_SHADER = DALI_COMPOSE_SHADER
-  (
-    uniform lowp vec4 uColor;
-    void main()
-    {
-      gl_FragColor = vec4(0.0,0.0,0.0,1.0);
-    }
-   );
-// clang-format on
 
 inline float Clamp(float v, float min, float max)
 {
@@ -294,7 +274,7 @@ public:
     mCurve.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mCurve.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
-    Shader shader = Shader::New(CURVE_VERTEX_SHADER, CURVE_FRAGMENT_SHADER);
+    Shader shader = Shader::New(SHADER_BEZIER_CURVE_VERT, SHADER_BEZIER_CURVE_FRAG);
 
     Property::Map curveVertexFormat;
     curveVertexFormat["aPosition"] = Property::VECTOR2;
@@ -338,7 +318,7 @@ public:
     line.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     line.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
-    Shader   shader   = Shader::New(CURVE_VERTEX_SHADER, CURVE_FRAGMENT_SHADER);
+    Shader   shader   = Shader::New(SHADER_BEZIER_CURVE_VERT, SHADER_BEZIER_CURVE_FRAG);
     Geometry geometry = Geometry::New();
     geometry.AddVertexBuffer(vertexBuffer);
     geometry.SetType(Geometry::LINE_STRIP);
