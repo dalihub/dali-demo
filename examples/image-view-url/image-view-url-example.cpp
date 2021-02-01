@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,7 +104,7 @@ private:
       mActorForInput.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mActorForInput.SetProperty(Actor::Property::SIZE, TARGET_SIZE);
       Property::Map customShader;
-      customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = SHADER_IMAGE_VIEW_URL_FRAG.data();
+      customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = Dali::Shader::GetFragmentShaderPrefix() + SHADER_IMAGE_VIEW_URL_FRAG.data();
       Property::Map visualMap;
       visualMap.Insert(Toolkit::Visual::Property::SHADER, customShader);
       mActorForInput.SetProperty(Toolkit::ImageView::Property::IMAGE, visualMap);

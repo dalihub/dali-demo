@@ -1,6 +1,5 @@
-// Shader for simple textured geometry.
-
 #version 300 es
+// Shader for simple textured geometry.
 
 precision mediump float;
 uniform mat4 uMvpMatrix;//by DALi

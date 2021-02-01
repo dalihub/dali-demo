@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,7 +82,7 @@ void ImageChannelControl::SetImage(const std::string& url)
 
   Property::Map properties;
   Property::Map shader;
-  shader[Dali::Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = SHADER_IMAGE_CHANNEL_CONTROL_FRAG.data();
+  shader[Dali::Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = Dali::Shader::GetFragmentShaderPrefix() + SHADER_IMAGE_CHANNEL_CONTROL_FRAG.data();
   properties[Dali::Toolkit::Visual::Property::TYPE]                = Dali::Toolkit::Visual::IMAGE;
   properties[Dali::Toolkit::Visual::Property::SHADER]              = shader;
   properties[Dali::Toolkit::ImageVisual::Property::URL]            = url;
