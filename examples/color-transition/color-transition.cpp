@@ -14,10 +14,10 @@
  * limitations under the License.
  *
  */
-#include "utils.h"
 #include "color-transition-controller.h"
-#include "dali/dali.h"
 #include "dali-toolkit/dali-toolkit.h"
+#include "dali/dali.h"
+#include "utils.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -26,7 +26,7 @@ namespace
 {
 const float TRANSITION_DURATION = 1.f;
 
-const Vector3 INITIAL_COLOR{ 1.f, 1.f, .25f };
+const Vector3 INITIAL_COLOR{1.f, 1.f, .25f};
 
 const char* const FLOW_MAPS[] = {
   "circular",
@@ -38,15 +38,13 @@ const char* const FLOW_MAPS[] = {
   "radial",
   "swipe",
   "bubbles",
-  "image"
-};
+  "image"};
 
 Texture LoadTexture(const std::string& path)
 {
   PixelData pixelData = SyncImageLoader::Load(path);
 
-  Texture texture = Texture::New(TextureType::TEXTURE_2D, pixelData.GetPixelFormat(),
-    pixelData.GetWidth(), pixelData.GetHeight());
+  Texture texture = Texture::New(TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight());
   texture.Upload(pixelData);
   return texture;
 }
@@ -64,7 +62,7 @@ TextLabel MakeTextLabel(const char* text, const Vector4& color, float pointSize,
   return tl;
 }
 
-}
+} // namespace
 
 /**
  * Demonstrates colour transition using flow maps and uv rotation / scaling.
@@ -81,7 +79,7 @@ TextLabel MakeTextLabel(const char* text, const Vector4& color, float pointSize,
  * - Double-tap outside the middle of screen: transition using one of the
  *   effects (flow maps) mapped to the given segment of the screen;
  */
-class ColorTransition: public ConnectionTracker
+class ColorTransition : public ConnectionTracker
 {
 public:
   ColorTransition(Application& app)
@@ -100,8 +98,8 @@ private:
 
   void OnInit(Application& app)
   {
-    auto window = mApp.GetWindow();
-    auto windowSize = Vector2{ window.GetSize() };
+    auto window     = mApp.GetWindow();
+    auto windowSize = Vector2{window.GetSize()};
 
     // create content root
     Actor content = Actor::New();
@@ -132,9 +130,9 @@ private:
     window.Add(mainRoot);
     mMainRoot = mainRoot;
 
-    auto renderTasks = window.GetRenderTaskList();
+    auto renderTasks     = window.GetRenderTaskList();
     auto weakRenderTasks = WeakHandle<RenderTaskList>(renderTasks);
-    auto controller = new ColorTransitionController(weakRenderTasks, content, window.GetRenderTaskList(), INITIAL_COLOR);
+    auto controller      = new ColorTransitionController(weakRenderTasks, content, window.GetRenderTaskList(), INITIAL_COLOR);
     mController.reset(controller);
     mainRoot.Add(mController->GetComposite());
 
@@ -167,9 +165,9 @@ private:
 
   void OnKeyEvent(const KeyEvent& event)
   {
-    if (event.GetState() == KeyEvent::DOWN)
+    if(event.GetState() == KeyEvent::DOWN)
     {
-      if (IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApp.Quit();
       }
@@ -178,17 +176,17 @@ private:
 
   void OnDoubleTap(Actor /*actor*/, const TapGesture& tap)
   {
-    auto window = mApp.GetWindow();
-    auto windowSize = Vector2{ window.GetSize() };
-    Vector2 clip = tap.GetScreenPoint() / windowSize - Vector2::ONE * .5f; // [-.5, .5]
-    if (clip.Length() < .333f * .5f)
+    auto    window     = mApp.GetWindow();
+    auto    windowSize = Vector2{window.GetSize()};
+    Vector2 clip       = tap.GetScreenPoint() / windowSize - Vector2::ONE * .5f; // [-.5, .5]
+    if(clip.Length() < .333f * .5f)
     {
       LoadFlowMap(FLOW_MAPS[rand() % std::extent<decltype(FLOW_MAPS)>::value]);
     }
     else
     {
       float theta = fmodf((atan2(clip.y, clip.x) + M_PI) / (M_PI * 2.) + .75f, 1.f);
-      int i = std::extent<decltype(FLOW_MAPS)>::value * theta;
+      int   i     = std::extent<decltype(FLOW_MAPS)>::value * theta;
 
       LoadFlowMap(FLOW_MAPS[i]);
     }
@@ -204,11 +202,11 @@ private:
   void LoadFlowMap(const char* const name)
   {
     DALI_ASSERT_DEBUG(name && "Flow map name must be given");
-    if (mLastFlowMap != name)
+    if(mLastFlowMap != name)
     {
-      std::string flowMapDir = Application::GetResourcePath() + "images/color-transition/";
+      std::string flowMapDir  = Application::GetResourcePath() + "images/color-transition/";
       std::string flowMapPath = flowMapDir + name + ".png";
-      auto flowMap = LoadTexture(flowMapPath);
+      auto        flowMap     = LoadTexture(flowMapPath);
       DALI_ASSERT_DEBUG(flowMap && "Failed to load flow map.");
       mController->SetFlowMap(flowMap);
     }
@@ -216,8 +214,7 @@ private:
 
   void RandomizeUvTransform()
   {
-    mController->SetUvTransform((rand() % 12) * M_PI / 12., 1.f,
-      (rand() % 12) * M_PI / 12., .5f);
+    mController->SetUvTransform((rand() % 12) * M_PI / 12., 1.f, (rand() % 12) * M_PI / 12., .5f);
   }
 
   void OnTransitionFinished()
@@ -241,7 +238,8 @@ int DALI_EXPORT_API main(int argc, char** argv)
 {
   auto app = Application::New(&argc, &argv
 #ifdef WIN32
-    , ".//dali-toolkit-default-theme.json"
+                              ,
+                              ".//dali-toolkit-default-theme.json"
 #endif
   );
   ColorTransition ct(app);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,38 +16,37 @@
  */
 
 // INTERNAL INCLUDES
-#include "particle-view.h"
-#include "float-rand.h"
-#include "particle-field.h"
-#include "utils.h"
-#include "dali/devel-api/adaptor-framework/tilt-sensor.h"
-#include "dali/public-api/adaptor-framework/application.h"
-#include "dali/public-api/adaptor-framework/key.h"
-#include "dali/public-api/actors/camera-actor.h"
-#include "dali/public-api/actors/layer.h"
-#include "dali/public-api/events/tap-gesture-detector.h"
-#include "dali/public-api/events/pan-gesture-detector.h"
-#include "dali/public-api/events/touch-event.h"
-#include "dali/public-api/render-tasks/render-task-list.h"
-#include "dali/public-api/render-tasks/render-task.h"
-#include "dali/public-api/object/property-index-ranges.h"
 #include <fstream>
 #include <iostream>
-#include <numeric>
 #include <list>
 #include <memory>
+#include <numeric>
 #include <random>
+#include "dali/devel-api/adaptor-framework/tilt-sensor.h"
+#include "dali/public-api/actors/camera-actor.h"
+#include "dali/public-api/actors/layer.h"
+#include "dali/public-api/adaptor-framework/application.h"
+#include "dali/public-api/adaptor-framework/key.h"
+#include "dali/public-api/events/pan-gesture-detector.h"
+#include "dali/public-api/events/tap-gesture-detector.h"
+#include "dali/public-api/events/touch-event.h"
+#include "dali/public-api/object/property-index-ranges.h"
+#include "dali/public-api/render-tasks/render-task-list.h"
+#include "dali/public-api/render-tasks/render-task.h"
+#include "float-rand.h"
+#include "particle-field.h"
+#include "particle-view.h"
+#include "utils.h"
 
 using namespace Dali;
 
 namespace
 {
-
-const float PARTICLE_ALPHA = .75;
+const float PARTICLE_ALPHA       = .75;
 const float ALPHA_TEST_REF_VALUE = .0625;
 
-const float NEAR_FADE = 0.04;	// normalized depth
-const float FAR_FADE = 0.8;	// normalized depth
+const float NEAR_FADE = 0.04; // normalized depth
+const float FAR_FADE  = 0.8;  // normalized depth
 
 const ParticleField PARTICLE_FIELD = {
   200.f,                        // particle size
@@ -63,23 +62,23 @@ const ParticleField PARTICLE_FIELD = {
   .333                          // twinkle opacity weight
 };
 
-const float WORLD_ANGULAR_VELOCITY = .08; // radians per seconds
-const float WORLD_LINEAR_VELOCITY = -500; // units along z
+const float WORLD_ANGULAR_VELOCITY = .08;  // radians per seconds
+const float WORLD_LINEAR_VELOCITY  = -500; // units along z
 
-const float SCATTER_RADIUS = 450.0f;
-const float SCATTER_AMOUNT = 180.0f;
+const float SCATTER_RADIUS       = 450.0f;
+const float SCATTER_AMOUNT       = 180.0f;
 const float SCATTER_DURATION_OUT = .8f;
-const float SCATTER_DURATION_IN = 1.5f;
+const float SCATTER_DURATION_IN  = 1.5f;
 
-const float FADE_DURATION = 1.2f;
+const float FADE_DURATION            = 1.2f;
 const float FADEOUT_SPEED_MULTIPLIER = 4.f; // speed multiplier upon fading out.
 
 const float FOCAL_LENGTH = 0.5f; // normalized depth value where particles appear sharp.
-const float APERTURE = 2.2f; // distance scale - the higher it is, the quicker the particles get blurred out moving away from the focal length.
+const float APERTURE     = 2.2f; // distance scale - the higher it is, the quicker the particles get blurred out moving away from the focal length.
 
-const ColorRange DEFAULT_COLOR_RANGE { Vector3(0., 48. / 255., 1.), Vector3(0., 216. / 255., 1.) };
+const ColorRange DEFAULT_COLOR_RANGE{Vector3(0., 48. / 255., 1.), Vector3(0., 216. / 255., 1.)};
 
-const float TILT_SCALE = 0.2;
+const float TILT_SCALE         = 0.2;
 const float TILT_RANGE_DEGREES = 30.f;
 
 FloatRand sFloatRand;
@@ -95,7 +94,7 @@ public:
   void Add(Dali::Vector2 tilt)
   {
     mTiltSamples[mIdxNextSample] = tilt;
-    mIdxNextSample = (mIdxNextSample + 1) % FILTER_SIZE;
+    mIdxNextSample               = (mIdxNextSample + 1) % FILTER_SIZE;
   }
 
   Dali::Vector2 Filter() const
@@ -104,17 +103,20 @@ public:
   }
 
 private:
-  enum { FILTER_SIZE = 8u };
+  enum
+  {
+    FILTER_SIZE = 8u
+  };
 
   Dali::Vector2 mTiltSamples[FILTER_SIZE];
-  size_t mIdxNextSample = 0;
+  size_t        mIdxNextSample = 0;
 };
 
 class ParticlesExample : public ConnectionTracker
 {
 public:
-  ParticlesExample( Application& app )
-  : mApp( app )
+  ParticlesExample(Application& app)
+  : mApp(app)
   {
     mApp.InitSignal().Connect(this, &ParticlesExample::OnInit);
     mApp.TerminateSignal().Connect(this, &ParticlesExample::OnTerminate);
@@ -127,8 +129,8 @@ private:
 
   CameraActor mCamera;
 
-  Actor mWorld;
-  Vector2 mAngularPosition;
+  Actor      mWorld;
+  Vector2    mAngularPosition;
   ColorRange mColors;
 
   std::unique_ptr<ParticleView> mParticles;
@@ -141,20 +143,20 @@ private:
 
   PanGestureDetector mPanGesture;
 
-  void OnInit( Application& application )
+  void OnInit(Application& application)
   {
-    Window window = application.GetWindow();
-    auto rootLayer = window.GetRootLayer();
+    Window window    = application.GetWindow();
+    auto   rootLayer = window.GetRootLayer();
     rootLayer.SetProperty(Layer::Property::BEHAVIOR, Layer::Behavior::LAYER_3D);
 
-    window.KeyEventSignal().Connect( this, &ParticlesExample::OnKeyEvent );
-    window.GetRootLayer().TouchedSignal().Connect( this, &ParticlesExample::OnTouched );
+    window.KeyEventSignal().Connect(this, &ParticlesExample::OnKeyEvent);
+    window.GetRootLayer().TouchedSignal().Connect(this, &ParticlesExample::OnTouched);
 
     auto tiltSensor = TiltSensor::Get();
-    if ( tiltSensor.Start() )
+    if(tiltSensor.Start())
     {
       // Get notifications when the device is tilted
-      tiltSensor.TiltedSignal().Connect( this, &ParticlesExample::OnTilted );
+      tiltSensor.TiltedSignal().Connect(this, &ParticlesExample::OnTilted);
     }
     else
     {
@@ -164,10 +166,10 @@ private:
     }
 
     // Get camera
-    RenderTaskList tasks = window.GetRenderTaskList();
-    RenderTask mainPass = tasks.GetTask(0);
-    CameraActor camera = mainPass.GetCameraActor();
-    mCamera = camera;
+    RenderTaskList tasks    = window.GetRenderTaskList();
+    RenderTask     mainPass = tasks.GetTask(0);
+    CameraActor    camera   = mainPass.GetCameraActor();
+    mCamera                 = camera;
 
     // Create world - particles and clock are added to it; this is what we apply tilt to.
     auto world = CreateActor();
@@ -205,23 +207,23 @@ private:
 
   void OnKeyEvent(const KeyEvent& event)
   {
-    if ( event.GetState() == KeyEvent::UP)	// single keystrokes
+    if(event.GetState() == KeyEvent::UP) // single keystrokes
     {
-      if( IsKey( event, DALI_KEY_ESCAPE ) || IsKey( event, DALI_KEY_BACK ) )
+      if(IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK))
       {
         mApp.Quit();
       }
     }
   }
 
-  bool OnTouched( Actor a, const TouchEvent& event )
+  bool OnTouched(Actor a, const TouchEvent& event)
   {
-    if (event.GetPointCount() > 0)
+    if(event.GetPointCount() > 0)
     {
       auto screenPos = event.GetScreenPosition(0);
-      switch (event.GetState(0))
+      switch(event.GetState(0))
       {
-      case PointState::STARTED:
+        case PointState::STARTED:
         {
           mParticles->Scatter(SCATTER_RADIUS, SCATTER_AMOUNT, SCATTER_DURATION_OUT, SCATTER_DURATION_IN);
 
@@ -230,8 +232,8 @@ private:
         }
         break;
 
-      default:
-        break;
+        default:
+          break;
       }
     }
 
@@ -240,7 +242,7 @@ private:
 
   void OnDoubleTap(Actor /*actor*/, const TapGesture& /*gesture*/)
   {
-    if (!mExpiringParticles)
+    if(!mExpiringParticles)
     {
       mColors.rgb0 = Vector3::ONE - mColors.rgb1;
       mColors.rgb1 = FromHueSaturationLightness(Vector3(sFloatRand() * 360.f, sFloatRand() * .5f + .5f, sFloatRand() * .25 + .75f));
@@ -251,33 +253,33 @@ private:
 
   void OnPan(Actor actor, const PanGesture& gesture)
   {
-    auto tilt = gesture.GetDisplacement() / Vector2(mApp.GetWindow().GetSize()) * TILT_SCALE;
+    auto       tilt = gesture.GetDisplacement() / Vector2(mApp.GetWindow().GetSize()) * TILT_SCALE;
     Quaternion q(Radian(-tilt.y), Radian(tilt.x), Radian(0.f));
     Quaternion q0 = mWorld.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
     mWorld.SetProperty(Actor::Property::ORIENTATION, q * q0);
   }
 
-  void OnTilted( const TiltSensor& sensor)
+  void OnTilted(const TiltSensor& sensor)
   {
     mTiltFilter.Add(Vector2(sensor.GetPitch(), sensor.GetRoll()));
-    Vector2 tilt = mTiltFilter.Filter() * TILT_RANGE_DEGREES;
+    Vector2    tilt = mTiltFilter.Filter() * TILT_RANGE_DEGREES;
     Quaternion q(Radian(Degree(tilt.x)), Radian(Degree(tilt.y)), Radian(0.f));
     mWorld.SetProperty(Actor::Property::ORIENTATION, q);
   }
 
   Vector3 GetViewRay(const Vector2& screenPos)
   {
-    Vector2 screenSize = mApp.GetWindow().GetSize();
+    Vector2 screenSize    = mApp.GetWindow().GetSize();
     Vector2 normScreenPos = (screenPos / screenSize) * 2.f - Vector2::ONE;
 
-    const float fov = mCamera.GetProperty(CameraActor::Property::FIELD_OF_VIEW).Get<float>();
+    const float fov    = mCamera.GetProperty(CameraActor::Property::FIELD_OF_VIEW).Get<float>();
     const float tanFov = std::tan(fov);
 
     const float zNear = mCamera.GetProperty(CameraActor::Property::NEAR_PLANE_DISTANCE).Get<float>();
     const float hProj = zNear * tanFov;
 
     const float aspectRatio = mCamera.GetProperty(CameraActor::Property::ASPECT_RATIO).Get<float>();
-    const float wProj = hProj * aspectRatio;
+    const float wProj       = hProj * aspectRatio;
 
     // Get camera orientation for view space ray casting. Assume:
     // - this to be world space, i.e. no parent transforms;
@@ -287,7 +289,7 @@ private:
     Matrix worldCamera;
     worldCamera.SetTransformComponents(Vector3::ONE, cameraOrientation, Vector3::ZERO);
 
-    float* data = worldCamera.AsFloat();
+    float*  data = worldCamera.AsFloat();
     Vector3 xWorldCamera(data[0], data[4], data[8]);
     xWorldCamera *= wProj * normScreenPos.x / xWorldCamera.Length();
 
@@ -303,7 +305,7 @@ private:
 
   void TriggerColorTransition(const ColorRange& range)
   {
-    if (mParticles)
+    if(mParticles)
     {
       mExpiringParticles = std::move(mParticles);
 
@@ -328,12 +330,12 @@ private:
   }
 };
 
-} // nonamespace
+} // namespace
 
-int DALI_EXPORT_API main( int argc, char **argv )
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New( &argc, &argv, DEMO_THEME_PATH );
-  ParticlesExample example( application);
+  Application      application = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  ParticlesExample example(application);
   application.MainLoop();
   return 0;
 }

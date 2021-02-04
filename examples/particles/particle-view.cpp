@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  *
  */
 #include "particle-view.h"
-#include "utils.h"
 #include "dali/public-api/animation/constraints.h"
+#include "utils.h"
 
-#include "generated/particle-view-vert.h"
 #include "generated/particle-view-frag.h"
-#include "generated/particle-view-simple-vert.h"
 #include "generated/particle-view-simple-frag.h"
+#include "generated/particle-view-simple-vert.h"
+#include "generated/particle-view-vert.h"
 
 //#define ENABLE_DEBUG_VOLUME
 
@@ -31,7 +31,6 @@ using namespace Dali;
 
 namespace
 {
-
 const uint32_t POPULATION_GRANULARITY = 128;
 
 uint32_t GetSkipValue(uint32_t count, uint32_t prime)
@@ -40,19 +39,17 @@ uint32_t GetSkipValue(uint32_t count, uint32_t prime)
   do
   {
     skip = (rand() % prime) * count * count + (rand() % prime) * count + (rand() % prime);
-  }
-  while (skip % prime == 0);
+  } while(skip % prime == 0);
   return skip;
 }
 
-}
+} // namespace
 
-ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::CameraActor camera,
-  Dali::Geometry particleGeom)
+ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::CameraActor camera, Dali::Geometry particleGeom)
 : mWorld(world),
   mParticleBoxSize(field.mBoxSize)
 {
-  if (!particleGeom)
+  if(!particleGeom)
   {
     // create particles
     particleGeom = field.MakeGeometry();
@@ -61,8 +58,8 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
   // create shader
   Shader particleShader = Shader::New(SHADER_PARTICLE_VIEW_VERT, SHADER_PARTICLE_VIEW_FRAG, Shader::Hint::MODIFIES_GEOMETRY);
 
-  float zNear = camera.GetNearClippingPlane();
-  float zFar = camera.GetFarClippingPlane();
+  float         zNear = camera.GetNearClippingPlane();
+  float         zFar  = camera.GetFarClippingPlane();
   const Vector2 depthRange(zNear, 1.f / (zFar - zNear));
   particleShader.RegisterProperty("uDepthRange", depthRange);
 
@@ -70,16 +67,16 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
   particleShader.RegisterProperty("uTwinkleSizeScale", field.mTwinkleSizeScale);
   particleShader.RegisterProperty("uTwinkleOpacityWeight", field.mTwinkleOpacityWeight);
 
-  mPropPopulation = particleShader.RegisterProperty("uPopulation", 1.f);
-  mPropFocalLength = particleShader.RegisterProperty("uFocalLength", .5f);
-  mPropAperture = particleShader.RegisterProperty("uAperture", 8.f);
+  mPropPopulation        = particleShader.RegisterProperty("uPopulation", 1.f);
+  mPropFocalLength       = particleShader.RegisterProperty("uFocalLength", .5f);
+  mPropAperture          = particleShader.RegisterProperty("uAperture", 8.f);
   mPropAlphaTestRefValue = particleShader.RegisterProperty("uAlphaTestRefValue", 0.f);
-  mPropFadeRange = particleShader.RegisterProperty("uFadeRange", Vector2(0.f, 1.f));
+  mPropFadeRange         = particleShader.RegisterProperty("uFadeRange", Vector2(0.f, 1.f));
 
   // scatter variables
-  char nameBuffer[64];
+  char  nameBuffer[64];
   char* writep = nameBuffer + snprintf(nameBuffer, sizeof(nameBuffer), "uScatter[");
-  for (uint32_t i = 0; i < std::extent<decltype(mScatterProps)>::value; ++i)
+  for(uint32_t i = 0; i < std::extent<decltype(mScatterProps)>::value; ++i)
   {
     char* writep2 = writep + snprintf(writep, sizeof(nameBuffer) - std::distance(nameBuffer, writep), "%d].", i);
 
@@ -97,18 +94,18 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
   // Our particle mesh is sorted in Z; changing the population should remove
   // particles "randomly", not from one end.
   // Algorithm described in Mike McShaffry & al: Game Coding Complete.
-  const uint32_t prime = 131;	// next prime after POPULATION_GRANULARITY
-  const uint32_t skip = GetSkipValue(POPULATION_GRANULARITY, prime);
-  uint32_t next = 0;
+  const uint32_t prime = 131; // next prime after POPULATION_GRANULARITY
+  const uint32_t skip  = GetSkipValue(POPULATION_GRANULARITY, prime);
+  uint32_t       next  = 0;
 
   writep = nameBuffer + snprintf(nameBuffer, sizeof(nameBuffer), "uOrderLookUp[");
-  for (uint32_t i = 0; i < POPULATION_GRANULARITY; ++i)
+  for(uint32_t i = 0; i < POPULATION_GRANULARITY; ++i)
   {
-    do {
+    do
+    {
       next += skip;
       next %= prime;
-    }
-    while (next == 0 || next > POPULATION_GRANULARITY);
+    } while(next == 0 || next > POPULATION_GRANULARITY);
 
     snprintf(writep, sizeof(nameBuffer) - std::distance(nameBuffer, writep), "%d]", i);
     particleShader.RegisterProperty(nameBuffer, float(next - 1));
@@ -124,7 +121,7 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
 
   mParticleShader = particleShader;
 
-  auto renderer = CreateRenderer(TextureSet::New(), particleGeom, particleShader, OPTION_BLEND);
+  auto renderer        = CreateRenderer(TextureSet::New(), particleGeom, particleShader, OPTION_BLEND);
   auto masterParticles = CreateActor();
   masterParticles.SetProperty(Actor::Property::SIZE, field.mBoxSize);
   masterParticles.SetProperty(Actor::Property::VISIBLE, true);
@@ -134,7 +131,7 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
 
 #ifdef ENABLE_DEBUG_VOLUME
   Geometry cubeGeom = CreateCuboidWireframeGeometry();
-  renderer = CreateRenderer(renderer.GetTextures(), cubeGeom, Shader::New(SHADER_PARTICLE_VIEW_SIMPLE_VERT, SHADER_PARTICLE_VIEW_SIMPLE_FRAG));
+  renderer          = CreateRenderer(renderer.GetTextures(), cubeGeom, Shader::New(SHADER_PARTICLE_VIEW_SIMPLE_VERT, SHADER_PARTICLE_VIEW_SIMPLE_FRAG));
   masterParticles.AddRenderer(renderer);
 #endif
 
@@ -147,19 +144,19 @@ ParticleView::~ParticleView()
   UnparentAndReset(mMasterParticles);
   UnparentAndReset(mSlaveParticles);
 
-  for (auto anim: { mAngularAnim, mLinearAnim })
+  for(auto anim : {mAngularAnim, mLinearAnim})
   {
-    if (anim)
+    if(anim)
     {
       anim.Stop();
       anim.Reset();
     }
   }
 
-  for (auto& s: mScatterProps)
+  for(auto& s : mScatterProps)
   {
     auto& anim = s.mAnim;
-    if (anim)
+    if(anim)
     {
       anim.Stop();
       anim.Reset();
@@ -204,23 +201,26 @@ void ParticleView::SetFadeRange(float near, float far)
 
 void ParticleView::SetAngularVelocity(float v)
 {
-  if (mAngularAnim)
+  if(mAngularAnim)
   {
     mAngularAnim.Stop();
     mAngularAnim.Clear();
     mAngularAnim.Reset();
   }
 
-  if (v * v > .0f)
+  if(v * v > .0f)
   {
     float sign = Sign(v);
-    auto anim = Animation::New(std::abs(2. * M_PI / v));
+    auto  anim = Animation::New(std::abs(2. * M_PI / v));
     anim.AnimateTo(Property(mMasterParticles, Actor::Property::ORIENTATION),
-      Quaternion(Radian(Degree(120. * sign)), Vector3::ZAXIS), TimePeriod(0., anim.GetDuration() / 3.));
+                   Quaternion(Radian(Degree(120. * sign)), Vector3::ZAXIS),
+                   TimePeriod(0., anim.GetDuration() / 3.));
     anim.AnimateTo(Property(mMasterParticles, Actor::Property::ORIENTATION),
-      Quaternion(Radian(Degree(240. * sign)), Vector3::ZAXIS), TimePeriod(anim.GetDuration() / 3., anim.GetDuration() / 3.));
+                   Quaternion(Radian(Degree(240. * sign)), Vector3::ZAXIS),
+                   TimePeriod(anim.GetDuration() / 3., anim.GetDuration() / 3.));
     anim.AnimateTo(Property(mMasterParticles, Actor::Property::ORIENTATION),
-      Quaternion(Radian(Degree(360. * sign)), Vector3::ZAXIS), TimePeriod(2. * anim.GetDuration() / 3., anim.GetDuration() / 3.));
+                   Quaternion(Radian(Degree(360. * sign)), Vector3::ZAXIS),
+                   TimePeriod(2. * anim.GetDuration() / 3., anim.GetDuration() / 3.));
     anim.SetLoopCount(0);
     anim.Play();
 
@@ -230,7 +230,7 @@ void ParticleView::SetAngularVelocity(float v)
 
 void ParticleView::SetLinearVelocity(float v)
 {
-  if (mLinearAnim)
+  if(mLinearAnim)
   {
     mLinearAnim.Stop();
     mLinearAnim.Clear();
@@ -238,13 +238,13 @@ void ParticleView::SetLinearVelocity(float v)
   }
   UnparentAndReset(mSlaveParticles);
 
-  if (v * v > .0f)
+  if(v * v > .0f)
   {
-    float sign = Sign(v);
+    float sign         = Sign(v);
     float directedSize = sign * mParticleBoxSize.z;
 
-    Actor slaveParticles = CloneActor(mMasterParticles);
-    Vector3 position = mMasterParticles.GetCurrentProperty(Actor::Property::POSITION).Get<Vector3>();
+    Actor   slaveParticles = CloneActor(mMasterParticles);
+    Vector3 position       = mMasterParticles.GetCurrentProperty(Actor::Property::POSITION).Get<Vector3>();
     slaveParticles.SetProperty(Actor::Property::POSITION, position + Vector3(0., 0., directedSize));
 
     auto propSecondaryColor = slaveParticles.RegisterProperty("uSecondaryColor", Vector3::XAXIS);
@@ -252,24 +252,21 @@ void ParticleView::SetLinearVelocity(float v)
     Actor world = mWorld.GetHandle();
     world.Add(slaveParticles);
 
-    if (sign < 0.)	// fix draw order
+    if(sign < 0.) // fix draw order
     {
       world.Remove(mMasterParticles);
       world.Add(mMasterParticles);
     }
 
-    Constraint constraint = Constraint::New<Vector4>(slaveParticles, Actor::Property::COLOR,
-      EqualToConstraint());
+    Constraint constraint = Constraint::New<Vector4>(slaveParticles, Actor::Property::COLOR, EqualToConstraint());
     constraint.AddSource(Source(mMasterParticles, Actor::Property::COLOR));
     constraint.Apply();
 
-    constraint = Constraint::New<Vector3>(slaveParticles, propSecondaryColor,
-      EqualToConstraint());
+    constraint = Constraint::New<Vector3>(slaveParticles, propSecondaryColor, EqualToConstraint());
     constraint.AddSource(Source(mMasterParticles, mPropSecondaryColor));
     constraint.Apply();
 
-    constraint = Constraint::New<Quaternion>(slaveParticles, Actor::Property::ORIENTATION,
-      EqualToConstraint());
+    constraint = Constraint::New<Quaternion>(slaveParticles, Actor::Property::ORIENTATION, EqualToConstraint());
     constraint.AddSource(Source(mMasterParticles, Actor::Property::ORIENTATION));
     constraint.Apply();
 
@@ -279,7 +276,7 @@ void ParticleView::SetLinearVelocity(float v)
     anim.SetLoopCount(0);
     anim.Play();
 
-    mLinearAnim = anim;
+    mLinearAnim     = anim;
     mSlaveParticles = slaveParticles;
   }
 }
@@ -289,7 +286,7 @@ void ParticleView::Scatter(float radius, float amount, float durationOut, float 
   mActiveScatter = (mActiveScatter + 1) % std::extent<decltype(mScatterProps)>::value;
 
   auto& scatter = mScatterProps[mActiveScatter];
-  if (scatter.mAnim)
+  if(scatter.mAnim)
   {
     scatter.mAnim.Stop();
   }
@@ -298,12 +295,10 @@ void ParticleView::Scatter(float radius, float amount, float durationOut, float 
   radius *= radius;
   mParticleShader.SetProperty(scatter.mPropRadius, radius);
 
-  Animation anim = Animation::New(durationOut + durationIn);
-  auto scatterAmount = Property(mParticleShader, scatter.mPropAmount);
-  anim.AnimateTo(scatterAmount, amount, AlphaFunction::EASE_OUT,
-    TimePeriod(0.f, durationOut));
-  anim.AnimateTo(scatterAmount, 0.f, AlphaFunction::EASE_IN_OUT_SINE,
-    TimePeriod(durationOut, durationIn));
+  Animation anim          = Animation::New(durationOut + durationIn);
+  auto      scatterAmount = Property(mParticleShader, scatter.mPropAmount);
+  anim.AnimateTo(scatterAmount, amount, AlphaFunction::EASE_OUT, TimePeriod(0.f, durationOut));
+  anim.AnimateTo(scatterAmount, 0.f, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(durationOut, durationIn));
   anim.Play();
 
   scatter.mAnim = anim;
@@ -312,25 +307,25 @@ void ParticleView::Scatter(float radius, float amount, float durationOut, float 
 void ParticleView::SetScatterRay(Dali::Vector3 rayDir)
 {
   auto& scatter = mScatterProps[mActiveScatter];
-  mParticleShader.SetProperty(scatter.mPropRay, rayDir);;
+  mParticleShader.SetProperty(scatter.mPropRay, rayDir);
+  ;
 }
 
-void ParticleView::Fade(float duration, float target, AlphaFunction alphaFn,
-  std::function<void(Dali::Animation&)> onFinished)
+void ParticleView::Fade(float duration, float target, AlphaFunction alphaFn, std::function<void(Dali::Animation&)> onFinished)
 {
-  if (mFadeAnim)
+  if(mFadeAnim)
   {
     mFadeAnim.Stop();
   }
 
   Animation anim = Animation::New(duration);
   anim.AnimateTo(Property(mMasterParticles, Actor::Property::COLOR_ALPHA), target, alphaFn);
-  if (mSlaveParticles)
+  if(mSlaveParticles)
   {
     anim.AnimateTo(Property(mSlaveParticles, Actor::Property::COLOR_ALPHA), target, alphaFn);
   }
 
-  if (onFinished)
+  if(onFinished)
   {
     anim.FinishedSignal().Connect(this, onFinished);
   }
@@ -339,11 +334,10 @@ void ParticleView::Fade(float duration, float target, AlphaFunction alphaFn,
   mFadeAnim = anim;
 }
 
-void ParticleView::Fade(float duration, float target, float from, AlphaFunction alphaFn,
-  std::function<void(Dali::Animation&)> onFinished)
+void ParticleView::Fade(float duration, float target, float from, AlphaFunction alphaFn, std::function<void(Dali::Animation&)> onFinished)
 {
   mMasterParticles.SetProperty(Actor::Property::COLOR_ALPHA, from);
-  if (mSlaveParticles)
+  if(mSlaveParticles)
   {
     mSlaveParticles.SetProperty(Actor::Property::COLOR_ALPHA, from);
   }

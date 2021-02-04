@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@
 #include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
-#include "shared/view.h"
-#include "generated/line-mesh-vert.h"
 #include "generated/line-mesh-frag.h"
+#include "generated/line-mesh-vert.h"
+#include "shared/view.h"
 
 #include <sstream>
 
@@ -31,7 +31,6 @@ using namespace Dali;
 
 namespace
 {
-
 const unsigned short  INDEX_LINES[]   = {0, 1, 1, 2, 2, 3, 3, 4, 4, 0};
 const unsigned short  INDEX_LOOP[]    = {0, 1, 2, 3, 4};
 const unsigned short  INDEX_STRIP[]   = {0, 1, 2, 3, 4, 0};

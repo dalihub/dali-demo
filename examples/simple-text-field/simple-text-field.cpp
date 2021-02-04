@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ public:
     mTextField.SetProperty(TextField::Property::PLACEHOLDER_TEXT_FOCUSED, "Enter folder name.");
 
     mButtonSelectionStart = PushButton::New();
-    mButtonSelectionEnd = PushButton::New();
+    mButtonSelectionEnd   = PushButton::New();
 
     mButtonSelectionStart.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mButtonSelectionStart.SetProperty(Actor::Property::SIZE, Vector2(140.f, 50.f));
@@ -100,7 +100,7 @@ public:
     if(button == mButtonSelectionStart)
     {
       int iStart = mTextField.GetProperty(DevelTextField::Property::SELECTED_TEXT_START).Get<int>() - 1;
-      if (iStart < 0)
+      if(iStart < 0)
       {
         iStart = 0;
       }
@@ -108,22 +108,22 @@ public:
     }
     else if(button == mButtonSelectionEnd)
     {
-      mTextField.SetProperty(DevelTextField::Property::SELECTED_TEXT_END , mTextField.GetProperty(DevelTextField::Property::SELECTED_TEXT_END).Get<int>() + 1);
+      mTextField.SetProperty(DevelTextField::Property::SELECTED_TEXT_END, mTextField.GetProperty(DevelTextField::Property::SELECTED_TEXT_END).Get<int>() + 1);
     }
-    else if (mBtnEditable == button)
+    else if(mBtnEditable == button)
     {
-      bool bEditable = !mTextField.GetProperty( DevelTextField::Property::ENABLE_EDITING).Get<int>();
-      mTextField.SetProperty( DevelTextField::Property::ENABLE_EDITING , bEditable);
-      if (bEditable)
-        {
-          mBtnEditable.SetProperty(Button::Property::LABEL, "Non-editable");
-          mBtnEditable.SetBackgroundColor(Color::RED);
-        }
+      bool bEditable = !mTextField.GetProperty(DevelTextField::Property::ENABLE_EDITING).Get<int>();
+      mTextField.SetProperty(DevelTextField::Property::ENABLE_EDITING, bEditable);
+      if(bEditable)
+      {
+        mBtnEditable.SetProperty(Button::Property::LABEL, "Non-editable");
+        mBtnEditable.SetBackgroundColor(Color::RED);
+      }
       else
-        {
-          mBtnEditable.SetProperty(Button::Property::LABEL, "editable");
-          mBtnEditable.SetBackgroundColor(Color::GREEN);
-        }
+      {
+        mBtnEditable.SetProperty(Button::Property::LABEL, "editable");
+        mBtnEditable.SetBackgroundColor(Color::GREEN);
+      }
     }
 
     return true;
@@ -145,10 +145,10 @@ public:
 
 private:
   Application& mApplication;
-  TextField mTextField;
-  PushButton mButtonSelectionStart;
-  PushButton mButtonSelectionEnd;
-  PushButton mBtnEditable;
+  TextField    mTextField;
+  PushButton   mButtonSelectionStart;
+  PushButton   mButtonSelectionEnd;
+  PushButton   mBtnEditable;
 };
 
 void RunTest(Application& application)

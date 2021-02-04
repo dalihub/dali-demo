@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,23 @@
  *
  */
 #include "scene-loader-example.h"
-#include "dali-scene-loader/public-api/gltf2-loader.h"
-#include "dali-scene-loader/public-api/shader-definition-factory.h"
-#include "dali-scene-loader/public-api/light-parameters.h"
+#include <dirent.h>
+#include <cstring>
+#include <string_view>
 #include "dali-scene-loader/public-api/dli-loader.h"
+#include "dali-scene-loader/public-api/gltf2-loader.h"
+#include "dali-scene-loader/public-api/light-parameters.h"
 #include "dali-scene-loader/public-api/load-result.h"
-#include "dali/public-api/adaptor-framework/key.h"
-#include "dali/public-api/events/key-event.h"
-#include "dali/public-api/actors/layer.h"
-#include "dali/public-api/render-tasks/render-task-list.h"
-#include "dali/public-api/object/property-array.h"
-#include "dali-toolkit/public-api/controls/scrollable/item-view/item-factory.h"
+#include "dali-scene-loader/public-api/shader-definition-factory.h"
 #include "dali-toolkit/public-api/controls/scrollable/item-view/default-item-layout.h"
+#include "dali-toolkit/public-api/controls/scrollable/item-view/item-factory.h"
 #include "dali-toolkit/public-api/controls/text-controls/text-label.h"
 #include "dali-toolkit/public-api/visuals/gradient-visual-properties.h"
-#include <string_view>
-#include <cstring>
-#include <dirent.h>
+#include "dali/public-api/actors/layer.h"
+#include "dali/public-api/adaptor-framework/key.h"
+#include "dali/public-api/events/key-event.h"
+#include "dali/public-api/object/property-array.h"
+#include "dali/public-api/render-tasks/render-task-list.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -39,14 +39,13 @@ using namespace Dali::SceneLoader;
 
 namespace
 {
-
 const float ROTATION_SCALE = 180.f; // the amount of rotation that a swipe whose length is the width of the screen, causes, in degrees.
 
 const float ITEM_HEIGHT = 50.f;
 
 const Vector3 CAMERA_DEFAULT_POSITION(0.0f, 0.0f, 3.5f);
 
-const std::string_view DLI_EXTENSION = ".dli";
+const std::string_view DLI_EXTENSION  = ".dli";
 const std::string_view GLTF_EXTENSION = ".gltf";
 
 const std::string RESOURCE_TYPE_DIRS[]{
@@ -58,18 +57,19 @@ const std::string RESOURCE_TYPE_DIRS[]{
 
 using StringVector = std::vector<std::string>;
 
-StringVector ListFiles(const std::string& path, bool(*predicate)(const char*) = [](const char*) { return true; })
+StringVector ListFiles(
+  const std::string& path, bool (*predicate)(const char*) = [](const char*) { return true; })
 {
   StringVector results;
 
-  if (auto dirp = opendir(path.c_str()))
+  if(auto dirp = opendir(path.c_str()))
   {
-    std::unique_ptr<DIR, int(*)(DIR*)> dir(dirp, closedir);
+    std::unique_ptr<DIR, int (*)(DIR*)> dir(dirp, closedir);
 
     struct dirent* ent;
-    while ((ent = readdir(dir.get())) != nullptr)
+    while((ent = readdir(dir.get())) != nullptr)
     {
-      if (ent->d_type == DT_REG && predicate(ent->d_name))
+      if(ent->d_type == DT_REG && predicate(ent->d_name))
       {
         results.push_back(ent->d_name);
       }
@@ -91,12 +91,13 @@ TextLabel MakeLabel(std::string msg)
 struct ItemFactoryImpl : Dali::Toolkit::ItemFactory
 {
   const std::vector<std::string>& mSceneNames;
-  TapGestureDetector mTapDetector;
+  TapGestureDetector              mTapDetector;
 
   ItemFactoryImpl(const std::vector<std::string>& sceneNames, TapGestureDetector tapDetector)
   : mSceneNames(sceneNames),
     mTapDetector(tapDetector)
-  {}
+  {
+  }
 
   unsigned int GetNumberOfItems() override
   {
@@ -122,7 +123,7 @@ Actor CreateErrorMessage(std::string msg)
 
 void ConfigureCamera(const CameraParameters& params, CameraActor camera)
 {
-  if (params.isPerspective)
+  if(params.isPerspective)
   {
     camera.SetProjectionMode(Camera::PERSPECTIVE_PROJECTION);
     camera.SetNearClippingPlane(params.zNear);
@@ -133,16 +134,16 @@ void ConfigureCamera(const CameraParameters& params, CameraActor camera)
   {
     camera.SetProjectionMode(Camera::ORTHOGRAPHIC_PROJECTION);
     camera.SetOrthographicProjection(params.orthographicSize.x,
-      params.orthographicSize.y,
-      params.orthographicSize.z,
-      params.orthographicSize.w,
-      params.zNear,
-      params.zFar);
+                                     params.orthographicSize.y,
+                                     params.orthographicSize.z,
+                                     params.orthographicSize.w,
+                                     params.zNear,
+                                     params.zFar);
   }
 
   // model
-  Vector3 camTranslation;
-  Vector3 camScale;
+  Vector3    camTranslation;
+  Vector3    camScale;
   Quaternion camOrientation;
   params.CalculateTransformComponents(camTranslation, camOrientation, camScale);
 
@@ -155,17 +156,16 @@ void ConfigureCamera(const CameraParameters& params, CameraActor camera)
   camOrientation.Conjugate();
 }
 
-void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition& scene, Actor root,
-  std::vector<BlendshapeShaderConfigurationRequest>&& requests)
+void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition& scene, Actor root, std::vector<BlendshapeShaderConfigurationRequest>&& requests)
 {
   std::vector<std::string> errors;
-  auto onError = [&errors](const std::string& msg) {
+  auto                     onError = [&errors](const std::string& msg) {
     errors.push_back(msg);
   };
-  if (!scene.ConfigureBlendshapeShaders(resources, root, std::move(requests), onError))
+  if(!scene.ConfigureBlendshapeShaders(resources, root, std::move(requests), onError))
   {
     ExceptionFlinger flinger(ASSERT_LOCATION);
-    for (auto& msg : errors)
+    for(auto& msg : errors)
     {
       flinger << msg << '\n';
     }
@@ -180,12 +180,12 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
 
   auto path = pathProvider(ResourceType::Mesh) + sceneName;
 
-  ResourceBundle resources;
-  SceneDefinition scene;
+  ResourceBundle                        resources;
+  SceneDefinition                       scene;
   std::vector<AnimationGroupDefinition> animGroups;
-  std::vector<CameraParameters> cameraParameters;
-  std::vector<LightParameters> lights;
-  std::vector<AnimationDefinition> animations;
+  std::vector<CameraParameters>         cameraParameters;
+  std::vector<LightParameters>          lights;
+  std::vector<AnimationDefinition>      animations;
 
   LoadResult output{
     resources,
@@ -193,12 +193,11 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
     animations,
     animGroups,
     cameraParameters,
-    lights
-  };
+    lights};
 
-  if (sceneName.rfind(DLI_EXTENSION) == sceneName.size() - DLI_EXTENSION.size())
+  if(sceneName.rfind(DLI_EXTENSION) == sceneName.size() - DLI_EXTENSION.size())
   {
-    DliLoader loader;
+    DliLoader              loader;
     DliLoader::InputParams input{
       pathProvider(ResourceType::Mesh),
       nullptr,
@@ -206,8 +205,8 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
       {},
       nullptr,
     };
-    DliLoader::LoadParams loadParams{ input, output };
-    if (!loader.LoadScene(path, loadParams))
+    DliLoader::LoadParams loadParams{input, output};
+    if(!loader.LoadScene(path, loadParams))
     {
       ExceptionFlinger(ASSERT_LOCATION) << "Failed to load scene from '" << path << "': " << loader.GetParseError();
     }
@@ -221,7 +220,7 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
     resources.mEnvironmentMaps.push_back({});
   }
 
-  if (cameraParameters.empty())
+  if(cameraParameters.empty())
   {
     cameraParameters.push_back(CameraParameters());
     cameraParameters[0].matrix.SetTranslation(CAMERA_DEFAULT_POSITION);
@@ -229,20 +228,18 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
   ConfigureCamera(cameraParameters[0], camera);
 
   ViewProjection viewProjection = cameraParameters[0].GetViewProjection();
-  Transforms xforms{
+  Transforms     xforms{
     MatrixStack{},
-    viewProjection
-  };
+    viewProjection};
   NodeDefinition::CreateParams nodeParams{
     resources,
-    xforms
-  };
+    xforms};
   Customization::Choices choices;
 
   Actor root = Actor::New();
   SetActorCentered(root);
 
-  for (auto iRoot : scene.GetRoots())
+  for(auto iRoot : scene.GetRoots())
   {
     auto resourceRefs = resources.CreateRefCounter();
     scene.CountResourceRefs(iRoot, choices, resourceRefs);
@@ -250,7 +247,7 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
 
     resources.LoadResources(resourceRefs, pathProvider);
 
-    if (auto actor = scene.CreateNodes(iRoot, choices, nodeParams))
+    if(auto actor = scene.CreateNodes(iRoot, choices, nodeParams))
     {
       scene.ConfigureSkeletonJoints(iRoot, resources.mSkeletons, actor);
       scene.ConfigureSkinningShaders(resources, actor, std::move(nodeParams.mSkinnables));
@@ -262,7 +259,7 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
     }
   }
 
-  if (!animations.empty())
+  if(!animations.empty())
   {
     auto getActor = [&root](const std::string& name) {
       return root.FindChildByName(name);
@@ -274,14 +271,14 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
   return root;
 }
 
-} // nonamespace
+} // namespace
 
 SceneLoaderExample::SceneLoaderExample(Dali::Application& app)
 : mApp(app)
 {
-  if (!std::getenv("DALI_APPLICATION_PACKAGE"))
+  if(!std::getenv("DALI_APPLICATION_PACKAGE"))
   {
-    if (auto desktopPrefix = std::getenv("DESKTOP_PREFIX"))
+    if(auto desktopPrefix = std::getenv("DESKTOP_PREFIX"))
     {
       std::stringstream sstr;
       sstr << desktopPrefix << "/share/com.samsung.dali-demo/res/";
@@ -298,14 +295,14 @@ SceneLoaderExample::SceneLoaderExample(Dali::Application& app)
 void SceneLoaderExample::OnInit(Application& app)
 {
   // get scenes
-  auto resPath = Application::GetResourcePath();
-  auto scenePath = resPath + RESOURCE_TYPE_DIRS[ResourceType::Mesh];
+  auto resPath    = Application::GetResourcePath();
+  auto scenePath  = resPath + RESOURCE_TYPE_DIRS[ResourceType::Mesh];
   auto sceneNames = ListFiles(scenePath, [](const char* name) {
     auto len = strlen(name);
     return (len > DLI_EXTENSION.size() && DLI_EXTENSION.compare(name + (len - DLI_EXTENSION.size())) == 0) ||
-      (len > GLTF_EXTENSION.size() && GLTF_EXTENSION.compare(name + (len - GLTF_EXTENSION.size())) == 0);
+           (len > GLTF_EXTENSION.size() && GLTF_EXTENSION.compare(name + (len - GLTF_EXTENSION.size())) == 0);
   });
-  mSceneNames = sceneNames;
+  mSceneNames     = sceneNames;
 
   // create Dali objects
   auto window = app.GetWindow();
@@ -324,13 +321,14 @@ void SceneLoaderExample::OnInit(Application& app)
   stopColors.PushBack(Vector4(0.45f, 0.7f, 0.8f, 1.f)); // Medium bright, pastel blue
   const float percentageWindowHeight = window.GetSize().GetHeight() * 0.6f;
 
-  navigationView.SetProperty(Toolkit::Control::Property::BACKGROUND, Dali::Property::Map().
-    Add(Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT).
-    Add(Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets).
-    Add(Toolkit::GradientVisual::Property::STOP_COLOR, stopColors).
-    Add(Toolkit::GradientVisual::Property::START_POSITION, Vector2(0.f, -percentageWindowHeight)).
-    Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.f, percentageWindowHeight)).
-    Add(Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE));
+  navigationView.SetProperty(Toolkit::Control::Property::BACKGROUND,
+                             Dali::Property::Map()
+                               .Add(Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT)
+                               .Add(Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets)
+                               .Add(Toolkit::GradientVisual::Property::STOP_COLOR, stopColors)
+                               .Add(Toolkit::GradientVisual::Property::START_POSITION, Vector2(0.f, -percentageWindowHeight))
+                               .Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.f, percentageWindowHeight))
+                               .Add(Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE));
   window.Add(navigationView);
   mNavigationView = navigationView;
 
@@ -344,13 +342,13 @@ void SceneLoaderExample::OnInit(Application& app)
   items.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
 
   Vector3 windowSize(window.GetSize());
-  auto itemLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
+  auto    itemLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
   itemLayout->SetItemSize(Vector3(windowSize.x, ITEM_HEIGHT, 1.f));
   items.AddLayout(*itemLayout);
   navigationView.Push(items);
 
   mItemLayout = itemLayout;
-  mItemView = items;
+  mItemView   = items;
 
   // camera
   auto camera = CameraActor::New();
@@ -373,7 +371,7 @@ void SceneLoaderExample::OnTerminate(Application& app)
   mTapDetector.Reset();
   mPanDetector.Reset();
 
-  auto window = app.GetWindow();
+  auto window      = app.GetWindow();
   auto renderTasks = window.GetRenderTaskList();
   renderTasks.RemoveTask(mSceneRender);
   mSceneRender.Reset();
@@ -386,11 +384,11 @@ void SceneLoaderExample::OnTerminate(Application& app)
 
 void SceneLoaderExample::OnKey(const KeyEvent& e)
 {
-  if (e.GetState() == KeyEvent::UP)
+  if(e.GetState() == KeyEvent::UP)
   {
-    if (IsKey(e, DALI_KEY_ESCAPE) || IsKey(e, DALI_KEY_BACK))
+    if(IsKey(e, DALI_KEY_ESCAPE) || IsKey(e, DALI_KEY_BACK))
     {
-      if (mScene)
+      if(mScene)
       {
         mPanDetector.Reset();
 
@@ -407,15 +405,15 @@ void SceneLoaderExample::OnKey(const KeyEvent& e)
 
 void SceneLoaderExample::OnPan(Actor actor, const PanGesture& pan)
 {
-  auto windowSize = mApp.GetWindow().GetSize();
-  Vector2 size{ float(windowSize.GetWidth()), float(windowSize.GetHeight()) };
-  float aspect = size.y / size.x;
+  auto    windowSize = mApp.GetWindow().GetSize();
+  Vector2 size{float(windowSize.GetWidth()), float(windowSize.GetHeight())};
+  float   aspect = size.y / size.x;
 
   size /= ROTATION_SCALE;
 
-  Vector2 rotation{ pan.GetDisplacement().x / size.x, pan.GetDisplacement().y / size.y * aspect };
+  Vector2 rotation{pan.GetDisplacement().x / size.x, pan.GetDisplacement().y / size.y * aspect};
 
-  Quaternion q = Quaternion(Radian(Degree(rotation.y)), Radian(Degree(rotation.x)), Radian(0.f));
+  Quaternion q  = Quaternion(Radian(Degree(rotation.y)), Radian(Degree(rotation.x)), Radian(0.f));
   Quaternion q0 = mScene.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
 
   mScene.SetProperty(Actor::Property::ORIENTATION, q * q0);
@@ -427,7 +425,7 @@ void SceneLoaderExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
 
   try
   {
-    auto window = mApp.GetWindow();
+    auto window      = mApp.GetWindow();
     auto renderTasks = window.GetRenderTaskList();
     renderTasks.RemoveTask(mSceneRender);
 
@@ -438,14 +436,14 @@ void SceneLoaderExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
     sceneRender.SetSourceActor(scene);
     sceneRender.SetExclusive(true);
 
-    mScene = scene;
+    mScene       = scene;
     mSceneRender = sceneRender;
 
     mPanDetector = PanGestureDetector::New();
     mPanDetector.DetectedSignal().Connect(this, &SceneLoaderExample::OnPan);
     mPanDetector.Attach(mNavigationView);
   }
-  catch (const DaliException& e)
+  catch(const DaliException& e)
   {
     mScene = CreateErrorMessage(e.condition);
   }

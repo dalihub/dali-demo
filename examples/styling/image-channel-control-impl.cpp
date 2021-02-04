@@ -31,7 +31,6 @@ namespace Internal
 {
 namespace
 {
-
 Dali::BaseHandle Create()
 {
   return Demo::ImageChannelControl::New();

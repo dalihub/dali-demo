@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,19 +21,18 @@
 
 #include <map>
 
-#include "gltf-scene.h"
-#include "generated/reflection-vert.h"
 #include "generated/reflection-frag.h"
-#include "generated/reflection-simple-frag.h"
-#include "generated/reflection-textured-frag.h"
 #include "generated/reflection-plasma-frag.h"
+#include "generated/reflection-simple-frag.h"
 #include "generated/reflection-tex-frag.h"
+#include "generated/reflection-textured-frag.h"
+#include "generated/reflection-vert.h"
+#include "gltf-scene.h"
 
 using namespace Dali;
 
 namespace
 {
-
 struct Model
 {
   Shader   shader;
@@ -467,10 +466,7 @@ private:
   void OnPan(Actor actor, const PanGesture& panGesture)
   {
     Vector2 displacement = panGesture.GetScreenDisplacement();
-    Vector2 rotation{
-      displacement.y * -0.1f,
-      displacement.x * 0.1f
-    };
+    Vector2 rotation{displacement.y * -0.1f, displacement.x * 0.1f};
 
     Quaternion q(Degree(0.f), Degree(rotation.y), Degree(rotation.x));
     Quaternion q0 = mCenterActor.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();

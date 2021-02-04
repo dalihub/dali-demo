@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -577,7 +577,9 @@ public:
 
         mFittingModes[id] = newMode;
 
-        SetTitle(std::string(newMode == FittingMode::SHRINK_TO_FIT ? "SHRINK_TO_FIT" : newMode == FittingMode::SCALE_TO_FILL ? "SCALE_TO_FILL" : newMode == FittingMode::FIT_WIDTH ? "FIT_WIDTH" : "FIT_HEIGHT"));
+        SetTitle(std::string(newMode == FittingMode::SHRINK_TO_FIT ? "SHRINK_TO_FIT" : newMode == FittingMode::SCALE_TO_FILL ? "SCALE_TO_FILL"
+                                                                                     : newMode == FittingMode::FIT_WIDTH     ? "FIT_WIDTH"
+                                                                                                                             : "FIT_HEIGHT"));
       }
     }
     return true;

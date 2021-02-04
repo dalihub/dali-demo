@@ -417,8 +417,8 @@ public:
           {
             //Calculate displacement and corresponding rotation.
             const Vector2 touchPosition = touch.GetScreenPosition(0);
-            const Vector2 displacement = touchPosition - mLastTouchPosition;
-            mLastTouchPosition = touchPosition;
+            const Vector2 displacement  = touchPosition - mLastTouchPosition;
+            mLastTouchPosition          = touchPosition;
 
             const Quaternion q(Radian(displacement.y / -Y_ROTATION_DISPLACEMENT_FACTOR), Radian(displacement.x / X_ROTATION_DISPLACEMENT_FACTOR), Radian(0.f));
             const Quaternion q0 = mModels[mSelectedModelIndex].control.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();

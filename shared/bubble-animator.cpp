@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@
 // CLASS HEADER
 #include "bubble-animator.h"
 
-#include <dali/public-api/animation/constraint.h>
-#include <dali/public-api/math/random.h>
-#include <dali/public-api/rendering/shader.h>
+#include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 #include <dali-toolkit/public-api/controls/image-view/image-view.h>
 #include <dali-toolkit/public-api/controls/scrollable/scroll-view/scroll-view.h>
 #include <dali-toolkit/public-api/visuals/image-visual-properties.h>
-#include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
+#include <dali/public-api/animation/constraint.h>
+#include <dali/public-api/math/random.h>
+#include <dali/public-api/rendering/shader.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -32,19 +32,17 @@ using namespace Dali::Toolkit;
 namespace
 {
 const char* const BUBBLE_COLOR_STYLE_NAME[] =
-{
-  "BubbleColor1",
-  "BubbleColor2",
-  "BubbleColor3",
-  "BubbleColor4"
-};
+  {
+    "BubbleColor1",
+    "BubbleColor2",
+    "BubbleColor3",
+    "BubbleColor4"};
 constexpr int NUMBER_OF_BUBBLE_COLORS(sizeof(BUBBLE_COLOR_STYLE_NAME) / sizeof(BUBBLE_COLOR_STYLE_NAME[0]));
 
 const char* const SHAPE_IMAGE_TABLE[] =
-{
-  DEMO_IMAGE_DIR "shape-circle.png",
-  DEMO_IMAGE_DIR "shape-bubble.png"
-};
+  {
+    DEMO_IMAGE_DIR "shape-circle.png",
+    DEMO_IMAGE_DIR "shape-bubble.png"};
 constexpr int NUMBER_OF_SHAPE_IMAGES(sizeof(SHAPE_IMAGE_TABLE) / sizeof(SHAPE_IMAGE_TABLE[0]));
 
 constexpr int   NUM_BACKGROUND_IMAGES   = 18;
@@ -157,7 +155,7 @@ void BubbleAnimator::InitializeBackgroundActors(Dali::Actor actor)
 
     // Define bubble horizontal parallax and vertical wrapping
     Actor scrollView = mScrollView.GetHandle();
-    if( scrollView )
+    if(scrollView)
     {
       Constraint animConstraint = Constraint::New<Vector3>(child, Actor::Property::POSITION, AnimateBubbleConstraint(childPos, Random::Range(-0.85f, 0.25f)));
       animConstraint.AddSource(Source(scrollView, ScrollView::Property::SCROLL_POSITION));
@@ -174,7 +172,6 @@ void BubbleAnimator::InitializeBackgroundActors(Dali::Actor actor)
     animation.Play();
     mBackgroundAnimations.push_back(animation);
   }
-
 }
 
 void BubbleAnimator::AddBackgroundActors(Actor layer, int count)

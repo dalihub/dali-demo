@@ -1,7 +1,7 @@
 #ifndef PARTICLES_UTILS_H_
 #define PARTICLES_UTILS_H_
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,18 @@
  *
  */
 
+#include <cmath>
 #include "dali/public-api/actors/actor.h"
-#include "dali/public-api/actors/actor.h"
+#include "dali/public-api/math/vector3.h"
 #include "dali/public-api/rendering/geometry.h"
 #include "dali/public-api/rendering/renderer.h"
 #include "dali/public-api/rendering/shader.h"
 #include "dali/public-api/rendering/texture.h"
-#include "dali/public-api/math/vector3.h"
-#include <cmath>
 
 //
 // Maths
 //
-inline
-float FastFloor(float x)
+inline float FastFloor(float x)
 {
   return static_cast<int>(x) - static_cast<int>(x < 0);
 }
@@ -52,9 +50,9 @@ Dali::Geometry CreateCuboidWireframeGeometry();
 
 enum RendererOptions
 {
-  OPTION_NONE = 0x0,
-  OPTION_BLEND = 0x01,
-  OPTION_DEPTH_TEST = 0x02,
+  OPTION_NONE        = 0x0,
+  OPTION_BLEND       = 0x01,
+  OPTION_DEPTH_TEST  = 0x02,
   OPTION_DEPTH_WRITE = 0x04
 };
 
@@ -62,8 +60,7 @@ enum RendererOptions
 /// and @a options from above.
 ///@note Back face culling is on.
 ///@note If textures is not a valid handle, an empty texture set will be created.
-Dali::Renderer CreateRenderer(Dali::TextureSet textures, Dali::Geometry geometry,
-  Dali::Shader shader, uint32_t options = OPTION_NONE);
+Dali::Renderer CreateRenderer(Dali::TextureSet textures, Dali::Geometry geometry, Dali::Shader shader, uint32_t options = OPTION_NONE);
 
 ///@brief Sets @a actor's anchor point and parent origin to center.
 void CenterActor(Dali::Actor actor);

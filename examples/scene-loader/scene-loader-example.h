@@ -1,7 +1,7 @@
 #ifndef SCENE_LAUNCHER_H_
 #define SCENE_LAUNCHER_H_
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,19 @@
  *
  */
 #include "dali-scene-loader/public-api/animation-definition.h"
-#include "dali-scene-loader/public-api/scene-definition.h"
-#include "dali-scene-loader/public-api/node-definition.h"
 #include "dali-scene-loader/public-api/camera-parameters.h"
+#include "dali-scene-loader/public-api/node-definition.h"
+#include "dali-scene-loader/public-api/scene-definition.h"
+#include "dali-toolkit/devel-api/controls/navigation-view/navigation-view.h"
+#include "dali-toolkit/public-api/controls/scrollable/item-view/item-factory.h"
+#include "dali-toolkit/public-api/controls/scrollable/item-view/item-layout.h"
+#include "dali-toolkit/public-api/controls/scrollable/item-view/item-view.h"
+#include "dali/public-api/actors/camera-actor.h"
+#include "dali/public-api/adaptor-framework/application.h"
 #include "dali/public-api/common/vector-wrapper.h"
 #include "dali/public-api/events/pan-gesture-detector.h"
-#include "dali/public-api/actors/camera-actor.h"
 #include "dali/public-api/render-tasks/render-task.h"
 #include "dali/public-api/signals/connection-tracker.h"
-#include "dali/public-api/adaptor-framework/application.h"
-#include "dali-toolkit/public-api/controls/scrollable/item-view/item-view.h"
-#include "dali-toolkit/public-api/controls/scrollable/item-view/item-layout.h"
-#include "dali-toolkit/public-api/controls/scrollable/item-view/item-factory.h"
-#include "dali-toolkit/devel-api/controls/navigation-view/navigation-view.h"
 
 class SceneLoaderExample : public Dali::ConnectionTracker
 {
@@ -37,7 +37,7 @@ public:
   SceneLoaderExample(Dali::Application& app);
   ~SceneLoaderExample() = default;
 
-private:  // data
+private: // data
   Dali::Application& mApp;
 
   std::vector<std::string> mSceneNames;
@@ -45,19 +45,19 @@ private:  // data
   Dali::Toolkit::NavigationView mNavigationView;
 
   std::unique_ptr<Dali::Toolkit::ItemFactory> mItemFactory;
-  Dali::Toolkit::ItemLayoutPtr mItemLayout;
-  Dali::Toolkit::ItemView mItemView;
+  Dali::Toolkit::ItemLayoutPtr                mItemLayout;
+  Dali::Toolkit::ItemView                     mItemView;
 
   Dali::CameraActor mSceneCamera;
-  Dali::RenderTask mSceneRender;
-  Dali::Actor mScene;
+  Dali::RenderTask  mSceneRender;
+  Dali::Actor       mScene;
 
   Dali::Quaternion mCameraOrientationInv;
 
   Dali::TapGestureDetector mTapDetector;
-  Dali::PanGestureDetector  mPanDetector;
+  Dali::PanGestureDetector mPanDetector;
 
-private:  // methods
+private: // methods
   void OnInit(Dali::Application& app);
   void OnTerminate(Dali::Application& app);
 
@@ -66,4 +66,4 @@ private:  // methods
   void OnTap(Dali::Actor actor, const Dali::TapGesture& tap);
 };
 
-#endif  //SCENE_LAUNCHER_H_
+#endif //SCENE_LAUNCHER_H_

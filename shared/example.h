@@ -2,7 +2,7 @@
 #define DALI_DEMO_EXAMPLE_H
 
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ struct Example
   std::string title; ///< title (caption) of example to appear on tile button.
 };
 
-using ExampleList = std::vector<Example>;
+using ExampleList          = std::vector<Example>;
 using ExampleListConstIter = ExampleList::const_iterator;
 
 #endif // DALI_DEMO_SHARED_EXAMPLE_H
