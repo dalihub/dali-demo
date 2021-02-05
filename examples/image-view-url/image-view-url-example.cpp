@@ -18,8 +18,8 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/image-loader/texture-manager.h>
 
-#include "shared/view.h"
 #include "generated/image-view-url-frag.h"
+#include "shared/view.h"
 
 using namespace Dali;
 

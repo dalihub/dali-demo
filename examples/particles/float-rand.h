@@ -1,7 +1,7 @@
 #ifndef PARTICLES_FLOAT_RAND_H_
 #define PARTICLES_FLOAT_RAND_H_
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,15 @@
 
 struct FloatRand
 {
-  std::random_device mDevice;
-  std::mt19937 mMersenneTwister;
+  std::random_device                    mDevice;
+  std::mt19937                          mMersenneTwister;
   std::uniform_real_distribution<float> mDistribution;
 
   FloatRand()
   : mMersenneTwister(mDevice()),
     mDistribution(0., 1.)
-  {}
+  {
+  }
 
   float operator()()
   {

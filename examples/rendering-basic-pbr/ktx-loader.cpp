@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,7 +94,7 @@ bool ConvertPixelFormat(const uint32_t ktxPixelFormat, Dali::Pixel::Format& form
 bool LoadCubeMapFromKtxFile(const std::string& path, CubeData& cubedata)
 {
   Dali::FileStream daliFileStream(path);
-  FILE* fp(daliFileStream.GetFile());
+  FILE*            fp(daliFileStream.GetFile());
   if(!fp)
   {
     return false;

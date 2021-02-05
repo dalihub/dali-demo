@@ -2,7 +2,7 @@
 #define DALI_DEMO_TABLEVIEW_H
 
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,6 @@
 class DaliTableView : public Dali::ConnectionTracker
 {
 public:
-
   /**
    * Constructor
    *
@@ -66,7 +65,7 @@ public:
    */
   void SortAlphabetically(bool sortAlphabetically);
 
-private: // Application callbacks & implementation
+private:                                                          // Application callbacks & implementation
   static constexpr unsigned int FOCUS_ANIMATION_ACTOR_NUMBER = 2; ///< The number of elements used to form the custom focus effect
 
   /**
@@ -239,14 +238,14 @@ private:
   };
   FocusEffect mFocusEffect[FOCUS_ANIMATION_ACTOR_NUMBER]; ///< The elements used to create the custom focus effect
 
-  std::vector<Dali::Actor> mPages;                ///< List of pages.
-  ExampleList              mExampleList;          ///< List of examples.
+  std::vector<Dali::Actor> mPages;       ///< List of pages.
+  ExampleList              mExampleList; ///< List of examples.
 
   float mPageWidth;  ///< The width of a page within the scroll-view, used to calculate the domain
   int   mTotalPages; ///< Total pages within scrollview.
 
-  bool mScrolling : 1;              ///< Flag indicating whether view is currently being scrolled
-  bool mSortAlphabetically : 1;     ///< Sort examples alphabetically.
+  bool mScrolling : 1;          ///< Flag indicating whether view is currently being scrolled
+  bool mSortAlphabetically : 1; ///< Sort examples alphabetically.
 };
 
 #endif // DALI_DEMO_TABLEVIEW_H

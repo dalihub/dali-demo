@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +18,17 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
-#include "look-camera.h"
-#include "generated/rendering-skybox-vert.h"
-#include "generated/rendering-skybox-frag.h"
-#include "generated/rendering-skybox-cube-vert.h"
 #include "generated/rendering-skybox-cube-frag.h"
+#include "generated/rendering-skybox-cube-vert.h"
+#include "generated/rendering-skybox-frag.h"
+#include "generated/rendering-skybox-vert.h"
+#include "look-camera.h"
 
 using namespace Dali;
 using namespace Toolkit;
 
 namespace
 {
-
 const float   CAMERA_DEFAULT_FOV(60.0f);
 const float   CAMERA_DEFAULT_NEAR(0.1f);
 const float   CAMERA_DEFAULT_FAR(1000.0f);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@
 #include <cstring>
 
 // INTERNAL INCLUDES
-#include "shared/utility.h"
-#include "generated/native-image-source-texture-vert.h"
 #include "generated/native-image-source-texture-frag.h"
+#include "generated/native-image-source-texture-vert.h"
+#include "shared/utility.h"
 
 using namespace Dali;
 using namespace Toolkit;

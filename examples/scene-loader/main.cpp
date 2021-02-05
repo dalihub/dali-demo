@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ using namespace Dali;
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  auto app = Application::New(&argc, &argv, DEMO_THEME_PATH);
+  auto               app = Application::New(&argc, &argv, DEMO_THEME_PATH);
   SceneLoaderExample sceneLoader(app);
   app.MainLoop();
   return 0;

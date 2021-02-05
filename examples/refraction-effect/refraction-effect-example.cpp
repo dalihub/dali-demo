@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,12 +26,12 @@
 #include <sstream>
 
 // INTERNAL INCLUDES
+#include "generated/refraction-effect-flat-frag.h"
+#include "generated/refraction-effect-flat-vert.h"
+#include "generated/refraction-effect-refraction-frag.h"
+#include "generated/refraction-effect-refraction-vert.h"
 #include "shared/utility.h"
 #include "shared/view.h"
-#include "generated/refraction-effect-flat-vert.h"
-#include "generated/refraction-effect-flat-frag.h"
-#include "generated/refraction-effect-refraction-vert.h"
-#include "generated/refraction-effect-refraction-frag.h"
 
 using namespace Dali;
 

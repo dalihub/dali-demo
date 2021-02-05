@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,18 +27,19 @@ namespace
 {
 const char* IMAGE_FILE(DEMO_IMAGE_DIR "gallery-medium-1.jpg");
 
-const float BLUR_RADIUS_VALUE(15.0f);
+const float   BLUR_RADIUS_VALUE(15.0f);
 const Vector2 BLUR_OFFSET_VALUE(0.05f, 0.05f);
 const Vector2 BLUR_SIZE_VALUE(1.1f, 1.1f);
 const Vector2 NO_BLUR_SIZE_VALUE(1.05f, 1.05f);
-const float ANIMATION_DURATION(2.0f);
+const float   ANIMATION_DURATION(2.0f);
 
 const Property::Value SHADOW{
   {Visual::Property::TYPE, Visual::COLOR},
   {Visual::Property::MIX_COLOR, Vector4(0.0f, 0.0f, 0.0f, 0.5f)},
-  {Visual::Property::TRANSFORM, Property::Map{{Visual::Transform::Property::SIZE, NO_BLUR_SIZE_VALUE},
-                                              {Visual::Transform::Property::ORIGIN, Align::CENTER},
-                                              {Visual::Transform::Property::ANCHOR_POINT, Align::CENTER}}}};
+  {Visual::Property::TRANSFORM,
+   Property::Map{{Visual::Transform::Property::SIZE, NO_BLUR_SIZE_VALUE},
+                 {Visual::Transform::Property::ORIGIN, Align::CENTER},
+                 {Visual::Transform::Property::ANCHOR_POINT, Align::CENTER}}}};
 
 } // namespace
 

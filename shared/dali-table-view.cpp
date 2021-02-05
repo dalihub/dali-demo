@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +19,9 @@
 #include "dali-table-view.h"
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/actors/actor-devel.h>
-#include <dali/devel-api/images/distance-field.h>
-#include <dali-toolkit/devel-api/controls/control-devel.h>
-#include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
-#include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/accessibility-manager/accessibility-manager.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
 #include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
@@ -65,7 +61,7 @@ const float   BUTTON_PRESS_ANIMATION_TIME = 0.35f; ///< Time to perform button s
 const int     EXAMPLES_PER_ROW            = 3;
 const int     ROWS_PER_PAGE               = 3;
 const int     EXAMPLES_PER_PAGE           = EXAMPLES_PER_ROW * ROWS_PER_PAGE;
-const Vector3 TABLE_RELATIVE_SIZE(0.95f, 0.9f, 0.8f);     ///< TableView's relative size to the entire stage. The Y value means sum of the logo and table relative heights.
+const Vector3 TABLE_RELATIVE_SIZE(0.95f, 0.9f, 0.8f); ///< TableView's relative size to the entire stage. The Y value means sum of the logo and table relative heights.
 
 const char* const DEMO_BUILD_DATE = __DATE__ " " __TIME__;
 
@@ -159,8 +155,7 @@ Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrac
   // Hide the popup when touched outside
   popup.OutsideTouchedSignal().Connect(
     &connectionTracker,
-    [popup]() mutable
-    {
+    [popup]() mutable {
       if(popup && (popup.GetDisplayState() == Toolkit::Popup::SHOWN))
       {
         popup.SetDisplayState(Popup::HIDDEN);
@@ -399,7 +394,7 @@ void DaliTableView::Populate()
   {
     if(mSortAlphabetically)
     {
-      sort(mExampleList.begin(), mExampleList.end(), [](auto& lhs, auto& rhs)->bool { return lhs.title < rhs.title; } );
+      sort(mExampleList.begin(), mExampleList.end(), [](auto& lhs, auto& rhs) -> bool { return lhs.title < rhs.title; });
     }
 
     unsigned int         exampleCount = 0;
@@ -501,7 +496,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   focusableTile.TouchedSignal().Connect(this, &DaliTableView::OnTilePressed);
   focusableTile.HoveredSignal().Connect(this, &DaliTableView::OnTileHovered);
   focusableTile.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::PUSH_BUTTON);
-  DevelControl::AccessibilityActivateSignal(focusableTile).Connect(this, [=](){
+  DevelControl::AccessibilityActivateSignal(focusableTile).Connect(this, [=]() {
     DoTilePress(focusableTile, PointState::DOWN);
     DoTilePress(focusableTile, PointState::UP);
   });
@@ -532,7 +527,7 @@ bool DaliTableView::DoTilePress(Actor actor, PointState::Type pointState)
     // ignore Example button presses when scrolling or button animating.
     if((!mScrolling) && (!mPressedAnimation))
     {
-      std::string           name = actor.GetProperty<std::string>(Dali::Actor::Property::NAME);
+      std::string name = actor.GetProperty<std::string>(Dali::Actor::Property::NAME);
       for(Example& example : mExampleList)
       {
         if(example.name == name)

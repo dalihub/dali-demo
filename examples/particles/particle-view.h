@@ -1,7 +1,7 @@
 #ifndef PARTICLES_PARTICLE_VIEW_H_
 #define PARTICLES_PARTICLE_VIEW_H_
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
  *
  */
 
-#include "particle-field.h"
+#include <functional>
+#include <vector>
 #include "dali/public-api/actors/camera-actor.h"
 #include "dali/public-api/animation/animation.h"
 #include "dali/public-api/object/weak-handle.h"
 #include "dali/public-api/rendering/shader.h"
-#include <vector>
-#include <functional>
+#include "particle-field.h"
 
 struct ColorRange
 {
@@ -31,11 +31,10 @@ struct ColorRange
   Dali::Vector3 rgb1;
 };
 
-class ParticleView: public Dali::ConnectionTracker
+class ParticleView : public Dali::ConnectionTracker
 {
 public:
-  ParticleView(const ParticleField& field, Dali::Actor world, Dali::CameraActor camera,
-    Dali::Geometry particleGeom = Dali::Geometry());
+  ParticleView(const ParticleField& field, Dali::Actor world, Dali::CameraActor camera, Dali::Geometry particleGeom = Dali::Geometry());
   ~ParticleView();
 
   void SetColorRange(const ColorRange& range);
@@ -62,15 +61,13 @@ public:
   ///@brief Starts an animation to change the opacity of the particles to @a target.
   ///@param duration Number of seconds to complete transition in.
   ///@param target Target opacity in the 0..1.f range.
-  void Fade(float duration, float target, Dali::AlphaFunction alphaFn = Dali::AlphaFunction::DEFAULT,
-    std::function<void(Dali::Animation&)> onFinished = nullptr);
+  void Fade(float duration, float target, Dali::AlphaFunction alphaFn = Dali::AlphaFunction::DEFAULT, std::function<void(Dali::Animation&)> onFinished = nullptr);
 
   ///@brief Starts an animation to change the opacity of the particles to @a target.
   ///@param duration Number of seconds to complete transition in.
   ///@param target Target opacity in the 0..1.f range.
   ///@param from The value to set the opacity to prior to the animation.
-  void Fade(float duration, float target, float from, Dali::AlphaFunction alphaFn = Dali::AlphaFunction::DEFAULT,
-    std::function<void(Dali::Animation&)> onFinished = nullptr);
+  void Fade(float duration, float target, float from, Dali::AlphaFunction alphaFn = Dali::AlphaFunction::DEFAULT, std::function<void(Dali::Animation&)> onFinished = nullptr);
 
 private: // DATA
   struct ScatterProps
@@ -83,9 +80,9 @@ private: // DATA
   };
 
   Dali::WeakHandle<Dali::Actor> mWorld;
-  Dali::Vector3 mParticleBoxSize;
+  Dali::Vector3                 mParticleBoxSize;
 
-  Dali::Shader mParticleShader;
+  Dali::Shader          mParticleShader;
   Dali::Property::Index mPropPopulation;
   Dali::Property::Index mPropFocalLength;
   Dali::Property::Index mPropAperture;
@@ -93,9 +90,9 @@ private: // DATA
   Dali::Property::Index mPropFadeRange;
 
   ScatterProps mScatterProps[6];
-  int mActiveScatter = 0;
+  int          mActiveScatter = 0;
 
-  Dali::Actor mMasterParticles;
+  Dali::Actor           mMasterParticles;
   Dali::Property::Index mPropSecondaryColor;
 
   Dali::Actor mSlaveParticles;

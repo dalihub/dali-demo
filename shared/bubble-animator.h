@@ -2,7 +2,7 @@
 #define DALI_DEMO_BUBBLE_ANIMATOR_H
 
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@
  */
 
 // EXTERNAL INCLUDES
-#include <vector>
 #include <dali/public-api/actors/actor.h>
 #include <dali/public-api/adaptor-framework/timer.h>
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/object/weak-handle.h>
 #include <dali/public-api/signals/connection-tracker.h>
+#include <vector>
 
 /**
  * Creates and animates random sized bubbles
@@ -32,7 +32,6 @@
 class BubbleAnimator : public Dali::ConnectionTracker
 {
 public:
-
   /**
    * @brief Initilizes the bubble background
    *
@@ -47,7 +46,6 @@ public:
   void PlayAnimation();
 
 private:
-
   /**
    * @brief Used by the timer to pause the animation
    *
@@ -71,13 +69,12 @@ private:
   void AddBackgroundActors(Dali::Actor layer, int count);
 
 private:
-
   using AnimationList = std::vector<Dali::Animation>;
 
-  Dali::WeakHandle<Dali::Actor> mScrollView; ///< Weak handle to the scroll view used to apply a parallax effect when scrolling.
-  AnimationList mBackgroundAnimations; ///< List of background bubble animations.
-  Dali::Timer mAnimationTimer;   ///< Timer used to turn off animation after a specific time period.
-  bool mBackgroundAnimsPlaying{false}; ///< Are background animations playing.
+  Dali::WeakHandle<Dali::Actor> mScrollView;                    ///< Weak handle to the scroll view used to apply a parallax effect when scrolling.
+  AnimationList                 mBackgroundAnimations;          ///< List of background bubble animations.
+  Dali::Timer                   mAnimationTimer;                ///< Timer used to turn off animation after a specific time period.
+  bool                          mBackgroundAnimsPlaying{false}; ///< Are background animations playing.
 };
 
 #endif // DALI_DEMO_BUBBLE_ANIMATOR_H

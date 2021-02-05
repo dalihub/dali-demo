@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@
 // from android_native_app_glue.c
 
 #define TAG "dalidemo"
-#define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR,   TAG, ##__VA_ARGS__))
+#define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, TAG, ##__VA_ARGS__))
 #ifndef NDEBUG
 #define LOGV(...) ((void)__android_log_print(ANDROID_LOG_VERBOSE, TAG, ##__VA_ARGS__))
 #else
@@ -156,7 +156,7 @@ void android_main(struct android_app* state)
   LOGV("android_main() >>");
 
   std::string filesDir = state->activity->internalDataPath;
-  LOGV("filesDir=%s", filesDir.c_str() );
+  LOGV("filesDir=%s", filesDir.c_str());
 
   std::string fontconfigPath = filesDir + "/fonts";
   setenv("FONTCONFIG_PATH", fontconfigPath.c_str(), 1);
@@ -186,13 +186,13 @@ void android_main(struct android_app* state)
 
   DaliDemoNativeActivity nativeActivity(state->activity);
 
-  int         status    = 0;
+  int status = 0;
 
   //dali requires Android 8 or higher
   //Android 6+ support loading library directly from apk,
   //therefore no need to extract to filesystem first then open by specifying full path
   //unless there is need to do profiling, or export libraries so that other packages can use
-  std::string libpath   = "libdali-demo.so";
+  std::string libpath = "libdali-demo.so";
 
   std::string callParam = nativeActivity.GetIntentStringExtra("start");
   if(callParam.empty())
@@ -217,16 +217,16 @@ void android_main(struct android_app* state)
   dlerror(); /* Clear any existing error */
 
   int (*main)(int, char**) = (int (*)(int, char**))dlsym(handle, "main");
-  LOGV("lib=%s handle=%p main=%p", libpath.c_str(), handle, main );
+  LOGV("lib=%s handle=%p main=%p", libpath.c_str(), handle, main);
   if(main)
   {
     status = main(0, nullptr);
   }
   else
   {
-      LOGE("lib %s doesn't have main()", libpath.c_str());
-      status = EFAULT;
-      std::exit(status);
+    LOGE("lib %s doesn't have main()", libpath.c_str());
+    status = EFAULT;
+    std::exit(status);
   }
 
   if(handle)
