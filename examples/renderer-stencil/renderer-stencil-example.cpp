@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,16 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/rendering/shader.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/public-api/rendering/shader.h>
 
 // INTERNAL INCLUDES
+#include "generated/render-stencil-frag.h"
+#include "generated/render-stencil-textured-frag.h"
+#include "generated/render-stencil-textured-vert.h"
+#include "generated/render-stencil-vert.h"
 #include "shared/utility.h"
 #include "shared/view.h"
-#include "generated/render-stencil-vert.h"
-#include "generated/render-stencil-frag.h"
-#include "generated/render-stencil-textured-vert.h"
-#include "generated/render-stencil-textured-frag.h"
 
 using namespace Dali;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -639,12 +639,12 @@ public:
       {
         //Rotate based off the gesture.
         Vector2 displacement = gesture.GetDisplacement();
-        Vector2 rotation {
+        Vector2 rotation{
           -displacement.y / X_ROTATION_DISPLACEMENT_FACTOR, // Y displacement rotates around X axis
-          displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR // X displacement rotates around Y axis
+          displacement.x / Y_ROTATION_DISPLACEMENT_FACTOR   // X displacement rotates around Y axis
         };
 
-        Quaternion q = Quaternion(Radian(rotation.x), Radian(rotation.y), Radian(0.f));
+        Quaternion q  = Quaternion(Radian(rotation.x), Radian(rotation.y), Radian(0.f));
         Quaternion q0 = mModel.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
 
         mModel.SetProperty(Actor::Property::ORIENTATION, q * q0);
@@ -698,7 +698,7 @@ private:
   PanGestureDetector mPanGestureDetector; ///< Detects pan gestures for rotation of the model.
   Animation          mRotationAnimation;  ///< Automatically rotates the model, unless it is being panned.
 
-  Vector4 mColor;    ///< Color to set all shapes.
+  Vector4 mColor; ///< Color to set all shapes.
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

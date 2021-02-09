@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -183,9 +183,12 @@ private:
   {
     if(touch.GetState(0) == PointState::UP)
     {
-      DevelControl::DoAction(mControl, Control::Property::BACKGROUND, DevelArcVisual::Action::UPDATE_PROPERTY,
-                             Property::Map().Add(DevelArcVisual::Property::START_ANGLE, START_ANGLE_INITIAL_VALUE)
-                                            .Add(DevelArcVisual::Property::SWEEP_ANGLE, SWEEP_ANGLE_INITIAL_VALUE));
+      DevelControl::DoAction(mControl,
+                             Control::Property::BACKGROUND,
+                             DevelArcVisual::Action::UPDATE_PROPERTY,
+                             Property::Map()
+                               .Add(DevelArcVisual::Property::START_ANGLE, START_ANGLE_INITIAL_VALUE)
+                               .Add(DevelArcVisual::Property::SWEEP_ANGLE, SWEEP_ANGLE_INITIAL_VALUE));
 
       Animation animation = Animation::New(ANIMATION_DURATION);
       animation.AnimateTo(DevelControl::GetVisualProperty(mControl, Control::Property::BACKGROUND, DevelArcVisual::Property::START_ANGLE), START_ANGLE_TARGET_VALUE);

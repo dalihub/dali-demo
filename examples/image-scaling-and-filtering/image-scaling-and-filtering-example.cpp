@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -134,12 +134,21 @@ SamplingMode::Type NextFilterMode(SamplingMode::Type oldMode)
 
 const char* StringFromScalingMode(FittingMode::Type scalingMode)
 {
-  return scalingMode == FittingMode::SCALE_TO_FILL ? "SCALE_TO_FILL" : scalingMode == FittingMode::SHRINK_TO_FIT ? "SHRINK_TO_FIT" : scalingMode == FittingMode::FIT_WIDTH ? "FIT_WIDTH" : scalingMode == FittingMode::FIT_HEIGHT ? "FIT_HEIGHT" : "UnknownScalingMode";
+  return scalingMode == FittingMode::SCALE_TO_FILL ? "SCALE_TO_FILL" : scalingMode == FittingMode::SHRINK_TO_FIT ? "SHRINK_TO_FIT"
+                                                                     : scalingMode == FittingMode::FIT_WIDTH     ? "FIT_WIDTH"
+                                                                     : scalingMode == FittingMode::FIT_HEIGHT    ? "FIT_HEIGHT"
+                                                                                                                 : "UnknownScalingMode";
 }
 
 const char* StringFromFilterMode(SamplingMode::Type filterMode)
 {
-  return filterMode == SamplingMode::BOX ? "BOX" : filterMode == SamplingMode::BOX_THEN_NEAREST ? "BOX_THEN_NEAREST" : filterMode == SamplingMode::BOX_THEN_LINEAR ? "BOX_THEN_LINEAR" : filterMode == SamplingMode::NEAREST ? "NEAREST" : filterMode == SamplingMode::LINEAR ? "LINEAR" : filterMode == SamplingMode::NO_FILTER ? "NO_FILTER" : filterMode == SamplingMode::DONT_CARE ? "DONT_CARE" : "UnknownFilterMode";
+  return filterMode == SamplingMode::BOX ? "BOX" : filterMode == SamplingMode::BOX_THEN_NEAREST ? "BOX_THEN_NEAREST"
+                                                 : filterMode == SamplingMode::BOX_THEN_LINEAR  ? "BOX_THEN_LINEAR"
+                                                 : filterMode == SamplingMode::NEAREST          ? "NEAREST"
+                                                 : filterMode == SamplingMode::LINEAR           ? "LINEAR"
+                                                 : filterMode == SamplingMode::NO_FILTER        ? "NO_FILTER"
+                                                 : filterMode == SamplingMode::DONT_CARE        ? "DONT_CARE"
+                                                                                                : "UnknownFilterMode";
 }
 
 } // namespace

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,9 @@
 #include "dali/public-api/rendering/renderer.h"
 #include "dali/public-api/rendering/texture.h"
 
-#define ACTOR_DECL(x) auto x = Dali::Actor::New(); x.SetProperty(Actor::Property::NAME, #x);
+#define ACTOR_DECL(x)          \
+  auto x = Dali::Actor::New(); \
+  x.SetProperty(Actor::Property::NAME, #x);
 
 /**
  * @brief Creates a unit quad centered on the origin (i.e. vertex positions
@@ -34,12 +36,12 @@ struct RendererOptions
 {
   enum
   {
-    NONE = 0x0,
-    BLEND = 0x01,
-    DEPTH_TEST = 0x02,
+    NONE        = 0x0,
+    BLEND       = 0x01,
+    DEPTH_TEST  = 0x02,
     DEPTH_WRITE = 0x04,
-    CULL_BACK = 0x08,
-    CULL_FRONT = 0x10,
+    CULL_BACK   = 0x08,
+    CULL_FRONT  = 0x10,
   };
 };
 
@@ -49,9 +51,9 @@ struct RendererOptions
 ///@note If textures is not a valid handle, an empty texture set will be created.
 Dali::Renderer CreateRenderer(
   Dali::TextureSet textures,
-  Dali::Geometry geometry,
-  Dali::Shader shader,
-  uint32_t options = RendererOptions::NONE);
+  Dali::Geometry   geometry,
+  Dali::Shader     shader,
+  uint32_t         options = RendererOptions::NONE);
 
 ///@brief Sets @a actor's anchor point and parent origin to center.
 void CenterActor(Dali::Actor actor);

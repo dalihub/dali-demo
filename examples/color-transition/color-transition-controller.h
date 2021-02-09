@@ -1,7 +1,7 @@
 #ifndef DALI_DEMO_COLOR_TRANSITION_CONTROLLER_H
 #define DALI_DEMO_COLOR_TRANSITION_CONTROLLER_H
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,18 @@
  * limitations under the License.
  *
  */
-#include "dali/public-api/adaptor-framework/window.h"
-#include "dali/public-api/object/weak-handle.h"
 #include "dali/public-api/actors/actor.h"
+#include "dali/public-api/adaptor-framework/window.h"
 #include "dali/public-api/animation/animation.h"
-#include "dali/public-api/rendering/texture.h"
-#include "dali/public-api/render-tasks/render-task.h"
+#include "dali/public-api/object/weak-handle.h"
 #include "dali/public-api/render-tasks/render-task-list.h"
+#include "dali/public-api/render-tasks/render-task.h"
+#include "dali/public-api/rendering/texture.h"
 
-class ColorTransitionController: public Dali::ConnectionTracker
+class ColorTransitionController : public Dali::ConnectionTracker
 {
 public:
-  using OnFinished = void(*)(void*);
+  using OnFinished = void (*)(void*);
 
   ColorTransitionController(Dali::WeakHandle<Dali::RenderTaskList> renderTasks, Dali::Actor content, Dali::RenderTaskList tasks, Dali::Vector3 initialColor);
   ~ColorTransitionController();
@@ -45,7 +45,7 @@ public:
 private:
   void OnTransitionFinished(Dali::Animation& anim);
 
-  Dali::Actor mComposite;
+  Dali::Actor           mComposite;
   Dali::Property::Index mPropFlow;
   Dali::Property::Index mPropUvTransform;
   Dali::Property::Index mPropRgb[2];
@@ -54,8 +54,8 @@ private:
 
   Dali::Animation mAnimation;
 
-  OnFinished mOnFinished = nullptr;
-  void* mOnFinishedData = nullptr;
+  OnFinished mOnFinished     = nullptr;
+  void*      mOnFinishedData = nullptr;
 
   Dali::WeakHandle<Dali::RenderTaskList> mWeakRenderTasks;
 };

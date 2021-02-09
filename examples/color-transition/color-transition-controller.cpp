@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,20 @@
  *
  */
 #include "color-transition-controller.h"
-#include "utils.h"
-#include "dali/dali.h"
 #include "dali-toolkit/dali-toolkit.h"
-#include "generated/color-transition-controller-composite-vert.h"
+#include "dali/dali.h"
 #include "generated/color-transition-controller-composite-frag.h"
+#include "generated/color-transition-controller-composite-vert.h"
+#include "utils.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 namespace
 {
-
 const Vector4 BG_COLOR = Vector4(0.f, 0.f, 0.f, 0.f);
 
-} // nonamespace
+} // namespace
 
 ColorTransitionController::ColorTransitionController(WeakHandle<RenderTaskList> window, Actor content, RenderTaskList tasks, Vector3 initialColor)
 : mWeakRenderTasks(window)
@@ -39,8 +38,7 @@ ColorTransitionController::ColorTransitionController(WeakHandle<RenderTaskList> 
   auto defaultTask = tasks.GetTask(0);
 
   // create rendertarget and rendertask
-  auto rtt = Texture::New(TextureType::TEXTURE_2D, Pixel::Format::RGBA8888,
-    static_cast<uint32_t>(contentSize.x), static_cast<uint32_t>(contentSize.y));
+  auto rtt = Texture::New(TextureType::TEXTURE_2D, Pixel::Format::RGBA8888, static_cast<uint32_t>(contentSize.x), static_cast<uint32_t>(contentSize.y));
 
   auto fbo = FrameBuffer::New(rtt.GetWidth(), rtt.GetHeight(), FrameBuffer::Attachment::NONE);
   fbo.AttachColorTexture(rtt);
@@ -58,10 +56,10 @@ ColorTransitionController::ColorTransitionController(WeakHandle<RenderTaskList> 
   CenterActor(composite);
   composite.SetProperty(Actor::Property::SIZE, contentSize);
 
-  mPropFlow = composite.RegisterProperty("uFlow", -1.f);
+  mPropFlow        = composite.RegisterProperty("uFlow", -1.f);
   mPropUvTransform = composite.RegisterProperty("uUvTransform", Vector4(0.f, 0.f, 1.f, 1.f));
-  mPropRgb[0] = composite.RegisterProperty("uRgb[0]", initialColor);
-  mPropRgb[1] = composite.RegisterProperty("uRgb[1]", Vector3::ONE);
+  mPropRgb[0]      = composite.RegisterProperty("uRgb[0]", initialColor);
+  mPropRgb[1]      = composite.RegisterProperty("uRgb[1]", Vector3::ONE);
 
   auto geomComposite = CreateQuadGeometry();
 
@@ -89,7 +87,7 @@ ColorTransitionController::ColorTransitionController(WeakHandle<RenderTaskList> 
 
 ColorTransitionController::~ColorTransitionController()
 {
-  if (auto renderTasks = mWeakRenderTasks.GetHandle())
+  if(auto renderTasks = mWeakRenderTasks.GetHandle())
   {
     renderTasks.RemoveTask(mRtCompositor);
   }
@@ -103,7 +101,7 @@ Dali::Actor ColorTransitionController::GetComposite()
 void ColorTransitionController::SetFlowMap(Texture flowMap)
 {
   auto renderer = mComposite.GetRendererAt(0);
-  auto texSet = renderer.GetTextures();
+  auto texSet   = renderer.GetTextures();
   texSet.SetTexture(1, flowMap);
 }
 
@@ -123,7 +121,7 @@ void ColorTransitionController::RequestTransition(float duration, const Dali::Ve
 
 void ColorTransitionController::SetOnFinished(OnFinished onFinished, void* data)
 {
-  mOnFinished = onFinished;
+  mOnFinished     = onFinished;
   mOnFinishedData = data;
 }
 
@@ -133,7 +131,7 @@ void ColorTransitionController::OnTransitionFinished(Animation& anim)
   Vector3 color1 = mComposite.GetProperty(mPropRgb[1]).Get<Vector3>();
   mComposite.SetProperty(mPropRgb[0], color1);
 
-  if (mOnFinished)
+  if(mOnFinished)
   {
     mOnFinished(mOnFinishedData);
   }

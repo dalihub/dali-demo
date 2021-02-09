@@ -1,7 +1,7 @@
 #ifndef WAVES_UTILS_H_
 #define WAVES_UTILS_H_
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,38 +16,37 @@
  * limitations under the License.
  *
  */
+#include <cmath>
 #include "dali/public-api/actors/actor.h"
+#include "dali/public-api/math/vector3.h"
 #include "dali/public-api/rendering/geometry.h"
 #include "dali/public-api/rendering/renderer.h"
 #include "dali/public-api/rendering/shader.h"
 #include "dali/public-api/rendering/texture.h"
-#include "dali/public-api/math/vector3.h"
-#include <cmath>
 
 //
 // Maths
 //
-inline
-float FastFloor(float x)
+inline float FastFloor(float x)
 {
   return static_cast<int>(x) - static_cast<int>(x < 0);
 }
 
-inline
-float Sign(float x)
+inline float Sign(float x)
 {
   return float(x > 0.f) - float(x < .0f);
 }
 
-template <typename T>
+template<typename T>
 inline
-typename std::decay<T>::type Lerp(
+  typename std::decay<T>::type
+  Lerp(
     const T& min, const T& max, float alpha)
 {
   return min + (max - min) * alpha;
 }
 
-template <typename T>
+template<typename T>
 T Normalized(T v)
 {
   v.Normalize();
@@ -68,22 +67,21 @@ Dali::Vector3 FromHueSaturationLightness(Dali::Vector3 hsl);
 //
 // Dali entities
 //
-using VertexFn = Dali::Vector2(*)(const Dali::Vector2&);
+using VertexFn = Dali::Vector2 (*)(const Dali::Vector2&);
 
 ///@brief Creates a tesselated quad with @a xVerts vertices horizontally and @a yVerts
 /// vertices vertically. Allows the use of an optional @a shaderFn, which can be used to
 /// modify the vertex positions - these will be in the [{ 0.f, 0.f}, { 1.f, 1.f}] range.
 /// After returning from the shader, they're transformed
-Dali::Geometry CreateTesselatedQuad(unsigned int xVerts, unsigned int yVerts,
-  Dali::Vector2 scale, VertexFn positionFn = nullptr, VertexFn texCoordFn = nullptr);
+Dali::Geometry CreateTesselatedQuad(unsigned int xVerts, unsigned int yVerts, Dali::Vector2 scale, VertexFn positionFn = nullptr, VertexFn texCoordFn = nullptr);
 
 Dali::Texture LoadTexture(const std::string& path);
 
 enum RendererOptions
 {
-  OPTION_NONE = 0x0,
-  OPTION_BLEND = 0x01,
-  OPTION_DEPTH_TEST = 0x02,
+  OPTION_NONE        = 0x0,
+  OPTION_BLEND       = 0x01,
+  OPTION_DEPTH_TEST  = 0x02,
   OPTION_DEPTH_WRITE = 0x04
 };
 
@@ -91,8 +89,7 @@ enum RendererOptions
 /// and @a options from above.
 ///@note Back face culling is on.
 ///@note If textures is not a valid handle, an empty texture set will be created.
-Dali::Renderer CreateRenderer(Dali::TextureSet textures, Dali::Geometry geometry,
-  Dali::Shader shader, uint32_t options = OPTION_NONE);
+Dali::Renderer CreateRenderer(Dali::TextureSet textures, Dali::Geometry geometry, Dali::Shader shader, uint32_t options = OPTION_NONE);
 
 ///@brief Sets @a actor's anchor point and parent origin to center.
 void CenterActor(Dali::Actor actor);

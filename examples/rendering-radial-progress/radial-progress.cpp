@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
-#include "generated/radial-progress-basic-vert.h"
 #include "generated/radial-progress-basic-frag.h"
-#include "generated/radial-progress-textured-vert.h"
+#include "generated/radial-progress-basic-vert.h"
 #include "generated/radial-progress-textured-frag.h"
+#include "generated/radial-progress-textured-vert.h"
 
 using namespace Dali;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,10 @@
 #include <dali/public-api/rendering/texture.h>
 
 // INTERNAL INCLUDES
-#include "shared/utility.h" // DemoHelper::LoadTexture
-#include "generated/metaball-vert.h"
 #include "generated/metaball-frag.h"
 #include "generated/metaball-refraction-frag.h"
+#include "generated/metaball-vert.h"
+#include "shared/utility.h" // DemoHelper::LoadTexture
 
 using namespace Dali;
 
