@@ -15,14 +15,18 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <iostream>
+
+// INTERNAL INCLUDES
 #include "generated/perf-scroll-frag.h"
 #include "generated/perf-scroll-vert.h"
 #include "shared/utility.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace std;
 
 namespace
 {
@@ -138,10 +142,8 @@ const char* NINEPATCH_IMAGE_PATH[] = {
   DEMO_IMAGE_DIR "button-up-17.9.png",
 };
 
-const unsigned int NUM_IMAGES           = sizeof(IMAGE_PATH) / sizeof(char*);
-const unsigned int NUM_NINEPATCH_IMAGES = sizeof(NINEPATCH_IMAGE_PATH) / sizeof(char*);
-
-const float ANIMATION_TIME(5.0f); // animation length in seconds
+constexpr unsigned int NUM_IMAGES           = sizeof(IMAGE_PATH) / sizeof(char*);
+constexpr unsigned int NUM_NINEPATCH_IMAGES = sizeof(NINEPATCH_IMAGE_PATH) / sizeof(char*);
 
 struct VertexWithTexture
 {
@@ -149,17 +151,19 @@ struct VertexWithTexture
   Vector2 texCoord;
 };
 
-bool         gUseMesh(false);
-bool         gNinePatch(false);
-unsigned int gRowsPerPage(15);
-unsigned int gColumnsPerPage(15);
-unsigned int gPageCount(10);
-float        gDuration(10.0f);
+bool gUseMesh(false);
+bool gUseNinePatch(false);
+
+constexpr unsigned int ROWS_PER_PAGE(15);
+constexpr unsigned int COLUMNS_PER_PAGE(15);
+constexpr unsigned int PAGE_COUNT(10);
+
+float gScrollDuration(10.0f); ///< Default animation duration for the scroll, is modifiable with the -t option
 
 Renderer CreateRenderer(unsigned int index, Geometry geometry, Shader shader)
 {
   Renderer    renderer   = Renderer::New(geometry, shader);
-  const char* imagePath  = !gNinePatch ? IMAGE_PATH[index] : NINEPATCH_IMAGE_PATH[index];
+  const char* imagePath  = !gUseNinePatch ? IMAGE_PATH[index] : NINEPATCH_IMAGE_PATH[index];
   Texture     texture    = DemoHelper::LoadTexture(imagePath);
   TextureSet  textureSet = TextureSet::New();
   textureSet.SetTexture(0u, texture);
@@ -169,30 +173,28 @@ Renderer CreateRenderer(unsigned int index, Geometry geometry, Shader shader)
 }
 
 } // namespace
-// Test application to compare performance between ImageActor and ImageView
-// By default, the application consist of 10 pages of 25x25 ImageActors, this can be modified using the following command line arguments:
-// -t duration (sec )
-// --use-imageview ( Use ImageView instead of ImageActor )
-// --use-mesh ( Use new renderer API (as ImageView) but shares renderers between actors when possible )
 
-//
+/**
+ * Test application to compare performance between ImageView & manually created Renderers
+ * By default, the application consist of 10 pages of 15x15 Images, this can be modified using the following command line arguments:
+ *  -t[duration] (seconds)
+ *  --use-mesh (Use Renderer API)
+ *  --nine-patch (Use nine-patch images in ImageView)
+ */
 class PerfScroll : public ConnectionTracker
 {
 public:
   PerfScroll(Application& application)
   : mApplication(application),
-    mRowsPerPage(gRowsPerPage),
-    mColumnsPerPage(gColumnsPerPage),
-    mPageCount(gPageCount)
+    mRowsPerPage(ROWS_PER_PAGE),
+    mColumnsPerPage(COLUMNS_PER_PAGE),
+    mPageCount(PAGE_COUNT)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &PerfScroll::Create);
   }
 
-  ~PerfScroll()
-  {
-    // Nothing to do here;
-  }
+  ~PerfScroll() = default;
 
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application& application)
@@ -225,7 +227,8 @@ public:
       CreateImageViews();
     }
 
-    ShowAnimation();
+    PositionActors();
+    ScrollAnimation();
   }
 
   bool OnTouch(Actor actor, const TouchEvent& touch)
@@ -237,33 +240,30 @@ public:
 
   const char* ImagePath(int i)
   {
-    return !gNinePatch ? IMAGE_PATH[i % NUM_IMAGES] : NINEPATCH_IMAGE_PATH[i % NUM_NINEPATCH_IMAGES];
+    return !gUseNinePatch ? IMAGE_PATH[i % NUM_IMAGES] : NINEPATCH_IMAGE_PATH[i % NUM_NINEPATCH_IMAGES];
   }
 
   void CreateImageViews()
   {
     Window       window = mApplication.GetWindow();
     unsigned int actorCount(mRowsPerPage * mColumnsPerPage * mPageCount);
-    mImageView.resize(actorCount);
+    mActor.resize(actorCount);
 
     for(size_t i(0); i < actorCount; ++i)
     {
-      mImageView[i] = ImageView::New();
+      mActor[i] = ImageView::New();
       Property::Map propertyMap;
       propertyMap.Insert(Toolkit::ImageVisual::Property::URL, ImagePath(i));
       propertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
-      propertyMap.Insert(Toolkit::DevelVisual::Property::VISUAL_FITTING_MODE, Toolkit::DevelVisual::FILL);
-      mImageView[i].SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
-
-      mImageView[i].SetProperty(Actor::Property::SIZE, Vector3(0.0f, 0.0f, 0.0f));
-      mImageView[i].SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
-      mParent.Add(mImageView[i]);
+      mActor[i].SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
+      mActor[i].SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+      mParent.Add(mActor[i]);
     }
   }
 
   void CreateMeshActors()
   {
-    unsigned int numImages = !gNinePatch ? NUM_IMAGES : NUM_NINEPATCH_IMAGES;
+    unsigned int numImages = !gUseNinePatch ? NUM_IMAGES : NUM_NINEPATCH_IMAGES;
 
     //Create all the renderers
     std::vector<Renderer> renderers(numImages);
@@ -282,28 +282,11 @@ public:
     {
       mActor[i] = Actor::New();
       mActor[i].AddRenderer(renderers[i % numImages]);
-      mActor[i].SetProperty(Actor::Property::SIZE, Vector3(0.0f, 0.0f, 0.0f));
       mParent.Add(mActor[i]);
     }
   }
 
-  void OnAnimationEnd(Animation& source)
-  {
-    if(source == mShow)
-    {
-      ScrollAnimation();
-    }
-    else if(source == mScroll)
-    {
-      HideAnimation();
-    }
-    else
-    {
-      mApplication.Quit();
-    }
-  }
-
-  void ShowAnimation()
+  void PositionActors()
   {
     Window  window = mApplication.GetWindow();
     Vector3 initialPosition(window.GetSize().GetWidth() * 0.5f, window.GetSize().GetHeight() * 0.5f, 1000.0f);
@@ -312,11 +295,6 @@ public:
 
     size_t count(0);
     float  xpos, ypos;
-    mShow = Animation::New(0.0f);
-
-    float totalDuration(0.0f);
-    float durationPerActor(0.0f);
-    float delayBetweenActors = (totalDuration - durationPerActor) / (mRowsPerPage * mColumnsPerPage);
 
     for(size_t i(0); i < totalColumns; ++i)
     {
@@ -325,35 +303,12 @@ public:
       for(size_t j(0); j < mRowsPerPage; ++j)
       {
         ypos = mSize.y * j;
-
-        float delay    = 0.0f;
-        float duration = 0.0f;
-        if(count < (static_cast<size_t>(mRowsPerPage) * mColumnsPerPage))
-        {
-          duration = durationPerActor;
-          delay    = delayBetweenActors * count;
-        }
-        if(gUseMesh)
-        {
-          mActor[count].SetProperty(Actor::Property::POSITION, initialPosition);
-          mActor[count].SetProperty(Actor::Property::SIZE, Vector3(0.0f, 0.0f, 0.0f));
-          mActor[count].SetProperty(Actor::Property::ORIENTATION, Quaternion(Quaternion(Radian(0.0f), Vector3::XAXIS)));
-          mShow.AnimateTo(Property(mActor[count], Actor::Property::POSITION), Vector3(xpos + mSize.x * 0.5f, ypos + mSize.y * 0.5f, 0.0f), AlphaFunction::EASE_OUT_BACK, TimePeriod(delay, duration));
-          mShow.AnimateTo(Property(mActor[count], Actor::Property::SIZE), mSize, AlphaFunction::EASE_OUT_BACK, TimePeriod(delay, duration));
-        }
-        else
-        {
-          mImageView[count].SetProperty(Actor::Property::POSITION, initialPosition);
-          mImageView[count].SetProperty(Actor::Property::SIZE, Vector3(0.0f, 0.0f, 0.0f));
-          mImageView[count].SetProperty(Actor::Property::ORIENTATION, Quaternion(Quaternion(Radian(0.0f), Vector3::XAXIS)));
-          mShow.AnimateTo(Property(mImageView[count], Actor::Property::POSITION), Vector3(xpos + mSize.x * 0.5f, ypos + mSize.y * 0.5f, 0.0f), AlphaFunction::EASE_OUT_BACK, TimePeriod(delay, duration));
-          mShow.AnimateTo(Property(mImageView[count], Actor::Property::SIZE), mSize, AlphaFunction::EASE_OUT_BACK, TimePeriod(delay, duration));
-        }
+        mActor[count].SetProperty(Actor::Property::POSITION, Vector3(xpos + mSize.x * 0.5f, ypos + mSize.y * 0.5f, 0.0f));
+        mActor[count].SetProperty(Actor::Property::SIZE, mSize);
+        mActor[count].SetProperty(Actor::Property::ORIENTATION, Quaternion(Radian(0.0f), Vector3::XAXIS));
         ++count;
       }
     }
-    mShow.Play();
-    mShow.FinishedSignal().Connect(this, &PerfScroll::OnAnimationEnd);
   }
 
   void ScrollAnimation()
@@ -361,52 +316,10 @@ public:
     Window  window = mApplication.GetWindow();
     Vector3 windowSize(window.GetSize());
 
-    mScroll = Animation::New(gDuration);
-
-    mScroll.AnimateBy(Property(mParent, Actor::Property::POSITION), Vector3(-(gPageCount - 1.) * windowSize.x, 0.0f, 0.0f));
-    mScroll.Play();
-    mScroll.FinishedSignal().Connect(this, &PerfScroll::OnAnimationEnd);
-  }
-
-  void HideAnimation()
-  {
-    size_t       count(0);
-    unsigned int actorsPerPage(mRowsPerPage * mColumnsPerPage);
-    mHide = Animation::New(0.0f);
-
-    unsigned int totalColumns = mColumnsPerPage * mPageCount;
-
-    float totalDuration(0.0f);
-    float durationPerActor(0.0f);
-    float delayBetweenActors = (totalDuration - durationPerActor) / (mRowsPerPage * mColumnsPerPage);
-    for(size_t i(0); i < mRowsPerPage; ++i)
-    {
-      for(size_t j(0); j < totalColumns; ++j)
-      {
-        float delay    = 0.0f;
-        float duration = 0.0f;
-        if(count < actorsPerPage)
-        {
-          duration = durationPerActor;
-          delay    = delayBetweenActors * count;
-        }
-
-        if(gUseMesh)
-        {
-          mHide.AnimateTo(Property(mActor[count], Actor::Property::ORIENTATION), Quaternion(Radian(Degree(70.0f)), Vector3::XAXIS), AlphaFunction::EASE_OUT, TimePeriod(delay, duration));
-          mHide.AnimateBy(Property(mActor[count], Actor::Property::POSITION_Z), 1000.0f, AlphaFunction::EASE_OUT_BACK, TimePeriod(delay + delayBetweenActors * actorsPerPage + duration, duration));
-        }
-        else
-        {
-          mHide.AnimateTo(Property(mImageView[count], Actor::Property::ORIENTATION), Quaternion(Radian(Degree(70.0f)), Vector3::XAXIS), AlphaFunction::EASE_OUT, TimePeriod(delay, duration));
-          mHide.AnimateBy(Property(mImageView[count], Actor::Property::POSITION_Z), 1000.0f, AlphaFunction::EASE_OUT_BACK, TimePeriod(delay + delayBetweenActors * actorsPerPage + duration, duration));
-        }
-        ++count;
-      }
-    }
-
-    mHide.Play();
-    mHide.FinishedSignal().Connect(this, &PerfScroll::OnAnimationEnd);
+    Animation scrollAnimation = Animation::New(gScrollDuration);
+    scrollAnimation.AnimateBy(Property(mParent, Actor::Property::POSITION), Vector3(-(PAGE_COUNT - 1.) * windowSize.x, 0.0f, 0.0f));
+    scrollAnimation.Play();
+    scrollAnimation.FinishedSignal().Connect(this, [&](Animation&) { mApplication.Quit(); });
   }
 
   void OnKeyEvent(const KeyEvent& event)
@@ -423,24 +336,18 @@ public:
 private:
   Application& mApplication;
 
-  std::vector<Actor>     mActor;
-  std::vector<ImageView> mImageView;
-  Actor                  mParent;
+  std::vector<Actor> mActor;
+  Actor              mParent;
 
-  Vector3      mSize;
-  unsigned int mRowsPerPage;
-  unsigned int mColumnsPerPage;
-  unsigned int mPageCount;
+  Vector3 mSize;
 
-  Animation mShow;
-  Animation mScroll;
-  Animation mHide;
+  const unsigned int mRowsPerPage;
+  const unsigned int mColumnsPerPage;
+  const unsigned int mPageCount;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New(&argc, &argv);
-
   for(int i(1); i < argc; ++i)
   {
     std::string arg(argv[i]);
@@ -450,13 +357,29 @@ int DALI_EXPORT_API main(int argc, char** argv)
     }
     else if(arg.compare("--nine-patch") == 0)
     {
-      gNinePatch = true;
+      gUseNinePatch = true;
     }
     else if(arg.compare(0, 2, "-t") == 0)
     {
-      gDuration = atof(arg.substr(2, arg.size()).c_str());
+      auto newDuration = atof(arg.substr(2, arg.size()).c_str());
+      if(newDuration > 0.0f)
+      {
+        gScrollDuration = newDuration;
+      }
+    }
+    else if((arg.compare("--help") == 0) || (arg.compare("-h") == 0))
+    {
+      cout << "perf-scroll.example [OPTIONS]" << endl;
+      cout << "  Options:" << endl;
+      cout << "    --use-mesh    Uses the Rendering API directly to create actors" << endl;
+      cout << "    --nine-patch  Uses n-patch images instead" << endl;
+      cout << "    -t[seconds]   Replace [seconds] with the animation time required, i.e. -t4. Default is 10s." << endl;
+      cout << "    -h|--help     Help" << endl;
+      return 0;
     }
   }
+
+  Application application = Application::New(&argc, &argv);
 
   PerfScroll test(application);
   application.MainLoop();
