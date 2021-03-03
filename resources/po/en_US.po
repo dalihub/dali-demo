@@ -4,9 +4,6 @@ msgstr "Animated Images"
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "Animated Shapes"
 
-msgid "DALI_DEMO_STR_TITLE_ALPHA_BLENDING_CPU"
-msgstr "CPU Alpha Blending"
-
 msgid "DALI_DEMO_STR_TITLE_ARC_VISUAL"
 msgstr "Arc Visual"
 
