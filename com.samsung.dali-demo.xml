@@ -55,9 +55,6 @@
 	<ui-application appid="buttons.example" exec="/usr/apps/com.samsung.dali-demo/bin/buttons.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Buttons</label>
 	</ui-application>
-	<ui-application appid="canvas-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/canvas-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Canvas View</label>
-	</ui-application>
 	<ui-application appid="clipping-draw-order.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping-draw-order.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping Draw Order</label>
 	</ui-application>
