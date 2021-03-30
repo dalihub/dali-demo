@@ -25,8 +25,8 @@ if [ ! -d "$ANDROID_SDK" ]; then
   if [ ! -d "$ROOT_DIR/Android/Sdk" ]; then
     mkdir -p "$ROOT_DIR/Android/Sdk"
     cd "$ROOT_DIR/Android/Sdk"
-    wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
-    unzip sdk-tools-linux-4333796.zip
+    wget --quiet https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+    unzip -q sdk-tools-linux-4333796.zip
     tools/bin/sdkmanager --update $SdbProxyOptions
     yes | tools/bin/sdkmanager $SdbProxyOptions "patcher;v4" "platform-tools" "platforms;android-29" "build-tools;29.0.2" "cmake;3.10.2.4988404" "ndk-bundle" "ndk;20.1.5948944"
     cd -
@@ -56,8 +56,8 @@ fi
 if [ ! -d "$ROOT_DIR/gradle/gradle-5.4.1" ]; then
   mkdir -p $ROOT_DIR/gradle
   cd $ROOT_DIR/gradle
-  wget https://services.gradle.org/distributions/gradle-5.4.1-bin.zip
-  unzip gradle-5.4.1-bin.zip
+  wget --quiet https://services.gradle.org/distributions/gradle-5.4.1-bin.zip
+  unzip -q gradle-5.4.1-bin.zip
   cd -
 fi
 
