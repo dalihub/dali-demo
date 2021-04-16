@@ -163,6 +163,8 @@ void glTF::LoadFromFile(const std::string& filename)
   mBuffer    = LoadFile(binFile);
   jsonBuffer = LoadFile(jsonFile);
 
+  jsonBuffer.push_back('\0'); // It should be null terminated.
+
   // Log errors
   if(mBuffer.empty())
   {

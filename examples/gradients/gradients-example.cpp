@@ -33,7 +33,7 @@ const char* const CHANGE_ICON_SELECTED(DEMO_IMAGE_DIR "icon-change-selected.png"
 const char* const ROUNDED_CORNER_ICON(DEMO_IMAGE_DIR "icon-replace.png");
 const char* const ROUNDED_CORNER_ICON_SELECTED(DEMO_IMAGE_DIR "icon-replace-selected.png");
 
-const float CORNER_RADIUS_VALUE(20.0f);
+constexpr Vector4 CORNER_RADIUS_VALUE(20.0f, 20.0f, 20.0f, 20.0f);
 
 } // namespace
 
@@ -119,7 +119,7 @@ public:
     stopColors.PushBack(Color::YELLOW);
     mGradientMap.Insert(GradientVisual::Property::STOP_COLOR, stopColors);
 
-    mGradientMap.Insert(DevelVisual::Property::CORNER_RADIUS, mRoundedCorner ? CORNER_RADIUS_VALUE : 0.0f);
+    mGradientMap.Insert(DevelVisual::Property::CORNER_RADIUS, mRoundedCorner ? CORNER_RADIUS_VALUE : Vector4::ZERO);
 
     UpdateGradientMap();
   }
@@ -142,7 +142,7 @@ public:
     }
     else
     {
-      animation.AnimateTo(DevelControl::GetVisualProperty(mGradientControl, Control::Property::BACKGROUND, DevelVisual::Property::CORNER_RADIUS), 0.0f);
+      animation.AnimateTo(DevelControl::GetVisualProperty(mGradientControl, Control::Property::BACKGROUND, DevelVisual::Property::CORNER_RADIUS), Vector4::ZERO);
     }
     animation.Play();
 
