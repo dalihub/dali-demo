@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ const char* const CHANGE_ICON_SELECTED(DEMO_IMAGE_DIR "icon-change-selected.png"
 const char* const ROUNDED_CORNER_ICON(DEMO_IMAGE_DIR "icon-replace.png");
 const char* const ROUNDED_CORNER_ICON_SELECTED(DEMO_IMAGE_DIR "icon-replace-selected.png");
 
-constexpr Vector4 CORNER_RADIUS_VALUE(20.0f, 20.0f, 20.0f, 20.0f);
+const float CORNER_RADIUS_VALUE(20.0f);
 
 } // namespace
 
@@ -119,7 +119,7 @@ public:
     stopColors.PushBack(Color::YELLOW);
     mGradientMap.Insert(GradientVisual::Property::STOP_COLOR, stopColors);
 
-    mGradientMap.Insert(DevelVisual::Property::CORNER_RADIUS, mRoundedCorner ? CORNER_RADIUS_VALUE : Vector4::ZERO);
+    mGradientMap.Insert(DevelVisual::Property::CORNER_RADIUS, mRoundedCorner ? CORNER_RADIUS_VALUE : 0.0f);
 
     UpdateGradientMap();
   }
@@ -142,7 +142,7 @@ public:
     }
     else
     {
-      animation.AnimateTo(DevelControl::GetVisualProperty(mGradientControl, Control::Property::BACKGROUND, DevelVisual::Property::CORNER_RADIUS), Vector4::ZERO);
+      animation.AnimateTo(DevelControl::GetVisualProperty(mGradientControl, Control::Property::BACKGROUND, DevelVisual::Property::CORNER_RADIUS), 0.0f);
     }
     animation.Play();
 
