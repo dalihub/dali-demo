@@ -35,7 +35,7 @@ const char* TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
 const char* APPLICATION_TITLE("Animated Vector Images Rive");
 
 const char* IMAGE_PATH[] = {
-  DEMO_IMAGE_DIR "juice.riv",
+  DEMO_IMAGE_DIR "shape.riv",
   };
 
 const unsigned int NUMBER_OF_IMAGES = 1;
