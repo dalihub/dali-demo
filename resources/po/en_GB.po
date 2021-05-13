@@ -28,6 +28,9 @@ msgstr "Bubbles"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Buttons"
 
+msgid "DALI_DEMO_STR_TITLE_CANVAS_VIEW"
+msgstr "Canvas view"
+
 msgid "DALI_DEMO_STR_TITLE_CALL_ACTIVE"
 msgstr "Call Active"
 
@@ -294,3 +297,6 @@ msgstr "Web View"
 
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
 msgstr "Animated Vector Images"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES_RIVE"
+msgstr "Animated Vector Images Rive"
