@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -252,10 +252,10 @@ void BeatControl::SetProperty(BaseObject* object, Property::Index index, const P
         const Property::Map* map = value.GetMap();
         if(map)
         {
-          Property::Value* value = map->Find(Visual::Property::TRANSFORM, "transform");
-          if(value)
+          Property::Value* transformValue = map->Find(Visual::Property::TRANSFORM, "transform");
+          if(transformValue)
           {
-            Property::Map* transformMap = value->GetMap();
+            Property::Map* transformMap = transformValue->GetMap();
             if(transformMap)
             {
               // We'll increment this whenever SIZE, ORIGIN or ANCHOR_POINT's are modified as we won't need to create a new visual if only these properties are used

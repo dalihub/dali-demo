@@ -222,9 +222,9 @@ Dali::FittingMode::Type NextMode(const Dali::FittingMode::Type oldMode)
  * */
 struct ImageConfiguration
 {
-  ImageConfiguration(const char* const path, const Vector2 dimensions)
-  : path(path),
-    dimensions(dimensions)
+  ImageConfiguration(const char* const imagePath, const Vector2 dims)
+  : path(imagePath),
+    dimensions(dims)
   {
   }
   const char* path;
@@ -236,11 +236,11 @@ struct ImageConfiguration
  */
 struct PositionedImage
 {
-  PositionedImage(ImageConfiguration& configuration, unsigned cellX, unsigned cellY, Vector2 imageGridDims)
-  : configuration(configuration),
-    cellX(cellX),
-    cellY(cellY),
-    imageGridDims(imageGridDims)
+  PositionedImage(ImageConfiguration& config, unsigned x, unsigned y, Vector2 imageGridDimensions)
+  : configuration(config),
+    cellX(x),
+    cellY(y),
+    imageGridDims(imageGridDimensions)
   {
   }
 
@@ -422,11 +422,10 @@ public:
 
     // Place the images in the grid:
 
-    std::vector<ImageConfiguration>::iterator config, end;
-    GridFlags                                 grid(gridWidth, maxGridHeight);
-    std::vector<PositionedImage>              placedImages;
+    GridFlags                    grid(gridWidth, maxGridHeight);
+    std::vector<PositionedImage> placedImages;
 
-    for(config = configurations.begin(), end = configurations.end(); config != end; ++config)
+    for(std::vector<ImageConfiguration>::iterator config = configurations.begin(), end = configurations.end(); config != end; ++config)
     {
       unsigned cellX, cellY;
       Vector2  imageGridDims;

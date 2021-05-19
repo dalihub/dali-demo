@@ -231,7 +231,7 @@ public:
     mMinusButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mMinusButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
 
-    Toolkit::PushButton mPlusButton = Toolkit::PushButton::New();
+    mPlusButton = Toolkit::PushButton::New();
     mPlusButton.SetProperty(Toolkit::Button::Property::LABEL, ">>");
     mPlusButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mPlusButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_RIGHT);
