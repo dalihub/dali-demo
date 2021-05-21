@@ -201,23 +201,6 @@ const int MAXIMUM_ANIMATION_COUNT = 30;
 // Geometry format used by the SparkeEffect
 struct Vertex
 {
-  Vertex(const Vector2& texCoord,
-         const Vector2& aParticlePath0,
-         const Vector2& aParticlePath1,
-         const Vector2& aParticlePath2,
-         const Vector2& aParticlePath3,
-         const Vector2& aParticlePath4,
-         const Vector2& aParticlePath5)
-  : aTexCoord(texCoord),
-    aParticlePath0(aParticlePath0),
-    aParticlePath1(aParticlePath1),
-    aParticlePath2(aParticlePath2),
-    aParticlePath3(aParticlePath3),
-    aParticlePath4(aParticlePath4),
-    aParticlePath5(aParticlePath5)
-  {
-  }
-
   Vector2 aTexCoord;
   Vector2 aParticlePath0;
   Vector2 aParticlePath1;

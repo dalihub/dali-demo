@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -220,9 +220,10 @@ void ShadowButton::OnRelayout(const Vector2& targetSize, RelayoutContainer& cont
 
 void ShadowButton::RelayoutVisuals(const Vector2& targetSize)
 {
-  bool                                transitioning = false;
-  ShadowButton::Transitions::iterator iter          = mTransitions.begin();
-  for(; iter != mTransitions.end(); ++iter)
+  bool transitioning = false;
+  for(ShadowButton::Transitions::iterator iter = mTransitions.begin();
+      iter != mTransitions.end();
+      ++iter)
   {
     if(iter->mPlaying == true)
     {
@@ -368,10 +369,10 @@ void ShadowButton::ResetVisual(
     }
 
     // Extract transform maps out of the visual definition and store them
-    Property::Value* value = map->Find(Visual::Property::TRANSFORM, "transform");
-    if(value)
+    Property::Value* transformValue = map->Find(Visual::Property::TRANSFORM, "transform");
+    if(transformValue)
     {
-      Property::Map* transformMap = value->GetMap();
+      Property::Map* transformMap = transformValue->GetMap();
       if(transformMap)
       {
         ShadowButton::Transforms::iterator iter = FindTransform(index);

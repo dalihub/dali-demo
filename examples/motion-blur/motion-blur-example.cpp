@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -281,11 +281,11 @@ public:
     destPos.y                 = localPoint.y - originOffsetY;
     destPos.z                 = 0.0f;
 
-    float animDuration         = 0.5f;
-    mActorTapMovementAnimation = Animation::New(animDuration);
+    float tapMovementAnimDuration = 0.5f;
+    mActorTapMovementAnimation    = Animation::New(tapMovementAnimDuration);
     if(mMotionBlurImageView)
     {
-      mActorTapMovementAnimation.AnimateTo(Property(mMotionBlurImageView, Actor::Property::POSITION), destPos, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(animDuration));
+      mActorTapMovementAnimation.AnimateTo(Property(mMotionBlurImageView, Actor::Property::POSITION), destPos, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(tapMovementAnimDuration));
     }
     mActorTapMovementAnimation.SetEndAction(Animation::BAKE);
     mActorTapMovementAnimation.Play();

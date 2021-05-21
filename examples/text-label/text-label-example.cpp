@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,10 +105,10 @@ int ConvertToEven(int value)
 
 struct HSVColorConstraint
 {
-  HSVColorConstraint(float hue, float saturation, float value)
-  : hue(hue),
-    saturation(saturation),
-    value(value)
+  HSVColorConstraint(float hueParam, float saturationParam, float valueParam)
+  : hue(hueParam),
+    saturation(saturationParam),
+    value(valueParam)
   {
   }
 
