@@ -204,7 +204,7 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
       {},
       {},
       nullptr,
-    };
+      {}};
     DliLoader::LoadParams loadParams{input, output};
     if(!loader.LoadScene(path, loadParams))
     {
@@ -233,7 +233,10 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
     viewProjection};
   NodeDefinition::CreateParams nodeParams{
     resources,
-    xforms};
+    xforms,
+    {},
+    {},
+    {}};
   Customization::Choices choices;
 
   Actor root = Actor::New();

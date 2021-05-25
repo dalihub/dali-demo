@@ -183,8 +183,8 @@ Geometry CreateOctahedron(bool invertNormals)
 
   struct Vertex
   {
-    Vector3 position;
-    Vector3 normal;
+    Vector3 position{};
+    Vector3 normal{};
   };
   Vertex vertexData[] = {
     {positions[0]},
@@ -624,12 +624,12 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  const bool showLights = [](int argc, char** argv) {
+  const bool showLights = [argc, argv]() {
     auto endArgs = argv + argc;
     return std::find_if(argv, endArgs, [](const char* arg) {
              return strcmp(arg, "--show-lights") == 0;
            }) != endArgs;
-  }(argc, argv);
+  }();
 
   Application            app = Application::New(&argc, &argv);
   DeferredShadingExample example(app, (showLights ? DeferredShadingExample::Options::SHOW_LIGHTS : 0));

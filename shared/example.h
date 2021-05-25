@@ -32,12 +32,12 @@ struct Example
   // Constructors
 
   /**
-   * @param[in] name unique name of example
-   * @param[in] title The caption for the example to appear on a tile button.
+   * @param[in] uniqueName unique name of example
+   * @param[in] captionTitle The caption for the example to appear on a tile button.
    */
-  Example(std::string name, std::string title)
-  : name(name),
-    title(title)
+  Example(std::string uniqueName, std::string captionTitle)
+  : name(uniqueName),
+    title(captionTitle)
   {
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -131,7 +131,7 @@ public:
 
     mAnimation = Animation::New(1.0f);
 
-    const Size mTargetActorSize(mWindowSize.width, mWindowSize.height * WINDOW_HEIGHT_MULTIPLIER);
+    const Size targetActorSize(mWindowSize.width, mWindowSize.height * WINDOW_HEIGHT_MULTIPLIER);
 
     // Create Desktop
     Control desktop = Control::New();
@@ -139,7 +139,7 @@ public:
     desktop.SetProperty(Dali::Actor::Property::NAME, "desktopActor");
     desktop.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     desktop.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
-    desktop.SetProperty(Actor::Property::SIZE, mTargetActorSize);
+    desktop.SetProperty(Actor::Property::SIZE, targetActorSize);
 
     rootActor.Add(desktop); // Add desktop (content) to offscreen actor
 
