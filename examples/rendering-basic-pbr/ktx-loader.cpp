@@ -69,7 +69,7 @@ bool ConvertPixelFormat(const uint32_t ktxPixelFormat, Dali::Pixel::Format& form
     }
     case 0x8C3A: // GL_R11F_G11F_B10F
     {
-      format = Dali::Pixel::RGB32F;
+      format = Dali::Pixel::R11G11B10F;
       break;
     }
     case 0x8D7C: // GL_RGBA8UI
