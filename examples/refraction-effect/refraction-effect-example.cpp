@@ -85,17 +85,6 @@ struct Vertex
   Vector3 position;
   Vector3 normal;
   Vector2 textureCoord;
-
-  Vertex()
-  {
-  }
-
-  Vertex(const Vector3& position, const Vector3& normal, const Vector2& textureCoord)
-  : position(position),
-    normal(normal),
-    textureCoord(textureCoord)
-  {
-  }
 };
 
 } // namespace
@@ -334,16 +323,16 @@ private:
       // make sure all the faces are front-facing
       if(normal.z > 0)
       {
-        vertices.push_back(Vertex(vertexPositions[faceIndices[i]], normal, textureCoordinates[faceIndices[i]]));
-        vertices.push_back(Vertex(vertexPositions[faceIndices[i + 1]], normal, textureCoordinates[faceIndices[i + 1]]));
-        vertices.push_back(Vertex(vertexPositions[faceIndices[i + 2]], normal, textureCoordinates[faceIndices[i + 2]]));
+        vertices.push_back(Vertex{vertexPositions[faceIndices[i]], normal, textureCoordinates[faceIndices[i]]});
+        vertices.push_back(Vertex{vertexPositions[faceIndices[i + 1]], normal, textureCoordinates[faceIndices[i + 1]]});
+        vertices.push_back(Vertex{vertexPositions[faceIndices[i + 2]], normal, textureCoordinates[faceIndices[i + 2]]});
       }
       else
       {
         normal *= -1.f;
-        vertices.push_back(Vertex(vertexPositions[faceIndices[i]], normal, textureCoordinates[faceIndices[i]]));
-        vertices.push_back(Vertex(vertexPositions[faceIndices[i + 2]], normal, textureCoordinates[faceIndices[i + 2]]));
-        vertices.push_back(Vertex(vertexPositions[faceIndices[i + 1]], normal, textureCoordinates[faceIndices[i + 1]]));
+        vertices.push_back(Vertex{vertexPositions[faceIndices[i]], normal, textureCoordinates[faceIndices[i]]});
+        vertices.push_back(Vertex{vertexPositions[faceIndices[i + 2]], normal, textureCoordinates[faceIndices[i + 2]]});
+        vertices.push_back(Vertex{vertexPositions[faceIndices[i + 1]], normal, textureCoordinates[faceIndices[i + 1]]});
       }
     }
 
@@ -386,10 +375,10 @@ private:
     {
       if(line[0] == 'v' && std::isspace(line[1])) // vertex
       {
-        std::istringstream iss(line.substr(2), std::istringstream::in);
+        std::istringstream vertexIss(line.substr(2), std::istringstream::in);
         unsigned int       i = 0;
         Vector3            vertex;
-        while(iss >> vertex[i++] && i < 3)
+        while(vertexIss >> vertex[i++] && i < 3)
           ;
         if(vertex.x < boundingBox[0]) boundingBox[0] = vertex.x;
         if(vertex.x > boundingBox[1]) boundingBox[1] = vertex.x;
@@ -413,11 +402,11 @@ private:
           numOfInt++;
         }
 
-        std::istringstream         iss(line.substr(2), std::istringstream::in);
+        std::istringstream         faceIss(line.substr(2), std::istringstream::in);
         Dali::Vector<unsigned int> indices;
         indices.Resize(numOfInt);
         unsigned int i = 0;
-        while(iss >> indices[i++] && i < numOfInt)
+        while(faceIss >> indices[i++] && i < numOfInt)
           ;
         unsigned int step = (i + 1) / 3;
         faceIndices.PushBack(indices[0] - 1);

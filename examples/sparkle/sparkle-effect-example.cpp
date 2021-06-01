@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -226,10 +226,10 @@ private:
 
     float particleIdx = static_cast<float>(idx / 4 + 1); // count from 1
     float colorIdx    = colorIndex + 1.f;                // count from 1
-    vertices.push_back(Vertex(Vector2(-colorIdx, -particleIdx), particlePath0, particlePath1, particlePath2, particlePath3, particlePath4, particlePath5));
-    vertices.push_back(Vertex(Vector2(-colorIdx, particleIdx), particlePath0, particlePath1, particlePath2, particlePath3, particlePath4, particlePath5));
-    vertices.push_back(Vertex(Vector2(colorIdx, particleIdx), particlePath0, particlePath1, particlePath2, particlePath3, particlePath4, particlePath5));
-    vertices.push_back(Vertex(Vector2(colorIdx, -particleIdx), particlePath0, particlePath1, particlePath2, particlePath3, particlePath4, particlePath5));
+    vertices.push_back(Vertex{Vector2(-colorIdx, -particleIdx), particlePath0, particlePath1, particlePath2, particlePath3, particlePath4, particlePath5});
+    vertices.push_back(Vertex{Vector2(-colorIdx, particleIdx), particlePath0, particlePath1, particlePath2, particlePath3, particlePath4, particlePath5});
+    vertices.push_back(Vertex{Vector2(colorIdx, particleIdx), particlePath0, particlePath1, particlePath2, particlePath3, particlePath4, particlePath5});
+    vertices.push_back(Vertex{Vector2(colorIdx, -particleIdx), particlePath0, particlePath1, particlePath2, particlePath3, particlePath4, particlePath5});
 
     faces.push_back(idx);
     faces.push_back(idx + 1);

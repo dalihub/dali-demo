@@ -53,14 +53,6 @@ inline float Clamp(float v, float min, float max)
 
 struct HandlePositionConstraint
 {
-  HandlePositionConstraint(float minRelX, float maxRelX, float minRelY, float maxRelY)
-  : minRelX(minRelX),
-    maxRelX(maxRelX),
-    minRelY(minRelY),
-    maxRelY(maxRelY)
-  {
-  }
-
   void operator()(Vector3& current, const PropertyInputContainer& inputs)
   {
     Vector3 size(inputs[0]->GetVector3());
@@ -68,10 +60,10 @@ struct HandlePositionConstraint
     current.y = Clamp(current.y, minRelY * size.y, maxRelY * size.y);
   }
 
-  float minRelX;
-  float maxRelX;
-  float minRelY;
-  float maxRelY;
+  float minRelX{0.0f};
+  float maxRelX{0.0f};
+  float minRelY{0.0f};
+  float maxRelY{0.0f};
 };
 
 void AnimatingPositionConstraint(Vector3& current, const PropertyInputContainer& inputs)
@@ -304,7 +296,7 @@ public:
     positionAnimation.FinishedSignal().Connect(this, &BezierCurveExample::OnAnimationFinished);
 
     // Set up constraints for drag/drop
-    Constraint constraint = Constraint::New<Vector3>(actor, Actor::Property::POSITION, HandlePositionConstraint(-0.5, 0.5, -1, 1));
+    Constraint constraint = Constraint::New<Vector3>(actor, Actor::Property::POSITION, HandlePositionConstraint{-0.5, 0.5, -1, 1});
     constraint.AddSource(Source(parent, Actor::Property::SIZE));
     constraint.Apply();
 

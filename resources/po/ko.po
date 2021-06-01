@@ -192,3 +192,6 @@ msgstr "PBR"
 
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
 msgstr "애니메이션 벡터 이미지"
+
+msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES_RIVE"
+msgstr "애니메이션 벡터 이미지 라이브"
