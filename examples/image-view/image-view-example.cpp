@@ -70,6 +70,21 @@ std::string EXAMPLE_INSTRUCTIONS =
   "on/off takes the ImageView and it's current visual on or off window.";
 
 const float CORNER_RADIUS_VALUE(20.0f);
+const float BORDERLINE_WIDTH_VALUE(10.0f);
+const float BORDERLINE_OFFSET_VALUE(-1.0f); ///< draw borderline inside of imageview.
+enum {
+  STATUS_NORMAL             = 0,
+  STATUS_ROUND              = 1,
+  STATUS_BORDERLINE         = 2,
+  STATUS_ROUNDED_BORDERLINE = 3,
+  NUMBER_OF_STATUS,
+};
+const char* BUTTON_LABEL[NUMBER_OF_STATUS] = {
+  "Normal",
+  "Round",
+  "Borderline",
+  "RoundBorderline",
+};
 
 } // namespace
 
@@ -147,7 +162,7 @@ public:
       mTable.AddChild(button2, Toolkit::TableView::CellPosition(CellPlacement::MID_BUTTON, x));
 
       Toolkit::PushButton button3 = Toolkit::PushButton::New();
-      button3.SetProperty(Toolkit::Button::Property::LABEL, "Round");
+      button3.SetProperty(Toolkit::Button::Property::LABEL, BUTTON_LABEL[(STATUS_NORMAL + 1) % NUMBER_OF_STATUS]);
       button3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
       button3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
       button3.ClickedSignal().Connect(this, &ImageViewController::RoundedCornerClicked);
@@ -170,7 +185,7 @@ public:
       // Set changeable counter and toggle for each ImageView
       mImageViewImageIndexStatus[x]    = 0;
       mImageViewToggleStatus[x]        = true;
-      mImageViewRoundedCornerStatus[x] = false;
+      mImageViewRoundedCornerStatus[x] = STATUS_NORMAL;
     }
 
     application.GetWindow().KeyEventSignal().Connect(this, &ImageViewController::OnKeyEvent);
@@ -220,7 +235,8 @@ private:
       }
 
       // Reset corner radius state value
-      mImageViewRoundedCornerStatus[buttonIndex] = false;
+      mImageViewRoundedCornerStatus[buttonIndex] = STATUS_NORMAL;
+      button.SetProperty(Toolkit::Button::Property::LABEL, BUTTON_LABEL[(mImageViewRoundedCornerStatus[buttonIndex] + 1) % NUMBER_OF_STATUS]);
 
       Property::Map imagePropertyMap;
       imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
@@ -236,12 +252,16 @@ private:
 
     if(mImageViews[buttonIndex].GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE))
     {
-      mImageViewRoundedCornerStatus[buttonIndex] = !mImageViewRoundedCornerStatus[buttonIndex];
+      mImageViewRoundedCornerStatus[buttonIndex] = (mImageViewRoundedCornerStatus[buttonIndex] + 1) % NUMBER_OF_STATUS;
+
+      button.SetProperty(Toolkit::Button::Property::LABEL, BUTTON_LABEL[(mImageViewRoundedCornerStatus[buttonIndex] + 1) % NUMBER_OF_STATUS]);
 
       Property::Map imagePropertyMap;
       imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
       imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, IMAGE_PATH[mImageViewImageIndexStatus[buttonIndex]]);
-      imagePropertyMap.Insert(Toolkit::DevelVisual::Property::CORNER_RADIUS, mImageViewRoundedCornerStatus[buttonIndex] ? CORNER_RADIUS_VALUE : 0.0f);
+      imagePropertyMap.Insert(Toolkit::DevelVisual::Property::CORNER_RADIUS, mImageViewRoundedCornerStatus[buttonIndex] & 1 ? CORNER_RADIUS_VALUE : 0.0f);
+      imagePropertyMap.Insert(Toolkit::DevelVisual::Property::BORDERLINE_WIDTH, mImageViewRoundedCornerStatus[buttonIndex] & 2 ? BORDERLINE_WIDTH_VALUE : 0.0f);
+      imagePropertyMap.Insert(Toolkit::DevelVisual::Property::BORDERLINE_OFFSET, mImageViewRoundedCornerStatus[buttonIndex] & 2 ? BORDERLINE_OFFSET_VALUE : 0.0f);
 
       mImageViews[buttonIndex].SetProperty(Toolkit::ImageView::Property::IMAGE, imagePropertyMap);
     }
@@ -271,7 +291,7 @@ private:
   Toolkit::TableView mTable;
   Toolkit::ImageView mImageViews[NUMBER_OF_IMAGES];
   bool               mImageViewToggleStatus[NUMBER_OF_IMAGES];
-  bool               mImageViewRoundedCornerStatus[NUMBER_OF_IMAGES];
+  unsigned int       mImageViewRoundedCornerStatus[NUMBER_OF_IMAGES];
   unsigned int       mImageViewImageIndexStatus[NUMBER_OF_IMAGES];
 
   Toolkit::TableView::CellPosition mCurrentPositionToggle;
