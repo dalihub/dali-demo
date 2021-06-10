@@ -76,7 +76,7 @@ enum {
   STATUS_NORMAL             = 0,
   STATUS_ROUND              = 1,
   STATUS_BORDERLINE         = 2,
-  STATUS_ROUNDED_BORDERLINE = 3,
+  STATUS_ROUNDED_BORDERLINE = STATUS_ROUND | STATUS_BORDERLINE,
   NUMBER_OF_STATUS,
 };
 const char* BUTTON_LABEL[NUMBER_OF_STATUS] = {
@@ -162,7 +162,7 @@ public:
       mTable.AddChild(button2, Toolkit::TableView::CellPosition(CellPlacement::MID_BUTTON, x));
 
       Toolkit::PushButton button3 = Toolkit::PushButton::New();
-      button3.SetProperty(Toolkit::Button::Property::LABEL, BUTTON_LABEL[(STATUS_NORMAL + 1) % NUMBER_OF_STATUS]);
+      button3.SetProperty(Toolkit::Button::Property::LABEL, BUTTON_LABEL[STATUS_NORMAL]);
       button3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
       button3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
       button3.ClickedSignal().Connect(this, &ImageViewController::RoundedCornerClicked);
@@ -234,13 +234,19 @@ private:
         mImageViewImageIndexStatus[buttonIndex] = 0;
       }
 
-      // Reset corner radius state value
-      mImageViewRoundedCornerStatus[buttonIndex] = STATUS_NORMAL;
-      button.SetProperty(Toolkit::Button::Property::LABEL, BUTTON_LABEL[(mImageViewRoundedCornerStatus[buttonIndex] + 1) % NUMBER_OF_STATUS]);
-
       Property::Map imagePropertyMap;
       imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
       imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, IMAGE_PATH[mImageViewImageIndexStatus[buttonIndex]]);
+      if(mImageViewRoundedCornerStatus[buttonIndex] & STATUS_ROUND)
+      {
+        imagePropertyMap.Insert(Toolkit::DevelVisual::Property::CORNER_RADIUS, CORNER_RADIUS_VALUE);
+      }
+      if(mImageViewRoundedCornerStatus[buttonIndex] & STATUS_BORDERLINE)
+      {
+        imagePropertyMap.Insert(Toolkit::DevelVisual::Property::BORDERLINE_WIDTH, BORDERLINE_WIDTH_VALUE);
+        imagePropertyMap.Insert(Toolkit::DevelVisual::Property::BORDERLINE_OFFSET, BORDERLINE_OFFSET_VALUE);
+      }
+
       mImageViews[buttonIndex].SetProperty(Toolkit::ImageView::Property::IMAGE, imagePropertyMap);
     }
     return true;
@@ -254,14 +260,20 @@ private:
     {
       mImageViewRoundedCornerStatus[buttonIndex] = (mImageViewRoundedCornerStatus[buttonIndex] + 1) % NUMBER_OF_STATUS;
 
-      button.SetProperty(Toolkit::Button::Property::LABEL, BUTTON_LABEL[(mImageViewRoundedCornerStatus[buttonIndex] + 1) % NUMBER_OF_STATUS]);
+      button.SetProperty(Toolkit::Button::Property::LABEL, BUTTON_LABEL[mImageViewRoundedCornerStatus[buttonIndex]]);
 
       Property::Map imagePropertyMap;
       imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
       imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, IMAGE_PATH[mImageViewImageIndexStatus[buttonIndex]]);
-      imagePropertyMap.Insert(Toolkit::DevelVisual::Property::CORNER_RADIUS, mImageViewRoundedCornerStatus[buttonIndex] & 1 ? CORNER_RADIUS_VALUE : 0.0f);
-      imagePropertyMap.Insert(Toolkit::DevelVisual::Property::BORDERLINE_WIDTH, mImageViewRoundedCornerStatus[buttonIndex] & 2 ? BORDERLINE_WIDTH_VALUE : 0.0f);
-      imagePropertyMap.Insert(Toolkit::DevelVisual::Property::BORDERLINE_OFFSET, mImageViewRoundedCornerStatus[buttonIndex] & 2 ? BORDERLINE_OFFSET_VALUE : 0.0f);
+      if(mImageViewRoundedCornerStatus[buttonIndex] & STATUS_ROUND)
+      {
+        imagePropertyMap.Insert(Toolkit::DevelVisual::Property::CORNER_RADIUS, CORNER_RADIUS_VALUE);
+      }
+      if(mImageViewRoundedCornerStatus[buttonIndex] & STATUS_BORDERLINE)
+      {
+        imagePropertyMap.Insert(Toolkit::DevelVisual::Property::BORDERLINE_WIDTH, BORDERLINE_WIDTH_VALUE);
+        imagePropertyMap.Insert(Toolkit::DevelVisual::Property::BORDERLINE_OFFSET, BORDERLINE_OFFSET_VALUE);
+      }
 
       mImageViews[buttonIndex].SetProperty(Toolkit::ImageView::Property::IMAGE, imagePropertyMap);
     }
