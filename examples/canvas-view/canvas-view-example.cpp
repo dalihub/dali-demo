@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/canvas-view/canvas-view.h>
+#include <dali/devel-api/adaptor-framework/canvas-renderer-drawable-group.h>
 #include <dali/devel-api/adaptor-framework/canvas-renderer-shape.h>
 
 using namespace Dali;
@@ -75,8 +76,6 @@ public:
     shape1.Rotate(Degree(45.0f));
     shape1.Translate(Vector2(100.0f, 100.0f));
 
-    mCanvasView.AddDrawable(shape1);
-
     mRoundedRect = Dali::CanvasRenderer::Shape::New();
     mRoundedRect.AddRect(Rect<float>(10.0f, 350.0f, 200.0f, 140.0f), Vector2(40.0f, 40.0f));
     mRoundedRect.SetFillColor(Vector4(0.0f, 0.0f, 1.0f, 1.0f));
@@ -88,7 +87,6 @@ public:
     dashPattern.PushBack(15.0f);
     dashPattern.PushBack(30.0f);
     mRoundedRect.SetStrokeDash(dashPattern);
-    mCanvasView.AddDrawable(mRoundedRect);
 
     Dali::CanvasRenderer::Shape shape2 = Dali::CanvasRenderer::Shape::New();
     shape2.AddMoveTo(Vector2(535.0f, 135.0f));
@@ -104,7 +102,6 @@ public:
     shape2.SetStrokeWidth(20.0f);
     shape2.SetStrokeJoin(Dali::CanvasRenderer::Shape::StrokeJoin::ROUND);
     shape2.Transform(Matrix3(0.6f, 0.0f, 20.0f, 0.0f, 0.6f, -50.0f, 0.0f, 0.0f, 1.0f));
-    mCanvasView.AddDrawable(shape2);
 
     mArc = Dali::CanvasRenderer::Shape::New();
     mArc.AddArc(Vector2(100.0f, 650.0f), 80.0f, 10.0f, 0.0f, true);
@@ -139,6 +136,18 @@ public:
 
     mCanvasView.AddDrawable(mStar);
 
+    mGroup1 = Dali::CanvasRenderer::DrawableGroup::New();
+
+    mGroup1.AddDrawable(mRoundedRect);
+    mGroup1.AddDrawable(shape1);
+
+    mGroup2 = Dali::CanvasRenderer::DrawableGroup::New();
+
+    mGroup2.AddDrawable(mGroup1);
+    mGroup2.AddDrawable(shape2);
+
+    mCanvasView.AddDrawable(mGroup2);
+
     mTimer = Timer::New(1000.0f / 32.0f);
     mTimer.TickSignal().Connect(this, &CanvasViewController::tick);
     mTimer.Start();
@@ -162,6 +171,11 @@ public:
 
     mStar.Rotate(Degree(mCount * 2.0f));
     mStar.Scale(float(mCount % 100) * 0.01f + 0.6f);
+
+    mGroup1.Scale(float(mCount % 50) * 0.005f + 0.8f);
+
+    mGroup2.SetOpacity(1.0f - float(mCount % 50) * 0.015f);
+
     mCount++;
     return true;
   }
@@ -184,12 +198,14 @@ public:
   }
 
 private:
-  Application&                mApplication;
-  Dali::CanvasRenderer::Shape mRoundedRect;
-  Dali::CanvasRenderer::Shape mArc;
-  Dali::CanvasRenderer::Shape mStar;
-  Timer                       mTimer;
-  int                         mCount;
+  Application&                        mApplication;
+  Dali::CanvasRenderer::Shape         mRoundedRect;
+  Dali::CanvasRenderer::Shape         mArc;
+  Dali::CanvasRenderer::Shape         mStar;
+  Dali::CanvasRenderer::DrawableGroup mGroup1;
+  Dali::CanvasRenderer::DrawableGroup mGroup2;
+  Timer                               mTimer;
+  int                                 mCount;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
