@@ -68,8 +68,8 @@ public:
     mWebView.SetProperty(Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER);
     mWebView.SetProperty(Actor::Property::POSITION, Vector2(0, 0));
     mWebView.SetProperty(Actor::Property::SIZE, Vector2(width, height));
-    mWebView.PageLoadStartedSignal().Connect(this, &WebViewController::OnPageLoadStarted);
-    mWebView.PageLoadFinishedSignal().Connect(this, &WebViewController::OnPageLoadFinished);
+    mWebView.RegisterPageLoadStartedCallback(std::bind(&WebViewController::OnPageLoadStarted, this, std::placeholders::_1));
+    mWebView.RegisterPageLoadFinishedCallback(std::bind(&WebViewController::OnPageLoadFinished, this, std::placeholders::_1));
 
     std::string url = GetNextUrl();
     mWebView.LoadUrl(url);
@@ -88,12 +88,12 @@ public:
     Toolkit::KeyboardFocusManager::Get().SetCurrentFocusActor(mWebView);
   }
 
-  void OnPageLoadStarted(Toolkit::WebView view, const std::string& url)
+  void OnPageLoadStarted(const std::string& url)
   {
     mAddressLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, "Loading");
   }
 
-  void OnPageLoadFinished(Toolkit::WebView view, const std::string& url)
+  void OnPageLoadFinished(const std::string& url)
   {
     mAddressLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, url.c_str());
   }
