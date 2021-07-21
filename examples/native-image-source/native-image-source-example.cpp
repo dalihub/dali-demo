@@ -43,28 +43,11 @@ const std::string CAPTURE_FILENAME = DEMO_DATA_PUBLIC_RW_DIR "native-image-captu
  */
 Shader CreateShader(NativeImageInterface& nativeImage)
 {
-  static const char* DEFAULT_SAMPLER_TYPENAME = "sampler2D";
-
   std::string fragmentShader;
 
   //Get custom fragment shader prefix
-  const char* fragmentPrefix = nativeImage.GetCustomFragmentPrefix();
-  if(fragmentPrefix)
-  {
-    fragmentShader = fragmentPrefix;
-    fragmentShader += SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_FRAG.data();
-  }
-  else
-  {
-    fragmentShader = SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_FRAG.data();
-  }
-
-  //Get custom sampler type name
-  const char* customSamplerTypename = nativeImage.GetCustomSamplerTypename();
-  if(customSamplerTypename)
-  {
-    fragmentShader.replace(fragmentShader.find(DEFAULT_SAMPLER_TYPENAME), strlen(DEFAULT_SAMPLER_TYPENAME), customSamplerTypename);
-  }
+  fragmentShader = SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_FRAG.data();
+  nativeImage.ApplyNativeFragmentShader(fragmentShader);
 
   return Shader::New(SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_VERT, fragmentShader);
 }
