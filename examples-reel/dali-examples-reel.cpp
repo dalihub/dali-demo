@@ -66,6 +66,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("image-scaling-irregular-grid.example", DALI_DEMO_STR_TITLE_IMAGE_SCALING));
   demo.AddExample(Example("image-view.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW));
   demo.AddExample(Example("image-view-alpha-blending.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING));
+  demo.AddExample(Example("image-view-encoded-image-buffer.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_ENCODED_IMAGE_BUFFER));
   demo.AddExample(Example("image-view-pixel-area.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA));
   demo.AddExample(Example("image-view-svg.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG));
   demo.AddExample(Example("image-view-url.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL));
