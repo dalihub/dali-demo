@@ -16,11 +16,11 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/public-api/image-loader/image.h>
-#include <dali/public-api/adaptor-framework/encoded-image-buffer.h>
-#include <dali-toolkit/public-api/image-loader/image-url.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
+#include <dali-toolkit/public-api/image-loader/image-url.h>
+#include <dali-toolkit/public-api/image-loader/image.h>
 #include <dali/dali.h>
+#include <dali/public-api/adaptor-framework/encoded-image-buffer.h>
 #include <string>
 #include "shared/view.h"
 
@@ -52,12 +52,12 @@ const unsigned int TIMER_INTERVAL = 1000; // ms
 EncodedImageBuffer ConvertFileToEncodedImageBuffer(const char* url)
 {
   EncodedImageBuffer buffer;
-  FILE *fp;
+  FILE*              fp;
   fp = fopen(url, "rb");
   if(fp != NULL)
   {
     fseek(fp, 0, SEEK_END);
-    size_t size = ftell(fp);
+    size_t                size = ftell(fp);
     Dali::Vector<uint8_t> data;
     data.Resize(size);
     fseek(fp, 0, SEEK_SET);
@@ -103,7 +103,7 @@ public:
                                            APPLICATION_TITLE);
 
     // Initialize
-    mState = 0;
+    mState      = 0;
     mImageIndex = 0;
     UpdateImageUrl();
     UpdateImageViews();
@@ -119,7 +119,6 @@ public:
   }
 
 private:
-
   void UpdateImageUrl()
   {
     mImageBuffer = ConvertFileToEncodedImageBuffer(IMAGE_PATH[mImageIndex]);
@@ -142,7 +141,7 @@ private:
         bool needToCreate = true;
 
         // If current state don't wanna create current view, just skip
-        unsigned int  currentViewState = 1u << ((i + j) & 1);
+        unsigned int currentViewState = 1u << ((i + j) & 1);
         if(mState & currentViewState)
         {
           needToCreate = false;
@@ -215,19 +214,19 @@ private:
 private:
   Application& mApplication;
 
-  Toolkit::Control   mView;         ///< The View instance.
-  Toolkit::ToolBar   mToolBar;      ///< The View's Toolbar.
-  Layer              mContentLayer; ///< Content layer
+  Toolkit::Control mView;         ///< The View instance.
+  Toolkit::ToolBar mToolBar;      ///< The View's Toolbar.
+  Layer            mContentLayer; ///< Content layer
 
   Toolkit::ImageView mImageViews[NUMBER_OF_IMAGES];
 
-  unsigned int       mImageIndex;
+  unsigned int       mImageIndex{0u};
   EncodedImageBuffer mImageBuffer;
   ImageUrl           mImageUrl;
 
   // Automatic unparent and create ticker.
-  Timer              mTimer;
-  unsigned int       mState; ///< 0 : draw all images, 1 : draw half, 2 : draw another half, 3 : don't draw images.
+  Timer        mTimer;
+  unsigned int mState{0u}; ///< 0 : draw all images, 1 : draw half, 2 : draw another half, 3 : don't draw images.
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
