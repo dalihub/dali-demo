@@ -109,6 +109,9 @@ msgstr "Image View"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ALPHA_BLENDING"
 msgstr "Image View Alpha Blending"
 
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ENCODED_IMAGE_BUFFER"
+msgstr "Image View Encoded Image Buffer"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
 msgstr "Image View Pixel Area"
 
