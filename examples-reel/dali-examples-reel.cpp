@@ -38,6 +38,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   // Create the demo launcher
   DaliTableView demo(app);
 
+  demo.AddExample(Example("advanced-blend-mode.example", DALI_DEMO_STR_TITLE_ADVANCED_BLENDING));
   demo.AddExample(Example("animated-images.example", DALI_DEMO_STR_TITLE_ANIMATED_IMAGES));
   demo.AddExample(Example("animated-shapes.example", DALI_DEMO_STR_TITLE_ANIMATED_SHAPES));
   demo.AddExample(Example("animated-vector-images.example", DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES));

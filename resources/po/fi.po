@@ -1,5 +1,8 @@
+msgid "DALI_DEMO_STR_TITLE_ADVANCED_BLENDING"
+msgstr "Photoshop sekoitus tila"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
-msgstr "animoituja kuvia"
+msgstr "Animoituja kuvia"
 
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_SHAPES"
 msgstr "Animoidut Muodot"

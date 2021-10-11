@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ADVANCED_BLENDING"
+msgstr "Modo de fusión"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
 msgstr "Imágenes animadas"
 
