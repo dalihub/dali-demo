@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ADVANCED_BLENDING"
+msgstr "포토샵 블렌드 모드"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
 msgstr "애니메이션 이미지"
 
