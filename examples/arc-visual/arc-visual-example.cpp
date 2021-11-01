@@ -18,7 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/transition-data.h>
-#include <dali-toolkit/devel-api/visuals/arc-visual-actions-devel.h>
+#include <dali-toolkit/devel-api/visuals/visual-actions-devel.h>
 #include <dali-toolkit/devel-api/visuals/arc-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
@@ -163,7 +163,7 @@ private:
         Property::Value* value = map.Find(mSelectedPoperty);
         if(value)
         {
-          DevelControl::DoAction(mControl, Control::Property::BACKGROUND, DevelArcVisual::Action::UPDATE_PROPERTY, Property::Map().Add(mSelectedPoperty, value->Get<float>() + 5.0f));
+          DevelControl::DoAction(mControl, Control::Property::BACKGROUND, DevelVisual::Action::UPDATE_PROPERTY, Property::Map().Add(mSelectedPoperty, value->Get<float>() + 5.0f));
         }
       }
       else
@@ -172,7 +172,7 @@ private:
         Property::Value* value = map.Find(mSelectedPoperty);
         if(value)
         {
-          DevelControl::DoAction(mControl, Control::Property::BACKGROUND, DevelArcVisual::Action::UPDATE_PROPERTY, Property::Map().Add(mSelectedPoperty, value->Get<float>() - 5.0f));
+          DevelControl::DoAction(mControl, Control::Property::BACKGROUND, DevelVisual::Action::UPDATE_PROPERTY, Property::Map().Add(mSelectedPoperty, value->Get<float>() - 5.0f));
         }
       }
     }
@@ -185,7 +185,7 @@ private:
     {
       DevelControl::DoAction(mControl,
                              Control::Property::BACKGROUND,
-                             DevelArcVisual::Action::UPDATE_PROPERTY,
+                             DevelVisual::Action::UPDATE_PROPERTY,
                              Property::Map()
                                .Add(DevelArcVisual::Property::START_ANGLE, START_ANGLE_INITIAL_VALUE)
                                .Add(DevelArcVisual::Property::SWEEP_ANGLE, SWEEP_ANGLE_INITIAL_VALUE));
