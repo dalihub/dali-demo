@@ -1,3 +1,6 @@
+msgid "DALI_DEMO_STR_TITLE_ADVANCED_BLENDING"
+msgstr "ഫോട്ടോഷോപ്പ് ബ്ലെൻഡ് മോഡ്"
+
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_IMAGES"
 msgstr "അനിമേറ്റഡ് ചിത്രങ്ങൾ"
 

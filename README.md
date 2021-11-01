@@ -187,3 +187,23 @@ To build, run:
 ```zsh
 % make install -j8
 ```
+
+# Creating an example
+In the dali-demo/examples folder, add another folder. This will become the name of your example executable, so for example the "hello-world" folder generates a "hello-world.example" binary.
+In this folder, you can add as many source code files as you need.
+
+Usually, create a single class file containing a main function that instantiates an Application. Usually, the class is named after your example, followed by "Controller", e.g. hello-world.cpp contains a class called HelloWorldController.
+
+There is a DemoHelper::CreateView method, which enables you to easiliy set up a title bar and buttons.
+
+Add at least a key handler such that Escape or Back keys can be used to quit the application. Some apps that only present a single thing also add a touch handler that quits the application.
+
+Add a launcher line to one of demo/dali-demo.cpp, examples-reel/dali-examples-reel.cpp or tests-reel/dali-tests-reel.cpp, depending on the nature of what you are demonstrating. Generally, dali-demo is for graphical showcase demos, dali-examples-reel is for reasonable examples that look ok, and dali-tests is for examples that are only for testing. This needs a language string defining for the title.
+
+Add 2 lines to shared/dali-demo-strings.h for the title of your application, please keep in alphabetic ordering. Add english strings and translations to each of the language files in resources/po.
+
+To ensure your application can run on a Tizen device through the launcher, add an entry to com.samsung.dali-demo.xml, ensuring that only tabs are used for XML indent.
+
+
+
+

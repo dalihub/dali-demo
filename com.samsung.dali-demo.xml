@@ -19,6 +19,9 @@
 
 	<!-- PLEASE KEEP THE FOLLOWING IN ALPHABETICAL ORDER USING THE 'appid'. -->
 
+	<ui-application appid="advanced-blend-mode.example" exec="/usr/apps/com.samsung.dali-demo/bin/advanced-blend-mode.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Advanced Blending App</label>
+	</ui-application>
 	<ui-application appid="animated-gradient-call-active.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-gradient-call-active.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Call Active App</label>
 	</ui-application>
