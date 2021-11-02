@@ -15,6 +15,7 @@ Requires(postun): /sbin/ldconfig
 BuildRequires:  cmake
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(capi-appfw-application)
+BuildRequires:  pkgconfig(capi-appfw-app-control)
 BuildRequires:  pkgconfig(capi-media-player)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  gettext-tools
@@ -66,6 +67,7 @@ cmake -DDALI_APP_DIR=%{dali_app_ro_dir}/bin \
 %endif
       -DLOCAL_STYLE_DIR=%{local_style_dir} \
       -DINTERNATIONALIZATION:BOOL=OFF \
+      -DTIZEN:BOOL=ON \
       .
 
 make %{?jobs:-j%jobs}
