@@ -181,6 +181,7 @@ ENDFOREACH(flag)
 #Create resources location file
 CONFIGURE_FILE( resources-location.in ${DEMO_SHARED}/resources-location.cpp )
 
+MESSAGE("Installing from: ${LOCAL_STYLE_DIR}")
 FILE(GLOB LOCAL_STYLES_LIST "${LOCAL_STYLE_DIR}/*.json")
 FOREACH(flag ${LOCAL_STYLES_LIST})
   INSTALL(FILES ${flag} DESTINATION ${STYLE_DIR})
