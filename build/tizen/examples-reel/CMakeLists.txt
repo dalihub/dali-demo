@@ -19,6 +19,11 @@ ELSEIF(ANDROID)
     ${EXAMPLES_REEL_SRCS}
     "${ROOT_SRC_DIR}/shared/execute-process-android.cpp"
   )
+ELSEIF(TIZEN)
+  SET(EXAMPLES_REEL_SRCS
+    ${EXAMPLES_REEL_SRCS}
+    "${ROOT_SRC_DIR}/shared/execute-process-tizen.cpp"
+  )
 ELSE()
   SET(EXAMPLES_REEL_SRCS
     ${EXAMPLES_REEL_SRCS}
