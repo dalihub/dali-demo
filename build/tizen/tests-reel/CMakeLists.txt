@@ -19,11 +19,6 @@ ELSEIF(ANDROID)
     ${TESTS_REEL_SRCS}
     "${ROOT_SRC_DIR}/shared/execute-process-android.cpp"
   )
-ELSEIF(TIZEN)
-  SET(TESTS_REEL_SRCS
-    ${TESTS_REEL_SRCS}
-    "${ROOT_SRC_DIR}/shared/execute-process-tizen.cpp"
-  )
 ELSE()
   SET(TESTS_REEL_SRCS
     ${TESTS_REEL_SRCS}
