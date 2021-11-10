@@ -34,6 +34,9 @@
 	<ui-application appid="animated-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Animated shapes</label>
 	</ui-application>
+	<ui-application appid="animated-vector-images.example" exec="/usr/apps/com.samsung.dali-demo/bin/animated-vector-images.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Animated Vector Images</label>
+	</ui-application>
 	<ui-application appid="arc-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/arc-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Arc Visual</label>
 	</ui-application>
@@ -85,7 +88,7 @@
 	<ui-application appid="dali-builder" exec="/usr/apps/com.samsung.dali-demo/bin/dali-builder" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Builder</label>
 	</ui-application>
-	<ui-application appid="deferred-shading" exec="/usr/apps/com.samsung.dali-demo/bin/deferred-shading" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+	<ui-application appid="deferred-shading" exec="/usr/apps/com.samsung.dali-demo/bin/deferred-shading.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Deferred Shading</label>
 	</ui-application>
 	<ui-application appid="dissolve-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/dissolve-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
@@ -139,6 +142,12 @@
 	<ui-application appid="image-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Image View</label>
 	</ui-application>
+	<ui-application appid="image-view-encoded-image-buffer.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-encoded-image-buffer.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Image View Encoded Image Buffer</label>
+	</ui-application>
+	<ui-application appid="image-view-url.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-url.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Image View URL</label>
+	</ui-application>
 	<ui-application appid="image-view-pixel-area.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-pixel-area.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>ImageView Pixel Area</label>
 	</ui-application>
@@ -151,8 +160,14 @@
 	<ui-application appid="layouting.example" exec="/usr/apps/com.samsung.dali-demo/bin/layouting.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Layouting</label>
 	</ui-application>
+	<ui-application appid="line-mesh.example" exec="/usr/apps/com.samsung.dali-demo/bin/line-mesh.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Line Mesh</label>
+	</ui-application>
 	<ui-application appid="magnifier.example" exec="/usr/apps/com.samsung.dali-demo/bin/magnifier.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Magnifier</label>
+	</ui-application>
+	<ui-application appid="mesh-morph.example" exec="/usr/apps/com.samsung.dali-demo/bin/mesh-morph.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Mesh Morph</label>
 	</ui-application>
 	<ui-application appid="mesh-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/mesh-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Mesh Visual</label>
@@ -189,6 +204,9 @@
 	</ui-application>
 	<ui-application appid="point-mesh.example" exec="/usr/apps/com.samsung.dali-demo/bin/point-mesh.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Point Mesh</label>
+	</ui-application>
+	<ui-application appid="popup.example" exec="/usr/apps/com.samsung.dali-demo/bin/popup.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+		<label>Popup</label>
 	</ui-application>
 	<ui-application appid="pre-render-callback.example" exec="/usr/apps/com.samsung.dali-demo/bin/pre-render-callback.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Frame Callback</label>
@@ -244,9 +262,6 @@
 	<ui-application appid="scene-loader.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene-loader.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scene Loader</label>
 	</ui-application>
-	<ui-application appid="scripting.example" exec="/usr/apps/com.samsung.dali-demo/bin/scripting.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Scroll View</label>
-	</ui-application>
 	<ui-application appid="scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>
 	</ui-application>
@@ -255,9 +270,6 @@
 	</ui-application>
 	<ui-application appid="simple-bitmap-font-text-label.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-bitmap-font-text-label.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Simple Bitmap Font Text Label</label>
-	</ui-application>
-	<ui-application appid="simple-layout.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-layout.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
-		<label>Simple Layout</label>
 	</ui-application>
 	<ui-application appid="simple-scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Simple Scroll View</label>
@@ -280,11 +292,11 @@
 	<ui-application appid="size-negotiation.example" exec="/usr/apps/com.samsung.dali-demo/bin/size-negotiation.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Size Negotiation</label>
 	</ui-application>
+	<ui-application appid="sparkle.example" exec="/usr/apps/com.samsung.dali-demo/bin/sparkle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Sparkle</label>
+	</ui-application>
 	<ui-application appid="styling.example" exec="/usr/apps/com.samsung.dali-demo/bin/styling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Styling</label>
-	</ui-application>
-	<ui-application appid="super-blur-bloom.example" exec="/usr/apps/com.samsung.dali-demo/bin/super-blur-bloom.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Super Blur and Bloom</label>
 	</ui-application>
 	<ui-application appid="super-blur-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/super-blur-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Super Blur</label>
@@ -315,6 +327,9 @@
 	</ui-application>
 	<ui-application appid="text-scrolling.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-scrolling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Scrolling</label>
+	</ui-application>
+	<ui-application appid="textured-mesh.example" exec="/usr/apps/com.samsung.dali-demo/bin/textured-mesh.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Textured Mesh</label>
 	</ui-application>
 	<ui-application appid="tilt.example" exec="/usr/apps/com.samsung.dali-demo/bin/tilt.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Tilt sensor</label>
