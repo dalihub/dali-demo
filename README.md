@@ -66,6 +66,10 @@ Before running make install as normal:
 
          $ gbs build -A [TARGET_ARCH] --define "%enable_debug 1"
 
+### Raspberry Pi builds
+
+         $ gbs build -A [TARGET_ARCH] --define "%rpi_style 1"
+
 # Creating an example
 
  - Make a directory in the "examples" directory. Only one example will be created per directory.

@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    2.0.51
+Version:    2.0.52
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -43,7 +43,12 @@ of the capability of the toolkit.
 %define dali_app_res_dir      %{dali_app_ro_dir}/res/
 %define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
 %define locale_dir            %{dali_app_res_dir}/locale
+
+%if 0%{?rpi_style}
+%define local_style_dir       ../../resources/style/rpi
+%else
 %define local_style_dir       ../../resources/style/mobile
+%endif
 
 ##############################
 # Build
