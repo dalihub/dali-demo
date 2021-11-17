@@ -1,0 +1,71 @@
+/*
+ * Copyright (c) 2019 Samsung Electronics Co., Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+{
+  "includes":
+  [
+    "{APPLICATION_RESOURCE_PATH}/style/base-theme.json"
+  ],
+
+  "styles":
+  {
+    "DemoTile":
+    {
+      "styles": ["DemoTileBase"],
+      "states":
+      {
+        "NORMAL":
+        {
+          "color":[0.9, 0.4, 0.4, 0.6]
+        }
+      }
+    },
+
+    "LauncherBackground":
+    {
+      "background":
+      {
+        "visualType": "GRADIENT",
+        "center": [360, 640],
+        "radius": 1468,
+        "units": "USER_SPACE",
+        "stopColor": [[0,0,0,1.0],[0.556863,0.054902,0,1.0]]
+      }
+    },
+
+    "BubbleColor1":
+    {
+      "color": [ 0.8255, 0.2412, 0.1353, 0.32 ]
+    },
+
+    "BubbleColor2":
+    {
+      "color": [ 0.8647, 0.4569, 0.3157, 0.32 ]
+    },
+
+    "BubbleColor3":
+    {
+      "color": [ 0.9804, 0.5412, 0.5510, 0.32 ]
+    },
+
+    "BubbleColor4":
+    {
+      "color": [ 1, 0, 0, 0.13 ]
+    }
+
+  }
+}
