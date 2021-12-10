@@ -30,6 +30,26 @@ The OpenGLES Canvas Core Demo is a collection of examples and demonstrations
 of the capability of the toolkit.
 
 ##############################
+# Resources
+##############################
+
+%package resources_mobile
+Summary:    Specific resource files for a 720x1280 display on Tizen Mobile
+Requires:   %{name} = %{version}-%{release}
+Conflicts:  %{name}-resources_rpi
+%description resources_mobile
+dali-demo specific resource files for a 720x1280 display on Tizen Mobile
+Contains style / style images
+
+%package resources_rpi
+Summary:    Specific resource files for a 1920x1080 display on Raspberry Pi 4
+Requires:   %{name} = %{version}-%{release}
+Conflicts:  %{name}-resources_mobile
+%description resources_rpi
+dali-demo specific resource files for a 1920x1080 display on Raspberry Pi 4
+Contains style / style images
+
+##############################
 # Preparation
 ##############################
 %prep
@@ -99,6 +119,7 @@ mkdir -p %{buildroot}%{smack_rule_dir}
 cp -f %{_builddir}/%{name}-%{version}/%{name}.rule %{buildroot}%{smack_rule_dir}
 %endif
 
+cp -rf %{_builddir}/%{name}-%{version}/resources/style/rpi %{buildroot}/%{dali_app_res_dir}/style_rpi
 
 ##############################
 # Post Install
@@ -106,6 +127,26 @@ cp -f %{_builddir}/%{name}-%{version}/%{name}.rule %{buildroot}%{smack_rule_dir}
 %post
 /sbin/ldconfig
 exit 0
+
+%post resources_rpi
+pushd %{dali_app_res_dir}
+rm -rf style
+mv style_rpi style
+popd
+
+##############################
+# Pre Uninstall
+##############################
+
+%preun resources_rpi
+case "$1" in
+  0)
+    %preun resources_rpi
+    pushd %{dali_app_res_dir}
+    mv style style_rpi
+    popd
+  ;;
+esac
 
 ##############################
 # Post Uninstall
@@ -136,8 +177,6 @@ exit 0
 %{dali_app_res_dir}/models/*
 %{dali_app_res_dir}/scripts/*
 %{dali_app_res_dir}/shaders/*
-%{dali_app_res_dir}/style/*
-%{dali_app_res_dir}/style/images/*
 %{dali_xml_file_dir}/%{name}.xml
 %{dali_icon_dir}/*
 %{locale_dir}/*
@@ -145,3 +184,23 @@ exit 0
 %config %{smack_rule_dir}/%{name}.rule
 %endif
 %license LICENSE
+
+%files resources_mobile
+%if 0%{?enable_dali_smack_rules}
+%manifest com.samsung.dali-demo.manifest-smack
+%else
+%manifest com.samsung.dali-demo.manifest
+%endif
+%defattr(-,root,root,-)
+%{dali_app_res_dir}/style/*
+%{dali_app_res_dir}/style/images/*
+
+%files resources_rpi
+%if 0%{?enable_dali_smack_rules}
+%manifest com.samsung.dali-demo.manifest-smack
+%else
+%manifest com.samsung.dali-demo.manifest
+%endif
+%defattr(-,root,root,-)
+%{dali_app_res_dir}/style_rpi/*
+%{dali_app_res_dir}/style_rpi/images/*

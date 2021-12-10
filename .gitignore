@@ -36,7 +36,6 @@ dali-builder
 /build/desktop
 /packaging/home*
 *.mo
-demo-theme.json
 simple-image-wall.js
 /shared/resources-location.cpp
 /build/tizen/documentation.list
