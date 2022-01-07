@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  *
  */
 #include "scene-loader-example.h"
+#include <dali-toolkit/dali-toolkit.h>
 #include <dirent.h>
 #include <cstring>
 #include <string_view>
@@ -32,6 +33,7 @@
 #include "dali/public-api/events/key-event.h"
 #include "dali/public-api/object/property-array.h"
 #include "dali/public-api/render-tasks/render-task-list.h"
+#include "scene-loader-extension.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -80,10 +82,11 @@ StringVector ListFiles(
 
 TextLabel MakeLabel(std::string msg)
 {
-  TextLabel label = TextLabel::New(msg);
+  TextLabel label = TextLabel::New("  " + msg);
   label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   label.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
   label.SetProperty(TextLabel::Property::PIXEL_SIZE, ITEM_HEIGHT * 4 / 7);
+  label.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
   SetActorCentered(label);
   return label;
 }
@@ -108,6 +111,7 @@ struct ItemFactoryImpl : Dali::Toolkit::ItemFactory
   {
     auto label = MakeLabel(mSceneNames[itemId]);
     mTapDetector.Attach(label);
+    label.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
     return label;
   }
 };
@@ -172,7 +176,7 @@ void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition
   }
 }
 
-Actor LoadScene(std::string sceneName, CameraActor camera)
+Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<AnimationDefinition>* animations, Animation& animation)
 {
   ResourceBundle::PathProvider pathProvider = [](ResourceType::Value type) {
     return Application::GetResourcePath() + RESOURCE_TYPE_DIRS[type];
@@ -185,12 +189,13 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
   std::vector<AnimationGroupDefinition> animGroups;
   std::vector<CameraParameters>         cameraParameters;
   std::vector<LightParameters>          lights;
-  std::vector<AnimationDefinition>      animations;
+
+  animations->clear();
 
   LoadResult output{
     resources,
     scene,
-    animations,
+    *animations,
     animGroups,
     cameraParameters,
     lights};
@@ -262,13 +267,14 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
     }
   }
 
-  if(!animations.empty())
+  if(!animations->empty())
   {
     auto getActor = [&root](const std::string& name) {
       return root.FindChildByName(name);
     };
 
-    animations[0].ReAnimate(getActor).Play();
+    animation = (*animations)[0].ReAnimate(getActor);
+    animation.Play();
   }
 
   return root;
@@ -277,7 +283,8 @@ Actor LoadScene(std::string sceneName, CameraActor camera)
 } // namespace
 
 SceneLoaderExample::SceneLoaderExample(Dali::Application& app)
-: mApp(app)
+: mApp(app),
+  mSceneLoaderExtension(new SceneLoaderExtension())
 {
   if(!std::getenv("DALI_APPLICATION_PACKAGE"))
   {
@@ -294,6 +301,8 @@ SceneLoaderExample::SceneLoaderExample(Dali::Application& app)
   app.InitSignal().Connect(this, &SceneLoaderExample::OnInit);
   app.TerminateSignal().Connect(this, &SceneLoaderExample::OnTerminate);
 }
+
+SceneLoaderExample::~SceneLoaderExample() = default;
 
 void SceneLoaderExample::OnInit(Application& app)
 {
@@ -346,12 +355,19 @@ void SceneLoaderExample::OnInit(Application& app)
 
   Vector3 windowSize(window.GetSize());
   auto    itemLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
-  itemLayout->SetItemSize(Vector3(windowSize.x, ITEM_HEIGHT, 1.f));
+  itemLayout->SetItemSize(Vector3(windowSize.x * 0.9f, ITEM_HEIGHT, 1.f));
   items.AddLayout(*itemLayout);
   navigationView.Push(items);
 
   mItemLayout = itemLayout;
   mItemView   = items;
+
+  mItemView.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
+  KeyboardFocusManager::Get().PreFocusChangeSignal().Connect(this, &SceneLoaderExample::OnKeyboardPreFocusChange);
+  KeyboardFocusManager::Get().FocusedActorEnterKeySignal().Connect(this, &SceneLoaderExample::OnKeyboardFocusedActorActivated);
+  KeyboardFocusManager::Get().FocusChangedSignal().Connect(this, &SceneLoaderExample::OnKeyboardFocusChanged);
+
+  SetActorCentered(KeyboardFocusManager::Get().GetFocusIndicatorActor());
 
   // camera
   auto camera = CameraActor::New();
@@ -366,7 +382,36 @@ void SceneLoaderExample::OnInit(Application& app)
   mTapDetector = tapDetector;
 
   // activate layout
-  mItemView.ActivateLayout(0, windowSize, 1.f);
+  mItemView.ActivateLayout(0, windowSize, 0.f);
+
+  mSceneLoaderExtension->SetSceneLoader(this);
+}
+
+Actor SceneLoaderExample::OnKeyboardPreFocusChange(Actor current, Actor proposed, Control::KeyboardFocus::Direction direction)
+{
+  if(!current && !proposed)
+  {
+    return mItemView;
+  }
+
+  return proposed;
+}
+
+void SceneLoaderExample::OnKeyboardFocusedActorActivated(Actor activatedActor)
+{
+  if(activatedActor)
+  {
+    OnTap(activatedActor, Dali::TapGesture());
+  }
+}
+
+void SceneLoaderExample::OnKeyboardFocusChanged(Actor originalFocusedActor, Actor currentFocusedActor)
+{
+  if(currentFocusedActor)
+  {
+    auto itemId = mItemView.GetItemId(currentFocusedActor);
+    mItemView.ScrollToItem(itemId, 0.1f);
+  }
 }
 
 void SceneLoaderExample::OnTerminate(Application& app)
@@ -397,11 +442,20 @@ void SceneLoaderExample::OnKey(const KeyEvent& e)
 
         mNavigationView.Pop();
         mScene.Reset();
+
+        if(mActivatedActor)
+        {
+          KeyboardFocusManager::Get().SetCurrentFocusActor(mActivatedActor);
+        }
       }
       else
       {
         mApp.Quit();
       }
+    }
+    else
+    {
+      mSceneLoaderExtension->OnKey(e);
     }
   }
 }
@@ -424,6 +478,8 @@ void SceneLoaderExample::OnPan(Actor actor, const PanGesture& pan)
 
 void SceneLoaderExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
 {
+  mActivatedActor = actor;
+
   auto id = mItemView.GetItemId(actor);
 
   try
@@ -432,7 +488,7 @@ void SceneLoaderExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
     auto renderTasks = window.GetRenderTaskList();
     renderTasks.RemoveTask(mSceneRender);
 
-    auto scene = LoadScene(mSceneNames[id], mSceneCamera);
+    auto scene = LoadScene(mSceneNames[id], mSceneCamera, &mSceneAnimations, mCurrentAnimation);
 
     auto sceneRender = renderTasks.CreateTask();
     sceneRender.SetCameraActor(mSceneCamera);
@@ -452,4 +508,6 @@ void SceneLoaderExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
   }
 
   mNavigationView.Push(mScene);
+
+  mSceneLoaderExtension->ConnectTouchSignals();
 }
