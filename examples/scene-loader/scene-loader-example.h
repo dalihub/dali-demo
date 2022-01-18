@@ -1,7 +1,7 @@
 #ifndef SCENE_LAUNCHER_H_
 #define SCENE_LAUNCHER_H_
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
  * limitations under the License.
  *
  */
+
+#include <memory>
 #include "dali-scene-loader/public-api/animation-definition.h"
 #include "dali-scene-loader/public-api/camera-parameters.h"
 #include "dali-scene-loader/public-api/node-definition.h"
@@ -31,11 +33,13 @@
 #include "dali/public-api/render-tasks/render-task.h"
 #include "dali/public-api/signals/connection-tracker.h"
 
+class SceneLoaderExtension;
+
 class SceneLoaderExample : public Dali::ConnectionTracker
 {
 public:
   SceneLoaderExample(Dali::Application& app);
-  ~SceneLoaderExample() = default;
+  ~SceneLoaderExample();
 
 private: // data
   Dali::Application& mApp;
@@ -50,12 +54,21 @@ private: // data
 
   Dali::CameraActor mSceneCamera;
   Dali::RenderTask  mSceneRender;
-  Dali::Actor       mScene;
 
   Dali::Quaternion mCameraOrientationInv;
 
   Dali::TapGestureDetector mTapDetector;
   Dali::PanGestureDetector mPanDetector;
+
+  Dali::Actor mActivatedActor;
+
+public:
+  Dali::Actor mScene;
+
+  std::vector<Dali::SceneLoader::AnimationDefinition> mSceneAnimations;
+  Dali::Animation                                     mCurrentAnimation;
+
+  std::unique_ptr<SceneLoaderExtension> mSceneLoaderExtension;
 
 private: // methods
   void OnInit(Dali::Application& app);
@@ -64,6 +77,10 @@ private: // methods
   void OnKey(const Dali::KeyEvent& e);
   void OnPan(Dali::Actor actor, const Dali::PanGesture& pan);
   void OnTap(Dali::Actor actor, const Dali::TapGesture& tap);
+
+  Dali::Actor OnKeyboardPreFocusChange(Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction);
+  void        OnKeyboardFocusedActorActivated(Dali::Actor activatedActor);
+  void        OnKeyboardFocusChanged(Dali::Actor originalFocusedActor, Dali::Actor currentFocusedActor);
 };
 
 #endif //SCENE_LAUNCHER_H_
