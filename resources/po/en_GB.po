@@ -79,6 +79,9 @@ msgstr "Dissolve Effect"
 msgid "DALI_DEMO_STR_TITLE_DRAG_AND_DROP"
 msgstr "Drag and Drop"
 
+msgid "DALI_DEMO_STR_TITLE_DRAWABLE_ACTOR"
+msgstr "DrawableActor"
+
 msgid "DALI_DEMO_STR_TITLE_EFFECTS_VIEW"
 msgstr "Effects View"
 

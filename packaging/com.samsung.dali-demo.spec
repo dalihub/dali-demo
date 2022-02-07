@@ -24,6 +24,8 @@ BuildRequires:  pkgconfig(dali2-adaptor)
 BuildRequires:  pkgconfig(dali2-toolkit)
 BuildRequires:  pkgconfig(dali2-scene-loader)
 BuildRequires:  pkgconfig(libtzplatform-config)
+BuildRequires:  pkgconfig(gles20)
+BuildRequires:  pkgconfig(glesv2)
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations
