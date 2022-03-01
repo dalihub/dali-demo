@@ -76,6 +76,15 @@
 	<ui-application appid="color-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/color-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Color Visual</label>
 	</ui-application>
+	<ui-application appid="cv-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/cv-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>CV Benchmark</label>
+	</ui-application>
+	<ui-application appid="iv-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/iv-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>IV Benchmark</label>
+	</ui-application>
+	<ui-application appid="tl-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/tl-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>TL Benchmark</label>
+	</ui-application>
 	<ui-application appid="compressed-texture-formats.example" exec="/usr/apps/com.samsung.dali-demo/bin/compressed-texture-formats.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Compressed Texture Formats</label>
 	</ui-application>
