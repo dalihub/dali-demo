@@ -88,7 +88,7 @@
 	<ui-application appid="dali-builder" exec="/usr/apps/com.samsung.dali-demo/bin/dali-builder" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Builder</label>
 	</ui-application>
-	<ui-application appid="deferred-shading" exec="/usr/apps/com.samsung.dali-demo/bin/deferred-shading.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+	<ui-application appid="deferred-shading.example" exec="/usr/apps/com.samsung.dali-demo/bin/deferred-shading.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Deferred Shading</label>
 	</ui-application>
 	<ui-application appid="dissolve-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/dissolve-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
@@ -156,9 +156,6 @@
 	</ui-application>
 	<ui-application appid="item-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/item-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Item View</label>
-	</ui-application>
-	<ui-application appid="layouting.example" exec="/usr/apps/com.samsung.dali-demo/bin/layouting.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
-		<label>Layouting</label>
 	</ui-application>
 	<ui-application appid="line-mesh.example" exec="/usr/apps/com.samsung.dali-demo/bin/line-mesh.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Line Mesh</label>
