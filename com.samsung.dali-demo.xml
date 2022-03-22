@@ -106,6 +106,9 @@
 	<ui-application appid="drag-and-drop.example" exec="/usr/apps/com.samsung.dali-demo/bin/drag-and-drop.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Drag And Drop</label>
 	</ui-application>
+	<ui-application appid="drawable-actor.example" exec="/usr/apps/com.samsung.dali-demo/bin/drawable-actor.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Drawable Actor</label>
+	</ui-application>
 	<ui-application appid="effects-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/effects-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Effects View</label>
 	</ui-application>
