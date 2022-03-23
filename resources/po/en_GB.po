@@ -169,6 +169,9 @@ msgstr "Particles"
 msgid "DALI_DEMO_STR_TITLE_PERF_SCROLL"
 msgstr "Scrolling Performance"
 
+msgid "DALI_DEMO_STR_TITLE_PERF_VIEW_CREATION"
+msgstr "Creation View Performance"
+
 msgid "DALI_DEMO_STR_TITLE_POINT_MESH"
 msgstr "Point Mesh"
 
