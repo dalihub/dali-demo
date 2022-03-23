@@ -92,6 +92,7 @@ cmake -DDALI_APP_DIR=%{dali_app_ro_dir}/bin \
 %if 0%{?enable_debug}
       -DCMAKE_BUILD_TYPE=Debug \
 %endif
+      -DENABLE_TRACE:BOOL=ON \
       -DLOCAL_STYLE_DIR=%{local_style_dir} \
       -DINTERNATIONALIZATION:BOOL=OFF \
       -DTIZEN:BOOL=ON \
