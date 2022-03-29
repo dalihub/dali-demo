@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ using namespace Dali;
 
 namespace
 {
-const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "background-gradient.jpg";
+const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "background-default.png";
 const char* const TOOLBAR_IMAGE    = DEMO_IMAGE_DIR "top-bar.png";
 
 const char* const TOOLBAR_TITLE = "Buttons";
@@ -44,20 +44,16 @@ const char* const BIG_IMAGE_3   = DEMO_IMAGE_DIR "gallery-large-13.jpg";
 
 const char* const ENABLED_IMAGE = DEMO_IMAGE_DIR "item-select-check.png";
 
-const Vector4 BACKGROUND_COLOUR(1.0f, 1.0f, 1.0f, 0.15f);
+const Vector4 BACKGROUND_COLOUR(0.25f, 0.25f, 0.25f, 0.15f);
 
 // Layout sizes
-const int RADIO_LABEL_THUMBNAIL_SIZE       = 60;
+const int RADIO_LABEL_THUMBNAIL_SIZE       = 50;
 const int RADIO_LABEL_THUMBNAIL_SIZE_SMALL = 40;
 const int RADIO_IMAGE_SPACING              = 8;
 const int BUTTON_HEIGHT                    = 48;
 
 const int MARGIN_SIZE   = 10;
 const int TOP_MARGIN    = 85;
-const int GROUP2_HEIGHT = 238;
-const int GROUP1_HEIGHT = 120;
-const int GROUP3_HEIGHT = 190;
-const int GROUP4_HEIGHT = BUTTON_HEIGHT + MARGIN_SIZE * 2;
 
 } // namespace
 
