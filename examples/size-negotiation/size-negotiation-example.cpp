@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ struct ButtonItem
 
 namespace
 {
-const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "background-gradient.jpg";
+const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "background-default.png";
 const char* const TOOLBAR_IMAGE    = DEMO_IMAGE_DIR "top-bar.png";
 const char* const IMAGE            = DEMO_IMAGE_DIR "background-magnifier.jpg";
 

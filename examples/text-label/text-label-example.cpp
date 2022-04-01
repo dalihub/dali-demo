@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -253,11 +253,10 @@ public:
     mBorder.SetProperty(Actor::Property::VISIBLE, false);
     mGrabCorner.RaiseToTop();
 
-    mHueAngleIndex         = mLabel.RegisterProperty("hue", 0.0f);
-    Renderer bgRenderer    = mLabel.GetRendererAt(0);
-    mOverrideMixColorIndex = bgRenderer.GetPropertyIndex(ColorVisual::Property::MIX_COLOR);
+    mHueAngleIndex      = mLabel.RegisterProperty("hue", 0.0f);
+    Renderer bgRenderer = mLabel.GetRendererAt(0);
 
-    Constraint constraint = Constraint::New<Vector3>(bgRenderer, mOverrideMixColorIndex, HSVColorConstraint(0.0f, 0.5f, 0.8f));
+    Constraint constraint = Constraint::New<Vector3>(bgRenderer, VisualRenderer::Property::VISUAL_MIX_COLOR, HSVColorConstraint(0.0f, 0.5f, 0.8f));
     constraint.AddSource(Source(mLabel, mHueAngleIndex));
     constraint.SetRemoveAction(Constraint::DISCARD);
     constraint.Apply();

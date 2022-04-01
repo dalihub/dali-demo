@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    2.1.15
+Version:    2.1.16
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -92,6 +92,7 @@ cmake -DDALI_APP_DIR=%{dali_app_ro_dir}/bin \
 %if 0%{?enable_debug}
       -DCMAKE_BUILD_TYPE=Debug \
 %endif
+      -DENABLE_TRACE:BOOL=ON \
       -DLOCAL_STYLE_DIR=%{local_style_dir} \
       -DINTERNATIONALIZATION:BOOL=OFF \
       -DTIZEN:BOOL=ON \
