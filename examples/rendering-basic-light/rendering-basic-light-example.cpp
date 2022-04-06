@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -295,13 +295,14 @@ public:
   void CreateActor()
   {
     Window window = mApplication.GetWindow();
+    const auto windowSize = window.GetSize();
 
-    float quarterWindowWidth = window.GetSize().GetWidth() * 0.25f;
-    mActor                   = Actor::New();
+    const float quarterWindowSize = std::min(windowSize.GetWidth(), windowSize.GetHeight()) * 0.25f;
+    mActor                        = Actor::New();
     mActor.SetProperty(Actor::Property::COLOR, Vector4(1.0f, 1.0f, 0.6f, 1.0f));
     mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mActor.SetProperty(Actor::Property::SIZE, Vector3(quarterWindowWidth, quarterWindowWidth, quarterWindowWidth));
+    mActor.SetProperty(Actor::Property::SIZE, Vector3(quarterWindowSize, quarterWindowSize, quarterWindowSize));
     mActor.AddRenderer(mRenderer);
     window.Add(mActor);
   }
