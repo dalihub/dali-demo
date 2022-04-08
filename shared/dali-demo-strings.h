@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_BLOOM_VIEW dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BLOOM_VIEW")
 #define DALI_DEMO_STR_TITLE_BUBBLES dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUBBLES")
 #define DALI_DEMO_STR_TITLE_BUTTONS dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_BUTTONS")
+#define DALI_DEMO_STR_TITLE_CAMERA_TEST dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CAMERA_TEST")
 #define DALI_DEMO_STR_TITLE_CANVAS_VIEW dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CANVAS_VIEW")
 #define DALI_DEMO_STR_TITLE_CALL_ACTIVE dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CALL_ACTIVE")
 #define DALI_DEMO_STR_TITLE_CARD_ACTIVE dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_CARD_ACTIVE")
@@ -155,6 +156,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_BLOOM_VIEW "Bloom"
 #define DALI_DEMO_STR_TITLE_BUBBLES "Bubbles"
 #define DALI_DEMO_STR_TITLE_BUTTONS "Buttons"
+#define DALI_DEMO_STR_TITLE_CAMERA_TEST "Camera Test"
 #define DALI_DEMO_STR_TITLE_CANVAS_VIEW "Canvas View"
 #define DALI_DEMO_STR_TITLE_CALL_ACTIVE "Call Active"
 #define DALI_DEMO_STR_TITLE_CARD_ACTIVE "Card Active"

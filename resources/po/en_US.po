@@ -31,6 +31,9 @@ msgstr "Bubbles"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Buttons"
 
+msgid "DALI_DEMO_STR_TITLE_CAMERA_TEST"
+msgstr "Camera Test"
+
 msgid "DALI_DEMO_STR_TITLE_CANVAS_VIEW"
 msgstr "Canvas view"
 

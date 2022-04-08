@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,9 @@ private:
     // Get a handle to the window
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ImageViewAlphaBlendApp::OnKeyEvent);
+    const Vector2 windowSize = window.GetSize();
+    const bool portraitOrientation = windowSize.width < windowSize.height;
+    const Property::Index positionProperty = portraitOrientation ? Actor::Property::POSITION_Y : Actor::Property::POSITION_X;
 
     auto  green0    = Vector4(0.f, 1.f, 0.f, 0.25f);
     auto  green1    = Vector4(0.f, 0.25f, 0.f, 0.25f);
@@ -59,7 +62,7 @@ private:
     Toolkit::ImageView imageView0 = CreateImageView(IMAGE_PATH);
     imageView0.SetProperty(Actor::Property::SIZE, Vector2(imageSize, imageSize));
     imageView0.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    imageView0.SetProperty(Actor::Property::POSITION_Y, -imageSize * 0.5f);
+    imageView0.SetProperty(positionProperty, -imageSize * 0.5f);
     window.Add(imageView0);
     Toolkit::ImageView imageView1 = CreateImageView(redGreen0);
     imageView1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -69,7 +72,7 @@ private:
     Toolkit::ImageView imageView2 = CreateImageView(IMAGE_PATH);
     imageView2.SetProperty(Actor::Property::SIZE, Vector2(imageSize, imageSize));
     imageView2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    imageView2.SetProperty(Actor::Property::POSITION_Y, imageSize * 0.5f);
+    imageView2.SetProperty(positionProperty, imageSize * 0.5f);
     window.Add(imageView2);
     Toolkit::ImageView imageView3 = CreateImageView(redGreen1);
     imageView3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
