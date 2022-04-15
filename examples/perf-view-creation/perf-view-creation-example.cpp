@@ -533,8 +533,8 @@ private:
   uint32_t mDeleteCount = 0;
   uint32_t mImageCount  = 0;
 
-  uint64_t mAppStartTime;
-  uint64_t mAppEndTime;
+  uint64_t mAppStartTime = 0;
+  uint64_t mAppEndTime   = 0;
 
   Statistic<double> mCreationStatistic;
 };
