@@ -31,6 +31,9 @@ msgstr "Bubbles"
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Buttons"
 
+msgid "DALI_DEMO_STR_TITLE_CAMERA_TEST"
+msgstr "Camera Test"
+
 msgid "DALI_DEMO_STR_TITLE_CANVAS_VIEW"
 msgstr "Canvas view"
 
@@ -171,6 +174,9 @@ msgstr "Particles"
 
 msgid "DALI_DEMO_STR_TITLE_PERF_SCROLL"
 msgstr "Scrolling Performance"
+
+msgid "DALI_DEMO_STR_TITLE_PERF_VIEW_CREATION"
+msgstr "Creation View Performance"
 
 msgid "DALI_DEMO_STR_TITLE_POINT_MESH"
 msgstr "Point Mesh"

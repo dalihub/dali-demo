@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,6 +73,7 @@ public:
   {
     auto window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
+    const auto windowHeight = window.GetSize().GetHeight();
 
     mDragAndDropDetector = Dali::Toolkit::DragAndDropDetector::New();
 
@@ -80,14 +81,19 @@ public:
     window.KeyEventSignal().Connect(this, &DragAndDropExample::OnKeyEvent);
 
     TextLabel hintText = TextLabel::New("please drag one textlabel, move and drop on other textlabel");
-    hintText.SetProperty(Actor::Property::POSITION, Vector2(0.0f, 700.0f));
-    hintText.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    hintText.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    hintText.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
+    hintText.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
     hintText.SetProperty(TextLabel::Property::MULTI_LINE, true);
     window.Add(hintText);
 
     for(unsigned int i = 0; i < TEXT_LABEL_NUM; i++)
     {
+      // Should be able to fit this and another more so if the height is less, then just stop adding new text labels
+      if((TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * (i + 2)) >= windowHeight)
+      {
+        break;
+      }
+
       std::string str = "textlabel ";
       mTextLabel[i]   = TextLabel::New(str + std::to_string(i));
       mTextLabel[i].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);

@@ -61,6 +61,9 @@
 	<ui-application appid="buttons.example" exec="/usr/apps/com.samsung.dali-demo/bin/buttons.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Buttons</label>
 	</ui-application>
+	<ui-application appid="camera-test.example" exec="/usr/apps/com.samsung.dali-demo/bin/camera-test.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Camera Test</label>
+	</ui-application>
 	<ui-application appid="canvas-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/canvas-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Canvas View</label>
 	</ui-application>
@@ -207,6 +210,9 @@
 	</ui-application>
 	<ui-application appid="perf-scroll.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-scroll.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>perf-scroll</label>
+	</ui-application>
+	<ui-application appid="perf-view-creation.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-view-creation.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>perf-view-creation</label>
 	</ui-application>
 	<ui-application appid="pivot.example" exec="/usr/apps/com.samsung.dali-demo/bin/pivot.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping</label>

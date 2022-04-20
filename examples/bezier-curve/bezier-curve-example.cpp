@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,6 +123,22 @@ public:
   {
     Window window = mApplication.GetWindow();
     window.KeyEventSignal().Connect(this, &BezierCurveExample::OnKeyEvent);
+    const Vector2 windowSize = window.GetSize();
+    const bool orientationPortrait = windowSize.width < windowSize.height;
+
+    unsigned int tableViewRows = 5;
+    unsigned int tableViewColumns = 1;
+    unsigned int rowPositionAdder = 1;
+    TableView::CellPosition gridPosition{1,0};
+
+    // Change layout if we're in landscape mode
+    if(!orientationPortrait)
+    {
+      tableViewRows = 4;
+      tableViewColumns = 2;
+      rowPositionAdder = 0;
+      gridPosition = {0,1,4,1};
+    }
 
     CreateBackground(window);
 
@@ -135,8 +151,7 @@ public:
     mContentLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     window.Add(mContentLayer);
 
-    // 6 rows: title, grid, coords, play, anim1, anim2
-    TableView contentLayout = TableView::New(5, 1);
+    TableView contentLayout = TableView::New(tableViewRows, tableViewColumns);
     contentLayout.SetProperty(Dali::Actor::Property::NAME, "contentLayout");
     contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     contentLayout.SetCellPadding(Size(30, 30));
@@ -161,7 +176,7 @@ public:
     mGrid.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mGrid.SetBackgroundColor(GRID_BACKGROUND_COLOR);
 
-    contentLayout.Add(mGrid);
+    contentLayout.AddChild(mGrid, gridPosition);
     contentLayout.SetCellAlignment(1, HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
     CreateCubic(mGrid);
     CreateControlPoints(mGrid); // Control points constrained to double height of grid
@@ -175,7 +190,7 @@ public:
 
     contentLayout.Add(mCoefficientLabel);
     SetLabel(Vector2(0, 0), Vector2(1, 1));
-    contentLayout.SetCellAlignment(2, HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
+    contentLayout.SetCellAlignment(1 + rowPositionAdder, HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
     contentLayout.SetFitHeight(2);
 
     // Setup Play button and 2 icons to show off current anim and linear anim
@@ -187,8 +202,8 @@ public:
     play.ClickedSignal().Connect(this, &BezierCurveExample::OnPlayClicked);
 
     contentLayout.Add(play);
-    contentLayout.SetCellAlignment(3, HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
-    contentLayout.SetFitHeight(3);
+    contentLayout.SetCellAlignment(2 + rowPositionAdder, HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
+    contentLayout.SetFitHeight(2 + rowPositionAdder);
 
     auto animContainer = Control::New();
     animContainer.SetProperty(Dali::Actor::Property::NAME, "AnimationContainer");
@@ -203,7 +218,7 @@ public:
     animContainer.Add(animRail);
 
     contentLayout.Add(animContainer);
-    contentLayout.SetFixedHeight(4, 150);
+    contentLayout.SetFixedHeight(3 + rowPositionAdder, 150);
 
     mAnimIcon1 = ImageView::New(CIRCLE1_IMAGE);
     mAnimIcon1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);

@@ -207,7 +207,8 @@ public:
     mContainer = Control::New();
     mContainer.SetProperty(Dali::Actor::Property::NAME, "Container");
     mContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mLayoutSize = Vector2(mWindowSize.width * 0.6f, mWindowSize.width * 0.6f);
+    auto size = std::min(mWindowSize.width, mWindowSize.height) * 0.6f;
+    mLayoutSize = Vector2(size, size);
     mContainer.SetProperty(Actor::Property::SIZE, mLayoutSize);
     window.Add(mContainer);
 
