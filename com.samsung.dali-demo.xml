@@ -211,6 +211,9 @@
 	<ui-application appid="perf-scroll.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-scroll.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>perf-scroll</label>
 	</ui-application>
+	<ui-application appid="perf-view-creation.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-view-creation.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>perf-view-creation</label>
+	</ui-application>
 	<ui-application appid="pivot.example" exec="/usr/apps/com.samsung.dali-demo/bin/pivot.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping</label>
 	</ui-application>
