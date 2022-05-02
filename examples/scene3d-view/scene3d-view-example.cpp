@@ -16,14 +16,14 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/scene3d-view/scene3d-view.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/file-loader.h>
+#include <dali/devel-api/adaptor-framework/file-stream.h>
+#include <dali/devel-api/adaptor-framework/image-loading.h>
 #include <dali/integration-api/debug.h>
 #include <dali/public-api/actors/camera-actor.h>
-#include <dali/devel-api/adaptor-framework/file-loader.h>
-#include <dali/devel-api/adaptor-framework/image-loading.h>
 #include <cstring>
-#include <dali-toolkit/devel-api/controls/scene3d-view/scene3d-view.h>
-#include <dali/devel-api/adaptor-framework/file-stream.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -41,7 +41,6 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-
 enum GLTF_MODEL_LIST
 {
   GLTF_ANIMATED_BOX = 0,
@@ -346,7 +345,6 @@ public:
       {Vector3(-1.0f, -1.0f, 1.0f)},
       {Vector3(1.0f, -1.0f, 1.0f)}};
 
-
     const std::string currentVShaderFile(VERTEX_SHADER_URL);
     const std::string currentFShaderFile(FRAGMENT_SHADER_URL);
 
@@ -448,10 +446,10 @@ public:
     uint32_t xOffset = cubeMap_index_x[faceIndex] * faceSize;
     uint32_t yOffset = cubeMap_index_y[faceIndex] * faceSize;
 
-    uint8_t*  tempImageBuffer = CropBuffer(imageBuffer, bytesPerPixel, imageWidth, imageHeight, xOffset, yOffset, faceSize, faceSize);
+    uint8_t* tempImageBuffer = CropBuffer(imageBuffer, bytesPerPixel, imageWidth, imageHeight, xOffset, yOffset, faceSize, faceSize);
     if(tempImageBuffer)
     {
-      PixelData pixelData       = PixelData::New(tempImageBuffer, faceSize * faceSize * bytesPerPixel, faceSize, faceSize, pixelBuffer.GetPixelFormat(), PixelData::FREE);
+      PixelData pixelData = PixelData::New(tempImageBuffer, faceSize * faceSize * bytesPerPixel, faceSize, faceSize, pixelBuffer.GetPixelFormat(), PixelData::FREE);
       texture.Upload(pixelData, CubeMapLayer::POSITIVE_X + faceIndex, 0, 0, 0, faceSize, faceSize);
     }
   }
@@ -481,7 +479,7 @@ public:
     mSkyboxActor.SetProperty(Dali::Actor::Property::POSITION, mCameraPosition);
     SetAnimation();
     mAnimationStop = false;
-    mWheelDelta = 1.0f;
+    mWheelDelta    = 1.0f;
   }
 
   /**
@@ -619,20 +617,20 @@ private:
   Actor      mSkyboxActor;
 
   Animation mAnimation;
-  bool      mProcess;
+  bool      mProcess{false};
   bool      mAnimationStop;
 
   Timer mDoubleTapTime;
-  bool  mDoubleTap;
+  bool  mDoubleTap{false};
 
   float mWheelDelta{1.0f};
 
-  int32_t mCurrentGlTF;
+  int32_t mCurrentGlTF{0};
 };
 
 int32_t DALI_EXPORT_API main(int32_t argc, char** argv)
 {
-  Application               application = Application::New(&argc, &argv);
+  Application           application = Application::New(&argc, &argv);
   Scene3dViewController test(application);
   application.MainLoop();
   return 0;
