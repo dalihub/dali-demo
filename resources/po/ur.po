@@ -177,3 +177,6 @@ msgstr "Skybox"
 
 msgid "DALI_DEMO_STR_TITLE_PBR"
 msgstr "PBR"
+
+msgid "DALI_DEMO_STR_TITLE_SCENE3D_VIEW"
+msgstr "Scene3D View glTF"
