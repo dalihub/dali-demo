@@ -58,8 +58,8 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("renderer-stencil.example", DALI_DEMO_STR_TITLE_RENDERER_STENCIL));
   demo.AddExample(Example("rendering-skybox.example", DALI_DEMO_STR_TITLE_SKYBOX));
   demo.AddExample(Example("rendering-basic-pbr.example", DALI_DEMO_STR_TITLE_PBR));
-  demo.AddExample(Example("scene3d-view.example", DALI_DEMO_STR_TITLE_SCENE3D_VIEW));
 #ifdef DALI_SCENE3D_AVAILABLE
+  demo.AddExample(Example("scene3d-model-view.example", DALI_DEMO_STR_TITLE_SCENE3D_MODEL_VIEW));
   demo.AddExample(Example("scene3d.example", DALI_DEMO_STR_TITLE_SCENE3D));
 #endif //DALI_SCENE3D_AVAILABLE
   demo.AddExample(Example("shadows-and-lights.example", DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS));

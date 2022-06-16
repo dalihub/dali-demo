@@ -274,8 +274,8 @@
 	<ui-application appid="rendering-triangle.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-triangle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Rendering Triangle</label>
 	</ui-application>
-	<ui-application appid="scene3d-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Scene3d View</label>
+	<ui-application appid="scene3d-model-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d-model-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Model View</label>
 	</ui-application>
 	<ui-application appid="scene3d.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scene3D</label>
