@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visuals/animated-image-visual-actions-devel.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -338,6 +339,7 @@ private:
       }
       map.Add(Toolkit::ImageVisual::Property::URL, Property::Value(frameUrls));
     }
+    map.Add(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FIT_KEEP_ASPECT_RATIO);
   }
 
   /**
