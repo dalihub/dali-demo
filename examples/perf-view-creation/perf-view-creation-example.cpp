@@ -34,10 +34,6 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace std;
 
-// TODO : borderline, blur type need to solve partial update issue.
-// Until that issue exist, just block it.
-#define ALLOW_BORDER_AND_BLUR 0
-
 namespace
 {
 enum class ControlTestType
@@ -47,12 +43,10 @@ enum class ControlTestType
   IMAGE,                ///< Test with simple image
   TEXT,                 ///< Test with simple text label
   ROUNDED_COLOR,        ///< Test with rounded color
-#if ALLOW_BORDER_AND_BLUR
   BORDER_COLOR,         ///< Test with borderline color
   ROUNDED_BORDER_COLOR, ///< Test with rounded borderline color
   BLUR_COLOR,           ///< Test with blur color
-  ROUNDED_BLUR_COLOR,   ///< Test with blur color
-#endif
+  ROUNDED_BLUR_COLOR,   ///< Test with rounded blur color
   TYPE_MAX,
   // clang-format on
 };
@@ -66,12 +60,10 @@ const char* TestTypeString(ControlTestType type)
     case ControlTestType::IMAGE:               return "IMAGE";
     case ControlTestType::TEXT:                return "TEXT";
     case ControlTestType::ROUNDED_COLOR:       return "ROUNDED COLOR";
-#if ALLOW_BORDER_AND_BLUR
     case ControlTestType::BORDER_COLOR:        return "BORDER COLOR";
     case ControlTestType::ROUNDED_BORDER_COLOR:return "ROUNDED BORDER COLOR";
     case ControlTestType::BLUR_COLOR:          return "BLUR COLOR";
     case ControlTestType::ROUNDED_BLUR_COLOR:  return "ROUNDED BLUR COLOR";
-#endif
     default:                                   return "UNKNOWN";
   }
   // clang-format on
@@ -94,7 +86,7 @@ constexpr uint32_t DURATION_OF_ANIMATION(DURATION_PER_COLUMNS*(COLUMNS_COUNT * 4
 // We should render same type of views in some timing.
 static_assert(COLUMNS_COUNT * 2 <= TOTAL_COLUMNS_COUNT);
 
-constexpr float VIEW_MARGIN_RATE = 0.1f;
+constexpr float VIEW_MARGIN_RATE = 0.2f;
 
 // copy from dali-adaptor time-service.cpp
 void GetNanoseconds(uint64_t& timeInNanoseconds)
@@ -141,7 +133,6 @@ Control CreateRoundedColor()
   return bgView;
 }
 
-#if ALLOW_BORDER_AND_BLUR
 Control CreateBorderColor(const float& requiredBorderlineWidth)
 {
   Control bgView = Control::New(Control::ControlBehaviour::DISABLE_STYLE_CHANGE_SIGNALS);
@@ -203,7 +194,6 @@ Control CreateRoundedBlurColor(const float& requiredBlurRadius)
 
   return bgView;
 }
-#endif
 
 /**
  * @brief Statistic container that we can get average / sum / min/ max.
@@ -379,7 +369,6 @@ public:
           bgView = CreateRoundedColor();
           break;
         }
-#if ALLOW_BORDER_AND_BLUR
         case ControlTestType::BORDER_COLOR:
         {
           bgView = CreateBorderColor(std::min(mSize.x, mSize.y) * VIEW_MARGIN_RATE);
@@ -400,7 +389,6 @@ public:
           bgView = CreateRoundedBlurColor(std::min(mSize.x, mSize.y) * VIEW_MARGIN_RATE * 0.5f);
           break;
         }
-#endif
       }
 
       bgView[Actor::Property::PARENT_ORIGIN] = ParentOrigin::TOP_LEFT;
