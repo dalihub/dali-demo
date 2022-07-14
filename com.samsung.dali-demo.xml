@@ -277,8 +277,8 @@
 	<ui-application appid="scene3d-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scene3d View</label>
 	</ui-application>
-	<ui-application appid="scene-loader.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene-loader.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Scene Loader</label>
+	<ui-application appid="scene3d.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Scene3D</label>
 	</ui-application>
 	<ui-application appid="scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>

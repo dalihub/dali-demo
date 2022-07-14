@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-#include "scene-loader-example.h"
+#include "scene3d-example.h"
 
 #include "dali/dali.h"
 
@@ -23,7 +23,7 @@ using namespace Dali;
 int DALI_EXPORT_API main(int argc, char** argv)
 {
   auto               app = Application::New(&argc, &argv, DEMO_THEME_PATH);
-  SceneLoaderExample sceneLoader(app);
+  Scene3DExample scene3D(app);
   app.MainLoop();
   return 0;
 }

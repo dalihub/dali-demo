@@ -215,19 +215,19 @@ IF( ENABLE_PKG_CONFIGURE )
         SET(REQUIRED_CFLAGS "${REQUIRED_CFLAGS} ${flag}")
   ENDFOREACH(flag)
 
-  pkg_check_modules(DALI_SCENE_LOADER dali2-scene-loader)
-  IF( DALI_SCENE_LOADER_FOUND )
-    FOREACH(flag ${DALI_SCENE_LOADER_CFLAGS})
+  pkg_check_modules(DALI_SCENE3D dali2-scene3d)
+  IF( DALI_SCENE3D_FOUND )
+    FOREACH(flag ${DALI_SCENE3D_CFLAGS})
       SET(REQUIRED_CFLAGS "${REQUIRED_CFLAGS} ${flag}")
     ENDFOREACH(flag)
 
-    SET( REQUIRED_CFLAGS "${REQUIRED_CFLAGS} -DDALI_SCENE_LOADER_AVAILABLE" )
+    SET( REQUIRED_CFLAGS "${REQUIRED_CFLAGS} -DDALI_SCENE3D_AVAILABLE" )
 
-    FOREACH(flag ${DALI_SCENE_LOADER_LDFLAGS})
+    FOREACH(flag ${DALI_SCENE3D_LDFLAGS})
       SET(REQUIRED_PKGS_LDFLAGS "${REQUIRED_PKGS_LDFLAGS} ${flag}")
     ENDFOREACH(flag)
 
-    SET( ENABLE_SCENE_LOADER "ON" )
+    SET( ENABLE_SCENE3D "ON" )
   ENDIF()
 
   # if build as tizen platform, use capi-appfw-app-control
@@ -277,7 +277,7 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
   FIND_PACKAGE( dali2-adaptor REQUIRED )
   FIND_PACKAGE( dali2-toolkit REQUIRED )
 
-  FIND_PACKAGE( dali2-scene-loader )
+  FIND_PACKAGE( dali2-scene3d )
 
   # Set up the include dir
   SET( INCLUDE_DIR $ENV{includedir} )
@@ -326,12 +326,12 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     )
   ENDIF()
 
-  IF (dali2-scene-loader_FOUND)
+  IF (dali2-scene3d_FOUND)
     SET(REQUIRED_LIBS
       ${REQUIRED_LIBS}
-      dali2-scene-loader::dali2-scene-loader
+      dali2-scene3d::dali2-scene3d
     )
-    SET( ENABLE_SCENE_LOADER "ON" )
+    SET( ENABLE_SCENE3D "ON" )
   ENDIF()
 ELSEIF( UNIX )
   SET( REQUIRED_LIBS
@@ -357,8 +357,8 @@ IF( ENABLE_TRACE )
   SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -DTRACE_ENABLED")
 ENDIF()
 
-IF( ENABLE_SCENE_LOADER )
-  SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -DDALI_SCENE_LOADER_AVAILABLE")
+IF( ENABLE_SCENE3D )
+  SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -DDALI_SCENE3D_AVAILABLE")
 ENDIF()
 
 IF( UNIX )
@@ -468,4 +468,4 @@ MESSAGE( " Folder  DEMO_LOCALE_DIR : [" ${DEMO_LOCALE_DIR} "]" )
 MESSAGE( " Folder DEMO_EXAMPLE_BIN : [" ${DEMO_EXAMPLE_BIN} "]" )
 MESSAGE( " Folder        DEMO_LANG : [" ${DEMO_LANG} "]" )
 MESSAGE( " Current Build Platform  : [" ${CURRENT_BUILD_PLATFORM} "]" )
-MESSAGE( " Scene Loader Enabled    : [" ${ENABLE_SCENE_LOADER} "]" )
+MESSAGE( " Scene3D Enabled    : [" ${ENABLE_SCENE3D} "]" )

@@ -18,10 +18,10 @@
  */
 
 #include <memory>
-#include "dali-scene-loader/public-api/animation-definition.h"
-#include "dali-scene-loader/public-api/camera-parameters.h"
-#include "dali-scene-loader/public-api/node-definition.h"
-#include "dali-scene-loader/public-api/scene-definition.h"
+#include "dali-scene3d/public-api/loader/animation-definition.h"
+#include "dali-scene3d/public-api/loader/camera-parameters.h"
+#include "dali-scene3d/public-api/loader/node-definition.h"
+#include "dali-scene3d/public-api/loader/scene-definition.h"
 #include "dali-toolkit/devel-api/controls/navigation-view/navigation-view.h"
 #include "dali-toolkit/public-api/controls/scrollable/item-view/item-factory.h"
 #include "dali-toolkit/public-api/controls/scrollable/item-view/item-layout.h"
@@ -33,13 +33,13 @@
 #include "dali/public-api/render-tasks/render-task.h"
 #include "dali/public-api/signals/connection-tracker.h"
 
-class SceneLoaderExtension;
+class Scene3DExtension;
 
-class SceneLoaderExample : public Dali::ConnectionTracker
+class Scene3DExample : public Dali::ConnectionTracker
 {
 public:
-  SceneLoaderExample(Dali::Application& app);
-  ~SceneLoaderExample();
+  Scene3DExample(Dali::Application& app);
+  ~Scene3DExample();
 
 private: // data
   Dali::Application& mApp;
@@ -65,10 +65,10 @@ private: // data
 public:
   Dali::Actor mScene;
 
-  std::vector<Dali::SceneLoader::AnimationDefinition> mSceneAnimations;
+  std::vector<Dali::Scene3D::Loader::AnimationDefinition> mSceneAnimations;
   Dali::Animation                                     mCurrentAnimation;
 
-  std::unique_ptr<SceneLoaderExtension> mSceneLoaderExtension;
+  std::unique_ptr<Scene3DExtension> mScene3DExtension;
 
 private: // methods
   void OnInit(Dali::Application& app);

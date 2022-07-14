@@ -19,20 +19,20 @@
 #include <dali/dali.h>
 #include <cstring>
 
-class SceneLoaderExtension : public Dali::ConnectionTracker
+class Scene3DExtension : public Dali::ConnectionTracker
 {
 public:
-  SceneLoaderExtension()
+  Scene3DExtension()
   : mSceneLoader(nullptr),
     mCurrentAnimationIndex(ANIMATION_IDLE)
   {
   }
 
-  ~SceneLoaderExtension() = default; // Nothing to do in destructor
+  ~Scene3DExtension() = default; // Nothing to do in destructor
 
-  void SetSceneLoader(SceneLoaderExample* sceneLoader)
+  void SetSceneLoader(Scene3DExample* scene3D)
   {
-    mSceneLoader = sceneLoader;
+    mSceneLoader = scene3D;
   }
 
   void ConnectTouchSignals()
@@ -102,7 +102,7 @@ private:
       {
         mCurrentAnimationIndex          = animationIndex;
         mSceneLoader->mCurrentAnimation = mSceneLoader->mSceneAnimations[animationIndex].ReAnimate(getActor);
-        mSceneLoader->mCurrentAnimation.FinishedSignal().Connect(this, &SceneLoaderExtension::OnAnimationFinished);
+        mSceneLoader->mCurrentAnimation.FinishedSignal().Connect(this, &Scene3DExtension::OnAnimationFinished);
         mSceneLoader->mCurrentAnimation.Play();
       }
     }
@@ -117,7 +117,7 @@ private:
       auto actor = mSceneLoader->mScene.FindChildByName(actorName);
       if(actor)
       {
-        actor.TouchedSignal().Connect(this, &SceneLoaderExtension::OnTouch);
+        actor.TouchedSignal().Connect(this, &Scene3DExtension::OnTouch);
       }
     }
   }
@@ -216,6 +216,6 @@ private:
   inline static const std::string ICON_JUMPING_JACK = "JumpingJack";
   inline static const std::string ICON_LUNGE        = "Lunge";
 
-  SceneLoaderExample* mSceneLoader;
+  Scene3DExample* mSceneLoader;
   unsigned int        mCurrentAnimationIndex;
 };
