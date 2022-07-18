@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 #include <dali-toolkit/devel-api/visuals/animated-vector-image-visual-signals-devel.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/vector-animation-renderer.h>
 #include <string>
 #include "shared/view.h"
 
@@ -35,8 +36,8 @@ const char* TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
 const char* APPLICATION_TITLE("Animated Vector Images");
 
 const char* IMAGE_PATH[] = {
+  DEMO_IMAGE_DIR "done.json",
   DEMO_IMAGE_DIR "insta_camera.json",
-  DEMO_IMAGE_DIR "you're_in!.json",
   DEMO_IMAGE_DIR "jolly_walker.json"};
 
 const unsigned int NUMBER_OF_IMAGES = 3;
@@ -140,10 +141,80 @@ public:
       mTable.AddChild(mImageViews[x], TableView::CellPosition(CellPlacement::IMAGE, x));
     }
 
+    DevelAnimatedVectorImageVisual::DynamicPropertyInfo info;
+    info.id       = 1;
+    info.keyPath  = "Shape Layer 1.Ellipse 1.Fill 1";
+    info.property = static_cast<int>(VectorAnimationRenderer::VectorProperty::FILL_COLOR);
+    info.callback = MakeCallback(this, &AnimatedVectorImageViewController::FillColorCallback);
+
+    DevelControl::DoActionExtension(mImageViews[0], ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::SET_DYNAMIC_PROPERTY, Any(info));
+
+    info.id       = 2;
+    info.keyPath  = "**";
+    info.property = static_cast<int>(VectorAnimationRenderer::VectorProperty::STROKE_COLOR);
+    info.callback = MakeCallback(this, &AnimatedVectorImageViewController::StrokeColorCallback);
+
+    DevelControl::DoActionExtension(mImageViews[0], ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::SET_DYNAMIC_PROPERTY, Any(info));
+
+    info.id       = 3;
+    info.keyPath  = "**";
+    info.property = static_cast<int>(VectorAnimationRenderer::VectorProperty::STROKE_WIDTH);
+    info.callback = MakeCallback(this, &AnimatedVectorImageViewController::StrokeWidthCallback);
+
+    DevelControl::DoActionExtension(mImageViews[0], ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::SET_DYNAMIC_PROPERTY, Any(info));
+
+    info.id       = 4;
+    info.keyPath  = "Shape Layer 2.Shape 1";
+    info.property = static_cast<int>(VectorAnimationRenderer::VectorProperty::TRANSFORM_ROTATION);
+    info.callback = MakeCallback(this, &AnimatedVectorImageViewController::TransformRotationCallback);
+
+    DevelControl::DoActionExtension(mImageViews[0], ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::SET_DYNAMIC_PROPERTY, Any(info));
+
     application.GetWindow().KeyEventSignal().Connect(this, &AnimatedVectorImageViewController::OnKeyEvent);
   }
 
 private:
+  Property::Value FillColorCallback(int32_t id, VectorAnimationRenderer::VectorProperty property, uint32_t frameNumber)
+  {
+    if(frameNumber < 60)
+    {
+      return Vector3(0, 0, 1);
+    }
+    else
+    {
+      return Vector3(1, 0, 0);
+    }
+  }
+
+  Property::Value StrokeColorCallback(int32_t id, VectorAnimationRenderer::VectorProperty property, uint32_t frameNumber)
+  {
+    if(frameNumber < 60)
+    {
+      return Vector3(1, 0, 1);
+    }
+    else
+    {
+      return Vector3(1, 1, 0);
+    }
+  }
+
+  Property::Value StrokeWidthCallback(int32_t id, VectorAnimationRenderer::VectorProperty property, uint32_t frameNumber)
+  {
+    if(frameNumber < 60)
+    {
+      return 2.0f;
+    }
+    else
+    {
+      return 5.0f;
+    }
+  }
+
+  Property::Value TransformRotationCallback(int32_t id, VectorAnimationRenderer::VectorProperty property, uint32_t frameNumber)
+  {
+    return frameNumber * 20.0f;
+  }
+
   bool OnPlayButtonClicked(Button button)
   {
     unsigned int controlIndex = GetControlIndex(button);
