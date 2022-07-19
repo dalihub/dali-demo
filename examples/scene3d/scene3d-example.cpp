@@ -14,16 +14,16 @@
  * limitations under the License.
  *
  */
-#include "scene-loader-example.h"
+#include "scene3d-example.h"
 #include <dali-toolkit/dali-toolkit.h>
 #include <dirent.h>
 #include <cstring>
 #include <string_view>
-#include "dali-scene-loader/public-api/dli-loader.h"
-#include "dali-scene-loader/public-api/gltf2-loader.h"
-#include "dali-scene-loader/public-api/light-parameters.h"
-#include "dali-scene-loader/public-api/load-result.h"
-#include "dali-scene-loader/public-api/shader-definition-factory.h"
+#include "dali-scene3d/public-api/loader/dli-loader.h"
+#include "dali-scene3d/public-api/loader/gltf2-loader.h"
+#include "dali-scene3d/public-api/loader/light-parameters.h"
+#include "dali-scene3d/public-api/loader/load-result.h"
+#include "dali-scene3d/public-api/loader/shader-definition-factory.h"
 #include "dali-toolkit/public-api/controls/scrollable/item-view/default-item-layout.h"
 #include "dali-toolkit/public-api/controls/scrollable/item-view/item-factory.h"
 #include "dali-toolkit/public-api/controls/text-controls/text-label.h"
@@ -33,11 +33,11 @@
 #include "dali/public-api/events/key-event.h"
 #include "dali/public-api/object/property-array.h"
 #include "dali/public-api/render-tasks/render-task-list.h"
-#include "scene-loader-extension.h"
+#include "scene3d-extension.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
-using namespace Dali::SceneLoader;
+using namespace Dali::Scene3D::Loader;
 
 namespace
 {
@@ -282,9 +282,9 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
 
 } // namespace
 
-SceneLoaderExample::SceneLoaderExample(Dali::Application& app)
+Scene3DExample::Scene3DExample(Dali::Application& app)
 : mApp(app),
-  mSceneLoaderExtension(new SceneLoaderExtension())
+  mScene3DExtension(new Scene3DExtension())
 {
   if(!std::getenv("DALI_APPLICATION_PACKAGE"))
   {
@@ -298,13 +298,13 @@ SceneLoaderExample::SceneLoaderExample(Dali::Application& app)
     }
   }
 
-  app.InitSignal().Connect(this, &SceneLoaderExample::OnInit);
-  app.TerminateSignal().Connect(this, &SceneLoaderExample::OnTerminate);
+  app.InitSignal().Connect(this, &Scene3DExample::OnInit);
+  app.TerminateSignal().Connect(this, &Scene3DExample::OnTerminate);
 }
 
-SceneLoaderExample::~SceneLoaderExample() = default;
+Scene3DExample::~Scene3DExample() = default;
 
-void SceneLoaderExample::OnInit(Application& app)
+void Scene3DExample::OnInit(Application& app)
 {
   // get scenes
   auto resPath    = Application::GetResourcePath();
@@ -363,9 +363,9 @@ void SceneLoaderExample::OnInit(Application& app)
   mItemView   = items;
 
   mItemView.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
-  KeyboardFocusManager::Get().PreFocusChangeSignal().Connect(this, &SceneLoaderExample::OnKeyboardPreFocusChange);
-  KeyboardFocusManager::Get().FocusedActorEnterKeySignal().Connect(this, &SceneLoaderExample::OnKeyboardFocusedActorActivated);
-  KeyboardFocusManager::Get().FocusChangedSignal().Connect(this, &SceneLoaderExample::OnKeyboardFocusChanged);
+  KeyboardFocusManager::Get().PreFocusChangeSignal().Connect(this, &Scene3DExample::OnKeyboardPreFocusChange);
+  KeyboardFocusManager::Get().FocusedActorEnterKeySignal().Connect(this, &Scene3DExample::OnKeyboardFocusedActorActivated);
+  KeyboardFocusManager::Get().FocusChangedSignal().Connect(this, &Scene3DExample::OnKeyboardFocusChanged);
 
   SetActorCentered(KeyboardFocusManager::Get().GetFocusIndicatorActor());
 
@@ -376,18 +376,18 @@ void SceneLoaderExample::OnInit(Application& app)
   mSceneCamera = camera;
 
   // event handling
-  window.KeyEventSignal().Connect(this, &SceneLoaderExample::OnKey);
+  window.KeyEventSignal().Connect(this, &Scene3DExample::OnKey);
 
-  tapDetector.DetectedSignal().Connect(this, &SceneLoaderExample::OnTap);
+  tapDetector.DetectedSignal().Connect(this, &Scene3DExample::OnTap);
   mTapDetector = tapDetector;
 
   // activate layout
   mItemView.ActivateLayout(0, windowSize, 0.f);
 
-  mSceneLoaderExtension->SetSceneLoader(this);
+  mScene3DExtension->SetSceneLoader(this);
 }
 
-Actor SceneLoaderExample::OnKeyboardPreFocusChange(Actor current, Actor proposed, Control::KeyboardFocus::Direction direction)
+Actor Scene3DExample::OnKeyboardPreFocusChange(Actor current, Actor proposed, Control::KeyboardFocus::Direction direction)
 {
   if(!current && !proposed)
   {
@@ -397,7 +397,7 @@ Actor SceneLoaderExample::OnKeyboardPreFocusChange(Actor current, Actor proposed
   return proposed;
 }
 
-void SceneLoaderExample::OnKeyboardFocusedActorActivated(Actor activatedActor)
+void Scene3DExample::OnKeyboardFocusedActorActivated(Actor activatedActor)
 {
   if(activatedActor)
   {
@@ -405,7 +405,7 @@ void SceneLoaderExample::OnKeyboardFocusedActorActivated(Actor activatedActor)
   }
 }
 
-void SceneLoaderExample::OnKeyboardFocusChanged(Actor originalFocusedActor, Actor currentFocusedActor)
+void Scene3DExample::OnKeyboardFocusChanged(Actor originalFocusedActor, Actor currentFocusedActor)
 {
   if(currentFocusedActor)
   {
@@ -414,7 +414,7 @@ void SceneLoaderExample::OnKeyboardFocusChanged(Actor originalFocusedActor, Acto
   }
 }
 
-void SceneLoaderExample::OnTerminate(Application& app)
+void Scene3DExample::OnTerminate(Application& app)
 {
   mTapDetector.Reset();
   mPanDetector.Reset();
@@ -430,7 +430,7 @@ void SceneLoaderExample::OnTerminate(Application& app)
   mItemFactory.reset();
 }
 
-void SceneLoaderExample::OnKey(const KeyEvent& e)
+void Scene3DExample::OnKey(const KeyEvent& e)
 {
   if(e.GetState() == KeyEvent::UP)
   {
@@ -455,12 +455,12 @@ void SceneLoaderExample::OnKey(const KeyEvent& e)
     }
     else
     {
-      mSceneLoaderExtension->OnKey(e);
+      mScene3DExtension->OnKey(e);
     }
   }
 }
 
-void SceneLoaderExample::OnPan(Actor actor, const PanGesture& pan)
+void Scene3DExample::OnPan(Actor actor, const PanGesture& pan)
 {
   auto    windowSize = mApp.GetWindow().GetSize();
   Vector2 size{float(windowSize.GetWidth()), float(windowSize.GetHeight())};
@@ -476,7 +476,7 @@ void SceneLoaderExample::OnPan(Actor actor, const PanGesture& pan)
   mScene.SetProperty(Actor::Property::ORIENTATION, q * q0);
 }
 
-void SceneLoaderExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
+void Scene3DExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
 {
   mActivatedActor = actor;
 
@@ -499,7 +499,7 @@ void SceneLoaderExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
     mSceneRender = sceneRender;
 
     mPanDetector = PanGestureDetector::New();
-    mPanDetector.DetectedSignal().Connect(this, &SceneLoaderExample::OnPan);
+    mPanDetector.DetectedSignal().Connect(this, &Scene3DExample::OnPan);
     mPanDetector.Attach(mNavigationView);
   }
   catch(const DaliException& e)
@@ -509,5 +509,5 @@ void SceneLoaderExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
 
   mNavigationView.Push(mScene);
 
-  mSceneLoaderExtension->ConnectTouchSignals();
+  mScene3DExtension->ConnectTouchSignals();
 }

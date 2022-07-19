@@ -211,8 +211,8 @@ msgstr "Refraction"
 msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
 msgstr "Renderer Stencil"
 
-msgid "DALI_DEMO_STR_TITLE_SCENE_LOADER"
-msgstr "Scene Loader"
+msgid "DALI_DEMO_STR_TITLE_SCENE3D"
+msgstr "Scene3D"
 
 msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
 msgstr "Script-based UI"
@@ -324,5 +324,5 @@ msgstr "Text Bitmap Font"
 
 msgid "DALI_DEMO_STR_TITLE_WAVES"
 msgstr "Waves"
-msgid "DALI_DEMO_STR_TITLE_SCENE3D_VIEW"
-msgstr "Scene3D View glTF"
+msgid "DALI_DEMO_STR_TITLE_SCENE3D_MODEL_VIEW"
+msgstr "Scene3D Model View"
