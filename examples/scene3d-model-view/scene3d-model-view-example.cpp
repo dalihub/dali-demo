@@ -16,7 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/scene3d-view/scene3d-view.h>
 #include <dali/dali.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali/devel-api/adaptor-framework/file-stream.h>
@@ -25,12 +24,14 @@
 #include <dali/public-api/actors/camera-actor.h>
 #include <cstring>
 
+#include <dali-scene3d/public-api/controls/model-view/model-view.h>
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 /*
- * This example shows how to create and display a Scene3dView control.
- * The application can load 5 different glTF model to Scene3dView control.
+ * This example shows how to create and display a ModelView control.
+ * The application can load 5 different glTF model to ModelView control.
  * Each model has diffirent material. BoomBox shows glossy or matt plastic material.
  * DamagedHelmet shows a kind of reflective glass and metallic object.
  * Microphone shows a roughness of metallic objects.
@@ -41,17 +42,10 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-enum GLTF_MODEL_LIST
-{
-  GLTF_ANIMATED_BOX = 0,
-  GLTF_LANTERN,
-  GLTF_BOOMBOX,
-  GLTF_DAMAGED_HELMET,
-  GLTF_MICROPHONE,
-  NUM_OF_GLTF_MODELS
-};
 
-const char* gltf_list[6] =
+static constexpr int32_t NUM_OF_GLTF_MODELS = 7;
+
+const char* gltf_list[7] =
   {
     /**
      * For the BoxAnimated.gltf and its Assets
@@ -86,15 +80,17 @@ const char* gltf_list[6] =
      * Creative Commons Attribution-NonCommercial license
      * https://sketchfab.com/models/5172dbe9281a45f48cee8c15bdfa1831
      */
-    "microphone.gltf"};
-
-Vector3 camera_position_list[6] =
-  {
-    Vector3(-6.00, -8.00, 12.00),
-    Vector3(-30.0, -40.0, 60.0),
-    Vector3(-0.03, -0.04, 0.06),
-    Vector3(-3.00, -4.00, 6.00),
-    Vector3(-0.00, -3.00, 4.00)};
+    "microphone.gltf",
+    /**
+     * For the beer_modelView.dli and its Assets
+     * This model includes a bottle of beer and cube box.
+     */
+    "beer_modelView.dli",
+    /**
+     * For the exercise_modelView.dli and its Assets
+     * This model includes a sportsman
+     */
+    "exercise_modelView.dli"};
 
 /**
  * For the diffuse and specular cube map texture.
@@ -124,8 +120,9 @@ Vector3 camera_position_list[6] =
 
 const std::string modeldir = DEMO_MODEL_DIR;
 const std::string imagedir = DEMO_IMAGE_DIR;
-const std::string uri_diffuse_texture(imagedir + "forest_diffuse_cubemap.png");
-const std::string uri_specular_texture(imagedir + "forest_specular_cubemap.png");
+const std::string uri_cube_diffuse_texture(imagedir + "forest_diffuse_cubemap.png");
+const std::string uri_diffuse_texture(imagedir + "Studio/Irradiance.ktx");
+const std::string uri_specular_texture(imagedir + "Studio/Radiance.ktx");
 
 const int32_t cubeMap_index_x[6] = {2, 0, 1, 1, 1, 3};
 const int32_t cubeMap_index_y[6] = {1, 1, 0, 2, 1, 1};
@@ -191,25 +188,25 @@ Shader LoadShaders(const std::string& shaderVertexFileName, const std::string& s
 } // namespace
 
 /**
- * This example shows how to render glTF model with Scene3dView
+ * This example shows how to render glTF model with ModelView
  * How to test
  *  - Input UP or DOWN key to make the model rotate or stop.
  *  - Input LEFT or RIGHT key to change glTF model
  *  - Double Touch also changes glTF model.
  */
-class Scene3dViewController : public ConnectionTracker
+class Scene3DModelViewExample : public ConnectionTracker
 {
 public:
-  Scene3dViewController(Application& application)
+  Scene3DModelViewExample(Application& application)
   : mApplication(application),
     mModelOrientation(),
     mAnimationStop(false)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect(this, &Scene3dViewController::Create);
+    mApplication.InitSignal().Connect(this, &Scene3DModelViewExample::Create);
   }
 
-  ~Scene3dViewController()
+  ~Scene3DModelViewExample()
   {
     mAnimation.Stop();
   }
@@ -225,20 +222,20 @@ public:
     RenderTask renderTask = mWindow.GetRenderTaskList().GetTask(0);
     renderTask.SetCullMode(false);
 
-    mCurrentGlTF = GLTF_ANIMATED_BOX;
-    CreateSceneFromGLTF(gltf_list[mCurrentGlTF]);
+    mCurrentGlTF = 0u;
+    CreateSceneFromGLTF(mCurrentGlTF);
     SetCameraActor();
     CreateSkybox();
     SetAnimation();
 
     // Respond to a click anywhere on the mWindow
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &Scene3dViewController::OnTouch);
-    mWindow.KeyEventSignal().Connect(this, &Scene3dViewController::OnKeyEvent);
-    mWindow.GetRootLayer().WheelEventSignal().Connect(this, &Scene3dViewController::OnWheel);
+    mWindow.GetRootLayer().TouchedSignal().Connect(this, &Scene3DModelViewExample::OnTouch);
+    mWindow.KeyEventSignal().Connect(this, &Scene3DModelViewExample::OnKeyEvent);
+    mWindow.GetRootLayer().WheelEventSignal().Connect(this, &Scene3DModelViewExample::OnWheel);
 
     mDoubleTap     = false;
     mDoubleTapTime = Timer::New(150);
-    mDoubleTapTime.TickSignal().Connect(this, &Scene3dViewController::OnDoubleTapTime);
+    mDoubleTapTime.TickSignal().Connect(this, &Scene3DModelViewExample::OnDoubleTapTime);
   }
 
   bool OnWheel(Actor actor, const WheelEvent& wheelEvent)
@@ -247,9 +244,9 @@ public:
     mWheelDelta = std::max(0.5f, mWheelDelta);
     mWheelDelta = std::min(2.0f, mWheelDelta);
 
-    if(mScene3dView)
+    if(mModelView)
     {
-      mScene3dView.SetProperty(Actor::Property::SCALE, mWheelDelta);
+      mModelView.SetProperty(Actor::Property::SCALE, mWheelDelta);
     }
 
     return true;
@@ -261,32 +258,46 @@ public:
     return true;
   }
 
-  void CreateSceneFromGLTF(std::string modelName)
+  void CreateSceneFromGLTF(uint32_t index)
   {
-    if(mScene3dView)
+    if(mModelView)
     {
-      mWindow.GetRootLayer().Remove(mScene3dView);
+      mWindow.GetRootLayer().Remove(mModelView);
     }
 
     std::string gltfUrl = modeldir;
-    gltfUrl += modelName;
-    mScene3dView = Scene3dView::New(gltfUrl, uri_diffuse_texture, uri_specular_texture, Vector4::ONE);
+    gltfUrl += gltf_list[index];
 
-    mScene3dView.SetLight(Scene3dView::LightType::POINT_LIGHT, Vector3(-5, -5, 5), Vector3(1, 1, 1));
+    mModelView = Dali::Scene3D::ModelView::New(gltfUrl);
+    if(index == 0u)
+    {
+      mModelView.SetProperty(Dali::Actor::Property::SIZE, Vector2(300, 300));
+      mModelView.SetProperty(Dali::Actor::Property::POSITION_Y, 100);
+    }
+    else
+    {
+      mModelView.SetProperty(Dali::Actor::Property::SIZE, Vector2(600, 600));
+    }
+    mModelView.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mModelView.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mModelView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
+    mModelView.FitSize(true);
+    mModelView.FitCenter(true);
 
-    mWindow.Add(mScene3dView);
-    mScene3dView.PlayAnimations();
+    mWindow.Add(mModelView);
+    if(mModelView.GetAnimationCount()>0)
+    {
+      Animation animation = (index == 0u) ? mModelView.GetAnimation(0u) : mModelView.GetAnimation("idleToSquatClip_0");
+      animation.Play();
+      animation.SetLoopCount(0);
+    }
   }
 
   void SetCameraActor()
   {
-    mCameraPosition = camera_position_list[mCurrentGlTF];
     mCameraActor    = mWindow.GetRenderTaskList().GetTask(0).GetCameraActor();
-    mCameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mCameraActor.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
-    mCameraActor.SetProperty(Dali::Actor::Property::POSITION, mCameraPosition);
+    mCameraPosition = mCameraActor.GetProperty<Vector3>(Dali::Actor::Property::POSITION);
     mCameraActor.SetType(Dali::Camera::LOOK_AT_TARGET);
-    mCameraActor.SetNearClippingPlane(0.01);
   }
 
   void CreateSkybox()
@@ -359,7 +370,7 @@ public:
     mSkyboxGeometry.SetType(Geometry::TRIANGLES);
 
     // Diffuse Cube Map
-    Devel::PixelBuffer diffusePixelBuffer = LoadImageFromFile(uri_diffuse_texture);
+    Devel::PixelBuffer diffusePixelBuffer = LoadImageFromFile(uri_cube_diffuse_texture);
     int32_t            diffuseFaceSize    = diffusePixelBuffer.GetWidth() / 4;
     Texture            texture            = Texture::New(TextureType::TEXTURE_CUBE, diffusePixelBuffer.GetPixelFormat(), diffuseFaceSize, diffuseFaceSize);
     for(int32_t i = 0; i < 6; ++i)
@@ -405,7 +416,7 @@ public:
     {
       keyframes.Add(i * lengthAnimation, Quaternion(Degree(i * 90.0), Vector3::YAXIS));
     }
-    mAnimation.AnimateBetween(Property(mScene3dView, Dali::Actor::Property::ORIENTATION), keyframes, Animation::Interpolation::LINEAR);
+    mAnimation.AnimateBetween(Property(mModelView, Dali::Actor::Property::ORIENTATION), keyframes, Animation::Interpolation::LINEAR);
     mAnimation.SetLooping(true);
     mAnimation.Play();
   }
@@ -465,18 +476,7 @@ public:
     {
       mCurrentGlTF = NUM_OF_GLTF_MODELS - 1;
     }
-    CreateSceneFromGLTF(gltf_list[mCurrentGlTF]);
-    mCameraPosition = camera_position_list[mCurrentGlTF];
-    mCameraActor.SetProperty(Dali::Actor::Property::POSITION, mCameraPosition);
-    if(mCurrentGlTF == GLTF_LANTERN)
-    {
-      mCameraActor.SetTargetPosition(Vector3(0.0, -15.0, 0.0));
-    }
-    else
-    {
-      mCameraActor.SetTargetPosition(Vector3::ZERO);
-    }
-    mSkyboxActor.SetProperty(Dali::Actor::Property::POSITION, mCameraPosition);
+    CreateSceneFromGLTF(mCurrentGlTF);
     SetAnimation();
     mAnimationStop = false;
     mWheelDelta    = 1.0f;
@@ -604,8 +604,8 @@ private:
   CameraActor  mCameraActor;
   Dali::Timer  mTimer;
 
-  Vector3     mCameraPosition;
-  Scene3dView mScene3dView;
+  Vector3   mCameraPosition;
+  Dali::Scene3D::ModelView mModelView;
 
   Vector2    mPointZ;
   Quaternion mModelOrientation;
@@ -630,8 +630,8 @@ private:
 
 int32_t DALI_EXPORT_API main(int32_t argc, char** argv)
 {
-  Application           application = Application::New(&argc, &argv);
-  Scene3dViewController test(application);
+  Application         application = Application::New(&argc, &argv);
+  Scene3DModelViewExample test(application);
   application.MainLoop();
   return 0;
 }
