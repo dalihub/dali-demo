@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/shader-effects/motion-blur-effect.h>
 #include <dali/dali.h>
-#include <dali/devel-api/actors/actor-devel.h>
 #include "shared/view.h"
 
 using namespace Dali;
@@ -207,7 +206,7 @@ public:
     SetImageFittedInBox(mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y);
     mMotionBlurImageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mMotionBlurImageView.SetProperty(Actor::Property::SIZE, mMotionBlurActorUpdateSize);
-    mMotionBlurImageView.SetProperty(DevelActor::Property::UPDATE_SIZE_HINT, mMotionBlurActorUpdateSize);
+    mMotionBlurImageView.SetProperty(Actor::Property::UPDATE_AREA_HINT, Vector4(0, 0, mMotionBlurActorUpdateSize.width, mMotionBlurActorUpdateSize.height));
 
     mContentLayer.Add(mMotionBlurImageView);
 
