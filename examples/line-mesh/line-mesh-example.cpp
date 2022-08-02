@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
-#include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
 #include "generated/line-mesh-frag.h"
@@ -158,7 +157,7 @@ public:
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer(mRenderer);
     mMeshActor.SetProperty(Actor::Property::SIZE, Vector2(200, 200));
-    mMeshActor.SetProperty(DevelActor::Property::UPDATE_SIZE_HINT, Vector2(400, 400));
+    mMeshActor.SetProperty(Actor::Property::UPDATE_AREA_HINT, Vector4(0, 0, 400, 400));
 
     Property::Index morphAmountIndex = mMeshActor.RegisterProperty("uMorphAmount", 0.0f);
 
