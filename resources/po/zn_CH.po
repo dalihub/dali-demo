@@ -181,5 +181,5 @@ msgstr "Skybox"
 msgid "DALI_DEMO_STR_TITLE_PBR"
 msgstr "PBR"
 
-msgid "DALI_DEMO_STR_TITLE_SCENE3D_MODEL_VIEW"
-msgstr "Scene3D Model View"
+msgid "DALI_DEMO_STR_TITLE_SCENE3D_MODEL"
+msgstr "Scene3D Model"

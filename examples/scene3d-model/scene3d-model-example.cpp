@@ -24,14 +24,14 @@
 #include <dali/public-api/actors/camera-actor.h>
 #include <cstring>
 
-#include <dali-scene3d/public-api/controls/model-view/model-view.h>
+#include <dali-scene3d/public-api/controls/model/model.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
 
 /*
- * This example shows how to create and display a ModelView control.
- * The application can load 5 different glTF model to ModelView control.
+ * This example shows how to create and display a Model control.
+ * The application can load 5 different glTF model to Model control.
  * Each model has diffirent material. BoomBox shows glossy or matt plastic material.
  * DamagedHelmet shows a kind of reflective glass and metallic object.
  * Microphone shows a roughness of metallic objects.
@@ -82,15 +82,15 @@ const char* gltf_list[7] =
      */
     "microphone.gltf",
     /**
-     * For the beer_modelView.dli and its Assets
+     * For the beer_model.dli and its Assets
      * This model includes a bottle of beer and cube box.
      */
-    "beer_modelView.dli",
+    "beer_model.dli",
     /**
-     * For the exercise_modelView.dli and its Assets
+     * For the exercise_model.dli and its Assets
      * This model includes a sportsman
      */
-    "exercise_modelView.dli"};
+    "exercise_model.dli"};
 
 /**
  * For the diffuse and specular cube map texture.
@@ -188,25 +188,25 @@ Shader LoadShaders(const std::string& shaderVertexFileName, const std::string& s
 } // namespace
 
 /**
- * This example shows how to render glTF model with ModelView
+ * This example shows how to render glTF model with Model
  * How to test
  *  - Input UP or DOWN key to make the model rotate or stop.
  *  - Input LEFT or RIGHT key to change glTF model
  *  - Double Touch also changes glTF model.
  */
-class Scene3DModelViewExample : public ConnectionTracker
+class Scene3DModelExample : public ConnectionTracker
 {
 public:
-  Scene3DModelViewExample(Application& application)
+  Scene3DModelExample(Application& application)
   : mApplication(application),
     mModelOrientation(),
     mAnimationStop(false)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect(this, &Scene3DModelViewExample::Create);
+    mApplication.InitSignal().Connect(this, &Scene3DModelExample::Create);
   }
 
-  ~Scene3DModelViewExample()
+  ~Scene3DModelExample()
   {
     mAnimation.Stop();
   }
@@ -229,13 +229,13 @@ public:
     SetAnimation();
 
     // Respond to a click anywhere on the mWindow
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &Scene3DModelViewExample::OnTouch);
-    mWindow.KeyEventSignal().Connect(this, &Scene3DModelViewExample::OnKeyEvent);
-    mWindow.GetRootLayer().WheelEventSignal().Connect(this, &Scene3DModelViewExample::OnWheel);
+    mWindow.GetRootLayer().TouchedSignal().Connect(this, &Scene3DModelExample::OnTouch);
+    mWindow.KeyEventSignal().Connect(this, &Scene3DModelExample::OnKeyEvent);
+    mWindow.GetRootLayer().WheelEventSignal().Connect(this, &Scene3DModelExample::OnWheel);
 
     mDoubleTap     = false;
     mDoubleTapTime = Timer::New(150);
-    mDoubleTapTime.TickSignal().Connect(this, &Scene3DModelViewExample::OnDoubleTapTime);
+    mDoubleTapTime.TickSignal().Connect(this, &Scene3DModelExample::OnDoubleTapTime);
   }
 
   bool OnWheel(Actor actor, const WheelEvent& wheelEvent)
@@ -244,9 +244,9 @@ public:
     mWheelDelta = std::max(0.5f, mWheelDelta);
     mWheelDelta = std::min(2.0f, mWheelDelta);
 
-    if(mModelView)
+    if(mModel)
     {
-      mModelView.SetProperty(Actor::Property::SCALE, mWheelDelta);
+      mModel.SetProperty(Actor::Property::SCALE, mWheelDelta);
     }
 
     return true;
@@ -260,34 +260,32 @@ public:
 
   void CreateSceneFromGLTF(uint32_t index)
   {
-    if(mModelView)
+    if(mModel)
     {
-      mWindow.GetRootLayer().Remove(mModelView);
+      mWindow.GetRootLayer().Remove(mModel);
     }
 
     std::string gltfUrl = modeldir;
     gltfUrl += gltf_list[index];
 
-    mModelView = Dali::Scene3D::ModelView::New(gltfUrl);
+    mModel = Dali::Scene3D::Model::New(gltfUrl);
     if(index == 0u)
     {
-      mModelView.SetProperty(Dali::Actor::Property::SIZE, Vector2(300, 300));
-      mModelView.SetProperty(Dali::Actor::Property::POSITION_Y, 100);
+      mModel.SetProperty(Dali::Actor::Property::SIZE, Vector2(300, 300));
+      mModel.SetProperty(Dali::Actor::Property::POSITION_Y, 100);
     }
     else
     {
-      mModelView.SetProperty(Dali::Actor::Property::SIZE, Vector2(600, 600));
+      mModel.SetProperty(Dali::Actor::Property::SIZE, Vector2(600, 600));
     }
-    mModelView.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
-    mModelView.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mModelView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
-    mModelView.FitSize(true);
-    mModelView.FitCenter(true);
+    mModel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mModel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mModel.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
 
-    mWindow.Add(mModelView);
-    if(mModelView.GetAnimationCount()>0)
+    mWindow.Add(mModel);
+    if(mModel.GetAnimationCount() > 0)
     {
-      Animation animation = (index == 0u) ? mModelView.GetAnimation(0u) : mModelView.GetAnimation("idleToSquatClip_0");
+      Animation animation = (index == 0u) ? mModel.GetAnimation(0u) : mModel.GetAnimation("idleToSquatClip_0");
       animation.Play();
       animation.SetLoopCount(0);
     }
@@ -416,7 +414,7 @@ public:
     {
       keyframes.Add(i * lengthAnimation, Quaternion(Degree(i * 90.0), Vector3::YAXIS));
     }
-    mAnimation.AnimateBetween(Property(mModelView, Dali::Actor::Property::ORIENTATION), keyframes, Animation::Interpolation::LINEAR);
+    mAnimation.AnimateBetween(Property(mModel, Dali::Actor::Property::ORIENTATION), keyframes, Animation::Interpolation::LINEAR);
     mAnimation.SetLooping(true);
     mAnimation.Play();
   }
@@ -604,8 +602,8 @@ private:
   CameraActor  mCameraActor;
   Dali::Timer  mTimer;
 
-  Vector3   mCameraPosition;
-  Dali::Scene3D::ModelView mModelView;
+  Vector3              mCameraPosition;
+  Dali::Scene3D::Model mModel;
 
   Vector2    mPointZ;
   Quaternion mModelOrientation;
@@ -631,7 +629,7 @@ private:
 int32_t DALI_EXPORT_API main(int32_t argc, char** argv)
 {
   Application         application = Application::New(&argc, &argv);
-  Scene3DModelViewExample test(application);
+  Scene3DModelExample test(application);
   application.MainLoop();
   return 0;
 }
