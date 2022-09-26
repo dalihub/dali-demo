@@ -35,6 +35,16 @@
 #include "shared/utility.h"
 #include "shared/view.h"
 
+
+#include <ifaddrs.h>
+#include <net/if.h>
+#include <netdb.h>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <cstdio>
+#include <cstring>
+
+
 using namespace Dali;
 using namespace Dali::Toolkit;
 
@@ -114,12 +124,8 @@ private:
   float mTileXOffset;
 };
 
-/**
- * Creates a popup that shows the version information of the DALi libraries and demo
- */
-Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrackerInterface& connectionTracker)
+void AppendVersionString(std::ostringstream& stream)
 {
-  std::ostringstream stream;
   stream << "DALi Core: " << CORE_MAJOR_VERSION << "." << CORE_MINOR_VERSION << "." << CORE_MICRO_VERSION << std::endl
          << "(" << CORE_BUILD_DATE << ")\n";
   stream << "DALi Adaptor: " << ADAPTOR_MAJOR_VERSION << "." << ADAPTOR_MINOR_VERSION << "." << ADAPTOR_MICRO_VERSION << std::endl
@@ -127,7 +133,47 @@ Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrac
   stream << "DALi Toolkit: " << TOOLKIT_MAJOR_VERSION << "." << TOOLKIT_MINOR_VERSION << "." << TOOLKIT_MICRO_VERSION << std::endl
          << "(" << TOOLKIT_BUILD_DATE << ")\n";
   stream << "DALi Demo:"
-         << "\n(" << DEMO_BUILD_DATE << ")\n";
+         << "\n(" << DEMO_BUILD_DATE << ")\n\n";
+}
+
+void AppendIpAddress(std::ostringstream& stream)
+{
+  // Append IP addresses
+  struct ifaddrs *interfaceAddresses, *head;
+  if(!getifaddrs(&interfaceAddresses))
+  {
+    head = interfaceAddresses;
+
+    char host[NI_MAXHOST];
+    int  n = 0;
+    while(interfaceAddresses)
+    {
+      if(strcmp(interfaceAddresses->ifa_name, "lo"))
+      {
+        struct sockaddr* address = interfaceAddresses->ifa_addr;
+        if(address != nullptr && address->sa_family == AF_INET)
+        {
+          if(getnameinfo(address, sizeof(struct sockaddr_in), host, NI_MAXHOST, nullptr, 0, NI_NUMERICHOST) == 0)
+          {
+            stream<<interfaceAddresses->ifa_name<<": "<<host<<std::endl;
+            ++n;
+          }
+        }
+      }
+      interfaceAddresses = interfaceAddresses->ifa_next;
+    }
+    freeifaddrs(head);
+  }
+}
+
+/**
+ * Creates a popup that shows the version information of the DALi libraries and demo
+ */
+Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrackerInterface& connectionTracker)
+{
+  std::ostringstream stream;
+  AppendVersionString(stream);
+  AppendIpAddress(stream);
 
   Dali::Toolkit::Popup popup = Dali::Toolkit::Popup::New();
 
