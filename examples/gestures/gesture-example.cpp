@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ const float   ROTATE_BACK_ANIMATION_DURATION(0.25f);
  */
 void AddHelpInfo(const std::string&& string, const Vector2& windowSize, Actor parent, Animation animation, float startTime, float endTime)
 {
-  Actor   text = TextLabel::New(std::move(string));
+  Actor   text = TextLabel::New(string);
   Vector3 position(windowSize * HELP_TEXT_POSITION_MULTIPLIER);
 
   text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
