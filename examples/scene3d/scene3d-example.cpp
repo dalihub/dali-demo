@@ -125,41 +125,6 @@ Actor CreateErrorMessage(std::string msg)
   return label;
 }
 
-void ConfigureCamera(const CameraParameters& params, CameraActor camera)
-{
-  if(params.isPerspective)
-  {
-    camera.SetProjectionMode(Camera::PERSPECTIVE_PROJECTION);
-    camera.SetNearClippingPlane(params.zNear);
-    camera.SetFarClippingPlane(params.zFar);
-    camera.SetFieldOfView(Radian(Degree(params.yFov)));
-  }
-  else
-  {
-    camera.SetProjectionMode(Camera::ORTHOGRAPHIC_PROJECTION);
-    camera.SetOrthographicProjection(params.orthographicSize.x,
-                                     params.orthographicSize.y,
-                                     params.orthographicSize.z,
-                                     params.orthographicSize.w,
-                                     params.zNear,
-                                     params.zFar);
-  }
-
-  // model
-  Vector3    camTranslation;
-  Vector3    camScale;
-  Quaternion camOrientation;
-  params.CalculateTransformComponents(camTranslation, camOrientation, camScale);
-
-  SetActorCentered(camera);
-  camera.SetInvertYAxis(true);
-  camera.SetProperty(Actor::Property::POSITION, camTranslation);
-  camera.SetProperty(Actor::Property::ORIENTATION, camOrientation);
-  camera.SetProperty(Actor::Property::SCALE, camScale);
-
-  camOrientation.Conjugate();
-}
-
 void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition& scene, Actor root, std::vector<BlendshapeShaderConfigurationRequest>&& requests)
 {
   std::vector<std::string> errors;
@@ -232,7 +197,8 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
     cameraParameters.push_back(CameraParameters());
     cameraParameters[0].matrix.SetTranslation(CAMERA_DEFAULT_POSITION);
   }
-  ConfigureCamera(cameraParameters[0], camera);
+  cameraParameters[0].ConfigureCamera(camera);
+  SetActorCentered(camera);
 
   ViewProjection viewProjection = cameraParameters[0].GetViewProjection();
   Transforms     xforms{
@@ -271,8 +237,22 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
 
   if(!animations->empty())
   {
-    auto getActor = [&root](const Scene3D::Loader::AnimatedProperty& property) {
-      return root.FindChildByName(property.mNodeName);
+    auto getActor = [&](const Scene3D::Loader::AnimatedProperty& property)
+    {
+      Dali::Actor actor;
+      if(property.mNodeIndex != Scene3D::Loader::INVALID_INDEX)
+      {
+        auto* node = scene.GetNode(property.mNodeIndex);
+        if(node != nullptr)
+        {
+          actor = root.FindChildById(node->mNodeId);
+        }
+      }
+      else
+      {
+        actor = root.FindChildByName(property.mNodeName);
+      }
+      return actor;
     };
 
     animation = (*animations)[0].ReAnimate(getActor);
@@ -486,6 +466,7 @@ void Scene3DExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
 
   auto id = mItemView.GetItemId(actor);
 
+  Scene3D::Loader::InitializeGltfLoader();
   try
   {
     auto window      = mApp.GetWindow();

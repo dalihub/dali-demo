@@ -25,6 +25,7 @@
 #include <cstring>
 
 #include <dali-scene3d/public-api/controls/model/model.h>
+#include <dali-scene3d/public-api/loader/environment-map-loader.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -217,8 +218,6 @@ public:
     mWindow = application.GetWindow();
     mWindow.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
 
-    mWindow.GetRootLayer().SetProperty(Dali::Layer::Property::BEHAVIOR, Dali::Layer::Behavior::LAYER_3D);
-
     // Get a handle to the mWindow
     mWindow.SetBackgroundColor(Color::WHITE);
 
@@ -263,6 +262,7 @@ public:
 
   void CreateSceneFromGLTF(uint32_t index)
   {
+    mReadyToLoad = false;
     if(mModel)
     {
       mWindow.GetRootLayer().Remove(mModel);
@@ -285,17 +285,19 @@ public:
     mModel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mModel.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
 
-    mWindow.Add(mModel);
+    mModel.ResourceReadySignal().Connect(this, &Scene3DModelExample::ResourceReady);
 
-    mModel.ResourceReadySignal().Connect(this, &Scene3DModelExample::ResourceReadySignal);
+    mWindow.Add(mModel);
   }
 
-  void ResourceReadySignal(Control control)
+  void ResourceReady(Control control)
   {
+    mReadyToLoad = true;
     if(mModel.GetAnimationCount() > 0)
     {
-      mModel.GetAnimation(0u).Play();
-      mModel.GetAnimation(0u).SetLoopCount(0);
+      Animation animation = (mCurrentGlTF == 0u) ? mModel.GetAnimation(0u) : mModel.GetAnimation("idleToSquatClip_0");
+      animation.Play();
+      animation.SetLoopCount(0);
     }
   }
 
@@ -375,15 +377,9 @@ public:
     mSkyboxGeometry.AddVertexBuffer(vertexBuffer);
     mSkyboxGeometry.SetType(Geometry::TRIANGLES);
 
-    // Diffuse Cube Map
-    Devel::PixelBuffer diffusePixelBuffer = LoadImageFromFile(uri_cube_diffuse_texture);
-    int32_t            diffuseFaceSize    = diffusePixelBuffer.GetWidth() / 4;
-    Texture            texture            = Texture::New(TextureType::TEXTURE_CUBE, diffusePixelBuffer.GetPixelFormat(), diffuseFaceSize, diffuseFaceSize);
-    for(int32_t i = 0; i < 6; ++i)
-    {
-      UploadTextureFace(texture, diffusePixelBuffer, i);
-    }
-    texture.GenerateMipmaps();
+    Dali::Scene3D::Loader::EnvironmentMapData environmentMapData;
+    Dali::Scene3D::Loader::LoadEnvironmentMap(uri_cube_diffuse_texture, environmentMapData);
+    Texture texture = environmentMapData.GetTexture();
 
     mSkyboxTextures = TextureSet::New();
     mSkyboxTextures.SetTexture(0, texture);
@@ -473,6 +469,11 @@ public:
 
   void ChangeModel(int32_t direction)
   {
+    if(!mReadyToLoad)
+    {
+      return;
+    }
+
     mCurrentGlTF += direction;
     if(mCurrentGlTF >= NUM_OF_GLTF_MODELS)
     {
@@ -632,6 +633,8 @@ private:
   float mWheelDelta{1.0f};
 
   int32_t mCurrentGlTF{0};
+
+  bool mReadyToLoad{true};
 };
 
 int32_t DALI_EXPORT_API main(int32_t argc, char** argv)
