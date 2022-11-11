@@ -125,41 +125,6 @@ Actor CreateErrorMessage(std::string msg)
   return label;
 }
 
-void ConfigureCamera(const CameraParameters& params, CameraActor camera)
-{
-  if(params.isPerspective)
-  {
-    camera.SetProjectionMode(Camera::PERSPECTIVE_PROJECTION);
-    camera.SetNearClippingPlane(params.zNear);
-    camera.SetFarClippingPlane(params.zFar);
-    camera.SetFieldOfView(Radian(Degree(params.yFov)));
-  }
-  else
-  {
-    camera.SetProjectionMode(Camera::ORTHOGRAPHIC_PROJECTION);
-    camera.SetOrthographicProjection(params.orthographicSize.x,
-                                     params.orthographicSize.y,
-                                     params.orthographicSize.z,
-                                     params.orthographicSize.w,
-                                     params.zNear,
-                                     params.zFar);
-  }
-
-  // model
-  Vector3    camTranslation;
-  Vector3    camScale;
-  Quaternion camOrientation;
-  params.CalculateTransformComponents(camTranslation, camOrientation, camScale);
-
-  SetActorCentered(camera);
-  camera.SetInvertYAxis(true);
-  camera.SetProperty(Actor::Property::POSITION, camTranslation);
-  camera.SetProperty(Actor::Property::ORIENTATION, camOrientation);
-  camera.SetProperty(Actor::Property::SCALE, camScale);
-
-  camOrientation.Conjugate();
-}
-
 void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition& scene, Actor root, std::vector<BlendshapeShaderConfigurationRequest>&& requests)
 {
   std::vector<std::string> errors;
@@ -230,7 +195,8 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
     cameraParameters.push_back(CameraParameters());
     cameraParameters[0].matrix.SetTranslation(CAMERA_DEFAULT_POSITION);
   }
-  ConfigureCamera(cameraParameters[0], camera);
+  cameraParameters[0].ConfigureCamera(camera);
+  SetActorCentered(camera);
 
   ViewProjection viewProjection = cameraParameters[0].GetViewProjection();
   Transforms     xforms{
