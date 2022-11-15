@@ -61,6 +61,9 @@ msgstr "Color Visual"
 msgid "DALI_DEMO_STR_TITLE_DEFERRED_SHADING"
 msgstr "Deferred Shading"
 
+msgid "DALI_DEMO_STR_TITLE_DIRECT_RENDERING"
+msgstr "Direct Rendering"
+
 msgid "DALI_DEMO_STR_TITLE_GAUSSIAN_BLUR_VIEW"
 msgstr "Gaussian Blur"
 
