@@ -52,6 +52,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("color-transition.example", DALI_DEMO_STR_TITLE_COLOR_TRANSITION));
   demo.AddExample(Example("color-visual.example", DALI_DEMO_STR_TITLE_COLOR_VISUAL));
   demo.AddExample(Example("deferred-shading.example", DALI_DEMO_STR_TITLE_DEFERRED_SHADING));
+  demo.AddExample(Example("direct-rendering.example", DALI_DEMO_STR_TITLE_DIRECT_RENDERING));
   demo.AddExample(Example("dissolve-effect.example", DALI_DEMO_STR_TITLE_DISSOLVE_TRANSITION));
   demo.AddExample(Example("drag-and-drop.example", DALI_DEMO_STR_TITLE_DRAG_AND_DROP));
   demo.AddExample(Example("drawable-actor.example", DALI_DEMO_STR_TITLE_DRAWABLE_ACTOR));
