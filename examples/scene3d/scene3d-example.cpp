@@ -186,6 +186,7 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
 
   ResourceBundle                        resources;
   SceneDefinition                       scene;
+  SceneMetadata                         metaData;
   std::vector<AnimationGroupDefinition> animGroups;
   std::vector<CameraParameters>         cameraParameters;
   std::vector<LightParameters>          lights;
@@ -195,6 +196,7 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
   LoadResult output{
     resources,
     scene,
+    metaData,
     *animations,
     animGroups,
     cameraParameters,
