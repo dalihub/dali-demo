@@ -215,6 +215,7 @@ public:
   void Create(Application& application)
   {
     mWindow = application.GetWindow();
+    mWindow.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
 
     mWindow.GetRootLayer().SetProperty(Dali::Layer::Property::BEHAVIOR, Dali::Layer::Behavior::LAYER_3D);
 
