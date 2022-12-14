@@ -269,8 +269,8 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
 
   if(!animations->empty())
   {
-    auto getActor = [&root](const std::string& name) {
-      return root.FindChildByName(name);
+    auto getActor = [&root](const Scene3D::Loader::AnimatedProperty& property) {
+      return root.FindChildByName(property.mNodeName);
     };
 
     animation = (*animations)[0].ReAnimate(getActor);

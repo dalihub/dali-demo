@@ -216,6 +216,8 @@ public:
   {
     mWindow = application.GetWindow();
 
+    mWindow.GetRootLayer().SetProperty(Dali::Layer::Property::BEHAVIOR, Dali::Layer::Behavior::LAYER_3D);
+
     // Get a handle to the mWindow
     mWindow.SetBackgroundColor(Color::WHITE);
 
@@ -283,11 +285,16 @@ public:
     mModel.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
 
     mWindow.Add(mModel);
+
+    mModel.ResourceReadySignal().Connect(this, &Scene3DModelExample::ResourceReadySignal);
+  }
+
+  void ResourceReadySignal(Control control)
+  {
     if(mModel.GetAnimationCount() > 0)
     {
-      Animation animation = (index == 0u) ? mModel.GetAnimation(0u) : mModel.GetAnimation("idleToSquatClip_0");
-      animation.Play();
-      animation.SetLoopCount(0);
+      mModel.GetAnimation(0u).Play();
+      mModel.GetAnimation(0u).SetLoopCount(0);
     }
   }
 
