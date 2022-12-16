@@ -201,11 +201,13 @@ public:
     mMotionBlurActorUpdateSize = Size(std::max(mMotionBlurActorSize.x, mMotionBlurActorSize.y), std::max(mMotionBlurActorSize.x, mMotionBlurActorSize.y));
     mMotionBlurActorSize       = Size(std::min(mMotionBlurActorSize.x, mMotionBlurActorSize.y), std::min(mMotionBlurActorSize.x, mMotionBlurActorSize.y));
 
+    mMotionBlurActorUpdateSize = mMotionBlurActorSize * 1.25f;
+
     mMotionBlurEffect    = CreateMotionBlurEffect();
     mMotionBlurImageView = ImageView::New();
     SetImageFittedInBox(mMotionBlurImageView, mMotionBlurEffect, MOTION_BLUR_ACTOR_IMAGE1, mMotionBlurActorSize.x, mMotionBlurActorSize.y);
     mMotionBlurImageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mMotionBlurImageView.SetProperty(Actor::Property::SIZE, mMotionBlurActorUpdateSize);
+    mMotionBlurImageView.SetProperty(Actor::Property::SIZE, mMotionBlurActorSize);
     mMotionBlurImageView.SetProperty(Actor::Property::UPDATE_AREA_HINT, Vector4(0, 0, mMotionBlurActorUpdateSize.width, mMotionBlurActorUpdateSize.height));
 
     mContentLayer.Add(mMotionBlurImageView);

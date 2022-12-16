@@ -182,7 +182,8 @@ public:
     mMotionStretchImageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mMotionStretchImageView.SetProperty(Actor::Property::SIZE, Vector2(MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT));
     // Add stretch padding
-    mMotionStretchImageView.SetProperty(Actor::Property::UPDATE_AREA_HINT, Vector4(0, 0, MOTION_STRETCH_ACTOR_WIDTH + 32, MOTION_STRETCH_ACTOR_HEIGHT + 32));
+
+    mMotionStretchImageView.SetProperty(Actor::Property::UPDATE_AREA_HINT, Vector4(0, 0, MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT)*1.25f);
 
     mContentLayer.Add(mMotionStretchImageView);
 
