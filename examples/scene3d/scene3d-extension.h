@@ -94,8 +94,8 @@ private:
       }
 
       auto root     = mSceneLoader->mScene;
-      auto getActor = [&root](const std::string& name) {
-        return root.FindChildByName(name);
+      auto getActor = [&root](const Dali::Scene3D::Loader::AnimatedProperty& property) {
+        return root.FindChildByName(property.mNodeName);
       };
 
       if(mSceneLoader->mSceneAnimations.size() > animationIndex)
