@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 #include "generated/rendering-skybox-cube-frag.h"
 #include "generated/rendering-skybox-cube-vert.h"
+#include "generated/rendering-skybox-equirectangular-frag.h"
 #include "generated/rendering-skybox-frag.h"
 #include "generated/rendering-skybox-vert.h"
 #include "look-camera.h"
@@ -40,6 +41,15 @@ const unsigned int SKYBOX_FACE_COUNT  = 6;
 const unsigned int SKYBOX_FACE_WIDTH  = 2048;
 const unsigned int SKYBOX_FACE_HEIGHT = 2048;
 
+/**
+ * @brief The skybox types supported by the application.
+ */
+enum class SkyboxType
+{
+  CUBEMAP,        ///< Skybox in cubemap
+  EQUIRECTANGULAR ///< Skybox in equirectangular projection
+};
+
 /*
  * Credit to Joey do Vries for the following cubemap images
  * Take from git://github.com/JoeyDeVries/LearnOpenGL.git
@@ -55,6 +65,13 @@ const char* SKYBOX_FACES[SKYBOX_FACE_COUNT] =
     DEMO_IMAGE_DIR "lake_back.jpg",
     DEMO_IMAGE_DIR "lake_front.jpg"};
 
+/*
+ * Take from Wikimedia Commons, the free media repository
+ * https://commons.wikimedia.org
+ * The image is licensed under the terms of the CC BY-SA 4.0 license:
+ * https://creativecommons.org/licenses/by-sa/4.0
+ */
+const char* EQUIRECTANGULAR_TEXTURE_URL = DEMO_IMAGE_DIR "veste_oberhaus_spherical_panoramic.jpg";
 } // namespace
 
 // This example shows how to create a skybox
@@ -65,7 +82,8 @@ class TexturedCubeController : public ConnectionTracker
 {
 public:
   TexturedCubeController(Application& application)
-  : mApplication(application)
+  : mApplication(application),
+    mCurrentSkyboxType(SkyboxType::CUBEMAP)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &TexturedCubeController::Create);
@@ -101,13 +119,18 @@ public:
     //         The depth test is enabled, the shader sets 1.0, which is the maximum depth and
     //         the depth function is set to LESS or EQUAL so the fragment shader will run only
     //         in those pixels that any other object has written on them.
-    DisplaySkybox();
+    DisplaySkybox(mCurrentSkyboxType);
 
     // Step 6. Play animation to rotate the cube
     PlayAnimation();
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &TexturedCubeController::OnKeyEvent);
+
+    // Create a tap gesture detector to detect double tap
+    mDoubleTapGesture = TapGestureDetector::New(2);
+    mDoubleTapGesture.Attach(window.GetRootLayer());
+    mDoubleTapGesture.DetectedSignal().Connect(this, &TexturedCubeController::OnDoubleTap);
   }
 
   /**
@@ -125,6 +148,20 @@ public:
         mApplication.Quit();
       }
     }
+  }
+
+  void OnDoubleTap(Actor /*actor*/, const TapGesture& /*gesture*/)
+  {
+    if(mCurrentSkyboxType == SkyboxType::CUBEMAP)
+    {
+      mCurrentSkyboxType = SkyboxType::EQUIRECTANGULAR;
+    }
+    else
+    {
+      mCurrentSkyboxType = SkyboxType::CUBEMAP;
+    }
+
+    DisplaySkybox(mCurrentSkyboxType);
   }
 
   /**
@@ -148,8 +185,9 @@ public:
    */
   void CreateShaders()
   {
-    mShaderCube   = Shader::New(SHADER_RENDERING_SKYBOX_CUBE_VERT, SHADER_RENDERING_SKYBOX_CUBE_FRAG);
-    mShaderSkybox = Shader::New(SHADER_RENDERING_SKYBOX_VERT, SHADER_RENDERING_SKYBOX_FRAG);
+    mShaderCube                  = Shader::New(SHADER_RENDERING_SKYBOX_CUBE_VERT, SHADER_RENDERING_SKYBOX_CUBE_FRAG);
+    mShaderSkybox                = Shader::New(SHADER_RENDERING_SKYBOX_VERT, SHADER_RENDERING_SKYBOX_FRAG);
+    mShaderSkyboxEquirectangular = Shader::New(SHADER_RENDERING_SKYBOX_VERT, SHADER_RENDERING_SKYBOX_EQUIRECTANGULAR_FRAG);
   }
 
   /**
@@ -330,21 +368,41 @@ public:
   /**
    * Display a skybox surrounding the camera
    */
-  void DisplaySkybox()
+  void DisplaySkybox(SkyboxType type)
   {
-    // Load skybox faces from file
-    Texture texture = Texture::New(TextureType::TEXTURE_CUBE, Pixel::RGBA8888, SKYBOX_FACE_WIDTH, SKYBOX_FACE_HEIGHT);
-    for(unsigned int i = 0; i < SKYBOX_FACE_COUNT; i++)
+    mSkyboxTextures.Reset();
+    mSkyboxRenderer.Reset();
+    mSkyboxActor.Reset();
+
+    Texture texture;
+
+    if(type == SkyboxType::CUBEMAP)
     {
-      PixelData pixels = SyncImageLoader::Load(SKYBOX_FACES[i]);
-      texture.Upload(pixels, CubeMapLayer::POSITIVE_X + i, 0, 0, 0, SKYBOX_FACE_WIDTH, SKYBOX_FACE_HEIGHT);
+      // Load skybox faces from file
+      texture = Texture::New(TextureType::TEXTURE_CUBE, Pixel::RGBA8888, SKYBOX_FACE_WIDTH, SKYBOX_FACE_HEIGHT);
+      for(unsigned int i = 0; i < SKYBOX_FACE_COUNT; i++)
+      {
+        PixelData pixels = SyncImageLoader::Load(SKYBOX_FACES[i]);
+        texture.Upload(pixels, CubeMapLayer::POSITIVE_X + i, 0, 0, 0, SKYBOX_FACE_WIDTH, SKYBOX_FACE_HEIGHT);
+      }
+
+      mSkyboxRenderer = Renderer::New(mSkyboxGeometry, mShaderSkybox);
+    }
+    else
+    {
+      // Load equirectangular image from file
+      PixelData pixels = SyncImageLoader::Load(EQUIRECTANGULAR_TEXTURE_URL);
+
+      texture = Texture::New(TextureType::TEXTURE_2D, pixels.GetPixelFormat(), pixels.GetWidth(), pixels.GetHeight());
+      texture.Upload(pixels, 0, 0, 0, 0, pixels.GetWidth(), pixels.GetHeight());
+
+      mSkyboxRenderer = Renderer::New(mSkyboxGeometry, mShaderSkyboxEquirectangular);
     }
 
     // create TextureSet
     mSkyboxTextures = TextureSet::New();
     mSkyboxTextures.SetTexture(0, texture);
 
-    mSkyboxRenderer = Renderer::New(mSkyboxGeometry, mShaderSkybox);
     mSkyboxRenderer.SetTextures(mSkyboxTextures);
     mSkyboxRenderer.SetProperty(Renderer::Property::DEPTH_INDEX, 2.0f);
 
@@ -385,6 +443,7 @@ private:
 
   Shader mShaderCube;
   Shader mShaderSkybox;
+  Shader mShaderSkyboxEquirectangular;
 
   Geometry   mGeometry;
   TextureSet mTextureSet;
@@ -396,6 +455,9 @@ private:
   TextureSet mSkyboxTextures;
   Renderer   mSkyboxRenderer;
   Actor      mSkyboxActor;
+
+  TapGestureDetector mDoubleTapGesture;
+  SkyboxType         mCurrentSkyboxType;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
