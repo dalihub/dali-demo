@@ -237,8 +237,22 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
 
   if(!animations->empty())
   {
-    auto getActor = [&root](const Scene3D::Loader::AnimatedProperty& property) {
-      return root.FindChildByName(property.mNodeName);
+    auto getActor = [&](const Scene3D::Loader::AnimatedProperty& property)
+    {
+      Dali::Actor actor;
+      if(property.mNodeIndex != Scene3D::Loader::INVALID_INDEX)
+      {
+        auto* node = scene.GetNode(property.mNodeIndex);
+        if(node != nullptr)
+        {
+          actor = root.FindChildById(node->mNodeId);
+        }
+      }
+      else
+      {
+        actor = root.FindChildByName(property.mNodeName);
+      }
+      return actor;
     };
 
     animation = (*animations)[0].ReAnimate(getActor);
@@ -452,6 +466,7 @@ void Scene3DExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
 
   auto id = mItemView.GetItemId(actor);
 
+  Scene3D::Loader::InitializeGltfLoader();
   try
   {
     auto window = mApp.GetWindow();
