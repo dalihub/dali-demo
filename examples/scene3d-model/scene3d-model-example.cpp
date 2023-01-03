@@ -215,6 +215,7 @@ public:
   void Create(Application& application)
   {
     mWindow = application.GetWindow();
+    mWindow.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
 
     // Get a handle to the mWindow
     mWindow.SetBackgroundColor(Color::WHITE);
