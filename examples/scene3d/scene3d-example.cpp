@@ -415,6 +415,8 @@ void Scene3DExample::OnKey(const KeyEvent& e)
         {
           KeyboardFocusManager::Get().SetCurrentFocusActor(mActivatedActor);
         }
+        auto window = mApp.GetWindow();
+        window.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_UI);
       }
       else
       {
@@ -452,7 +454,8 @@ void Scene3DExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
 
   try
   {
-    auto window      = mApp.GetWindow();
+    auto window = mApp.GetWindow();
+    window.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
     auto renderTasks = window.GetRenderTaskList();
     renderTasks.RemoveTask(mSceneRender);
 
