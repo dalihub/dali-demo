@@ -1094,8 +1094,8 @@
         "uCubeMatrix" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
         "uMaxLOD" : 6
     }, {
-        "vertex" : "dli_images.vsh",
-        "fragment" : "dli_images.fsh",
+        "vertex" : "../shaders/dli_images.vsh",
+        "fragment" : "../shaders/dli_images.fsh",
         "rendererState" : "DEPTH_TEST|ALPHA_BLEND",
         "uCubeMatrix" : [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ],
         "uTilt" : [ 0.0, 0.0 ]
