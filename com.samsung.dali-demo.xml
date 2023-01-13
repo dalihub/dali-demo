@@ -103,6 +103,9 @@
 	<ui-application appid="deferred-shading.example" exec="/usr/apps/com.samsung.dali-demo/bin/deferred-shading.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Deferred Shading</label>
 	</ui-application>
+	<ui-application appid="direct-rendering.example" exec="/usr/apps/com.samsung.dali-demo/bin/direct-rendering.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Direct-Rendering</label>
+	</ui-application>
 	<ui-application appid="dissolve-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/dissolve-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Dissolve effect</label>
 	</ui-application>
