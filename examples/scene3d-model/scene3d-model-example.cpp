@@ -261,6 +261,7 @@ public:
 
   void CreateSceneFromGLTF(uint32_t index)
   {
+    mReadyToLoad = false;
     if(mModel)
     {
       mWindow.GetRootLayer().Remove(mModel);
@@ -283,10 +284,17 @@ public:
     mModel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mModel.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
 
+    mModel.ResourceReadySignal().Connect(this, &Scene3DModelExample::ResourceReady);
+
     mWindow.Add(mModel);
+  }
+
+  void ResourceReady(Control control)
+  {
+    mReadyToLoad = true;
     if(mModel.GetAnimationCount() > 0)
     {
-      Animation animation = (index == 0u) ? mModel.GetAnimation(0u) : mModel.GetAnimation("idleToSquatClip_0");
+      Animation animation = (mCurrentGlTF == 0u) ? mModel.GetAnimation(0u) : mModel.GetAnimation("idleToSquatClip_0");
       animation.Play();
       animation.SetLoopCount(0);
     }
@@ -466,6 +474,11 @@ public:
 
   void ChangeModel(int32_t direction)
   {
+    if(!mReadyToLoad)
+    {
+      return;
+    }
+
     mCurrentGlTF += direction;
     if(mCurrentGlTF >= NUM_OF_GLTF_MODELS)
     {
@@ -625,6 +638,8 @@ private:
   float mWheelDelta{1.0f};
 
   int32_t mCurrentGlTF{0};
+
+  bool mReadyToLoad{true};
 };
 
 int32_t DALI_EXPORT_API main(int32_t argc, char** argv)
