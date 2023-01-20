@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,32 +46,32 @@ const uint32_t DR_THREAD_ENABLED = GetEnvInt("DR_THREAD_ENABLED", 0);
  */
 const Toolkit::GlView::BackendMode BACKEND_MODE =
   Toolkit::GlView::BackendMode(GetEnvInt("EGL_ENABLED", 0));
-}
+} // namespace
 
 /**
  * RenderView encapsulates single GLView callback and its parameters.
  */
 struct RenderView
 {
-  explicit RenderView( const Dali::Window& window )
+  explicit RenderView(const Dali::Window& window)
   {
     mWindow = window;
   }
 
-  int Create(const Vector2& pos, Toolkit::GlView::BackendMode mode )
+  int Create(const Vector2& pos, Toolkit::GlView::BackendMode mode)
   {
     auto w = mWindow.GetSize().GetWidth();
     auto h = mWindow.GetSize().GetHeight();
 
     NativeRenderer::CreateInfo info{};
     info.clearColor = {0, 0, 0, 0};
-    info.name = "DR";
-    info.offscreen = (mode == Toolkit::GlView::BackendMode::EGL_IMAGE_OFFSCREEN_RENDERING || DR_THREAD_ENABLED);
-    info.viewportX = 0;
-    info.viewportY = 0;
-    info.width = w;
-    info.height = h;
-    info.threaded = (mode != Toolkit::GlView::BackendMode::EGL_IMAGE_OFFSCREEN_RENDERING) && (DR_THREAD_ENABLED);
+    info.name       = "DR";
+    info.offscreen  = (mode == Toolkit::GlView::BackendMode::EGL_IMAGE_OFFSCREEN_RENDERING || DR_THREAD_ENABLED);
+    info.viewportX  = 0;
+    info.viewportY  = 0;
+    info.width      = w;
+    info.height     = h;
+    info.threaded   = (mode != Toolkit::GlView::BackendMode::EGL_IMAGE_OFFSCREEN_RENDERING) && (DR_THREAD_ENABLED);
 
     // Enable threaded rendering
     if(info.threaded && mode == Dali::Toolkit::GlView::BackendMode::DIRECT_RENDERING)
@@ -103,9 +103,8 @@ struct RenderView
     return 0;
   }
 
-
-  Dali::Window mWindow;
-  Toolkit::GlView mGlView;
+  Dali::Window                    mWindow;
+  Toolkit::GlView                 mGlView;
   std::unique_ptr<NativeRenderer> mRenderer{};
 
   CallbackBase* mGlInitCallback{};
@@ -119,9 +118,8 @@ struct RenderView
 class DirectRenderingExampleController : public ConnectionTracker
 {
 public:
-
   explicit DirectRenderingExampleController(Application& application)
-    : mApplication(application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &DirectRenderingExampleController::Create);
@@ -135,8 +133,11 @@ public:
     Dali::Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
 
+    window.KeyEventSignal().Connect(this, &DirectRenderingExampleController::OnKeyEvent);
+    window.GetRootLayer().TouchedSignal().Connect(this, &DirectRenderingExampleController::OnTouch);
+
     mDRView = std::make_unique<RenderView>(window);
-    mDRView->Create( Vector2::ZERO, BACKEND_MODE );
+    mDRView->Create(Vector2::ZERO, BACKEND_MODE);
   }
 
   bool OnTouch(Actor actor, const TouchEvent& touch)
@@ -158,13 +159,13 @@ public:
   }
 
 private:
-  Application& mApplication;
+  Application&                mApplication;
   std::unique_ptr<RenderView> mDRView;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application          application = Application::New(&argc, &argv);
+  Application                      application = Application::New(&argc, &argv);
   DirectRenderingExampleController test(application);
   application.MainLoop();
   return 0;
