@@ -451,7 +451,7 @@ public:
     mCreatingControlList.pop_front();
 
     // Dereference timer safety
-    if(mTimerList.empty())
+    if(!mTimerList.empty())
     {
       mTimerList.pop_front();
     }
