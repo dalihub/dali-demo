@@ -25,6 +25,7 @@
 #include <cstring>
 
 #include <dali-scene3d/public-api/controls/model/model.h>
+#include <dali-scene3d/public-api/loader/environment-map-loader.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -376,15 +377,9 @@ public:
     mSkyboxGeometry.AddVertexBuffer(vertexBuffer);
     mSkyboxGeometry.SetType(Geometry::TRIANGLES);
 
-    // Diffuse Cube Map
-    Devel::PixelBuffer diffusePixelBuffer = LoadImageFromFile(uri_cube_diffuse_texture);
-    int32_t            diffuseFaceSize    = diffusePixelBuffer.GetWidth() / 4;
-    Texture            texture            = Texture::New(TextureType::TEXTURE_CUBE, diffusePixelBuffer.GetPixelFormat(), diffuseFaceSize, diffuseFaceSize);
-    for(int32_t i = 0; i < 6; ++i)
-    {
-      UploadTextureFace(texture, diffusePixelBuffer, i);
-    }
-    texture.GenerateMipmaps();
+    Dali::Scene3D::Loader::EnvironmentMapData environmentMapData;
+    Dali::Scene3D::Loader::LoadEnvironmentMap(uri_cube_diffuse_texture, environmentMapData);
+    Texture texture = environmentMapData.GetTexture();
 
     mSkyboxTextures = TextureSet::New();
     mSkyboxTextures.SetTexture(0, texture);
