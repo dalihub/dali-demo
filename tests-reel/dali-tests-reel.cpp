@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("camera-test.example", DALI_DEMO_STR_TITLE_CAMERA_TEST));
   demo.AddExample(Example("compressed-texture-formats.example", DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS));
   demo.AddExample(Example("homescreen-benchmark.example", DALI_DEMO_STR_TITLE_HOMESCREEN));
+  demo.AddExample(Example("inherit-test.example", DALI_DEMO_STR_TITLE_INHERIT_TEST));
   demo.AddExample(Example("pre-render-callback.example", DALI_DEMO_STR_TITLE_PRE_RENDER_CALLBACK));
   demo.AddExample(Example("perf-scroll.example", DALI_DEMO_STR_TITLE_PERF_SCROLL));
   demo.AddExample(Example("perf-view-creation.example", DALI_DEMO_STR_TITLE_PERF_VIEW_CREATION));

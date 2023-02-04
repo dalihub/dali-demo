@@ -61,6 +61,9 @@ msgstr "Bildansicht Pixelbereich"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
 msgstr "Bildansicht SVG"
 
+msgid "DALI_DEMO_STR_TITLE_INHERIT_TEST"
+msgstr "Inherit Test"
+
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "Item-Ansicht"
 
