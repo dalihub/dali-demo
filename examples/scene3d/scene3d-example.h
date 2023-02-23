@@ -65,8 +65,8 @@ private: // data
 public:
   Dali::Actor mScene;
 
-  std::vector<Dali::Scene3D::Loader::AnimationDefinition> mSceneAnimations;
-  Dali::Animation                                     mCurrentAnimation;
+  std::vector<Dali::Animation> mSceneAnimations;
+  Dali::Animation              mCurrentAnimation;
 
   std::unique_ptr<Scene3DExtension> mScene3DExtension;
 
