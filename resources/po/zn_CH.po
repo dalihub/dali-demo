@@ -64,6 +64,9 @@ msgstr "图像视图像素区域"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
 msgstr "图像视图 SVG"
 
+msgid "DALI_DEMO_STR_TITLE_INHERIT_TEST"
+msgstr "Inherit Test"
+
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "项目视图"
 

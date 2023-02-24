@@ -145,6 +145,9 @@
 	<ui-application appid="homescreen-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/homescreen-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Homescreen Benchmark</label>
 	</ui-application>
+	<ui-application appid="inherit-test.example" exec="/usr/apps/com.samsung.dali-demo/bin/inherit-test.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+		<label>Inherit test</label>
+	</ui-application>
 	<ui-application appid="image-policies.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-policies.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Image Policies</label>
 	</ui-application>

@@ -133,6 +133,9 @@ msgstr "Image View SVG"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_URL"
 msgstr "Image View URL"
 
+msgid "DALI_DEMO_STR_TITLE_INHERIT_TEST"
+msgstr "Inherit Test"
+
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "Item View"
 
