@@ -79,6 +79,9 @@ msgstr "이미지 뷰 픽셀 영역"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
 msgstr "이미지 뷰 SVG"
 
+msgid "DALI_DEMO_STR_TITLE_INHERIT_TEST"
+msgstr "속성 전파 테스트"
+
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "아이템 뷰"
 

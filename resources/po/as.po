@@ -61,6 +61,9 @@ msgstr "অনুবিম্ব Pixel Area"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
 msgstr "অনুবিম্ব SVG"
 
+msgid "DALI_DEMO_STR_TITLE_INHERIT_TEST"
+msgstr "Inherit Test"
+
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "আইটেম দর্শন"
 

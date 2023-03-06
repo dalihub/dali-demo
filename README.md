@@ -52,6 +52,13 @@ Before running make install as normal:
 
          $ make install -j8
 
+### Build Only specific sample
+
+You can set the sample's name and can build that sample only. For example, If you want to build 'hello-world',
+
+         $ cmake -DCMAKE_INSTALL_PREFIX=$DESKTOP_PREFIX -DBUILD_EXAMPLE_NAME=hello-world
+         $ make install -j9
+
 ## 2. GBS Builds
 
 ### NON-SMACK Targets
@@ -69,6 +76,10 @@ Before running make install as normal:
 ### Raspberry Pi builds
 
          $ gbs build -A [TARGET_ARCH] --define "%rpi_style 1"
+
+### Build specific sample only
+
+         $ gbs build -A [TARGET_ARCH] --define "build_example_name hello-world"
 
 # Creating an example
 
@@ -162,6 +173,7 @@ vcpkg-script folder in the windows-dependencies repository.
     - INTERNATIONALIZATION  ---> Whether to generate and install internazionalization '.po' Portable Object files.
     - CMAKE_INSTALL_PREFIX  ---> Were DALi is installed.
     - ENABLE_DEBUG          ---> Whether to build with debug enabled.
+    - BUILD_EXAMPLE_NAME    ---> The name of sample what you want to build. To reduce the memory of rpm file, we didn't copy resources now.
 
   * If dali-toolkit has been compiled with the USE_DEFAULT_RESOURCE_DIR option disabled then is needed to set global environment variables in order to find the default toolkit resources.
 
