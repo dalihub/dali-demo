@@ -49,11 +49,11 @@ static constexpr int32_t NUM_OF_GLTF_MODELS = 7;
 const char* gltf_list[7] =
   {
     /**
-     * For the BoxAnimated.gltf and its Assets
+     * For the BoxAnimated.glb
      * Donated by Cesium for glTF testing.
      * Take from https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/BoxAnimated
      */
-    "BoxAnimated.gltf",
+    "BoxAnimated.glb",
     /**
      * For the Lantern.gltf and its Assets
      * Donated by Microsoft for glTF testing
@@ -69,12 +69,12 @@ const char* gltf_list[7] =
      */
     "BoomBox.gltf",
     /**
-     * For the DamagedHelmet.gltf and its Assets
+     * For the DamagedHelmet.glb
      * Battle Damaged Sci-fi Helmet - PBR by theblueturtle_, published under a
      * Creative Commons Attribution-NonCommercial license
      * https://sketchfab.com/models/b81008d513954189a063ff901f7abfe4
      */
-    "DamagedHelmet.gltf",
+    "DamagedHelmet.glb",
     /**
      * For the microphone.gltf and its Assets
      * Microphone GXL 066 Bafhcteks by Gistold, published under a
@@ -295,7 +295,7 @@ public:
     mReadyToLoad = true;
     if(mModel.GetAnimationCount() > 0)
     {
-      Animation animation = (mCurrentGlTF == 0u) ? mModel.GetAnimation(0u) : mModel.GetAnimation("idleToSquatClip_0");
+      Animation animation = (std::string("exercise_model.dli") == gltf_list[mCurrentGlTF]) ? mModel.GetAnimation("idleToSquatClip_0") : mModel.GetAnimation(0u);
       animation.Play();
       animation.SetLoopCount(0);
     }

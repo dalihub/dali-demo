@@ -19,8 +19,7 @@
 #include <dirent.h>
 #include <cstring>
 #include <string_view>
-#include "dali-scene3d/public-api/loader/dli-loader.h"
-#include "dali-scene3d/public-api/loader/gltf2-loader.h"
+#include "dali-scene3d/public-api/loader/model-loader.h"
 #include "dali-scene3d/public-api/loader/light-parameters.h"
 #include "dali-scene3d/public-api/loader/load-result.h"
 #include "dali-scene3d/public-api/loader/shader-definition-factory.h"
@@ -141,7 +140,7 @@ void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition
   }
 }
 
-Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<AnimationDefinition>* animations, Animation& animation)
+Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Dali::Animation>& generatedAnimations, Animation& animation)
 {
   ResourceBundle::PathProvider pathProvider = [](ResourceType::Value type) {
     return Application::GetResourcePath() + RESOURCE_TYPE_DIRS[type];
@@ -149,48 +148,27 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
 
   auto path = pathProvider(ResourceType::Mesh) + sceneName;
 
-  ResourceBundle                        resources;
-  SceneDefinition                       scene;
-  SceneMetadata                         metaData;
-  std::vector<AnimationGroupDefinition> animGroups;
-  std::vector<CameraParameters>         cameraParameters;
-  std::vector<LightParameters>          lights;
+  ResourceBundle                                          resources;
+  SceneDefinition                                         scene;
+  SceneMetadata                                           metaData;
+  std::vector<Dali::Scene3D::Loader::AnimationDefinition> animations;
+  std::vector<AnimationGroupDefinition>                   animGroups;
+  std::vector<CameraParameters>                           cameraParameters;
+  std::vector<LightParameters>                            lights;
 
-  animations->clear();
+  animations.clear();
 
   LoadResult output{
     resources,
     scene,
     metaData,
-    *animations,
+    animations,
     animGroups,
     cameraParameters,
     lights};
 
-  if(sceneName.rfind(DLI_EXTENSION) == sceneName.size() - DLI_EXTENSION.size())
-  {
-    DliLoader              loader;
-    DliLoader::InputParams input{
-      pathProvider(ResourceType::Mesh),
-      nullptr,
-      {},
-      {},
-      nullptr,
-      {}};
-    DliLoader::LoadParams loadParams{input, output};
-    if(!loader.LoadScene(path, loadParams))
-    {
-      ExceptionFlinger(ASSERT_LOCATION) << "Failed to load scene from '" << path << "': " << loader.GetParseError();
-    }
-  }
-  else
-  {
-    ShaderDefinitionFactory sdf;
-    sdf.SetResources(resources);
-    LoadGltfScene(path, sdf, output);
-
-    resources.mEnvironmentMaps.push_back({});
-  }
+  Dali::Scene3D::Loader::ModelLoader modelLoader(path, pathProvider(ResourceType::Mesh) + "/", output);
+  modelLoader.LoadModel(pathProvider);
 
   if(cameraParameters.empty())
   {
@@ -210,20 +188,14 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
     {},
     {},
     {}};
-  Customization::Choices choices;
 
   Actor root = Actor::New();
   SetActorCentered(root);
 
+  auto& resourceChoices = modelLoader.GetResourceChoices();
   for(auto iRoot : scene.GetRoots())
   {
-    auto resourceRefs = resources.CreateRefCounter();
-    scene.CountResourceRefs(iRoot, choices, resourceRefs);
-    resources.CountEnvironmentReferences(resourceRefs);
-
-    resources.LoadResources(resourceRefs, pathProvider);
-
-    if(auto actor = scene.CreateNodes(iRoot, choices, nodeParams))
+    if(auto actor = scene.CreateNodes(iRoot, resourceChoices, nodeParams))
     {
       scene.ConfigureSkeletonJoints(iRoot, resources.mSkeletons, actor);
       scene.ConfigureSkinningShaders(resources, actor, std::move(nodeParams.mSkinnables));
@@ -235,8 +207,10 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
     }
   }
 
-  if(!animations->empty())
+  generatedAnimations.clear();
+  if(!animations.empty())
   {
+    generatedAnimations.reserve(animations.size());
     auto getActor = [&](const Scene3D::Loader::AnimatedProperty& property)
     {
       Dali::Actor actor;
@@ -255,8 +229,11 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Animation
       return actor;
     };
 
-    animation = (*animations)[0].ReAnimate(getActor);
-    animation.Play();
+    for(auto& animationDefinition : animations)
+    {
+      generatedAnimations.push_back(animationDefinition.ReAnimate(getActor));
+    }
+    generatedAnimations[0].Play();
   }
 
   return root;
@@ -466,7 +443,6 @@ void Scene3DExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
 
   auto id = mItemView.GetItemId(actor);
 
-  Scene3D::Loader::InitializeGltfLoader();
   try
   {
     auto window = mApp.GetWindow();
@@ -474,7 +450,7 @@ void Scene3DExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
     auto renderTasks = window.GetRenderTaskList();
     renderTasks.RemoveTask(mSceneRender);
 
-    auto scene = LoadScene(mSceneNames[id], mSceneCamera, &mSceneAnimations, mCurrentAnimation);
+    auto scene = LoadScene(mSceneNames[id], mSceneCamera, mSceneAnimations, mCurrentAnimation);
 
     auto sceneRender = renderTasks.CreateTask();
     sceneRender.SetCameraActor(mSceneCamera);
