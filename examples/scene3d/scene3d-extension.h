@@ -93,16 +93,14 @@ private:
         return false;
       }
 
-      auto root     = mSceneLoader->mScene;
-      auto getActor = [&root](const Dali::Scene3D::Loader::AnimatedProperty& property) {
-        return root.FindChildByName(property.mNodeName);
-      };
-
       if(mSceneLoader->mSceneAnimations.size() > animationIndex)
       {
         mCurrentAnimationIndex          = animationIndex;
-        mSceneLoader->mCurrentAnimation = mSceneLoader->mSceneAnimations[animationIndex].ReAnimate(getActor);
-        mSceneLoader->mCurrentAnimation.FinishedSignal().Connect(this, &Scene3DExtension::OnAnimationFinished);
+        mSceneLoader->mCurrentAnimation = mSceneLoader->mSceneAnimations[animationIndex];
+        if(mSceneLoader->mCurrentAnimation.FinishedSignal().GetConnectionCount() == 0)
+        {
+          mSceneLoader->mCurrentAnimation.FinishedSignal().Connect(this, &Scene3DExtension::OnAnimationFinished);
+        }
         mSceneLoader->mCurrentAnimation.Play();
       }
     }
