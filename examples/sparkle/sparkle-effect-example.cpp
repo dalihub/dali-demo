@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -168,6 +168,7 @@ private:
     Actor meshActor = Actor::New();
     meshActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     meshActor.SetProperty(Actor::Property::SIZE, Vector2(1, 1));
+    meshActor.SetProperty(Actor::Property::UPDATE_AREA_HINT, ACTOR_UPDATE_AREA_HINT);
     meshActor.AddRenderer(renderer);
 
     return meshActor;
