@@ -2,7 +2,7 @@
 #define DALI_SPARKLE_EFFECT_H
 
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -191,12 +191,22 @@ MovingPath PATHS[] =
     {339, 348, 361, 465, 382, 477, 406, 442, 430, 406, 269, 369}};
 const unsigned int NUM_PARTICLE(sizeof(PATHS) / sizeof(PATHS[0]));
 
-const float PARTICLE_SIZE = 13.f;
+constexpr float PARTICLE_SIZE = 13.f;
 
-const float   ACTOR_SCALE = 0.704f; // resize 500*500 to 352*352, a bit smaller than 360*360
-const Vector3 ACTOR_POSITION(-176.f, -176.f, 1.f);
+// These values are mainly used to set the size of the actor, the shader draws outside the values set
+constexpr float   ACTOR_DIMENSION_SIZE(500.0f);
+constexpr float   ACTOR_SCALE = 0.704f; // resize 500*500 to 352*352, a bit smaller than 360*360
+constexpr float   ACTOR_POSITION_VALUE(176.0f);
+constexpr Vector3 ACTOR_POSITION(-ACTOR_POSITION_VALUE, -ACTOR_POSITION_VALUE, 1.f);
 
-const int MAXIMUM_ANIMATION_COUNT = 30;
+// Need to remove scale in the update-size-hint
+constexpr Vector4 ACTOR_UPDATE_AREA_HINT(
+  ACTOR_POSITION_VALUE,
+  ACTOR_POSITION_VALUE,
+  ACTOR_DIMENSION_SIZE / ACTOR_SCALE,
+  ACTOR_DIMENSION_SIZE / ACTOR_SCALE);
+
+constexpr int MAXIMUM_ANIMATION_COUNT = 30;
 
 // Geometry format used by the SparkeEffect
 struct Vertex
