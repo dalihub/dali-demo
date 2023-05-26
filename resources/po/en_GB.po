@@ -208,6 +208,12 @@ msgstr "Renderer Stencil"
 msgid "DALI_DEMO_STR_TITLE_SCENE3D"
 msgstr "Scene3D"
 
+msgid "DALI_DEMO_STR_TITLE_SCENE3D_LIGHT"
+msgstr "Scene3D Light"
+
+msgid "DALI_DEMO_STR_TITLE_SCENE3D_MODEL"
+msgstr "Scene3D Model"
+
 msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
 msgstr "Script-based UI"
 
@@ -309,5 +315,3 @@ msgstr "Web View"
 
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
 msgstr "Animated Vector Images"
-msgid "DALI_DEMO_STR_TITLE_SCENE3D_MODEL"
-msgstr "Scene3D Model"
