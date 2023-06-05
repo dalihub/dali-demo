@@ -84,8 +84,8 @@ uint32_t ImageExplodeEffectSource::Update(ParticleList& particleList, uint32_t c
   float particleScale = 4.0f;
   float pixelSize = 2.0f;
 
-  uint32_t halfWidth = (mImageWidth/2) * particleScale;
-  uint32_t halfHeight = (mImageHeight/2) * particleScale;
+  auto halfWidth = (float(mImageWidth)*0.5f) * particleScale;
+  auto halfHeight = (float(mImageHeight)*0.5f) * particleScale;
 
   for(auto y = 0u ; y < mImageHeight; ++y)
   {
@@ -103,7 +103,7 @@ uint32_t ImageExplodeEffectSource::Update(ParticleList& particleList, uint32_t c
         auto& scale        = particle.Get<Vector3>(ParticleStream::SCALE_STREAM_BIT);
         color              = GetColorAt(x, y, mPixelBuffer);
         // Set basePosition
-        position = basePosition = Vector3(x* particleScale -halfWidth, y* particleScale -halfHeight, 0);
+        position = basePosition = Vector3(float(x) * particleScale - halfWidth, float(y)* particleScale - halfHeight, 0);
         scale                   = Vector3(pixelSize, pixelSize, 1);
         velocity                = Vector3::ZERO;
       }

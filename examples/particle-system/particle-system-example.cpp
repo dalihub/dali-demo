@@ -100,6 +100,8 @@ public:
       emitterActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       emitterActor.SetProperty(Actor::Property::POSITION, Vector2(0.0, 0.0f));
       emitterActor.SetProperty(Actor::Property::SIZE, Vector2(1.0, 1.0f));
+      emitterActor.SetProperty(Actor::Property::UPDATE_AREA_HINT, Vector4(0, 0, window.GetSize().GetWidth(), window.GetSize().GetHeight()));
+
       window.Add(emitterActor);
 
       mEmitterActor = emitterActor;
