@@ -39,12 +39,22 @@ mEmitter(emitter)
 
 void SparklesSource::Init()
 {
-  mStreamBasePos = mEmitter.GetParticleList().AddLocalStream<Vector3>(Vector3::ZERO);
-  mStreamBaseAngle = mEmitter.GetParticleList().AddLocalStream<float>(0.0f);
+  auto handle = mEmitter.GetHandle();
+  if(!handle)
+  {
+    return;
+  }
+  mStreamBasePos = handle.GetParticleList().AddLocalStream<Vector3>(Vector3::ZERO);
+  mStreamBaseAngle = handle.GetParticleList().AddLocalStream<float>(0.0f);
 }
 
 uint32_t SparklesSource::Update(ParticleList& particleList, uint32_t count)
 {
+  if(!mStreamBasePos || !mStreamBaseAngle)
+  {
+    return 0u;
+  }
+
   while(count--)
   {
     auto particle = particleList.NewParticle(LIFETIME);

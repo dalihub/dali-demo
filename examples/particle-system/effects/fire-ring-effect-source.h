@@ -23,6 +23,7 @@
 #include <dali-toolkit/public-api/particle-system/particle-modifier.h>
 #include <dali-toolkit/public-api/particle-system/particle-list.h>
 #include <dali-toolkit/public-api/particle-system/particle.h>
+#include <dali/public-api/object/weak-handle.h>
 #include <ctime>
 
 namespace Dali::ParticleEffect
@@ -43,7 +44,7 @@ public:
 
   void UpdateParticle(Vector3& position, Vector3& basePosition, Vector4& color, Vector3& velocity, Vector3& scale);
 
-  ParticleEmitter mEmitter;
+  Dali::WeakHandle<ParticleEmitter> mEmitter;
 
   Dali::Vector2 mRadius;
 

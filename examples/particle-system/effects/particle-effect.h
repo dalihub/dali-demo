@@ -55,10 +55,6 @@ public:
   ~ParticleEffect();
 
   Dali::Toolkit::ParticleSystem::ParticleEmitter CreateEffectEmitter( EffectType effectType, Actor parentActor, const ParticleEffectParams& params );
-
-private:
-
-
 };
 }
 

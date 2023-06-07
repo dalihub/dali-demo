@@ -42,13 +42,18 @@ void SparklesModifier::Update(ParticleList& particleList, uint32_t first, uint32
   mAngle = ((mAngle + 2) % 360);
 
   // Retrieve the Source and get the stream
+  auto handle = mEmitter.GetHandle();
+  if(!handle)
+  {
+    return;
+  }
   if(!mStreamBasePos)
   {
-    mStreamBasePos = static_cast<SparklesSource*>(&mEmitter.GetSource().GetSourceCallback())->mStreamBasePos;
+    mStreamBasePos = static_cast<SparklesSource*>(&handle.GetSource().GetSourceCallback())->mStreamBasePos;
   }
   if(!mStreamBaseAngle)
   {
-    mStreamBaseAngle = static_cast<SparklesSource*>(&mEmitter.GetSource().GetSourceCallback())->mStreamBaseAngle;
+    mStreamBaseAngle = static_cast<SparklesSource*>(&handle.GetSource().GetSourceCallback())->mStreamBaseAngle;
   }
 
   // Missing stream, return!
@@ -77,7 +82,7 @@ void SparklesModifier::Update(ParticleList& particleList, uint32_t first, uint32
     auto angle = particle.GetByIndex<float>(mStreamBaseAngle);
     auto                   radians  = ((angle * M_PI)/180.f);
     float                  lifetime = particle.Get<float>(ParticleStream::LIFETIME_STREAM_BIT);
-    position.y += velocity.y *sin(radians);
+    position.y += velocity.y * sin(radians);
     position.x += velocity.x * cos(radians);
 
     velocity *= 0.990f;

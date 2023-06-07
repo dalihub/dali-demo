@@ -64,12 +64,16 @@ mEmitter(emitter)
 
 void ImageExplodeEffectSource::Init()
 {
-  mStreamBasePos = mEmitter.GetParticleList().AddLocalStream<Vector3>(Vector3::ZERO);
+  auto handle = mEmitter.GetHandle();
+  if(handle)
+  {
+    mStreamBasePos = handle.GetParticleList().AddLocalStream<Vector3>(Vector3::ZERO);
+  }
 }
 
 uint32_t ImageExplodeEffectSource::Update(ParticleList& particleList, uint32_t count)
 {
-  if(!mShouldEmit)
+  if(!mShouldEmit || !mStreamBasePos)
   {
     return 0;
   }

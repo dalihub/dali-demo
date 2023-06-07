@@ -44,7 +44,12 @@ void ImageExplodeEffectModifier::Update(ParticleList& particleList, uint32_t fir
   // Retrieve the Source and get the stream
   if(!mStreamBasePos)
   {
-    mStreamBasePos = static_cast<ImageExplodeEffectSource*>(&mEmitter.GetSource().GetSourceCallback())->mStreamBasePos;
+    auto handle = mEmitter.GetHandle();
+    if(!handle)
+    {
+      return;
+    }
+    mStreamBasePos = static_cast<ImageExplodeEffectSource*>(&handle.GetSource().GetSourceCallback())->mStreamBasePos;
   }
 
   // Missing stream, return!
