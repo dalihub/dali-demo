@@ -178,6 +178,9 @@ msgstr "Page Turn"
 msgid "DALI_DEMO_STR_TITLE_PARTICLES"
 msgstr "Particles"
 
+msgid "DALI_DEMO_STR_TITLE_PARTICLE_SYSTEM"
+msgstr "Particle System"
+
 msgid "DALI_DEMO_STR_TITLE_PERF_SCROLL"
 msgstr "Scrolling Performance"
 
