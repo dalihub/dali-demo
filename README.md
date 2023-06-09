@@ -13,10 +13,10 @@
          * [DEBUG Builds](#debug-builds-1)
       * [3. Building for Android](#3-android-builds)
       * [4. Building for MS Windows](#4-windows-builds)
-         * Build with the Visual Studio project.
-         * Build with CMake.
+         * [Build with the Visual Studio project](#build-with-the-visual-studio-project)
+         * [Build with CMake](#build-with-cmake)
       * [5. Building for MacOS](#5-building-for-macos)
-   * [Creating an example](#creating-an-example)
+   * [Creating an Example](#creating-an-example)
 
 # Build Instructions
 
@@ -80,14 +80,6 @@ You can set the sample's name and can build that sample only. For example, If yo
 ### Build specific sample only
 
          $ gbs build -A [TARGET_ARCH] --define "build_example_name hello-world"
-
-# Creating an example
-
- - Make a directory in the "examples" directory. Only one example will be created per directory.
- - The executable installed will have a ".example" appended to it, e.g. a "blocks" directory produces "blocks.example".
- - Add all source files for the required example in this directory.
- - Modify "com.samsung.dali-demo.xml" to include your example so that it can be launched on target.
- - No changes are required to the make system as long as the above is followed, your example will be automatically built & installed.
 
 ## 3. Building for Android
 
@@ -204,22 +196,19 @@ To build, run:
 % make install -j8
 ```
 
-# Creating an example
-In the dali-demo/examples folder, add another folder. This will become the name of your example executable, so for example the "hello-world" folder generates a "hello-world.example" binary.
-In this folder, you can add as many source code files as you need.
+# Creating an Example
 
-Usually, create a single class file containing a main function that instantiates an Application. Usually, the class is named after your example, followed by "Controller", e.g. hello-world.cpp contains a class called HelloWorldController.
-
-There is a DemoHelper::CreateView method, which enables you to easiliy set up a title bar and buttons.
-
-Add at least a key handler such that Escape or Back keys can be used to quit the application. Some apps that only present a single thing also add a touch handler that quits the application.
-
-Add a launcher line to one of demo/dali-demo.cpp, examples-reel/dali-examples-reel.cpp or tests-reel/dali-tests-reel.cpp, depending on the nature of what you are demonstrating. Generally, dali-demo is for graphical showcase demos, dali-examples-reel is for reasonable examples that look ok, and dali-tests is for examples that are only for testing. This needs a language string defining for the title.
-
-Add 2 lines to shared/dali-demo-strings.h for the title of your application, please keep in alphabetic ordering. Add english strings and translations to each of the language files in resources/po.
-
-To ensure your application can run on a Tizen device through the launcher, add an entry to com.samsung.dali-demo.xml, ensuring that only tabs are used for XML indent.
-
-
-
-
+- Make a directory in the `examples` directory. Only one example will be created per directory.
+- The executable installed will have a `.example` appended to it, e.g. a `blocks` directory produces `blocks.example`.
+- Add all source files for the required example in this directory.
+- Modify `com.samsung.dali-demo.xml` to include your example so that it can be launched on target.
+- No changes are required to the make system as long as the above is followed, your example will be automatically built & installed.
+- Add a key handler so that the `ESC` or `Back` keys can be used to quit the application.
+- Depending on the nature of what you are demonstrating, add a launcher line to either:
+  - `demo/dali-demo.cpp`: for graphical showcase demos.
+  - `examples-reel/dali-examples-reel.cpp`: generic examples of how to use various features.
+  - `tests-reel/dali-tests-reel.cpp`: for testing purposes.
+- Add 2 lines to `shared/dali-demo-strings.h` for the title of your application, please keep in alphabetic order,
+- Add as many translations of the title as possible to the files in `resources/po`. Currently, this only works on Ubuntu.
+- In each example folder, create a README.md with images and a description of what the example is demonstrating.
+  Look at [this](examples/particle-system/README.md) for reference.
