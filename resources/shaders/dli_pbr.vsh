@@ -10,6 +10,7 @@ in vec3 aPosition;
 in vec2 aTexCoord;
 in vec3 aNormal;
 in vec3 aTangent;
+in vec4 aVertexColor;
 
 #ifdef MORPH
   uniform sampler2D sBlendShapeGeometry;
@@ -19,6 +20,7 @@ out vec2 vUV;
 out vec3 vNormal;
 out vec3 vTangent;
 out vec3 vViewVec;
+out vec4 vColor;
 
 
 uniform highp mat4 uMvpMatrix;
@@ -149,6 +151,8 @@ void main()
 #else
   vUV = aTexCoord;
 #endif
+
+  vColor = aVertexColor;
 
   vViewVec = viewPosition.xyz;
 }
