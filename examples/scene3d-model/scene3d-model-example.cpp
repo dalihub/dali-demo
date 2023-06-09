@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  *
  */
 
+#include <dali-scene3d/dali-scene3d.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
@@ -23,9 +24,6 @@
 #include <dali/integration-api/debug.h>
 #include <dali/public-api/actors/camera-actor.h>
 #include <cstring>
-
-#include <dali-scene3d/public-api/controls/model/model.h>
-#include <dali-scene3d/public-api/loader/environment-map-loader.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -43,7 +41,6 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-
 static constexpr int32_t NUM_OF_GLTF_MODELS = 7;
 
 const char* gltf_list[7] =

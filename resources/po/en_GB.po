@@ -178,6 +178,9 @@ msgstr "Creation View Performance"
 msgid "DALI_DEMO_STR_TITLE_POINT_MESH"
 msgstr "Point Mesh"
 
+msgid "DALI_DEMO_STR_TITLE_PARTICLE_SYSTEM"
+msgstr "Particle System"
+
 msgid "DALI_DEMO_STR_TITLE_POPUP"
 msgstr "Popup"
 

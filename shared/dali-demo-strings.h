@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,6 +97,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE")
 #define DALI_DEMO_STR_TITLE_PAGE_TURN dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PAGE_TURN")
 #define DALI_DEMO_STR_TITLE_PARTICLES dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PARTICLES")
+#define DALI_DEMO_STR_TITLE_PARTICLE_SYSTEM dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PARTICLE_SYSTEM")
 #define DALI_DEMO_STR_TITLE_PBR dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PBR")
 #define DALI_DEMO_STR_TITLE_PERF_SCROLL dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PERF_SCROLL")
 #define DALI_DEMO_STR_TITLE_PERF_VIEW_CREATION dgettext(DALI_DEMO_DOMAIN_LOCAL, "DALI_DEMO_STR_TITLE_PERF_VIEW_CREATION")
@@ -211,6 +212,7 @@ extern "C"
 #define DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE "Negotiate Size"
 #define DALI_DEMO_STR_TITLE_PAGE_TURN "Page Turn"
 #define DALI_DEMO_STR_TITLE_PARTICLES "Particles"
+#define DALI_DEMO_STR_TITLE_PARTICLE_SYSTEM "Particle System"
 #define DALI_DEMO_STR_TITLE_PBR "PBR"
 #define DALI_DEMO_STR_TITLE_PERF_SCROLL "Scrolling Performance"
 #define DALI_DEMO_STR_TITLE_PERF_VIEW_CREATION "Creation View Performance"
