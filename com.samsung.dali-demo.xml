@@ -256,6 +256,9 @@
 	<ui-application appid="remote-image-loading.example" exec="/usr/apps/com.samsung.dali-demo/bin/remote-image-loading.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Remote Image</label>
 	</ui-application>
+	<ui-application appid="render-pass-tag.example" exec="/usr/apps/com.samsung.dali-demo/bin/render-pass-tag.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Render Pass</label>
+	</ui-application>
 	<ui-application appid="renderer-stencil.example" exec="/usr/apps/com.samsung.dali-demo/bin/renderer-stencil.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Renderer Stencils</label>
 	</ui-application>
