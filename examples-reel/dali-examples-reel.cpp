@@ -83,6 +83,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
   demo.AddExample(Example("progress-bar.example", DALI_DEMO_STR_TITLE_PROGRESS_BAR));
   demo.AddExample(Example("remote-image-loading.example", DALI_DEMO_STR_TITLE_REMOTE_IMAGE));
+  demo.AddExample(Example("render-pass-tag.example", DALI_DEMO_STR_TITLE_RENDER_PASS_TAG));
   demo.AddExample(Example("rendering-basic-light.example", DALI_DEMO_STR_TITLE_BASIC_LIGHT));
   demo.AddExample(Example("rendering-line.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_LINE));
   demo.AddExample(Example("rendering-triangle.example", DALI_DEMO_STR_TITLE_RENDERING_DRAW_TRIANGLE));
@@ -90,6 +91,9 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("rendering-textured-cube.example", DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE));
   demo.AddExample(Example("rendering-radial-progress.example", DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS));
   demo.AddExample(Example("ray-marching.example", DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING));
+  demo.AddExample(Example("scene3d.example", DALI_DEMO_STR_TITLE_SCENE3D));
+  demo.AddExample(Example("scene3d-light.example", DALI_DEMO_STR_TITLE_SCENE3D_LIGHT));
+  demo.AddExample(Example("scene3d-model.example", DALI_DEMO_STR_TITLE_SCENE3D_MODEL));
   demo.AddExample(Example("scroll-view.example", DALI_DEMO_STR_TITLE_SCROLL_VIEW));
   demo.AddExample(Example("size-negotiation.example", DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE));
   demo.AddExample(Example("styling.example", DALI_DEMO_STR_TITLE_STYLING));

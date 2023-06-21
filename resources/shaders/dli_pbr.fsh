@@ -51,6 +51,7 @@ in vec2 vUV;
 in vec3 vNormal;
 in vec3 vTangent;
 in vec3 vViewVec;
+in vec4 vColor;
 
 out vec4 FragColor;
 
@@ -82,7 +83,7 @@ void main()
     discard;
   }
 #endif	//ALPHA_TEST
-  vec3 albedoColor = albedoAlpha.rgb * uColor.rgb;
+  vec3 albedoColor = albedoAlpha.rgb * vColor.rgb * uColor.rgb;
 
   vec4 metalRoughness = texture(sMetalRoughness, vUV.st);
   float metallic = metalRoughness.METALLIC * uMetallicFactor;
@@ -91,7 +92,7 @@ void main()
   vec3 normalMap = texture(sNormal, vUV.st).rgb;
 #else  //THREE_TEX
   vec4 albedoMetal = texture(sAlbedoMetal, vUV.st);
-  vec3 albedoColor = albedoMetal.rgb * uColor.rgb;
+  vec3 albedoColor = albedoMetal.rgb * vColor.rgb * uColor.rgb;
   float metallic = albedoMetal.a * uMetallicFactor;
 
   vec4 normalRoughness = texture(sNormalRoughness, vUV.st);

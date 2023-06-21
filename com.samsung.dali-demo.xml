@@ -256,6 +256,9 @@
 	<ui-application appid="remote-image-loading.example" exec="/usr/apps/com.samsung.dali-demo/bin/remote-image-loading.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Remote Image</label>
 	</ui-application>
+	<ui-application appid="render-pass-tag.example" exec="/usr/apps/com.samsung.dali-demo/bin/render-pass-tag.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Render Pass</label>
+	</ui-application>
 	<ui-application appid="renderer-stencil.example" exec="/usr/apps/com.samsung.dali-demo/bin/renderer-stencil.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Renderer Stencils</label>
 	</ui-application>
@@ -283,11 +286,14 @@
 	<ui-application appid="rendering-triangle.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-triangle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Rendering Triangle</label>
 	</ui-application>
-	<ui-application appid="scene3d-model.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d-model.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Model View</label>
-	</ui-application>
 	<ui-application appid="scene3d.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scene3D</label>
+	</ui-application>
+	<ui-application appid="scene3d-light.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d-light.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Scene3D Light</label>
+	</ui-application>
+	<ui-application appid="scene3d-model.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d-model.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Scene3D Model</label>
 	</ui-application>
 	<ui-application appid="scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>
