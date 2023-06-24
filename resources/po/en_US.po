@@ -342,3 +342,6 @@ msgstr "Text Bitmap Font"
 
 msgid "DALI_DEMO_STR_TITLE_WAVES"
 msgstr "Waves"
+
+msgid "DALI_DEMO_STR_TITLE_UNIFORM_BLOCKS"
+msgstr "Uniform Blocks"

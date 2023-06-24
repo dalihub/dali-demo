@@ -324,3 +324,6 @@ msgstr "Web View"
 
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
 msgstr "Animated Vector Images"
+
+msgid "DALI_DEMO_STR_TITLE_UNIFORM_BLOCKS"
+msgstr "Uniform Blocks"
