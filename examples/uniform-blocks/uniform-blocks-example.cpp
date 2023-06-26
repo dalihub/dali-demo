@@ -199,7 +199,7 @@ private:
   Shader mShader;
   Geometry mGeometry;
   Renderer mRenderer;
-  uint32_t mFirstActor;
+  uint32_t mFirstActor{0};
   Timer mTimer;
 };
 
