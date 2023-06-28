@@ -25,6 +25,7 @@
 #include <dali-toolkit/public-api/particle-system/particle-list.h>
 #include <dali-toolkit/public-api/particle-system/particle.h>
 #include <dali/public-api/common/vector-wrapper.h>
+#include <dali/public-api/object/weak-handle.h>
 #include <ctime>
 
 namespace Dali::ParticleEffect
@@ -76,7 +77,7 @@ public:
   void Update(ParticleList& particleList, uint32_t first, uint32_t count) override;
 
   ColorGradient mFireGradient;
-  ParticleEmitter mEmitter;
+  Dali::WeakHandle<ParticleEmitter> mEmitter;
   uint32_t mStreamBasePos{0u};
   uint32_t mAngle{0u};
 };

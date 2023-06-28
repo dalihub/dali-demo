@@ -24,6 +24,7 @@
 #include <dali-toolkit/public-api/particle-system/particle-list.h>
 #include <dali-toolkit/public-api/particle-system/particle.h>
 #include <dali/devel-api/adaptor-framework/pixel-buffer.h>
+#include <dali/public-api/object/weak-handle.h>
 #include <ctime>
 
 namespace Dali::ParticleEffect
@@ -46,7 +47,7 @@ public:
 
   void Init() override;
 
-  ParticleEmitter mEmitter;
+  WeakHandle<ParticleEmitter> mEmitter;
 
   uint32_t mImageWidth{0u};
   uint32_t mImageHeight{0u};

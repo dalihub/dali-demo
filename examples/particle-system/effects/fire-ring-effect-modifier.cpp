@@ -55,7 +55,12 @@ void FireModifier::Update(ParticleList& particleList, uint32_t first, uint32_t c
   // Retrieve the Source and get the stream
   if(!mStreamBasePos)
   {
-    mStreamBasePos = static_cast<FireSource*>(&mEmitter.GetSource().GetSourceCallback())->mStreamBasePos;
+    auto handle = mEmitter.GetHandle();
+    if(!handle)
+    {
+      return;
+    }
+    mStreamBasePos = static_cast<FireSource*>(&handle.GetSource().GetSourceCallback())->mStreamBasePos;
   }
 
   // Missing stream, return!

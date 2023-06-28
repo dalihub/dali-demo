@@ -211,6 +211,9 @@ msgstr "Reflection"
 msgid "DALI_DEMO_STR_TITLE_RENDERER_STENCIL"
 msgstr "Renderer Stencil"
 
+msgid "DALI_DEMO_STR_TITLE_SCENE_VIEW"
+msgstr "Scene View"
+
 msgid "DALI_DEMO_STR_TITLE_SCENE3D"
 msgstr "Scene3D"
 
@@ -324,3 +327,6 @@ msgstr "Web View"
 
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
 msgstr "Animated Vector Images"
+
+msgid "DALI_DEMO_STR_TITLE_UNIFORM_BLOCKS"
+msgstr "Uniform Blocks"
