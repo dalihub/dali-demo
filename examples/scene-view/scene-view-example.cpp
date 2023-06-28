@@ -28,7 +28,8 @@ using namespace Scene3D;
 
 namespace
 {
-const char* CUBEMAP_SKY_BOX_URL = DEMO_IMAGE_DIR "veste_oberhaus_cubemap.png";
+const char* CUBEMAP_SKY_BOX_URL    = DEMO_IMAGE_DIR "veste_oberhaus_cubemap.png";
+const char* CUBEMAP_IRRADIANCE_URL = DEMO_IMAGE_DIR "veste_oberhaus_irradiance.png";
 const char* CAMERA_NAME("MyCamera");
 
 const char*       MODEL_URL = DEMO_MODEL_DIR "SphereMetallic.gltf";
@@ -71,7 +72,7 @@ private:
       {Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
       {Actor::Property::SIZE, MODEL_SIZE},
     });
-    model.SetImageBasedLightSource(CUBEMAP_SKY_BOX_URL, CUBEMAP_SKY_BOX_URL);
+    model.SetImageBasedLightSource(CUBEMAP_IRRADIANCE_URL, CUBEMAP_SKY_BOX_URL);
     sceneView.Add(model);
 
     // Create a new camera and reparent as we want to rotate the camera around the origin
