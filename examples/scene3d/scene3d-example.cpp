@@ -15,23 +15,10 @@
  *
  */
 #include "scene3d-example.h"
-#include <dali-toolkit/dali-toolkit.h>
 #include <dirent.h>
 #include <cstring>
+#include <filesystem>
 #include <string_view>
-#include "dali-scene3d/public-api/loader/model-loader.h"
-#include "dali-scene3d/public-api/loader/light-parameters.h"
-#include "dali-scene3d/public-api/loader/load-result.h"
-#include "dali-scene3d/public-api/loader/shader-definition-factory.h"
-#include "dali-toolkit/public-api/controls/scrollable/item-view/default-item-layout.h"
-#include "dali-toolkit/public-api/controls/scrollable/item-view/item-factory.h"
-#include "dali-toolkit/public-api/controls/text-controls/text-label.h"
-#include "dali-toolkit/public-api/visuals/gradient-visual-properties.h"
-#include "dali/public-api/actors/layer.h"
-#include "dali/public-api/adaptor-framework/key.h"
-#include "dali/public-api/events/key-event.h"
-#include "dali/public-api/object/property-array.h"
-#include "dali/public-api/render-tasks/render-task-list.h"
 #include "scene3d-extension.h"
 
 using namespace Dali;
@@ -59,7 +46,8 @@ const std::string RESOURCE_TYPE_DIRS[]{
 using StringVector = std::vector<std::string>;
 
 StringVector ListFiles(
-  const std::string& path, bool (*predicate)(const char*) = [](const char*) { return true; })
+  const std::string& path, bool (*predicate)(const char*) = [](const char*)
+                           { return true; })
 {
   StringVector results;
 
@@ -127,7 +115,8 @@ Actor CreateErrorMessage(std::string msg)
 void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition& scene, Actor root, std::vector<BlendshapeShaderConfigurationRequest>&& requests)
 {
   std::vector<std::string> errors;
-  auto                     onError = [&errors](const std::string& msg) {
+  auto                     onError = [&errors](const std::string& msg)
+  {
     errors.push_back(msg);
   };
   if(!scene.ConfigureBlendshapeShaders(resources, root, std::move(requests), onError))
@@ -142,7 +131,8 @@ void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition
 
 Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Dali::Animation>& generatedAnimations, Animation& animation)
 {
-  ResourceBundle::PathProvider pathProvider = [](ResourceType::Value type) {
+  ResourceBundle::PathProvider pathProvider = [](ResourceType::Value type)
+  {
     return Application::GetResourcePath() + RESOURCE_TYPE_DIRS[type];
   };
 
@@ -178,13 +168,19 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Dali::Ani
   cameraParameters[0].ConfigureCamera(camera);
   SetActorCentered(camera);
 
-  ViewProjection viewProjection = cameraParameters[0].GetViewProjection();
-  Transforms     xforms{
+  std::filesystem::path modelPath(path);
+  std::string           extension = modelPath.extension();
+  std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+  Scene3D::Loader::ShaderManagerPtr shaderManager  = (extension == GLTF_EXTENSION) ? new Scene3D::Loader::ShaderManager() : nullptr;
+  ViewProjection                    viewProjection = cameraParameters[0].GetViewProjection();
+  Transforms                        xforms{
     MatrixStack{},
     viewProjection};
   NodeDefinition::CreateParams nodeParams{
     resources,
     xforms,
+    shaderManager,
     {},
     {},
     {}};
@@ -267,11 +263,11 @@ void Scene3DExample::OnInit(Application& app)
   // get scenes
   auto resPath    = Application::GetResourcePath();
   auto scenePath  = resPath + RESOURCE_TYPE_DIRS[ResourceType::Mesh];
-  auto sceneNames = ListFiles(scenePath, [](const char* name) {
+  auto sceneNames = ListFiles(scenePath, [](const char* name)
+                              {
     auto len = strlen(name);
     return (len > DLI_EXTENSION.size() && DLI_EXTENSION.compare(name + (len - DLI_EXTENSION.size())) == 0) ||
-           (len > GLTF_EXTENSION.size() && GLTF_EXTENSION.compare(name + (len - GLTF_EXTENSION.size())) == 0);
-  });
+           (len > GLTF_EXTENSION.size() && GLTF_EXTENSION.compare(name + (len - GLTF_EXTENSION.size())) == 0); });
   mSceneNames     = sceneNames;
 
   // create Dali objects

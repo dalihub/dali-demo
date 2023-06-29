@@ -17,21 +17,11 @@
  *
  */
 
+#include <dali-scene3d/dali-scene3d.h>
+#include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/navigation-view/navigation-view.h>
+#include <dali/dali.h>
 #include <memory>
-#include "dali-scene3d/public-api/loader/animation-definition.h"
-#include "dali-scene3d/public-api/loader/camera-parameters.h"
-#include "dali-scene3d/public-api/loader/node-definition.h"
-#include "dali-scene3d/public-api/loader/scene-definition.h"
-#include "dali-toolkit/devel-api/controls/navigation-view/navigation-view.h"
-#include "dali-toolkit/public-api/controls/scrollable/item-view/item-factory.h"
-#include "dali-toolkit/public-api/controls/scrollable/item-view/item-layout.h"
-#include "dali-toolkit/public-api/controls/scrollable/item-view/item-view.h"
-#include "dali/public-api/actors/camera-actor.h"
-#include "dali/public-api/adaptor-framework/application.h"
-#include "dali/public-api/common/vector-wrapper.h"
-#include "dali/public-api/events/pan-gesture-detector.h"
-#include "dali/public-api/render-tasks/render-task.h"
-#include "dali/public-api/signals/connection-tracker.h"
 
 class Scene3DExtension;
 
@@ -83,4 +73,4 @@ private: // methods
   void        OnKeyboardFocusChanged(Dali::Actor originalFocusedActor, Dali::Actor currentFocusedActor);
 };
 
-#endif //SCENE_LAUNCHER_H_
+#endif // SCENE_LAUNCHER_H_
