@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ void FrameCallback::AddId(uint32_t id)
   mActorIdContainer.PushBack(id);
 }
 
-void FrameCallback::Update(Dali::UpdateProxy& updateProxy, float /* elapsedSeconds */)
+bool FrameCallback::Update(Dali::UpdateProxy& updateProxy, float /* elapsedSeconds */)
 {
   // Go through Actor ID container and check if we've hit the sides.
   for(auto&& i : mActorIdContainer)
@@ -67,4 +67,7 @@ void FrameCallback::Update(Dali::UpdateProxy& updateProxy, float /* elapsedSecon
       }
     }
   }
+
+  // We don't need it to keep rendering.
+  return false;
 }

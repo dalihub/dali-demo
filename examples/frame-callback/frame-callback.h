@@ -2,7 +2,7 @@
 #define DEMO_FRAME_CALLBACK_H
 
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,8 +54,9 @@ private:
    * @brief Called when every frame is updated.
    * @param[in]  updateProxy     Used to set the world-matrix and sizes.
    * @param[in]  elapsedSeconds  Time elapsed time since the last frame (in seconds)
+   * @return Whether we should keep rendering.
    */
-  virtual void Update(Dali::UpdateProxy& updateProxy, float elapsedSeconds);
+  virtual bool Update(Dali::UpdateProxy& updateProxy, float elapsedSeconds);
 
 private:
   Dali::Vector<uint32_t> mActorIdContainer; ///< Container of Actor IDs.
