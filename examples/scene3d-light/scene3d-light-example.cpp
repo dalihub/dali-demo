@@ -15,11 +15,10 @@
  *
  */
 
-#include <dali-toolkit/dali-toolkit.h>
-#include <dali-scene3d/public-api/controls/scene-view/scene-view.h>
-#include <dali-scene3d/public-api/controls/model/model.h>
-#include <dali/devel-api/actors/actor-devel.h>
+#include <dali-scene3d/dali-scene3d.h>
 #include <dali-scene3d/public-api/light/light.h>
+#include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 #include <dali/integration-api/debug.h>
 
@@ -152,7 +151,7 @@ public:
         sceneView.SetImageBasedLightSource("", "", 1.0f);
         light1.Enable(true);
         light2.Enable(true);
-        light6.Enable(false);  // to reset state of lights
+        light6.Enable(false); // to reset state of lights
         light6.Enable(true);
         light3.Enable(true);
       }
@@ -194,19 +193,19 @@ public:
   }
 
 private:
-  Application& mApplication;
-  Scene3D::Light light1;
-  Scene3D::Light light2;
-  Scene3D::Light light3;
-  Scene3D::Light light4;
-  Scene3D::Light light5;
-  Scene3D::Light light6;
+  Application&       mApplication;
+  Scene3D::Light     light1;
+  Scene3D::Light     light2;
+  Scene3D::Light     light3;
+  Scene3D::Light     light4;
+  Scene3D::Light     light5;
+  Scene3D::Light     light6;
   Scene3D::SceneView sceneView;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application          application = Application::New(&argc, &argv);
+  Application            application = Application::New(&argc, &argv);
   Scene3dLightController test(application);
   application.MainLoop();
   return 0;
