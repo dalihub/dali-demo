@@ -67,6 +67,9 @@
 	<ui-application appid="canvas-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/canvas-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Canvas View</label>
 	</ui-application>
+	<ui-application appid="chipmunk-physics.example" exec="/usr/apps/com.samsung.dali-demo/bin/chipmunk-physics.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Chipmunk Physics</label>
+	</ui-application>
 	<ui-application appid="clipping-draw-order.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping-draw-order.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping Draw Order</label>
 	</ui-application>
