@@ -340,10 +340,10 @@ private:
 
   PhysicsImpl   mPhysicsImpl;
   Actor         mPhysicsRoot;
-  cpBody*       mMouseBody;
-  cpBody*       mPickedBody;
-  int           mPickedSavedState;
-  cpConstraint* mPickedConstraint;
+  cpBody*       mMouseBody{nullptr};
+  cpBody*       mPickedBody{nullptr};
+  cpConstraint* mPickedConstraint{nullptr};
+  int           mPickedSavedState = -1; /// 0 : Active, 1 : Sleeping
 
   bool mCtrlDown{false};
   bool mAltDown{false};

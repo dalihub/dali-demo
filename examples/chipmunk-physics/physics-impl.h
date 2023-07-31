@@ -158,7 +158,7 @@ public:
   bool mPhysicsIntegrateState{true};
   bool mPhysicsDebugState{true};
 
-  cpSpace* mSpace;
+  cpSpace* mSpace{nullptr};
   cpShape* mLeftBound{nullptr};
   cpShape* mRightBound{nullptr};
   cpShape* mTopBound{nullptr};
@@ -169,7 +169,7 @@ public:
 
   Dali::Actor mPhysicsRoot;
   Dali::Vector2 mWorldOffset;
-  FrameCallback* mFrameCallback;
+  FrameCallback* mFrameCallback{nullptr};
 };
 
 #endif // DALI_PHYSICS_DEMO_PHYSICS_IMPL_H
