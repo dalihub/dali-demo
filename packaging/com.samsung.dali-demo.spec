@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    2.2.36
+Version:    2.2.37
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -23,6 +23,7 @@ BuildRequires:  pkgconfig(dali2-core)
 BuildRequires:  pkgconfig(dali2-adaptor)
 BuildRequires:  pkgconfig(dali2-toolkit)
 BuildRequires:  pkgconfig(dali2-scene3d)
+BuildRequires:  pkgconfig(dali2-physics-2d)
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(gles20)
 BuildRequires:  pkgconfig(glesv2)

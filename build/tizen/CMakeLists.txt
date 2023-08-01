@@ -243,6 +243,21 @@ IF( ENABLE_PKG_CONFIGURE )
     SET( ENABLE_SCENE3D "ON" )
   ENDIF()
 
+  pkg_check_modules(DALI_PHYSICS_2D dali2-physics-2d)
+  IF( DALI_PHYSICS_2D_FOUND )
+    FOREACH(flag ${DALI_PHYSICS_2D_CFLAGS})
+      SET(REQUIRED_CFLAGS "${REQUIRED_CFLAGS} ${flag}")
+    ENDFOREACH(flag)
+
+    SET( REQUIRED_CFLAGS "${REQUIRED_CFLAGS} -DDALI_PHYSICS_2D_AVAILABLE" )
+
+    FOREACH(flag ${DALI_PHYSICS_2D_LDFLAGS})
+      SET(REQUIRED_PKGS_LDFLAGS "${REQUIRED_PKGS_LDFLAGS} ${flag}")
+    ENDFOREACH(flag)
+
+    SET( ENABLE_PHYSICS_2D "ON" )
+  ENDIF()
+
   # if build as tizen platform, use capi-appfw-app-control
   IF( TIZEN )
     pkg_check_modules(CAPI_APPFW_APP_CONTROL capi-appfw-app-control)
@@ -291,6 +306,8 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
   FIND_PACKAGE( dali2-toolkit REQUIRED )
 
   FIND_PACKAGE( dali2-scene3d )
+
+  FIND_PACKAGE( chipmunk )
 
   # Set up the include dir
   SET( INCLUDE_DIR $ENV{includedir} )
@@ -346,6 +363,15 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     )
     SET( ENABLE_SCENE3D "ON" )
   ENDIF()
+
+  IF (chipmunk_FOUND)
+    SET(REQUIRED_LIBS
+      ${REQUIRED_LIBS}
+      -lchipmunk
+    )
+    SET( ENABLE_PHYSICS_2D "ON" )
+  ENDIF()
+
 ELSEIF( UNIX )
   SET( REQUIRED_LIBS
     ${REQUIRED_PKGS_LDFLAGS}
@@ -372,6 +398,10 @@ ENDIF()
 
 IF( ENABLE_SCENE3D )
   SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -DDALI_SCENE3D_AVAILABLE")
+ENDIF()
+
+IF( ENABLE_PHYSICS_2D )
+  SET(DALI_DEMO_CFLAGS "${DALI_DEMO_CFLAGS} -DDALI_PHYSICS_2D_AVAILABLE")
 ENDIF()
 
 IF( UNIX )
@@ -491,3 +521,4 @@ MESSAGE( " Folder        DEMO_LANG : [" ${DEMO_LANG} "]" )
 MESSAGE( " Current Build Platform  : [" ${CURRENT_BUILD_PLATFORM} "]" )
 MESSAGE( " Build example name      : [" ${CURRENT_BUILD_EXAMPLE_NAME} "]" )
 MESSAGE( " Scene3D Enabled         : [" ${ENABLE_SCENE3D} "]" )
+MESSAGE( " Physics 2D Enabled      : [" ${ENABLE_PHYSICS_2D} "]" )

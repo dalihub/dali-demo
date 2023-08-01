@@ -46,6 +46,9 @@ msgstr "Card Active"
 msgid "DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS"
 msgstr "Compressed Texture Formats"
 
+msgid "DALI_DEMO_STR_TITLE_CHIPMUNK_PHYSICS"
+msgstr "Chipmunk Physics"
+
 msgid "DALI_DEMO_STR_TITLE_CLIPPING"
 msgstr "Clipping"
 
