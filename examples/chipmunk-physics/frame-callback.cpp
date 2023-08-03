@@ -15,13 +15,18 @@
  */
 
 #include "frame-callback.h"
-#include "physics-impl.h"
-#include <dali/public-api/math/vector3.h>
-#include <dali/devel-api/update/update-proxy.h>
 #include <dali/devel-api/threading/mutex.h>
+#include <dali/devel-api/update/update-proxy.h>
+#include <dali/integration-api/debug.h>
+#include <dali/public-api/math/vector3.h>
+#include "physics-impl.h"
 
-using Dali::Vector3;
 using Dali::Quaternion;
+using Dali::Vector3;
+
+#if defined(DEBUG_ENABLED)
+extern Debug::Filter* gPhysicsDemo;
+#endif
 
 FrameCallback::FrameCallback(PhysicsImpl& physicsImpl)
 : mPhysicsImpl(physicsImpl)
@@ -30,14 +35,22 @@ FrameCallback::FrameCallback(PhysicsImpl& physicsImpl)
 
 bool FrameCallback::Update(Dali::UpdateProxy& updateProxy, float elapsedSeconds)
 {
+  static int numCalls = 0;
+
+  numCalls++;
+  if(numCalls % 30 == 0)
+  {
+    DALI_LOG_INFO(gPhysicsDemo, Debug::Concise, "Physics frame update\n");
+  }
+
   Dali::Mutex::ScopedLock lock(mPhysicsImpl.mMutex);
-  static float frameTime=0;
-  frameTime+=elapsedSeconds;
+  static float            frameTime = 0;
+  frameTime += elapsedSeconds;
   do
   {
     mPhysicsImpl.Integrate(mPhysicsTimeStep);
-    frameTime-=mPhysicsTimeStep;
-  } while (frameTime>0);
+    frameTime -= mPhysicsTimeStep;
+  } while(frameTime > 0);
 
   for(auto&& actor : mPhysicsImpl.mPhysicsActors)
   {
