@@ -21,6 +21,7 @@
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/devel-api/adaptor-framework/key-devel.h>
 #include <dali/devel-api/events/hit-test-algorithm.h>
+#include <dali/integration-api/debug.h>
 
 #include <iostream>
 #include <string>
@@ -31,6 +32,10 @@
 #include "physics-impl.h"
 
 using namespace Dali;
+
+#if defined(DEBUG_ENABLED)
+Debug::Filter* gPhysicsDemo = Debug::Filter::New(Debug::Concise, false, "LOG_PHYSICS_EXAMPLE");
+#endif
 
 namespace KeyModifier
 {
@@ -84,8 +89,14 @@ public:
 
     mWindow.Add(mPhysicsRoot);
 
-    CreateBall();
-    CreateBrickPyramid(windowSize);
+    // Ball area = 2*PI*26^2 ~= 6.28*26*26 ~= 5400
+    // Fill quarter of the screen...
+    int numBalls = 10 + windowSize.GetWidth() * windowSize.GetHeight() / 20000;
+
+    for(int i = 0; i < numBalls; ++i)
+    {
+      CreateBall();
+    }
 
     // For funky mouse drag
     mMouseBody = mPhysicsImpl.AddMouseBody();
@@ -98,53 +109,17 @@ public:
     const float BALL_ELASTICITY = 0.5f;
     const float BALL_FRICTION   = 0.5f;
 
-    Property::Value v{std::string{SHADER_RENDERING_TEXTURED_SHAPE_VERT}};
-    Property::Value f{std::string{SHADER_RENDERING_TEXTURED_SHAPE_FRAG}};
+    auto ball = Toolkit::ImageView::New(BALL_IMAGE);
 
-    auto image = Property::Map{{Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE},
-                               {Toolkit::ImageVisual::Property::URL, BALL_IMAGE},
-                               {Toolkit::Visual::Property::SHADER, {{Toolkit::Visual::Shader::Property::FRAGMENT_SHADER, f}}}};
-
-    auto ball                                 = Toolkit::ImageView::New();
-    ball[Toolkit::ImageView::Property::IMAGE] = image;
-    mPhysicsImpl.AddBall(ball, BALL_MASS, BALL_RADIUS, BALL_ELASTICITY, BALL_FRICTION);
+    auto&              physicsBall = mPhysicsImpl.AddBall(ball, BALL_MASS, BALL_RADIUS, BALL_ELASTICITY, BALL_FRICTION);
+    Window::WindowSize windowSize  = mWindow.GetSize();
+    const float        s           = BALL_RADIUS;
+    const float        fw          = windowSize.GetWidth() - BALL_RADIUS;
+    const float        fh          = windowSize.GetHeight() - BALL_RADIUS;
+    physicsBall.SetPhysicsPosition(Vector3(Random::Range(s, fw), Random::Range(s, fh), 0.0f));
+    physicsBall.SetPhysicsVelocity(Vector3(Random::Range(-100.0, 100.0), Random::Range(-100.0, 100.0), 0.0f));
   }
 
-  void CreateBrickPyramid(Dali::Window::WindowSize windowSize)
-  {
-    const float BRICK_MASS       = 30.0f;
-    const float BRICK_ELASTICITY = 0.0f;
-    const float BRICK_FRICTION   = 0.9f;
-    const int   BRICK_WIDTH      = 128;
-    const int   BRICK_HEIGHT     = 64;
-    const int   BRICK_GAP        = 8;
-
-    Property::Value v{std::string{SHADER_RENDERING_TEXTURED_SHAPE_VERT}};
-    Property::Value f{std::string{SHADER_RENDERING_TEXTURED_SHAPE_FRAG}};
-
-    int uriIndex     = 0;
-    int numberOfRows = windowSize.GetWidth() / (BRICK_WIDTH + BRICK_GAP) - 2;
-    int oY           = windowSize.GetHeight() - (1 + numberOfRows) * BRICK_HEIGHT;
-    for(int i = 0; i < numberOfRows; ++i)
-    {
-      // Row start: i+1 is brick number. i is gap#
-      int w  = (i + 1) * BRICK_WIDTH + i * BRICK_GAP;
-      int oX = (windowSize.GetWidth() - w) / 2;
-      for(int j = 0; j < i + 1; ++j)
-      {
-        auto image = Property::Map{{Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE},
-                                   {Toolkit::ImageVisual::Property::URL, BRICK_URIS[uriIndex]},
-                                   {Toolkit::Visual::Property::SHADER, {{Toolkit::Visual::Shader::Property::FRAGMENT_SHADER, f}}}};
-
-        auto brick                                 = Toolkit::ImageView::New();
-        brick[Toolkit::ImageView::Property::IMAGE] = image;
-        auto& physicsActor                         = mPhysicsImpl.AddBrick(brick, BRICK_MASS, BRICK_ELASTICITY, BRICK_FRICTION, Vector3(BRICK_WIDTH, BRICK_HEIGHT, BRICK_HEIGHT));
-        physicsActor.SetPhysicsPosition(Vector3(oX + j * (BRICK_WIDTH + BRICK_GAP), oY + i * BRICK_HEIGHT, 0.0f));
-        uriIndex += 1;
-        uriIndex %= 4;
-      }
-    }
-  }
   void OnTerminate(Application& application)
   {
     UnparentAndReset(mPhysicsRoot);
