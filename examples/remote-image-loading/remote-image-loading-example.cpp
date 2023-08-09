@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,7 @@ public:
 
     mImageView5 = Toolkit::ImageView::New("http://static.midomi.com/h/images/w/weather_sunny.png");
     mImageView5.SetProperty(Dali::Actor::Property::NAME, "mImageView5");
-    mImageView4.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+    mImageView5.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mImageView5.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
     mImageView5.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
     mImageView5.SetProperty(Actor::Property::POSITION, Vector2(800, 100));

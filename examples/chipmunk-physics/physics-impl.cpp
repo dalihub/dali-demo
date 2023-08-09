@@ -19,26 +19,26 @@
 #include "physics-actor.h"
 
 #include <devel-api/common/stage.h>
+#include <iostream>
 #include <map>
 #include <utility>
-#include <iostream>
 
-using Dali::Layer;
 using Dali::Actor;
-using Dali::Window;
+using Dali::Layer;
+using Dali::Stage;
 using Dali::Vector2;
 using Dali::Vector3;
-using Dali::Stage;
+using Dali::Window;
 using namespace Dali::DevelStage;
 
-#define GRABBABLE_MASK_BIT (1u<<31)
-cpShapeFilter GRAB_FILTER = {CP_NO_GROUP, GRABBABLE_MASK_BIT, GRABBABLE_MASK_BIT};
+#define GRABBABLE_MASK_BIT (1u << 31)
+cpShapeFilter GRAB_FILTER          = {CP_NO_GROUP, GRABBABLE_MASK_BIT, GRABBABLE_MASK_BIT};
 cpShapeFilter NOT_GRABBABLE_FILTER = {CP_NO_GROUP, ~GRABBABLE_MASK_BIT, ~GRABBABLE_MASK_BIT};
 
 Actor PhysicsImpl::Initialize(Window window)
 {
   mWindow = window;
-  mSpace = cpSpaceNew();
+  mSpace  = cpSpaceNew();
   cpSpaceSetIterations(mSpace, 30);
   cpSpaceSetSleepTimeThreshold(mSpace, 0.5f);
   cpSpaceSetGravity(mSpace, cpv(0, -200));
@@ -47,15 +47,14 @@ Actor PhysicsImpl::Initialize(Window window)
   CreateWorldBounds(windowSize);
 
   // Create an actor that can handle mouse events.
-  mPhysicsRoot = Layer::New();
-  mPhysicsRoot[Actor::Property::SIZE] = Vector2(windowSize.GetWidth(), windowSize.GetHeight());
-  mPhysicsRoot[Actor::Property::ANCHOR_POINT] = Dali::AnchorPoint::CENTER;
+  mPhysicsRoot                                 = Layer::New();
+  mPhysicsRoot[Actor::Property::SIZE]          = Vector2(windowSize.GetWidth(), windowSize.GetHeight());
+  mPhysicsRoot[Actor::Property::ANCHOR_POINT]  = Dali::AnchorPoint::CENTER;
   mPhysicsRoot[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::CENTER;
 
   mFrameCallback = new FrameCallback(*this);
   AddFrameCallback(Stage::GetCurrent(), *mFrameCallback, window.GetRootLayer());
   Stage::GetCurrent().KeepRendering(30);
-
 
   return mPhysicsRoot;
 }
@@ -73,10 +72,10 @@ void PhysicsImpl::CreateWorldBounds(Window::WindowSize size)
   // But, can't use actors in update, so cache transform.
   SetTransform(Vector2(size.GetWidth(), size.GetHeight()));
 
-  int xBound=size.GetWidth()/2;
-  int yBound=size.GetHeight()/2;
+  int xBound = size.GetWidth() / 2;
+  int yBound = size.GetHeight() / 2;
 
-  cpBody *staticBody = cpSpaceGetStaticBody(mSpace);
+  cpBody* staticBody = cpSpaceGetStaticBody(mSpace);
 
   if(mLeftBound)
   {
@@ -89,10 +88,10 @@ void PhysicsImpl::CreateWorldBounds(Window::WindowSize size)
     cpShapeFree(mTopBound);
     cpShapeFree(mBottomBound);
   }
-  mLeftBound   = AddBound(staticBody, cpv(-xBound, -yBound), cpv(-xBound,  yBound));
-  mRightBound  = AddBound(staticBody, cpv( xBound, -yBound), cpv( xBound,  yBound));
-  mTopBound    = AddBound(staticBody, cpv(-xBound, -yBound), cpv( xBound, -yBound));
-  mBottomBound = AddBound(staticBody, cpv(-xBound,  yBound), cpv( xBound,  yBound));
+  mLeftBound   = AddBound(staticBody, cpv(-xBound, -yBound), cpv(-xBound, yBound));
+  mRightBound  = AddBound(staticBody, cpv(xBound, -yBound), cpv(xBound, yBound));
+  mTopBound    = AddBound(staticBody, cpv(-xBound, -yBound), cpv(xBound, -yBound));
+  mBottomBound = AddBound(staticBody, cpv(-xBound, yBound), cpv(xBound, yBound));
 }
 
 void PhysicsImpl::SetTransform(Vector2 worldSize)
@@ -104,7 +103,7 @@ void PhysicsImpl::SetTransform(Vector2 worldSize)
 
 cpShape* PhysicsImpl::AddBound(cpBody* staticBody, cpVect start, cpVect end)
 {
-  cpShape* shape = cpSpaceAddShape(mSpace, cpSegmentShapeNew(staticBody,start, end,0.0f));
+  cpShape* shape = cpSpaceAddShape(mSpace, cpSegmentShapeNew(staticBody, start, end, 0.0f));
   cpShapeSetElasticity(shape, 1.0f);
   cpShapeSetFriction(shape, 1.0f);
   cpShapeSetFilter(shape, NOT_GRABBABLE_FILTER);
@@ -114,7 +113,7 @@ cpShape* PhysicsImpl::AddBound(cpBody* staticBody, cpVect start, cpVect end)
 PhysicsActor& PhysicsImpl::AddBall(::Actor actor, float mass, float radius, float elasticity, float friction)
 {
   Dali::Mutex::ScopedLock lock(mMutex);
-  cpBody* body = cpSpaceAddBody(mSpace, cpBodyNew(mass, cpMomentForCircle(mass, 0.0f, radius, cpvzero)));
+  cpBody*                 body = cpSpaceAddBody(mSpace, cpBodyNew(mass, cpMomentForCircle(mass, 0.0f, radius, cpvzero)));
   cpBodySetPosition(body, cpv(0, 0));
   cpBodySetVelocity(body, cpv(0, 0));
 
@@ -122,11 +121,11 @@ PhysicsActor& PhysicsImpl::AddBall(::Actor actor, float mass, float radius, floa
   cpShapeSetElasticity(shape, elasticity);
   cpShapeSetFriction(shape, friction);
 
-  int id = actor[Actor::Property::ID];
+  int                   id    = actor[Actor::Property::ID];
   Dali::Property::Index index = actor.RegisterProperty("uBrightness", 0.0f);
   mPhysicsActors.insert(std::make_pair(id, PhysicsActor{actor, body, this, index}));
   actor[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::TOP_LEFT;
-  actor[Actor::Property::ANCHOR_POINT] = Dali::AnchorPoint::CENTER;
+  actor[Actor::Property::ANCHOR_POINT]  = Dali::AnchorPoint::CENTER;
   mPhysicsRoot.Add(actor);
   return mPhysicsActors.at(id);
 }
@@ -134,7 +133,7 @@ PhysicsActor& PhysicsImpl::AddBall(::Actor actor, float mass, float radius, floa
 PhysicsActor& PhysicsImpl::AddBrick(Dali::Actor actor, float mass, float elasticity, float friction, Vector3 size)
 {
   Dali::Mutex::ScopedLock lock(mMutex);
-  cpBody* body = cpSpaceAddBody(mSpace, cpBodyNew(mass, cpMomentForBox(mass, size.width, size.height)));
+  cpBody*                 body = cpSpaceAddBody(mSpace, cpBodyNew(mass, cpMomentForBox(mass, size.width, size.height)));
   cpBodySetPosition(body, cpv(0, 0));
   cpBodySetVelocity(body, cpv(0, 0));
 
@@ -142,11 +141,11 @@ PhysicsActor& PhysicsImpl::AddBrick(Dali::Actor actor, float mass, float elastic
   cpShapeSetFriction(shape, friction);
   cpShapeSetElasticity(shape, elasticity);
 
-  int id = actor[Actor::Property::ID];
+  int                   id    = actor[Actor::Property::ID];
   Dali::Property::Index index = actor.RegisterProperty("uBrightness", 0.0f);
   mPhysicsActors.insert(std::make_pair(id, PhysicsActor{actor, body, this, index}));
   actor[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::TOP_LEFT;
-  actor[Actor::Property::ANCHOR_POINT] = Dali::AnchorPoint::CENTER;
+  actor[Actor::Property::ANCHOR_POINT]  = Dali::AnchorPoint::CENTER;
   mPhysicsRoot.Add(actor);
   return mPhysicsActors.at(id);
 }
@@ -154,7 +153,7 @@ PhysicsActor& PhysicsImpl::AddBrick(Dali::Actor actor, float mass, float elastic
 cpBody* PhysicsImpl::AddMouseBody()
 {
   Dali::Mutex::ScopedLock lock(mMutex);
-  auto kinematicBody = cpBodyNewKinematic(); // Mouse actor is a kinematic body that is not integrated
+  auto                    kinematicBody = cpBodyNewKinematic(); // Mouse actor is a kinematic body that is not integrated
   return kinematicBody;
 }
 
@@ -171,7 +170,7 @@ void PhysicsImpl::HighlightBody(cpBody* body, bool highlight)
     Actor actor = mPhysicsRoot.FindChildById(physicsActor->GetId());
     if(actor)
     {
-      actor[physicsActor->GetBrightnessIndex()] = highlight?1.0f:0.0f;
+      actor[physicsActor->GetBrightnessIndex()] = highlight ? 1.0f : 0.0f;
     }
   }
 }
@@ -181,13 +180,13 @@ Vector3 PhysicsImpl::TranslateToPhysicsSpace(Vector3 vector)
 {
   // root actor origin is top left, DALi Y is inverted.
   // Physics origin is center. Y: 0->1 => 0.5=>-0.5
-  return Vector3(vector.x-mWorldOffset.x, mWorldOffset.y-vector.y, vector.z);
+  return Vector3(vector.x - mWorldOffset.x, mWorldOffset.y - vector.y, vector.z);
 }
 
 // Convert from physics space to root actor local space
 Vector3 PhysicsImpl::TranslateFromPhysicsSpace(Vector3 vector)
 {
-  return Vector3(vector.x+mWorldOffset.x, mWorldOffset.y-vector.y, vector.z);
+  return Vector3(vector.x + mWorldOffset.x, mWorldOffset.y - vector.y, vector.z);
 }
 
 // Convert a vector from dali space to physics space
@@ -210,39 +209,38 @@ void PhysicsImpl::Integrate(float timestep)
   {
     cpSpaceStep(mSpace, timestep);
   }
-//  if(mDynamicsWorld->getDebugDrawer() && mPhysicsDebugState)
-//  {
-//    mDynamicsWorld->debugDrawWorld();
-//  }
+  //  if(mDynamicsWorld->getDebugDrawer() && mPhysicsDebugState)
+  //  {
+  //    mDynamicsWorld->debugDrawWorld();
+  //  }
 }
 
 cpBody* PhysicsImpl::HitTest(Vector2 screenCoords, Vector3 origin, Vector3 direction, Vector3& localPivot, float& distanceFromCamera)
 {
-  Vector3 spacePosition = TranslateToPhysicsSpace(Vector3{screenCoords});
-  cpVect mousePosition = cpv(spacePosition.x, spacePosition.y);
-  cpFloat radius = 5.0f;
-  cpPointQueryInfo info = {0};
-  cpShape *shape = cpSpacePointQueryNearest(mSpace, mousePosition, radius, GRAB_FILTER, &info);
+  Vector3          spacePosition = TranslateToPhysicsSpace(Vector3{screenCoords});
+  cpVect           mousePosition = cpv(spacePosition.x, spacePosition.y);
+  cpFloat          radius        = 5.0f;
+  cpPointQueryInfo info          = {0};
+  cpShape*         shape         = cpSpacePointQueryNearest(mSpace, mousePosition, radius, GRAB_FILTER, &info);
 
-  cpBody *body{nullptr};
+  cpBody* body{nullptr};
 
   if(shape && cpBodyGetMass(cpShapeGetBody(shape)) < INFINITY)
   {
     // Use the closest point on the surface if the click is outside the shape.
     cpVect nearest = (info.distance > 0.0f ? info.point : mousePosition);
-    body = cpShapeGetBody(shape);
-    cpVect local = cpBodyWorldToLocal(body, nearest);
-    localPivot.x = local.x;
-    localPivot.y = local.y;
-    localPivot.z = 0.0;
+    body           = cpShapeGetBody(shape);
+    cpVect local   = cpBodyWorldToLocal(body, nearest);
+    localPivot.x   = local.x;
+    localPivot.y   = local.y;
+    localPivot.z   = 0.0;
   }
   return body;
 }
 
-
 cpConstraint* PhysicsImpl::AddPivotJoint(cpBody* body1, cpBody* body2, Vector3 localPivot)
 {
-  cpVect pivot{localPivot.x, localPivot.y};
+  cpVect        pivot{localPivot.x, localPivot.y};
   cpConstraint* joint = cpPivotJointNew2(body2, body1, cpvzero, pivot);
   cpConstraintSetMaxForce(joint, 50000.0f); // Magic numbers for mouse feedback.
   cpConstraintSetErrorBias(joint, cpfpow(1.0f - 0.15f, 60.0f));
@@ -253,7 +251,7 @@ cpConstraint* PhysicsImpl::AddPivotJoint(cpBody* body1, cpBody* body2, Vector3 l
 void PhysicsImpl::MoveMouseBody(cpBody* mouseBody, Vector3 position)
 {
   cpVect cpPosition = cpv(position.x, position.y);
-  cpVect newPoint = cpvlerp(cpBodyGetPosition(mouseBody), cpPosition, 0.25f);
+  cpVect newPoint   = cpvlerp(cpBodyGetPosition(mouseBody), cpPosition, 0.25f);
   cpBodySetVelocity(mouseBody, cpvmult(cpvsub(newPoint, cpBodyGetPosition(mouseBody)), 60.0f));
   // Normally, kinematic body's position would be calculated by engine.
   // For mouse, though, we want to set it.
