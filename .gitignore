@@ -60,6 +60,10 @@ simple-image-wall.js
 /com.samsung.dali-demo-debugsource.manifest
 /build/tizen/*.vcxproj
 /build/tizen/*.vcxproj.filters
+/build/tizen/.ninja_deps
+/build/tizen/.ninja_log
+/build/tizen/build.ninja
+/build/tizen/rules.ninja
 /build/tizen/builder/Debug/*
 /build/tizen/builder/Release/*
 /build/tizen/builder/*.dir

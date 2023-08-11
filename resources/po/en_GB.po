@@ -28,6 +28,9 @@ msgstr "Bloom"
 msgid "DALI_DEMO_STR_TITLE_BUBBLES"
 msgstr "Bubbles"
 
+msgid "DALI_DEMO_STR_TITLE_BULLET_PHYSICS"
+msgstr "Bullet Physics"
+
 msgid "DALI_DEMO_STR_TITLE_BUTTONS"
 msgstr "Buttons"
 

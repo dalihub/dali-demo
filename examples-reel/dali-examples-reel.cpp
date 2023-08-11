@@ -46,6 +46,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("bloom-view.example", DALI_DEMO_STR_TITLE_BLOOM_VIEW));
   demo.AddExample(Example("builder.example", DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI));
   demo.AddExample(Example("buttons.example", DALI_DEMO_STR_TITLE_BUTTONS));
+  demo.AddExample(Example("bullet-physics.example", DALI_DEMO_STR_TITLE_BULLET_PHYSICS));
   demo.AddExample(Example("canvas-view.example", DALI_DEMO_STR_TITLE_CANVAS_VIEW));
   demo.AddExample(Example("chipmunk-physics.example", DALI_DEMO_STR_TITLE_CHIPMUNK_PHYSICS));
   demo.AddExample(Example("clipping.example", DALI_DEMO_STR_TITLE_CLIPPING));
