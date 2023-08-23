@@ -327,6 +327,7 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
 
   FIND_PACKAGE( chipmunk )
   FIND_PACKAGE( bullet3 )
+  FIND_PACKAGE( dali2-physics-2d )
   FIND_PACKAGE( dali2-physics-3d )
 
   # Set up the include dir
@@ -392,6 +393,10 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
   IF (bullet3_FOUND)
     SET(DALI_PHYSICS_3D_LDFLAGS ${OPTIONAL_PHYSICS_3D_LDFLAGS} -lbullet3)
     SET(ENABLE_PHYSICS_3D "ON" )
+  ENDIF()
+
+  IF (dali2-physics-2d_FOUND)
+    SET(DALI_PHYSICS_2D_LDFLAGS ${DALI_PHYSICS_2D_LDFLAGS} dali2-physics-2d::dali2-physics-2d)
   ENDIF()
 
   IF (dali2-physics-3d_FOUND)

@@ -15,7 +15,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/dali.h>
+#include <dali-physics/dali-physics.h>
 
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
@@ -25,17 +25,17 @@
 
 #include <iostream>
 #include <string>
-
-#include "generated/rendering-textured-shape-frag.h"
-#include "generated/rendering-textured-shape-vert.h"
-#include "physics-actor.h"
-#include "physics-impl.h"
+#include <chipmunk/chipmunk.h>
 
 using namespace Dali;
+using namespace Dali::Toolkit::Physics;
 
 #if defined(DEBUG_ENABLED)
 Debug::Filter* gPhysicsDemo = Debug::Filter::New(Debug::Concise, false, "LOG_PHYSICS_EXAMPLE");
 #endif
+
+#define GRABBABLE_MASK_BIT (1u << 31)
+cpShapeFilter NOT_GRABBABLE_FILTER = {CP_NO_GROUP, ~GRABBABLE_MASK_BIT, ~GRABBABLE_MASK_BIT};
 
 namespace KeyModifier
 {
@@ -84,25 +84,39 @@ public:
     mWindow.SetBackgroundColor(Color::DARK_SLATE_GRAY);
     Window::WindowSize windowSize = mWindow.GetSize();
 
-    mPhysicsRoot = mPhysicsImpl.Initialize(mWindow);
+    // Map Physics space (origin bottom left, +ve Y up)
+    // to DALi space (origin center, +ve Y down)
+    mPhysicsTransform.SetIdentityAndScale(Vector3(1.0f, -1.0f, 1.0f));
+    mPhysicsTransform.SetTranslation(Vector3(windowSize.GetWidth() * 0.5f,
+                                             windowSize.GetHeight() * 0.5f,
+                                             0.0f));
+
+    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, windowSize);
+    mPhysicsRoot = mPhysicsAdaptor.GetRootActor();
     mPhysicsRoot.TouchedSignal().Connect(this, &PhysicsDemoController::OnTouched);
 
     mWindow.Add(mPhysicsRoot);
 
+    auto scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
+    cpSpace* space = scopedAccessor->GetNative().Get<cpSpace*>();
+
+    CreateBounds(space, windowSize);
     // Ball area = 2*PI*26^2 ~= 6.28*26*26 ~= 5400
     // Fill quarter of the screen...
     int numBalls = 10 + windowSize.GetWidth() * windowSize.GetHeight() / 20000;
-
     for(int i = 0; i < numBalls; ++i)
     {
-      CreateBall();
+      CreateBall(space);
     }
 
     // For funky mouse drag
-    mMouseBody = mPhysicsImpl.AddMouseBody();
+    mMouseBody = cpBodyNewKinematic(); // Mouse actor is a kinematic body that is not integrated
+
+    // Process any async queued methods next frame
+    mPhysicsAdaptor.CreateSyncPoint();
   }
 
-  void CreateBall()
+  void CreateBall(cpSpace* space)
   {
     const float BALL_MASS       = 10.0f;
     const float BALL_RADIUS     = 26.0f;
@@ -111,13 +125,81 @@ public:
 
     auto ball = Toolkit::ImageView::New(BALL_IMAGE);
 
-    auto&              physicsBall = mPhysicsImpl.AddBall(ball, BALL_MASS, BALL_RADIUS, BALL_ELASTICITY, BALL_FRICTION);
+    cpBody* body = cpSpaceAddBody(space, cpBodyNew(BALL_MASS, cpMomentForCircle(BALL_MASS, 0.0f, BALL_RADIUS, cpvzero)));
+
+    cpShape* shape = cpSpaceAddShape(space, cpCircleShapeNew(body, BALL_RADIUS, cpvzero));
+    cpShapeSetElasticity(shape, BALL_ELASTICITY);
+    cpShapeSetFriction(shape, BALL_FRICTION);
+
+    ball.RegisterProperty("uBrightness", 0.0f);
+
+    PhysicsActor physicsBall = mPhysicsAdaptor.AddActorBody(ball, body);
+
     Window::WindowSize windowSize  = mWindow.GetSize();
-    const float        s           = BALL_RADIUS;
-    const float        fw          = windowSize.GetWidth() - BALL_RADIUS;
-    const float        fh          = windowSize.GetHeight() - BALL_RADIUS;
-    physicsBall.SetPhysicsPosition(Vector3(Random::Range(s, fw), Random::Range(s, fh), 0.0f));
-    physicsBall.SetPhysicsVelocity(Vector3(Random::Range(-100.0, 100.0), Random::Range(-100.0, 100.0), 0.0f));
+
+    const float        fw          = 0.5f*(windowSize.GetWidth() - BALL_RADIUS);
+    const float        fh          = 0.5f*(windowSize.GetHeight() - BALL_RADIUS);
+
+    // Example of setting physics property on update thread
+    physicsBall.AsyncSetPhysicsPosition(Vector3(Random::Range(-fw, fw), Random::Range(-fh, fh), 0.0f));
+
+    // Example of queuing a chipmunk method to run on the update thread
+    mPhysicsAdaptor.Queue([body](){
+      cpBodySetVelocity(body, cpv(Random::Range(-100.0, 100.0), Random::Range(-100.0, 100.0)));
+    });
+  }
+
+  void CreateBounds(cpSpace* space, Window::WindowSize size)
+  {
+    // We're working in physics space here - coords are: origin: bottom left, +ve Y: up
+    int xBound = size.GetWidth();
+    int yBound = size.GetHeight();
+
+    cpBody* staticBody = cpSpaceGetStaticBody(space);
+
+    if(mLeftBound)
+    {
+      cpSpaceRemoveShape(space, mLeftBound);
+      cpSpaceRemoveShape(space, mRightBound);
+      cpSpaceRemoveShape(space, mTopBound);
+      cpSpaceRemoveShape(space, mBottomBound);
+      cpShapeFree(mLeftBound);
+      cpShapeFree(mRightBound);
+      cpShapeFree(mTopBound);
+      cpShapeFree(mBottomBound);
+    }
+    mLeftBound   = AddBound(space, staticBody, cpv(0, 0), cpv(0, yBound));
+    mRightBound  = AddBound(space, staticBody, cpv(xBound, 0), cpv(xBound, yBound));
+    mTopBound    = AddBound(space, staticBody, cpv(0, 0), cpv(xBound, 0));
+    mBottomBound = AddBound(space, staticBody, cpv(0, yBound), cpv(xBound, yBound));
+  }
+
+  cpShape* AddBound(cpSpace* space, cpBody* staticBody, cpVect start, cpVect end)
+  {
+    cpShape* shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, start, end, 0.0f));
+    cpShapeSetElasticity(shape, 1.0f);
+    cpShapeSetFriction(shape, 1.0f);
+
+    cpShapeSetFilter(shape, NOT_GRABBABLE_FILTER);
+    return shape;
+  }
+
+  void MoveMouseBody(cpBody* mouseBody, Vector3 position)
+  {
+    cpVect cpPosition = cpv(position.x, position.y);
+    cpVect newPoint   = cpvlerp(cpBodyGetPosition(mouseBody), cpPosition, 0.25f);
+    cpBodySetVelocity(mouseBody, cpvmult(cpvsub(newPoint, cpBodyGetPosition(mouseBody)), 60.0f));
+    cpBodySetPosition(mouseBody, newPoint);
+  }
+
+  cpConstraint* AddPivotJoint(cpSpace* space, cpBody* body1, cpBody* body2, Vector3 localPivot)
+  {
+    cpVect        pivot{localPivot.x, localPivot.y};
+    cpConstraint* joint = cpPivotJointNew2(body2, body1, cpvzero, pivot);
+    cpConstraintSetMaxForce(joint, 50000.0f); // Magic numbers for mouse feedback.
+    cpConstraintSetErrorBias(joint, cpfpow(1.0f - 0.15f, 60.0f));
+    cpConstraint* constraint = cpSpaceAddConstraint(space, joint);
+    return constraint; // Constraint & joint are the same...
   }
 
   void OnTerminate(Application& application)
@@ -127,21 +209,24 @@ public:
 
   void OnWindowResize(Window window, Window::WindowSize newSize)
   {
-    mPhysicsImpl.CreateWorldBounds(newSize);
+    auto scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
+    cpSpace* space = scopedAccessor->GetNative().Get<cpSpace*>();
+
+    CreateBounds(space, newSize);
   }
 
   bool OnTouched(Dali::Actor actor, const Dali::TouchEvent& touch)
   {
     static enum {
       None,
-      MoveCameraXZ,
       MovePivot,
     } state = None;
 
-    auto    renderTask   = mWindow.GetRenderTaskList().GetTask(0);
-    auto    screenCoords = touch.GetScreenPosition(0);
-    Vector3 origin, direction;
-    Dali::HitTestAlgorithm::BuildPickingRay(renderTask, screenCoords, origin, direction);
+    auto renderTask   = mWindow.GetRenderTaskList().GetTask(0);
+    auto screenCoords = touch.GetScreenPosition(0);
+    // In this demo, physics space is equivalent to screen space with y inverted
+    auto windowSize = mWindow.GetSize();
+    Vector3 rayPhysicsOrigin(screenCoords.x, windowSize.GetHeight() - screenCoords.y, 0.0f);
 
     switch(state)
     {
@@ -149,30 +234,23 @@ public:
       {
         if(touch.GetState(0) == Dali::PointState::STARTED)
         {
-          if(mCtrlDown)
-          {
-            state = MoveCameraXZ;
-            // local to top left
-            //cameraY = touch.GetLocalPosition(0).y;
-            // Could move on fixed plane, e.g. y=0.
-            // position.Y corresponds to a z value depending on perspective
-            // position.X scales to an x value depending on perspective
-          }
-          else
-          {
-            state = MovePivot;
-            Dali::Mutex::ScopedLock lock(mPhysicsImpl.mMutex);
+          state = MovePivot;
 
-            Vector3 localPivot;
-            float   pickingDistance;
-            auto    body = mPhysicsImpl.HitTest(screenCoords, origin, direction, localPivot, pickingDistance);
-            if(body)
-            {
-              mPickedBody = body;
-              mPhysicsImpl.HighlightBody(mPickedBody, true);
-              mPickedSavedState = mPhysicsImpl.ActivateBody(mPickedBody);
-              mPickedConstraint = mPhysicsImpl.AddPivotJoint(mPickedBody, mMouseBody, localPivot);
-            }
+          auto scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
+          cpSpace* space = scopedAccessor->GetNative().Get<cpSpace*>();
+
+          Vector3 localPivot;
+          float   pickingDistance;
+
+          auto body = scopedAccessor->HitTest(rayPhysicsOrigin, rayPhysicsOrigin, localPivot, pickingDistance);
+          if(!body.Empty())
+          {
+            mPickedBody = body.Get<cpBody*>();
+            mSelectedActor = mPhysicsAdaptor.GetPhysicsActor(mPickedBody);
+
+            mPickedSavedState = cpBodyIsSleeping(mPickedBody);
+            cpBodyActivate(mPickedBody);
+            mPickedConstraint = AddPivotJoint(space, mPickedBody, mMouseBody, localPivot);
           }
         }
         break;
@@ -183,23 +261,11 @@ public:
         {
           if(mPickedBody && mPickedConstraint)
           {
-            if(!mShiftDown)
-            {
-              // Move point in XY plane, projected into scene
-              Dali::Mutex::ScopedLock lock(mPhysicsImpl.mMutex);
+            // Ensure we get a lock before altering constraints
+            auto scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
 
-              Vector3 position = mPhysicsImpl.TranslateToPhysicsSpace(Vector3(screenCoords));
-              mPhysicsImpl.MoveMouseBody(mMouseBody, position);
-            }
-            else
-            {
-              // Move point in XZ plane
-              // Above vanishing pt, it's on top plane of frustum; below vanishing pt it's on bottom plane.
-              // Kind of want to project onto the plane using initial touch xy, rather than top/bottom.
-              // Whole new projection code needed.
-
-              // Cheat!
-            }
+            // Move point in physics coords
+            MoveMouseBody(mMouseBody, rayPhysicsOrigin);
           }
         }
         else if(touch.GetState(0) == Dali::PointState::FINISHED ||
@@ -207,11 +273,20 @@ public:
         {
           if(mPickedConstraint)
           {
-            mPhysicsImpl.HighlightBody(mPickedBody, false);
+            auto scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
+            cpSpace* space = scopedAccessor->GetNative().Get<cpSpace*>();
 
-            Dali::Mutex::ScopedLock lock(mPhysicsImpl.mMutex);
-            mPhysicsImpl.RestoreBodyState(mPickedBody, mPickedSavedState);
-            mPhysicsImpl.ReleaseConstraint(mPickedConstraint);
+            if(mPickedSavedState)
+            {
+              cpBodyActivate(mPickedBody);
+            }
+            else
+            {
+              cpBodySleep(mPickedBody);
+            }
+
+            cpSpaceRemoveConstraint(space, mPickedConstraint);
+            cpConstraintFree(mPickedConstraint);
             mPickedConstraint = nullptr;
             mPickedBody       = nullptr;
           }
@@ -219,23 +294,9 @@ public:
         }
         break;
       }
-      case MoveCameraXZ:
-      {
-        if(touch.GetState(0) == Dali::PointState::MOTION)
-        {
-          // Move camera in XZ plane
-          //float y = cameraY; // touch point in Y. Move camera in an XZ plane on this point.
-        }
-        else if(touch.GetState(0) == Dali::PointState::FINISHED ||
-                touch.GetState(0) == Dali::PointState::INTERRUPTED)
-        {
-          state = None;
-        }
-        break;
-      }
     }
 
-    //std::cout<<"Touch State: "<<state<<std::endl;
+
     Stage::GetCurrent().KeepRendering(30.0f);
 
     return true;
@@ -243,6 +304,8 @@ public:
 
   void OnKeyEv(const Dali::KeyEvent& event)
   {
+    static bool integrateState{true};
+
     if(event.GetState() == KeyEvent::DOWN)
     {
       switch(event.GetKeyCode())
@@ -273,11 +336,80 @@ public:
           }
           else if(!event.GetKeyString().compare(" "))
           {
-            mPhysicsImpl.ToggleIntegrateState();
+            integrateState = true^integrateState;
+            mPhysicsAdaptor.SetIntegrationState(integrateState?
+                                                PhysicsAdaptor::IntegrationState::ON:
+                                                PhysicsAdaptor::IntegrationState::OFF);
+
           }
-          else if(!event.GetKeyString().compare("m"))
+          else if(!event.GetKeyString().compare("w"))
           {
-            mPhysicsImpl.ToggleDebugState();
+            if(mSelectedActor)
+            {
+              Vector3 pos = mSelectedActor.GetActorPosition();
+              mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(0, -10, 0));
+              cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
+              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.CreateSyncPoint();
+            }
+          }
+          else if(!event.GetKeyString().compare("s"))
+          {
+            if(mSelectedActor)
+            {
+              Vector3 pos = mSelectedActor.GetActorPosition();
+              mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(0, 10, 0));
+              cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
+              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.CreateSyncPoint();
+            }
+          }
+          else if(!event.GetKeyString().compare("a"))
+          {
+            if(mSelectedActor)
+            {
+              Vector3 pos = mSelectedActor.GetActorPosition();
+              mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(-10, 0, 0));
+              cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
+              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.CreateSyncPoint();
+            }
+          }
+          else if(!event.GetKeyString().compare("d"))
+          {
+            if(mSelectedActor)
+            {
+              Vector3 pos = mSelectedActor.GetActorPosition();
+              mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(10, 0, 0));
+              cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
+              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.CreateSyncPoint();
+            }
+          }
+          else if(!event.GetKeyString().compare("q"))
+          {
+            // Rotate anti-clockwise
+            if(mSelectedActor)
+            {
+              Quaternion quaternion = mSelectedActor.GetActorRotation();
+              quaternion *= Quaternion(Degree(-15.0f), Vector3::ZAXIS);
+              mSelectedActor.AsyncSetPhysicsRotation(quaternion);
+              cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
+              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.CreateSyncPoint();
+            }
+          }
+          else if(!event.GetKeyString().compare("e"))
+          {
+            // Rotate clockwise using native physics APIs
+            if(mSelectedActor)
+            {
+              cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
+              float angle = cpBodyGetAngle(body);
+              mPhysicsAdaptor.Queue([body, angle]() { cpBodySetAngle(body, angle-Math::PI/12.0f); });
+              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.CreateSyncPoint();
+            }
           }
           break;
         }
@@ -313,12 +445,19 @@ private:
   Application& mApplication;
   Window       mWindow;
 
-  PhysicsImpl   mPhysicsImpl;
+  PhysicsAdaptor mPhysicsAdaptor;
+  PhysicsActor   mSelectedActor;
+  Matrix        mPhysicsTransform;
   Actor         mPhysicsRoot;
   cpBody*       mMouseBody{nullptr};
   cpBody*       mPickedBody{nullptr};
   cpConstraint* mPickedConstraint{nullptr};
   int           mPickedSavedState = -1; /// 0 : Active, 1 : Sleeping
+
+  cpShape* mLeftBound{nullptr};
+  cpShape* mRightBound{nullptr};
+  cpShape* mTopBound{nullptr};
+  cpShape* mBottomBound{nullptr};
 
   bool mCtrlDown{false};
   bool mAltDown{false};
