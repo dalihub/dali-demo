@@ -58,6 +58,9 @@
 	<ui-application appid="builder.example" exec="/usr/apps/com.samsung.dali-demo/bin/builder.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Script Based UI</label>
 	</ui-application>
+	<ui-application appid="bullet-physics.example" exec="/usr/apps/com.samsung.dali-demo/bin/bullet-physics.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Bullet Physics</label>
+	</ui-application>
 	<ui-application appid="buttons.example" exec="/usr/apps/com.samsung.dali-demo/bin/buttons.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Buttons</label>
 	</ui-application>

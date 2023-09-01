@@ -1,5 +1,5 @@
 attribute mediump vec3 aPosition;  // DALi shader builtin
-//attribute mediump vec2 aTexCoord;  // DALi shader builtin
+attribute mediump vec2 aTexCoord;  // DALi shader builtin
 uniform   mediump mat4 uMvpMatrix; // DALi shader builtin
 uniform   mediump mat4 uViewMatrix; // DALi shader builtin
 uniform   mediump mat4 uModelView; // DALi shader builtin
@@ -21,6 +21,6 @@ void main()
   float lightDiffuse = max(dot(vectorToLight, normal), 0.0);
 
   vIllumination = vec3(lightDiffuse * 0.5 + 0.5);
-  vTexCoord = aPosition.xy*2.0;
+  vTexCoord = aTexCoord;
   gl_Position = uMvpMatrix * vertexPosition;
 }

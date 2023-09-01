@@ -24,6 +24,9 @@ mediump vec3 redistribute_rgb(mediump vec3 color)
 void main()
 {
   mediump vec4 texColor = texture2D( uTexture, vTexCoord );
-  mediump vec3 pcol=texColor.rgb*(1.0+uBrightness);
-  gl_FragColor = vec4( redistribute_rgb(pcol), texColor.a);
+  //mediump vec4 texColor = vec4(0.5,0.5,0.5,1.0);
+  //gl_FragColor = vec4(texColor.rgb, 1.0);
+
+  mediump vec3 pcol=vec3(vIllumination.rgb * texColor.rgb)*(1.0+uBrightness);
+  gl_FragColor = vec4( redistribute_rgb(pcol), 1.0);
 }
