@@ -77,13 +77,13 @@ public:
     mWindow.SetBackgroundColor(Color::DARK_SLATE_GRAY);
     Window::WindowSize windowSize = mWindow.GetSize();
 
-    auto cameraActor = mWindow.GetRenderTaskList().GetTask(0).GetCameraActor();
-    cameraActor[CameraActor::Property::FIELD_OF_VIEW] = Math::PI/2.5f; // 72 degrees
-    cameraActor[Actor::Property::POSITION_X] = 500;
-    float z = cameraActor[Actor::Property::POSITION_Z];
-    cameraActor[Actor::Property::POSITION_Z] = z-100;
+    auto cameraActor                                    = mWindow.GetRenderTaskList().GetTask(0).GetCameraActor();
+    cameraActor[CameraActor::Property::FIELD_OF_VIEW]   = Math::PI / 2.5f; // 72 degrees
+    cameraActor[Actor::Property::POSITION_X]            = 500;
+    float z                                             = cameraActor[Actor::Property::POSITION_Z];
+    cameraActor[Actor::Property::POSITION_Z]            = z - 100;
     cameraActor[CameraActor::Property::TARGET_POSITION] = Vector3();
-    cameraActor[CameraActor::Property::TYPE] = Camera::LOOK_AT_TARGET;
+    cameraActor[CameraActor::Property::TYPE]            = Camera::LOOK_AT_TARGET;
     mPhysicsTransform.SetIdentityAndScale(Vector3(1.0f, -1.0f, 1.0f));
     mPhysicsTransform.SetTranslation(Vector3(windowSize.GetWidth() * 0.5f,
                                              windowSize.GetHeight() * 0.5f,
@@ -98,11 +98,11 @@ public:
     mWindow.Add(mPhysicsRoot);
 
     auto scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
-    auto bulletWorld = scopedAccessor->GetNative().Get<btDiscreteDynamicsWorld*>();
+    auto bulletWorld    = scopedAccessor->GetNative().Get<btDiscreteDynamicsWorld*>();
     bulletWorld->setGravity(btVector3(0, -200, 0));
 
     CreateGround(scopedAccessor, windowSize);
-    mBrick = CreateLargeBrick(scopedAccessor);
+    mBrick         = CreateLargeBrick(scopedAccessor);
     mSelectedActor = mBrick;
 
     CreateBall(scopedAccessor);
@@ -628,7 +628,7 @@ private:
   PhysicsActor   mBrick;
   PhysicsActor   mSelectedActor;
 
-  btRigidBody*                     mPickedBody;
+  btRigidBody*                     mPickedBody{nullptr};
   float                            mOldPickingDistance{0.0f};
   int                              mPickedSavedState{0};
   btTypedConstraint*               mPickedConstraint{nullptr};

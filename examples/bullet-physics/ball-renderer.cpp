@@ -118,7 +118,7 @@ Geometry BallRenderer::CreateBallGeometry()
     vertices.emplace_back(Vertex{Vector3{b, -a, 0}});
     vertices.emplace_back(Vertex{Vector3{-b, -a, 0}});
 
-    for(auto vertex : vertices)
+    for(auto& vertex : vertices)
     {
       vertex.aPosition.Normalize();
     }
