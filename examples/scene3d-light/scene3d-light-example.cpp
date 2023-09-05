@@ -28,6 +28,8 @@ using Dali::Toolkit::TextLabel;
 const std::string imagedir = DEMO_IMAGE_DIR;
 const std::string uri_diffuse_texture(imagedir + "papermill_E_diffuse-64.ktx");
 const std::string uri_specular_texture(imagedir + "papermill_pmrem.ktx");
+const std::string uri_diffuse_texture2(imagedir + "Studio/Irradiance.ktx");
+const std::string uri_specular_texture2(imagedir + "Studio/Radiance.ktx");
 
 // This example shows how to create and display Hello World! using a simple TextActor
 //
@@ -56,14 +58,13 @@ public:
     sceneView.SetProperty(Dali::Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     sceneView.SetProperty(Dali::Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     sceneView.SetBackgroundColor(Color::BEIGE);
-    sceneView.SetProperty(Dali::CameraActor::Property::NEAR_PLANE_DISTANCE, 0.5f);
-    sceneView.SetProperty(Dali::CameraActor::Property::FAR_PLANE_DISTANCE, 0.5f);
+    sceneView.UseFramebuffer(true);
 
     light1 = Scene3D::Light::New();
     light1.SetProperty(Dali::Actor::Property::COLOR, Color::BROWN);
-    light1.SetProperty(Dali::Actor::Property::POSITION, Vector3(-2.0f, -2.0f, 0.0f));
+    light1.SetProperty(Dali::Actor::Property::POSITION, Vector3(-2.0f, -0.5f, 0.0f));
     Dali::DevelActor::LookAt(light1, Vector3(0.0f, 0.0f, 0.0f));
-    Dali::Animation animation = Dali::Animation::New(3);
+    mAnimation = Dali::Animation::New(5);
     Dali::KeyFrames keyFrames = Dali::KeyFrames::New();
     keyFrames.Add(0.0f, Quaternion(Radian(Degree(0.0f)), Vector3::YAXIS));
     keyFrames.Add(0.25f, Quaternion(Radian(Degree(90.0f)), Vector3::YAXIS));
@@ -77,19 +78,24 @@ public:
     dummyActor.Add(light1);
     sceneView.Add(dummyActor);
 
-    animation.AnimateBetween(Dali::Property(dummyActor, Dali::Actor::Property::ORIENTATION), keyFrames);
-    animation.Play();
-    animation.SetLooping(true);
+    mAnimation.AnimateBetween(Dali::Property(dummyActor, Dali::Actor::Property::ORIENTATION), keyFrames);
+    mAnimation.Play();
+    mAnimation.SetLooping(true);
+    light1.Enable(true);
+    light1.EnableShadow(true);
+    light1.EnableShadowSoftFiltering(true);
 
     light2 = Scene3D::Light::New();
-    light2.SetProperty(Dali::Actor::Property::COLOR, Color::BLUE);
-    Dali::DevelActor::LookAt(light2, Vector3(1.0f, 1.0f, -1.0f));
+    light2.SetProperty(Dali::Actor::Property::COLOR, Color::WHITE * 0.4);
+    light2.SetProperty(Dali::Actor::Property::POSITION, Vector3(-1.0f, 0.0f, 1.1f));
+    Dali::DevelActor::LookAt(light2, Vector3(0.0, 0.0, 0.0f));
+    light2.EnableShadow(true);
     sceneView.Add(light2);
 
     light3 = Scene3D::Light::New();
-    light3.SetProperty(Dali::Actor::Property::COLOR, Color::WHITE * 0.4);
-    light3.SetProperty(Dali::Actor::Property::POSITION, Vector3(-1.0f, 0.0f, 1.1f));
-    Dali::DevelActor::LookAt(light3, Vector3(0.0, 0.0, 0.0f));
+    light3.SetProperty(Dali::Actor::Property::COLOR, Color::BLUE);
+    light3.SetProperty(Dali::Actor::Property::POSITION, Vector3(-2.0, 0.0, -0.6));
+    Dali::DevelActor::LookAt(light3, Vector3(0.0f, 0.0f, 0.0f));
     sceneView.Add(light3);
 
     light4 = Scene3D::Light::New();
@@ -104,20 +110,21 @@ public:
     Dali::DevelActor::LookAt(light5, Vector3(0.0, 0.0, 0.0f));
     sceneView.Add(light5);
 
-    light6 = Scene3D::Light::New();
-    light6.SetProperty(Dali::Actor::Property::COLOR, Color::CYAN);
-    light6.SetProperty(Dali::Actor::Property::POSITION, Vector3(-1.0f, -1.2f, 1.1f));
-    Dali::DevelActor::LookAt(light6, Vector3(0.0, 0.0, 0.0f));
-    sceneView.Add(light6);
-
     CameraActor camera = sceneView.GetSelectedCamera();
-    camera.SetProperty(Dali::Actor::Property::POSITION, Vector3(-1.0f, 0.0f, 1.1f));
+    camera.SetProperty(Dali::Actor::Property::POSITION, Vector3(1.5f, 0.0f, 1.5f));
     Dali::DevelActor::LookAt(camera, Vector3(0.0, 0.0, 0.0f));
+    camera.SetProperty(Dali::CameraActor::Property::NEAR_PLANE_DISTANCE, 1.0f);
+    camera.SetProperty(Dali::CameraActor::Property::FAR_PLANE_DISTANCE, 4.0f);
 
     Scene3D::Model model = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf");
-    model.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
+    model.SetProperty(Dali::Actor::Property::POSITION, Vector3(-0.5f, 0.0f, 0.0f));
     model.SetProperty(Dali::Actor::Property::SIZE, Vector3::ONE);
     sceneView.Add(model);
+
+    Scene3D::Model model2 = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "microphone.gltf");
+    model2.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.2f, 0.0f, 0.0f));
+    model2.SetProperty(Dali::Actor::Property::SIZE, Vector3::ONE);
+    sceneView.Add(model2);
 
     window.Add(sceneView);
 
@@ -151,48 +158,118 @@ public:
         sceneView.SetImageBasedLightSource("", "", 1.0f);
         light1.Enable(true);
         light2.Enable(true);
-        light6.Enable(false); // to reset state of lights
-        light6.Enable(true);
         light3.Enable(true);
+        light4.Enable(true);
+        light5.Enable(true);
+        light1.EnableShadow(true);
+        light2.EnableShadow(false);
+        mAnimation.Play();
       }
       if(event.GetKeyName() == "1")
       {
-        sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
-        light1.Enable(false);
-        light2.Enable(false);
+        sceneView.SetImageBasedLightSource(uri_diffuse_texture2, uri_specular_texture2, 0.6f);
+        light1.Enable(true);
+        light2.Enable(true);
+        light3.Enable(true);
+        light4.Enable(true);
+        light5.Enable(true);
+        light1.EnableShadow(true);
+        light2.EnableShadow(false);
+        mAnimation.Play();
       }
       else if(event.GetKeyName() == "2")
+      {
+        sceneView.SetImageBasedLightSource(uri_diffuse_texture2, uri_specular_texture2, 0.6f);
+        light1.Enable(true);
+        light2.Enable(true);
+        light3.Enable(true);
+        light4.Enable(true);
+        light5.Enable(true);
+        light1.EnableShadow(false);
+        light2.EnableShadow(true);
+        mAnimation.Play();
+      }
+      else if(event.GetKeyName() == "3")
       {
         sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
         light1.Enable(true);
         light2.Enable(true);
+        light3.Enable(true);
+        light4.Enable(true);
+        light5.Enable(true);
+        light1.EnableShadow(true);
+        light2.EnableShadow(false);
+        mAnimation.Play();
       }
-      else if(event.GetKeyName() == "3")
+      else if(event.GetKeyName() == "4")
       {
         sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.3f);
         light1.Enable(true);
         light2.Enable(true);
+        light3.Enable(true);
+        light4.Enable(true);
+        light5.Enable(true);
+        light1.EnableShadow(true);
+        light2.EnableShadow(false);
+        mAnimation.Play();
       }
-      else if(event.GetKeyName() == "4")
+      else if(event.GetKeyName() == "5")
       {
         sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.1f);
         light1.Enable(true);
         light2.Enable(true);
-      }
-      else if(event.GetKeyName() == "5")
-      {
-        sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.0f);
-        light1.Enable(true);
+        light3.Enable(true);
+        light4.Enable(true);
+        light5.Enable(true);
+        light1.EnableShadow(true);
+        light2.EnableShadow(false);
+        mAnimation.Play();
       }
       else if(event.GetKeyName() == "6")
       {
         sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.0f);
-        light1.Enable(false);
+        light1.Enable(true);
+        light2.Enable(true);
+        light3.Enable(true);
+        light4.Enable(true);
+        light5.Enable(true);
+        light1.EnableShadow(true);
+        light2.EnableShadow(false);
+        mAnimation.Play();
+      }
+      else if(event.GetKeyName() == "7")
+      {
+        sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
+        light1.Enable(true);
+        light2.Enable(true);
+        light3.Enable(true);
+        light4.Enable(true);
+        light5.Enable(true);
+        light2.EnableShadow(false);
+        light1.EnableShadow(!light1.IsShadowEnabled());
+        mAnimation.Play();
+      }
+      else if(event.GetKeyName() == "8")
+      {
+        light1.EnableShadowSoftFiltering(!light1.IsShadowSoftFilteringEnabled());
+        light2.EnableShadowSoftFiltering(!light2.IsShadowSoftFilteringEnabled());
+      }
+      else if(event.GetKeyName() == "9")
+      {
+        progress += 0.05;
+        if(progress >= 1.0)
+        {
+          progress = 0.0f;
+        }
+        mAnimation.Play();
+        mAnimation.SetCurrentProgress(progress);
+        mAnimation.Pause();
       }
     }
   }
 
 private:
+  float              progress{0.0f};
   Application&       mApplication;
   Scene3D::Light     light1;
   Scene3D::Light     light2;
@@ -201,6 +278,7 @@ private:
   Scene3D::Light     light5;
   Scene3D::Light     light6;
   Scene3D::SceneView sceneView;
+  Dali::Animation    mAnimation;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

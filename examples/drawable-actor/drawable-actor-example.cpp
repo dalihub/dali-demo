@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,9 +35,8 @@ using namespace Dali;
 class DrawableActorExampleController : public ConnectionTracker
 {
 public:
-
   explicit DrawableActorExampleController(Application& application)
-    : mApplication(application)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &DrawableActorExampleController::Create);
@@ -56,16 +55,17 @@ public:
     mRenderer = std::make_unique<NativeRenderer>(window.GetSize().GetWidth(), window.GetSize().GetHeight());
 
     // Create render callback
-    mRenderCallback = RenderCallback::New<NativeRenderer>( mRenderer.get(), &NativeRenderer::OnRender );
+    mRenderCallback = RenderCallback::New<NativeRenderer>(mRenderer.get(), &NativeRenderer::OnRender);
 
     // Create drawable actor
-    mGLActor = DrawableActor::New( *mRenderCallback );
+    mGLActor = DrawableActor::New(*mRenderCallback);
 
-    mGLActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
-    mGLActor.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
+    mGLActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mGLActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
 
     // Set size on the actor (half the window size to show that glClear() and scissor test work together)
-    mGLActor.SetProperty( Actor::Property::SIZE, Size( window.GetSize() ) * 0.5f);
+    mGLActor.SetProperty(Actor::Property::SIZE, Size(window.GetSize()) * 0.75f);
+    mGLActor[Actor::Property::POSITION] = Vector3(50.0f, 50.0f, 0.0f);
 
     // Add actor to the scene
     window.Add(mGLActor);
@@ -101,7 +101,7 @@ public:
     }
   }
 
-  TextLabel mTextLabel;
+  TextLabel     mTextLabel;
   DrawableActor mGLActor;
 
   std::unique_ptr<RenderCallback> mRenderCallback;
@@ -113,7 +113,7 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application          application = Application::New(&argc, &argv);
+  Application                    application = Application::New(&argc, &argv);
   DrawableActorExampleController test(application);
   application.MainLoop();
   return 0;
