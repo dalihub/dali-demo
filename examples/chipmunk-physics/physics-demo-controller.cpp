@@ -170,8 +170,8 @@ public:
 
     // Ball area = 2*PI*26^2 ~= 6.28*26*26 ~= 5400
     // Fill top quarter of the screen...
-    int numBalls = 10 + windowSize.GetWidth() * windowSize.GetHeight() / 20000;
-    for(int i = 0; i < numBalls; ++i)
+    uint32_t numBalls = 10u + static_cast<uint32_t>(windowSize.GetWidth()) * static_cast<uint32_t>(windowSize.GetHeight()) / 20000;
+    for(uint32_t i = 0; i < numBalls; ++i)
     {
       mBalls.push_back(CreateBall(space));
     }
@@ -241,7 +241,7 @@ public:
     cpShapeSetFriction(logoShape, 0.9);
     cpShapeSetElasticity(logoShape, 0.0);
     Window::WindowSize windowSize = mWindow.GetSize();
-    Vector3            daliPos(0, -windowSize.GetHeight() / 2 + logoSize.height * 1.3, 0);
+    Vector3            daliPos(0, -static_cast<float>(windowSize.GetHeight()) / 2 + logoSize.height * 1.3f, 0);
     Vector3            physPos = mPhysicsAdaptor.TranslateToPhysicsSpace(daliPos);
     cpBodySetPosition(logoBody, cpv(physPos.x, physPos.y));
 
@@ -299,8 +299,8 @@ public:
       // Image is 326x171; center of letter is guessed; each image contains only 1 image.
       // Position the letters into the window
 
-      float   cellW   = (windowSize.GetWidth() - 170) / 4;
-      float   cellC   = -windowSize.GetWidth() * 0.5f + cellW * (0.5f + index);
+      float   cellW   = (static_cast<float>(windowSize.GetWidth()) - 170) / 4;
+      float   cellC   = -static_cast<float>(windowSize.GetWidth()) * 0.5f + cellW * (0.5f + index);
       float   x       = 85 + cellC; // - 61.0f;
       Vector3 physPos = mPhysicsAdaptor.TranslateToPhysicsSpace(Vector3(x, 0, 0.0f));
 
@@ -343,8 +343,8 @@ public:
   void CreateBounds(cpSpace* space, Window::WindowSize size)
   {
     // We're working in physics space here - coords are: origin: bottom left, +ve Y: up
-    int xBound = size.GetWidth();
-    int yBound = size.GetHeight();
+    int32_t xBound = static_cast<int32_t>(static_cast<uint32_t>(size.GetWidth()));
+    int32_t yBound = static_cast<int32_t>(static_cast<uint32_t>(size.GetHeight()));
 
     cpBody* staticBody = cpSpaceGetStaticBody(space);
 
@@ -435,7 +435,7 @@ public:
     auto screenCoords = touch.GetScreenPosition(0);
     // In this demo, physics space is equivalent to screen space with y inverted
     auto    windowSize = mWindow.GetSize();
-    Vector3 rayPhysicsOrigin(screenCoords.x, windowSize.GetHeight() - screenCoords.y, 0.0f);
+    Vector3 rayPhysicsOrigin(screenCoords.x, static_cast<float>(windowSize.GetHeight()) - screenCoords.y, 0.0f);
 
     switch(state)
     {
