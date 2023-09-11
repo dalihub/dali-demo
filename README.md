@@ -11,8 +11,8 @@
          * [NON-SMACK Targets](#non-smack-targets)
          * [SMACK enabled Targets](#smack-enabled-targets)
          * [DEBUG Builds](#debug-builds-1)
-      * [3. Building for Android](#3-android-builds)
-      * [4. Building for MS Windows](#4-windows-builds)
+      * [3. Building for Android](#3-building-for-android)
+      * [4. Building for MS Windows](#4-building-for-ms-windows)
          * [Build with the Visual Studio project](#build-with-the-visual-studio-project)
          * [Build with CMake](#build-with-cmake)
       * [5. Building for MacOS](#5-building-for-macos)
@@ -85,7 +85,8 @@ You can set the sample's name and can build that sample only. For example, If yo
 
 ### Requirements
 
- - Ubuntu 16.04 or later
+ - Ubuntu 20.04 or later
+ - Open JDK Version 17 or above
  - Android DALi dependencies
  - If you are behind a proxy, please set up the "http_proxy" and "https_proxy" environment variables appropriately
  - Clone dali-core, dali-adaptor, dali-toolkit & android-dependencies to the same folder as dali-demo

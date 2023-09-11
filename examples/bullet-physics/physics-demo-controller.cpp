@@ -303,8 +303,9 @@ public:
             Vector3 localPivot;
             Vector3 rayPhysicsOrigin;
             Vector3 rayPhysicsEnd;
+            Dali::Any nullFilter;
             mPhysicsAdaptor.BuildPickingRay(origin, direction, rayPhysicsOrigin, rayPhysicsEnd);
-            auto body = scopedAccessor->HitTest(rayPhysicsOrigin, rayPhysicsEnd, localPivot, mOldPickingDistance);
+            auto body = scopedAccessor->HitTest(rayPhysicsOrigin, rayPhysicsEnd, nullFilter, localPivot, mOldPickingDistance);
             if(!body.Empty())
             {
               mPickedBody = body.Get<btRigidBody*>();

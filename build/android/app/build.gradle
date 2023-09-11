@@ -8,6 +8,7 @@ def daliEnvLibDir = daliEnvDir + '/lib'
 def daliEnvFilesDir = daliEnvDir + '/files'
 
 android {
+    namespace = "com.sec.dalidemo"
     signingConfigs {
         config {
             storeFile file("../key.jks")
@@ -30,7 +31,6 @@ android {
             }
         }
     }
-    project.archivesBaseName = 'dali-demo'
     aaptOptions {
         noCompress ''
     }
@@ -81,8 +81,8 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = 1.6
-        sourceCompatibility = 1.6
+        targetCompatibility = 1.8
+        sourceCompatibility = 1.8
     }
 }
 
@@ -112,6 +112,11 @@ task buildDali(type:Exec) {
 task cleanDali(type:Exec) {
     workingDir "../dali"
     commandLine 'sh', './build.sh', 'clean'
+}
+
+
+tasks.withType(JavaCompile) {
+    options.deprecation = true
 }
 
 buildDali.dependsOn buildDaliDependencies
