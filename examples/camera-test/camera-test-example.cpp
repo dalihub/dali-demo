@@ -41,10 +41,10 @@ struct CameraPosConstraint
 
 struct BoundaryConstraint
 {
-  BoundaryConstraint(std::string name, Vector2 size, bool centered)
-  : name(name),
+  BoundaryConstraint(std::string nameParam, Vector2 size, bool centeredParam)
+  : name(nameParam),
     boundarySize(size),
-    centered(centered)
+    centered(centeredParam)
   {
   }
   void operator()(Vector3& current, const PropertyInputContainer& inputs)
@@ -214,7 +214,7 @@ public:
         Dali::ParentOrigin::CENTER,
       };
 
-    Layer viewLayer = Layer::New();
+    viewLayer = Layer::New();
     window.Add(viewLayer);
 
     viewLayer.SetProperty(Actor::Property::POSITION, Vector3(position));
@@ -372,7 +372,7 @@ public:
     return renderTask;
   }
 
-  void ConstrainSceneViewportCamera(RenderTask sceneRenderTask, Vector2 viewportOrigin)
+  void ConstrainSceneViewportCamera(RenderTask renderTask, Vector2 viewportOrigin)
   {
     Constraint constraint = Constraint::New<Vector3>(cameraActor, Actor::Property::POSITION, CameraPosConstraint());
     constraint.AddSource(Source(cameraFrame, Actor::Property::POSITION));
@@ -382,11 +382,11 @@ public:
     constraint.AddSource(Source(cameraFrame, Actor::Property::SIZE));
     constraint.Apply();
 
-    constraint = Constraint::New<Vector2>(sceneRenderTask, RenderTask::Property::VIEWPORT_POSITION, ViewportPositionConstraint(viewportOrigin));
+    constraint = Constraint::New<Vector2>(renderTask, RenderTask::Property::VIEWPORT_POSITION, ViewportPositionConstraint(viewportOrigin));
     constraint.AddSource(Source(viewportFrame, Actor::Property::POSITION));
     constraint.Apply();
 
-    constraint = Constraint::New<Vector2>(sceneRenderTask, RenderTask::Property::VIEWPORT_SIZE, ViewportSizeConstraint());
+    constraint = Constraint::New<Vector2>(renderTask, RenderTask::Property::VIEWPORT_SIZE, ViewportSizeConstraint());
     constraint.AddSource(Source(viewportFrame, Actor::Property::SIZE));
     constraint.Apply();
   }
@@ -403,20 +403,20 @@ public:
     overlayCameraActor.SetPerspectiveProjection(windowSize);
     window.Add(overlayCameraActor);
 
-    RenderTask overlayRenderTask = window.GetRenderTaskList().CreateTask();
+    RenderTask renderTask = window.GetRenderTaskList().CreateTask();
 
-    overlayRenderTask.SetCameraActor(overlayCameraActor);
-    overlayRenderTask.SetInputEnabled(true);
-    overlayRenderTask.SetClearEnabled(false);
-    overlayRenderTask.SetSourceActor(source);
-    overlayRenderTask.SetExclusive(true);
+    renderTask.SetCameraActor(overlayCameraActor);
+    renderTask.SetInputEnabled(true);
+    renderTask.SetClearEnabled(false);
+    renderTask.SetSourceActor(source);
+    renderTask.SetExclusive(true);
 
-    overlayRenderTask.SetViewportPosition(Vector2(0, 0));
-    overlayRenderTask.SetViewportSize(windowSize);
+    renderTask.SetViewportPosition(Vector2(0, 0));
+    renderTask.SetViewportSize(windowSize);
 
-    overlayRenderTask.SetCullMode(false);
+    renderTask.SetCullMode(false);
 
-    return overlayRenderTask;
+    return renderTask;
   }
 
   Actor CreateFrame(Vector2 position, Vector2 size, std::string label)
@@ -567,8 +567,8 @@ public:
     if(actorIdIndex != Property::INVALID_INDEX)
     {
       int   actorIndex = slider["actorId"];
-      float value      = slider["value"];
-      imageViews[actorIndex].SetProperty(Actor::Property::ORIENTATION, AngleAxis(Degree(value), Vector3::ZAXIS));
+      float newValue   = slider["value"];
+      imageViews[actorIndex].SetProperty(Actor::Property::ORIENTATION, AngleAxis(Degree(newValue), Vector3::ZAXIS));
     }
     return true;
   }
