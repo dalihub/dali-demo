@@ -397,6 +397,9 @@
 	<ui-application appid="web-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/web-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Web View</label>
 	</ui-application>
+	<ui-application appid="window.example" exec="/usr/apps/com.samsung.dali-demo/bin/window.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Window</label>
+	</ui-application>
 	<ui-application appid="waves.example" exec="/usr/apps/com.samsung.dali-demo/bin/waves.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Waves</label>
 	</ui-application>
