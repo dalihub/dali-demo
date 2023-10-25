@@ -49,15 +49,9 @@ void SubDivide(std::vector<Vertex>& vertices, std::vector<uint16_t>& indices)
     auto     v5 = v2 + (v3 - v2) * 0.5f;
     auto     v6 = v3 + (v1 - v3) * 0.5f;
     uint16_t j  = vertices.size();
-    vertices.emplace_back(Vertex{
-      {v4},
-    });
-    vertices.emplace_back(Vertex{
-      {v5},
-    });
-    vertices.emplace_back(Vertex{
-      {v6},
-    });
+    vertices.emplace_back(Vertex{v4, Vector2::ZERO});
+    vertices.emplace_back(Vertex{v5, Vector2::ZERO});
+    vertices.emplace_back(Vertex{v6, Vector2::ZERO});
     // Now, original tri breaks into 4, so replace this tri, and add 3 more
     uint16_t i1        = indices[i * 3 + 1];
     uint16_t i2        = indices[i * 3 + 2];
@@ -102,21 +96,21 @@ Geometry BallRenderer::CreateBallGeometry()
 
     // add vertices
     std::vector<Vertex> vertices;
-    vertices.emplace_back(Vertex{Vector3{0, b, -a}});
-    vertices.emplace_back(Vertex{Vector3{b, a, 0}});
-    vertices.emplace_back(Vertex{Vector3{-b, a, -a}});
+    vertices.emplace_back(Vertex{Vector3{0, b, -a}, Vector2::ZERO});
+    vertices.emplace_back(Vertex{Vector3{b, a, 0}, Vector2::ZERO});
+    vertices.emplace_back(Vertex{Vector3{-b, a, -a}, Vector2::ZERO});
 
-    vertices.emplace_back(Vertex{Vector3{0, b, a}});
-    vertices.emplace_back(Vertex{Vector3{0, -b, a}});
-    vertices.emplace_back(Vertex{Vector3{-a, 0, b}});
+    vertices.emplace_back(Vertex{Vector3{0, b, a}, Vector2::ZERO});
+    vertices.emplace_back(Vertex{Vector3{0, -b, a}, Vector2::ZERO});
+    vertices.emplace_back(Vertex{Vector3{-a, 0, b}, Vector2::ZERO});
 
-    vertices.emplace_back(Vertex{Vector3{0, -b, -a}});
-    vertices.emplace_back(Vertex{Vector3{a, 0, -b}});
-    vertices.emplace_back(Vertex{Vector3{a, 0, b}});
+    vertices.emplace_back(Vertex{Vector3{0, -b, -a}, Vector2::ZERO});
+    vertices.emplace_back(Vertex{Vector3{a, 0, -b}, Vector2::ZERO});
+    vertices.emplace_back(Vertex{Vector3{a, 0, b}, Vector2::ZERO});
 
-    vertices.emplace_back(Vertex{Vector3{-a, 0, -b}});
-    vertices.emplace_back(Vertex{Vector3{b, -a, 0}});
-    vertices.emplace_back(Vertex{Vector3{-b, -a, 0}});
+    vertices.emplace_back(Vertex{Vector3{-a, 0, -b}, Vector2::ZERO});
+    vertices.emplace_back(Vertex{Vector3{b, -a, 0}, Vector2::ZERO});
+    vertices.emplace_back(Vertex{Vector3{-b, -a, 0}, Vector2::ZERO});
 
     for(auto& vertex : vertices)
     {

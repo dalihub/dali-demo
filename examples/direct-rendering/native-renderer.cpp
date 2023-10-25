@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,18 +23,17 @@
  */
 namespace
 {
-
 [[maybe_unused]] std::vector<std::string> split(const std::string& s, char seperator)
 {
   std::vector<std::string> output;
-  std::string::size_type prev_pos = 0, pos = 0;
+  std::string::size_type   prev_pos = 0, pos = 0;
   while((pos = s.find(seperator, pos)) != std::string::npos)
   {
-    std::string substring( s.substr(prev_pos, pos-prev_pos) );
+    std::string substring(s.substr(prev_pos, pos - prev_pos));
     output.push_back(substring);
     prev_pos = ++pos;
   }
-  output.push_back(s.substr(prev_pos, pos-prev_pos)); // Last word
+  output.push_back(s.substr(prev_pos, pos - prev_pos)); // Last word
   return output;
 }
 
@@ -52,8 +51,18 @@ int GetEnvInt(const char* name, int def)
 
 const uint32_t MAX_CUBES = GetEnvInt("MAX_CUBES", 200);
 
-#define GL(x) {glGetError();{x;};auto err = glGetError();if(err){ \
-printf("%p:%d: ERROR: 0x%X\n", this, __LINE__, int(err));} }
+#define GL(x)                                                   \
+  {                                                             \
+    glGetError();                                               \
+    {                                                           \
+      x;                                                        \
+    };                                                          \
+    auto err = glGetError();                                    \
+    if(err)                                                     \
+    {                                                           \
+      printf("%p:%d: ERROR: 0x%X\n", this, __LINE__, int(err)); \
+    }                                                           \
+  }
 
 constexpr GLfloat CUBE_VERTICES[] = {-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f};
 
@@ -63,23 +72,29 @@ constexpr GLushort CUBE_INDICES[] = {0, 2, 3, 0, 1, 3, 4, 6, 7, 4, 5, 7, 8, 9, 1
 
 constexpr float QUAD_VERTS[] = {
   // positions          // colors           // texture coords
-  1.0f,  1.0f,
-  1.0f, -1.0f,
-  -1.0f, -1.0f,
-  -1.0f,  1.0f,
+  1.0f,
+  1.0f,
+  1.0f,
+  -1.0f,
+  -1.0f,
+  -1.0f,
+  -1.0f,
+  1.0f,
 };
 
 constexpr unsigned short QUAD_INDICES[] = {
-  0, 1, 2,
-  3, 0, 2
-};
+  0, 1, 2, 3, 0, 2};
 
 constexpr float QUAD_UV[] = {
   // positions          // colors           // texture coords
-  1.0f, 1.0f,   // top right
-  1.0f, 0.0f,   // bottom right
-  0.0f, 0.0f,   // bottom left
-  0.0f, 1.0f    // top left
+  1.0f,
+  1.0f, // top right
+  1.0f,
+  0.0f, // bottom right
+  0.0f,
+  0.0f, // bottom left
+  0.0f,
+  1.0f // top left
 };
 
 float matrixDegreesToRadians(float degrees)
@@ -123,7 +138,7 @@ float matrixDegreesToRadians(float degrees)
                              operand1[8 + j] * operand2[4 * i + 2] + operand1[12 + j] * operand2[4 * i + 3];
     }
   }
-  for(int i = 0; i < 16; i++)
+  for(i = 0; i < 16; i++)
   {
     destination[i] = theResult[i];
   }
@@ -210,7 +225,7 @@ void matrixFrustum(float* matrix, float left, float right, float bottom, float t
 
 NativeRenderer::~NativeRenderer() = default;
 
-NativeRenderer::NativeRenderer(const CreateInfo& info )
+NativeRenderer::NativeRenderer(const CreateInfo& info)
 : mWidth(info.width),
   mHeight(info.height),
   mCreateInfo(info)
@@ -338,7 +353,7 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
   [[maybe_unused]] auto y = mCreateInfo.viewportY; // float(mHeight - input.size.height) * 0.5f;
   auto                  w = mCreateInfo.width;
   auto                  h = mCreateInfo.height;
-  
+
   matrixPerspective(mProjectionMatrix, 45, (float)w / (float)h, 0.1f, 100);
 
   GL(glViewport(x, y, w, h));
@@ -355,8 +370,7 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
   GL(glClearColor(mCreateInfo.clearColor[0],
                   mCreateInfo.clearColor[1],
                   mCreateInfo.clearColor[2],
-                  mCreateInfo.clearColor[3]
-                  ));
+                  mCreateInfo.clearColor[3]));
   {
     GL(glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT));
   }
@@ -370,7 +384,7 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
 
   const auto maxCubes = int(MAX_CUBES);
 
-  for( int i = 0; i < int(maxCubes); ++i)
+  for(int i = 0; i < int(maxCubes); ++i)
   {
     GL(matrixIdentityFunction(mModelViewMatrix));
     matrixScale(mModelViewMatrix, 0.2f, 0.2f, 0.2f);
@@ -379,10 +393,10 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
     auto max = 7000;
     if(mPosX.size() == uint32_t(i))
     {
-      auto x = float((rand() % max) - (max / 2)) / 1000.0f;
-      auto y = float((rand() % max) - (max / 2)) / 1000.0f;
-      mPosX.emplace_back(x);
-      mPosY.emplace_back(y);
+      auto xPos = float((rand() % max) - (max / 2)) / 1000.0f;
+      auto yPos = float((rand() % max) - (max / 2)) / 1000.0f;
+      mPosX.emplace_back(xPos);
+      mPosY.emplace_back(yPos);
     }
     matrixTranslate(mModelViewMatrix, mPosX[i], mPosY[i], -5.0f);
     GL(glUniformMatrix4fv(mProjectionLocation, 1, GL_FALSE, mProjectionMatrix));
