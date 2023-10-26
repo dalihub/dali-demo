@@ -216,9 +216,9 @@ public:
     mParent.SetBackgroundColor(Color::BLUE);
     mParent.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mParent.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
-    mParent.SetProperty(Actor::Property::SIZE, parentViewSize);
+    mParent.SetProperty(Actor::Property::SIZE, Vector3(parentViewSize));
     mParent.SetProperty(Actor::Property::POSITION, Vector3::ZERO);
-    mParent.SetProperty(Actor::Property::SCALE, parentViewScale);
+    mParent.SetProperty(Actor::Property::SCALE, Vector3(parentViewScale.x, parentViewScale.y, 1.0f));
 
     Vector3 parentOrigin        = PARENT_ORIGIN_LIST[mParentOriginIndex];
     Vector3 anchorPoint         = ANCHOR_POINT_LIST[mAnchorPointIndex];
@@ -234,9 +234,9 @@ public:
     mCurrent.SetBackgroundColor(Color::RED);
     mCurrent.SetProperty(Actor::Property::PARENT_ORIGIN, parentOrigin);
     mCurrent.SetProperty(Actor::Property::ANCHOR_POINT, anchorPoint);
-    mCurrent.SetProperty(Actor::Property::SIZE, currentViewSize);
-    mCurrent.SetProperty(Actor::Property::POSITION, currentViewPosition);
-    mCurrent.SetProperty(Actor::Property::SCALE, currentViewScale);
+    mCurrent.SetProperty(Actor::Property::SIZE, Vector3(currentViewSize));
+    mCurrent.SetProperty(Actor::Property::POSITION, Vector3(currentViewPosition));
+    mCurrent.SetProperty(Actor::Property::SCALE, Vector3(currentViewScale.x, currentViewScale.y, 1.0f));
 
     mCurrent.SetProperty(Actor::Property::INHERIT_POSITION, inheritPosition);
     mCurrent.SetProperty(Actor::Property::INHERIT_SCALE, inheritScale);
