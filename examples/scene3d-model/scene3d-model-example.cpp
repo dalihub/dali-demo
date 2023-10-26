@@ -41,54 +41,69 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-static constexpr int32_t NUM_OF_GLTF_MODELS = 7;
+struct ModelInfo
+{
+  const char*   name;      ///< The name of the model.
+  const Vector2 size;      ///< The size of the model
+  const float   yPosition; ///< The position of the model in the Y axis.
+};
 
-const char* gltf_list[7] =
+const ModelInfo gltf_list[] =
   {
     /**
      * For the BoxAnimated.glb
      * Donated by Cesium for glTF testing.
      * Take from https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/BoxAnimated
      */
-    "BoxAnimated.glb",
+    {"BoxAnimated.glb", Vector2(300.0f, 300.0f), 100.0f},
+    /**
+     * For the quantized Duck.gltf and its Assets
+     * Created by Sony Computer Entertainment Inc.
+     * Licensed under the SCEA Shared Source License, Version 1.0
+     * Take from https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/Duck/glTF-Quantized
+     */
+    {"Duck.gltf", Vector2(600.0f, 600.0f), 300.0f},
     /**
      * For the Lantern.gltf and its Assets
      * Donated by Microsoft for glTF testing
      * Created by Ryan Martin
      * Take from https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/Lantern
      */
-    "Lantern.gltf",
+    {"Lantern.gltf", Vector2(600.0f, 600.0f), 0.0f},
     /**
      * For the BoomBox.gltf and its Assets
      * Donated by Microsoft for glTF testing
      * Created by Ryan Martin
      * Take from https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/BoomBox
      */
-    "BoomBox.gltf",
+    {"BoomBox.gltf", Vector2(600.0f, 600.0f), 0.0f},
     /**
      * For the DamagedHelmet.glb
      * Battle Damaged Sci-fi Helmet - PBR by theblueturtle_, published under a
      * Creative Commons Attribution-NonCommercial license
      * https://sketchfab.com/models/b81008d513954189a063ff901f7abfe4
      */
-    "DamagedHelmet.glb",
+    {"DamagedHelmet.glb", Vector2(600.0f, 600.0f), 0.0f},
     /**
      * For the microphone.gltf and its Assets
      * Microphone GXL 066 Bafhcteks by Gistold, published under a
      * Creative Commons Attribution-NonCommercial license
      * https://sketchfab.com/models/5172dbe9281a45f48cee8c15bdfa1831
      */
-    "microphone.gltf",
+    {"microphone.gltf", Vector2(600.0f, 600.0f), 0.0f},
     /**
      * For the beer_model.dli and its Assets
      * This model includes a bottle of beer and cube box.
      */
-    "beer_model.dli",
+    {"beer_model.dli", Vector2(600.0f, 600.0f), 0.0f},
     /**
      * For the exercise_model.dli and its Assets
      * This model includes a sportsman
      */
-    "exercise_model.dli"};
+    {"exercise_model.dli", Vector2(600.0f, 600.0f), 0.0f},
+};
+
+const int32_t NUM_OF_GLTF_MODELS = sizeof(gltf_list) / sizeof(gltf_list[0]);
 
 /**
  * For the diffuse and specular cube map texture.
@@ -266,18 +281,11 @@ public:
     }
 
     std::string gltfUrl = modeldir;
-    gltfUrl += gltf_list[index];
+    gltfUrl += gltf_list[index].name;
 
     mModel = Dali::Scene3D::Model::New(gltfUrl);
-    if(index == 0u)
-    {
-      mModel.SetProperty(Dali::Actor::Property::SIZE, Vector2(300, 300));
-      mModel.SetProperty(Dali::Actor::Property::POSITION_Y, 100);
-    }
-    else
-    {
-      mModel.SetProperty(Dali::Actor::Property::SIZE, Vector2(600, 600));
-    }
+    mModel.SetProperty(Dali::Actor::Property::SIZE, gltf_list[index].size);
+    mModel.SetProperty(Dali::Actor::Property::POSITION_Y, gltf_list[index].yPosition);
     mModel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mModel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mModel.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
@@ -292,7 +300,7 @@ public:
     mReadyToLoad = true;
     if(mModel.GetAnimationCount() > 0)
     {
-      Animation animation = (std::string("exercise_model.dli") == gltf_list[mCurrentGlTF]) ? mModel.GetAnimation("idleToSquatClip_0") : mModel.GetAnimation(0u);
+      Animation animation = (std::string("exercise_model.dli") == gltf_list[mCurrentGlTF].name) ? mModel.GetAnimation("idleToSquatClip_0") : mModel.GetAnimation(0u);
       animation.Play();
       animation.SetLoopCount(0);
     }
