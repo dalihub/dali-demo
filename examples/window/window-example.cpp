@@ -33,10 +33,14 @@ class WindowExampleController : public ConnectionTracker
 public:
   WindowExampleController(Application& application)
   : mApplication(application),
-    manual_rotation_flag(false),
-    rotation_count(0),
+    manualRotationFlag(false),
+    rotationCount(0),
     rot(0),
-    bColor(0)
+    enableTimer(false),
+    bChangedOrientation(false),
+    isRotating(false),
+    bColor(false),
+    currentOrientation(Dali::WindowOrientation::NO_ORIENTATION_PREFERENCE)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &WindowExampleController::Create);
@@ -60,10 +64,10 @@ public:
     window.SetType(WindowType::NOTIFICATION);
     window.SetNotificationLevel(WindowNotificationLevel::MEDIUM);
 
-    currentOrientation   = Dali::WindowOrientation::PORTRAIT;
-    enableTimer          = false;
-    bChangedOrientation  = false;
-    manual_rotation_flag = false;
+    currentOrientation  = Dali::WindowOrientation::PORTRAIT;
+    enableTimer         = false;
+    bChangedOrientation = false;
+    manualRotationFlag  = false;
 
     // Add a text label to the window
     TextLabel textLabel = TextLabel::New("Window Example");
@@ -220,13 +224,13 @@ public:
   {
     if(touch.GetState(0) == PointState::DOWN)
     {
-      const int local_x  = static_cast<int>(touch.GetLocalPosition(0).x);
-      const int local_y  = static_cast<int>(touch.GetLocalPosition(0).y);
-      const int global_x = static_cast<int>(touch.GetScreenPosition(0).x);
-      const int global_y = static_cast<int>(touch.GetScreenPosition(0).y);
+      const int localX  = static_cast<int>(touch.GetLocalPosition(0).x);
+      const int localY  = static_cast<int>(touch.GetLocalPosition(0).y);
+      const int globalX = static_cast<int>(touch.GetScreenPosition(0).x);
+      const int globalY = static_cast<int>(touch.GetScreenPosition(0).y);
 
-      DALI_LOG_RELEASE_INFO("Main Window Touch Event : x:%d, y:%d\n", local_x, local_y);
-      DALI_LOG_RELEASE_INFO("global position: x:%d, y:%d\n", global_x, global_y);
+      DALI_LOG_RELEASE_INFO("Main Window Touch Event : x:%d, y:%d\n", localX, localY);
+      DALI_LOG_RELEASE_INFO("global position: x:%d, y:%d\n", globalX, globalY);
 
       Dali::Window       window     = mApplication.GetWindow();
       Window::WindowSize windowSize = window.GetSize();
@@ -234,44 +238,44 @@ public:
       DALI_LOG_RELEASE_INFO("window size: w:%d, h:%d\n", windowSize.GetWidth(), windowSize.GetHeight());
       DevelWindow::EnableFloatingMode(window, true);
 
-      if((local_x < MARGIN) && (local_y < MARGIN)) // left top corner
+      if((localX < MARGIN) && (localY < MARGIN)) // left top corner
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP_LEFT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP_LEFT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::TOP_LEFT);
       }
-      else if((local_x > (windowSize.GetWidth() - MARGIN)) && (local_y < MARGIN)) // rigth top corner
+      else if((localX > (windowSize.GetWidth() - MARGIN)) && (localY < MARGIN)) // rigth top corner
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP_RIGHT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP_RIGHT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::TOP_RIGHT);
       }
-      else if((local_x > MARGIN) && (local_x < (windowSize.GetWidth() - MARGIN)) && (local_y < MARGIN))
+      else if((localX > MARGIN) && (localX < (windowSize.GetWidth() - MARGIN)) && (localY < MARGIN))
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::TOP);
       }
-      else if((local_x < MARGIN) && (local_y < (windowSize.GetHeight() - MARGIN)) && (local_y > MARGIN))
+      else if((localX < MARGIN) && (localY < (windowSize.GetHeight() - MARGIN)) && (localY > MARGIN))
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::LEFT);
       }
-      else if((local_x > (windowSize.GetWidth() - MARGIN)) && (local_y < (windowSize.GetHeight() - MARGIN)) && (local_y > MARGIN))
+      else if((localX > (windowSize.GetWidth() - MARGIN)) && (localY < (windowSize.GetHeight() - MARGIN)) && (localY > MARGIN))
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: LEFT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: LEFT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::RIGHT);
       }
-      else if((local_x < MARGIN) && (local_y > (windowSize.GetHeight() - MARGIN))) // left bottom corner
+      else if((localX < MARGIN) && (localY > (windowSize.GetHeight() - MARGIN))) // left bottom corner
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: RIGHT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: RIGHT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::BOTTOM_LEFT);
       }
-      else if((local_x > (windowSize.GetWidth() - MARGIN)) && (local_y > (windowSize.GetHeight() - MARGIN))) // right bottom corner
+      else if((localX > (windowSize.GetWidth() - MARGIN)) && (localY > (windowSize.GetHeight() - MARGIN))) // right bottom corner
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: BOTTOM_RIGHT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: BOTTOM_RIGHT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::BOTTOM_RIGHT);
       }
       else
       {
-        DALI_LOG_RELEASE_INFO("RequestMoveToServer\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestMoveToServer\n", localX, localY);
         DevelWindow::RequestMoveToServer(window);
       }
     }
@@ -336,13 +340,13 @@ public:
   {
     if(touch.GetState(0) == PointState::DOWN)
     {
-      const int local_x  = static_cast<int>(touch.GetLocalPosition(0).x);
-      const int local_y  = static_cast<int>(touch.GetLocalPosition(0).y);
-      const int global_x = static_cast<int>(touch.GetScreenPosition(0).x);
-      const int global_y = static_cast<int>(touch.GetScreenPosition(0).y);
+      const int localX  = static_cast<int>(touch.GetLocalPosition(0).x);
+      const int localY  = static_cast<int>(touch.GetLocalPosition(0).y);
+      const int globalX = static_cast<int>(touch.GetScreenPosition(0).x);
+      const int globalY = static_cast<int>(touch.GetScreenPosition(0).y);
 
-      DALI_LOG_RELEASE_INFO("SubWindow Touch Event : x:%d, y:%d\n", local_x, local_y);
-      DALI_LOG_RELEASE_INFO("global position: x:%d, y:%d\n", global_x, global_y);
+      DALI_LOG_RELEASE_INFO("SubWindow Touch Event : x:%d, y:%d\n", localX, localY);
+      DALI_LOG_RELEASE_INFO("global position: x:%d, y:%d\n", globalX, globalY);
 
       Dali::Window       window     = mSecondWindow;
       Window::WindowSize windowSize = window.GetSize();
@@ -350,44 +354,44 @@ public:
       DALI_LOG_RELEASE_INFO("window size: w:%d, h:%d\n", windowSize.GetWidth(), windowSize.GetHeight());
       DevelWindow::EnableFloatingMode(window, true);
 
-      if((local_x < MARGIN) && (local_y < MARGIN)) // left top corner
+      if((localX < MARGIN) && (localY < MARGIN)) // left top corner
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP_LEFT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP_LEFT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::TOP_LEFT);
       }
-      else if((local_x > (windowSize.GetWidth() - MARGIN)) && (local_y < MARGIN)) // rigth top corner
+      else if((localX > (windowSize.GetWidth() - MARGIN)) && (localY < MARGIN)) // rigth top corner
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP_RIGHT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP_RIGHT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::TOP_RIGHT);
       }
-      else if((local_x > MARGIN) && (local_x < (windowSize.GetWidth() - MARGIN)) && (local_y < MARGIN))
+      else if((localX > MARGIN) && (localX < (windowSize.GetWidth() - MARGIN)) && (localY < MARGIN))
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::TOP);
       }
-      else if((local_x < MARGIN) && (local_y < (windowSize.GetHeight() - MARGIN)) && (local_y > MARGIN))
+      else if((localX < MARGIN) && (localY < (windowSize.GetHeight() - MARGIN)) && (localY > MARGIN))
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: TOP\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::LEFT);
       }
-      else if((local_x > (windowSize.GetWidth() - MARGIN)) && (local_y < (windowSize.GetHeight() - MARGIN)) && (local_y > MARGIN))
+      else if((localX > (windowSize.GetWidth() - MARGIN)) && (localY < (windowSize.GetHeight() - MARGIN)) && (localY > MARGIN))
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: LEFT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: LEFT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::RIGHT);
       }
-      else if((local_x < MARGIN) && (local_y > (windowSize.GetHeight() - MARGIN))) // left bottom corner
+      else if((localX < MARGIN) && (localY > (windowSize.GetHeight() - MARGIN))) // left bottom corner
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: RIGHT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: RIGHT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::BOTTOM_LEFT);
       }
-      else if((local_x > (windowSize.GetWidth() - MARGIN)) && (local_y > (windowSize.GetHeight() - MARGIN))) // right bottom corner
+      else if((localX > (windowSize.GetWidth() - MARGIN)) && (localY > (windowSize.GetHeight() - MARGIN))) // right bottom corner
       {
-        DALI_LOG_RELEASE_INFO("RequestResizeToServer: BOTTOM_RIGHT\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestResizeToServer: BOTTOM_RIGHT\n", localX, localY);
         DevelWindow::RequestResizeToServer(window, WindowResizeDirection::BOTTOM_RIGHT);
       }
       else
       {
-        DALI_LOG_RELEASE_INFO("RequestMoveToServer\n", local_x, local_y);
+        DALI_LOG_RELEASE_INFO("RequestMoveToServer\n", localX, localY);
         DevelWindow::RequestMoveToServer(window);
       }
     }
@@ -413,15 +417,15 @@ public:
       {
         DALI_LOG_RELEASE_INFO("Present Callback Test\n");
 
-        if(bColor == 0)
+        if(!bColor)
         {
           window.SetBackgroundColor(Color::WHITE);
-          bColor = 1;
+          bColor = true;
         }
         else
         {
           window.SetBackgroundColor(Color::BLACK);
-          bColor = 0;
+          bColor = false;
         }
 
         DevelWindow::AddFramePresentedCallback(window, std::unique_ptr<Dali::CallbackBase>(MakeCallback(this, &WindowExampleController::PresentedCallback)), count);
@@ -429,14 +433,14 @@ public:
       else if(event.GetKeyName() == "3")
       {
         DALI_LOG_RELEASE_INFO("Send AckWindowRotation test\n");
-        if(manual_rotation_flag == true)
+        if(manualRotationFlag == true)
         {
           if(isRotating)
           {
             DALI_LOG_RELEASE_INFO("Send AckWindowRotation in Key Event Callback\n");
             DevelWindow::SendRotationCompletedAcknowledgement(window);
-            manual_rotation_flag = false;
-            isRotating           = false;
+            manualRotationFlag = false;
+            isRotating         = false;
           }
           else
           {
@@ -446,7 +450,7 @@ public:
         else if(event.GetKeyName() == "4")
         {
           DALI_LOG_RELEASE_INFO("Set Manual Window Rotation Test\n");
-          if(manual_rotation_flag)
+          if(manualRotationFlag)
           {
             mTimer.Start();
           }
@@ -454,13 +458,13 @@ public:
           {
             mTimer.Stop();
           }
-          DALI_LOG_RELEASE_INFO("call SetNeedsRotationCompletedAcknowledgement with flag %d\n", manual_rotation_flag);
-          DevelWindow::SetNeedsRotationCompletedAcknowledgement(window, manual_rotation_flag);
+          DALI_LOG_RELEASE_INFO("call SetNeedsRotationCompletedAcknowledgement with flag %d\n", manualRotationFlag);
+          DevelWindow::SetNeedsRotationCompletedAcknowledgement(window, manualRotationFlag);
         }
         else
         {
-          DALI_LOG_RELEASE_INFO("set flag %d\n", manual_rotation_flag);
-          manual_rotation_flag = true;
+          DALI_LOG_RELEASE_INFO("set flag %d\n", manualRotationFlag);
+          manualRotationFlag = true;
         }
       }
       else if(event.GetKeyName() == "5")
@@ -555,21 +559,21 @@ public:
 
 private:
   Application& mApplication;
-  Control      mClipControl;
-  bool         manual_rotation_flag;
-  int          rotation_count;
-  int          rot;
-  Timer        mTimer;
-  TextLabel    mTextLabel2;
-  bool         enableTimer;
-  bool         bChangedOrientation;
-  bool         isRotating;
-  bool         bColor;
+  Control      mClipControl{};
+  bool         manualRotationFlag{false};
+  int          rotationCount{0};
+  int          rot{0};
+  Timer        mTimer{};
+  TextLabel    mTextLabel2{};
+  bool         enableTimer{false};
+  bool         bChangedOrientation{false};
+  bool         isRotating{false};
+  bool         bColor{false};
 
-  Dali::Window            mSecondWindow;
-  Dali::WindowOrientation currentOrientation;
+  Dali::Window            mSecondWindow{};
+  Dali::WindowOrientation currentOrientation{Dali::WindowOrientation::NO_ORIENTATION_PREFERENCE};
 
-  CallbackBase* mPresentCallback{};
+  CallbackBase* mPresentCallback{nullptr};
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
