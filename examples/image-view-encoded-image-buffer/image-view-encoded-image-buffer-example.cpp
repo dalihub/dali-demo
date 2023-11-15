@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,15 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/visuals/animated-vector-image-visual-actions-devel.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/public-api/image-loader/image-url.h>
 #include <dali-toolkit/public-api/image-loader/image.h>
 #include <dali/dali.h>
 #include <dali/public-api/adaptor-framework/encoded-image-buffer.h>
 #include <string>
+
 #include "shared/view.h"
 
 using namespace Dali;
@@ -37,9 +40,16 @@ const char* IMAGE_PATH[] = {
   DEMO_IMAGE_DIR "gallery-small-23.jpg",
   DEMO_IMAGE_DIR "woodEffect.jpg",
   DEMO_IMAGE_DIR "wood.png", // 32bits image
+  // DEMO_IMAGE_DIR "heartsframe.9.png", ///< Not implemented yet.
+  DEMO_IMAGE_DIR "dog-anim.webp",
+  DEMO_IMAGE_DIR "World.svg",        // svg image
+  DEMO_IMAGE_DIR "insta_camera.json" // lottie image
 };
 
 const unsigned int NUMBER_OF_RESOURCES = sizeof(IMAGE_PATH) / sizeof(char*);
+
+const unsigned int VECTOR_IMAGE_INDEX          = NUMBER_OF_RESOURCES - 2u;
+const unsigned int ANIMATED_VECTOR_IMAGE_INDEX = NUMBER_OF_RESOURCES - 1u;
 
 const unsigned int NUMBER_OF_IMAGES_ROW    = 3;
 const unsigned int NUMBER_OF_IMAGES_COLUMN = 2;
@@ -121,9 +131,23 @@ public:
 private:
   void UpdateImageUrl()
   {
-    mImageBuffer = ConvertFileToEncodedImageBuffer(IMAGE_PATH[mImageIndex]);
-    mImageUrl    = Image::GenerateUrl(mImageBuffer);
+    if(mImageIndex < NUMBER_OF_RESOURCES)
+    {
+      mImageBuffer = ConvertFileToEncodedImageBuffer(IMAGE_PATH[mImageIndex]);
+    }
+
+    if(mImageIndex == VECTOR_IMAGE_INDEX)
+    {
+      mImageBuffer.SetImageType(EncodedImageBuffer::ImageType::VECTOR_IMAGE);
+    }
+    else if(mImageIndex == ANIMATED_VECTOR_IMAGE_INDEX)
+    {
+      mImageBuffer.SetImageType(EncodedImageBuffer::ImageType::ANIMATED_VECTOR_IMAGE);
+    }
+
+    mImageUrl = Image::GenerateUrl(mImageBuffer);
   }
+
   void UpdateImageViews()
   {
     for(int i = 0; i < static_cast<int>(NUMBER_OF_IMAGES_ROW); i++)
@@ -167,6 +191,11 @@ private:
     imagePropertyMap.Insert(ImageVisual::Property::URL, mImageUrl.GetUrl());
 
     view.SetProperty(ImageView::Property::IMAGE, imagePropertyMap);
+
+    if(mImageIndex == ANIMATED_VECTOR_IMAGE_INDEX)
+    {
+      DevelControl::DoAction(view, ImageView::Property::IMAGE, DevelAnimatedVectorImageVisual::Action::PLAY, Property::Value());
+    }
 
     return view;
   }
