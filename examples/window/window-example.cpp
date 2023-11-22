@@ -528,7 +528,7 @@ public:
         // scissor test for Window Rotation
         // Toggle the clipping mode on mClippingControl if any other actor by pressing any key
         DALI_LOG_RELEASE_INFO("Scissor Test\n");
-        ClippingMode::Type currentMode{ClippingMode::DISABLED};
+        ClippingMode::Type currentMode;
         mClipControl.GetProperty(Actor::Property::CLIPPING_MODE).Get(currentMode);
         mClipControl.SetProperty(Actor::Property::CLIPPING_MODE,
                                  ((currentMode == ClippingMode::DISABLED) ? ClippingMode::CLIP_TO_BOUNDING_BOX : ClippingMode::DISABLED));
