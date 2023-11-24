@@ -38,6 +38,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   DaliTableView demo(app);
 
   demo.AddExample(Example("benchmark.example", DALI_DEMO_STR_TITLE_BENCHMARK));
+  demo.AddExample(Example("benchmark-2dphysics.example", DALI_DEMO_STR_TITLE_BENCHMARK_2D_PHYSICS));
   demo.AddExample(Example("camera-test.example", DALI_DEMO_STR_TITLE_CAMERA_TEST));
   demo.AddExample(Example("compressed-texture-formats.example", DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS));
   demo.AddExample(Example("homescreen-benchmark.example", DALI_DEMO_STR_TITLE_HOMESCREEN));
