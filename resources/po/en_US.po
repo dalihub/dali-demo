@@ -16,6 +16,9 @@ msgstr "Basic Light"
 msgid "DALI_DEMO_STR_TITLE_BENCHMARK"
 msgstr "ImageView Benchmark"
 
+msgid "DALI_DEMO_STR_TITLE_BENCHMARK_2D_PHYSICS"
+msgstr "2D Physics Benchmark"
+
 msgid "DALI_DEMO_STR_TITLE_BEZIER_CURVE"
 msgstr "Bezier Curve"
 
