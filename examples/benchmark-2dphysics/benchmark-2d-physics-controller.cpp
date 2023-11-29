@@ -62,6 +62,12 @@ const cpBitmask COLLISION_MASK{0xfF};
 
 const cpBitmask BALL_COLLIDES_WITH{BALL_GROUP | BOUNDS_GROUP};
 
+enum BenchmarkType
+{
+  ANIMATION,
+  PHYSICS_2D,
+};
+
 /**
  * @brief The physics demo using Chipmunk2D APIs.
  */
@@ -86,11 +92,31 @@ public:
     mWindow.GetRootLayer().TouchedSignal().Connect(this, &Physics2dBenchmarkController::OnTouched);
     mWindow.SetBackgroundColor(Color::DARK_SLATE_GRAY);
 
-    CreateAnimationSimulation();
+    mType = BenchmarkType::ANIMATION;
+
+    CreateSimulation();
 
     mTimer = Timer::New(ANIMATION_TIME);
     mTimer.TickSignal().Connect(this, &Physics2dBenchmarkController::AnimationSimFinished);
     mTimer.Start();
+  }
+
+  void CreateSimulation()
+  {
+    switch(mType)
+    {
+      case BenchmarkType::ANIMATION:
+      default:
+      {
+        CreateAnimationSimulation();
+        break;
+      }
+      case BenchmarkType::PHYSICS_2D:
+      {
+        CreatePhysicsSimulation();
+        break;
+      }
+    }
   }
 
   void CreateAnimationSimulation()
@@ -154,19 +180,26 @@ public:
 
   bool AnimationSimFinished()
   {
-    static bool first = true;
-    if(first)
+    switch(mType)
     {
-      UnparentAndReset(mAnimationSimRootActor);
-      mBallAnimation.Stop();
-      mBallAnimation.Clear();
-      first = false;
+      case BenchmarkType::ANIMATION:
+      default:
+      {
+        UnparentAndReset(mAnimationSimRootActor);
+        mBallAnimation.Stop();
+        mBallAnimation.Clear();
 
-      CreatePhysicsSimulation();
-      return true;
+        mType = BenchmarkType::PHYSICS_2D;
+
+        CreateSimulation();
+        return true;
+      }
+      case BenchmarkType::PHYSICS_2D:
+      {
+        mApplication.Quit();
+        break;
+      }
     }
-
-    mApplication.Quit();
     return false;
   }
 
@@ -189,7 +222,7 @@ public:
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
     {
-      int index        = actor["index"];
+      int index              = actor["index"];
       mBallVelocity[index].x = fabsf(mBallVelocity[index].x);
       ContinueAnimation();
     }
@@ -200,7 +233,7 @@ public:
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
     {
-      int index        = actor["index"];
+      int index              = actor["index"];
       mBallVelocity[index].x = -fabsf(mBallVelocity[index].x);
       ContinueAnimation();
     }
@@ -211,7 +244,7 @@ public:
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
     {
-      int index        = actor["index"];
+      int index              = actor["index"];
       mBallVelocity[index].y = -fabsf(mBallVelocity[index].y);
       ContinueAnimation();
     }
@@ -222,7 +255,7 @@ public:
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
     {
-      int index        = actor["index"];
+      int index              = actor["index"];
       mBallVelocity[index].y = fabsf(mBallVelocity[index].y);
       ContinueAnimation();
     }
@@ -339,15 +372,32 @@ public:
 
   void OnTerminate(Application& application)
   {
+    UnparentAndReset(mAnimationSimRootActor);
     UnparentAndReset(mPhysicsRoot);
   }
 
   void OnWindowResize(Window window, Window::WindowSize newSize)
   {
-    auto     scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
-    cpSpace* space          = scopedAccessor->GetNative().Get<cpSpace*>();
+    switch(mType)
+    {
+      case BenchmarkType::ANIMATION:
+      default:
+      {
+        // TODO : Implement here if you want.
+        break;
+      }
+      case BenchmarkType::PHYSICS_2D:
+      {
+        if(mPhysicsAdaptor)
+        {
+          auto     scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
+          cpSpace* space          = scopedAccessor->GetNative().Get<cpSpace*>();
 
-    CreateBounds(space, newSize);
+          CreateBounds(space, newSize);
+        }
+        break;
+      }
+    }
   }
 
   bool OnTouched(Dali::Actor actor, const Dali::TouchEvent& touch)
@@ -370,6 +420,8 @@ public:
 private:
   Application& mApplication;
   Window       mWindow;
+
+  BenchmarkType mType{BenchmarkType::ANIMATION};
 
   PhysicsAdaptor            mPhysicsAdaptor;
   std::vector<PhysicsActor> mBalls;
