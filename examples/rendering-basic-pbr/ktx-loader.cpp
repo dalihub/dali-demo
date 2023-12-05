@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,7 @@ bool LoadCubeMapFromKtxFile(const std::string& path, CubeData& cubedata)
   }
 
   // Skip the key-values:
-  if(fseek(fp, header.bytesOfKeyValueData, SEEK_CUR))
+  if(fseek(fp, (long int)(header.bytesOfKeyValueData), SEEK_CUR))
   {
     return false;
   }
