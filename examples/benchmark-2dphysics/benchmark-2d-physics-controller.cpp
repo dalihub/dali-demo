@@ -27,6 +27,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <unistd.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit::Physics;
@@ -74,8 +75,9 @@ enum BenchmarkType
 class Physics2dBenchmarkController : public ConnectionTracker
 {
 public:
-  Physics2dBenchmarkController(Application& app, int numberOfBalls)
+  Physics2dBenchmarkController(Application& app, BenchmarkType startType, int numberOfBalls)
   : mApplication(app),
+    mType(startType),
     mBallNumber(numberOfBalls)
   {
     app.InitSignal().Connect(this, &Physics2dBenchmarkController::OnInit);
@@ -91,8 +93,6 @@ public:
     mWindow.KeyEventSignal().Connect(this, &Physics2dBenchmarkController::OnKeyEv);
     mWindow.GetRootLayer().TouchedSignal().Connect(this, &Physics2dBenchmarkController::OnTouched);
     mWindow.SetBackgroundColor(Color::DARK_SLATE_GRAY);
-
-    mType = BenchmarkType::ANIMATION;
 
     CreateSimulation();
 
@@ -201,6 +201,8 @@ public:
 
   void CreateAnimationSimulation()
   {
+    DALI_LOG_RELEASE_INFO("Creating animation simulation with %d balls\n", mBallNumber);
+
     Window::WindowSize windowSize = mWindow.GetSize();
     mBallActors.resize(mBallNumber);
     mBallVelocity.resize(mBallNumber);
@@ -331,6 +333,8 @@ public:
 
   void CreatePhysicsSimulation()
   {
+    DALI_LOG_RELEASE_INFO("Creating physics simulation with %d balls\n", mBallNumber);
+
     Window::WindowSize windowSize = mWindow.GetSize();
 
     // Map Physics space (origin bottom left, +ve Y up)
@@ -466,14 +470,36 @@ int DALI_EXPORT_API main(int argc, char** argv)
 {
   setenv("DALI_FPS_TRACKING", "5", 1);
   Application application = Application::New(&argc, &argv);
+  BenchmarkType startType = BenchmarkType::ANIMATION;
 
   int numberOfBalls = DEFAULT_BALL_COUNT;
-  if(argc > 1)
+  int opt=0;
+  optind=1;
+  while((opt=getopt(argc, argv, "ap")) != -1)
   {
-    numberOfBalls = atoi(argv[1]);
+    switch(opt)
+    {
+      case 'a':
+        startType = BenchmarkType::ANIMATION;
+        break;
+      case 'p':
+        startType = BenchmarkType::PHYSICS_2D;
+        break;
+      case 1:
+        // Should only trigger if optstring argument starts with "-", but check it anyway.
+        numberOfBalls = atoi(optarg);
+        break;
+      default:
+        fprintf(stderr, "Usage: %s [-p][-a] [n-balls]\n", argv[0]);
+        exit(1);
+    }
+  }
+  if(optind < argc)
+  {
+    numberOfBalls = atoi(argv[optind]);
   }
 
-  Physics2dBenchmarkController controller(application, numberOfBalls);
+  Physics2dBenchmarkController controller(application, startType, numberOfBalls);
   application.MainLoop();
   return 0;
 }
