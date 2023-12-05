@@ -108,22 +108,103 @@ public:
       case BenchmarkType::ANIMATION:
       default:
       {
+        DALI_LOG_ERROR("CreateAnimationSimulation\n");
         CreateAnimationSimulation();
         break;
       }
       case BenchmarkType::PHYSICS_2D:
       {
+        DALI_LOG_ERROR("CreatePhysicsSimulation\n");
         CreatePhysicsSimulation();
         break;
       }
     }
   }
 
+  bool AnimationSimFinished()
+  {
+    switch(mType)
+    {
+      case BenchmarkType::ANIMATION:
+      default:
+      {
+        UnparentAndReset(mAnimationSimRootActor);
+        for(auto&& animation : mBallAnimations)
+        {
+          animation.Stop();
+          animation.Clear();
+        }
+        mBallAnimations.clear();
+
+        mType = BenchmarkType::PHYSICS_2D;
+
+        CreateSimulation();
+        return true;
+      }
+      case BenchmarkType::PHYSICS_2D:
+      {
+        mApplication.Quit();
+        break;
+      }
+    }
+    return false;
+  }
+
+  void OnTerminate(Application& application)
+  {
+    UnparentAndReset(mAnimationSimRootActor);
+    UnparentAndReset(mPhysicsRoot);
+  }
+
+  void OnWindowResize(Window window, Window::WindowSize newSize)
+  {
+    switch(mType)
+    {
+      case BenchmarkType::ANIMATION:
+      default:
+      {
+        // TODO : Implement here if you want.
+        break;
+      }
+      case BenchmarkType::PHYSICS_2D:
+      {
+        if(mPhysicsAdaptor)
+        {
+          auto     scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
+          cpSpace* space          = scopedAccessor->GetNative().Get<cpSpace*>();
+
+          CreateBounds(space, newSize);
+        }
+        break;
+      }
+    }
+  }
+
+  bool OnTouched(Dali::Actor actor, const Dali::TouchEvent& touch)
+  {
+    mApplication.Quit();
+    return false;
+  }
+
+  void OnKeyEv(const Dali::KeyEvent& event)
+  {
+    if(event.GetState() == KeyEvent::DOWN)
+    {
+      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
+      {
+        mApplication.Quit();
+      }
+    }
+  }
+
+  // BenchmarkType::ANIMATION
+
   void CreateAnimationSimulation()
   {
     Window::WindowSize windowSize = mWindow.GetSize();
     mBallActors.resize(mBallNumber);
     mBallVelocity.resize(mBallNumber);
+    mBallAnimations.resize(mBallNumber);
 
     mAnimationSimRootActor = Layer::New();
     mAnimationSimRootActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -172,49 +253,22 @@ public:
 
       PropertyNotification bottomNotify = mBallActors[i].AddPropertyNotification(Actor::Property::POSITION_Y, GreaterThanCondition(height - margin));
       bottomNotify.NotifySignal().Connect(this, &Physics2dBenchmarkController::OnHitBottomWall);
+
+      ContinueAnimation(i);
     }
 
     title.RaiseToTop();
-    ContinueAnimation();
   }
 
-  bool AnimationSimFinished()
+  void ContinueAnimation(int index)
   {
-    switch(mType)
+    if(mBallAnimations[index])
     {
-      case BenchmarkType::ANIMATION:
-      default:
-      {
-        UnparentAndReset(mAnimationSimRootActor);
-        mBallAnimation.Stop();
-        mBallAnimation.Clear();
-
-        mType = BenchmarkType::PHYSICS_2D;
-
-        CreateSimulation();
-        return true;
-      }
-      case BenchmarkType::PHYSICS_2D:
-      {
-        mApplication.Quit();
-        break;
-      }
+      mBallAnimations[index].Clear();
     }
-    return false;
-  }
-
-  void ContinueAnimation()
-  {
-    if(mBallAnimation)
-    {
-      mBallAnimation.Clear();
-    }
-    mBallAnimation = Animation::New(MAX_ANIMATION_DURATION);
-    for(int i = 0; i < mBallNumber; ++i)
-    {
-      mBallAnimation.AnimateBy(Property(mBallActors[i], Actor::Property::POSITION), mBallVelocity[i] * MAX_ANIMATION_DURATION);
-    }
-    mBallAnimation.Play();
+    mBallAnimations[index] = Animation::New(MAX_ANIMATION_DURATION);
+    mBallAnimations[index].AnimateBy(Property(mBallActors[index], Actor::Property::POSITION), mBallVelocity[index] * MAX_ANIMATION_DURATION);
+    mBallAnimations[index].Play();
   }
 
   void OnHitLeftWall(PropertyNotification& source)
@@ -222,9 +276,12 @@ public:
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
     {
-      int index              = actor["index"];
-      mBallVelocity[index].x = fabsf(mBallVelocity[index].x);
-      ContinueAnimation();
+      int index = actor["index"];
+      if(mBallVelocity[index].x < 0.0f)
+      {
+        mBallVelocity[index].x = fabsf(mBallVelocity[index].x);
+        ContinueAnimation(index);
+      }
     }
   }
 
@@ -233,9 +290,12 @@ public:
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
     {
-      int index              = actor["index"];
-      mBallVelocity[index].x = -fabsf(mBallVelocity[index].x);
-      ContinueAnimation();
+      int index = actor["index"];
+      if(mBallVelocity[index].x > 0.0f)
+      {
+        mBallVelocity[index].x = -fabsf(mBallVelocity[index].x);
+        ContinueAnimation(index);
+      }
     }
   }
 
@@ -244,9 +304,12 @@ public:
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
     {
-      int index              = actor["index"];
-      mBallVelocity[index].y = -fabsf(mBallVelocity[index].y);
-      ContinueAnimation();
+      int index = actor["index"];
+      if(mBallVelocity[index].y > 0.0f)
+      {
+        mBallVelocity[index].y = -fabsf(mBallVelocity[index].y);
+        ContinueAnimation(index);
+      }
     }
   }
 
@@ -255,11 +318,16 @@ public:
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
     {
-      int index              = actor["index"];
-      mBallVelocity[index].y = fabsf(mBallVelocity[index].y);
-      ContinueAnimation();
+      int index = actor["index"];
+      if(mBallVelocity[index].y < 0.0f)
+      {
+        mBallVelocity[index].y = fabsf(mBallVelocity[index].y);
+        ContinueAnimation(index);
+      }
     }
   }
+
+  // BenchmarkType::PHYSICS_2D
 
   void CreatePhysicsSimulation()
   {
@@ -370,53 +438,6 @@ public:
     return shape;
   }
 
-  void OnTerminate(Application& application)
-  {
-    UnparentAndReset(mAnimationSimRootActor);
-    UnparentAndReset(mPhysicsRoot);
-  }
-
-  void OnWindowResize(Window window, Window::WindowSize newSize)
-  {
-    switch(mType)
-    {
-      case BenchmarkType::ANIMATION:
-      default:
-      {
-        // TODO : Implement here if you want.
-        break;
-      }
-      case BenchmarkType::PHYSICS_2D:
-      {
-        if(mPhysicsAdaptor)
-        {
-          auto     scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
-          cpSpace* space          = scopedAccessor->GetNative().Get<cpSpace*>();
-
-          CreateBounds(space, newSize);
-        }
-        break;
-      }
-    }
-  }
-
-  bool OnTouched(Dali::Actor actor, const Dali::TouchEvent& touch)
-  {
-    mApplication.Quit();
-    return false;
-  }
-
-  void OnKeyEv(const Dali::KeyEvent& event)
-  {
-    if(event.GetState() == KeyEvent::DOWN)
-    {
-      if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
-      {
-        mApplication.Quit();
-      }
-    }
-  }
-
 private:
   Application& mApplication;
   Window       mWindow;
@@ -434,11 +455,11 @@ private:
   cpShape*                  mTopBound{nullptr};
   cpShape*                  mBottomBound{nullptr};
 
-  std::vector<Actor>   mBallActors;
-  std::vector<Vector3> mBallVelocity;
-  int                  mBallNumber;
-  Animation            mBallAnimation;
-  Timer                mTimer;
+  std::vector<Actor>     mBallActors;
+  std::vector<Vector3>   mBallVelocity;
+  std::vector<Animation> mBallAnimations;
+  int                    mBallNumber;
+  Timer                  mTimer;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
