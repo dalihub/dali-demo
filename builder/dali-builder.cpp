@@ -140,7 +140,7 @@ bool FileWatcher::FileHasChanged(void)
   {
     if(buf.st_mtime > mLastTime)
     {
-      mLastTime = buf.st_mtime;
+      mLastTime = std::time_t(buf.st_mtime);
       return true;
     }
     else
