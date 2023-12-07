@@ -376,6 +376,7 @@ public:
 
   PhysicsActor CreateBall(cpSpace* space)
   {
+    Window::WindowSize windowSize = mWindow.GetSize();
     const float BALL_MASS       = 10.0f;
     const float BALL_RADIUS     = BALL_SIZE.x * 0.25f;
     const float BALL_ELASTICITY = 1.0f;
@@ -384,7 +385,13 @@ public:
     auto ball                   = Toolkit::ImageView::New(BALL_IMAGES[rand() % 4]);
     ball[Actor::Property::NAME] = "Ball";
     ball[Actor::Property::SIZE] = BALL_SIZE * 0.5f;
-    cpBody* body                = cpSpaceAddBody(space, cpBodyNew(BALL_MASS, cpMomentForCircle(BALL_MASS, 0.0f, BALL_RADIUS, cpvzero)));
+    const float moment = cpMomentForCircle(BALL_MASS, 0.0f, BALL_RADIUS, cpvzero);
+    cpBody* body = cpBodyNew(BALL_MASS, moment);
+    const float fw = (windowSize.GetWidth() - BALL_RADIUS);
+    const float fh = (windowSize.GetHeight() - BALL_RADIUS);
+    cpBodySetPosition(body, cpv(Random::Range(0, fw), Random::Range(0, fh)));
+    cpBodySetVelocity(body, cpv(Random::Range(-100.0, 100.0), Random::Range(-100.0, 100.0)));
+    cpSpaceAddBody(space, body);
 
     cpShape* shape = cpSpaceAddShape(space, cpCircleShapeNew(body, BALL_RADIUS, cpvzero));
     cpShapeSetElasticity(shape, BALL_ELASTICITY);
@@ -392,18 +399,6 @@ public:
 
     PhysicsActor physicsBall = mPhysicsAdaptor.AddActorBody(ball, body);
 
-    Window::WindowSize windowSize = mWindow.GetSize();
-
-    const float fw = 0.5f * (windowSize.GetWidth() - BALL_RADIUS);
-    const float fh = 0.5f * (windowSize.GetHeight() - BALL_RADIUS);
-
-    // Example of setting physics property on update thread
-    physicsBall.AsyncSetPhysicsPosition(Vector3(Random::Range(-fw, fw), Random::Range(-fh, -fh * 0.5), 0.0f));
-
-    // Example of queuing a chipmunk method to run on the update thread
-    mPhysicsAdaptor.Queue([body]() {
-      cpBodySetVelocity(body, cpv(Random::Range(-100.0, 100.0), Random::Range(-100.0, 100.0)));
-    });
     return physicsBall;
   }
 
