@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,6 +54,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("text-overlap.example", DALI_DEMO_STR_TITLE_TEXT_OVERLAP));
   demo.AddExample(Example("visual-fitting-mode.example", DALI_DEMO_STR_TITLE_VISUAL_FITTING_MODE));
   demo.AddExample(Example("visual-transitions.example", DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS));
+  demo.AddExample(Example("scene-view-test.example", DALI_DEMO_STR_TITLE_SCENE_VIEW_TEST));
   demo.AddExample(Example("simple-scroll-view.example", DALI_DEMO_STR_TITLE_SIMPLE_SCROLL_VIEW));
   demo.AddExample(Example("simple-text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL));
   demo.AddExample(Example("simple-text-field.example", DALI_DEMO_STR_TITLE_TEXT_FIELD));
