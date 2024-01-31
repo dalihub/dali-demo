@@ -232,6 +232,9 @@ msgstr "Renderer Stencil"
 msgid "DALI_DEMO_STR_TITLE_SCENE_VIEW"
 msgstr "Scene View"
 
+msgid "DALI_DEMO_STR_TITLE_SCENE_VIEW_TEST"
+msgstr "Scene View Test"
+
 msgid "DALI_DEMO_STR_TITLE_SCENE3D"
 msgstr "Scene3D"
 
