@@ -116,25 +116,30 @@ private:
 
     if(PointState::DOWN == state)
     {
-      if(!mActivate)
-      {
-        mActivate = true;
-        mGaussianBlurView.Activate();
-
-        mOnLabel.SetProperty(Actor::Property::VISIBLE, true);
-        mOffLabel.SetProperty(Actor::Property::VISIBLE, false);
-      }
-      else
-      {
-        mActivate = false;
-        mGaussianBlurView.Deactivate();
-
-        mOnLabel.SetProperty(Actor::Property::VISIBLE, false);
-        mOffLabel.SetProperty(Actor::Property::VISIBLE, true);
-      }
+      ToggleBlurState();
     }
 
     return true;
+  }
+
+  void ToggleBlurState()
+  {
+    if(!mActivate)
+    {
+      mActivate = true;
+      mGaussianBlurView.Activate();
+
+      mOnLabel.SetProperty(Actor::Property::VISIBLE, true);
+      mOffLabel.SetProperty(Actor::Property::VISIBLE, false);
+    }
+    else
+    {
+      mActivate = false;
+      mGaussianBlurView.Deactivate();
+
+      mOnLabel.SetProperty(Actor::Property::VISIBLE, false);
+      mOffLabel.SetProperty(Actor::Property::VISIBLE, true);
+    }
   }
 
   void OnKeyEvent(const KeyEvent& event)
@@ -144,6 +149,10 @@ private:
       if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
+      }
+      else if(!event.GetKeyName().compare("1"))
+      {
+        ToggleBlurState();
       }
     }
   }
