@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,11 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include "native-renderer.h"
+#include <dali/integration-api/debug.h>
 
+#include <dali/public-api/render-tasks/render-task-list.h>
 using namespace Dali;
-
+using namespace Dali::Toolkit;
 namespace
 {
 /**
@@ -44,8 +46,13 @@ const uint32_t DR_THREAD_ENABLED = GetEnvInt("DR_THREAD_ENABLED", 0);
  *
  * When set to 1 the native image is used for direct rendering (rendering is parallel by default).
  */
-const Toolkit::GlView::BackendMode BACKEND_MODE =
-  Toolkit::GlView::BackendMode(GetEnvInt("EGL_ENABLED", 0));
+
+/**
+ * Environment variable: UNSAFE_MODE (default: 1)
+ *
+ * Enables/disables rendering within GL window context rather than creating isolated context
+ */
+
 } // namespace
 
 /**
@@ -63,6 +70,7 @@ struct RenderView
     auto w = mWindow.GetSize().GetWidth();
     auto h = mWindow.GetSize().GetHeight();
 
+    mWindow.SetBackgroundColor(Color::BLUE);
     NativeRenderer::CreateInfo info{};
     info.clearColor = {0, 0, 0, 0};
     info.name       = "DR";
@@ -72,6 +80,15 @@ struct RenderView
     info.width      = w;
     info.height     = h;
     info.threaded   = (mode != Toolkit::GlView::BackendMode::EGL_IMAGE_OFFSCREEN_RENDERING) && (DR_THREAD_ENABLED);
+
+    // turn off threaded mode if rendering is direct
+    if(mode == Dali::Toolkit::GlView::BackendMode::UNSAFE_DIRECT_RENDERING)
+    {
+      DALI_LOG_RELEASE_INFO("Threaded and offscreen rendering modes cannot be used with UNSAFE_RENDERING_DIRECT backend!\n");
+      DALI_LOG_RELEASE_INFO("Setting threading and offscreen to false!\n");
+      info.threaded = false;
+      info.offscreen = false;
+    }
 
     // Enable threaded rendering
     if(info.threaded && mode == Dali::Toolkit::GlView::BackendMode::DIRECT_RENDERING)
@@ -96,6 +113,30 @@ struct RenderView
     glView.SetProperty(Actor::Property::SIZE, Size(w, h));
     glView.SetProperty(Actor::Property::POSITION, pos);
     glView.SetRenderingMode(Toolkit::GlView::RenderingMode::CONTINUOUS);
+
+    std::string strMode = "Backend: Unknown"; // shouldn't happen
+    if(mode == Dali::Toolkit::GlView::BackendMode::UNSAFE_DIRECT_RENDERING)
+    {
+      strMode = "Backend: UNSAFE_DIRECT_RENDERING";
+    }
+    else if(mode == Dali::Toolkit::GlView::BackendMode::DIRECT_RENDERING)
+    {
+      strMode = "Backend: DIRECT_RENDERING (isolated context)";
+    }
+    else if(mode == Dali::Toolkit::GlView::BackendMode::EGL_IMAGE_OFFSCREEN_RENDERING)
+    {
+      strMode = "Backend: EGL_IMAGE_OFFSCREEN_RENDERING";
+    }
+    strMode += ", threaded = " + std::to_string(info.threaded) + ", offscreen = " + std::to_string(info.offscreen);
+
+    TextLabel textLabel = TextLabel::New(strMode);
+    textLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
+    textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
+    textLabel.SetProperty(Dali::Actor::Property::NAME, "label");
+    textLabel.SetProperty(Dali::Actor::Property::POSITION, Vector2(0, 0));
+    glView.Add(textLabel);
+
     mWindow.Add(glView);
 
     mGlView = glView;
@@ -137,7 +178,21 @@ public:
     window.GetRootLayer().TouchedSignal().Connect(this, &DirectRenderingExampleController::OnTouch);
 
     mDRView = std::make_unique<RenderView>(window);
-    mDRView->Create(Vector2::ZERO, BACKEND_MODE);
+
+    bool eglMode = GetEnvInt("EGL_ENABLED", 0);
+    bool glDirectMode = GetEnvInt("UNSAFE_MODE", 1);
+
+    Toolkit::GlView::BackendMode mode(Dali::Toolkit::GlView::BackendMode::UNSAFE_DIRECT_RENDERING);
+    if(eglMode)
+    {
+      mode = Dali::Toolkit::GlView::BackendMode::EGL_IMAGE_OFFSCREEN_RENDERING;
+    }
+    else if(!glDirectMode)
+    {
+      mode = Dali::Toolkit::GlView::BackendMode::DIRECT_RENDERING;
+    }
+
+    mDRView->Create(Vector2::ZERO, mode);
   }
 
   bool OnTouch(Actor actor, const TouchEvent& touch)
