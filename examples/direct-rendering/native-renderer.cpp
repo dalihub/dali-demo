@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -372,18 +372,25 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
                   mCreateInfo.clearColor[2],
                   mCreateInfo.clearColor[3]));
   {
-    GL(glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT));
+    GL(glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT));
   }
   GL(glUseProgram(mProgramId));
+  // unbind VAO
+  GL(glBindVertexArray(0));
+  srand(10);
+
+  const auto maxCubes = int(MAX_CUBES);
+  GL(glBindBuffer(GL_ARRAY_BUFFER, 0));
+  GL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+  GL(glBindBuffer(GL_COPY_READ_BUFFER, 0));
+  GL(glBindBuffer(GL_COPY_WRITE_BUFFER, 0));
+
+
+
   GL(glVertexAttribPointer(mVertexLocation, 3, GL_FLOAT, GL_FALSE, 0, CUBE_VERTICES));
   GL(glEnableVertexAttribArray(mVertexLocation));
   GL(glVertexAttribPointer(mVertexColourLocation, 3, GL_FLOAT, GL_FALSE, 0, CUBE_COLOURS));
   GL(glEnableVertexAttribArray(mVertexColourLocation));
-
-  srand(10);
-
-  const auto maxCubes = int(MAX_CUBES);
-
   for(int i = 0; i < int(maxCubes); ++i)
   {
     GL(matrixIdentityFunction(mModelViewMatrix));
