@@ -15,7 +15,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/integration-api/adaptors/adaptor.h>
+#include <dali/integration-api/adaptor-framework/adaptor.h>
 #include <dali/devel-api/adaptor-framework/application-devel.h>
 #include <dali-toolkit/devel-api/layouting/linear-layout.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
