@@ -325,9 +325,6 @@
 	<ui-application appid="simple-text-label.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-label.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Simple Text Label</label>
 	</ui-application>
-	<ui-application appid="simple-text-renderer.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-renderer.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Simple Text Renderer</label>
-	</ui-application>
 	<ui-application appid="simple-text-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Visual</label>
 	</ui-application>
