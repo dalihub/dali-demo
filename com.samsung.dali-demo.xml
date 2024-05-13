@@ -295,6 +295,9 @@
 	<ui-application appid="rendering-triangle.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-triangle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Rendering Triangle</label>
 	</ui-application>
+	<ui-application appid="scene-view-test.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene-view-test.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Scene View Test</label>
+	</ui-application>
 	<ui-application appid="scene-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scene View</label>
 	</ui-application>
@@ -324,9 +327,6 @@
 	</ui-application>
 	<ui-application appid="simple-text-label.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-label.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Simple Text Label</label>
-	</ui-application>
-	<ui-application appid="simple-text-renderer.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-renderer.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Simple Text Renderer</label>
 	</ui-application>
 	<ui-application appid="simple-text-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/simple-text-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Visual</label>

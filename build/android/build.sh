@@ -36,7 +36,7 @@ if [ ! -d "$ANDROID_SDK" ]; then
     unzip -q $androidCommandLineToolsPkgName
     SDK_MANAGER="$ROOT_DIR/Android/Sdk/cmdline-tools/bin/sdkmanager --sdk_root=$ROOT_DIR/Android/Sdk $SdbProxyOptions"
     $SDK_MANAGER --update
-    yes | $SDK_MANAGER "platform-tools" "platforms;android-29" "build-tools;29.0.2" "cmake;3.10.2.4988404" "ndk-bundle" "ndk;22.1.7171670"
+    yes | $SDK_MANAGER "platform-tools" "platforms;android-30" "build-tools;33.0.1" "cmake;3.22.1" "ndk-bundle" "ndk;25.1.8937393"
     cd -
   fi
 fi
