@@ -195,6 +195,21 @@ ENDIF()
 #Create resources location file
 CONFIGURE_FILE( resources-location.in ${DEMO_SHARED}/resources-location.cpp )
 
+#Replace @DEMO_STYLE_IMAGE_DIR@ in following files
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/demo-theme.json.in ${LOCAL_STYLE_DIR}/demo-theme.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/animated-gradient-call-active-style.json.in ${LOCAL_STYLE_DIR}/animated-gradient-call-active-style.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/contact-cards-example-theme.json.in ${LOCAL_STYLE_DIR}/contact-cards-example-theme.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/progress-bar-example-theme.json.in ${LOCAL_STYLE_DIR}/progress-bar-example-theme.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/simple-example-theme.json.in ${LOCAL_STYLE_DIR}/simple-example-theme.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/style-example-theme-one.json.in ${LOCAL_STYLE_DIR}/style-example-theme-one.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/style-example-theme-two.json.in ${LOCAL_STYLE_DIR}/style-example-theme-two.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/style-example-theme-three.json.in ${LOCAL_STYLE_DIR}/style-example-theme-three.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/tooltip-example-theme.json.in ${LOCAL_STYLE_DIR}/tooltip-example-theme.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/basic-light-theme.json.in ${LOCAL_STYLE_DIR}/basic-light-theme.json )
+CONFIGURE_FILE( ${LOCAL_STYLE_DIR}/text-editor-example-theme.json.in ${LOCAL_STYLE_DIR}/text-editor-example-theme.json )
+MESSAGE("Configured ${LOCAL_STYLE_DIR}/style-example-theme<>.json files")
+
+
 MESSAGE("Installing from: ${LOCAL_STYLE_DIR}")
 FILE(GLOB LOCAL_STYLES_LIST "${LOCAL_STYLE_DIR}/*.json")
 FOREACH(flag ${LOCAL_STYLES_LIST})
