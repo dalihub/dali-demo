@@ -94,6 +94,9 @@ FittingMode::Type NextScalingMode(FittingMode::Type oldMode)
       newMode = FittingMode::FIT_HEIGHT;
       break;
     case FittingMode::FIT_HEIGHT:
+      newMode = FittingMode::VISUAL_FITTING;
+      break;
+    case FittingMode::VISUAL_FITTING:
       newMode = FittingMode::SHRINK_TO_FIT;
       break;
   }
