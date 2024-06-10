@@ -464,7 +464,7 @@ std::vector<unsigned char> glTF::GetMeshAttributeBuffer(const glTF_Mesh& mesh, c
   std::vector<Data> data{};
   for(const auto& attrType : attrTypes)
   {
-    std::find_if(mesh.attributes.begin(), mesh.attributes.end(), [&data, &attrType](const std::pair<glTFAttributeType, uint32_t>& item) {
+    (void)std::find_if(mesh.attributes.begin(), mesh.attributes.end(), [&data, &attrType](const std::pair<glTFAttributeType, uint32_t>& item) {
       if(item.first == attrType)
       {
         data.emplace_back();
