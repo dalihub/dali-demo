@@ -19,6 +19,7 @@ OPTION(ENABLE_EXPORTALL          "Enable Export all symbols" OFF)
 OPTION(ENABLE_DEBUG              "Enable Debug" OFF)
 OPTION(ENABLE_TRACE              "Enable Trace" OFF)
 OPTION(ENABLE_PKG_CONFIGURE      "Use pkgconfig" ON)
+OPTION(ENABLE_VULKAN             "Use Vulkan instead of GLES" OFF)
 OPTION(INTERNATIONALIZATION      "Internationalization demo string names" ON)
 
 SET(ROOT_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..)
