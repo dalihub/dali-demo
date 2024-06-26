@@ -183,3 +183,6 @@ msgstr "PBR"
 
 msgid "DALI_DEMO_STR_TITLE_SCENE3D_MODEL"
 msgstr "Scene3D Model"
+
+msgid "DALI_DEMO_STR_TITLE_SCENE3D_PANEL"
+msgstr "Scene3D Panel"

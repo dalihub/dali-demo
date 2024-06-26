@@ -235,6 +235,9 @@ msgstr "Scene3D Light"
 msgid "DALI_DEMO_STR_TITLE_SCENE3D_MODEL"
 msgstr "Scene3D Model"
 
+msgid "DALI_DEMO_STR_TITLE_SCENE3D_PANEL"
+msgstr "Scene3D Panel"
+
 msgid "DALI_DEMO_STR_TITLE_SCRIPT_BASED_UI"
 msgstr "Script-based UI"
 
