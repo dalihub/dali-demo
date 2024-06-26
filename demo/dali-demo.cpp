@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,6 +59,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("renderer-stencil.example", DALI_DEMO_STR_TITLE_RENDERER_STENCIL));
   demo.AddExample(Example("rendering-skybox.example", DALI_DEMO_STR_TITLE_SKYBOX));
   demo.AddExample(Example("rendering-basic-pbr.example", DALI_DEMO_STR_TITLE_PBR));
+  demo.AddExample(Example("render-effects.example", DALI_DEMO_STR_TITLE_RENDER_EFFECTS));
 #ifdef DALI_SCENE3D_AVAILABLE
   demo.AddExample(Example("scene-view.example", DALI_DEMO_STR_TITLE_SCENE_VIEW));
   demo.AddExample(Example("scene3d-model.example", DALI_DEMO_STR_TITLE_SCENE3D_MODEL));
