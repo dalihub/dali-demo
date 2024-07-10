@@ -75,7 +75,7 @@ public:
     UIPanel.SetProperty(Actor::Property::SIZE, size * 0.8f);
     UIPanel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     window.Add(UIPanel);
-    UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40, 10.0f));
+    UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
 
     // Welcome message
     {
@@ -132,7 +132,7 @@ public:
       label.Add(unitLabel);
 
       UIPanel.Add(weatherPanel);
-      weatherPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40, 10.0f));
+      weatherPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
     }
 
     // Icon mini panels
@@ -146,25 +146,25 @@ public:
       control.SetProperty(Actor::Property::POSITION, Vector2(-x_incrementer, y_starter));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40, 10.0f));
+      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
 
       control = CreateIconPanel("BlueTooth", "2 devices", true, DEMO_IMAGE_DIR "application-icon-14.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(x_incrementer, y_starter));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40, 10.0f));
+      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
 
       control = CreateIconPanel("Wi-Fi", "TizenUIFW", true, DEMO_IMAGE_DIR "application-icon-55.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(-x_incrementer, y_starter + y_incrementer));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40, 10.0f));
+      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
 
       control = CreateIconPanel("Lighting", "5 devices", true, DEMO_IMAGE_DIR "application-icon-21.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(x_incrementer, y_starter + y_incrementer));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40, 10.0f));
+      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
     }
 
     // Air conditioner
@@ -213,7 +213,7 @@ public:
       airConPanel.SetProperty(Toolkit::Control::Property::BACKGROUND, airConPanelDimmer);
 
       UIPanel.Add(airConPanel);
-      airConPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40, 10.0f));
+      airConPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
     }
 
     // lower background layer
