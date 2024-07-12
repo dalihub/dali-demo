@@ -128,6 +128,12 @@ public:
 
     window.Add(sceneView);
 
+    auto text = TextLabel::New("Press keys 0-9 to change lighting");
+    text[Actor::Property::PARENT_ORIGIN]=ParentOrigin::BOTTOM_CENTER;
+    text[Actor::Property::ANCHOR_POINT]=AnchorPoint::BOTTOM_CENTER;
+    text[TextLabel::Property::TEXT_COLOR] = Color::BLACK;
+    window.Add(text);
+
     // Respond to a touch anywhere on the window
     window.GetRootLayer().TouchedSignal().Connect(this, &Scene3dLightController::OnTouch);
 
@@ -264,6 +270,10 @@ public:
         mAnimation.Play();
         mAnimation.SetCurrentProgress(progress);
         mAnimation.Pause();
+      }
+      else if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
+      {
+        mApplication.Quit();
       }
     }
   }

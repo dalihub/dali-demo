@@ -93,7 +93,6 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("rendering-textured-cube.example", DALI_DEMO_STR_TITLE_RENDERING_TEXTURED_CUBE));
   demo.AddExample(Example("rendering-radial-progress.example", DALI_DEMO_STR_TITLE_RENDERING_RADIAL_PROGRESS));
   demo.AddExample(Example("ray-marching.example", DALI_DEMO_STR_TITLE_RENDERING_RAY_MARCHING));
-  demo.AddExample(Example("scene3d.example", DALI_DEMO_STR_TITLE_SCENE3D));
   demo.AddExample(Example("scene3d-light.example", DALI_DEMO_STR_TITLE_SCENE3D_LIGHT));
   demo.AddExample(Example("scene3d-model.example", DALI_DEMO_STR_TITLE_SCENE3D_MODEL));
   demo.AddExample(Example("scroll-view.example", DALI_DEMO_STR_TITLE_SCROLL_VIEW));
