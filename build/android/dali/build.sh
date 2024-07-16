@@ -26,8 +26,11 @@ if [ ! -z "$DEBUG" ]; then
   export ENABLE_TRACE=ON
 fi
 
-ANDROID_PLATFORM=26 ANDROID_ABI=${TARGET} ./build_core.sh || exit 1
-ANDROID_PLATFORM=26 ANDROID_ABI=${TARGET} ./build_adaptor.sh || exit 1
-ANDROID_PLATFORM=26 ANDROID_ABI=${TARGET} ./build_toolkit.sh || exit 1
-ANDROID_PLATFORM=26 ANDROID_ABI=${TARGET} ./build_demo.sh || exit 1
+export ANDROID_CMAKE_COMMAND=${ANDROID_SDK}/cmake/3.22.1/bin/cmake
+export ANDROID_PLATFORM=26
+export ANDROID_ABI=${TARGET}
 
+./build_core.sh || exit 1
+./build_adaptor.sh || exit 1
+./build_toolkit.sh || exit 1
+./build_demo.sh || exit 1

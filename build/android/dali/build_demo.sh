@@ -23,11 +23,29 @@ else
   export DALI_DEMO_RES_DIR=assets
   #NOTE: keep app id consistent with dali-demo/build/android/app/src/main/AndroidManifest.xml
   export DALI_DEMO_APP_ID=com.sec.dalidemo
+  # There are other exports in the calling build.sh script
 
-  ${ANDROID_SDK}/cmake/3.22.1/bin/cmake ${DALI_DIR}/dali-demo/build/tizen -DCMAKE_C_COMPILER=${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang -DCMAKE_CXX_COMPILER=${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=${ANDROID_PLATFORM} -DANDROID_ABI=${ANDROID_ABI} -DANDROID_NDK=${ANDROID_NDK} -DANDROID_STL=c++_shared -DCMAKE_CXX_FLAGS='-fexceptions -frtti -w -Wall -std=c++17' -DINCLUDE_DIR=${PREFIX}/include -DLIB_DIR=${PREFIX}/lib/${ANDROID_ABI} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DENABLE_TRACE=${ENABLE_TRACE} -DINTERNATIONALIZATION=OFF -DSHARED=ON -DDALI_APP_RES_DIR=${DALI_APP_RES_DIR} -DDALI_APP_DIR=${DALI_APP_DIR} -DDALI_DEMO_RES_DIR=${DALI_DEMO_RES_DIR} -DDALI_DEMO_APP_ID=${DALI_DEMO_APP_ID}
+  ${ANDROID_CMAKE_COMMAND} -S ${DALI_DIR}/dali-demo/build/tizen \
+    -DCMAKE_C_COMPILER=${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang \
+    -DCMAKE_CXX_COMPILER=${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ \
+    -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+    -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake \
+    -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
+    -DANDROID_ABI=${ANDROID_ABI} \
+    -DANDROID_NDK=${ANDROID_NDK} \
+    -DANDROID_STL=c++_shared \
+    -DCMAKE_CXX_FLAGS='-fexceptions -frtti -w -Wall -std=c++17' \
+    -DINCLUDE_DIR=${PREFIX}/include \
+    -DLIB_DIR=${PREFIX}/lib/${ANDROID_ABI} \
+    -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
+    -DENABLE_TRACE=${ENABLE_TRACE} \
+    -DINTERNATIONALIZATION=OFF \
+    -DSHARED=ON \
+    -DDALI_APP_RES_DIR=${DALI_APP_RES_DIR} \
+    -DDALI_APP_DIR=${DALI_APP_DIR} \
+    -DDALI_DEMO_RES_DIR=${DALI_DEMO_RES_DIR} \
+    -DDALI_DEMO_APP_ID=${DALI_DEMO_APP_ID}
 fi
 
-make -j8 || exit 1
-make install || exit 1
-
+make -j8 install || exit 1
 cd -

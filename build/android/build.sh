@@ -9,7 +9,7 @@ export DALI_DIR=$DALI_DIR
 echo "Using DALI_ENV_DIR=\"$DALI_ENV_DIR\""
 export DALI_ENV_DIR=$DALI_ENV_DIR
 
-[ -z $TARGET ] && export TARGET=armeabi-v7a
+[ -z $TARGET ] && export TARGET=arm64-v8a
 echo "Using TARGET=\"$TARGET\""
 
 if [ ! -z $http_proxy ]
