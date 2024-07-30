@@ -18,8 +18,9 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 #include <dali/dali.h>
-#include <devel-api/actors/actor-devel.h>
-#include <public-api/events/key-event.h>
+#include <dali/devel-api/actors/actor-devel.h>
+#include <dali/integration-api/debug.h>
+#include <dali/public-api/events/key-event.h>
 
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
@@ -33,6 +34,9 @@ namespace
 {
 const char* BACKGROUND_IMAGE(DEMO_IMAGE_DIR "background-3.jpg");
 const char* SUN_CLOUD_ICON_IMAGE(DEMO_IMAGE_DIR "light-icon-front.png");
+
+constexpr float unitSizeWidth  = 180.0f;
+constexpr float unitSizeHeight = 180.0f;
 } // namespace
 
 class RenderEffectController : public Dali::ConnectionTracker
@@ -50,32 +54,39 @@ public:
 
   void Create(Dali::Application& application)
   {
-    Window window          = application.GetWindow();
-    Layer  backgroundLayer = Layer::New();
-
-    Vector2 size = window.GetSize();
+    window = application.GetWindow();
 
     // Background image
     {
+      backgroundLayer = Layer::New();
       backgroundLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      backgroundLayer.SetProperty(Actor::Property::SIZE, size);
+      backgroundLayer.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+      backgroundLayer.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
 
       Toolkit::ImageView backgroundImage = Toolkit::ImageView::New(BACKGROUND_IMAGE);
-      backgroundImage.SetProperty(Actor::Property::SIZE, size);
       backgroundImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+      backgroundImage.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+      backgroundImage.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
       backgroundLayer.Add(backgroundImage);
       window.Add(backgroundLayer);
     }
+    {
+      pannelLayer = Layer::New();
+      pannelLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+      pannelLayer.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+      pannelLayer.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+
+      window.Add(pannelLayer);
+    }
+
+    Vector2 size = window.GetSize();
 
     // UI panel
-    float unitSizeWidth  = 180.0f;
-    float unitSizeHeight = 180.0f;
-
-    Toolkit::Control UIPanel = Toolkit::Control::New();
+    UIPanel = Toolkit::Control::New();
     UIPanel.SetProperty(Actor::Property::SIZE, size * 0.8f);
     UIPanel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    window.Add(UIPanel);
-    UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
+    pannelLayer.Add(UIPanel);
+    UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
 
     // Welcome message
     {
@@ -92,6 +103,7 @@ public:
       weatherPanel.SetProperty(Actor::Property::SIZE, Vector2(unitSizeWidth * 2.0f, unitSizeHeight + 10.0f));
       weatherPanel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       weatherPanel.SetProperty(Actor::Property::POSITION, Vector2(0, size.y * 0.15f));
+      weatherPanel.SetProperty(Actor::Property::NAME, "Weather");
 
       Property::Map colorVisualPropertyMap;
       colorVisualPropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::COLOR);
@@ -138,33 +150,36 @@ public:
     // Icon mini panels
     {
       Vector2 iconPanelSize = Vector2(unitSizeWidth, unitSizeHeight);
-      float   x_incrementer = iconPanelSize.x / 2.0f + 10.0f;
-      float   y_incrementer = iconPanelSize.y + 20.f;
-      float   y_starter     = size.y * .33f;
+      float   xIncrementer  = iconPanelSize.x / 2.0f + 10.0f;
+      float   yIncrementer  = iconPanelSize.y + 20.f;
+      float   yStarter      = size.y * .33f;
 
       Toolkit::Control control = CreateIconPanel("Security", "4 rooms", false, DEMO_IMAGE_DIR "application-icon-7.png", iconPanelSize);
-      control.SetProperty(Actor::Property::POSITION, Vector2(-x_incrementer, y_starter));
+      control.SetProperty(Actor::Property::POSITION, Vector2(-xIncrementer, yStarter));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
       control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
 
       control = CreateIconPanel("BlueTooth", "2 devices", true, DEMO_IMAGE_DIR "application-icon-14.png", iconPanelSize);
-      control.SetProperty(Actor::Property::POSITION, Vector2(x_incrementer, y_starter));
+      control.SetProperty(Actor::Property::POSITION, Vector2(xIncrementer, yStarter));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
       control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
 
       control = CreateIconPanel("Wi-Fi", "TizenUIFW", true, DEMO_IMAGE_DIR "application-icon-55.png", iconPanelSize);
-      control.SetProperty(Actor::Property::POSITION, Vector2(-x_incrementer, y_starter + y_incrementer));
+      control.SetProperty(Actor::Property::POSITION, Vector2(-xIncrementer, yStarter + yIncrementer));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
       control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
 
       control = CreateIconPanel("Lighting", "5 devices", true, DEMO_IMAGE_DIR "application-icon-21.png", iconPanelSize);
-      control.SetProperty(Actor::Property::POSITION, Vector2(x_incrementer, y_starter + y_incrementer));
+      control.SetProperty(Actor::Property::POSITION, Vector2(xIncrementer, yStarter + yIncrementer));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
       control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
+
+      // Keep one of control to test visible option change.
+      mVisibilityChangedControl = control;
     }
 
     // Air conditioner
@@ -174,6 +189,7 @@ public:
       airConPanel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
       airConPanel.SetProperty(Actor::Property::POSITION_Y, -unitSizeHeight + 20.0f);
       airConPanel.SetProperty(DevelActor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN);
+      airConPanel.SetProperty(Actor::Property::NAME, "Air Conditioner");
 
       Toolkit::TextLabel label = SetUpTextLabelProperties("Air Conditioner", Color::WHITE, "BEGIN", 15.0f);
       label.SetProperty(Actor::Property::SIZE_WIDTH, unitSizeWidth * 2.0f - 50.0f);
@@ -220,13 +236,15 @@ public:
     backgroundLayer.LowerBelow(window.GetRootLayer());
 
     // Connect signals
-    application.GetWindow().KeyEventSignal().Connect(this, &RenderEffectController::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &RenderEffectController::OnKeyEvent);
+    window.ResizeSignal().Connect(this, &RenderEffectController::OnWindowResized);
   }
 
   Toolkit::Control CreateIconPanel(std::string title, std::string detail, bool isOn, std::string iconURL, Vector2 size)
   {
     Toolkit::Control panel = Toolkit::Control::New();
     panel.SetProperty(Actor::Property::SIZE, size);
+    panel.SetProperty(Actor::Property::NAME, title);
 
     Property::Map colorVisualPropertyMap;
     colorVisualPropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::COLOR);
@@ -280,6 +298,41 @@ public:
     return label;
   }
 
+  void OnWindowResized(Dali::Window windowHandle, Dali::Window::WindowSize windowSize)
+  {
+    DALI_LOG_RELEASE_INFO("Resize finish / %d x %d\n", windowSize.GetWidth(), windowSize.GetHeight());
+    Vector2 size = Vector2(windowSize.GetWidth(), windowSize.GetHeight()); // Get new size
+
+    // Change some window size relative properties.
+    UIPanel.SetProperty(Actor::Property::SIZE, size * 0.8f);
+
+    // Weather panel
+    {
+      Actor childPannel;
+      childPannel = UIPanel.FindChildByName("Weather");
+      childPannel.SetProperty(Actor::Property::POSITION_Y, size.y * 0.15f);
+    }
+
+    // Mini pannel
+    {
+      float yIncrementer = unitSizeHeight + 20.f;
+      float yStarter     = size.y * .33f;
+
+      Actor childPannel;
+      childPannel = UIPanel.FindChildByName("Security");
+      childPannel.SetProperty(Actor::Property::POSITION_Y, yStarter);
+
+      childPannel = UIPanel.FindChildByName("BlueTooth");
+      childPannel.SetProperty(Actor::Property::POSITION_Y, yStarter);
+
+      childPannel = UIPanel.FindChildByName("Wi-Fi");
+      childPannel.SetProperty(Actor::Property::POSITION_Y, yStarter + yIncrementer);
+
+      childPannel = UIPanel.FindChildByName("Lighting");
+      childPannel.SetProperty(Actor::Property::POSITION_Y, yStarter + yIncrementer);
+    }
+  }
+
   void OnKeyEvent(const KeyEvent& event)
   {
     if(event.GetState() == KeyEvent::DOWN)
@@ -288,11 +341,62 @@ public:
       {
         mApplication.Quit();
       }
+      else if(event.GetKeyName() == "1")
+      {
+        if(UIPanel)
+        {
+          if(UIPanel.GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE))
+          {
+            UIPanel.Unparent();
+          }
+          else
+          {
+            pannelLayer.Add(UIPanel);
+          }
+        }
+      }
+      else if(event.GetKeyName() == "2")
+      {
+        if(mVisibilityChangedControl)
+        {
+          mVisibilityChangedControl.SetProperty(Actor::Property::VISIBLE, !mVisibilityChangedControl.GetProperty<bool>(Actor::Property::VISIBLE));
+        }
+      }
+      else if(event.GetKeyName() == "3")
+      {
+        if(flexableRadius >= 10)
+        {
+          flexableRadius -= 10;
+          if(UIPanel)
+          {
+            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
+          }
+        }
+      }
+      else if(event.GetKeyName() == "4")
+      {
+        if(flexableRadius < 1000)
+        {
+          flexableRadius += 10;
+          if(UIPanel)
+          {
+            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
+          }
+        }
+      }
     }
   }
 
 private:
   Application& mApplication;
+
+  Window window;
+  Layer  backgroundLayer;
+  Layer  pannelLayer;
+
+  Toolkit::Control UIPanel;
+  Toolkit::Control mVisibilityChangedControl;
+  uint32_t         flexableRadius{40};
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
