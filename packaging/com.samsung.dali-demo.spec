@@ -1,6 +1,6 @@
 %bcond_with wayland
 
-Name:       com.samsung.dali-demo-vk
+Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
 Version:    1.4.16
 Release:    1
@@ -15,18 +15,14 @@ Requires(postun): /sbin/ldconfig
 BuildRequires:  cmake
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(capi-appfw-application)
+BuildRequires:  pkgconfig(capi-appfw-app-control)
 BuildRequires:  pkgconfig(capi-media-player)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  gettext-tools
-BuildRequires:  pkgconfig(dali-core-vk)
-BuildRequires:  pkgconfig(dali-adaptor-vk)
-BuildRequires:  pkgconfig(dali-graphics-vk)
-BuildRequires:  pkgconfig(dali-toolkit-vk)
-
-#need libtzplatform-config for directory if tizen version is 3.x
-%if 0%{?tizen_version_major} >= 3
+BuildRequires:  pkgconfig(dali-core)
+BuildRequires:  pkgconfig(dali-adaptor)
+BuildRequires:  pkgconfig(dali-toolkit)
 BuildRequires:  pkgconfig(libtzplatform-config)
-%endif
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations
@@ -38,19 +34,10 @@ of the capability of the toolkit.
 %prep
 %setup -q
 
-#Use TZ_PATH when tizen version is 3.x
-
-%if "%{tizen_version_major}" == "2"
-%define dali_app_ro_dir       /usr/apps/com.samsung.dali-demo/
-%define dali_xml_file_dir     /usr/share/packages/
-%define dali_icon_dir         /usr/share/icons/
-%define smack_rule_dir        /etc/smack/accesses2.d/
-%else
-%define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo-vk/
+%define dali_app_ro_dir       %TZ_SYS_RO_APP/com.samsung.dali-demo/
 %define dali_xml_file_dir     %TZ_SYS_RO_PACKAGES
 %define dali_icon_dir         %TZ_SYS_RO_ICONS
 %define smack_rule_dir        %TZ_SYS_SMACK/accesses2.d/
-%endif
 
 %define dali_app_res_dir      %{dali_app_ro_dir}/res/
 %define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
@@ -71,7 +58,7 @@ CXXFLAGS+=" -D_ARCH_ARM_"
 
 cd %{_builddir}/%{name}-%{version}/build/tizen
 
-cmake -DDALI_APP_DIR=%{dali_app_ro_dir} \
+cmake -DDALI_APP_DIR=%{dali_app_ro_dir}/bin \
       -DLOCALE_DIR=%{locale_dir} \
       -DDALI_APP_RES_DIR=%{dali_app_res_dir} \
 %if 0%{?enable_debug}
@@ -89,14 +76,14 @@ make %{?jobs:-j%jobs}
 %install
 rm -rf %{buildroot}
 cd build/tizen
-%make_install DALI_APP_DIR=%{dali_app_ro_dir}
+%make_install DALI_APP_DIR=%{dali_app_ro_dir}/bin
 %make_install DDALI_APP_RES_DIR=%{dali_app_res_dir}
 
 mkdir -p %{buildroot}%{dali_xml_file_dir}
 cp -f %{_builddir}/%{name}-%{version}/%{name}.xml %{buildroot}%{dali_xml_file_dir}
 
 mkdir -p %{buildroot}%{dali_icon_dir}
-mv %{buildroot}/%{dali_app_res_dir}/images/com.samsung.dali-demo.png %{buildroot}%{dali_icon_dir}
+mv %{buildroot}/%{dali_app_res_dir}/images/%{name}.png %{buildroot}%{dali_icon_dir}
 mv %{buildroot}/%{dali_app_res_dir}/images/dali-examples.png %{buildroot}%{dali_icon_dir}
 mv %{buildroot}/%{dali_app_res_dir}/images/dali-tests.png %{buildroot}%{dali_icon_dir}
 
@@ -126,9 +113,9 @@ exit 0
 
 %files
 %if 0%{?enable_dali_smack_rules}
-%manifest com.samsung.dali-demo-vk.manifest-smack
+%manifest com.samsung.dali-demo.manifest-smack
 %else
-%manifest com.samsung.dali-demo-vk.manifest
+%manifest com.samsung.dali-demo.manifest
 %endif
 %defattr(-,root,root,-)
 %{dali_app_exe_dir}/dali-demo
