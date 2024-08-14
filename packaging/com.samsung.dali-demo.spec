@@ -42,7 +42,7 @@ of the capability of the toolkit.
 %define dali_app_res_dir      %{dali_app_ro_dir}/res/
 %define dali_app_exe_dir      %{dali_app_ro_dir}/bin/
 %define locale_dir            %{dali_app_res_dir}/locale
-%define local_style_dir       ../../resources/style/mobile
+%define local_style_dir       ../../resources/style
 
 ##############################
 # Build
