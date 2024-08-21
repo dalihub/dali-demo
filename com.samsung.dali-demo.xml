@@ -313,6 +313,9 @@
 	<ui-application appid="scene3d-model.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d-model.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scene3D Model</label>
 	</ui-application>
+	<ui-application appid="scene3d-panel.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d-panel.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Scene3D Panel</label>
+	</ui-application>
 	<ui-application appid="scroll-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scroll-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scroll View</label>
 	</ui-application>

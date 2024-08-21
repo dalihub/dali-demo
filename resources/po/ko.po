@@ -201,5 +201,9 @@ msgstr "PBR"
 
 msgid "DALI_DEMO_STR_TITLE_ANIMATED_VECTOR_IMAGES"
 msgstr "애니메이션 벡터 이미지"
+
 msgid "DALI_DEMO_STR_TITLE_SCENE3D_MODEL"
 msgstr "Scene3D Model"
+
+msgid "DALI_DEMO_STR_TITLE_SCENE3D_PANEL"
+msgstr "Scene3D Panel"
