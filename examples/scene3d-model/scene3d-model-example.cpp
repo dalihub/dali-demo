@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,8 @@ using namespace Dali::Toolkit;
 
 /*
  * This example shows how to create and display a Model control.
- * The application can load 5 different glTF model to Model control.
- * Each model has diffirent material. BoomBox shows glossy or matt plastic material.
+ * The application can load 3D models in different formats (i.e. glTF, USD, and DLI) to Model control.
+ * Each model has different material. BoomBox shows glossy or matt plastic material.
  * DamagedHelmet shows a kind of reflective glass and metallic object.
  * Microphone shows a roughness of metallic objects.
  * and Lantern shows a realistic difference between wood object and metallic object.
@@ -41,6 +41,8 @@ using namespace Dali::Toolkit;
 
 namespace
 {
+const Vector3 DEFAULT_CAMERA_POSITION(53.0f, -1300.0f, 3200.0f);
+
 struct ModelInfo
 {
   const char*   name;      ///< The name of the model.
@@ -48,7 +50,7 @@ struct ModelInfo
   const float   yPosition; ///< The position of the model in the Y axis.
 };
 
-const ModelInfo gltf_list[] =
+const ModelInfo model_list[] =
   {
     /**
      * For the BoxAnimated.glb
@@ -69,7 +71,7 @@ const ModelInfo gltf_list[] =
      * Created by Ryan Martin
      * Take from https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/Lantern
      */
-    {"Lantern.gltf", Vector2(600.0f, 600.0f), 0.0f},
+    {"Lantern.gltf", Vector2(600.0f, 600.0f), 300.0f},
     /**
      * For the BoomBox.gltf and its Assets
      * Donated by Microsoft for glTF testing
@@ -92,6 +94,38 @@ const ModelInfo gltf_list[] =
      */
     {"microphone.gltf", Vector2(600.0f, 600.0f), 0.0f},
     /**
+     * Converted from the AntiqueCamera glTF file and its Assets
+     * Old camera model by Maximilian Kamps
+     * Dontated by UX3D for glTF testing
+     * Take from https://github.com/KhronosGroup/glTF-Sample-Models/blob/master/2.0/AntiqueCamera
+     */
+    {"AntiqueCamera.usdz", Vector2(60.0f, 60.0f), 350.0f},
+    /**
+     * Converted from the BarramundiFish glTF file and its Assets
+     * Donated by Microsoft for glTF testing
+     * Take from https://github.com/KhronosGroup/glTF-Sample-Models/blob/master/2.0/BarramundiFish
+     */
+    {"BarramundiFish.usdz", Vector2(2500.0f, 2500.0f), 300.0f},
+    /**
+     * Converted from the CesiumMilkTruck glTF file and its Assets
+     * Published under a Creative Commons Attribution 4.0 International License
+     * Donated by Cesium for glTF testing
+     * Take from https://github.com/KhronosGroup/glTF-Sample-Models/blob/master/2.0/CesiumMilkTruck
+     */
+    {"CesiumMilkTruck.usdz", Vector2(300.0f, 300.0f), 300.0f},
+    /**
+     * Converted from the Corset glTF file and its Assets
+     * Donated by Microsoft for glTF testing
+     * Take from https://github.com/KhronosGroup/glTF-Sample-Models/blob/master/2.0/Corset
+     */
+    {"Corset.usdz", Vector2(12000.0f, 12000.0f), 300.0f},
+    /**
+     * Converted from the WaterBottle glTF file and its Assets
+     * Donated by Microsoft for glTF testing
+     * Take from https://github.com/KhronosGroup/glTF-Sample-Models/blob/master/2.0/WaterBottle
+     */
+    {"WaterBottle.usdz", Vector2(3000.0f, 3000.0f), 0.0f},
+    /**
      * For the beer_model.dli and its Assets
      * This model includes a bottle of beer and cube box.
      */
@@ -103,7 +137,7 @@ const ModelInfo gltf_list[] =
     {"exercise_model.dli", Vector2(600.0f, 600.0f), 0.0f},
 };
 
-const int32_t NUM_OF_GLTF_MODELS = sizeof(gltf_list) / sizeof(gltf_list[0]);
+const int32_t NUM_OF_MODELS = sizeof(model_list) / sizeof(model_list[0]);
 
 /**
  * For the diffuse and specular cube map texture.
@@ -201,11 +235,11 @@ Shader LoadShaders(const std::string& shaderVertexFileName, const std::string& s
 } // namespace
 
 /**
- * This example shows how to render glTF model with Model
+ * This example shows how to render 3D model with Model
  * How to test
  *  - Input UP or DOWN key to make the model rotate or stop.
- *  - Input LEFT or RIGHT key to change glTF model
- *  - Double Touch also changes glTF model.
+ *  - Input LEFT or RIGHT key to change 3D model
+ *  - Double Touch also changes 3D model.
  */
 class Scene3DModelExample : public ConnectionTracker
 {
@@ -221,7 +255,10 @@ public:
 
   ~Scene3DModelExample()
   {
-    mAnimation.Stop();
+    if(mAnimation)
+    {
+      mAnimation.Stop();
+    }
   }
 
   // The Init signal is received once (only) during the Application lifetime
@@ -233,11 +270,22 @@ public:
     // Get a handle to the mWindow
     mWindow.SetBackgroundColor(Color::WHITE);
 
+    // Create a text label for error message when a model is failed to load
+    mTextLabel = TextLabel::New();
+    mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mTextLabel.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
+    mTextLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
+    mTextLabel.SetProperty(TextLabel::Property::AUTO_SCROLL_STOP_MODE, TextLabel::AutoScrollStopMode::IMMEDIATE);
+    mWindow.Add(mTextLabel);
+
+    mTextLabel.SetProperty(Actor::Property::VISIBLE, false);
+
     RenderTask renderTask = mWindow.GetRenderTaskList().GetTask(0);
     renderTask.SetCullMode(false);
 
-    mCurrentGlTF = 0u;
-    CreateSceneFromGLTF(mCurrentGlTF);
+    mCurrentModel = 0u;
+    CreateSceneFromModel(mCurrentModel);
     SetCameraActor();
     CreateSkybox();
     SetAnimation();
@@ -272,7 +320,7 @@ public:
     return true;
   }
 
-  void CreateSceneFromGLTF(uint32_t index)
+  void CreateSceneFromModel(uint32_t index)
   {
     mReadyToLoad = false;
     if(mModel)
@@ -280,17 +328,18 @@ public:
       mWindow.GetRootLayer().Remove(mModel);
     }
 
-    std::string gltfUrl = modeldir;
-    gltfUrl += gltf_list[index].name;
+    std::string modelUrl = modeldir;
+    modelUrl += model_list[index].name;
 
-    mModel = Dali::Scene3D::Model::New(gltfUrl);
-    mModel.SetProperty(Dali::Actor::Property::SIZE, gltf_list[index].size);
-    mModel.SetProperty(Dali::Actor::Property::POSITION_Y, gltf_list[index].yPosition);
+    mModel = Dali::Scene3D::Model::New(modelUrl);
+    mModel.SetProperty(Dali::Actor::Property::SIZE, model_list[index].size);
+    mModel.SetProperty(Dali::Actor::Property::POSITION_Y, model_list[index].yPosition);
     mModel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mModel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mModel.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
 
     mModel.ResourceReadySignal().Connect(this, &Scene3DModelExample::ResourceReady);
+    mModel.LoadCompletedSignal().Connect(this, &Scene3DModelExample::LoadCompleted);
 
     mWindow.Add(mModel);
   }
@@ -300,15 +349,33 @@ public:
     mReadyToLoad = true;
     if(mModel.GetAnimationCount() > 0)
     {
-      Animation animation = (std::string("exercise_model.dli") == gltf_list[mCurrentGlTF].name) ? mModel.GetAnimation("idleToSquatClip_0") : mModel.GetAnimation(0u);
+      Animation animation = (std::string("exercise_model.dli") == model_list[mCurrentModel].name) ? mModel.GetAnimation("idleToSquatClip_0") : mModel.GetAnimation(0u);
       animation.Play();
       animation.SetLoopCount(0);
     }
   }
 
+  void LoadCompleted(Dali::Scene3D::Model model, bool succeeded)
+  {
+    if(!succeeded)
+    {
+      // Show an error message
+      std::ostringstream messageStream;
+      messageStream << "Failed to load " << model_list[mCurrentModel].name;
+      mTextLabel.SetProperty(TextLabel::Property::TEXT, messageStream.str());
+      mTextLabel.SetProperty(TextLabel::Property::ENABLE_AUTO_SCROLL, true);
+      mTextLabel.SetProperty(Actor::Property::VISIBLE, true);
+    }
+
+    // Current model finishes loading (regardless of successfully or not)
+    // So allow to load the next model
+    mReadyToLoad = true;
+  }
+
   void SetCameraActor()
   {
-    mCameraActor    = mWindow.GetRenderTaskList().GetTask(0).GetCameraActor();
+    mCameraActor = mWindow.GetRenderTaskList().GetTask(0).GetCameraActor();
+    mCameraActor.SetProperty(Dali::Actor::Property::POSITION, DEFAULT_CAMERA_POSITION);
     mCameraPosition = mCameraActor.GetProperty<Vector3>(Dali::Actor::Property::POSITION);
     mCameraActor.SetType(Dali::Camera::LOOK_AT_TARGET);
   }
@@ -479,16 +546,20 @@ public:
       return;
     }
 
-    mCurrentGlTF += direction;
-    if(mCurrentGlTF >= NUM_OF_GLTF_MODELS)
+    // Hide any error message
+    mTextLabel.SetProperty(Actor::Property::VISIBLE, false);
+    mTextLabel.SetProperty(TextLabel::Property::ENABLE_AUTO_SCROLL, false);
+
+    mCurrentModel += direction;
+    if(mCurrentModel >= NUM_OF_MODELS)
     {
-      mCurrentGlTF = 0;
+      mCurrentModel = 0;
     }
-    if(mCurrentGlTF < 0)
+    if(mCurrentModel < 0)
     {
-      mCurrentGlTF = NUM_OF_GLTF_MODELS - 1;
+      mCurrentModel = NUM_OF_MODELS - 1;
     }
-    CreateSceneFromGLTF(mCurrentGlTF);
+    CreateSceneFromModel(mCurrentModel);
     SetAnimation();
     mAnimationStop = false;
     mWheelDelta    = 1.0f;
@@ -637,9 +708,11 @@ private:
 
   float mWheelDelta{1.0f};
 
-  int32_t mCurrentGlTF{0};
+  int32_t mCurrentModel{0};
 
   bool mReadyToLoad{true};
+
+  TextLabel mTextLabel;
 };
 
 int32_t DALI_EXPORT_API main(int32_t argc, char** argv)
