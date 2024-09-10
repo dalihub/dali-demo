@@ -1,9 +1,13 @@
-attribute mediump vec3 aPosition;  // DALi shader builtin
-attribute mediump vec2 aTexCoord;  // DALi shader builtin
-uniform   mediump mat4 uMvpMatrix; // DALi shader builtin
-uniform   mediump vec3 uSize;      // DALi shader builtin
+//@version 100
+INPUT mediump vec3 aPosition;  // DALi shader builtin
+INPUT mediump vec2 aTexCoord;  // DALi shader builtin
+UNIFORM_BLOCK Vert
+{
+UNIFORM mediump mat4 uMvpMatrix; // DALi shader builtin
+UNIFORM mediump vec3 uSize;      // DALi shader builtin
+};
 
-varying mediump vec2 vTexCoord;
+OUTPUT mediump vec2 vTexCoord;
 
 void main()
 {
