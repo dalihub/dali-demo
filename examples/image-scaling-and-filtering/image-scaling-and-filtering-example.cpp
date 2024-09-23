@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -111,26 +111,47 @@ SamplingMode::Type NextFilterMode(SamplingMode::Type oldMode)
   switch(oldMode)
   {
     case SamplingMode::BOX:
+    {
       newMode = SamplingMode::NEAREST;
       break;
+    }
     case SamplingMode::NEAREST:
+    {
       newMode = SamplingMode::LINEAR;
       break;
+    }
     case SamplingMode::LINEAR:
+    {
       newMode = SamplingMode::BOX_THEN_NEAREST;
       break;
+    }
     case SamplingMode::BOX_THEN_NEAREST:
+    {
       newMode = SamplingMode::BOX_THEN_LINEAR;
       break;
+    }
     case SamplingMode::BOX_THEN_LINEAR:
+    {
+      newMode = SamplingMode::LANCZOS;
+      break;
+    }
+    case SamplingMode::LANCZOS:
+    {
+      newMode = SamplingMode::BOX_THEN_LANCZOS;
+      break;
+    }
+    case SamplingMode::BOX_THEN_LANCZOS:
+    {
       newMode = SamplingMode::NO_FILTER;
       break;
+    }
     case SamplingMode::NO_FILTER:
-      newMode = SamplingMode::BOX;
-      break;
     case SamplingMode::DONT_CARE:
+    default:
+    {
       newMode = SamplingMode::BOX;
       break;
+    }
   }
   return newMode;
 }
@@ -151,6 +172,8 @@ const char* StringFromFilterMode(SamplingMode::Type filterMode)
                                                  : filterMode == SamplingMode::LINEAR           ? "LINEAR"
                                                  : filterMode == SamplingMode::NO_FILTER        ? "NO_FILTER"
                                                  : filterMode == SamplingMode::DONT_CARE        ? "DONT_CARE"
+                                                 : filterMode == SamplingMode::LANCZOS          ? "LANCZOS"
+                                                 : filterMode == SamplingMode::BOX_THEN_LANCZOS ? "BOX_THEN_LANCZOS"
                                                                                                 : "UnknownFilterMode";
 }
 
@@ -425,7 +448,7 @@ public:
       mPopup = CreatePopup();
 
       // Table to hold buttons for each sampling mode:
-      Toolkit::TableView samplingModes = Toolkit::TableView::New(6, 1);
+      Toolkit::TableView samplingModes = Toolkit::TableView::New(8, 1);
       samplingModes.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       samplingModes.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       samplingModes.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5));
@@ -435,12 +458,16 @@ public:
       samplingModes.SetFitHeight(3);
       samplingModes.SetFitHeight(4);
       samplingModes.SetFitHeight(5);
+      samplingModes.SetFitHeight(6);
+      samplingModes.SetFitHeight(7);
 
       CreatePopupButton(samplingModes, StringFromFilterMode(SamplingMode::NEAREST));
       CreatePopupButton(samplingModes, StringFromFilterMode(SamplingMode::LINEAR));
       CreatePopupButton(samplingModes, StringFromFilterMode(SamplingMode::BOX));
       CreatePopupButton(samplingModes, StringFromFilterMode(SamplingMode::BOX_THEN_NEAREST));
       CreatePopupButton(samplingModes, StringFromFilterMode(SamplingMode::BOX_THEN_LINEAR));
+      CreatePopupButton(samplingModes, StringFromFilterMode(SamplingMode::LANCZOS));
+      CreatePopupButton(samplingModes, StringFromFilterMode(SamplingMode::BOX_THEN_LANCZOS));
       CreatePopupButton(samplingModes, StringFromFilterMode(SamplingMode::NO_FILTER));
 
       mPopup.SetContent(samplingModes);
@@ -456,9 +483,10 @@ public:
     else if(CheckSamplingModeButton(button, SamplingMode::NEAREST) ||
             CheckSamplingModeButton(button, SamplingMode::LINEAR) ||
             CheckSamplingModeButton(button, SamplingMode::BOX) ||
-            CheckSamplingModeButton(button, SamplingMode::LINEAR) ||
             CheckSamplingModeButton(button, SamplingMode::BOX_THEN_NEAREST) ||
             CheckSamplingModeButton(button, SamplingMode::BOX_THEN_LINEAR) ||
+            CheckSamplingModeButton(button, SamplingMode::LANCZOS) ||
+            CheckSamplingModeButton(button, SamplingMode::BOX_THEN_LANCZOS) ||
             CheckSamplingModeButton(button, SamplingMode::NO_FILTER))
     {
     }
