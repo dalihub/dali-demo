@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,10 +93,9 @@ public:
 
       if(!mBlurEnabled)
       {
-        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::MIX_COLOR), Vector3(1.0f, 0.0f, 0.0f));
-        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::OPACITY), 0.5f);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::MIX_COLOR), Vector4(1.0f, 0.0f, 0.0f, 0.5f));
         animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, DevelVisual::Property::CORNER_RADIUS), CORNER_RADIUS_VALUE);
-        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, ColorVisual::Property::MIX_COLOR), Vector3(0.0f, 0.0f, 1.0f));
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, ColorVisual::Property::MIX_COLOR), Vector4(0.0f, 0.0f, 1.0f, 0.5f));
         animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, DevelVisual::Property::CORNER_RADIUS), SHADOW_CORNER_RADIUS_VALUE);
         animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, DevelColorVisual::Property::BLUR_RADIUS), BLUR_RADIUS_VALUE);
         animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, Visual::Transform::Property::OFFSET), BLUR_OFFSET_VALUE);
@@ -104,10 +103,9 @@ public:
       }
       else
       {
-        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::MIX_COLOR), Vector3(1.0f, 1.0f, 1.0f));
-        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::OPACITY), 1.0f);
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, Visual::Property::MIX_COLOR), Vector4(1.0f, 1.0f, 1.0f, 1.0f));
         animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, ImageView::Property::IMAGE, DevelVisual::Property::CORNER_RADIUS), Vector4::ZERO);
-        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, ColorVisual::Property::MIX_COLOR), Vector3(0.0f, 0.0f, 0.0f));
+        animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, ColorVisual::Property::MIX_COLOR), Vector4(0.0f, 0.0f, 0.0f, 0.5f));
         animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, DevelVisual::Property::CORNER_RADIUS), Vector4::ZERO);
         animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, DevelColorVisual::Property::BLUR_RADIUS), 0.0f);
         animation.AnimateTo(DevelControl::GetVisualProperty(mImageView, DevelControl::Property::SHADOW, Visual::Transform::Property::OFFSET), Vector2::ZERO);

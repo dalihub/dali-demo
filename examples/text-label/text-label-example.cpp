@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,9 +112,12 @@ struct HSVColorConstraint
   {
   }
 
-  void operator()(Vector3& current, const PropertyInputContainer& inputs)
+  void operator()(Vector4& current, const PropertyInputContainer& inputs)
   {
-    current = hsv2rgb(Vector3(inputs[0]->GetFloat(), saturation, value));
+    auto rgbColor = hsv2rgb(Vector3(inputs[0]->GetFloat(), saturation, value));
+    current.r     = rgbColor.r;
+    current.g     = rgbColor.g;
+    current.b     = rgbColor.b;
   }
 
   Vector3 hsv2rgb(Vector3 colorHSV)
@@ -207,7 +210,7 @@ public:
     mContainer = Control::New();
     mContainer.SetProperty(Dali::Actor::Property::NAME, "Container");
     mContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    auto size = std::min(mWindowSize.width, mWindowSize.height) * 0.6f;
+    auto size   = std::min(mWindowSize.width, mWindowSize.height) * 0.6f;
     mLayoutSize = Vector2(size, size);
     mContainer.SetProperty(Actor::Property::SIZE, mLayoutSize);
     window.Add(mContainer);
@@ -257,7 +260,7 @@ public:
     mHueAngleIndex      = mLabel.RegisterProperty("hue", 0.0f);
     Renderer bgRenderer = mLabel.GetRendererAt(0);
 
-    Constraint constraint = Constraint::New<Vector3>(bgRenderer, VisualRenderer::Property::VISUAL_MIX_COLOR, HSVColorConstraint(0.0f, 0.5f, 0.8f));
+    Constraint constraint = Constraint::New<Vector4>(bgRenderer, Renderer::Property::MIX_COLOR, HSVColorConstraint(0.0f, 0.5f, 0.8f));
     constraint.AddSource(Source(mLabel, mHueAngleIndex));
     constraint.SetRemoveAction(Constraint::DISCARD);
     constraint.Apply();
