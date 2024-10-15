@@ -1,4 +1,5 @@
 //@version 100
+
 UNIFORM sampler2D uTexture;
 INPUT mediump vec2 vTexCoord;
 

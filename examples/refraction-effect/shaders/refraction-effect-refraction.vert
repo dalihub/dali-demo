@@ -1,11 +1,18 @@
-attribute mediump vec3 aPosition;
-attribute mediump vec3 aNormal;
-attribute highp   vec2 aTexCoord;
-uniform   mediump mat4 uMvpMatrix;
-varying   mediump vec4 vVertex;
-varying   mediump vec3 vNormal;
-varying   mediump vec2 vTexCoord;
-varying   mediump vec2 vTextureOffset;
+//@version 100
+
+INPUT mediump vec3 aPosition;
+INPUT mediump vec3 aNormal;
+INPUT highp   vec2 aTexCoord;
+
+UNIFORM_BLOCK Vanilla
+{
+UNIFORM   mediump mat4 uMvpMatrix;
+};
+
+OUTPUT   mediump vec4 vVertex;
+OUTPUT   mediump vec3 vNormal;
+OUTPUT   mediump vec2 vTexCoord;
+OUTPUT   mediump vec2 vTextureOffset;
 
 void main()
 {

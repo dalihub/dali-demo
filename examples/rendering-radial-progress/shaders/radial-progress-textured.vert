@@ -1,10 +1,15 @@
+//@version 100
 // Vertex shader for textured quad
 
-attribute mediump vec2 aPosition;
-uniform   mediump mat4 uMvpMatrix; // DALi shader builtin
-uniform   mediump vec3 uSize;      // DALi shader builtin
+INPUT mediump vec2 aPosition;
 
-varying mediump vec2 vTexCoord;
+UNIFORM_BLOCK Vanilla
+{
+UNIFORM   mediump mat4 uMvpMatrix; // DALi shader builtin
+UNIFORM   mediump vec3 uSize;      // DALi shader builtin
+};
+
+OUTPUT mediump vec2 vTexCoord;
 
 void main()
 {

@@ -1,11 +1,16 @@
+//@version 100
+
 /*
  * Fragment shader for textured quad
  */
-varying mediump vec2 vTexCoord;
-varying mediump vec2 vRayCastCoord;
+INPUT mediump vec2 vTexCoord;
+INPUT mediump vec2 vRayCastCoord;
 
-uniform mediump float uRadius;
-uniform mediump float uAdjuster;
+UNIFORM_BLOCK Custom
+{
+UNIFORM mediump float uRadius;
+UNIFORM mediump float uAdjuster;
+}
 
 #define CAMERA_Z_POSITION 1.0  // gives us a FOV of 90 degrees if Plane of projection is at Z = 0 with size 2x2
 #define SPHERE_Z_POSITION -1.0 // Sphere placed behind Plane of projection

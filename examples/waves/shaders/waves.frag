@@ -1,19 +1,25 @@
+//@version 100
+
 precision highp float;
 
-uniform vec4 uColor; // DALi
-uniform sampler2D uNormalMap; // DALi
+UNIFORM sampler2D uNormalMap; // DALi
 
-uniform vec3 uInvLightDir;
-uniform vec3 uLightColorSqr;
-uniform vec3 uAmbientColor;
+UNIFORM_BLOCK CustomFrag
+{
+UNIFORM vec4 uColor; // DALi
 
-uniform float uNormalMapWeight;
-uniform float uSpecularity;
+UNIFORM vec3 uInvLightDir;
+UNIFORM vec3 uLightColorSqr;
+UNIFORM vec3 uAmbientColor;
 
-varying vec2 vUv;
-varying vec3 vNormal;
-varying vec3 vViewPos;
-varying float vHeight;
+UNIFORM float uNormalMapWeight;
+UNIFORM float uSpecularity;
+};
+
+INPUT vec2 vUv;
+INPUT vec3 vNormal;
+INPUT vec3 vViewPos;
+INPUT float vHeight;
 
 float Rand(vec2 co)
 {
@@ -30,8 +36,8 @@ void main()
   vec3 viewPos = normalize(vViewPos);
   vec2 uv2 = vUv + vViewPos.xy / vViewPos.z * vHeight + vec2(.5, 0.);
 
-  vec3 perturbNormal = texture2D(uNormalMap, vUv).rgb * 2. - 1.;
-  vec3 perturbNormal2 = texture2D(uNormalMap, uv2).rgb * 2. - 1.;
+  vec3 perturbNormal = TEXTURE(uNormalMap, vUv).rgb * 2. - 1.;
+  vec3 perturbNormal2 = TEXTURE(uNormalMap, uv2).rgb * 2. - 1.;
   vec3 normal = normalize(vNormal + perturbNormal * uNormalMapWeight);
   vec3 normal2 = normalize(vNormal + perturbNormal2 * uNormalMapWeight);
 

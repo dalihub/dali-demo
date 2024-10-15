@@ -1,9 +1,16 @@
-varying mediump vec2 vTexCoord;
-uniform lowp vec4    uColor;
-uniform sampler2D    sTexture;
-uniform lowp vec4    uFadeColor;
+//@version 100
+
+INPUT mediump vec2 vTexCoord;
+
+UNIFORM sampler2D    sTexture;
+
+UNIFORM_BLOCK CustomColor
+{
+UNIFORM lowp vec4    uColor;
+UNIFORM lowp vec4    uFadeColor;
+};
 
 void main()
 {
-  gl_FragColor = texture2D(sTexture, vTexCoord) * uColor * uFadeColor;
+  gl_FragColor = TEXTURE(sTexture, vTexCoord)* uColor * uFadeColor;
 }

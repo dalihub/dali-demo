@@ -1,6 +1,8 @@
 //@version 100
+
 INPUT mediump vec3 aPosition;  // DALi shader builtin
 INPUT mediump vec2 aTexCoord;  // DALi shader builtin
+
 UNIFORM_BLOCK Vert
 {
 UNIFORM mediump mat4 uMvpMatrix; // DALi shader builtin

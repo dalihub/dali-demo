@@ -1,7 +1,13 @@
-uniform lowp vec4 uColor;
-uniform sampler2D sTexture;
+//@version 100
 
-varying lowp vec3 vColor;
+UNIFORM sampler2D sTexture;
+
+UNIFORM_BLOCK VanillaFrag
+{
+UNIFORM lowp vec4 uColor;
+};
+
+INPUT lowp vec3 vColor;
 
 void main()
 {
