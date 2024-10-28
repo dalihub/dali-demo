@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,17 +69,17 @@ public:
     rubric.SetProperty(Actor::Property::ANCHOR_POINT, ParentOrigin::TOP_CENTER);
     mWindow.Add(rubric);
 
-    mImageView1 = Toolkit::ImageView::New("http://static.midomi.com/s/s/images/000/000/000/000/293/259/19/520_000000000000293259191500x1500_72dpi_RGB_q70.jpg");
+    mImageView1 = Toolkit::ImageView::New("https://raw.githubusercontent.com/dalihub/dali-test/refs/heads/master/visual-tests/remote-download/images/rockstar.jpg");
 
     mImageView1.SetProperty(Dali::Actor::Property::NAME, "mImageView1");
     mImageView1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mImageView1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
     mImageView1.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
-    mImageView1.SetProperty(Actor::Property::POSITION, Vector2(0, 100));
+    mImageView1.SetProperty(Actor::Property::POSITION, Vector2(0, 50));
     mImageView1.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     mWindow.Add(mImageView1);
 
-    mImageView2 = Toolkit::ImageView::New("http://static.midomi.com/s/s/images/000/000/000/000/212/651/88/520_000000000000212651881500x1500_72dpi_RGB_q70.jpg");
+    mImageView2 = Toolkit::ImageView::New("https://raw.githubusercontent.com/dalihub/dali-test/refs/heads/master/visual-tests/remote-download/images/stars.jpg");
     mImageView2.SetProperty(Dali::Actor::Property::NAME, "mImageView2");
     mImageView2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mImageView2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
@@ -88,7 +88,7 @@ public:
     mImageView2.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     mWindow.Add(mImageView2);
 
-    mImageView3 = Toolkit::ImageView::New("http://static.midomi.com/s/s/images/000/000/000/000/212/353/21/520_000000000000212353211500x1500_72dpi_RGB_q70.jpg");
+    mImageView3 = Toolkit::ImageView::New("https://raw.githubusercontent.com/dalihub/dali-test/refs/heads/master/visual-tests/remote-download/images/stormtrooper.jpg");
     mImageView3.SetProperty(Dali::Actor::Property::NAME, "mImageView3");
     mImageView3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mImageView3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
@@ -96,15 +96,6 @@ public:
     mImageView3.SetProperty(Actor::Property::POSITION, Vector2(0, 400));
     mImageView3.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     mWindow.Add(mImageView3);
-
-    mImageView4 = Toolkit::ImageView::New("http://d2k43l0oslhof9.cloudfront.net/platform/image/contents/vc/20/01/58/20170629100630071189_0bf6b911-a847-cba4-e518-be40fe2f579420170629192203240.jpg");
-    mImageView4.SetProperty(Dali::Actor::Property::NAME, "mImageView4");
-    mImageView4.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mImageView4.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
-    mImageView4.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
-    mImageView4.SetProperty(Actor::Property::POSITION, Vector2(400, 400));
-    mImageView4.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
-    mWindow.Add(mImageView4);
 
     mImageView5 = Toolkit::ImageView::New("http://static.midomi.com/h/images/w/weather_sunny.png");
     mImageView5.SetProperty(Dali::Actor::Property::NAME, "mImageView5");
