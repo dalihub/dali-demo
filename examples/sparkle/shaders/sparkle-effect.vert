@@ -24,7 +24,7 @@ UNIFORM float uTapOffset[MAXIMUM_ANIMATION_COUNT];
 UNIFORM vec2  uTapPoint[MAXIMUM_ANIMATION_COUNT];
 UNIFORM float uAcceleration;
 UNIFORM float uRadius;
-UNIFORM float uScale;
+UNIFORM float uEffectScale;
 UNIFORM float uBreak;
 };
 
@@ -78,8 +78,8 @@ void main()
   position = mix( position, vec2( 250.0,250.0 ),uBreak*(1.0-uOpacity[int(idx)]) ) ;
 
   // vertex position on the mesh: (sign(aTexCoord.x), sign(aTexCoord.y))*PARTICLE_HALF_SIZE
-  gl_Position = uMvpMatrix * vec4( position.x+sign(aTexCoord.x)*PARTICLE_HALF_SIZE/uScale,
-                                   position.y+sign(aTexCoord.y)*PARTICLE_HALF_SIZE/uScale,
+  gl_Position = uMvpMatrix * vec4( position.x+sign(aTexCoord.x)*PARTICLE_HALF_SIZE/uEffectScale,
+                                   position.y+sign(aTexCoord.y)*PARTICLE_HALF_SIZE/uEffectScale,
                                    0.0, 1.0 );
 
   // we store the color index inside texCoord attribute
