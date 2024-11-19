@@ -1,20 +1,13 @@
-//@version 100
-
 precision mediump float;
+uniform sampler2D sTexture;
 
-UNIFORM sampler2D sTexture;
-
-UNIFORM_BLOCK Custom
-{
-UNIFORM float uTime;
-UNIFORM float uKFactor;
-UNIFORM mediump vec3 eyePos;
-UNIFORM mediump vec3 lightDir;
-};
-
-INPUT mediump vec3 vNormal;
-INPUT mediump vec3 vPosition;
-INPUT mediump vec2 vTexCoord;
+uniform float uTime;
+uniform float uKFactor;
+uniform mediump vec3 eyePos;
+uniform mediump vec3 lightDir;
+varying mediump vec3 vNormal;
+varying mediump vec3 vPosition;
+varying mediump vec2 vTexCoord;
 
 void main()
 {
@@ -33,5 +26,5 @@ void main()
   v += sin(sqrt(c.x*c.x+c.y*c.y+1.0)+uTime);
   v = v/2.0;
   mediump vec3 col = vec3(1, sin(PI*v), cos(PI*v));
-  gl_FragColor = (TEXTURE(sTexture, vTexCoord)) * (((col.r+col.g+col.b)/3.0)+1.0+intensity);
+  gl_FragColor = (texture2D(sTexture, vTexCoord)) * (((col.r+col.g+col.b)/3.0)+1.0+intensity);
 }

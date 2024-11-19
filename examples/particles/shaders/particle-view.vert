@@ -1,29 +1,22 @@
-//@version 100
-
+#version 300 es
 // Shader for billboarded particles, where the vertices of the particles
 // are supplied as vec3 position (particle position) + vec2 sub-position.
 
 precision lowp float;
-UNIFORM_BLOCK Vanilla
-{
-UNIFORM mat4 uModelView; // DALi
-UNIFORM mat4 uProjection; // DALi
-UNIFORM vec3 uSize; // DALi
-UNIFORM vec4 uColor; // DALi
-};
+uniform mat4 uModelView; // DALi
+uniform mat4 uProjection; // DALi
+uniform vec3 uSize; // DALi
+uniform vec4 uColor; // DALi
 
-UNIFORM_BLOCK Billboard
-{
-UNIFORM vec3 uSecondaryColor;
-UNIFORM vec2 uDepthRange; // x is zNear, y is 1.f / (zFar - zNear)
-UNIFORM float uTwinkleFrequency;
-UNIFORM float uTwinkleSizeScale;
-UNIFORM float uTwinkleOpacityWeight;
-UNIFORM float uTime;
-UNIFORM float uFocalLength;
-UNIFORM float uAperture;
-UNIFORM float uPopulation;
-};
+uniform vec3 uSecondaryColor;
+uniform vec2 uDepthRange; // x is zNear, y is 1.f / (zFar - zNear)
+uniform float uTwinkleFrequency;
+uniform float uTwinkleSizeScale;
+uniform float uTwinkleOpacityWeight;
+uniform float uTime;
+uniform float uFocalLength;
+uniform float uAperture;
+uniform float uPopulation;
 
 struct Scatter
 {
@@ -33,29 +26,22 @@ struct Scatter
 };
 
 const int SCATTER_VARS = 6; // Must match ParticleView::mScatterProps' size.
-
-UNIFORM_BLOCK ScatterBlock
-{
-UNIFORM Scatter uScatter[SCATTER_VARS];
-};
+uniform Scatter uScatter[SCATTER_VARS];
 
 const int POPULATION_GRANULARITY = 128;
-UNIFORM_BLOCK OrderLookup
-{
-UNIFORM float uOrderLookUp[POPULATION_GRANULARITY];
-};
+uniform float uOrderLookUp[POPULATION_GRANULARITY];
 
-INPUT vec3 aPosition;
-INPUT float aSeed;
-INPUT vec4 aPath;
-INPUT vec2 aSubPosition;
-INPUT float aSize;
+in vec3 aPosition;
+in float aSeed;
+in vec4 aPath;
+in vec2 aSubPosition;
+in float aSize;
 
-OUTPUT flat float vDepth;
-OUTPUT flat float vFocalDistance;
-OUTPUT vec2 vUvUnit;
-OUTPUT flat float vOpacity;
-OUTPUT flat vec3 vColor; // ignore alpha
+flat out float vDepth;
+flat out float vFocalDistance;
+out vec2 vUvUnit;
+flat out float vOpacity;
+flat out vec3 vColor; // ignore alpha
 
 float bezier(vec3 control, float alpha)
 {

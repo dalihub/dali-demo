@@ -244,7 +244,7 @@ Shader New()
     handle.RegisterProperty(oss.str(), PARTICLE_COLORS[i].RGB);
   }
   handle.RegisterProperty("uRadius", 250.f);
-  handle.RegisterProperty("uEffectScale", ACTOR_SCALE);
+  handle.RegisterProperty("uScale", ACTOR_SCALE);
 
   // set the initial uniform values
 

@@ -1,14 +1,7 @@
-//@version 100
-
-INPUT mediump vec2 vTexCoord;
-INPUT mediump vec3 vIllumination;
-
-UNIFORM_BLOCK color
-{
-  UNIFORM lowp vec4 uColor;
-};
-
-UNIFORM sampler2D    sTexture;
+varying mediump vec2 vTexCoord;
+varying mediump vec3 vIllumination;
+uniform lowp    vec4 uColor;
+uniform sampler2D    sTexture;
 
 void main()
 {

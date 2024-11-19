@@ -1,14 +1,8 @@
-//@version 100
-
-INPUT mediump vec2 aPosition;
-INPUT mediump vec2 aTexCoord;
-OUTPUT mediump vec2 vTexCoord;
-
-UNIFORM_BLOCK Vanilla
-{
-UNIFORM mediump mat4 uMvpMatrix;
-UNIFORM mediump vec3 uSize;
-};
+attribute mediump vec2 aPosition;
+attribute mediump vec2 aTexCoord;
+uniform mediump mat4 uMvpMatrix;
+uniform mediump vec3 uSize;
+varying mediump vec2 vTexCoord;
 
 void main()
 {

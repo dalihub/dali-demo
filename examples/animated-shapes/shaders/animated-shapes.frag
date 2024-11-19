@@ -1,11 +1,5 @@
-//@version 100
-
-UNIFORM_BLOCK VanillaFrag
-{
-UNIFORM lowp vec4 uColor;
-};
-
-INPUT lowp vec2 vCoefficient;
+uniform lowp vec4 uColor;
+varying lowp vec2 vCoefficient;
 
 void main()
 {

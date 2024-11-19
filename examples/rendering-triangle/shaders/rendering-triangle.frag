@@ -1,9 +1,4 @@
-//@version 100
-
-UNIFORM_BLOCK Custome
-{
-UNIFORM mediump vec4 uColor;
-};
+uniform mediump vec4 uColor;
 
 void main()
 {
