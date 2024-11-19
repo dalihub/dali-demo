@@ -1,4 +1,5 @@
-uniform lowp vec4 uColor;
+//@version 100
+
 
 void main()
 {

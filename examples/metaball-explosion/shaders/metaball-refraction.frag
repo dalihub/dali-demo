@@ -1,10 +1,18 @@
+//@version 100
+
 //Fragment shader code for metaball and background composition with refraction effect
 
 precision highp float;
-varying vec2 vTexCoord;
-uniform sampler2D sTexture;
-uniform sampler2D sEffect;
-uniform vec2 uPositionMetaball;
+INPUT vec2 vTexCoord;
+
+UNIFORM sampler2D sTexture;
+UNIFORM sampler2D sEffect;
+
+UNIFORM_BLOCK VanillaFrag
+{
+UNIFORM vec2 uPositionMetaball;
+};
+
 void main()
 {
   vec2 zoomCoords;
@@ -13,7 +21,7 @@ void main()
   vec3 color = vec3(1.0, 1.0, 1.0);
   float ambient = 0.2;
 
-  vec4 metaColor = texture2D(sEffect, vTexCoord);
+  vec4 metaColor = TEXTURE(sEffect, vTexCoord);
 
   vec2 adjustedCoords = vTexCoord.xy * vec2(2.0) - vec2(1.0);
   fakePos = adjustedCoords.xy - vec2(uPositionMetaball.x, -uPositionMetaball.y);
@@ -65,7 +73,7 @@ void main()
   float specularFactor = max(0.0,dot(vertexToEye, lightReflect));
   specularFactor = pow(specularFactor, 32.0) * 0.7;
 
-  vec4 texColor = texture2D(sTexture, zoomCoords);
+  vec4 texColor = TEXTURE(sTexture, zoomCoords);
   gl_FragColor.rgb = texColor.rgb * ambient + color.rgb * texColor.rgb * lightDiffuse + vec3(specularFactor);
   gl_FragColor.a = 1.0;
 }
