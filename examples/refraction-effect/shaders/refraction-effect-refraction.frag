@@ -1,22 +1,15 @@
-//@version 100
-
 precision mediump float;
-UNIFORM_BLOCK Custom
-{
-UNIFORM   mediump float  uEffectStrength;
-UNIFORM   mediump vec3   uLightPosition;
-UNIFORM   mediump vec2   uLightXYOffset;
-UNIFORM   mediump vec2   uLightSpinOffset;
-UNIFORM   mediump float  uLightIntensity;
-UNIFORM   lowp    vec4   uColor;
-};
-
-UNIFORM   sampler2D      sTexture;
-
-INPUT   mediump vec4   vVertex;
-INPUT   mediump vec3   vNormal;
-INPUT   mediump vec2   vTexCoord;
-INPUT   mediump vec2   vTextureOffset;
+uniform   mediump float  uEffectStrength;
+uniform   mediump vec3   uLightPosition;
+uniform   mediump vec2   uLightXYOffset;
+uniform   mediump vec2   uLightSpinOffset;
+uniform   mediump float  uLightIntensity;
+uniform   lowp    vec4   uColor;
+uniform   sampler2D      sTexture;
+varying   mediump vec4   vVertex;
+varying   mediump vec3   vNormal;
+varying   mediump vec2   vTexCoord;
+varying   mediump vec2   vTextureOffset;
 
 vec3 rgb2hsl(vec3 rgb)
 {
@@ -56,7 +49,7 @@ void main()
   spotEffect = spotEffect * uEffectStrength;
   mediump float lightDiffuse = ( ( dot( vecToLight, normal )-0.75 ) *uLightIntensity  ) * spotEffect;
 
-  lowp vec4 color = TEXTURE( sTexture, vTexCoord + vTextureOffset * spotEffect );
+  lowp vec4 color = texture2D( sTexture, vTexCoord + vTextureOffset * spotEffect );
   vec3 lightedColor =  hsl2rgb( rgb2hsl(color.rgb) + vec3(0.0,0.0,lightDiffuse) );
 
   gl_FragColor = vec4( lightedColor, color.a ) * uColor;

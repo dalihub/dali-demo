@@ -78,7 +78,7 @@ Shader CreateShader(const std::string& vsh, const std::string& fsh)
   std::vector<char> fshShaderSource;
 
   // VSH
-  if(vsh[0] == '/' && vsh[1] != '/')
+  if(vsh[0] == '/')
   {
     std::string vshPath(DEMO_GAME_DIR);
     vshPath += '/';
@@ -91,7 +91,7 @@ Shader CreateShader(const std::string& vsh, const std::string& fsh)
   }
 
   // FSH
-  if(fsh[0] == '/' && fsh[1] != '/')
+  if(fsh[0] == '/')
   {
     std::string fshPath(DEMO_GAME_DIR);
     fshPath += '/';

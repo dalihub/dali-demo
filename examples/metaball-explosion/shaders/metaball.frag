@@ -1,19 +1,12 @@
-//@version 100
-
 // Fragment shader code for metaball
 
 precision mediump float;
-
-INPUT vec2 vTexCoord;
-
-UNIFORM_BLOCK VanillaFrag
-{
-UNIFORM vec2 uPositionMetaball;
-UNIFORM vec2 uPositionVar;
-UNIFORM vec2 uGravityVector;
-UNIFORM float uRadius;
-UNIFORM float uRadiusVar;
-};
+varying vec2 vTexCoord;
+uniform vec2 uPositionMetaball;
+uniform vec2 uPositionVar;
+uniform vec2 uGravityVector;
+uniform float uRadius;
+uniform float uRadiusVar;
 
 void main()
 {

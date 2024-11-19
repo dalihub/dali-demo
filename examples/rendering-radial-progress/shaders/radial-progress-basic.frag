@@ -1,5 +1,3 @@
-//@version 100
-
 // Fragment shader for polygon
 
 void main()

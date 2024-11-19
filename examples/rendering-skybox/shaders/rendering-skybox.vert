@@ -1,16 +1,9 @@
-//@version 100
-
 // Vertex shader for a skybox
 
-INPUT mediump vec3 aPosition;  // DALi shader builtin
+attribute mediump vec3 aPosition;  // DALi shader builtin
+uniform   mediump mat4 uMvpMatrix; // DALi shader builtin
 
-
-UNIFORM_BLOCK Vanilla
-{
-UNIFORM   mediump mat4 uMvpMatrix; // DALi shader builtin
-};
-
-OUTPUT mediump vec3 vTexCoord;
+varying mediump vec3 vTexCoord;
 
 void main()
 {

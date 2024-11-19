@@ -1,7 +1,6 @@
-//@version 100
-
-INPUT mediump vec3 vNormal;
-INPUT mediump vec3 vFragPos;
+varying mediump vec3 vNormal;
+varying mediump vec3 vFragPos;
+uniform mediump vec3 viewPos; // custom uniform
 
 struct Material
 {
@@ -17,12 +16,8 @@ struct Light
   mediump vec3 color;
 };
 
-UNIFORM_BLOCK CustomFrag
-{
-UNIFORM mediump vec3 viewPos; // custom uniform
-UNIFORM Material material; // custom uniform
-UNIFORM Light light;       // custom uniform
-};
+uniform Material material; // custom uniform
+uniform Light light;       // custom uniform
 
 void main()
 {

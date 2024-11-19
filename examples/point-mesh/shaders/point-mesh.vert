@@ -1,21 +1,12 @@
-//@version 100
-
-INPUT mediump vec2 aPosition;
-INPUT highp float  aHue;
-OUTPUT mediump vec2   vTexCoord;
-OUTPUT mediump vec3   vVertexColor;
-OUTPUT mediump float  vHue;
-
-UNIFORM_BLOCK Vanilla
-{
-UNIFORM mediump mat4   uMvpMatrix;
-UNIFORM mediump vec3   uSize;
-};
-
-UNIFORM_BLOCK Custom
-{
-UNIFORM mediump float  uPointSize;
-};
+attribute mediump vec2 aPosition;
+attribute highp float  aHue;
+varying mediump vec2   vTexCoord;
+uniform mediump mat4   uMvpMatrix;
+uniform mediump vec3   uSize;
+uniform mediump float  uPointSize;
+uniform lowp vec4      uFadeColor;
+varying mediump vec3   vVertexColor;
+varying mediump float  vHue;
 
 vec3 hsv2rgb(vec3 c)
 {

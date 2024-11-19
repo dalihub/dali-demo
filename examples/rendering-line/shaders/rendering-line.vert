@@ -1,12 +1,6 @@
-//@version 100
-
-INPUT mediump vec2 aPosition; // DALi shader builtin
-
-UNIFORM_BLOCK Vanilla
-{
-UNIFORM   mediump mat4 uMvpMatrix; // DALi shader builtin
-UNIFORM   mediump vec3 uSize; // DALi shader builtin
-};
+attribute mediump vec2 aPosition; // DALi shader builtin
+uniform   mediump mat4 uMvpMatrix; // DALi shader builtin
+uniform   mediump vec3 uSize; // DALi shader builtin
 
 void main()
 {

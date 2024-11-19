@@ -92,7 +92,6 @@ public:
 
     mRenderer = Renderer::New(mGeometry, mShader);
     mRenderer.SetTextures(mTextureSet1);
-    mRenderer[Renderer::Property::FACE_CULLING_MODE] = FaceCullingMode::NONE;
 
     mMeshActor = Actor::New();
     mMeshActor.AddRenderer(mRenderer);

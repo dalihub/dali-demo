@@ -1,39 +1,32 @@
-//@version 100
-
 #define FMA(a, b, c) ((a) * (b) + (c))  // fused multiply-add
 
 precision highp float;
 
 const float kTile = 1.;
+
 const float kPi = 3.1415926535;
 const float kEpsilon = 1. / 32.;
 
 // DALI uniforms
-UNIFORM_BLOCK Vanilla
-{
-UNIFORM vec3 uSize;
-UNIFORM mat4 uModelView;
-UNIFORM mat4 uProjection;
-UNIFORM mat3 uNormalMatrix;
-};
+uniform vec3 uSize;
+uniform mat4 uModelView;
+uniform mat4 uProjection;
+uniform mat3 uNormalMatrix;
 
-// our UNIFORMs
-UNIFORM_BLOCK CustomVert
-{
-UNIFORM float uTime;
-UNIFORM vec2  uScrollScale;
-UNIFORM float uWaveRate;
-UNIFORM float uWaveAmplitude;
-UNIFORM float uParallaxAmount;
-};
+// our uniforms
+uniform float uTime;
+uniform vec2 uScrollScale;
+uniform float uWaveRate;
+uniform float uWaveAmplitude;
+uniform float uParallaxAmount;
 
-INPUT vec2 aPosition;
-INPUT vec2 aTexCoord;
+attribute vec2 aPosition;
+attribute vec2 aTexCoord;
 
-OUTPUT vec2 vUv;
-OUTPUT vec3 vViewPos;
-OUTPUT vec3 vNormal;
-OUTPUT float vHeight;
+varying vec2 vUv;
+varying vec3 vViewPos;
+varying vec3 vNormal;
+varying float vHeight;
 
 float CubicHermite(float B, float C, float t)
 {
