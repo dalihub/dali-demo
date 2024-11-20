@@ -1,4 +1,6 @@
-varying mediump vec4 vColor;
+//@version 100
+
+INPUT mediump vec4 vColor;
 
 void main()
 {

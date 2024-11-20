@@ -1,7 +1,14 @@
-uniform sampler2D uTexture;
-uniform mediump float uBrightness;
-varying mediump vec2 vTexCoord;
-varying mediump vec3 vIllumination;
+//@version 100
+
+UNIFORM sampler2D uTexture;
+
+UNIFORM_BLOCK VanFrag
+{
+UNIFORM mediump float uBrightness;
+};
+
+INPUT mediump vec2 vTexCoord;
+INPUT mediump vec3 vIllumination;
 
 mediump vec3 redistribute_rgb(mediump vec3 color)
 {
@@ -23,7 +30,7 @@ mediump vec3 redistribute_rgb(mediump vec3 color)
 
 void main()
 {
-  mediump vec4 texColor = texture2D( uTexture, vTexCoord );
+  mediump vec4 texColor = TEXTURE( uTexture, vTexCoord );
   //mediump vec4 texColor = vec4(0.5,0.5,0.5,1.0);
   //gl_FragColor = vec4(texColor.rgb, 1.0);
 

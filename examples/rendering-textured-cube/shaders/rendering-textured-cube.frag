@@ -1,8 +1,10 @@
-uniform sampler2D uTexture;
-varying mediump vec2 vTexCoord;
+//@version 100
+
+UNIFORM sampler2D uTexture;
+INPUT mediump vec2 vTexCoord;
 
 void main()
 {
-  mediump vec4 texColor = texture2D( uTexture, vTexCoord );
+  mediump vec4 texColor = TEXTURE( uTexture, vTexCoord );
   gl_FragColor = texColor;
 }

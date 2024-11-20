@@ -1,13 +1,15 @@
+//@version 100
 // Fragment shader code for metaball and background composition with refraction effect
 
 precision mediump float;
-varying vec2 vTexCoord;
-uniform sampler2D sTexture;
-uniform sampler2D sEffect;
+INPUT vec2 vTexCoord;
+
+UNIFORM sampler2D sTexture;
+UNIFORM sampler2D sEffect;
 
 void main()
 {
-  vec4 metaColor = texture2D(sEffect, vTexCoord);
+  vec4 metaColor = TEXTURE(sEffect, vTexCoord);
   vec2 zoomCoords;
   float bright = 1.0;
   if (metaColor.r > 0.85)
@@ -25,5 +27,5 @@ void main()
     zoomCoords = vTexCoord;
   }
 
-  gl_FragColor = texture2D(sTexture, zoomCoords) * bright;
+  gl_FragColor = TEXTURE(sTexture, zoomCoords) * bright;
 }

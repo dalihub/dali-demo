@@ -1,3 +1,5 @@
+//@version 100
+
 // This fragment-shader does not output anything.
 // It's for a control which is just going to clip as specified in the vertex shader.
 

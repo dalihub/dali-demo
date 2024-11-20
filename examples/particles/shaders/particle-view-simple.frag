@@ -1,11 +1,15 @@
-#version 300 es
+//@version 100
+
 // Shader for an unlit, unfogged, textured mesh.
 
 precision mediump float;
-uniform vec4 uColor;
-out vec4 oFragColor;
+
+UNIFORM_BLOCK VanillaFrag
+{
+UNIFORM vec4 uColor;
+};
 
 void main()
 {
-  oFragColor = uColor;
+ gl_FragColor = uColor;
 }

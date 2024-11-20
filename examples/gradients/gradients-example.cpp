@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -91,6 +91,7 @@ public:
                        Toolkit::Alignment::HORIZONTAL_CENTER,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
+
     mGradientControl = Control::New();
     mGradientControl.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mGradientControl.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -105,20 +106,22 @@ public:
 
     Property::Array stopOffsets;
     stopOffsets.PushBack(0.0f);
-    stopOffsets.PushBack(0.3f);
+    stopOffsets.PushBack(0.2f);
+    stopOffsets.PushBack(0.4f);
     stopOffsets.PushBack(0.6f);
     stopOffsets.PushBack(0.8f);
     stopOffsets.PushBack(1.0f);
     mGradientMap.Insert(GradientVisual::Property::STOP_OFFSET, stopOffsets);
 
     Property::Array stopColors;
-    stopColors.PushBack(Vector4(129.f, 198.f, 193.f, 255.f) / 255.f);
-    stopColors.PushBack(Vector4(196.f, 198.f, 71.f, 122.f) / 255.f);
-    stopColors.PushBack(Vector4(214.f, 37.f, 139.f, 191.f) / 255.f);
-    stopColors.PushBack(Vector4(129.f, 198.f, 193.f, 150.f) / 255.f);
+    stopColors.PushBack(Color::BLUE);
+    stopColors.PushBack(Color::MAGENTA);
+    stopColors.PushBack(Color::RED);
+    stopColors.PushBack(Color::ORANGE);
     stopColors.PushBack(Color::YELLOW);
-    mGradientMap.Insert(GradientVisual::Property::STOP_COLOR, stopColors);
+    stopColors.PushBack(Color::GREEN);
 
+    mGradientMap.Insert(GradientVisual::Property::STOP_COLOR, stopColors);
     mGradientMap.Insert(DevelVisual::Property::CORNER_RADIUS, mRoundedCorner ? CORNER_RADIUS_VALUE : Vector4::ZERO);
 
     UpdateGradientMap();
@@ -196,6 +199,11 @@ public:
       if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
         mApplication.Quit();
+      }
+      else if(event.GetKeyName() >= "1" && event.GetKeyName() <= "4")
+      {
+        mIndex = (event.GetKeyName()[0] - '0') % 4;
+        UpdateGradientMap();
       }
     }
   }
