@@ -1,11 +1,16 @@
+//@version 100
 // Vertex shader for metaballs
 
-attribute mediump vec2    aPosition;
-attribute mediump vec2    aTexture;
-uniform   mediump mat4    uMvpMatrix;
-uniform   mediump vec3    uSize;
-uniform   lowp    vec4    uColor;
-varying   mediump vec2    vTexCoord;
+INPUT mediump vec2    aPosition;
+INPUT mediump vec2    aTexture;
+OUTPUT   mediump vec2    vTexCoord;
+
+UNIFORM_BLOCK Vanilla
+{
+UNIFORM   mediump mat4    uMvpMatrix;
+UNIFORM   mediump vec3    uSize;
+UNIFORM   lowp    vec4    uColor;
+};
 
 void main()
 {

@@ -1,12 +1,19 @@
-uniform lowp vec4 uColor;
-uniform sampler2D sTexture0;
-uniform sampler2D sTexture1;
-uniform mediump vec3 eyePos;
-uniform mediump vec3 lightDir;
-uniform mediump vec2 uScreenSize;
-varying mediump vec3 vNormal;
-varying mediump vec3 vPosition;
-varying mediump vec2 vTexCoord;
+//@version 100
+
+UNIFORM sampler2D sTexture0;
+UNIFORM sampler2D sTexture1;
+
+UNIFORM_BLOCK Custom
+{
+UNIFORM lowp vec4 uColor;
+UNIFORM mediump vec3 eyePos;
+UNIFORM mediump vec3 lightDir;
+UNIFORM mediump vec2 uScreenSize;
+};
+
+INPUT mediump vec3 vNormal;
+INPUT mediump vec3 vPosition;
+INPUT mediump vec2 vTexCoord;
 
 mediump float rand(mediump vec2 co)
 {
@@ -22,6 +29,6 @@ void main()
   mediump float factor = gl_FragCoord.y / uScreenSize.y;
   mediump float intensity = max(dot(n,l), 0.0);
   mediump vec2 uv = tx;
-  gl_FragColor = ((texture2D(sTexture0, vTexCoord) * factor ) +
-                 (texture2D(sTexture1, uv))) * intensity;
+  gl_FragColor = ((TEXTURE(sTexture0, vTexCoord) * factor ) +
+                  (TEXTURE(sTexture1, uv))) * intensity;
 }

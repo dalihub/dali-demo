@@ -1,8 +1,14 @@
-uniform lowp vec4 uColor;
-uniform sampler2D sTexture;
-varying mediump vec2 vTexCoord;
+//@version 100
+
+UNIFORM_BLOCK VanillaFrag
+{
+UNIFORM lowp vec4 uColor;
+}
+UNIFORM sampler2D sTexture;
+
+INPUT mediump vec2 vTexCoord;
 
 void main()
 {
-  gl_FragColor = texture2D( sTexture, vTexCoord ) * uColor;
+  gl_FragColor = TEXTURE( sTexture, vTexCoord ) * uColor;
 }

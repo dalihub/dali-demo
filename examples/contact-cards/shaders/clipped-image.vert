@@ -1,13 +1,19 @@
+//@version 100
+
 // This vertex-shader mixes in the quad and circle geometry depending on the value of uDelta.
 //
 // uDelta is used to mix in the Circle and the Quad positions.
 // If uDelta is 0.0f, then the circle position is adopted and if it is 1.0f, then the quad position is adopted.
 
-attribute mediump vec2  aPositionCircle;
-attribute mediump vec2  aPositionQuad;
-uniform   mediump float uDelta;
-uniform mediump mat4    uMvpMatrix;
-uniform mediump vec3    uSize;
+INPUT mediump vec2  aPositionCircle;
+INPUT mediump vec2  aPositionQuad;
+
+UNIFORM_BLOCK Vanilla
+{
+UNIFORM mediump float uDelta;
+UNIFORM mediump mat4  uMvpMatrix;
+UNIFORM mediump vec3  uSize;
+};
 
 void main()
 {
