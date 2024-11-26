@@ -1,24 +1,18 @@
-//@version 100
-
 // Shader for basic, per-vertex lighting with texture (vertex):
 
-INPUT mediump vec3  aPosition;
-INPUT highp   vec3  aNormal;
-INPUT highp   vec2  aTexCoord;
+attribute mediump vec3  aPosition;
+attribute highp   vec3  aNormal;
+attribute highp   vec2  aTexCoord;
 
-OUTPUT   mediump vec3  vIllumination;
-OUTPUT   mediump vec2  vTexCoord;
-
-UNIFORM_BLOCK Vanilla
-{
-UNIFORM   mediump mat4  uMvpMatrix;
-UNIFORM   mediump vec3  uSize;
-UNIFORM   mediump vec3  uObjectDimensions;
-UNIFORM   mediump mat4  uModelView;
-UNIFORM   mediump mat4  uViewMatrix;
-UNIFORM   mediump mat3  uNormalMatrix;
-UNIFORM   mediump vec3  uLightPosition;
-};
+varying   mediump vec2  vTexCoord;
+uniform   mediump mat4  uMvpMatrix;
+uniform   mediump vec3  uSize;
+uniform   mediump vec3  uObjectDimensions;
+varying   mediump vec3  vIllumination;
+uniform   mediump mat4  uModelView;
+uniform   mediump mat4  uViewMatrix;
+uniform   mediump mat3  uNormalMatrix;
+uniform   mediump vec3  uLightPosition;
 
 void main()
 {

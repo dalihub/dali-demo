@@ -1,21 +1,16 @@
-//@version 100
-
+#version 300 es
 // Fragment shader for particles, which simulates depth of field using
 // a combination of procedural texturing, alpha testing and alpha blending.
 
 precision lowp float;
-
-UNIFORM_BLOCK VanillaFrag
-{
-UNIFORM float uAlphaTestRefValue;
-UNIFORM vec2 uFadeRange; // near, far
-};
-
-INPUT vec2 vUvUnit;
-INPUT flat float vDepth;
-INPUT flat float vFocalDistance;
-INPUT flat float vOpacity;
-INPUT flat vec3 vColor;
+uniform float uAlphaTestRefValue;
+uniform vec2 uFadeRange; // near, far
+in vec2 vUvUnit;
+flat in float vDepth;
+flat in float vFocalDistance;
+flat in float vOpacity;
+flat in vec3 vColor;
+out vec4 oFragColor;
 
 const float REF_VALUE_THRESHOLD = 1. / 64.;
 
@@ -40,5 +35,5 @@ void main()
   // Fade particles out as they get close to the near and far clipping planes
   alpha *= smoothstep(.0f, uFadeRange.x, vDepth) * smoothstep(1.f, uFadeRange.y, vDepth);
 
-  gl_FragColor = vec4(vColor, alpha);
+  oFragColor = vec4(vColor, alpha);
 }

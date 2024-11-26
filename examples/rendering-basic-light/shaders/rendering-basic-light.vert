@@ -1,18 +1,12 @@
-//@version 100
+attribute mediump vec3 aPosition; // DALi shader builtin
+attribute mediump vec3 aNormal; // DALi shader builtin
+uniform   mediump mat4 uMvpMatrix; // DALi shader builtin
+uniform   mediump vec3 uSize; // DALi shader builtin
+uniform   mediump mat4 uModelView; // DALi shader builtin
+uniform   mediump mat3 uNormalMatrix; // DALi shader builtin
 
-INPUT mediump vec3 aPosition; // DALi shader builtin
-INPUT mediump vec3 aNormal; // DALi shader builtin
-
-UNIFORM_BLOCK Vanilla
-{
-UNIFORM   mediump mat4 uMvpMatrix; // DALi shader builtin
-UNIFORM   mediump vec3 uSize; // DALi shader builtin
-UNIFORM   mediump mat4 uModelView; // DALi shader builtin
-UNIFORM   mediump mat3 uNormalMatrix; // DALi shader builtin
-};
-
-OUTPUT mediump vec3 vNormal;
-OUTPUT mediump vec3 vFragPos;
+varying mediump vec3 vNormal;
+varying mediump vec3 vFragPos;
 
 void main()
 {

@@ -356,12 +356,12 @@ private:
     // prepare the animation by setting the uniform to the required value
     mEffect.SetProperty(mEffect.GetPropertyIndex(BREAK_UNIFORM_NAME), 1.f);
     mMeshActor.SetProperty(Actor::Property::SCALE, 0.01f);
-    mEffect.SetProperty(mEffect.GetPropertyIndex("uEffectScale"), 0.01f);
+    mEffect.SetProperty(mEffect.GetPropertyIndex("uScale"), 0.01f);
     mMeshActor.SetProperty(Actor::Property::POSITION, Vector3(0.f, 0.f, 1.f));
 
     Animation breakAnimation = Animation::New(duration * 1.5f);
     breakAnimation.AnimateTo(Property(mMeshActor, Actor::Property::SCALE), Vector3(ACTOR_SCALE, ACTOR_SCALE, ACTOR_SCALE), EaseOutSquare);
-    breakAnimation.AnimateTo(Property(mEffect, "uEffectScale"), ACTOR_SCALE, EaseOutSquare);
+    breakAnimation.AnimateTo(Property(mEffect, "uScale"), ACTOR_SCALE, EaseOutSquare);
     breakAnimation.AnimateTo(Property(mMeshActor, Actor::Property::POSITION), ACTOR_POSITION, EaseOutSquare);
     breakAnimation.FinishedSignal().Connect(this, &SparkleEffectExample::OnBreakAnimationFinished);
 

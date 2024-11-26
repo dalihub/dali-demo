@@ -1,32 +1,29 @@
-//@version 100
 precision highp float;
 
-INPUT vec2  aTexCoord;
-INPUT vec2  aParticlePath0;
-INPUT vec2  aParticlePath1;
-INPUT vec2  aParticlePath2;
-INPUT vec2  aParticlePath3;
-INPUT vec2  aParticlePath4;
-INPUT vec2  aParticlePath5;
+attribute vec2  aTexCoord;
+uniform   mat4  uMvpMatrix;
+varying   vec2  vTexCoord;
 
-OUTPUT lowp vec4 vColor;
-OUTPUT vec2 vTexCoord;
+attribute vec2  aParticlePath0;
+attribute vec2  aParticlePath1;
+attribute vec2  aParticlePath2;
+attribute vec2  aParticlePath3;
+attribute vec2  aParticlePath4;
+attribute vec2  aParticlePath5;
 
-UNIFORM_BLOCK Custom
-{
-UNIFORM mat4  uMvpMatrix;
-UNIFORM float uPercentage;
-UNIFORM float uPercentageMarked;
-UNIFORM vec3  uParticleColors[NUM_COLOR];
-UNIFORM float uOpacity[NUM_PARTICLE];
-UNIFORM vec2  uTapIndices;
-UNIFORM float uTapOffset[MAXIMUM_ANIMATION_COUNT];
-UNIFORM vec2  uTapPoint[MAXIMUM_ANIMATION_COUNT];
-UNIFORM float uAcceleration;
-UNIFORM float uRadius;
-UNIFORM float uEffectScale;
-UNIFORM float uBreak;
-};
+uniform float uPercentage;
+uniform float uPercentageMarked;
+uniform vec3  uParticleColors[NUM_COLOR];
+uniform float uOpacity[NUM_PARTICLE];
+uniform vec2  uTapIndices;
+uniform float uTapOffset[MAXIMUM_ANIMATION_COUNT];
+uniform vec2  uTapPoint[MAXIMUM_ANIMATION_COUNT];
+uniform float uAcceleration;
+uniform float uRadius;
+uniform float uScale;
+uniform float uBreak;
+
+varying lowp vec4 vColor;
 
 void main()
 {
@@ -41,7 +38,7 @@ void main()
     return;
   }
 
-  // As the movement along the b-curve has nonUNIFORM speed with a UNIFORM increasing parameter 'uPercentage'
+  // As the movement along the b-curve has nonuniform speed with a uniform increasing parameter 'uPercentage'
   // we give different particles the different 'percentage' to make them looks more random
   float increment = idx / float(NUM_PARTICLE)*5.0;
   float percentage = mod(uPercentage +uAcceleration+increment, 1.0);
@@ -78,8 +75,8 @@ void main()
   position = mix( position, vec2( 250.0,250.0 ),uBreak*(1.0-uOpacity[int(idx)]) ) ;
 
   // vertex position on the mesh: (sign(aTexCoord.x), sign(aTexCoord.y))*PARTICLE_HALF_SIZE
-  gl_Position = uMvpMatrix * vec4( position.x+sign(aTexCoord.x)*PARTICLE_HALF_SIZE/uEffectScale,
-                                   position.y+sign(aTexCoord.y)*PARTICLE_HALF_SIZE/uEffectScale,
+  gl_Position = uMvpMatrix * vec4( position.x+sign(aTexCoord.x)*PARTICLE_HALF_SIZE/uScale,
+                                   position.y+sign(aTexCoord.y)*PARTICLE_HALF_SIZE/uScale,
                                    0.0, 1.0 );
 
   // we store the color index inside texCoord attribute

@@ -1,17 +1,11 @@
-//@version 100
+attribute mediump vec2 aPosition1;
+attribute mediump vec2 aPosition2;
+attribute lowp vec3    aColor;
+uniform mediump mat4   uMvpMatrix;
+uniform mediump vec3   uSize;
+uniform mediump float  uMorphAmount;
 
-INPUT mediump vec2 aPosition1;
-INPUT mediump vec2 aPosition2;
-INPUT lowp vec3    aColor;
-
-UNIFORM_BLOCK Vanilla
-{
-UNIFORM mediump mat4   uMvpMatrix;
-UNIFORM mediump vec3   uSize;
-UNIFORM mediump float  uMorphAmount;
-};
-
-OUTPUT lowp vec3 vColor;
+varying lowp vec3 vColor;
 
 void main()
 {
