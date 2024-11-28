@@ -51,7 +51,7 @@
               {
                 "fragmentShader":[
                   "//@version 100",
-                  "  varying mediump vec2  vTexCoord;",
+                  "  INPUT mediump vec2  vTexCoord;",
                   "  UNIFORM sampler2D     sTexture;",
                   "  UNIFORM_BLOCK FragBlock",
                   "  {",
@@ -91,13 +91,15 @@
               "shader":
               {
                 "fragmentShader":[
-                  "  varying mediump vec2  vTexCoord;",
+                  "//@version 100",
+                  "  INPUT mediump vec2  vTexCoord;",
                   "  UNIFORM sampler2D     sTexture;",
                   "  UNIFORM_BLOCK FragBlock",
                   "  {",
                   "    UNIFORM lowp    vec4  uColor;",
                   "    UNIFORM mediump vec3  uCustomPosition;",
                   "  };",
+                  "",
                   "  void main()",
                   "  {",
                   "    if( TEXTURE( sTexture, vTexCoord ).a <= 0.0001 )",
