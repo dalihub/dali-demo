@@ -19,7 +19,6 @@ OPTION(ENABLE_EXPORTALL          "Enable Export all symbols" OFF)
 OPTION(ENABLE_DEBUG              "Enable Debug" OFF)
 OPTION(ENABLE_TRACE              "Enable Trace" OFF)
 OPTION(ENABLE_PKG_CONFIGURE      "Use pkgconfig" ON)
-OPTION(ENABLE_VULKAN             "Use Vulkan instead of GLES" OFF)
 OPTION(INTERNATIONALIZATION      "Internationalization demo string names" ON)
 
 SET(ROOT_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..)
@@ -412,9 +411,6 @@ ELSEIF( UNIX )
 
   IF( ANDROID )
     SET( REQUIRED_LIBS ${REQUIRED_LIBS} -lGLESv3 )
-  ELSE()
-    PKG_CHECK_MODULES( GLESV2 REQUIRED glesv2 )
-    SET( REQUIRED_LIBS ${REQUIRED_LIBS} ${GLESV2_LIBRARIES} )
   ENDIF()
 ENDIF()
 
