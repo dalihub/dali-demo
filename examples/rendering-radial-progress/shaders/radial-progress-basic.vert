@@ -1,11 +1,17 @@
+//@version 100
+
 // Vertex shader for polygon
 
-attribute mediump vec3  aPosition;
-uniform   mediump mat4  uMvpMatrix; // DALi shader builtin
-uniform   mediump vec3  uSize;      // DALi shader builtin
-uniform   mediump float uProgress;
+INPUT mediump vec3  aPosition;
 
-varying mediump vec2 vTexCoord;
+UNIFORM_BLOCK Vanilla
+{
+UNIFORM   mediump mat4  uMvpMatrix; // DALi shader builtin
+UNIFORM   mediump vec3  uSize;      // DALi shader builtin
+UNIFORM   mediump float uProgress;
+};
+
+OUTPUT mediump vec2 vTexCoord;
 
 void main()
 {

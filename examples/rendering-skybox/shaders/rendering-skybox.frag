@@ -1,11 +1,13 @@
+//@version 100
+
 // Fragment shader for a skybox
 
-uniform samplerCube uSkyBoxTexture;
+UNIFORM samplerCube uSkyBoxTexture;
 
-varying mediump vec3 vTexCoord;
+INPUT mediump vec3 vTexCoord;
 
 void main()
 {
-  mediump vec4 texColor = textureCube( uSkyBoxTexture, vTexCoord );
+  mediump vec4 texColor = TEXTURE( uSkyBoxTexture, vTexCoord );
   gl_FragColor = texColor;
 }

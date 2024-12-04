@@ -1,11 +1,13 @@
-layout(std140) uniform FragmentBlock
+//@version 100
+
+UNIFORM_BLOCK FragmentBlock
 {
-  lowp vec4 uColor;
-  mediump vec4 uColorArray[1024];
-  mediump int uColorIndex;
+UNIFORM  lowp vec4 uColor;
+UNIFORM  mediump vec4 uColorArray[1024];
+UNIFORM  mediump int uColorIndex;
 };
 
 void main()
 {
-  fragColor = uColorArray[uColorIndex];
+  gl_FragColor = uColorArray[uColorIndex];
 }

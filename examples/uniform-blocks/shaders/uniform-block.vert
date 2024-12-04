@@ -1,9 +1,11 @@
+//@version 100
+
 INPUT vec2 aPosition;
 
-layout(std140) uniform VertexBlock
+UNIFORM_BLOCK Vanilla
 {
-  highp mat4 uMvpMatrix;
-  highp vec3 uSize;
+UNIFORM  highp mat4 uMvpMatrix;
+UNIFORM  highp vec3 uSize;
 };
 
 void main()

@@ -1,9 +1,15 @@
-attribute mediump vec2 aPosition;
-uniform   mediump mat4 uMvpMatrix;  // DALi shader builtin
-uniform   mediump vec3 uSize; // DALi shader builtin
+//@version 100
 
-varying mediump vec2 vTexCoord;
-varying mediump vec2 vRayCastCoord;
+INPUT mediump vec2 aPosition;
+OUTPUT mediump vec2 vTexCoord;
+OUTPUT mediump vec2 vRayCastCoord;
+
+UNIFORM_BLOCK Vanilla
+{
+UNIFORM   mediump mat4 uMvpMatrix;  // DALi shader builtin
+UNIFORM   mediump vec3 uSize; // DALi shader builtin
+};
+
 void main()
 {
   mediump vec4 vertexPosition = vec4(aPosition, 0.0, 1.0);
