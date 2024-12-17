@@ -18,3 +18,5 @@ DR_THREAD_ENABLED (default: 0) - threaded rendering. Runs custom rendering code 
 thread. This method implicitly creates an offscreen buffer to render into.
 
 MAX_CUBES - allows change number of cubes to render
+
+**Please note:** native-renderer.cpp/h are used by gl-window.example as well.

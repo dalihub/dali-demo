@@ -145,6 +145,9 @@
 	<ui-application appid="gestures.example" exec="/usr/apps/com.samsung.dali-demo/bin/gestures.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Gestures</label>
 	</ui-application>
+	<ui-application appid="gl-window.example" exec="/usr/apps/com.samsung.dali-demo/bin/gl-window.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>GL Window</label>
+	</ui-application>
 	<ui-application appid="gradients.example" exec="/usr/apps/com.samsung.dali-demo/bin/gradients.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Color Gradient</label>
 	</ui-application>
