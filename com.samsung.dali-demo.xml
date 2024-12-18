@@ -175,6 +175,9 @@
 	<ui-application appid="image-view-encoded-image-buffer.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-encoded-image-buffer.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Image View Encoded Image Buffer</label>
 	</ui-application>
+	<ui-application appid="image-view-external-texture.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-external-texture.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Image View External Texture</label>
+	</ui-application>
 	<ui-application appid="image-view-url.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-url.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Image View URL</label>
 	</ui-application>
