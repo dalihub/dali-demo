@@ -1,7 +1,12 @@
+//@version 100
+
 precision highp float;
 INPUT mediump vec2 vTexCoord;
-uniform sampler2D sTexture;
-uniform mediump float uDelta;
+UNIFORM sampler2D sTexture;
+UNIFORM_BLOCK FragBlock
+{
+UNIFORM mediump float uDelta;
+};
 
 void main()
 {
@@ -10,5 +15,5 @@ void main()
   mat2 rotation = mat2(cos(uDelta), -sin(uDelta), sin(uDelta), cos(uDelta));
   texCoord = (rotation * texCoord) * .5 + .5;
   color += TEXTURE( sTexture, texCoord );
-  OUT_COLOR = color;
+  gl_FragColor = color;
 }
