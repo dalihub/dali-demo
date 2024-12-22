@@ -73,6 +73,9 @@ msgstr "이미지 뷰 알파 블렌딩"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_ENCODED_IMAGE_BUFFER"
 msgstr "이미지 뷰 인코딩 버퍼"
 
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_EXTERNAL_TEXTURE"
+msgstr "이미지 뷰 외부 텍스쳐"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_PIXEL_AREA"
 msgstr "이미지 뷰 픽셀 영역"
 
