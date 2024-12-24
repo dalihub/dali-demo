@@ -223,6 +223,13 @@ public:
     mCurrentPositionToggle(0, 0),
     mCurrentPositionImage(0, 0)
   {
+    for(uint32_t i = 0u; i < NUMBER_OF_VISUAL_TYPE; ++i)
+    {
+      mImageViewMaskUrlImageIndex[i] = 0u;
+      mImageViewUrlType[i]           = UrlType::REGULAR_IMAGE;
+      mImageViewMaskUrlType[i]       = UrlType::REGULAR_IMAGE;
+    }
+
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &ImageViewController::Create);
   }
