@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,12 +81,14 @@ public:
 
     Vector2 size = window.GetSize();
 
+    Toolkit::RenderEffect fixedEffect = Toolkit::RenderEffect::CreateBackgroundBlurEffect(0.4f, 40);
+
     // UI panel
     UIPanel = Toolkit::Control::New();
     UIPanel.SetProperty(Actor::Property::SIZE, size * 0.8f);
     UIPanel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     pannelLayer.Add(UIPanel);
-    UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
+    UIPanel.SetRenderEffect(Toolkit::RenderEffect::CreateBackgroundBlurEffect(1.0f, flexableRadius));
 
     // Welcome message
     {
@@ -144,7 +146,7 @@ public:
       label.Add(unitLabel);
 
       UIPanel.Add(weatherPanel);
-      weatherPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
+      weatherPanel.SetRenderEffect(fixedEffect);
     }
 
     // Icon mini panels
@@ -158,25 +160,25 @@ public:
       control.SetProperty(Actor::Property::POSITION, Vector2(-xIncrementer, yStarter));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
+      control.SetRenderEffect(fixedEffect);
 
       control = CreateIconPanel("BlueTooth", "2 devices", true, DEMO_IMAGE_DIR "application-icon-14.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(xIncrementer, yStarter));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
+      control.SetRenderEffect(fixedEffect);
 
       control = CreateIconPanel("Wi-Fi", "TizenUIFW", true, DEMO_IMAGE_DIR "application-icon-55.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(-xIncrementer, yStarter + yIncrementer));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
+      control.SetRenderEffect(fixedEffect);
 
       control = CreateIconPanel("Lighting", "5 devices", true, DEMO_IMAGE_DIR "application-icon-21.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(xIncrementer, yStarter + yIncrementer));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
+      control.SetRenderEffect(fixedEffect);
 
       // Keep one of control to test visible option change.
       mVisibilityChangedControl = control;
@@ -229,7 +231,7 @@ public:
       airConPanel.SetProperty(Toolkit::Control::Property::BACKGROUND, airConPanelDimmer);
 
       UIPanel.Add(airConPanel);
-      airConPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(0.4f, 40));
+      airConPanel.SetRenderEffect(fixedEffect);
     }
 
     // lower background layer
@@ -369,7 +371,7 @@ public:
           flexableRadius -= 10;
           if(UIPanel)
           {
-            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
+            UIPanel.SetRenderEffect(Toolkit::RenderEffect::CreateBackgroundBlurEffect(1.0f, flexableRadius));
           }
         }
       }
@@ -380,7 +382,7 @@ public:
           flexableRadius += 10;
           if(UIPanel)
           {
-            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
+            UIPanel.SetRenderEffect(Toolkit::RenderEffect::CreateBackgroundBlurEffect(1.0f, flexableRadius));
           }
         }
       }
