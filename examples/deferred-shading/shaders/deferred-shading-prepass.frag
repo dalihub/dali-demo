@@ -1,16 +1,20 @@
-#version 300 es
+//@version 100
+
 precision mediump float;
 
 // DALI uniform
-uniform vec4 uColor;
+UNIFORM_BLOCK FragBuffer
+{
+  UNIFORM vec4 uColor;
+};
 
-in vec4 vPosition;
-in vec3 vNormal;
+INPUT vec4 vPosition;
+INPUT vec3 vNormal;
 
 // These are our outputs.
-layout(location = 0) out vec3 oNormal;
-layout(location = 1) out vec4 oPosition;
-layout(location = 2) out vec3 oColor;
+OUTPUT vec3 oNormal;
+layout(location=1) out vec4 oPosition;
+layout(location=2) out vec3 oColor;
 
 void main()
 {
