@@ -34,7 +34,7 @@ const char* const BUTTON_ICON_SELECTED(DEMO_IMAGE_DIR "icon-change-selected.png"
 
 const char* DELTA_UNIFORM_NAME = "uDelta";
 
-const Vector2 TARGET_SIZE(800.f, 800.f);
+const Vector2 TARGET_SIZE(600.f, 600.f);
 } // namespace
 
 class ImageViewUrlApp : public ConnectionTracker
@@ -126,7 +126,7 @@ private:
       renderTask.SetCameraActor(cameraActor);
 
       mOutputTexture   = Texture::New(TextureType::TEXTURE_2D,
-                                    Pixel::RGB888,
+                                    Pixel::RGBA8888,
                                     unsigned(TARGET_SIZE.width),
                                     unsigned(TARGET_SIZE.height));
       auto framebuffer = FrameBuffer::New(TARGET_SIZE.width, TARGET_SIZE.height, FrameBuffer::Attachment::NONE);

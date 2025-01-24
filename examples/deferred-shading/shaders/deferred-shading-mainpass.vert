@@ -1,14 +1,18 @@
-#version 300 es
+//@version 100
+
 precision mediump float;
 
 // DALI uniforms
-uniform mat4 uMvpMatrix;
-uniform vec3 uSize;
+UNIFORM_BLOCK VertBuffer
+{
+UNIFORM mat4 uMvpMatrix;
+UNIFORM vec3 uSize;
+};
 
-in vec3 aPosition;
-in vec2 aTexCoord;
+INPUT vec3 aPosition;
+INPUT vec2 aTexCoord;
 
-out vec2 vUv;
+OUTPUT vec2 vUv;
 
 void main()
 {

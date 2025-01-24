@@ -1,4 +1,4 @@
-#version 300 es
+//@version 100
 
 precision mediump float;
 
@@ -9,12 +9,15 @@ const float kAttenuationLinear = .1f;
 const float kAttenuationQuadratic = .15f;
 
 // G-buffer
-uniform sampler2D uTextureNormal;
-uniform sampler2D uTexturePosition;
-uniform sampler2D uTextureColor;
+UNIFORM sampler2D uTextureNormal;
+UNIFORM sampler2D uTexturePosition;
+UNIFORM sampler2D uTextureColor;
 
-uniform mat4 uInvProjection;
-uniform vec3 uDepth_InvDepth_Near;
+UNIFORM_BLOCK FragBuffer
+{
+  UNIFORM mat4 uInvProjection;
+  UNIFORM vec3 uDepth_InvDepth_Near;
+};
 
 #define DEPTH uDepth_InvDepth_Near.x
 #define INV_DEPTH uDepth_InvDepth_Near.y
@@ -28,10 +31,12 @@ struct Light
   vec3 color;
 };
 
-uniform Light uLights[kMaxLights];
+UNIFORM_BLOCK LightsBuffer
+{
+UNIFORM Light uLights[kMaxLights];
+};
 
-in vec2 vUv;
-out vec4 oColor;
+INPUT vec2 vUv;
 
 vec4 Unmap(vec4 m)  // texture -> projection
 {
@@ -66,7 +71,7 @@ vec3 CalculateLighting(vec3 pos, vec3 normal)
 
 void main()
 {
-  vec3 normSample = texture(uTextureNormal, vUv).xyz;
+  vec3 normSample = TEXTURE(uTextureNormal, vUv).xyz;
   if (dot(normSample, normSample) == 0.f)
   {
     discard;  // if we didn't write this texel, don't bother lighting it.
@@ -74,11 +79,11 @@ void main()
 
   vec3 normal = normalize(normSample - .5f);
 
-  vec4 posSample = texture(uTexturePosition, vUv);
+  vec4 posSample = TEXTURE(uTexturePosition, vUv);
   vec3 pos = (uInvProjection * Unmap(posSample)).xyz;
 
-  vec3 color = texture(uTextureColor, vUv).rgb;
+  vec3 color = TEXTURE(uTextureColor, vUv).rgb;
   vec3 finalColor = color * CalculateLighting(pos, normal);
 
-  oColor = vec4(finalColor, 1.f);
+  gl_FragColor = vec4(finalColor, 1.f);
 }
