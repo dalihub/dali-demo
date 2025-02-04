@@ -182,6 +182,9 @@ public:
   void OnWindowOrientationChanged(Dali::Window window, Dali::WindowOrientation orientation)
   {
     DALI_LOG_RELEASE_INFO("OnWindowOrientationChanged, changed window orientation: %d\n", orientation);
+    Dali::Window::WindowPosition position = window.GetPosition();
+    Dali::Window::WindowSize size= window.GetSize();
+    DALI_LOG_RELEASE_INFO("OnWindowOrientationChanged, x:%d, y:%d, w:%d, h:%d\n", position.GetX(), position.GetY(),  size.GetWidth(), size.GetHeight());
   }
 
   void OnWindowResized(Dali::Window winHandle, Dali::Window::WindowSize size)
@@ -412,6 +415,10 @@ public:
         DALI_LOG_RELEASE_INFO("Move/Resize Test  ::: window move and resize (10, 10) (600 x 400)\n");
         PositionSize windowPosition(10, 10, 600, 400);
         DevelWindow::SetPositionSize(window, windowPosition);
+
+        Dali::Window::WindowPosition position = window.GetPosition();
+        Dali::Window::WindowSize size = window.GetSize();
+        DALI_LOG_RELEASE_INFO("Check Converted window position/size, x:%d, y:%d, w:%d, h:%d\n", position.GetX(), position.GetY(),  size.GetWidth(), size.GetHeight());
       }
       else if(event.GetKeyName() == "2")
       {
