@@ -1,23 +1,25 @@
-#version 300 es
+//@version 100
 
 precision mediump float;
 
 // DALI uniforms
-uniform mat4 uMvpMatrix;
-uniform mat3 uNormalMatrix;
-uniform vec3 uSize;
+UNIFORM_BLOCK VertBuffer
+{
+UNIFORM mat4 uMvpMatrix;
+UNIFORM mat3 uNormalMatrix;
+UNIFORM vec3 uSize;
 
-uniform vec3 uDepth_InvDepth_Near;
-
+UNIFORM vec3 uDepth_InvDepth_Near;
+};
 #define DEPTH uDepth_InvDepth_Near.x
 #define INV_DEPTH uDepth_InvDepth_Near.y
 #define NEAR uDepth_InvDepth_Near.z
 
-in vec3 aPosition;
-in vec3 aNormal;
+INPUT vec3 aPosition;
+INPUT vec3 aNormal;
 
-out vec4 vPosition;
-out vec3 vNormal;
+OUTPUT vec4 vPosition;
+OUTPUT vec3 vNormal;
 
 vec4 Map(vec4 v) // projection space -> texture
 {

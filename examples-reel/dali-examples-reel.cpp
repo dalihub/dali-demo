@@ -64,6 +64,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("focus-integration.example", DALI_DEMO_STR_TITLE_FOCUS_INTEGRATION));
   demo.AddExample(Example("gaussian-blur-view.example", DALI_DEMO_STR_TITLE_GAUSSIAN_BLUR_VIEW));
   demo.AddExample(Example("gestures.example", DALI_DEMO_STR_TITLE_GESTURES));
+  demo.AddExample(Example("gl-window.example", DALI_DEMO_STR_TITLE_GL_WINDOW));
   demo.AddExample(Example("gradients.example", DALI_DEMO_STR_TITLE_COLOR_GRADIENT));
   demo.AddExample(Example("hello-world.example", DALI_DEMO_STR_TITLE_HELLO_WORLD));
   demo.AddExample(Example("image-policies.example", DALI_DEMO_STR_TITLE_IMAGE_POLICIES));

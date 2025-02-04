@@ -103,6 +103,9 @@ msgstr "Flexbox Playground"
 msgid "DALI_DEMO_STR_TITLE_FRAME_CALLBACK"
 msgstr "Frame Callback"
 
+msgid "DALI_DEMO_STR_TITLE_GL_WINDOW"
+msgstr "GL Window"
+
 msgid "DALI_DEMO_STR_TITLE_HELLO_WORLD"
 msgstr "Hello World"
 
