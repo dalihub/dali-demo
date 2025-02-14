@@ -61,6 +61,9 @@ msgstr "സുതാര്യത ഉപയോഗിച്ച് ഇമേജ�
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
 msgstr "ചിത്രം കാഴ്ച SVG"
 
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_YUV"
+msgstr "ചിത്രം കാഴ്ച YUV"
+
 msgid "DALI_DEMO_STR_TITLE_INHERIT_TEST"
 msgstr "Inherit Test"
 

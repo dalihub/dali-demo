@@ -190,6 +190,9 @@
 	<ui-application appid="image-view-svg.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-svg.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>ImageView SVG</label>
 	</ui-application>
+	<ui-application appid="image-view-yuv.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-yuv.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>ImageView YUV</label>
+	</ui-application>
 	<ui-application appid="item-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/item-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Item View</label>
 	</ui-application>
