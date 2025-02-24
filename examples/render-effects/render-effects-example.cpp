@@ -23,8 +23,10 @@
 #include <dali/public-api/events/key-event.h>
 
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali-toolkit/public-api/visuals/visual-properties.h>
 
 #include <unordered_map>
 
@@ -111,8 +113,9 @@ public:
       colorVisualPropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::COLOR);
       colorVisualPropertyMap.Insert(Toolkit::Visual::Property::MIX_COLOR, Color::BLACK);
       colorVisualPropertyMap.Insert(Toolkit::Visual::Property::OPACITY, 0.2f);
-      colorVisualPropertyMap.Insert(Toolkit::DevelVisual::Property::CORNER_RADIUS, 30.0f);
       weatherPanel.SetProperty(Toolkit::Control::Property::BACKGROUND, colorVisualPropertyMap);
+      weatherPanel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS, Vector4(30.0f, 30.0f, 30.0f, 30.0f));
+      weatherPanel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::ABSOLUTE);
 
       Toolkit::TextLabel label = SetUpTextLabelProperties("10:21", Color::WHITE, "BEGIN", 36.0f);
       label.SetProperty(Actor::Property::SIZE_WIDTH, 250.0f);
@@ -227,8 +230,9 @@ public:
       airConPanelDimmer.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::COLOR);
       airConPanelDimmer.Insert(Toolkit::Visual::Property::MIX_COLOR, Color::BLACK);
       airConPanelDimmer.Insert(Toolkit::Visual::Property::OPACITY, 0.2f);
-      airConPanelDimmer.Insert(Toolkit::DevelVisual::Property::CORNER_RADIUS, 30.0f);
       airConPanel.SetProperty(Toolkit::Control::Property::BACKGROUND, airConPanelDimmer);
+      airConPanel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS, Vector4(30.0f, 30.0f, 30.0f, 30.0f));
+      airConPanel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::ABSOLUTE);
 
       UIPanel.Add(airConPanel);
       airConPanel.SetRenderEffect(fixedEffect);
@@ -251,8 +255,9 @@ public:
     Property::Map colorVisualPropertyMap;
     colorVisualPropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::COLOR);
     colorVisualPropertyMap.Insert(Toolkit::Visual::Property::OPACITY, 0.3f);
-    colorVisualPropertyMap.Insert(Toolkit::DevelVisual::Property::CORNER_RADIUS, 30.0f);
     panel.SetProperty(Toolkit::Control::Property::BACKGROUND, colorVisualPropertyMap);
+    panel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS, Vector4(30.0f, 30.0f, 30.0f, 30.0f));
+    panel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::ABSOLUTE);
 
     // TOP
     Toolkit::ImageView icon = Toolkit::ImageView::New(iconURL);
