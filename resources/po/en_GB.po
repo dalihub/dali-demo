@@ -139,6 +139,9 @@ msgstr "Image View Pixel Area"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
 msgstr "Image View SVG"
 
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_YUV"
+msgstr "Image View YUV"
+
 msgid "DALI_DEMO_STR_TITLE_INHERIT_TEST"
 msgstr "Inherit Test"
 
@@ -174,6 +177,9 @@ msgstr "Motion Stretch"
 
 msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
 msgstr "Native Image Source"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE_QUEUE"
+msgstr "Native Image Source Queue"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "Negotiate Size"

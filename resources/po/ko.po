@@ -82,6 +82,9 @@ msgstr "이미지 뷰 픽셀 영역"
 msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_SVG"
 msgstr "이미지 뷰 SVG"
 
+msgid "DALI_DEMO_STR_TITLE_IMAGE_VIEW_YUV"
+msgstr "이미지 뷰 YUV"
+
 msgid "DALI_DEMO_STR_TITLE_INHERIT_TEST"
 msgstr "속성 전파 테스트"
 
@@ -117,6 +120,9 @@ msgstr "늘이기"
 
 msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE"
 msgstr "네이티브 이미지 소스"
+
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE_QUEUE"
+msgstr "네이티브 이미지 소스 큐"
 
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "사이즈 조절"
