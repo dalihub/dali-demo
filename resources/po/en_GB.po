@@ -319,6 +319,9 @@ msgstr "Remote Image"
 msgid "DALI_DEMO_STR_TITLE_RENDER_EFFECTS"
 msgstr "Render Effects"
 
+msgid "DALI_DEMO_STR_TITLE_TOUCH"
+msgstr "Touch Algorithm"
+
 msgid "DALI_DEMO_STR_TITLE_RENDER_PASS_TAG"
 msgstr "Render Pass Tag"
 

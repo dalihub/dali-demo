@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -167,6 +167,9 @@ public:
     winHandle.AddAvailableOrientation(Dali::WindowOrientation::LANDSCAPE_INVERSE);
     winHandle.ResizeSignal().Connect(this, &MotionStretchExampleApp::OnWindowResized);
 
+    // Make we always full swap for this demo application.
+    winHandle.SetPartialUpdateEnabled(false);
+
     // set initial orientation
     Rotate(PORTRAIT);
 
@@ -183,7 +186,7 @@ public:
     mMotionStretchImageView.SetProperty(Actor::Property::SIZE, Vector2(MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT));
     // Add stretch padding
 
-    mMotionStretchImageView.SetProperty(Actor::Property::UPDATE_AREA_HINT, Vector4(0, 0, MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT)*1.25f);
+    mMotionStretchImageView.SetProperty(Actor::Property::UPDATE_AREA_HINT, Vector4(0, 0, MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT) * 1.25f);
 
     mContentLayer.Add(mMotionStretchImageView);
 

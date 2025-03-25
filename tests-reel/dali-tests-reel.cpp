@@ -61,6 +61,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("simple-text-field.example", DALI_DEMO_STR_TITLE_TEXT_FIELD));
   demo.AddExample(Example("simple-text-visual.example", DALI_DEMO_STR_TITLE_TEXT_VISUAL));
   demo.AddExample(Example("simple-bitmap-font-text-label.example", DALI_DEMO_STR_TITLE_TEXT_LABEL_BITMAP_FONT));
+  demo.AddExample(Example("touch.example", DALI_DEMO_STR_TITLE_TOUCH));
   demo.AddExample(Example("uniform-blocks.example", DALI_DEMO_STR_TITLE_UNIFORM_BLOCKS));
 
   demo.SortAlphabetically(true);
