@@ -403,10 +403,9 @@
 	<ui-application appid="transitions.example" exec="/usr/apps/com.samsung.dali-demo/bin/transitions.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Shadow button</label>
 	</ui-application>
-	</ui-application>
 	<ui-application appid="touch.example" exec="/usr/apps/com.samsung.dali-demo/bin/touch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-	</ui-application>
 		<label>Touch Algorithm</label>
+	</ui-application>
 	<ui-application appid="uniform-blocks.example" exec="/usr/apps/com.samsung.dali-demo/bin/uniform-blocks.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Uniform Blocks</label>
 	</ui-application>
