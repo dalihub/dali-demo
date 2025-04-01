@@ -83,14 +83,14 @@ public:
 
     Vector2 size = window.GetSize();
 
-    Toolkit::RenderEffect fixedEffect = Toolkit::RenderEffect::CreateBackgroundBlurEffect(0.4f, 40);
+    Toolkit::RenderEffect fixedEffect = Toolkit::BackgroundBlurEffect::New(0.4f, 40);
 
     // UI panel
     UIPanel = Toolkit::Control::New();
     UIPanel.SetProperty(Actor::Property::SIZE, size * 0.8f);
     UIPanel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     pannelLayer.Add(UIPanel);
-    UIPanel.SetRenderEffect(Toolkit::RenderEffect::CreateBackgroundBlurEffect(1.0f, flexableRadius));
+    UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
 
     // Welcome message
     {
@@ -376,7 +376,7 @@ public:
           flexableRadius -= 10;
           if(UIPanel)
           {
-            UIPanel.SetRenderEffect(Toolkit::RenderEffect::CreateBackgroundBlurEffect(1.0f, flexableRadius));
+            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
           }
         }
       }
@@ -387,7 +387,7 @@ public:
           flexableRadius += 10;
           if(UIPanel)
           {
-            UIPanel.SetRenderEffect(Toolkit::RenderEffect::CreateBackgroundBlurEffect(1.0f, flexableRadius));
+            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
           }
         }
       }
