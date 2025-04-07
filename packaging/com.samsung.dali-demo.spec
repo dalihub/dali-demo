@@ -189,7 +189,6 @@ exit 0
 %{dali_app_res_dir}/shaders/*
 %{dali_xml_file_dir}/%{name}.xml
 %{dali_icon_dir}/*
-%{locale_dir}/*
 %if 0%{?enable_dali_smack_rules} && !%{with wayland}
 %config %{smack_rule_dir}/%{name}.rule
 %endif
