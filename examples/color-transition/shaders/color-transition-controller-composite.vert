@@ -1,17 +1,24 @@
+//@version 100
+
 precision mediump float;
 
 // <DALI>
-uniform mat4 uMvpMatrix;
-uniform vec3 uSize;
+UNIFORM_BLOCK Vanilla
+{
+  uniform mat4 uMvpMatrix;
+  uniform vec3 uSize;
+};
 // </DALI>
 
-uniform float uFlow;
-uniform vec4 uUvTransform; // rotation, scale (initial, target))
+UNIFORM_BLOCK VertBlock
+{
+UNIFORM float uFlow;
+UNIFORM vec4 uUvTransform; // rotation, scale (initial, target))
+};
 
-attribute vec2 aPosition;
-
-varying vec2 vUv;
-varying vec2 vUvFlow;
+INPUT vec2 aPosition;
+OUTPUT vec2 vUv;
+OUTPUT vec2 vUvFlow;
 
 void main()
 {

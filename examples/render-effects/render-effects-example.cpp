@@ -22,8 +22,8 @@
 #include <dali/integration-api/debug.h>
 #include <dali/public-api/events/key-event.h>
 
-#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
@@ -39,6 +39,11 @@ const char* SUN_CLOUD_ICON_IMAGE(DEMO_IMAGE_DIR "light-icon-front.png");
 
 constexpr float unitSizeWidth  = 180.0f;
 constexpr float unitSizeHeight = 180.0f;
+
+static Toolkit::RenderEffect CreateFixedBackgroundBlurEffect()
+{
+  return Toolkit::BackgroundBlurEffect::New(0.4f, 40);
+}
 } // namespace
 
 class RenderEffectController : public Dali::ConnectionTracker
@@ -83,14 +88,14 @@ public:
 
     Vector2 size = window.GetSize();
 
-    Toolkit::RenderEffect fixedEffect = Toolkit::RenderEffect::CreateBackgroundBlurEffect(0.4f, 40);
-
     // UI panel
     UIPanel = Toolkit::Control::New();
     UIPanel.SetProperty(Actor::Property::SIZE, size * 0.8f);
     UIPanel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     pannelLayer.Add(UIPanel);
-    UIPanel.SetRenderEffect(Toolkit::RenderEffect::CreateBackgroundBlurEffect(1.0f, flexableRadius));
+    UIPanel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS, Vector4(50.0f, 50.0f, 50.f, 50.0f));
+    UIPanel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::ABSOLUTE);
+    UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
 
     // Welcome message
     {
@@ -149,7 +154,7 @@ public:
       label.Add(unitLabel);
 
       UIPanel.Add(weatherPanel);
-      weatherPanel.SetRenderEffect(fixedEffect);
+      weatherPanel.SetRenderEffect(CreateFixedBackgroundBlurEffect());
     }
 
     // Icon mini panels
@@ -163,25 +168,25 @@ public:
       control.SetProperty(Actor::Property::POSITION, Vector2(-xIncrementer, yStarter));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(fixedEffect);
+      control.SetRenderEffect(CreateFixedBackgroundBlurEffect());
 
       control = CreateIconPanel("BlueTooth", "2 devices", true, DEMO_IMAGE_DIR "application-icon-14.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(xIncrementer, yStarter));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(fixedEffect);
+      control.SetRenderEffect(CreateFixedBackgroundBlurEffect());
 
       control = CreateIconPanel("Wi-Fi", "TizenUIFW", true, DEMO_IMAGE_DIR "application-icon-55.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(-xIncrementer, yStarter + yIncrementer));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(fixedEffect);
+      control.SetRenderEffect(CreateFixedBackgroundBlurEffect());
 
       control = CreateIconPanel("Lighting", "5 devices", true, DEMO_IMAGE_DIR "application-icon-21.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(xIncrementer, yStarter + yIncrementer));
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
-      control.SetRenderEffect(fixedEffect);
+      control.SetRenderEffect(CreateFixedBackgroundBlurEffect());
 
       // Keep one of control to test visible option change.
       mVisibilityChangedControl = control;
@@ -235,7 +240,7 @@ public:
       airConPanel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::ABSOLUTE);
 
       UIPanel.Add(airConPanel);
-      airConPanel.SetRenderEffect(fixedEffect);
+      airConPanel.SetRenderEffect(CreateFixedBackgroundBlurEffect());
     }
 
     // lower background layer
@@ -256,14 +261,15 @@ public:
     colorVisualPropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::COLOR);
     colorVisualPropertyMap.Insert(Toolkit::Visual::Property::OPACITY, 0.3f);
     panel.SetProperty(Toolkit::Control::Property::BACKGROUND, colorVisualPropertyMap);
-    panel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS, Vector4(30.0f, 30.0f, 30.0f, 30.0f));
-    panel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::ABSOLUTE);
+    panel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS, Vector4(0.5f, 0.5f, 0.5f, 0.5f));
+    panel.SetProperty(Toolkit::DevelControl::Property::CORNER_SQUARENESS, Vector4(0.7f, 0.7f, 0.7f, 0.7f));
+    panel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::RELATIVE);
 
     // TOP
     Toolkit::ImageView icon = Toolkit::ImageView::New(iconURL);
     icon.SetProperty(Actor::Property::SIZE, Vector2(50.0f, 50.0f));
     icon.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
-    icon.SetProperty(Actor::Property::POSITION, size * 0.05f);
+    icon.SetProperty(Actor::Property::POSITION, size * 0.1f);
     panel.Add(icon);
 
     Toolkit::TextLabel isOnLabel;
@@ -276,7 +282,7 @@ public:
       isOnLabel = SetUpTextLabelProperties("Off", Vector4::ONE, "END", 13.0f);
     }
     isOnLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    isOnLabel.SetProperty(Actor::Property::POSITION_Y, size.y * 0.15f);
+    isOnLabel.SetProperty(Actor::Property::POSITION_Y, size.y * 0.25f);
     isOnLabel.SetProperty(Actor::Property::SIZE_WIDTH, size.x * 0.7f);
     panel.Add(isOnLabel);
 
@@ -376,7 +382,7 @@ public:
           flexableRadius -= 10;
           if(UIPanel)
           {
-            UIPanel.SetRenderEffect(Toolkit::RenderEffect::CreateBackgroundBlurEffect(1.0f, flexableRadius));
+            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
           }
         }
       }
@@ -387,7 +393,7 @@ public:
           flexableRadius += 10;
           if(UIPanel)
           {
-            UIPanel.SetRenderEffect(Toolkit::RenderEffect::CreateBackgroundBlurEffect(1.0f, flexableRadius));
+            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
           }
         }
       }

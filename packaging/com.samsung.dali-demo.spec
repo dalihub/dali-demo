@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    2.4.12
+Version:    2.4.13
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0
@@ -189,7 +189,6 @@ exit 0
 %{dali_app_res_dir}/shaders/*
 %{dali_xml_file_dir}/%{name}.xml
 %{dali_icon_dir}/*
-%{locale_dir}/*
 %if 0%{?enable_dali_smack_rules} && !%{with wayland}
 %config %{smack_rule_dir}/%{name}.rule
 %endif

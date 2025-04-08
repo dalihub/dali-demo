@@ -51,9 +51,14 @@ Geometry CreateQuadGeometry()
 }
 
 const std::string_view SHADER_COLOR_TEST_SHADER_VERT{
-  R"(INPUT mediump vec2 aPosition;
-uniform highp mat4 uMvpMatrix;
-uniform highp vec3 uSize;
+  R"(
+//@version 100
+INPUT mediump vec2 aPosition;
+UNIFORM_BLOCK Vanilla
+{
+UNIFORM highp mat4 uMvpMatrix;
+UNIFORM highp vec3 uSize;
+};
 
 void main()
 {
@@ -63,18 +68,24 @@ void main()
 
 const std::string_view SHADER_COLOR_TEST_SHADER_FRAG{
   R"(
+//@version 100
 void main()
 {
-  OUT_COLOR = vec4(0.0, 0.0, 1.0, 1.0);
+  gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
 }
 )"};
 
 const std::string_view SHADER_IMAGE_TEST_SHADER_VERT{
-  R"(INPUT mediump vec2 aPosition;
+  R"(
+//@version 100
+INPUT mediump vec2 aPosition;
 OUTPUT mediump vec2 vTexCoord;
 
-uniform highp mat4 uMvpMatrix;
-uniform highp vec3 uSize;
+UNIFORM_BLOCK Vanilla
+{
+UNIFORM highp mat4 uMvpMatrix;
+UNIFORM highp vec3 uSize;
+};
 
 void main()
 {
@@ -84,16 +95,18 @@ void main()
 )"};
 
 const std::string_view SHADER_IMAGE_TEST_SHADER_FRAG{
-  R"(INPUT mediump vec2 vTexCoord;
-//
-uniform sampler2D sColorTexture;
-uniform sampler2D sTexture;
+  R"(
+//@version 100
+INPUT mediump vec2 vTexCoord;
+
+UNIFORM sampler2D sColorTexture;
+UNIFORM sampler2D sTexture;
 
 void main()
 {
   mediump vec2 texCoord = vTexCoord;
   lowp vec4 textureColor = TEXTURE( sTexture, texCoord ) * TEXTURE( sColorTexture, texCoord );
-  OUT_COLOR = textureColor;
+  gl_FragColor = textureColor;
 }
 )"};
 
