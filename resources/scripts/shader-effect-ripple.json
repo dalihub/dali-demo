@@ -17,22 +17,25 @@
         "desiredHeight": 400,
         "shader": {
           "fragmentShader": [
-              "{DALI_FRAGMENT_SHADER_PREFIX}",
-              "precision mediump float;",
-              "uniform sampler2D sTexture;",
-              "uniform vec4 uColor;",
-              "uniform float uAmplitude;",
-              "uniform float uTime;",
-              "INPUT vec2 vTexCoord;",
-              "void main()",
-              "{",
-              "  highp vec2 pos = -1.0 + 2.0 * vTexCoord;",
-              "  highp float len = length(pos);",
-              "  highp vec2 texCoord = vTexCoord + pos/len * sin( len * 12.0 - uTime * 4.0 ) * uAmplitude;",
-              "  OUT_COLOR = TEXTURE(sTexture, texCoord) * uColor;",
-              "}"
-            ]
-          }
+            "//@version 100",
+            "precision mediump float;",
+            "UNIFORM sampler2D sTexture;",
+            "UNIFORM_BLOCK FragBlock",
+            "{"
+            "  UNIFORM vec4 uColor;",
+            "  UNIFORM float uAmplitude;",
+            "  UNIFORM float uTime;",
+            "};",
+            "INPUT vec2 vTexCoord;",
+            "void main()",
+            "{",
+            "  highp vec2 pos = -1.0 + 2.0 * vTexCoord;",
+            "  highp float len = length(pos);",
+            "  highp vec2 texCoord = vTexCoord + pos/len * sin( len * 12.0 - uTime * 4.0 ) * uAmplitude;",
+            "  gl_FragColor = TEXTURE(sTexture, texCoord) * uColor;",
+            "}"
+          ]
+        }
       },
       "animatableProperties": {
         "uAmplitude": 0.02,
