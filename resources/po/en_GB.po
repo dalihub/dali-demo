@@ -214,6 +214,9 @@ msgstr "Pivot"
 msgid "DALI_DEMO_STR_TITLE_PRE_RENDER_CALLBACK"
 msgstr "Pre Render Callback"
 
+msgid "DALI_DEMO_STR_TITLE_PRECOMPILE_SHADER"
+msgstr "Precompile Shader"
+
 msgid "DALI_DEMO_STR_TITLE_PROGRESS_BAR"
 msgstr "Progress Bar"
 
