@@ -46,6 +46,9 @@
 	<ui-application appid="benchmark-2dphysics.example" exec="/usr/apps/com.samsung.dali-demo/bin/benchmark-2dphysics.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Benchmark 2D Physics</label>
 	</ui-application>
+	<ui-application appid="benchmark-color.example" exec="/usr/apps/com.samsung.dali-demo/bin/benchmark-color.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Benchmark Color</label>
+	</ui-application>
 	<ui-application appid="bezier-curve.example" exec="/usr/apps/com.samsung.dali-demo/bin/bezier-curve.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Alpha Function Curve</label>
 	</ui-application>

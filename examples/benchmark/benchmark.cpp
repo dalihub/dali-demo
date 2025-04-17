@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -303,11 +303,13 @@ public:
 
     size_t count(0);
     float  xpos, ypos;
-    mShow = Animation::New(0.0f);
 
     float totalDuration(10.0f);
     float durationPerActor(0.5f);
     float delayBetweenActors = (totalDuration - durationPerActor) / (mRowsPerPage * mColumnsPerPage);
+
+    mShow = Animation::New(totalDuration);
+
     for(size_t i(0); i < totalColumns; ++i)
     {
       xpos = mSize.x * i;
@@ -378,7 +380,6 @@ public:
   {
     size_t       count(0);
     unsigned int actorsPerPage(mRowsPerPage * mColumnsPerPage);
-    mHide = Animation::New(0.0f);
 
     unsigned int totalColumns = mColumnsPerPage * mPageCount;
 
@@ -386,6 +387,9 @@ public:
     float totalDuration(5.0f);
     float durationPerActor(0.5f);
     float delayBetweenActors = (totalDuration - durationPerActor) / (mRowsPerPage * mColumnsPerPage);
+
+    mHide = Animation::New(totalDuration * 2.0f);
+
     for(size_t i(0); i < mRowsPerPage; ++i)
     {
       for(size_t j(0); j < totalColumns; ++j)

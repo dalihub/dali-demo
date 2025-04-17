@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/public-api/rendering/uniform-block.h>
 
-#include "generated/uniform-block-vert.h"
-#include "generated/uniform-block-frag.h"
 #include "generated/uniform-block-alt-frag.h"
+#include "generated/uniform-block-frag.h"
+#include "generated/uniform-block-vert.h"
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
-
-
 
 /**
  * This application tests that shaders with uniform blocks work as expected.
@@ -48,12 +47,14 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
 
+    mUniformBlocks = UniformBlock::New("SharedFragmentBlock");
+
     CreateShader(0);
     CreateGeometry();
     CreateRenderer();
     mFirstActor = window.GetRootLayer().GetChildCount();
 
-    for(int i=0; i<200; ++i)
+    for(int i = 0; i < 200; ++i)
     {
       AddActor(i);
     }
@@ -70,30 +71,32 @@ public:
 
   bool OnTick()
   {
-    static int index=200;
-    Window window = mApplication.GetWindow();
-    Layer layer = window.GetRootLayer();
-    Actor child = layer.GetChildAt(mFirstActor);
+    static int index  = 200;
+    Window     window = mApplication.GetWindow();
+    Layer      layer  = window.GetRootLayer();
+    Actor      child  = layer.GetChildAt(mFirstActor);
     UnparentAndReset(child);
     AddActor(index);
-    index = (index+1)%1024;
+    index = (index + 1) % 1024;
     return true;
   }
 
   bool OnTouch(Actor actor, const TouchEvent& touch)
   {
-    static int testNumber=0;
+    static int testNumber = 0;
     if(touch.GetState(0) == PointState::STARTED)
     {
       testNumber++;
-      if(testNumber >=2)
+      if(testNumber >= 2)
+      {
         mApplication.Quit();
+      }
 
       CreateShader(testNumber);
-      mRenderer = Renderer::New(mGeometry, mShader);
+      CreateRenderer();
 
       Actor parent = mApplication.GetWindow().GetRootLayer();
-      for(uint32_t i=0; i<parent.GetChildCount(); ++i)
+      for(uint32_t i = 0; i < parent.GetChildCount(); ++i)
       {
         parent.GetChildAt(i).RemoveRenderer(0);
         parent.GetChildAt(i).AddRenderer(mRenderer);
@@ -118,17 +121,18 @@ public:
     Actor actor = Actor::New();
     actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    actor.SetProperty(Actor::Property::POSITION, Vector3(Random::Range(-200.0f, 200.0f), Random::Range(-300.0f, 300.0f), 0.0f));;
-    actor.SetProperty( Actor::Property::SIZE, Vector2(32, 32) );
-    Vector4 color(Random::Range(0.1f,1.0f),Random::Range(0.1f,1.0f),Random::Range(0.1f,1.0f),1.0f);
-    actor.SetProperty( Actor::Property::COLOR, color);
+    actor.SetProperty(Actor::Property::POSITION, Vector3(Random::Range(-200.0f, 200.0f), Random::Range(-300.0f, 300.0f), 0.0f));
+    actor.SetProperty(Actor::Property::SIZE, Vector2(32, 32));
+    Vector4 color(Random::Range(0.1f, 1.0f), Random::Range(0.1f, 1.0f), Random::Range(0.1f, 1.0f), 1.0f);
+    actor.SetProperty(Actor::Property::COLOR, color);
 
     actor.AddRenderer(mRenderer);
 
     actor.RegisterProperty("uColorIndex", n);
+
     char buffer[80];
     sprintf(buffer, "uColorArray[%d]", n);
-    actor.RegisterProperty(buffer, color);
+    mUniformBlocks.RegisterProperty(buffer, color);
 
     Window window = mApplication.GetWindow();
     window.Add(actor);
@@ -136,8 +140,10 @@ public:
 
   void CreateShader(int testNumber)
   {
-
-
+    if(mShader)
+    {
+      mUniformBlocks.DisconnectFromShader(mShader);
+    }
     // Create shaders
     switch(testNumber)
     {
@@ -154,25 +160,28 @@ public:
         break;
       }
     }
+    mUniformBlocks.ConnectToShader(mShader);
   }
 
   void CreateGeometry()
   {
     struct Vertex2D
     {
-      Vertex2D(const Vector2& _co) :
-        co(_co){}
+      Vertex2D(const Vector2& _co)
+      : co(_co)
+      {
+      }
       Dali::Vector2 co{};
     };
     const static Vector2 C(0.5f, 0.5f);
     struct Quad2D
     {
-      Vertex2D a0{Vector2(0.0f, 0.0f)-C};
-      Vertex2D a1{Vector2(1.0f, 0.0f)-C};
-      Vertex2D a2{Vector2(1.0f, 1.0f)-C};
-      Vertex2D a3{Vector2(0.0f, 0.0f)-C};
-      Vertex2D a4{Vector2(1.0f, 1.0f)-C};
-      Vertex2D a5{Vector2(0.0f, 1.0f)-C};
+      Vertex2D a0{Vector2(0.0f, 0.0f) - C};
+      Vertex2D a1{Vector2(1.0f, 0.0f) - C};
+      Vertex2D a2{Vector2(1.0f, 1.0f) - C};
+      Vertex2D a3{Vector2(0.0f, 0.0f) - C};
+      Vertex2D a4{Vector2(1.0f, 1.0f) - C};
+      Vertex2D a5{Vector2(0.0f, 1.0f) - C};
     } QUAD;
 
     // Create geometry
@@ -181,31 +190,34 @@ public:
     Property::Map attrMap{};
     attrMap.Add("aPosition", Property::Type::VECTOR2);
     VertexBuffer vb = VertexBuffer::New(attrMap);
-    vb.SetData( &QUAD, 6 );
+    vb.SetData(&QUAD, 6);
 
-    geometry.SetType( Geometry::Type::TRIANGLES);
+    geometry.SetType(Geometry::Type::TRIANGLES);
     geometry.AddVertexBuffer(vb);
     mGeometry = geometry;
   }
 
   void CreateRenderer()
   {
-    mRenderer = Renderer::New( mGeometry, mShader);
+    mRenderer = Renderer::New(mGeometry, mShader);
   }
 
 private:
   Application& mApplication;
 
-  Shader mShader;
+  Shader   mShader;
   Geometry mGeometry;
   Renderer mRenderer;
+
+  UniformBlock mUniformBlocks;
+
   uint32_t mFirstActor{0};
-  Timer mTimer;
+  Timer    mTimer;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application          application = Application::New(&argc, &argv);
+  Application             application = Application::New(&argc, &argv);
   UniformBlocksController test(application);
   application.MainLoop();
   return 0;
