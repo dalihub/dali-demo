@@ -21,6 +21,8 @@
 
 #include <dali/devel-api/common/stage.h>
 
+#include <dali-toolkit/devel-api/controls/control-devel.h>
+
 // INTERNAL INCLUDES
 #include <dali/integration-api/debug.h>
 
@@ -32,14 +34,29 @@ namespace
 uint32_t gRows(50);
 uint32_t gColumns(20);
 uint32_t gRunningDurationMilliSeconds(60 * 1000); // 1 minutes
+
+enum ControlPropertyUsesFlag
+{
+  NONE = 0,
+
+  CORNER_RADIUS     = 1 << 0,
+  CORNER_SQUARENESS = 1 << 1,
+
+  OFFSCREEN_RENDERING = 1 << 2,
+};
+
+int gControlPropertyUses = ControlPropertyUsesFlag::NONE;
 } // namespace
 
 // Test application to check performance for rendering simple colors
 // -r NumberOfRows    (Modifies the number of rows per page)
 // -c NumberOfColumns (Modifies the number of columns per page)
 // -d RunningDurationMilliSeconds (Modifies the duration of the test in milliseconds. 0 means infinite)
+//
+// -p Add options for control properties. C : Corner Radius, S : Corner Squareness, O : OffscreenRendering with refresh always.
+//
 // For example:
-// $ ./benchmark-color.example -r200 -c800 -d60000
+// $ ./benchmark-color.example -r200 -c800 -d60000 -pCSO
 
 //
 class BenchmarkColor : public ConnectionTracker
@@ -88,6 +105,20 @@ public:
         control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
         control.SetProperty(Actor::Property::POSITION, Vector3(j * mSize.x, i * mSize.y, 0.0f));
         control.SetProperty(Actor::Property::SIZE, mSize);
+
+        if(gControlPropertyUses & ControlPropertyUsesFlag::CORNER_RADIUS)
+        {
+          control.SetProperty(DevelControl::Property::CORNER_RADIUS, Vector4(0.5f, 0.5f, 0.5f, 0.5f));
+          control.SetProperty(DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::RELATIVE);
+        }
+        if(gControlPropertyUses & ControlPropertyUsesFlag::CORNER_SQUARENESS)
+        {
+          control.SetProperty(DevelControl::Property::CORNER_SQUARENESS, Vector4(0.6f, 0.6f, 0.6f, 0.6f));
+        }
+        if(gControlPropertyUses & ControlPropertyUsesFlag::OFFSCREEN_RENDERING)
+        {
+          control.SetProperty(DevelControl::Property::OFFSCREEN_RENDERING, DevelControl::OffScreenRenderingType::REFRESH_ALWAYS);
+        }
         control.SetProperty(Control::Property::BACKGROUND, Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f));
 
         mRootActor.Add(control);
@@ -166,6 +197,25 @@ int DALI_EXPORT_API main(int argc, char** argv)
     else if(arg.compare(0, 2, "-d") == 0)
     {
       gRunningDurationMilliSeconds = atoi(arg.substr(2, arg.size()).c_str());
+    }
+    else if(arg.compare(0, 2, "-p") == 0)
+    {
+      std::string subarg = arg.substr(2, arg.size());
+      for(auto c : subarg)
+      {
+        if(c == 'C' || c == 'c')
+        {
+          gControlPropertyUses |= ControlPropertyUsesFlag::CORNER_RADIUS;
+        }
+        if(c == 'S' || c == 's')
+        {
+          gControlPropertyUses |= ControlPropertyUsesFlag::CORNER_SQUARENESS;
+        }
+        if(c == 'O' || c == 'o')
+        {
+          gControlPropertyUses |= ControlPropertyUsesFlag::OFFSCREEN_RENDERING;
+        }
+      }
     }
   }
 
