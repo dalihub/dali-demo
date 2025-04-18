@@ -42,7 +42,7 @@ constexpr float unitSizeHeight = 180.0f;
 
 static Toolkit::RenderEffect CreateFixedBackgroundBlurEffect()
 {
-  return Toolkit::BackgroundBlurEffect::New(0.4f, 40);
+  return Toolkit::BackgroundBlurEffect::New(40u);
 }
 } // namespace
 
@@ -95,7 +95,9 @@ public:
     pannelLayer.Add(UIPanel);
     UIPanel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS, Vector4(50.0f, 50.0f, 50.f, 50.0f));
     UIPanel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::ABSOLUTE);
-    UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
+
+    flexibleBackgroundBlurEffect = Toolkit::BackgroundBlurEffect::New(flexibleBlurRadius);
+    UIPanel.SetRenderEffect(flexibleBackgroundBlurEffect);
 
     // Welcome message
     {
@@ -377,25 +379,33 @@ public:
       }
       else if(event.GetKeyName() == "3")
       {
-        if(flexableRadius >= 10)
+        if(flexibleBlurRadius >= 10)
         {
-          flexableRadius -= 10;
-          if(UIPanel)
-          {
-            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
-          }
+          flexibleBlurRadius -= 10;
+          flexibleBackgroundBlurEffect.SetBlurRadius(flexibleBlurRadius);
         }
       }
       else if(event.GetKeyName() == "4")
       {
-        if(flexableRadius < 1000)
+        if(flexibleBlurRadius < 1000)
         {
-          flexableRadius += 10;
-          if(UIPanel)
-          {
-            UIPanel.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(1.0f, flexableRadius));
-          }
+          flexibleBlurRadius += 10;
+          flexibleBackgroundBlurEffect.SetBlurRadius(flexibleBlurRadius);
         }
+      }
+      else if(event.GetKeyName() == "5")
+      {
+        float duration = 1.0f;
+        Animation animation = Animation::New(duration);
+        flexibleBackgroundBlurEffect.AddBlurStrengthAnimation(animation, AlphaFunction::BuiltinFunction::DEFAULT, TimePeriod(duration), 0.0f, 1.0f);
+        animation.Play();
+      }
+      else if(event.GetKeyName() == "6")
+      {
+        float duration = 1.0f;
+        Animation animation = Animation::New(duration);
+        flexibleBackgroundBlurEffect.AddBlurOpacityAnimation(animation, AlphaFunction::BuiltinFunction::DEFAULT, TimePeriod(duration), 0.0f, 1.0f);
+        animation.Play();
       }
     }
   }
@@ -409,7 +419,9 @@ private:
 
   Toolkit::Control UIPanel;
   Toolkit::Control mVisibilityChangedControl;
-  uint32_t         flexableRadius{40};
+
+  uint32_t         flexibleBlurRadius{40};
+  Toolkit::BackgroundBlurEffect flexibleBackgroundBlurEffect;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
