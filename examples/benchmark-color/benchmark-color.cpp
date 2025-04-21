@@ -22,6 +22,8 @@
 #include <dali/devel-api/common/stage.h>
 
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/visuals/color-visual-properties-devel.h>
+#include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/debug.h>
@@ -41,8 +43,12 @@ enum ControlPropertyUsesFlag
 
   CORNER_RADIUS     = 1 << 0,
   CORNER_SQUARENESS = 1 << 1,
+  BORDERLINE_WIDTH  = 1 << 2,
 
-  OFFSCREEN_RENDERING = 1 << 2,
+  SHADOW       = 1 << 3,
+  INNER_SHADOW = 1 << 4,
+
+  OFFSCREEN_RENDERING = 1 << 5,
 };
 
 int gControlPropertyUses = ControlPropertyUsesFlag::NONE;
@@ -53,10 +59,15 @@ int gControlPropertyUses = ControlPropertyUsesFlag::NONE;
 // -c NumberOfColumns (Modifies the number of columns per page)
 // -d RunningDurationMilliSeconds (Modifies the duration of the test in milliseconds. 0 means infinite)
 //
-// -p Add options for control properties. C : Corner Radius, S : Corner Squareness, O : OffscreenRendering with refresh always.
+// -p Add options for control properties.
+//  * C : Corner Radius,
+//  * S : Corner Squareness,
+//  * B : Borderline,
+//  * I : Inner Shadow,
+//  * O : OffscreenRendering with refresh always.
 //
 // For example:
-// $ ./benchmark-color.example -r200 -c800 -d60000 -pCSO
+// $ ./benchmark-color.example -r200 -c800 -d60000 -pCSBI
 
 //
 class BenchmarkColor : public ConnectionTracker
@@ -114,6 +125,43 @@ public:
         if(gControlPropertyUses & ControlPropertyUsesFlag::CORNER_SQUARENESS)
         {
           control.SetProperty(DevelControl::Property::CORNER_SQUARENESS, Vector4(0.6f, 0.6f, 0.6f, 0.6f));
+        }
+        if(gControlPropertyUses & ControlPropertyUsesFlag::BORDERLINE_WIDTH)
+        {
+          control.SetProperty(DevelControl::Property::BORDERLINE_WIDTH, std::min(mSize.x, mSize.y) * 0.1f);
+          control.SetProperty(DevelControl::Property::BORDERLINE_COLOR, Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f));
+          control.SetProperty(DevelControl::Property::BORDERLINE_OFFSET, -1.0f);
+        }
+        if(gControlPropertyUses & ControlPropertyUsesFlag::SHADOW)
+        {
+          Property::Map map{
+            {Visual::Property::TYPE, Visual::COLOR},
+            {Visual::Property::MIX_COLOR, Vector4(1.0f, 1.0f, 1.0f, 1.0f)},
+            {DevelColorVisual::Property::BLUR_RADIUS, std::min(mSize.x, mSize.y) * 0.15f},
+            {DevelColorVisual::Property::CUTOUT_POLICY, DevelColorVisual::CutoutPolicy::CUTOUT_VIEW_WITH_CORNER_RADIUS},
+            {Visual::Property::TRANSFORM,
+             Property::Map{
+               {Visual::Transform::Property::OFFSET, Vector2(0.0f, 0.05f)},
+             }},
+          };
+          control.SetProperty(DevelControl::Property::SHADOW, map);
+        }
+        if(gControlPropertyUses & ControlPropertyUsesFlag::INNER_SHADOW)
+        {
+          Property::Map map{
+            {Visual::Property::TYPE, Visual::COLOR},
+            {Visual::Property::MIX_COLOR, Vector4(0.0f, 0.0f, 0.0f, 0.0f)},
+            {DevelVisual::Property::BORDERLINE_WIDTH, std::min(mSize.x, mSize.y) * 0.3f},
+            {DevelVisual::Property::BORDERLINE_COLOR, Vector4(0.0f, 0.0f, 0.0f, 1.0f)},
+            {DevelVisual::Property::BORDERLINE_OFFSET, 1.0f},
+            {DevelColorVisual::Property::BLUR_RADIUS, std::min(mSize.x, mSize.y) * 0.05f},
+            {DevelColorVisual::Property::CUTOUT_POLICY, DevelColorVisual::CutoutPolicy::CUTOUT_OUTSIDE_WITH_CORNER_RADIUS},
+            {Visual::Property::TRANSFORM,
+             Property::Map{
+               {Visual::Transform::Property::OFFSET, Vector2(0.15f, 0.10f)},
+             }},
+          };
+          control.SetProperty(DevelControl::Property::INNER_SHADOW, map);
         }
         if(gControlPropertyUses & ControlPropertyUsesFlag::OFFSCREEN_RENDERING)
         {
@@ -210,6 +258,18 @@ int DALI_EXPORT_API main(int argc, char** argv)
         if(c == 'S' || c == 's')
         {
           gControlPropertyUses |= ControlPropertyUsesFlag::CORNER_SQUARENESS;
+        }
+        if(c == 'B' || c == 'b')
+        {
+          gControlPropertyUses |= ControlPropertyUsesFlag::BORDERLINE_WIDTH;
+        }
+        if(c == 'H' || c == 'h')
+        {
+          gControlPropertyUses |= ControlPropertyUsesFlag::SHADOW;
+        }
+        if(c == 'I' || c == 'i')
+        {
+          gControlPropertyUses |= ControlPropertyUsesFlag::INNER_SHADOW;
         }
         if(c == 'O' || c == 'o')
         {
