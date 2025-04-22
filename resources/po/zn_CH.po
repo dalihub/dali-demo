@@ -133,6 +133,9 @@ msgstr "滚动视图"
 msgid "DALI_DEMO_STR_TITLE_SPARKLE"
 msgstr "火花"
 
+msgid "DALI_DEMO_STR_TITLE_SPRING_ALPHAFUNCTION"
+msgstr "Spring AlphaFunction"
+
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "样式"
 

@@ -130,6 +130,9 @@ msgstr "Vieritysnäkymä"
 msgid "DALI_DEMO_STR_TITLE_SPARKLE"
 msgstr "Kimalteluefekti"
 
+msgid "DALI_DEMO_STR_TITLE_SPRING_ALPHAFUNCTION"
+msgstr "Spring AlphaFunction"
+
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "UI Tyyli"
 

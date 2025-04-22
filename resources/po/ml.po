@@ -130,6 +130,9 @@ msgstr "സ്ക്രോള്ചെയ്യുക കാഴ്ച"
 msgid "DALI_DEMO_STR_TITLE_SPARKLE"
 msgstr "നക്ഷത്ര"
 
+msgid "DALI_DEMO_STR_TITLE_SPRING_ALPHAFUNCTION"
+msgstr "Spring AlphaFunction"
+
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "ശൈലി"
 
