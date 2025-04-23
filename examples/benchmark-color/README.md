@@ -13,6 +13,21 @@ $ ./benchmark-color.example // R = 50, C = 20, D = 60000 (== 1 minute)
 $ ./benchmark-color.example -r200 -c80 -d1000 // R = 200, C = 80, D = 1000 (== 1 seconds)
 ```
 
+## Appendix
+
+If you want to test with additional option, add options after `-p`.
+We can add multiple optons.
+
+`C` : Use `DevelControl::Property::CORNER_RADIUS`
+`S` : Use `DevelControl::Property::CORNER_SQUARENESS`
+`O` : Use `DevelControl::Property::OFFSCREEN_RENDERING`
+
+```shell
+$ ./benchmark-color.example -pC /// Rounded Corner
+$ ./benchmark-color.example -pCS /// Squircle Corner
+$ ./benchmark-color.example -r20 -c20 -pOC /// R = 20, C = 20 with OffscreenRendering::REFRESH_ALWAYS and Rounded Corner
+```
+
 
 
 
