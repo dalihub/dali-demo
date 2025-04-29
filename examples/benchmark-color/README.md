@@ -20,12 +20,15 @@ We can add multiple optons.
 
 `C` : Use `DevelControl::Property::CORNER_RADIUS`
 `S` : Use `DevelControl::Property::CORNER_SQUARENESS`
+`B` : Use `DevelControl::Property::BORDERLINE_WIDTH`
+`H` : Use `DevelControl::Property::SHADOW`
+`I` : Use `DevelControl::Property::INNER_SHADOW`
 `O` : Use `DevelControl::Property::OFFSCREEN_RENDERING`
 
 ```shell
 $ ./benchmark-color.example -pC /// Rounded Corner
 $ ./benchmark-color.example -pCS /// Squircle Corner
-$ ./benchmark-color.example -r20 -c20 -pOC /// R = 20, C = 20 with OffscreenRendering::REFRESH_ALWAYS and Rounded Corner
+$ ./benchmark-color.example -r20 -c20 -pOCB /// R = 20, C = 20 with OffscreenRendering::REFRESH_ALWAYS and Rounded Border
 ```
 
 

@@ -256,6 +256,9 @@
 	<ui-application appid="popup.example" exec="/usr/apps/com.samsung.dali-demo/bin/popup.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Popup</label>
 	</ui-application>
+	<ui-application appid="precompile-shader.example" exec="/usr/apps/com.samsung.dali-demo/bin/precompile-shader.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Precompile Shader</label>
+	</ui-application>
 	<ui-application appid="pre-render-callback.example" exec="/usr/apps/com.samsung.dali-demo/bin/pre-render-callback.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Frame Callback</label>
 	</ui-application>
