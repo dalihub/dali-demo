@@ -92,19 +92,19 @@ task buildDaliDependencies(type:Exec) {
     if (buildType == 'debug')
         environment "DEBUG", "1"
     workingDir file(daliDir + '/android-dependencies/cmake').getAbsolutePath()
-    commandLine 'sh',  './buildall.sh'
+    commandLine 'bash',  './buildall.sh'
 }
 
 task buildDali(type:Exec) {
     workingDir "../dali"
     if (buildType == 'debug')
         environment "DEBUG", "1"
-    commandLine 'sh', './build.sh'
+    commandLine 'bash', './build.sh'
 }
 
 task cleanDali(type:Exec) {
     workingDir "../dali"
-    commandLine 'sh', './build.sh', 'clean'
+    commandLine 'bash', './build.sh', 'clean'
 }
 
 
