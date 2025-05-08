@@ -364,6 +364,9 @@
 	<ui-application appid="sparkle.example" exec="/usr/apps/com.samsung.dali-demo/bin/sparkle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Sparkle</label>
 	</ui-application>
+	<ui-application appid="spring-alphafunction.example" exec="/usr/apps/com.samsung.dali-demo/bin/spring-alphafunction.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Spring AlphaFunction</label>
+	</ui-application>
 	<ui-application appid="styling.example" exec="/usr/apps/com.samsung.dali-demo/bin/styling.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Styling</label>
 	</ui-application>

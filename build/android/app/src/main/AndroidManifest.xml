@@ -18,7 +18,8 @@
         android:label="DALi Example"
         android:screenOrientation="portrait"
         android:windowSoftInputMode="stateAlwaysVisible"
-        android:process=":example">
+        android:process=":example"
+        android:exported="true">
       <!-- Tell NativeActivity the name of our .so -->
       <meta-data android:name="android.app.lib_name"
           android:value="native-activity" />
@@ -36,7 +37,8 @@
               android:label="@string/demo_name"
               android:screenOrientation="portrait"
               android:windowSoftInputMode="stateAlwaysVisible"
-              android:process=":dalidemos">
+              android:process=":dalidemos"
+              android:exported="true">
       <!-- Tell NativeActivity the name of our .so -->
       <meta-data android:name="android.app.lib_name"
                  android:value="native-activity" />
@@ -54,7 +56,8 @@
         android:label="@string/examples_name"
         android:screenOrientation="portrait"
         android:windowSoftInputMode="stateAlwaysVisible"
-        android:process=":daliexamples">
+        android:process=":daliexamples"
+        android:exported="true">
       <!-- Tell NativeActivity the name of our .so -->
       <meta-data android:name="android.app.lib_name"
           android:value="native-activity" />
@@ -72,7 +75,8 @@
         android:label="@string/tests_name"
         android:screenOrientation="portrait"
         android:windowSoftInputMode="stateAlwaysVisible"
-        android:process=":dalitests">
+        android:process=":dalitests"
+        android:exported="true">
       <!-- Tell NativeActivity the name of our .so -->
       <meta-data android:name="android.app.lib_name"
           android:value="native-activity" />

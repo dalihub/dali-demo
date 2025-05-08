@@ -130,6 +130,9 @@ msgstr "স্ক্ৰ'ল কৰক"
 msgid "DALI_DEMO_STR_TITLE_SPARKLE"
 msgstr "তাৰকা"
 
+msgid "DALI_DEMO_STR_TITLE_SPRING_ALPHAFUNCTION"
+msgstr "Spring AlphaFunction"
+
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "শৈলী"
 

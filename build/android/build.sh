@@ -17,9 +17,18 @@ then
   proxyFull=${http_proxy/http:\/\/}
   proxyHost=$(echo $proxyFull | cut -d: -f 1)
   proxyPort=$(echo $proxyFull | cut -d: -f 2)
-  SdbProxyOptions="--proxy=http --proxy_host=$proxyHost --proxy_port=$proxyPort"
+  SdkProxyOptions="--proxy=http --proxy_host=$proxyHost --proxy_port=$proxyPort"
   echo "Proxy detected Host:$proxyHost Port:$proxyPort"
 fi
+
+SDK_PACKAGES=$(echo "
+  'platform-tools'
+  'platforms;android-35'
+  'build-tools;35.0.1'
+  'cmake;3.22.1'
+  'ndk;29.0.13113456'
+" | xargs)
+SDK_MANAGER="$ROOT_DIR/Android/Sdk/cmdline-tools/bin/sdkmanager --sdk_root=$ROOT_DIR/Android/Sdk $SdkProxyOptions"
 
 if [ ! -d "$ANDROID_SDK" ]; then
   if [ ! -d "$ROOT_DIR/Android/Sdk" ]; then
@@ -30,16 +39,26 @@ if [ ! -d "$ANDROID_SDK" ]; then
 
     androidCommandLineToolsPkgUrl=$(cat index.html | grep "commandlinetools-linux-" | grep href | cut -d\" -f 2)
     androidCommandLineToolsPkgName=$(echo $androidCommandLineToolsPkgUrl | rev | cut -d\/ -f 1 | rev)
-    echo "Downloading Android Command Line Tools from: $androidCommandLineToolsPkgUrl"
+    echo "Android SDK: Downloading Android Command Line Tools from: $androidCommandLineToolsPkgUrl"
     wget --quiet $androidCommandLineToolsPkgUrl
-    echo "Unzipping $androidCommandLineToolsPkgName"
+    echo "Android SDK: Unzipping $androidCommandLineToolsPkgName"
     unzip -q $androidCommandLineToolsPkgName
-    SDK_MANAGER="$ROOT_DIR/Android/Sdk/cmdline-tools/bin/sdkmanager --sdk_root=$ROOT_DIR/Android/Sdk $SdbProxyOptions"
     $SDK_MANAGER --update
-    yes | $SDK_MANAGER "platform-tools" "platforms;android-30" "build-tools;33.0.1" "cmake;3.22.1" "ndk-bundle" "ndk;25.1.8937393"
+    yes | $SDK_MANAGER $SDK_PACKAGES
     cd -
   fi
 fi
+
+# Install any missing packages that we require
+SDK_PACKAGES_INSTALLED="$($SDK_MANAGER --list_installed)"
+for package in $SDK_PACKAGES;
+do
+  if ! echo -e $SDK_PACKAGES_INSTALLED | grep $package &> /dev/null
+  then
+    echo "Android SDK: Installing $package"
+    yes | $SDK_MANAGER "$package"
+  fi
+done
 
 if [ ! -d "$ANDROID_SDK" ]; then
 # try default path
@@ -50,31 +69,38 @@ fi
 
 if [ ! -d "$ANDROID_NDK" ]; then
   if [ -d "$ANDROID_SDK" ]; then
-    NDK_DIR=$(find $ANDROID_SDK -maxdepth 2 -name ndk-build | sed 's/\/ndk-build//')
-    # Some sdk folder structures have extra <version> dir for ndk folders.
-    if [ ! -d "$NDK_DIR" ]; then
-      NDK_DIR=$(find $ANDROID_SDK -maxdepth 3 -name ndk-build | sed 's/\/ndk-build//')
-    fi
+    # Disregard ndk-bundle and use the latest ndk installed
+    NDK_DIR=$(find $ANDROID_SDK -maxdepth 3 -name ndk-build | grep -v ndk-bundle | sort -u | tail -n 1 | sed 's/\/ndk-build//')
     if [ -d "$NDK_DIR" ]; then
       export ANDROID_NDK=$NDK_DIR
     fi
   fi
 fi
 
-GRADLE_VERSION=8.3
+echo "ANDROID_NDK=$ANDROID_NDK"
+echo "ANDROID_SDK=$ANDROID_SDK"
+echo "NDK_DIR=$NDK_DIR"
+
+GRADLE_VERSION=8.11.1
 if [ ! -d "$ROOT_DIR/gradle/gradle-$GRADLE_VERSION" ]; then
   mkdir -p $ROOT_DIR/gradle
   cd $ROOT_DIR/gradle
-  wget --quiet https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip
-  unzip -q gradle-$GRADLE_VERSION-bin.zip
+  gradleUrl=https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip
+  gradlePkgName=gradle-$GRADLE_VERSION-bin.zip
+  echo "Gradle: Downloading Gradle from: $gradleUrl"
+  wget --quiet $gradleUrl
+  echo "Unzipping $gradlePkgName"
+  unzip -q $gradlePkgName
   cd -
 fi
 
 GRADLE_PROPERTIES_FILE=gradle.properties
 if [ ! -f $GRADLE_PROPERTIES_FILE ]
 then
+  echo "Gradle: Creating $GRADLE_PROPERTIES_FILE"
   echo "org.gradle.jvmargs=-Xmx1536m" > $GRADLE_PROPERTIES_FILE
   echo "android.useAndroidX=true" >> $GRADLE_PROPERTIES_FILE
+  echo "android.enableJetifier=true" >> $GRADLE_PROPERTIES_FILE
   if [ ! -z $http_proxy ]
   then
     echo "systemProp.http.proxyHost=$proxyHost" >> $GRADLE_PROPERTIES_FILE
@@ -93,16 +119,21 @@ then
   fi
 fi
 
+echo "Using \"$ROOT_DIR/gradle/gradle-$GRADLE_VERSION/bin/gradle\""
 export PATH=$PATH:$ROOT_DIR/gradle/gradle-$GRADLE_VERSION/bin
 [ ! -f local.properties ] && echo 'sdk.dir='$(echo $ANDROID_SDK) > local.properties
 
+echo "Gradle: Creating Wrapper"
 gradle wrapper || exit 1
 if [ "$1" = "clean" ]; then
   ./gradlew clean
 else
-  if [ -z "$DEBUG" ]; then
+  if [ -z "$DEBUG" ];
+  then
+    echo "Gradle: Initiating Release Build"
     ./gradlew assembleRelease
   else
+    echo "Gradle: Initiating Debug Build"
     ./gradlew assembleDebug
   fi
 fi

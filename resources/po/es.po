@@ -130,6 +130,9 @@ msgstr "Vista de desplazamiento"
 msgid "DALI_DEMO_STR_TITLE_SPARKLE"
 msgstr "Brillar"
 
+msgid "DALI_DEMO_STR_TITLE_SPRING_ALPHAFUNCTION"
+msgstr "Spring AlphaFunction"
+
 msgid "DALI_DEMO_STR_TITLE_STYLING"
 msgstr "Estilo"
 

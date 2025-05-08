@@ -67,6 +67,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
 #endif //DALI_SCENE3D_AVAILABLE
   demo.AddExample(Example("shadows-and-lights.example", DALI_DEMO_STR_TITLE_LIGHTS_AND_SHADOWS));
   demo.AddExample(Example("sparkle.example", DALI_DEMO_STR_TITLE_SPARKLE));
+  demo.AddExample(Example("spring-alphafunction.example", DALI_DEMO_STR_TITLE_SPRING_ALPHAFUNCTION));
   demo.AddExample(Example("waves.example", DALI_DEMO_STR_TITLE_WAVES));
 
   demo.SortAlphabetically(true);
