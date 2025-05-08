@@ -21,9 +21,11 @@ We can add multiple optons.
 `C` : Use `DevelControl::Property::CORNER_RADIUS`
 `S` : Use `DevelControl::Property::CORNER_SQUARENESS`
 `B` : Use `DevelControl::Property::BORDERLINE_WIDTH`
+`b` : Use `DevelVisual::Property::BORDERLINE_WIDTH`
 `H` : Use `DevelControl::Property::SHADOW`
 `I` : Use `DevelControl::Property::INNER_SHADOW`
 `O` : Use `DevelControl::Property::OFFSCREEN_RENDERING`
+`E` : Use `DevelActor::Property::CHILDREN_DEPTH_INDEX_POLICY`
 
 ```shell
 $ ./benchmark-color.example -pC /// Rounded Corner
