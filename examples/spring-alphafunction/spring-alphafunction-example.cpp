@@ -110,17 +110,17 @@ public:
     animation.SetLooping(true);
     animation.Play();
 
-    animation = Animation::New(SpringData::GetDuration({100.0f, 10.0f, 1.0f}));  // Set the longest duration.
+    animation = Animation::New(SpringData{100.0f, 10.0f, 1.0f}.GetDuration());  // Set the longest duration.
     animation.AnimateTo(Dali::Property(mS100D10M1, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction({100.0f, 10.0f, 1.0f}));
     animation.SetLooping(true);
     animation.Play();
 
-    animation = Animation::New(SpringData::GetDuration({4420.0f, 20.8f, 1.0f}));  // Set the longest duration.
+    animation = Animation::New(SpringData({4420.0f, 20.8f, 1.0f}).GetDuration());  // Set the longest duration.
     animation.AnimateTo(Dali::Property(mS4420D20_8M1, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction({4420.0f, 20.8f, 1.0f}));
     animation.SetLooping(true);
     animation.Play();
 
-    animation = Animation::New(SpringData::GetDuration({1000.0f, 10.0f, 10.0f}));  // Set the longest duration.
+    animation = Animation::New(SpringData({1000.0f, 10.0f, 10.0f}).GetDuration());  // Set the longest duration.
     animation.AnimateTo(Dali::Property(mS1000D10M10, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction({1000.0f, 10.0f, 10.0f}));
     animation.SetLooping(true);
     animation.Play();
