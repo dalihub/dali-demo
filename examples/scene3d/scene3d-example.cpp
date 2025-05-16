@@ -285,16 +285,16 @@ void Scene3DExample::OnInit(Application& app)
   Property::Array stopColors;
   stopColors.PushBack(Color::BLACK);
   stopColors.PushBack(Vector4(0.45f, 0.7f, 0.8f, 1.f)); // Medium bright, pastel blue
-  const float percentageWindowHeight = window.GetSize().GetHeight() * 0.6f;
+  const float percentageWindowHeight = window.GetSize().GetHeight() * 0.8f;
 
   navigationView.SetProperty(Toolkit::Control::Property::BACKGROUND,
                              Dali::Property::Map()
                                .Add(Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT)
                                .Add(Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets)
                                .Add(Toolkit::GradientVisual::Property::STOP_COLOR, stopColors)
-                               .Add(Toolkit::GradientVisual::Property::START_POSITION, Vector2(0.f, -percentageWindowHeight))
-                               .Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.f, percentageWindowHeight))
-                               .Add(Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE));
+                               .Add(Toolkit::GradientVisual::Property::START_POSITION, Vector2(0.f, 0.0f))
+                             .Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.f, percentageWindowHeight))
+                             .Add(Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE));
   window.Add(navigationView);
   mNavigationView = navigationView;
 

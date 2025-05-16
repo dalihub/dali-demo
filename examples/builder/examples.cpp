@@ -492,7 +492,13 @@ public:
     stopColors.PushBack(Vector4(0.45f, 0.70f, 0.80f, 1.0f)); // Medium bright, pastel blue
     const float percentageWindowHeight = window.GetSize().GetHeight() * 0.6f;
 
-    mNavigationView.SetProperty(Toolkit::Control::Property::BACKGROUND, Dali::Property::Map().Add(Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT).Add(Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets).Add(Toolkit::GradientVisual::Property::STOP_COLOR, stopColors).Add(Toolkit::GradientVisual::Property::START_POSITION, Vector2(0.0f, -percentageWindowHeight)).Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.0f, percentageWindowHeight)).Add(Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE));
+    Dali::Property::Map map{};
+    map.Add(Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT);
+    map.Add(Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets);
+    map.Add(Toolkit::GradientVisual::Property::STOP_COLOR, stopColors);
+    map.Add(Toolkit::GradientVisual::Property::START_POSITION, Vector2(0.0f, -percentageWindowHeight*0.5f));
+    map.Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.0f, percentageWindowHeight*0.5f));
+    mNavigationView.SetProperty(Toolkit::Control::Property::BACKGROUND, map);
 
     SetUpItemView();
     mNavigationView.Push(mItemView);

@@ -90,9 +90,8 @@ public:
     stopColors.PushBack(Vector4(0.0f, 0.0f, 1.0f, 1.0f));
     stopColors.PushBack(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
     map.Insert(GradientVisual::Property::STOP_COLOR, stopColors);
-    Vector2 halfWindowSize = windowSize * 0.5f;
-    map.Insert(GradientVisual::Property::START_POSITION, Vector2(0.0f, -halfWindowSize.y));
-    map.Insert(GradientVisual::Property::END_POSITION, Vector2(0.0f, halfWindowSize.y));
+    map.Insert(GradientVisual::Property::START_POSITION, Vector2::ZERO);
+    map.Insert(GradientVisual::Property::END_POSITION, Vector2(0.0f, windowSize.y));
     map.Insert(GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE);
     background[Dali::Toolkit::Control::Property::BACKGROUND] = map;
     window.Add(background);
