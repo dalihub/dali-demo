@@ -39,7 +39,7 @@
       "background":
       {
         "visualType": "GRADIENT",
-        "center": [360, 640],
+        "center": [720, 1280],
         "radius": 1468,
         "units": "USER_SPACE",
         "stopColor": [[0.392157,0.254902,0.647059,1.0],[0.164706,0.0313725,0.270588,1.0]]
