@@ -12,6 +12,9 @@
          * [SMACK enabled Targets](#smack-enabled-targets)
          * [DEBUG Builds](#debug-builds-1)
       * [3. Building for Android](#3-building-for-android)
+         * [Requirements](#requirements)
+         * [Building the Repository](#building-the-repository)
+         * [Launching a demo via the ADB command](#launching-a-demo-via-the-adb-command)
       * [4. Building for MS Windows](#4-building-for-ms-windows)
          * [Build with the Visual Studio project](#build-with-the-visual-studio-project)
          * [Build with CMake](#build-with-cmake)
@@ -122,6 +125,11 @@ To install apks:
 Manually granting permission for accessing Storage before running the demo
          1. Long press the DALi demo app icon => App Info
          2. Permissions => Storage => Enable
+
+### Launching a demo via the ADB command
+A demo can be launched directly via the ADB command. For example, to launch the Benchmark demo:
+
+         $ adb shell am start -n com.sec.dalidemo/.DaliDemoNativeActivity --es start "benchmark.example"
 
 ## 4. Building for MS Windows
 
