@@ -131,6 +131,10 @@ A demo can be launched directly via the ADB command. For example, to launch the 
 
          $ adb shell am start -n com.sec.dalidemo/.DaliDemoNativeActivity --es start "benchmark.example"
 
+Optional arguments can be added while launching the demo. For example:
+
+         $ adb shell 'am start -n com.sec.dalidemo/.DaliDemoNativeActivity --es start "benchmark.example" --es arguments "-r40 -c40"'
+
 ## 4. Building for MS Windows
 
 Third party dependencies are built using vcpkg. Instructions on how to install vcpkg can be found in the
