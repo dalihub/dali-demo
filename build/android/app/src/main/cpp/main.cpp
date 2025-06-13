@@ -239,6 +239,10 @@ void android_main(struct android_app* state)
 
       // Convert to char** argv
       std::vector<char*> argv;
+
+      argv.reserve(argTokens.size() + 1);
+      argv.push_back(const_cast<char*>(callParam.c_str())); // Insert callParam as argv[0]
+
       for(std::string& arg : argTokens)
       {
         argv.push_back(const_cast<char*>(arg.c_str()));
