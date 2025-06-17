@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -216,11 +216,44 @@ void android_main(struct android_app* state)
 
   dlerror(); /* Clear any existing error */
 
+  std::string argumentsParam = nativeActivity.GetIntentStringExtra("arguments");
+  if(argumentsParam.empty())
+  {
+    argumentsParam = nativeActivity.GetMetaData("arguments");
+  }
+
   int (*main)(int, char**) = (int (*)(int, char**))dlsym(handle, "main");
   LOGV("lib=%s handle=%p main=%p", libpath.c_str(), handle, main);
   if(main)
   {
-    status = main(0, nullptr);
+    if(!argumentsParam.empty())
+    {
+      // Tokenize `arguments` string into argc and argv
+      std::vector<std::string> argTokens;
+      std::istringstream       iss(argumentsParam);
+      std::string              token;
+      while(iss >> token)
+      {
+        argTokens.push_back(token);
+      }
+
+      // Convert to char** argv
+      std::vector<char*> argv;
+
+      argv.reserve(argTokens.size() + 1);
+      argv.push_back(const_cast<char*>(callParam.c_str())); // Insert callParam as argv[0]
+
+      for(std::string& arg : argTokens)
+      {
+        argv.push_back(const_cast<char*>(arg.c_str()));
+      }
+
+      status = main(static_cast<int>(argv.size()), argv.empty() ? nullptr : argv.data());
+    }
+    else
+    {
+      status = main(0, nullptr);
+    }
   }
   else
   {

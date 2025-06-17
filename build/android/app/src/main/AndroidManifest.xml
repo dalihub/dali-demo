@@ -25,6 +25,8 @@
           android:value="native-activity" />
       <meta-data android:name="start"
           android:value="blocks.example" />
+      <meta-data android:name="arguments"
+          android:value="" />
       <intent-filter>
         <action android:name="android.intent.action.RUN" />
       </intent-filter>
@@ -44,6 +46,8 @@
                  android:value="native-activity" />
       <meta-data android:name="start"
                  android:value="dali-demo" />
+      <meta-data android:name="arguments"
+                 android:value="" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -63,6 +67,8 @@
           android:value="native-activity" />
       <meta-data android:name="start"
           android:value="dali-examples" />
+      <meta-data android:name="arguments"
+          android:value="" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -82,6 +88,8 @@
           android:value="native-activity" />
       <meta-data android:name="start"
           android:value="dali-tests" />
+      <meta-data android:name="arguments"
+          android:value="" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
