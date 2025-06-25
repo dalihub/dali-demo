@@ -37,6 +37,7 @@ install_manifest.txt
 *.swp
 *.creator
 *.creator.user
+*.idea/
 /docs/generated/*
 /build/tizen/doc
 /build/tizen/.cov

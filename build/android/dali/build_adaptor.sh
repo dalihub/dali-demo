@@ -14,6 +14,10 @@ else
     export ENABLE_TRACE=OFF
   fi
 
+  if [ -z "$ENABLE_GRAPHICS_BACKEND" ]; then
+    export ENABLE_GRAPHICS_BACKEND=GLES
+  fi
+
   export PREFIX=${DALI_ENV_DIR}
   export PKG_CONFIG_LIBDIR=${ANDROID_NDK}/prebuilt/linux-x86_64/lib/pkgconfig
   export PKG_CONFIG_PATH=${PREFIX}/lib/${ANDROID_ABI}/pkgconfig
@@ -35,7 +39,9 @@ else
     -DLIB_DIR=${PREFIX}/lib/${ANDROID_ABI} \
     -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
     -DENABLE_TRACE=${ENABLE_TRACE} \
-    -DENABLE_PROFILE=ANDROID
+    -DENABLE_PROFILE=ANDROID \
+    -DENABLE_GRAPHICS_BACKEND=${ENABLE_GRAPHICS_BACKEND} \
+    -Dglslang_DIR=${PREFIX}/lib/${ANDROID_ABI}/cmake/glslang
 fi
 
 make -j8 install || exit 1

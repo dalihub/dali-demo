@@ -113,6 +113,10 @@ To debug from Android Studio set Android DALi enviroment using setenv script in 
          $ . setenv
          $ <path/to/androidstudio>/bin/studio.sh
 
+For Vulkan build:
+
+         $ ENABLE_GRAPHICS_BACKEND=VULKAN ./build.sh
+
 To clean the build:
 
          $ ./build.sh clean

@@ -16,7 +16,6 @@ public class DaliDemoNativeActivity extends NativeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setDecorFitsSystemWindows(false);
     }
 
     protected void onResume() {
