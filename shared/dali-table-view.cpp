@@ -20,7 +20,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/accessibility-manager/accessibility-manager.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/shader-effects/alpha-discard-effect.h>
@@ -443,7 +442,6 @@ void DaliTableView::Populate()
       sort(mExampleList.begin(), mExampleList.end(), [](auto& lhs, auto& rhs) -> bool { return lhs.title < rhs.title; });
     }
 
-    unsigned int         exampleCount = 0;
     ExampleListConstIter iter         = mExampleList.begin();
 
     for(int t = 0; t < mTotalPages && iter != mExampleList.end(); t++)
@@ -468,11 +466,6 @@ void DaliTableView::Populate()
           // Calculate the tiles relative position on the page (between 0 & 1 in each dimension).
           Vector2              position(static_cast<float>(column) / (EXAMPLES_PER_ROW - 1.0f), static_cast<float>(row) / (EXAMPLES_PER_ROW - 1.0f));
           Actor                tile                 = CreateTile(example.name, example.title, Vector3(tileParentMultiplier, tileParentMultiplier, 1.0f), position);
-          AccessibilityManager accessibilityManager = AccessibilityManager::Get();
-          accessibilityManager.SetFocusOrder(tile, ++exampleCount);
-          accessibilityManager.SetAccessibilityAttribute(tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_LABEL, example.title);
-          accessibilityManager.SetAccessibilityAttribute(tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_TRAIT, "Tile");
-          accessibilityManager.SetAccessibilityAttribute(tile, Dali::Toolkit::AccessibilityManager::ACCESSIBILITY_HINT, "You can run this example");
 
           tile.SetProperty(Actor::Property::PADDING, Padding(margin, margin, margin, margin));
           page.AddChild(tile, TableView::CellPosition(row, column));
@@ -628,10 +621,6 @@ void DaliTableView::OnScrollStart(const Dali::Vector2& position)
 void DaliTableView::OnScrollComplete(const Dali::Vector2& position)
 {
   mScrolling = false;
-
-  // move focus to 1st item of new page
-  AccessibilityManager accessibilityManager = AccessibilityManager::Get();
-  accessibilityManager.SetCurrentFocusActor(mPages[mScrollView.GetCurrentPage()].GetChildAt(0));
 }
 
 bool DaliTableView::OnScrollTouched(Actor actor, const TouchEvent& event)
