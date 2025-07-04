@@ -15,7 +15,7 @@ else
   fi
 
   if [ -z "$ENABLE_GRAPHICS_BACKEND" ]; then
-    export ENABLE_GRAPHICS_BACKEND=GLES
+    export ENABLE_GRAPHICS_BACKEND=DYNAMIC
   fi
 
   export PREFIX=${DALI_ENV_DIR}
