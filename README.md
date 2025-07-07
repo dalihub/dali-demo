@@ -15,6 +15,7 @@
          * [Requirements](#requirements)
          * [Building the Repository](#building-the-repository)
          * [Launching a demo via the ADB command](#launching-a-demo-via-the-adb-command)
+         * [Launching a demo with a different Graphics Backend](#launching-a-demo-with-a-different-graphics-backend)
       * [4. Building for MS Windows](#4-building-for-ms-windows)
          * [Build with the Visual Studio project](#build-with-the-visual-studio-project)
          * [Build with CMake](#build-with-cmake)
@@ -138,6 +139,11 @@ A demo can be launched directly via the ADB command. For example, to launch the 
 Optional arguments can be added while launching the demo. For example:
 
          $ adb shell 'am start -n com.sec.dalidemo/.DaliDemoNativeActivity --es start "benchmark.example" --es arguments "-r40 -c40"'
+
+### Launching a demo with a different Graphics Backend
+A demo can be launched using a different graphics backend via the ADB command too. For example, to launch the Benchmark demo with the Vulkan backend:
+
+         $ adb shell 'am start -n com.sec.dalidemo/.DaliDemoNativeActivity --es start "benchmark.example" --es graphics-backend "VULKAN"'
 
 ## 4. Building for MS Windows
 
