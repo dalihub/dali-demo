@@ -19,6 +19,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/common/stage.h>
 
 #include <dali-toolkit/devel-api/controls/control-devel.h>
@@ -41,14 +42,17 @@ enum ControlPropertyUsesFlag
 {
   NONE = 0,
 
-  CORNER_RADIUS     = 1 << 0,
-  CORNER_SQUARENESS = 1 << 1,
-  BORDERLINE_WIDTH  = 1 << 2,
+  CORNER_RADIUS           = 1 << 0,
+  CORNER_SQUARENESS       = 1 << 1,
+  BORDERLINE_WIDTH        = 1 << 2,
+  BORDERLINE_WIDTH_VISUAL = 1 << 3,
 
-  SHADOW       = 1 << 3,
-  INNER_SHADOW = 1 << 4,
+  SHADOW       = 1 << 10,
+  INNER_SHADOW = 1 << 11,
 
-  OFFSCREEN_RENDERING = 1 << 5,
+  OFFSCREEN_RENDERING = 1 << 20,
+
+  EQUAL_DEPTH_INDEX = 1 << 30,
 };
 
 int gControlPropertyUses = ControlPropertyUsesFlag::NONE;
@@ -65,9 +69,10 @@ int gControlPropertyUses = ControlPropertyUsesFlag::NONE;
 //  * B : Borderline,
 //  * I : Inner Shadow,
 //  * O : OffscreenRendering with refresh always.
+//  * E : Equality depth index.
 //
 // For example:
-// $ ./benchmark-color.example -r200 -c800 -d60000 -pCSBI
+// $ ./benchmark-color.example -r200 -c800 -d60000 -pCSBIE
 
 //
 class BenchmarkColor : public ConnectionTracker
@@ -106,6 +111,11 @@ public:
     mRootActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mRootActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mRootActor.SetProperty(Actor::Property::OPACITY, 0.8f); ///< Do not make it as 1.0f, to avoid full-opaque optimization.
+
+    if(gControlPropertyUses & ControlPropertyUsesFlag::EQUAL_DEPTH_INDEX)
+    {
+      mRootActor.SetProperty(DevelActor::Property::CHILDREN_DEPTH_INDEX_POLICY, DevelActor::ChildrenDepthIndexPolicy::EQUAL);
+    }
 
     for(auto i = 0u; i < mRows; ++i)
     {
@@ -167,7 +177,21 @@ public:
         {
           control.SetProperty(DevelControl::Property::OFFSCREEN_RENDERING, DevelControl::OffScreenRenderingType::REFRESH_ALWAYS);
         }
-        control.SetProperty(Control::Property::BACKGROUND, Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f));
+        if(gControlPropertyUses & ControlPropertyUsesFlag::BORDERLINE_WIDTH_VISUAL)
+        {
+          Property::Map map{
+            {Visual::Property::TYPE, Visual::COLOR},
+            {Visual::Property::MIX_COLOR, Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f)},
+            {DevelVisual::Property::BORDERLINE_WIDTH, std::min(mSize.x, mSize.y) * 0.1f},
+            {DevelVisual::Property::BORDERLINE_COLOR, Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f)},
+            {DevelVisual::Property::BORDERLINE_OFFSET, -1.0f},
+          };
+          control.SetProperty(Control::Property::BACKGROUND, map);
+        }
+        else
+        {
+          control.SetProperty(Control::Property::BACKGROUND, Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f));
+        }
 
         mRootActor.Add(control);
       }
@@ -259,9 +283,13 @@ int DALI_EXPORT_API main(int argc, char** argv)
         {
           gControlPropertyUses |= ControlPropertyUsesFlag::CORNER_SQUARENESS;
         }
-        if(c == 'B' || c == 'b')
+        if(c == 'B')
         {
           gControlPropertyUses |= ControlPropertyUsesFlag::BORDERLINE_WIDTH;
+        }
+        if(c == 'b')
+        {
+          gControlPropertyUses |= ControlPropertyUsesFlag::BORDERLINE_WIDTH_VISUAL;
         }
         if(c == 'H' || c == 'h')
         {
@@ -274,6 +302,10 @@ int DALI_EXPORT_API main(int argc, char** argv)
         if(c == 'O' || c == 'o')
         {
           gControlPropertyUses |= ControlPropertyUsesFlag::OFFSCREEN_RENDERING;
+        }
+        if(c == 'E' || c == 'e')
+        {
+          gControlPropertyUses |= ControlPropertyUsesFlag::EQUAL_DEPTH_INDEX;
         }
       }
     }

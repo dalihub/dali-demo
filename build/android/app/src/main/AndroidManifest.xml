@@ -27,6 +27,8 @@
           android:value="blocks.example" />
       <meta-data android:name="arguments"
           android:value="" />
+      <meta-data android:name="graphics-backend"
+          android:value="" />
       <intent-filter>
         <action android:name="android.intent.action.RUN" />
       </intent-filter>
@@ -47,6 +49,8 @@
       <meta-data android:name="start"
                  android:value="dali-demo" />
       <meta-data android:name="arguments"
+                 android:value="" />
+      <meta-data android:name="graphics-backend"
                  android:value="" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -69,6 +73,8 @@
           android:value="dali-examples" />
       <meta-data android:name="arguments"
           android:value="" />
+      <meta-data android:name="graphics-backend"
+          android:value="" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -89,6 +95,8 @@
       <meta-data android:name="start"
           android:value="dali-tests" />
       <meta-data android:name="arguments"
+          android:value="" />
+      <meta-data android:name="graphics-backend"
           android:value="" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

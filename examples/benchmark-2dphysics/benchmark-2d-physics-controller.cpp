@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,10 @@
 #include <dali/integration-api/debug.h>
 
 #include <chipmunk/chipmunk.h>
+#include <unistd.h>
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include <unistd.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit::Physics;
@@ -158,18 +158,29 @@ public:
 
   void OnWindowResize(Window window, Window::WindowSize newSize)
   {
+    DALI_LOG_RELEASE_INFO("OnWindowResize %u x %u\n", static_cast<uint32_t>(newSize.GetWidth()), static_cast<uint32_t>(newSize.GetHeight()));
     switch(mType)
     {
       case BenchmarkType::ANIMATION:
       default:
       {
-        // TODO : Implement here if you want.
+        for(int i = 0; i < mBallNumber; ++i)
+        {
+          CreateBallNotification(i, newSize);
+        }
         break;
       }
       case BenchmarkType::PHYSICS_2D:
       {
         if(mPhysicsAdaptor)
         {
+          mPhysicsTransform.SetIdentityAndScale(Vector3(1.0f, -1.0f, 1.0f));
+          mPhysicsTransform.SetTranslation(Vector3(newSize.GetWidth() * 0.5f,
+                                                   newSize.GetHeight() * 0.5f,
+                                                   0.0f));
+
+          mPhysicsAdaptor.SetTransformAndSize(mPhysicsTransform, newSize);
+
           auto     scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
           cpSpace* space          = scopedAccessor->GetNative().Get<cpSpace*>();
 
@@ -244,22 +255,34 @@ public:
       mBallVelocity[i].Normalize();
       mBallVelocity[i] = mBallVelocity[i] * Random::Range(15.0f, 50.0f);
 
-      PropertyNotification leftNotify = mBallActors[i].AddPropertyNotification(Actor::Property::POSITION_X, LessThanCondition(margin - width));
-      leftNotify.NotifySignal().Connect(this, &Physics2dBenchmarkController::OnHitLeftWall);
-
-      PropertyNotification rightNotify = mBallActors[i].AddPropertyNotification(Actor::Property::POSITION_X, GreaterThanCondition(width - margin));
-      rightNotify.NotifySignal().Connect(this, &Physics2dBenchmarkController::OnHitRightWall);
-
-      PropertyNotification topNotify = mBallActors[i].AddPropertyNotification(Actor::Property::POSITION_Y, LessThanCondition(margin - height));
-      topNotify.NotifySignal().Connect(this, &Physics2dBenchmarkController::OnHitTopWall);
-
-      PropertyNotification bottomNotify = mBallActors[i].AddPropertyNotification(Actor::Property::POSITION_Y, GreaterThanCondition(height - margin));
-      bottomNotify.NotifySignal().Connect(this, &Physics2dBenchmarkController::OnHitBottomWall);
-
+      CreateBallNotification(i, windowSize);
       ContinueAnimation(i);
     }
 
     title.RaiseToTop();
+  }
+
+  void CreateBallNotification(int index, Window::WindowSize size)
+  {
+    const float margin(BALL_SIZE.width * 0.5f);
+
+    int width  = size.GetWidth() / 2;
+    int height = size.GetHeight() / 2;
+
+    // Remove any existing notifications
+    mBallActors[index].RemovePropertyNotifications();
+
+    PropertyNotification leftNotify = mBallActors[index].AddPropertyNotification(Actor::Property::POSITION_X, LessThanCondition(margin - width));
+    leftNotify.NotifySignal().Connect(this, &Physics2dBenchmarkController::OnHitLeftWall);
+
+    PropertyNotification rightNotify = mBallActors[index].AddPropertyNotification(Actor::Property::POSITION_X, GreaterThanCondition(width - margin));
+    rightNotify.NotifySignal().Connect(this, &Physics2dBenchmarkController::OnHitRightWall);
+
+    PropertyNotification topNotify = mBallActors[index].AddPropertyNotification(Actor::Property::POSITION_Y, LessThanCondition(margin - height));
+    topNotify.NotifySignal().Connect(this, &Physics2dBenchmarkController::OnHitTopWall);
+
+    PropertyNotification bottomNotify = mBallActors[index].AddPropertyNotification(Actor::Property::POSITION_Y, GreaterThanCondition(height - margin));
+    bottomNotify.NotifySignal().Connect(this, &Physics2dBenchmarkController::OnHitBottomWall);
   }
 
   void ContinueAnimation(int index)
@@ -268,7 +291,10 @@ public:
     {
       mBallAnimations[index].Clear();
     }
-    mBallAnimations[index] = Animation::New(MAX_ANIMATION_DURATION);
+    else
+    {
+      mBallAnimations[index] = Animation::New(MAX_ANIMATION_DURATION);
+    }
     mBallAnimations[index].AnimateBy(Property(mBallActors[index], Actor::Property::POSITION), mBallVelocity[index] * MAX_ANIMATION_DURATION);
     mBallAnimations[index].Play();
   }
@@ -376,19 +402,19 @@ public:
 
   PhysicsActor CreateBall(cpSpace* space)
   {
-    Window::WindowSize windowSize = mWindow.GetSize();
-    const float BALL_MASS       = 10.0f;
-    const float BALL_RADIUS     = BALL_SIZE.x * 0.25f;
-    const float BALL_ELASTICITY = 1.0f;
-    const float BALL_FRICTION   = 0.0f;
+    Window::WindowSize windowSize      = mWindow.GetSize();
+    const float        BALL_MASS       = 10.0f;
+    const float        BALL_RADIUS     = BALL_SIZE.x * 0.25f;
+    const float        BALL_ELASTICITY = 1.0f;
+    const float        BALL_FRICTION   = 0.0f;
 
     auto ball                   = Toolkit::ImageView::New(BALL_IMAGES[rand() % 4]);
     ball[Actor::Property::NAME] = "Ball";
     ball[Actor::Property::SIZE] = BALL_SIZE * 0.5f;
-    const float moment = cpMomentForCircle(BALL_MASS, 0.0f, BALL_RADIUS, cpvzero);
-    cpBody* body = cpBodyNew(BALL_MASS, moment);
-    const float fw = (windowSize.GetWidth() - BALL_RADIUS);
-    const float fh = (windowSize.GetHeight() - BALL_RADIUS);
+    const float moment          = cpMomentForCircle(BALL_MASS, 0.0f, BALL_RADIUS, cpvzero);
+    cpBody*     body            = cpBodyNew(BALL_MASS, moment);
+    const float fw              = (windowSize.GetWidth() - BALL_RADIUS);
+    const float fh              = (windowSize.GetHeight() - BALL_RADIUS);
     cpBodySetPosition(body, cpv(Random::Range(0, fw), Random::Range(0, fh)));
     cpBodySetVelocity(body, cpv(Random::Range(-100.0, 100.0), Random::Range(-100.0, 100.0)));
     cpSpaceAddBody(space, body);
@@ -464,13 +490,13 @@ private:
 int DALI_EXPORT_API main(int argc, char** argv)
 {
   setenv("DALI_FPS_TRACKING", "5", 1);
-  Application application = Application::New(&argc, &argv);
-  BenchmarkType startType = BenchmarkType::ANIMATION;
+  Application   application = Application::New(&argc, &argv);
+  BenchmarkType startType   = BenchmarkType::ANIMATION;
 
   int numberOfBalls = DEFAULT_BALL_COUNT;
-  int opt=0;
-  optind=1;
-  while((opt=getopt(argc, argv, "ap")) != -1)
+  int opt           = 0;
+  optind            = 1;
+  while((opt = getopt(argc, argv, "ap")) != -1)
   {
     switch(opt)
     {

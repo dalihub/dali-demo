@@ -216,6 +216,17 @@ void android_main(struct android_app* state)
 
   dlerror(); /* Clear any existing error */
 
+  std::string graphicsBackendParam = nativeActivity.GetIntentStringExtra("graphics-backend");
+  if(graphicsBackendParam.empty())
+  {
+    graphicsBackendParam = nativeActivity.GetMetaData("graphics-backend");
+  }
+
+  if(!graphicsBackendParam.empty())
+  {
+    setenv("DALI_GRAPHICS_BACKEND", graphicsBackendParam.c_str(), 1);
+  }
+
   std::string argumentsParam = nativeActivity.GetIntentStringExtra("arguments");
   if(argumentsParam.empty())
   {

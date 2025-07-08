@@ -44,6 +44,10 @@ static Toolkit::RenderEffect CreateFixedBackgroundBlurEffect()
 {
   return Toolkit::BackgroundBlurEffect::New(40u);
 }
+static Toolkit::RenderEffect CreateFixedGaussianBlurEffect()
+{
+  return Toolkit::GaussianBlurEffect::New(40u);
+}
 } // namespace
 
 class RenderEffectController : public Dali::ConnectionTracker
@@ -171,6 +175,9 @@ public:
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       UIPanel.Add(control);
       control.SetRenderEffect(CreateFixedBackgroundBlurEffect());
+
+      // Keep one of control to test effect change.
+      mEffectChangedControl = control;
 
       control = CreateIconPanel("BlueTooth", "2 devices", true, DEMO_IMAGE_DIR "application-icon-14.png", iconPanelSize);
       control.SetProperty(Actor::Property::POSITION, Vector2(xIncrementer, yStarter));
@@ -387,7 +394,7 @@ public:
       }
       else if(event.GetKeyName() == "4")
       {
-        if(flexibleBlurRadius < 1000)
+        if(flexibleBlurRadius < 5000)
         {
           flexibleBlurRadius += 10;
           flexibleBackgroundBlurEffect.SetBlurRadius(flexibleBlurRadius);
@@ -395,17 +402,23 @@ public:
       }
       else if(event.GetKeyName() == "5")
       {
-        float duration = 1.0f;
+        float     duration  = 1.0f;
         Animation animation = Animation::New(duration);
         flexibleBackgroundBlurEffect.AddBlurStrengthAnimation(animation, AlphaFunction::BuiltinFunction::DEFAULT, TimePeriod(duration), 0.0f, 1.0f);
         animation.Play();
       }
       else if(event.GetKeyName() == "6")
       {
-        float duration = 1.0f;
+        float     duration  = 1.0f;
         Animation animation = Animation::New(duration);
         flexibleBackgroundBlurEffect.AddBlurOpacityAnimation(animation, AlphaFunction::BuiltinFunction::DEFAULT, TimePeriod(duration), 0.0f, 1.0f);
         animation.Play();
+      }
+      else if(event.GetKeyName() == "7")
+      {
+        useGaussianBlurEffect ^= true;
+        mEffectChangedControl.ClearRenderEffect();
+        mEffectChangedControl.SetRenderEffect(useGaussianBlurEffect ? CreateFixedGaussianBlurEffect() : CreateFixedBackgroundBlurEffect());
       }
     }
   }
@@ -419,8 +432,11 @@ private:
 
   Toolkit::Control UIPanel;
   Toolkit::Control mVisibilityChangedControl;
+  Toolkit::Control mEffectChangedControl;
 
-  uint32_t         flexibleBlurRadius{40};
+  bool useGaussianBlurEffect{false};
+
+  uint32_t                      flexibleBlurRadius{40};
   Toolkit::BackgroundBlurEffect flexibleBackgroundBlurEffect;
 };
 
