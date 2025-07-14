@@ -43,8 +43,9 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("camera-test.example", DALI_DEMO_STR_TITLE_CAMERA_TEST));
   demo.AddExample(Example("compressed-texture-formats.example", DALI_DEMO_STR_TITLE_COMPRESSED_TEXTURE_FORMATS));
   demo.AddExample(Example("homescreen-benchmark.example", DALI_DEMO_STR_TITLE_HOMESCREEN));
-  demo.AddExample(Example("inherit-test.example", DALI_DEMO_STR_TITLE_INHERIT_TEST));
   demo.AddExample(Example("image-view-yuv.example", DALI_DEMO_STR_TITLE_IMAGE_VIEW_YUV));
+  demo.AddExample(Example("inherit-test.example", DALI_DEMO_STR_TITLE_INHERIT_TEST));
+  demo.AddExample(Example("instance-rendering.example", DALI_DEMO_STR_TITLE_INSTANCE_RENDERING));
   demo.AddExample(Example("pre-render-callback.example", DALI_DEMO_STR_TITLE_PRE_RENDER_CALLBACK));
   demo.AddExample(Example("precompile-shader.example", DALI_DEMO_STR_TITLE_PRECOMPILE_SHADER));
   demo.AddExample(Example("perf-scroll.example", DALI_DEMO_STR_TITLE_PERF_SCROLL));

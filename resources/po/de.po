@@ -67,6 +67,9 @@ msgstr "Bildansicht YUV"
 msgid "DALI_DEMO_STR_TITLE_INHERIT_TEST"
 msgstr "Inherit Test"
 
+msgid "DALI_DEMO_STR_TITLE_INSTANCE_RENDERING"
+msgstr "Instance Rendering"
+
 msgid "DALI_DEMO_STR_TITLE_ITEM_VIEW"
 msgstr "Item-Ansicht"
 
