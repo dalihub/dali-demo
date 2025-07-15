@@ -151,7 +151,8 @@ class NativeImageSourceRenderThread : public NativeImageRenderThread
 public:
   NativeImageSourceRenderThread(NativeImageSourcePtr nativeSource)
   : NativeImageRenderThread(),
-    mNativeSource(nativeSource)
+    mNativeSource(nativeSource),
+    mOffset(Dali::Random::Range(0.0f, 1.0f))
   {
   }
 
@@ -165,7 +166,7 @@ private:
 
       if(buffer != nullptr)
       {
-        FillRainbowBuffer(buffer, width, height, strideBytes);
+        FillRainbowBuffer(buffer, width, height, strideBytes, mOffset);
 
         // Don't forget to call ReleaseBuffer
         DevelNativeImageSource::ReleaseBuffer(*mNativeSource, Rect<uint32_t>());
@@ -183,6 +184,7 @@ private:
 
 private:
   NativeImageSourcePtr mNativeSource;
+  float                mOffset;
 };
 
 class NativeImageSourceQueueRenderThread : public NativeImageRenderThread
@@ -328,6 +330,13 @@ public:
       Renderer nativeImageRenderer = nativeImageViewer.GetRendererAt(0u);
       nativeImageRenderer.SetProperty(DevelRenderer::Property::RENDERING_BEHAVIOR, DevelRenderer::Rendering::CONTINUOUSLY);
     }
+
+    mBlurView = Control::New();
+    mBlurView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mBlurView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+    mBlurView.SetProperty(Actor::Property::SIZE, Vector2(752.0f, 125.0f));
+    mBlurView.SetBackgroundColor(Vector4(0.5f, 0.3f, 0.2f, 0.2f));
+    mBlurView.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(40u));
   }
 
   void OnKeyEvent(const KeyEvent& event)
@@ -338,6 +347,37 @@ public:
       {
         TerminateRenderThread();
         mApplication.Quit();
+      }
+      else if(event.GetKeyName() == "1")
+      {
+        if(mBlurView)
+        {
+          if(mBlurView.GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE))
+          {
+            mBlurView.Unparent();
+          }
+          else
+          {
+            Window window = mApplication.GetWindow();
+            window.Add(mBlurView);
+          }
+        }
+      }
+      else if(event.GetKeyName() == "2")
+      {
+        if(mNativeSourceSupported)
+        {
+          DALI_LOG_ERROR("Regenerate TBM surface result\n");
+          if(mSourceRenderThreadPtr)
+          {
+            mSourceRenderThreadPtr->Finalize();
+            mSourceRenderThreadPtr->Join();
+            delete mSourceRenderThreadPtr;
+            mSourceRenderThreadPtr = nullptr;
+          }
+          mSourceRenderThreadPtr = new NativeImageSourceRenderThread(mNativeSource);
+          mSourceRenderThreadPtr->Start();
+        }
       }
     }
   }
@@ -368,6 +408,8 @@ private:
 
   NativeImageSourceRenderThread*      mSourceRenderThreadPtr;
   NativeImageSourceQueueRenderThread* mQueueRenderThreadPtr;
+
+  Control mBlurView;
 
   bool mNativeSourceSupported;
   bool mNativeSourceQueueSupported;
