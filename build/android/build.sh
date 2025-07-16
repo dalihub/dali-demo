@@ -98,7 +98,7 @@ GRADLE_PROPERTIES_FILE=gradle.properties
 if [ ! -f $GRADLE_PROPERTIES_FILE ]
 then
   echo "Gradle: Creating $GRADLE_PROPERTIES_FILE"
-  echo "org.gradle.jvmargs=-Xmx1536m" > $GRADLE_PROPERTIES_FILE
+  echo "org.gradle.jvmargs=-Xmx4096m" > $GRADLE_PROPERTIES_FILE
   echo "android.useAndroidX=true" >> $GRADLE_PROPERTIES_FILE
   echo "android.enableJetifier=true" >> $GRADLE_PROPERTIES_FILE
   if [ ! -z $http_proxy ]
