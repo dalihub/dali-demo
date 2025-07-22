@@ -217,9 +217,6 @@
 	<ui-application appid="metaball-refrac.example" exec="/usr/apps/com.samsung.dali-demo/bin/metaball-refrac.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Metaball Refractions</label>
 	</ui-application>
-	<ui-application appid="model3d-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/model3d-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Model 3D Viewer</label>
-	</ui-application>
 	<ui-application appid="motion-blur.example" exec="/usr/apps/com.samsung.dali-demo/bin/motion-blur.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Motion Blur</label>
 	</ui-application>
