@@ -79,26 +79,17 @@
 	<ui-application appid="chipmunk-physics.example" exec="/usr/apps/com.samsung.dali-demo/bin/chipmunk-physics.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Chipmunk Physics</label>
 	</ui-application>
-	<ui-application appid="clipping-draw-order.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping-draw-order.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Clipping Draw Order</label>
-	</ui-application>
 	<ui-application appid="clipping.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Clipping</label>
+	</ui-application>
+	<ui-application appid="clipping-draw-order.example" exec="/usr/apps/com.samsung.dali-demo/bin/clipping-draw-order.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Clipping Draw Order</label>
 	</ui-application>
 	<ui-application appid="color-transition.example" exec="/usr/apps/com.samsung.dali-demo/bin/color-transition.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Color Transition</label>
 	</ui-application>
 	<ui-application appid="color-visual.example" exec="/usr/apps/com.samsung.dali-demo/bin/color-visual.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Color Visual</label>
-	</ui-application>
-	<ui-application appid="cv-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/cv-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>CV Benchmark</label>
-	</ui-application>
-	<ui-application appid="iv-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/iv-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>IV Benchmark</label>
-	</ui-application>
-	<ui-application appid="tl-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/tl-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>TL Benchmark</label>
 	</ui-application>
 	<ui-application appid="compressed-texture-formats.example" exec="/usr/apps/com.samsung.dali-demo/bin/compressed-texture-formats.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Compressed Texture Formats</label>
@@ -108,6 +99,9 @@
 	</ui-application>
 	<ui-application appid="cube-transition-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/cube-transition-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Cube transition effect</label>
+	</ui-application>
+	<ui-application appid="cv-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/cv-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>CV Benchmark</label>
 	</ui-application>
 	<ui-application appid="dali-builder" exec="/usr/apps/com.samsung.dali-demo/bin/dali-builder" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Builder</label>
@@ -160,9 +154,6 @@
 	<ui-application appid="homescreen-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/homescreen-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Homescreen Benchmark</label>
 	</ui-application>
-	<ui-application appid="inherit-test.example" exec="/usr/apps/com.samsung.dali-demo/bin/inherit-test.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
-		<label>Inherit test</label>
-	</ui-application>
 	<ui-application appid="image-policies.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-policies.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Image Policies</label>
 	</ui-application>
@@ -172,11 +163,11 @@
 	<ui-application appid="image-scaling-irregular-grid.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-scaling-irregular-grid.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Image Scaling Grid</label>
 	</ui-application>
-	<ui-application appid="image-view-alpha-blending.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-alpha-blending.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>ImageView Alpha Blending</label>
-	</ui-application>
 	<ui-application appid="image-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Image View</label>
+	</ui-application>
+	<ui-application appid="image-view-alpha-blending.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-alpha-blending.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>ImageView Alpha Blending</label>
 	</ui-application>
 	<ui-application appid="image-view-encoded-image-buffer.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-encoded-image-buffer.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Image View Encoded Image Buffer</label>
@@ -184,20 +175,29 @@
 	<ui-application appid="image-view-external-texture.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-external-texture.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Image View External Texture</label>
 	</ui-application>
-	<ui-application appid="image-view-url.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-url.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Image View URL</label>
-	</ui-application>
 	<ui-application appid="image-view-pixel-area.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-pixel-area.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>ImageView Pixel Area</label>
 	</ui-application>
 	<ui-application appid="image-view-svg.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-svg.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>ImageView SVG</label>
 	</ui-application>
+	<ui-application appid="image-view-url.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-url.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Image View URL</label>
+	</ui-application>
 	<ui-application appid="image-view-yuv.example" exec="/usr/apps/com.samsung.dali-demo/bin/image-view-yuv.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>ImageView YUV</label>
 	</ui-application>
+	<ui-application appid="inherit-test.example" exec="/usr/apps/com.samsung.dali-demo/bin/inherit-test.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+		<label>Inherit test</label>
+	</ui-application>
+	<ui-application appid="instance-rendering.example" exec="/usr/apps/com.samsung.dali-demo/bin/instance-rendering.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
+		<label>Instance Rendering</label>
+	</ui-application>
 	<ui-application appid="item-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/item-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Item View</label>
+	</ui-application>
+	<ui-application appid="iv-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/iv-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>IV Benchmark</label>
 	</ui-application>
 	<ui-application appid="line-mesh.example" exec="/usr/apps/com.samsung.dali-demo/bin/line-mesh.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Line Mesh</label>
@@ -253,11 +253,11 @@
 	<ui-application appid="popup.example" exec="/usr/apps/com.samsung.dali-demo/bin/popup.example" nodisplay="true" multiple="false" taskmanage="true" type="c++app">
 		<label>Popup</label>
 	</ui-application>
-	<ui-application appid="precompile-shader.example" exec="/usr/apps/com.samsung.dali-demo/bin/precompile-shader.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Precompile Shader</label>
-	</ui-application>
 	<ui-application appid="pre-render-callback.example" exec="/usr/apps/com.samsung.dali-demo/bin/pre-render-callback.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Frame Callback</label>
+	</ui-application>
+	<ui-application appid="precompile-shader.example" exec="/usr/apps/com.samsung.dali-demo/bin/precompile-shader.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Precompile Shader</label>
 	</ui-application>
 	<ui-application appid="primitive-shapes.example" exec="/usr/apps/com.samsung.dali-demo/bin/primitive-shapes.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Primitive Shapes</label>
@@ -313,11 +313,11 @@
 	<ui-application appid="rendering-triangle.example" exec="/usr/apps/com.samsung.dali-demo/bin/rendering-triangle.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Rendering Triangle</label>
 	</ui-application>
-	<ui-application appid="scene-view-test.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene-view-test.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Scene View Test</label>
-	</ui-application>
 	<ui-application appid="scene-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scene View</label>
+	</ui-application>
+	<ui-application appid="scene-view-test.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene-view-test.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Scene View Test</label>
 	</ui-application>
 	<ui-application appid="scene3d.example" exec="/usr/apps/com.samsung.dali-demo/bin/scene3d.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Scene3D</label>
@@ -379,11 +379,11 @@
 	<ui-application appid="text-fonts.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-fonts.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Fonts</label>
 	</ui-application>
-	<ui-application appid="text-label-emojis.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-label-emojis.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Emojis Text Label</label>
-	</ui-application>
 	<ui-application appid="text-label.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-label.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Text Label</label>
+	</ui-application>
+	<ui-application appid="text-label-emojis.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-label-emojis.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Emojis Text Label</label>
 	</ui-application>
 	<ui-application appid="text-label-multi-language.example" exec="/usr/apps/com.samsung.dali-demo/bin/text-label-multi-language.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Multi-language Text Label</label>
@@ -403,14 +403,17 @@
 	<ui-application appid="tilt.example" exec="/usr/apps/com.samsung.dali-demo/bin/tilt.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Tilt sensor</label>
 	</ui-application>
+	<ui-application appid="tl-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/tl-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>TL Benchmark</label>
+	</ui-application>
 	<ui-application appid="tooltip.example" exec="/usr/apps/com.samsung.dali-demo/bin/tooltip.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Tooltip</label>
 	</ui-application>
-	<ui-application appid="transitions.example" exec="/usr/apps/com.samsung.dali-demo/bin/transitions.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Shadow button</label>
-	</ui-application>
 	<ui-application appid="touch.example" exec="/usr/apps/com.samsung.dali-demo/bin/touch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Touch Algorithm</label>
+	</ui-application>
+	<ui-application appid="transitions.example" exec="/usr/apps/com.samsung.dali-demo/bin/transitions.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Shadow button</label>
 	</ui-application>
 	<ui-application appid="uniform-blocks.example" exec="/usr/apps/com.samsung.dali-demo/bin/uniform-blocks.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Uniform Blocks</label>
@@ -424,14 +427,14 @@
 	<ui-application appid="visual-transitions.example" exec="/usr/apps/com.samsung.dali-demo/bin/visual-transitions.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Visual Transitions</label>
 	</ui-application>
+	<ui-application appid="waves.example" exec="/usr/apps/com.samsung.dali-demo/bin/waves.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Waves</label>
+	</ui-application>
 	<ui-application appid="web-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/web-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Web View</label>
 	</ui-application>
 	<ui-application appid="window.example" exec="/usr/apps/com.samsung.dali-demo/bin/window.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Window</label>
-	</ui-application>
-	<ui-application appid="waves.example" exec="/usr/apps/com.samsung.dali-demo/bin/waves.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
-		<label>Waves</label>
 	</ui-application>
 
 	<!-- END OF ALPHABETICAL ORDER SORT. -->
