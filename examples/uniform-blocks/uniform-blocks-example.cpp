@@ -149,14 +149,14 @@ public:
     {
       case 0:
       {
-        mShader = Shader::New(Dali::Shader::GetVertexShaderPrefix() + std::string(SHADER_UNIFORM_BLOCK_VERT),
-                              Dali::Shader::GetFragmentShaderPrefix() + std::string(SHADER_UNIFORM_BLOCK_FRAG));
+        mShader = Shader::New(std::string(SHADER_UNIFORM_BLOCK_VERT),
+                              std::string(SHADER_UNIFORM_BLOCK_FRAG));
         break;
       }
       case 1:
       {
-        mShader = Shader::New(Dali::Shader::GetVertexShaderPrefix() + std::string(SHADER_UNIFORM_BLOCK_VERT),
-                              Dali::Shader::GetFragmentShaderPrefix() + std::string(SHADER_UNIFORM_BLOCK_ALT_FRAG));
+        mShader = Shader::New(std::string(SHADER_UNIFORM_BLOCK_VERT),
+                              std::string(SHADER_UNIFORM_BLOCK_ALT_FRAG));
         break;
       }
     }
