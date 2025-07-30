@@ -388,8 +388,8 @@ private:
   Geometry mGeometry;
   Renderer mRenderer;
 
-  uint16_t offsetXRange;
-  uint16_t offsetYRange;
+  uint16_t offsetXRange{0u};
+  uint16_t offsetYRange{0u};
 
   UniformBlock mUniformBlocks;
 
