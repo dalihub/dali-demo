@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -142,13 +142,13 @@ public:
 
     Property::Map shader1;
     shader1.Add("renderPassTag", 1);
-    shader1.Add("vertex", Dali::Shader::GetVertexShaderPrefix() + SHADER_COLOR_TEST_SHADER_VERT.data());
-    shader1.Add("fragment", Dali::Shader::GetFragmentShaderPrefix() + SHADER_COLOR_TEST_SHADER_FRAG.data());
+    shader1.Add("vertex", SHADER_COLOR_TEST_SHADER_VERT.data());
+    shader1.Add("fragment", SHADER_COLOR_TEST_SHADER_FRAG.data());
 
     Property::Map shader2;
     shader2.Add("renderPassTag", 0);
-    shader2.Add("vertex", Dali::Shader::GetVertexShaderPrefix() + SHADER_IMAGE_TEST_SHADER_VERT.data());
-    shader2.Add("fragment", Dali::Shader::GetFragmentShaderPrefix() + SHADER_IMAGE_TEST_SHADER_FRAG.data());
+    shader2.Add("vertex", SHADER_IMAGE_TEST_SHADER_VERT.data());
+    shader2.Add("fragment", SHADER_IMAGE_TEST_SHADER_FRAG.data());
 
     Property::Array array;
     array.PushBack(shader1);
@@ -156,7 +156,7 @@ public:
 
     Dali::Shader shader   = Dali::Shader::New(array);
     Geometry     geometry = CreateQuadGeometry();
-    Renderer renderer = Renderer::New(geometry, shader);
+    Renderer     renderer = Renderer::New(geometry, shader);
     control.AddRenderer(renderer);
 
     RenderTask renderTask = mWindow.GetRenderTaskList().CreateTask();
@@ -168,8 +168,8 @@ public:
     renderTask.SetClearColor(Color::TRANSPARENT);
     renderTask.SetRenderPassTag(1u);
 
-    CameraActor cameraActor      = Dali::CameraActor::New(Vector2(300.0f, 300.0f));
-    float   cameraDefaultZPosition = cameraActor.GetProperty<float>(Dali::Actor::Property::POSITION_Z);
+    CameraActor cameraActor            = Dali::CameraActor::New(Vector2(300.0f, 300.0f));
+    float       cameraDefaultZPosition = cameraActor.GetProperty<float>(Dali::Actor::Property::POSITION_Z);
     cameraActor.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.0f, 0.0f, cameraDefaultZPosition));
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     cameraActor.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
@@ -222,7 +222,7 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application          application = Application::New(&argc, &argv);
+  Application             application = Application::New(&argc, &argv);
   RenderPassTagController test(application);
   application.MainLoop();
   return 0;

@@ -272,16 +272,16 @@ public:
       case TestType::TEST_MULTIPLE_RENDERER:
       default:
       {
-        mShader = Shader::New(Dali::Shader::GetVertexShaderPrefix() + oss.str() + std::string(SHADER_NOT_INSTANCE_RENDERING_VERT),
-                              Dali::Shader::GetFragmentShaderPrefix() + std::string(SHADER_INSTANCE_RENDERING_FRAG));
+        mShader = Shader::New(oss.str() + std::string(SHADER_NOT_INSTANCE_RENDERING_VERT),
+                              std::string(SHADER_INSTANCE_RENDERING_FRAG));
         break;
       }
       case TestType::TEST_INSTANCE_RENDERING_WITH_VERTEX_GEOMETRY:
       case TestType::TEST_INSTANCE_RENDERING_WITH_16BIT_INDEX_GEOMETRY:
       case TestType::TEST_INSTANCE_RENDERING_WITH_32BIT_INDEX_GEOMETRY:
       {
-        mShader = Shader::New(Dali::Shader::GetVertexShaderPrefix() + oss.str() + std::string(SHADER_INSTANCE_RENDERING_VERT),
-                              Dali::Shader::GetFragmentShaderPrefix() + std::string(SHADER_INSTANCE_RENDERING_FRAG));
+        mShader = Shader::New(oss.str() + std::string(SHADER_INSTANCE_RENDERING_VERT),
+                              std::string(SHADER_INSTANCE_RENDERING_FRAG));
         break;
       }
     }
@@ -388,8 +388,8 @@ private:
   Geometry mGeometry;
   Renderer mRenderer;
 
-  uint16_t offsetXRange;
-  uint16_t offsetYRange;
+  uint16_t offsetXRange{0u};
+  uint16_t offsetYRange{0u};
 
   UniformBlock mUniformBlocks;
 

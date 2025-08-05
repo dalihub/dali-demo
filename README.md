@@ -114,7 +114,13 @@ To debug from Android Studio set Android DALi enviroment using setenv script in 
          $ . setenv
          $ <path/to/androidstudio>/bin/studio.sh
 
-For Vulkan build:
+By default, the build script will build both the GLES and the VULKAN backends as separate libraries which can then be loaded dynamically.
+
+If only the GLES backend is required, then you can run:
+
+         $ ENABLE_GRAPHICS_BACKEND=GLES ./build.sh
+
+And if only the VULKAN backend is required:
 
          $ ENABLE_GRAPHICS_BACKEND=VULKAN ./build.sh
 
