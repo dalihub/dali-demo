@@ -64,7 +64,7 @@ float bezier(vec3 control, float alpha)
 
 void main() {
   // Get random order from the look-up table, based on particle ID.
-  int particleId = gl_VertexID / 6;
+  int particleId = INSTANCE_INDEX / 6;
   float order = uOrderLookUp[particleId & (POPULATION_GRANULARITY - 1)];
 
   // Get twinkle scalar

@@ -1,8 +1,16 @@
-attribute highp vec3 aPosition;
-attribute highp vec3 aNormal;
-attribute highp vec2 aTexCoord;
-uniform highp mat4 uMvpMatrix;
-varying highp vec2 vTexCoord;
+//@version 100
+
+precision highp float;
+INPUT highp vec3 aPosition;
+INPUT highp vec3 aNormal;
+INPUT highp vec2 aTexCoord;
+
+UNIFORM_BLOCK VertBlock
+{
+  UNIFORM highp mat4 uMvpMatrix;
+};
+
+OUTPUT highp vec2 vTexCoord;
 
 void main()
 {
