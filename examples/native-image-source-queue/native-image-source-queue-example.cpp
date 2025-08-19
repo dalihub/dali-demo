@@ -280,7 +280,7 @@ public:
       mSourceRenderThreadPtr->Start();
     }
 
-    mNativeQueue = NativeImageSourceQueue::New(123, 345, NativeImageSourceQueue::ColorFormat::RGBA8888);
+    mNativeQueue = NativeImageSourceQueue::New(123, 345, NativeImageSourceQueue::ColorFormat::BGRA8888);
 
     // Check whether current platform support NativeImageSourceQueue or not.
     if(mNativeQueue && !mNativeQueue->GetNativeImageSourceQueue().Empty())
