@@ -43,6 +43,9 @@ msgstr "Emoji"
 msgid "DALI_DEMO_STR_TITLE_FLEXBOX_PLAYGROUND"
 msgstr "Flexbox ডেমো"
 
+msgid "DALI_DEMO_STR_TITLE_FRAME_CALLBACK_TOGGLE"
+msgstr "Frame Callback Toggle"
+
 msgid "DALI_DEMO_STR_TITLE_IMAGE_FITTING_SAMPLING"
 msgstr "অনুবিম্ব ইজাৰ"
 
