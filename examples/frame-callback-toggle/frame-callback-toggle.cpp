@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 #include <dali/devel-api/common/stage-devel.h>
 #include <dali/devel-api/update/frame-callback-interface.h>
 #include <dali/devel-api/update/update-proxy.h>
+
+#include <memory> ///< for std::unique_ptr
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -59,21 +61,21 @@ public:
       mCurrentlyIgnored = !mCurrentlyIgnored;
       updateProxy.SetIgnored(mActorId, mCurrentlyIgnored);
       // Control label visibility using UpdateProxy to ensure thread safety
-      updateProxy.SetIgnored(mVisibleLabelId, mCurrentlyIgnored); // Hide "Visible" label when main actor is ignored
+      updateProxy.SetIgnored(mVisibleLabelId, mCurrentlyIgnored);  // Hide "Visible" label when main actor is ignored
       updateProxy.SetIgnored(mIgnoredLabelId, !mCurrentlyIgnored); // Show "Ignored" label when main actor is ignored
-      mElapsedTime = 0.0f; // Reset timer
+      mElapsedTime = 0.0f;                                         // Reset timer
     }
 
     return true; // Keep the callback alive
   }
 
 private:
-  uint32_t mActorId;         ///< ID of the actor to control
-  float   mIntervalSeconds;  ///< Interval for toggling
-  float   mElapsedTime;      ///< Accumulated elapsed time
-  bool    mCurrentlyIgnored; ///< Current ignored state
-  uint32_t mVisibleLabelId;  ///< ID of the "Visible" TextLabel
-  uint32_t mIgnoredLabelId;  ///< ID of the "Ignored" TextLabel
+  uint32_t mActorId;          ///< ID of the actor to control
+  float    mIntervalSeconds;  ///< Interval for toggling
+  float    mElapsedTime;      ///< Accumulated elapsed time
+  bool     mCurrentlyIgnored; ///< Current ignored state
+  uint32_t mVisibleLabelId;   ///< ID of the "Visible" TextLabel
+  uint32_t mIgnoredLabelId;   ///< ID of the "Ignored" TextLabel
 };
 
 /**
@@ -82,7 +84,6 @@ private:
 class FrameCallbackToggleController : public ConnectionTracker
 {
 public:
-
   /**
    * @brief Constructor.
    * @param[in] application The application instance
@@ -97,7 +98,6 @@ public:
   ~FrameCallbackToggleController() = default; // Nothing to do in destructor
 
 private:
-
   /**
    * @brief The Init signal is received once (only) during the Application lifetime
    */
@@ -118,7 +118,7 @@ private:
     // Set a visual. Using a solid color rectangle for simplicity.
     // In a real app, you would use an image URL.
     Property::Map map;
-    map[Visual::Property::TYPE] = Visual::COLOR;
+    map[Visual::Property::TYPE]           = Visual::COLOR;
     map[ColorVisual::Property::MIX_COLOR] = Color::RED; // Corrected property name
     mImageView.SetProperty(ImageView::Property::IMAGE, map);
 
@@ -151,14 +151,14 @@ private:
     mIgnoredLabel.SetIgnored(true); // Initially ignored
 
     // Get the actor IDs for the FrameCallback
-    uint32_t actorId = mImageView.GetProperty<int>(Actor::Property::ID);
+    uint32_t actorId        = mImageView.GetProperty<int>(Actor::Property::ID);
     uint32_t visibleLabelId = mVisibleLabel.GetProperty<int>(Actor::Property::ID);
     uint32_t ignoredLabelId = mIgnoredLabel.GetProperty<int>(Actor::Property::ID);
 
     // Create and add the frame callback to toggle the ignored state every 2 seconds
     // Pass the label IDs to the IgnoredToggler
-    mIgnoredToggler = new IgnoredToggler(actorId, 2.0f, visibleLabelId, ignoredLabelId); // Manage with a unique_ptr or similar if needed
-    DevelStage::AddFrameCallback(stage, *mIgnoredToggler, stage.GetRootLayer()); // Dali:: prefix not needed due to 'using namespace Dali;'
+    mIgnoredToggler = std::make_unique<IgnoredToggler>(actorId, 2.0f, visibleLabelId, ignoredLabelId); // Manage with a unique_ptr or similar if needed
+    DevelStage::AddFrameCallback(stage, *mIgnoredToggler, stage.GetRootLayer());                       // Dali:: prefix not needed due to 'using namespace Dali;'
 
     // Respond to a touch anywhere on the window to quit
     window.GetRootLayer().TouchedSignal().Connect(this, &FrameCallbackToggleController::OnTouch);
@@ -187,15 +187,16 @@ private:
 
 private:
   Application& mApplication;
-  ImageView     mImageView;
-  TextLabel     mVisibleLabel;      ///< Label to show when actor is visible
-  TextLabel     mIgnoredLabel;      ///< Label to show when actor is ignored
-  IgnoredToggler* mIgnoredToggler; // Raw pointer for simplicity, use smart pointer in production code
+  ImageView    mImageView;
+  TextLabel    mVisibleLabel; ///< Label to show when actor is visible
+  TextLabel    mIgnoredLabel; ///< Label to show when actor is ignored
+
+  std::unique_ptr<IgnoredToggler> mIgnoredToggler; // Raw pointer for simplicity, use smart pointer in production code
 };
 
-int DALI_EXPORT_API main(int argc, char **argv)
+int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New(&argc, &argv);
+  Application                   application = Application::New(&argc, &argv);
   FrameCallbackToggleController test(application);
   application.MainLoop();
   return 0;
