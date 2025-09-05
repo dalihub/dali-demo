@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include "native-renderer.h"
 #include <dali/integration-api/debug.h>
+#include "native-renderer.h"
 
 #include <dali/public-api/render-tasks/render-task-list.h>
 using namespace Dali;
@@ -86,7 +86,7 @@ struct RenderView
     {
       DALI_LOG_RELEASE_INFO("Threaded and offscreen rendering modes cannot be used with UNSAFE_RENDERING_DIRECT backend!\n");
       DALI_LOG_RELEASE_INFO("Setting threading and offscreen to false!\n");
-      info.threaded = false;
+      info.threaded  = false;
       info.offscreen = false;
     }
 
@@ -144,6 +144,11 @@ struct RenderView
     return 0;
   }
 
+  void Terminate()
+  {
+    mGlView.Terminate();
+  }
+
   Dali::Window                    mWindow;
   Toolkit::GlView                 mGlView;
   std::unique_ptr<NativeRenderer> mRenderer{};
@@ -160,7 +165,9 @@ class DirectRenderingExampleController : public ConnectionTracker
 {
 public:
   explicit DirectRenderingExampleController(Application& application)
-  : mApplication(application)
+  : mApplication(application),
+    mDRView(nullptr),
+    mQuitTimer()
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &DirectRenderingExampleController::Create);
@@ -179,7 +186,7 @@ public:
 
     mDRView = std::make_unique<RenderView>(window);
 
-    bool eglMode = GetEnvInt("EGL_ENABLED", 0);
+    bool eglMode      = GetEnvInt("EGL_ENABLED", 0);
     bool glDirectMode = GetEnvInt("UNSAFE_MODE", 1);
 
     Toolkit::GlView::BackendMode mode(Dali::Toolkit::GlView::BackendMode::UNSAFE_DIRECT_RENDERING);
@@ -198,7 +205,7 @@ public:
   bool OnTouch(Actor actor, const TouchEvent& touch)
   {
     // quit the application
-    mApplication.Quit();
+    RequestApplicationQuit();
     return true;
   }
 
@@ -208,14 +215,34 @@ public:
     {
       if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))
       {
-        mApplication.Quit();
+        RequestApplicationQuit();
       }
     }
+  }
+
+  void RequestApplicationQuit()
+  {
+    mDRView->Terminate();
+
+    // Wait 1 seconds to quit application, to check whether mDRView->Terminate() make some crash or not during rendering serverl times.
+    // (Quit application will stop render thread.)
+    mApplication.GetWindow().KeepRendering(1.0f);
+
+    mQuitTimer = Timer::New(1000);
+    mQuitTimer.TickSignal().Connect(this, &DirectRenderingExampleController::OnTerminateCompleted);
+    mQuitTimer.Start();
+  }
+
+  bool OnTerminateCompleted()
+  {
+    mApplication.Quit();
+    return false;
   }
 
 private:
   Application&                mApplication;
   std::unique_ptr<RenderView> mDRView;
+  Dali::Timer                 mQuitTimer;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

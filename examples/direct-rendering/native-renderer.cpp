@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -279,6 +279,7 @@ GLuint NativeRenderer::CreateProgram(const char* vertexSource, const char* fragm
   GLuint fragmentShader = LoadShader(GL_FRAGMENT_SHADER, fragmentSource);
   if(!fragmentShader)
   {
+    GL(glDeleteShader(vertexShader));
     return 0;
   }
   GLuint program = glCreateProgram();
@@ -289,6 +290,8 @@ GLuint NativeRenderer::CreateProgram(const char* vertexSource, const char* fragm
     GL(glLinkProgram(program));
     GLint linkStatus = GL_FALSE;
     GL(glGetProgramiv(program, GL_LINK_STATUS, &linkStatus));
+    GL(glDeleteShader(vertexShader));
+    GL(glDeleteShader(fragmentShader));
     if(linkStatus != GL_TRUE)
     {
       GLint bufLength = 0;
@@ -303,6 +306,7 @@ GLuint NativeRenderer::CreateProgram(const char* vertexSource, const char* fragm
         }
       }
       glDeleteProgram(program);
+
       program = 0;
     }
   }
@@ -358,6 +362,8 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
 
   GL(glViewport(x, y, w, h));
   GL(glEnable(GL_DEPTH_TEST));
+  GL(glDepthMask(true));
+  GL(glDisable(GL_STENCIL_TEST));
   if(!mCreateInfo.offscreen)
   {
     GL(glEnable(GL_SCISSOR_TEST));
@@ -372,8 +378,11 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
                   mCreateInfo.clearColor[2],
                   mCreateInfo.clearColor[3]));
   {
-    GL(glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT));
+    GL(glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT));
   }
+  GL(glDisable(GL_CULL_FACE));
+  GL(glDisable(GL_BLEND));
+
   GL(glUseProgram(mProgramId));
   // unbind VAO
   GL(glBindVertexArray(0));
@@ -384,8 +393,6 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
   GL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
   GL(glBindBuffer(GL_COPY_READ_BUFFER, 0));
   GL(glBindBuffer(GL_COPY_WRITE_BUFFER, 0));
-
-
 
   GL(glVertexAttribPointer(mVertexLocation, 3, GL_FLOAT, GL_FALSE, 0, CUBE_VERTICES));
   GL(glEnableVertexAttribArray(mVertexLocation));
@@ -420,6 +427,7 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
 
 void NativeRenderer::GlViewInitCallback(const Dali::RenderCallbackInput& input)
 {
+  fprintf(stderr, "GlViewInitCallback called!\n");
   Setup(mWidth, mHeight);
   mState = State::RENDER;
 }
@@ -432,5 +440,8 @@ int NativeRenderer::GlViewRenderCallback(const Dali::RenderCallbackInput& input)
 
 void NativeRenderer::GlViewTerminateCallback(const Dali::RenderCallbackInput& input)
 {
-  // Nothing to do here
+  fprintf(stderr, "GlViewTerminateCallback called!\n");
+
+  GL(glDeleteProgram(mProgramId));
+  mProgramId = 0u;
 }

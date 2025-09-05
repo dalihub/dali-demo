@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,9 +45,9 @@ Shader CreateShader(NativeImageInterface& nativeImage)
 {
   std::string fragmentShader;
 
-  //Get custom fragment shader prefix
+  // Get custom fragment shader prefix
   fragmentShader = SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_FRAG.data();
-  nativeImage.ApplyNativeFragmentShader(fragmentShader);
+  nativeImage.ApplyNativeFragmentShader(fragmentShader, 1);
 
   return Shader::New(SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_VERT, fragmentShader);
 }
