@@ -19,16 +19,15 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 
 // For Wait
-#include <iostream>
 #include <chrono>
+#include <iostream>
 #include <thread>
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
 
-const std::string_view SHADER_CUSTOM_VERT
-{
-R"(attribute mediump vec2 aPosition;
+const std::string_view SHADER_CUSTOM_VERT{
+  R"(attribute mediump vec2 aPosition;
 uniform mediump mat4 uMvpMatrix;
 uniform vec3 uSize;
 
@@ -36,19 +35,16 @@ void main()
 {
   gl_Position = uMvpMatrix * vec4(aPosition*uSize.xy, 0.0, 1.0);
 }
-)"
-};
+)"};
 
-const std::string_view SHADER_CUSTOM_FRAG
-{
-R"(uniform lowp vec4 uColor;
+const std::string_view SHADER_CUSTOM_FRAG{
+  R"(uniform lowp vec4 uColor;
 
 void main()
 {
   gl_FragColor = vec4(0.0,0.0,0.0,1.0);
 }
-)"
-};
+)"};
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -81,31 +77,30 @@ public:
     imageShader2["shaderOption"] = Property::Map()
                                      .Add("ROUNDED_CORNER", true)
                                      .Add("MASKING", true);
-    imageShader2["shaderName"]   = "";
+    imageShader2["shaderName"] = "";
 
     Property::Map textShader;
     textShader["shaderType"]   = "text";
     textShader["shaderOption"] = Property::Map()
-                                     .Add("MULTI_COLOR", true)
-                                     .Add("STYLES", true);
-    textShader["shaderName"]   = "";
+                                   .Add("MULTI_COLOR", true)
+                                   .Add("STYLES", true);
+    textShader["shaderName"] = "";
 
     Property::Map colorShader;
     colorShader["shaderType"]   = "color";
     colorShader["shaderOption"] = Property::Map()
-                                     .Add("CUTOUT", true)
-                                     .Add("BORDERLINE", true);
-    colorShader["shaderName"]   = "ColorBorderlineCutout";
-
+                                    .Add("CUTOUT", true)
+                                    .Add("BORDERLINE", true);
+    colorShader["shaderName"] = "ColorBorderlineCutout";
 
     Property::Map customSHader;
-    customSHader["shaderType"]   = "custom";
-    customSHader["shaderName"]   = "myShader";
-    customSHader["vertexShader"] = SHADER_CUSTOM_VERT.data();
+    customSHader["shaderType"]     = "custom";
+    customSHader["shaderName"]     = "myShader";
+    customSHader["vertexShader"]   = SHADER_CUSTOM_VERT.data();
     customSHader["fragmentShader"] = SHADER_CUSTOM_FRAG.data();
 
     Property::Map npatchShader;
-    npatchShader["shaderType"]   = "npatch";
+    npatchShader["shaderType"]    = "npatch";
     npatchShader["xStretchCount"] = 4;
     npatchShader["yStretchCount"] = 3;
 
@@ -136,7 +131,7 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application          application = Application::New(&argc, &argv);
+  Application                application = Application::New(&argc, &argv);
   PrecompileShaderController test(application);
   application.MainLoop();
   return 0;

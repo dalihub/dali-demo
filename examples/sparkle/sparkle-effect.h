@@ -2,7 +2,7 @@
 #define DALI_SPARKLE_EFFECT_H
 
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -221,9 +221,9 @@ struct Vertex
 };
 
 /**
-   * Create a SparkleEffect object.
-   * @return A handle to a newly allocated SparkleEffect
-   */
+ * Create a SparkleEffect object.
+ * @return A handle to a newly allocated SparkleEffect
+ */
 Shader New()
 {
   std::ostringstream vertexShaderStringStream;

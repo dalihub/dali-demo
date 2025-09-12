@@ -90,37 +90,37 @@ public:
     mS1000D10M10.SetProperty(Dali::Actor::Property::POSITION_Y, 600.0f);
     window.Add(mS1000D10M10);
 
-    Animation animation = Animation::New(1.0f);  // Set the longest duration.
+    Animation animation = Animation::New(1.0f); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mGentle, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction(Dali::AlphaFunction::SpringType::GENTLE));
     animation.SetLooping(true);
     animation.Play();
 
-    animation = Animation::New(1.0f);  // Set the longest duration.
+    animation = Animation::New(1.0f); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mQuick, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction(Dali::AlphaFunction::SpringType::QUICK));
     animation.SetLooping(true);
     animation.Play();
 
-    animation = Animation::New(1.0f);  // Set the longest duration.
+    animation = Animation::New(1.0f); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mBouncy, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction(Dali::AlphaFunction::SpringType::BOUNCY));
     animation.SetLooping(true);
     animation.Play();
 
-    animation = Animation::New(1.0f);  // Set the longest duration.
+    animation = Animation::New(1.0f); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mSlow, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction(Dali::AlphaFunction::SpringType::SLOW));
     animation.SetLooping(true);
     animation.Play();
 
-    animation = Animation::New(SpringData{100.0f, 10.0f, 1.0f}.GetDuration());  // Set the longest duration.
+    animation = Animation::New(SpringData{100.0f, 10.0f, 1.0f}.GetDuration()); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mS100D10M1, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction({100.0f, 10.0f, 1.0f}));
     animation.SetLooping(true);
     animation.Play();
 
-    animation = Animation::New(SpringData({4420.0f, 20.8f, 1.0f}).GetDuration());  // Set the longest duration.
+    animation = Animation::New(SpringData({4420.0f, 20.8f, 1.0f}).GetDuration()); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mS4420D20_8M1, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction({4420.0f, 20.8f, 1.0f}));
     animation.SetLooping(true);
     animation.Play();
 
-    animation = Animation::New(SpringData({1000.0f, 10.0f, 10.0f}).GetDuration());  // Set the longest duration.
+    animation = Animation::New(SpringData({1000.0f, 10.0f, 10.0f}).GetDuration()); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mS1000D10M10, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction({1000.0f, 10.0f, 10.0f}));
     animation.SetLooping(true);
     animation.Play();
@@ -152,12 +152,12 @@ public:
 
 private:
   Dali::Toolkit::TextLabel mGentle, mQuick, mBouncy, mSlow, mS100D10M1, mS4420D20_8M1, mS1000D10M10;
-  Application& mApplication;
+  Application&             mApplication;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application          application = Application::New(&argc, &argv);
+  Application                   application = Application::New(&argc, &argv);
   SpringAlphaFunctionController test(application);
   application.MainLoop();
   return 0;

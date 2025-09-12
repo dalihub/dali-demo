@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,11 +98,11 @@ private:
     // The view is added to the window.
     Toolkit::ToolBar toolBar;
     Layer            content = DemoHelper::CreateView(app,
-                                           mBackground,
-                                           toolBar,
-                                           "",
-                                           TOOLBAR_IMAGE,
-                                           APPLICATION_TITLE);
+                                                      mBackground,
+                                                      toolBar,
+                                                      "",
+                                                      TOOLBAR_IMAGE,
+                                                      APPLICATION_TITLE);
 
     // Add a button to change background. (right of toolbar)
     mChangeBackgroundButton = Toolkit::PushButton::New();
@@ -149,8 +149,8 @@ private:
   }
 
   /***********
- * Emit bubbles
- *****************/
+   * Emit bubbles
+   *****************/
 
   // Set up the animation of emitting bubbles, to be efficient, every animation controls multiple emission ( 4 here )
   void SetUpAnimation(Vector2 emitPosition, Vector2 direction)

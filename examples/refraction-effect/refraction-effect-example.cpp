@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -378,8 +378,7 @@ private:
         std::istringstream vertexIss(line.substr(2), std::istringstream::in);
         unsigned int       i = 0;
         Vector3            vertex;
-        while(vertexIss >> vertex[i++] && i < 3)
-          ;
+        while(vertexIss >> vertex[i++] && i < 3);
         if(vertex.x < boundingBox[0]) boundingBox[0] = vertex.x;
         if(vertex.x > boundingBox[1]) boundingBox[1] = vertex.x;
         if(vertex.y < boundingBox[2]) boundingBox[2] = vertex.y;
@@ -406,8 +405,7 @@ private:
         Dali::Vector<unsigned int> indices;
         indices.Resize(numOfInt);
         unsigned int i = 0;
-        while(faceIss >> indices[i++] && i < numOfInt)
-          ;
+        while(faceIss >> indices[i++] && i < numOfInt);
         unsigned int step = (i + 1) / 3;
         faceIndices.PushBack(indices[0] - 1);
         faceIndices.PushBack(indices[step] - 1);

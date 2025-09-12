@@ -207,12 +207,13 @@ Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrac
   // Hide the popup when touched outside
   popup.OutsideTouchedSignal().Connect(
     &connectionTracker,
-    [popup]() mutable {
-      if(popup && (popup.GetDisplayState() == Toolkit::Popup::SHOWN))
-      {
-        popup.SetDisplayState(Popup::HIDDEN);
-      }
-    });
+    [popup]() mutable
+  {
+    if(popup && (popup.GetDisplayState() == Toolkit::Popup::SHOWN))
+    {
+      popup.SetDisplayState(Popup::HIDDEN);
+    }
+  });
 
   return popup;
 }
@@ -446,7 +447,8 @@ void DaliTableView::Populate()
   {
     if(mSortAlphabetically)
     {
-      sort(mExampleList.begin(), mExampleList.end(), [](auto& lhs, auto& rhs) -> bool { return lhs.title < rhs.title; });
+      sort(mExampleList.begin(), mExampleList.end(), [](auto& lhs, auto& rhs) -> bool
+      { return lhs.title < rhs.title; });
     }
 
     ExampleListConstIter iter = mExampleList.begin();
@@ -542,7 +544,8 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   focusableTile.TouchedSignal().Connect(this, &DaliTableView::OnTilePressed);
   focusableTile.HoveredSignal().Connect(this, &DaliTableView::OnTileHovered);
   focusableTile.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::PUSH_BUTTON);
-  DevelControl::AccessibilityActivateSignal(focusableTile).Connect(this, [=]() {
+  DevelControl::AccessibilityActivateSignal(focusableTile).Connect(this, [=]()
+  {
     DoTilePress(focusableTile, PointState::DOWN);
     DoTilePress(focusableTile, PointState::UP);
   });

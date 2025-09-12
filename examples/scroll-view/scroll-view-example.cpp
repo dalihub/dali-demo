@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -427,11 +427,11 @@ private:
   }
   // end switch
   /**
-    * [Page]
-    * Applies effect to the pages within scroll view.
-    *
-    * @param[in] page The page Actor to apply effect to.
-    */
+   * [Page]
+   * Applies effect to the pages within scroll view.
+   *
+   * @param[in] page The page Actor to apply effect to.
+   */
   void ApplyEffectToPage(Actor page, unsigned int pageOrder)
   {
     page.RemoveConstraints();

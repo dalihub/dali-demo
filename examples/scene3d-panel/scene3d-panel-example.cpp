@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  */
 
-#include <dali-toolkit/dali-toolkit.h>
 #include <dali-scene3d/dali-scene3d.h>
+#include <dali-toolkit/dali-toolkit.h>
 #include <dali/integration-api/debug.h>
 
 using namespace Dali;
@@ -24,12 +24,12 @@ using Dali::Toolkit::TextLabel;
 
 namespace
 {
-  Vector3 BackFaceColors[3] =
+Vector3 BackFaceColors[3] =
   {
     Vector3(1.0f, 0.0f, 0.0f),
     Vector3(0.0f, 1.0f, 0.0f),
     Vector3(0.0f, 0.0f, 1.0f),
-  };
+};
 }
 
 // This example shows how to create and display Hello World! using a simple TextActor
@@ -148,10 +148,10 @@ public:
     }
     mApplication.GetWindow().Add(mGuideText);
 
-    std::string    isTransparent        = mPanel.GetProperty<bool>(Dali::Scene3D::Panel::Property::TRANSPARENT) ? "true" : "false";
-    std::string    isDoubleSided        = mPanel.GetProperty<bool>(Dali::Scene3D::Panel::Property::DOUBLE_SIDED) ? "true" : "false";
-    std::string    isUsingBackFacePlane = mPanel.GetProperty<bool>(Dali::Scene3D::Panel::Property::USE_BACK_FACE_PLANE) ? "true" : "false";
-    std::string    backFaceColor;
+    std::string isTransparent        = mPanel.GetProperty<bool>(Dali::Scene3D::Panel::Property::TRANSPARENT) ? "true" : "false";
+    std::string isDoubleSided        = mPanel.GetProperty<bool>(Dali::Scene3D::Panel::Property::DOUBLE_SIDED) ? "true" : "false";
+    std::string isUsingBackFacePlane = mPanel.GetProperty<bool>(Dali::Scene3D::Panel::Property::USE_BACK_FACE_PLANE) ? "true" : "false";
+    std::string backFaceColor;
     backFaceColor.append("(" + std::to_string(BackFaceColors[mColorIndex].r));
     backFaceColor.append(", " + std::to_string(BackFaceColors[mColorIndex].g));
     backFaceColor.append(", " + std::to_string(BackFaceColors[mColorIndex].b) + ")");
@@ -173,7 +173,7 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application          application = Application::New(&argc, &argv);
+  Application            application = Application::New(&argc, &argv);
   Scene3DPanelController test(application);
   application.MainLoop();
   return 0;

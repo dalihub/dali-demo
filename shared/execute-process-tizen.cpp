@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,20 +19,21 @@
 #include "execute-process.h"
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/common/dali-common.h>
-#include <dali/integration-api/debug.h>
 #include <app_control.h>
+#include <dali/integration-api/debug.h>
+#include <dali/public-api/common/dali-common.h>
 
-namespace {
+namespace
+{
 
 #define MATCH_THEN_RETURN_ERROR_NAME(ret, error_type) \
-do                                                    \
-{                                                     \
-  if(ret == error_type)                               \
+  do                                                  \
   {                                                   \
-   return #error_type;                                \
-  }                                                   \
-} while(0)
+    if(ret == error_type)                             \
+    {                                                 \
+      return #error_type;                             \
+    }                                                 \
+  } while(0)
 
 const char* GetAppControlErrorName(int ret)
 {
@@ -67,7 +68,7 @@ void ExecuteProcess(const std::string& processName, Dali::Application& applicati
   }
   else
   {
-    DALI_LOG_ERROR("Fail to launch app[%s] ret=%d(%s)\n",processName.c_str(), ret, GetAppControlErrorName(ret));
+    DALI_LOG_ERROR("Fail to launch app[%s] ret=%d(%s)\n", processName.c_str(), ret, GetAppControlErrorName(ret));
     DALI_ASSERT_ALWAYS(false && "Send launch request failed!");
   }
   app_control_destroy(handle);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (   "License");
  * you may not use this file except in compliance with the License.
@@ -173,14 +173,16 @@ private:
 
     // Create geometry
     Geometry geom = CreateTesselatedQuad(
-      16, 64, Vector2{.25f, 3.8f}, [](const Vector2& v) {
+      16, 64, Vector2{.25f, 3.8f}, [](const Vector2& v)
+    {
       float y = v.y + .5f;  // 0..1
       y = std::sqrt(y) - .5f; // perspective correction - increase vertex density closer to viewer
 
       float x = v.x + v.x * (1.f - y) * 5.5f;
 
       y -= .24f;  // further translation
-      return Vector2{ x, y }; }, [](const Vector2& v) { return Vector2{v.x, std::sqrt(v.y)}; });
+      return Vector2{ x, y }; }, [](const Vector2& v)
+    { return Vector2{v.x, std::sqrt(v.y)}; });
 
     // Create texture
     auto normalMap = LoadTexture(std::string(DEMO_IMAGE_DIR) + NORMAL_MAP_NAME.data());

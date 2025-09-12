@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -467,7 +467,8 @@ private:
     RegisterDepthProperties(depth, zNear, finalImageRenderer);
 
     auto       propInvProjection  = finalImageRenderer.RegisterProperty("uInvProjection", Matrix::IDENTITY);
-    Constraint cnstrInvProjection = Constraint::New<Matrix>(finalImageRenderer, propInvProjection, [zCameraPos, zNear, depth](Matrix& output, const PropertyInputContainer& input) {
+    Constraint cnstrInvProjection = Constraint::New<Matrix>(finalImageRenderer, propInvProjection, [zCameraPos, zNear, depth](Matrix& output, const PropertyInputContainer& input)
+    {
       output = input[0]->GetMatrix();
       DALI_ASSERT_ALWAYS(output.Invert() && "Failed to invert projection matrix.");
     });
@@ -566,7 +567,8 @@ private:
 
     // Constrain the light position, radius and color to lighting shader uniforms.
     // Convert light position to view space;
-    Constraint cLightPos = Constraint::New<Vector3>(renderer, oPropLightPos, [](Vector3& output, const PropertyInputContainer& input) {
+    Constraint cLightPos = Constraint::New<Vector3>(renderer, oPropLightPos, [](Vector3& output, const PropertyInputContainer& input)
+    {
       Vector4 worldPos(input[0]->GetVector3());
       worldPos.w = 1.f;
 
@@ -624,11 +626,13 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  const bool showLights = [argc, argv]() {
+  const bool showLights = [argc, argv]()
+  {
     auto endArgs = argv + argc;
-    return std::find_if(argv, endArgs, [](const char* arg) {
-             return strcmp(arg, "--show-lights") == 0;
-           }) != endArgs;
+    return std::find_if(argv, endArgs, [](const char* arg)
+    {
+      return strcmp(arg, "--show-lights") == 0;
+    }) != endArgs;
   }();
 
   Application            app = Application::New(&argc, &argv);

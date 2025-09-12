@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -496,10 +496,10 @@ public:
   }
 
   /**
-  * Upon Touching an image (Release), change its scaling mode and make it spin, provided we're not scrolling.
-  * @param[in] actor The actor touched
-  * @param[in] event The Touch information.
-  */
+   * Upon Touching an image (Release), change its scaling mode and make it spin, provided we're not scrolling.
+   * @param[in] actor The actor touched
+   * @param[in] event The Touch information.
+   */
   bool OnTouchImage(Actor actor, const TouchEvent& event)
   {
     if((event.GetPointCount() > 0) && (!mScrolling))
@@ -535,9 +535,9 @@ public:
   }
 
   /**
-  * Main key event handler.
-  * Quit on escape key.
-  */
+   * Main key event handler.
+   * Quit on escape key.
+   */
   void OnKeyEvent(const KeyEvent& event)
   {
     if(event.GetState() == KeyEvent::DOWN)
@@ -550,10 +550,10 @@ public:
   }
 
   /**
-  * Signal handler, called when the 'Scaling' button has been touched.
-  *
-  * @param[in] button The button that was pressed.
-  */
+   * Signal handler, called when the 'Scaling' button has been touched.
+   *
+   * @param[in] button The button that was pressed.
+   */
   bool OnToggleScalingTouched(Button button)
   {
     const unsigned numChildren = mGridActor.GetChildCount();

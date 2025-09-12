@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -183,8 +183,8 @@ public:
   {
     DALI_LOG_RELEASE_INFO("OnWindowOrientationChanged, changed window orientation: %d\n", orientation);
     Dali::Window::WindowPosition position = window.GetPosition();
-    Dali::Window::WindowSize size= window.GetSize();
-    DALI_LOG_RELEASE_INFO("OnWindowOrientationChanged, x:%d, y:%d, w:%d, h:%d\n", position.GetX(), position.GetY(),  size.GetWidth(), size.GetHeight());
+    Dali::Window::WindowSize     size     = window.GetSize();
+    DALI_LOG_RELEASE_INFO("OnWindowOrientationChanged, x:%d, y:%d, w:%d, h:%d\n", position.GetX(), position.GetY(), size.GetWidth(), size.GetHeight());
   }
 
   void OnWindowResized(Dali::Window winHandle, Dali::Window::WindowSize size)
@@ -417,8 +417,8 @@ public:
         DevelWindow::SetPositionSize(window, windowPosition);
 
         Dali::Window::WindowPosition position = window.GetPosition();
-        Dali::Window::WindowSize size = window.GetSize();
-        DALI_LOG_RELEASE_INFO("Check Converted window position/size, x:%d, y:%d, w:%d, h:%d\n", position.GetX(), position.GetY(),  size.GetWidth(), size.GetHeight());
+        Dali::Window::WindowSize     size     = window.GetSize();
+        DALI_LOG_RELEASE_INFO("Check Converted window position/size, x:%d, y:%d, w:%d, h:%d\n", position.GetX(), position.GetY(), size.GetWidth(), size.GetHeight());
       }
       else if(event.GetKeyName() == "2")
       {

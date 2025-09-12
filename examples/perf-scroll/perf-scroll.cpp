@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -319,7 +319,8 @@ public:
     Animation scrollAnimation = Animation::New(gScrollDuration);
     scrollAnimation.AnimateBy(Property(mParent, Actor::Property::POSITION), Vector3(-(PAGE_COUNT - 1.) * windowSize.x, 0.0f, 0.0f));
     scrollAnimation.Play();
-    scrollAnimation.FinishedSignal().Connect(this, [&](Animation&) { mApplication.Quit(); });
+    scrollAnimation.FinishedSignal().Connect(this, [&](Animation&)
+    { mApplication.Quit(); });
   }
 
   void OnKeyEvent(const KeyEvent& event)

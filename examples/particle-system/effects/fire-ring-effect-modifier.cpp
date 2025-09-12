@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,8 +32,8 @@ FireModifier::FireModifier(ParticleEmitter& emitter)
   mFireGradient.PushColor(Vector4(0.3, 0.3, 0.3, 1.0f), 1.0f - 0.400f);
   mFireGradient.PushColor(Vector4(0.3, 0.2, 0.2, 1.0f), 1.0f - 0.200f);
   mFireGradient.PushColor(Vector4(0.2, 0.1, 0.1, 1.0f), 1.0f - 0.150f);
-  mFireGradient.PushColor(Vector4(0.1, 0.0, 0.0, 1.0f), 1.0f- 0.100f);
-  mFireGradient.PushColor(Vector4(0.0, 0.0, 0.0, 0.5f), 1.0f-0.050f);
+  mFireGradient.PushColor(Vector4(0.1, 0.0, 0.0, 1.0f), 1.0f - 0.100f);
+  mFireGradient.PushColor(Vector4(0.0, 0.0, 0.0, 0.5f), 1.0f - 0.050f);
   mFireGradient.PushColor(Vector4(0.0, 0.0, 0.0, 0.2f), 1.0f);
 }
 
@@ -80,28 +80,28 @@ void FireModifier::Update(ParticleList& particleList, uint32_t first, uint32_t c
     i += 1;
 
     // Acquire stream data
-    auto&                  particle    = *it;
-    auto&                  position    = particle.Get<Vector3>(ParticleStream::POSITION_STREAM_BIT);
-    auto&                  velocity    = particle.Get<Vector3>(ParticleStream::VELOCITY_STREAM_BIT);
-    auto&                  color       = particle.Get<Vector4>(ParticleStream::COLOR_STREAM_BIT);
-    auto&                  baseLifetime = particle.Get<float>(ParticleStream::LIFETIME_BASE_STREAM_BIT);
-    auto&                  scale        = particle.Get<Vector3>(ParticleStream::SCALE_STREAM_BIT);
+    auto& particle     = *it;
+    auto& position     = particle.Get<Vector3>(ParticleStream::POSITION_STREAM_BIT);
+    auto& velocity     = particle.Get<Vector3>(ParticleStream::VELOCITY_STREAM_BIT);
+    auto& color        = particle.Get<Vector4>(ParticleStream::COLOR_STREAM_BIT);
+    auto& baseLifetime = particle.Get<float>(ParticleStream::LIFETIME_BASE_STREAM_BIT);
+    auto& scale        = particle.Get<Vector3>(ParticleStream::SCALE_STREAM_BIT);
 
     // Get base positions
     auto& basePos = particle.GetByIndex<Vector3>(mStreamBasePos);
 
-    float                  lifetime = particle.Get<float>(ParticleStream::LIFETIME_STREAM_BIT);
+    float lifetime = particle.Get<float>(ParticleStream::LIFETIME_STREAM_BIT);
     position.y += -fabs(velocity.y);
-    position.x  = basePos.x + 5.0f * sin((((mAngle + i)%360)*M_PI)/180.f );
+    position.x = basePos.x + 5.0f * sin((((mAngle + i) % 360) * M_PI) / 180.f);
 
     velocity *= 0.990f;
-    auto newColor = mFireGradient.GetColorAt((baseLifetime - lifetime) / baseLifetime);
+    auto  newColor       = mFireGradient.GetColorAt((baseLifetime - lifetime) / baseLifetime);
     float normalizedTime = (lifetime / baseLifetime);
-    newColor.a = normalizedTime * normalizedTime;
+    newColor.a           = normalizedTime * normalizedTime;
 
-    scale = Vector3(64.0f*(normalizedTime * normalizedTime * normalizedTime * normalizedTime), 64.0f*(normalizedTime * normalizedTime * normalizedTime * normalizedTime), 1.0);
+    scale = Vector3(64.0f * (normalizedTime * normalizedTime * normalizedTime * normalizedTime), 64.0f * (normalizedTime * normalizedTime * normalizedTime * normalizedTime), 1.0);
 
     color = newColor;
   }
 }
-}
+} //namespace Dali::ParticleEffect

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,9 +105,9 @@ class MotionBlurExampleApp : public ConnectionTracker
 {
 public:
   /**
-     * DeviceOrientation describes the four different
-     * orientations the device can be in based on accelerometer reports.
-     */
+   * DeviceOrientation describes the four different
+   * orientations the device can be in based on accelerometer reports.
+   */
   enum DeviceOrientation
   {
     PORTRAIT          = 0,

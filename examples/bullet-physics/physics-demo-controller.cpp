@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -300,9 +300,9 @@ public:
             auto scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
             auto bulletWorld    = scopedAccessor->GetNative().Get<btDiscreteDynamicsWorld*>();
 
-            Vector3 localPivot;
-            Vector3 rayPhysicsOrigin;
-            Vector3 rayPhysicsEnd;
+            Vector3   localPivot;
+            Vector3   rayPhysicsOrigin;
+            Vector3   rayPhysicsEnd;
             Dali::Any nullFilter;
             mPhysicsAdaptor.BuildPickingRay(origin, direction, rayPhysicsOrigin, rayPhysicsEnd);
             auto body = scopedAccessor->HitTest(rayPhysicsOrigin, rayPhysicsEnd, nullFilter, localPivot, mOldPickingDistance);
@@ -489,7 +489,8 @@ public:
             Vector3 pos = mSelectedActor.GetActorPosition();
             mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(0, 10, 0));
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("s"))
@@ -497,7 +498,8 @@ public:
             Vector3 pos = mSelectedActor.GetActorPosition();
             mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(0, -10, 0));
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("a"))
@@ -505,7 +507,8 @@ public:
             Vector3 pos = mSelectedActor.GetActorPosition();
             mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(-10, 0, 0));
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("d"))
@@ -513,7 +516,8 @@ public:
             Vector3 pos = mSelectedActor.GetActorPosition();
             mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(10, 0, 0));
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("q"))
@@ -522,7 +526,8 @@ public:
             quat *= Quaternion(Radian(-0.1f), Vector3::ZAXIS);
             mSelectedActor.AsyncSetPhysicsRotation(quat);
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("e"))
@@ -531,7 +536,8 @@ public:
             quat *= Quaternion(Radian(0.1f), Vector3::ZAXIS);
             mSelectedActor.AsyncSetPhysicsRotation(quat);
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("z"))
@@ -540,7 +546,8 @@ public:
             quat *= Quaternion(Radian(-0.1f), Vector3::YAXIS);
             mSelectedActor.AsyncSetPhysicsRotation(quat);
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("x"))
@@ -549,7 +556,8 @@ public:
             quat *= Quaternion(Radian(0.1f), Vector3::YAXIS);
             mSelectedActor.AsyncSetPhysicsRotation(quat);
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("c"))
@@ -558,7 +566,8 @@ public:
             quat *= Quaternion(Radian(-0.1f), Vector3::XAXIS);
             mSelectedActor.AsyncSetPhysicsRotation(quat);
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("v"))
@@ -567,7 +576,8 @@ public:
             quat *= Quaternion(Radian(0.1f), Vector3::XAXIS);
             mSelectedActor.AsyncSetPhysicsRotation(quat);
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->activate(true); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           else if(!event.GetKeyString().compare("p"))
@@ -577,7 +587,8 @@ public:
 
             // Example of calling specific function asyncronously:
             btRigidBody* body = mSelectedActor.GetBody().Get<btRigidBody*>();
-            mPhysicsAdaptor.Queue([body]() { body->clearForces(); });
+            mPhysicsAdaptor.Queue([body]()
+            { body->clearForces(); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
           break;

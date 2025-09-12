@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public:
     light1.SetProperty(Dali::Actor::Property::COLOR, Color::BROWN);
     light1.SetProperty(Dali::Actor::Property::POSITION, Vector3(-2.0f, -0.5f, 0.0f));
     Dali::DevelActor::LookAt(light1, Vector3(0.0f, 0.0f, 0.0f));
-    mAnimation = Dali::Animation::New(5);
+    mAnimation                = Dali::Animation::New(5);
     Dali::KeyFrames keyFrames = Dali::KeyFrames::New();
     keyFrames.Add(0.0f, Quaternion(Radian(Degree(0.0f)), Vector3::YAXIS));
     keyFrames.Add(0.25f, Quaternion(Radian(Degree(90.0f)), Vector3::YAXIS));
@@ -128,9 +128,9 @@ public:
 
     window.Add(sceneView);
 
-    auto text = TextLabel::New("Press keys 0-9 to change lighting");
-    text[Actor::Property::PARENT_ORIGIN]=ParentOrigin::BOTTOM_CENTER;
-    text[Actor::Property::ANCHOR_POINT]=AnchorPoint::BOTTOM_CENTER;
+    auto text                             = TextLabel::New("Press keys 0-9 to change lighting");
+    text[Actor::Property::PARENT_ORIGIN]  = ParentOrigin::BOTTOM_CENTER;
+    text[Actor::Property::ANCHOR_POINT]   = AnchorPoint::BOTTOM_CENTER;
     text[TextLabel::Property::TEXT_COLOR] = Color::BLACK;
     window.Add(text);
 

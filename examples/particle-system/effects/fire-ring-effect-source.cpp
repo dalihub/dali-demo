@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,13 +29,12 @@ FireSource::FireSource(ParticleEmitter& emitter)
   mRadius = Vector2::ONE;
 }
 
-FireSource::FireSource(ParticleEmitter& emitter, Dali::Vector2 ringRadius) :
-mEmitter(emitter)
+FireSource::FireSource(ParticleEmitter& emitter, Dali::Vector2 ringRadius)
+: mEmitter(emitter)
 {
   std::time_t result = std::time(nullptr);
   srand(result);
   mRadius = ringRadius;
-
 }
 
 void FireSource::Init()
@@ -51,7 +50,7 @@ uint32_t FireSource::Update(ParticleList& particleList, uint32_t count)
 {
   while(count--)
   {
-    auto particle = particleList.NewParticle(LIFETIME  * (float(std::rand() % 1000)/1000.0f) + 1.0f );
+    auto particle = particleList.NewParticle(LIFETIME * (float(std::rand() % 1000) / 1000.0f) + 1.0f);
     if(!particle)
     {
       return 0u;
@@ -71,21 +70,21 @@ uint32_t FireSource::Update(ParticleList& particleList, uint32_t count)
 
 void FireSource::UpdateParticle(Vector3& position, Vector3& basePosition, Vector4& color, Vector3& velocity, Vector3& scale)
 {
-  float posRadians   = ((rand() % 360) * M_PI) / 180.0f;
+  float posRadians = ((rand() % 360) * M_PI) / 180.0f;
 
   basePosition.x = position.x = mRadius.x * sin(posRadians);
   basePosition.y = position.y = mRadius.y * cos(posRadians);
   color                       = Dali::Color::WHITE; // white color when emitted
 
   // angle of motion
-  float radians    = ((rand() % 360) * M_PI) / 180.0f;
-  float speed = ((rand() % 5) + 5);
-  velocity.x       = sin(radians) * speed;
-  velocity.y       = cos(radians) * speed;
+  float radians = ((rand() % 360) * M_PI) / 180.0f;
+  float speed   = ((rand() % 5) + 5);
+  velocity.x    = sin(radians) * speed;
+  velocity.y    = cos(radians) * speed;
 
   // Random initial scale
   float currentScale = float(rand() % 32) + 32;
-  scale   = Vector3(currentScale, currentScale, 1);
+  scale              = Vector3(currentScale, currentScale, 1);
 }
 
 } // namespace Dali::ParticleEffect

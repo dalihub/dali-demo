@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,8 @@ const std::vector<std::pair<std::string, uint32_t>> GLTF_STR_COMPONENT_TYPE = {
 glTFAttributeType glTFAttributeTypeStrToEnum(const std::string& name)
 {
   int  index = -1;
-  auto iter  = std::find_if(GLTF_STR_ATTRIBUTE_TYPE.begin(), GLTF_STR_ATTRIBUTE_TYPE.end(), [name, &index](const std::string& val) {
+  auto iter  = std::find_if(GLTF_STR_ATTRIBUTE_TYPE.begin(), GLTF_STR_ATTRIBUTE_TYPE.end(), [name, &index](const std::string& val)
+   {
     index++;
     return val == name;
   });
@@ -52,7 +53,8 @@ glTFAttributeType glTFAttributeTypeStrToEnum(const std::string& name)
 
 uint32_t glTFComponentTypeStrToNum(const std::string& name)
 {
-  auto iter = std::find_if(GLTF_STR_COMPONENT_TYPE.begin(), GLTF_STR_COMPONENT_TYPE.end(), [name](const std::pair<std::string, uint32_t>& val) {
+  auto iter = std::find_if(GLTF_STR_COMPONENT_TYPE.begin(), GLTF_STR_COMPONENT_TYPE.end(), [name](const std::pair<std::string, uint32_t>& val)
+  {
     return val.first == name;
   });
   if(iter == GLTF_STR_COMPONENT_TYPE.end())
@@ -90,7 +92,8 @@ struct JsonResult<bool>
 template<class Expected, class Converted = Expected>
 JsonResult<picojson::value> JsonFindValue(const picojson::object& object, const std::string& name)
 {
-  auto iter = find_if(object.begin(), object.end(), [name](decltype(*object.begin())& item) {
+  auto iter = find_if(object.begin(), object.end(), [name](decltype(*object.begin())& item)
+  {
     return item.first == name;
   });
 
@@ -464,7 +467,8 @@ std::vector<unsigned char> glTF::GetMeshAttributeBuffer(const glTF_Mesh& mesh, c
   std::vector<Data> data{};
   for(const auto& attrType : attrTypes)
   {
-    (void)std::find_if(mesh.attributes.begin(), mesh.attributes.end(), [&data, &attrType](const std::pair<glTFAttributeType, uint32_t>& item) {
+    (void)std::find_if(mesh.attributes.begin(), mesh.attributes.end(), [&data, &attrType](const std::pair<glTFAttributeType, uint32_t>& item)
+    {
       if(item.first == attrType)
       {
         data.emplace_back();
@@ -561,7 +565,8 @@ std::vector<uint16_t> glTF::GetMeshIndexBuffer(const glTF_Mesh* mesh) const
 
 const glTF_Node* glTF::FindNodeByName(const std::string& name) const
 {
-  auto iter = std::find_if(mNodes.begin(), mNodes.end(), [name](const glTF_Node& node) {
+  auto iter = std::find_if(mNodes.begin(), mNodes.end(), [name](const glTF_Node& node)
+  {
     return !name.compare(node.name);
   });
 
