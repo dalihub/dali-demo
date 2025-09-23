@@ -2,7 +2,7 @@
 #define DALI_PARTICLE_EFFECT_H
 
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,10 +35,10 @@ enum class EffectType
 
 struct ParticleEffectParams
 {
-  uint32_t emissionRate;
-  uint32_t particleCount;
-  uint32_t initialParticleCount;
-  Vector2 sourceSize;
+  uint32_t    emissionRate;
+  uint32_t    particleCount;
+  uint32_t    initialParticleCount;
+  Vector2     sourceSize;
   std::string strTexture;
   std::string strImageSourceName;
 };
@@ -49,13 +49,12 @@ struct ParticleEffectParams
 class ParticleEffect
 {
 public:
-
   ParticleEffect();
 
   ~ParticleEffect();
 
-  Dali::Toolkit::ParticleSystem::ParticleEmitter CreateEffectEmitter( EffectType effectType, Actor parentActor, const ParticleEffectParams& params );
+  Dali::Toolkit::ParticleSystem::ParticleEmitter CreateEffectEmitter(EffectType effectType, Actor parentActor, const ParticleEffectParams& params);
 };
-}
+} //namespace Dali::ParticleEffect
 
-#endif  // DALI_PARTICLE_MANAGER_H
+#endif // DALI_PARTICLE_MANAGER_H

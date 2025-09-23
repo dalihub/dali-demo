@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -313,7 +313,8 @@ private:
       mExpiringParticles->SetLinearVelocity(WORLD_LINEAR_VELOCITY * FADEOUT_SPEED_MULTIPLIER);
 
       auto& p = mExpiringParticles;
-      mExpiringParticles->Fade(FADE_DURATION, 0.f, AlphaFunction::EASE_IN, [&p](Animation&) {
+      mExpiringParticles->Fade(FADE_DURATION, 0.f, AlphaFunction::EASE_IN, [&p](Animation&)
+      {
         p.reset();
       });
     }

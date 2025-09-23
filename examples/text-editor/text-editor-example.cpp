@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,13 +45,13 @@ const Vector3     TEXT_EDITOR_RELATIVE_SIZE(0.9f, 0.5f, 1.0f);                 /
 const Vector4     TEXT_EDITOR_BACKGROUND_COLOR(1.f, 1.f, 1.f, 0.15f);          ///< The background color of the text editor.
 
 const Vector4      COLORS[]         = {Color::RED,
-                          Color::GREEN,
-                          Color::BLUE,
-                          Color::YELLOW,
-                          Color::CYAN,
-                          Color::MAGENTA,
-                          Color::WHITE,
-                          Color::BLACK};
+                                       Color::GREEN,
+                                       Color::BLUE,
+                                       Color::YELLOW,
+                                       Color::CYAN,
+                                       Color::MAGENTA,
+                                       Color::WHITE,
+                                       Color::BLACK};
 const unsigned int NUMBER_OF_COLORS = sizeof(COLORS) / sizeof(Vector4);
 
 } // Unnamed namespace
@@ -160,9 +160,9 @@ public:
 
     const Size boundingBoxSize(windowSize * TEXT_EDITOR_RELATIVE_SIZE.GetVectorXY());
     Rect<int>  boundingBox(0,
-                          static_cast<int>(toolBarHeight),
-                          static_cast<int>(boundingBoxSize.width),
-                          static_cast<int>(boundingBoxSize.height - toolBarHeight));
+                           static_cast<int>(toolBarHeight),
+                           static_cast<int>(boundingBoxSize.width),
+                           static_cast<int>(boundingBoxSize.height - toolBarHeight));
 
     mEditor.SetProperty(TextEditor::Property::DECORATION_BOUNDING_BOX, boundingBox);
     mEditor.SetProperty(TextEditor::Property::TEXT_COLOR, Color::BLACK);

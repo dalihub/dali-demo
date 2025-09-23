@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ using namespace Toolkit;
  * "Papermill Ruins E" by Blochi and is licensed under Creative Commons License
  * http://creativecommons.org/licenses/by-nc-sa/3.0/us/
  *
-*/
+ */
 
 namespace
 {
@@ -73,7 +73,7 @@ const Vector3 CAMERA_DEFAULT_POSITION(0.0f, 0.0f, 3.5f);
  * - Pan up/down on right side of screen to change metalness
  * - Pan anywhere else to rotate scene
  *
-*/
+ */
 
 class BasicPbrController : public ConnectionTracker
 {
@@ -379,11 +379,11 @@ public:
   }
 
   /**
-  * @brief Load a shader source file
-  * @param[in] The path of the source file
-  * @param[out] The contents of file
-  * @return True if the source was read successfully
-  */
+   * @brief Load a shader source file
+   * @param[in] The path of the source file
+   * @param[out] The contents of file
+   * @return True if the source was read successfully
+   */
   bool LoadShaderCode(const std::string& fullpath, std::vector<char>& output)
   {
     Dali::FileStream fileStream(fullpath, FileStream::READ | FileStream::BINARY);
@@ -413,11 +413,11 @@ public:
   }
 
   /**
-  * @brief Load vertex and fragment shader source
-  * @param[in] shaderVertexFileName is the filepath of Vertex shader
-  * @param[in] shaderFragFileName is the filepath of Fragment shader
-  * @return the Dali::Shader object
-  */
+   * @brief Load vertex and fragment shader source
+   * @param[in] shaderVertexFileName is the filepath of Vertex shader
+   * @param[in] shaderFragFileName is the filepath of Fragment shader
+   * @return the Dali::Shader object
+   */
   Shader LoadShaders(const std::string& shaderVertexFileName, const std::string& shaderFragFileName)
   {
     Shader            shader;

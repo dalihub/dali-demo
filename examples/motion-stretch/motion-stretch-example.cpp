@@ -83,9 +83,9 @@ class MotionStretchExampleApp : public ConnectionTracker
 {
 public:
   /**
-     * DeviceOrientation describes the four different
-     * orientations the device can be in based on accelerometer reports.
-     */
+   * DeviceOrientation describes the four different
+   * orientations the device can be in based on accelerometer reports.
+   */
   enum DeviceOrientation
   {
     PORTRAIT          = 0,

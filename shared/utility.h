@@ -2,7 +2,7 @@
 #define DALI_DEMO_UTILITY_H
 
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,9 +34,9 @@ Dali::Texture LoadTexture(const char*              imagePath,
 {
   Dali::Devel::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, fittingMode, samplingMode, orientationCorrection);
   Dali::Texture            texture     = Dali::Texture::New(Dali::TextureType::TEXTURE_2D,
-                                             pixelBuffer.GetPixelFormat(),
-                                             pixelBuffer.GetWidth(),
-                                             pixelBuffer.GetHeight());
+                                                            pixelBuffer.GetPixelFormat(),
+                                                            pixelBuffer.GetWidth(),
+                                                            pixelBuffer.GetHeight());
 
   Dali::PixelData pixelData = Dali::Devel::PixelBuffer::Convert(pixelBuffer);
   texture.Upload(pixelData);

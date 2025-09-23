@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,8 @@ private:
     // Create a tap gesture detector, attach the actor & connect
     mTapDetector = TapGestureDetector::New();
     mTapDetector.Attach(mEmitterActor);
-    mTapDetector.DetectedSignal().Connect(this, [&](Actor actor, const TapGesture& tap) { NextEffect(); });
+    mTapDetector.DetectedSignal().Connect(this, [&](Actor actor, const TapGesture& tap)
+    { NextEffect(); });
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &ParticleEffectController::OnKeyEvent);

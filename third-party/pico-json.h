@@ -46,8 +46,7 @@
 #if __cplusplus >= 201103L
 #include <cmath>
 #else
-extern "C"
-{
+extern "C" {
 #ifdef _MSC_VER
 #include <float.h>
 #elif defined(__INTEL_COMPILER)
@@ -59,7 +58,7 @@ extern "C"
 #endif
 
 #ifndef PICOJSON_USE_RVALUE_REFERENCE
-#if(defined(__cpp_rvalue_references) && __cpp_rvalue_references >= 200610) || (defined(_MSC_VER) && _MSC_VER >= 1600)
+#if (defined(__cpp_rvalue_references) && __cpp_rvalue_references >= 200610) || (defined(_MSC_VER) && _MSC_VER >= 1600)
 #define PICOJSON_USE_RVALUE_REFERENCE 1
 #else
 #define PICOJSON_USE_RVALUE_REFERENCE 0
@@ -78,8 +77,7 @@ extern "C"
 #define PICOJSON_USE_LOCALE 1
 #endif
 #if PICOJSON_USE_LOCALE
-extern "C"
-{
+extern "C" {
 #include <locale.h>
 }
 #endif

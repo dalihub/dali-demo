@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,11 @@
 namespace Dali::ParticleEffect
 {
 
-#define RAD(x) (float(x)*M_PI/180.0f)
+#define RAD(x) (float(x) * M_PI / 180.0f)
 
 ImageExplodeEffectModifier::ImageExplodeEffectModifier(ParticleEmitter& emitter)
 : mEmitter(emitter)
 {
-
 }
 
 bool ImageExplodeEffectModifier::IsMultiThreaded()
@@ -68,15 +67,15 @@ void ImageExplodeEffectModifier::Update(ParticleList& particleList, uint32_t fir
   for(; count; ++it, count--)
   {
     // Acquire stream data
-    auto&                  particle = *it;
-    auto&                  position = particle.Get<Vector3>(ParticleStream::POSITION_STREAM_BIT);
-    auto&                  color    = particle.Get<Vector4>(ParticleStream::COLOR_STREAM_BIT);
+    auto& particle = *it;
+    auto& position = particle.Get<Vector3>(ParticleStream::POSITION_STREAM_BIT);
+    auto& color    = particle.Get<Vector4>(ParticleStream::COLOR_STREAM_BIT);
 
     // Get base positions
     auto& basePos = particle.GetByIndex<Vector3>(mStreamBasePos);
-    position.z = 200.f * sin(RAD(mAngle+basePos.x));
-    color.a = position.z < 0.0f ? 1.0f : 1.0f - position.z/500.0f;
-    position.z = 500 + position.z;
+    position.z    = 200.f * sin(RAD(mAngle + basePos.x));
+    color.a       = position.z < 0.0f ? 1.0f : 1.0f - position.z / 500.0f;
+    position.z    = 500 + position.z;
   }
 }
-}
+} //namespace Dali::ParticleEffect

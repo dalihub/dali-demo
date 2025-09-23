@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,8 @@ std::string EXAMPLE_INSTRUCTIONS =
 const float CORNER_RADIUS_VALUE(20.0f);
 const float BORDERLINE_WIDTH_VALUE(10.0f);
 const float BORDERLINE_OFFSET_VALUE(-1.0f); ///< draw borderline inside of imageview.
-enum {
+enum
+{
   STATUS_NORMAL             = 0,
   STATUS_ROUND              = 1,
   STATUS_BORDERLINE         = 2,

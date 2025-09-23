@@ -2,7 +2,7 @@
 #define DALI_PROJECT_NATIVE_RENDERER_H
 
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,22 +25,21 @@
 
 #include <dali/public-api/signals/render-callback.h>
 
-#include <cmath>
 #include <GLES3/gl3.h>
+#include <cmath>
 
 class NativeRenderer
 {
 public:
+  NativeRenderer(uint32_t width, uint32_t height);
 
-  NativeRenderer( uint32_t width, uint32_t height);
-
-  bool OnRender( const Dali::RenderCallbackInput& input );
+  bool OnRender(const Dali::RenderCallbackInput& input);
 
   void PrepareShader();
 
-  void Setup( int width, int height);
+  void Setup(int width, int height);
 
-  void RenderCube( const Dali::RenderCallbackInput& input );
+  void RenderCube(const Dali::RenderCallbackInput& input);
 
   /**
    * Creates GL program from shader sources
@@ -59,8 +58,7 @@ public:
   };
 
 private:
-
-  State mState {State::INIT};
+  State mState{State::INIT};
 
   GLuint mProgramId{0u};
 

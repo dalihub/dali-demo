@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,9 +49,9 @@ private:
     // Get a handle to the window
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ImageViewAlphaBlendApp::OnKeyEvent);
-    const Vector2 windowSize = window.GetSize();
-    const bool portraitOrientation = windowSize.width < windowSize.height;
-    const Property::Index positionProperty = portraitOrientation ? Actor::Property::POSITION_Y : Actor::Property::POSITION_X;
+    const Vector2         windowSize          = window.GetSize();
+    const bool            portraitOrientation = windowSize.width < windowSize.height;
+    const Property::Index positionProperty    = portraitOrientation ? Actor::Property::POSITION_Y : Actor::Property::POSITION_X;
 
     auto  green0    = Vector4(0.f, 1.f, 0.f, 0.25f);
     auto  green1    = Vector4(0.f, 0.25f, 0.f, 0.25f);

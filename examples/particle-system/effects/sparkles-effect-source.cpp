@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,13 +28,12 @@ SparklesSource::SparklesSource(ParticleEmitter& emitter)
   mRadius = Vector2::ONE;
 }
 
-SparklesSource::SparklesSource(ParticleEmitter& emitter, Dali::Vector2 ringRadius) :
-mEmitter(emitter)
+SparklesSource::SparklesSource(ParticleEmitter& emitter, Dali::Vector2 ringRadius)
+: mEmitter(emitter)
 {
   std::time_t result = std::time(nullptr);
   srand(result);
   mRadius = ringRadius;
-
 }
 
 void SparklesSource::Init()
@@ -44,7 +43,7 @@ void SparklesSource::Init()
   {
     return;
   }
-  mStreamBasePos = handle.GetParticleList().AddLocalStream<Vector3>(Vector3::ZERO);
+  mStreamBasePos   = handle.GetParticleList().AddLocalStream<Vector3>(Vector3::ZERO);
   mStreamBaseAngle = handle.GetParticleList().AddLocalStream<float>(0.0f);
 }
 
@@ -64,12 +63,11 @@ uint32_t SparklesSource::Update(ParticleList& particleList, uint32_t count)
     }
 
     auto& basePosition = particle.GetByIndex<Vector3>(mStreamBasePos);
-    auto& angle = particle.GetByIndex<float>(mStreamBaseAngle);
+    auto& angle        = particle.GetByIndex<float>(mStreamBaseAngle);
     auto& position     = particle.Get<Vector3>(ParticleStream::POSITION_STREAM_BIT);
     auto& color        = particle.Get<Vector4>(ParticleStream::COLOR_STREAM_BIT);
     auto& velocity     = particle.Get<Vector3>(ParticleStream::VELOCITY_STREAM_BIT);
     auto& scale        = particle.Get<Vector3>(ParticleStream::SCALE_STREAM_BIT);
-
 
     UpdateParticle(position, basePosition, color, velocity, scale, angle);
   }
@@ -79,23 +77,23 @@ uint32_t SparklesSource::Update(ParticleList& particleList, uint32_t count)
 
 void SparklesSource::UpdateParticle(Vector3& position, Vector3& basePosition, Vector4& color, Vector3& velocity, Vector3& scale, float& angle)
 {
-  static uint32_t a = 0.0f;
-  float posRadians   = ((rand() % 360) * M_PI) / 180.0f;
+  static uint32_t a          = 0.0f;
+  float           posRadians = ((rand() % 360) * M_PI) / 180.0f;
 
   basePosition.x = position.x = mRadius.x * sin(posRadians);
   basePosition.y = position.y = mRadius.y * cos(posRadians);
   color                       = Dali::Color::WHITE;
 
-  angle = float(a);
-  a = ((a+5)%360);
+  angle       = float(a);
+  a           = ((a + 5) % 360);
   float rad   = ((rand() % 360) * M_PI) / 180.0f;
   float speed = ((rand() % 5) + 5);
-  velocity.x       = sin(rad) * speed;
-  velocity.y       = cos(rad) * speed;
+  velocity.x  = sin(rad) * speed;
+  velocity.y  = cos(rad) * speed;
 
   // Random initial scale
   float initialScale = float(rand() % 32) + 32;
-  scale   = Vector3(initialScale, initialScale, 1);
+  scale              = Vector3(initialScale, initialScale, 1);
 }
 
 } // namespace Dali::ParticleEffect

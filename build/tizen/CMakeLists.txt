@@ -297,7 +297,11 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     FIND_PACKAGE( pthreads REQUIRED )
   ENDIF()
   FIND_PACKAGE( curl REQUIRED )
-  FIND_LIBRARY( EXIF_LIBRARY NAMES libexif )
+  FIND_LIBRARY( EXIF_LIBRARY QUIET NAMES libexif )
+  IF ( NOT EXIF_LIBRARY )
+    PKG_CHECK_MODULES( libexif QUIET IMPORTED_TARGET libexif )
+    SET( EXIF_LIBRARY "")
+  ENDIF()
 
   FIND_PACKAGE( png REQUIRED )
   FIND_PACKAGE( gif REQUIRED )
@@ -309,7 +313,8 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
   FIND_LIBRARY( FRIBIDI_LIBRARY NAMES fribidi )
 
   FIND_PACKAGE( unofficial-angle REQUIRED )
-  FIND_PACKAGE( unofficial-cairo REQUIRED )
+  FIND_PACKAGE( unofficial-cairo QUIET )
+  PKG_CHECK_MODULES( cairo QUIET IMPORTED_TARGET cairo )
 
   FIND_PACKAGE( WebP REQUIRED )
 

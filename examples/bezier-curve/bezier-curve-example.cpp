@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,21 +123,21 @@ public:
   {
     Window window = mApplication.GetWindow();
     window.KeyEventSignal().Connect(this, &BezierCurveExample::OnKeyEvent);
-    const Vector2 windowSize = window.GetSize();
-    const bool orientationPortrait = windowSize.width < windowSize.height;
+    const Vector2 windowSize          = window.GetSize();
+    const bool    orientationPortrait = windowSize.width < windowSize.height;
 
-    unsigned int tableViewRows = 5;
-    unsigned int tableViewColumns = 1;
-    unsigned int rowPositionAdder = 1;
-    TableView::CellPosition gridPosition{1,0};
+    unsigned int            tableViewRows    = 5;
+    unsigned int            tableViewColumns = 1;
+    unsigned int            rowPositionAdder = 1;
+    TableView::CellPosition gridPosition{1, 0};
 
     // Change layout if we're in landscape mode
     if(!orientationPortrait)
     {
-      tableViewRows = 4;
+      tableViewRows    = 4;
       tableViewColumns = 2;
       rowPositionAdder = 0;
-      gridPosition = {0,1,4,1};
+      gridPosition     = {0, 1, 4, 1};
     }
 
     CreateBackground(window);
@@ -338,13 +338,13 @@ public:
   void CreateControlPoints(Actor parent)
   {
     mControlPoint1   = CreateControlPoint(parent,
-                                        CIRCLE1_IMAGE,
-                                        CONTROL_POINT1_ORIGIN);
+                                          CIRCLE1_IMAGE,
+                                          CONTROL_POINT1_ORIGIN);
     mControlPoint1Id = mControlPoint1.GetProperty<int>(Actor::Property::ID);
 
     mControlPoint2   = CreateControlPoint(parent,
-                                        CIRCLE2_IMAGE,
-                                        CONTROL_POINT2_ORIGIN);
+                                          CIRCLE2_IMAGE,
+                                          CONTROL_POINT2_ORIGIN);
     mControlPoint2Id = mControlPoint2.GetProperty<int>(Actor::Property::ID);
 
     Property::Map lineVertexFormat;

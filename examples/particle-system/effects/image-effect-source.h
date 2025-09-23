@@ -2,7 +2,7 @@
 #define DALI_IMAGE_EFFECT_SOURCE_H
 
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@
  */
 
 #include <dali-toolkit/public-api/particle-system/particle-emitter.h>
-#include <dali-toolkit/public-api/particle-system/particle-source.h>
-#include <dali-toolkit/public-api/particle-system/particle-modifier.h>
 #include <dali-toolkit/public-api/particle-system/particle-list.h>
+#include <dali-toolkit/public-api/particle-system/particle-modifier.h>
+#include <dali-toolkit/public-api/particle-system/particle-source.h>
 #include <dali-toolkit/public-api/particle-system/particle.h>
 #include <dali/devel-api/adaptor-framework/pixel-buffer.h>
 #include <dali/public-api/object/weak-handle.h>
@@ -38,7 +38,6 @@ using namespace Dali::Toolkit::ParticleSystem;
 class ImageExplodeEffectSource : public Toolkit::ParticleSystem::ParticleSourceInterface
 {
 public:
-
   explicit ImageExplodeEffectSource(ParticleEmitter& emitter);
 
   explicit ImageExplodeEffectSource(ParticleEmitter& emitter, const std::string& imageFileName, uint32_t width, uint32_t height);
@@ -56,8 +55,8 @@ public:
 
   Devel::PixelBuffer mPixelBuffer;
 
-  bool mShouldEmit {true};
+  bool mShouldEmit{true};
 };
 
-}
+} //namespace Dali::ParticleEffect
 #endif // DALI_IMAGE_EFFECT_SOURCE_H

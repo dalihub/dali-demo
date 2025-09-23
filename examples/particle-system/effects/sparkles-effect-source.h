@@ -2,7 +2,7 @@
 #define DALI_PARTICLES_SPARKLES_EFFECT_SOURCE_H
 
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@
  */
 
 #include <dali-toolkit/public-api/particle-system/particle-emitter.h>
-#include <dali-toolkit/public-api/particle-system/particle-source.h>
-#include <dali-toolkit/public-api/particle-system/particle-modifier.h>
 #include <dali-toolkit/public-api/particle-system/particle-list.h>
+#include <dali-toolkit/public-api/particle-system/particle-modifier.h>
+#include <dali-toolkit/public-api/particle-system/particle-source.h>
 #include <dali-toolkit/public-api/particle-system/particle.h>
 #include <dali/public-api/object/weak-handle.h>
 
@@ -34,7 +34,6 @@ using namespace Dali::Toolkit::ParticleSystem;
 class SparklesSource : public Toolkit::ParticleSystem::ParticleSourceInterface
 {
 public:
-
   explicit SparklesSource(ParticleEmitter& emitter);
 
   explicit SparklesSource(ParticleEmitter& emitter, Dali::Vector2 ringRadius);
@@ -51,8 +50,7 @@ public:
 
   uint32_t mStreamBasePos{0u};
   uint32_t mStreamBaseAngle{0u};
-
 };
 
-}
+} //namespace Dali::ParticleEffect
 #endif // DALI_PARTICLES_SPARKLES_EFFECT_SOURCE_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ using StringVector = std::vector<std::string>;
 
 StringVector ListFiles(
   const std::string& path, bool (*predicate)(const char*) = [](const char*)
-                           { return true; })
+{ return true; })
 {
   StringVector results;
 
@@ -264,7 +264,7 @@ void Scene3DExample::OnInit(Application& app)
   auto resPath    = Application::GetResourcePath();
   auto scenePath  = resPath + RESOURCE_TYPE_DIRS[ResourceType::Mesh];
   auto sceneNames = ListFiles(scenePath, [](const char* name)
-                              {
+  {
     auto len = strlen(name);
     return (len > DLI_EXTENSION.size() && DLI_EXTENSION.compare(name + (len - DLI_EXTENSION.size())) == 0) ||
            (len > GLTF_EXTENSION.size() && GLTF_EXTENSION.compare(name + (len - GLTF_EXTENSION.size())) == 0); });
@@ -293,8 +293,8 @@ void Scene3DExample::OnInit(Application& app)
                                .Add(Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets)
                                .Add(Toolkit::GradientVisual::Property::STOP_COLOR, stopColors)
                                .Add(Toolkit::GradientVisual::Property::START_POSITION, Vector2(0.f, 0.0f))
-                             .Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.f, percentageWindowHeight))
-                             .Add(Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE));
+                               .Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.f, percentageWindowHeight))
+                               .Add(Toolkit::GradientVisual::Property::UNITS, Toolkit::GradientVisual::Units::USER_SPACE));
   window.Add(navigationView);
   mNavigationView = navigationView;
 

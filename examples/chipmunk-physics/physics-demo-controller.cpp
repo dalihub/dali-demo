@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -221,7 +221,8 @@ public:
     physicsBall.AsyncSetPhysicsPosition(Vector3(Random::Range(-fw, fw), Random::Range(-fh, -fh * 0.5), 0.0f));
 
     // Example of queuing a chipmunk method to run on the update thread
-    mPhysicsAdaptor.Queue([body]() {
+    mPhysicsAdaptor.Queue([body]()
+    {
       cpBodySetVelocity(body, cpv(Random::Range(-100.0, 100.0), Random::Range(-100.0, 100.0)));
     });
     return physicsBall;
@@ -571,7 +572,8 @@ public:
               Vector3 pos = mSelectedActor.GetActorPosition();
               mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(0, -10, 0));
               cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
-              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.Queue([body]()
+              { cpBodyActivate(body); });
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
@@ -582,7 +584,8 @@ public:
               Vector3 pos = mSelectedActor.GetActorPosition();
               mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(0, 10, 0));
               cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
-              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.Queue([body]()
+              { cpBodyActivate(body); });
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
@@ -593,7 +596,8 @@ public:
               Vector3 pos = mSelectedActor.GetActorPosition();
               mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(-10, 0, 0));
               cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
-              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.Queue([body]()
+              { cpBodyActivate(body); });
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
@@ -604,7 +608,8 @@ public:
               Vector3 pos = mSelectedActor.GetActorPosition();
               mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(10, 0, 0));
               cpBody* body = mSelectedActor.GetBody().Get<cpBody*>();
-              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.Queue([body]()
+              { cpBodyActivate(body); });
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
@@ -619,8 +624,10 @@ public:
 
               cpBody* body  = mSelectedActor.GetBody().Get<cpBody*>();
               float   angle = cpBodyGetAngle(body);
-              mPhysicsAdaptor.Queue([body, angle]() { cpBodySetAngle(body, angle + Math::PI / 12.0f); });
-              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.Queue([body, angle]()
+              { cpBodySetAngle(body, angle + Math::PI / 12.0f); });
+              mPhysicsAdaptor.Queue([body]()
+              { cpBodyActivate(body); });
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
@@ -631,8 +638,10 @@ public:
             {
               cpBody* body  = mSelectedActor.GetBody().Get<cpBody*>();
               float   angle = cpBodyGetAngle(body);
-              mPhysicsAdaptor.Queue([body, angle]() { cpBodySetAngle(body, angle - Math::PI / 12.0f); });
-              mPhysicsAdaptor.Queue([body]() { cpBodyActivate(body); });
+              mPhysicsAdaptor.Queue([body, angle]()
+              { cpBodySetAngle(body, angle - Math::PI / 12.0f); });
+              mPhysicsAdaptor.Queue([body]()
+              { cpBodyActivate(body); });
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,11 +67,11 @@ public:
     // The view is added to the window.
     Toolkit::ToolBar toolBar;
     Layer            content = DemoHelper::CreateView(application,
-                                           mView,
-                                           toolBar,
-                                           "",
-                                           TOOLBAR_IMAGE,
-                                           APPLICATION_TITLE);
+                                                      mView,
+                                                      toolBar,
+                                                      "",
+                                                      TOOLBAR_IMAGE,
+                                                      APPLICATION_TITLE);
 
     PushButton changeButton = Toolkit::PushButton::New();
     changeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_ICON);
@@ -90,7 +90,6 @@ public:
                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
                        Toolkit::Alignment::HORIZONTAL_CENTER,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
-
 
     mGradientControl = Control::New();
     mGradientControl.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
@@ -166,7 +165,7 @@ public:
       }
       case 1: // linear gradient with units as userSpaceOnUse
       {
-        Vector2 windowSize = Vector2(mApplication.GetWindow().GetSize())*0.8f;
+        Vector2 windowSize = Vector2(mApplication.GetWindow().GetSize()) * 0.8f;
         gradientMap.Insert(GradientVisual::Property::START_POSITION, Vector2::ZERO);
         gradientMap.Insert(GradientVisual::Property::END_POSITION, windowSize);
         gradientMap.Insert(GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE);
@@ -181,8 +180,8 @@ public:
       default: // radial gradient with units as userSpaceOnUse
       {
         Vector2 windowSize = mApplication.GetWindow().GetSize();
-        gradientMap.Insert(GradientVisual::Property::CENTER, windowSize*0.8f);
-        gradientMap.Insert(GradientVisual::Property::RADIUS, windowSize.Length()*0.8f);
+        gradientMap.Insert(GradientVisual::Property::CENTER, windowSize * 0.8f);
+        gradientMap.Insert(GradientVisual::Property::RADIUS, windowSize.Length() * 0.8f);
         gradientMap.Insert(GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE);
         break;
       }

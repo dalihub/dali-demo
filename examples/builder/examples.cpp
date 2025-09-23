@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -496,8 +496,8 @@ public:
     map.Add(Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT);
     map.Add(Toolkit::GradientVisual::Property::STOP_OFFSET, stopOffsets);
     map.Add(Toolkit::GradientVisual::Property::STOP_COLOR, stopColors);
-    map.Add(Toolkit::GradientVisual::Property::START_POSITION, Vector2(0.0f, -percentageWindowHeight*0.5f));
-    map.Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.0f, percentageWindowHeight*0.5f));
+    map.Add(Toolkit::GradientVisual::Property::START_POSITION, Vector2(0.0f, -percentageWindowHeight * 0.5f));
+    map.Add(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.0f, percentageWindowHeight * 0.5f));
     mNavigationView.SetProperty(Toolkit::Control::Property::BACKGROUND, map);
 
     SetUpItemView();

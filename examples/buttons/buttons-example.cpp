@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,8 +52,8 @@ const int RADIO_LABEL_THUMBNAIL_SIZE_SMALL = 40;
 const int RADIO_IMAGE_SPACING              = 8;
 const int BUTTON_HEIGHT                    = 48;
 
-const int MARGIN_SIZE   = 10;
-const int TOP_MARGIN    = 85;
+const int MARGIN_SIZE = 10;
+const int TOP_MARGIN  = 85;
 
 } // namespace
 

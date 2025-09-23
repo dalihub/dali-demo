@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,16 @@
  */
 
 #include "particle-effect.h"
-#include "fire-ring-effect-source.h"
-#include "sparkles-effect-source.h"
-#include "image-effect-source.h"
 #include "fire-ring-effect-modifier.h"
-#include "sparkles-effect-modifier.h"
+#include "fire-ring-effect-source.h"
 #include "image-effect-modifier.h"
+#include "image-effect-source.h"
+#include "sparkles-effect-modifier.h"
+#include "sparkles-effect-source.h"
 
+#include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/public-api/particle-system/particle-domain.h>
 #include <dali-toolkit/public-api/particle-system/particle-renderer.h>
-#include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/common/vector-wrapper.h>
 #include <functional>
 
@@ -35,44 +35,43 @@
 
 namespace Dali::ParticleEffect
 {
-using ParticleEmitter = Dali::Toolkit::ParticleSystem::ParticleEmitter;
-using ParticleSource = Dali::Toolkit::ParticleSystem::ParticleSource;
+using ParticleEmitter  = Dali::Toolkit::ParticleSystem::ParticleEmitter;
+using ParticleSource   = Dali::Toolkit::ParticleSystem::ParticleSource;
 using ParticleModifier = Dali::Toolkit::ParticleSystem::ParticleModifier;
 
 struct FunctorReturn
 {
-  ParticleEmitter emitter;
-  ParticleSource source;
+  ParticleEmitter  emitter;
+  ParticleSource   source;
   ParticleModifier modifier;
 };
 
-static std::vector<FunctorReturn(*)(const ParticleEffectParams&)> gEffectInitializers =
+static std::vector<FunctorReturn (*)(const ParticleEffectParams&)> gEffectInitializers =
+  {
+    [](const ParticleEffectParams& params)
 {
-  [](const ParticleEffectParams& params){
-      ParticleEmitter emitter = ParticleEmitter::New();
-      return FunctorReturn{emitter, ParticleSource::New<FireSource>(emitter, params.sourceSize), ParticleModifier::New<FireModifier>(emitter) };
-    },
-  [](const ParticleEffectParams& params){
-      ParticleEmitter emitter = ParticleEmitter::New();
-      return FunctorReturn{emitter, ParticleSource::New<SparklesSource>(emitter), ParticleModifier::New<SparklesModifier>(emitter) };
-    },
-  [](const ParticleEffectParams& params){
-      ParticleEmitter emitter = ParticleEmitter::New();
-      return FunctorReturn{emitter, ParticleSource::New<ImageExplodeEffectSource>(emitter,
-                                                                                  params.strImageSourceName,
-                                                                                  uint32_t(params.sourceSize.width),
-                                                                                  uint32_t(params.sourceSize.height)
-                                                                                  ), ParticleModifier::New<ImageExplodeEffectModifier>(emitter) };
-    },
+  ParticleEmitter emitter = ParticleEmitter::New();
+  return FunctorReturn{emitter, ParticleSource::New<FireSource>(emitter, params.sourceSize), ParticleModifier::New<FireModifier>(emitter)};
+},
+    [](const ParticleEffectParams& params)
+{
+  ParticleEmitter emitter = ParticleEmitter::New();
+  return FunctorReturn{emitter, ParticleSource::New<SparklesSource>(emitter), ParticleModifier::New<SparklesModifier>(emitter)};
+},
+    [](const ParticleEffectParams& params)
+{
+  ParticleEmitter emitter = ParticleEmitter::New();
+  return FunctorReturn{emitter, ParticleSource::New<ImageExplodeEffectSource>(emitter, params.strImageSourceName, uint32_t(params.sourceSize.width), uint32_t(params.sourceSize.height)), ParticleModifier::New<ImageExplodeEffectModifier>(emitter)};
+},
 };
 
 ParticleEffect::ParticleEffect() = default;
 
 ParticleEffect::~ParticleEffect() = default;
 
-Dali::Toolkit::ParticleSystem::ParticleEmitter ParticleEffect::CreateEffectEmitter( EffectType effectType, Actor parentActor, const ParticleEffectParams& params )
+Dali::Toolkit::ParticleSystem::ParticleEmitter ParticleEffect::CreateEffectEmitter(EffectType effectType, Actor parentActor, const ParticleEffectParams& params)
 {
-  auto retval = gEffectInitializers[int(effectType)](params);
+  auto retval  = gEffectInitializers[int(effectType)](params);
   auto emitter = retval.emitter;
 
   ParticleRenderer renderer = ParticleRenderer::New();
@@ -83,24 +82,22 @@ Dali::Toolkit::ParticleSystem::ParticleEmitter ParticleEffect::CreateEffectEmitt
     std::string filename(DEMO_IMAGE_DIR);
     filename += params.strTexture;
     Dali::PixelData pixelData = Dali::Toolkit::SyncImageLoader::Load(filename);
-    auto texture = Texture::New(Dali::TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight());
+    auto            texture   = Texture::New(Dali::TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight());
     texture.Upload(pixelData);
     renderer.SetTexture(texture);
   }
 
   emitter.AttachTo(std::move(parentActor));
-  emitter.SetEmissionRate( params.emissionRate ); // 20 particles emitted per second
-  emitter.SetParticleCount( params.particleCount );
-  emitter.SetSource( retval.source );
-  emitter.SetDomain( ParticleDomain::New() );
+  emitter.SetEmissionRate(params.emissionRate); // 20 particles emitted per second
+  emitter.SetParticleCount(params.particleCount);
+  emitter.SetSource(retval.source);
+  emitter.SetDomain(ParticleDomain::New());
   emitter.AddModifier(retval.modifier);
-  emitter.SetRenderer( renderer );
+  emitter.SetRenderer(renderer);
   renderer.SetBlendingMode(Dali::Toolkit::ParticleSystem::BlendingMode::SCREEN);
-  emitter.SetInitialParticleCount( params.initialParticleCount );
+  emitter.SetInitialParticleCount(params.initialParticleCount);
 
   return emitter;
 }
 
-
-}
-
+} //namespace Dali::ParticleEffect

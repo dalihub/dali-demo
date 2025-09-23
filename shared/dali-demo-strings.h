@@ -24,8 +24,7 @@
 #endif
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif // __cplusplus
 
 #define DALI_DEMO_DOMAIN_LOCAL "dali-demo"
