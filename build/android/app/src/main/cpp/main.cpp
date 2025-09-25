@@ -216,7 +216,20 @@ void android_main(struct android_app* state)
 
   dlerror(); /* Clear any existing error */
 
+  // First, check if the graphics-backend intent extra string is set
   std::string graphicsBackendParam = nativeActivity.GetIntentStringExtra("graphics-backend");
+  if(graphicsBackendParam.empty())
+  {
+    graphicsBackendParam = nativeActivity.GetMetaData("graphics-backend");
+  }
+
+  // If nothing found, then try to get the graphics backend preference from SharedPreferences
+  if(graphicsBackendParam.empty())
+  {
+    graphicsBackendParam = nativeActivity.GetGraphicsBackendPreference();
+  }
+
+  // If still nothing found, try metadata
   if(graphicsBackendParam.empty())
   {
     graphicsBackendParam = nativeActivity.GetMetaData("graphics-backend");
@@ -225,6 +238,11 @@ void android_main(struct android_app* state)
   if(!graphicsBackendParam.empty())
   {
     setenv("DALI_GRAPHICS_BACKEND", graphicsBackendParam.c_str(), 1);
+    LOGV("DALI: DALi Graphics backend set to: %s", graphicsBackendParam.c_str());
+  }
+  else
+  {
+    LOGV("DALI: No graphics backend specified, using system default");
   }
 
   std::string argumentsParam = nativeActivity.GetIntentStringExtra("arguments");
