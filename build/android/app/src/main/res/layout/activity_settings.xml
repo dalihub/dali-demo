@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/graphics_backend_label"
+        android:textSize="18sp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="8dp"
+        android:paddingTop="8dp"
+        android:textColor="#333333"/>
+
+    <RadioGroup
+        android:id="@+id/graphicsBackendRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/glesRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gles_option"
+            android:textSize="16sp"
+            android:layout_marginBottom="12dp"
+            android:padding="8dp"/>
+
+        <RadioButton
+            android:id="@+id/vulkanRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vulkan_option"
+            android:textSize="16sp"
+            android:padding="8dp"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_button"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="#2196F3"
+        android:textColor="#FFFFFF"/>
+
+</LinearLayout>

@@ -4,4 +4,10 @@
     <string name="demo_name">DALi Demo</string>
     <string name="examples_name">DALi Examples</string>
     <string name="tests_name">DALi Tests</string>
+    <string name="settings_name">DALi Settings</string>
+    <string name="settings_title">Settings</string>
+    <string name="graphics_backend_label">Graphics Backend</string>
+    <string name="vulkan_option">VULKAN</string>
+    <string name="gles_option">GLES</string>
+    <string name="save_button">Save</string>
 </resources>
