@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,6 +99,15 @@ public:
       env->CallVoidMethod(activity->clazz, methodID, argument.string);
     }
 
+    JNIEnv* GetEnv() const
+    {
+      return env;
+    }
+    jclass GetClazz() const
+    {
+      return clazz;
+    }
+
   private:
     ANativeActivity* activity;
     JNIEnv*          env;
@@ -121,6 +130,28 @@ public:
   {
     NativeActivityJNI nativeActivityJNI(activity);
     return nativeActivityJNI.CallVoidMethod("launchExample", exampleName);
+  }
+
+  std::string GetGraphicsBackendPreference()
+  {
+    NativeActivityJNI nativeActivityJNI(activity);
+    JNIEnv*           env   = nativeActivityJNI.GetEnv();
+    jclass            clazz = nativeActivityJNI.GetClazz();
+
+    jmethodID methodID = env->GetMethodID(clazz, "getGraphicsBackendPreference", "()Ljava/lang/String;");
+    if(methodID == nullptr)
+    {
+      return "";
+    }
+
+    jstring jBackend = (jstring)env->CallObjectMethod(activity->clazz, methodID);
+    if(jBackend == nullptr)
+    {
+      return "";
+    }
+
+    JString jStringWrapper(env, jBackend);
+    return jStringWrapper.ToString();
   }
 
 private:

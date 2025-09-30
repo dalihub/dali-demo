@@ -5,6 +5,7 @@ import android.app.NativeActivity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -57,5 +58,14 @@ public class DaliDemoNativeActivity extends NativeActivity {
         Intent intent = new Intent(this, DaliDemoNativeActivity.class);
         intent.putExtra("start", exampleName);
         startActivity(intent);
+    }
+
+    /**
+     * JNI method to get the graphics backend preference from native code
+     * This method can be called from C++ code via JNI
+     */
+    public String getGraphicsBackendPreference() {
+        SharedPreferences prefs = getSharedPreferences("DaliGraphicsPrefs", Context.MODE_PRIVATE);
+        return prefs.getString("graphics_backend_preference", "");
     }
 }
