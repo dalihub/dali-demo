@@ -14,6 +14,10 @@ This example highlights the importance of using `UpdateProxy::SetIgnored` within
 *   **UpdateProxy**: Demonstrates the use of `UpdateProxy::SetIgnored` to safely modify actor properties from the update thread.
 *   **Actor Ignored State**: Illustrates the effect of the "ignored" property on an actor's visibility and its children.
 *   **Periodic Updates**: Uses a timer within the frame callback to perform actions at regular intervals.
+*   **Property Notification Signals**: Demonstrates how to monitor and respond to changes in the "ignored" property using `PropertyNotification`. The example shows two types of notifications:
+    *   **Less Than Notification**: Triggers when the ignored property changes from 1 (ignored) to 0 (visible), displaying a "1 -> 0 Notified" label in the top-left corner.
+    *   **Greater Than Notification**: Triggers when the ignored property changes from 0 (visible) to 1 (ignored), displaying a "0 -> 1 Notified" label in the top-right corner.
+    These notifications provide real-time feedback about property changes and demonstrate how to implement event-driven responses to property modifications in Dali.
 
 ## Controls
 
