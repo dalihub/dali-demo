@@ -17,6 +17,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/common/stage-devel.h>
 #include <dali/devel-api/update/frame-callback-interface.h>
 #include <dali/devel-api/update/update-proxy.h>
@@ -160,11 +161,50 @@ private:
     mIgnoredToggler = std::make_unique<IgnoredToggler>(actorId, 2.0f, visibleLabelId, ignoredLabelId); // Manage with a unique_ptr or similar if needed
     DevelStage::AddFrameCallback(stage, *mIgnoredToggler, stage.GetRootLayer());                       // Dali:: prefix not needed due to 'using namespace Dali;'
 
+    // Connect property notification for world ignored.
+    PropertyNotification lessThanNotification = mImageView.AddPropertyNotification(DevelActor::Property::IGNORED, LessThanCondition(0.5f));
+    lessThanNotification.NotifySignal().Connect(this, &FrameCallbackToggleController::OnLessThanNotify);
+
+    mLessThanLabel = TextLabel::New("1 -> 0 Notified");
+    mLessThanLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mLessThanLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+    mLessThanLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
+    mLessThanLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "BEGIN");
+    mLessThanLabel.SetProperty(TextLabel::Property::POINT_SIZE, 12.0f);
+    window.Add(mLessThanLabel); // Add as a child
+
+    mLessThanLabel.SetIgnored(true);
+
+    PropertyNotification greaterThanNotification = mImageView.AddPropertyNotification(DevelActor::Property::IGNORED, GreaterThanCondition(0.5f));
+    greaterThanNotification.NotifySignal().Connect(this, &FrameCallbackToggleController::OnGreaterThanNotify);
+
+    mGreaterThanLabel = TextLabel::New("0 -> 1 Notified");
+    mGreaterThanLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
+    mGreaterThanLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
+    mGreaterThanLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
+    mGreaterThanLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "END");
+    mGreaterThanLabel.SetProperty(TextLabel::Property::POINT_SIZE, 12.0f);
+    window.Add(mGreaterThanLabel); // Add as a child
+
+    mGreaterThanLabel.SetIgnored(true);
+
     // Respond to a touch anywhere on the window to quit
     window.GetRootLayer().TouchedSignal().Connect(this, &FrameCallbackToggleController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &FrameCallbackToggleController::OnKeyEvent);
+  }
+
+  void OnLessThanNotify(PropertyNotification& source)
+  {
+    mLessThanLabel.SetIgnored(false);
+    mGreaterThanLabel.SetIgnored(true);
+  }
+
+  void OnGreaterThanNotify(PropertyNotification& source)
+  {
+    mLessThanLabel.SetIgnored(true);
+    mGreaterThanLabel.SetIgnored(false);
   }
 
   bool OnTouch(Actor actor, const TouchEvent& touch)
@@ -190,6 +230,9 @@ private:
   ImageView    mImageView;
   TextLabel    mVisibleLabel; ///< Label to show when actor is visible
   TextLabel    mIgnoredLabel; ///< Label to show when actor is ignored
+
+  TextLabel mLessThanLabel;    ///< Label to show when ignored property less than notified
+  TextLabel mGreaterThanLabel; ///< Label to show when ignored property greater than notified
 
   std::unique_ptr<IgnoredToggler> mIgnoredToggler; // Raw pointer for simplicity, use smart pointer in production code
 };
