@@ -1,4 +1,4 @@
-#version 300 es
+//@verson 100
 
 #ifdef HIGHP
   precision highp float;
@@ -6,18 +6,21 @@
   precision mediump float;
 #endif
 
-in vec3 aPosition;
-in vec2 aTexCoord;
+INPUT vec3 aPosition;
+INPUT vec2 aTexCoord;
 
-out vec2 vUV;
+OUTPUT vec2 vUV;
 
-uniform vec3 uSize;
+UNIFORM_BLOCK VertBlock
+{
+UNIFORM vec3 uSize;
 
-uniform mat4 uProjection;
-uniform mat4 uModelMatrix;
-uniform mat4 uViewMatrix;
+UNIFORM mat4 uProjection;
+UNIFORM mat4 uModelMatrix;
+UNIFORM mat4 uViewMatrix;
 
-uniform vec2 uTilt;
+UNIFORM vec2 uTilt;
+};
 
 void main()
 {

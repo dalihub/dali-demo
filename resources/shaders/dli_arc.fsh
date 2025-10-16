@@ -1,4 +1,4 @@
-#version 300 es
+//@version 100
 
 #ifdef HIGHP
   precision highp float;
@@ -12,16 +12,19 @@
 #define SQUARE_ENDCAP    0x8
 precision mediump float;
 
-in vec2 vUV;
+INPUT vec2 vUV;
 
-uniform vec4 uColor;
-uniform int antiAliasing;
-uniform float radius;
-uniform vec2 startAngle;
-uniform vec2 endAngle;
-uniform int arcCaps;
+UNIFORM_BLOCK FragBlock
+{
+UNIFORM vec4 uColor;
+UNIFORM int antiAliasing;
+UNIFORM float radius;
+UNIFORM vec2 startAngle;
+UNIFORM vec2 endAngle;
+UNIFORM int arcCaps;
+};
 
-out vec4 FragColor;
+OUTPUT vec4 FragColor;
 
 
 void main()
