@@ -1,31 +1,35 @@
-#version 300 es
+//@version 100
 
 precision highp float;
 
-uniform sampler2D sAlbedoMetal;
-uniform sampler2D sNormalRoughness;
-uniform samplerCube sDiffuse;
-uniform samplerCube sSpecular;
+UNIFORM sampler2D sAlbedoMetal;
+UNIFORM sampler2D sNormalRoughness;
+UNIFORM samplerCube sDiffuse;
+UNIFORM samplerCube sSpecular;
 
 // Transformation matrix of the cubemap texture
 
+UNIFORM_BLOCK FragBlock
+{
 // Number of mip map levels in the texture
-uniform float uMaxLOD;
+UNIFORM float uMaxLOD;
 
 // Number of mip map levels in the texture
-uniform float uRoughness;
+UNIFORM float uRoughness;
 
 // Number of mip map levels in the texture
-uniform float uMetallic;
+UNIFORM float uMetallic;
+};
 
-in vec2 vUV;
-in vec3 vNormal;
-in vec3 vTangent;
-in vec3 vBitangent;
-in vec3 vViewVec;
-in mat4 uCubeMatrix;
 
-out vec4 FragColor;
+INPUT vec2 vUV;
+INPUT vec3 vNormal;
+INPUT vec3 vTangent;
+INPUT vec3 vBitangent;
+INPUT vec3 vViewVec;
+INPUT mat4 uCubeMatrix;
+
+OUTPUT vec4 FragColor;
 
 // Functions for BRDF calculation come from
 // https://www.unrealengine.com/blog/physically-based-shading-on-mobile
@@ -46,11 +50,11 @@ void main()
 {
   // We get information from the maps (albedo, normal map, roughness, metalness
   // I access the maps in the order they will be used
-  vec4 normalRoughness = texture(sNormalRoughness, vUV.st);
+  vec4 normalRoughness = TEXTURE(sNormalRoughness, vUV.st);
   vec3 normalMap = normalRoughness.rgb;
   float roughness = normalRoughness.a * uRoughness;
 
-  vec4 albedoMetal = texture(sAlbedoMetal, vUV.st);
+  vec4 albedoMetal = TEXTURE(sAlbedoMetal, vUV.st);
   vec3 albedoColor = albedoMetal.rgb;
   float metallic = albedoMetal.a * uMetallic;
 
@@ -83,7 +87,7 @@ void main()
   normalCube = normalize(normalCube);
 
   // Get irradiance from diffuse cubemap
-  vec3 irradiance = texture(sDiffuse, normalCube).rgb;
+  vec3 irradiance = TEXTURE(sDiffuse, normalCube).rgb;
 
   // Way to access the mip map level - copied from UE
   const float REFLECTION_CAPTURE_ROUGHEST_MIP = 1.;

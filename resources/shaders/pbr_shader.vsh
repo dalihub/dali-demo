@@ -1,25 +1,26 @@
-#version 300 es
+//@version 100
 
-in vec3 aPosition;
-in vec2 aTexCoord;
-in vec3 aNormal;
-in vec3 aTangent;
+INPUT vec3 aPosition;
+INPUT vec2 aTexCoord;
+INPUT vec3 aNormal;
+INPUT vec3 aTangent;
 
-out vec2 vUV;
-out vec3 vNormal;
-out vec3 vTangent;
-out vec3 vBitangent;
-out vec3 vViewVec;
-out mat4 uCubeMatrix;
+OUTPUT vec2 vUV;
+OUTPUT vec3 vNormal;
+OUTPUT vec3 vTangent;
+OUTPUT vec3 vBitangent;
+OUTPUT vec3 vViewVec;
+OUTPUT mat4 uCubeMatrix;
 
-uniform vec3 uSize;
-
-uniform mat4 uMvpMatrix;
-uniform mat3 uNormalMatrix;
-uniform mat4 uModelMatrix;
-uniform mat4 uModelView;
-uniform mat4 uViewMatrix;
-
+UNIFORM_BLOCK VertBlock
+{
+UNIFORM vec3 uSize;
+UNIFORM mat4 uMvpMatrix;
+UNIFORM mat3 uNormalMatrix;
+UNIFORM mat4 uModelMatrix;
+UNIFORM mat4 uModelView;
+UNIFORM mat4 uViewMatrix;
+};
 
 void main()
 {

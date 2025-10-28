@@ -1,5 +1,8 @@
-uniform samplerCube uSkyBoxTexture;
-varying mediump vec3 vTexCoord;
+//@version 100
+
+UNIFORM samplerCube uSkyBoxTexture;
+
+INPUT mediump vec3 vTexCoord;
 
 void main()
 {

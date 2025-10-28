@@ -1,7 +1,14 @@
-attribute mediump vec3 aPosition;  // DALi shader builtin
-uniform   mediump mat4 uMvpMatrix; // DALi shader builtin
+//@version 100
 
-varying mediump vec3 vTexCoord;
+INPUT mediump vec3 aPosition;  // DALi shader builtin
+
+UNIFORM_BLOCK Vanilla
+{
+UNIFORM   mediump mat4 uMvpMatrix; // DALi shader builtin
+};
+
+OUTPUT mediump vec3 vTexCoord;
+
 void main()
 {
   vTexCoord =  aPosition;

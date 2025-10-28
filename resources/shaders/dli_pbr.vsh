@@ -1,4 +1,4 @@
-#version 300 es
+//@version 100
 
 #ifdef HIGHP
   precision highp float;
@@ -6,47 +6,56 @@
   precision mediump float;
 #endif
 
-in vec3 aPosition;
-in vec2 aTexCoord;
-in vec3 aNormal;
-in vec3 aTangent;
-in vec4 aVertexColor;
+INPUT vec3 aPosition;
+INPUT vec2 aTexCoord;
+INPUT vec3 aNormal;
+INPUT vec3 aTangent;
+INPUT vec4 aVertexColor;
 
 #ifdef MORPH
-  uniform sampler2D sBlendShapeGeometry;
+  UNIFORM sampler2D sBlendShapeGeometry;
 #endif
 
-out vec2 vUV;
-out vec3 vNormal;
-out vec3 vTangent;
-out vec3 vViewVec;
-out vec4 vColor;
+OUTPUT vec2 vUV;
+OUTPUT vec3 vNormal;
+OUTPUT vec3 vTangent;
+OUTPUT vec3 vViewVec;
+OUTPUT vec4 vColor;
 
-
-uniform highp mat4 uMvpMatrix;
-uniform highp mat4 uViewMatrix;
-uniform mat3 uNormalMatrix;
-uniform mat4 uModelMatrix;
-uniform mat4 uModelView;
-uniform mat4 uProjection;
+UNIFORM_BLOCK VertBlock
+{
+UNIFORM highp mat4 uMvpMatrix;
+UNIFORM highp mat4 uViewMatrix;
+UNIFORM mat3 uNormalMatrix;
+UNIFORM mat4 uModelMatrix;
+UNIFORM mat4 uModelView;
+UNIFORM mat4 uProjection;
+};
 
 #ifdef SKINNING
-  in vec4 aJoints0;
-  in vec4 aWeights0;
-  #define MAX_BONES 64
-  uniform mat4 uBone[MAX_BONES];
+INPUT vec4 aJoints0;
+INPUT vec4 aWeights0;
+#define MAX_BONES 64
+
+UNIFORM_BLOCK SkinningBlock
+{
+UNIFORM highp mat4 uBone[MAX_BONES];
+};
 #endif
 
 #ifdef MORPH
+UNIFORM_BLOCK MorphBlock
+{
 #define MAX_BLEND_SHAPE_NUMBER 128
-uniform int uNumberOfBlendShapes;                                   ///< Total number of blend shapes loaded.
-uniform float uBlendShapeWeight[MAX_BLEND_SHAPE_NUMBER];            ///< The weight of each blend shape.
+UNIFORM int uNumberOfBlendShapes;                                   ///< Total number of blend shapes loaded.
+UNIFORM float uBlendShapeWeight[MAX_BLEND_SHAPE_NUMBER];            ///< The weight of each blend shape.
 #ifdef MORPH_VERSION_2_0
-uniform float uBlendShapeUnnormalizeFactor;                         ///< Factor used to unnormalize the geometry of the blend shape.
+UNIFORM float uBlendShapeUnnormalizeFactor;                         ///< Factor used to unnormalize the geometry of the blend shape.
 #else
-uniform float uBlendShapeUnnormalizeFactor[MAX_BLEND_SHAPE_NUMBER]; ///< Factor used to unnormalize the geometry of the blend shape.
+UNIFORM float uBlendShapeUnnormalizeFactor[MAX_BLEND_SHAPE_NUMBER]; ///< Factor used to unnormalize the geometry of the blend shape.
 #endif
-uniform int uBlendShapeComponentSize;                               ///< The size in the texture of either the vertices, normals or tangents. Used to calculate the offset to address them.
+UNIFORM int uBlendShapeComponentSize;                               ///< The size in the texture of either the vertices, normals or tangents. Used to calculate the offset to address them.
+};
 #endif
 
 void main()

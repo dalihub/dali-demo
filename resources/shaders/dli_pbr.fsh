@@ -1,4 +1,4 @@
-#version 300 es
+//@version 100
 
 #ifdef HIGHP
   precision highp float;
@@ -18,42 +18,47 @@
 #endif //THREE_TEX
 
 #ifdef THREE_TEX
-  uniform sampler2D sAlbedoAlpha;
-  uniform sampler2D sMetalRoughness;
-  uniform sampler2D sNormal;
-
-#ifdef ALPHA_TEST
-  uniform float uAlphaThreshold;
-#endif	//ALPHA_TEST
+  UNIFORM sampler2D sAlbedoAlpha;
+  UNIFORM sampler2D sMetalRoughness;
+  UNIFORM sampler2D sNormal;
 
 #else
-  uniform sampler2D sAlbedoMetal;
-  uniform sampler2D sNormalRoughness;
+  UNIFORM sampler2D sAlbedoMetal;
+  UNIFORM sampler2D sNormalRoughness;
 #endif
 
-uniform samplerCube sDiffuse;
-uniform samplerCube sSpecular;
+UNIFORM samplerCube sDiffuse;
+UNIFORM samplerCube sSpecular;
 
+UNIFORM_BLOCK FragBlock
+{
 // Number of mip map levels in the texture
-uniform float uMaxLOD;
+UNIFORM float uMaxLOD;
 
 // Transformation matrix of the cubemap texture
-uniform mat4 uCubeMatrix;
+UNIFORM mat4 uCubeMatrix;
 
-uniform vec4 uColor;
-uniform float uMetallicFactor;
-uniform float uRoughnessFactor;
+UNIFORM vec4 uColor;
+UNIFORM float uMetallicFactor;
+UNIFORM float uRoughnessFactor;
 
 //IBL Light intensity
-uniform float uIblIntensity;
+UNIFORM float uIblIntensity;
 
-in vec2 vUV;
-in vec3 vNormal;
-in vec3 vTangent;
-in vec3 vViewVec;
-in vec4 vColor;
+#ifdef THREE_TEX
+#ifdef ALPHA_TEST
+UNIFORM float uAlphaThreshold;
+#endif	//ALPHA_TEST
+#endif //THREE_TEX
+};
 
-out vec4 FragColor;
+INPUT vec2 vUV;
+INPUT vec3 vNormal;
+INPUT vec3 vTangent;
+INPUT vec3 vViewVec;
+INPUT vec4 vColor;
+
+OUTPUT vec4 FragColor;
 
 // Functions for BRDF calculation come from
 // https://www.unrealengine.com/blog/physically-based-shading-on-mobile
@@ -75,7 +80,7 @@ void main()
   // We get information from the maps (albedo, normal map, roughness, metalness
   // I access the maps in the order they will be used
 #ifdef THREE_TEX
-  vec4 albedoAlpha = texture(sAlbedoAlpha, vUV.st);
+  vec4 albedoAlpha = TEXTURE(sAlbedoAlpha, vUV.st);
   float alpha = albedoAlpha.a;
 #ifdef ALPHA_TEST
   if (alpha <= uAlphaThreshold)
@@ -85,17 +90,17 @@ void main()
 #endif	//ALPHA_TEST
   vec3 albedoColor = albedoAlpha.rgb * vColor.rgb * uColor.rgb;
 
-  vec4 metalRoughness = texture(sMetalRoughness, vUV.st);
+  vec4 metalRoughness = TEXTURE(sMetalRoughness, vUV.st);
   float metallic = metalRoughness.METALLIC * uMetallicFactor;
   float roughness = metalRoughness.ROUGHNESS * uRoughnessFactor;
 
-  vec3 normalMap = texture(sNormal, vUV.st).rgb;
+  vec3 normalMap = TEXTURE(sNormal, vUV.st).rgb;
 #else  //THREE_TEX
-  vec4 albedoMetal = texture(sAlbedoMetal, vUV.st);
+  vec4 albedoMetal = TEXTURE(sAlbedoMetal, vUV.st);
   vec3 albedoColor = albedoMetal.rgb * vColor.rgb * uColor.rgb;
   float metallic = albedoMetal.a * uMetallicFactor;
 
-  vec4 normalRoughness = texture(sNormalRoughness, vUV.st);
+  vec4 normalRoughness = TEXTURE(sNormalRoughness, vUV.st);
   vec3 normalMap = normalRoughness.rgb;
   float roughness = normalRoughness.a * uRoughnessFactor;
 #endif
@@ -131,11 +136,11 @@ void main()
   normalCube = normalize( normalCube );
 
   // Get irradiance from diffuse cubemap
-  vec3 irradiance = texture( sDiffuse, normalCube ).rgb;
+  vec3 irradiance = TEXTURE( sDiffuse, normalCube ).rgb;
 
   // Access reflection color using roughness value
   float finalLod = mix( 0.0, uMaxLOD - 2.0, roughness);
-  vec3 reflectionColor = textureLod(sSpecular, reflecCube, finalLod).rgb;
+  vec3 reflectionColor = TEXTURE_LOD(sSpecular, reflecCube, finalLod).rgb;
 
   // We are supposed to be using DielectricColor (0.04) of a plastic (almost everything)
   // http://blog.selfshadow.com/publications/s2014-shading-course/hoffman/s2014_pbs_physics_math_slides.pdf

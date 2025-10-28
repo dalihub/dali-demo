@@ -11,6 +11,7 @@ UNIFORM_BLOCK Custom
 UNIFORM mediump float uRadius;
 UNIFORM mediump float uAdjuster;
 }
+OUTPUT mediump vec4 FragColor;
 
 #define CAMERA_Z_POSITION 1.0  // gives us a FOV of 90 degrees if Plane of projection is at Z = 0 with size 2x2
 #define SPHERE_Z_POSITION -1.0 // Sphere placed behind Plane of projection
@@ -115,7 +116,7 @@ void main()
       // if we're close to the edge of the sphere, then draw it
       if( distance < 0.01 )
       {
-        gl_FragColor = lightSphere(  hitPoint, spherePosition );
+        FragColor = lightSphere(  hitPoint, spherePosition );
         return;
       }
 
@@ -124,6 +125,6 @@ void main()
 
   }
   // no hit, color the pixel based on it's x,y position
-  gl_FragColor = vec4(pixelPosition.x,pixelPosition.y,0.5,1);
+  FragColor = vec4(pixelPosition.x,pixelPosition.y,0.5,1);
 
 }

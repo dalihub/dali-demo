@@ -26,8 +26,8 @@ using namespace Dali;
 using Dali::Toolkit::TextLabel;
 
 const std::string imagedir = DEMO_IMAGE_DIR;
-const std::string uri_diffuse_texture(imagedir + "papermill_E_diffuse-64.ktx");
-const std::string uri_specular_texture(imagedir + "papermill_pmrem.ktx");
+const std::string uri_diffuse_texture(imagedir + "meadow_diffuse_rgb16f_cm.ktx");
+const std::string uri_specular_texture(imagedir + "meadow_radiance_rgb16f_cm.ktx");
 const std::string uri_diffuse_texture2(imagedir + "Studio/Irradiance.ktx");
 const std::string uri_specular_texture2(imagedir + "Studio/Radiance.ktx");
 
