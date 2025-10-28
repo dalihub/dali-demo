@@ -28,6 +28,7 @@ BuildRequires:  pkgconfig(dali2-physics-3d)
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(gles20)
 BuildRequires:  pkgconfig(glesv2)
+BuildRequires:  pkgconfig(libtbm)
 
 %description
 The OpenGLES Canvas Core Demo is a collection of examples and demonstrations
