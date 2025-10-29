@@ -172,12 +172,12 @@ private:
 
   Dali::NativeImageSourcePtr mNativeImageSrc;
 
-  size_t   mOutputWidth;
-  size_t   mOutputHeight;
-  size_t   mOutputStride;
-  uint8_t* mOutputBuffer;
+  size_t   mOutputWidth{0u};
+  size_t   mOutputHeight{0u};
+  size_t   mOutputStride{0u};
+  uint8_t* mOutputBuffer{nullptr};
 
-  tbm_surface_h mTbmSurface;
+  tbm_surface_h mTbmSurface{nullptr};
 
   Texture mNativeTexture;
   Actor   mDisplayActor;
