@@ -1,23 +1,28 @@
+//@version 100
+
 #ifdef HIGHP
   precision highp float;
 #else
   precision mediump float;
 #endif
 
-attribute vec3 aPosition;
-attribute vec2 aTexCoord;
+INPUT vec3 aPosition;
+INPUT vec2 aTexCoord;
 
-varying vec2 vUV;
+OUTPUT vec2 vUV;
 
-uniform vec3 uSize;
+UNIFORM_BLOCK VertBlock
+{
+UNIFORM vec3 uSize;
 
-uniform mat4 uCubeMatrix;
+UNIFORM mat4 uCubeMatrix;
 
-uniform mat4 uProjection;
-uniform mat4 uModelMatrix;
-uniform mat4 uViewMatrix;
+UNIFORM mat4 uProjection;
+UNIFORM mat4 uModelMatrix;
+UNIFORM mat4 uViewMatrix;
 
-uniform vec2 uTilt;
+UNIFORM vec2 uTilt;
+};
 
 void main()
 {

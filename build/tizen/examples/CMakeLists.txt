@@ -34,6 +34,13 @@ IF (NOT "${ENABLE_PHYSICS_2D}" )
   ENDIF()
 ENDIF()
 
+SET(TBM_DIR "native-image-test")
+IF (NOT "${ENABLE_TBM}" )
+  IF ( ${TBM_DIR} IN_LIST SUBDIRS )
+    LIST( REMOVE_ITEM SUBDIRS ${TBM_DIR} )
+  ENDIF()
+ENDIF()
+
 FIND_PROGRAM( SHADER_GENERATOR "dali-shader-generator" )
 IF( NOT SHADER_GENERATOR )
   MESSAGE( FATAL_ERROR "dali-shader-generator not found!" )

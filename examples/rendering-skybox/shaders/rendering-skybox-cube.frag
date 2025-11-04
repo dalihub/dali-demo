@@ -5,9 +5,10 @@
 UNIFORM sampler2D uTexture;
 
 INPUT mediump vec2 vTexCoord;
+OUTPUT mediump vec4 FragColor;
 
 void main()
 {
-  mediump vec4 texColor = TEXTURE( uTexture, vTexCoord );
-  gl_FragColor = texColor;
+  mediump vec4 texColor = TEXTURE( uTexture, vTexCoord);
+  FragColor = texColor;
 }

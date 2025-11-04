@@ -1,27 +1,33 @@
+//@version 100
+
+
 #ifdef HIGHP
   precision highp float;
 #else
   precision mediump float;
 #endif
 
-uniform sampler2D sAlbedo;
-
-uniform vec4 uColor;
+UNIFORM sampler2D sAlbedo;
+UNIFORM_BLOCK FragBlock
+{
+UNIFORM vec4 uColor;
 
 #ifdef ALPHA_TEST
   uniform float uAlphaThreshold;
 #endif	//ALPHA_TEST
+};
 
-varying vec2 vUV;
+INPUT vec2 vUV;
+OUTPUT mediump vec4 FragColor;
 
 void main()
 {
-  vec4 color = texture2D(sAlbedo, vUV.st);
+  vec4 color = TEXTURE(sAlbedo, vUV.st);
 #ifdef ALPHA_TEST
   if (color.a <= uAlphaThreshold)
   {
     discard;
   }
 #endif
-  gl_FragColor = color * uColor;
+  FragColor = color * uColor;
 }

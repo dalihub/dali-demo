@@ -36,6 +36,11 @@ using namespace Dali::Toolkit;
 
 namespace
 {
+// The width and height should be powers of two for NativeImageSource and NativeImageSourceQueue
+// (depending on hardware e.g. the RPI4)
+constexpr uint32_t NATIVE_IMAGE_WIDTH  = 128;
+constexpr uint32_t NATIVE_IMAGE_HEIGHT = 256;
+
 class NativeImageRenderThread : public Dali::Thread
 {
 public:
@@ -269,7 +274,7 @@ public:
 
     window.KeyEventSignal().Connect(this, &NativeImageSourceQueueController::OnKeyEvent);
 
-    mNativeSource = NativeImageSource::New(123, 345, NativeImageSource::ColorDepth::COLOR_DEPTH_32);
+    mNativeSource = NativeImageSource::New(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT, NativeImageSource::ColorDepth::COLOR_DEPTH_32);
 
     // Check whether current platform support NativeImageSource or not.
     if(mNativeSource && !mNativeSource->GetNativeImageSource().Empty())
@@ -280,7 +285,7 @@ public:
       mSourceRenderThreadPtr->Start();
     }
 
-    mNativeQueue = NativeImageSourceQueue::New(123, 345, NativeImageSourceQueue::ColorFormat::BGRA8888);
+    mNativeQueue = NativeImageSourceQueue::New(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT, NativeImageSourceQueue::ColorFormat::BGRA8888);
 
     // Check whether current platform support NativeImageSourceQueue or not.
     if(mNativeQueue && !mNativeQueue->GetNativeImageSourceQueue().Empty())
@@ -305,8 +310,8 @@ public:
       ImageView nativeImageViewer = ImageView::New(nativeImageUrl.GetUrl());
       nativeImageViewer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
       nativeImageViewer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      nativeImageViewer.SetProperty(Actor::Property::SIZE, Vector2(123.0f, 345.0f));
-      nativeImageViewer.SetProperty(Actor::Property::POSITION, Vector2(-(123.0f * 0.5f + 1.0f), 0.0f));
+      nativeImageViewer.SetProperty(Actor::Property::SIZE, Vector2(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT));
+      nativeImageViewer.SetProperty(Actor::Property::POSITION, Vector2(-(NATIVE_IMAGE_WIDTH * 0.5f + 1.0f), 0.0f));
 
       window.Add(nativeImageViewer);
 
@@ -321,8 +326,8 @@ public:
       ImageView nativeImageViewer = ImageView::New(nativeImageUrl.GetUrl());
       nativeImageViewer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
       nativeImageViewer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      nativeImageViewer.SetProperty(Actor::Property::SIZE, Vector2(123.0f, 345.0f));
-      nativeImageViewer.SetProperty(Actor::Property::POSITION, Vector2(123.0f * 0.5f + 1.0f, 0.0f));
+      nativeImageViewer.SetProperty(Actor::Property::SIZE, Vector2(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT));
+      nativeImageViewer.SetProperty(Actor::Property::POSITION, Vector2(NATIVE_IMAGE_WIDTH * 0.5f + 1.0f, 0.0f));
 
       window.Add(nativeImageViewer);
 

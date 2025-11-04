@@ -1,6 +1,11 @@
-attribute mediump vec3   aPosition;
-uniform mediump mat4   uMvpMatrix;
-varying mediump vec3 vTexCoord;
+//@version 100
+
+INPUT mediump vec3   aPosition;
+UNIFORM_BLOCK VertBlock
+{
+UNIFORM mediump mat4   uMvpMatrix;
+};
+OUTPUT mediump vec3 vTexCoord;
 
 void main()
 {

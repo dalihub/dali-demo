@@ -190,6 +190,9 @@ msgstr "Native Image Source"
 msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE_QUEUE"
 msgstr "Native Image Source Queue"
 
+msgid "DALI_DEMO_STR_TITLE_NATIVE_IMAGE_TEST"
+msgstr "Native Image Test"
+
 msgid "DALI_DEMO_STR_TITLE_NEGOTIATE_SIZE"
 msgstr "Negotiate Size"
 
