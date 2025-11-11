@@ -12,8 +12,12 @@ UNIFORM_BLOCK Vanilla
 
 UNIFORM_BLOCK VertBlock
 {
-UNIFORM float uFlow;
 UNIFORM vec4 uUvTransform; // rotation, scale (initial, target))
+};
+
+UNIFORM_BLOCK SharedBlock
+{
+UNIFORM float uFlow;
 };
 
 INPUT vec2 aPosition;
