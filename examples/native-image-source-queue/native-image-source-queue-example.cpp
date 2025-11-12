@@ -287,6 +287,8 @@ public:
 
     mNativeQueue = NativeImageSourceQueue::New(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT, NativeImageSourceQueue::ColorFormat::BGRA8888);
 
+    mNativeQueue->SetQueueUsageHint(Dali::NativeImageSourceQueue::QueueUsageType::ENQUEUE_DEQUEUE);
+
     // Check whether current platform support NativeImageSourceQueue or not.
     if(mNativeQueue && !mNativeQueue->GetNativeImageSourceQueue().Empty())
     {
