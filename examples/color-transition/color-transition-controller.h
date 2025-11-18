@@ -1,7 +1,7 @@
 #ifndef DALI_DEMO_COLOR_TRANSITION_CONTROLLER_H
 #define DALI_DEMO_COLOR_TRANSITION_CONTROLLER_H
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ class ColorTransitionController : public Dali::ConnectionTracker
 public:
   using OnFinished = void (*)(void*);
 
-  ColorTransitionController(Dali::WeakHandle<Dali::RenderTaskList> renderTasks, Dali::Actor content, Dali::RenderTaskList tasks, Dali::Vector3 initialColor);
+  ColorTransitionController(Dali::Actor root, Dali::WeakHandle<Dali::RenderTaskList> renderTasks, Dali::Actor content, Dali::RenderTaskList tasks, Dali::Vector3 initialColor);
   ~ColorTransitionController();
 
   Dali::Actor GetComposite();
@@ -60,4 +60,4 @@ private:
   Dali::WeakHandle<Dali::RenderTaskList> mWeakRenderTasks;
 };
 
-#endif //DALI_DEMO_COLOR_TRANSITION_CONTROLLER_H
+#endif // DALI_DEMO_COLOR_TRANSITION_CONTROLLER_H

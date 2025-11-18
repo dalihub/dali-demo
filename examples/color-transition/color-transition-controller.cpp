@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ const Vector4 BG_COLOR = Vector4(0.f, 0.f, 0.f, 0.f);
 
 } // namespace
 
-ColorTransitionController::ColorTransitionController(WeakHandle<RenderTaskList> window, Actor content, RenderTaskList tasks, Vector3 initialColor)
+ColorTransitionController::ColorTransitionController(Dali::Actor root, WeakHandle<RenderTaskList> window, Actor content, RenderTaskList tasks, Vector3 initialColor)
 : mWeakRenderTasks(window)
 {
   auto contentSize = content.GetProperty(Actor::Property::SIZE).Get<Vector2>();
@@ -43,12 +43,19 @@ ColorTransitionController::ColorTransitionController(WeakHandle<RenderTaskList> 
   auto fbo = FrameBuffer::New(rtt.GetWidth(), rtt.GetHeight(), FrameBuffer::Attachment::NONE);
   fbo.AttachColorTexture(rtt);
 
+  // Create custom camera
+  CameraActor offscreenCamera = CameraActor::New(contentSize);
+  offscreenCamera.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  offscreenCamera.SetInvertYAxis(true);
+  root.Add(offscreenCamera);
+
   RenderTask rtCompositor = tasks.CreateTask();
   rtCompositor.SetClearEnabled(true);
   rtCompositor.SetClearColor(BG_COLOR);
   rtCompositor.SetFrameBuffer(fbo);
   rtCompositor.SetSourceActor(content);
   rtCompositor.SetExclusive(true);
+  rtCompositor.SetCameraActor(offscreenCamera);
   mRtCompositor = rtCompositor;
 
   // renderer for the composite

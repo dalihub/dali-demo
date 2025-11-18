@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2025 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -132,7 +132,7 @@ private:
 
     auto renderTasks     = window.GetRenderTaskList();
     auto weakRenderTasks = WeakHandle<RenderTaskList>(renderTasks);
-    auto controller      = new ColorTransitionController(weakRenderTasks, content, window.GetRenderTaskList(), INITIAL_COLOR);
+    auto controller      = new ColorTransitionController(mMainRoot, weakRenderTasks, content, window.GetRenderTaskList(), INITIAL_COLOR);
     mController.reset(controller);
     mainRoot.Add(mController->GetComposite());
 
