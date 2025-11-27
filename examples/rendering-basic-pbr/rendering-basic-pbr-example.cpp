@@ -44,9 +44,8 @@ namespace
 {
 const char* NORMAL_ROUGH_TEXTURE_URL     = DEMO_IMAGE_DIR "Test_100_normal_roughness.png";
 const char* ALBEDO_METAL_TEXTURE_URL     = DEMO_IMAGE_DIR "Test_wblue_100_albedo_metal.png";
-const char* CUBEMAP_SPECULAR_TEXTURE_URL = DEMO_IMAGE_DIR "meadow_irradiance_rgb16f_cm.ktx";
-const char* CUBEMAP_DIFFUSE_TEXTURE_URL  = DEMO_IMAGE_DIR "meadow_diffuse_rgb16f_cm.ktx";
-//                                  DEMO_IMAGE_DIR "meadow_radiance_rgb16f_cm.ktx"};
+const char* CUBEMAP_SPECULAR_TEXTURE_URL = DEMO_IMAGE_DIR "meadow_radiance_rgb16f_cm.ktx";
+const char* CUBEMAP_DIFFUSE_TEXTURE_URL  = DEMO_IMAGE_DIR "meadow_irradiance_rgb16f_cm.ktx";
 
 const char* SPHERE_URL = DEMO_MODEL_DIR "sphere.obj";
 const char* TEAPOT_URL = DEMO_MODEL_DIR "teapot.obj";

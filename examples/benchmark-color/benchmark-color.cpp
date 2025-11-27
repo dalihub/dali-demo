@@ -86,6 +86,7 @@ public:
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &BenchmarkColor::Create);
+    mApplication.TerminateSignal().Connect(this, &BenchmarkColor::Destroy);
   }
 
   ~BenchmarkColor() = default;
@@ -211,6 +212,23 @@ public:
       mTimer.TickSignal().Connect(this, &BenchmarkColor::OnTimer);
       mTimer.Start();
     }
+  }
+  void Destroy(Application& application)
+  {
+    // Clean up:
+    mTimer.Stop();
+    mAnimation.Stop();
+    mAnimation.Reset();
+    auto count = mRootActor.GetChildCount();
+    for(auto i = 0u; i < count; ++i)
+    {
+      if(auto control = Control::DownCast(mRootActor.GetChildAt(0)); control != nullptr)
+      {
+        control.ClearRenderEffect();
+        UnparentAndReset(control);
+      }
+    }
+    UnparentAndReset(mRootActor);
   }
 
   bool OnTimer()

@@ -9,8 +9,12 @@ UNIFORM sampler2D sFlowMap;
 
 UNIFORM_BLOCK FragBlock
 {
-  UNIFORM float uFlow;
   UNIFORM vec3 uRgb[2];
+};
+
+UNIFORM_BLOCK SharedBlock
+{
+UNIFORM float uFlow;
 };
 
 INPUT vec2 vUv;

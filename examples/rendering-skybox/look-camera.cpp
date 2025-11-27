@@ -106,7 +106,8 @@ bool LookCamera::OnTick()
   {
     mCameraYawPitch.x = CAMERA_VERTICAL_LIMIT * ((mCameraYawPitch.x < 0) ? -1.0f : 1.0f);
   }
-
+  // Spin
+  mCameraYawPitch.y+=3.14f/15.0f;
   Quaternion rotation;
   Quaternion rotX(Degree(mCameraYawPitch.x), Vector3(1.0f, 0.0f, 0.0f));
   Quaternion rotY(Degree(mCameraYawPitch.y), Vector3(0.0f, 1.0f, 0.0f));
