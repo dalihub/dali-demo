@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  *
  */
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/visuals/animated-gradient-visual-properties-devel.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
 #include <dali/integration-api/debug.h>
@@ -24,7 +24,7 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
-// This example shows how to create and display animated-gradient-effect
+// This example shows how to create and display gradient-effect with animate start offset
 //
 namespace
 {
@@ -300,7 +300,7 @@ public:
     mBackground = Control::New();
     mBackground.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mBackground.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
-    mBackground.SetProperty(Actor::Property::SIZE, WINDOW_SIZE);
+    mBackground.SetProperty(Actor::Property::SIZE, WINDOW_SIZE * 2.0f);
 
     mWindow.Add(mBackground);
 
@@ -437,126 +437,46 @@ public:
   }
 
 private:
-  // Utility function to make animation parameter map. return Property::Map
-  Property::Value BuildMap(const Property::Value& start, const Property::Value& target, int dir, float duration, float delay, int repeat, float repeat_delay, int motion, int easing)
-  {
-    Property::Map map;
-
-    map.Clear();
-    map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::START, start);
-    map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::TARGET, target);
-    if(dir == 0)
-    {
-      map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::DIRECTION, DevelAnimatedGradientVisual::AnimationParameter::DirectionType::FORWARD);
-    }
-    else
-    {
-      map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::DIRECTION, DevelAnimatedGradientVisual::AnimationParameter::DirectionType::BACKWARD);
-    }
-    map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::DURATION, duration);
-    map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::DELAY, delay);
-    map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::REPEAT, repeat);
-    map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::REPEAT_DELAY, repeat_delay);
-    if(motion == 0)
-    {
-      map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::MOTION_TYPE, DevelAnimatedGradientVisual::AnimationParameter::MotionType::LOOP);
-    }
-    else
-    {
-      map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::MOTION_TYPE, DevelAnimatedGradientVisual::AnimationParameter::MotionType::MIRROR);
-    }
-    if(easing == 0)
-    {
-      map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::EASING_TYPE, DevelAnimatedGradientVisual::AnimationParameter::EasingType::LINEAR);
-    }
-    else if(easing == 1)
-    {
-      map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::EASING_TYPE, DevelAnimatedGradientVisual::AnimationParameter::EasingType::IN);
-    }
-    else if(easing == 2)
-    {
-      map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::EASING_TYPE, DevelAnimatedGradientVisual::AnimationParameter::EasingType::OUT);
-    }
-    else
-    {
-      map.Insert(DevelAnimatedGradientVisual::AnimationParameter::Property::EASING_TYPE, DevelAnimatedGradientVisual::AnimationParameter::EasingType::IN_OUT);
-    }
-
-    return Property::Value(map);
-  }
-
   // Setup background visual property during nothing action
   void InitMapNormal()
   {
     mBackgroundNormalMap.Clear();
-    mBackgroundNormalMap.Insert(Visual::Property::TYPE, DevelVisual::ANIMATED_GRADIENT);
-
-    mBackgroundNormalMap.Insert(Toolkit::DevelAnimatedGradientVisual::Property::START_POSITION, Vector2(-0.5, -0.5));
-    mBackgroundNormalMap.Insert(Toolkit::DevelAnimatedGradientVisual::Property::END_POSITION, Vector2(0.5, 0.5));
-    mBackgroundNormalMap.Insert(Toolkit::DevelAnimatedGradientVisual::Property::START_COLOR, mNormalColor);
-    mBackgroundNormalMap.Insert(Toolkit::DevelAnimatedGradientVisual::Property::END_COLOR, mNormalColor);
-    mBackgroundNormalMap.Insert(Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_CENTER, Vector2(0.0f, 0.0f));
-    mBackgroundNormalMap.Insert(Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_AMOUNT, 0.0f);
-    mBackgroundNormalMap.Insert(Toolkit::DevelAnimatedGradientVisual::Property::OFFSET, 0.0f);
+    mBackgroundNormalMap.Insert(Visual::Property::TYPE, Visual::COLOR);
+    mBackgroundNormalMap.Insert(Toolkit::ColorVisual::Property::MIX_COLOR, mNormalColor);
   }
 
-  // Setup background visual property during NFC tagging start
-  void InitMapStart()
+  // Setup background visual property during NFC tagging
+  void InitMapActive()
   {
-    mBackgroundMapStart.Clear();
-    mBackgroundMapStart.Insert(Visual::Property::TYPE, DevelVisual::ANIMATED_GRADIENT);
+    mBackgroundMapActive.Clear();
+    mBackgroundMapActive.Insert(Visual::Property::TYPE, DevelVisual::GRADIENT);
 
-    mBackgroundMapStart.Insert(Toolkit::DevelAnimatedGradientVisual::Property::START_POSITION, Vector2(-0.5, -0.5));
-    mBackgroundMapStart.Insert(Toolkit::DevelAnimatedGradientVisual::Property::END_POSITION, Vector2(0.5, 0.5));
-    mBackgroundMapStart.Insert(Toolkit::DevelAnimatedGradientVisual::Property::START_COLOR, mNormalColor);
-    mBackgroundMapStart.Insert(Toolkit::DevelAnimatedGradientVisual::Property::END_COLOR, mNormalColor);
-    mBackgroundMapStart.Insert(Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_CENTER, Vector2(0.0f, 0.0f));
-    mBackgroundMapStart.Insert(Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_AMOUNT, 0.0f);
-    mBackgroundMapStart.Insert(Toolkit::DevelAnimatedGradientVisual::Property::OFFSET, BuildMap(0.0f, 2.0f, 0, mLoadingTime, 0.0f, -1, 0.0f, 0, 0));
-
-    mColorAnimationStartStart = *(BuildMap(mNormalColor, Vector4(0, 0, 0, 0), 0, mDuration, 0.0f, 1, 0.0f, 0, 0).GetMap());
-    mColorAnimationStartEnd   = *(BuildMap(mNormalColor, Vector4(0, 0, 0, 0), 0, mDuration, 0.0f, 1, 0.0f, 0, 0).GetMap());
-  }
-
-  // Setup background visual property during NFC tagging end
-  void InitMapEnd()
-  {
-    mBackgroundMapEnd.Clear();
-    mBackgroundMapEnd.Insert(Visual::Property::TYPE, DevelVisual::ANIMATED_GRADIENT);
-
-    mBackgroundMapEnd.Insert(Toolkit::DevelAnimatedGradientVisual::Property::START_POSITION, Vector2(-0.5, -0.5));
-    mBackgroundMapEnd.Insert(Toolkit::DevelAnimatedGradientVisual::Property::END_POSITION, Vector2(0.5, 0.5));
-    mBackgroundMapEnd.Insert(Toolkit::DevelAnimatedGradientVisual::Property::START_COLOR, mNormalColor);
-    mBackgroundMapEnd.Insert(Toolkit::DevelAnimatedGradientVisual::Property::END_COLOR, mNormalColor);
-    mBackgroundMapEnd.Insert(Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_CENTER, Vector2(0.0f, 0.0f));
-    mBackgroundMapEnd.Insert(Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_AMOUNT, 0.0f);
-    mBackgroundMapEnd.Insert(Toolkit::DevelAnimatedGradientVisual::Property::OFFSET, BuildMap(0.0f, 2.0f, 0, mLoadingTime, 0.0f, -1, 0.0f, 0, 0));
-
-    mColorAnimationEndStart = *(BuildMap(mNormalColor, Vector4(0, 0, 0, 0), 1, mDuration, 0.0f, 1, 0.0f, 0, 0).GetMap());
-    mColorAnimationEndEnd   = *(BuildMap(mNormalColor, Vector4(0, 0, 0, 0), 1, mDuration, 0.0f, 1, 0.0f, 0, 0).GetMap());
+    mBackgroundMapActive.Insert(Toolkit::GradientVisual::Property::START_POSITION, Vector2(-0.5, -0.5));
+    mBackgroundMapActive.Insert(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.5, 0.5));
+    mBackgroundMapActive.Insert(Toolkit::GradientVisual::Property::STOP_OFFSET, Property::Array().Add(0.0f).Add(1.0f));
+    mBackgroundMapActive.Insert(Toolkit::GradientVisual::Property::STOP_COLOR, Property::Array().Add(mNormalColor).Add(mNormalColor));
+    mBackgroundMapActive.Insert(Toolkit::GradientVisual::Property::UNITS, GradientVisual::Units::OBJECT_BOUNDING_BOX);
+    mBackgroundMapActive.Insert(Toolkit::GradientVisual::Property::SPREAD_METHOD, GradientVisual::SpreadMethod::REFLECT);
   }
 
   // Setup background visual property during card change
   void InitMapMove()
   {
     mBackgroundMapMove.Clear();
-    mBackgroundMapMove.Insert(Visual::Property::TYPE, DevelVisual::ANIMATED_GRADIENT);
-    mBackgroundMapMove.Insert(Toolkit::DevelAnimatedGradientVisual::Property::SPREAD_TYPE, Toolkit::DevelAnimatedGradientVisual::SpreadType::CLAMP);
+    mBackgroundMapMove.Insert(Visual::Property::TYPE, DevelVisual::GRADIENT);
 
-    mBackgroundMapMove.Insert(Toolkit::DevelAnimatedGradientVisual::Property::START_POSITION, Vector2(-0.5, 0.0));
-    mBackgroundMapMove.Insert(Toolkit::DevelAnimatedGradientVisual::Property::END_POSITION, Vector2(0.5, 0.0));
-    mBackgroundMapMove.Insert(Toolkit::DevelAnimatedGradientVisual::Property::START_COLOR, mNormalStartColor);
-    mBackgroundMapMove.Insert(Toolkit::DevelAnimatedGradientVisual::Property::END_COLOR, mNormalEndColor);
-    mBackgroundMapMove.Insert(Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_CENTER, Vector2(0.0f, 0.0f));
-    mBackgroundMapMove.Insert(Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_AMOUNT, 0.0f);
-    mBackgroundMapMove.Insert(Toolkit::DevelAnimatedGradientVisual::Property::OFFSET, BuildMap(-1.0f, 1.0f, 0, mCardDuration, 0.0f, 1, 0.0f, 0, 2));
+    mBackgroundMapMove.Insert(Toolkit::GradientVisual::Property::START_POSITION, Vector2(-0.5, 0.0));
+    mBackgroundMapMove.Insert(Toolkit::GradientVisual::Property::END_POSITION, Vector2(0.5, 0.0));
+    mBackgroundMapMove.Insert(Toolkit::GradientVisual::Property::STOP_OFFSET, Property::Array().Add(0.0f).Add(1.0f));
+    mBackgroundMapMove.Insert(Toolkit::GradientVisual::Property::STOP_COLOR, Property::Array().Add(mNormalStartColor).Add(mNormalEndColor));
+    mBackgroundMapMove.Insert(Toolkit::GradientVisual::Property::UNITS, GradientVisual::Units::OBJECT_BOUNDING_BOX);
+    mBackgroundMapMove.Insert(Toolkit::GradientVisual::Property::SPREAD_METHOD, GradientVisual::SpreadMethod::PAD);
   }
 
   void InitMap()
   {
     InitMapNormal();
-    InitMapStart();
-    InitMapEnd();
+    InitMapActive();
     InitMapMove();
   }
 
@@ -572,11 +492,6 @@ private:
 
     mNormalStartColor = mNormalColor;
     mNormalEndColor   = mNormalColor;
-  }
-
-  void BuildAnimation()
-  {
-    InitMap();
   }
 
   void SetupCards()
@@ -648,38 +563,38 @@ private:
   // Run animations when 'index' card active
   void RunAnimation(int index)
   {
-    //set animated background color here
-    mColorAnimationStartStart[DevelAnimatedGradientVisual::AnimationParameter::Property::START] = mNormalStartColor;
-    mColorAnimationStartEnd[DevelAnimatedGradientVisual::AnimationParameter::Property::START]   = mNormalStartColor;
-    mColorAnimationEndStart[DevelAnimatedGradientVisual::AnimationParameter::Property::START]   = mNormalStartColor;
-    mColorAnimationEndEnd[DevelAnimatedGradientVisual::AnimationParameter::Property::START]     = mNormalStartColor;
+    mBackgroundMapActive[Toolkit::GradientVisual::Property::STOP_COLOR] = Property::Array().Add(mCards.GetColorStart(index)).Add(mCards.GetColorEnd(index));
+    mBackground.SetProperty(Control::Property::BACKGROUND, mBackgroundMapActive);
 
-    mColorAnimationStartStart[DevelAnimatedGradientVisual::AnimationParameter::Property::TARGET] = mCards.GetColorStart(index);
-    mColorAnimationStartEnd[DevelAnimatedGradientVisual::AnimationParameter::Property::TARGET]   = mCards.GetColorEnd(index);
-    mColorAnimationEndStart[DevelAnimatedGradientVisual::AnimationParameter::Property::TARGET]   = mCards.GetColorStart(index);
-    mColorAnimationEndEnd[DevelAnimatedGradientVisual::AnimationParameter::Property::TARGET]     = mCards.GetColorEnd(index);
+    if(mActiveAnimation)
+    {
+      mActiveAnimation.Clear();
+      mActiveAnimation.Reset();
+    }
 
-    mBackgroundMapStart[Toolkit::DevelAnimatedGradientVisual::Property::START_COLOR] = mColorAnimationStartStart;
-    mBackgroundMapStart[Toolkit::DevelAnimatedGradientVisual::Property::END_COLOR]   = mColorAnimationStartEnd;
-    mBackgroundMapEnd[Toolkit::DevelAnimatedGradientVisual::Property::START_COLOR]   = mColorAnimationEndStart;
-    mBackgroundMapEnd[Toolkit::DevelAnimatedGradientVisual::Property::END_COLOR]     = mColorAnimationEndEnd;
+    mActiveAnimation = Animation::New(mLoadingTime);
+    mActiveAnimation.SetEndAction(Animation::EndAction::DISCARD);
+    mActiveAnimation.SetLooping(true);
 
     if(index == 1)
     {
+      mActiveAnimation.AnimateTo(DevelControl::GetVisualProperty(mBackground, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), 2.0f);
       // Rotate background gradient
-      mBackgroundMapStart[Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_AMOUNT] = BuildMap(0.0f, Math::PI * 2.0f, 0, mLoadingTime, 0.0f, -1, 0.0f, 0, 0);
+      mActiveAnimation.AnimateBy(Property(mBackground, Actor::Property::ORIENTATION), Dali::Quaternion(Dali::Radian(Dali::Degree(360.0f)), Vector3::ZAXIS));
     }
     else if(index == 2)
     {
+      mActiveAnimation.SetDuration(mLoadingTime * 2.0f);
+      mActiveAnimation.AnimateTo(DevelControl::GetVisualProperty(mBackground, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), 4.0f);
       // Rotate background gradient more slow
-      mBackgroundMapStart[Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_AMOUNT] = BuildMap(0.0f, Math::PI * 2.0f, 0, mLoadingTime * 2.0, 0.0f, -1, 0.0f, 0, 0);
+      mActiveAnimation.AnimateBy(Property(mBackground, Actor::Property::ORIENTATION), Dali::Quaternion(Dali::Radian(Dali::Degree(360.0f)), Vector3::ZAXIS));
     }
     else
     {
-      mBackgroundMapStart[Toolkit::DevelAnimatedGradientVisual::Property::ROTATE_AMOUNT] = 0.0f;
+      mActiveAnimation.AnimateTo(DevelControl::GetVisualProperty(mBackground, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), 2.0f);
     }
 
-    mBackground.SetProperty(Control::Property::BACKGROUND, mBackgroundMapStart);
+    mActiveAnimation.Play();
 
     mTickCount         = 0;
     mBackgroundChanger = Timer::New(mLoadingTime * 1000.0f / mLoadingCountScale);
@@ -722,7 +637,6 @@ private:
       if(mCards.mCurState == 1)
       {
         mCards.mCurState = 2;
-        mBackground.SetProperty(Control::Property::BACKGROUND, mBackgroundMapEnd);
         mMoveBack.Play();
         mBackgroundChanger.SetInterval(mDuration * 1000.0f);
         return true;
@@ -740,27 +654,36 @@ private:
     if(mCards.MoveRight(mCardDuration))
     {
       // Set smooth background color change here
-      mNormalEndColor                                                                 = mCards.GetColorBackground(mCards.mCurIndex);
-      mBackgroundMapMove[Toolkit::DevelAnimatedGradientVisual::Property::START_COLOR] = mNormalEndColor;
-      mBackgroundMapMove[Toolkit::DevelAnimatedGradientVisual::Property::END_COLOR]   = mNormalStartColor;
-
-      (*mBackgroundMapMove[Toolkit::DevelAnimatedGradientVisual::Property::OFFSET].GetMap())[DevelAnimatedGradientVisual::AnimationParameter::Property::DIRECTION] = Property::Value(DevelAnimatedGradientVisual::AnimationParameter::DirectionType::BACKWARD);
-
+      mNormalEndColor                                                   = mCards.GetColorBackground(mCards.mCurIndex);
+      mBackgroundMapMove[Toolkit::GradientVisual::Property::STOP_COLOR] = Property::Array().Add(mNormalEndColor).Add(mNormalStartColor);
       mBackground.SetProperty(Control::Property::BACKGROUND, mBackgroundMapMove);
+
+      Dali::KeyFrames keyFrames = KeyFrames::New();
+      keyFrames.Add(0.0f, 1.0f);
+      keyFrames.Add(1.0f, -1.0f);
+
+      Animation anim = Animation::New(mCardDuration);
+      anim.AnimateBetween(DevelControl::GetVisualProperty(mBackground, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), keyFrames, AlphaFunction::EASE_OUT);
+      anim.Play();
     }
   }
   void MoveLeft()
   {
-    if(mCards.MoveLeft(mCardDuration))
+    auto anim = mCards.MoveLeft(mCardDuration);
+    if(anim)
     {
       //Set smooth background color change here
-      mNormalEndColor                                                                 = mCards.GetColorBackground(mCards.mCurIndex);
-      mBackgroundMapMove[Toolkit::DevelAnimatedGradientVisual::Property::START_COLOR] = mNormalStartColor;
-      mBackgroundMapMove[Toolkit::DevelAnimatedGradientVisual::Property::END_COLOR]   = mNormalEndColor;
-
-      (*mBackgroundMapMove[Toolkit::DevelAnimatedGradientVisual::Property::OFFSET].GetMap())[DevelAnimatedGradientVisual::AnimationParameter::Property::DIRECTION] = Property::Value(DevelAnimatedGradientVisual::AnimationParameter::DirectionType::FORWARD);
-
+      mNormalEndColor                                                   = mCards.GetColorBackground(mCards.mCurIndex);
+      mBackgroundMapMove[Toolkit::GradientVisual::Property::STOP_COLOR] = Property::Array().Add(mNormalStartColor).Add(mNormalEndColor);
       mBackground.SetProperty(Control::Property::BACKGROUND, mBackgroundMapMove);
+
+      Dali::KeyFrames keyFrames = KeyFrames::New();
+      keyFrames.Add(0.0f, -1.0f);
+      keyFrames.Add(1.0f, 1.0f);
+
+      Animation anim = Animation::New(mCardDuration);
+      anim.AnimateBetween(DevelControl::GetVisualProperty(mBackground, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), keyFrames, AlphaFunction::EASE_OUT);
+      anim.Play();
     }
   }
 
@@ -770,10 +693,16 @@ private:
     mCancelSignal    = false;
     mMoveFront.Clear();
     mMoveBack.Clear();
+    if(mActiveAnimation)
+    {
+      mActiveAnimation.Clear();
+      mActiveAnimation.Reset();
+    }
 
-    mNormalStartColor                                                                 = mNormalEndColor;
-    mBackgroundNormalMap[Toolkit::DevelAnimatedGradientVisual::Property::START_COLOR] = mNormalStartColor;
-    mBackgroundNormalMap[Toolkit::DevelAnimatedGradientVisual::Property::END_COLOR]   = mNormalEndColor;
+    mNormalStartColor = mNormalEndColor;
+
+    mBackgroundNormalMap[ColorVisual::Property::MIX_COLOR] = mNormalStartColor;
+
     mBackground.SetProperty(Control::Property::BACKGROUND, mBackgroundNormalMap);
   }
 
@@ -796,18 +725,12 @@ private:
 
   Animation mMoveFront;
   Animation mMoveBack;
+  Animation mActiveAnimation;
 
-  // Property for background animated gradient visual
+  // Property for background gradient visual
   Property::Map mBackgroundNormalMap;
-  Property::Map mBackgroundMapStart;
-  Property::Map mBackgroundMapEnd;
+  Property::Map mBackgroundMapActive;
   Property::Map mBackgroundMapMove;
-
-  // Property for animation of color in animated gradient visual
-  Property::Map mColorAnimationStartStart;
-  Property::Map mColorAnimationStartEnd;
-  Property::Map mColorAnimationEndStart;
-  Property::Map mColorAnimationEndEnd;
 
   Vector4 mNormalColor;
   Vector4 mNormalStartColor;
