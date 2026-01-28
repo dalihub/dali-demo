@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  *
  */
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/visuals/animated-gradient-visual-properties-devel.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
 #include <dali/integration-api/debug.h>
@@ -24,7 +24,7 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
-// This example shows how to create and display animated-gradient-effect
+// This example shows how to create and display gradient-effect with animate start offset
 //
 namespace
 {
@@ -91,11 +91,40 @@ const char* const LABEL_NUMBER_STR("+1 908-247-1695");
 const char* const LABEL_DECLINE_STR("Decline Message");
 const char* const LABEL_TIME_STR("1:03");
 
-// Set style from json
-const char* const BACKGROUND_STYLE_JSON(DEMO_STYLE_DIR "animated-gradient-call-active-style.json");
-const char* const BACKGROUND_INCOME_STYLE_STR("IncomeBackground");
-const char* const BACKGROUND_ACTIVE_STYLE_STR("ActiveBackground");
-const char* const DECLINE_BUTTON_STYLE_STR("DeclineButton");
+// Gradient visual
+const Property::Map DECLINE_BUTTON_BACKGROUND = {
+  {Visual::Property::TYPE, Visual::GRADIENT},
+  {GradientVisual::Property::START_POSITION, Vector2(-(BUTTON_DECALL_SIZE.x + BUTTON_DECALL_SIZE.y) * 0.5f, (BUTTON_DECALL_SIZE.x + BUTTON_DECALL_SIZE.y) * 0.5f)},
+  {GradientVisual::Property::END_POSITION, Vector2((BUTTON_DECALL_SIZE.x + BUTTON_DECALL_SIZE.y) * 0.5f, -(BUTTON_DECALL_SIZE.x + BUTTON_DECALL_SIZE.y) * 0.5f)},
+  {GradientVisual::Property::STOP_OFFSET, Property::Array().Add(0.0f).Add(1.0f)},
+  {GradientVisual::Property::STOP_COLOR, Property::Array().Add(Vector4(0.8941f, 0.0078f, 0.0078f, 1.0f)).Add(Vector4(1.0f, 0.5961f, 0.0f, 1.0f))},
+  {GradientVisual::Property::SPREAD_METHOD, GradientVisual::SpreadMethod::REFLECT},
+  {GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE},
+};
+constexpr float DECLINE_ANIMATION_DURATION = 3.0f;
+constexpr float DECLINE_ANIMATION_DELAY    = 1.2f;
+
+Property::Map INCOME_BACKGROUND = {
+  {Visual::Property::TYPE, Visual::GRADIENT},
+  //{GradientVisual::Property::CENTER, Vector2::ZERO}, ///< Will be added at OnCreate time.
+  {GradientVisual::Property::RADIUS, 180.0f},
+  {GradientVisual::Property::STOP_OFFSET, Property::Array().Add(0.0f).Add(1.0f)},
+  {GradientVisual::Property::STOP_COLOR, Property::Array().Add(Vector4(0.1333f, 0.1647f, 0.2941f, 1.0f)).Add(Vector4(0.0784f, 0.3961f, 0.4863f, 1.0f))},
+  {GradientVisual::Property::SPREAD_METHOD, GradientVisual::SpreadMethod::REFLECT},
+  {GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE},
+};
+constexpr float INCOME_ANIMATION_DURATION = 1.25f;
+
+Property::Map ACTIVE_BACKGROUND = {
+  {Visual::Property::TYPE, Visual::GRADIENT},
+  //{GradientVisual::Property::CENTER, Vector2::ZERO}, ///< Will be added at OnCreate time.
+  {GradientVisual::Property::RADIUS, 180.0f},
+  {GradientVisual::Property::STOP_OFFSET, Property::Array().Add(0.0f).Add(1.0f)},
+  {GradientVisual::Property::STOP_COLOR, Property::Array().Add(Vector4(0.1066f, 0.1318f, 0.2353f, 1.0f)).Add(Vector4(0.0627f, 0.3169f, 0.3890f, 1.0f))},
+  {GradientVisual::Property::SPREAD_METHOD, GradientVisual::SpreadMethod::REFLECT},
+  {GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE},
+};
+constexpr float ACTIVE_ANIMATION_DURATION = 4.0f;
 
 } // unnamed namespace
 
@@ -133,9 +162,6 @@ public:
     mWindow = application.GetWindow();
     mWindow.KeyEventSignal().Connect(this, &CallController::OnKeyEvent);
 
-    // Apply custom style for background and button.
-    StyleManager::Get().ApplyTheme(BACKGROUND_STYLE_JSON);
-
     // Get current device's width and height.
     const Window::WindowSize windowSize = mWindow.GetSize();
     WINDOW_SIZE                         = Vector2(windowSize.GetWidth(), windowSize.GetHeight());
@@ -151,6 +177,9 @@ public:
     mBackground.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mBackground.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mBackground.SetProperty(Actor::Property::SIZE, WINDOW_SIZE);
+
+    INCOME_BACKGROUND.Insert(GradientVisual::Property::CENTER, WINDOW_SIZE * 0.5f);
+    ACTIVE_BACKGROUND.Insert(GradientVisual::Property::CENTER, WINDOW_SIZE * 0.5f);
 
     mWindow.Add(mBackground);
 
@@ -291,8 +320,8 @@ private:
     mCallEndButton.ClickedSignal().Connect(this, &CallController::OnButtonClicked);
     mCallEndButton.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, "");
     mCallEndButton.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, "");
-    mCallEndButton.SetStyleName(DECLINE_BUTTON_STYLE_STR);
     mCallEndButton.SetProperty(Button::Property::LABEL, "");
+    mCallEndButton.SetProperty(Control::Property::BACKGROUND, DECLINE_BUTTON_BACKGROUND);
 
     mButtonClip.Add(mCallEndButton);
     mButtonClip.Add(mButtonIcon);
@@ -330,26 +359,48 @@ private:
     mMoveBack.AnimateTo(Property(mLabelIncoming, Actor::Property::VISIBLE), true);
     mMoveBack.AnimateTo(Property(mLabelNumber, Actor::Property::VISIBLE), true);
     mMoveBack.AnimateTo(Property(mLabelTime, Actor::Property::VISIBLE), false);
+
+    mDeclineAnimation = Animation::New(DECLINE_ANIMATION_DURATION);
+
+    mDeclineAnimation.AnimateTo(DevelControl::GetVisualProperty(mCallEndButton, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), 2.0f, AlphaFunction::EASE_IN_OUT, TimePeriod(DECLINE_ANIMATION_DELAY, DECLINE_ANIMATION_DURATION - DECLINE_ANIMATION_DELAY));
+    mDeclineAnimation.SetLooping(true);
   }
 
   bool OnButtonClicked(Button button)
   {
     if(button == mCallStartButton)
     {
-      mBackground.SetStyleName(BACKGROUND_ACTIVE_STYLE_STR);
+      mBackground.SetProperty(Control::Property::BACKGROUND, ACTIVE_BACKGROUND);
       mWindow.Add(mButtonClip);
       mMoveFront.Play();
+      mDeclineAnimation.PlayFrom(DECLINE_ANIMATION_DELAY / DECLINE_ANIMATION_DURATION);
+
+      if(mIncomeAnimation)
+      {
+        mIncomeAnimation.Stop();
+      }
+      if(mActiveAnimation)
+      {
+        mActiveAnimation.Stop();
+      }
+      mActiveAnimation = Animation::New(ACTIVE_ANIMATION_DURATION);
+      mActiveAnimation.AnimateTo(DevelControl::GetVisualProperty(mBackground, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), -2.0f);
+      mActiveAnimation.SetLooping(true);
+      mActiveAnimation.Play();
     }
     else if(button == mCallEndButton)
     {
-      mBackground.SetStyleName(BACKGROUND_INCOME_STYLE_STR);
       mTempTimer = Timer::New(mDuration * 1000.0f);
       mTempTimer.TickSignal().Connect(this, &CallController::smallTick);
       mTempTimer.Start();
       mMoveBack.Play();
+      mDeclineAnimation.Stop();
+
+      Reset();
     }
     return true;
   }
+
   bool smallTick()
   {
     mButtonClip.Unparent();
@@ -358,7 +409,20 @@ private:
 
   void Reset()
   {
-    mBackground.SetStyleName(BACKGROUND_INCOME_STYLE_STR);
+    mBackground.SetProperty(Control::Property::BACKGROUND, INCOME_BACKGROUND);
+
+    if(mIncomeAnimation)
+    {
+      mIncomeAnimation.Stop();
+    }
+    if(mActiveAnimation)
+    {
+      mActiveAnimation.Stop();
+    }
+    mIncomeAnimation = Animation::New(INCOME_ANIMATION_DURATION);
+    mIncomeAnimation.AnimateTo(DevelControl::GetVisualProperty(mBackground, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), -2.0f);
+    mIncomeAnimation.SetLooping(true);
+    mIncomeAnimation.Play();
   }
 
 private:
@@ -387,6 +451,10 @@ private:
 
   Animation mMoveFront;
   Animation mMoveBack;
+
+  Animation mIncomeAnimation;
+  Animation mActiveAnimation;
+  Animation mDeclineAnimation;
 
   Vector4 mColorStart;
   Vector4 mColorEnd;
