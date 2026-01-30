@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@
 #include <dali-toolkit/devel-api/builder/tree-node.h>
 #include <dali/dali.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
+
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <map>

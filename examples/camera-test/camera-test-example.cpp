@@ -55,14 +55,14 @@ struct BoundaryConstraint
     if(centered)
     {
       // AnchorPoint is center of actor
-      current.x = std::clamp(curPos.x, 0.0f, boundarySize.x);
-      current.y = std::clamp(curPos.y, 0.0f, boundarySize.y);
+      current.x = Dali::Clamp(curPos.x, 0.0f, boundarySize.x);
+      current.y = Dali::Clamp(curPos.y, 0.0f, boundarySize.y);
     }
     else
     {
       // Anchor point is top left of actor.
-      current.x = std::clamp(curPos.x, 0.0f, boundarySize.x - curSize.x);
-      current.y = std::clamp(curPos.y, 0.0f, boundarySize.y - curSize.y);
+      current.x = Dali::Clamp(curPos.x, 0.0f, boundarySize.x - curSize.x);
+      current.y = Dali::Clamp(curPos.y, 0.0f, boundarySize.y - curSize.y);
     }
   }
 
