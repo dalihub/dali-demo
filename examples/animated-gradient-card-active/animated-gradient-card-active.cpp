@@ -669,8 +669,7 @@ private:
   }
   void MoveLeft()
   {
-    auto anim = mCards.MoveLeft(mCardDuration);
-    if(anim)
+    if(mCards.MoveLeft(mCardDuration))
     {
       //Set smooth background color change here
       mNormalEndColor                                                   = mCards.GetColorBackground(mCards.mCurIndex);
