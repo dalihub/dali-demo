@@ -533,6 +533,7 @@ ADD_SUBDIRECTORY(examples)
 ADD_SUBDIRECTORY(examples-reel)
 ADD_SUBDIRECTORY(tests-reel)
 ADD_SUBDIRECTORY(builder)
+ADD_SUBDIRECTORY(controls)
 
 # Setup CURRENT_BUILD_PLATFORM to use at message
 IF(ANDROID)
