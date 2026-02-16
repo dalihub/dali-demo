@@ -9,6 +9,7 @@ include_directories(
 # Collect all control sources
 file(GLOB_RECURSE CONTROLS_SOURCES
   ${ROOT_SRC_DIR}/controls/slider/*.cpp
+  ${ROOT_SRC_DIR}/controls/progress-bar/*.cpp
 )
 
 # Create static library for all controls
