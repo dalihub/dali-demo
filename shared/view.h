@@ -2,7 +2,7 @@
 #define DALI_DEMO_HELPER_VIEW_H
 
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,11 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/tool-bar/tool-bar.h>
+
+// INTERNAL INCLUDES
+#include "controls/tool-bar/tool-bar.h"
 
 namespace DemoHelper
 {
