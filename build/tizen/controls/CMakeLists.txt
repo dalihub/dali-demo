@@ -6,16 +6,11 @@ include_directories(
   ${ROOT_SRC_DIR}
 )
 
-# Collect all control sources
-file(GLOB_RECURSE CONTROLS_SOURCES
-  ${ROOT_SRC_DIR}/controls/slider/*.cpp
-  ${ROOT_SRC_DIR}/controls/progress-bar/*.cpp
-  ${ROOT_SRC_DIR}/controls/alignment/*.cpp
-  ${ROOT_SRC_DIR}/controls/tool-bar/*.cpp
-)
+# Include control source file list
+include(${ROOT_SRC_DIR}/controls/file.list)
 
 # Create static library for all controls
-add_library(dali-demo-controls STATIC ${CONTROLS_SOURCES})
+add_library(dali-demo-controls STATIC ${SOURCES})
 
 # Enable function and data sections for linker GC (Linux/Unix only)
 IF(UNIX AND NOT APPLE)

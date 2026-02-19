@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
 #include "shared/view.h"
+#include "controls/magnifier/magnifier.h"
 
-#include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/magnifier/magnifier.h>
 using namespace Dali;
 
 namespace

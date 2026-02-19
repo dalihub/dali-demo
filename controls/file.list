@@ -1,0 +1,20 @@
+# Set the source directory
+SET( controls_src_dir ${ROOT_SRC_DIR}/controls )
+
+# Add control source files
+SET( controls_src_files
+  ${controls_src_dir}/alignment/alignment.cpp
+  ${controls_src_dir}/alignment/alignment-impl.cpp
+  ${controls_src_dir}/magnifier/magnifier.cpp
+  ${controls_src_dir}/magnifier/magnifier-impl.cpp
+  ${controls_src_dir}/progress-bar/progress-bar.cpp
+  ${controls_src_dir}/progress-bar/progress-bar-impl.cpp
+  ${controls_src_dir}/slider/slider.cpp
+  ${controls_src_dir}/slider/slider-impl.cpp
+  ${controls_src_dir}/tool-bar/tool-bar.cpp
+  ${controls_src_dir}/tool-bar/tool-bar-impl.cpp
+)
+
+SET( SOURCES ${SOURCES}
+  ${controls_src_files}
+)
