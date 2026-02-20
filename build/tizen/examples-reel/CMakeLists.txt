@@ -37,7 +37,7 @@ ELSE()
   ADD_EXECUTABLE(dali-examples ${EXAMPLES_REEL_SRCS})
 ENDIF()
 
-TARGET_LINK_LIBRARIES(dali-examples ${REQUIRED_LIBS})
+TARGET_LINK_LIBRARIES(dali-examples ${REQUIRED_LIBS} dali-demo-controls)
 
 INSTALL(TARGETS dali-examples DESTINATION ${BINDIR})
 
