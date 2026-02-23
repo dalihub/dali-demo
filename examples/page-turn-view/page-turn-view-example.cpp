@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,15 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/page-turn-view/page-factory.h>
-#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-landscape-view.h>
-#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-portrait-view.h>
-#include <dali-toolkit/devel-api/controls/page-turn-view/page-turn-view.h>
 #include <dali/dali.h>
+
+// INTERNAL INCLUDES
+#include "controls/page-turn-view/page-factory.h"
+#include "controls/page-turn-view/page-turn-landscape-view.h"
+#include "controls/page-turn-view/page-turn-portrait-view.h"
+#include "controls/page-turn-view/page-turn-view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
