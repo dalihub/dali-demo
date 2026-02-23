@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,7 @@
  *
  */
 
-#include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/progress-bar/progress-bar-devel.h>
+#include "controls/progress-bar/progress-bar.h"
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include "shared/view.h"
 
@@ -26,7 +25,8 @@ using Dali::Toolkit::ProgressBar;
 
 namespace
 {
-const char* const THEME_PATH(DEMO_STYLE_DIR "progress-bar-example-theme.json"); ///< The theme used for this example
+const char* const DEFAULT_THEME_PATH(DEMO_STYLE_DIR "demo-controls-theme.json"); ///< The default theme used for this example
+const char* const THEME_PATH(DEMO_STYLE_DIR "progress-bar-example-theme.json");  ///< The theme used for this example
 const char* const BACKGROUND_IMAGE = DEMO_IMAGE_DIR "background-gradient.jpg";
 const char* const TOOLBAR_IMAGE    = DEMO_IMAGE_DIR "top-bar.png";
 const char* const TOOLBAR_TITLE    = "Progress Bar";
@@ -85,7 +85,7 @@ private:
     mProgressBarDefault.ValueChangedSignal().Connect(this, &ProgressBarExample::OnValueChanged);
 
     // Creates a progress bar in circular style
-    mProgressBarCircular = DevelProgressBar::New(DevelProgressBar::Style::CIRCULAR);
+    mProgressBarCircular = ProgressBar::New(ProgressBar::Style::CIRCULAR);
     mProgressBarCircular.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     mProgressBarCircular.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
     mProgressBarCircular.SetProperty(Actor::Property::SIZE, Vector2(CIRCULAR_PROGRESS_BAR_SIZE, CIRCULAR_PROGRESS_BAR_SIZE));
@@ -225,7 +225,7 @@ private:
     }
     else
     {
-      styleManager.ApplyDefaultTheme();
+      styleManager.ApplyTheme(DEFAULT_THEME_PATH);
       isDefaultTheme = true;
     }
     return true;
@@ -261,7 +261,7 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application        application = Application::New(&argc, &argv);
+  Application        application = Application::New(&argc, &argv, DEFAULT_THEME_PATH);
   ProgressBarExample test(application);
   application.MainLoop();
   return 0;

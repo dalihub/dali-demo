@@ -3,6 +3,10 @@
   {
     "STYLE_DIR":"{APPLICATION_RESOURCE_PATH}/style"
   },
+  "includes":
+  [
+    "{STYLE_DIR}/demo-controls-theme.json"
+  ],
   "styles":
   {
     "Title":{

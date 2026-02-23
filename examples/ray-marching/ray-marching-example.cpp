@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,14 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/tool-bar/tool-bar.h>
 #include <dali/devel-api/adaptor-framework/file-stream.h>
 #include <dali/integration-api/debug.h>
 #include <stdio.h>
+
+// INTERNAL INCLUDES
+#include "controls/tool-bar/tool-bar.h"
 #include "shared/utility.h"
 #include "shared/view.h"
 

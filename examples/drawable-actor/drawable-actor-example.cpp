@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,10 +52,10 @@ public:
     window.SetBackgroundColor(Color::WHITE);
 
     // Create native renderer
-    mRenderer = std::make_unique<NativeRenderer>(window.GetSize().GetWidth(), window.GetSize().GetHeight());
+    mRenderer = MakeUnique<NativeRenderer>(window.GetSize().GetWidth(), window.GetSize().GetHeight());
 
     // Create render callback
-    mRenderCallback = RenderCallback::New<NativeRenderer>(mRenderer.get(), &NativeRenderer::OnRender);
+    mRenderCallback = RenderCallback::New<NativeRenderer>(mRenderer.Get(), &NativeRenderer::OnRender);
 
     // Create drawable actor
     mGLActor = DrawableActor::New(*mRenderCallback);
@@ -104,8 +104,8 @@ public:
   TextLabel     mTextLabel;
   DrawableActor mGLActor;
 
-  std::unique_ptr<RenderCallback> mRenderCallback;
-  std::unique_ptr<NativeRenderer> mRenderer{nullptr};
+  UniquePtr<RenderCallback> mRenderCallback;
+  UniquePtr<NativeRenderer> mRenderer{nullptr};
 
 private:
   Application& mApplication;
