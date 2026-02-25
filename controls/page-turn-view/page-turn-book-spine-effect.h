@@ -22,8 +22,8 @@
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
 
 // INTERNAL INCLUDES
-#include "page-turn-book-spine-effect-frag.h"
-#include "page-turn-book-spine-effect-vert.h"
+#include <controls/shaders/page-turn-book-spine-effect-frag.h>
+#include <controls/shaders/page-turn-book-spine-effect-vert.h>
 
 namespace Dali
 {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,13 @@
  */
 
 // EXTERNAL INCLUDES
-
-// INTERNAL INCLUDES
-#include "shared/view.h"
-
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/effects-view/effects-view.h>
 #include <dali/dali.h>
 #include <sstream>
+
+// INTERNAL INCLUDES
+#include <controls/effects-view/effects-view.h>
+#include <shared/view.h>
 
 using namespace Dali;
 using namespace Dali::Toolkit;
