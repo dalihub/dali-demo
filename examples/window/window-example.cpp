@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -435,7 +435,7 @@ public:
           bColor = false;
         }
 
-        DevelWindow::AddFramePresentedCallback(window, std::unique_ptr<Dali::CallbackBase>(MakeCallback(this, &WindowExampleController::PresentedCallback)), count);
+        DevelWindow::AddFramePresentedCallback(window, MakeCallback(this, &WindowExampleController::PresentedCallback), count);
       }
       else if(event.GetKeyName() == "3")
       {
