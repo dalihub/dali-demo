@@ -7,6 +7,9 @@ SET( controls_src_files
   ${controls_src_dir}/alignment/alignment-impl.cpp
   ${controls_src_dir}/bloom-view/bloom-view.cpp
   ${controls_src_dir}/bloom-view/bloom-view-impl.cpp
+  ${controls_src_dir}/bubble-effect/bubble-emitter.cpp
+  ${controls_src_dir}/bubble-effect/bubble-emitter-impl.cpp
+  ${controls_src_dir}/bubble-effect/bubble-renderer.cpp
   ${controls_src_dir}/effects-view/effects-view.cpp
   ${controls_src_dir}/effects-view/effects-view-impl.cpp
   ${controls_src_dir}/filters/blur-two-pass-filter.cpp
