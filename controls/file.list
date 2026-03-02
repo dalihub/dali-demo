@@ -5,6 +5,14 @@ SET( controls_src_dir ${ROOT_SRC_DIR}/controls )
 SET( controls_src_files
   ${controls_src_dir}/alignment/alignment.cpp
   ${controls_src_dir}/alignment/alignment-impl.cpp
+  ${controls_src_dir}/bloom-view/bloom-view.cpp
+  ${controls_src_dir}/bloom-view/bloom-view-impl.cpp
+  ${controls_src_dir}/effects-view/effects-view.cpp
+  ${controls_src_dir}/effects-view/effects-view-impl.cpp
+  ${controls_src_dir}/filters/blur-two-pass-filter.cpp
+  ${controls_src_dir}/filters/emboss-filter.cpp
+  ${controls_src_dir}/filters/image-filter.cpp
+  ${controls_src_dir}/filters/spread-filter.cpp
   ${controls_src_dir}/magnifier/magnifier.cpp
   ${controls_src_dir}/magnifier/magnifier-impl.cpp
   ${controls_src_dir}/page-turn-view/page-turn-effect.cpp
@@ -16,8 +24,12 @@ SET( controls_src_files
   ${controls_src_dir}/page-turn-view/page-turn-view-impl.cpp
   ${controls_src_dir}/progress-bar/progress-bar.cpp
   ${controls_src_dir}/progress-bar/progress-bar-impl.cpp
+  ${controls_src_dir}/shadow-view/shadow-view.cpp
+  ${controls_src_dir}/shadow-view/shadow-view-impl.cpp
   ${controls_src_dir}/slider/slider.cpp
   ${controls_src_dir}/slider/slider-impl.cpp
+  ${controls_src_dir}/super-blur-view/super-blur-view.cpp
+  ${controls_src_dir}/super-blur-view/super-blur-view-impl.cpp
   ${controls_src_dir}/tool-bar/tool-bar.cpp
   ${controls_src_dir}/tool-bar/tool-bar-impl.cpp
 )

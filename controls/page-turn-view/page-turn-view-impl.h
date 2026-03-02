@@ -19,15 +19,15 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali-toolkit/devel-api/controls/shadow-view/shadow-view.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/devel-api/common/map-wrapper.h>
 #include <dali/public-api/actors/layer.h>
 #include <dali/public-api/rendering/renderer.h>
 
 // INTERNAL INCLUDES
-#include "page-factory.h"
-#include "page-turn-view.h"
+#include <controls/page-turn-view/page-factory.h>
+#include <controls/page-turn-view/page-turn-view.h>
+#include <controls/shadow-view/shadow-view.h>
 
 namespace Dali
 {
