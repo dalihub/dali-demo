@@ -41,10 +41,10 @@ struct Vertex
   {
   }
 
-  Vertex(float index, const Dali::Vector2& position, const Dali::Vector2& textureCoord)
-  : index(index),
-    position(position),
-    textureCoord(textureCoord)
+  Vertex(float aIndex, const Dali::Vector2& aPosition, const Dali::Vector2& aTextureCoord)
+  : index(aIndex),
+    position(aPosition),
+    textureCoord(aTextureCoord)
   {
   }
 
