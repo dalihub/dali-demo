@@ -17,6 +17,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/color-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/integration-api/debug.h>
@@ -100,10 +101,15 @@ void GetNanoseconds(uint64_t& timeInNanoseconds)
   timeInNanoseconds = static_cast<uint64_t>(duration.count());
 }
 
+Property::Map gBasicBackroundProperties;
+Property::Map gBasicCornerRadiusProperties;
+Property::Map gBasicBorderlineProperties;
+Property::Map gBlurVisualMap;
+
 Control CreateColor()
 {
   Control bgView = Control::New(Control::ControlBehaviour::DISABLE_STYLE_CHANGE_SIGNALS);
-  bgView.SetBackgroundColor(Color::YELLOW);
+  bgView.SetProperties(gBasicBackroundProperties);
   return bgView;
 }
 
@@ -123,13 +129,8 @@ Control CreateRoundedColor()
 {
   Control bgView = Control::New(Control::ControlBehaviour::DISABLE_STYLE_CHANGE_SIGNALS);
 
-  Property::Map map;
-  map[Visual::Property::TYPE]                      = Visual::COLOR;
-  map[ColorVisual::Property::MIX_COLOR]            = Color::YELLOW;
-  map[DevelVisual::Property::CORNER_RADIUS]        = 0.5f;
-  map[DevelVisual::Property::CORNER_RADIUS_POLICY] = Visual::Transform::Policy::RELATIVE;
-
-  bgView[Control::Property::BACKGROUND] = map;
+  bgView.SetProperties(gBasicBackroundProperties);
+  bgView.SetProperties(gBasicCornerRadiusProperties);
 
   return bgView;
 }
@@ -138,13 +139,8 @@ Control CreateBorderColor(const float& requiredBorderlineWidth)
 {
   Control bgView = Control::New(Control::ControlBehaviour::DISABLE_STYLE_CHANGE_SIGNALS);
 
-  Property::Map map;
-  map[Visual::Property::TYPE]                  = Visual::COLOR;
-  map[ColorVisual::Property::MIX_COLOR]        = Color::YELLOW;
-  map[DevelVisual::Property::BORDERLINE_WIDTH] = requiredBorderlineWidth;
-  map[DevelVisual::Property::BORDERLINE_COLOR] = Color::RED;
-
-  bgView[Control::Property::BACKGROUND] = map;
+  bgView.SetProperties(gBasicBackroundProperties);
+  bgView.SetProperties(gBasicBorderlineProperties);
 
   return bgView;
 }
@@ -153,15 +149,9 @@ Control CreateRoundedBorderColor(const float& requiredBorderlineWidth)
 {
   Control bgView = Control::New(Control::ControlBehaviour::DISABLE_STYLE_CHANGE_SIGNALS);
 
-  Property::Map map;
-  map[Visual::Property::TYPE]                      = Visual::COLOR;
-  map[ColorVisual::Property::MIX_COLOR]            = Color::YELLOW;
-  map[DevelVisual::Property::CORNER_RADIUS]        = 0.5f;
-  map[DevelVisual::Property::CORNER_RADIUS_POLICY] = Visual::Transform::Policy::RELATIVE;
-  map[DevelVisual::Property::BORDERLINE_WIDTH]     = requiredBorderlineWidth;
-  map[DevelVisual::Property::BORDERLINE_COLOR]     = Color::RED;
-
-  bgView[Control::Property::BACKGROUND] = map;
+  bgView.SetProperties(gBasicBackroundProperties);
+  bgView.SetProperties(gBasicCornerRadiusProperties);
+  bgView.SetProperties(gBasicBorderlineProperties);
 
   return bgView;
 }
@@ -170,12 +160,7 @@ Control CreateBlurColor(const float& requiredBlurRadius)
 {
   Control bgView = Control::New(Control::ControlBehaviour::DISABLE_STYLE_CHANGE_SIGNALS);
 
-  Property::Map map;
-  map[Visual::Property::TYPE]                  = Visual::COLOR;
-  map[ColorVisual::Property::MIX_COLOR]        = Color::YELLOW;
-  map[DevelColorVisual::Property::BLUR_RADIUS] = requiredBlurRadius;
-
-  bgView[Control::Property::BACKGROUND] = map;
+  bgView[Control::Property::BACKGROUND] = gBlurVisualMap;
 
   return bgView;
 }
@@ -184,14 +169,8 @@ Control CreateRoundedBlurColor(const float& requiredBlurRadius)
 {
   Control bgView = Control::New(Control::ControlBehaviour::DISABLE_STYLE_CHANGE_SIGNALS);
 
-  Property::Map map;
-  map[Visual::Property::TYPE]                      = Visual::COLOR;
-  map[ColorVisual::Property::MIX_COLOR]            = Color::YELLOW;
-  map[DevelVisual::Property::CORNER_RADIUS]        = 0.5f;
-  map[DevelVisual::Property::CORNER_RADIUS_POLICY] = Visual::Transform::Policy::RELATIVE;
-  map[DevelColorVisual::Property::BLUR_RADIUS]     = requiredBlurRadius;
-
-  bgView[Control::Property::BACKGROUND] = map;
+  bgView[Control::Property::BACKGROUND] = gBlurVisualMap;
+  bgView.SetProperties(gBasicCornerRadiusProperties);
 
   return bgView;
 }
@@ -309,6 +288,8 @@ public:
     mCreateCount = 0;
     mDeleteCount = 0;
     mImageCount  = 0;
+
+    PreparePropertyMap();
 
     timer.Start();
 
@@ -494,6 +475,18 @@ public:
       DALI_LOG_ERROR("Duration of all app running time : %.6lf ms\n", (mAppEndTime - mAppStartTime) / 1000000.0);
       mApplication.Quit();
     }
+  }
+
+  void PreparePropertyMap()
+  {
+    float requiredBorderlineWidth = Dali::Min(mSize.width, mSize.height) * VIEW_MARGIN_RATE;
+    float requiredBlurRadius      = Dali::Min(mSize.width, mSize.height) * VIEW_MARGIN_RATE * 0.5f;
+
+    gBasicBackroundProperties    = Property::Map().Add(Control::Property::BACKGROUND, Color::YELLOW);
+    gBasicCornerRadiusProperties = Property::Map().Add(DevelControl::Property::CORNER_RADIUS, 0.5f).Add(DevelControl::Property::CORNER_RADIUS_POLICY, (int)Visual::Transform::Policy::RELATIVE);
+    gBasicBorderlineProperties   = Property::Map().Add(DevelControl::Property::BORDERLINE_WIDTH, requiredBorderlineWidth).Add(DevelControl::Property::BORDERLINE_COLOR, Color::RED);
+
+    gBlurVisualMap = Property::Map().Add(Visual::Property::TYPE, (int)Visual::Type::COLOR).Add(ColorVisual::Property::MIX_COLOR, Color::YELLOW).Add(DevelColorVisual::Property::BLUR_RADIUS, requiredBlurRadius);
   }
 
 private:
