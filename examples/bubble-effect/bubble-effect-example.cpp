@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,14 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/bubble-effect/bubble-emitter.h>
 #include <dali/dali.h>
-#include "shared/utility.h"
-#include "shared/view.h"
+
+// INTERNAL INCLUDES
+#include <controls/bubble-effect/bubble-emitter.h>
+#include <shared/utility.h>
+#include <shared/view.h>
 
 using namespace Dali;
 
