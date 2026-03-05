@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,8 +81,8 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("magnifier.example", DALI_DEMO_STR_TITLE_MAGNIFIER));
   demo.AddExample(Example("mesh-morph.example", DALI_DEMO_STR_TITLE_MESH_MORPH));
   demo.AddExample(Example("motion-stretch.example", DALI_DEMO_STR_TITLE_MOTION_STRETCH));
-  demo.AddExample(Example("native-image-source.example", DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE));
-  demo.AddExample(Example("native-image-source-queue.example", DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE_QUEUE));
+  demo.AddExample(Example("native-image.example", DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE));
+  demo.AddExample(Example("native-image-queue.example", DALI_DEMO_STR_TITLE_NATIVE_IMAGE_SOURCE_QUEUE));
   demo.AddExample(Example("popup.example", DALI_DEMO_STR_TITLE_POPUP));
   demo.AddExample(Example("pivot.example", DALI_DEMO_STR_TITLE_PIVOT));
   demo.AddExample(Example("primitive-shapes.example", DALI_DEMO_STR_TITLE_PRIMITIVE_SHAPES));
