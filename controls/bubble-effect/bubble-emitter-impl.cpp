@@ -67,16 +67,16 @@ float RandomRange(float f0, float f1, unsigned int& seed)
 
 Dali::Geometry CreateTexturedQuad()
 {
-  struct Vertex
+  struct QuadVertex
   {
     Dali::Vector2 position;
     Dali::Vector2 texCoord;
   };
 
-  static const Vertex data[] = {{Dali::Vector2(-0.5f, -0.5f), Dali::Vector2(0.0f, 0.0f)},
-                                {Dali::Vector2(0.5f, -0.5f), Dali::Vector2(1.0f, 0.0f)},
-                                {Dali::Vector2(-0.5f, 0.5f), Dali::Vector2(0.0f, 1.0f)},
-                                {Dali::Vector2(0.5f, 0.5f), Dali::Vector2(1.0f, 1.0f)}};
+  static const QuadVertex data[] = {{Dali::Vector2(-0.5f, -0.5f), Dali::Vector2(0.0f, 0.0f)},
+                                    {Dali::Vector2(0.5f, -0.5f), Dali::Vector2(1.0f, 0.0f)},
+                                    {Dali::Vector2(-0.5f, 0.5f), Dali::Vector2(0.0f, 1.0f)},
+                                    {Dali::Vector2(0.5f, 0.5f), Dali::Vector2(1.0f, 1.0f)}};
 
   // Create a vertex buffer for vertex positions and texture coordinates
   Dali::VertexBuffer vertexBuffer = Dali::VertexBuffer::New(Dali::Property::Map()
