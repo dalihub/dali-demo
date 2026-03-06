@@ -18,6 +18,8 @@ SET( controls_src_files
   ${controls_src_dir}/filters/spread-filter.cpp
   ${controls_src_dir}/magnifier/magnifier.cpp
   ${controls_src_dir}/magnifier/magnifier-impl.cpp
+  ${controls_src_dir}/navigation-view/navigation-view.cpp
+  ${controls_src_dir}/navigation-view/navigation-view-impl.cpp
   ${controls_src_dir}/page-turn-view/page-turn-effect.cpp
   ${controls_src_dir}/page-turn-view/page-turn-landscape-view.cpp
   ${controls_src_dir}/page-turn-view/page-turn-landscape-view-impl.cpp

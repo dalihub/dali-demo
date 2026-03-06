@@ -1,7 +1,7 @@
 #ifndef SCENE_LAUNCHER_H_
 #define SCENE_LAUNCHER_H_
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,14 @@
  *
  */
 
+// EXTERNAL INCLUDES
 #include <dali-scene3d/dali-scene3d.h>
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/navigation-view/navigation-view.h>
 #include <dali/dali.h>
 #include <memory>
+
+// INTERNAL INCLUDES
+#include <controls/navigation-view/navigation-view.h>
 
 class Scene3DExtension;
 
