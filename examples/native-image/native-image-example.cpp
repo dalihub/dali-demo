@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@
 #include <cstring>
 
 // INTERNAL INCLUDES
-#include "generated/native-image-source-texture-frag.h"
-#include "generated/native-image-source-texture-vert.h"
+#include "generated/native-image-texture-frag.h"
+#include "generated/native-image-texture-vert.h"
 #include "shared/utility.h"
 
 using namespace Dali;
@@ -46,28 +46,28 @@ Shader CreateShader(NativeImageInterface& nativeImage)
   std::string fragmentShader;
 
   // Get custom fragment shader prefix
-  fragmentShader = SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_FRAG.data();
+  fragmentShader = SHADER_NATIVE_IMAGE_TEXTURE_FRAG.data();
   nativeImage.ApplyNativeFragmentShader(fragmentShader, 1);
 
-  return Shader::New(SHADER_NATIVE_IMAGE_SOURCE_TEXTURE_VERT, fragmentShader);
+  return Shader::New(SHADER_NATIVE_IMAGE_TEXTURE_VERT, fragmentShader);
 }
 
 } // namespace
 
-// This example shows how to create and use a NativeImageSource as the target of the render task.
+// This example shows how to create and use a NativeImage as the target of the render task.
 //
-class NativeImageSourceController : public ConnectionTracker
+class NativeImageController : public ConnectionTracker
 {
 public:
-  NativeImageSourceController(Application& application)
+  NativeImageController(Application& application)
   : mApplication(application),
     mRefreshAlways(true)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect(this, &NativeImageSourceController::Create);
+    mApplication.InitSignal().Connect(this, &NativeImageController::Create);
   }
 
-  ~NativeImageSourceController()
+  ~NativeImageController()
   {
     // Nothing to do here;
   }
@@ -79,7 +79,7 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
 
-    window.KeyEventSignal().Connect(this, &NativeImageSourceController::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &NativeImageController::OnKeyEvent);
 
     CreateButtonArea();
 
@@ -103,7 +103,7 @@ public:
     mButtonShow.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mButtonShow.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mButtonShow.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
-    mButtonShow.ClickedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonShow.ClickedSignal().Connect(this, &NativeImageController::OnButtonSelected);
     mButtonArea.Add(mButtonShow);
 
     mButtonRefreshAlways = PushButton::New();
@@ -113,7 +113,7 @@ public:
     mButtonRefreshAlways.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mButtonRefreshAlways.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
     mButtonRefreshAlways.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 1.0f, 0.0f));
-    mButtonRefreshAlways.StateChangedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonRefreshAlways.StateChangedSignal().Connect(this, &NativeImageController::OnButtonSelected);
     mButtonArea.Add(mButtonRefreshAlways);
 
     mButtonRefreshOnce = PushButton::New();
@@ -122,7 +122,7 @@ public:
     mButtonRefreshOnce.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mButtonRefreshOnce.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
     mButtonRefreshOnce.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 2.0f, 0.0f));
-    mButtonRefreshOnce.ClickedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonRefreshOnce.ClickedSignal().Connect(this, &NativeImageController::OnButtonSelected);
     mButtonArea.Add(mButtonRefreshOnce);
 
     mButtonCapture = PushButton::New();
@@ -131,7 +131,7 @@ public:
     mButtonCapture.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mButtonCapture.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
     mButtonCapture.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 3.0f, 0.0f));
-    mButtonCapture.ClickedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonCapture.ClickedSignal().Connect(this, &NativeImageController::OnButtonSelected);
     mButtonArea.Add(mButtonCapture);
 
     mButtonReset = PushButton::New();
@@ -140,7 +140,7 @@ public:
     mButtonReset.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mButtonReset.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
     mButtonReset.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 4.0f, 0.0f));
-    mButtonReset.ClickedSignal().Connect(this, &NativeImageSourceController::OnButtonSelected);
+    mButtonReset.ClickedSignal().Connect(this, &NativeImageController::OnButtonSelected);
     mButtonArea.Add(mButtonReset);
   }
 
@@ -202,8 +202,8 @@ public:
       float   contentHeight((windowSize.y - BUTTON_HEIGHT) / 2.0f);
       Vector2 imageSize(windowSize.x, contentHeight);
 
-      mNativeImageSourcePtr = NativeImageSource::New(imageSize.width, imageSize.height, NativeImageSource::COLOR_DEPTH_DEFAULT);
-      mNativeTexture        = Texture::New(*mNativeImageSourcePtr);
+      mNativeImagePtr = NativeImage::New(imageSize.width, imageSize.height, NativeImage::COLOR_DEPTH_DEFAULT);
+      mNativeTexture  = Texture::New(*mNativeImagePtr);
 
       mFrameBuffer = FrameBuffer::New(mNativeTexture.GetWidth(), mNativeTexture.GetHeight(), FrameBuffer::Attachment::NONE);
       mFrameBuffer.AttachColorTexture(mNativeTexture);
@@ -248,7 +248,7 @@ public:
 
         Geometry geometry = DemoHelper::CreateTexturedQuad();
 
-        Shader shader = CreateShader(*mNativeImageSourcePtr);
+        Shader shader = CreateShader(*mNativeImagePtr);
 
         Renderer renderer = Renderer::New(geometry, shader);
 
@@ -273,14 +273,14 @@ public:
     mRefreshAlways = false;
     SetupNativeImage();
 
-    mOffscreenRenderTask.FinishedSignal().Connect(this, &NativeImageSourceController::DoCapture);
+    mOffscreenRenderTask.FinishedSignal().Connect(this, &NativeImageController::DoCapture);
   }
 
   void DoCapture(RenderTask& task)
   {
-    task.FinishedSignal().Disconnect(this, &NativeImageSourceController::DoCapture);
+    task.FinishedSignal().Disconnect(this, &NativeImageController::DoCapture);
 
-    mNativeImageSourcePtr->EncodeToFile(CAPTURE_FILENAME);
+    mNativeImagePtr->EncodeToFile(CAPTURE_FILENAME);
   }
 
   void Reset()
@@ -295,7 +295,7 @@ public:
 
     mFrameBuffer.Reset();
     mNativeTexture.Reset();
-    mNativeImageSourcePtr.Reset();
+    mNativeImagePtr.Reset();
   }
 
   bool OnButtonSelected(Toolkit::Button button)
@@ -365,9 +365,9 @@ private:
 
   Actor mSourceActor;
 
-  NativeImageSourcePtr mNativeImageSourcePtr;
-  Texture              mNativeTexture;
-  FrameBuffer          mFrameBuffer;
+  NativeImagePtr mNativeImagePtr;
+  Texture        mNativeTexture;
+  FrameBuffer    mFrameBuffer;
 
   RenderTask  mOffscreenRenderTask;
   CameraActor mCameraActor;
@@ -379,8 +379,8 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application                 application = Application::New(&argc, &argv);
-  NativeImageSourceController test(application);
+  Application           application = Application::New(&argc, &argv);
+  NativeImageController test(application);
   application.MainLoop();
   return 0;
 }
