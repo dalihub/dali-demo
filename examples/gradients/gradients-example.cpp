@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,13 +65,13 @@ public:
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.
-    Toolkit::ToolBar toolBar;
-    Layer            content = DemoHelper::CreateView(application,
-                                                      mView,
-                                                      toolBar,
-                                                      "",
-                                                      TOOLBAR_IMAGE,
-                                                      APPLICATION_TITLE);
+    Demo::ToolBar toolBar;
+    Layer         content = DemoHelper::CreateView(application,
+                                           mView,
+                                           toolBar,
+                                           "",
+                                           TOOLBAR_IMAGE,
+                                           APPLICATION_TITLE);
 
     PushButton changeButton = Toolkit::PushButton::New();
     changeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_ICON);
@@ -79,7 +79,7 @@ public:
     changeButton.ClickedSignal().Connect(this, &GradientController::OnChangeIconClicked);
     toolBar.AddControl(changeButton,
                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                       Toolkit::Alignment::HORIZONTAL_RIGHT,
+                       Demo::Alignment::HORIZONTAL_RIGHT,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     PushButton roundedCornerButton = Toolkit::PushButton::New();
@@ -88,7 +88,7 @@ public:
     roundedCornerButton.ClickedSignal().Connect(this, &GradientController::OnRoundedCornerClicked);
     toolBar.AddControl(roundedCornerButton,
                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                       Toolkit::Alignment::HORIZONTAL_CENTER,
+                       Demo::Alignment::HORIZONTAL_CENTER,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     mGradientControl = Control::New();

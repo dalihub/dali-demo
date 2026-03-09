@@ -19,41 +19,37 @@
 #include "tool-bar-impl.h"
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/type-registry-helper.h>
 #include <dali/public-api/object/type-registry.h>
-#include <dali-toolkit/devel-api/controls/control-devel.h>
 
 // INTERNAL INCLUDES
 #include "controls/alignment/alignment.h"
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
 BaseHandle Create()
 {
-  return Toolkit::ToolBar::New();
+  return Demo::ToolBar::New();
 }
 
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::ToolBar, Toolkit::Control, Create)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::ToolBar, Toolkit::Control, Create)
 DALI_TYPE_REGISTRATION_END()
 
-const float                    DEFAULT_RELATIVE_SIZE(0.1f);
-const Toolkit::Alignment::Type DEFAULT_ALIGNMENT(Toolkit::Alignment::HORIZONTAL_LEFT);
+const float                 DEFAULT_RELATIVE_SIZE(0.1f);
+const Demo::Alignment::Type DEFAULT_ALIGNMENT(Demo::Alignment::HORIZONTAL_LEFT);
 } // namespace
 
-Toolkit::ToolBar ToolBar::New()
+Demo::ToolBar ToolBar::New()
 {
   // Create the implementation, temporarily owned on stack
   IntrusivePtr<ToolBar> internalToolBar = new ToolBar();
 
-  // Pass ownership to Toolkit::Toolbar
-  Toolkit::ToolBar toolBar(*internalToolBar);
+  // Pass ownership to Demo::Toolbar
+  Demo::ToolBar toolBar(*internalToolBar);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -62,13 +58,13 @@ Toolkit::ToolBar ToolBar::New()
   return toolBar;
 }
 
-void ToolBar::AddControl(Actor control, float relativeSize, Toolkit::Alignment::Type alignment, const Toolkit::Alignment::Padding& padding)
+void ToolBar::AddControl(Actor control, float relativeSize, Demo::Alignment::Type alignment, const Demo::Alignment::Padding& padding)
 {
   // Work out index and update bases and offsets for further insertions.
   unsigned int index = 0;
   switch(alignment)
   {
-    case Toolkit::Alignment::HORIZONTAL_LEFT:
+    case Demo::Alignment::HORIZONTAL_LEFT:
     {
       index = mLeftOffset;
       ++mLeftOffset;
@@ -76,14 +72,14 @@ void ToolBar::AddControl(Actor control, float relativeSize, Toolkit::Alignment::
       ++mRightBase;
       break;
     }
-    case Toolkit::Alignment::HORIZONTAL_CENTER:
+    case Demo::Alignment::HORIZONTAL_CENTER:
     {
       index = mCenterBase + mCenterOffset;
       ++mCenterOffset;
       ++mRightBase;
       break;
     }
-    case Toolkit::Alignment::HORIZONTAL_RIGHT:
+    case Demo::Alignment::HORIZONTAL_RIGHT:
     {
       index = mRightBase - mRightOffset;
       ++mRightBase;
@@ -100,7 +96,7 @@ void ToolBar::AddControl(Actor control, float relativeSize, Toolkit::Alignment::
   mLayout.InsertColumn(index);
 
   // Create an alignment container where to place the control.
-  Toolkit::Alignment alignmentContainer = Toolkit::Alignment::New(alignment);
+  Demo::Alignment alignmentContainer = Demo::Alignment::New(alignment);
   alignmentContainer.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
   alignmentContainer.SetPadding(padding);
   alignmentContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -119,7 +115,7 @@ void ToolBar::AddControl(Actor control, float relativeSize, Toolkit::Alignment::
   // Update spaces between left, center and right groups of controls.
   switch(alignment)
   {
-    case Toolkit::Alignment::HORIZONTAL_LEFT:
+    case Demo::Alignment::HORIZONTAL_LEFT:
     {
       mLeftRelativeSpace -= relativeSize;
       if(mLeftRelativeSpace < 0.f)
@@ -128,7 +124,7 @@ void ToolBar::AddControl(Actor control, float relativeSize, Toolkit::Alignment::
       }
       break;
     }
-    case Toolkit::Alignment::HORIZONTAL_CENTER:
+    case Demo::Alignment::HORIZONTAL_CENTER:
     {
       mLeftRelativeSpace -= 0.5f * relativeSize;
       if(mLeftRelativeSpace < 0.f)
@@ -142,7 +138,7 @@ void ToolBar::AddControl(Actor control, float relativeSize, Toolkit::Alignment::
       }
       break;
     }
-    case Toolkit::Alignment::HORIZONTAL_RIGHT:
+    case Demo::Alignment::HORIZONTAL_RIGHT:
     {
       mRightRelativeSpace -= relativeSize;
       if(mRightRelativeSpace < 0.f)
@@ -166,7 +162,7 @@ void ToolBar::RemoveControl(Actor control)
   Toolkit::TableView::CellPosition position;
 
   // Find the alignment where the control is placed.
-  std::map<Actor, Toolkit::Alignment>::iterator it = mControls.find(control);
+  std::map<Actor, Demo::Alignment>::iterator it = mControls.find(control);
 
   if((it != mControls.end()) && (mLayout.FindChildPosition(it->second, position)))
   {
@@ -176,18 +172,18 @@ void ToolBar::RemoveControl(Actor control)
     // Update spaces between left, center and right groups of controls.
     if(1.0 > mAccumulatedRelativeSpace)
     {
-      Toolkit::Alignment::Type alignment = Toolkit::Alignment::HORIZONTAL_LEFT;
+      Demo::Alignment::Type alignment = Demo::Alignment::HORIZONTAL_LEFT;
       if(position.columnIndex < mLeftOffset)
       {
-        alignment = Toolkit::Alignment::HORIZONTAL_LEFT;
+        alignment = Demo::Alignment::HORIZONTAL_LEFT;
       }
       else if((position.columnIndex > mLeftOffset) && (position.columnIndex < mCenterBase + mCenterOffset))
       {
-        alignment = Toolkit::Alignment::HORIZONTAL_CENTER;
+        alignment = Demo::Alignment::HORIZONTAL_CENTER;
       }
       else if(position.columnIndex > mCenterBase + mCenterOffset)
       {
-        alignment = Toolkit::Alignment::HORIZONTAL_RIGHT;
+        alignment = Demo::Alignment::HORIZONTAL_RIGHT;
       }
       else
       {
@@ -198,7 +194,7 @@ void ToolBar::RemoveControl(Actor control)
 
       switch(alignment)
       {
-        case Toolkit::Alignment::HORIZONTAL_LEFT:
+        case Demo::Alignment::HORIZONTAL_LEFT:
         {
           mLeftRelativeSpace += relativeSize;
           if(mLeftRelativeSpace < 0.f)
@@ -207,7 +203,7 @@ void ToolBar::RemoveControl(Actor control)
           }
           break;
         }
-        case Toolkit::Alignment::HORIZONTAL_CENTER:
+        case Demo::Alignment::HORIZONTAL_CENTER:
         {
           mLeftRelativeSpace += 0.5f * relativeSize;
           if(mLeftRelativeSpace < 0.f)
@@ -221,7 +217,7 @@ void ToolBar::RemoveControl(Actor control)
           }
           break;
         }
-        case Toolkit::Alignment::HORIZONTAL_RIGHT:
+        case Demo::Alignment::HORIZONTAL_RIGHT:
         {
           mRightRelativeSpace += relativeSize;
           if(mRightRelativeSpace < 0.f)
@@ -272,7 +268,7 @@ void ToolBar::RemoveControl(Actor control)
 }
 
 ToolBar::ToolBar()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mLayout(),
   mLeftOffset(0),
   mCenterBase(1),
@@ -311,7 +307,7 @@ void ToolBar::OnInitialize()
   mLayout.SetRelativeWidth(0, mLeftRelativeSpace);
   mLayout.SetRelativeWidth(1, mRightRelativeSpace);
 
-  Self().SetProperty(DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::TOOL_BAR);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::TOOL_BAR);
 }
 
 void ToolBar::OnChildAdd(Actor& child)
@@ -326,7 +322,7 @@ void ToolBar::OnChildAdd(Actor& child)
       child.GetParent().Remove(child);
     }
 
-    AddControl(child, DEFAULT_RELATIVE_SIZE, DEFAULT_ALIGNMENT, Toolkit::ToolBar::DEFAULT_PADDING);
+    AddControl(child, DEFAULT_RELATIVE_SIZE, DEFAULT_ALIGNMENT, Demo::ToolBar::DEFAULT_PADDING);
   }
 
   // No OnChildRemove method required because Actors are added to the mLayout table view, so if an
@@ -336,8 +332,4 @@ void ToolBar::OnChildAdd(Actor& child)
   Control::OnChildAdd(child);
 }
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal

@@ -42,7 +42,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
     }
   }
 
-  Application application = Application::New(&argc, &argv, themeName);
+  Dali::Application application = Dali::Application::New(&argc, &argv, themeName);
   {
     Demo::StylingApplication stylingApplication(application);
     application.MainLoop();

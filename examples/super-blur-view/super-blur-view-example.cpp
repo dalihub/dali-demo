@@ -25,7 +25,7 @@
 using namespace Dali;
 using Dali::Toolkit::Button;
 using Dali::Toolkit::PushButton;
-using Dali::Toolkit::SuperBlurView;
+using Dali::Demo::SuperBlurView;
 
 namespace
 {

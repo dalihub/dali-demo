@@ -37,6 +37,9 @@
 #include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/control-renderers-frag.h>
 
+using namespace Dali::Toolkit;
+using namespace Dali::Toolkit::Internal;
+
 namespace //Unnamed namespace
 {
 using namespace Dali;
@@ -86,11 +89,7 @@ struct ActorOpacityConstraint
 
 } // namespace
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -98,20 +97,20 @@ const unsigned int DEFAULT_BLUR_LEVEL(5u); ///< The default blur level when crea
 
 BaseHandle Create()
 {
-  return Toolkit::SuperBlurView::New(DEFAULT_BLUR_LEVEL);
+  return Demo::SuperBlurView::New(DEFAULT_BLUR_LEVEL);
 }
 
 // Setup properties, signals and actions using the type-registry.
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::SuperBlurView, Toolkit::Control, Create)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::SuperBlurView, Toolkit::Control, Create)
 
-DALI_PROPERTY_REGISTRATION(Toolkit, SuperBlurView, "imageUrl", STRING, IMAGE_URL)
+DALI_PROPERTY_REGISTRATION(Demo, SuperBlurView, "imageUrl", STRING, IMAGE_URL)
 
 DALI_TYPE_REGISTRATION_END()
 
 } // unnamed namespace
 
 SuperBlurView::SuperBlurView(unsigned int blurLevels)
-: Control(ControlBehaviour(DISABLE_SIZE_NEGOTIATION | DISABLE_STYLE_CHANGE_SIGNALS)),
+: Toolkit::Internal::Control(ControlBehaviour(DISABLE_SIZE_NEGOTIATION | DISABLE_STYLE_CHANGE_SIGNALS)),
   mTargetSize(Vector2::ZERO),
   mBlurStrengthPropertyIndex(Property::INVALID_INDEX),
   mBlurLevels(blurLevels),
@@ -127,13 +126,13 @@ SuperBlurView::~SuperBlurView()
 {
 }
 
-Toolkit::SuperBlurView SuperBlurView::New(unsigned int blurLevels)
+Demo::SuperBlurView SuperBlurView::New(unsigned int blurLevels)
 {
   //Create the implementation
   IntrusivePtr<SuperBlurView> superBlurView(new SuperBlurView(blurLevels));
 
   //Pass ownership to CustomActor via derived handle
-  Toolkit::SuperBlurView handle(*superBlurView);
+  Demo::SuperBlurView handle(*superBlurView);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -148,7 +147,7 @@ void SuperBlurView::OnInitialize()
 
   mBlurStrengthPropertyIndex = self.RegisterUniqueProperty("blurStrength", 0.f);
 
-  self.SetProperty(DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
 }
 
 void SuperBlurView::SetTexture(Texture texture)
@@ -197,7 +196,7 @@ float SuperBlurView::GetCurrentBlurStrength() const
   return blurStrength;
 }
 
-Toolkit::SuperBlurView::SuperBlurViewSignal& SuperBlurView::BlurFinishedSignal()
+Demo::SuperBlurView::SuperBlurViewSignal& SuperBlurView::BlurFinishedSignal()
 {
   return mBlurFinishedSignal;
 }
@@ -236,7 +235,7 @@ void SuperBlurView::BlurTexture(unsigned int idx, Texture texture)
 void SuperBlurView::OnBlurViewFinished(Toolkit::GaussianBlurView blurView)
 {
   ClearBlurResource();
-  Toolkit::SuperBlurView handle(GetOwner());
+  Demo::SuperBlurView handle(GetOwner());
   mBlurFinishedSignal.Emit(handle);
 }
 
@@ -344,13 +343,13 @@ Vector3 SuperBlurView::GetNaturalSize()
 
 void SuperBlurView::SetProperty(BaseObject* object, Property::Index propertyIndex, const Property::Value& value)
 {
-  Toolkit::SuperBlurView superBlurView = Toolkit::SuperBlurView::DownCast(Dali::BaseHandle(object));
+  Demo::SuperBlurView superBlurView = Demo::SuperBlurView::DownCast(Dali::BaseHandle(object));
 
   if(superBlurView)
   {
     SuperBlurView& superBlurViewImpl(GetImpl(superBlurView));
 
-    if(propertyIndex == Toolkit::SuperBlurView::Property::IMAGE_URL)
+    if(propertyIndex == Demo::SuperBlurView::Property::IMAGE_URL)
     {
       if(DALI_LIKELY(value.Get(superBlurViewImpl.mUrl)))
       {
@@ -376,13 +375,13 @@ Property::Value SuperBlurView::GetProperty(BaseObject* object, Property::Index p
 {
   Property::Value value;
 
-  Toolkit::SuperBlurView blurView = Toolkit::SuperBlurView::DownCast(Dali::BaseHandle(object));
+  Demo::SuperBlurView blurView = Demo::SuperBlurView::DownCast(Dali::BaseHandle(object));
 
   if(blurView)
   {
     SuperBlurView& superBlurViewImpl(GetImpl(blurView));
 
-    if(propertyIndex == Toolkit::SuperBlurView::Property::IMAGE_URL)
+    if(propertyIndex == Demo::SuperBlurView::Property::IMAGE_URL)
     {
       value = superBlurViewImpl.mUrl;
     }
@@ -391,8 +390,4 @@ Property::Value SuperBlurView::GetProperty(BaseObject* object, Property::Index p
   return value;
 }
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal

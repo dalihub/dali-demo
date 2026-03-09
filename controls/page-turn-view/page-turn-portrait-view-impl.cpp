@@ -26,15 +26,11 @@
 //INTERNAL INCLUDES
 #include "page-turn-effect.h"
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::PageTurnPortraitView, Toolkit::PageTurnView, NULL)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::PageTurnPortraitView, Demo::PageTurnView, NULL)
 DALI_TYPE_REGISTRATION_END()
 
 // the panning speed threshold, no matter how far is the pan displacement, pan fast to left/right quickly (speed > 0.3) will turn over/back the page
@@ -54,13 +50,13 @@ PageTurnPortraitView::~PageTurnPortraitView()
 {
 }
 
-Toolkit::PageTurnPortraitView PageTurnPortraitView::New(PageFactory& pageFactory, const Vector2& viewPageSize)
+Demo::PageTurnPortraitView PageTurnPortraitView::New(PageFactory& pageFactory, const Vector2& viewPageSize)
 {
   // Create the implementation, temporarily owned on stack
   IntrusivePtr<PageTurnPortraitView> internalPageTurnView = new PageTurnPortraitView(pageFactory, viewPageSize);
 
   // Pass ownership to CustomActor
-  Dali::Toolkit::PageTurnPortraitView pageTurnView(*internalPageTurnView);
+  Dali::Demo::PageTurnPortraitView pageTurnView(*internalPageTurnView);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -111,7 +107,7 @@ void PageTurnPortraitView::OnPossibleOutwardsFlick(const Vector2& panPosition, f
 
     // Guard against destruction during signal emission
     //Emit signal, to notify that page[mCurrentPageIndex-1] is turning backwards
-    Toolkit::PageTurnView handle(GetOwner());
+    Demo::PageTurnView handle(GetOwner());
     mTurningPageIndex = mCurrentPageIndex - 1;
     mPageTurnStartedSignal.Emit(handle, static_cast<unsigned int>(mTurningPageIndex), false);
 
@@ -161,8 +157,4 @@ void PageTurnPortraitView::TurnedOverBackwards(Animation& animation)
   TurnedOver(animation);
 }
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal

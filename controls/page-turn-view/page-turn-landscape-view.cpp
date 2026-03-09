@@ -21,9 +21,7 @@
 // INTERNAL INCLUDES
 #include "page-turn-landscape-view-impl.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 PageTurnLandscapeView::PageTurnLandscapeView()
 : PageTurnView()
@@ -69,6 +67,4 @@ PageTurnLandscapeView PageTurnLandscapeView::DownCast(BaseHandle handle)
   return Control::DownCast<PageTurnLandscapeView, Internal::PageTurnLandscapeView>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo

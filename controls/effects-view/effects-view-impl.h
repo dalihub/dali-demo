@@ -29,9 +29,7 @@
 // INTERNAL INCLUDES
 #include <controls/effects-view/effects-view.h>
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 namespace Internal
 {
@@ -39,17 +37,17 @@ class ImageFilter;
 
 /**
  * EffectsView implementation class
- * @copydoc Dali::Toolkit::EffectsView
+ * @copydoc Dali::Demo::EffectsView
  */
-class EffectsView : public Control
+class EffectsView : public Toolkit::Internal::Control
 {
 public:
-  /// @copydoc Dali::Toolkit::EffectsView New()
-  static Toolkit::EffectsView New();
+  /// @copydoc Dali::Demo::EffectsView New()
+  static Demo::EffectsView New();
 
   /**
    * Construct a new EffectsView.
-   * @copydoc Toolkit::EffectsView New()
+   * @copydoc Demo::EffectsView New()
    */
   EffectsView();
 
@@ -59,25 +57,25 @@ public:
   virtual ~EffectsView();
 
 public:
-  /// @copydoc Dali::Toolkit::EffectsView::SetType
-  void SetType(Toolkit::EffectsView::EffectType type);
+  /// @copydoc Dali::Demo::EffectsView::SetType
+  void SetType(Demo::EffectsView::EffectType type);
 
-  /// @copydoc Dali::Toolkit::EffectsView::GetType
-  Toolkit::EffectsView::EffectType GetType() const;
+  /// @copydoc Dali::Demo::EffectsView::GetType
+  Demo::EffectsView::EffectType GetType() const;
 
-  /// @copydoc Dali::Toolkit::EffectsView::Refresh
+  /// @copydoc Dali::Demo::EffectsView::Refresh
   void Refresh();
 
-  /// @copydoc Dali::Toolkit::EffectsView::SetRefreshOnDemand
+  /// @copydoc Dali::Demo::EffectsView::SetRefreshOnDemand
   void SetRefreshOnDemand(bool onDemand);
 
-  /// @copydoc Dali::Toolkit::EffectsView::SetPixelFormat
+  /// @copydoc Dali::Demo::EffectsView::SetPixelFormat
   void SetPixelFormat(Pixel::Format pixelFormat);
 
-  /// @copydoc Dali::Toolkit::EffectsView::SetBackgroundColor(const Vector4&)
+  /// @copydoc Dali::Demo::EffectsView::SetBackgroundColor(const Vector4&)
   void SetBackgroundColor(const Vector4& color);
 
-  /// @copydoc Dali::Toolkit::EffectsView::GetBackgroundColor
+  /// @copydoc Dali::Demo::EffectsView::GetBackgroundColor
   Vector4 GetBackgroundColor() const;
 
   /**
@@ -222,8 +220,8 @@ private: // attributes/properties
   int mEffectSize;
 
   /////////////////////////////////////////////////////////////
-  Toolkit::EffectsView::EffectType mEffectType;
-  Pixel::Format                    mPixelFormat; ///< pixel format used by render targets
+  Demo::EffectsView::EffectType mEffectType;
+  Pixel::Format                 mPixelFormat; ///< pixel format used by render targets
 
   bool mEnabled : 1;
   bool mRefreshOnDemand : 1;
@@ -233,26 +231,24 @@ private: // attributes/properties
 
 // Helpers for public-api forwarding methods
 
-inline Toolkit::Internal::EffectsView& GetImpl(Toolkit::EffectsView& effectsView)
+inline Demo::Internal::EffectsView& GetImpl(Demo::EffectsView& effectsView)
 {
   DALI_ASSERT_ALWAYS(effectsView);
 
   Dali::RefObject& handle = effectsView.GetImplementation();
 
-  return static_cast<Toolkit::Internal::EffectsView&>(handle);
+  return static_cast<Demo::Internal::EffectsView&>(handle);
 }
 
-inline const Toolkit::Internal::EffectsView& GetImpl(const Toolkit::EffectsView& effectsView)
+inline const Demo::Internal::EffectsView& GetImpl(const Demo::EffectsView& effectsView)
 {
   DALI_ASSERT_ALWAYS(effectsView);
 
   const Dali::RefObject& handle = effectsView.GetImplementation();
 
-  return static_cast<const Toolkit::Internal::EffectsView&>(handle);
+  return static_cast<const Demo::Internal::EffectsView&>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_EFFECTS_VIEW_H

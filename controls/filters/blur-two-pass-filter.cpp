@@ -33,7 +33,7 @@
 #include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/control-renderers-frag.h>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -98,8 +98,8 @@ void BlurTwoPassFilter::Enable()
   mActorForInput = Actor::New();
   mActorForInput.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mActorForInput.SetProperty(Actor::Property::SIZE, mTargetSize);
-  Renderer rendererForInput = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, fragmentSource.c_str());
-  DevelControl::SetRendererTexture(rendererForInput, mInputTexture);
+  Renderer rendererForInput = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, fragmentSource.c_str());
+  Toolkit::DevelControl::SetRendererTexture(rendererForInput, mInputTexture);
   mActorForInput.AddRenderer(rendererForInput);
 
   // create internal offscreen for result of horizontal pass
@@ -111,8 +111,8 @@ void BlurTwoPassFilter::Enable()
   mActorForHorz = Actor::New();
   mActorForHorz.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mActorForHorz.SetProperty(Actor::Property::SIZE, mTargetSize);
-  Renderer rendererForHorz = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, fragmentSource.c_str());
-  DevelControl::SetRendererTexture(rendererForHorz, textureForHorz);
+  Renderer rendererForHorz = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, fragmentSource.c_str());
+  Toolkit::DevelControl::SetRendererTexture(rendererForHorz, textureForHorz);
   mActorForHorz.AddRenderer(rendererForHorz);
 
   // create internal offscreen for result of the two pass blurred image
@@ -121,7 +121,7 @@ void BlurTwoPassFilter::Enable()
   mBlurredFrameBuffer.AttachColorTexture(blurredTexture);
 
   // create an actor to blend the blurred image and the input image with the given blur strength
-  Renderer   rendererForBlending   = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_BLUR_TWO_IMAGES_SHADER_FRAG);
+  Renderer   rendererForBlending   = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_BLUR_TWO_IMAGES_SHADER_FRAG);
   TextureSet textureSetForBlending = rendererForBlending.GetTextures();
   textureSetForBlending.SetTexture(0u, blurredTexture);
   textureSetForBlending.SetTexture(1u, mInputTexture);
@@ -268,4 +268,4 @@ void BlurTwoPassFilter::CreateRenderTasks()
   mRenderTaskForBlending.SetCameraActor(mCameraActor);
 }
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal

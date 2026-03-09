@@ -87,11 +87,11 @@ const int NUM_COLUMNS_FOLD(8);
 const int NUM_ROWS_WAVE(20);
 const int NUM_ROWS_CROSS(10);
 const int NUM_ROWS_FOLD(10);
-//transition effect duration
+// transition effect duration
 const float ANIMATION_DURATION_WAVE(1.5f);
 const float ANIMATION_DURATION_CROSS(1.f);
 const float ANIMATION_DURATION_FOLD(1.f);
-//transition effect displacement
+// transition effect displacement
 const float CUBE_DISPLACEMENT_WAVE(70.f);
 const float CUBE_DISPLACEMENT_CROSS(30.f);
 
@@ -164,7 +164,7 @@ private:
 private:
   Application&       mApplication;
   Toolkit::Control   mView;
-  Toolkit::ToolBar   mToolBar;
+  Demo::ToolBar      mToolBar;
   Layer              mContent;
   Toolkit::TextLabel mTitle;
 
@@ -201,7 +201,7 @@ CubeTransitionApp::CubeTransitionApp(Application& application)
 
 CubeTransitionApp::~CubeTransitionApp()
 {
-  //Nothing to do
+  // Nothing to do
 }
 
 void CubeTransitionApp::OnInit(Application& application)
@@ -221,18 +221,18 @@ void CubeTransitionApp::OnInit(Application& application)
                                                        EFFECT_FOLD_IMAGE});
 
   effectChangeToggleButton.ClickedSignal().Connect(this, &CubeTransitionApp::OnEffectButtonClicked);
-  mToolBar.AddControl(effectChangeToggleButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+  mToolBar.AddControl(effectChangeToggleButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
   // Add title to the tool bar.
   mTitle = DemoHelper::CreateToolBarLabel(APPLICATION_TITLE_WAVE);
-  mToolBar.AddControl(mTitle, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER);
+  mToolBar.AddControl(mTitle, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Demo::Alignment::HORIZONTAL_CENTER);
 
-  //Add an slideshow icon on the right of the title
+  // Add an slideshow icon on the right of the title
   mSlideshowButton = Toolkit::PushButton::New();
   mSlideshowButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON);
   mSlideshowButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, SLIDE_SHOW_START_ICON_SELECTED);
   mSlideshowButton.ClickedSignal().Connect(this, &CubeTransitionApp::OnSildeshowButtonClicked);
-  mToolBar.AddControl(mSlideshowButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
+  mToolBar.AddControl(mSlideshowButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
 
   // Set size to window size to avoid seeing a black border on transition
   mViewSize = application.GetWindow().GetSize();
@@ -240,7 +240,7 @@ void CubeTransitionApp::OnInit(Application& application)
   // show the first image
   mCurrentTexture = LoadWindowFillingTexture(IMAGES[mIndex]);
 
-  //use small cubes
+  // use small cubes
   mCubeWaveEffect = Toolkit::CubeTransitionWaveEffect::New(NUM_ROWS_WAVE, NUM_COLUMNS_WAVE);
   mCubeWaveEffect.SetTransitionDuration(ANIMATION_DURATION_WAVE);
   mCubeWaveEffect.SetCubeDisplacement(CUBE_DISPLACEMENT_WAVE);
@@ -380,7 +380,7 @@ bool CubeTransitionApp::OnTimerTick()
     GoToNextImage();
   }
 
-  //return false to stop the timer
+  // return false to stop the timer
   return false;
 }
 

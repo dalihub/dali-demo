@@ -26,7 +26,7 @@
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -47,7 +47,7 @@ class Alignment;
  * All actors added to an alignment are going to be set with the same anchor point and parent origin. And if the scaling property is set to a value
  * different than SCALE_NONE, constraints as well.
  */
-class DALI_DEMO_CONTROLS_API Alignment : public Control
+class DALI_DEMO_CONTROLS_API Alignment : public Toolkit::Control
 {
 public:
   /**
@@ -259,7 +259,7 @@ public: // Not intended for application developers
  * @}
  */
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali
 

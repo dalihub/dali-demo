@@ -23,16 +23,14 @@
 
 using namespace Dali;
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 PageTurnView::PageTurnView()
 {
 }
 
 PageTurnView::PageTurnView(const PageTurnView& handle)
-: Control(handle)
+: Toolkit::Control(handle)
 {
 }
 
@@ -67,24 +65,22 @@ PageTurnView::PageTurnView(Dali::Internal::CustomActor* internal)
 
 PageTurnView::PageTurnSignal& PageTurnView::PageTurnStartedSignal()
 {
-  return Toolkit::GetImplementation(*this).PageTurnStartedSignal();
+  return Demo::GetImplementation(*this).PageTurnStartedSignal();
 }
 
 PageTurnView::PageTurnSignal& PageTurnView::PageTurnFinishedSignal()
 {
-  return Toolkit::GetImplementation(*this).PageTurnFinishedSignal();
+  return Demo::GetImplementation(*this).PageTurnFinishedSignal();
 }
 
 PageTurnView::PagePanSignal& PageTurnView::PagePanStartedSignal()
 {
-  return Toolkit::GetImplementation(*this).PagePanStartedSignal();
+  return Demo::GetImplementation(*this).PagePanStartedSignal();
 }
 
 PageTurnView::PagePanSignal& PageTurnView::PagePanFinishedSignal()
 {
-  return Toolkit::GetImplementation(*this).PagePanFinishedSignal();
+  return Demo::GetImplementation(*this).PagePanFinishedSignal();
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo

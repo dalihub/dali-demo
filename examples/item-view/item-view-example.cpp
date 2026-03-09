@@ -24,6 +24,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 
 namespace
 {
@@ -216,7 +217,7 @@ public:
     editButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EDIT_IMAGE_SELECTED);
     editButton.ClickedSignal().Connect(this, &ItemViewExample::OnModeButtonClicked);
     editButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(editButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create a layout toggle button. (right of toolbar)
     mLayoutButton = Toolkit::PushButton::New();
@@ -224,7 +225,7 @@ public:
     mLayoutButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, SPIRAL_LAYOUT_IMAGE_SELECTED);
     mLayoutButton.ClickedSignal().Connect(this, &ItemViewExample::OnLayoutButtonClicked);
     mLayoutButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mLayoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create a delete button (bottom right of screen)
     mDeleteButton = Toolkit::PushButton::New();
@@ -975,8 +976,8 @@ private:
   Toolkit::Control mView;
   unsigned int     mOrientation;
 
-  Toolkit::ToolBar mToolBar;
-  TextLabel        mTitleActor; ///< The Toolbar's Title.
+  Demo::ToolBar mToolBar;
+  TextLabel     mTitleActor; ///< The Toolbar's Title.
 
   ItemView     mItemView;
   unsigned int mCurrentLayout;

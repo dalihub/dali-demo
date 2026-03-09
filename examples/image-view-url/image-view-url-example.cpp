@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ private:
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ImageViewUrlApp::OnKeyEvent);
 
-    Toolkit::ToolBar toolBar;
+    Demo::ToolBar    toolBar;
     Toolkit::Control background;
     // Creates a default view with a default tool bar.
     mContent = DemoHelper::CreateView(application,
@@ -76,7 +76,7 @@ private:
     switchButton.ClickedSignal().Connect(this, &ImageViewUrlApp::OnButtonClicked);
     toolBar.AddControl(switchButton,
                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                       Toolkit::Alignment::HORIZONTAL_RIGHT,
+                       Demo::Alignment::HORIZONTAL_RIGHT,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     std::string url = mUrl;
@@ -126,9 +126,9 @@ private:
       renderTask.SetCameraActor(cameraActor);
 
       mOutputTexture   = Texture::New(TextureType::TEXTURE_2D,
-                                      Pixel::RGBA8888,
-                                      unsigned(TARGET_SIZE.width),
-                                      unsigned(TARGET_SIZE.height));
+                                    Pixel::RGBA8888,
+                                    unsigned(TARGET_SIZE.width),
+                                    unsigned(TARGET_SIZE.height));
       auto framebuffer = FrameBuffer::New(TARGET_SIZE.width, TARGET_SIZE.height, FrameBuffer::Attachment::NONE);
       framebuffer.AttachColorTexture(mOutputTexture);
 

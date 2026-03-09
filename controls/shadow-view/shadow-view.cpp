@@ -28,9 +28,7 @@ const float GAUSSIAN_BLUR_VIEW_DEFAULT_DOWNSAMPLE_HEIGHT_SCALE = 1.0f;
 
 } // namespace
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 ShadowView::ShadowView()
 {
@@ -60,19 +58,19 @@ ShadowView ShadowView::New(float downsampleWidthScale, float downsampleHeightSca
 }
 
 ShadowView::ShadowView(Internal::ShadowView& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
 ShadowView::ShadowView(Dali::Internal::CustomActor* internal)
-: Control(internal)
+: Toolkit::Control(internal)
 {
   VerifyCustomActorPointer<Internal::ShadowView>(internal);
 }
 
 ShadowView ShadowView::DownCast(BaseHandle handle)
 {
-  return Control::DownCast<ShadowView, Internal::ShadowView>(handle);
+  return Toolkit::Control::DownCast<ShadowView, Internal::ShadowView>(handle);
 }
 
 void ShadowView::SetShadowPlaneBackground(Actor shadowPlaneBackground)
@@ -115,6 +113,4 @@ Property::Index ShadowView::GetShadowColorPropertyIndex() const
   return GetImpl(*this).GetShadowColorPropertyIndex();
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo

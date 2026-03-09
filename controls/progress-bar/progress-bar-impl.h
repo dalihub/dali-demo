@@ -29,9 +29,7 @@
 // INTERNAL INCLUDES
 #include "progress-bar.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 namespace Internal
 {
@@ -42,7 +40,7 @@ typedef Dali::IntrusivePtr<ProgressBar> ProgressBarPtr;
 /**
  * @copydoc Toolkit::ProgressBar
  */
-class ProgressBar : public Control
+class ProgressBar : public Toolkit::Internal::Control
 {
 public:
   /**
@@ -50,7 +48,7 @@ public:
    * @param[in] progressBarStyle A style value that determines the shape of the progress bar.
    * @return A public handle to the newly allocated ProgressBar.
    */
-  static Dali::Toolkit::ProgressBar New(Toolkit::ProgressBar::Style progressBarStyle = Toolkit::ProgressBar::Style::LINEAR);
+  static Dali::Demo::ProgressBar New(Demo::ProgressBar::Style progressBarStyle = Demo::ProgressBar::Style::LINEAR);
 
 public:
   // Properties
@@ -122,7 +120,7 @@ public:
   /**
    * @copydoc toolkit::progressbar::valuechangedsignal()
    */
-  Toolkit::ProgressBar::ValueChangedSignalType& ValueChangedSignal();
+  Demo::ProgressBar::ValueChangedSignalType& ValueChangedSignal();
 
   /**
    * Connects a callback function with the object's signals.
@@ -202,7 +200,7 @@ private:
   /**
    * @copydoc Toolkit::Internal::Control::CreateAccessibleObject()
    */
-  DevelControl::ControlAccessible* CreateAccessibleObject() override;
+  Toolkit::DevelControl::ControlAccessible* CreateAccessibleObject() override;
 
   /**
    * Get the range of the valid values the ProgressBar handle can move between
@@ -257,8 +255,8 @@ private:
 private:
   Domain mDomain; ///< Current domain of the handle
 
-  Animation                                    mIndeterminateVisualAni; ///< Animation for indetrminate visual. Transition animation.
-  Toolkit::ProgressBar::ValueChangedSignalType mValueChangedSignal;     ///< Signal emitted when the value is changed
+  Animation                                 mIndeterminateVisualAni; ///< Animation for indetrminate visual. Transition animation.
+  Demo::ProgressBar::ValueChangedSignalType mValueChangedSignal;     ///< Signal emitted when the value is changed
 
   Toolkit::TransitionData mIndeterminateVisualTransition; ///< Transition data map for mIndeterminateVisualAni
   float                   mProgressValue;                 ///< Current value of ProgressBar
@@ -269,11 +267,11 @@ private:
   Property::Map           mSecondaryProgressVisualMap;    ///< To backup visual properties when switching determinate/indeterminate.
 
 protected:
-  class ProgressBarAccessible : public DevelControl::ControlAccessible,
+  class ProgressBarAccessible : public Toolkit::DevelControl::ControlAccessible,
                                 public Dali::Accessibility::Value
   {
   public:
-    using DevelControl::ControlAccessible::ControlAccessible;
+    using Toolkit::DevelControl::ControlAccessible::ControlAccessible;
 
     /**
      * @copydoc Dali::Accessibility::Value::GetMinimum()
@@ -317,26 +315,24 @@ protected:
 
 // Helpers for public-api forwarding methods
 
-inline Toolkit::Internal::ProgressBar& GetImpl(Toolkit::ProgressBar& pub)
+inline Demo::Internal::ProgressBar& GetImpl(Demo::ProgressBar& pub)
 {
   DALI_ASSERT_ALWAYS(pub);
 
   Dali::RefObject& handle = pub.GetImplementation();
 
-  return static_cast<Toolkit::Internal::ProgressBar&>(handle);
+  return static_cast<Demo::Internal::ProgressBar&>(handle);
 }
 
-inline const Toolkit::Internal::ProgressBar& GetImpl(const Toolkit::ProgressBar& pub)
+inline const Demo::Internal::ProgressBar& GetImpl(const Demo::ProgressBar& pub)
 {
   DALI_ASSERT_ALWAYS(pub);
 
   const Dali::RefObject& handle = pub.GetImplementation();
 
-  return static_cast<const Toolkit::Internal::ProgressBar&>(handle);
+  return static_cast<const Demo::Internal::ProgressBar&>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_PROGRESS_BAR_H

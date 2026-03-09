@@ -16,14 +16,14 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/adaptor-framework/file-loader.h>
-#include <dali/integration-api/debug.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/builder/builder.h>
 #include <dali-toolkit/devel-api/builder/json-parser.h>
 #include <dali-toolkit/devel-api/builder/tree-node.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/file-loader.h>
+#include <dali/integration-api/debug.h>
 
 #include <dirent.h>
 #include <stdio.h>
@@ -47,6 +47,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 
 namespace
 {
@@ -473,9 +474,9 @@ public:
     backButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EDIT_IMAGE_SELECTED);
     backButton.ClickedSignal().Connect(this, &ExampleApp::OnBackButtonPressed);
     backButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
-    mNavigationView = Toolkit::NavigationView::New();
+    mNavigationView = Demo::NavigationView::New();
     mNavigationView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mNavigationView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
 
@@ -550,14 +551,14 @@ public:
 private:
   Application& mApp;
 
-  ItemLayoutPtr           mLayout;
-  ItemView                mItemView;
-  Toolkit::NavigationView mNavigationView;
+  ItemLayoutPtr        mLayout;
+  ItemView             mItemView;
+  Demo::NavigationView mNavigationView;
 
   Toolkit::Control mView;
 
-  Toolkit::ToolBar mToolBar;
-  TextLabel        mTitleActor;
+  Demo::ToolBar mToolBar;
+  TextLabel     mTitleActor;
 
   Layer mBuilderLayer;
 

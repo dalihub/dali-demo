@@ -15,13 +15,14 @@
  *
  */
 
-#include "controls/progress-bar/progress-bar.h"
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include "controls/progress-bar/progress-bar.h"
 #include "shared/view.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
-using Dali::Toolkit::ProgressBar;
+using namespace Dali::Demo;
+using Dali::Demo::ProgressBar;
 
 namespace
 {
@@ -247,7 +248,7 @@ private:
   Application&        mApplication;
   Timer               mTimer;
   Toolkit::Control    mView;         ///< The View instance.
-  Toolkit::ToolBar    mToolBar;      ///< The View's Toolbar.
+  Demo::ToolBar       mToolBar;      ///< The View's Toolbar.
   Layer               mContentLayer; ///< Content layer.
   ProgressBar         mProgressBarDefault;
   ProgressBar         mProgressBarCircular;

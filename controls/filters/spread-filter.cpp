@@ -30,7 +30,7 @@
 #include <controls/shaders/control-renderers-frag.h>
 #include <controls/shaders/spread-filter-shader-frag.h>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -64,8 +64,8 @@ void SpreadFilter::Enable()
   mActorForInput.RegisterProperty(SPREAD_UNIFORM_NAME, mSpread);
   mActorForInput.RegisterProperty(TEX_SCALE_UNIFORM_NAME, Vector2(1.0f / mTargetSize.width, 0.0f));
 
-  Renderer rendererForInput = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_SPREAD_FILTER_SHADER_FRAG);
-  DevelControl::SetRendererTexture(rendererForInput, mInputTexture);
+  Renderer rendererForInput = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_SPREAD_FILTER_SHADER_FRAG);
+  Toolkit::DevelControl::SetRendererTexture(rendererForInput, mInputTexture);
   mActorForInput.AddRenderer(rendererForInput);
 
   // create internal offscreen for result of horizontal pass
@@ -80,8 +80,8 @@ void SpreadFilter::Enable()
   // register properties as shader uniforms
   mActorForHorz.RegisterProperty(SPREAD_UNIFORM_NAME, mSpread);
   mActorForHorz.RegisterProperty(TEX_SCALE_UNIFORM_NAME, Vector2(0.0f, 1.0f / mTargetSize.height));
-  Renderer rendererForHorz = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_SPREAD_FILTER_SHADER_FRAG);
-  DevelControl::SetRendererTexture(rendererForHorz, textureForHorz);
+  Renderer rendererForHorz = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_SPREAD_FILTER_SHADER_FRAG);
+  Toolkit::DevelControl::SetRendererTexture(rendererForHorz, textureForHorz);
   mActorForHorz.AddRenderer(rendererForHorz);
 
   mRootActor.Add(mActorForInput);
@@ -181,4 +181,4 @@ void SpreadFilter::CreateRenderTasks()
   mRenderTaskForVert.SetCameraActor(mCameraActor);
 }
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal

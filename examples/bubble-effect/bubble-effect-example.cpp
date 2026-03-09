@@ -25,6 +25,8 @@
 #include <shared/view.h>
 
 using namespace Dali;
+using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 
 namespace
 {
@@ -99,13 +101,13 @@ private:
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.
-    Toolkit::ToolBar toolBar;
-    Layer            content = DemoHelper::CreateView(app,
-                                                      mBackground,
-                                                      toolBar,
-                                                      "",
-                                                      TOOLBAR_IMAGE,
-                                                      APPLICATION_TITLE);
+    Demo::ToolBar toolBar;
+    Layer         content = DemoHelper::CreateView(app,
+                                        mBackground,
+                                        toolBar,
+                                        "",
+                                        TOOLBAR_IMAGE,
+                                        APPLICATION_TITLE);
 
     // Add a button to change background. (right of toolbar)
     mChangeBackgroundButton = Toolkit::PushButton::New();
@@ -114,7 +116,7 @@ private:
     mChangeBackgroundButton.ClickedSignal().Connect(this, &BubbleEffectExample::OnChangeIconClicked);
     toolBar.AddControl(mChangeBackgroundButton,
                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                       Toolkit::Alignment::HORIZONTAL_RIGHT,
+                       Demo::Alignment::HORIZONTAL_RIGHT,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
     // Add a button to change bubble shape. ( left of bar )
     mChangeBubbleShapeButton = Toolkit::PushButton::New();
@@ -123,14 +125,14 @@ private:
     mChangeBubbleShapeButton.ClickedSignal().Connect(this, &BubbleEffectExample::OnChangeIconClicked);
     toolBar.AddControl(mChangeBubbleShapeButton,
                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                       Toolkit::Alignment::HORIZONTAL_LEFT,
+                       Demo::Alignment::HORIZONTAL_LEFT,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create and initialize the BubbleEmitter object
-    mBubbleEmitter = Toolkit::BubbleEmitter::New(windowSize,
-                                                 DemoHelper::LoadTexture(BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId]),
-                                                 DEFAULT_NUMBER_OF_BUBBLES,
-                                                 DEFAULT_BUBBLE_SIZE);
+    mBubbleEmitter = BubbleEmitter::New(windowSize,
+                                        DemoHelper::LoadTexture(BUBBLE_SHAPE_IMAGES[mCurrentBubbleShapeImageId]),
+                                        DEFAULT_NUMBER_OF_BUBBLES,
+                                        DEFAULT_BUBBLE_SIZE);
 
     mBubbleEmitter.SetBackground(DemoHelper::LoadWindowFillingTexture(window.GetSize(), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
 
@@ -282,7 +284,7 @@ private:
   Application&           mApp;
   Dali::Toolkit::Control mBackground;
 
-  Toolkit::BubbleEmitter mBubbleEmitter;
+  Demo::BubbleEmitter    mBubbleEmitter;
   Animation              mEmitAnimation;
   Toolkit::PushButton    mChangeBackgroundButton;
   Toolkit::PushButton    mChangeBubbleShapeButton;

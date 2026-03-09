@@ -25,7 +25,7 @@ using namespace Dali;
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 Slider::Slider()
 {
@@ -79,6 +79,6 @@ Slider Slider::DownCast(BaseHandle handle)
   return Control::DownCast<Slider, Internal::Slider>(handle);
 }
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali

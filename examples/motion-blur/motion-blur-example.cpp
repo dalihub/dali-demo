@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -160,12 +160,12 @@ public:
     float   size       = std::max(windowSize.width, windowSize.height);
     mContentLayer.SetProperty(Actor::Property::SIZE, Vector2(size, size));
 
-    //Add an effects icon on the right of the title
+    // Add an effects icon on the right of the title
     mActorEffectsButton = Toolkit::PushButton::New();
     mActorEffectsButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON);
     mActorEffectsButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECTS_OFF_ICON_SELECTED);
     mActorEffectsButton.ClickedSignal().Connect(this, &MotionBlurExampleApp::OnEffectButtonClicked);
-    mToolBar.AddControl(mActorEffectsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
+    mToolBar.AddControl(mActorEffectsButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
 
     // Creates a mode button.
     // Create a effect toggle button. (right of toolbar)
@@ -174,7 +174,7 @@ public:
     layoutButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, LAYOUT_IMAGE_SELECTED);
     layoutButton.ClickedSignal().Connect(this, &MotionBlurExampleApp::OnLayoutButtonClicked);
     layoutButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(layoutButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Input
     mTapGestureDetector = TapGestureDetector::New();
@@ -420,7 +420,7 @@ public:
 private:
   Application&     mApplication; ///< Application instance
   Toolkit::Control mView;
-  Toolkit::ToolBar mToolBar;
+  Demo::ToolBar    mToolBar;
 
   Layer mContentLayer; ///< Content layer (contains actor for this blur demo)
 

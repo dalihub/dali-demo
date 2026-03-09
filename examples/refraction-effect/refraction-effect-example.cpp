@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -134,7 +134,7 @@ private:
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.
-    Toolkit::ToolBar toolBar;
+    Demo::ToolBar    toolBar;
     Toolkit::Control view;
     mContent = DemoHelper::CreateView(application,
                                       view,
@@ -150,7 +150,7 @@ private:
     mChangeTextureButton.ClickedSignal().Connect(this, &RefractionEffectExample::OnChangeTexture);
     toolBar.AddControl(mChangeTextureButton,
                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                       Toolkit::Alignment::HORIZONTAL_RIGHT,
+                       Demo::Alignment::HORIZONTAL_RIGHT,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
     // Add a button to change mesh pattern. ( left of bar )
     mChangeMeshButton = Toolkit::PushButton::New();
@@ -159,7 +159,7 @@ private:
     mChangeMeshButton.ClickedSignal().Connect(this, &RefractionEffectExample::OnChangeMesh);
     toolBar.AddControl(mChangeMeshButton,
                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                       Toolkit::Alignment::HORIZONTAL_LEFT,
+                       Demo::Alignment::HORIZONTAL_LEFT,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // shader used when the screen is not touched, render a flat surface
@@ -387,7 +387,7 @@ private:
         if(vertex.z > boundingBox[5]) boundingBox[5] = vertex.z;
         vertexPositions.push_back(vertex);
       }
-      else if(line[0] == 'f') //face
+      else if(line[0] == 'f') // face
       {
         unsigned int numOfInt = 3;
         while(true)

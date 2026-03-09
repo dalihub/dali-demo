@@ -27,7 +27,7 @@
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -51,7 +51,7 @@ class SuperBlurView;
  *  blurAnimation.AnimateTo( Property( blurView, blurView.GetBlurStrengthPropertyIndex() ), ... );\n
  *  blurAnimation.Play();\n
  */
-class DALI_DEMO_CONTROLS_API SuperBlurView : public Control
+class DALI_DEMO_CONTROLS_API SuperBlurView : public Toolkit::Control
 {
 public:
   /**
@@ -59,7 +59,7 @@ public:
    */
   enum PropertyRange
   {
-    PROPERTY_START_INDEX = Control::CONTROL_PROPERTY_END_INDEX + 1,
+    PROPERTY_START_INDEX = Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1,
     PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000 ///< Reserve property indices
   };
 
@@ -205,7 +205,7 @@ public: // Not intended for application developers
   explicit DALI_INTERNAL SuperBlurView(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali
 

@@ -25,7 +25,7 @@
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
 
-namespace Dali::Toolkit
+namespace Dali::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -41,7 +41,7 @@ class NavigationView;
  * When pop is called on the NavigationView, the current tree of Actors are removed and the previous set added back.
  * If pop is called on the last set of Actors then they remain, nothing is popped.
  */
-class DALI_DEMO_CONTROLS_API NavigationView : public Control
+class DALI_DEMO_CONTROLS_API NavigationView : public Toolkit::Control
 {
 public:
   /**
@@ -120,7 +120,7 @@ public:
 public: // Not intended for application developers
         /// @cond internal
   /**
-   * Creates a handle using the Toolkit::Internal implementation.
+   * Creates a handle using the Demo::Internal implementation.
    * @param[in]  implementation  The Control implementation.
    */
   DALI_INTERNAL NavigationView(Internal::NavigationView& implementation);
@@ -133,6 +133,6 @@ public: // Not intended for application developers
   /// @endcond
 }; // class NavigationView
 
-} // namespace Dali::Toolkit
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_NAVIGATION_VIEW_H

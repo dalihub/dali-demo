@@ -22,11 +22,7 @@
 #include "page-turn-portrait-view.h"
 #include "page-turn-view-impl.h"
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 /**
  * Implementation class of the PageTurnView in portrait mode
@@ -35,9 +31,9 @@ class PageTurnPortraitView : public PageTurnView
 {
 public:
   /**
-   * @copydoc Toolkit::PageTurnPortraitView::New( PageFactory&, const Vector2& )
+   * @copydoc Demo::PageTurnPortraitView::New( PageFactory&, const Vector2& )
    */
-  static Toolkit::PageTurnPortraitView New(PageFactory& pageFactory, const Vector2& viewPageSize);
+  static Demo::PageTurnPortraitView New(PageFactory& pageFactory, const Vector2& viewPageSize);
 
 protected:
   /**
@@ -93,10 +89,6 @@ private:
   PageTurnPortraitView& operator=(const PageTurnPortraitView& rhs);
 };
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_PAGE_TURN_PORTRAIT_VIEW_IMPL_H

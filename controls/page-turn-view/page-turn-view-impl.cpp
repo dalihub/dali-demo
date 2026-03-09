@@ -34,6 +34,8 @@
 #include "page-turn-effect.h"
 
 using namespace Dali;
+using namespace Dali::Toolkit;
+using namespace Dali::Toolkit::Internal;
 
 namespace // Unnamed namespace
 {
@@ -222,11 +224,7 @@ struct ShadowBlurStrengthConstraint
 
 } // unnamed namespace
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -237,16 +235,16 @@ BaseHandle Create()
 }
 
 // Setup properties, signals and actions using the type-registry.
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::PageTurnView, Toolkit::Control, Create);
+DALI_TYPE_REGISTRATION_BEGIN(Demo::PageTurnView, Toolkit::Control, Create);
 
-DALI_PROPERTY_REGISTRATION(Toolkit, PageTurnView, "viewPageSize", VECTOR2, VIEW_PAGE_SIZE)
-DALI_PROPERTY_REGISTRATION(Toolkit, PageTurnView, "currentPageId", INTEGER, CURRENT_PAGE_ID)
-DALI_PROPERTY_REGISTRATION(Toolkit, PageTurnView, "spineShadow", VECTOR2, SPINE_SHADOW)
+DALI_PROPERTY_REGISTRATION(Demo, PageTurnView, "viewPageSize", VECTOR2, VIEW_PAGE_SIZE)
+DALI_PROPERTY_REGISTRATION(Demo, PageTurnView, "currentPageId", INTEGER, CURRENT_PAGE_ID)
+DALI_PROPERTY_REGISTRATION(Demo, PageTurnView, "spineShadow", VECTOR2, SPINE_SHADOW)
 
-DALI_SIGNAL_REGISTRATION(Toolkit, PageTurnView, "pageTurnStarted", SIGNAL_PAGE_TURN_STARTED)
-DALI_SIGNAL_REGISTRATION(Toolkit, PageTurnView, "pageTurnFinished", SIGNAL_PAGE_TURN_FINISHED)
-DALI_SIGNAL_REGISTRATION(Toolkit, PageTurnView, "pagePanStarted", SIGNAL_PAGE_PAN_STARTED)
-DALI_SIGNAL_REGISTRATION(Toolkit, PageTurnView, "pagePanFinished", SIGNAL_PAGE_PAN_FINISHED)
+DALI_SIGNAL_REGISTRATION(Demo, PageTurnView, "pageTurnStarted", SIGNAL_PAGE_TURN_STARTED)
+DALI_SIGNAL_REGISTRATION(Demo, PageTurnView, "pageTurnFinished", SIGNAL_PAGE_TURN_FINISHED)
+DALI_SIGNAL_REGISTRATION(Demo, PageTurnView, "pagePanStarted", SIGNAL_PAGE_PAN_STARTED)
+DALI_SIGNAL_REGISTRATION(Demo, PageTurnView, "pagePanFinished", SIGNAL_PAGE_PAN_FINISHED)
 
 DALI_TYPE_REGISTRATION_END()
 
@@ -343,7 +341,7 @@ void PageTurnView::Page::SetCurrentCenter(const Vector2& value)
 }
 
 PageTurnView::PageTurnView(PageFactory& pageFactory, const Vector2& viewPageSize)
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mPageFactory(&pageFactory),
   mPageSize(viewPageSize),
   mSpineShadowParameter(DEFAULT_SPINE_SHADOW_PARAMETER),
@@ -451,7 +449,7 @@ Shader PageTurnView::CreateShader(const Property::Map& shaderMap)
 
 void PageTurnView::SetupShadowView()
 {
-  mShadowView    = Toolkit::ShadowView::New(0.25f, 0.25f);
+  mShadowView    = Demo::ShadowView::New(0.25f, 0.25f);
   Vector3 origin = mTurningPageLayer.GetCurrentProperty<Vector3>(Actor::Property::PARENT_ORIGIN);
   mShadowView.SetProperty(Actor::Property::PARENT_ORIGIN, origin);
   mShadowView.SetProperty(Actor::Property::ANCHOR_POINT, origin);
@@ -672,7 +670,7 @@ void PageTurnView::PanStarted(const Vector2& gesturePosition)
   mPageUpdated    = false;
 
   // Guard against destruction during signal emission
-  Toolkit::PageTurnView handle(GetOwner());
+  Demo::PageTurnView handle(GetOwner());
   mPagePanStartedSignal.Emit(handle);
 }
 
@@ -684,7 +682,7 @@ void PageTurnView::PanContinuing(const Vector2& gesturePosition)
   }
 
   // Guard against destruction during signal emission
-  Toolkit::PageTurnView handle(GetOwner());
+  Demo::PageTurnView handle(GetOwner());
 
   if(!mPress)
   {
@@ -709,6 +707,7 @@ void PageTurnView::PanContinuing(const Vector2& gesturePosition)
       mPress           = true;
       mAnimatingCount++;
 
+      Demo::PageTurnView handle(GetOwner());
       mPageTurnStartedSignal.Emit(handle, static_cast<unsigned int>(mTurningPageIndex), !mPages[mIndex].isTurnBack);
       int id = mTurningPageIndex + (mPages[mIndex].isTurnBack ? -1 : 1);
       if(id >= 0 && id < mTotalPageCount)
@@ -825,7 +824,7 @@ void PageTurnView::PanContinuing(const Vector2& gesturePosition)
 void PageTurnView::PanFinished(const Vector2& gesturePosition, float gestureSpeed)
 {
   // Guard against destruction during signal emission
-  Toolkit::PageTurnView handle(GetOwner());
+  Demo::PageTurnView handle(GetOwner());
 
   if(mTurningPageIndex == -1)
   {
@@ -919,7 +918,7 @@ void PageTurnView::TurnedOver(Animation& animation)
   OnTurnedOver(mPages[index].actor, mPages[index].isTurnBack);
 
   // Guard against destruction during signal emission
-  Toolkit::PageTurnView handle(GetOwner());
+  Demo::PageTurnView handle(GetOwner());
   mPageTurnFinishedSignal.Emit(handle, static_cast<unsigned int>(pageId), mPages[index].isTurnBack);
 }
 
@@ -941,7 +940,7 @@ void PageTurnView::SliddenBack(Animation& animation)
   }
 
   // Guard against destruction during signal emission
-  Toolkit::PageTurnView handle(GetOwner());
+  Demo::PageTurnView handle(GetOwner());
   mPageTurnFinishedSignal.Emit(handle, static_cast<unsigned int>(pageId), mPages[index].isTurnBack);
 }
 
@@ -985,22 +984,22 @@ void PageTurnView::StopTurning()
   }
 }
 
-Toolkit::PageTurnView::PageTurnSignal& PageTurnView::PageTurnStartedSignal()
+Demo::PageTurnView::PageTurnSignal& PageTurnView::PageTurnStartedSignal()
 {
   return mPageTurnStartedSignal;
 }
 
-Toolkit::PageTurnView::PageTurnSignal& PageTurnView::PageTurnFinishedSignal()
+Demo::PageTurnView::PageTurnSignal& PageTurnView::PageTurnFinishedSignal()
 {
   return mPageTurnFinishedSignal;
 }
 
-Toolkit::PageTurnView::PagePanSignal& PageTurnView::PagePanStartedSignal()
+Demo::PageTurnView::PagePanSignal& PageTurnView::PagePanStartedSignal()
 {
   return mPagePanStartedSignal;
 }
 
-Toolkit::PageTurnView::PagePanSignal& PageTurnView::PagePanFinishedSignal()
+Demo::PageTurnView::PagePanSignal& PageTurnView::PagePanFinishedSignal()
 {
   return mPagePanFinishedSignal;
 }
@@ -1010,7 +1009,7 @@ bool PageTurnView::DoConnectSignal(BaseObject* object, ConnectionTrackerInterfac
   Dali::BaseHandle handle(object);
 
   bool                  connected(true);
-  Toolkit::PageTurnView pageTurnView = Toolkit::PageTurnView::DownCast(handle);
+  Demo::PageTurnView pageTurnView = Demo::PageTurnView::DownCast(handle);
 
   if(0 == strcmp(signalName.c_str(), SIGNAL_PAGE_TURN_STARTED))
   {
@@ -1039,7 +1038,7 @@ bool PageTurnView::DoConnectSignal(BaseObject* object, ConnectionTrackerInterfac
 
 void PageTurnView::SetProperty(BaseObject* object, Property::Index index, const Property::Value& value)
 {
-  Toolkit::PageTurnView pageTurnView = Toolkit::PageTurnView::DownCast(Dali::BaseHandle(object));
+  Demo::PageTurnView pageTurnView = Demo::PageTurnView::DownCast(Dali::BaseHandle(object));
 
   if(pageTurnView)
   {
@@ -1047,17 +1046,17 @@ void PageTurnView::SetProperty(BaseObject* object, Property::Index index, const 
 
     switch(index)
     {
-      case Toolkit::PageTurnView::Property::VIEW_PAGE_SIZE:
+      case Demo::PageTurnView::Property::VIEW_PAGE_SIZE:
       {
         pageTurnViewImpl.SetPageSize(value.Get<Vector2>());
         break;
       }
-      case Toolkit::PageTurnView::Property::CURRENT_PAGE_ID:
+      case Demo::PageTurnView::Property::CURRENT_PAGE_ID:
       {
         pageTurnViewImpl.GoToPage(value.Get<int>());
         break;
       }
-      case Toolkit::PageTurnView::Property::SPINE_SHADOW:
+      case Demo::PageTurnView::Property::SPINE_SHADOW:
       {
         pageTurnViewImpl.SetSpineShadowParameter(value.Get<Vector2>());
         break;
@@ -1070,7 +1069,7 @@ Property::Value PageTurnView::GetProperty(BaseObject* object, Property::Index in
 {
   Property::Value value;
 
-  Toolkit::PageTurnView pageTurnView = Toolkit::PageTurnView::DownCast(Dali::BaseHandle(object));
+  Demo::PageTurnView pageTurnView = Demo::PageTurnView::DownCast(Dali::BaseHandle(object));
 
   if(pageTurnView)
   {
@@ -1078,17 +1077,17 @@ Property::Value PageTurnView::GetProperty(BaseObject* object, Property::Index in
 
     switch(index)
     {
-      case Toolkit::PageTurnView::Property::VIEW_PAGE_SIZE:
+      case Demo::PageTurnView::Property::VIEW_PAGE_SIZE:
       {
         value = pageTurnViewImpl.GetPageSize();
         break;
       }
-      case Toolkit::PageTurnView::Property::CURRENT_PAGE_ID:
+      case Demo::PageTurnView::Property::CURRENT_PAGE_ID:
       {
         value = static_cast<int>(pageTurnViewImpl.GetCurrentPage());
         break;
       }
-      case Toolkit::PageTurnView::Property::SPINE_SHADOW:
+      case Demo::PageTurnView::Property::SPINE_SHADOW:
       {
         value = pageTurnViewImpl.GetSpineShadowParameter();
         break;
@@ -1098,8 +1097,4 @@ Property::Value PageTurnView::GetProperty(BaseObject* object, Property::Index in
   return value;
 }
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal

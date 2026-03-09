@@ -54,11 +54,7 @@
 // to take account of the changed ShadowView object size, projecting to the unchanged render target sizes. This is done relative to the fixed render target / actor sizes
 // by using constraints relative to the ShadowView actor size.
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -66,10 +62,10 @@ using namespace Dali;
 
 BaseHandle Create()
 {
-  return Toolkit::ShadowView::New();
+  return Demo::ShadowView::New();
 }
 
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::ShadowView, Toolkit::Control, Create)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::ShadowView, Toolkit::Control, Create)
 DALI_TYPE_REGISTRATION_END()
 
 const float BLUR_STRENGTH_DEFAULT = 1.0f;
@@ -88,7 +84,7 @@ const char* const SHADOW_COLOR_PROPERTY_NAME                          = "ShadowC
 } // namespace
 
 ShadowView::ShadowView(float downsampleWidthScale, float downsampleHeightScale)
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mChildrenRoot(Actor::New()),
   mCachedShadowColor(DEFAULT_SHADOW_COLOR),
   mCachedBackgroundColor(DEFAULT_SHADOW_COLOR.r, DEFAULT_SHADOW_COLOR.g, DEFAULT_SHADOW_COLOR.b, 0.0f),
@@ -103,11 +99,11 @@ ShadowView::~ShadowView()
 {
 }
 
-Toolkit::ShadowView ShadowView::New(float downsampleWidthScale, float downsampleHeightScale)
+Demo::ShadowView ShadowView::New(float downsampleWidthScale, float downsampleHeightScale)
 {
   ShadowView* impl = new ShadowView(downsampleWidthScale, downsampleHeightScale);
 
-  Dali::Toolkit::ShadowView handle = Dali::Toolkit::ShadowView(*impl);
+  Dali::Demo::ShadowView handle = Dali::Demo::ShadowView(*impl);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -124,7 +120,7 @@ void ShadowView::SetShadowPlaneBackground(Actor shadowPlaneBackground)
   mShadowPlane.SetProperty(Actor::Property::NAME, "SHADOW_PLANE");
   mShadowPlane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mShadowPlane.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
-  Renderer   shadowRenderer = DevelControl::CreateRenderer(SHADER_SHADOW_VIEW_RENDER_SHADER_VERT, SHADER_SHADOW_VIEW_RENDER_SHADER_FRAG, Shader::Hint::OUTPUT_IS_TRANSPARENT, "SHADOW_VIEW_RENDER_SHADER", Uint16Pair(20, 20));
+  Renderer   shadowRenderer = Toolkit::DevelControl::CreateRenderer(SHADER_SHADOW_VIEW_RENDER_SHADER_VERT, SHADER_SHADOW_VIEW_RENDER_SHADER_FRAG, Shader::Hint::OUTPUT_IS_TRANSPARENT, "SHADOW_VIEW_RENDER_SHADER", Uint16Pair(20, 20));
   TextureSet textureSet     = shadowRenderer.GetTextures();
   textureSet.SetTexture(0u, mOutputFrameBuffer.GetColorTexture());
   mShadowPlane.AddRenderer(shadowRenderer);
@@ -256,7 +252,7 @@ void ShadowView::OnInitialize()
   blurStrengthConstraint.AddSource(Source(self, mBlurStrengthPropertyIndex));
   blurStrengthConstraint.Apply();
 
-  Self().SetProperty(DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
 }
 
 void ShadowView::OnChildAdd(Actor& child)
@@ -266,14 +262,14 @@ void ShadowView::OnChildAdd(Actor& child)
     mChildrenRoot.Add(child);
   }
 
-  Control::OnChildAdd(child);
+  Toolkit::Internal::Control::OnChildAdd(child);
 }
 
 void ShadowView::OnChildRemove(Actor& child)
 {
   mChildrenRoot.Remove(child);
 
-  Control::OnChildRemove(child);
+  Toolkit::Internal::Control::OnChildRemove(child);
 }
 
 void ShadowView::ConstrainCamera()
@@ -341,8 +337,4 @@ void ShadowView::SetShaderConstants()
   mShadowColorPropertyIndex = mShadowPlane.RegisterProperty(SHADER_SHADOW_COLOR_PROPERTY_NAME, mCachedShadowColor);
 }
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal

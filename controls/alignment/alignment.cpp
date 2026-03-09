@@ -26,7 +26,7 @@
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 Alignment::Alignment()
 {
@@ -82,7 +82,7 @@ const Alignment::Padding& Alignment::GetPadding() const
 }
 
 Alignment::Alignment(Internal::Alignment& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
@@ -96,11 +96,11 @@ Alignment& Alignment::operator=(const Alignment& alignment)
 }
 
 Alignment::Alignment(Dali::Internal::CustomActor* internal)
-: Control(internal)
+: Toolkit::Control(internal)
 {
   VerifyCustomActorPointer<Internal::Alignment>(internal);
 }
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali

@@ -26,7 +26,7 @@
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 class Alignment;
 
@@ -34,9 +34,9 @@ namespace Internal
 {
 /**
  * Alignment is a control to position and resize actors inside other container actors.
- * @see Dali::Toolkit::Alignment for more details.
+ * @see Dali::Demo::Alignment for more details.
  */
-class Alignment : public Control
+class Alignment : public Toolkit::Internal::Control
 {
 public:
   /**
@@ -44,37 +44,37 @@ public:
    * @param type Type of alignment.
    * @return A handle to a newly allocated Dali resource.
    */
-  static Toolkit::Alignment New(Toolkit::Alignment::Type horizontal, Toolkit::Alignment::Type vertical);
+  static Demo::Alignment New(Demo::Alignment::Type horizontal, Demo::Alignment::Type vertical);
 
   /**
-   * @copydoc Dali::Toolkit::Alignment::SetAlignmentType()
+   * @copydoc Dali::Demo::Alignment::SetAlignmentType()
    */
-  void SetAlignmentType(Toolkit::Alignment::Type type);
+  void SetAlignmentType(Demo::Alignment::Type type);
 
   /**
-   * @copydoc Dali::Toolkit::Alignment::GetAlignmentType()
+   * @copydoc Dali::Demo::Alignment::GetAlignmentType()
    */
-  Toolkit::Alignment::Type GetAlignmentType() const;
+  Demo::Alignment::Type GetAlignmentType() const;
 
   /**
-   * @copydoc Dali::Toolkit::Alignment::SetScaling()
+   * @copydoc Dali::Demo::Alignment::SetScaling()
    */
-  void SetScaling(Toolkit::Alignment::Scaling scaling);
+  void SetScaling(Demo::Alignment::Scaling scaling);
 
   /**
-   * @copydoc Dali::Toolkit::Alignment::GetScaling()
+   * @copydoc Dali::Demo::Alignment::GetScaling()
    */
-  Toolkit::Alignment::Scaling GetScaling() const;
+  Demo::Alignment::Scaling GetScaling() const;
 
   /**
-   * @copydoc Dali::Toolkit::Alignment::SetPadding()
+   * @copydoc Dali::Demo::Alignment::SetPadding()
    */
-  void SetPadding(const Toolkit::Alignment::Padding& padding);
+  void SetPadding(const Demo::Alignment::Padding& padding);
 
   /**
-   * @copydoc Dali::Toolkit::Alignment::GetPadding()
+   * @copydoc Dali::Demo::Alignment::GetPadding()
    */
-  const Toolkit::Alignment::Padding& GetPadding() const;
+  const Demo::Alignment::Padding& GetPadding() const;
 
 private: // From Control
   /**
@@ -92,7 +92,7 @@ private:
    * Constructor.
    * It initializes Alignment members.
    */
-  Alignment(Toolkit::Alignment::Type horizontal, Toolkit::Alignment::Type vertical);
+  Alignment(Demo::Alignment::Type horizontal, Demo::Alignment::Type vertical);
 
   /**
    * A reference counted object may only be deleted by calling Unreference()
@@ -105,35 +105,35 @@ private:
   Alignment& operator=(const Alignment&);
 
 private:
-  Toolkit::Alignment::Type    mHorizontal; ///< Type of alignment.
-  Toolkit::Alignment::Type    mVertical;   ///< Type of alignment.
-  Toolkit::Alignment::Scaling mScaling;    ///< Stores the geometry scaling.
-  Toolkit::Alignment::Padding mPadding;    ///< Stores the padding values.
+  Demo::Alignment::Type    mHorizontal; ///< Type of alignment.
+  Demo::Alignment::Type    mVertical;   ///< Type of alignment.
+  Demo::Alignment::Scaling mScaling;    ///< Stores the geometry scaling.
+  Demo::Alignment::Padding mPadding;    ///< Stores the padding values.
 };
 
 } // namespace Internal
 
 // Helpers for public-api forwarding methods
 
-inline Toolkit::Internal::Alignment& GetImpl(Toolkit::Alignment& alignment)
+inline Demo::Internal::Alignment& GetImpl(Demo::Alignment& alignment)
 {
   DALI_ASSERT_ALWAYS(alignment);
 
   Dali::RefObject& handle = alignment.GetImplementation();
 
-  return static_cast<Toolkit::Internal::Alignment&>(handle);
+  return static_cast<Demo::Internal::Alignment&>(handle);
 }
 
-inline const Toolkit::Internal::Alignment& GetImpl(const Toolkit::Alignment& alignment)
+inline const Demo::Internal::Alignment& GetImpl(const Demo::Alignment& alignment)
 {
   DALI_ASSERT_ALWAYS(alignment);
 
   const Dali::RefObject& handle = alignment.GetImplementation();
 
-  return static_cast<const Toolkit::Internal::Alignment&>(handle);
+  return static_cast<const Demo::Internal::Alignment&>(handle);
 }
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali
 

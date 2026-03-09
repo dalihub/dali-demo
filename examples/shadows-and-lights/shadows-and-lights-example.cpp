@@ -16,8 +16,8 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/dali.h>
 #include <iostream>
 
 // INTERNAL INCLUDES
@@ -26,6 +26,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 using std::string;
 using namespace DemoHelper;
 
@@ -154,7 +155,7 @@ public:
   {
     // Creates a default view with a default tool bar.
     // The view is added to the window.
-    Toolkit::ToolBar toolBar;
+    Demo::ToolBar toolBar;
     mContents = DemoHelper::CreateView(app,
                                        mView,
                                        toolBar,
@@ -167,21 +168,21 @@ public:
     effectChangeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE);
     effectChangeButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CHANGE_EFFECT_IMAGE_SELECTED);
     effectChangeButton.ClickedSignal().Connect(this, &TestApp::OnEffectButtonClicked);
-    toolBar.AddControl(effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    toolBar.AddControl(effectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Add title to the tool bar.
     mTitleActor = DemoHelper::CreateToolBarLabel("");
-    toolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER);
+    toolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Demo::Alignment::HORIZONTAL_CENTER);
 
     // Set Title text
     mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT));
 
-    //Add a reset button
+    // Add a reset button
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
     resetButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, RESET_ICON);
     resetButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, RESET_ICON_SELECTED);
     resetButton.ClickedSignal().Connect(this, &TestApp::OnResetPressed);
-    toolBar.AddControl(resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
+    toolBar.AddControl(resetButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
 
     // Setup
     mView.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
@@ -206,7 +207,7 @@ public:
 
   void CreateShadowViewAndLights()
   {
-    mShadowView = Toolkit::ShadowView::New();
+    mShadowView = ShadowView::New();
     mShadowView.SetProperty(Dali::Actor::Property::NAME, "Container");
     mShadowView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mShadowView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
@@ -467,7 +468,7 @@ private:
   Animation            mAnimation;
   Animation            mSceneAnimation;
   bool                 mPaused;
-  Toolkit::ShadowView  mShadowView;
+  ShadowView           mShadowView;
   ImageView            mShadowPlaneBg;
   ImageView            mShadowPlane;
   Actor                mCastingLight;

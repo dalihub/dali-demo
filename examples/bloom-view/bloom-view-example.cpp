@@ -24,6 +24,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 
 namespace
 {
@@ -82,7 +83,7 @@ public:
     window.Add(mRootActor);
 
     // Create the object that will perform the blooming work
-    mBloomView = Dali::Toolkit::BloomView::New();
+    mBloomView = BloomView::New();
     mBloomView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mBloomView.SetProperty(Actor::Property::SIZE, viewSize);
     mRootActor.Add(mBloomView);

@@ -36,7 +36,7 @@ using namespace Dali;
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 namespace Internal
 {
@@ -44,31 +44,31 @@ namespace // Unnamed namespace
 {
 BaseHandle Create()
 {
-  return Dali::Toolkit::Slider::New();
+  return Demo::Slider::New();
 }
 
 // clang-format off
 // Setup properties, signals and actions using the type-registry.
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::Slider, Toolkit::Control, Create )
+DALI_TYPE_REGISTRATION_BEGIN(Demo::Slider, Toolkit::Control, Create )
 
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "lowerBound",       FLOAT,    LOWER_BOUND       )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "upperBound",       FLOAT,    UPPER_BOUND       )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "value",            FLOAT,    VALUE             )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "trackVisual",      MAP,      TRACK_VISUAL      )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "handleVisual",     MAP,      HANDLE_VISUAL     )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "progressVisual",   MAP,      PROGRESS_VISUAL   )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "popupVisual",      MAP,      POPUP_VISUAL      )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "popupArrowVisual", MAP,      POPUP_ARROW_VISUAL)
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "disabledColor",    VECTOR4,  DISABLED_COLOR    )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "valuePrecision",   INTEGER,  VALUE_PRECISION   )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "showPopup",        BOOLEAN,  SHOW_POPUP        )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "showValue",        BOOLEAN,  SHOW_VALUE        )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "marks",            ARRAY,    MARKS             )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "snapToMarks",      BOOLEAN,  SNAP_TO_MARKS     )
-DALI_PROPERTY_REGISTRATION(Toolkit, Slider, "markTolerance",    FLOAT,    MARK_TOLERANCE    )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "lowerBound",       FLOAT,    LOWER_BOUND       )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "upperBound",       FLOAT,    UPPER_BOUND       )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "value",            FLOAT,    VALUE             )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "trackVisual",      MAP,      TRACK_VISUAL      )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "handleVisual",     MAP,      HANDLE_VISUAL     )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "progressVisual",   MAP,      PROGRESS_VISUAL   )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "popupVisual",      MAP,      POPUP_VISUAL      )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "popupArrowVisual", MAP,      POPUP_ARROW_VISUAL)
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "disabledColor",    VECTOR4,  DISABLED_COLOR    )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "valuePrecision",   INTEGER,  VALUE_PRECISION   )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "showPopup",        BOOLEAN,  SHOW_POPUP        )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "showValue",        BOOLEAN,  SHOW_VALUE        )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "marks",            ARRAY,    MARKS             )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "snapToMarks",      BOOLEAN,  SNAP_TO_MARKS     )
+DALI_PROPERTY_REGISTRATION(Demo, Slider, "markTolerance",    FLOAT,    MARK_TOLERANCE    )
 
-DALI_SIGNAL_REGISTRATION(Toolkit, Slider, "valueChanged", SIGNAL_VALUE_CHANGED)
-DALI_SIGNAL_REGISTRATION(Toolkit, Slider, "mark",         SIGNAL_MARK         )
+DALI_SIGNAL_REGISTRATION(Demo, Slider, "valueChanged", SIGNAL_VALUE_CHANGED)
+DALI_SIGNAL_REGISTRATION(Demo, Slider, "mark",         SIGNAL_MARK         )
 
 DALI_TYPE_REGISTRATION_END()
 // clang-format on
@@ -117,13 +117,13 @@ const bool  DEFAULT_SNAP_TO_MARKS   = false;
 // Slider
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-Dali::Toolkit::Slider Slider::New()
+Demo::Slider Slider::New()
 {
   // Create the implementation
   SliderPtr slider(new Slider());
 
   // Pass ownership to CustomActor via derived handle
-  Dali::Toolkit::Slider handle(*slider);
+  Demo::Slider handle(*slider);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -205,11 +205,11 @@ void Slider::OnInitialize()
   self.TouchedSignal().Connect(this, &Slider::OnTouch);
 
   // Accessibility
-  self.SetProperty(DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::SLIDER);
-  self.SetProperty(DevelControl::Property::ACCESSIBILITY_HIGHLIGHTABLE, true);
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::SLIDER);
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_HIGHLIGHTABLE, true);
 }
 
-DevelControl::ControlAccessible* Slider::CreateAccessibleObject()
+Toolkit::DevelControl::ControlAccessible* Slider::CreateAccessibleObject()
 {
   return new SliderAccessible(Self());
 }
@@ -242,7 +242,7 @@ bool Slider::OnTouch(Actor actor, const TouchEvent& touch)
       if(mState == PRESSED)
       {
         mState = NORMAL;
-        mSlidingFinishedSignal.Emit(Toolkit::Slider::DownCast(Self()), GetValue());
+        mSlidingFinishedSignal.Emit(Demo::Slider::DownCast(Self()), GetValue());
       }
     }
   }
@@ -277,7 +277,7 @@ void Slider::OnPan(Actor actor, const PanGesture& gesture)
             SetValue(value);
             DisplayPopup(value);
           }
-          mSlidingFinishedSignal.Emit(Toolkit::Slider::DownCast(Self()), GetValue());
+          mSlidingFinishedSignal.Emit(Demo::Slider::DownCast(Self()), GetValue());
         }
 
         mState = NORMAL;
@@ -339,7 +339,7 @@ void Slider::DisplayValue(float value, bool raiseSignals)
   // Signals
   if(raiseSignals)
   {
-    Toolkit::Slider self = Toolkit::Slider::DownCast(Self());
+    Demo::Slider self = Demo::Slider::DownCast(Self());
     mValueChangedSignal.Emit(self, clampedValue);
 
     int markIndex;
@@ -393,9 +393,9 @@ Actor Slider::CreateHitRegion()
   return hitRegion;
 }
 
-Toolkit::ImageView Slider::CreateTrack()
+Dali::Toolkit::ImageView Slider::CreateTrack()
 {
-  Toolkit::ImageView track = Toolkit::ImageView::New();
+  Dali::Toolkit::ImageView track = Dali::Toolkit::ImageView::New();
   track.SetProperty(Dali::Actor::Property::NAME, "SliderTrack");
   track.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   track.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
@@ -723,17 +723,17 @@ Actor Slider::CreateValueDisplay()
   return popup;
 }
 
-Toolkit::Slider::ValueChangedSignalType& Slider::ValueChangedSignal()
+Demo::Slider::ValueChangedSignalType& Slider::ValueChangedSignal()
 {
   return mValueChangedSignal;
 }
 
-Toolkit::Slider::ValueChangedSignalType& Slider::SlidingFinishedSignal()
+Demo::Slider::ValueChangedSignalType& Slider::SlidingFinishedSignal()
 {
   return mSlidingFinishedSignal;
 }
 
-Toolkit::Slider::MarkReachedSignalType& Slider::MarkReachedSignal()
+Demo::Slider::MarkReachedSignalType& Slider::MarkReachedSignal()
 {
   return mMarkReachedSignal;
 }
@@ -1096,8 +1096,8 @@ bool Slider::DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tra
 {
   Dali::BaseHandle handle(object);
 
-  bool            connected = true;
-  Toolkit::Slider slider    = Toolkit::Slider::DownCast(handle);
+  bool         connected = true;
+  Demo::Slider slider    = Demo::Slider::DownCast(handle);
 
   if(0 == strcmp(signalName.c_str(), SIGNAL_VALUE_CHANGED))
   {
@@ -1137,7 +1137,7 @@ void Slider::DisplayPopup(float value)
 
 void Slider::SetProperty(BaseObject* object, Property::Index propertyIndex, const Property::Value& value)
 {
-  Toolkit::Slider slider = Toolkit::Slider::DownCast(Dali::BaseHandle(object));
+  Demo::Slider slider = Demo::Slider::DownCast(Dali::BaseHandle(object));
 
   if(slider)
   {
@@ -1145,25 +1145,25 @@ void Slider::SetProperty(BaseObject* object, Property::Index propertyIndex, cons
 
     switch(propertyIndex)
     {
-      case Toolkit::Slider::Property::LOWER_BOUND:
+      case Demo::Slider::Property::LOWER_BOUND:
       {
         sliderImpl.SetLowerBound(value.Get<float>());
         break;
       }
 
-      case Toolkit::Slider::Property::UPPER_BOUND:
+      case Demo::Slider::Property::UPPER_BOUND:
       {
         sliderImpl.SetUpperBound(value.Get<float>());
         break;
       }
 
-      case Toolkit::Slider::Property::VALUE:
+      case Demo::Slider::Property::VALUE:
       {
         sliderImpl.SetValue(value.Get<float>());
         break;
       }
 
-      case Toolkit::Slider::Property::TRACK_VISUAL:
+      case Demo::Slider::Property::TRACK_VISUAL:
       {
         Property::Map map;
         if(value.Get(map))
@@ -1173,7 +1173,7 @@ void Slider::SetProperty(BaseObject* object, Property::Index propertyIndex, cons
         break;
       }
 
-      case Toolkit::Slider::Property::HANDLE_VISUAL:
+      case Demo::Slider::Property::HANDLE_VISUAL:
       {
         Property::Map map;
         if(value.Get(map))
@@ -1183,7 +1183,7 @@ void Slider::SetProperty(BaseObject* object, Property::Index propertyIndex, cons
         break;
       }
 
-      case Toolkit::Slider::Property::PROGRESS_VISUAL:
+      case Demo::Slider::Property::PROGRESS_VISUAL:
       {
         Property::Map map;
         if(value.Get(map))
@@ -1193,7 +1193,7 @@ void Slider::SetProperty(BaseObject* object, Property::Index propertyIndex, cons
         break;
       }
 
-      case Toolkit::Slider::Property::POPUP_VISUAL:
+      case Demo::Slider::Property::POPUP_VISUAL:
       {
         std::string imageUrl;
         if(value.Get(imageUrl))
@@ -1211,7 +1211,7 @@ void Slider::SetProperty(BaseObject* object, Property::Index propertyIndex, cons
         break;
       }
 
-      case Toolkit::Slider::Property::POPUP_ARROW_VISUAL:
+      case Demo::Slider::Property::POPUP_ARROW_VISUAL:
       {
         Property::Map map;
         if(value.Get(map))
@@ -1221,43 +1221,43 @@ void Slider::SetProperty(BaseObject* object, Property::Index propertyIndex, cons
         break;
       }
 
-      case Toolkit::Slider::Property::DISABLED_COLOR:
+      case Demo::Slider::Property::DISABLED_COLOR:
       {
         sliderImpl.SetDisabledColor(value.Get<Vector4>());
         break;
       }
 
-      case Toolkit::Slider::Property::VALUE_PRECISION:
+      case Demo::Slider::Property::VALUE_PRECISION:
       {
         sliderImpl.SetValuePrecision(value.Get<int>());
         break;
       }
 
-      case Toolkit::Slider::Property::SHOW_POPUP:
+      case Demo::Slider::Property::SHOW_POPUP:
       {
         sliderImpl.SetShowPopup(value.Get<bool>());
         break;
       }
 
-      case Toolkit::Slider::Property::SHOW_VALUE:
+      case Demo::Slider::Property::SHOW_VALUE:
       {
         sliderImpl.SetShowValue(value.Get<bool>());
         break;
       }
 
-      case Toolkit::Slider::Property::MARKS:
+      case Demo::Slider::Property::MARKS:
       {
         sliderImpl.SetMarks(value.Get<Property::Array>());
         break;
       }
 
-      case Toolkit::Slider::Property::SNAP_TO_MARKS:
+      case Demo::Slider::Property::SNAP_TO_MARKS:
       {
         sliderImpl.SetSnapToMarks(value.Get<bool>());
         break;
       }
 
-      case Toolkit::Slider::Property::MARK_TOLERANCE:
+      case Demo::Slider::Property::MARK_TOLERANCE:
       {
         sliderImpl.SetMarkTolerance(value.Get<float>());
         break;
@@ -1270,7 +1270,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
 {
   Property::Value value;
 
-  Toolkit::Slider slider = Toolkit::Slider::DownCast(Dali::BaseHandle(object));
+  Demo::Slider slider = Demo::Slider::DownCast(Dali::BaseHandle(object));
 
   if(slider)
   {
@@ -1278,25 +1278,25 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
 
     switch(propertyIndex)
     {
-      case Toolkit::Slider::Property::LOWER_BOUND:
+      case Demo::Slider::Property::LOWER_BOUND:
       {
         value = sliderImpl.GetLowerBound();
         break;
       }
 
-      case Toolkit::Slider::Property::UPPER_BOUND:
+      case Demo::Slider::Property::UPPER_BOUND:
       {
         value = sliderImpl.GetUpperBound();
         break;
       }
 
-      case Toolkit::Slider::Property::VALUE:
+      case Demo::Slider::Property::VALUE:
       {
         value = sliderImpl.GetValue();
         break;
       }
 
-      case Toolkit::Slider::Property::TRACK_VISUAL:
+      case Demo::Slider::Property::TRACK_VISUAL:
       {
         if(!sliderImpl.mTrackVisual.empty())
         {
@@ -1309,7 +1309,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
         break;
       }
 
-      case Toolkit::Slider::Property::HANDLE_VISUAL:
+      case Demo::Slider::Property::HANDLE_VISUAL:
       {
         if(!sliderImpl.mHandleVisual.empty())
         {
@@ -1322,7 +1322,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
         break;
       }
 
-      case Toolkit::Slider::Property::PROGRESS_VISUAL:
+      case Demo::Slider::Property::PROGRESS_VISUAL:
       {
         if(!sliderImpl.mProgressVisual.empty())
         {
@@ -1335,7 +1335,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
         break;
       }
 
-      case Toolkit::Slider::Property::POPUP_VISUAL:
+      case Demo::Slider::Property::POPUP_VISUAL:
       {
         if(!sliderImpl.mPopupVisual.empty())
         {
@@ -1348,7 +1348,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
         break;
       }
 
-      case Toolkit::Slider::Property::POPUP_ARROW_VISUAL:
+      case Demo::Slider::Property::POPUP_ARROW_VISUAL:
       {
         if(!sliderImpl.mPopupArrowVisual.empty())
         {
@@ -1361,31 +1361,31 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
         break;
       }
 
-      case Toolkit::Slider::Property::DISABLED_COLOR:
+      case Demo::Slider::Property::DISABLED_COLOR:
       {
         value = sliderImpl.GetDisabledColor();
         break;
       }
 
-      case Toolkit::Slider::Property::VALUE_PRECISION:
+      case Demo::Slider::Property::VALUE_PRECISION:
       {
         value = sliderImpl.GetValuePrecision();
         break;
       }
 
-      case Toolkit::Slider::Property::SHOW_POPUP:
+      case Demo::Slider::Property::SHOW_POPUP:
       {
         value = sliderImpl.GetShowPopup();
         break;
       }
 
-      case Toolkit::Slider::Property::SHOW_VALUE:
+      case Demo::Slider::Property::SHOW_VALUE:
       {
         value = sliderImpl.GetShowValue();
         break;
       }
 
-      case Toolkit::Slider::Property::MARKS:
+      case Demo::Slider::Property::MARKS:
       {
         Property::Value  value1(Property::ARRAY);
         Property::Array* markArray = value1.GetArray();
@@ -1399,13 +1399,13 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
         break;
       }
 
-      case Toolkit::Slider::Property::SNAP_TO_MARKS:
+      case Demo::Slider::Property::SNAP_TO_MARKS:
       {
         value = sliderImpl.GetSnapToMarks();
         break;
       }
 
-      case Toolkit::Slider::Property::MARK_TOLERANCE:
+      case Demo::Slider::Property::MARK_TOLERANCE:
       {
         value = sliderImpl.GetMarkTolerance();
         break;
@@ -1418,20 +1418,20 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
 
 void Slider::SliderAccessible::InitDefaultFeatures()
 {
-  DevelControl::ControlAccessible::InitDefaultFeatures();
+  Toolkit::DevelControl::ControlAccessible::InitDefaultFeatures();
   AddFeature<Dali::Accessibility::Value>(shared_from_this());
 }
 
 double Slider::SliderAccessible::GetMinimum() const
 {
-  auto self = Toolkit::Slider::DownCast(Self());
-  return self.GetProperty(Toolkit::Slider::Property::LOWER_BOUND).Get<float>();
+  auto self = Demo::Slider::DownCast(Self());
+  return self.GetProperty(Demo::Slider::Property::LOWER_BOUND).Get<float>();
 }
 
 double Slider::SliderAccessible::GetCurrent() const
 {
-  auto self = Toolkit::Slider::DownCast(Self());
-  return self.GetProperty(Toolkit::Slider::Property::VALUE).Get<float>();
+  auto self = Demo::Slider::DownCast(Self());
+  return self.GetProperty(Demo::Slider::Property::VALUE).Get<float>();
 }
 
 std::string Slider::SliderAccessible::GetValueText() const
@@ -1441,8 +1441,8 @@ std::string Slider::SliderAccessible::GetValueText() const
 
 double Slider::SliderAccessible::GetMaximum() const
 {
-  auto self = Toolkit::Slider::DownCast(Self());
-  return self.GetProperty(Toolkit::Slider::Property::UPPER_BOUND).Get<float>();
+  auto self = Demo::Slider::DownCast(Self());
+  return self.GetProperty(Demo::Slider::Property::UPPER_BOUND).Get<float>();
 }
 
 bool Slider::SliderAccessible::SetCurrent(double current)
@@ -1452,19 +1452,19 @@ bool Slider::SliderAccessible::SetCurrent(double current)
     return false;
   }
 
-  auto  self = Toolkit::Slider::DownCast(Self());
-  auto& impl = Toolkit::GetImpl(self);
+  auto  self = Demo::Slider::DownCast(Self());
+  auto& impl = Demo::GetImpl(self);
 
-  const float prev = self.GetProperty<float>(Toolkit::Slider::Property::VALUE);
+  const float prev = self.GetProperty<float>(Demo::Slider::Property::VALUE);
   float       next = static_cast<float>(current);
 
   if(fabsf(next - prev) < Math::MACHINE_EPSILON_0)
   {
     // do nothing
   }
-  else if(self.GetProperty<bool>(Toolkit::Slider::Property::SNAP_TO_MARKS))
+  else if(self.GetProperty<bool>(Demo::Slider::Property::SNAP_TO_MARKS))
   {
-    auto marks = self.GetProperty<Property::Array>(Toolkit::Slider::Property::MARKS);
+    auto marks = self.GetProperty<Property::Array>(Demo::Slider::Property::MARKS);
 
     int prevIdx;
     if(impl.MarkReached(impl.MapValuePercentage(prev), prevIdx))
@@ -1497,10 +1497,10 @@ bool Slider::SliderAccessible::SetCurrent(double current)
 
 double Slider::SliderAccessible::GetMinimumIncrement() const
 {
-  auto self = Toolkit::Slider::DownCast(Self());
+  auto self = Demo::Slider::DownCast(Self());
 
-  bool  hasMarks  = !self.GetProperty<Property::Array>(Toolkit::Slider::Property::MARKS).Empty();
-  float tolerance = self.GetProperty<float>(Toolkit::Slider::Property::MARK_TOLERANCE);
+  bool  hasMarks  = !self.GetProperty<Property::Array>(Demo::Slider::Property::MARKS).Empty();
+  float tolerance = self.GetProperty<float>(Demo::Slider::Property::MARK_TOLERANCE);
 
   if(!hasMarks || fabsf(tolerance) < 0.01)
   {
@@ -1512,6 +1512,6 @@ double Slider::SliderAccessible::GetMinimumIncrement() const
 
 } // namespace Internal
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali

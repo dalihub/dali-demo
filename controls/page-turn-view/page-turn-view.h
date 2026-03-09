@@ -22,11 +22,9 @@
 #include <dali-toolkit/public-api/controls/control.h>
 
 // INTERNAL INCLUDES
-#include "../dali-demo-controls-common.h"
+#include <controls/dali-demo-controls-common.h>
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 // Forward declarations
 class PageFactory;
@@ -64,7 +62,7 @@ class PageTurnView;
  *
  * @SINCE_1_1.4
  */
-class DALI_DEMO_CONTROLS_API PageTurnView : public Control
+class DALI_DEMO_CONTROLS_API PageTurnView : public Toolkit::Control
 {
 public:
   /**
@@ -73,8 +71,8 @@ public:
    */
   enum PropertyRange
   {
-    PROPERTY_START_INDEX = Control::CONTROL_PROPERTY_END_INDEX + 1, ///< @SINCE_1_1.4
-    PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000              ///< Reserve property indices @SINCE_1_1.4
+    PROPERTY_START_INDEX = Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1, ///< @SINCE_1_1.4
+    PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000                       ///< Reserve property indices @SINCE_1_1.4
   };
 
   struct Property
@@ -197,8 +195,6 @@ public: // Not intended for application developers
   /// @endcond
 };
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_PAGE_TURN_VIEW_H

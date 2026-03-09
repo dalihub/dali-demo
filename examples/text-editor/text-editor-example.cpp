@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -145,8 +145,8 @@ public:
     mColorButtonOption.ClickedSignal().Connect(this, &TextEditorExample::OnChangeColorButtonClicked);
     mColorContainer.Add(mColorButtonOption);
 
-    //Add label to toolbar, which will also add the color button next to it.
-    mToolBar.AddControl(colorLabel, viewStyle.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    // Add label to toolbar, which will also add the color button next to it.
+    mToolBar.AddControl(colorLabel, viewStyle.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create the text editor.
     mEditor = TextEditor::New();
@@ -160,9 +160,9 @@ public:
 
     const Size boundingBoxSize(windowSize * TEXT_EDITOR_RELATIVE_SIZE.GetVectorXY());
     Rect<int>  boundingBox(0,
-                           static_cast<int>(toolBarHeight),
-                           static_cast<int>(boundingBoxSize.width),
-                           static_cast<int>(boundingBoxSize.height - toolBarHeight));
+                          static_cast<int>(toolBarHeight),
+                          static_cast<int>(boundingBoxSize.width),
+                          static_cast<int>(boundingBoxSize.height - toolBarHeight));
 
     mEditor.SetProperty(TextEditor::Property::DECORATION_BOUNDING_BOX, boundingBox);
     mEditor.SetProperty(TextEditor::Property::TEXT_COLOR, Color::BLACK);
@@ -286,7 +286,7 @@ private:
   Application& mApplication;
 
   Toolkit::Control    mView;
-  Toolkit::ToolBar    mToolBar;
+  Demo::ToolBar       mToolBar;
   Toolkit::TextEditor mEditor;
   Toolkit::Control    mColorContainer;
   Toolkit::PushButton mColorButtonOption;

@@ -24,7 +24,7 @@
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/rendering/renderer.h>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 /**
  * BubbleRenderer renders a group of bubbles.Each bubble can be moved separately.
@@ -125,6 +125,6 @@ private:
   Property::Index              mIndexInvertedMovementArea; ///< Index of the property mapping to uniform 'uInvertedMovementArea'
 };
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_BUBBLE_RENDERER_H
