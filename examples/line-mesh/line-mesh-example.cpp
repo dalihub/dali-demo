@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,13 @@
 #include "generated/line-mesh-vert.h"
 #include "shared/view.h"
 
+#include <dali/integration-api/string-utils.h>
 #include <sstream>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -147,7 +153,7 @@ public:
       mMeshActor.Reset();
     }
 
-    mShader   = Shader::New(SHADER_LINE_MESH_VERT, SHADER_LINE_MESH_FRAG);
+    mShader   = Shader::New(ToDaliStringView(SHADER_LINE_MESH_VERT), ToDaliStringView(SHADER_LINE_MESH_FRAG));
     mGeometry = CreateGeometry();
     mRenderer = Renderer::New(mGeometry, mShader);
 
@@ -244,7 +250,7 @@ public:
 
     std::stringstream str;
     str << mCurrentIndexCount;
-    mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, str.str());
+    mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, ToPropertyValue(str.str()));
     mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(1.0, 1.0, 1.0, 1.0));
     mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "BOTTOM");
     mIndicesCountLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
@@ -307,7 +313,7 @@ public:
 
     std::stringstream str;
     str << mCurrentIndexCount;
-    mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, str.str());
+    mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, ToPropertyValue(str.str()));
     mGeometry.SetType(mPrimitiveType);
     mGeometry.SetIndexBuffer(INDICES[indicesArray], INDICES_SIZE[indicesArray]);
     mRenderer.SetIndexRange(0, mCurrentIndexCount);
@@ -329,7 +335,7 @@ public:
 
     std::stringstream str;
     str << mCurrentIndexCount;
-    mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, str.str());
+    mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, ToPropertyValue(str.str()));
     mRenderer.SetIndexRange(0, mCurrentIndexCount);
     return true;
   }

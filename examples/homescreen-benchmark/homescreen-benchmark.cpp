@@ -23,6 +23,12 @@
 
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -208,7 +214,7 @@ public:
     Property::Map     map;
     std::stringstream imagePath;
     imagePath << IMAGE_PATH_PREFIX << currentIconIndex << IMAGE_PATH_POSTFIX;
-    map[Dali::Toolkit::ImageVisual::Property::URL] = imagePath.str();
+    map[Dali::Toolkit::ImageVisual::Property::URL] = ToDaliString(imagePath.str());
 
     imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
     imageView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);

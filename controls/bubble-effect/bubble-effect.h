@@ -25,6 +25,9 @@
 // INTERNAL INCLUDES
 #include <controls/shaders/bubble-effect-frag.h>
 #include <controls/shaders/bubble-effect-vert.h>
+#include <dali/integration-api/string-utils.h>
+
+using Dali::Integration::ToDaliStringView;
 
 namespace Dali::Demo::Internal
 {
@@ -38,7 +41,7 @@ inline Shader CreateBubbleShader(unsigned int numBubble)
   std::ostringstream vertexShaderStringStream;
   vertexShaderStringStream << "#define NUMBER_OF_BUBBLE " << numBubble << "\n"
                            << SHADER_BUBBLE_EFFECT_VERT;
-  Shader shader = Shader::New(vertexShaderStringStream.str(), SHADER_BUBBLE_EFFECT_FRAG, static_cast<Shader::Hint::Value>(Shader::Hint::FILE_CACHE_SUPPORT | Shader::Hint::INTERNAL), "BUBBLE_EFFECT");
+  Shader shader = Shader::New(ToDaliStringView(vertexShaderStringStream.str()), ToDaliStringView(SHADER_BUBBLE_EFFECT_FRAG), static_cast<Shader::Hint::Value>(Shader::Hint::FILE_CACHE_SUPPORT | Shader::Hint::INTERNAL), "BUBBLE_EFFECT");
 
   return shader;
 }

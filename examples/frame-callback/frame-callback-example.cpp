@@ -20,7 +20,13 @@
 #include <dali/devel-api/common/stage-devel.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "frame-callback.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -142,13 +148,13 @@ private:
     if(mFrameCallbackEnabled)
     {
       DevelStage::RemoveFrameCallback(Stage::GetCurrent(), mFrameCallback);
-      mTextLabel.SetProperty(TextLabel::Property::TEXT, TEXT_DISABLED);
+      mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(TEXT_DISABLED));
       mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, TEXT_COLOR_DISABLED);
     }
     else
     {
       DevelStage::AddFrameCallback(Stage::GetCurrent(), mFrameCallback, actor);
-      mTextLabel.SetProperty(TextLabel::Property::TEXT, TEXT_ENABLED);
+      mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(TEXT_ENABLED));
       mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, TEXT_COLOR_ENABLED);
     }
 

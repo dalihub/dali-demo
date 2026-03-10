@@ -21,8 +21,14 @@
 #include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "clipping-item-factory.h"
 #include "item-view-orientation-constraint.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -130,7 +136,7 @@ private:
     button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     button.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
-    button.SetProperty(Button::Property::LABEL, BUTTON_LABEL);
+    button.SetProperty(Button::Property::LABEL, ToPropertyValue(BUTTON_LABEL));
     button.ClickedSignal().Connect(this, &ClippingExample::OnButtonClicked);
     window.Add(button);
   }

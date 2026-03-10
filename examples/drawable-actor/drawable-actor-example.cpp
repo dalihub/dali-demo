@@ -25,6 +25,12 @@
 #include <dali/graphics-api/graphics-buffer-create-info.h>
 
 #include <dali/devel-api/common/stage-devel.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using TextLabel = Dali::Toolkit::TextLabel;
 using namespace Dali;
@@ -71,7 +77,8 @@ public:
     window.Add(mGLActor);
 
     // Create TextLabel
-    mTextLabel = TextLabel::New("This text overlays DrawableActor");
+    mTextLabel = TextLabel::New();
+    mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("This text overlays DrawableActor"));
     mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mTextLabel.SetProperty(Dali::Actor::Property::NAME, "SomeTextLabel");
     window.Add(mTextLabel);

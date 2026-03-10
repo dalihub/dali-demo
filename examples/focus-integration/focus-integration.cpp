@@ -17,7 +17,13 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -30,9 +36,9 @@ const char* const TOOLBAR_TITLE    = "Focus Integration";
 const Vector4     BACKGROUND_COLOUR(1.0f, 1.0f, 1.0f, 0.15f);
 
 // Layout sizes
-const int         MARGIN_SIZE = 10;
-const int         TOP_MARGIN  = 85;
-const std::string ITEMNAME[]  = {"TextLabel", "TextField", "TextEditor", "PushButton", "RadioButton", "CheckBoxButton"};
+const int    MARGIN_SIZE = 10;
+const int    TOP_MARGIN  = 85;
+const String ITEMNAME[]  = {"TextLabel", "TextField", "TextEditor", "PushButton", "RadioButton", "CheckBoxButton"};
 
 } // namespace
 
@@ -76,7 +82,8 @@ public:
     mContentLayer.Add(contentTable);
 
     // Create label to display which control's KeyEvent callback is called
-    mEventLabel = TextLabel::New("Controls don't get KeyEvent yet");
+    mEventLabel = TextLabel::New();
+    mEventLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Controls don't get KeyEvent yet"));
     mEventLabel.SetProperty(Actor::Property::SIZE, Vector2(windowSize.width, windowSize.height * 0.1f));
     mEventLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mEventLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
@@ -99,7 +106,7 @@ public:
     // Make name label for each controls
     for(int i = 0; i < 6; i++)
     {
-      TextLabel itemLabel = TextLabel::New(ITEMNAME[i]);
+      TextLabel itemLabel = TextLabel::New(ToDaliString(ITEMNAME[i]));
       itemLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       itemLabel.SetBackgroundColor(BACKGROUND_COLOUR);
       itemLabel.SetProperty(TextLabel::Property::POINT_SIZE, 14.0f);
@@ -108,7 +115,8 @@ public:
       mContainer.AddChild(itemLabel, TableView::CellPosition((i / 3) * 2, i % 3));
     }
 
-    TextLabel textLabel = TextLabel::New("TextLabel");
+    TextLabel textLabel = TextLabel::New();
+    textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("TextLabel"));
     mContainer.AddChild(textLabel, TableView::CellPosition(1, 0));
 
     TextField textField = TextField::New();
@@ -160,7 +168,7 @@ public:
   // Display current control name.
   bool OnControlKeyEvent(Control control, const KeyEvent& event)
   {
-    std::string controlName = control.GetProperty<std::string>(Dali::Actor::Property::NAME);
+    String controlName = control.GetProperty<String>(Dali::Actor::Property::NAME);
     mEventLabel.SetProperty(TextLabel::Property::TEXT, controlName + "'s KeyEvent works\n");
 
     return false;

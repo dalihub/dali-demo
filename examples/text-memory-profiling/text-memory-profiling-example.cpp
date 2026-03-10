@@ -26,7 +26,13 @@
 
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view.h>
+#include <dali/integration-api/string-utils.h>
 #include <shared/view.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -227,7 +233,7 @@ public:
    */
   virtual Actor NewItem(unsigned int itemId)
   {
-    TextLabel label = TextLabel::New(TEXT_TYPE_STRING[itemId]);
+    TextLabel label = TextLabel::New(ToDaliString(TEXT_TYPE_STRING[itemId]));
     label.SetStyleName("BuilderLabel");
     label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
 
@@ -300,8 +306,8 @@ public:
 
     // Create a back button in the left of toolbar
     PushButton backButton = PushButton::New();
-    backButton.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, BACK_IMAGE);
-    backButton.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, BACK_IMAGE_SELECTED);
+    backButton.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, ToPropertyValue(BACK_IMAGE));
+    backButton.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, ToPropertyValue(BACK_IMAGE_SELECTED));
     backButton.ClickedSignal().Connect(this, &TextMemoryProfilingExample::OnBackButtonPressed);
     backButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
     mToolBar.AddControl(backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);

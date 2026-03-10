@@ -21,8 +21,10 @@
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
-#include <string>
+#include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -52,12 +54,12 @@ enum CellPlacement
 
 unsigned int GetButtonIndex(Toolkit::Button button)
 {
-  std::string  buttonName = button.GetProperty<std::string>(Dali::Actor::Property::NAME);
+  String       buttonName = button.GetProperty<String>(Dali::Actor::Property::NAME);
   unsigned int index      = 0;
 
   if(buttonName != "")
   {
-    index = std::stoul(buttonName);
+    index = std::stoul(ToStdString(buttonName));
   }
 
   return index;
@@ -131,7 +133,7 @@ public:
     mTable.SetFitHeight(CellPlacement::LOWER_BUTTON);
     mContentLayer.Add(mTable);
 
-    Toolkit::TextLabel instructions = Toolkit::TextLabel::New(EXAMPLE_INSTRUCTIONS);
+    Toolkit::TextLabel instructions = Toolkit::TextLabel::New(ToDaliString(EXAMPLE_INSTRUCTIONS));
     instructions.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     instructions.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     instructions.SetProperty(Actor::Property::POSITION_Y, -50.0f);
@@ -149,7 +151,7 @@ public:
       button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       std::string s = std::to_string(x);
-      button.SetProperty(Dali::Actor::Property::NAME, s);
+      button.SetProperty(Dali::Actor::Property::NAME, ToDaliString(s));
       mTable.AddChild(button, Toolkit::TableView::CellPosition(CellPlacement::TOP_BUTTON, x));
 
       Toolkit::PushButton button2 = Toolkit::PushButton::New();
@@ -159,7 +161,7 @@ public:
       button2.ClickedSignal().Connect(this, &ImageViewController::ChangeImageClicked);
       button2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       button2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-      button2.SetProperty(Dali::Actor::Property::NAME, s);
+      button2.SetProperty(Dali::Actor::Property::NAME, ToDaliString(s));
       mTable.AddChild(button2, Toolkit::TableView::CellPosition(CellPlacement::MID_BUTTON, x));
 
       Toolkit::PushButton button3 = Toolkit::PushButton::New();
@@ -169,7 +171,7 @@ public:
       button3.ClickedSignal().Connect(this, &ImageViewController::RoundedCornerClicked);
       button3.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       button3.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-      button3.SetProperty(Dali::Actor::Property::NAME, s);
+      button3.SetProperty(Dali::Actor::Property::NAME, ToDaliString(s));
       mTable.AddChild(button3, Toolkit::TableView::CellPosition(CellPlacement::LOWER_BUTTON, x));
 
       mImageViews[x] = Toolkit::ImageView::New();

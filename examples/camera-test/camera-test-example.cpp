@@ -19,7 +19,13 @@
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <string>
 
+#include <dali/integration-api/string-utils.h>
 #include "controls/slider/slider.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -249,7 +255,8 @@ public:
     bg.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     viewLayer.Add(bg);
 
-    auto label                                       = TextLabel::New("Scene");
+    auto label = TextLabel::New();
+    label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Scene"));
     label[TextLabel::Property::POINT_SIZE]           = 12;
     label[TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
     label[TextLabel::Property::TEXT_COLOR]           = Color::WHITE;
@@ -260,7 +267,7 @@ public:
     int i = 0;
     for(auto& image : images)
     {
-      auto imageView = ImageView::New(image);
+      auto imageView = ImageView::New(ToDaliString(image));
       imageViews.push_back(imageView);
       viewLayer.Add(imageView);
 
@@ -304,7 +311,7 @@ public:
     {
       actorProps.SetFitHeight(i);
 
-      auto icon = ImageView::New(image);
+      auto icon = ImageView::New(ToDaliString(image));
       icon.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       // I would like 50% of natural size...
       icon.SetProperty(Actor::Property::SIZE, Vector3(50, 50, 50));
@@ -313,7 +320,7 @@ public:
       auto               slider = Slider::New();
       std::ostringstream sliderStyleName;
       sliderStyleName << "RotationSlider" << i + 1;
-      slider.SetProperty(Actor::Property::NAME, sliderStyleName.str());
+      slider.SetProperty(Actor::Property::NAME, ToPropertyValue(sliderStyleName.str()));
       slider.SetStyleName("ThinSlider");
       slider.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       slider.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
@@ -332,7 +339,8 @@ public:
       i++;
     }
 
-    auto fovLabel = TextLabel::New("FOV");
+    auto fovLabel = TextLabel::New();
+    fovLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("FOV"));
     fovLabel.SetProperty(TextLabel::Property::POINT_SIZE, 12);
     fovLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
     fovLabel[TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
@@ -448,7 +456,7 @@ public:
     frame.SetProperty(Actor::Property::SIZE, size);
     frame.SetProperty(Actor::Property::POSITION, position);
 
-    auto frameLabel                                       = TextLabel::New(label);
+    auto frameLabel                                       = TextLabel::New(ToDaliString(label));
     frameLabel[TextLabel::Property::POINT_SIZE]           = 12;
     frameLabel[TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
     frameLabel[TextLabel::Property::TEXT_COLOR]           = Color::YELLOW;
@@ -503,7 +511,7 @@ public:
 
     // Really, just need a box that represents the screen plane at z=0 from MVP.
 
-    cameraDetail.SetProperty(TextLabel::Property::TEXT, oss.str());
+    cameraDetail.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(oss.str()));
   }
 
   void OnPan(Actor actor, const PanGesture& gesture)

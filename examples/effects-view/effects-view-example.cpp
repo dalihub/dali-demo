@@ -22,7 +22,13 @@
 
 // INTERNAL INCLUDES
 #include <controls/effects-view/effects-view.h>
+#include <dali/integration-api/string-utils.h>
 #include <shared/view.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -162,8 +168,8 @@ EffectsView EffectsViewApp::CreateEffectsView(EffectsView::EffectType type, cons
 
   // Create some content
   // text
-  std::string text = (type == EffectsView::DROP_SHADOW) ? "Drop Shadow" : "Emboss";
-  TextLabel   textActor(TextLabel::New(text));
+  String    text = (type == EffectsView::DROP_SHADOW) ? "Drop Shadow" : "Emboss";
+  TextLabel textActor(TextLabel::New(text));
   textActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT);
   textActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
   textActor.SetProperty(Actor::Property::SIZE, viewSize);
@@ -215,7 +221,7 @@ void EffectsViewApp::SetTitle(int effectSize)
     // Add title to the tool bar.
     mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Demo::Alignment::HORIZONTAL_CENTER);
   }
-  mTitleActor.SetProperty(Toolkit::TextLabel::Property::TEXT, title.str());
+  mTitleActor.SetProperty(Toolkit::TextLabel::Property::TEXT, ToPropertyValue(title.str()));
 }
 
 bool EffectsViewApp::ChangeEffectSize(Button button)

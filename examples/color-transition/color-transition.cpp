@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,15 @@
  * limitations under the License.
  *
  */
+#include <dali/integration-api/string-utils.h>
 #include "color-transition-controller.h"
 #include "dali-toolkit/dali-toolkit.h"
 #include "dali/dali.h"
 #include "utils.h"
+
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -42,7 +47,7 @@ const char* const FLOW_MAPS[] = {
 
 Texture LoadTexture(const std::string& path)
 {
-  PixelData pixelData = SyncImageLoader::Load(path);
+  PixelData pixelData = SyncImageLoader::Load(ToDaliString(path));
 
   Texture texture = Texture::New(TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight());
   texture.Upload(pixelData);
@@ -204,9 +209,9 @@ private:
     DALI_ASSERT_DEBUG(name && "Flow map name must be given");
     if(mLastFlowMap != name)
     {
-      std::string flowMapDir  = Application::GetResourcePath() + "images/color-transition/";
-      std::string flowMapPath = flowMapDir + name + ".png";
-      auto        flowMap     = LoadTexture(flowMapPath);
+      String flowMapDir  = Application::GetResourcePath() + "images/color-transition/";
+      String flowMapPath = flowMapDir + name + ".png";
+      auto   flowMap     = LoadTexture(ToStdString(flowMapPath));
       DALI_ASSERT_DEBUG(flowMap && "Failed to load flow map.");
       mController->SetFlowMap(flowMap);
     }

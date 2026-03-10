@@ -19,11 +19,11 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/rendering/frame-buffer.h>
-#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
+#include <dali/public-api/rendering/frame-buffer.h>
+#include <dali/public-api/rendering/renderer.h>
 
 // INTERNAL INCLUDES
 #include <controls/super-blur-view/super-blur-view.h>
@@ -158,7 +158,7 @@ private:
 
   Demo::SuperBlurView::SuperBlurViewSignal mBlurFinishedSignal; ///< Signal emitted when blur has completed.
 
-  std::string     mUrl;
+  String          mUrl;
   Property::Index mBlurStrengthPropertyIndex;
   unsigned int    mBlurLevels;
   bool            mResourcesCleared;

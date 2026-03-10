@@ -1,4 +1,10 @@
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -190,7 +196,8 @@ public:
     positionActorModel.Add(shadingModeButton);
 
     //Text label title for changing model or shading mode.
-    TextLabel changeTitleLabel = TextLabel::New("Change");
+    TextLabel changeTitleLabel = TextLabel::New();
+    changeTitleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Change"));
     changeTitleLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     changeTitleLabel.SetProperty(TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}");
     changeTitleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
@@ -231,7 +238,8 @@ public:
     positionActorLight.Add(lightSideButton);
 
     //Text label title for light position mode.
-    TextLabel lightTitleLabel = TextLabel::New("Light Position");
+    TextLabel lightTitleLabel = TextLabel::New();
+    lightTitleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Light Position"));
     lightTitleLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     lightTitleLabel.SetProperty(TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}");
     lightTitleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
@@ -304,7 +312,7 @@ public:
 
     Property::Map lightMap;
     lightMap.Insert(Toolkit::Visual::Property::TYPE, Visual::IMAGE);
-    lightMap.Insert(ImageVisual::Property::URL, imageUrl);
+    lightMap.Insert(ImageVisual::Property::URL, ToPropertyValue(imageUrl));
     mLightSource.SetProperty(Control::Property::BACKGROUND, Property::Value(lightMap));
   }
 
@@ -318,7 +326,7 @@ public:
                Property::Map().Add(Visual::Transform::Property::ORIGIN, Align::CENTER).Add(Visual::Transform::Property::ANCHOR_POINT, Align::CENTER));
     map.Insert(MeshVisual::Property::OBJECT_URL, MODEL_FILE_TABLE[mModelIndex]);
     map.Insert(MeshVisual::Property::MATERIAL_URL, MATERIAL_FILE_TABLE[mModelIndex]);
-    map.Insert(MeshVisual::Property::TEXTURES_PATH, TEXTURES_PATH);
+    map.Insert(MeshVisual::Property::TEXTURES_PATH, ToPropertyValue(TEXTURES_PATH));
     map.Insert(MeshVisual::Property::SHADING_MODE, SHADING_MODE_TABLE[mShadingModeIndex]);
 
     //Set the two controls to use the mesh

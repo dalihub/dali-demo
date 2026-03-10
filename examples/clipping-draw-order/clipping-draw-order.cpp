@@ -17,6 +17,12 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -55,7 +61,8 @@ public:
     window.KeyEventSignal().Connect(this, &ClippingDrawOrderVerification::OnKeyEvent);
 
     // Create the title label.
-    TextLabel title = TextLabel::New("Clipping draw order verification");
+    TextLabel title = TextLabel::New();
+    title.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Clipping draw order verification"));
     title.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     title.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     title.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
@@ -140,7 +147,7 @@ public:
       {
         std::stringstream labelStream;
         labelStream << static_cast<char>(static_cast<char>(i) + 'A');
-        TextLabel textLabel = TextLabel::New(labelStream.str());
+        TextLabel textLabel = TextLabel::New(ToDaliString(labelStream.str()));
         textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
 
         image[i] = ImageView::New(images[i]);
@@ -166,7 +173,7 @@ public:
 
       // Create the title label.
       std::string treeText  = tree == 0 ? "Without Clipping" : "With Clipping";
-      TextLabel   treeLabel = TextLabel::New(treeText);
+      TextLabel   treeLabel = TextLabel::New(ToDaliString(treeText));
       treeLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
       treeLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "BOTTOM");
       treeLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);

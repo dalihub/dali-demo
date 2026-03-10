@@ -24,9 +24,15 @@
 #include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "clipped-image.h"
 #include "contact-card-layout-info.h"
 #include "masked-image.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -89,9 +95,9 @@ const Vector4 HEADER_COLOR(231.0f / 255.0f, 231.0f / 255.0f, 231.0f / 255.0f, 1.
 ContactCard::ContactCard(
   Dali::Window                 window,
   const ContactCardLayoutInfo& contactCardLayoutInfo,
-  const std::string&           contactName,
-  const std::string&           contactAddress,
-  const std::string&           imagePath,
+  const String&                contactName,
+  const String&                contactAddress,
+  const String&                imagePath,
   const Vector2&               position)
 : mTapDetector(),
   mContactCard(),
@@ -159,11 +165,11 @@ ContactCard::ContactCard(
   mContactCard.Add(mNameText);
 
   // Create the detail text-label
-  std::string detailString(contactName);
+  std::string detailString = ToStdString(contactName);
   detailString += "\n\n";
-  detailString += contactAddress;
+  detailString += ToStdString(contactAddress);
 
-  mDetailText = TextLabel::New(detailString);
+  mDetailText = TextLabel::New(ToDaliString(detailString));
   mDetailText.SetStyleName("ContactDetailTextLabel");
   mDetailText.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
   mDetailText.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);

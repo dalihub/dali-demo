@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,15 @@
 #include <iostream>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/perf-scroll-frag.h"
 #include "generated/perf-scroll-vert.h"
 #include "shared/utility.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -267,7 +273,7 @@ public:
 
     //Create all the renderers
     std::vector<Renderer> renderers(numImages);
-    Shader                shader   = Shader::New(SHADER_PERF_SCROLL_VERT, SHADER_PERF_SCROLL_FRAG);
+    Shader                shader   = Shader::New(ToDaliStringView(SHADER_PERF_SCROLL_VERT), ToDaliStringView(SHADER_PERF_SCROLL_FRAG));
     Geometry              geometry = DemoHelper::CreateTexturedQuad();
     for(unsigned int i(0); i < numImages; ++i)
     {

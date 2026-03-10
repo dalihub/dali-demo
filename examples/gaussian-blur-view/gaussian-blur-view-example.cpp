@@ -18,7 +18,13 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
+#include <dali/integration-api/string-utils.h>
 #include <algorithm>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::GaussianBlurView;
@@ -86,13 +92,15 @@ private:
     window.Add(onTop);
     onTop.RaiseToTop();
 
-    mOnLabel = TextLabel::New("Blur ON");
+    mOnLabel = TextLabel::New();
+    mOnLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Blur ON"));
     mOnLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mOnLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::GREEN);
     mOnLabel.SetProperty(Actor::Property::VISIBLE, false);
     onTop.Add(mOnLabel);
 
-    mOffLabel = TextLabel::New("Blur OFF");
+    mOffLabel = TextLabel::New();
+    mOffLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Blur OFF"));
     mOffLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mOffLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
     mOffLabel.SetProperty(Actor::Property::VISIBLE, true);
@@ -150,7 +158,7 @@ private:
       {
         mApplication.Quit();
       }
-      else if(!event.GetKeyName().compare("1"))
+      else if(event.GetKeyName() == "1")
       {
         ToggleBlurState();
       }

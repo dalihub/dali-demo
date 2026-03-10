@@ -36,7 +36,7 @@ namespace MaskedImage
  * @param[in]  imagePath  The path to the image to show.
  * @return The ImageView with a mask control.
  */
-Dali::Toolkit::Control Create(const std::string& imagePath);
+Dali::Toolkit::Control Create(const Dali::String& imagePath);
 
 } // namespace MaskedImage
 

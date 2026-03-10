@@ -16,11 +16,17 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/dali.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/dali.h>
 
 // INTERNAL INCLUDES
 #include <controls/super-blur-view/super-blur-view.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::Button;
@@ -59,7 +65,7 @@ private:
     mSuperBlurView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mSuperBlurView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mSuperBlurView.SetProperty(Actor::Property::SIZE, Vector2(800, 1280));
-    mSuperBlurView.SetProperty(SuperBlurView::Property::IMAGE_URL, BACKGROUND_IMAGE);
+    mSuperBlurView.SetProperty(SuperBlurView::Property::IMAGE_URL, ToPropertyValue(BACKGROUND_IMAGE));
     window.Add(mSuperBlurView);
 
     mBlurAnimation = Animation::New(1.0f);

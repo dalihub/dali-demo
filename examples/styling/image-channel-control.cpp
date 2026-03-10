@@ -16,6 +16,9 @@
 
 #include "image-channel-control.h"
 #include "image-channel-control-impl.h"
+#include <dali/integration-api/string-utils.h>
+
+using Dali::Integration::ToDaliString;
 
 namespace Dali::Demo
 {
@@ -61,7 +64,7 @@ ImageChannelControl ImageChannelControl::DownCast(BaseHandle handle)
 
 void ImageChannelControl::SetImage(const std::string& url)
 {
-  GetImpl(*this).SetImage(url);
+  GetImpl(*this).SetImage(ToDaliString(url));
 }
 
 void ImageChannelControl::SetVisibility(bool visibility)

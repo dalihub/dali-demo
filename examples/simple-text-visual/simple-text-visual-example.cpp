@@ -22,6 +22,12 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -60,7 +66,14 @@ public:
     const std::string markupText("<color value='blue'><font size='50'>H</font></color>ello <color value='blue'><font size='50'>w</font></color>orld");
 
     Dali::Property::Map map;
-    map.Add(Dali::Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::TEXT).Add(Dali::Toolkit::TextVisual::Property::ENABLE_MARKUP, true).Add(Dali::Toolkit::TextVisual::Property::TEXT, markupText).Add(Dali::Toolkit::TextVisual::Property::TEXT_COLOR, Dali::Vector4(0.25f, 0.25f, 0.5f, 1.f)).Add(Dali::Toolkit::TextVisual::Property::FONT_FAMILY, "TizenSansRegular").Add(Dali::Toolkit::TextVisual::Property::POINT_SIZE, 30.f).Add(Dali::Toolkit::TextVisual::Property::HORIZONTAL_ALIGNMENT, "END").Add(Dali::Toolkit::TextVisual::Property::VERTICAL_ALIGNMENT, "CENTER");
+    map.Add(Dali::Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::TEXT)
+      .Add(Dali::Toolkit::TextVisual::Property::ENABLE_MARKUP, true)
+      .Add(Dali::Toolkit::TextVisual::Property::TEXT, ToDaliString(markupText))
+      .Add(Dali::Toolkit::TextVisual::Property::TEXT_COLOR, Dali::Vector4(0.25f, 0.25f, 0.5f, 1.f))
+      .Add(Dali::Toolkit::TextVisual::Property::FONT_FAMILY, "TizenSansRegular")
+      .Add(Dali::Toolkit::TextVisual::Property::POINT_SIZE, 30.f)
+      .Add(Dali::Toolkit::TextVisual::Property::HORIZONTAL_ALIGNMENT, "END")
+      .Add(Dali::Toolkit::TextVisual::Property::VERTICAL_ALIGNMENT, "CENTER");
 
     control.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, map);
 

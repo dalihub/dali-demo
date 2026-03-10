@@ -24,7 +24,13 @@
 #include <cstdio>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "obj-loader.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 namespace
 {

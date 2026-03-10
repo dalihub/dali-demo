@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,15 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/rendering/uniform-block.h>
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/uniform-block-alt-frag.h"
 #include "generated/uniform-block-frag.h"
 #include "generated/uniform-block-vert.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -149,14 +155,14 @@ public:
     {
       case 0:
       {
-        mShader = Shader::New(std::string(SHADER_UNIFORM_BLOCK_VERT),
-                              std::string(SHADER_UNIFORM_BLOCK_FRAG));
+        mShader = Shader::New(ToDaliStringView(SHADER_UNIFORM_BLOCK_VERT),
+                              ToDaliStringView(SHADER_UNIFORM_BLOCK_FRAG));
         break;
       }
       case 1:
       {
-        mShader = Shader::New(std::string(SHADER_UNIFORM_BLOCK_VERT),
-                              std::string(SHADER_UNIFORM_BLOCK_ALT_FRAG));
+        mShader = Shader::New(ToDaliStringView(SHADER_UNIFORM_BLOCK_VERT),
+                              ToDaliStringView(SHADER_UNIFORM_BLOCK_ALT_FRAG));
         break;
       }
     }

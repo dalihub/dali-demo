@@ -29,7 +29,13 @@
 #include <dali/integration-api/debug.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "shared/utility.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -301,8 +307,8 @@ public:
     TextLabel supportedLabel = TextLabel::New();
     supportedLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     supportedLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    supportedLabel.SetProperty(TextLabel::Property::TEXT,
-                               std::string("Support NativeImage ") + std::string(mNativeSourceSupported ? "T" : "F") + std::string(" Queue ") + std::string(mNativeSourceQueueSupported ? "T" : "F"));
+    supportedLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(
+                                                            std::string("Support NativeImage ") + std::string(mNativeSourceSupported ? "T" : "F") + std::string(" Queue ") + std::string(mNativeSourceQueueSupported ? "T" : "F")));
     window.Add(supportedLabel);
 
     if(mNativeSource)

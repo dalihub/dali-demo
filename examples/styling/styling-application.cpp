@@ -27,9 +27,15 @@
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/integration-api/string-utils.h>
 #include <cstdio>
 #include <sstream>
 #include "image-channel-control.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 // Internal includes
 
@@ -142,7 +148,8 @@ void StylingApplication::Create(Application& application)
 
   mContentPane.Add(contentLayout);
 
-  mTitle = TextLabel::New("Styling Example");
+  mTitle = TextLabel::New();
+  mTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Styling Example"));
   mTitle.SetProperty(Dali::Actor::Property::NAME, "Title");
   mTitle.SetStyleName("Title");
   mTitle.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
@@ -187,15 +194,15 @@ void StylingApplication::Create(Application& application)
     std::ostringstream thumbnailName;
     thumbnailName << "thumbnail" << i + 1;
     ImageView image = ImageView::New(images[i]);
-    image.SetProperty(Dali::Actor::Property::NAME, thumbnailName.str());
+    image.SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(thumbnailName.str()));
     image.SetProperty(Actor::Property::SIZE, Vector2(DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE)));
 
     std::ostringstream label;
     label << (i + 1);
     std::ostringstream radioButtonStyleName;
     radioButtonStyleName << "imageSelectButton" << i + 1;
-    mRadioButtons[i] = RadioButton::New(label.str());
-    mRadioButtons[i].SetProperty(Dali::Actor::Property::NAME, radioButtonStyleName.str());
+    mRadioButtons[i] = RadioButton::New(ToDaliString(label.str()));
+    mRadioButtons[i].SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(radioButtonStyleName.str()));
     mRadioButtons[i].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mRadioButtons[i].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mRadioButtons[i].SetProperty(Button::Property::SELECTED, false);
@@ -272,7 +279,7 @@ void StylingApplication::Create(Application& application)
     std::ostringstream checkBoxStyleName;
     checkBoxStyleName << "channelActiveCheckBox" << i + 1;
     mCheckButtons[i] = CheckBoxButton::New();
-    mCheckButtons[i].SetProperty(Dali::Actor::Property::NAME, checkBoxStyleName.str());
+    mCheckButtons[i].SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(checkBoxStyleName.str()));
     mCheckButtons[i].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mCheckButtons[i].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mCheckButtons[i].SetProperty(Button::Property::SELECTED, true);
@@ -286,8 +293,8 @@ void StylingApplication::Create(Application& application)
     TextLabel          label = TextLabel::New(checkboxLabels[i]);
     std::ostringstream labelStyleName;
     labelStyleName << "ColorLabel" << i + 1;
-    label.SetProperty(Dali::Actor::Property::NAME, labelStyleName.str());
-    label.SetStyleName(labelStyleName.str());
+    label.SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(labelStyleName.str()));
+    label.SetStyleName(ToDaliString(labelStyleName.str()));
     label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     label.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
@@ -299,8 +306,8 @@ void StylingApplication::Create(Application& application)
     mChannelSliders[i] = Slider::New();
     std::ostringstream sliderStyleName;
     sliderStyleName << "ColorSlider" << i + 1;
-    mChannelSliders[i].SetProperty(Dali::Actor::Property::NAME, sliderStyleName.str());
-    mChannelSliders[i].SetStyleName(sliderStyleName.str());
+    mChannelSliders[i].SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(sliderStyleName.str()));
+    mChannelSliders[i].SetStyleName(ToDaliString(sliderStyleName.str()));
     mChannelSliders[i].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mChannelSliders[i].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mChannelSliders[i].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
@@ -340,7 +347,8 @@ void StylingApplication::Create(Application& application)
   themeButtonLayout.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
   themeButtonLayout.SetFitHeight(0);
 
-  TextLabel label = TextLabel::New("Theme: ");
+  TextLabel label = TextLabel::New();
+  label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Theme: "));
   label.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   label.SetStyleName("ThemeLabel");
   label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
@@ -424,7 +432,8 @@ Popup StylingApplication::CreateResetPopup()
 
   popup.SetTitle(CreateTitle("Reset channels"));
 
-  TextLabel text = TextLabel::New("This will reset the channel data to full value. Are you sure?");
+  TextLabel text = TextLabel::New();
+  text.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("This will reset the channel data to full value. Are you sure?"));
   text.SetProperty(Dali::Actor::Property::NAME, "PopupContentText");
   text.SetStyleName("PopupBody");
   text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
@@ -480,7 +489,7 @@ Popup StylingApplication::CreateResetPopup()
 
 TextLabel StylingApplication::CreateTitle(std::string title)
 {
-  TextLabel titleActor = TextLabel::New(title);
+  TextLabel titleActor = TextLabel::New(ToDaliString(title));
   titleActor.SetProperty(Dali::Actor::Property::NAME, "titleActor");
   titleActor.SetStyleName("PopupTitle");
   titleActor.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -652,13 +661,13 @@ void StylingApplication::OnKeyEvent(const KeyEvent& keyEvent)
   {
     if(keyPressed == 0) // Is this the first down event?
     {
-      printf("Key pressed: %s %d\n", keyEvent.GetKeyName().c_str(), keyEvent.GetKeyCode());
+      printf("Key pressed: %s %d\n", keyEvent.GetKeyName().CStr(), keyEvent.GetKeyCode());
 
       if(IsKey(keyEvent, DALI_KEY_ESCAPE) || IsKey(keyEvent, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
-      else if(keyEvent.GetKeyName().compare("Return") == 0)
+      else if(keyEvent.GetKeyName() == "Return")
       {
         mCurrentTheme++;
         mCurrentTheme %= NUMBER_OF_THEMES;

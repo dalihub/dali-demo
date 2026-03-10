@@ -17,9 +17,15 @@
 
 #include "game-camera.h"
 
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/events/touch-event.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/render-tasks/render-task.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 

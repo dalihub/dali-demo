@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,16 @@
 #include "dali/public-api/animation/constraints.h"
 #include "utils.h"
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/particle-view-frag.h"
 #include "generated/particle-view-simple-frag.h"
 #include "generated/particle-view-simple-vert.h"
 #include "generated/particle-view-vert.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 //#define ENABLE_DEBUG_VOLUME
 
@@ -56,7 +62,7 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
   }
 
   // create shader
-  Shader particleShader = Shader::New(SHADER_PARTICLE_VIEW_VERT, SHADER_PARTICLE_VIEW_FRAG, Shader::Hint::MODIFIES_GEOMETRY);
+  Shader particleShader = Shader::New(ToDaliStringView(SHADER_PARTICLE_VIEW_VERT), ToDaliStringView(SHADER_PARTICLE_VIEW_FRAG), Shader::Hint::MODIFIES_GEOMETRY);
 
   float         zNear = camera.GetNearClippingPlane();
   float         zFar  = camera.GetFarClippingPlane();
@@ -131,7 +137,7 @@ ParticleView::ParticleView(const ParticleField& field, Dali::Actor world, Dali::
 
 #ifdef ENABLE_DEBUG_VOLUME
   Geometry cubeGeom = CreateCuboidWireframeGeometry();
-  renderer          = CreateRenderer(renderer.GetTextures(), cubeGeom, Shader::New(SHADER_PARTICLE_VIEW_SIMPLE_VERT, SHADER_PARTICLE_VIEW_SIMPLE_FRAG));
+  renderer          = CreateRenderer(renderer.GetTextures(), cubeGeom, Shader::New(ToDaliStringView(SHADER_PARTICLE_VIEW_SIMPLE_VERT), ToDaliStringView(SHADER_PARTICLE_VIEW_SIMPLE_FRAG)));
   masterParticles.AddRenderer(renderer);
 #endif
 

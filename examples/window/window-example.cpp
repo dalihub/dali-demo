@@ -19,6 +19,12 @@
 #include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/scene.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -70,7 +76,8 @@ public:
     manualRotationFlag  = false;
 
     // Add a text label to the window
-    TextLabel textLabel = TextLabel::New("Window Example");
+    TextLabel textLabel = TextLabel::New();
+    textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Window Example"));
     textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     textLabel.SetProperty(Actor::Property::NAME, "WindowExampleLabel");
@@ -294,7 +301,8 @@ public:
     mSecondWindow.SetTransparency(true);
     mSecondWindow.SetBackgroundColor(Vector4(1.0, 0.3, 0.3, 0.5));
 
-    mTextLabel2 = TextLabel::New("Second window");
+    mTextLabel2 = TextLabel::New();
+    mTextLabel2.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Second window"));
     mTextLabel2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mTextLabel2.SetProperty(Actor::Property::NAME, "Second Window");
     mSecondWindow.Add(mTextLabel2);

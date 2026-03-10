@@ -22,9 +22,11 @@
 #include <stdio.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "controls/tool-bar/tool-bar.h"
 #include "shared/utility.h"
 #include "shared/view.h"
+using Dali::Integration::ToDaliStringView;
 
 using namespace Dali;
 using Dali::Toolkit::Control;

@@ -52,8 +52,14 @@
 #include <random> // std::default_random_engine
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "grid-flags.h"
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -182,13 +188,13 @@ ImageView CreateImageView(const std::string& filename, int width, int height, Da
   ImageView imageView = ImageView::New();
 
   Property::Map map;
-  map[Toolkit::ImageVisual::Property::URL]            = filename;
+  map[Toolkit::ImageVisual::Property::URL]            = ToPropertyValue(filename);
   map[Toolkit::ImageVisual::Property::DESIRED_WIDTH]  = width;
   map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = height;
   map[Toolkit::ImageVisual::Property::FITTING_MODE]   = fittingMode;
   imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
 
-  imageView.SetProperty(Dali::Actor::Property::NAME, filename);
+  imageView.SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(filename));
   imageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   imageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
 
@@ -521,7 +527,7 @@ public:
         {
           Property::Map map;
           map[Visual::Property::TYPE]                = Visual::IMAGE;
-          map[ImageVisual::Property::URL]            = mResourceUrls[id];
+          map[ImageVisual::Property::URL]            = ToPropertyValue(mResourceUrls[id]);
           map[ImageVisual::Property::DESIRED_WIDTH]  = imageSize.width + 0.5f;
           map[ImageVisual::Property::DESIRED_HEIGHT] = imageSize.height + 0.5f;
           map[ImageVisual::Property::FITTING_MODE]   = newMode;
@@ -571,7 +577,7 @@ public:
 
         Property::Map map;
         map[Visual::Property::TYPE]                = Visual::IMAGE;
-        map[ImageVisual::Property::URL]            = mResourceUrls[id];
+        map[ImageVisual::Property::URL]            = ToPropertyValue(mResourceUrls[id]);
         map[ImageVisual::Property::DESIRED_WIDTH]  = imageSize.width;
         map[ImageVisual::Property::DESIRED_HEIGHT] = imageSize.height;
         map[ImageVisual::Property::FITTING_MODE]   = newMode;
@@ -600,7 +606,7 @@ public:
       mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER);
     }
 
-    mTitleActor.SetProperty(TextLabel::Property::TEXT, title);
+    mTitleActor.SetProperty(TextLabel::Property::TEXT, ToDaliString(title));
   }
 
   /**

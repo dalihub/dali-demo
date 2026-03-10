@@ -21,7 +21,13 @@
 #include <iostream>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "emoji-strings.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -72,7 +78,7 @@ public:
       const Emoji&      emoji = EMOJIS[index];
       const std::string text  = emoji.mUTF8 + " " + emoji.mDescription;
 
-      TextLabel label = TextLabel::New(text);
+      TextLabel label = TextLabel::New(ToDaliString(text));
       label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
       label.SetProperty(TextLabel::Property::MULTI_LINE, true);

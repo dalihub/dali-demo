@@ -30,7 +30,13 @@
 #include <thread>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "shared/utility.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;

@@ -19,8 +19,11 @@
 #include <controls/bubble-effect/bubble-renderer.h>
 
 // EXTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include <cmath>
 #include <sstream>
+
+using Dali::Integration::ToDaliString;
 
 namespace Dali::Demo::Internal
 {
@@ -74,11 +77,11 @@ void BubbleRenderer::Initialize(unsigned int numberOfBubble, const Vector2& move
   {
     std::ostringstream ossProperty;
     ossProperty << "uStartEndPosition[" << i << "]";
-    mIndiceStartEndPos[i] = mRenderer.RegisterUniqueProperty(ossProperty.str(), zeroVector);
+    mIndiceStartEndPos[i] = mRenderer.RegisterUniqueProperty(ToDaliString(ossProperty.str()), zeroVector);
 
     ossProperty.str("");
     ossProperty << "uPercentage[" << i << "]";
-    mIndicesPercentage[i] = mRenderer.RegisterUniqueProperty(ossProperty.str(), 0.f);
+    mIndicesPercentage[i] = mRenderer.RegisterUniqueProperty(ToDaliString(ossProperty.str()), 0.f);
   }
 }
 

@@ -19,7 +19,13 @@
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
 #include <iostream>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -148,7 +154,7 @@ public:
       {
         Property::Map propertyMap;
         propertyMap.Insert(Visual::Property::TYPE, Visual::IMAGE);
-        propertyMap.Insert(ImageVisual::Property::URL, mImageUrl[k]);
+        propertyMap.Insert(ImageVisual::Property::URL, ToDaliString(mImageUrl[k]));
         propertyMap.Insert(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FILL);
         mCard[k].SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
       }

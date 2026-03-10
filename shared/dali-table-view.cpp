@@ -36,6 +36,7 @@
 #include "shared/utility.h"
 #include "shared/view.h"
 
+#include <dali/integration-api/string-utils.h>
 #include <ifaddrs.h>
 #include <net/if.h>
 #include <netdb.h>
@@ -43,6 +44,11 @@
 #include <sys/types.h>
 #include <cstdio>
 #include <cstring>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -80,7 +86,7 @@ const char* const DEMO_BUILD_DATE = __DATE__ " " __TIME__;
 Actor CreateBackground(std::string stylename)
 {
   Control background = Control::New();
-  background.SetStyleName(stylename);
+  background.SetStyleName(ToDaliString(stylename));
   background.SetProperty(Actor::Property::NAME, "BACKGROUND");
   background.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
   background.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -188,7 +194,7 @@ Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrac
   titleActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
   titleActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
 
-  Toolkit::TextLabel contentActor = Toolkit::TextLabel::New(stream.str());
+  Toolkit::TextLabel contentActor = Toolkit::TextLabel::New(ToDaliString(stream.str()));
   contentActor.SetProperty(Actor::Property::NAME, "contentActor");
   contentActor.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
   contentActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
@@ -298,7 +304,7 @@ void DaliTableView::Initialize(Application& application)
   window.Add(mRootActor);
 
   // Add logo
-  ImageView logo = ImageView::New(LOGO_PATH);
+  ImageView logo = ImageView::New(ToDaliString(LOGO_PATH));
   logo.SetProperty(Actor::Property::NAME, "LOGO_IMAGE");
   logo.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
   logo.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.1f, 0.5f));
@@ -498,7 +504,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   focusableTile.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   focusableTile.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
   focusableTile.SetProperty(Actor::Property::SIZE_MODE_FACTOR, sizeMultiplier);
-  focusableTile.SetProperty(Actor::Property::NAME, name);
+  focusableTile.SetProperty(Actor::Property::NAME, ToPropertyValue(name));
 
   // Set the tile to be keyboard focusable
   focusableTile.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
@@ -530,7 +536,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   label.SetStyleName("LauncherLabel");
   label.SetProperty(TextLabel::Property::MULTI_LINE, true);
-  label.SetProperty(TextLabel::Property::TEXT, title);
+  label.SetProperty(TextLabel::Property::TEXT, ToDaliString(title));
   label.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
   label.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
   label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
@@ -576,10 +582,10 @@ bool DaliTableView::DoTilePress(Actor actor, PointState::Type pointState)
     // ignore Example button presses when scrolling or button animating.
     if((!mScrolling) && (!mPressedAnimation))
     {
-      std::string name = actor.GetProperty<std::string>(Dali::Actor::Property::NAME);
+      String name = actor.GetProperty<String>(Dali::Actor::Property::NAME);
       for(Example& example : mExampleList)
       {
-        if(example.name == name)
+        if(example.name == ToStdString(name))
         {
           // do nothing, until pressed animation finished.
           consumed = true;
@@ -613,7 +619,7 @@ void DaliTableView::OnPressedAnimationFinished(Dali::Animation& source)
   mPressedAnimation.Reset();
   if(mPressedActor)
   {
-    std::string name = mPressedActor.GetProperty<std::string>(Dali::Actor::Property::NAME);
+    String name = mPressedActor.GetProperty<String>(Dali::Actor::Property::NAME);
 
     ExecuteProcess(name, mApplication);
 

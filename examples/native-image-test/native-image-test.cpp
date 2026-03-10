@@ -28,9 +28,12 @@
 #include <cstring> // memcpy
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/native-image-test-texture-frag.h"
 #include "generated/native-image-test-texture-vert.h"
 #include "shared/utility.h"
+
+using Dali::Integration::ToDaliStringView;
 
 using namespace Dali;
 
@@ -46,13 +49,13 @@ const std::string IMAGE_FILE = DEMO_IMAGE_DIR "background-5.jpg";
  */
 Shader CreateShader(NativeImageInterface& nativeImage)
 {
-  std::string fragmentShader;
+  String fragmentShader;
 
   // Get custom fragment shader prefix
   fragmentShader = SHADER_NATIVE_IMAGE_TEST_TEXTURE_FRAG.data();
   nativeImage.ApplyNativeFragmentShader(fragmentShader, 1);
 
-  return Shader::New(SHADER_NATIVE_IMAGE_TEST_TEXTURE_VERT, fragmentShader);
+  return Shader::New(ToDaliStringView(SHADER_NATIVE_IMAGE_TEST_TEXTURE_VERT), fragmentShader);
 }
 
 } // namespace

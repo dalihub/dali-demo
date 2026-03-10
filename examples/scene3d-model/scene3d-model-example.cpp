@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,14 @@
 #include <dali/devel-api/adaptor-framework/file-stream.h>
 #include <dali/devel-api/adaptor-framework/image-loading.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/actors/camera-actor.h>
 #include <cstring>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -331,12 +337,12 @@ public:
     std::string modelUrl = modeldir;
     modelUrl += model_list[index].name;
 
-    mModel = Dali::Scene3D::Model::New(modelUrl);
+    mModel = Dali::Scene3D::Model::New(ToDaliString(modelUrl));
     mModel.SetProperty(Dali::Actor::Property::SIZE, model_list[index].size);
     mModel.SetProperty(Dali::Actor::Property::POSITION_Y, model_list[index].yPosition);
     mModel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mModel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mModel.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
+    mModel.SetImageBasedLightSource(ToDaliString(uri_diffuse_texture), ToDaliString(uri_specular_texture), 0.6f);
 
     mModel.ResourceReadySignal().Connect(this, &Scene3DModelExample::ResourceReady);
     mModel.LoadCompletedSignal().Connect(this, &Scene3DModelExample::LoadCompleted);
@@ -362,7 +368,7 @@ public:
       // Show an error message
       std::ostringstream messageStream;
       messageStream << "Failed to load " << model_list[mCurrentModel].name;
-      mTextLabel.SetProperty(TextLabel::Property::TEXT, messageStream.str());
+      mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(messageStream.str()));
       mTextLabel.SetProperty(TextLabel::Property::ENABLE_AUTO_SCROLL, true);
       mTextLabel.SetProperty(Actor::Property::VISIBLE, true);
     }

@@ -19,19 +19,22 @@
 #include <controls/filters/blur-two-pass-filter.h>
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali/devel-api/common/stage.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/rendering/renderer.h>
-#include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <sstream>
 
 // INTERNAL INCLUDES
-#include <controls/shaders/blur-two-pass-shader-frag.h>
 #include <controls/shaders/blur-two-images-shader-frag.h>
-#include <controls/shaders/control-renderers-vert.h>
+#include <controls/shaders/blur-two-pass-shader-frag.h>
 #include <controls/shaders/control-renderers-frag.h>
+#include <controls/shaders/control-renderers-vert.h>
+#include <dali/integration-api/string-utils.h>
+
+using Dali::Integration::ToDaliString;
 
 namespace Dali::Demo::Internal
 {
@@ -134,11 +137,11 @@ void BlurTwoPassFilter::Enable()
     const std::string offsetUniform(GetOffsetUniformName(i));
     const std::string weightUniform(GetWeightUniformName(i));
 
-    mActorForInput.RegisterProperty(offsetUniform, Vector2(mKernel[i]) * Vector2::XAXIS);
-    mActorForInput.RegisterProperty(weightUniform, mKernel[i].z);
+    mActorForInput.RegisterProperty(ToDaliString(offsetUniform), Vector2(mKernel[i]) * Vector2::XAXIS);
+    mActorForInput.RegisterProperty(ToDaliString(weightUniform), mKernel[i].z);
 
-    mActorForHorz.RegisterProperty(offsetUniform, Vector2(mKernel[i]) * Vector2::YAXIS);
-    mActorForHorz.RegisterProperty(weightUniform, mKernel[i].z);
+    mActorForHorz.RegisterProperty(ToDaliString(offsetUniform), Vector2(mKernel[i]) * Vector2::YAXIS);
+    mActorForHorz.RegisterProperty(ToDaliString(weightUniform), mKernel[i].z);
   }
 
   mRootActor.Add(mActorForInput);

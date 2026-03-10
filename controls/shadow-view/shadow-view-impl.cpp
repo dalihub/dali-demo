@@ -19,6 +19,9 @@
 #include "shadow-view-impl.h"
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/control-renderers.h>
+#include <dali-toolkit/public-api/visuals/visual-properties.h>
 #include <dali/devel-api/common/stage.h>
 #include <dali/integration-api/debug.h>
 #include <dali/public-api/animation/constraint.h>
@@ -26,17 +29,20 @@
 #include <dali/public-api/object/type-registry.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/rendering/shader.h>
-#include <dali-toolkit/public-api/visuals/visual-properties.h>
-#include <dali-toolkit/devel-api/controls/control-devel.h>
-#include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <iomanip>
 #include <sstream>
 
 // INTERNAL INCLUDES
-#include <controls/shadow-view/shadow-view-impl.h>
 #include <controls/filters/blur-two-pass-filter.h>
-#include <controls/shaders/shadow-view-render-shader-vert.h>
 #include <controls/shaders/shadow-view-render-shader-frag.h>
+#include <controls/shaders/shadow-view-render-shader-vert.h>
+#include <controls/shadow-view/shadow-view-impl.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 // TODO:
 // pixel format / size - set from JSON

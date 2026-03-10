@@ -19,6 +19,9 @@
 #include "super-blur-view-impl.h"
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/control-renderers.h>
+#include <dali-toolkit/public-api/image-loader/sync-image-loader.h>
 #include <dali/devel-api/common/stage.h>
 #include <dali/devel-api/scripting/scripting.h>
 #include <dali/integration-api/debug.h>
@@ -27,15 +30,18 @@
 #include <dali/public-api/object/type-registry-helper.h>
 #include <dali/public-api/object/type-registry.h>
 #include <dali/public-api/rendering/renderer.h>
-#include <dali-toolkit/devel-api/controls/control-devel.h>
-#include <dali-toolkit/devel-api/controls/control-renderers.h>
-#include <dali-toolkit/public-api/image-loader/sync-image-loader.h>
 #include <cmath>
 
 // INTERNAL INCLUDES
-#include <controls/shaders/super-blur-view-frag.h>
-#include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/control-renderers-frag.h>
+#include <controls/shaders/control-renderers-vert.h>
+#include <controls/shaders/super-blur-view-frag.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali::Toolkit;
 using namespace Dali::Toolkit::Internal;

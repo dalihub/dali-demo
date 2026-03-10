@@ -19,7 +19,13 @@
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
 #include <iostream>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -237,9 +243,9 @@ private:
     mCallStartButton.SetProperty(Actor::Property::SIZE, BUTTON_CALL_START_SIZE * SCALED_WIDTH);
     mCallStartButton.SetProperty(Actor::Property::POSITION, BUTTON_CALL_START_POSITION * SCALED_WIDTH);
     mCallStartButton.ClickedSignal().Connect(this, &CallController::OnButtonClicked);
-    mCallStartButton.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE);
-    mCallStartButton.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, ICON_CALL_IMAGE);
-    mCallStartButton.SetProperty(Control::Property::BACKGROUND, ICON_CALL_IMAGE);
+    mCallStartButton.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, ToPropertyValue(ICON_CALL_IMAGE));
+    mCallStartButton.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, ToPropertyValue(ICON_CALL_IMAGE));
+    mCallStartButton.SetProperty(Control::Property::BACKGROUND, ToPropertyValue(ICON_CALL_IMAGE));
     mCallStartButton.SetProperty(Button::Property::LABEL, "");
 
     mWindow.Add(mCallStartButton);

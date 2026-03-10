@@ -26,12 +26,18 @@
 #include <sstream>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/refraction-effect-flat-frag.h"
 #include "generated/refraction-effect-flat-vert.h"
 #include "generated/refraction-effect-refraction-frag.h"
 #include "generated/refraction-effect-refraction-vert.h"
 #include "shared/utility.h"
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -163,7 +169,7 @@ private:
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // shader used when the screen is not touched, render a flat surface
-    mShaderFlat = Shader::New(SHADER_REFRACTION_EFFECT_FLAT_VERT, SHADER_REFRACTION_EFFECT_FLAT_FRAG);
+    mShaderFlat = Shader::New(ToDaliStringView(SHADER_REFRACTION_EFFECT_FLAT_VERT), ToDaliStringView(SHADER_REFRACTION_EFFECT_FLAT_FRAG));
     mGeometry   = CreateGeometry(MESH_FILES[mCurrentMeshId]);
 
     Texture texture = DemoHelper::LoadWindowFillingTexture(window.GetSize(), TEXTURE_IMAGES[mCurrentTextureId]);
@@ -183,7 +189,7 @@ private:
     mContent.TouchedSignal().Connect(this, &RefractionEffectExample::OnTouch);
 
     // shader used when the finger is touching the screen. render refraction effect
-    mShaderRefraction = Shader::New(SHADER_REFRACTION_EFFECT_REFRACTION_VERT, SHADER_REFRACTION_EFFECT_REFRACTION_FRAG);
+    mShaderRefraction = Shader::New(ToDaliStringView(SHADER_REFRACTION_EFFECT_REFRACTION_VERT), ToDaliStringView(SHADER_REFRACTION_EFFECT_REFRACTION_FRAG));
 
     // register uniforms
     mLightXYOffsetIndex = mMeshActor.RegisterProperty("uLightXYOffset", Vector2::ZERO);

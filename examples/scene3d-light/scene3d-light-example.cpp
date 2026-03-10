@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,12 @@
 #include <dali/devel-api/actors/actor-devel.h>
 
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -116,19 +122,20 @@ public:
     camera.SetProperty(Dali::CameraActor::Property::NEAR_PLANE_DISTANCE, 1.0f);
     camera.SetProperty(Dali::CameraActor::Property::FAR_PLANE_DISTANCE, 4.0f);
 
-    Scene3D::Model model = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf");
+    Scene3D::Model model = Scene3D::Model::New(ToDaliString(std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf"));
     model.SetProperty(Dali::Actor::Property::POSITION, Vector3(-0.5f, 0.0f, 0.0f));
     model.SetProperty(Dali::Actor::Property::SIZE, Vector3::ONE);
     sceneView.Add(model);
 
-    Scene3D::Model model2 = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "microphone.gltf");
+    Scene3D::Model model2 = Scene3D::Model::New(ToDaliString(std::string(DEMO_MODEL_DIR) + "microphone.gltf"));
     model2.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.2f, 0.0f, 0.0f));
     model2.SetProperty(Dali::Actor::Property::SIZE, Vector3::ONE);
     sceneView.Add(model2);
 
     window.Add(sceneView);
 
-    auto text                             = TextLabel::New("Press keys 0-9 to change lighting");
+    auto text = TextLabel::New();
+    text.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Press keys 0-9 to change lighting"));
     text[Actor::Property::PARENT_ORIGIN]  = ParentOrigin::BOTTOM_CENTER;
     text[Actor::Property::ANCHOR_POINT]   = AnchorPoint::BOTTOM_CENTER;
     text[TextLabel::Property::TEXT_COLOR] = Color::BLACK;
@@ -173,7 +180,8 @@ public:
       }
       if(event.GetKeyName() == "1")
       {
-        sceneView.SetImageBasedLightSource(uri_diffuse_texture2, uri_specular_texture2, 0.6f);
+        sceneView.SetImageBasedLightSource(ToDaliString(uri_diffuse_texture2),
+                                           ToDaliString(uri_specular_texture2), 0.6f);
         light1.Enable(true);
         light2.Enable(true);
         light3.Enable(true);
@@ -185,7 +193,8 @@ public:
       }
       else if(event.GetKeyName() == "2")
       {
-        sceneView.SetImageBasedLightSource(uri_diffuse_texture2, uri_specular_texture2, 0.6f);
+        sceneView.SetImageBasedLightSource(ToDaliString(uri_diffuse_texture2),
+                                           ToDaliString(uri_specular_texture2), 0.6f);
         light1.Enable(true);
         light2.Enable(true);
         light3.Enable(true);
@@ -197,7 +206,8 @@ public:
       }
       else if(event.GetKeyName() == "3")
       {
-        sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
+        sceneView.SetImageBasedLightSource(ToDaliString(uri_diffuse_texture),
+                                           ToDaliString(uri_specular_texture), 0.6f);
         light1.Enable(true);
         light2.Enable(true);
         light3.Enable(true);
@@ -209,7 +219,8 @@ public:
       }
       else if(event.GetKeyName() == "4")
       {
-        sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.3f);
+        sceneView.SetImageBasedLightSource(ToDaliString(uri_diffuse_texture),
+                                           ToDaliString(uri_specular_texture), 0.3f);
         light1.Enable(true);
         light2.Enable(true);
         light3.Enable(true);
@@ -221,7 +232,8 @@ public:
       }
       else if(event.GetKeyName() == "5")
       {
-        sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.1f);
+        sceneView.SetImageBasedLightSource(ToDaliString(uri_diffuse_texture),
+                                           ToDaliString(uri_specular_texture), 0.1f);
         light1.Enable(true);
         light2.Enable(true);
         light3.Enable(true);
@@ -233,7 +245,8 @@ public:
       }
       else if(event.GetKeyName() == "6")
       {
-        sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.0f);
+        sceneView.SetImageBasedLightSource(ToDaliString(uri_diffuse_texture),
+                                           ToDaliString(uri_specular_texture), 0.0f);
         light1.Enable(true);
         light2.Enable(true);
         light3.Enable(true);
@@ -245,7 +258,8 @@ public:
       }
       else if(event.GetKeyName() == "7")
       {
-        sceneView.SetImageBasedLightSource(uri_diffuse_texture, uri_specular_texture, 0.6f);
+        sceneView.SetImageBasedLightSource(ToDaliString(uri_diffuse_texture),
+                                           ToDaliString(uri_specular_texture), 0.6f);
         light1.Enable(true);
         light2.Enable(true);
         light3.Enable(true);

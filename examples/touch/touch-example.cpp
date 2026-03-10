@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,12 @@
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/window-system-devel.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -73,19 +79,19 @@ public:
     mPropagationTypeLabelString = "Propagation::PARENT";
 
     mScenarioTypeLabel = Dali::Toolkit::TextLabel::New();
-    mScenarioTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, mScenarioTypeLabelString);
+    mScenarioTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mScenarioTypeLabelString));
     mScenarioTypeLabel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mScenarioTypeLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     window.Add(mScenarioTypeLabel);
 
     mScenarioDetailLabel = Dali::Toolkit::TextLabel::New();
-    mScenarioDetailLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, mScenarioDetailLabelString);
+    mScenarioDetailLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mScenarioDetailLabelString));
     mScenarioDetailLabel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mScenarioDetailLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     mScenarioTypeLabel.Add(mScenarioDetailLabel);
 
     mPropagationTypeLabel = Dali::Toolkit::TextLabel::New();
-    mPropagationTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, mPropagationTypeLabelString);
+    mPropagationTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mPropagationTypeLabelString));
     mPropagationTypeLabel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mPropagationTypeLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     mScenarioDetailLabel.Add(mPropagationTypeLabel);
@@ -144,7 +150,7 @@ public:
   bool OnTouchActor(Actor actor, const TouchEvent& touch)
   {
     // quit the application
-    DALI_LOG_ERROR("touched : name : %s, id : %d\n", actor.GetProperty<std::string>(Dali::Actor::Property::NAME).c_str(), actor.GetProperty<int>(Dali::Actor::Property::ID));
+    DALI_LOG_ERROR("touched : name : %s, id : %d\n", actor.GetProperty<String>(Dali::Actor::Property::NAME).CStr(), actor.GetProperty<int>(Dali::Actor::Property::ID));
     Toolkit::Control control = Toolkit::Control::DownCast(actor);
     if(control)
     {
@@ -156,7 +162,7 @@ public:
   bool OnTouch3DActor(Actor actor, const TouchEvent& touch)
   {
     // quit the application
-    DALI_LOG_ERROR("3D touched : name : %s, id : %d\n", actor.GetProperty<std::string>(Dali::Actor::Property::NAME).c_str(), actor.GetProperty<int>(Dali::Actor::Property::ID));
+    DALI_LOG_ERROR("3D touched : name : %s, id : %d\n", actor.GetProperty<String>(Dali::Actor::Property::NAME).CStr(), actor.GetProperty<int>(Dali::Actor::Property::ID));
     Toolkit::Control control = Toolkit::Control::DownCast(actor);
     if(control)
     {
@@ -176,7 +182,7 @@ public:
   {
     Toolkit::Control control = Toolkit::Control::New();
     control.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, map);
-    control.SetProperty(Dali::Actor::Property::NAME, name);
+    control.SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(name));
     control.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     control.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     control.SetProperty(Dali::Actor::Property::POSITION, position);
@@ -187,7 +193,7 @@ public:
       control.TouchedSignal().Connect(this, &TouchController::OnTouchActor);
     }
 
-    Dali::Toolkit::TextLabel tag = Dali::Toolkit::TextLabel::New(name);
+    Dali::Toolkit::TextLabel tag = Dali::Toolkit::TextLabel::New(ToDaliStringView(name));
     tag.SetProperty(Dali::Actor::Property::SIZE_WIDTH, 1500.0f);
     tag.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     tag.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
@@ -745,7 +751,8 @@ public:
     camera.SetProperty(Dali::CameraActor::Property::FAR_PLANE_DISTANCE, 4.0f);
 
     //    Scene3D::Model model = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "BoxAnimated.gltf");
-    Scene3D::Model model = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf");
+    auto           modelName = std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf";
+    Scene3D::Model model     = Scene3D::Model::New(ToDaliString(modelName));
     model.SetProperty(Dali::Actor::Property::POSITION, Vector3(-0.5f, 0.0f, 0.0f));
     model.SetProperty(Dali::Actor::Property::SIZE, Vector3::ONE);
     model.SetProperty(Dali::Actor::Property::SCALE, Vector3::ONE * 0.5f);
@@ -789,7 +796,8 @@ public:
     axis.Normalize();
     mPanel.SetProperty(Dali::Actor::Property::ORIENTATION, Quaternion(Radian(Degree(45.0f)), axis));
 
-    Scene3D::Model model = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf");
+    auto           modelName = std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf";
+    Scene3D::Model model     = Scene3D::Model::New(ToDaliString(modelName));
     model.SetProperty(Dali::Actor::Property::POSITION, Vector3(-0.5f, 0.0f, 0.0f));
     model.SetProperty(Dali::Actor::Property::SIZE, Vector3::ONE * 0.7f);
     model.SetProperty(Dali::Actor::Property::SCALE, Vector3::ONE * 1.5f);
@@ -836,7 +844,8 @@ public:
     mPanel.SetBackgroundColor(Color::BLUE);
     mPanel.TouchedSignal().Connect(this, &TouchController::OnTouch3DActor);
 
-    Scene3D::Model model = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf");
+    auto           modelName = std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf";
+    Scene3D::Model model     = Scene3D::Model::New(ToDaliString(modelName));
     model.SetProperty(Dali::Actor::Property::POSITION, Vector3(-0.5f, 0.0f, 2.0f));
     model.SetProperty(Dali::Actor::Property::SIZE, Vector3::ONE * 0.7f);
     model.SetProperty(Dali::Actor::Property::SCALE, Vector3::ONE * 1.5f);
@@ -846,7 +855,7 @@ public:
     sceneView.Add(model);
     model.TouchedSignal().Connect(this, &TouchController::OnTouch3DActor);
 
-    Scene3D::Model model3 = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf");
+    Scene3D::Model model3 = Scene3D::Model::New(ToDaliString(modelName));
     model3.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.0f, 0.5f, 1.0f));
     model3.SetProperty(Dali::Actor::Property::SIZE, Vector3::ONE * 0.7f);
     model3.SetProperty(Dali::Actor::Property::SCALE, Vector3::ONE * 1.5f);
@@ -856,7 +865,7 @@ public:
     sceneView.Add(model3);
     model3.TouchedSignal().Connect(this, &TouchController::OnTouch3DActor);
 
-    Scene3D::Model model2 = Scene3D::Model::New(std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf");
+    Scene3D::Model model2 = Scene3D::Model::New(ToDaliString(modelName));
     model2.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.5f, 0.0f, 0.0f));
     model2.SetProperty(Dali::Actor::Property::SIZE, Vector3::ONE * 0.7f);
     model2.SetProperty(Dali::Actor::Property::SCALE, Vector3::ONE * 1.5f);
@@ -1092,22 +1101,22 @@ public:
         {
           case SceneType::DEFAULT:
           {
-            GenSingleScene(std::stoi(event.GetKeyName()));
+            GenSingleScene(std::stoi(ToStdString(event.GetKeyName())));
             break;
           }
           case SceneType::VIEWPORT:
           {
-            GenViewportScene(std::stoi(event.GetKeyName()));
+            GenViewportScene(std::stoi(ToStdString(event.GetKeyName())));
             break;
           }
           case SceneType::THREE_DIMENSION:
           {
-            Gen3DScene(std::stoi(event.GetKeyName()));
+            Gen3DScene(std::stoi(ToStdString(event.GetKeyName())));
             break;
           }
           default:
           {
-            GenSingleScene(std::stoi(event.GetKeyName()));
+            GenSingleScene(std::stoi(ToStdString(event.GetKeyName())));
             break;
           }
         }
@@ -1123,13 +1132,13 @@ public:
         mPropagationTypeLabelString = "PropagationType::PARENT";
       }
 
-      mScenarioTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, mScenarioTypeLabelString);
-      mScenarioDetailLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, mScenarioDetailLabelString);
-      mPropagationTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, mPropagationTypeLabelString);
+      mScenarioTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mScenarioTypeLabelString));
+      mScenarioDetailLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mScenarioDetailLabelString));
+      mPropagationTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mPropagationTypeLabelString));
 
       for(auto&& actor : mActorList)
       {
-        DALI_LOG_ERROR("%s id : %d\n", actor.GetProperty<std::string>(Dali::Actor::Property::NAME).c_str(), actor.GetProperty<int>(Dali::Actor::Property::ID));
+        DALI_LOG_ERROR("%s id : %d\n", actor.GetProperty<String>(Dali::Actor::Property::NAME).CStr(), actor.GetProperty<int>(Dali::Actor::Property::ID));
       }
     }
   }

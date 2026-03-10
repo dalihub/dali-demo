@@ -17,6 +17,12 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -61,7 +67,8 @@ public:
     window.KeyEventSignal().Connect(this, &PropertyNotificationController::OnKeyEvent);
 
     // Create a text label and set the text color to black
-    mTextLabel = TextLabel::New("Black to Red Animation\nNew opacity animation at 50% Red");
+    mTextLabel = TextLabel::New();
+    mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Black to Red Animation\nNew opacity animation at 50% Red"));
     mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mTextLabel.SetProperty(TextLabel::Property::MULTI_LINE, true);

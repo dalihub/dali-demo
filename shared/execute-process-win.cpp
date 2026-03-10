@@ -19,15 +19,18 @@
 #include "execute-process.h"
 
 // EXTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/common/dali-common.h>
 #include <windows.h>
+
+using Dali::Integration::ToStdString;
 
 namespace
 {
 const std::string PATH_SEPARATOR("\\");
 }
 
-void ExecuteProcess(const std::string& processName, Dali::Application& application)
+void ExecuteProcess(const Dali::String& processName, Dali::Application& application)
 {
   std::string processPathName;
 
@@ -43,16 +46,16 @@ void ExecuteProcess(const std::string& processName, Dali::Application& applicati
     }
 
     currentPath[numberOfCharacters] = '\0';
-    processPathName                 = std::string(currentPath) + PATH_SEPARATOR + DEMO_EXAMPLE_BIN + PATH_SEPARATOR + processName + ".exe";
+    processPathName                 = std::string(currentPath) + PATH_SEPARATOR + DEMO_EXAMPLE_BIN + PATH_SEPARATOR + ToStdString(processName) + ".exe";
   }
   else
   {
-    processPathName = DEMO_EXAMPLE_BIN + PATH_SEPARATOR + processName + ".exe";
+    processPathName = DEMO_EXAMPLE_BIN + PATH_SEPARATOR + ToStdString(processName) + ".exe";
   }
 
   STARTUPINFO         info = {sizeof(info)};
   PROCESS_INFORMATION processInfo;
-  if(CreateProcess(processPathName.c_str(), nullptr, nullptr, nullptr, TRUE, 0, nullptr, nullptr, &info, &processInfo))
+  if(CreateProcess(processPathName.CStr(), nullptr, nullptr, nullptr, TRUE, 0, nullptr, nullptr, &info, &processInfo))
   {
     WaitForSingleObject(processInfo.hProcess, INFINITE);
     CloseHandle(processInfo.hProcess);

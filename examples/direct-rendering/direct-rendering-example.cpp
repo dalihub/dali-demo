@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,13 @@
 #include <dali/integration-api/debug.h>
 #include "native-renderer.h"
 
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 using namespace Dali;
 using namespace Dali::Toolkit;
 namespace
@@ -129,7 +135,7 @@ struct RenderView
     }
     strMode += ", threaded = " + std::to_string(info.threaded) + ", offscreen = " + std::to_string(info.offscreen);
 
-    TextLabel textLabel = TextLabel::New(strMode);
+    TextLabel textLabel = TextLabel::New(ToDaliString(strMode));
     textLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
     textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);

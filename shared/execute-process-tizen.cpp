@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,10 @@
 // EXTERNAL INCLUDES
 #include <app_control.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/common/dali-common.h>
+
+using Dali::Integration::ToStdString;
 
 namespace
 {
@@ -54,21 +57,21 @@ const char* GetAppControlErrorName(int ret)
 
 } // unnamed namespace
 
-void ExecuteProcess(const std::string& processName, Dali::Application& application)
+void ExecuteProcess(const Dali::String& processName, Dali::Application& application)
 {
   app_control_h handle;
   app_control_create(&handle);
-  app_control_set_app_id(handle, processName.c_str());
+  app_control_set_app_id(handle, processName.CStr());
 
-  DALI_LOG_RELEASE_INFO("Try to launch app[%s]\n", processName.c_str());
+  DALI_LOG_RELEASE_INFO("Try to launch app[%s]\n", processName.CStr());
   int ret = app_control_send_launch_request(handle, NULL, NULL);
   if(ret == APP_CONTROL_ERROR_NONE)
   {
-    DALI_LOG_RELEASE_INFO("Succeeded to launch app[%s]\n", processName.c_str());
+    DALI_LOG_RELEASE_INFO("Succeeded to launch app[%s]\n", processName.CStr());
   }
   else
   {
-    DALI_LOG_ERROR("Fail to launch app[%s] ret=%d(%s)\n", processName.c_str(), ret, GetAppControlErrorName(ret));
+    DALI_LOG_ERROR("Fail to launch app[%s] ret=%d(%s)\n", processName.CStr(), ret, GetAppControlErrorName(ret));
     DALI_ASSERT_ALWAYS(false && "Send launch request failed!");
   }
   app_control_destroy(handle);

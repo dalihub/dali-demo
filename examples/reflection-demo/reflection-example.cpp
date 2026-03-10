@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 
 #include <map>
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/reflection-frag.h"
 #include "generated/reflection-plasma-frag.h"
 #include "generated/reflection-simple-frag.h"
@@ -28,6 +29,11 @@
 #include "generated/reflection-textured-frag.h"
 #include "generated/reflection-vert.h"
 #include "gltf-scene.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -105,7 +111,7 @@ Shader CreateShader(const std::string& vsh, const std::string& fsh)
 
   vshShaderSource.emplace_back(0);
   fshShaderSource.emplace_back(0);
-  return Shader::New(std::string(vshShaderSource.data()), std::string(fshShaderSource.data()));
+  return Shader::New(ToDaliStringView(std::string(vshShaderSource.data())), ToDaliStringView(std::string(fshShaderSource.data())));
 }
 
 ModelPtr CreateModel(
@@ -168,7 +174,7 @@ void CreateTextureSetsFromGLTF(glTF* gltf, const std::string& basePath, TextureS
       std::string filename(basePath);
       filename += '/';
       filename += textures[material.pbrMetallicRoughness.baseTextureColor.index].uri;
-      Dali::PixelData pixelData = Dali::Toolkit::SyncImageLoader::Load(filename);
+      Dali::PixelData pixelData = Dali::Toolkit::SyncImageLoader::Load(ToDaliString(filename));
 
       auto    cacheKey = textures[material.pbrMetallicRoughness.baseTextureColor.index].uri;
       auto    iter     = textureCache.find(cacheKey);
@@ -234,7 +240,7 @@ Actor CreateSceneFromGLTF(
     auto actor = node.cameraId != 0xffffffff ? CameraActor::New(window.GetSize()) : Actor::New();
 
     actor.SetProperty(Actor::Property::SIZE, Vector3(1, 1, 1));
-    actor.SetProperty(Dali::Actor::Property::NAME, node.name);
+    actor.SetProperty(Dali::Actor::Property::NAME, ToDaliString(node.name));
     actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     actor.SetProperty(Actor::Property::POSITION, Vector3(node.translation[0], node.translation[1], node.translation[2]));

@@ -29,7 +29,13 @@
 #include <dali/integration-api/debug.h>
 #include <string>
 
+#include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -116,12 +122,12 @@ void ChangeUrlTypeToNextUrlType(UrlType& urlType)
 
 ImageVisualType GetVisualTypeFromButton(Toolkit::Button button)
 {
-  std::string  buttonName = button.GetProperty<std::string>(Dali::Actor::Property::NAME);
+  String       buttonName = button.GetProperty<String>(Dali::Actor::Property::NAME);
   unsigned int index      = 0;
 
   if(buttonName != "")
   {
-    index = std::stoul(buttonName);
+    index = std::stoul(ToStdString(buttonName));
   }
 
   return static_cast<ImageVisualType>(index);
@@ -149,7 +155,7 @@ EncodedImageBuffer ConvertFileToEncodedImageBuffer(const char* url)
 
 std::vector<ImageUrl> gImageUrlHolder;
 
-std::string ConvertFileToImageUrlString(const char* url, UrlType type)
+Dali::String ConvertFileToImageUrlString(const char* url, UrlType type)
 {
   ImageUrl imageUrl;
 
@@ -160,7 +166,7 @@ std::string ConvertFileToImageUrlString(const char* url, UrlType type)
     case REGULAR_IMAGE:
     default:
     {
-      return std::string(url);
+      return String(url);
     }
     case EXTERNAL_TEXTURE:
     {
@@ -264,7 +270,7 @@ public:
     mTable.SetFitHeight(CellPlacement::LOWER_BUTTON);
     mContentLayer.Add(mTable);
 
-    Toolkit::TextLabel instructions = Toolkit::TextLabel::New(EXAMPLE_INSTRUCTIONS);
+    Toolkit::TextLabel instructions = Toolkit::TextLabel::New(ToDaliString(EXAMPLE_INSTRUCTIONS));
     instructions.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     instructions.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     instructions.SetProperty(Actor::Property::POSITION_Y, -50.0f);
@@ -288,27 +294,29 @@ public:
       button.ClickedSignal().Connect(this, &ImageViewController::ChangeMaskImageUrl);
       button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-      button.SetProperty(Dali::Actor::Property::NAME, s);
+      button.SetProperty(Dali::Actor::Property::NAME, ToDaliString(s));
       mTable.AddChild(button, Toolkit::TableView::CellPosition(CellPlacement::TOP_BUTTON, x));
 
       Toolkit::PushButton button2 = Toolkit::PushButton::New();
-      button2.SetProperty(Toolkit::Button::Property::LABEL, std::string("Image-") + std::string(BUTTON_LABEL_SUFFIX[UrlType::REGULAR_IMAGE]));
+      button2.SetProperty(Toolkit::Button::Property::LABEL, ToPropertyValue(
+                                                              std::string("Image-") + std::string(BUTTON_LABEL_SUFFIX[UrlType::REGULAR_IMAGE])));
       button2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
       button2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
       button2.ClickedSignal().Connect(this, &ImageViewController::ChangeImageUrlType);
       button2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       button2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-      button2.SetProperty(Dali::Actor::Property::NAME, s);
+      button2.SetProperty(Dali::Actor::Property::NAME, ToDaliString(s));
       mTable.AddChild(button2, Toolkit::TableView::CellPosition(CellPlacement::MID_BUTTON, x));
 
       Toolkit::PushButton button3 = Toolkit::PushButton::New();
-      button3.SetProperty(Toolkit::Button::Property::LABEL, std::string("Mask-") + std::string(BUTTON_LABEL_SUFFIX[UrlType::REGULAR_IMAGE]));
+      button3.SetProperty(Toolkit::Button::Property::LABEL, ToPropertyValue(
+                                                              std::string("Mask-") + std::string(BUTTON_LABEL_SUFFIX[UrlType::REGULAR_IMAGE])));
       button3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
       button3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
       button3.ClickedSignal().Connect(this, &ImageViewController::ChangeMaskImageUrlType);
       button3.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       button3.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-      button3.SetProperty(Dali::Actor::Property::NAME, s);
+      button3.SetProperty(Dali::Actor::Property::NAME, ToDaliString(s));
       mTable.AddChild(button3, Toolkit::TableView::CellPosition(CellPlacement::LOWER_BUTTON, x));
 
       mImageViews[x] = Toolkit::ImageView::New();
@@ -397,7 +405,8 @@ private:
 
     ChangeUrlTypeToNextUrlType(mImageViewUrlType[buttonIndex]);
 
-    button.SetProperty(Toolkit::Button::Property::LABEL, std::string("Image-") + std::string(BUTTON_LABEL_SUFFIX[mImageViewUrlType[buttonIndex]]));
+    button.SetProperty(Toolkit::Button::Property::LABEL, ToPropertyValue(
+                                                           std::string("Image-") + std::string(BUTTON_LABEL_SUFFIX[mImageViewUrlType[buttonIndex]])));
 
     DALI_LOG_RELEASE_INFO("Change image url type for [%d]'s image, url type : %s\n", buttonIndex, BUTTON_LABEL_SUFFIX[mImageViewUrlType[buttonIndex]]);
 
@@ -416,7 +425,8 @@ private:
 
     ChangeUrlTypeToNextUrlType(mImageViewMaskUrlType[buttonIndex]);
 
-    button.SetProperty(Toolkit::Button::Property::LABEL, std::string("Mask-") + std::string(BUTTON_LABEL_SUFFIX[mImageViewMaskUrlType[buttonIndex]]));
+    button.SetProperty(Toolkit::Button::Property::LABEL,
+                       ToPropertyValue(std::string("Mask-") + std::string(BUTTON_LABEL_SUFFIX[mImageViewMaskUrlType[buttonIndex]])));
 
     DALI_LOG_RELEASE_INFO("Change mask image url type for [%d]'s image, mask url type : %s\n", buttonIndex, BUTTON_LABEL_SUFFIX[mImageViewMaskUrlType[buttonIndex]]);
 

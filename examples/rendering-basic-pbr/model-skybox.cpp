@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,9 +24,15 @@
 #include <cstdio>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/skybox-frag.h"
 #include "generated/skybox-vert.h"
 #include "obj-loader.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 ModelSkybox::ModelSkybox()
 {
@@ -39,7 +45,7 @@ ModelSkybox::~ModelSkybox()
 void ModelSkybox::Init(const Vector3& size)
 {
   Geometry geometry = CreateGeometry();
-  Shader   shader   = Shader::New(SHADER_SKYBOX_VERT, SHADER_SKYBOX_FRAG);
+  Shader   shader   = Shader::New(ToDaliStringView(SHADER_SKYBOX_VERT), ToDaliStringView(SHADER_SKYBOX_FRAG));
 
   Renderer renderer = Renderer::New(geometry, shader);
 

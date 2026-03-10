@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,13 @@
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
 
+#include <dali/integration-api/string-utils.h>
 #include <unordered_map>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -264,7 +270,7 @@ public:
   {
     Toolkit::Control panel = Toolkit::Control::New();
     panel.SetProperty(Actor::Property::SIZE, size);
-    panel.SetProperty(Actor::Property::NAME, title);
+    panel.SetProperty(Actor::Property::NAME, ToDaliString(title));
 
     Property::Map colorVisualPropertyMap;
     colorVisualPropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::COLOR);
@@ -275,7 +281,7 @@ public:
     panel.SetProperty(Toolkit::DevelControl::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::Type::RELATIVE);
 
     // TOP
-    Toolkit::ImageView icon = Toolkit::ImageView::New(iconURL);
+    Toolkit::ImageView icon = Toolkit::ImageView::New(ToDaliString(iconURL));
     icon.SetProperty(Actor::Property::SIZE, Vector2(50.0f, 50.0f));
     icon.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     icon.SetProperty(Actor::Property::POSITION, size * 0.1f);
@@ -312,9 +318,9 @@ public:
 
   Toolkit::TextLabel SetUpTextLabelProperties(std::string text, Vector4 color, std::string alignment, float fontSize = 15.0f)
   {
-    Toolkit::TextLabel label = Toolkit::TextLabel::New(text);
+    Toolkit::TextLabel label = Toolkit::TextLabel::New(ToDaliString(text));
     label.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, color);
-    label.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, alignment);
+    label.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, ToDaliString(alignment));
     label.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     label.SetProperty(Toolkit::TextLabel::Property::POINT_SIZE, fontSize);
     return label;
@@ -323,7 +329,7 @@ public:
   void OnWindowResized(Dali::Window windowHandle, Dali::Window::WindowSize windowSize)
   {
     DALI_LOG_RELEASE_INFO("Resize finish / %d x %d\n", windowSize.GetWidth(), windowSize.GetHeight());
-    Vector2 size = Vector2(windowSize.GetWidth(), windowSize.GetHeight()); // Get new size
+    Vector2 size = Vector2(windowSize.GetWidth(), windowSize.GetHeight()); // Get new ToDaliString(size
 
     // Change some window size relative properties.
     UIPanel.SetProperty(Actor::Property::SIZE, size * 0.8f);

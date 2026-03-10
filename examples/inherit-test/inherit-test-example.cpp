@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,13 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/integration-api/string-utils.h>
 #include <sstream>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -309,7 +315,7 @@ public:
     oss << "Key 7 : Change CurrentView's Position\n";
     oss << "Key 8 : Change CurrentView's Scale\n";
 
-    mTitle.SetProperty(TextLabel::Property::TEXT, oss.str());
+    mTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(oss.str()));
   }
 
 private:

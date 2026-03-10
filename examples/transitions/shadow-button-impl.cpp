@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,13 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali/devel-api/scripting/enum-helper.h>
 
+#include <dali/integration-api/string-utils.h>
 #include <cstdio>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali; // Needed for macros
 using namespace Dali::Toolkit;
@@ -389,7 +395,7 @@ void ShadowButton::ResetVisual(
   }
 }
 
-bool IsTransformProperty(const std::string& property)
+bool IsTransformProperty(const String& property)
 {
   const char* transformProperties[]    = {"size", "offset", "origin", "anchorPoint", "offsetPolicy", "sizePolicy"};
   const int   NUM_TRANSFORM_PROPERTIES = sizeof(transformProperties) / sizeof(const char*);
@@ -429,7 +435,7 @@ void ShadowButton::StoreTargetLayouts(TransitionData transitionData)
           Property::Value* property = animator.Find("property");
           if(property)
           {
-            std::string propertyString;
+            String propertyString;
             property->Get(propertyString);
             if(IsTransformProperty(propertyString))
             {

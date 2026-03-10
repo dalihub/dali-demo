@@ -25,9 +25,15 @@
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/integration-api/string-utils.h>
 #include <cstdio>
 #include <sstream>
 #include "beat-control.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 // Internal includes
 
@@ -83,7 +89,8 @@ void TransitionApplication::Create(Application& application)
 
   window.Add(contentLayout);
 
-  mTitle = TextLabel::New("Custom Control Transition Example");
+  mTitle = TextLabel::New();
+  mTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Custom Control Transition Example"));
   mTitle.SetProperty(Dali::Actor::Property::NAME, "Title");
   mTitle.SetStyleName("Title");
   mTitle.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
@@ -134,7 +141,8 @@ void TransitionApplication::Create(Application& application)
   actionButtonLayout.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
   actionButtonLayout.SetFitHeight(0);
 
-  TextLabel label = TextLabel::New("Action: ");
+  TextLabel label = TextLabel::New();
+  label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Action: "));
   label.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   label.SetStyleName("ActionLabel");
   actionButtonLayout.AddChild(label, TableView::CellPosition(0, 0));
@@ -322,13 +330,13 @@ void TransitionApplication::OnKeyEvent(const KeyEvent& keyEvent)
   {
     if(keyPressed == 0) // Is this the first down event?
     {
-      printf("Key pressed: %s %d\n", keyEvent.GetKeyName().c_str(), keyEvent.GetKeyCode());
+      printf("Key pressed: %s %d\n", keyEvent.GetKeyName().CStr(), keyEvent.GetKeyCode());
 
       if(IsKey(keyEvent, DALI_KEY_ESCAPE) || IsKey(keyEvent, DALI_KEY_BACK))
       {
         mApplication.Quit();
       }
-      else if(keyEvent.GetKeyName().compare("Return") == 0)
+      else if(keyEvent.GetKeyName() == "Return")
       {
       }
     }

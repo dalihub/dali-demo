@@ -16,7 +16,13 @@
  */
 
 #include "game-entity.h"
+#include <dali/integration-api/string-utils.h>
 #include "game-renderer.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 GameEntity::GameEntity(const char* name)
 {

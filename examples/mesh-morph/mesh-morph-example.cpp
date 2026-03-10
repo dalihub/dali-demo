@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,15 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/mesh-morph-frag.h"
 #include "generated/mesh-morph-vert.h"
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -262,7 +268,7 @@ public:
 
     // The Init signal is received once (only) during the Application lifetime
 
-    mShader   = Shader::New(SHADER_MESH_MORPH_VERT, SHADER_MESH_MORPH_FRAG);
+    mShader   = Shader::New(ToDaliStringView(SHADER_MESH_MORPH_VERT), ToDaliStringView(SHADER_MESH_MORPH_FRAG));
     mGeometry = CreateGeometry();
     mRenderer = Renderer::New(mGeometry, mShader);
 

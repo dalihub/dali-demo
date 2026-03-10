@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,13 @@
 #include "generated/animated-shapes-vert.h"
 #include "shared/view.h"
 
+#include <dali/integration-api/string-utils.h>
 #include <sstream>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -41,12 +47,12 @@ Shader CreateShader(unsigned int pointCount)
                  << "\n"
                  << SHADER_ANIMATED_SHAPES_FRAG;
 
-  Shader shader = Shader::New(vertexShader.str(), fragmentShader.str());
+  Shader shader = Shader::New(ToDaliStringView(vertexShader.str()), ToDaliStringView(fragmentShader.str()));
   for(unsigned int i(0); i < pointCount; ++i)
   {
     std::ostringstream propertyName;
     propertyName << "uPosition[" << i << "]";
-    shader.RegisterProperty(propertyName.str(), Vector3(0.0f, 0.0f, 0.0f));
+    shader.RegisterProperty(ToDaliString(propertyName.str()), Vector3(0.0f, 0.0f, 0.0f));
   }
 
   return shader;

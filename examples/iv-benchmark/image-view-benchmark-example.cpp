@@ -24,9 +24,15 @@
 
 #include <dali/devel-api/adaptor-framework/performance-logger.h>
 
+#include <dali/integration-api/string-utils.h>
 #include <chrono>
 #include <list>
 #include <thread>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;

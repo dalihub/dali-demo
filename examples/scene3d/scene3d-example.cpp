@@ -15,12 +15,18 @@
  *
  */
 #include "scene3d-example.h"
+#include <dali/integration-api/string-utils.h>
 #include <dirent.h>
 #include <algorithm>
 #include <cstring>
 #include <filesystem>
 #include <string_view>
 #include "scene3d-extension.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -71,7 +77,7 @@ StringVector ListFiles(
 
 TextLabel MakeLabel(std::string msg)
 {
-  TextLabel label = TextLabel::New("  " + msg);
+  TextLabel label = TextLabel::New(ToDaliString(std::string("  ") + msg));
   label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   label.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
   label.SetProperty(TextLabel::Property::PIXEL_SIZE, ITEM_HEIGHT * 4 / 7);
@@ -135,7 +141,7 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Dali::Ani
 {
   ResourceBundle::PathProvider pathProvider = [](ResourceType::Value type)
   {
-    return Application::GetResourcePath() + RESOURCE_TYPE_DIRS[type];
+    return ToStdString(Application::GetResourcePath()) + RESOURCE_TYPE_DIRS[type];
   };
 
   auto path = pathProvider(ResourceType::Mesh) + sceneName;
@@ -159,7 +165,7 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Dali::Ani
     cameraParameters,
     lights};
 
-  Dali::Scene3D::Loader::ModelLoader modelLoader(path, pathProvider(ResourceType::Mesh) + "/", output);
+  Dali::Scene3D::Loader::ModelLoader modelLoader(ToDaliString(path), ToDaliString(pathProvider(ResourceType::Mesh) + "/"), output);
   modelLoader.LoadModel(pathProvider);
 
   if(cameraParameters.empty())
@@ -263,7 +269,7 @@ Scene3DExample::~Scene3DExample() = default;
 void Scene3DExample::OnInit(Application& app)
 {
   // get scenes
-  auto resPath    = Application::GetResourcePath();
+  auto resPath    = ToStdString(Application::GetResourcePath());
   auto scenePath  = resPath + RESOURCE_TYPE_DIRS[ResourceType::Mesh];
   auto sceneNames = ListFiles(scenePath, [](const char* name)
   {

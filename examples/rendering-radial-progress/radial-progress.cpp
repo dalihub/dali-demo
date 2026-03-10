@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,16 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/radial-progress-basic-frag.h"
 #include "generated/radial-progress-basic-vert.h"
 #include "generated/radial-progress-textured-frag.h"
 #include "generated/radial-progress-textured-vert.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -129,7 +135,7 @@ public:
     geometry.AddVertexBuffer(vertexBuffer);
     geometry.SetType(Geometry::TRIANGLE_FAN);
 
-    Shader   shader   = Shader::New(SHADER_RADIAL_PROGRESS_BASIC_VERT, SHADER_RADIAL_PROGRESS_BASIC_FRAG);
+    Shader   shader   = Shader::New(ToDaliStringView(SHADER_RADIAL_PROGRESS_BASIC_VERT), ToDaliStringView(SHADER_RADIAL_PROGRESS_BASIC_FRAG));
     Renderer renderer = Renderer::New(geometry, shader);
 
     // Setting stencil data. We don't want to render to the color buffer so
@@ -167,7 +173,7 @@ public:
   {
     // Create shader & geometry needed by Renderer
 
-    Shader shader = Shader::New(SHADER_RADIAL_PROGRESS_TEXTURED_VERT, SHADER_RADIAL_PROGRESS_TEXTURED_FRAG);
+    Shader shader = Shader::New(ToDaliStringView(SHADER_RADIAL_PROGRESS_TEXTURED_VERT), ToDaliStringView(SHADER_RADIAL_PROGRESS_TEXTURED_FRAG));
 
     Property::Map vertexFormat;
     vertexFormat["aPosition"] = Property::VECTOR2;

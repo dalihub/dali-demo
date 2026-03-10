@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,12 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/public-api/particle-system/particle-domain.h>
 #include <dali-toolkit/public-api/particle-system/particle-renderer.h>
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/common/vector-wrapper.h>
+
 #include <functional>
+
+using Dali::Integration::ToDaliString;
 
 #ifndef DEMO_IMAGE_DIR
 #define DEMO_IMAGE_DIR ""
@@ -81,7 +85,7 @@ Dali::Toolkit::ParticleSystem::ParticleEmitter ParticleEffect::CreateEffectEmitt
     // Create texture
     std::string filename(DEMO_IMAGE_DIR);
     filename += params.strTexture;
-    Dali::PixelData pixelData = Dali::Toolkit::SyncImageLoader::Load(filename);
+    Dali::PixelData pixelData = Dali::Toolkit::SyncImageLoader::Load(ToDaliString(filename));
     auto            texture   = Texture::New(Dali::TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight());
     texture.Upload(pixelData);
     renderer.SetTexture(texture);
