@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 #include <dali/devel-api/adaptor-framework/image-loading.h>
-#include <dali/devel-api/adaptor-framework/native-image-source-devel.h>
+#include <dali/devel-api/adaptor-framework/native-image-devel.h>
 #include <dali/devel-api/adaptor-framework/pixel-buffer.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/pixel-data-integ.h>
@@ -94,7 +94,7 @@ public:
       return; // Exit if image loading fails
     }
 
-    // Ensure width and height are powers of two for NativeImageSource (depending on hardware e.g. the RPI4)
+    // Ensure width and height are powers of two for NativeImage (depending on hardware e.g. the RPI4)
     uint32_t nativeImageWidth  = NextPowerOfTwo(pixelBuffer.GetWidth());
     uint32_t nativeImageHeight = NextPowerOfTwo(pixelBuffer.GetHeight());
 
@@ -102,8 +102,8 @@ public:
 
     PixelData pixelData = Devel::PixelBuffer::Convert(pixelBuffer);
 
-    // Create native image source with power-of-two dimensions
-    mNativeImageSrc = Dali::NativeImageSource::New(nativeImageWidth, nativeImageHeight, Dali::NativeImageSource::COLOR_DEPTH_DEFAULT);
+    // Create native image with power-of-two dimensions
+    mNativeImageSrc = Dali::NativeImage::New(nativeImageWidth, nativeImageHeight, Dali::NativeImage::COLOR_DEPTH_DEFAULT);
 
     mOutputWidth  = nativeImageWidth;
     mOutputHeight = nativeImageHeight;
@@ -120,9 +120,9 @@ public:
     mNativeImageSrc->SetSource(source);
 
     auto pixelDataBuffer = Dali::Integration::GetPixelDataBuffer(pixelData);
-    if(!Dali::DevelNativeImageSource::SetPixels(*mNativeImageSrc, pixelDataBuffer.buffer, pixelData.GetPixelFormat()))
+    if(!Dali::DevelNativeImage::SetPixels(*mNativeImageSrc, pixelDataBuffer.buffer, pixelData.GetPixelFormat()))
     {
-      DALI_LOG_ERROR("Failed to set the pixel buffer to NativeImageSource.\n");
+      DALI_LOG_ERROR("Failed to set the pixel buffer to NativeImage.\n");
       return;
     }
 
@@ -170,7 +170,7 @@ public:
 private:
   Application& mApplication;
 
-  Dali::NativeImageSourcePtr mNativeImageSrc;
+  Dali::NativeImagePtr mNativeImageSrc;
 
   size_t   mOutputWidth{0u};
   size_t   mOutputHeight{0u};

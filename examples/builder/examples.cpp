@@ -15,16 +15,13 @@
  *
  */
 
-//------------------------------------------------------------------------------
-//
-//
-//------------------------------------------------------------------------------
-
+// EXTERNAL INCLUDES
+#include <dali/devel-api/adaptor-framework/file-loader.h>
+#include <dali/integration-api/debug.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/builder/builder.h>
 #include <dali-toolkit/devel-api/builder/json-parser.h>
 #include <dali-toolkit/devel-api/builder/tree-node.h>
-#include <dali-toolkit/devel-api/controls/navigation-view/navigation-view.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali/dali.h>
 
@@ -42,9 +39,9 @@
 #include <ctime>
 #include "sys/stat.h"
 
-#include <dali/devel-api/adaptor-framework/file-loader.h>
-#include <dali/integration-api/debug.h>
-#include "shared/view.h"
+// INTERNAL INCLUDES
+#include <controls/navigation-view/navigation-view.h>
+#include <shared/view.h>
 
 #define TOKEN_STRING(x) #x
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@
 #include <dali/dali.h>
 #include <cstring>
 
-#include <dali/devel-api/adaptor-framework/native-image-source-devel.h>
-#include <dali/devel-api/adaptor-framework/native-image-source-queue.h>
+#include <dali/devel-api/adaptor-framework/native-image-devel.h>
+#include <dali/devel-api/adaptor-framework/native-image-queue.h>
 #include <dali/devel-api/rendering/renderer-devel.h>
 #include <dali/devel-api/threading/mutex.h>
 #include <dali/devel-api/threading/thread.h>
@@ -36,7 +36,7 @@ using namespace Dali::Toolkit;
 
 namespace
 {
-// The width and height should be powers of two for NativeImageSource and NativeImageSourceQueue
+// The width and height should be powers of two for NativeImage and NativeImageQueue
 // (depending on hardware e.g. the RPI4)
 constexpr uint32_t NATIVE_IMAGE_WIDTH  = 128;
 constexpr uint32_t NATIVE_IMAGE_HEIGHT = 256;
@@ -154,7 +154,7 @@ private:
 class NativeImageSourceRenderThread : public NativeImageRenderThread
 {
 public:
-  NativeImageSourceRenderThread(NativeImageSourcePtr nativeSource)
+  NativeImageSourceRenderThread(NativeImagePtr nativeSource)
   : NativeImageRenderThread(),
     mNativeSource(nativeSource),
     mOffset(Dali::Random::Range(0.0f, 1.0f))
@@ -167,14 +167,14 @@ private:
     if(mNativeSource)
     {
       uint32_t width, height, strideBytes;
-      uint8_t* buffer = DevelNativeImageSource::AcquireBuffer(*mNativeSource, width, height, strideBytes);
+      uint8_t* buffer = DevelNativeImage::AcquireBuffer(*mNativeSource, width, height, strideBytes);
 
       if(buffer != nullptr)
       {
         FillRainbowBuffer(buffer, width, height, strideBytes, mOffset);
 
         // Don't forget to call ReleaseBuffer
-        DevelNativeImageSource::ReleaseBuffer(*mNativeSource, Rect<uint32_t>());
+        DevelNativeImage::ReleaseBuffer(*mNativeSource, Rect<uint32_t>());
       }
       else
       {
@@ -182,20 +182,20 @@ private:
       }
 
       // DevNote : Since Acquire + Release make render thread block.
-      //           let we just finalize NativeImageSource thread now.
+      //           let we just finalize NativeImage thread now.
       Finalize();
     }
   }
 
 private:
-  NativeImageSourcePtr mNativeSource;
-  float                mOffset;
+  NativeImagePtr mNativeSource;
+  float          mOffset;
 };
 
-class NativeImageSourceQueueRenderThread : public NativeImageRenderThread
+class NativeImageQueueRenderThread : public NativeImageRenderThread
 {
 public:
-  NativeImageSourceQueueRenderThread(NativeImageSourceQueuePtr nativeQueue)
+  NativeImageQueueRenderThread(NativeImageQueuePtr nativeQueue)
   : NativeImageRenderThread(),
     mNativeQueue(nativeQueue)
   {
@@ -237,17 +237,17 @@ private:
   }
 
 private:
-  NativeImageSourceQueuePtr mNativeQueue;
+  NativeImageQueuePtr mNativeQueue;
 };
 
 } // namespace
 
-// This example shows how to create and use a NativeImageSourceQueueController as the target of the render task.
+// This example shows how to create and use a NativeImageQueueController as the target of the render task.
 //
-class NativeImageSourceQueueController : public ConnectionTracker
+class NativeImageQueueController : public ConnectionTracker
 {
 public:
-  NativeImageSourceQueueController(Application& application)
+  NativeImageQueueController(Application& application)
   : mApplication(application),
     mNativeSource(),
     mNativeQueue(),
@@ -257,10 +257,10 @@ public:
     mNativeSourceQueueSupported(false)
   {
     // Connect to the Application's Init signal
-    mApplication.InitSignal().Connect(this, &NativeImageSourceQueueController::Create);
+    mApplication.InitSignal().Connect(this, &NativeImageQueueController::Create);
   }
 
-  ~NativeImageSourceQueueController()
+  ~NativeImageQueueController()
   {
     TerminateRenderThread();
   }
@@ -272,12 +272,12 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
 
-    window.KeyEventSignal().Connect(this, &NativeImageSourceQueueController::OnKeyEvent);
+    window.KeyEventSignal().Connect(this, &NativeImageQueueController::OnKeyEvent);
 
-    mNativeSource = NativeImageSource::New(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT, NativeImageSource::ColorDepth::COLOR_DEPTH_32);
+    mNativeSource = NativeImage::New(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT, NativeImage::ColorDepth::COLOR_DEPTH_32);
 
-    // Check whether current platform support NativeImageSource or not.
-    if(mNativeSource && !mNativeSource->GetNativeImageSource().Empty())
+    // Check whether current platform support NativeImage or not.
+    if(mNativeSource && !mNativeSource->GetNativeImage().Empty())
     {
       mNativeSourceSupported = true;
 
@@ -285,16 +285,16 @@ public:
       mSourceRenderThreadPtr->Start();
     }
 
-    mNativeQueue = NativeImageSourceQueue::New(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT, NativeImageSourceQueue::ColorFormat::BGRA8888);
+    mNativeQueue = NativeImageQueue::New(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT, NativeImageQueue::ColorFormat::BGRA8888);
 
-    mNativeQueue->SetQueueUsageHint(Dali::NativeImageSourceQueue::QueueUsageType::ENQUEUE_DEQUEUE);
+    mNativeQueue->SetQueueUsageHint(Dali::NativeImageQueue::QueueUsageType::ENQUEUE_DEQUEUE);
 
-    // Check whether current platform support NativeImageSourceQueue or not.
-    if(mNativeQueue && !mNativeQueue->GetNativeImageSourceQueue().Empty())
+    // Check whether current platform support NativeImageQueue or not.
+    if(mNativeQueue && !mNativeQueue->GetNativeImageQueue().Empty())
     {
       mNativeSourceQueueSupported = true;
 
-      mQueueRenderThreadPtr = new NativeImageSourceQueueRenderThread(mNativeQueue);
+      mQueueRenderThreadPtr = new NativeImageQueueRenderThread(mNativeQueue);
       mQueueRenderThreadPtr->Start();
     }
 
@@ -302,7 +302,7 @@ public:
     supportedLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     supportedLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     supportedLabel.SetProperty(TextLabel::Property::TEXT,
-                               std::string("Support NativeImageSource ") + std::string(mNativeSourceSupported ? "T" : "F") + std::string(" Queue ") + std::string(mNativeSourceQueueSupported ? "T" : "F"));
+                               std::string("Support NativeImage ") + std::string(mNativeSourceSupported ? "T" : "F") + std::string(" Queue ") + std::string(mNativeSourceQueueSupported ? "T" : "F"));
     window.Add(supportedLabel);
 
     if(mNativeSource)
@@ -410,11 +410,11 @@ public:
 private:
   Application& mApplication;
 
-  NativeImageSourcePtr      mNativeSource;
-  NativeImageSourceQueuePtr mNativeQueue;
+  NativeImagePtr      mNativeSource;
+  NativeImageQueuePtr mNativeQueue;
 
-  NativeImageSourceRenderThread*      mSourceRenderThreadPtr;
-  NativeImageSourceQueueRenderThread* mQueueRenderThreadPtr;
+  NativeImageRenderThread*      mSourceRenderThreadPtr;
+  NativeImageQueueRenderThread* mQueueRenderThreadPtr;
 
   Control mBlurView;
 
@@ -424,8 +424,8 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application                      application = Application::New(&argc, &argv);
-  NativeImageSourceQueueController test(application);
+  Application                application = Application::New(&argc, &argv);
+  NativeImageQueueController test(application);
   application.MainLoop();
   return 0;
 }
