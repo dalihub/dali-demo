@@ -24,9 +24,7 @@
 // INTERNAL INCLUDES
 #include "../dali-demo-controls-common.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 /**
  * @brief PageFactory is an abstract interface for providing textures to PageTurnView
@@ -75,7 +73,5 @@ public:
   }
 };
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 #endif // DALI_DEMO_CONTROLS_PAGE_FACTORY_H

@@ -25,15 +25,13 @@
 #include "controls/alignment/alignment.h"
 #include "controls/dali-demo-controls-common.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 namespace Internal DALI_INTERNAL
 {
 // Forward declarations
 class ToolBar;
-} //namespace Internal DALI_INTERNAL
+} // namespace DALI_INTERNAL
 
 /**
  * Provides a tool bar where other controls (Dali::Actor) could be placed.
@@ -42,10 +40,10 @@ class ToolBar;
  * is not forbidden, it adds controls on the left group with a size of 10% of the total tool bar size.
  * Dali::Actor::Remove() method does nothing.
  */
-class DALI_DEMO_CONTROLS_API ToolBar : public Control
+class DALI_DEMO_CONTROLS_API ToolBar : public Toolkit::Control
 {
 public:
-  static const Toolkit::Alignment::Padding DEFAULT_PADDING; ///< Default padding space between controls. By default all values are set to 0.
+  static const Demo::Alignment::Padding DEFAULT_PADDING; ///< Default padding space between controls. By default all values are set to 0.
 
 public:
   /**
@@ -107,10 +105,10 @@ public:
    * @pre The alignment needs to be horizontal.
    * @param control An Actor with the additional control.
    * @param relativeSize Control's size as a percentage of the tool bar width.
-   * @param alignment Where to insert controls. Possible values are Toolkit::Alignment::Left, Toolkit::Alignment::Center or Toolkit::Alignment::Right.
+   * @param alignment Where to insert controls. Possible values are Demo::Alignment::Left, Demo::Alignment::Center or Demo::Alignment::Right.
    * @param padding Padding values used for the added control (left, right, top, bottom). By default, no padding is added.
    */
-  void AddControl(Actor control, float relativeSize, Toolkit::Alignment::Type alignment, const Toolkit::Alignment::Padding& padding = DEFAULT_PADDING);
+  void AddControl(Actor control, float relativeSize, Demo::Alignment::Type alignment, const Demo::Alignment::Padding& padding = DEFAULT_PADDING);
 
   /**
    * Removes a control from the tool bar.
@@ -121,7 +119,7 @@ public:
 
 public: // Not intended for application developers
   /**
-   * Creates a handle using the Toolkit::Internal implementation.
+   * Creates a handle using the Demo::Internal implementation.
    * @param[in]  implementation  The Control implementation.
    */
   DALI_INTERNAL ToolBar(Internal::ToolBar& implementation);
@@ -133,8 +131,6 @@ public: // Not intended for application developers
   explicit DALI_INTERNAL ToolBar(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_TOOL_BAR_H

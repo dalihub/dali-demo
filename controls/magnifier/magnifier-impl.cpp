@@ -32,26 +32,22 @@
 #include <dali-toolkit/public-api/visuals/border-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 namespace // unnamed namespace
 {
 Dali::BaseHandle Create()
 {
-  return Toolkit::Magnifier::New();
+  return Demo::Magnifier::New();
 }
 
 // clang-format off
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::Magnifier, Toolkit::Control, Create)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::Magnifier, Toolkit::Control, Create)
 
-DALI_PROPERTY_REGISTRATION(Toolkit, Magnifier, "frameVisibility",      BOOLEAN, FRAME_VISIBILITY    )
-DALI_PROPERTY_REGISTRATION(Toolkit, Magnifier, "magnificationFactor",  FLOAT,   MAGNIFICATION_FACTOR)
+DALI_PROPERTY_REGISTRATION(Demo, Magnifier, "frameVisibility",      BOOLEAN, FRAME_VISIBILITY    )
+DALI_PROPERTY_REGISTRATION(Demo, Magnifier, "magnificationFactor",  FLOAT,   MAGNIFICATION_FACTOR)
 
-DALI_ANIMATABLE_PROPERTY_REGISTRATION(Toolkit, Magnifier, "sourcePosition",  VECTOR3, SOURCE_POSITION)
+DALI_ANIMATABLE_PROPERTY_REGISTRATION(Demo, Magnifier, "sourcePosition",  VECTOR3, SOURCE_POSITION)
 
 DALI_TYPE_REGISTRATION_END()
 // clang-format on
@@ -121,13 +117,13 @@ struct RenderTaskViewportSizeConstraint
 // Magnifier
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-Dali::Toolkit::Magnifier Magnifier::New()
+Dali::Demo::Magnifier Magnifier::New()
 {
   // Create the implementation
   MagnifierPtr magnifier(new Magnifier());
 
   // Pass ownership to CustomActor via derived handle
-  Dali::Toolkit::Magnifier handle(*magnifier);
+  Dali::Demo::Magnifier handle(*magnifier);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -137,7 +133,7 @@ Dali::Toolkit::Magnifier Magnifier::New()
 }
 
 Magnifier::Magnifier()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mDefaultCameraDistance(1000.f),
   mActorSize(Vector3::ZERO),
   mMagnificationFactor(1.0f)
@@ -172,7 +168,7 @@ void Magnifier::OnInitialize()
   Stage().GetCurrent().Add(mSourceActor);
   mSourceActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   Constraint constraint = Constraint::New<Vector3>(mSourceActor, Actor::Property::POSITION, EqualToConstraint());
-  constraint.AddSource(Source(self, Toolkit::Magnifier::Property::SOURCE_POSITION));
+  constraint.AddSource(Source(self, Demo::Magnifier::Property::SOURCE_POSITION));
   constraint.Apply();
 
   // create the render task this will render content on top of everything
@@ -219,7 +215,7 @@ void Magnifier::OnInitialize()
   constraint.AddSource(Source(self, Actor::Property::WORLD_SCALE));
   constraint.Apply();
 
-  self.SetProperty(DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
 }
 
 void Magnifier::InitializeRenderTask()
@@ -290,7 +286,7 @@ void Magnifier::OnSizeSet(const Vector3& targetSize)
   mActorSize = targetSize;
   Update();
 
-  Control::OnSizeSet(targetSize);
+  Toolkit::Internal::Control::OnSizeSet(targetSize);
 }
 
 float Magnifier::GetMagnificationFactor() const
@@ -335,19 +331,19 @@ void Magnifier::Update()
 
 void Magnifier::SetProperty(BaseObject* object, Property::Index index, const Property::Value& value)
 {
-  Toolkit::Magnifier magnifier = Toolkit::Magnifier::DownCast(Dali::BaseHandle(object));
+  Demo::Magnifier magnifier = Demo::Magnifier::DownCast(Dali::BaseHandle(object));
 
   if(magnifier)
   {
     Magnifier& magnifierImpl(GetImpl(magnifier));
     switch(index)
     {
-      case Toolkit::Magnifier::Property::FRAME_VISIBILITY:
+      case Demo::Magnifier::Property::FRAME_VISIBILITY:
       {
         magnifierImpl.SetFrameVisibility(value.Get<bool>());
         break;
       }
-      case Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR:
+      case Demo::Magnifier::Property::MAGNIFICATION_FACTOR:
       {
         magnifierImpl.SetMagnificationFactor(value.Get<float>());
         break;
@@ -360,19 +356,19 @@ Property::Value Magnifier::GetProperty(BaseObject* object, Property::Index index
 {
   Property::Value value;
 
-  Toolkit::Magnifier magnifier = Toolkit::Magnifier::DownCast(Dali::BaseHandle(object));
+  Demo::Magnifier magnifier = Demo::Magnifier::DownCast(Dali::BaseHandle(object));
 
   if(magnifier)
   {
     Magnifier& magnifierImpl(GetImpl(magnifier));
     switch(index)
     {
-      case Toolkit::Magnifier::Property::FRAME_VISIBILITY:
+      case Demo::Magnifier::Property::FRAME_VISIBILITY:
       {
         value = magnifierImpl.GetFrameVisibility();
         break;
       }
-      case Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR:
+      case Demo::Magnifier::Property::MAGNIFICATION_FACTOR:
       {
         value = magnifierImpl.GetMagnificationFactor();
         break;
@@ -383,8 +379,4 @@ Property::Value Magnifier::GetProperty(BaseObject* object, Property::Index index
   return value;
 }
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal

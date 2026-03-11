@@ -23,7 +23,7 @@
 #include <dali/public-api/animation/animation.h>
 #include "image-channel-control.h"
 
-namespace Demo
+namespace Dali::Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
@@ -133,6 +133,6 @@ inline const Internal::ImageChannelControl& GetImpl(const Demo::ImageChannelCont
   return static_cast<const Internal::ImageChannelControl&>(object);
 }
 
-} // namespace Demo
+} // namespace Dali::Demo
 
 #endif //  DALI_DEMO_IMAGE_CHANNEL_CONTROL_IMPL_H

@@ -26,11 +26,11 @@
 #include "image-channel-control.h"
 
 // Internal includes
-
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 
-namespace Demo
+namespace Dali::Demo
 {
 class StylingApplication : public ConnectionTracker
 {
@@ -47,20 +47,20 @@ public:
   // Create the GUI components
   Actor              CreateContentPane();
   Actor              CreateResizableContentPane();
-  Toolkit::Popup     CreateResetPopup();
-  Toolkit::TextLabel CreateTitle(std::string title);
+  Popup       CreateResetPopup();
+  TextLabel   CreateTitle(std::string title);
 
   // Key event handler
   void OnKeyEvent(const KeyEvent& event);
 
   // Button event handlers
-  bool OnButtonStateChange(Toolkit::Button button);
-  bool OnCheckButtonChange(Toolkit::Button button);
-  bool OnResetClicked(Toolkit::Button button);
-  bool OnThemeButtonClicked(Toolkit::Button button);
+  bool OnButtonStateChange(Button button);
+  bool OnCheckButtonChange(Button button);
+  bool OnResetClicked(Button button);
+  bool OnThemeButtonClicked(Button button);
 
   // Slider event handler
-  bool OnSliderChanged(Toolkit::Slider slider, float value);
+  bool OnSliderChanged(Slider slider, float value);
 
   // Popup event handlers
   void HidePopup();
@@ -94,6 +94,6 @@ private:
   PanGestureDetector  mPanGestureDetector;
 };
 
-} // Namespace Demo
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_STYLING_APPLICATION_H

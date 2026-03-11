@@ -50,10 +50,10 @@ const ViewStyle DEFAULT_VIEW_STYLE(0.1f, 0.7f, 80.f, 4.f);
 const char* DEFAULT_TEXT_STYLE_FONT_FAMILY("HelveticaNue");
 const float DEFAULT_TEXT_STYLE_POINT_SIZE(8.0f);
 
-const Dali::Toolkit::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
-const Dali::Toolkit::Alignment::Padding DEFAULT_MODE_SWITCH_PADDING(8.0f, 8.0f, 8.0f, 8.0f);
+const Dali::Demo::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 12.0f);
+const Dali::Demo::Alignment::Padding DEFAULT_MODE_SWITCH_PADDING(8.0f, 8.0f, 8.0f, 8.0f);
 
-Dali::Layer CreateToolbar(Dali::Toolkit::ToolBar& toolBar,
+Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
                           const std::string&      toolbarImagePath,
                           const std::string&      title,
                           const ViewStyle&        style)
@@ -69,7 +69,7 @@ Dali::Layer CreateToolbar(Dali::Toolkit::ToolBar& toolBar,
   toolBarLayer.RaiseToTop();
 
   // Tool bar
-  toolBar = Dali::Toolkit::ToolBar::New();
+  toolBar = Dali::Demo::ToolBar::New();
   toolBar.SetProperty(Dali::Actor::Property::NAME, "TOOLBAR");
   Dali::Property::Map background;
   background["url"] = toolbarImagePath;
@@ -94,7 +94,7 @@ Dali::Layer CreateToolbar(Dali::Toolkit::ToolBar& toolBar,
 
     // Add title to the tool bar.
     const float padding(style.mToolBarPadding);
-    toolBar.AddControl(label, style.mToolBarTitlePercentage, Dali::Toolkit::Alignment::HORIZONTAL_CENTER, Dali::Toolkit::Alignment::Padding(padding, padding, padding, padding));
+    toolBar.AddControl(label, style.mToolBarTitlePercentage, Dali::Demo::Alignment::HORIZONTAL_CENTER, Dali::Demo::Alignment::Padding(padding, padding, padding, padding));
   }
 
   return toolBarLayer;
@@ -102,7 +102,7 @@ Dali::Layer CreateToolbar(Dali::Toolkit::ToolBar& toolBar,
 
 Dali::Layer CreateView(Dali::Application&      application,
                        Dali::Toolkit::Control& view,
-                       Dali::Toolkit::ToolBar& toolBar,
+                       Dali::Demo::ToolBar&    toolBar,
                        const std::string&      backgroundImagePath,
                        const std::string&      toolbarImagePath,
                        const std::string&      title,

@@ -35,8 +35,9 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 
-namespace Demo
+namespace Dali::Demo
 {
 const char* StylingApplication::DEMO_THEME_ONE_PATH(DEMO_STYLE_DIR "style-example-theme-one.json");
 const char* StylingApplication::DEMO_THEME_TWO_PATH(DEMO_STYLE_DIR "style-example-theme-two.json");
@@ -694,4 +695,4 @@ void StylingApplication::OnKeyEvent(const KeyEvent& keyEvent)
   }
 }
 
-} // namespace Demo
+} // namespace Dali::Demo

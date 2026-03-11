@@ -19,7 +19,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 
-namespace Demo
+namespace Dali::Demo
 {
 namespace Internal
 {
@@ -102,6 +102,6 @@ public: // Not for public use
   ExpandingButtons(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Demo
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_EXPANDING_BUTTONS_CONTROL_H

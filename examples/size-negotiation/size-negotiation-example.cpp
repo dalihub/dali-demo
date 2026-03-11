@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -127,7 +127,7 @@ public:
 
     // Add title to the tool bar.
     const float padding(DemoHelper::DEFAULT_VIEW_STYLE.mToolBarPadding);
-    mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER, Toolkit::Alignment::Padding(padding, padding, padding, padding));
+    mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Demo::Alignment::HORIZONTAL_CENTER, Demo::Alignment::Padding(padding, padding, padding, padding));
 
     mItemView = Toolkit::ItemView::New(*this);
     mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -803,7 +803,7 @@ public: // From ItemFactory
 private:
   Application&     mApplication;
   Toolkit::Control mView;         ///< The View instance.
-  Toolkit::ToolBar mToolBar;      ///< The View's Toolbar.
+  Demo::ToolBar    mToolBar;      ///< The View's Toolbar.
   Layer            mContentLayer; ///< Content layer.
 
   Toolkit::TextLabel mTitleActor; ///< Title text.

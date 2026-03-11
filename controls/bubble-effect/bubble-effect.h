@@ -26,7 +26,7 @@
 #include <controls/shaders/bubble-effect-frag.h>
 #include <controls/shaders/bubble-effect-vert.h>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 /**
  * Create the shader to be used by the renderer
@@ -43,6 +43,6 @@ inline Shader CreateBubbleShader(unsigned int numBubble)
   return shader;
 }
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_BUBBLE_EFFECT_H

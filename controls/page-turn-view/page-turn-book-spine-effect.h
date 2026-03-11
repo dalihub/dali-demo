@@ -25,11 +25,7 @@
 #include <controls/shaders/page-turn-book-spine-effect-frag.h>
 #include <controls/shaders/page-turn-book-spine-effect-vert.h>
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 /**
  * @brief Creates a new PageTurnBookSpineEffect
@@ -62,10 +58,5 @@ inline Property::Map CreatePageTurnBookSpineEffect()
   return map;
 }
 
-} //namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
-
+} // namespace Dali::Demo::Internal
 #endif // DALI_DEMO_CONTROLS_PAGE_TURN_BOOK_SPINE_EFFECT_H

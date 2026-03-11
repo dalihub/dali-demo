@@ -25,9 +25,7 @@
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -40,7 +38,7 @@ class EffectsView;
  *
  * Example usage: Applying an emboss effect
  * ...
- * EffectsView effectsView = EffectsView::New( Toolkit::EffectsView::EMBOSS );
+ * EffectsView effectsView = EffectsView::New( Demo::EffectsView::EMBOSS );
  *
  * // set position and format
  * effectsView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
@@ -58,7 +56,7 @@ class EffectsView;
  * // optionally set a clear color
  * effectsView.SetBackgroundColor( Vector4( 0.0f, 0.0f, 0.0f, 0.0f ) );
  */
-class DALI_DEMO_CONTROLS_API EffectsView : public Control
+class DALI_DEMO_CONTROLS_API EffectsView : public Toolkit::Control
 {
 public:
   enum EffectType
@@ -73,8 +71,8 @@ public:
    */
   enum PropertyRange
   {
-    PROPERTY_START_INDEX = Control::CONTROL_PROPERTY_END_INDEX + 1, ///< @SINCE_1_0.0
-    PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000,             ///< Reserve property indices @SINCE_1_0.0
+    PROPERTY_START_INDEX = Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1, ///< @SINCE_1_0.0
+    PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000,                      ///< Reserve property indices @SINCE_1_0.0
 
     ANIMATABLE_PROPERTY_START_INDEX = ANIMATABLE_PROPERTY_REGISTRATION_START_INDEX,       ///< @SINCE_1_1.18
     ANIMATABLE_PROPERTY_END_INDEX   = ANIMATABLE_PROPERTY_REGISTRATION_START_INDEX + 1000 ///< Reserve animatable property indices, @SINCE_1_1.18
@@ -190,7 +188,7 @@ public:
 
 public: // Not intended for application developers
   /**
-   * Creates a handle using the Toolkit::Internal implementation.
+   * Creates a handle using the Demo::Internal implementation.
    * @param[in]  implementation  The Control implementation.
    */
   DALI_INTERNAL EffectsView(Internal::EffectsView& implementation);
@@ -203,8 +201,6 @@ public: // Not intended for application developers
 
 }; // class EffectsView
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_EFFECTS_VIEW_H

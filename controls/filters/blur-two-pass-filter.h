@@ -24,7 +24,7 @@
 // INTERNAL INCLUDES
 #include <controls/filters/image-filter.h>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 /**
  * A two pass blur filter, pass one performs a horizontal blur and pass two performs a
@@ -44,16 +44,16 @@ public:
   virtual ~BlurTwoPassFilter();
 
 public: // From ImageFilter
-  /// @copydoc Dali::Toolkit::Internal::ImageFilter::Enable
+  /// @copydoc Dali::Demo::Internal::ImageFilter::Enable
   void Enable() override;
 
-  /// @copydoc Dali::Toolkit::Internal::ImageFilter::Disable
+  /// @copydoc Dali::Demo::Internal::ImageFilter::Disable
   void Disable() override;
 
-  /// @copydoc Dali::Toolkit::Internal::ImageFilter::Refresh
+  /// @copydoc Dali::Demo::Internal::ImageFilter::Refresh
   void Refresh() override;
 
-  /// @copydoc Dali::Toolkit::Internal::ImageFilter::SetSize
+  /// @copydoc Dali::Demo::Internal::ImageFilter::SetSize
   void SetSize(const Vector2& size) override;
 
   /**
@@ -100,6 +100,6 @@ private: // Attributes
 
 }; // class BlurTwoPassFilter
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_BLUR_TWO_PASS_FILTER_H

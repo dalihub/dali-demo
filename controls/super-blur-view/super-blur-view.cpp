@@ -21,9 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/super-blur-view/super-blur-view-impl.h>
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 SuperBlurView::SuperBlurView()
 {
@@ -48,16 +46,16 @@ SuperBlurView::~SuperBlurView()
 
 SuperBlurView SuperBlurView::DownCast(BaseHandle handle)
 {
-  return Control::DownCast<SuperBlurView, Internal::SuperBlurView>(handle);
+  return Toolkit::Control::DownCast<SuperBlurView, Internal::SuperBlurView>(handle);
 }
 
 SuperBlurView::SuperBlurView(Internal::SuperBlurView& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
 SuperBlurView::SuperBlurView(Dali::Internal::CustomActor* internal)
-: Control(internal)
+: Toolkit::Control(internal)
 {
   VerifyCustomActorPointer<Internal::SuperBlurView>(internal);
 }
@@ -92,6 +90,4 @@ Texture SuperBlurView::GetBlurredTexture(unsigned int level)
   return GetImpl(*this).GetBlurredTexture(level);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo

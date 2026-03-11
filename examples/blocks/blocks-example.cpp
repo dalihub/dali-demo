@@ -251,7 +251,7 @@ public:
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.
-    Toolkit::ToolBar toolBar;
+    Demo::ToolBar toolBar;
     mContentLayer = DemoHelper::CreateView(application,
                                            mView,
                                            toolBar,
@@ -260,7 +260,7 @@ public:
                                            APPLICATION_TITLE);
 
     // Add an extra space on the right to center the title text.
-    toolBar.AddControl(Actor::New(), DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT);
+    toolBar.AddControl(Actor::New(), DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT);
 
     // Create the content layer, which is where game actors appear.
     AddContentLayer();

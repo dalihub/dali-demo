@@ -33,7 +33,7 @@
 // INTERNAL INCLUDES
 #include <controls/bubble-effect/bubble-emitter.h>
 
-namespace Dali::Toolkit
+namespace Dali::Demo
 {
 namespace Internal
 {
@@ -42,7 +42,7 @@ class BubbleRenderer;
 /**
  * BubbleEmitter implementation class.
  */
-class BubbleEmitter : public Control
+class BubbleEmitter : public Toolkit::Internal::Control
 {
 public:
   /**
@@ -51,45 +51,45 @@ public:
   ~BubbleEmitter();
 
   /**
-   * @copydoc Toolkit::BubbleEmitter::New
+   * @copydoc Demo::BubbleEmitter::New
    */
-  static Toolkit::BubbleEmitter New(const Vector2& winSize,
-                                    Texture        shapeTexture,
-                                    unsigned int   maximumNumberOfBubble,
-                                    const Vector2& bubbleSizeRange);
+  static Demo::BubbleEmitter New(const Vector2& winSize,
+                                 Texture        shapeTexture,
+                                 unsigned int   maximumNumberOfBubble,
+                                 const Vector2& bubbleSizeRange);
 
   /**
-   * @copydoc Toolkit::BubbleEmitter::GetRootActor
+   * @copydoc Demo::BubbleEmitter::GetRootActor
    */
   Actor GetRootActor();
 
   /**
-   * @copydoc Toolkit::BubbleEmitter::SetBackground
+   * @copydoc Demo::BubbleEmitter::SetBackground
    */
   void SetBackground(Texture bgTexture, const Vector3& hsvDelta);
 
   /**
-   * @copydoc Toolkit::BubbleEmitter::SetShape
+   * @copydoc Demo::BubbleEmitter::SetShape
    */
   void SetBubbleShape(Texture shapeTexture);
 
   /**
-   * @copydoc Toolkit::BubbleEmiter::SetBubbleScale
+   * @copydoc Demo::BubbleEmiter::SetBubbleScale
    */
   void SetBubbleScale(float scale);
 
   /**
-   * @copydoc Toolkit::BubbleEmitter::SetBubbleDensity
+   * @copydoc Demo::BubbleEmitter::SetBubbleDensity
    */
   void SetBubbleDensity(unsigned int density);
 
   /**
-   * @copydoc Toolkit::BubbleEmitter::EmitBubble
+   * @copydoc Demo::BubbleEmitter::EmitBubble
    */
   void EmitBubble(Animation& animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement);
 
   /**
-   * @copydoc Toolkit::BubbleEmitter::Restore
+   * @copydoc Demo::BubbleEmitter::Restore
    */
   void Restore();
 
@@ -169,20 +169,20 @@ private:
 } // namespace Internal
 
 // Helpers for public-api forwarding methods
-inline Internal::BubbleEmitter& GetImpl(Dali::Toolkit::BubbleEmitter& obj)
+inline Internal::BubbleEmitter& GetImpl(Dali::Demo::BubbleEmitter& obj)
 {
   DALI_ASSERT_ALWAYS(obj && "BubbleEmitter handle is empty");
   Dali::RefObject& handle = obj.GetImplementation();
-  return static_cast<Toolkit::Internal::BubbleEmitter&>(handle);
+  return static_cast<Demo::Internal::BubbleEmitter&>(handle);
 }
 
-inline const Internal::BubbleEmitter& GetImpl(const Dali::Toolkit::BubbleEmitter& obj)
+inline const Internal::BubbleEmitter& GetImpl(const Dali::Demo::BubbleEmitter& obj)
 {
   DALI_ASSERT_ALWAYS(obj && "BubbleEmitter handle is empty");
   const Dali::RefObject& handle = obj.GetImplementation();
-  return static_cast<const Toolkit::Internal::BubbleEmitter&>(handle);
+  return static_cast<const Demo::Internal::BubbleEmitter&>(handle);
 }
 
-} // namespace Dali::Toolkit
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_BUBBLE_EMMITER_H

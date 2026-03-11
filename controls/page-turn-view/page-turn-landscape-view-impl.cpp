@@ -22,15 +22,11 @@
 #include <dali/public-api/object/type-registry-helper.h>
 #include <dali/public-api/object/type-registry.h>
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::PageTurnLandscapeView, Toolkit::PageTurnView, NULL)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::PageTurnLandscapeView, Demo::PageTurnView, NULL)
 DALI_TYPE_REGISTRATION_END()
 
 } // namespace
@@ -44,13 +40,13 @@ PageTurnLandscapeView::~PageTurnLandscapeView()
 {
 }
 
-Toolkit::PageTurnLandscapeView PageTurnLandscapeView::New(PageFactory& pageFactory, const Vector2& viewPageSize)
+Demo::PageTurnLandscapeView PageTurnLandscapeView::New(PageFactory& pageFactory, const Vector2& viewPageSize)
 {
   // Create the implementation, temporarily owned on stack
   IntrusivePtr<PageTurnLandscapeView> internalPageTurnView = new PageTurnLandscapeView(pageFactory, viewPageSize);
 
   // Pass ownership to CustomActor
-  Dali::Toolkit::PageTurnLandscapeView pageTurnView(*internalPageTurnView);
+  Dali::Demo::PageTurnLandscapeView pageTurnView(*internalPageTurnView);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -102,8 +98,4 @@ void PageTurnLandscapeView::SetPanActor(const Vector2& panPosition)
   }
 }
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal

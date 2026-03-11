@@ -33,7 +33,7 @@
 #include <controls/shaders/emboss-filter-shader-frag.h>
 #include <controls/shaders/emboss-filter-composite-shader-frag.h>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -70,8 +70,8 @@ void EmbossFilter::Enable()
   mActorForInput1.RegisterProperty(TEX_SCALE_UNIFORM_NAME, textureScale);
   mActorForInput1.RegisterProperty(COEFFICIENT_UNIFORM_NAME, Vector3(2.f, -1.f, -1.f));
   // set EMBOSS custom shader
-  Renderer renderer1 = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_EMBOSS_FILTER_SHADER_FRAG);
-  DevelControl::SetRendererTexture(renderer1, mInputTexture);
+  Renderer renderer1 = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_EMBOSS_FILTER_SHADER_FRAG);
+  Toolkit::DevelControl::SetRendererTexture(renderer1, mInputTexture);
   mActorForInput1.AddRenderer(renderer1);
   mRootActor.Add(mActorForInput1);
 
@@ -81,8 +81,8 @@ void EmbossFilter::Enable()
   mActorForInput2.RegisterProperty(TEX_SCALE_UNIFORM_NAME, textureScale);
   mActorForInput2.RegisterProperty(COEFFICIENT_UNIFORM_NAME, Vector3(-1.f, -1.f, 2.f));
   // set EMBOSS custom shader
-  Renderer renderer2 = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_EMBOSS_FILTER_SHADER_FRAG);
-  DevelControl::SetRendererTexture(renderer2, mInputTexture);
+  Renderer renderer2 = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_EMBOSS_FILTER_SHADER_FRAG);
+  Toolkit::DevelControl::SetRendererTexture(renderer2, mInputTexture);
   mActorForInput2.AddRenderer(renderer2);
   mRootActor.Add(mActorForInput2);
 
@@ -93,13 +93,13 @@ void EmbossFilter::Enable()
 
   mRootActor.Add(mActorForComposite);
 
-  mRendererForEmboss1 = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_EMBOSS_FILTER_COMPOSITE_SHADER_FRAG);
-  DevelControl::SetRendererTexture(mRendererForEmboss1, mFrameBufferForEmboss1);
+  mRendererForEmboss1 = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_EMBOSS_FILTER_COMPOSITE_SHADER_FRAG);
+  Toolkit::DevelControl::SetRendererTexture(mRendererForEmboss1, mFrameBufferForEmboss1);
   mRendererForEmboss1.RegisterProperty(COLOR_UNIFORM_NAME, Color::BLACK);
   mActorForComposite.AddRenderer(mRendererForEmboss1);
 
-  mRendererForEmboss2 = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_EMBOSS_FILTER_COMPOSITE_SHADER_FRAG);
-  DevelControl::SetRendererTexture(mRendererForEmboss2, mFrameBufferForEmboss2);
+  mRendererForEmboss2 = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_EMBOSS_FILTER_COMPOSITE_SHADER_FRAG);
+  Toolkit::DevelControl::SetRendererTexture(mRendererForEmboss2, mFrameBufferForEmboss2);
   mRendererForEmboss2.RegisterProperty(COLOR_UNIFORM_NAME, Color::WHITE);
   mActorForComposite.AddRenderer(mRendererForEmboss2);
 
@@ -225,4 +225,4 @@ void EmbossFilter::CreateRenderTasks()
   mRenderTaskForOutput.SetCameraActor(mCameraActor);
 }
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal

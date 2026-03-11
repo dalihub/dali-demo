@@ -41,11 +41,10 @@
 #include <controls/shaders/effects-view-vert.h>
 #include <controls/shaders/effects-view-frag.h>
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+using namespace Dali::Toolkit;
+using namespace Dali::Toolkit::Internal;
+
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -54,10 +53,10 @@ Dali::BaseHandle Create()
   return EffectsView::New();
 }
 
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::EffectsView, Toolkit::Control, Create)
-DALI_PROPERTY_REGISTRATION(Toolkit, EffectsView, "effectSize", INTEGER, EFFECT_SIZE)
-DALI_ANIMATABLE_PROPERTY_REGISTRATION(Toolkit, EffectsView, "effectOffset", VECTOR3, EFFECT_OFFSET)
-DALI_ANIMATABLE_PROPERTY_REGISTRATION_WITH_DEFAULT(Toolkit, EffectsView, "effectColor", Color::WHITE, EFFECT_COLOR)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::EffectsView, Toolkit::Control, Create)
+DALI_PROPERTY_REGISTRATION(Demo, EffectsView, "effectSize", INTEGER, EFFECT_SIZE)
+DALI_ANIMATABLE_PROPERTY_REGISTRATION(Demo, EffectsView, "effectOffset", VECTOR3, EFFECT_OFFSET)
+DALI_ANIMATABLE_PROPERTY_REGISTRATION_WITH_DEFAULT(Demo, EffectsView, "effectColor", Color::WHITE, EFFECT_COLOR)
 DALI_TYPE_REGISTRATION_END()
 
 const Pixel::Format EFFECTS_VIEW_DEFAULT_PIXEL_FORMAT = Pixel::RGBA8888;
@@ -90,11 +89,11 @@ const float BLUR_KERNEL4[] = {3.0f/16.0f,
 // clang-format on
 } // namespace
 
-Toolkit::EffectsView EffectsView::New()
+Demo::EffectsView EffectsView::New()
 {
   EffectsView* effectsView = new EffectsView;
 
-  Toolkit::EffectsView handle = Toolkit::EffectsView(*effectsView);
+  Demo::EffectsView handle = Demo::EffectsView(*effectsView);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -104,13 +103,13 @@ Toolkit::EffectsView EffectsView::New()
 }
 
 EffectsView::EffectsView()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mChildrenRoot(Actor::New()),
   mBackgroundColor(EFFECTS_VIEW_DEFAULT_BACKGROUND_COLOR),
   mTargetSize(Vector2::ZERO),
   mLastSize(Vector2::ZERO),
   mEffectSize(0),
-  mEffectType(Toolkit::EffectsView::INVALID_TYPE),
+  mEffectType(Demo::EffectsView::INVALID_TYPE),
   mPixelFormat(EFFECTS_VIEW_DEFAULT_PIXEL_FORMAT),
   mEnabled(false),
   mRefreshOnDemand(EFFECTS_VIEW_REFRESH_ON_DEMAND)
@@ -122,7 +121,7 @@ EffectsView::~EffectsView()
   RemoveFilters();
 }
 
-void EffectsView::SetType(Toolkit::EffectsView::EffectType type)
+void EffectsView::SetType(Demo::EffectsView::EffectType type)
 {
   if(mEffectType != type)
   {
@@ -132,13 +131,13 @@ void EffectsView::SetType(Toolkit::EffectsView::EffectType type)
 
     switch(type)
     {
-      case Toolkit::EffectsView::DROP_SHADOW:
+      case Demo::EffectsView::DROP_SHADOW:
       {
         mFilters.PushBack(new SpreadFilter);
         mFilters.PushBack(new BlurTwoPassFilter);
         break;
       }
-      case Toolkit::EffectsView::EMBOSS:
+      case Demo::EffectsView::EMBOSS:
       {
         mFilters.PushBack(new SpreadFilter);
         mFilters.PushBack(new EmbossFilter);
@@ -155,7 +154,7 @@ void EffectsView::SetType(Toolkit::EffectsView::EffectType type)
   }
 }
 
-Toolkit::EffectsView::EffectType EffectsView::GetType() const
+Demo::EffectsView::EffectType EffectsView::GetType() const
 {
   return mEffectType;
 }
@@ -236,7 +235,7 @@ void EffectsView::OnInitialize()
   mChildrenRoot.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   self.Add(mChildrenRoot);
 
-  self.SetProperty(DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
 }
 
 void EffectsView::OnSizeSet(const Vector3& targetSize)
@@ -255,7 +254,7 @@ void EffectsView::OnSizeSet(const Vector3& targetSize)
 
   mChildrenRoot.SetProperty(Actor::Property::SIZE, targetSize);
 
-  Control::OnSizeSet(targetSize);
+  Toolkit::Internal::Control::OnSizeSet(targetSize);
 }
 
 void EffectsView::OnSceneConnection(int depth)
@@ -263,18 +262,18 @@ void EffectsView::OnSceneConnection(int depth)
   Actor self(Self());
 
   // Create renderers
-  mRendererPostFilter = DevelControl::CreateRenderer(SHADER_EFFECTS_VIEW_VERT,
-                                                     SHADER_EFFECTS_VIEW_FRAG);
+  mRendererPostFilter = Toolkit::DevelControl::CreateRenderer(SHADER_EFFECTS_VIEW_VERT,
+                                                              SHADER_EFFECTS_VIEW_FRAG);
   mRendererPostFilter.SetProperty(Dali::Renderer::Property::DEPTH_INDEX, DepthIndex::CONTENT);
   self.AddRenderer(mRendererPostFilter);
 
-  mRendererForChildren = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_CONTROL_RENDERERS_FRAG);
+  mRendererForChildren = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_CONTROL_RENDERERS_FRAG);
   mRendererForChildren.SetProperty(Dali::Renderer::Property::DEPTH_INDEX, DepthIndex::CONTENT + 1);
   self.AddRenderer(mRendererForChildren);
 
   Enable();
 
-  Control::OnSceneConnection(depth);
+  Toolkit::Internal::Control::OnSceneConnection(depth);
 }
 
 void EffectsView::OnSceneDisconnection()
@@ -296,7 +295,7 @@ void EffectsView::OnSceneDisconnection()
   self.RemoveRenderer(mRendererPostFilter);
   mRendererPostFilter.Reset();
 
-  Control::OnSceneDisconnection();
+  Toolkit::Internal::Control::OnSceneDisconnection();
 }
 
 void EffectsView::OnChildAdd(Actor& child)
@@ -306,21 +305,21 @@ void EffectsView::OnChildAdd(Actor& child)
     mChildrenRoot.Add(child);
   }
 
-  Control::OnChildAdd(child);
+  Toolkit::Internal::Control::OnChildAdd(child);
 }
 
 void EffectsView::OnChildRemove(Actor& child)
 {
   mChildrenRoot.Remove(child);
 
-  Control::OnChildRemove(child);
+  Toolkit::Internal::Control::OnChildRemove(child);
 }
 
 void EffectsView::SetupFilters()
 {
   switch(mEffectType)
   {
-    case Toolkit::EffectsView::DROP_SHADOW:
+    case Demo::EffectsView::DROP_SHADOW:
     {
       SpreadFilter* spreadFilter = static_cast<SpreadFilter*>(mFilters[0]);
       spreadFilter->SetInputTexture(mFrameBufferForChildren.GetColorTexture());
@@ -378,7 +377,7 @@ void EffectsView::SetupFilters()
       blurFilter->CreateKernel(kernel, kernelSize);
       break;
     }
-    case Toolkit::EffectsView::EMBOSS:
+    case Demo::EffectsView::EMBOSS:
     {
       SpreadFilter* spreadFilter = static_cast<SpreadFilter*>(mFilters[0]);
       spreadFilter->SetInputTexture(mFrameBufferForChildren.GetColorTexture());
@@ -428,13 +427,13 @@ void EffectsView::AllocateResources()
     Texture textureForChildren = Texture::New(TextureType::TEXTURE_2D, mPixelFormat, unsigned(mTargetSize.width), unsigned(mTargetSize.height));
     mFrameBufferForChildren.AttachColorTexture(textureForChildren);
 
-    DevelControl::SetRendererTexture(mRendererForChildren, textureForChildren);
+    Toolkit::DevelControl::SetRendererTexture(mRendererForChildren, textureForChildren);
 
     mFrameBufferPostFilter    = FrameBuffer::New(mTargetSize.width, mTargetSize.height, FrameBuffer::Attachment::NONE);
     Texture texturePostFilter = Texture::New(TextureType::TEXTURE_2D, mPixelFormat, unsigned(mTargetSize.width), unsigned(mTargetSize.height));
     mFrameBufferPostFilter.AttachColorTexture(texturePostFilter);
 
-    DevelControl::SetRendererTexture(mRendererPostFilter, texturePostFilter);
+    Toolkit::DevelControl::SetRendererTexture(mRendererPostFilter, texturePostFilter);
 
     SetupFilters();
   }
@@ -536,13 +535,13 @@ void EffectsView::RemoveFilters()
 
 void EffectsView::SetProperty(BaseObject* object, Property::Index index, const Property::Value& value)
 {
-  Toolkit::EffectsView effectsView = Toolkit::EffectsView::DownCast(Dali::BaseHandle(object));
+  Demo::EffectsView effectsView = Demo::EffectsView::DownCast(Dali::BaseHandle(object));
 
   if(effectsView)
   {
     switch(index)
     {
-      case Toolkit::EffectsView::Property::EFFECT_SIZE:
+      case Demo::EffectsView::Property::EFFECT_SIZE:
       {
         int effectSize;
         if(value.Get(effectSize))
@@ -563,14 +562,14 @@ Property::Value EffectsView::GetProperty(BaseObject* object, Property::Index pro
 {
   Property::Value value;
 
-  Toolkit::EffectsView imageview = Toolkit::EffectsView::DownCast(Dali::BaseHandle(object));
+  Demo::EffectsView imageview = Demo::EffectsView::DownCast(Dali::BaseHandle(object));
 
   if(imageview)
   {
     EffectsView& impl = GetImpl(imageview);
     switch(propertyIndex)
     {
-      case Toolkit::EffectsView::Property::EFFECT_SIZE:
+      case Demo::EffectsView::Property::EFFECT_SIZE:
       {
         value = impl.GetEffectSize();
         break;
@@ -585,8 +584,4 @@ Property::Value EffectsView::GetProperty(BaseObject* object, Property::Index pro
   return value;
 }
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal

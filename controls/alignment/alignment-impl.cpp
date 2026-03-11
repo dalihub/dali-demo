@@ -19,15 +19,15 @@
 #include "alignment-impl.h"
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali/public-api/object/property-input.h>
 #include <dali/public-api/object/type-registry-helper.h>
 #include <dali/public-api/object/type-registry.h>
 #include <dali/public-api/size-negotiation/relayout-container.h>
-#include <dali-toolkit/devel-api/controls/control-devel.h>
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 namespace Internal
 {
@@ -36,10 +36,10 @@ namespace
 //Type Registration
 BaseHandle Create()
 {
-  return Toolkit::Alignment::New();
+  return Demo::Alignment::New();
 }
 
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::Alignment, Toolkit::Control, Create)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::Alignment, Toolkit::Control, Create)
 DALI_TYPE_REGISTRATION_END()
 
 /**
@@ -49,24 +49,24 @@ DALI_TYPE_REGISTRATION_END()
  * @param currentSize of the object
  * @param parentSize
  */
-inline Vector3 GetPosition(const Toolkit::Alignment::Padding& padding, Toolkit::Alignment::Type horizontalAlignment, Toolkit::Alignment::Type verticalAlignment, const Vector2& currentSize, const Vector2& parentSize)
+inline Vector3 GetPosition(const Demo::Alignment::Padding& padding, Demo::Alignment::Type horizontalAlignment, Demo::Alignment::Type verticalAlignment, const Vector2& currentSize, const Vector2& parentSize)
 {
   Vector3 position(0.f, 0.f, 0.f);
 
   switch(horizontalAlignment)
   {
-    case Dali::Toolkit::Alignment::HORIZONTAL_LEFT:
+    case Dali::Demo::Alignment::HORIZONTAL_LEFT:
     {
       position.x += padding.left;
       break;
     }
-    case Dali::Toolkit::Alignment::HORIZONTAL_RIGHT:
+    case Dali::Demo::Alignment::HORIZONTAL_RIGHT:
     {
       position.x -= padding.right;
       break;
     }
-    case Dali::Toolkit::Alignment::HORIZONTAL_CENTER: // FALLTHROUGH
-    default:                                          // use center as default
+    case Dali::Demo::Alignment::HORIZONTAL_CENTER: // FALLTHROUGH
+    default:                                       // use center as default
     {
       if(currentSize.width + padding.left + padding.right >= parentSize.width)
       {
@@ -78,18 +78,18 @@ inline Vector3 GetPosition(const Toolkit::Alignment::Padding& padding, Toolkit::
 
   switch(verticalAlignment)
   {
-    case Dali::Toolkit::Alignment::VERTICAL_TOP:
+    case Dali::Demo::Alignment::VERTICAL_TOP:
     {
       position.y += padding.top;
       break;
     }
-    case Dali::Toolkit::Alignment::VERTICAL_BOTTOM:
+    case Dali::Demo::Alignment::VERTICAL_BOTTOM:
     {
       position.y -= padding.bottom;
       break;
     }
-    case Dali::Toolkit::Alignment::VERTICAL_CENTER: // FALLTHROUGH
-    default:                                        // use center as default
+    case Dali::Demo::Alignment::VERTICAL_CENTER: // FALLTHROUGH
+    default:                                     // use center as default
     {
       if(currentSize.height + padding.top + padding.bottom >= parentSize.height)
       {
@@ -104,13 +104,13 @@ inline Vector3 GetPosition(const Toolkit::Alignment::Padding& padding, Toolkit::
 
 } // namespace
 
-Toolkit::Alignment Alignment::New(Toolkit::Alignment::Type horizontal, Toolkit::Alignment::Type vertical)
+Demo::Alignment Alignment::New(Demo::Alignment::Type horizontal, Demo::Alignment::Type vertical)
 {
   // Create the implementation, temporarily owned on stack
   IntrusivePtr<Alignment> internalAlignment = new Alignment(horizontal, vertical);
 
-  // Pass ownership to Toolkit::Alignment
-  Toolkit::Alignment alignment(*internalAlignment);
+  // Pass ownership to Demo::Alignment
+  Demo::Alignment alignment(*internalAlignment);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -119,57 +119,57 @@ Toolkit::Alignment Alignment::New(Toolkit::Alignment::Type horizontal, Toolkit::
   return alignment;
 }
 
-void Alignment::SetAlignmentType(Toolkit::Alignment::Type type)
+void Alignment::SetAlignmentType(Demo::Alignment::Type type)
 {
   // Horizontal Alignment
-  if(type & Toolkit::Alignment::HORIZONTAL_RIGHT)
+  if(type & Demo::Alignment::HORIZONTAL_RIGHT)
   {
-    mHorizontal = Toolkit::Alignment::HORIZONTAL_RIGHT;
+    mHorizontal = Demo::Alignment::HORIZONTAL_RIGHT;
   }
-  if(type & Toolkit::Alignment::HORIZONTAL_LEFT)
+  if(type & Demo::Alignment::HORIZONTAL_LEFT)
   {
-    mHorizontal = Toolkit::Alignment::HORIZONTAL_LEFT;
+    mHorizontal = Demo::Alignment::HORIZONTAL_LEFT;
   }
-  if(type & Toolkit::Alignment::HORIZONTAL_CENTER)
+  if(type & Demo::Alignment::HORIZONTAL_CENTER)
   {
-    mHorizontal = Toolkit::Alignment::HORIZONTAL_CENTER;
+    mHorizontal = Demo::Alignment::HORIZONTAL_CENTER;
   }
 
   // Vertical Alignment
-  if(type & Toolkit::Alignment::VERTICAL_BOTTOM)
+  if(type & Demo::Alignment::VERTICAL_BOTTOM)
   {
-    mVertical = Toolkit::Alignment::VERTICAL_BOTTOM;
+    mVertical = Demo::Alignment::VERTICAL_BOTTOM;
   }
-  if(type & Toolkit::Alignment::VERTICAL_TOP)
+  if(type & Demo::Alignment::VERTICAL_TOP)
   {
-    mVertical = Toolkit::Alignment::VERTICAL_TOP;
+    mVertical = Demo::Alignment::VERTICAL_TOP;
   }
-  if(type & Toolkit::Alignment::VERTICAL_CENTER)
+  if(type & Demo::Alignment::VERTICAL_CENTER)
   {
-    mVertical = Toolkit::Alignment::VERTICAL_CENTER;
+    mVertical = Demo::Alignment::VERTICAL_CENTER;
   }
 
   RelayoutRequest();
 }
 
-Toolkit::Alignment::Type Alignment::GetAlignmentType() const
+Demo::Alignment::Type Alignment::GetAlignmentType() const
 {
-  return Toolkit::Alignment::Type(mHorizontal | mVertical);
+  return Demo::Alignment::Type(mHorizontal | mVertical);
 }
 
-void Alignment::SetScaling(Toolkit::Alignment::Scaling scaling)
+void Alignment::SetScaling(Demo::Alignment::Scaling scaling)
 {
   mScaling = scaling;
 
   RelayoutRequest();
 }
 
-Toolkit::Alignment::Scaling Alignment::GetScaling() const
+Demo::Alignment::Scaling Alignment::GetScaling() const
 {
   return mScaling;
 }
 
-void Alignment::SetPadding(const Toolkit::Alignment::Padding& padding)
+void Alignment::SetPadding(const Demo::Alignment::Padding& padding)
 {
   DALI_ASSERT_ALWAYS((padding.left >= 0.f) && (padding.top >= 0.f) && (padding.right >= 0.f) && (padding.bottom >= 0.f));
 
@@ -178,14 +178,14 @@ void Alignment::SetPadding(const Toolkit::Alignment::Padding& padding)
   RelayoutRequest();
 }
 
-const Toolkit::Alignment::Padding& Alignment::GetPadding() const
+const Demo::Alignment::Padding& Alignment::GetPadding() const
 {
   return mPadding;
 }
 
 void Alignment::OnInitialize()
 {
-  Self().SetProperty(DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
 }
 
 void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
@@ -194,20 +194,20 @@ void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
   Vector3 anchorPointAndParentOrigin = Vector3::ZERO;
   anchorPointAndParentOrigin.z       = 0.5f;
   // anchorPoint.x is initialized to 0.0, which is HORIZONTAL_LEFT
-  if(Toolkit::Alignment::HORIZONTAL_CENTER == mHorizontal)
+  if(Demo::Alignment::HORIZONTAL_CENTER == mHorizontal)
   {
     anchorPointAndParentOrigin.x = 0.5f;
   }
-  else if(Toolkit::Alignment::HORIZONTAL_RIGHT == mHorizontal)
+  else if(Demo::Alignment::HORIZONTAL_RIGHT == mHorizontal)
   {
     anchorPointAndParentOrigin.x = 1.0f;
   }
   // anchorPoint.y is initialized to 0.0, which is VERTICAL_TOP
-  if(Toolkit::Alignment::VERTICAL_CENTER == mVertical)
+  if(Demo::Alignment::VERTICAL_CENTER == mVertical)
   {
     anchorPointAndParentOrigin.y = 0.5f;
   }
-  else if(Toolkit::Alignment::VERTICAL_BOTTOM == mVertical)
+  else if(Demo::Alignment::VERTICAL_BOTTOM == mVertical)
   {
     anchorPointAndParentOrigin.y = 1.0f;
   }
@@ -237,33 +237,33 @@ void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
       // no point trying to squeeze actors into too small size
       switch(mScaling)
       {
-        case Toolkit::Alignment::SCALE_NONE:
+        case Demo::Alignment::SCALE_NONE:
         {
           // Nothing to do
           renegotiate = false;
           break;
         }
-        case Toolkit::Alignment::SCALE_TO_FILL:
+        case Demo::Alignment::SCALE_TO_FILL:
         {
           // Nothing to do, newChildSize is already full size minus padding
           break;
         }
-        case Toolkit::Alignment::SCALE_TO_FIT_KEEP_ASPECT:
+        case Demo::Alignment::SCALE_TO_FIT_KEEP_ASPECT:
         {
           newChildSize = currentChildSize * std::min((newChildSize.width / currentChildSize.width), (newChildSize.height / currentChildSize.height));
           break;
         }
-        case Toolkit::Alignment::SCALE_TO_FILL_KEEP_ASPECT:
+        case Demo::Alignment::SCALE_TO_FILL_KEEP_ASPECT:
         {
           newChildSize = currentChildSize * std::max((newChildSize.width / currentChildSize.width), (newChildSize.height / currentChildSize.height));
           break;
         }
-        case Toolkit::Alignment::SHRINK_TO_FIT:
+        case Demo::Alignment::SHRINK_TO_FIT:
         {
           newChildSize = Vector2(std::min(newChildSize.width, currentChildSize.width), std::min(newChildSize.height, currentChildSize.height));
           break;
         }
-        case Toolkit::Alignment::SHRINK_TO_FIT_KEEP_ASPECT:
+        case Demo::Alignment::SHRINK_TO_FIT_KEEP_ASPECT:
         {
           // check source size vs target size to see if we need to shrink
           float widthScale  = (newChildSize.width < currentChildSize.width) ? (newChildSize.width / currentChildSize.width) : 1.f;
@@ -290,11 +290,11 @@ void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
   }
 }
 
-Alignment::Alignment(Toolkit::Alignment::Type horizontal, Toolkit::Alignment::Type vertical)
+Alignment::Alignment(Demo::Alignment::Type horizontal, Demo::Alignment::Type vertical)
 : Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mHorizontal(horizontal),
   mVertical(vertical),
-  mScaling(Toolkit::Alignment::SCALE_NONE),
+  mScaling(Demo::Alignment::SCALE_NONE),
   mPadding(0.f, 0.f, 0.f, 0.f)
 {
 }
@@ -305,6 +305,6 @@ Alignment::~Alignment()
 
 } // namespace Internal
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali

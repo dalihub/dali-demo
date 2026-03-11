@@ -116,7 +116,7 @@ struct CommonParametersConstraint
   float mPageHeight;
 };
 
-void Dali::Toolkit::Internal::PageTurnApplyInternalConstraint(Actor& actor, float pageHeight)
+void Dali::Demo::Internal::PageTurnApplyInternalConstraint(Actor& actor, float pageHeight)
 {
   Constraint constraint = Constraint::New<Dali::Matrix>(actor, actor.GetPropertyIndex(PROPERTY_COMMON_PARAMETERS), CommonParametersConstraint(pageHeight));
   constraint.AddSource(LocalSource(actor.GetPropertyIndex(PROPERTY_ORIGINAL_CENTER)));
@@ -124,7 +124,7 @@ void Dali::Toolkit::Internal::PageTurnApplyInternalConstraint(Actor& actor, floa
   constraint.Apply();
 }
 
-Property::Map Dali::Toolkit::Internal::CreatePageTurnEffect()
+Property::Map Dali::Demo::Internal::CreatePageTurnEffect()
 {
   Property::Map map;
 

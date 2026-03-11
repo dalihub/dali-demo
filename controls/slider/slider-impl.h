@@ -37,7 +37,9 @@ namespace Dali
 namespace Toolkit
 {
 class Button;
-
+}
+namespace Demo
+{
 namespace Internal
 {
 class Slider;
@@ -45,9 +47,9 @@ class Slider;
 typedef Dali::IntrusivePtr<Slider> SliderPtr;
 
 /**
- * @copydoc Toolkit::Slider
+ * @copydoc Dali::Demo::Slider
  */
-class Slider : public Control
+class Slider : public Toolkit::Internal::Control
 {
 public:
   typedef Property::Array MarkList;
@@ -57,7 +59,7 @@ public:
    *
    * @return A public handle to the newly allocated Slider.
    */
-  static Dali::Toolkit::Slider New();
+  static Demo::Slider New();
 
 public:
   // Properties
@@ -223,19 +225,19 @@ public:
   //Signals
 
   /**
-   * @copydoc Toolkit::Slider::ValueChangedSignal()
+   * @copydoc Demo::Slider::ValueChangedSignal()
    */
-  Toolkit::Slider::ValueChangedSignalType& ValueChangedSignal();
+  Demo::Slider::ValueChangedSignalType& ValueChangedSignal();
 
   /**
-   * copydoc Toolkit::Slider::SlidingFinishedSignal()
+   * copydoc Demo::Slider::SlidingFinishedSignal()
    */
-  Toolkit::Slider::ValueChangedSignalType& SlidingFinishedSignal();
+  Demo::Slider::ValueChangedSignalType& SlidingFinishedSignal();
 
   /**
-   * @copydoc Toolkit::Slider::MarkReachedSignal()
+   * @copydoc Demo::Slider::MarkReachedSignal()
    */
-  Toolkit::Slider::MarkReachedSignalType& MarkReachedSignal();
+  Demo::Slider::MarkReachedSignalType& MarkReachedSignal();
 
   /**
    * Connects a callback function with the object's signals.
@@ -321,7 +323,7 @@ private:
   /**
    * @copydoc Toolkit::Internal::Control::CreateAccessibleObject()
    */
-  DevelControl::ControlAccessible* CreateAccessibleObject() override;
+  Toolkit::DevelControl::ControlAccessible* CreateAccessibleObject() override;
 
   /**
    * Hit region touch
@@ -343,7 +345,7 @@ private:
   /**
    * @copydoc Control::OnPan
    */
-  using Control::OnPan;
+  using Toolkit::Internal::Control::OnPan;
 
   /**
    * Map a position onto a domain and return the result as a percentage
@@ -718,9 +720,9 @@ private:
   Vector2            mHandleLastTouchPoint; ///< The last touch point for the handle
   Timer              mValueTimer;           ///< Timer used to hide value view
 
-  Toolkit::Slider::ValueChangedSignalType mValueChangedSignal;    ///< Signal emitted when the value is changed
-  Toolkit::Slider::ValueChangedSignalType mSlidingFinishedSignal; ///< Signal emitted when a sliding is finished
-  Toolkit::Slider::MarkReachedSignalType  mMarkReachedSignal;     ///< Signal emitted when a mark is reached
+  Demo::Slider::ValueChangedSignalType mValueChangedSignal;    ///< Signal emitted when the value is changed
+  Demo::Slider::ValueChangedSignalType mSlidingFinishedSignal; ///< Signal emitted when a sliding is finished
+  Demo::Slider::MarkReachedSignalType  mMarkReachedSignal;     ///< Signal emitted when a mark is reached
 
   SliderState mState; ///< The state of the slider
 
@@ -759,11 +761,11 @@ private:
     mSnapToMarks : 1;  ///< Turn on or off snapping to marks
 
 protected:
-  class SliderAccessible : public DevelControl::ControlAccessible,
+  class SliderAccessible : public Toolkit::DevelControl::ControlAccessible,
                            public Dali::Accessibility::Value
   {
   public:
-    using DevelControl::ControlAccessible::ControlAccessible;
+    using Toolkit::DevelControl::ControlAccessible::ControlAccessible;
 
     /**
      * @copydoc Dali::Accessibility::Value::GetMinimum()
@@ -807,25 +809,25 @@ protected:
 
 // Helpers for public-api forwarding methods
 
-inline Toolkit::Internal::Slider& GetImpl(Toolkit::Slider& pub)
+inline Demo::Internal::Slider& GetImpl(Demo::Slider& pub)
 {
   DALI_ASSERT_ALWAYS(pub);
 
   Dali::RefObject& handle = pub.GetImplementation();
 
-  return static_cast<Toolkit::Internal::Slider&>(handle);
+  return static_cast<Demo::Internal::Slider&>(handle);
 }
 
-inline const Toolkit::Internal::Slider& GetImpl(const Toolkit::Slider& pub)
+inline const Demo::Internal::Slider& GetImpl(const Demo::Slider& pub)
 {
   DALI_ASSERT_ALWAYS(pub);
 
   const Dali::RefObject& handle = pub.GetImplementation();
 
-  return static_cast<const Toolkit::Internal::Slider&>(handle);
+  return static_cast<const Demo::Internal::Slider&>(handle);
 }
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali
 

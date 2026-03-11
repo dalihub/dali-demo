@@ -24,9 +24,7 @@
 // INTERNAL INCLUDES
 #include "../dali-demo-controls-common.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -40,7 +38,7 @@ class Magnifier;
  * to the stage as a separate overlay. In addition to the contents, an optional frame
  * is displayed around the magnified contents.
  */
-class DALI_DEMO_CONTROLS_API Magnifier : public Control
+class DALI_DEMO_CONTROLS_API Magnifier : public Toolkit::Control
 {
 public:
   /**
@@ -48,7 +46,7 @@ public:
    */
   enum PropertyRange
   {
-    PROPERTY_START_INDEX = Control::CONTROL_PROPERTY_END_INDEX + 1,
+    PROPERTY_START_INDEX = Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1,
     PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000, ///< Reserve property indices
 
     ANIMATABLE_PROPERTY_START_INDEX = ANIMATABLE_PROPERTY_REGISTRATION_START_INDEX,
@@ -133,7 +131,7 @@ public:
 
 public: // Not intended for application developers
   /**
-   * Creates a handle using the Toolkit::Internal implementation.
+   * Creates a handle using the Demo::Internal implementation.
    * @param[in]  implementation  The Control implementation.
    */
   DALI_INTERNAL Magnifier(Internal::Magnifier& implementation);
@@ -145,8 +143,6 @@ public: // Not intended for application developers
   explicit DALI_INTERNAL Magnifier(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_MAGNIFIER_H

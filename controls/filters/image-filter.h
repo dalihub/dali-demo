@@ -27,7 +27,7 @@
 // INTERNAL INCLUDES
 #include <controls/effects-view/effects-view.h>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 /**
  * An interface class that provides a interface for image filters that perform
@@ -65,7 +65,7 @@ public:
   virtual void Refresh() = 0;
 
   /**
-   * @copydoc Dali::Toolkit::EffectsView::SetRefreshOnDemand
+   * @copydoc Dali::Demo::EffectsView::SetRefreshOnDemand
    */
   void SetRefreshOnDemand(bool onDemand);
 
@@ -150,6 +150,6 @@ protected:
 
 }; // class Imagefilter
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_IMAGE_FILTER_H

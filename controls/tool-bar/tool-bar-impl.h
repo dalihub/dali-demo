@@ -19,16 +19,14 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/common/map-wrapper.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
+#include <dali/devel-api/common/map-wrapper.h>
 
 // INTERNAL INCLUDES
 #include "tool-bar.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 class ToolBar;
 
@@ -36,24 +34,24 @@ namespace Internal
 {
 /**
  * ToolBar is a control to create a tool bar.
- * @see Dali::Toolkit::ToolBar for more details.
+ * @see Dali::Demo::ToolBar for more details.
  */
-class ToolBar : public Control
+class ToolBar : public Toolkit::Internal::Control
 {
 public:
   /**
    * Create an initialized ToolBar.
    * @return A handle to a newly allocated Dali resource.
    */
-  static Toolkit::ToolBar New();
+  static Demo::ToolBar New();
 
   /**
-   * @copydoc Dali::Toolkit::ToolBar::AddControl()
+   * @copydoc Dali::Demo::ToolBar::AddControl()
    */
-  void AddControl(Dali::Actor control, float relativeSize, Toolkit::Alignment::Type alignment, const Toolkit::Alignment::Padding& padding);
+  void AddControl(Dali::Actor control, float relativeSize, Demo::Alignment::Type alignment, const Demo::Alignment::Padding& padding);
 
   /**
-   * @copydoc Dali::Toolkit::ToolBar::RemoveControl()
+   * @copydoc Dali::Demo::ToolBar::RemoveControl()
    */
   void RemoveControl(Dali::Actor control);
 
@@ -121,33 +119,31 @@ private:
   float              mAccumulatedRelativeSpace; ///< Stores the total percentage space used by controls.
   bool               mInitializing;             ///< Allows the use of Actor's API to add controls.
 
-  std::map<Actor /*control*/, Toolkit::Alignment> mControls; ///< Stores a relationship between controls and their alignments used to place them inside the table view.
+  std::map<Actor /*control*/, Demo::Alignment> mControls; ///< Stores a relationship between controls and their alignments used to place them inside the table view.
 };
 
 } // namespace Internal
 
 // Helpers for public-api forwarding methods
 
-inline Toolkit::Internal::ToolBar& GetImpl(Toolkit::ToolBar& toolBar)
+inline Demo::Internal::ToolBar& GetImpl(Demo::ToolBar& toolBar)
 {
   DALI_ASSERT_ALWAYS(toolBar);
 
   Dali::RefObject& handle = toolBar.GetImplementation();
 
-  return static_cast<Toolkit::Internal::ToolBar&>(handle);
+  return static_cast<Demo::Internal::ToolBar&>(handle);
 }
 
-inline const Toolkit::Internal::ToolBar& GetImpl(const Toolkit::ToolBar& toolBar)
+inline const Demo::Internal::ToolBar& GetImpl(const Demo::ToolBar& toolBar)
 {
   DALI_ASSERT_ALWAYS(toolBar);
 
   const Dali::RefObject& handle = toolBar.GetImplementation();
 
-  return static_cast<const Toolkit::Internal::ToolBar&>(handle);
+  return static_cast<const Demo::Internal::ToolBar&>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_TOOL_BAR_H

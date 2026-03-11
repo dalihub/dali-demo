@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/bubble-effect/bubble-emitter-impl.h>
 
-namespace Dali::Toolkit
+namespace Dali::Demo
 {
 BubbleEmitter::BubbleEmitter()
 {
@@ -32,7 +32,7 @@ BubbleEmitter::~BubbleEmitter()
 }
 
 BubbleEmitter::BubbleEmitter(Internal::BubbleEmitter& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
@@ -98,4 +98,4 @@ void BubbleEmitter::Restore()
   GetImpl(*this).Restore();
 }
 
-} // namespace Dali::Toolkit
+} // namespace Dali::Demo

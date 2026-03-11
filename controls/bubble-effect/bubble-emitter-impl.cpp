@@ -30,6 +30,9 @@
 #include <controls/shaders/bubble-emitter-frag.h>
 #include <controls/shaders/bubble-emitter-vert.h>
 
+using namespace Dali::Toolkit;
+using namespace Dali::Toolkit::Internal;
+
 namespace
 {
 struct Vertex
@@ -94,7 +97,7 @@ Dali::Geometry CreateTexturedQuad()
 
 } // namespace
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 BubbleEmitter::BubbleEmitter(const Vector2& movementArea,
                              Texture        shapeTexture,
@@ -135,16 +138,16 @@ BubbleEmitter::~BubbleEmitter()
 {
 }
 
-Toolkit::BubbleEmitter BubbleEmitter::New(const Vector2& winSize,
-                                          Texture        shapeTexture,
-                                          unsigned int   maximumNumberOfBubble,
-                                          const Vector2& bubbleSizeRange)
+Demo::BubbleEmitter BubbleEmitter::New(const Vector2& winSize,
+                                        Texture        shapeTexture,
+                                        unsigned int   maximumNumberOfBubble,
+                                        const Vector2& bubbleSizeRange)
 {
   // Create the implementation
   IntrusivePtr<BubbleEmitter> internalBubbleEmitter(new BubbleEmitter(winSize, shapeTexture, maximumNumberOfBubble, bubbleSizeRange));
 
-  // Pass ownership to Toolkit::BubbleEmitter handle
-  Toolkit::BubbleEmitter bubbleEmitter(*internalBubbleEmitter);
+  // Pass ownership to Demo::BubbleEmitter handle
+  Demo::BubbleEmitter bubbleEmitter(*internalBubbleEmitter);
 
   //Second phase of implementeation : Initialization
   internalBubbleEmitter->OnInitialize();
@@ -368,4 +371,4 @@ void BubbleEmitter::SetBubbleParameter(BubbleRenderer& bubbleRenderer, unsigned 
   bubbleRenderer.SetPercentage(curUniform, 0.f);
 }
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal

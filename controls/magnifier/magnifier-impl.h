@@ -27,9 +27,7 @@
 // INTERNAL INCLUDES
 #include "magnifier.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 namespace Internal
 {
@@ -38,16 +36,16 @@ class Magnifier;
 typedef IntrusivePtr<Magnifier> MagnifierPtr;
 
 /**
- * @copydoc Toolkit::Magnifier
+ * @copydoc Demo::Magnifier
  */
-class Magnifier : public Control
+class Magnifier : public Toolkit::Internal::Control
 {
 public:
   /**
    * Create a new Magnifier.
    * @return A public handle to the newly allocated Magnifier.
    */
-  static Dali::Toolkit::Magnifier New();
+  static Dali::Demo::Magnifier New();
 
 public:
   /**
@@ -119,7 +117,7 @@ protected:
 
 private:
   /**
-   * @copydoc Toolkit::Control::OnInitialize()
+   * @copydoc Toolkit::Internal::Control::OnInitialize()
    */
   void OnInitialize() override;
 
@@ -152,26 +150,24 @@ private:
 
 // Helpers for public-api forwarding methods
 
-inline Toolkit::Internal::Magnifier& GetImpl(Toolkit::Magnifier& pub)
+inline Demo::Internal::Magnifier& GetImpl(Demo::Magnifier& pub)
 {
   DALI_ASSERT_ALWAYS(pub);
 
   Dali::RefObject& handle = pub.GetImplementation();
 
-  return static_cast<Toolkit::Internal::Magnifier&>(handle);
+  return static_cast<Demo::Internal::Magnifier&>(handle);
 }
 
-inline const Toolkit::Internal::Magnifier& GetImpl(const Toolkit::Magnifier& pub)
+inline const Demo::Internal::Magnifier& GetImpl(const Demo::Magnifier& pub)
 {
   DALI_ASSERT_ALWAYS(pub);
 
   const Dali::RefObject& handle = pub.GetImplementation();
 
-  return static_cast<const Toolkit::Internal::Magnifier&>(handle);
+  return static_cast<const Demo::Internal::Magnifier&>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_MAGNIFIER_H

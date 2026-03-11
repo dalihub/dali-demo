@@ -21,9 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/effects-view/effects-view-impl.h>
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 EffectsView EffectsView::New(EffectType type)
 {
@@ -46,7 +44,7 @@ EffectsView& EffectsView::operator=(EffectsView&& handle) = default;
 
 EffectsView EffectsView::DownCast(BaseHandle handle)
 {
-  return Control::DownCast<EffectsView, Internal::EffectsView>(handle);
+  return Toolkit::Control::DownCast<EffectsView, Internal::EffectsView>(handle);
 }
 
 EffectsView::~EffectsView()
@@ -84,16 +82,14 @@ Vector4 EffectsView::GetBackgroundColor() const
 }
 
 EffectsView::EffectsView(Internal::EffectsView& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
 EffectsView::EffectsView(Dali::Internal::CustomActor* internal)
-: Control(internal)
+: Toolkit::Control(internal)
 {
   VerifyCustomActorPointer<Internal::EffectsView>(internal);
 }
 
-} //namespace Toolkit
-
-} //namespace Dali
+} // namespace Dali::Demo

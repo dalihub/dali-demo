@@ -17,7 +17,7 @@
 #include "image-channel-control.h"
 #include "image-channel-control-impl.h"
 
-namespace Demo
+namespace Dali::Demo
 {
 ImageChannelControl::ImageChannelControl()
 {
@@ -80,4 +80,4 @@ ImageChannelControl::ImageChannelControl(Dali::Internal::CustomActor* internal)
   VerifyCustomActorPointer<Internal::ImageChannelControl>(internal);
 }
 
-} //namespace Demo
+} // namespace Dali::Demo

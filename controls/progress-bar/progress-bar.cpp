@@ -21,9 +21,7 @@
 // INTERNAL INCLUDES
 #include "progress-bar-impl.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 ProgressBar::ProgressBar()
 {
@@ -38,7 +36,7 @@ ProgressBar& ProgressBar::operator=(const ProgressBar& handle) = default;
 ProgressBar& ProgressBar::operator=(ProgressBar&& rhs) noexcept = default;
 
 ProgressBar::ProgressBar(Internal::ProgressBar& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
@@ -72,6 +70,4 @@ ProgressBar ProgressBar::DownCast(BaseHandle handle)
   return Control::DownCast<ProgressBar, Internal::ProgressBar>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo

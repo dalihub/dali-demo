@@ -22,22 +22,22 @@
 #include <dali/public-api/object/type-registry-helper.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 namespace // to register type
 {
 BaseHandle Create()
 {
-  return Toolkit::NavigationView::New();
+  return Demo::NavigationView::New();
 }
 
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::NavigationView, Toolkit::Control, Create)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::NavigationView, Toolkit::Control, Create)
 DALI_TYPE_REGISTRATION_END()
 
 } // namespace
 
 NavigationView::NavigationView()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT))
+: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT))
 {
 }
 
@@ -47,13 +47,13 @@ NavigationView::~NavigationView()
   mContentStack.clear();
 }
 
-Toolkit::NavigationView NavigationView::New()
+Demo::NavigationView NavigationView::New()
 {
   // Create the implementation, temporarily owned by this handle on stack
   IntrusivePtr<NavigationView> internalNavigationView = new NavigationView();
 
   // Pass ownership to CustomActor handle
-  Toolkit::NavigationView navigationView(*internalNavigationView);
+  Demo::NavigationView navigationView(*internalNavigationView);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -64,14 +64,14 @@ Toolkit::NavigationView NavigationView::New()
 
 void NavigationView::OnInitialize()
 {
-  Self().SetProperty(DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
 }
 
 void NavigationView::OnSceneConnection(int depth)
 {
   Self().SetProperty(Actor::Property::SENSITIVE, true);
 
-  Control::OnSceneConnection(depth);
+  Toolkit::Internal::Control::OnSceneConnection(depth);
 }
 
 void NavigationView::Push(Actor& actor)
@@ -109,5 +109,5 @@ Actor NavigationView::Pop()
   return poppedItem;
 }
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal
 

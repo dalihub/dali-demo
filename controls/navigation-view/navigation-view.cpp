@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view-impl.h>
 
-namespace Dali::Toolkit
+namespace Dali::Demo
 {
 NavigationView::NavigationView()
 {
@@ -46,16 +46,16 @@ NavigationView NavigationView::New()
 
 NavigationView NavigationView::DownCast(BaseHandle handle)
 {
-  return Control::DownCast<NavigationView, Internal::NavigationView>(handle);
+  return Toolkit::Control::DownCast<NavigationView, Internal::NavigationView>(handle);
 }
 
 NavigationView::NavigationView(Internal::NavigationView& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
 NavigationView::NavigationView(Dali::Internal::CustomActor* internal)
-: Control(internal)
+: Toolkit::Control(internal)
 {
   VerifyCustomActorPointer<Internal::NavigationView>(internal);
 }
@@ -70,4 +70,4 @@ Actor NavigationView::Pop()
   return GetImpl(*this).Pop();
 }
 
-} // namespace Dali::Toolkit
+} // namespace Dali::Demo

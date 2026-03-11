@@ -19,8 +19,8 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
-#include "shared/view.h"
 #include "controls/magnifier/magnifier.h"
+#include "shared/view.h"
 
 using namespace Dali;
 
@@ -201,7 +201,7 @@ public:
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.
-    Toolkit::ToolBar toolBar;
+    Demo::ToolBar toolBar;
     mContent = DemoHelper::CreateView(application,
                                       mView,
                                       toolBar,
@@ -219,10 +219,10 @@ public:
     overlay.SetProperty(Actor::Property::SIZE, mWindowSize);
     window.Add(overlay);
 
-    mMagnifier = Toolkit::Magnifier::New();
+    mMagnifier = Demo::Magnifier::New();
     mMagnifier.SetSourceActor(mView);
     mMagnifier.SetProperty(Actor::Property::SIZE, MAGNIFIER_SIZE * mWindowSize.width); // Size of magnifier is in relation to window width
-    mMagnifier.SetProperty(Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR);
+    mMagnifier.SetProperty(Demo::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR);
     mMagnifier.SetProperty(Actor::Property::SCALE, Vector3::ZERO);
     overlay.Add(mMagnifier);
 
@@ -236,10 +236,10 @@ public:
     constraint.Apply();
 
     // Create bouncing magnifier automatically bounces around screen.
-    mBouncingMagnifier = Toolkit::Magnifier::New();
+    mBouncingMagnifier = Demo::Magnifier::New();
     mBouncingMagnifier.SetSourceActor(mView);
     mBouncingMagnifier.SetProperty(Actor::Property::SIZE, MAGNIFIER_SIZE * mWindowSize.width); // Size of magnifier is in relation to window width
-    mBouncingMagnifier.SetProperty(Toolkit::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR);
+    mBouncingMagnifier.SetProperty(Demo::Magnifier::Property::MAGNIFICATION_FACTOR, MAGNIFICATION_FACTOR);
     overlay.Add(mBouncingMagnifier);
 
     mAnimationTimeProperty = mBouncingMagnifier.RegisterProperty("animationTime", 0.0f);
@@ -252,7 +252,7 @@ public:
     constraint.Apply();
 
     // Apply constraint to animate the source of the magnifier.
-    constraint = Constraint::New<Vector3>(mBouncingMagnifier, Toolkit::Magnifier::Property::SOURCE_POSITION, MagnifierPathConstraint(mWindowSize));
+    constraint = Constraint::New<Vector3>(mBouncingMagnifier, Demo::Magnifier::Property::SOURCE_POSITION, MagnifierPathConstraint(mWindowSize));
     constraint.AddSource(LocalSource(Actor::Property::SIZE));
     constraint.AddSource(LocalSource(mAnimationTimeProperty));
     constraint.Apply();
@@ -364,7 +364,7 @@ public:
    */
   void SetMagnifierPosition(const Vector3 position)
   {
-    mMagnifier.SetProperty(Toolkit::Magnifier::Property::SOURCE_POSITION, position);
+    mMagnifier.SetProperty(Demo::Magnifier::Property::SOURCE_POSITION, position);
 
     // position magnifier glass such that bottom edge is touching/near top of finger.
     Vector3 glassPosition(position);
@@ -385,15 +385,15 @@ public:
   }
 
 private:
-  Application&       mApplication;           ///< Application instance
-  Toolkit::Control   mView;                  ///< The view
-  Layer              mContent;               ///< The content layer
-  Toolkit::Magnifier mMagnifier;             ///< The manually controlled magnifier
-  Toolkit::Magnifier mBouncingMagnifier;     ///< The animating magnifier (swirly animation)
-  Vector3            mWindowSize;            ///< The size of the window
-  float              mAnimationTime;         ///< Keep track of start animation time.
-  Property::Index    mAnimationTimeProperty; ///< Animation time property (responsible for swirly animation)
-  bool               mMagnifierShown;        ///< Flag indicating whether the magnifier is being shown or not.
+  Application&     mApplication;           ///< Application instance
+  Toolkit::Control mView;                  ///< The view
+  Layer            mContent;               ///< The content layer
+  Demo::Magnifier  mMagnifier;             ///< The manually controlled magnifier
+  Demo::Magnifier  mBouncingMagnifier;     ///< The animating magnifier (swirly animation)
+  Vector3          mWindowSize;            ///< The size of the window
+  float            mAnimationTime;         ///< Keep track of start animation time.
+  Property::Index  mAnimationTimeProperty; ///< Animation time property (responsible for swirly animation)
+  bool             mMagnifierShown;        ///< Flag indicating whether the magnifier is being shown or not.
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

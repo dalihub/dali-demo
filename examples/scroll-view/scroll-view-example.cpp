@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 
 namespace
 {
@@ -185,7 +186,7 @@ public:
     // Create a effect change button. (right of toolbar)
     mEffectChangeButton = Toolkit::PushButton::New();
     mEffectChangeButton.ClickedSignal().Connect(this, &ExampleController::OnEffectTouched);
-    mToolBar.AddControl(mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create the content layer.
     AddContentLayer();
@@ -554,7 +555,7 @@ private:
 private:
   Application&       mApplication;      ///< Application instance
   Toolkit::Control   mView;             ///< The View instance.
-  Toolkit::ToolBar   mToolBar;          ///< The View's Toolbar.
+  Demo::ToolBar      mToolBar;          ///< The View's Toolbar.
   TextLabel          mTitleActor;       ///< The Toolbar's Title.
   Layer              mContentLayer;     ///< The content layer (contains game actors)
   ScrollView         mScrollView;       ///< ScrollView UI Component
