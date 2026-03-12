@@ -707,7 +707,6 @@ void PageTurnView::PanContinuing(const Vector2& gesturePosition)
       mPress           = true;
       mAnimatingCount++;
 
-      Demo::PageTurnView handle(GetOwner());
       mPageTurnStartedSignal.Emit(handle, static_cast<unsigned int>(mTurningPageIndex), !mPages[mIndex].isTurnBack);
       int id = mTurningPageIndex + (mPages[mIndex].isTurnBack ? -1 : 1);
       if(id >= 0 && id < mTotalPageCount)
@@ -1008,7 +1007,7 @@ bool PageTurnView::DoConnectSignal(BaseObject* object, ConnectionTrackerInterfac
 {
   Dali::BaseHandle handle(object);
 
-  bool                  connected(true);
+  bool               connected(true);
   Demo::PageTurnView pageTurnView = Demo::PageTurnView::DownCast(handle);
 
   if(0 == strcmp(signalName.c_str(), SIGNAL_PAGE_TURN_STARTED))
