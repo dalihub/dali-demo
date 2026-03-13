@@ -19,26 +19,26 @@
 #include <controls/bloom-view/bloom-view-impl.h>
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/common/stage.h>
-#include <dali/public-api/animation/constraint.h>
-#include <dali/public-api/animation/constraints.h>
-#include <dali/public-api/object/property-map.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
-#include <dali/public-api/render-tasks/render-task-list.h>
-#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
+#include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
+#include <dali/public-api/animation/constraint.h>
+#include <dali/public-api/animation/constraints.h>
+#include <dali/public-api/object/property-map.h>
+#include <dali/public-api/render-tasks/render-task-list.h>
+#include <dali/public-api/rendering/renderer.h>
 #include <iomanip>
 #include <sstream>
 
 // INTERNAL INCLUDES
 #include <controls/bloom-view/bloom-view.h>
-#include <controls/shaders/bloom-view-extract-shader-frag.h>
 #include <controls/shaders/bloom-view-composite-shader-frag.h>
-#include <controls/shaders/control-renderers-vert.h>
+#include <controls/shaders/bloom-view-extract-shader-frag.h>
 #include <controls/shaders/control-renderers-frag.h>
+#include <controls/shaders/control-renderers-vert.h>
 
 namespace Dali::Demo::Internal
 {

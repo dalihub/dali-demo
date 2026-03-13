@@ -23,10 +23,11 @@
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
 #include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/animation/constraint.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/rendering/shader.h>
 #include <iomanip>
@@ -37,7 +38,7 @@
 #include <controls/shaders/shadow-view-render-shader-frag.h>
 #include <controls/shaders/shadow-view-render-shader-vert.h>
 #include <controls/shadow-view/shadow-view-impl.h>
-#include <dali/integration-api/string-utils.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;

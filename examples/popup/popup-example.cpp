@@ -19,8 +19,10 @@
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
+#include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;

@@ -19,15 +19,15 @@
 #include "page-turn-view-impl.h"
 
 // EXTERNAL INCLUDES
+#include <cstring> // for strcmp
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/debug.h>
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/animation/constraint.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
-#include <cstring> // for strcmp
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>

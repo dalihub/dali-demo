@@ -25,12 +25,12 @@
 #include <dali-toolkit/public-api/visuals/border-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
 #include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/animation/constraint.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 
 using Dali::Integration::GetStdString;
@@ -203,7 +203,7 @@ void Magnifier::OnInitialize()
   // Use a 1 frame delayed source position to determine the camera actor's position.
   // This is necessary as the viewport is determined by the Magnifier's Actor's World position (which is computed
   // at the end of the update cycle i.e. after constraints have been applied.)
-  //Property::Index propertySourcePositionDelayed = mCameraActor.RegisterProperty("delayedSourcePosition",   Vector3::ZERO);
+  // Property::Index propertySourcePositionDelayed = mCameraActor.RegisterProperty("delayedSourcePosition",   Vector3::ZERO);
 
   constraint = Constraint::New<Vector3>(mCameraActor, Actor::Property::POSITION, CameraActorPositionConstraint(stageSize, mDefaultCameraDistance));
   constraint.AddSource(Source(mSourceActor, Actor::Property::WORLD_POSITION));

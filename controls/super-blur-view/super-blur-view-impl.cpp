@@ -19,24 +19,25 @@
 #include "super-blur-view-impl.h"
 
 // EXTERNAL INCLUDES
+#include <cmath>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/public-api/image-loader/sync-image-loader.h>
 #include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
 #include <dali/devel-api/scripting/scripting.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/animation/constraint.h>
 #include <dali/public-api/object/property-map.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
 #include <dali/public-api/rendering/renderer.h>
-#include <cmath>
 
 // INTERNAL INCLUDES
 #include <controls/shaders/control-renderers-frag.h>
 #include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/super-blur-view-frag.h>
-#include <dali/integration-api/string-utils.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;

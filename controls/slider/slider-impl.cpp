@@ -19,16 +19,16 @@
 #include "slider-impl.h"
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/events/touch-event.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
 
 #include <dali-toolkit/devel-api/asset-manager/asset-manager.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali-toolkit/public-api/controls/image-view/image-view.h>
 #include <dali-toolkit/public-api/visuals/image-visual-properties.h>
 
-#include <dali/integration-api/string-utils.h>
 #include <limits>
 #include <sstream>
 

@@ -19,6 +19,8 @@
 #include "progress-bar-impl.h"
 
 // EXTERNAL INCLUDES
+#include <algorithm>
+#include <cstring> // for strcmp
 #include <dali-toolkit/devel-api/controls/control-depth-index-ranges.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-base.h>
@@ -30,11 +32,9 @@
 #include <dali-toolkit/public-api/visuals/image-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/text-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/public-api/math/math-utils.h>
-#include <dali/public-api/object/type-registry-helper.h>
 #include <dali/public-api/size-negotiation/relayout-container.h>
-#include <algorithm>
-#include <cstring> // for strcmp
 #include <sstream>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/string-utils.h>

@@ -19,27 +19,27 @@
 #include "effects-view-impl.h"
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/devel-api/controls/control-depth-index-ranges.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
 #include <dali/public-api/animation/constraint.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/object/property.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/rendering/renderer.h>
-#include <dali-toolkit/devel-api/controls/control-depth-index-ranges.h>
-#include <dali-toolkit/devel-api/controls/control-devel.h>
-#include <dali-toolkit/devel-api/controls/control-renderers.h>
 
 // INTERNAL INCLUDES
 #include <controls/filters/blur-two-pass-filter.h>
 #include <controls/filters/emboss-filter.h>
 #include <controls/filters/spread-filter.h>
-#include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/control-renderers-frag.h>
-#include <controls/shaders/effects-view-vert.h>
+#include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/effects-view-frag.h>
+#include <controls/shaders/effects-view-vert.h>
 
 using namespace Dali::Toolkit;
 using namespace Dali::Toolkit::Internal;
