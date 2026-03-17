@@ -18,7 +18,13 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -389,7 +395,7 @@ public:
       return true;
     }
 
-    if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == "radioSelectEnable")
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == "radioSelectEnable")
     {
       mUpdateButton.SetProperty(Toolkit::Button::Property::DISABLED, false);
 
@@ -403,7 +409,7 @@ public:
 
       mToggleButton.SetProperty(Toolkit::Button::Property::DISABLED, false);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == "radioSelectDisable")
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == "radioSelectDisable")
     {
       mUpdateButton.SetProperty(Toolkit::Button::Property::DISABLED, true);
 
@@ -441,7 +447,7 @@ public:
   bool OnCheckBoxesSelected(Toolkit::Button button)
   {
     bool isSelected = button.GetProperty(Toolkit::Button::Property::SELECTED).Get<bool>();
-    if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == "checkbox1")
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == "checkbox1")
     {
       if(isSelected)
       {
@@ -453,7 +459,7 @@ public:
       }
     }
 
-    if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == "checkbox2")
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == "checkbox2")
     {
       if(isSelected)
       {
@@ -465,7 +471,7 @@ public:
       }
     }
 
-    if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == "checkbox3")
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == "checkbox3")
     {
       if(isSelected)
       {

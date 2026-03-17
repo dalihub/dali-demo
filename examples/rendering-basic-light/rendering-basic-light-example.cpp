@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,14 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/rendering-basic-light-frag.h"
 #include "generated/rendering-basic-light-vert.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Toolkit;
@@ -264,7 +270,7 @@ public:
    */
   void CreateCubeShader()
   {
-    mShader = Shader::New(SHADER_RENDERING_BASIC_LIGHT_VERT, SHADER_RENDERING_BASIC_LIGHT_FRAG);
+    mShader = Shader::New(ToDaliStringView(SHADER_RENDERING_BASIC_LIGHT_VERT), ToDaliStringView(SHADER_RENDERING_BASIC_LIGHT_FRAG));
 
     float scale = 120.0f;
     mShader.RegisterProperty("light.position", Vector3(1.2 * scale, scale, 2.0 * scale));

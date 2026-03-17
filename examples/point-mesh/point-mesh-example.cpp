@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,16 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/point-mesh-frag.h"
 #include "generated/point-mesh-vert.h"
 #include "shared/utility.h"
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -109,7 +115,7 @@ public:
     Texture texture0 = DemoHelper::LoadTexture(MATERIAL_SAMPLE);
     Texture texture1 = DemoHelper::LoadTexture(MATERIAL_SAMPLE2);
 
-    Shader shader = Shader::New(SHADER_POINT_MESH_VERT, SHADER_POINT_MESH_FRAG);
+    Shader shader = Shader::New(ToDaliStringView(SHADER_POINT_MESH_VERT), ToDaliStringView(SHADER_POINT_MESH_FRAG));
 
     TextureSet textureSet = TextureSet::New();
     textureSet.SetTexture(0u, texture0);

@@ -20,7 +20,13 @@
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -191,7 +197,7 @@ public:
 
   bool OnButtonClicked(Toolkit::Button button)
   {
-    if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_1CELL_ID)
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_1CELL_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -209,7 +215,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_3CELL_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_3CELL_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -238,7 +244,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_3X3CELL_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_3X3CELL_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -302,7 +308,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_FIXED1_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_FIXED1_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -353,7 +359,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_FIXED2_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_FIXED2_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -411,7 +417,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_FIT1_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_FIT1_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -477,7 +483,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_FIT2_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_FIT2_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -541,7 +547,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_NATURAL1_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_NATURAL1_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
@@ -611,7 +617,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_NATURAL2_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_NATURAL2_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
@@ -664,7 +670,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_NATURAL3_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == TABLEVIEW_BUTTON_NATURAL3_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
@@ -714,7 +720,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_IMAGE_SCALE_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_IMAGE_SCALE_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -727,7 +733,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_IMAGE_FIT_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_IMAGE_FIT_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -741,7 +747,7 @@ public:
 
       ShowPopup(mPopup);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_IMAGE_FILL_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_IMAGE_FILL_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);

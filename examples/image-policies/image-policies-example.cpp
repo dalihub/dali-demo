@@ -21,8 +21,14 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
 #include <string>
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Toolkit;
@@ -174,9 +180,11 @@ public:
     dualImageViewTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     dualImageViewTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     dualImageViewTable.SetCellPadding(Vector2(6.0f, 0.0f));
-    TextLabel attached = TextLabel::New("ATTACHED loaded image \nWill appear here");
+    TextLabel attached = TextLabel::New();
+    attached.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ATTACHED loaded image \nWill appear here"));
     attached.SetProperty(TextLabel::Property::MULTI_LINE, true);
-    TextLabel immediate = TextLabel::New("IMMEDIATE loaded image \nWill appear here");
+    TextLabel immediate = TextLabel::New();
+    immediate.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("IMMEDIATE loaded image \nWill appear here"));
     immediate.SetProperty(TextLabel::Property::MULTI_LINE, true);
 
     dualImageViewTable.AddChild(attached, TableView::CellPosition(0, 0));
@@ -204,8 +212,10 @@ public:
     dualImageViewTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     dualImageViewTable.SetCellPadding(Vector2(6.0f, 0.0f));
 
-    TextLabel attached  = TextLabel::New("ATTACHED");
-    TextLabel immediate = TextLabel::New("IMMEDIATE");
+    TextLabel attached = TextLabel::New();
+    attached.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ATTACHED"));
+    TextLabel immediate = TextLabel::New();
+    immediate.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("IMMEDIATE"));
     dualImageViewTable.AddChild(attached, TableView::CellPosition(1, 0));
     dualImageViewTable.AddChild(immediate, TableView::CellPosition(1, 1));
     dualImageViewTable.SetFitHeight(1);
@@ -410,8 +420,8 @@ public:
     imagePropertyMap.Insert(Visual::Property::TYPE, Visual::IMAGE);
     imagePropertyMap.Insert(ImageVisual::Property::URL, NEXT_BUTTON_PRESSED_IMAGE);
     mNextButton.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, imagePropertyMap);
-    mNextButton.SetProperty(Button::Property::DISABLED_UNSELECTED_BACKGROUND_VISUAL, LOADING_IMAGE);
-    mNextButton.SetProperty(Button::Property::DISABLED_SELECTED_BACKGROUND_VISUAL, NEXT_BUTTON_DISABLED_IMAGE);
+    mNextButton.SetProperty(Button::Property::DISABLED_UNSELECTED_BACKGROUND_VISUAL, ToPropertyValue(LOADING_IMAGE));
+    mNextButton.SetProperty(Button::Property::DISABLED_SELECTED_BACKGROUND_VISUAL, ToPropertyValue(NEXT_BUTTON_DISABLED_IMAGE));
     mNextButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     mNextButton.SetProperty(Actor::Property::POSITION_Y, -50.0f);
     mNextButton.SetProperty(Actor::Property::SIZE, Vector2(100.0f, 100.0f));
@@ -427,13 +437,15 @@ public:
     outlineMap["width"] = 1.0f;
 
     // Create Title Label
-    mTitle = TextLabel::New("Image Polices");
+    mTitle = TextLabel::New();
+    mTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Image Polices"));
     mTitle.SetProperty(TextLabel::Property::TEXT_COLOR, Color::CYAN);
     mTable.AddChild(mTitle, TableView::CellPosition(TableRowPlacement::TITLE, 0));
     mTable.SetFitHeight(TableRowPlacement::TITLE);
 
     // Create Instructions label
-    mInstructions = TextLabel::New("This is an explaination of each example");
+    mInstructions = TextLabel::New();
+    mInstructions.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("This is an explaination of each example"));
     mInstructions.SetProperty(TextLabel::Property::MULTI_LINE, true);
     mInstructions.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
     mInstructions.SetProperty(TextLabel::Property::OUTLINE, outlineMap);
@@ -502,8 +514,8 @@ private:
       {
         ReleasePolicyDestroyedExample06();
         // Change Next button to complete button ( will quit app once pressed )
-        button.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, OK_IMAGE_IMAGE);
-        button.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, OK_IMAGE_IMAGE);
+        button.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, ToPropertyValue(OK_IMAGE_IMAGE));
+        button.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, ToPropertyValue(OK_IMAGE_IMAGE));
         break;
       }
       default:

@@ -23,10 +23,16 @@
 #include "dali/public-api/actors/actor.h"
 #include "dali/public-api/rendering/renderer.h"
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/deferred-shading-mainpass-frag.h"
 #include "generated/deferred-shading-mainpass-vert.h"
 #include "generated/deferred-shading-prepass-frag.h"
 #include "generated/deferred-shading-prepass-vert.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -374,7 +380,7 @@ private:
     Geometry mesh = CreateOctahedron(false);
 
     // Create main actors
-    Shader     preShader        = Shader::New(SHADER_DEFERRED_SHADING_PREPASS_VERT, SHADER_DEFERRED_SHADING_PREPASS_FRAG);
+    Shader     preShader        = Shader::New(ToDaliStringView(SHADER_DEFERRED_SHADING_PREPASS_VERT), ToDaliStringView(SHADER_DEFERRED_SHADING_PREPASS_FRAG));
     TextureSet noTexturesThanks = TextureSet::New();
     Renderer   meshRenderer     = CreateRenderer(noTexturesThanks, mesh, preShader, OPTION_DEPTH_TEST | OPTION_DEPTH_WRITE);
     meshRenderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
@@ -463,7 +469,7 @@ private:
     finalImageTextures.SetSampler(1, sampler);
     finalImageTextures.SetSampler(2, sampler);
 
-    Shader   shdMain            = Shader::New(SHADER_DEFERRED_SHADING_MAINPASS_VERT, SHADER_DEFERRED_SHADING_MAINPASS_FRAG);
+    Shader   shdMain            = Shader::New(ToDaliStringView(SHADER_DEFERRED_SHADING_MAINPASS_VERT), ToDaliStringView(SHADER_DEFERRED_SHADING_MAINPASS_FRAG));
     Geometry finalImageGeom     = CreateTexturedQuadGeometry(true);
     Renderer finalImageRenderer = CreateRenderer(finalImageTextures, finalImageGeom, shdMain);
     RegisterDepthProperties(depth, zNear, finalImageRenderer);

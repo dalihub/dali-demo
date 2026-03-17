@@ -131,7 +131,7 @@ public:
    * @return True if the signal was connected.
    * @post If a signal was connected, ownership of functor was passed to CallbackBase. Otherwise the caller is responsible for deleting the unused functor.
    */
-  static bool DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const std::string& signalName, FunctorDelegate* functor);
+  static bool DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const String& signalName, FunctorDelegate* functor);
 
   // Properties
 

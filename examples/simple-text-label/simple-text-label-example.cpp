@@ -22,6 +22,12 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -53,7 +59,8 @@ public:
 
     window.KeyEventSignal().Connect(this, &SimpleTextLabelExample::OnKeyEvent);
 
-    mLabel = TextLabel::New("A Quick Brown Fox Jumps Over The Lazy Dog");
+    mLabel = TextLabel::New();
+    mLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("A Quick Brown Fox Jumps Over The Lazy Dog"));
     mLabel.SetProperty(Dali::Actor::Property::NAME, "SimpleTextLabel");
     mLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);

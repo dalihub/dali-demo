@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,14 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/clipped-image-frag.h"
 #include "generated/clipped-image-vert.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 namespace ClippedImage
 {
@@ -48,7 +54,7 @@ Shader& CreateShader()
 
   if(!shader)
   {
-    shader = Shader::New(SHADER_CLIPPED_IMAGE_VERT, SHADER_CLIPPED_IMAGE_FRAG);
+    shader = Shader::New(ToDaliStringView(SHADER_CLIPPED_IMAGE_VERT), ToDaliStringView(SHADER_CLIPPED_IMAGE_FRAG));
   }
 
   return shader;
@@ -165,7 +171,7 @@ Geometry& CreateGeometry()
 const float CIRCLE_GEOMETRY = 0.0f;
 const float QUAD_GEOMETRY   = 1.0f;
 
-Dali::Toolkit::Control Create(const std::string& imagePath, Property::Index& propertyIndex)
+Dali::Toolkit::Control Create(const Dali::String& imagePath, Property::Index& propertyIndex)
 {
   // Create a control which whose geometry will be morphed between a circle and a quad
   Control clippedImage = Control::New();

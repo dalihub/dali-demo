@@ -23,8 +23,14 @@
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali/dali.h>
 #include <dali/devel-api/adaptor-framework/vector-animation-renderer.h>
+#include <dali/integration-api/string-utils.h>
 #include <string>
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -53,12 +59,12 @@ enum CellPlacement
 
 unsigned int GetControlIndex(Control control)
 {
-  std::string  controlName = control.GetProperty<std::string>(Dali::Actor::Property::NAME);
+  String       controlName = control.GetProperty<String>(Dali::Actor::Property::NAME);
   unsigned int index       = 0;
 
   if(controlName != "")
   {
-    index = std::stoul(controlName);
+    index = std::stoul(ToStdString(controlName));
   }
 
   return index;
@@ -112,7 +118,7 @@ public:
       mPlayButtons[x].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       mPlayButtons[x].SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       std::string s = std::to_string(x);
-      mPlayButtons[x].SetProperty(Dali::Actor::Property::NAME, s);
+      mPlayButtons[x].SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(s));
       mTable.AddChild(mPlayButtons[x], TableView::CellPosition(CellPlacement::TOP_BUTTON, x));
 
       mStopButtons[x] = PushButton::New();
@@ -122,7 +128,7 @@ public:
       mStopButtons[x].ClickedSignal().Connect(this, &AnimatedVectorImageViewController::OnStopButtonClicked);
       mStopButtons[x].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       mStopButtons[x].SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-      mStopButtons[x].SetProperty(Dali::Actor::Property::NAME, s);
+      mStopButtons[x].SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(s));
       mTable.AddChild(mStopButtons[x], TableView::CellPosition(CellPlacement::LOWER_BUTTON, x));
 
       mImageViews[x] = ImageView::New();
@@ -135,7 +141,7 @@ public:
       mImageViews[x].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mImageViews[x].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
       mImageViews[x].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-      mImageViews[x].SetProperty(Dali::Actor::Property::NAME, s);
+      mImageViews[x].SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(s));
 
       DevelControl::VisualEventSignal(mImageViews[x]).Connect(this, &AnimatedVectorImageViewController::OnVisualEvent);
 

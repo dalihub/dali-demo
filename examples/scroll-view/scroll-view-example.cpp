@@ -21,7 +21,13 @@
 // INTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -244,8 +250,8 @@ private:
     ss << APPLICATION_TITLE << ": " << EFFECT_MODE_NAME[mEffectMode];
     SetTitle(ss.str());
 
-    mEffectChangeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, mEffectIcon[mEffectMode]);
-    mEffectChangeButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, mEffectIconSelected[mEffectMode]);
+    mEffectChangeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, ToDaliString(mEffectIcon[mEffectMode]));
+    mEffectChangeButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, ToDaliString(mEffectIconSelected[mEffectMode]));
 
     // remove old Effect if exists.
     if(mScrollViewEffect)
@@ -454,14 +460,14 @@ private:
     ImageView     actor = ImageView::New();
     Property::Map map;
     map[Visual::Property::TYPE]                = Visual::IMAGE;
-    map[ImageVisual::Property::URL]            = filename;
+    map[ImageVisual::Property::URL]            = ToDaliString(filename);
     map[ImageVisual::Property::DESIRED_WIDTH]  = width;
     map[ImageVisual::Property::DESIRED_HEIGHT] = height;
     map[ImageVisual::Property::FITTING_MODE]   = FittingMode::SCALE_TO_FILL;
     map[ImageVisual::Property::SAMPLING_MODE]  = SamplingMode::BOX_THEN_LINEAR;
     actor.SetProperty(ImageView::Property::IMAGE, map);
 
-    actor.SetProperty(Dali::Actor::Property::NAME, filename);
+    actor.SetProperty(Dali::Actor::Property::NAME, ToDaliString(filename));
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
 
@@ -535,7 +541,7 @@ private:
       mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER);
     }
 
-    mTitleActor.SetProperty(Toolkit::TextLabel::Property::TEXT, title);
+    mTitleActor.SetProperty(Toolkit::TextLabel::Property::TEXT, ToPropertyValue(title));
   }
 
   /**

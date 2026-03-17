@@ -19,7 +19,10 @@
 #include "contact-card-layouter.h"
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "contact-card.h"
+
+using Dali::Integration::ToDaliString;
 
 using namespace Dali;
 
@@ -95,7 +98,7 @@ void ContactCardLayouter::AddContact(Dali::Window window, const std::string& con
   }
 
   // Create a new contact card and add to our container
-  mContactCards.push_back(new ContactCard(window, mContactCardLayoutInfo, contactName, contactAddress, imagePath, NextCardPosition()));
+  mContactCards.push_back(new ContactCard(window, mContactCardLayoutInfo, ToDaliString(contactName), ToDaliString(contactAddress), ToDaliString(imagePath), NextCardPosition()));
 }
 
 const Vector2& ContactCardLayouter::NextCardPosition()

@@ -56,7 +56,7 @@ public:
    * @param[in]  imagePath              The path to the image to display.
    * @param[in]  position               The unique folded position of this particular contact-card.
    */
-  ContactCard(Dali::Window window, const ContactCardLayoutInfo& contactCardLayoutInfo, const std::string& contactName, const std::string& contactAddress, const std::string& imagePath, const Dali::Vector2& position);
+  ContactCard(Dali::Window window, const ContactCardLayoutInfo& contactCardLayoutInfo, const Dali::String& contactName, const Dali::String& contactAddress, const Dali::String& imagePath, const Dali::Vector2& position);
 
 private:
   /**

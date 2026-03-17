@@ -16,8 +16,15 @@
  */
 
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/integration-api/string-utils.h>
 #include "controls/progress-bar/progress-bar.h"
 #include "shared/view.h"
+
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -197,7 +204,7 @@ private:
     newLabel.precision(2);
     newLabel << std::fixed << "current : " << value << " / loaded : " << secondaryValue;
 
-    mProgressBarDefault.SetProperty(ProgressBar::Property::LABEL_VISUAL, newLabel.str());
+    mProgressBarDefault.SetProperty(ProgressBar::Property::LABEL_VISUAL, ToPropertyValue(newLabel.str()));
   }
 
   bool OnSetIndeterminateButtonSelected(Toolkit::Button button)

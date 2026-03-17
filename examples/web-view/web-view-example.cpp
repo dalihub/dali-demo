@@ -17,7 +17,13 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
 #include "dali-toolkit/devel-api/controls/web-view/web-view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -75,7 +81,7 @@ public:
     mWebView.LoadUrl(url);
     window.Add(mWebView);
 
-    mAddressLabel = Toolkit::TextLabel::New(url);
+    mAddressLabel = Toolkit::TextLabel::New(ToDaliString(url));
     mAddressLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mAddressLabel.SetProperty(Toolkit::TextLabel::Property::POINT_SIZE, fontSize);
     mAddressLabel.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);

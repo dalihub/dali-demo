@@ -20,6 +20,12 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -34,51 +40,51 @@ const char* TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
 
 const DemoHelper::ViewStyle VIEW_STYLE(0.08f, 0.45f, 80.f, 4.f);
 
-const std::string FLEX_DIRECTION[] = {
+const String FLEX_DIRECTION[] = {
   "column",
   "columnReverse",
   "row",
   "rowReverse"};
 
-const unsigned int NUM_FLEX_DIRECTION = sizeof(FLEX_DIRECTION) / sizeof(std::string);
+const unsigned int NUM_FLEX_DIRECTION = sizeof(FLEX_DIRECTION) / sizeof(String);
 
-const std::string FLEX_WRAP[] = {
+const String FLEX_WRAP[] = {
   "noWrap",
   "Wrap"};
 
-const unsigned int NUM_FLEX_WRAP = sizeof(FLEX_WRAP) / sizeof(std::string);
+const unsigned int NUM_FLEX_WRAP = sizeof(FLEX_WRAP) / sizeof(String);
 
-const std::string CONTENT_DIRECTION[] = {
+const String CONTENT_DIRECTION[] = {
   "inherit",
   "LTR",
   "RTL"};
 
-const unsigned int NUM_CONTENT_DIRECTION = sizeof(CONTENT_DIRECTION) / sizeof(std::string);
+const unsigned int NUM_CONTENT_DIRECTION = sizeof(CONTENT_DIRECTION) / sizeof(String);
 
-const std::string JUSTIFY_CONTENT[] = {
+const String JUSTIFY_CONTENT[] = {
   "flexStart",
   "center",
   "flexEnd",
   "spaceBetween",
   "spaceAround"};
 
-const unsigned int NUM_JUSTIFY_CONTENT = sizeof(JUSTIFY_CONTENT) / sizeof(std::string);
+const unsigned int NUM_JUSTIFY_CONTENT = sizeof(JUSTIFY_CONTENT) / sizeof(String);
 
-const std::string ALIGN_ITEMS[] = {
+const String ALIGN_ITEMS[] = {
   "flexStart",
   "center",
   "flexEnd",
   "stretch"};
 
-const unsigned int NUM_ALIGN_ITEMS = sizeof(ALIGN_ITEMS) / sizeof(std::string);
+const unsigned int NUM_ALIGN_ITEMS = sizeof(ALIGN_ITEMS) / sizeof(String);
 
-const std::string ALIGN_CONTENT[] = {
+const String ALIGN_CONTENT[] = {
   "flexStart",
   "center",
   "flexEnd",
   "stretch"};
 
-const unsigned int NUM_ALIGN_CONTENT = sizeof(ALIGN_CONTENT) / sizeof(std::string);
+const unsigned int NUM_ALIGN_CONTENT = sizeof(ALIGN_CONTENT) / sizeof(String);
 
 } // unnamed namespace
 
@@ -191,7 +197,7 @@ public:
     contents.Add(mFlexContainer);
 
     // Add a text label to the container for showing the recently updated flexbox property value
-    mFlexPropertyLabel = TextLabel::New(FLEX_DIRECTION[mCurrentFlexDirection]);
+    mFlexPropertyLabel = TextLabel::New(ToDaliString(FLEX_DIRECTION[mCurrentFlexDirection]));
     mFlexPropertyLabel.SetProperty(FlexContainer::ChildProperty::FLEX_MARGIN, Vector4(10.0f, 10.0f, 10.0f, 10.0f));
     mFlexPropertyLabel.SetProperty(FlexContainer::ChildProperty::FLEX, 0.05f); // 5 pecent of the container size in the main axis
     mFlexPropertyLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -223,8 +229,9 @@ public:
       // Add a label to the button so that we can identify each item more easily
       std::ostringstream index;
       index << i + 1;
-      flexItem.SetProperty(Toolkit::Button::Property::LABEL, index.str());
-      flexItem.SetProperty(Dali::Actor::Property::NAME, "FlexItem " + index.str());
+      flexItem.SetProperty(Toolkit::Button::Property::LABEL, ToPropertyValue(index.str()));
+      auto flexItemString = "FlexItem " + index.str();
+      flexItem.SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(flexItemString));
 
       // Set a fixed size to the items so that we can wrap the line and test these
       // flex properties that only work when there are multiple lines in the layout
@@ -303,7 +310,7 @@ private:
    * @param[in] title The new title for the view.
    * @param[in] propertyValue The value of the flexbox property.
    */
-  void SetTitle(const std::string& title, const std::string& propertyValue)
+  void SetTitle(const String& title, const String& propertyValue)
   {
     if(!mTitleActor)
     {

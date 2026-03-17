@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,10 @@
 #include "generated/metaball-refraction-frag.h"
 #include "generated/metaball-vert.h"
 #include "shared/utility.h" // DemoHelper::LoadTexture
+
+#include <dali/integration-api/string-utils.h>
+
+using Dali::Integration::ToDaliStringView;
 
 using namespace Dali;
 
@@ -298,7 +302,7 @@ void MetaballRefracController::CreateMetaballActors()
   const float aspect = mScreenSize.y / mScreenSize.x;
 
   // Create the renderer for the metaballs
-  Shader   shader           = Shader::New(SHADER_METABALL_VERT, SHADER_METABALL_FRAG, Shader::Hint::MODIFIES_GEOMETRY);
+  Shader   shader           = Shader::New(ToDaliStringView(SHADER_METABALL_VERT), ToDaliStringView(SHADER_METABALL_FRAG), Shader::Hint::MODIFIES_GEOMETRY);
   Geometry metaballGeometry = CreateGeometry();
   Renderer renderer         = Renderer::New(metaballGeometry, shader);
   renderer.SetProperty(Renderer::Property::BLEND_MODE, BlendMode::ON);
@@ -364,7 +368,7 @@ void MetaballRefracController::CreateMetaballImage()
 void MetaballRefracController::CreateComposition()
 {
   // Create Refraction shader and renderer
-  mShaderRefraction = Shader::New(SHADER_METABALL_VERT, SHADER_METABALL_REFRACTION_FRAG);
+  mShaderRefraction = Shader::New(ToDaliStringView(SHADER_METABALL_VERT), ToDaliStringView(SHADER_METABALL_REFRACTION_FRAG));
 
   // Create new texture set
   mTextureSetRefraction = TextureSet::New();
@@ -372,7 +376,7 @@ void MetaballRefracController::CreateComposition()
   mTextureSetRefraction.SetTexture(1u, mMetaballFBO.GetColorTexture());
 
   // Create normal shader
-  mShaderNormal = Shader::New(SHADER_METABALL_VERT, SHADER_FRAGMENT_FRAG);
+  mShaderNormal = Shader::New(ToDaliStringView(SHADER_METABALL_VERT), ToDaliStringView(SHADER_FRAGMENT_FRAG));
 
   // Create new texture set
   mTextureSetNormal = TextureSet::New();

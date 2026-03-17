@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,12 @@
 #include <dali-toolkit/devel-api/drag-drop-detector/drag-and-drop-detector.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -80,7 +86,8 @@ public:
     // Respond to key events
     window.KeyEventSignal().Connect(this, &DragAndDropExample::OnKeyEvent);
 
-    TextLabel hintText = TextLabel::New("please drag one textlabel, move and drop on other textlabel");
+    TextLabel hintText = TextLabel::New();
+    hintText.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("please drag one textlabel, move and drop on other textlabel"));
     hintText.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     hintText.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
     hintText.SetProperty(TextLabel::Property::MULTI_LINE, true);
@@ -94,11 +101,11 @@ public:
         break;
       }
 
-      std::string str = "textlabel ";
-      mTextLabel[i]   = TextLabel::New(str + std::to_string(i));
+      std::string str = "textlabel " + std::to_string(i);
+      mTextLabel[i]   = TextLabel::New(ToDaliString(str));
       mTextLabel[i].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
       mTextLabel[i].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
-      mTextLabel[i].SetProperty(Dali::Actor::Property::NAME, "textlabel " + std::to_string(i));
+      mTextLabel[i].SetProperty(Dali::Actor::Property::NAME, ToDaliString(str));
       mTextLabel[i].SetProperty(Actor::Property::LEAVE_REQUIRED, true);
       mTextLabel[i].SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
       mTextLabel[i].SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
@@ -136,7 +143,7 @@ public:
   void OnStart(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnStart---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<std::string>(Dali::Actor::Property::NAME).c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<String>(Dali::Actor::Property::NAME).CStr());
 
     control.SetProperty(Actor::Property::OPACITY, 0.1f);
     Vector2 screenPos = detector.GetCurrentScreenPosition();
@@ -157,26 +164,26 @@ public:
   void OnEnter(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnEnter---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<std::string>(Dali::Actor::Property::NAME).c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<String>(Dali::Actor::Property::NAME).CStr());
   }
 
   void OnExit(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnExit---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<std::string>(Dali::Actor::Property::NAME).c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<String>(Dali::Actor::Property::NAME).CStr());
   }
 
   void OnMoved(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::Verbose, "---OnMoved---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::Verbose, "---control name is %s---\n", control.GetProperty<std::string>(Dali::Actor::Property::NAME).c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::Verbose, "---control name is %s---\n", control.GetProperty<String>(Dali::Actor::Property::NAME).CStr());
     DALI_LOG_INFO(gDragAndDropFilter, Debug::Verbose, "---coordinate is (%f, %f)---\n", detector.GetCurrentScreenPosition().x, detector.GetCurrentScreenPosition().y);
   }
 
   void OnDropped(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnDropped---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<std::string>(Dali::Actor::Property::NAME).c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<String>(Dali::Actor::Property::NAME).CStr());
 
     Vector2     screenPos = detector.GetCurrentScreenPosition();
     Rect<float> targetRect(screenPos.x, screenPos.y, 0.0f, 0.0f);
@@ -257,7 +264,7 @@ public:
   void OnEnd(Control control, Dali::Toolkit::DragAndDropDetector detector)
   {
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnEnd---\n");
-    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<std::string>(Dali::Actor::Property::NAME).c_str());
+    DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<String>(Dali::Actor::Property::NAME).CStr());
 
     control.SetProperty(Actor::Property::OPACITY, 1.0f);
   }

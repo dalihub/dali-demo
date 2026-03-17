@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@
 #include "generated/game-renderer-vert.h"
 
 #include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::ToDaliStringView;
 
 GameRenderer::GameRenderer()
 : mModel(NULL),
@@ -50,7 +52,7 @@ void GameRenderer::Setup()
 {
   if(!mRenderer && mModel)
   {
-    Dali::Shader shader = Dali::Shader::New(SHADER_GAME_RENDERER_VERT, SHADER_GAME_RENDERER_FRAG);
+    Dali::Shader shader = Dali::Shader::New(ToDaliStringView(SHADER_GAME_RENDERER_VERT), ToDaliStringView(SHADER_GAME_RENDERER_FRAG));
     mRenderer           = Dali::Renderer::New(mModel->GetGeometry(), shader);
     mRenderer.SetProperty(Dali::Renderer::Property::DEPTH_WRITE_MODE, Dali::DepthWriteMode::ON);
     mRenderer.SetProperty(Dali::Renderer::Property::DEPTH_FUNCTION, Dali::DepthFunction::LESS_EQUAL);

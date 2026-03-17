@@ -29,6 +29,12 @@
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-fold-effect.h>
 #include <dali-toolkit/devel-api/transition-effects/cube-transition-wave-effect.h>
 #include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -322,17 +328,17 @@ bool CubeTransitionApp::OnEffectButtonClicked(Toolkit::Button button)
   if(mCurrentEffect == mCubeWaveEffect)
   {
     mCurrentEffect = mCubeCrossEffect;
-    mTitle.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_CROSS));
+    mTitle.SetProperty(TextLabel::Property::TEXT, APPLICATION_TITLE_CROSS);
   }
   else if(mCurrentEffect == mCubeCrossEffect)
   {
     mCurrentEffect = mCubeFoldEffect;
-    mTitle.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_FOLD));
+    mTitle.SetProperty(TextLabel::Property::TEXT, APPLICATION_TITLE_FOLD);
   }
   else
   {
     mCurrentEffect = mCubeWaveEffect;
-    mTitle.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_WAVE));
+    mTitle.SetProperty(TextLabel::Property::TEXT, APPLICATION_TITLE_WAVE);
   }
   mContent.Add(mCurrentEffect);
 

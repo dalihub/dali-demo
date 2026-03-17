@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,10 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/rendering-line-frag.h"
 #include "generated/rendering-line-vert.h"
+using Dali::Integration::ToDaliStringView;
 
 using namespace Dali;
 using namespace Toolkit;
@@ -117,7 +119,7 @@ public:
    */
   void CreateLineShader()
   {
-    mShader = Shader::New(SHADER_RENDERING_LINE_VERT, SHADER_RENDERING_LINE_FRAG);
+    mShader = Shader::New(ToDaliStringView(SHADER_RENDERING_LINE_VERT), ToDaliStringView(SHADER_RENDERING_LINE_FRAG));
   }
 
   /**

@@ -26,8 +26,14 @@
 #include <iostream>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "shared/multi-language-strings.h"
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -103,7 +109,7 @@ public:
     return true;
   }
 
-  TextField CreateTextField(const Vector2& windowSize, const std::string& text)
+  TextField CreateTextField(const Vector2& windowSize, const String& text)
   {
     TextField field = TextField::New();
     field.SetProperty(Dali::Actor::Property::NAME, "textField");
@@ -137,7 +143,7 @@ public:
     if(mButton && mField)
     {
       Property::Value text = mField.GetProperty(TextField::Property::TEXT);
-      mButtonLabel         = text.Get<std::string>();
+      mButtonLabel         = text.Get<String>();
       mButton.SetProperty(Toolkit::Button::Property::LABEL, mButtonLabel);
     }
 
@@ -162,7 +168,7 @@ public:
           if(mButton && mField)
           {
             Property::Value text = mField.GetProperty(TextField::Property::TEXT);
-            mButtonLabel         = text.Get<std::string>();
+            mButtonLabel         = text.Get<String>();
             mButton.SetProperty(Toolkit::Button::Property::LABEL, mButtonLabel);
             mField.ClearKeyInputFocus();
           }
@@ -196,8 +202,8 @@ private:
   Application& mApplication;
 
   // This button launches a pop-up containing TextField
-  PushButton  mButton;
-  std::string mButtonLabel;
+  PushButton mButton;
+  String     mButtonLabel;
 
   // Pop-up contents
   TextField mField;

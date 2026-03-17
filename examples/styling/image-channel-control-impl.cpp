@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,13 @@
 
 #include "generated/image-channel-control-frag.h"
 
+#include <dali/integration-api/string-utils.h>
 #include <cstdio>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali; // Needed for macros
 
@@ -73,7 +79,7 @@ Demo::ImageChannelControl Internal::ImageChannelControl::New()
   return handle;
 }
 
-void ImageChannelControl::SetImage(const std::string& url)
+void ImageChannelControl::SetImage(const String& url)
 {
   mUrl = url;
 
@@ -84,7 +90,7 @@ void ImageChannelControl::SetImage(const std::string& url)
   shader[Dali::Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = Dali::Shader::GetFragmentShaderPrefix() + SHADER_IMAGE_CHANNEL_CONTROL_FRAG.data();
   properties[Dali::Toolkit::Visual::Property::TYPE]                = Dali::Toolkit::Visual::IMAGE;
   properties[Dali::Toolkit::Visual::Property::SHADER]              = shader;
-  properties[Dali::Toolkit::ImageVisual::Property::URL]            = url;
+  properties[Dali::Toolkit::ImageVisual::Property::URL]            = ToDaliString(url);
 
   mVisual = Toolkit::VisualFactory::Get().CreateVisual(properties);
   Toolkit::DevelControl::RegisterVisual(*this, Demo::ImageChannelControl::Property::IMAGE_VISUAL, mVisual);
@@ -95,7 +101,7 @@ void ImageChannelControl::SetImage(const std::string& url)
 
 void ImageChannelControl::SetVisibility(bool visibility)
 {
-  printf("ImageChannelControl %s: SetVisibility( %s )\n", Self().GetProperty<std::string>(Dali::Actor::Property::NAME).c_str(), visibility ? "T" : "F");
+  printf("ImageChannelControl %s: SetVisibility( %s )\n", Self().GetProperty<String>(Dali::Actor::Property::NAME).CStr(), visibility ? "T" : "F");
 
   if(mAnimation)
   {
@@ -209,7 +215,7 @@ void ImageChannelControl::SetProperty(BaseObject* object, Property::Index index,
     {
       case Demo::ImageChannelControl::Property::RESOURCE_URL:
       {
-        impl.SetImage(value.Get<std::string>());
+        impl.SetImage(value.Get<String>());
         break;
       }
       case Demo::ImageChannelControl::Property::IMAGE_VISUAL:

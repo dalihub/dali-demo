@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (   "License");
  * you may not use this file except in compliance with the License.
@@ -32,8 +32,14 @@
 #include "dali/public-api/render-tasks/render-task.h"
 #include "utils.h"
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/waves-frag.h"
 #include "generated/waves-vert.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -274,20 +280,21 @@ private:
       specularity     = mWaveShader.GetProperty(mUSpecularity).Get<float>();
     }
 
-    Shader shader     = Shader::New(SHADER_WAVES_VERT, SHADER_WAVES_FRAG, Shader::Hint::MODIFIES_GEOMETRY);
-    mULightColorSqr   = shader.RegisterProperty(UNIFORM_LIGHT_COLOR_SQR, lightColorSqr);
-    mUAmbientColor    = shader.RegisterProperty(UNIFORM_AMBIENT_COLOR, ambientColor);
-    mUInvLightDir     = shader.RegisterProperty(UNIFORM_INV_LIGHT_DIR, invLightDir);
-    mUScrollScale     = shader.RegisterProperty(UNIFORM_SCROLL_SCALE, scrollScale);
-    mUWaveRate        = shader.RegisterProperty(UNIFORM_WAVE_RATE, waveRate);
-    mUWaveAmplitude   = shader.RegisterProperty(UNIFORM_WAVE_AMPLITUDE, waveAmp);
-    mUNormalMapWeight = shader.RegisterProperty(UNIFORM_NORMAL_MAP_WEIGHT, normalMapWeight);
-    mUSpecularity     = shader.RegisterProperty(UNIFORM_SPECULARITY, specularity);
-    mUParallaxAmount  = shader.RegisterProperty(UNIFORM_PARALLAX_AMOUNT, parallaxAmount);
-    mUTime            = shader.RegisterProperty(UNIFORM_TIME, 0.f);
+    Shader shader     = Shader::New(ToDaliStringView(SHADER_WAVES_VERT), ToDaliStringView(SHADER_WAVES_FRAG), static_cast<Shader::Hint::Value>(Shader::Hint::MODIFIES_GEOMETRY), "WAVES_SHADER");
+    mULightColorSqr   = shader.RegisterProperty(ToDaliStringView(UNIFORM_LIGHT_COLOR_SQR), lightColorSqr);
+    mUAmbientColor    = shader.RegisterProperty(ToDaliStringView(UNIFORM_AMBIENT_COLOR), ambientColor);
+    mUInvLightDir     = shader.RegisterProperty(ToDaliStringView(UNIFORM_INV_LIGHT_DIR), invLightDir);
+    mUScrollScale     = shader.RegisterProperty(ToDaliStringView(UNIFORM_SCROLL_SCALE), scrollScale);
+    mUWaveRate        = shader.RegisterProperty(ToDaliStringView(UNIFORM_WAVE_RATE), waveRate);
+    mUWaveAmplitude   = shader.RegisterProperty(ToDaliStringView(UNIFORM_WAVE_AMPLITUDE), waveAmp);
+    mUNormalMapWeight = shader.RegisterProperty(ToDaliStringView(UNIFORM_NORMAL_MAP_WEIGHT), normalMapWeight);
+    mUSpecularity     = shader.RegisterProperty(ToDaliStringView(UNIFORM_SPECULARITY), specularity);
+    mUParallaxAmount  = shader.RegisterProperty(ToDaliStringView(UNIFORM_PARALLAX_AMOUNT), parallaxAmount);
+    mUTime            = shader.RegisterProperty(ToDaliStringView(UNIFORM_TIME), 0.f);
 
-    auto window = mApp.GetWindow();
-    shader.RegisterProperty("uScreenHalfSize", Vector2(window.GetSize()) * .5f);
+    auto   window = mApp.GetWindow();
+    String uniformName("uScreenHalfSize");
+    shader.RegisterProperty(uniformName, Vector2(window.GetSize()) * .5f);
     mWaveShader = shader;
 
     return shader;

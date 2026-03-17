@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,15 @@
 #include <dali/dali.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/compressed-texture-formats-example-frag.h"
 #include "generated/compressed-texture-formats-example-vert.h"
 #include "shared/utility.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -97,7 +103,8 @@ public:
     table.SetRelativeHeight(2u, 1.0f / 3.0f);
 
     // Add text labels.
-    TextLabel textLabel = TextLabel::New("ETC1 (KTX):");
+    TextLabel textLabel = TextLabel::New();
+    textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ETC1 (KTX):"));
     textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -105,7 +112,8 @@ public:
     table.AddChild(textLabel, Toolkit::TableView::CellPosition(0u, 0u));
     table.SetCellAlignment(Toolkit::TableView::CellPosition(0u, 0u), HorizontalAlignment::LEFT, VerticalAlignment::CENTER);
 
-    textLabel = TextLabel::New("ASTC (KTX) 4x4 linear:");
+    textLabel = TextLabel::New();
+    textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ASTC (KTX) 4x4 linear:"));
     textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -113,7 +121,8 @@ public:
     table.AddChild(textLabel, Toolkit::TableView::CellPosition(1u, 0u));
     table.SetCellAlignment(Toolkit::TableView::CellPosition(1u, 0u), HorizontalAlignment::LEFT, VerticalAlignment::CENTER);
 
-    textLabel = TextLabel::New("ASTC (Native) 4x4 linear:");
+    textLabel = TextLabel::New();
+    textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ASTC (Native) 4x4 linear:"));
     textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -123,7 +132,7 @@ public:
 
     //Create the geometry and the shader renderers will use
     Geometry geometry = DemoHelper::CreateTexturedQuad();
-    Shader   shader   = Shader::New(SHADER_COMPRESSED_TEXTURE_FORMATS_EXAMPLE_VERT, SHADER_COMPRESSED_TEXTURE_FORMATS_EXAMPLE_FRAG);
+    Shader   shader   = Shader::New(ToDaliStringView(SHADER_COMPRESSED_TEXTURE_FORMATS_EXAMPLE_VERT), ToDaliStringView(SHADER_COMPRESSED_TEXTURE_FORMATS_EXAMPLE_FRAG));
 
     // Add images.
     Actor actor = Actor::New();

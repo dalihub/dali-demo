@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,16 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/integration-api/stream-operators.h>
+#include <dali/integration-api/string-utils.h>
 #include <shared/utility.h>
 #include <stdlib.h>
 #include <iostream>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -60,7 +67,8 @@ public:
     mWindow.KeyEventSignal().Connect(this, &MyTester::OnKey);
     mWindow.TouchedSignal().Connect(this, &MyTester::OnTouch);
 
-    TextLabel rubric = TextLabel::New("You will need a working internet connection to see the images below");
+    TextLabel rubric = TextLabel::New();
+    rubric.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("You will need a working internet connection to see the images below"));
     rubric.SetProperty(TextLabel::Property::MULTI_LINE, true);
     rubric.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
     rubric.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
@@ -146,11 +154,11 @@ public:
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
-      std::cout << "Control down key : " << control.GetProperty<std::string>(Dali::Actor::Property::NAME) << ", keyCode : " << event.GetKeyCode() << std::endl;
+      std::cout << "Control down key : " << control.GetProperty<String>(Dali::Actor::Property::NAME) << ", keyCode : " << event.GetKeyCode() << std::endl;
     }
     else
     {
-      std::cout << "Control up key : " << control.GetProperty<std::string>(Dali::Actor::Property::NAME) << ", keyCode : " << event.GetKeyCode() << std::endl;
+      std::cout << "Control up key : " << control.GetProperty<String>(Dali::Actor::Property::NAME) << ", keyCode : " << event.GetKeyCode() << std::endl;
     }
     return false;
   }
@@ -159,7 +167,7 @@ public:
   {
     if(touch.GetState(0) == PointState::DOWN)
     {
-      std::cout << "Control touch " << actor.GetProperty<std::string>(Dali::Actor::Property::NAME) << ", parent " << actor.GetParent().GetProperty<std::string>(Dali::Actor::Property::NAME) << std::endl;
+      std::cout << "Control touch " << actor.GetProperty<String>(Dali::Actor::Property::NAME) << ", parent " << actor.GetParent().GetProperty<String>(Dali::Actor::Property::NAME) << std::endl;
     }
 
     return false;
@@ -167,12 +175,12 @@ public:
 
   void OnFocusSet(Control control)
   {
-    std::cout << "OnFocusSet " << control.GetProperty<std::string>(Dali::Actor::Property::NAME) << std::endl;
+    std::cout << "OnFocusSet " << control.GetProperty<String>(Dali::Actor::Property::NAME) << std::endl;
   }
 
   void OnFocusUnSet(Control control)
   {
-    std::cout << "OnFocusUnSet " << control.GetProperty<std::string>(Dali::Actor::Property::NAME) << std::endl;
+    std::cout << "OnFocusUnSet " << control.GetProperty<String>(Dali::Actor::Property::NAME) << std::endl;
   }
 
 private:

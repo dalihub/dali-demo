@@ -18,6 +18,12 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/tooltip/tooltip-properties.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -57,7 +63,8 @@ private:
     const Vector2 windowSize = window.GetSize();
 
     // Add a text label at the top for information purposes
-    Control label = TextLabel::New("Hover over buttons to see tooltip");
+    Control label = TextLabel::New();
+    label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Hover over buttons to see tooltip"));
     label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
     label.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "Center");
@@ -132,7 +139,7 @@ private:
     if(control)
     {
       control.SetProperty(Button::Property::LABEL,
-                          Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::TEXT).Add(TextVisual::Property::TEXT, label));
+                          Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::TEXT).Add(TextVisual::Property::TEXT, ToDaliString(label)));
     }
   }
 

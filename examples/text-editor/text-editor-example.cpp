@@ -26,7 +26,11 @@
 #include <sstream>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -110,7 +114,8 @@ public:
 
     // Create a label for the color selection button.
     // The button will be a child of this, so as to be placed next to it.
-    TextLabel colorLabel = TextLabel::New("Text Color: ");
+    TextLabel colorLabel = TextLabel::New();
+    colorLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Text Color: "));
     colorLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
     colorLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
     colorLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
@@ -207,7 +212,7 @@ public:
 
       std::ostringstream s;
       s << "color" << index;
-      button.SetProperty(Dali::Actor::Property::NAME, s.str());
+      button.SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(s.str()));
 
       SetButtonColor(button, COLORS[index]);
 
@@ -243,12 +248,13 @@ public:
 
   bool OnColorButtonClicked(Button button)
   {
-    const std::string& name = button.GetProperty<std::string>(Dali::Actor::Property::NAME);
+    const String& name = button.GetProperty<String>(Dali::Actor::Property::NAME);
 
     Vector4 color;
-    if("color" == name.substr(0u, 5u))
+    auto    nameStr = ToStdString(name);
+    if("color" == nameStr.substr(0u, 5u))
     {
-      const unsigned int index = strtoul(name.substr(5u, 1u).c_str(), NULL, 10u);
+      const unsigned int index = strtoul(nameStr.substr(5u, 1u).c_str(), NULL, 10u);
       color                    = COLORS[index];
       mEditor.SetProperty(TextEditor::Property::INPUT_COLOR, color);
     }

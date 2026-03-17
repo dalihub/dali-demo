@@ -24,7 +24,13 @@
 #include <dali/public-api/object/type-registry.h>
 
 //INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "page-turn-effect.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 namespace Dali::Demo::Internal
 {

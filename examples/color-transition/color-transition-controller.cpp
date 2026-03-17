@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,17 @@
  *
  */
 #include "color-transition-controller.h"
+#include <dali/integration-api/string-utils.h>
 #include "dali-toolkit/dali-toolkit.h"
 #include "dali/dali.h"
 #include "generated/color-transition-controller-composite-frag.h"
 #include "generated/color-transition-controller-composite-vert.h"
 #include "utils.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -77,7 +83,7 @@ ColorTransitionController::ColorTransitionController(Dali::Actor root, WeakHandl
   flowSampler.SetWrapMode(WrapMode::REPEAT, WrapMode::REPEAT);
   tsComposite.SetSampler(1, flowSampler);
 
-  auto shdComposite = Shader::New(SHADER_COLOR_TRANSITION_CONTROLLER_COMPOSITE_VERT, SHADER_COLOR_TRANSITION_CONTROLLER_COMPOSITE_FRAG);
+  auto shdComposite = Shader::New(ToDaliStringView(SHADER_COLOR_TRANSITION_CONTROLLER_COMPOSITE_VERT), ToDaliStringView(SHADER_COLOR_TRANSITION_CONTROLLER_COMPOSITE_FRAG));
 
   auto compositeRenderer = CreateRenderer(tsComposite, geomComposite, shdComposite);
   composite.AddRenderer(compositeRenderer);

@@ -24,7 +24,13 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -57,8 +63,8 @@ const Vector3 PADDLE_COLLISION_MARGIN(0.0f, 0.0f, 0.0f); ///< Collision margin f
 const Vector3 BRICK_COLLISION_MARGIN(0.0f, 0.0f, 0.0f);  ///< Collision margin for ball-brick detection.
 const Vector3 INITIAL_BALL_DIRECTION(1.0f, 1.0f, 0.0f);  ///< Initial ball direction.
 
-const std::string WOBBLE_PROPERTY_NAME("wobbleProperty");       ///< Wobble property name.
-const std::string COLLISION_PROPERTY_NAME("collisionProperty"); ///< Collision property name.
+const String WOBBLE_PROPERTY_NAME("wobbleProperty");       ///< Wobble property name.
+const String COLLISION_PROPERTY_NAME("collisionProperty"); ///< Collision property name.
 
 const Vector2 BRICK_SIZE(0.1f, 0.05f);           ///< Brick size relative to width of window.
 const Vector2 BALL_SIZE(0.05f, 0.05f);           ///< Ball size relative to width of window.
@@ -582,7 +588,7 @@ private:
   {
     Property::Map propertyMap;
     propertyMap.Insert(Visual::Property::TYPE, Visual::IMAGE);
-    propertyMap.Insert(ImageVisual::Property::URL, filename);
+    propertyMap.Insert(ImageVisual::Property::URL, ToPropertyValue(filename));
     propertyMap.Insert(DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FILL);
     ImageView actor = ImageView::New();
     actor.SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);

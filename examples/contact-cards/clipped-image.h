@@ -42,7 +42,7 @@ extern const float QUAD_GEOMETRY;   ///< Setting or animating the returned prope
  * @param[out]  propertyIndex  Gets set with the property index which the caller can animate using the CIRCLE_GEOMETRY & QUAD_GEOMETRY values.
  * @return The image-mesh control
  */
-Dali::Toolkit::Control Create(const std::string& imagePath, Dali::Property::Index& propertyIndex);
+Dali::Toolkit::Control Create(const Dali::String& imagePath, Dali::Property::Index& propertyIndex);
 
 } // namespace ClippedImage
 

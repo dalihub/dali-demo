@@ -36,8 +36,14 @@
 #include <algorithm>
 #include <cstring> // for strcmp
 #include <sstream>
-
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
+
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali::Toolkit;
 using namespace Dali::Toolkit::Internal;
@@ -403,10 +409,10 @@ void ProgressBar::CreateVisualsForComponent(Property::Index index, const Propert
   Toolkit::VisualFactory visualFactory = Toolkit::VisualFactory::Get();
   Toolkit::Visual::Base  progressVisual;
 
-  std::string imageUrl;
+  String imageUrl;
   if(value.Get(imageUrl))
   {
-    if(!imageUrl.empty())
+    if(!imageUrl.Empty())
     {
       progressVisual = visualFactory.CreateVisual(imageUrl, ImageDimensions());
     }
@@ -490,14 +496,14 @@ void ProgressBar::ApplyProgressToVisualTransform(float progress, Vector2 trackSi
 }
 
 // Static class method to support script connecting signals
-bool ProgressBar::DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const std::string& signalName, FunctorDelegate* functor)
+bool ProgressBar::DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const String& signalName, FunctorDelegate* functor)
 {
   Dali::BaseHandle handle(object);
 
   bool                 connected   = true;
   Demo::ProgressBar ProgressBar = Demo::ProgressBar::DownCast(handle);
 
-  if(0 == strcmp(signalName.c_str(), SIGNAL_VALUE_CHANGED))
+  if(signalName == SIGNAL_VALUE_CHANGED)
   {
     ProgressBar.ValueChangedSignal().Connect(tracker, functor);
   }
@@ -549,8 +555,8 @@ void ProgressBar::SetProperty(BaseObject* object, Property::Index propertyIndex,
       case Demo::ProgressBar::Property::LABEL_VISUAL:
       {
         Property::Map map;
-        std::string   textString;
 
+        String textString;
         if(value.Get(textString))
         {
           // set new text string as TEXT property

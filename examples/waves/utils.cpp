@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,11 @@
  *
  */
 #include "utils.h"
+#include <dali/integration-api/string-utils.h>
 #include <fstream>
 #include "dali-toolkit/dali-toolkit.h"
+
+using Dali::Integration::ToDaliStringView;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -198,7 +201,7 @@ Geometry CreateTesselatedQuad(unsigned int xVerts, unsigned int yVerts, Vector2 
 
 Texture LoadTexture(const std::string& path)
 {
-  PixelData pixelData = SyncImageLoader::Load(path);
+  PixelData pixelData = SyncImageLoader::Load(ToDaliStringView(path));
 
   Texture texture = Texture::New(TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight());
   texture.Upload(pixelData);

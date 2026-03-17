@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,13 @@
 #include <dali/devel-api/update/frame-callback-interface.h>
 #include <dali/devel-api/update/update-proxy.h>
 
+#include <dali/integration-api/string-utils.h>
 #include <memory> ///< for std::unique_ptr
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -127,7 +133,8 @@ private:
 
     // Create TextLabels to display the ignored state
     // "Visible" Label
-    mVisibleLabel = TextLabel::New("Visible");
+    mVisibleLabel = TextLabel::New();
+    mVisibleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Visible"));
     mVisibleLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mVisibleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mVisibleLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
@@ -136,7 +143,8 @@ private:
     window.Add(mVisibleLabel); // Add as a child so it's ignored with the parent
 
     // "Ignored" Label
-    mIgnoredLabel = TextLabel::New("Ignored");
+    mIgnoredLabel = TextLabel::New();
+    mIgnoredLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Ignored"));
     mIgnoredLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mIgnoredLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mIgnoredLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::RED); // Use red to distinguish
@@ -165,7 +173,8 @@ private:
     PropertyNotification lessThanNotification = mImageView.AddPropertyNotification(DevelActor::Property::IGNORED, LessThanCondition(0.5f));
     lessThanNotification.NotifySignal().Connect(this, &FrameCallbackToggleController::OnLessThanNotify);
 
-    mLessThanLabel = TextLabel::New("1 -> 0 Notified");
+    mLessThanLabel = TextLabel::New();
+    mLessThanLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("1 -> 0 Notified"));
     mLessThanLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mLessThanLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mLessThanLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
@@ -178,7 +187,8 @@ private:
     PropertyNotification greaterThanNotification = mImageView.AddPropertyNotification(DevelActor::Property::IGNORED, GreaterThanCondition(0.5f));
     greaterThanNotification.NotifySignal().Connect(this, &FrameCallbackToggleController::OnGreaterThanNotify);
 
-    mGreaterThanLabel = TextLabel::New("0 -> 1 Notified");
+    mGreaterThanLabel = TextLabel::New();
+    mGreaterThanLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("0 -> 1 Notified"));
     mGreaterThanLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
     mGreaterThanLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
     mGreaterThanLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
