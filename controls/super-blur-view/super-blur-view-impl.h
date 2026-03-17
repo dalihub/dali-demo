@@ -37,7 +37,7 @@ namespace Internal
 /**
  * SuperBlurView implementation class
  */
-class SuperBlurView : public Toolkit::Internal::Control
+class SuperBlurView : public Toolkit::ControlImpl
 {
 public:
   /**

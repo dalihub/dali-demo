@@ -139,7 +139,7 @@ Demo::Slider Slider::New()
 }
 
 Slider::Slider()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mState(NORMAL),
   mPopupVisual(""),
   mPopupArrowVisual(""),
@@ -225,7 +225,7 @@ void Slider::OnRelayout(const Vector2& size, RelayoutContainer& container)
   SetHitRegion(Vector2(size.x, GetHitRegion().y));
   // Factor in handle overshoot into size of backing
   SetTrackRegion(Vector2(size.x - GetHandleSize().x, GetTrackRegion().y));
-  Control::OnRelayout(size, container);
+  ControlImpl::OnRelayout(size, container);
 }
 
 bool Slider::OnTouch(Actor actor, const TouchEvent& touch)

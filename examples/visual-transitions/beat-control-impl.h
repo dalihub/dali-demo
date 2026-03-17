@@ -28,7 +28,7 @@ namespace Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
-class BeatControl : public Dali::Toolkit::Internal::Control
+class BeatControl : public Dali::Toolkit::ControlImpl
 {
 public:
   /**

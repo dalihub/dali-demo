@@ -33,7 +33,7 @@ namespace Dali::Demo
 {
 namespace Internal
 {
-class PageTurnView : public Toolkit::Internal::Control
+class PageTurnView : public Toolkit::ControlImpl
 {
 protected:
   /**
@@ -368,10 +368,10 @@ private:
   PageTurnView& operator=(const PageTurnView& rhs);
 
 protected:
-  Layer               mTurningPageLayer;      ///< The layer for the turning page, to avoid possible depth conflict
-  Demo::ShadowView    mShadowView;            ///< The shadow view control for shadow casting
-  Actor               mShadowPlaneBackground; ///< The plane for the shadow to cast on
-  Actor               mPointLight;            ///< The point light used for shadow casting
+  Layer            mTurningPageLayer;      ///< The layer for the turning page, to avoid possible depth conflict
+  Demo::ShadowView mShadowView;            ///< The shadow view control for shadow casting
+  Actor            mShadowPlaneBackground; ///< The plane for the shadow to cast on
+  Actor            mPointLight;            ///< The point light used for shadow casting
 
   PageFactory* const mPageFactory;       ///< The factory which provides the page actors
   Shader             mTurnEffectShader;  ///< The group of PageTurnEffects

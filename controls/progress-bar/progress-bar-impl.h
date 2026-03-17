@@ -40,7 +40,7 @@ typedef Dali::IntrusivePtr<ProgressBar> ProgressBarPtr;
 /**
  * @copydoc Toolkit::ProgressBar
  */
-class ProgressBar : public Toolkit::Internal::Control
+class ProgressBar : public Toolkit::ControlImpl
 {
 public:
   /**
@@ -198,7 +198,7 @@ private:
   void OnInitialize() override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::CreateAccessibleObject()
+   * @copydoc Toolkit::ControlImpl::CreateAccessibleObject()
    */
   Toolkit::DevelControl::ControlAccessible* CreateAccessibleObject() override;
 

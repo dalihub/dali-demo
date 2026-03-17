@@ -25,7 +25,7 @@ namespace Dali::Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
-class ExpandingButtons : public Dali::Toolkit::Internal::Control
+class ExpandingButtons : public Dali::Toolkit::ControlImpl
 {
 public:
   /**

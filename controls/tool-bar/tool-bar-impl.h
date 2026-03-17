@@ -36,7 +36,7 @@ namespace Internal
  * ToolBar is a control to create a tool bar.
  * @see Dali::Demo::ToolBar for more details.
  */
-class ToolBar : public Toolkit::Internal::Control
+class ToolBar : public Toolkit::ControlImpl
 {
 public:
   /**

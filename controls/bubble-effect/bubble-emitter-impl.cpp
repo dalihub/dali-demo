@@ -34,7 +34,6 @@
 using Dali::Integration::ToDaliStringView;
 
 using namespace Dali::Toolkit;
-using namespace Dali::Toolkit::Internal;
 
 namespace
 {
@@ -106,7 +105,7 @@ BubbleEmitter::BubbleEmitter(const Vector2& movementArea,
                              Texture        shapeTexture,
                              unsigned int   maximumNumberOfBubble,
                              const Vector2& bubbleSizeRange)
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mShapeTexture(shapeTexture),
   mMovementArea(movementArea),
   mBubbleSizeRange(bubbleSizeRange),
@@ -142,9 +141,9 @@ BubbleEmitter::~BubbleEmitter()
 }
 
 Demo::BubbleEmitter BubbleEmitter::New(const Vector2& winSize,
-                                        Texture        shapeTexture,
-                                        unsigned int   maximumNumberOfBubble,
-                                        const Vector2& bubbleSizeRange)
+                                       Texture        shapeTexture,
+                                       unsigned int   maximumNumberOfBubble,
+                                       const Vector2& bubbleSizeRange)
 {
   // Create the implementation
   IntrusivePtr<BubbleEmitter> internalBubbleEmitter(new BubbleEmitter(winSize, shapeTexture, maximumNumberOfBubble, bubbleSizeRange));

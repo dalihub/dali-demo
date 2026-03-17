@@ -83,7 +83,7 @@ Toolkit::TransitionData ConvertPropertyToTransition(const Property::Value& value
 } // anonymous namespace
 
 Internal::ShadowButton::ShadowButton()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mCheckState(false),
   mActiveState(false)
 {
@@ -206,17 +206,17 @@ void ShadowButton::OnInitialize()
 
 void ShadowButton::OnSceneConnection(int depth)
 {
-  Control::OnSceneConnection(depth);
+  ControlImpl::OnSceneConnection(depth);
 }
 
 void ShadowButton::OnSceneDisconnection()
 {
-  Control::OnSceneDisconnection();
+  ControlImpl::OnSceneDisconnection();
 }
 
 void ShadowButton::OnSizeSet(const Vector3& targetSize)
 {
-  Control::OnSizeSet(targetSize);
+  ControlImpl::OnSizeSet(targetSize);
   RelayoutVisuals(Vector2(targetSize));
 }
 
@@ -293,7 +293,7 @@ Vector3 ShadowButton::GetNaturalSize()
 void ShadowButton::OnStyleChange(Toolkit::StyleManager styleManager, StyleChange::Type change)
 {
   // Chain up.
-  Control::OnStyleChange(styleManager, change);
+  ControlImpl::OnStyleChange(styleManager, change);
 }
 
 ShadowButton::Transitions::iterator ShadowButton::FindTransition(Property::Index index)

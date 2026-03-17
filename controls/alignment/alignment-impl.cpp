@@ -291,7 +291,7 @@ void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
 }
 
 Alignment::Alignment(Demo::Alignment::Type horizontal, Demo::Alignment::Type vertical)
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mHorizontal(horizontal),
   mVertical(vertical),
   mScaling(Demo::Alignment::SCALE_NONE),

@@ -117,7 +117,7 @@ DALI_TYPE_REGISTRATION_END()
 } // unnamed namespace
 
 SuperBlurView::SuperBlurView(unsigned int blurLevels)
-: Toolkit::Internal::Control(ControlBehaviour(DISABLE_SIZE_NEGOTIATION | DISABLE_STYLE_CHANGE_SIGNALS)),
+: Toolkit::ControlImpl(ControlBehaviour(DISABLE_SIZE_NEGOTIATION | DISABLE_STYLE_CHANGE_SIGNALS)),
   mTargetSize(Vector2::ZERO),
   mBlurStrengthPropertyIndex(Property::INVALID_INDEX),
   mBlurLevels(blurLevels),
@@ -285,7 +285,7 @@ void SuperBlurView::OnSizeSet(const Vector3& targetSize)
     }
   }
 
-  Control::OnSizeSet(targetSize);
+  ControlImpl::OnSizeSet(targetSize);
 }
 
 void SuperBlurView::OnSceneConnection(int depth)
@@ -296,7 +296,7 @@ void SuperBlurView::OnSceneConnection(int depth)
   }
 
   // Exception to the rule, chaining up first ensures visuals have SetOnScene called to create their renderers
-  Control::OnSceneConnection(depth);
+  ControlImpl::OnSceneConnection(depth);
 
   Actor self = Self();
 
@@ -336,7 +336,7 @@ void SuperBlurView::OnSceneDisconnection()
     mRenderers[i].Reset();
   }
 
-  Control::OnSceneDisconnection();
+  ControlImpl::OnSceneDisconnection();
 }
 
 Vector3 SuperBlurView::GetNaturalSize()

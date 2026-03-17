@@ -27,7 +27,7 @@ namespace Dali::Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
-class ImageChannelControl : public Dali::Toolkit::Internal::Control
+class ImageChannelControl : public Dali::Toolkit::ControlImpl
 {
 public:
   /**

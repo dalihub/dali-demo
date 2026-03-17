@@ -55,7 +55,7 @@ void ResetControls(std::vector<WeakHandle<Control> > controls, unsigned int numb
 } // anonymous namespace
 
 Internal::ExpandingButtons::ExpandingButtons()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mStyleButtonsHidden(false)
 {
 }

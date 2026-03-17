@@ -140,7 +140,7 @@ Dali::Demo::Magnifier Magnifier::New()
 }
 
 Magnifier::Magnifier()
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mDefaultCameraDistance(1000.f),
   mActorSize(Vector3::ZERO),
   mMagnificationFactor(1.0f)
@@ -293,7 +293,7 @@ void Magnifier::OnSizeSet(const Vector3& targetSize)
   mActorSize = targetSize;
   Update();
 
-  Toolkit::Internal::Control::OnSizeSet(targetSize);
+  Toolkit::ControlImpl::OnSizeSet(targetSize);
 }
 
 float Magnifier::GetMagnificationFactor() const

@@ -42,7 +42,7 @@ class BubbleRenderer;
 /**
  * BubbleEmitter implementation class.
  */
-class BubbleEmitter : public Toolkit::Internal::Control
+class BubbleEmitter : public Toolkit::ControlImpl
 {
 public:
   /**

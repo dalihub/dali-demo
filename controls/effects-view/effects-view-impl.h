@@ -19,12 +19,12 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/public-api/actors/camera-actor.h>
 #include <dali/public-api/common/dali-vector.h>
 #include <dali/public-api/render-tasks/render-task.h>
 #include <dali/public-api/rendering/frame-buffer.h>
 #include <dali/public-api/rendering/renderer.h>
-#include <dali-toolkit/public-api/controls/control-impl.h>
 
 // INTERNAL INCLUDES
 #include <controls/effects-view/effects-view.h>
@@ -39,7 +39,7 @@ class ImageFilter;
  * EffectsView implementation class
  * @copydoc Dali::Demo::EffectsView
  */
-class EffectsView : public Toolkit::Internal::Control
+class EffectsView : public Toolkit::ControlImpl
 {
 public:
   /// @copydoc Dali::Demo::EffectsView New()
@@ -109,7 +109,7 @@ public:
 
 private: // From Control
   /**
-   * @copydoc Toolkit::Internal::Control::OnInitialize()
+   * @copydoc Toolkit::ControlImpl::OnInitialize()
    */
   void OnInitialize() override;
 
@@ -119,22 +119,22 @@ private: // From Control
   void OnSizeSet(const Vector3& targetSize) override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::OnSceneConnection
+   * @copydoc Toolkit::ControlImpl::OnSceneConnection
    */
   void OnSceneConnection(int depth) override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::OnSceneDisconnection
+   * @copydoc Toolkit::ControlImpl::OnSceneDisconnection
    */
   void OnSceneDisconnection() override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::OnChildAdd
+   * @copydoc Toolkit::ControlImpl::OnChildAdd
    */
   void OnChildAdd(Actor& child) override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::OnChildRemove
+   * @copydoc Toolkit::ControlImpl::OnChildRemove
    */
   void OnChildRemove(Actor& child) override;
 

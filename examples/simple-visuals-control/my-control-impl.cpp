@@ -58,7 +58,7 @@ DALI_ENUM_TO_STRING_TABLE_END(VISUAL_PROPERTIES)
 } // anonymous namespace
 
 Internal::MyControl::MyControl()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT))
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT))
 {
 }
 

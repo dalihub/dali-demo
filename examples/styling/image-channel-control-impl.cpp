@@ -60,7 +60,7 @@ DALI_TYPE_REGISTRATION_END();
 } // anonymous namespace
 
 Internal::ImageChannelControl::ImageChannelControl()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mChannels(1.0f, 1.0f, 1.0f),
   mChannelIndex(Property::INVALID_INDEX),
   mVisibility(true),
@@ -154,17 +154,17 @@ void ImageChannelControl::OnInitialize()
 
 void ImageChannelControl::OnSceneConnection(int depth)
 {
-  Control::OnSceneConnection(depth);
+  ControlImpl::OnSceneConnection(depth);
 }
 
 void ImageChannelControl::OnSceneDisconnection()
 {
-  Control::OnSceneDisconnection();
+  ControlImpl::OnSceneDisconnection();
 }
 
 void ImageChannelControl::OnSizeSet(const Vector3& targetSize)
 {
-  Control::OnSizeSet(targetSize);
+  ControlImpl::OnSizeSet(targetSize);
 
   if(mVisual)
   {
@@ -196,7 +196,7 @@ Vector3 ImageChannelControl::GetNaturalSize()
 void ImageChannelControl::OnStyleChange(Toolkit::StyleManager styleManager, StyleChange::Type change)
 {
   // Chain up.
-  Control::OnStyleChange(styleManager, change);
+  ControlImpl::OnStyleChange(styleManager, change);
 }
 
 ///////////////////////////////////////////////////////////

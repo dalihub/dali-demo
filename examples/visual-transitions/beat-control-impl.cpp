@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ Toolkit::TransitionData ConvertPropertyToTransition(const Property::Value& value
 } // anonymous namespace
 
 Internal::BeatControl::BeatControl()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mTransformSize(1.0f, 1.0f),
   mTransformOrigin(Align::CENTER),
   mTransformAnchorPoint(Align::CENTER),
@@ -175,17 +175,17 @@ void BeatControl::OnInitialize()
 
 void BeatControl::OnSceneConnection(int depth)
 {
-  Control::OnSceneConnection(depth);
+  ControlImpl::OnSceneConnection(depth);
 }
 
 void BeatControl::OnSceneDisconnection()
 {
-  Control::OnSceneDisconnection();
+  ControlImpl::OnSceneDisconnection();
 }
 
 void BeatControl::OnSizeSet(const Vector3& targetSize)
 {
-  Control::OnSizeSet(targetSize);
+  ControlImpl::OnSizeSet(targetSize);
   RelayoutVisuals(Vector2(targetSize));
 }
 
@@ -226,7 +226,7 @@ Vector3 BeatControl::GetNaturalSize()
 void BeatControl::OnStyleChange(Toolkit::StyleManager styleManager, StyleChange::Type change)
 {
   // Chain up.
-  Control::OnStyleChange(styleManager, change);
+  ControlImpl::OnStyleChange(styleManager, change);
 }
 
 ///////////////////////////////////////////////////////////

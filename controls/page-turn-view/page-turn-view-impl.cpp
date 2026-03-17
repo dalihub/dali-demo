@@ -347,7 +347,7 @@ void PageTurnView::Page::SetCurrentCenter(const Vector2& value)
 }
 
 PageTurnView::PageTurnView(PageFactory& pageFactory, const Vector2& viewPageSize)
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mPageFactory(&pageFactory),
   mPageSize(viewPageSize),
   mSpineShadowParameter(DEFAULT_SPINE_SHADOW_PARAMETER),
@@ -483,7 +483,7 @@ void PageTurnView::OnSceneConnection(int depth)
 {
   SetupShadowView();
 
-  Control::OnSceneConnection(depth);
+  ControlImpl::OnSceneConnection(depth);
 }
 
 void PageTurnView::OnSceneDisconnection()
@@ -499,7 +499,7 @@ void PageTurnView::OnSceneDisconnection()
   // make sure the status of the control is updated correctly when the pan gesture is interrupted
   StopTurning();
 
-  Control::OnSceneDisconnection();
+  ControlImpl::OnSceneDisconnection();
 }
 
 void PageTurnView::SetPageSize(const Vector2& viewPageSize)

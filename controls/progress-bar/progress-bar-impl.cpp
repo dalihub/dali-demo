@@ -19,8 +19,6 @@
 #include "progress-bar-impl.h"
 
 // EXTERNAL INCLUDES
-#include <algorithm>
-#include <cstring> // for strcmp
 #include <dali-toolkit/devel-api/controls/control-depth-index-ranges.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-base.h>
@@ -33,11 +31,12 @@
 #include <dali-toolkit/public-api/visuals/text-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
 #include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/math/math-utils.h>
 #include <dali/public-api/size-negotiation/relayout-container.h>
+#include <algorithm>
+#include <cstring> // for strcmp
 #include <sstream>
-#include <dali/integration-api/debug.h>
-#include <dali/integration-api/string-utils.h>
 
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -95,7 +94,7 @@ float       DEFAULT_UPPER_BOUND              = 1.0f;
 float       DEFAULT_FONT_SIZE                = 12.0f;
 const char* CIRCULAR_PROGRESS_BAR_STYLE_NAME = "CircularProgressBar";
 
-void BackupVisualProperties(const Toolkit::Internal::Control* control, Property::Index index, Property::Map& map)
+void BackupVisualProperties(const Toolkit::ControlImpl* control, Property::Index index, Property::Map& map)
 {
   Toolkit::Visual::Base visual = Toolkit::DevelControl::GetVisual(*control, index);
 
@@ -106,7 +105,7 @@ void BackupVisualProperties(const Toolkit::Internal::Control* control, Property:
   }
 }
 
-void RestoreVisualProperties(Toolkit::Internal::Control* control, Property::Index index, Property::Map& map, int depth)
+void RestoreVisualProperties(Toolkit::ControlImpl* control, Property::Index index, Property::Map& map, int depth)
 {
   if(!map.Empty())
   {
@@ -157,7 +156,7 @@ Dali::Demo::ProgressBar ProgressBar::New(Demo::ProgressBar::Style progressBarSty
 }
 
 ProgressBar::ProgressBar()
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mProgressValue(DEFAULT_VALUE),
   mSecondaryProgressValue(DEFAULT_VALUE),
   mIndeterminate(false)
@@ -500,7 +499,7 @@ bool ProgressBar::DoConnectSignal(BaseObject* object, ConnectionTrackerInterface
 {
   Dali::BaseHandle handle(object);
 
-  bool                 connected   = true;
+  bool              connected   = true;
   Demo::ProgressBar ProgressBar = Demo::ProgressBar::DownCast(handle);
 
   if(signalName == SIGNAL_VALUE_CHANGED)
@@ -674,7 +673,7 @@ Property::Value ProgressBar::GetProperty(BaseObject* object, Property::Index pro
 void ProgressBar::OnSceneConnection(int depth)
 {
   // Chain up first (ensures visuals are ready to draw)
-  Control::OnSceneConnection(depth);
+  ControlImpl::OnSceneConnection(depth);
 
   if(mIndeterminate)
   {

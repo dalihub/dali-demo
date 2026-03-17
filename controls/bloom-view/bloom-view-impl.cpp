@@ -83,7 +83,7 @@ const char* const IMAGE_SATURATION_PROPERTY_NAME                = "uImageSaturat
 } // namespace
 
 BloomView::BloomView()
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mBlurNumSamples(BLOOM_GAUSSIAN_BLUR_VIEW_DEFAULT_NUM_SAMPLES),
   mBlurBellCurveWidth(BLOOM_GAUSSIAN_BLUR_VIEW_DEFAULT_BLUR_BELL_CURVE_WIDTH),
   mPixelFormat(BLOOM_GAUSSIAN_BLUR_VIEW_DEFAULT_RENDER_TARGET_PIXEL_FORMAT),
@@ -106,7 +106,7 @@ BloomView::BloomView()
 }
 
 BloomView::BloomView(const unsigned int blurNumSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale)
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mBlurNumSamples(blurNumSamples),
   mBlurBellCurveWidth(blurBellCurveWidth),
   mPixelFormat(renderTargetPixelFormat),
@@ -242,7 +242,7 @@ void BloomView::OnSizeSet(const Vector3& targetSize)
     Activate();
   }
 
-  Toolkit::Internal::Control::OnSizeSet(targetSize);
+  Toolkit::ControlImpl::OnSizeSet(targetSize);
 }
 
 void BloomView::OnChildAdd(Actor& child)
@@ -252,14 +252,14 @@ void BloomView::OnChildAdd(Actor& child)
     mChildrenRoot.Add(child);
   }
 
-  Toolkit::Internal::Control::OnChildAdd(child);
+  Toolkit::ControlImpl::OnChildAdd(child);
 }
 
 void BloomView::OnChildRemove(Actor& child)
 {
   mChildrenRoot.Remove(child);
 
-  Toolkit::Internal::Control::OnChildRemove(child);
+  Toolkit::ControlImpl::OnChildRemove(child);
 }
 
 void BloomView::AllocateResources()

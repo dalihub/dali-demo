@@ -268,7 +268,7 @@ void ToolBar::RemoveControl(Actor control)
 }
 
 ToolBar::ToolBar()
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mLayout(),
   mLeftOffset(0),
   mCenterBase(1),
@@ -329,7 +329,7 @@ void ToolBar::OnChildAdd(Actor& child)
   // actor is removed using the Actor::RemoveChild method it will not remove anything because the
   // actor is in mLayout not in Self().
 
-  Control::OnChildAdd(child);
+  ControlImpl::OnChildAdd(child);
 }
 
 } // namespace Dali::Demo::Internal

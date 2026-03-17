@@ -91,7 +91,7 @@ const char* const SHADOW_COLOR_PROPERTY_NAME                          = "ShadowC
 } // namespace
 
 ShadowView::ShadowView(float downsampleWidthScale, float downsampleHeightScale)
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mChildrenRoot(Actor::New()),
   mCachedShadowColor(DEFAULT_SHADOW_COLOR),
   mCachedBackgroundColor(DEFAULT_SHADOW_COLOR.r, DEFAULT_SHADOW_COLOR.g, DEFAULT_SHADOW_COLOR.b, 0.0f),
@@ -269,14 +269,14 @@ void ShadowView::OnChildAdd(Actor& child)
     mChildrenRoot.Add(child);
   }
 
-  Toolkit::Internal::Control::OnChildAdd(child);
+  Toolkit::ControlImpl::OnChildAdd(child);
 }
 
 void ShadowView::OnChildRemove(Actor& child)
 {
   mChildrenRoot.Remove(child);
 
-  Toolkit::Internal::Control::OnChildRemove(child);
+  Toolkit::ControlImpl::OnChildRemove(child);
 }
 
 void ShadowView::ConstrainCamera()

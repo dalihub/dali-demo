@@ -36,7 +36,7 @@ namespace Internal
  * Alignment is a control to position and resize actors inside other container actors.
  * @see Dali::Demo::Alignment for more details.
  */
-class Alignment : public Toolkit::Internal::Control
+class Alignment : public Toolkit::ControlImpl
 {
 public:
   /**
