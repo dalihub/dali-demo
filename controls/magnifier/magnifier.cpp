@@ -21,9 +21,7 @@
 
 using namespace Dali;
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Magnifier
@@ -42,12 +40,12 @@ Magnifier::Magnifier(Magnifier&& rhs) = default;
 Magnifier& Magnifier::operator=(Magnifier&& rhs) = default;
 
 Magnifier::Magnifier(Internal::Magnifier& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
 Magnifier::Magnifier(Dali::Internal::CustomActor* internal)
-: Control(internal)
+: Toolkit::Control(internal)
 {
   VerifyCustomActorPointer<Internal::Magnifier>(internal);
 }
@@ -63,7 +61,7 @@ Magnifier::~Magnifier()
 
 Magnifier Magnifier::DownCast(BaseHandle handle)
 {
-  return Control::DownCast<Magnifier, Internal::Magnifier>(handle);
+  return Toolkit::Control::DownCast<Magnifier, Internal::Magnifier>(handle);
 }
 
 void Magnifier::SetSourceActor(Actor actor)
@@ -71,6 +69,4 @@ void Magnifier::SetSourceActor(Actor actor)
   GetImpl(*this).SetSourceActor(actor);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo

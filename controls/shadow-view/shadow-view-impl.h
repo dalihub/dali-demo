@@ -32,9 +32,7 @@
 #include <controls/filters/blur-two-pass-filter.h>
 #include <controls/shadow-view/shadow-view.h>
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 class ShadowView;
 
@@ -43,61 +41,61 @@ namespace Internal
 /**
  * ShadowView implementation class
  */
-class ShadowView : public Control
+class ShadowView : public Toolkit::Internal::Control
 {
 public:
   /**
-   * @copydoc Dali::Toolkit::ShadowView::ShadowView
+   * @copydoc Dali::Demo::ShadowView::ShadowView
    */
   ShadowView();
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::ShadowView
+   * @copydoc Dali::Demo::ShadowView::ShadowView
    */
   ShadowView(float downsampleWidthScale, float downsampleHeightScale);
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::~ShadowView
+   * @copydoc Dali::Demo::ShadowView::~ShadowView
    */
   virtual ~ShadowView();
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::New(float downsampleWidthScale, float downsampleHeightScale)
+   * @copydoc Dali::Demo::ShadowView::New(float downsampleWidthScale, float downsampleHeightScale)
    */
-  static Dali::Toolkit::ShadowView New(float downsampleWidthScale, float downsampleHeightScale);
+  static Demo::ShadowView New(float downsampleWidthScale, float downsampleHeightScale);
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::SetShadowPlaneBackground(Actor shadowPlaneBackground)
+   * @copydoc Dali::Demo::ShadowView::SetShadowPlaneBackground(Actor shadowPlaneBackground)
    */
   void SetShadowPlaneBackground(Actor shadowPlaneBackground);
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::SetPointLight(Actor pointLight)
+   * @copydoc Dali::Demo::ShadowView::SetPointLight(Actor pointLight)
    */
   void SetPointLight(Actor pointLight);
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::SetPointLightFieldOfView(float fieldOfView)
+   * @copydoc Dali::Demo::ShadowView::SetPointLightFieldOfView(float fieldOfView)
    */
   void SetPointLightFieldOfView(float fieldOfView);
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::SetShadowColor(Vector4 color)
+   * @copydoc Dali::Demo::ShadowView::SetShadowColor(Vector4 color)
    */
   void SetShadowColor(Vector4 color);
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::Activate()
+   * @copydoc Dali::Demo::ShadowView::Activate()
    */
   void Activate();
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::Deactivate()
+   * @copydoc Dali::Demo::ShadowView::Deactivate()
    */
   void Deactivate();
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::GetBlurStrengthPropertyIndex()
+   * @copydoc Dali::Demo::ShadowView::GetBlurStrengthPropertyIndex()
    */
   Property::Index GetBlurStrengthPropertyIndex() const
   {
@@ -105,7 +103,7 @@ public:
   }
 
   /**
-   * @copydoc Dali::Toolkit::ShadowView::GetShadowColorPropertyIndex()
+   * @copydoc Dali::Demo::ShadowView::GetShadowColorPropertyIndex()
    */
   Property::Index GetShadowColorPropertyIndex() const
   {
@@ -118,12 +116,12 @@ private:
   void OnInitialize() override;
 
   /**
-   * @copydoc Control::OnChildAdd()
+   * @copydoc Toolkit::Internal::Control::OnChildAdd()
    */
   void OnChildAdd(Actor& child) override;
 
   /**
-   * @copydoc Control::OnChildRemove()
+   * @copydoc Toolkit::Internal::Control::OnChildRemove()
    */
   void OnChildRemove(Actor& child) override;
 
@@ -154,7 +152,7 @@ private:
   CameraActor mCameraActor; // Constrained to same position as mPointLight and pointing at mShadowPlane
 
   Property::Map     mShadowVisualMap;
-  BlurTwoPassFilter mBlurFilter;
+  Demo::Internal::BlurTwoPassFilter mBlurFilter;
 
   Vector4 mCachedShadowColor;     ///< Cached Shadow color.
   Vector4 mCachedBackgroundColor; ///< Cached Shadow background color (same as shadow color but with alpha at 0.0)
@@ -177,22 +175,20 @@ private:
 } // namespace Internal
 
 // Helpers for public-api forwarding methods
-inline Toolkit::Internal::ShadowView& GetImpl(Toolkit::ShadowView& obj)
+inline Demo::Internal::ShadowView& GetImpl(Demo::ShadowView& obj)
 {
   DALI_ASSERT_ALWAYS(obj);
   Dali::RefObject& handle = obj.GetImplementation();
-  return static_cast<Toolkit::Internal::ShadowView&>(handle);
+  return static_cast<Demo::Internal::ShadowView&>(handle);
 }
 
-inline const Toolkit::Internal::ShadowView& GetImpl(const Toolkit::ShadowView& obj)
+inline const Demo::Internal::ShadowView& GetImpl(const Demo::ShadowView& obj)
 {
   DALI_ASSERT_ALWAYS(obj);
   const Dali::RefObject& handle = obj.GetImplementation();
-  return static_cast<const Toolkit::Internal::ShadowView&>(handle);
+  return static_cast<const Demo::Internal::ShadowView&>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_SHADOW_VIEW_H

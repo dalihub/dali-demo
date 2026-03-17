@@ -31,9 +31,7 @@
 // INTERNAL INCLUDES
 #include <controls/bloom-view/bloom-view.h>
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 class BloomView;
 
@@ -42,29 +40,29 @@ namespace Internal
 /**
  * BloomEffect implementation class
  */
-class BloomView : public Control
+class BloomView : public Toolkit::Internal::Control
 {
 public:
   /**
-   * @copydoc Dali::Toolkit::BloomView::BloomView
+   * @copydoc Dali::Demo::BloomView::BloomView
    */
   BloomView();
 
   /**
-   * @copydoc Dali::Toolkit::BloomView::BloomView
+   * @copydoc Dali::Demo::BloomView::BloomView
    */
   BloomView(const unsigned int numSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale);
 
   /**
-   * @copydoc Dali::Toolkit::BloomView::~BloomView
+   * @copydoc Dali::Demo::BloomView::~BloomView
    */
   virtual ~BloomView();
 
   /**
-   * @copydoc Dali::Toolkit::BloomView::New
+   * @copydoc Dali::Demo::BloomView::New
    */
-  static Dali::Toolkit::BloomView New();
-  static Dali::Toolkit::BloomView New(const unsigned int numSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale);
+  static Dali::Demo::BloomView New();
+  static Dali::Demo::BloomView New(const unsigned int numSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale);
   void                            Activate();
   void                            Deactivate();
 
@@ -98,12 +96,12 @@ private:
   void OnSizeSet(const Vector3& targetSize) override;
 
   /**
-   * @copydoc Control::OnChildAdd()
+   * @copydoc Toolkit::Internal::Control::OnChildAdd()
    */
   void OnChildAdd(Actor& child) override;
 
   /**
-   * @copydoc Control::OnChildRemove()
+   * @copydoc Toolkit::Internal::Control::OnChildRemove()
    */
   void OnChildRemove(Actor& child) override;
 
@@ -189,22 +187,20 @@ private:
 } // namespace Internal
 
 // Helpers for public-api forwarding methods
-inline Toolkit::Internal::BloomView& GetImpl(Toolkit::BloomView& obj)
+inline Demo::Internal::BloomView& GetImpl(Demo::BloomView& obj)
 {
   DALI_ASSERT_ALWAYS(obj);
   Dali::RefObject& handle = obj.GetImplementation();
-  return static_cast<Toolkit::Internal::BloomView&>(handle);
+  return static_cast<Demo::Internal::BloomView&>(handle);
 }
 
-inline const Toolkit::Internal::BloomView& GetImpl(const Toolkit::BloomView& obj)
+inline const Demo::Internal::BloomView& GetImpl(const Demo::BloomView& obj)
 {
   DALI_ASSERT_ALWAYS(obj);
   const Dali::RefObject& handle = obj.GetImplementation();
-  return static_cast<const Toolkit::Internal::BloomView&>(handle);
+  return static_cast<const Demo::Internal::BloomView&>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_BLOOM_VIEW_H

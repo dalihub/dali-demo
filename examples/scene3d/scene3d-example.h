@@ -39,7 +39,7 @@ private: // data
 
   std::vector<std::string> mSceneNames;
 
-  Dali::Toolkit::NavigationView mNavigationView;
+  Dali::Demo::NavigationView mNavigationView;
 
   std::unique_ptr<Dali::Toolkit::ItemFactory> mItemFactory;
   Dali::Toolkit::ItemLayoutPtr                mItemLayout;

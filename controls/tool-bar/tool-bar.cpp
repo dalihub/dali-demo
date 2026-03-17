@@ -25,11 +25,9 @@
 // INTERNAL INCLUDES
 #include "tool-bar-impl.h"
 
-namespace Dali
+namespace Dali::Demo
 {
-namespace Toolkit
-{
-const Toolkit::Alignment::Padding ToolBar::DEFAULT_PADDING(0.f, 0.f, 0.f, 0.f);
+const Demo::Alignment::Padding ToolBar::DEFAULT_PADDING(0.f, 0.f, 0.f, 0.f);
 
 ToolBar::ToolBar()
 {
@@ -54,10 +52,10 @@ ToolBar ToolBar::New()
 
 ToolBar ToolBar::DownCast(BaseHandle handle)
 {
-  return Control::DownCast<ToolBar, Internal::ToolBar>(handle);
+  return Toolkit::Control::DownCast<ToolBar, Internal::ToolBar>(handle);
 }
 
-void ToolBar::AddControl(Actor control, float relativeSize, Toolkit::Alignment::Type alignment, const Toolkit::Alignment::Padding& padding)
+void ToolBar::AddControl(Actor control, float relativeSize, Demo::Alignment::Type alignment, const Demo::Alignment::Padding& padding)
 {
   GetImpl(*this).AddControl(control, relativeSize, alignment, padding);
 }
@@ -68,16 +66,14 @@ void ToolBar::RemoveControl(Actor control)
 }
 
 ToolBar::ToolBar(Internal::ToolBar& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
 ToolBar::ToolBar(Dali::Internal::CustomActor* internal)
-: Control(internal)
+: Toolkit::Control(internal)
 {
   VerifyCustomActorPointer<Internal::ToolBar>(internal);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo

@@ -26,7 +26,7 @@
 // INTERNAL INCLUDES
 #include <controls/shaders/bubble-effect-color-adjuster-frag.h>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 inline void SetColorAdjusterProperties(Actor& actor, const Vector3& hsvDelta, bool ignoreAlpha = false)
 {
@@ -52,6 +52,6 @@ inline Property::Map CreateColorAdjuster()
   return map;
 }
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_COLOR_ADJUSTER_H

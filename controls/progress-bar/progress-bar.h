@@ -24,9 +24,7 @@
 // INTERNAL INCLUDES
 #include "controls/dali-demo-controls-common.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -48,7 +46,7 @@ class ProgressBar;
  * @SINCE_1_2.60
  */
 
-class DALI_DEMO_CONTROLS_API ProgressBar : public Control
+class DALI_DEMO_CONTROLS_API ProgressBar : public Toolkit::Control
 {
 public:
   // Properties
@@ -286,8 +284,6 @@ public: // Not intended for application developers
 /**
  * @}
  */
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_PROGRESS_BAR_H

@@ -20,7 +20,7 @@
 
 // INTERNAL INCLUDES
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -129,4 +129,4 @@ void ImageFilter::SetupCamera()
   }
 }
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal

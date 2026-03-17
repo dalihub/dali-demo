@@ -22,19 +22,15 @@
 #include "page-turn-landscape-view.h"
 #include "page-turn-view-impl.h"
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 class PageTurnLandscapeView : public PageTurnView
 {
 public:
   /**
-   * @copydoc Toolkit::PageTurnLandscapeView::New( PageFactory&, const Vector2& )
+   * @copydoc Demo::PageTurnLandscapeView::New( PageFactory&, const Vector2& )
    */
-  static Toolkit::PageTurnLandscapeView New(PageFactory& pageFactory, const Vector2& viewPageSize);
+  static Demo::PageTurnLandscapeView New(PageFactory& pageFactory, const Vector2& viewPageSize);
 
 protected:
   /**
@@ -79,10 +75,6 @@ private:
   PageTurnLandscapeView& operator=(const PageTurnLandscapeView& rhs);
 };
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_PAGE_TURN_LANDSCAPE_VIEW_IMPL_H

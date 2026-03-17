@@ -24,6 +24,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 using namespace Dali::Scene3D::Loader;
 
 namespace

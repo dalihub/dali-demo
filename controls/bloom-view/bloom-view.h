@@ -27,7 +27,7 @@
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -88,7 +88,7 @@ class BloomView;
  *  Stage::GetCurrent().Remove(bloomView);\n
  *  bloomView.Deactivate();\n
  */
-class DALI_DEMO_CONTROLS_API BloomView : public Control
+class DALI_DEMO_CONTROLS_API BloomView : public Toolkit::Control
 {
 public:
   /**
@@ -221,7 +221,7 @@ public:
 
 public:
   /**
-   * Creates a handle using the Toolkit::Internal implementation.
+   * Creates a handle using the Demo::Internal implementation.
    * @param[in]  implementation  The UI Control implementation.
    */
   DALI_INTERNAL BloomView(Internal::BloomView& implementation);
@@ -233,7 +233,7 @@ public:
   explicit DALI_INTERNAL BloomView(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali
 

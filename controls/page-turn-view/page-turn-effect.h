@@ -18,13 +18,7 @@
  *
  */
 
-// EXTERNAL INCLUDES
-
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 /**
  * @brief Re-applies PageTurnEffect internal constraints
@@ -74,10 +68,5 @@ void PageTurnApplyInternalConstraint(Actor& actor, float pageHeight);
  */
 Property::Map CreatePageTurnEffect();
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
-
+} // namespace Dali::Demo::Internal
 #endif // DALI_DEMO_CONTROLS_PAGE_TURN_EFFECT_H

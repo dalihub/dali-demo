@@ -22,7 +22,7 @@
 #include <cmath>
 #include <sstream>
 
-namespace Dali::Toolkit::Internal
+namespace Dali::Demo::Internal
 {
 BubbleRenderer::BubbleRenderer()
 : mRenderer(),
@@ -127,4 +127,4 @@ void BubbleRenderer::ResetProperties()
   }
 }
 
-} // namespace Dali::Toolkit::Internal
+} // namespace Dali::Demo::Internal

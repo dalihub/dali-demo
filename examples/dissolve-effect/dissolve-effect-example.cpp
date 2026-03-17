@@ -75,7 +75,7 @@ const int NUM_IMAGES(sizeof(IMAGES) / sizeof(IMAGES[0]));
 // The duration of the current image staying on screen when slideshow is on
 const int VIEWINGTIME = 2000; // 2 seconds
 
-const float TRANSITION_DURATION = 2.5f; //2.5 second
+const float TRANSITION_DURATION = 2.5f; // 2.5 second
 
 const float INITIAL_DEPTH = 10.0f;
 
@@ -165,7 +165,7 @@ private:
 private:
   Application&       mApplication;
   Toolkit::Control   mView;
-  Toolkit::ToolBar   mToolBar;
+  Demo::ToolBar      mToolBar;
   Layer              mContent;
   Toolkit::TextLabel mTitleActor;
   Actor              mParent;
@@ -206,7 +206,7 @@ DissolveEffectApp::DissolveEffectApp(Application& application)
 
 DissolveEffectApp::~DissolveEffectApp()
 {
-  //Nothing to do
+  // Nothing to do
 }
 
 void DissolveEffectApp::OnInit(Application& application)
@@ -223,18 +223,18 @@ void DissolveEffectApp::OnInit(Application& application)
   mEffectChangeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE);
   mEffectChangeButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE_SELECTED);
   mEffectChangeButton.ClickedSignal().Connect(this, &DissolveEffectApp::OnEffectButtonClicked);
-  mToolBar.AddControl(mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+  mToolBar.AddControl(mEffectChangeButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
   // Add title to the tool bar.
   mTitleActor = DemoHelper::CreateToolBarLabel(APPLICATION_TITLE_HIGHP);
-  mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER);
+  mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Demo::Alignment::HORIZONTAL_CENTER);
 
   // Add an slide-show button on the right of the title
   mPlayStopButton = Toolkit::PushButton::New();
   mPlayStopButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON);
   mPlayStopButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED);
   mPlayStopButton.ClickedSignal().Connect(this, &DissolveEffectApp::OnSildeshowButtonClicked);
-  mToolBar.AddControl(mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
+  mToolBar.AddControl(mPlayStopButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
 
   // use pan gesture to detect the cursor or finger movement
   mPanGestureDetector = PanGestureDetector::New();
@@ -431,7 +431,7 @@ bool DissolveEffectApp::OnTimerTick()
     }
     mCentralLineIndex++;
   }
-  return false; //return false to stop the timer
+  return false; // return false to stop the timer
 }
 
 int DALI_EXPORT_API main(int argc, char** argv)

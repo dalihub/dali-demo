@@ -29,13 +29,11 @@
 #include <controls/page-turn-view/page-turn-view.h>
 #include <controls/shadow-view/shadow-view.h>
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 namespace Internal
 {
-class PageTurnView : public Control
+class PageTurnView : public Toolkit::Internal::Control
 {
 protected:
   /**
@@ -316,22 +314,22 @@ public: //signal and property
   /**
    * @copydoc Toolkit::PageTurnView::PageTurnStartedSignal()
    */
-  Toolkit::PageTurnView::PageTurnSignal& PageTurnStartedSignal();
+  Demo::PageTurnView::PageTurnSignal& PageTurnStartedSignal();
 
   /**
-   * @copydoc Toolkit::PageTurnView::PageTurnFinishedSignal()
+   * @copydoc Demo::PageTurnView::PageTurnFinishedSignal()
    */
-  Toolkit::PageTurnView::PageTurnSignal& PageTurnFinishedSignal();
+  Demo::PageTurnView::PageTurnSignal& PageTurnFinishedSignal();
 
   /**
-   * @copydoc Toolkit::PageTurnView::PagePanStartSignal()
+   * @copydoc Demo::PageTurnView::PagePanStartSignal()
    */
-  Toolkit::PageTurnView::PagePanSignal& PagePanStartedSignal();
+  Demo::PageTurnView::PagePanSignal& PagePanStartedSignal();
 
   /**
-   * @copydoc Toolkit::PageTurnView::PagePanFinishedSignal()
+   * @copydoc Demo::PageTurnView::PagePanFinishedSignal()
    */
-  Toolkit::PageTurnView::PagePanSignal& PagePanFinishedSignal();
+  Demo::PageTurnView::PagePanSignal& PagePanFinishedSignal();
 
   /**
    * Connects a callback function with the object's signals.
@@ -371,7 +369,7 @@ private:
 
 protected:
   Layer               mTurningPageLayer;      ///< The layer for the turning page, to avoid possible depth conflict
-  Toolkit::ShadowView mShadowView;            ///< The shadow view control for shadow casting
+  Demo::ShadowView    mShadowView;            ///< The shadow view control for shadow casting
   Actor               mShadowPlaneBackground; ///< The plane for the shadow to cast on
   Actor               mPointLight;            ///< The point light used for shadow casting
 
@@ -405,10 +403,10 @@ protected:
   bool mPress;       ///< The boolean to keep track the state of the pageTurnEffect is activated or not
   bool mPageUpdated; ///< The boolean to keep track whether is page is updated after any turning activity
 
-  Toolkit::PageTurnView::PageTurnSignal mPageTurnStartedSignal;  ///< The signal to notify that a page has started turning
-  Toolkit::PageTurnView::PageTurnSignal mPageTurnFinishedSignal; ///< The signal to notify that a page has finished turning
-  Toolkit::PageTurnView::PagePanSignal  mPagePanStartedSignal;   ///< The signal to notify that a page has started panning
-  Toolkit::PageTurnView::PagePanSignal  mPagePanFinishedSignal;  ///< The signal to notify that a page has finished panning
+  Demo::PageTurnView::PageTurnSignal mPageTurnStartedSignal;  ///< The signal to notify that a page has started turning
+  Demo::PageTurnView::PageTurnSignal mPageTurnFinishedSignal; ///< The signal to notify that a page has finished turning
+  Demo::PageTurnView::PagePanSignal  mPagePanStartedSignal;   ///< The signal to notify that a page has started panning
+  Demo::PageTurnView::PagePanSignal  mPagePanFinishedSignal;  ///< The signal to notify that a page has finished panning
 
   static const char* const PROPERTY_TEXTURE_WIDTH;   ///< The uniform name of texture width
   static const char* const PROPERTY_ORIGINAL_CENTER; ///< The property name of original center, which is used to constrain the uniforms
@@ -424,26 +422,24 @@ protected:
 
 // Helpers for public-api forwarding methods
 
-inline Toolkit::Internal::PageTurnView& GetImplementation(Toolkit::PageTurnView& pub)
+inline Demo::Internal::PageTurnView& GetImplementation(Demo::PageTurnView& pub)
 {
   DALI_ASSERT_ALWAYS(pub);
 
   Dali::RefObject& handle = pub.GetImplementation();
 
-  return static_cast<Toolkit::Internal::PageTurnView&>(handle);
+  return static_cast<Demo::Internal::PageTurnView&>(handle);
 }
 
-inline const Toolkit::Internal::PageTurnView& GetImplementation(const Toolkit::PageTurnView& pub)
+inline const Demo::Internal::PageTurnView& GetImplementation(const Demo::PageTurnView& pub)
 {
   DALI_ASSERT_ALWAYS(pub);
 
   const Dali::RefObject& handle = pub.GetImplementation();
 
-  return static_cast<const Toolkit::Internal::PageTurnView&>(handle);
+  return static_cast<const Demo::Internal::PageTurnView&>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_PAGE_TURN_VIEW_IMPL_H

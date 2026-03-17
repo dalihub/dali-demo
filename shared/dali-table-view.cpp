@@ -26,8 +26,8 @@
 #include <dali-toolkit/devel-api/shader-effects/distance-field-effect.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/adaptor-framework/graphics-backend.h>
 #include <dali/devel-api/images/distance-field.h>
-#include <dali/public-api/adaptor-framework/graphics-backend.h>
 #include <algorithm>
 #include <iostream>
 

@@ -26,12 +26,13 @@
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 namespace Internal DALI_INTERNAL
 {
 class Slider;
 }
+
 /**
  * @addtogroup dali_toolkit_controls_slider
  * @{
@@ -48,7 +49,7 @@ class Slider;
  * | slidingFinished   | @ref SlidingFinishedSignal()  |
  * @SINCE_1_1.39
  */
-class DALI_DEMO_CONTROLS_API Slider : public Control
+class DALI_DEMO_CONTROLS_API Slider : public Toolkit::Control
 {
 public:
   // Properties
@@ -59,8 +60,8 @@ public:
    */
   enum PropertyRange
   {
-    PROPERTY_START_INDEX = Control::CONTROL_PROPERTY_END_INDEX + 1, ///< @SINCE_1_1.39
-    PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000              ///< Reserve property indices @SINCE_1_1.39
+    PROPERTY_START_INDEX = Toolkit::Control::CONTROL_PROPERTY_END_INDEX + 1, ///< @SINCE_1_1.39
+    PROPERTY_END_INDEX   = PROPERTY_START_INDEX + 1000                       ///< Reserve property indices @SINCE_1_1.39
   };
 
   /**
@@ -309,7 +310,7 @@ public: // Not intended for application developers
 /**
  * @}
  */
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali
 

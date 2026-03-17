@@ -23,7 +23,7 @@
 using namespace Dali;
 using namespace Dali::Toolkit;
 
-namespace Demo
+namespace Dali::Demo
 {
 namespace Internal
 {
@@ -170,4 +170,4 @@ Demo::ExpandingButtons::ExpandingButtonsSignalType& ExpandingButtons::Collapsing
 }
 
 } // namespace Internal
-} // namespace Demo
+} // namespace Dali::Demo

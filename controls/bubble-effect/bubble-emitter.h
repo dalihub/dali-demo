@@ -25,7 +25,7 @@
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
 
-namespace Dali::Toolkit
+namespace Dali::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -40,7 +40,7 @@ class BubbleEmitter;
  *
  * This is done by applying BubbleEffect to multiple specifically created meshActors.
  */
-class DALI_DEMO_CONTROLS_API BubbleEmitter : public Control
+class DALI_DEMO_CONTROLS_API BubbleEmitter : public Toolkit::Control
 {
 public:
   /**
@@ -172,7 +172,7 @@ public:
 
 public: // Not intended for developer use
   /**
-   * @brief Creates a handle using the Toolkit::Internal implementation.
+   * @brief Creates a handle using the Demo::Internal implementation.
    *
    * @param[in]  implementation  The Control implementation.
    */
@@ -186,6 +186,6 @@ public: // Not intended for developer use
   explicit DALI_INTERNAL BubbleEmitter(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Dali::Toolkit
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_BUBBLE_EMMITER_H

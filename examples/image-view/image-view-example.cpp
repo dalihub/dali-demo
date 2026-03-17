@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -299,7 +299,7 @@ private:
   Application& mApplication;
 
   Toolkit::Control   mView;         ///< The View instance.
-  Toolkit::ToolBar   mToolBar;      ///< The View's Toolbar.
+  Demo::ToolBar      mToolBar;      ///< The View's Toolbar.
   Layer              mContentLayer; ///< Content layer
   Toolkit::TableView mTable;
   Toolkit::ImageView mImageViews[NUMBER_OF_IMAGES];

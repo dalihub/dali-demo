@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,7 +128,7 @@ public:
 
     // Add title to the tool bar.
     const float padding(DemoHelper::DEFAULT_VIEW_STYLE.mToolBarPadding);
-    mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER, Toolkit::Alignment::Padding(padding, padding, padding, padding));
+    mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Demo::Alignment::HORIZONTAL_CENTER, Demo::Alignment::Padding(padding, padding, padding, padding));
 
     // Create animation button.
     mAnimationButton = Toolkit::PushButton::New();
@@ -136,7 +136,7 @@ public:
     mAnimationButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, ANIMATION_ZOOM_ICON_IMAGE);
     mAnimationButton.SetProperty(Toolkit::Button::Property::TOGGLABLE, true);
     mAnimationButton.ClickedSignal().Connect(this, &PopupExample::OnAnimationClicked);
-    mToolBar.AddControl(mAnimationButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mAnimationButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create context button.
     mContextButton = Toolkit::PushButton::New();
@@ -144,7 +144,7 @@ public:
     mContextButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, CONTEXT_ENABLED_ICON_IMAGE);
     mContextButton.SetProperty(Toolkit::Button::Property::TOGGLABLE, true);
     mContextButton.ClickedSignal().Connect(this, &PopupExample::OnContextClicked);
-    mToolBar.AddControl(mContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mContextButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Add title to the tool bar.
     mItemView = Toolkit::ItemView::New(*this);
@@ -709,7 +709,7 @@ public: // From ItemFactory
 private:
   Application&        mApplication;
   Toolkit::Control    mView;            ///< The View instance.
-  Toolkit::ToolBar    mToolBar;         ///< The View's Toolbar.
+  Demo::ToolBar       mToolBar;         ///< The View's Toolbar.
   Toolkit::PushButton mContextButton;   ///< For toggling contextual mode.
   Toolkit::PushButton mAnimationButton; ///< For toggling the fade animation.
   Layer               mContentLayer;    ///< Content layer

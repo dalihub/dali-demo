@@ -22,9 +22,7 @@
 #include "../dali-demo-controls-common.h"
 #include "page-turn-view.h"
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -88,7 +86,7 @@ public:
 public: // Not intended for application developers
   /// @cond internal
   /**
-   * @brief Creates a handle using the Toolkit::Internal implementation.
+   * @brief Creates a handle using the Demo::Internal implementation.
    * @SINCE_1_1.4
    * @param[in]  implementation  The Control implementation.
    */
@@ -103,8 +101,6 @@ public: // Not intended for application developers
   /// @endcond
 };
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_PAGE_TURN_PORTRAIT_VIEW_H

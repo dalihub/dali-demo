@@ -40,11 +40,7 @@
 #include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/control-renderers-frag.h>
 
-namespace Dali
-{
-namespace Toolkit
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -52,10 +48,10 @@ using namespace Dali;
 
 BaseHandle Create()
 {
-  return Toolkit::BloomView::New();
+  return Demo::BloomView::New();
 }
 
-DALI_TYPE_REGISTRATION_BEGIN(Toolkit::BloomView, Toolkit::Control, Create)
+DALI_TYPE_REGISTRATION_BEGIN(Demo::BloomView, Toolkit::Control, Create)
 DALI_TYPE_REGISTRATION_END()
 
 // default parameters
@@ -87,7 +83,7 @@ const char* const IMAGE_SATURATION_PROPERTY_NAME                = "uImageSaturat
 } // namespace
 
 BloomView::BloomView()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mBlurNumSamples(BLOOM_GAUSSIAN_BLUR_VIEW_DEFAULT_NUM_SAMPLES),
   mBlurBellCurveWidth(BLOOM_GAUSSIAN_BLUR_VIEW_DEFAULT_BLUR_BELL_CURVE_WIDTH),
   mPixelFormat(BLOOM_GAUSSIAN_BLUR_VIEW_DEFAULT_RENDER_TARGET_PIXEL_FORMAT),
@@ -110,7 +106,7 @@ BloomView::BloomView()
 }
 
 BloomView::BloomView(const unsigned int blurNumSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale)
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mBlurNumSamples(blurNumSamples),
   mBlurBellCurveWidth(blurBellCurveWidth),
   mPixelFormat(renderTargetPixelFormat),
@@ -136,11 +132,11 @@ BloomView::~BloomView()
 {
 }
 
-Toolkit::BloomView BloomView::New()
+Demo::BloomView BloomView::New()
 {
   BloomView* impl = new BloomView();
 
-  Dali::Toolkit::BloomView handle = Dali::Toolkit::BloomView(*impl);
+  Dali::Demo::BloomView handle = Dali::Demo::BloomView(*impl);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -149,11 +145,11 @@ Toolkit::BloomView BloomView::New()
   return handle;
 }
 
-Toolkit::BloomView BloomView::New(const unsigned int blurNumSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale)
+Demo::BloomView BloomView::New(const unsigned int blurNumSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale)
 {
   BloomView* impl = new BloomView(blurNumSamples, blurBellCurveWidth, renderTargetPixelFormat, downsampleWidthScale, downsampleHeightScale);
 
-  Dali::Toolkit::BloomView handle = Dali::Toolkit::BloomView(*impl);
+  Dali::Demo::BloomView handle = Dali::Demo::BloomView(*impl);
 
   // Second-phase init of the implementation
   // This can only be done after the CustomActor connection has been made...
@@ -219,7 +215,7 @@ void BloomView::OnInitialize()
   // bind properties for / set shader constants to defaults
   SetupProperties();
 
-  Self().SetProperty(DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::ANIMATION);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::ANIMATION);
 }
 
 void BloomView::OnSizeSet(const Vector3& targetSize)
@@ -246,7 +242,7 @@ void BloomView::OnSizeSet(const Vector3& targetSize)
     Activate();
   }
 
-  Control::OnSizeSet(targetSize);
+  Toolkit::Internal::Control::OnSizeSet(targetSize);
 }
 
 void BloomView::OnChildAdd(Actor& child)
@@ -256,14 +252,14 @@ void BloomView::OnChildAdd(Actor& child)
     mChildrenRoot.Add(child);
   }
 
-  Control::OnChildAdd(child);
+  Toolkit::Internal::Control::OnChildAdd(child);
 }
 
 void BloomView::OnChildRemove(Actor& child)
 {
   mChildrenRoot.Remove(child);
 
-  Control::OnChildRemove(child);
+  Toolkit::Internal::Control::OnChildRemove(child);
 }
 
 void BloomView::AllocateResources()
@@ -327,8 +323,8 @@ void BloomView::AllocateResources()
     //////////////////////////////////////////////////////
     // Point actors and render tasks at new render targets
 
-    Renderer bloomRenderer = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_BLOOM_VIEW_EXTRACT_SHADER_FRAG);
-    DevelControl::SetRendererTexture(bloomRenderer, mRenderTargetForRenderingChildren);
+    Renderer bloomRenderer = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_BLOOM_VIEW_EXTRACT_SHADER_FRAG);
+    Toolkit::DevelControl::SetRendererTexture(bloomRenderer, mRenderTargetForRenderingChildren);
     mBloomExtractActor.AddRenderer(bloomRenderer);
     mBloomExtractActor.SetProperty(Actor::Property::SIZE, Vector2(mDownsampledWidth, mDownsampledHeight)); // size needs to match render target
 
@@ -336,16 +332,16 @@ void BloomView::AllocateResources()
     mGaussianBlurView.SetUserImageAndOutputRenderTarget(mBloomExtractTarget.GetColorTexture(), blurExtractTarget);
 
     // use the completed blur in the first buffer and composite with the original child actors render
-    Renderer compositeRenderer = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_BLOOM_VIEW_COMPOSITE_SHADER_FRAG);
-    DevelControl::SetRendererTexture(compositeRenderer, mRenderTargetForRenderingChildren);
+    Renderer compositeRenderer = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_BLOOM_VIEW_COMPOSITE_SHADER_FRAG);
+    Toolkit::DevelControl::SetRendererTexture(compositeRenderer, mRenderTargetForRenderingChildren);
     TextureSet textureSet = compositeRenderer.GetTextures();
     textureSet.SetTexture(0u, mRenderTargetForRenderingChildren.GetColorTexture());
     textureSet.SetTexture(1u, blurExtractTarget.GetColorTexture());
     mCompositeActor.AddRenderer(compositeRenderer);
 
     // set up target actor for rendering result, i.e. the blurred image
-    Renderer targetRenderer = DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_CONTROL_RENDERERS_FRAG);
-    DevelControl::SetRendererTexture(targetRenderer, mOutputRenderTarget);
+    Renderer targetRenderer = Toolkit::DevelControl::CreateRenderer(SHADER_CONTROL_RENDERERS_VERT, SHADER_CONTROL_RENDERERS_FRAG);
+    Toolkit::DevelControl::SetRendererTexture(targetRenderer, mOutputRenderTarget);
     mTargetActor.AddRenderer(targetRenderer);
   }
 }
@@ -522,8 +518,4 @@ void BloomView::SetupProperties()
   imageSaturationConstraint.Apply();
 }
 
-} // namespace Internal
-
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo::Internal

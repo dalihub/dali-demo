@@ -21,7 +21,7 @@
 #include <dali/public-api/object/weak-handle.h>
 #include "expanding-buttons.h"
 
-namespace Demo
+namespace Dali::Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
@@ -110,6 +110,6 @@ inline const Internal::ExpandingButtons& GetImpl(const Demo::ExpandingButtons& h
   return static_cast<const Internal::ExpandingButtons&>(object);
 }
 
-} // namespace Demo
+} // namespace Dali::Demo
 
 #endif //  DALI_DEMO_INTERNAL_EXPANDING_BUTTONS_IMPL_H

@@ -58,7 +58,7 @@ private:
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ImageViewPixelAreaApp::OnKeyEvent);
 
-    Toolkit::ToolBar toolBar;
+    Demo::ToolBar    toolBar;
     Toolkit::Control background;
     // Creates a default view with a default tool bar.
     mContent = DemoHelper::CreateView(application,
@@ -75,7 +75,7 @@ private:
     switchButton.ClickedSignal().Connect(this, &ImageViewPixelAreaApp::OnButtonClicked);
     toolBar.AddControl(switchButton,
                        DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage,
-                       Toolkit::Alignment::HORIZONTAL_RIGHT,
+                       Demo::Alignment::HORIZONTAL_RIGHT,
                        DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // for testing image WITH automatic atlasing

@@ -28,9 +28,7 @@
 // INTERNAL INCLUDES
 #include <controls/super-blur-view/super-blur-view.h>
 
-namespace Dali
-{
-namespace Toolkit
+namespace Dali::Demo
 {
 class SuperBlurView;
 
@@ -39,13 +37,13 @@ namespace Internal
 /**
  * SuperBlurView implementation class
  */
-class SuperBlurView : public Control
+class SuperBlurView : public Toolkit::Internal::Control
 {
 public:
   /**
    * @copydoc Dali::Toolkit::SuperBlurView::New
    */
-  static Toolkit::SuperBlurView New(unsigned int blurLevels);
+  static Demo::SuperBlurView New(unsigned int blurLevels);
 
   /**
    * @copydoc Dali::Toolkit::SuperBlurView::SetImage
@@ -70,7 +68,7 @@ public:
   /**
    * @copydoc Dali::Toolkit::SuperBlurView::BlurFinishedSignal
    */
-  Dali::Toolkit::SuperBlurView::SuperBlurViewSignal& BlurFinishedSignal();
+  Demo::SuperBlurView::SuperBlurViewSignal& BlurFinishedSignal();
 
   /**
    * @copydoc Dali::Toolkit::SuperBlurView::GetBlurredTexture
@@ -158,7 +156,7 @@ private:
   Texture                                mInputTexture;
   Vector2                                mTargetSize;
 
-  Toolkit::SuperBlurView::SuperBlurViewSignal mBlurFinishedSignal; ///< Signal emitted when blur has completed.
+  Demo::SuperBlurView::SuperBlurViewSignal mBlurFinishedSignal; ///< Signal emitted when blur has completed.
 
   std::string     mUrl;
   Property::Index mBlurStrengthPropertyIndex;
@@ -169,22 +167,20 @@ private:
 } // namespace Internal
 
 // Helpers for public-api forwarding methods
-inline Toolkit::Internal::SuperBlurView& GetImpl(Toolkit::SuperBlurView& obj)
+inline Demo::Internal::SuperBlurView& GetImpl(Demo::SuperBlurView& obj)
 {
   DALI_ASSERT_ALWAYS(obj);
   Dali::RefObject& handle = obj.GetImplementation();
-  return static_cast<Toolkit::Internal::SuperBlurView&>(handle);
+  return static_cast<Demo::Internal::SuperBlurView&>(handle);
 }
 
-inline const Toolkit::Internal::SuperBlurView& GetImpl(const Toolkit::SuperBlurView& obj)
+inline const Demo::Internal::SuperBlurView& GetImpl(const Demo::SuperBlurView& obj)
 {
   DALI_ASSERT_ALWAYS(obj);
   const Dali::RefObject& handle = obj.GetImplementation();
-  return static_cast<const Toolkit::Internal::SuperBlurView&>(handle);
+  return static_cast<const Demo::Internal::SuperBlurView&>(handle);
 }
 
-} // namespace Toolkit
-
-} // namespace Dali
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_SUPER_BLUR_VIEW_H

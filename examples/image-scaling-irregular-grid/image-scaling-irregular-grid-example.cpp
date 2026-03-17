@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ using namespace Dali::Demo;
 namespace
 {
 /** Controls the output of application logging. */
-//#define DEBUG_PRINT_DIAGNOSTICS;
+// #define DEBUG_PRINT_DIAGNOSTICS;
 
 const char* BACKGROUND_IMAGE(DEMO_IMAGE_DIR "background-gradient.jpg");
 const char* TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
@@ -317,7 +317,7 @@ public:
     toggleScalingButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, TOGGLE_SCALING_IMAGE);
     toggleScalingButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, TOGGLE_SCALING_IMAGE_SELECTED);
     toggleScalingButton.ClickedSignal().Connect(this, &ImageScalingIrregularGridController::OnToggleScalingTouched);
-    mToolBar.AddControl(toggleScalingButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(toggleScalingButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     SetTitle(APPLICATION_TITLE);
 
@@ -628,7 +628,7 @@ private:
 
   Layer                                       mContentLayer;        ///< The content layer (contains non gui chrome actors)
   Toolkit::Control                            mView;                ///< The View instance.
-  Toolkit::ToolBar                            mToolBar;             ///< The View's Toolbar.
+  Demo::ToolBar                               mToolBar;             ///< The View's Toolbar.
   TextLabel                                   mTitleActor;          ///< The Toolbar's Title.
   Actor                                       mGridActor;           ///< The container for the grid of images
   Actor                                       mOffWindowImageViews; ///< ImageViews held off window until the inital batch have loaded their images

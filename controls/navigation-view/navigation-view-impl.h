@@ -26,7 +26,7 @@
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view.h>
 
-namespace Dali::Toolkit
+namespace Dali::Demo
 {
 class NavigationView;
 
@@ -40,49 +40,35 @@ class NavigationBar;
  * NavigationView implements a controller than manages the navigation of hierarchical contents.
  */
 
-class NavigationView : public Control
+class NavigationView : public Toolkit::Internal::Control
 {
 public:
   /**
    * Create an initialized NavigationView.
    * @return A handle to a newly allocated Dali resource
    */
-  static Toolkit::NavigationView New();
+  static Demo::NavigationView New();
 
   /**
-   * @copydoc Dali::Toolkit::NavigationView::Push()
+   * @copydoc Dali::Demo::NavigationView::Push()
    */
   void Push(Actor& actor);
 
   /**
-   * @copydoc Dali::Toolkit::NavigationView::Pop()
+   * @copydoc Dali::Demo::NavigationView::Pop()
    */
   Actor Pop();
 
-  /**
-   * Performs actions as requested using the action name.
-   * @param[in] object The object on which to perform the action.
-   * @param[in] actionName The action to perform.
-   * @param[in] properties The properties with which to perform this action.
-   * @return true if action has been accepted by this control
-   */
-  //static bool DoAction( BaseObject* object, const std::string& actionName, const Property::Map& properties );
-
 private: // override functions from Control
   /**
-   * @copydoc Constrol::OnInitialize
+   * @copydoc Toolkit::Internal::Control::OnInitialize
    */
   virtual void OnInitialize() override;
 
   /**
-   * @copydoc Control::OnSceneConnection( int depth  )
+   * @copydoc Toolkit::Internal::Control::OnSceneConnection( int depth  )
    */
   void OnSceneConnection(int depth) override;
-
-  /**
-   * @copydoc Control::OnRelayout()
-   */
-  //virtual void OnRelayout( const Vector2& size, RelayoutContainer& container );
 
 protected:
   /**
@@ -111,24 +97,24 @@ private:
 
 // Helpers for public-api forwarding methods
 
-inline Toolkit::Internal::NavigationView& GetImpl(Toolkit::NavigationView& navigationView)
+inline Demo::Internal::NavigationView& GetImpl(Demo::NavigationView& navigationView)
 {
   DALI_ASSERT_ALWAYS(navigationView);
 
   Dali::RefObject& handle = navigationView.GetImplementation();
 
-  return static_cast<Toolkit::Internal::NavigationView&>(handle);
+  return static_cast<Demo::Internal::NavigationView&>(handle);
 }
 
-inline const Toolkit::Internal::NavigationView& GetImpl(const Toolkit::NavigationView& navigationView)
+inline const Demo::Internal::NavigationView& GetImpl(const Demo::NavigationView& navigationView)
 {
   DALI_ASSERT_ALWAYS(navigationView);
 
   const Dali::RefObject& handle = navigationView.GetImplementation();
 
-  return static_cast<const Toolkit::Internal::NavigationView&>(handle);
+  return static_cast<const Demo::Internal::NavigationView&>(handle);
 }
 
-} // namespace Dali::Toolkit
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_NAVIGATION_CONTROL_H

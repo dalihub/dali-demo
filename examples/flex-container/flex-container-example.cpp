@@ -23,6 +23,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 
 namespace
 {
@@ -133,7 +134,7 @@ public:
     mFlexDirectionButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-change-selected.png");
     mFlexDirectionButton.ClickedSignal().Connect(this, &FlexContainerExample::OnFlexDirectionButtonClicked);
     mFlexDirectionButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(mFlexDirectionButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mFlexDirectionButton, VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create a flex wrap toggle button. (left of toolbar)
     mFlexWrapButton = Toolkit::PushButton::New();
@@ -142,7 +143,7 @@ public:
     mFlexWrapButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-edit-selected.png");
     mFlexWrapButton.ClickedSignal().Connect(this, &FlexContainerExample::OnFlexWrapButtonClicked);
     mFlexWrapButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(mFlexWrapButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mFlexWrapButton, VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create a content direction toggle button. (left of toolbar)
     mContentDirectionButton = Toolkit::PushButton::New();
@@ -151,7 +152,7 @@ public:
     mContentDirectionButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-replace-selected.png");
     mContentDirectionButton.ClickedSignal().Connect(this, &FlexContainerExample::OnContentDirectionButtonClicked);
     mContentDirectionButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(mContentDirectionButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mContentDirectionButton, VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create a justify content toggle button. (right of toolbar)
     mJustifyContentButton = Toolkit::PushButton::New();
@@ -160,7 +161,7 @@ public:
     mJustifyContentButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-reset-selected.png");
     mJustifyContentButton.ClickedSignal().Connect(this, &FlexContainerExample::OnJustifyContentButtonClicked);
     mJustifyContentButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(mJustifyContentButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mJustifyContentButton, VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create a align items toggle button. (right of toolbar)
     mAlignItemsButton = Toolkit::PushButton::New();
@@ -169,7 +170,7 @@ public:
     mAlignItemsButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-highp-selected.png");
     mAlignItemsButton.ClickedSignal().Connect(this, &FlexContainerExample::OnAlignItemsButtonClicked);
     mAlignItemsButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(mAlignItemsButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mAlignItemsButton, VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create a align content toggle button. (right of toolbar)
     mAlignContentButton = Toolkit::PushButton::New();
@@ -178,7 +179,7 @@ public:
     mAlignContentButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, DEMO_IMAGE_DIR "icon-effect-cross-selected.png");
     mAlignContentButton.ClickedSignal().Connect(this, &FlexContainerExample::OnAlignContentButtonClicked);
     mAlignContentButton.SetProperty(Actor::Property::LEAVE_REQUIRED, true);
-    mToolBar.AddControl(mAlignContentButton, VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+    mToolBar.AddControl(mAlignContentButton, VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     // Create the base flex container
     mFlexContainer = FlexContainer::New();
@@ -334,7 +335,7 @@ private:
   Application& mApplication;
 
   Toolkit::Control mView;
-  Toolkit::ToolBar mToolBar;
+  Demo::ToolBar    mToolBar;
   TextLabel        mTitleActor; ///< The Toolbar's Title.
 
   FlexContainer mFlexContainer;

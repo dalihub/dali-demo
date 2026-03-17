@@ -26,6 +26,7 @@
 
 using namespace Dali;
 using namespace Dali::Toolkit;
+using namespace Dali::Demo;
 
 namespace
 {
@@ -92,7 +93,7 @@ private:
   Application&       mApplication;
   Layer              mContents;
   Toolkit::Control   mView;
-  Toolkit::ToolBar   mToolBar;
+  Demo::ToolBar      mToolBar;
   EffectsView        mDropShadowView;
   EffectsView        mEmbossView;
   Toolkit::TextLabel mTitleActor; ///< The title on the toolbar
@@ -133,7 +134,7 @@ void EffectsViewApp::OnAppInitialize(Application& application)
   viewButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, VIEW_SWAP_SELECTED_IMAGE);
   // Connects the view change button clicked signal to the OnView method.
   viewButton.ClickedSignal().Connect(this, &EffectsViewApp::ChangeEffectSize);
-  mToolBar.AddControl(viewButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Toolkit::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
+  mToolBar.AddControl(viewButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
   Vector2 effectsViewSize(mWindowSize.width, mWindowSize.height * 0.25f);
   mDropShadowView = CreateEffectsView(EffectsView::DROP_SHADOW, effectsViewSize, mEffectSize);
@@ -153,7 +154,7 @@ void EffectsViewApp::OnAppInitialize(Application& application)
 
 EffectsView EffectsViewApp::CreateEffectsView(EffectsView::EffectType type, const Vector2& viewSize, int effectSize)
 {
-  Toolkit::EffectsView effectsView = Toolkit::EffectsView::New(type);
+  Demo::EffectsView effectsView = Demo::EffectsView::New(type);
   // set control size
   effectsView.SetProperty(Actor::Property::SIZE, Vector2(viewSize.width, viewSize.height));
   // set effect size property
@@ -212,7 +213,7 @@ void EffectsViewApp::SetTitle(int effectSize)
   {
     mTitleActor = DemoHelper::CreateToolBarLabel(title.str());
     // Add title to the tool bar.
-    mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Toolkit::Alignment::HORIZONTAL_CENTER);
+    mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Demo::Alignment::HORIZONTAL_CENTER);
   }
   mTitleActor.SetProperty(Toolkit::TextLabel::Property::TEXT, title.str());
 }

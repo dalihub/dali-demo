@@ -23,7 +23,7 @@
 
 namespace Dali
 {
-namespace Toolkit
+namespace Demo
 {
 BloomView::BloomView()
 {
@@ -52,19 +52,19 @@ BloomView BloomView::New(const unsigned int numSamples, const float blurBellCurv
 }
 
 BloomView::BloomView(Internal::BloomView& implementation)
-: Control(implementation)
+: Toolkit::Control(implementation)
 {
 }
 
 BloomView::BloomView(Dali::Internal::CustomActor* internal)
-: Control(internal)
+: Toolkit::Control(internal)
 {
   VerifyCustomActorPointer<Internal::BloomView>(internal);
 }
 
 BloomView BloomView::DownCast(BaseHandle handle)
 {
-  return Control::DownCast<BloomView, Internal::BloomView>(handle);
+  return Toolkit::Control::DownCast<BloomView, Internal::BloomView>(handle);
 }
 
 void BloomView::Activate()
@@ -107,6 +107,6 @@ Property::Index BloomView::GetImageSaturationPropertyIndex() const
   return GetImpl(*this).GetImageSaturationPropertyIndex();
 }
 
-} // namespace Toolkit
+} // namespace Demo
 
 } // namespace Dali
