@@ -49,7 +49,7 @@ typedef Dali::IntrusivePtr<Slider> SliderPtr;
 /**
  * @copydoc Dali::Demo::Slider
  */
-class Slider : public Toolkit::Internal::Control
+class Slider : public Toolkit::ControlImpl
 {
 public:
   typedef Property::Array MarkList;
@@ -248,7 +248,7 @@ public:
    * @return True if the signal was connected.
    * @post If a signal was connected, ownership of functor was passed to CallbackBase. Otherwise the caller is responsible for deleting the unused functor.
    */
-  static bool DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const std::string& signalName, FunctorDelegate* functor);
+  static bool DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const Dali::String& signalName, FunctorDelegate* functor);
 
   // Properties
 
@@ -321,7 +321,7 @@ private:
   void OnInitialize() override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::CreateAccessibleObject()
+   * @copydoc Toolkit::ControlImpl::CreateAccessibleObject()
    */
   Toolkit::DevelControl::ControlAccessible* CreateAccessibleObject() override;
 
@@ -345,7 +345,7 @@ private:
   /**
    * @copydoc Control::OnPan
    */
-  using Toolkit::Internal::Control::OnPan;
+  using Toolkit::ControlImpl::OnPan;
 
   /**
    * Map a position onto a domain and return the result as a percentage

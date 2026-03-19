@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,9 +128,15 @@ enum TestType
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/public-api/rendering/uniform-block.h>
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/instance-rendering-frag.h"
 #include "generated/instance-rendering-vert.h"
 #include "generated/not-instance-rendering-vert.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -272,16 +278,16 @@ public:
       case TestType::TEST_MULTIPLE_RENDERER:
       default:
       {
-        mShader = Shader::New(oss.str() + std::string(SHADER_NOT_INSTANCE_RENDERING_VERT),
-                              std::string(SHADER_INSTANCE_RENDERING_FRAG));
+        mShader = Shader::New(ToDaliStringView(oss.str() + std::string(SHADER_NOT_INSTANCE_RENDERING_VERT)),
+                              ToDaliString(SHADER_INSTANCE_RENDERING_FRAG));
         break;
       }
       case TestType::TEST_INSTANCE_RENDERING_WITH_VERTEX_GEOMETRY:
       case TestType::TEST_INSTANCE_RENDERING_WITH_16BIT_INDEX_GEOMETRY:
       case TestType::TEST_INSTANCE_RENDERING_WITH_32BIT_INDEX_GEOMETRY:
       {
-        mShader = Shader::New(oss.str() + std::string(SHADER_INSTANCE_RENDERING_VERT),
-                              std::string(SHADER_INSTANCE_RENDERING_FRAG));
+        mShader = Shader::New(ToDaliStringView(oss.str() + std::string(SHADER_INSTANCE_RENDERING_VERT)),
+                              ToDaliString(SHADER_INSTANCE_RENDERING_FRAG));
         break;
       }
     }

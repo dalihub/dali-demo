@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,13 @@
 #include "generated/bezier-curve-vert.h"
 #include "shared/view.h"
 
+#include <dali/integration-api/string-utils.h>
 #include <sstream>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -281,7 +287,8 @@ public:
     mCurve.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mCurve.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
-    Shader shader = Shader::New(SHADER_BEZIER_CURVE_VERT, SHADER_BEZIER_CURVE_FRAG);
+    Shader shader = Shader::New(ToDaliStringView(SHADER_BEZIER_CURVE_VERT),
+                                ToDaliStringView(SHADER_BEZIER_CURVE_FRAG));
 
     Property::Map curveVertexFormat;
     curveVertexFormat["aPosition"] = Property::VECTOR2;
@@ -325,7 +332,8 @@ public:
     line.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     line.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
-    Shader   shader   = Shader::New(SHADER_BEZIER_CURVE_VERT, SHADER_BEZIER_CURVE_FRAG);
+    Shader   shader   = Shader::New(ToDaliStringView(SHADER_BEZIER_CURVE_VERT),
+                                    ToDaliStringView(SHADER_BEZIER_CURVE_FRAG));
     Geometry geometry = Geometry::New();
     geometry.AddVertexBuffer(vertexBuffer);
     geometry.SetType(Geometry::LINE_STRIP);
@@ -363,14 +371,16 @@ public:
 
   void CreateAxisLabels(Actor parent)
   {
-    TextLabel progressionLabel = TextLabel::New("Progression");
+    TextLabel progressionLabel = TextLabel::New();
+    progressionLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Progression"));
     progressionLabel.SetProperty(TextLabel::Property::POINT_SIZE, AXIS_LABEL_POINT_SIZE);
     progressionLabel.SetProperty(Actor::Property::ORIENTATION, Quaternion(Radian(Degree(-90.0f)), Vector3::ZAXIS));
     progressionLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
     progressionLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     CreateLine(progressionLabel, ParentOrigin::BOTTOM_LEFT);
 
-    TextLabel timeLabel = TextLabel::New("Time");
+    TextLabel timeLabel = TextLabel::New();
+    timeLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Time"));
     timeLabel.SetProperty(TextLabel::Property::POINT_SIZE, AXIS_LABEL_POINT_SIZE);
     timeLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     timeLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
@@ -400,7 +410,7 @@ public:
     oss << "<color value='#e7640d'>" << pos2.x << ", " << pos2.y << "</color>";
     oss << "<color value='black'> )</color>";
 
-    mCoefficientLabel.SetProperty(TextLabel::Property::TEXT, oss.str());
+    mCoefficientLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(oss.str()));
   }
 
   Vector2 AlignToGrid(Vector3 actorPos, Vector3 gridSize)

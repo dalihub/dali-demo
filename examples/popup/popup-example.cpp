@@ -19,7 +19,15 @@
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
+#include <dali/devel-api/object/type-registry.h>
+#include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -406,7 +414,7 @@ public:
 
   Actor CreateTitle(std::string title)
   {
-    Toolkit::TextLabel titleActor = Toolkit::TextLabel::New(title);
+    Toolkit::TextLabel titleActor = Toolkit::TextLabel::New(ToDaliString(title));
     titleActor.SetProperty(Dali::Actor::Property::NAME, "titleActor");
     titleActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
     titleActor.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
@@ -447,28 +455,28 @@ public:
   bool OnButtonClicked(Toolkit::Button button)
   {
     // Handle menu items that create popups.
-    if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TITLE_ID)
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TITLE_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetTitle(CreateTitle("Popup!"));
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_BUTTONS_1_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_BUTTONS_1_ID)
     {
       mPopup = CreateConfirmationPopup(1);
       mPopup.SetTitle(CreateTitle("Title"));
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_BUTTONS_2_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_BUTTONS_2_ID)
     {
       mPopup = CreateConfirmationPopup(2);
       mPopup.SetTitle(CreateTitle("Title"));
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TOAST_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TOAST_ID)
     {
       // Create a toast popup via the type registry (as it is a named-type).
       TypeInfo typeInfo = TypeRegistry::Get().GetTypeInfo("PopupToast");
@@ -485,7 +493,7 @@ public:
         }
       }
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TITLE_CONTENT_BUTTONS_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TITLE_CONTENT_BUTTONS_ID)
     {
       mPopup = CreateConfirmationPopup(2);
       mPopup.SetTitle(CreateTitle("Erase image"));
@@ -501,7 +509,7 @@ public:
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_TEXT_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_TEXT_ID)
     {
       mPopup = CreatePopup();
 
@@ -519,7 +527,7 @@ public:
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_IMAGE_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CONTENT_IMAGE_ID)
     {
       mPopup                   = CreatePopup();
       Toolkit::ImageView image = Toolkit::ImageView::New(IMAGE2);
@@ -531,7 +539,7 @@ public:
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TITLE_CONTENT_TEXT_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TITLE_CONTENT_TEXT_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetTitle(CreateTitle("Popup!"));
@@ -548,7 +556,7 @@ public:
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_FIXED_SIZE_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_FIXED_SIZE_ID)
     {
       mPopup = CreatePopup();
       mPopup.SetTitle(CreateTitle("Popup!"));
@@ -567,7 +575,7 @@ public:
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TITLE_LARGE_CONTENT_BUTTONS_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_TITLE_LARGE_CONTENT_BUTTONS_ID)
     {
       mPopup = CreateConfirmationPopup(2);
       mPopup.SetTitle(CreateTitle("Popup!"));
@@ -584,7 +592,7 @@ public:
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_COMPLEX_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_COMPLEX_ID)
     {
       mPopup = CreateConfirmationPopup(2);
       mPopup.SetTitle(CreateTitle("Warning"));
@@ -646,7 +654,7 @@ public:
 
       SetupPopup(mPopup, button);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CUSTOM_STYLE)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == POPUP_BUTTON_CUSTOM_STYLE)
     {
       mPopup = CreateConfirmationPopup(2);
 

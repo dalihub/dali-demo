@@ -19,16 +19,22 @@
 #include <controls/filters/spread-filter.h>
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali/devel-api/common/stage.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
-#include <dali-toolkit/devel-api/controls/control-renderers.h>
 
 // INTERNAL INCLUDES
-#include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/control-renderers-frag.h>
+#include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/spread-filter-shader-frag.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 namespace Dali::Demo::Internal
 {

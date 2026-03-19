@@ -19,12 +19,12 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/public-api/controls/control-impl.h>
+#include <dali-toolkit/public-api/controls/image-view/image-view.h>
 #include <dali/public-api/actors/camera-actor.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/render-tasks/render-task.h>
-#include <dali-toolkit/public-api/controls/control-impl.h>
-#include <dali-toolkit/public-api/controls/image-view/image-view.h>
 #include <cmath>
 #include <sstream>
 
@@ -41,7 +41,7 @@ namespace Internal
 /**
  * ShadowView implementation class
  */
-class ShadowView : public Toolkit::Internal::Control
+class ShadowView : public Toolkit::ControlImpl
 {
 public:
   /**
@@ -116,12 +116,12 @@ private:
   void OnInitialize() override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::OnChildAdd()
+   * @copydoc Toolkit::ControlImpl::OnChildAdd()
    */
   void OnChildAdd(Actor& child) override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::OnChildRemove()
+   * @copydoc Toolkit::ControlImpl::OnChildRemove()
    */
   void OnChildRemove(Actor& child) override;
 
@@ -151,7 +151,7 @@ private:
 
   CameraActor mCameraActor; // Constrained to same position as mPointLight and pointing at mShadowPlane
 
-  Property::Map     mShadowVisualMap;
+  Property::Map                     mShadowVisualMap;
   Demo::Internal::BlurTwoPassFilter mBlurFilter;
 
   Vector4 mCachedShadowColor;     ///< Cached Shadow color.

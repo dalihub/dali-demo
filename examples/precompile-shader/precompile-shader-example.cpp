@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,15 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 
 // For Wait
+#include <dali/integration-api/string-utils.h>
 #include <chrono>
 #include <iostream>
 #include <thread>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -116,7 +122,8 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
 
-    TextLabel textLabel = TextLabel::New("Precomile Shader");
+    TextLabel textLabel = TextLabel::New();
+    textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Precomile Shader"));
     textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     textLabel.SetProperty(Dali::Actor::Property::NAME, "Precompile Shader");
     window.Add(textLabel);

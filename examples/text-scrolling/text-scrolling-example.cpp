@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,12 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -73,7 +79,7 @@ public:
 
   void CreateBox(const std::string& name, Actor& box, Actor parent, const Vector2& size)
   {
-    box.SetProperty(Dali::Actor::Property::NAME, name);
+    box.SetProperty(Dali::Actor::Property::NAME, ToDaliString(name));
     box.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     box.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     box.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
@@ -90,7 +96,7 @@ public:
 
   void CreateLabel(Actor& label, const std::string text, Actor parent, bool scrollOnStart, PushButton button)
   {
-    label = TextLabel::New(text);
+    label = TextLabel::New(ToDaliString(text));
     label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     label.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
     label.SetProperty(Actor::Property::PADDING, Padding(1.0f, 1.0f, 1.0f, 1.0f));
@@ -331,7 +337,7 @@ public:
   {
     for(unsigned int index = 0; index < ALIGNMENT_TABLE_COUNT; ++index)
     {
-      const std::string& buttonName = button.GetProperty<std::string>(Dali::Actor::Property::NAME);
+      const String& buttonName = button.GetProperty<String>(Dali::Actor::Property::NAME);
       if(buttonName == ALIGNMENT_TABLE[index])
       {
         mSmallLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, ALIGNMENT_TABLE[index]);

@@ -18,6 +18,12 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/devel-api/object/handle-devel.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -129,18 +135,18 @@ private:
     mFitKeepAspectRatioImage.SetProperty(ImageView::Property::IMAGE,
                                          Property::Map{
                                            {Visual::Property::TYPE, Visual::IMAGE},
-                                           {ImageVisual::Property::URL, IMAGE_NAME},
+                                           {ImageVisual::Property::URL, ToPropertyValue(IMAGE_NAME)},
                                            {DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FIT_KEEP_ASPECT_RATIO}});
     window.Add(mFitKeepAspectRatioImage);
 
     // Create an overlay label for fill image
-    Actor fillLabel = TextLabel::New(FILL_LABEL);
+    Actor fillLabel = TextLabel::New(ToDaliString(FILL_LABEL));
     fillLabel.SetProperties(FILL_IMAGE_PROPERTIES);
     fillLabel.SetProperties(OVERLAY_LABEL_PROPERTIES);
     window.Add(fillLabel);
 
     // Create an overlay label for the Fit/Keep Aspect image
-    Actor fitLabel = TextLabel::New(FIT_KEEP_ASPECT_LABEL);
+    Actor fitLabel = TextLabel::New(ToDaliString(FIT_KEEP_ASPECT_LABEL));
     fitLabel.SetProperties(FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES);
     fitLabel.SetProperties(OVERLAY_LABEL_PROPERTIES);
     window.Add(fitLabel);
@@ -163,7 +169,7 @@ private:
     mFitKeepAspectRatioImage.SetProperty(Control::Property::PADDING, padding);
     mFillImage.SetProperty(Control::Property::PADDING, padding);
 
-    mTextLabel.SetProperty(TextLabel::Property::TEXT, mLargePadding ? LARGE_PADDING_TEXT : BORDER_ONLY_PADDING_TEXT);
+    mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(mLargePadding ? LARGE_PADDING_TEXT : BORDER_ONLY_PADDING_TEXT));
   }
 
   /**

@@ -17,7 +17,13 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/integration-api/string-utils.h>
 #include "controls/slider/slider.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -156,7 +162,8 @@ public:
     layer.Add(topAlignment);
 
     //Add a title to indicate the currently selected shape.
-    mShapeTitle = TextLabel::New("DEFAULT");
+    mShapeTitle = TextLabel::New();
+    mShapeTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("DEFAULT"));
     mShapeTitle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mShapeTitle.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mShapeTitle.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
@@ -376,7 +383,7 @@ public:
     mModel.SetProperty(Control::Property::BACKGROUND, Property::Value(mVisualMap));
 
     //Update title.
-    mShapeTitle.SetProperty(TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Sphere");
+    mShapeTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(SHAPE_TITLE_PREFIX + "Sphere"));
   }
 
   //Sets the 3D model to a cone and modifies the sliders appropriately.
@@ -405,7 +412,7 @@ public:
     mModel.SetProperty(Control::Property::BACKGROUND, Property::Value(mVisualMap));
 
     //Update title.
-    mShapeTitle.SetProperty(TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Cone");
+    mShapeTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(SHAPE_TITLE_PREFIX + "Cone"));
   }
 
   //Sets the 3D model to a conical frustum and modifies the sliders appropriately.
@@ -434,7 +441,7 @@ public:
     mModel.SetProperty(Control::Property::BACKGROUND, Property::Value(mVisualMap));
 
     //Update title.
-    mShapeTitle.SetProperty(TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Conical Frustum");
+    mShapeTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(SHAPE_TITLE_PREFIX + "Conical Frustum"));
   }
 
   //Sets the 3D model to a cylinder and modifies the sliders appropriately.
@@ -463,7 +470,7 @@ public:
     mModel.SetProperty(Control::Property::BACKGROUND, Property::Value(mVisualMap));
 
     //Update title.
-    mShapeTitle.SetProperty(TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Cylinder");
+    mShapeTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(SHAPE_TITLE_PREFIX + "Cylinder"));
   }
 
   //Sets the 3D model to a cube and modifies the sliders appropriately.
@@ -478,7 +485,7 @@ public:
     mModel.SetProperty(Control::Property::BACKGROUND, Property::Value(mVisualMap));
 
     //Update title.
-    mShapeTitle.SetProperty(TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Cube");
+    mShapeTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(SHAPE_TITLE_PREFIX + "Cube"));
   }
 
   //Sets the 3D model to a bevelled cube and modifies the sliders appropriately.
@@ -502,7 +509,7 @@ public:
     mModel.SetProperty(Control::Property::BACKGROUND, Property::Value(mVisualMap));
 
     //Update title.
-    mShapeTitle.SetProperty(TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Bevelled Cube");
+    mShapeTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(SHAPE_TITLE_PREFIX + "Bevelled Cube"));
   }
 
   //Sets the 3D model to an octahedron and modifies the sliders appropriately.
@@ -517,7 +524,7 @@ public:
     mModel.SetProperty(Control::Property::BACKGROUND, Property::Value(mVisualMap));
 
     //Update title.
-    mShapeTitle.SetProperty(TextLabel::Property::TEXT, SHAPE_TITLE_PREFIX + "Octahedron");
+    mShapeTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(SHAPE_TITLE_PREFIX + "Octahedron"));
   }
 
   //Sets up the slider at the given index for the supplied property, and labels it appropriately.
@@ -535,7 +542,7 @@ public:
     //We reset the TextLabel to force a relayout of the table.
     mSliderTable.RemoveChildAt(TableView::CellPosition(sliderIndex, 0));
 
-    TextLabel sliderLabel = TextLabel::New(visualPropertyLabel);
+    TextLabel sliderLabel = TextLabel::New(ToDaliString(visualPropertyLabel));
     sliderLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     sliderLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     sliderLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);

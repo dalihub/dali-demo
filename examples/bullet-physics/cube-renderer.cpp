@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,14 @@
 
 #include "cube-renderer.h"
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/integration-api/string-utils.h>
 #include "generated/rendering-textured-shape-frag.h"
 #include "generated/rendering-textured-shape-vert.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -35,7 +41,8 @@ Dali::Shader CreateShader()
 
   if(!gShapeShader)
   {
-    gShapeShader = Shader::New(SHADER_RENDERING_TEXTURED_SHAPE_VERT, SHADER_RENDERING_TEXTURED_SHAPE_FRAG);
+    gShapeShader = Shader::New(ToDaliStringView(SHADER_RENDERING_TEXTURED_SHAPE_VERT),
+                               ToDaliStringView(SHADER_RENDERING_TEXTURED_SHAPE_FRAG));
   }
   return gShapeShader;
 }
@@ -119,7 +126,7 @@ Geometry CubeRenderer::CreateCubeGeometry()
 TextureSet CubeRenderer::CreateTexture(std::string url)
 {
   // Load image from file
-  PixelData pixels = Dali::Toolkit::SyncImageLoader::Load(url);
+  PixelData pixels = Dali::Toolkit::SyncImageLoader::Load(ToDaliString(url));
 
   Texture texture = Texture::New(TextureType::TEXTURE_2D, pixels.GetPixelFormat(), pixels.GetWidth(), pixels.GetHeight());
   texture.Upload(pixels, 0, 0, 0, 0, pixels.GetWidth(), pixels.GetHeight());

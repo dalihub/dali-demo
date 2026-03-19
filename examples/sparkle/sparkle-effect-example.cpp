@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,14 @@
 #include <random> // std::default_random_engine
 #include <sstream>
 
+#include <dali/integration-api/string-utils.h>
 #include "shared/utility.h"
 #include "sparkle-effect.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::ImageView;
@@ -307,7 +313,7 @@ private:
   void PlayWanderAnimation(float duration, bool looping = true)
   {
     Animation wanderAnimation = Animation::New(duration);
-    wanderAnimation.AnimateTo(Property(mEffect, PERCENTAGE_UNIFORM_NAME), 1.f);
+    wanderAnimation.AnimateTo(Property(mEffect, ToDaliString(PERCENTAGE_UNIFORM_NAME)), 1.f);
     wanderAnimation.SetLooping(looping); // infinite playing
 
     wanderAnimation.Play();
@@ -327,9 +333,9 @@ private:
     DestroyAnimation(mTapAnimationAux);
 
     float accelaration = GetFloatUniformValue(ACCELARATION_UNIFORM_NAME);
-    mEffect.SetProperty(mEffect.GetPropertyIndex(ACCELARATION_UNIFORM_NAME), accelaration - int(accelaration)); // Set the value as its fractional part
+    mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(ACCELARATION_UNIFORM_NAME)), accelaration - int(accelaration)); // Set the value as its fractional part
     Animation shakeAnimation = Animation::New(duration);
-    shakeAnimation.AnimateBy(Property(mEffect, ACCELARATION_UNIFORM_NAME), cycle, AlphaFunction::EASE_OUT);
+    shakeAnimation.AnimateBy(Property(mEffect, ToDaliString(ACCELARATION_UNIFORM_NAME)), cycle, AlphaFunction::EASE_OUT);
     shakeAnimation.FinishedSignal().Connect(this, &SparkleEffectExample::OnShakeAnimationFinished);
 
     shakeAnimation.Play();
@@ -350,11 +356,11 @@ private:
     // Stop the fading / tap animation before the breaking
     DestroyAnimation(mFadeAnimation);
     mTapIndices.x = mTapIndices.y;
-    mEffect.SetProperty(mEffect.GetPropertyIndex(TAP_INDICES_UNIFORM_NAME), mTapIndices);
-    mEffect.SetProperty(mEffect.GetPropertyIndex(ACCELARATION_UNIFORM_NAME), 0.f);
+    mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(TAP_INDICES_UNIFORM_NAME)), mTapIndices);
+    mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(ACCELARATION_UNIFORM_NAME)), 0.f);
 
     // prepare the animation by setting the uniform to the required value
-    mEffect.SetProperty(mEffect.GetPropertyIndex(BREAK_UNIFORM_NAME), 1.f);
+    mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(BREAK_UNIFORM_NAME)), 1.f);
     mMeshActor.SetProperty(Actor::Property::SCALE, 0.01f);
     mEffect.SetProperty(mEffect.GetPropertyIndex("uEffectScale"), 0.01f);
     mMeshActor.SetProperty(Actor::Property::POSITION, Vector3(0.f, 0.f, 1.f));
@@ -371,9 +377,9 @@ private:
     {
       oss.str("");
       oss << OPACITY_UNIFORM_NAME << i << "]";
-      mEffect.SetProperty(mEffect.GetPropertyIndex(oss.str()), 0.01f);
+      mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(oss.str())), 0.01f);
       float timeSlice = timeUnit * i * i;
-      breakAnimation.AnimateTo(Property(mEffect, oss.str()), 1.f, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(timeSlice * 0.5f, timeSlice));
+      breakAnimation.AnimateTo(Property(mEffect, ToDaliString(oss.str())), 1.f, AlphaFunction::EASE_IN_OUT_SINE, TimePeriod(timeSlice * 0.5f, timeSlice));
     }
 
     breakAnimation.Play();
@@ -406,7 +412,7 @@ private:
 
       oss.str("");
       oss << OPACITY_UNIFORM_NAME << i << "]";
-      fadeAnimation.AnimateTo(Property(mEffect, oss.str()), targetValue, TimePeriod(timeSlice * i, fadeDuration * 2.f));
+      fadeAnimation.AnimateTo(Property(mEffect, ToDaliString(oss.str())), targetValue, TimePeriod(timeSlice * i, fadeDuration * 2.f));
     }
 
     fadeAnimation.Play();
@@ -432,19 +438,19 @@ private:
 
     std::ostringstream oss;
     oss << TAP_OFFSET_UNIFORM_NAME << idx << "]";
-    mEffect.SetProperty(mEffect.GetPropertyIndex(oss.str()), 0.f);
-    animation.AnimateTo(Property(mEffect, oss.str()), 0.75f, CustomBounce);
+    mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(oss.str())), 0.f);
+    animation.AnimateTo(Property(mEffect, ToDaliString(oss.str())), 0.75f, CustomBounce);
 
     oss.str("");
     oss << TAP_POINT_UNIFORM_NAME << idx << "]";
-    mEffect.SetProperty(mEffect.GetPropertyIndex(oss.str()), tapPoint / ACTOR_SCALE);
+    mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(oss.str())), tapPoint / ACTOR_SCALE);
 
-    mEffect.SetProperty(mEffect.GetPropertyIndex(TAP_INDICES_UNIFORM_NAME), mTapIndices);
+    mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(TAP_INDICES_UNIFORM_NAME)), mTapIndices);
 
     if(!mShaking)
     {
       mTapAnimationAux = Animation::New(duration * 0.2f);
-      mTapAnimationAux.AnimateBy(Property(mEffect, ACCELARATION_UNIFORM_NAME), 0.15f, AlphaFunction::EASE_IN_OUT);
+      mTapAnimationAux.AnimateBy(Property(mEffect, ToDaliString(ACCELARATION_UNIFORM_NAME)), 0.15f, AlphaFunction::EASE_IN_OUT);
       mTapAnimationAux.Play();
     }
     animation.Play();
@@ -475,7 +481,7 @@ private:
    */
   void OnBreakAnimationFinished(Animation& animation)
   {
-    mEffect.SetProperty(mEffect.GetPropertyIndex(BREAK_UNIFORM_NAME), 0.f);
+    mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(BREAK_UNIFORM_NAME)), 0.f);
   }
 
   /**
@@ -490,14 +496,14 @@ private:
       {
         mTapIndices = Vector2::ZERO;
       }
-      mEffect.SetProperty(mEffect.GetPropertyIndex(TAP_INDICES_UNIFORM_NAME), mTapIndices);
+      mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(TAP_INDICES_UNIFORM_NAME)), mTapIndices);
     }
 
     mTapAnimationIndexPair.erase(animation);
     if(mTapAnimationIndexPair.size() < 1 && mTapIndices != Vector2::ZERO)
     {
       mTapIndices = Vector2::ZERO;
-      mEffect.SetProperty(mEffect.GetPropertyIndex(TAP_INDICES_UNIFORM_NAME), mTapIndices);
+      mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(TAP_INDICES_UNIFORM_NAME)), mTapIndices);
     }
 
     animation.Clear();
@@ -512,7 +518,7 @@ private:
   float GetFloatUniformValue(const std::string& uniformName)
   {
     float value;
-    mEffect.GetProperty(mEffect.GetPropertyIndex(uniformName)).Get(value);
+    mEffect.GetProperty(mEffect.GetPropertyIndex(ToDaliString(uniformName))).Get(value);
     return value;
   }
 

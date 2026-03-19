@@ -19,8 +19,8 @@
 #include <controls/navigation-view/navigation-view-impl.h>
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/object/type-registry-helper.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali/devel-api/object/type-registry-helper.h>
 
 namespace Dali::Demo::Internal
 {
@@ -37,7 +37,7 @@ DALI_TYPE_REGISTRATION_END()
 } // namespace
 
 NavigationView::NavigationView()
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT))
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT))
 {
 }
 
@@ -71,7 +71,7 @@ void NavigationView::OnSceneConnection(int depth)
 {
   Self().SetProperty(Actor::Property::SENSITIVE, true);
 
-  Toolkit::Internal::Control::OnSceneConnection(depth);
+  Toolkit::ControlImpl::OnSceneConnection(depth);
 }
 
 void NavigationView::Push(Actor& actor)
@@ -110,4 +110,3 @@ Actor NavigationView::Pop()
 }
 
 } // namespace Dali::Demo::Internal
-

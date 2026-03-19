@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,9 +24,15 @@
 // INTERNAL INCLUDES
 #include <dali/devel-api/adaptor-framework/file-stream.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
 #include "ktx-loader.h"
 #include "model-pbr.h"
 #include "model-skybox.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Toolkit;
@@ -106,7 +112,8 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::BLACK);
     mAnimation = Animation::New(1.0f);
-    mLabel     = TextLabel::New("R:1 M:0");
+    mLabel     = TextLabel::New();
+    mLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("R:1 M:0"));
     mLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
     mLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     mLabel.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize().GetWidth() * 0.75f, window.GetSize().GetHeight() * 0.083f));
@@ -183,7 +190,7 @@ public:
           oss.precision(2);
           oss << " R:" << mRoughness << ","
               << " M:" << mMetalness;
-          mLabel.SetProperty(TextLabel::Property::TEXT, oss.str());
+          mLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(oss.str()));
           mStartTouch = point;
           process     = true;
         }
@@ -199,7 +206,7 @@ public:
           oss.precision(2);
           oss << " R:" << mRoughness << ","
               << " M:" << mMetalness;
-          mLabel.SetProperty(TextLabel::Property::TEXT, oss.str());
+          mLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(oss.str()));
           mStartTouch = point;
           process     = true;
         }

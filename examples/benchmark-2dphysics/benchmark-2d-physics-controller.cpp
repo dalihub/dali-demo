@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,16 @@
 #include <dali/integration-api/debug.h>
 
 #include <chipmunk/chipmunk.h>
+#include <dali/integration-api/string-utils.h>
 #include <unistd.h>
 #include <cstdlib>
 #include <iostream>
 #include <string>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit::Physics;
@@ -227,7 +233,7 @@ public:
     mWindow.Add(mAnimationSimRootActor);
     std::ostringstream oss;
     oss << "Animation simulation of " << mBallNumber << " balls";
-    auto title = Toolkit::TextLabel::New(oss.str());
+    auto title = Toolkit::TextLabel::New(ToDaliString(oss.str()));
     mAnimationSimRootActor.Add(title);
     title[Toolkit::TextLabel::Property::TEXT_COLOR]           = Color::WHITE;
     title[Actor::Property::PARENT_ORIGIN]                     = Dali::ParentOrigin::TOP_CENTER;
@@ -239,7 +245,7 @@ public:
 
     for(int i = 0; i < mBallNumber; ++i)
     {
-      Actor ball = mBallActors[i]          = Toolkit::ImageView::New(BALL_IMAGES[rand() % 4]);
+      Actor ball = mBallActors[i]          = Toolkit::ImageView::New(ToDaliString(BALL_IMAGES[rand() % 4]));
       ball[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::CENTER;
       ball[Actor::Property::ANCHOR_POINT]  = Dali::AnchorPoint::CENTER;
 
@@ -390,7 +396,7 @@ public:
 
     std::ostringstream oss;
     oss << "Physics simulation of " << mBallNumber << " balls";
-    auto title = Toolkit::TextLabel::New(oss.str());
+    auto title = Toolkit::TextLabel::New(ToDaliString(oss.str()));
     mPhysicsRoot.Add(title);
     title[Toolkit::TextLabel::Property::TEXT_COLOR]           = Color::WHITE;
     title[Actor::Property::PARENT_ORIGIN]                     = Dali::ParentOrigin::TOP_CENTER;
@@ -408,7 +414,7 @@ public:
     const float        BALL_ELASTICITY = 1.0f;
     const float        BALL_FRICTION   = 0.0f;
 
-    auto ball                   = Toolkit::ImageView::New(BALL_IMAGES[rand() % 4]);
+    auto ball                   = Toolkit::ImageView::New(ToDaliString(BALL_IMAGES[rand() % 4]));
     ball[Actor::Property::NAME] = "Ball";
     ball[Actor::Property::SIZE] = BALL_SIZE * 0.5f;
     const float moment          = cpMomentForCircle(BALL_MASS, 0.0f, BALL_RADIUS, cpvzero);

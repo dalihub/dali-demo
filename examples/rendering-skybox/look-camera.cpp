@@ -17,9 +17,15 @@
 
 #include "look-camera.h"
 
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/events/touch-event.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/render-tasks/render-task.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -107,7 +113,7 @@ bool LookCamera::OnTick()
     mCameraYawPitch.x = CAMERA_VERTICAL_LIMIT * ((mCameraYawPitch.x < 0) ? -1.0f : 1.0f);
   }
   // Spin
-  mCameraYawPitch.y+=3.14f/15.0f;
+  mCameraYawPitch.y += 3.14f / 15.0f;
   Quaternion rotation;
   Quaternion rotX(Degree(mCameraYawPitch.x), Vector3(1.0f, 0.0f, 0.0f));
   Quaternion rotY(Degree(mCameraYawPitch.y), Vector3(0.0f, 1.0f, 0.0f));

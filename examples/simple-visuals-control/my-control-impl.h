@@ -32,7 +32,7 @@ namespace Internal // To use TypeRegistry, handle and body classes need the same
  * @brief A Simple Control to show use of visuals with a style sheet and changing visuals with a state change
  */
 
-class MyControl : public Dali::Toolkit::Internal::Control
+class MyControl : public Dali::Toolkit::ControlImpl
 {
 public:
   /**

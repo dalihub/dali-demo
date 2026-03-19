@@ -19,18 +19,24 @@
 #include "slider-impl.h"
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/events/touch-event.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
 
 #include <dali-toolkit/devel-api/asset-manager/asset-manager.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali-toolkit/public-api/controls/image-view/image-view.h>
 #include <dali-toolkit/public-api/visuals/image-visual-properties.h>
 
-#include <cstring> // for strcmp
 #include <limits>
 #include <sstream>
+
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -133,7 +139,7 @@ Demo::Slider Slider::New()
 }
 
 Slider::Slider()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mState(NORMAL),
   mPopupVisual(""),
   mPopupArrowVisual(""),
@@ -219,7 +225,7 @@ void Slider::OnRelayout(const Vector2& size, RelayoutContainer& container)
   SetHitRegion(Vector2(size.x, GetHitRegion().y));
   // Factor in handle overshoot into size of backing
   SetTrackRegion(Vector2(size.x - GetHandleSize().x, GetTrackRegion().y));
-  Control::OnRelayout(size, container);
+  ControlImpl::OnRelayout(size, container);
 }
 
 bool Slider::OnTouch(Actor actor, const TouchEvent& touch)
@@ -355,10 +361,10 @@ void Slider::DisplayValue(float value, bool raiseSignals)
     ss.precision(GetValuePrecision());
     ss << std::fixed << clampedValue;
 
-    std::string label = mHandleValueTextLabel.GetProperty<std::string>(Toolkit::TextLabel::Property::TEXT);
-    if(label.compare(ss.str()))
+    String label = mHandleValueTextLabel.GetProperty<String>(Toolkit::TextLabel::Property::TEXT);
+    if(label == ToDaliString(ss.str()))
     {
-      mHandleValueTextLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, ss.str());
+      mHandleValueTextLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, ToPropertyValue(ss.str()));
     }
   }
 }
@@ -406,7 +412,7 @@ void Slider::SetTrackVisual(const std::string& filename)
 {
   if(mHandle && (filename.size() > 0))
   {
-    mTrack.SetImage(filename);
+    mTrack.SetImage(ToDaliString(filename));
     mTrackVisual = filename;
   }
 }
@@ -417,10 +423,10 @@ void Slider::SetTrackVisual(Property::Map map)
   if(imageValue)
   {
     mTrackVisual.clear();
-    std::string filename;
+    String filename;
     if(imageValue->Get(filename))
     {
-      if(mTrack && (filename.size() > 0))
+      if(mTrack && (filename.Size() > 0))
       {
         mTrack.SetImage(filename);
         mTrackMap = map;
@@ -469,7 +475,7 @@ void Slider::SetProgressVisual(const std::string& filename)
 {
   if(mProgress && (filename.size() > 0))
   {
-    mProgress.SetImage(filename);
+    mProgress.SetImage(ToDaliString(filename));
     mProgressVisual = filename;
   }
 }
@@ -480,10 +486,10 @@ void Slider::SetProgressVisual(Property::Map map)
   if(imageValue)
   {
     mProgressVisual.clear();
-    std::string filename;
+    String filename;
     if(imageValue->Get(filename))
     {
-      if(mProgress && (filename.size() > 0))
+      if(mProgress && (filename.Size() > 0))
       {
         mProgress.SetImage(filename);
         mProgressMap = map;
@@ -508,10 +514,10 @@ void Slider::SetPopupVisual(Property::Map map)
   if(imageValue)
   {
     mPopupVisual.clear();
-    std::string filename;
+    String filename;
     if(imageValue->Get(filename))
     {
-      if(mPopup && (filename.size() > 0))
+      if(mPopup && (filename.Size() > 0))
       {
         mPopup.SetImage(filename);
         mPopupMap = map;
@@ -530,7 +536,7 @@ void Slider::CreatePopupImage(const std::string& filename)
   if(mPopup && (filename.size() > 0))
   {
     Property::Map map;
-    map[Toolkit::ImageVisual::Property::URL] = filename;
+    map[Toolkit::ImageVisual::Property::URL] = ToPropertyValue(filename);
     mPopup.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
   }
 }
@@ -546,10 +552,10 @@ void Slider::SetPopupArrowVisual(Property::Map map)
   if(imageValue)
   {
     mPopupArrowVisual.clear();
-    std::string filename;
+    String filename;
     if(imageValue->Get(filename))
     {
-      if(mPopupArrow && (filename.size() > 0))
+      if(mPopupArrow && (filename.Size() > 0))
       {
         mPopupArrow.SetImage(filename);
         mPopupArrowMap = map;
@@ -568,7 +574,7 @@ void Slider::CreatePopupArrowImage(const std::string& filename)
   if(mPopupArrow && (filename.size() > 0))
   {
     Property::Map map;
-    map[Toolkit::ImageVisual::Property::URL] = filename;
+    map[Toolkit::ImageVisual::Property::URL] = ToPropertyValue(filename);
     mPopupArrow.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
   }
 }
@@ -635,7 +641,7 @@ void Slider::SetHandleVisual(const std::string& filename)
 {
   if(mHandle && (filename.size() > 0))
   {
-    mHandle.SetImage(filename);
+    mHandle.SetImage(ToDaliString(filename));
     mHandleVisual = filename;
   }
 }
@@ -646,10 +652,10 @@ void Slider::SetHandleVisual(Property::Map map)
   if(imageValue)
   {
     mHandleVisual.clear();
-    std::string filename;
+    String filename;
     if(imageValue->Get(filename))
     {
-      if(mHandle && (filename.size() > 0))
+      if(mHandle && (filename.Size() > 0))
       {
         mHandle.SetImage(filename);
         mHandleMap = map;
@@ -1092,18 +1098,18 @@ float Slider::GetMarkTolerance() const
 }
 
 // Static class method to support script connecting signals
-bool Slider::DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const std::string& signalName, FunctorDelegate* functor)
+bool Slider::DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const Dali::String& signalName, FunctorDelegate* functor)
 {
   Dali::BaseHandle handle(object);
 
   bool         connected = true;
   Demo::Slider slider    = Demo::Slider::DownCast(handle);
 
-  if(0 == strcmp(signalName.c_str(), SIGNAL_VALUE_CHANGED))
+  if(signalName == SIGNAL_VALUE_CHANGED)
   {
     slider.ValueChangedSignal().Connect(tracker, functor);
   }
-  else if(0 == strcmp(signalName.c_str(), SIGNAL_MARK))
+  else if(signalName == SIGNAL_MARK)
   {
     slider.MarkReachedSignal().Connect(tracker, functor);
   }
@@ -1124,7 +1130,7 @@ void Slider::DisplayPopup(float value)
     std::stringstream ss;
     ss.precision(GetValuePrecision());
     ss << std::fixed << value;
-    mValueTextLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, ss.str());
+    mValueTextLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, ToPropertyValue(ss.str()));
 
     if(mValueDisplay)
     {
@@ -1195,17 +1201,17 @@ void Slider::SetProperty(BaseObject* object, Property::Index propertyIndex, cons
 
       case Demo::Slider::Property::POPUP_VISUAL:
       {
-        std::string imageUrl;
-        if(value.Get(imageUrl))
-        {
-          sliderImpl.SetPopupVisual(imageUrl);
-        }
-
-        // If it is not a string, then get a Property::Map from the property if possible.
         Property::Map map;
         if(value.Get(map))
         {
           sliderImpl.SetPopupVisual(map);
+          break;
+        }
+
+        String imageUrl;
+        if(value.Get(imageUrl))
+        {
+          sliderImpl.SetPopupVisual(ToStdString(imageUrl));
         }
 
         break;
@@ -1300,7 +1306,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
       {
         if(!sliderImpl.mTrackVisual.empty())
         {
-          value = sliderImpl.GetTrackVisual();
+          value = ToPropertyValue(sliderImpl.GetTrackVisual());
         }
         else if(!sliderImpl.mTrackMap.Empty())
         {
@@ -1313,7 +1319,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
       {
         if(!sliderImpl.mHandleVisual.empty())
         {
-          value = sliderImpl.GetHandleVisual();
+          value = ToPropertyValue(sliderImpl.GetHandleVisual());
         }
         else if(!sliderImpl.mHandleMap.Empty())
         {
@@ -1326,7 +1332,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
       {
         if(!sliderImpl.mProgressVisual.empty())
         {
-          value = sliderImpl.GetProgressVisual();
+          value = ToPropertyValue(sliderImpl.GetProgressVisual());
         }
         else if(!sliderImpl.mProgressMap.Empty())
         {
@@ -1339,7 +1345,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
       {
         if(!sliderImpl.mPopupVisual.empty())
         {
-          value = sliderImpl.GetPopupVisual();
+          value = ToPropertyValue(sliderImpl.GetPopupVisual());
         }
         else if(!sliderImpl.mPopupMap.Empty())
         {
@@ -1352,7 +1358,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
       {
         if(!sliderImpl.mPopupArrowVisual.empty())
         {
-          value = sliderImpl.GetPopupArrowVisual();
+          value = ToPropertyValue(sliderImpl.GetPopupArrowVisual());
         }
         else if(!sliderImpl.mPopupArrowMap.Empty())
         {

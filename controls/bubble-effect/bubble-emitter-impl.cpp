@@ -29,9 +29,11 @@
 #include <controls/bubble-effect/bubble-renderer.h>
 #include <controls/shaders/bubble-emitter-frag.h>
 #include <controls/shaders/bubble-emitter-vert.h>
+#include <dali/integration-api/string-utils.h>
+
+using Dali::Integration::ToDaliStringView;
 
 using namespace Dali::Toolkit;
-using namespace Dali::Toolkit::Internal;
 
 namespace
 {
@@ -103,7 +105,7 @@ BubbleEmitter::BubbleEmitter(const Vector2& movementArea,
                              Texture        shapeTexture,
                              unsigned int   maximumNumberOfBubble,
                              const Vector2& bubbleSizeRange)
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mShapeTexture(shapeTexture),
   mMovementArea(movementArea),
   mBubbleSizeRange(bubbleSizeRange),
@@ -139,9 +141,9 @@ BubbleEmitter::~BubbleEmitter()
 }
 
 Demo::BubbleEmitter BubbleEmitter::New(const Vector2& winSize,
-                                        Texture        shapeTexture,
-                                        unsigned int   maximumNumberOfBubble,
-                                        const Vector2& bubbleSizeRange)
+                                       Texture        shapeTexture,
+                                       unsigned int   maximumNumberOfBubble,
+                                       const Vector2& bubbleSizeRange)
 {
   // Create the implementation
   IntrusivePtr<BubbleEmitter> internalBubbleEmitter(new BubbleEmitter(winSize, shapeTexture, maximumNumberOfBubble, bubbleSizeRange));
@@ -213,7 +215,7 @@ void BubbleEmitter::SetBackground(Texture bgTexture, const Vector3& hsvDelta)
 
   //Create renderer
   Dali::Geometry geometry   = CreateTexturedQuad();
-  Shader         shader     = Shader::New(SHADER_BUBBLE_EMITTER_VERT, SHADER_BUBBLE_EMITTER_FRAG, static_cast<Shader::Hint::Value>(Shader::Hint::FILE_CACHE_SUPPORT | Shader::Hint::INTERNAL), "BUBBLE_EMITTER");
+  Shader         shader     = Shader::New(ToDaliStringView(SHADER_BUBBLE_EMITTER_VERT), ToDaliStringView(SHADER_BUBBLE_EMITTER_FRAG), static_cast<Shader::Hint::Value>(Shader::Hint::FILE_CACHE_SUPPORT | Shader::Hint::INTERNAL), "BUBBLE_EMITTER");
   Renderer       renderer   = Renderer::New(geometry, shader);
   TextureSet     textureSet = TextureSet::New();
   textureSet.SetTexture(0u, bgTexture);

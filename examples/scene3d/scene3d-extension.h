@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
-#include <cstring>
+#include <dali/integration-api/string-utils.h>
+
+using Dali::Integration::ToDaliString;
 
 class Scene3DExtension : public Dali::ConnectionTracker
 {
@@ -108,7 +110,7 @@ private:
     return true;
   }
 
-  void ConnectTouchSignal(const std::string actorName)
+  void ConnectTouchSignal(const Dali::String actorName)
   {
     if(mSceneLoader && mSceneLoader->mScene)
     {
@@ -166,7 +168,7 @@ private:
     {
       if(touch.GetState(0) == Dali::PointState::DOWN)
       {
-        auto actorName = actor.GetProperty<std::string>(Dali::Actor::Property::NAME);
+        auto actorName = actor.GetProperty<Dali::String>(Dali::Actor::Property::NAME);
 
         if(ICON_IDLE == actorName)
         {
@@ -209,10 +211,10 @@ private:
   static constexpr unsigned int ANIMATION_LUNGE         = 9;
   static constexpr unsigned int ANIMATION_LUNGE_TO_IDLE = 10;
 
-  inline static const std::string ICON_IDLE         = "Idle";
-  inline static const std::string ICON_SQUAT        = "Squat";
-  inline static const std::string ICON_JUMPING_JACK = "JumpingJack";
-  inline static const std::string ICON_LUNGE        = "Lunge";
+  inline static const Dali::String ICON_IDLE         = "Idle";
+  inline static const Dali::String ICON_SQUAT        = "Squat";
+  inline static const Dali::String ICON_JUMPING_JACK = "JumpingJack";
+  inline static const Dali::String ICON_LUNGE        = "Lunge";
 
   Scene3DExample* mSceneLoader;
   unsigned int    mCurrentAnimationIndex;

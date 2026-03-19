@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,14 @@
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/integration-api/string-utils.h>
 #include <iostream>
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Toolkit::TextLabel;
@@ -340,7 +346,8 @@ public:
       fittingModeGroup.SetFitHeight(0);
       fittingModeGroup.SetFitHeight(1);
 
-      TextLabel label = TextLabel::New("Image fitting mode:");
+      TextLabel label = TextLabel::New();
+      label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Image fitting mode:"));
       label.SetStyleName(STYLE_LABEL_TEXT);
       fittingModeGroup.Add(label);
 
@@ -361,7 +368,8 @@ public:
       samplingModeGroup.SetFitHeight(0);
       samplingModeGroup.SetFitHeight(1);
 
-      TextLabel label = TextLabel::New("Image sampling mode:");
+      TextLabel label = TextLabel::New();
+      label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Image sampling mode:"));
       label.SetStyleName(STYLE_LABEL_TEXT);
       samplingModeGroup.Add(label);
 
@@ -420,7 +428,7 @@ public:
 
   bool OnButtonClicked(Toolkit::Button button)
   {
-    if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == FITTING_BUTTON_ID)
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == FITTING_BUTTON_ID)
     {
       mPopup = CreatePopup();
 
@@ -443,7 +451,7 @@ public:
       mApplication.GetWindow().Add(mPopup);
       mPopup.SetDisplayState(Toolkit::Popup::SHOWN);
     }
-    else if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == SAMPLING_BUTTON_ID)
+    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == SAMPLING_BUTTON_ID)
     {
       mPopup = CreatePopup();
 
@@ -496,7 +504,7 @@ public:
   bool CheckFittingModeButton(Actor& button, FittingMode::Type mode)
   {
     const char* const modeName = StringFromScalingMode(mode);
-    if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == modeName)
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == modeName)
     {
       mFittingMode = mode;
       mFittingModeButton.SetProperty(Toolkit::Button::Property::LABEL, modeName);
@@ -511,7 +519,7 @@ public:
   bool CheckSamplingModeButton(Actor& button, SamplingMode::Type mode)
   {
     const char* const modeName = StringFromFilterMode(mode);
-    if(button.GetProperty<std::string>(Dali::Actor::Property::NAME) == modeName)
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == modeName)
     {
       mSamplingMode = mode;
       mSamplingModeButton.SetProperty(Toolkit::Button::Property::LABEL, modeName);
@@ -540,7 +548,7 @@ public:
       {
         case PointState::UP:
         {
-          const std::string& name = actor.GetProperty<std::string>(Dali::Actor::Property::NAME);
+          const String& name = actor.GetProperty<String>(Dali::Actor::Property::NAME);
           if(name == NEXT_BUTTON_ID)
           {
             mCurrentPath = mCurrentPath + 1;

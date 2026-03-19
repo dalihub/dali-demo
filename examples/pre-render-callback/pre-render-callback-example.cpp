@@ -18,6 +18,12 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali/devel-api/adaptor-framework/application-devel.h>
 #include <dali/integration-api/adaptor-framework/adaptor.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali::Toolkit;
 
@@ -31,7 +37,7 @@ const float TEXT_HEIGHT = 40.0f;
 
 void AddText(Control textContainer, std::string text, unsigned int yIndex)
 {
-  auto label = TextLabel::New(text);
+  auto label = TextLabel::New(ToDaliString(text));
   label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
   label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
   label.SetProperty(Actor::Property::SIZE, Vector2(300, TEXT_HEIGHT));
@@ -191,15 +197,15 @@ private:
       {
         mApplication.Quit();
       }
-      else if(event.GetKeyName().compare("1") == 0)
+      else if(event.GetKeyName() == "1")
       {
         Adaptor::Get().SetPreRenderCallback(MakeCallback(this, &PreRenderCallbackController::OnPreRender));
       }
-      else if(event.GetKeyName().compare("2") == 0)
+      else if(event.GetKeyName() == "2")
       {
         Adaptor::Get().SetPreRenderCallback(NULL);
       }
-      else if(event.GetKeyName().compare("3") == 0)
+      else if(event.GetKeyName() == "3")
       {
         mKeepPreRender = !mKeepPreRender;
       }
@@ -221,7 +227,7 @@ private:
     if(rotation != mLastRTC)
     {
       mLastRTC = rotation;
-      mSpinner.SetProperty(TextLabel::Property::TEXT, std::string(1, ROTATE_TEXT[rotation % 4]));
+      mSpinner.SetProperty(TextLabel::Property::TEXT, ToDaliString(std::string(1, ROTATE_TEXT[rotation % 4])));
     }
     return true;
   }

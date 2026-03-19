@@ -19,24 +19,31 @@
 #include "shadow-view-impl.h"
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/common/stage.h>
-#include <dali/integration-api/debug.h>
-#include <dali/public-api/animation/constraint.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
-#include <dali/public-api/render-tasks/render-task-list.h>
-#include <dali/public-api/rendering/shader.h>
-#include <dali-toolkit/public-api/visuals/visual-properties.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
+#include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
+#include <dali/integration-api/debug.h>
+#include <dali/integration-api/string-utils.h>
+#include <dali/public-api/animation/constraint.h>
+#include <dali/public-api/render-tasks/render-task-list.h>
+#include <dali/public-api/rendering/shader.h>
 #include <iomanip>
 #include <sstream>
 
 // INTERNAL INCLUDES
-#include <controls/shadow-view/shadow-view-impl.h>
 #include <controls/filters/blur-two-pass-filter.h>
-#include <controls/shaders/shadow-view-render-shader-vert.h>
 #include <controls/shaders/shadow-view-render-shader-frag.h>
+#include <controls/shaders/shadow-view-render-shader-vert.h>
+#include <controls/shadow-view/shadow-view-impl.h>
+
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 // TODO:
 // pixel format / size - set from JSON
@@ -84,7 +91,7 @@ const char* const SHADOW_COLOR_PROPERTY_NAME                          = "ShadowC
 } // namespace
 
 ShadowView::ShadowView(float downsampleWidthScale, float downsampleHeightScale)
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mChildrenRoot(Actor::New()),
   mCachedShadowColor(DEFAULT_SHADOW_COLOR),
   mCachedBackgroundColor(DEFAULT_SHADOW_COLOR.r, DEFAULT_SHADOW_COLOR.g, DEFAULT_SHADOW_COLOR.b, 0.0f),
@@ -262,14 +269,14 @@ void ShadowView::OnChildAdd(Actor& child)
     mChildrenRoot.Add(child);
   }
 
-  Toolkit::Internal::Control::OnChildAdd(child);
+  Toolkit::ControlImpl::OnChildAdd(child);
 }
 
 void ShadowView::OnChildRemove(Actor& child)
 {
   mChildrenRoot.Remove(child);
 
-  Toolkit::Internal::Control::OnChildRemove(child);
+  Toolkit::ControlImpl::OnChildRemove(child);
 }
 
 void ShadowView::ConstrainCamera()

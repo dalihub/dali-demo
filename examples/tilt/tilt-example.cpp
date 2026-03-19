@@ -17,6 +17,12 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/adaptor-framework/tilt-sensor.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -45,7 +51,8 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::BLUE);
 
-    mTextLabel = TextLabel::New("Tilt Sensor Demo");
+    mTextLabel = TextLabel::New();
+    mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Tilt Sensor Demo"));
     mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mTextLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");

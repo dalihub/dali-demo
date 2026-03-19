@@ -25,6 +25,12 @@
 #include <dali-toolkit/devel-api/shader-effects/dissolve-effect.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -340,13 +346,13 @@ bool DissolveEffectApp::OnEffectButtonClicked(Toolkit::Button button)
   mDissolveEffect   = Dali::Toolkit::CreateDissolveEffect(mUseHighPrecision);
   if(mUseHighPrecision)
   {
-    mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_HIGHP));
+    mTitleActor.SetProperty(TextLabel::Property::TEXT, APPLICATION_TITLE_HIGHP);
     mEffectChangeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE);
     mEffectChangeButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_HIGHP_IMAGE_SELECTED);
   }
   else
   {
-    mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_MEDIUMP));
+    mTitleActor.SetProperty(TextLabel::Property::TEXT, APPLICATION_TITLE_MEDIUMP);
     mEffectChangeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, EFFECT_MEDIUMP_IMAGE);
     mEffectChangeButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, EFFECT_MEDIUMP_IMAGE_SELECTED);
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,9 +29,17 @@
 #include <iostream>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/stream-operators.h>
+#include <dali/integration-api/string-utils.h>
 #include "expanding-buttons.h"
 #include "shared/multi-language-strings.h"
 #include "shared/view.h"
+
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -227,7 +235,8 @@ public:
     mPanGestureDetector.Attach(mGrabCorner);
     mPanGestureDetector.DetectedSignal().Connect(this, &TextLabelExample::OnPan);
 
-    mLabel = TextLabel::New("\xF0\x9F\x98\x89 A Quick Brown Fox Jumps Over The Lazy Dog");
+    mLabel = TextLabel::New();
+    mLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("\xF0\x9F\x98\x89 A Quick Brown Fox Jumps Over The Lazy Dog"));
 
     mLabel.SetProperty(Dali::Actor::Property::NAME, "TextLabel");
     mLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
@@ -274,7 +283,7 @@ public:
     mGrabCorner.RaiseToTop();
 
     Property::Value labelText = mLabel.GetProperty(TextLabel::Property::TEXT);
-    std::cout << "Displaying text: \"" << labelText.Get<std::string>() << "\"" << std::endl;
+    std::cout << "Displaying text: \"" << labelText.Get<String>() << "\"" << std::endl;
   }
 
   // If the styling buttons should colapse (hide) then the color buttons should also hide.
@@ -679,7 +688,7 @@ public:
           {
             const Language& language = LANGUAGES[mLanguageId];
 
-            mLabel.SetProperty(TextLabel::Property::TEXT, language.text);
+            mLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(language.text));
 
             if(++mLanguageId >= NUMBER_OF_LANGUAGES)
             {

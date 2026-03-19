@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,16 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/scripting/enum-helper.h>
 
+#include <dali/integration-api/string-utils.h>
 #include <cstdio>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali; // Needed for macros
 using namespace Dali::Toolkit;
@@ -76,7 +83,7 @@ Toolkit::TransitionData ConvertPropertyToTransition(const Property::Value& value
 } // anonymous namespace
 
 Internal::ShadowButton::ShadowButton()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mCheckState(false),
   mActiveState(false)
 {
@@ -199,17 +206,17 @@ void ShadowButton::OnInitialize()
 
 void ShadowButton::OnSceneConnection(int depth)
 {
-  Control::OnSceneConnection(depth);
+  ControlImpl::OnSceneConnection(depth);
 }
 
 void ShadowButton::OnSceneDisconnection()
 {
-  Control::OnSceneDisconnection();
+  ControlImpl::OnSceneDisconnection();
 }
 
 void ShadowButton::OnSizeSet(const Vector3& targetSize)
 {
-  Control::OnSizeSet(targetSize);
+  ControlImpl::OnSizeSet(targetSize);
   RelayoutVisuals(Vector2(targetSize));
 }
 
@@ -286,7 +293,7 @@ Vector3 ShadowButton::GetNaturalSize()
 void ShadowButton::OnStyleChange(Toolkit::StyleManager styleManager, StyleChange::Type change)
 {
   // Chain up.
-  Control::OnStyleChange(styleManager, change);
+  ControlImpl::OnStyleChange(styleManager, change);
 }
 
 ShadowButton::Transitions::iterator ShadowButton::FindTransition(Property::Index index)
@@ -389,7 +396,7 @@ void ShadowButton::ResetVisual(
   }
 }
 
-bool IsTransformProperty(const std::string& property)
+bool IsTransformProperty(const String& property)
 {
   const char* transformProperties[]    = {"size", "offset", "origin", "anchorPoint", "offsetPolicy", "sizePolicy"};
   const int   NUM_TRANSFORM_PROPERTIES = sizeof(transformProperties) / sizeof(const char*);
@@ -429,7 +436,7 @@ void ShadowButton::StoreTargetLayouts(TransitionData transitionData)
           Property::Value* property = animator.Find("property");
           if(property)
           {
-            std::string propertyString;
+            String propertyString;
             property->Get(propertyString);
             if(IsTransformProperty(propertyString))
             {

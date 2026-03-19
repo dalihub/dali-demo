@@ -19,18 +19,24 @@
 #include "execute-process.h"
 
 // EXTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/common/dali-common.h>
 #include <unistd.h>
 #include <sstream>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
-void ExecuteProcess(const std::string& processName, Dali::Application& application)
+void ExecuteProcess(const Dali::String& processName, Dali::Application& application)
 {
   std::stringstream stream;
-  stream << DEMO_EXAMPLE_BIN << processName.c_str();
+  stream << DEMO_EXAMPLE_BIN << processName.CStr();
   pid_t pid = fork();
   if(pid == 0)
   {
-    execlp(stream.str().c_str(), processName.c_str(), NULL);
+    execlp(stream.str().c_str(), processName.CStr(), NULL);
     DALI_ASSERT_ALWAYS(false && "exec failed!");
   }
 }

@@ -2,7 +2,7 @@
 #define DALI_SPARKLE_EFFECT_H
 
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,11 +20,14 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
 
 #include "generated/sparkle-effect-frag.h"
 #include "generated/sparkle-effect-vert.h"
 
 using namespace Dali;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
 using Dali::Toolkit::ImageView;
 
 /************************************************************/
@@ -233,7 +236,8 @@ Shader New()
                            << "#define MAXIMUM_ANIMATION_COUNT " << MAXIMUM_ANIMATION_COUNT << "\n"
                            << SHADER_SPARKLE_EFFECT_VERT;
 
-  Shader handle = Shader::New(vertexShaderStringStream.str(), SHADER_SPARKLE_EFFECT_FRAG);
+  Shader handle = Shader::New(ToDaliStringView(vertexShaderStringStream.str()),
+                              ToDaliStringView(SHADER_SPARKLE_EFFECT_FRAG));
 
   // set the particle colors
   std::ostringstream oss;
@@ -241,7 +245,7 @@ Shader New()
   {
     oss.str("");
     oss << PARTICLE_COLOR_UNIFORM_NAME << i << "]";
-    handle.RegisterProperty(oss.str(), PARTICLE_COLORS[i].RGB);
+    handle.RegisterProperty(ToDaliString(oss.str()), PARTICLE_COLORS[i].RGB);
   }
   handle.RegisterProperty("uRadius", 250.f);
   handle.RegisterProperty("uEffectScale", ACTOR_SCALE);
@@ -252,22 +256,22 @@ Shader New()
   {
     oss.str("");
     oss << OPACITY_UNIFORM_NAME << i << "]";
-    handle.RegisterProperty(oss.str(), 1.f);
+    handle.RegisterProperty(ToDaliString(oss.str()), 1.f);
   }
-  handle.RegisterProperty(PERCENTAGE_UNIFORM_NAME, 0.f);
-  handle.RegisterProperty(ACCELARATION_UNIFORM_NAME, 0.f);
-  handle.RegisterProperty(BREAK_UNIFORM_NAME, 0.f);
-  handle.RegisterProperty(TAP_INDICES_UNIFORM_NAME, Vector2::ZERO);
+  handle.RegisterProperty(ToDaliString(PERCENTAGE_UNIFORM_NAME), 0.f);
+  handle.RegisterProperty(ToDaliString(ACCELARATION_UNIFORM_NAME), 0.f);
+  handle.RegisterProperty(ToDaliString(BREAK_UNIFORM_NAME), 0.f);
+  handle.RegisterProperty(ToDaliString(TAP_INDICES_UNIFORM_NAME), Vector2::ZERO);
 
   for(int i = 0; i < MAXIMUM_ANIMATION_COUNT; i++)
   {
     oss.str("");
     oss << TAP_OFFSET_UNIFORM_NAME << i << "]";
-    handle.RegisterProperty(oss.str(), 0.f);
+    handle.RegisterProperty(ToDaliString(oss.str()), 0.f);
 
     oss.str("");
     oss << TAP_POINT_UNIFORM_NAME << i << "]";
-    handle.RegisterProperty(oss.str(), Vector2(250.0f, 250.0f));
+    handle.RegisterProperty(ToDaliString(oss.str()), Vector2(250.0f, 250.0f));
   }
 
   return handle;

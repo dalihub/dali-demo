@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,12 @@
 #include <dali-toolkit/devel-api/visuals/arc-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-actions-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -78,7 +84,8 @@ private:
     mControl.SetProperty(Control::Property::BACKGROUND, BACKGROUND);
     window.Add(mControl);
 
-    mStartAngleLabel = TextLabel::New("1");
+    mStartAngleLabel = TextLabel::New();
+    mStartAngleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("1"));
     mStartAngleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mStartAngleLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT);
     mStartAngleLabel.SetProperty(Actor::Property::POSITION, Vector2(-30.0f, -10.0f));
@@ -89,7 +96,8 @@ private:
     mStartAngleLabel.TouchedSignal().Connect(this, &ArcVisualExample::OnButtonTouch);
     window.Add(mStartAngleLabel);
 
-    mSweepAngleLabel = TextLabel::New("2");
+    mSweepAngleLabel = TextLabel::New();
+    mSweepAngleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("2"));
     mSweepAngleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mSweepAngleLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
     mSweepAngleLabel.SetProperty(Actor::Property::POSITION, Vector2(0.0f, -10.0f));
@@ -100,7 +108,8 @@ private:
     mSweepAngleLabel.TouchedSignal().Connect(this, &ArcVisualExample::OnButtonTouch);
     window.Add(mSweepAngleLabel);
 
-    mThicknessLabel = TextLabel::New("3");
+    mThicknessLabel = TextLabel::New();
+    mThicknessLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("3"));
     mThicknessLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mThicknessLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
     mThicknessLabel.SetProperty(Actor::Property::POSITION, Vector2(30.0f, -10.0f));
@@ -111,7 +120,8 @@ private:
     mThicknessLabel.TouchedSignal().Connect(this, &ArcVisualExample::OnButtonTouch);
     window.Add(mThicknessLabel);
 
-    mPlusTextLabel = TextLabel::New("+");
+    mPlusTextLabel = TextLabel::New();
+    mPlusTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("+"));
     mPlusTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mPlusTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     mPlusTextLabel.SetProperty(Actor::Property::POSITION, Vector2(20.0f, 10.0f));
@@ -122,7 +132,8 @@ private:
     mPlusTextLabel.TouchedSignal().Connect(this, &ArcVisualExample::OnButtonTouch);
     window.Add(mPlusTextLabel);
 
-    mMinusTextLabel = TextLabel::New("-");
+    mMinusTextLabel = TextLabel::New();
+    mMinusTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("-"));
     mMinusTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mMinusTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
     mMinusTextLabel.SetProperty(Actor::Property::POSITION, Vector2(-20.0f, 10.0f));

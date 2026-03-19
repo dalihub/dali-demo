@@ -41,7 +41,13 @@
 
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view.h>
+#include <dali/integration-api/string-utils.h>
 #include <shared/view.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 #define TOKEN_STRING(x) #x
 
@@ -256,7 +262,7 @@ public:
       mToolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Alignment::HORIZONTAL_CENTER);
     }
 
-    mTitleActor.SetProperty(TextLabel::Property::TEXT, title);
+    mTitleActor.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(title));
   }
 
   bool OnBackButtonPressed(Toolkit::Button button)
@@ -350,7 +356,7 @@ public:
 
   Actor MenuItem(const std::string& text)
   {
-    TextLabel label = TextLabel::New(ShortName(text));
+    TextLabel label = TextLabel::New(ToDaliString(ShortName(text)));
     label.SetStyleName("BuilderLabel");
     label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
 

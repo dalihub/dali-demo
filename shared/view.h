@@ -22,7 +22,11 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "controls/tool-bar/tool-bar.h"
+
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToPropertyValue;
 
 namespace DemoHelper
 {
@@ -72,7 +76,7 @@ Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
   toolBar = Dali::Demo::ToolBar::New();
   toolBar.SetProperty(Dali::Actor::Property::NAME, "TOOLBAR");
   Dali::Property::Map background;
-  background["url"] = toolbarImagePath;
+  background["url"] = ToPropertyValue(toolbarImagePath);
   toolBar.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, background);
   toolBar.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::TOP_CENTER);
   toolBar.SetProperty(Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_CENTER);
@@ -87,7 +91,7 @@ Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
     Dali::Toolkit::TextLabel label = Dali::Toolkit::TextLabel::New();
     label.SetProperty(Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_LEFT);
     label.SetStyleName("ToolbarLabel");
-    label.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, title);
+    label.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToPropertyValue(title));
     label.SetProperty(Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     label.SetProperty(Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     label.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
@@ -124,7 +128,7 @@ Dali::Layer CreateView(Dali::Application&      application,
   {
     Dali::Property::Map map;
     map[Dali::Toolkit::Visual::Property::TYPE]                     = Dali::Toolkit::Visual::IMAGE;
-    map[Dali::Toolkit::ImageVisual::Property::URL]                 = backgroundImagePath;
+    map[Dali::Toolkit::ImageVisual::Property::URL]                 = ToPropertyValue(backgroundImagePath);
     map[Dali::Toolkit::ImageVisual::Property::DESIRED_WIDTH]       = window.GetSize().GetWidth();
     map[Dali::Toolkit::ImageVisual::Property::DESIRED_HEIGHT]      = window.GetSize().GetHeight();
     map[Dali::Toolkit::ImageVisual::Property::FITTING_MODE]        = Dali::FittingMode::SCALE_TO_FILL;
@@ -152,7 +156,7 @@ Dali::Layer CreateView(Dali::Application&      application,
 
 Dali::Toolkit::TextLabel CreateToolBarLabel(const std::string& text)
 {
-  Dali::Toolkit::TextLabel label = Dali::Toolkit::TextLabel::New(text);
+  Dali::Toolkit::TextLabel label = Dali::Toolkit::TextLabel::New(ToDaliString(text));
   label.SetStyleName("ToolbarLabel");
   label.SetProperty(Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
   label.SetProperty(Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");

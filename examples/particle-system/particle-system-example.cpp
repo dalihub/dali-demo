@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,11 @@
 #include <dali-toolkit/public-api/particle-system/particle-types.h>
 
 #include <dali-toolkit/public-api/particle-system/particle-modifier.h>
+#include <dali/integration-api/string-utils.h>
 
 #include "effects/particle-effect.h"
+
+using Dali::Integration::ToPropertyValue;
 
 using namespace Dali;
 using namespace Dali::Toolkit::ParticleSystem;
@@ -95,8 +98,8 @@ private:
     StartEffect(EffectType(mCurrentEffectType));
 
     // Add extra line to text for further instructions only the first time
-    std::string label = mTextLabel[TextLabel::Property::TEXT];
-    label += "\nTap to change particle effect";
+    Dali::String label                    = mTextLabel[TextLabel::Property::TEXT];
+    label                                 = label + "\nTap to change particle effect";
     mTextLabel[TextLabel::Property::TEXT] = label;
   }
 
@@ -145,7 +148,7 @@ private:
     mCurrentEmitter.Start();
 
     // Set text and reset TextLabel properties and animation
-    mTextLabel[Toolkit::TextLabel::Property::TEXT] = effectName;
+    mTextLabel[Toolkit::TextLabel::Property::TEXT] = ToPropertyValue(effectName);
     mTextLabel[Actor::Property::COLOR_ALPHA]       = 1.0f;
     mTextLabelAnimation.SetCurrentProgress(0.0f);
     mTextLabelAnimation.Play();

@@ -19,19 +19,25 @@
 #include "page-turn-view-impl.h"
 
 // EXTERNAL INCLUDES
+#include <cstring> // for strcmp
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/debug.h>
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/animation/constraint.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
-#include <cstring> // for strcmp
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "page-turn-book-spine-effect.h"
 #include "page-turn-effect.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -341,7 +347,7 @@ void PageTurnView::Page::SetCurrentCenter(const Vector2& value)
 }
 
 PageTurnView::PageTurnView(PageFactory& pageFactory, const Vector2& viewPageSize)
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mPageFactory(&pageFactory),
   mPageSize(viewPageSize),
   mSpineShadowParameter(DEFAULT_SPINE_SHADOW_PARAMETER),
@@ -427,17 +433,17 @@ Shader PageTurnView::CreateShader(const Property::Map& shaderMap)
   {
     std::string      vertexShader;
     Property::Value* vertexShaderValue = shaderSource.Find(Toolkit::Visual::Shader::Property::VERTEX_SHADER, CUSTOM_VERTEX_SHADER);
-    if(!vertexShaderValue || !vertexShaderValue->Get(vertexShader))
+    if(!vertexShaderValue || !GetStdString(*vertexShaderValue, vertexShader))
     {
       DALI_LOG_ERROR("PageTurnView::CreateShader failed: vertex shader source is not available.\n");
     }
     std::string      fragmentShader;
     Property::Value* fragmentShaderValue = shaderSource.Find(Toolkit::Visual::Shader::Property::FRAGMENT_SHADER, CUSTOM_FRAGMENT_SHADER);
-    if(!fragmentShaderValue || !fragmentShaderValue->Get(fragmentShader))
+    if(!fragmentShaderValue || !GetStdString(*fragmentShaderValue, fragmentShader))
     {
       DALI_LOG_ERROR("PageTurnView::CreateShader failed: fragment shader source is not available.\n");
     }
-    shader = Shader::New(vertexShader, fragmentShader, static_cast<Shader::Hint::Value>(Shader::Hint::FILE_CACHE_SUPPORT | Shader::Hint::INTERNAL), "PAGE_TURN_VIEW");
+    shader = Shader::New(ToDaliStringView(vertexShader), ToDaliStringView(fragmentShader), static_cast<Shader::Hint::Value>(Shader::Hint::FILE_CACHE_SUPPORT | Shader::Hint::INTERNAL), String("PAGE_TURN_VIEW"));
   }
   else
   {
@@ -477,7 +483,7 @@ void PageTurnView::OnSceneConnection(int depth)
 {
   SetupShadowView();
 
-  Control::OnSceneConnection(depth);
+  ControlImpl::OnSceneConnection(depth);
 }
 
 void PageTurnView::OnSceneDisconnection()
@@ -493,7 +499,7 @@ void PageTurnView::OnSceneDisconnection()
   // make sure the status of the control is updated correctly when the pan gesture is interrupted
   StopTurning();
 
-  Control::OnSceneDisconnection();
+  ControlImpl::OnSceneDisconnection();
 }
 
 void PageTurnView::SetPageSize(const Vector2& viewPageSize)
@@ -1003,26 +1009,26 @@ Demo::PageTurnView::PagePanSignal& PageTurnView::PagePanFinishedSignal()
   return mPagePanFinishedSignal;
 }
 
-bool PageTurnView::DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const std::string& signalName, FunctorDelegate* functor)
+bool PageTurnView::DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const Dali::String& signalName, FunctorDelegate* functor)
 {
   Dali::BaseHandle handle(object);
 
   bool               connected(true);
   Demo::PageTurnView pageTurnView = Demo::PageTurnView::DownCast(handle);
 
-  if(0 == strcmp(signalName.c_str(), SIGNAL_PAGE_TURN_STARTED))
+  if(signalName == SIGNAL_PAGE_TURN_STARTED)
   {
     pageTurnView.PageTurnStartedSignal().Connect(tracker, functor);
   }
-  else if(0 == strcmp(signalName.c_str(), SIGNAL_PAGE_TURN_FINISHED))
+  else if(signalName == SIGNAL_PAGE_TURN_FINISHED)
   {
     pageTurnView.PageTurnFinishedSignal().Connect(tracker, functor);
   }
-  else if(0 == strcmp(signalName.c_str(), SIGNAL_PAGE_PAN_STARTED))
+  else if(signalName == SIGNAL_PAGE_PAN_STARTED)
   {
     pageTurnView.PagePanStartedSignal().Connect(tracker, functor);
   }
-  else if(0 == strcmp(signalName.c_str(), SIGNAL_PAGE_PAN_FINISHED))
+  else if(signalName == SIGNAL_PAGE_PAN_FINISHED)
   {
     pageTurnView.PagePanFinishedSignal().Connect(tracker, functor);
   }

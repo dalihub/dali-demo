@@ -19,26 +19,26 @@
 #include <controls/bloom-view/bloom-view-impl.h>
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/common/stage.h>
-#include <dali/public-api/animation/constraint.h>
-#include <dali/public-api/animation/constraints.h>
-#include <dali/public-api/object/property-map.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
-#include <dali/public-api/render-tasks/render-task-list.h>
-#include <dali/public-api/rendering/renderer.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
+#include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
+#include <dali/public-api/animation/constraint.h>
+#include <dali/public-api/animation/constraints.h>
+#include <dali/public-api/object/property-map.h>
+#include <dali/public-api/render-tasks/render-task-list.h>
+#include <dali/public-api/rendering/renderer.h>
 #include <iomanip>
 #include <sstream>
 
 // INTERNAL INCLUDES
 #include <controls/bloom-view/bloom-view.h>
-#include <controls/shaders/bloom-view-extract-shader-frag.h>
 #include <controls/shaders/bloom-view-composite-shader-frag.h>
-#include <controls/shaders/control-renderers-vert.h>
+#include <controls/shaders/bloom-view-extract-shader-frag.h>
 #include <controls/shaders/control-renderers-frag.h>
+#include <controls/shaders/control-renderers-vert.h>
 
 namespace Dali::Demo::Internal
 {
@@ -83,7 +83,7 @@ const char* const IMAGE_SATURATION_PROPERTY_NAME                = "uImageSaturat
 } // namespace
 
 BloomView::BloomView()
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mBlurNumSamples(BLOOM_GAUSSIAN_BLUR_VIEW_DEFAULT_NUM_SAMPLES),
   mBlurBellCurveWidth(BLOOM_GAUSSIAN_BLUR_VIEW_DEFAULT_BLUR_BELL_CURVE_WIDTH),
   mPixelFormat(BLOOM_GAUSSIAN_BLUR_VIEW_DEFAULT_RENDER_TARGET_PIXEL_FORMAT),
@@ -106,7 +106,7 @@ BloomView::BloomView()
 }
 
 BloomView::BloomView(const unsigned int blurNumSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale)
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mBlurNumSamples(blurNumSamples),
   mBlurBellCurveWidth(blurBellCurveWidth),
   mPixelFormat(renderTargetPixelFormat),
@@ -242,7 +242,7 @@ void BloomView::OnSizeSet(const Vector3& targetSize)
     Activate();
   }
 
-  Toolkit::Internal::Control::OnSizeSet(targetSize);
+  Toolkit::ControlImpl::OnSizeSet(targetSize);
 }
 
 void BloomView::OnChildAdd(Actor& child)
@@ -252,14 +252,14 @@ void BloomView::OnChildAdd(Actor& child)
     mChildrenRoot.Add(child);
   }
 
-  Toolkit::Internal::Control::OnChildAdd(child);
+  Toolkit::ControlImpl::OnChildAdd(child);
 }
 
 void BloomView::OnChildRemove(Actor& child)
 {
   mChildrenRoot.Remove(child);
 
-  Toolkit::Internal::Control::OnChildRemove(child);
+  Toolkit::ControlImpl::OnChildRemove(child);
 }
 
 void BloomView::AllocateResources()

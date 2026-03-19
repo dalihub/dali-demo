@@ -31,8 +31,14 @@
 #include <iostream>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "shared/multi-language-strings.h"
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -66,7 +72,7 @@ public:
 
   void CreateTextLabel(TextLabel& textLabel, std::string textString, const Vector4& color, bool infoLabel = false)
   {
-    textLabel = TextLabel::New(textString);
+    textLabel = TextLabel::New(ToDaliString(textString));
     textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);

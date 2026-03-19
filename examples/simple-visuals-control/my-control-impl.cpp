@@ -24,6 +24,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/scripting/enum-helper.h>
 
 using namespace Dali;
@@ -57,7 +58,7 @@ DALI_ENUM_TO_STRING_TABLE_END(VISUAL_PROPERTIES)
 } // anonymous namespace
 
 Internal::MyControl::MyControl()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT))
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT))
 {
 }
 

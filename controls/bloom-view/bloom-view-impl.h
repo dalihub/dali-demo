@@ -19,12 +19,12 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/actors/camera-actor.h>
-#include <dali/public-api/render-tasks/render-task.h>
-#include <dali/public-api/rendering/frame-buffer.h>
 #include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali-toolkit/public-api/controls/image-view/image-view.h>
+#include <dali/public-api/actors/camera-actor.h>
+#include <dali/public-api/render-tasks/render-task.h>
+#include <dali/public-api/rendering/frame-buffer.h>
 #include <cmath>
 #include <sstream>
 
@@ -40,7 +40,7 @@ namespace Internal
 /**
  * BloomEffect implementation class
  */
-class BloomView : public Toolkit::Internal::Control
+class BloomView : public Toolkit::ControlImpl
 {
 public:
   /**
@@ -63,8 +63,8 @@ public:
    */
   static Dali::Demo::BloomView New();
   static Dali::Demo::BloomView New(const unsigned int numSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale);
-  void                            Activate();
-  void                            Deactivate();
+  void                         Activate();
+  void                         Deactivate();
 
   Property::Index GetBloomThresholdPropertyIndex() const
   {
@@ -96,12 +96,12 @@ private:
   void OnSizeSet(const Vector3& targetSize) override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::OnChildAdd()
+   * @copydoc Toolkit::ControlImpl::OnChildAdd()
    */
   void OnChildAdd(Actor& child) override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::OnChildRemove()
+   * @copydoc Toolkit::ControlImpl::OnChildRemove()
    */
   void OnChildRemove(Actor& child) override;
 

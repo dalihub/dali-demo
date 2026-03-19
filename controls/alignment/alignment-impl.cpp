@@ -20,9 +20,9 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
 #include <dali/public-api/object/property-input.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
 #include <dali/public-api/size-negotiation/relayout-container.h>
 
 namespace Dali
@@ -291,7 +291,7 @@ void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
 }
 
 Alignment::Alignment(Demo::Alignment::Type horizontal, Demo::Alignment::Type vertical)
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mHorizontal(horizontal),
   mVertical(vertical),
   mScaling(Demo::Alignment::SCALE_NONE),

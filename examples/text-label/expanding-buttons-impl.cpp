@@ -18,7 +18,13 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali/public-api/animation/animation.h>
 
+#include <dali/integration-api/string-utils.h>
 #include "expanding-buttons-impl.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -49,7 +55,7 @@ void ResetControls(std::vector<WeakHandle<Control> > controls, unsigned int numb
 } // anonymous namespace
 
 Internal::ExpandingButtons::ExpandingButtons()
-: Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mStyleButtonsHidden(false)
 {
 }

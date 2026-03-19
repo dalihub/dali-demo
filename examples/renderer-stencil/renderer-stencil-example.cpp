@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,18 @@
 #include <dali/public-api/rendering/shader.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/render-stencil-frag.h"
 #include "generated/render-stencil-textured-frag.h"
 #include "generated/render-stencil-textured-vert.h"
 #include "generated/render-stencil-vert.h"
 #include "shared/utility.h"
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -495,11 +501,11 @@ private:
 
     if(textured)
     {
-      shader = Shader::New(SHADER_RENDER_STENCIL_TEXTURED_VERT, SHADER_RENDER_STENCIL_TEXTURED_FRAG);
+      shader = Shader::New(ToDaliStringView(SHADER_RENDER_STENCIL_TEXTURED_VERT), ToDaliStringView(SHADER_RENDER_STENCIL_TEXTURED_FRAG));
     }
     else
     {
-      shader = Shader::New(SHADER_RENDER_STENCIL_VERT, SHADER_RENDER_STENCIL_FRAG);
+      shader = Shader::New(ToDaliStringView(SHADER_RENDER_STENCIL_VERT), ToDaliStringView(SHADER_RENDER_STENCIL_FRAG));
     }
 
     // Here we modify the light position based on half the window size as a pre-calculation step.

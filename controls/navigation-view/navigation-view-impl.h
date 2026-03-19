@@ -19,8 +19,8 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/actors/layer.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
+#include <dali/public-api/actors/layer.h>
 #include <list>
 
 // INTERNAL INCLUDES
@@ -40,7 +40,7 @@ class NavigationBar;
  * NavigationView implements a controller than manages the navigation of hierarchical contents.
  */
 
-class NavigationView : public Toolkit::Internal::Control
+class NavigationView : public Toolkit::ControlImpl
 {
 public:
   /**
@@ -61,12 +61,12 @@ public:
 
 private: // override functions from Control
   /**
-   * @copydoc Toolkit::Internal::Control::OnInitialize
+   * @copydoc Toolkit::ControlImpl::OnInitialize
    */
   virtual void OnInitialize() override;
 
   /**
-   * @copydoc Toolkit::Internal::Control::OnSceneConnection( int depth  )
+   * @copydoc Toolkit::ControlImpl::OnSceneConnection( int depth  )
    */
   void OnSceneConnection(int depth) override;
 

@@ -19,27 +19,27 @@
 #include "effects-view-impl.h"
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/devel-api/controls/control-depth-index-ranges.h>
+#include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/object/type-registry.h>
 #include <dali/public-api/animation/constraint.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/object/property.h>
-#include <dali/public-api/object/type-registry-helper.h>
-#include <dali/public-api/object/type-registry.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/rendering/renderer.h>
-#include <dali-toolkit/devel-api/controls/control-depth-index-ranges.h>
-#include <dali-toolkit/devel-api/controls/control-devel.h>
-#include <dali-toolkit/devel-api/controls/control-renderers.h>
 
 // INTERNAL INCLUDES
 #include <controls/filters/blur-two-pass-filter.h>
 #include <controls/filters/emboss-filter.h>
 #include <controls/filters/spread-filter.h>
-#include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/control-renderers-frag.h>
-#include <controls/shaders/effects-view-vert.h>
+#include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/effects-view-frag.h>
+#include <controls/shaders/effects-view-vert.h>
 
 using namespace Dali::Toolkit;
 using namespace Dali::Toolkit::Internal;
@@ -103,7 +103,7 @@ Demo::EffectsView EffectsView::New()
 }
 
 EffectsView::EffectsView()
-: Toolkit::Internal::Control(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
+: Toolkit::ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mChildrenRoot(Actor::New()),
   mBackgroundColor(EFFECTS_VIEW_DEFAULT_BACKGROUND_COLOR),
   mTargetSize(Vector2::ZERO),
@@ -254,7 +254,7 @@ void EffectsView::OnSizeSet(const Vector3& targetSize)
 
   mChildrenRoot.SetProperty(Actor::Property::SIZE, targetSize);
 
-  Toolkit::Internal::Control::OnSizeSet(targetSize);
+  Toolkit::ControlImpl::OnSizeSet(targetSize);
 }
 
 void EffectsView::OnSceneConnection(int depth)
@@ -273,7 +273,7 @@ void EffectsView::OnSceneConnection(int depth)
 
   Enable();
 
-  Toolkit::Internal::Control::OnSceneConnection(depth);
+  Toolkit::ControlImpl::OnSceneConnection(depth);
 }
 
 void EffectsView::OnSceneDisconnection()
@@ -295,7 +295,7 @@ void EffectsView::OnSceneDisconnection()
   self.RemoveRenderer(mRendererPostFilter);
   mRendererPostFilter.Reset();
 
-  Toolkit::Internal::Control::OnSceneDisconnection();
+  Toolkit::ControlImpl::OnSceneDisconnection();
 }
 
 void EffectsView::OnChildAdd(Actor& child)
@@ -305,14 +305,14 @@ void EffectsView::OnChildAdd(Actor& child)
     mChildrenRoot.Add(child);
   }
 
-  Toolkit::Internal::Control::OnChildAdd(child);
+  Toolkit::ControlImpl::OnChildAdd(child);
 }
 
 void EffectsView::OnChildRemove(Actor& child)
 {
   mChildrenRoot.Remove(child);
 
-  Toolkit::Internal::Control::OnChildRemove(child);
+  Toolkit::ControlImpl::OnChildRemove(child);
 }
 
 void EffectsView::SetupFilters()

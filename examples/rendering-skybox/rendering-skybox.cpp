@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,18 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/rendering-skybox-cube-frag.h"
 #include "generated/rendering-skybox-cube-vert.h"
 #include "generated/rendering-skybox-equirectangular-frag.h"
 #include "generated/rendering-skybox-frag.h"
 #include "generated/rendering-skybox-vert.h"
 #include "look-camera.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Toolkit;
@@ -185,9 +191,9 @@ public:
    */
   void CreateShaders()
   {
-    mShaderCube                  = Shader::New(SHADER_RENDERING_SKYBOX_CUBE_VERT, SHADER_RENDERING_SKYBOX_CUBE_FRAG);
-    mShaderSkybox                = Shader::New(SHADER_RENDERING_SKYBOX_VERT, SHADER_RENDERING_SKYBOX_FRAG);
-    mShaderSkyboxEquirectangular = Shader::New(SHADER_RENDERING_SKYBOX_VERT, SHADER_RENDERING_SKYBOX_EQUIRECTANGULAR_FRAG);
+    mShaderCube                  = Shader::New(ToDaliStringView(SHADER_RENDERING_SKYBOX_CUBE_VERT), ToDaliStringView(SHADER_RENDERING_SKYBOX_CUBE_FRAG));
+    mShaderSkybox                = Shader::New(ToDaliStringView(SHADER_RENDERING_SKYBOX_VERT), ToDaliStringView(SHADER_RENDERING_SKYBOX_FRAG));
+    mShaderSkyboxEquirectangular = Shader::New(ToDaliStringView(SHADER_RENDERING_SKYBOX_VERT), ToDaliStringView(SHADER_RENDERING_SKYBOX_EQUIRECTANGULAR_FRAG));
   }
 
   /**

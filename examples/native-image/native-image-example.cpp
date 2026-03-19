@@ -21,9 +21,15 @@
 #include <cstring>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/native-image-texture-frag.h"
 #include "generated/native-image-texture-vert.h"
 #include "shared/utility.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Toolkit;
@@ -43,13 +49,11 @@ const std::string CAPTURE_FILENAME = DEMO_DATA_PUBLIC_RW_DIR "native-image-captu
  */
 Shader CreateShader(NativeImageInterface& nativeImage)
 {
-  std::string fragmentShader;
-
   // Get custom fragment shader prefix
-  fragmentShader = SHADER_NATIVE_IMAGE_TEXTURE_FRAG.data();
+  auto fragmentShader = ToDaliString(SHADER_NATIVE_IMAGE_TEXTURE_FRAG);
   nativeImage.ApplyNativeFragmentShader(fragmentShader, 1);
 
-  return Shader::New(SHADER_NATIVE_IMAGE_TEXTURE_VERT, fragmentShader);
+  return Shader::New(ToDaliStringView(SHADER_NATIVE_IMAGE_TEXTURE_VERT), fragmentShader);
 }
 
 } // namespace
@@ -164,7 +168,7 @@ public:
     mBottomContentArea.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
     window.Add(mBottomContentArea);
 
-    mSourceActor = ImageView::New(JPG_FILENAME);
+    mSourceActor = ImageView::New(ToDaliString(JPG_FILENAME));
     mSourceActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mSourceActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mTopContentArea.Add(mSourceActor);
@@ -179,14 +183,16 @@ public:
     animation.SetLooping(true);
     animation.Play();
 
-    TextLabel textLabel1 = TextLabel::New("Image");
+    TextLabel textLabel1 = TextLabel::New();
+    textLabel1.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Image"));
     textLabel1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     textLabel1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
     mTopContentArea.Add(textLabel1);
 
     // Wait until button press before creating mOffscreenRenderTask
 
-    TextLabel textLabel2 = TextLabel::New("Native Image");
+    TextLabel textLabel2 = TextLabel::New();
+    textLabel2.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Native Image"));
     textLabel2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     textLabel2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
     mBottomContentArea.Add(textLabel2);
@@ -280,7 +286,7 @@ public:
   {
     task.FinishedSignal().Disconnect(this, &NativeImageController::DoCapture);
 
-    mNativeImagePtr->EncodeToFile(CAPTURE_FILENAME);
+    mNativeImagePtr->EncodeToFile(ToDaliString(CAPTURE_FILENAME));
   }
 
   void Reset()

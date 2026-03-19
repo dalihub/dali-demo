@@ -28,8 +28,11 @@
 
 #include <android_native_app_glue.h>
 #include <dali-demo-native-activity-jni.h>
+#include <dali/integration-api/string-utils.h>
 
-void ExecuteProcess(const std::string& processName, Dali::Application& application)
+using Dali::Integration::ToStdString;
+
+void ExecuteProcess(const Dali::String& processName, Dali::Application& application)
 {
   struct android_app* nativeApp = Dali::Integration::AndroidFramework::Get().GetNativeApplication();
   if(!nativeApp)
@@ -39,5 +42,5 @@ void ExecuteProcess(const std::string& processName, Dali::Application& applicati
   }
 
   DaliDemoNativeActivity nativeActivity(nativeApp->activity);
-  nativeActivity.LaunchExample(processName);
+  nativeActivity.LaunchExample(ToStdString(processName));
 }

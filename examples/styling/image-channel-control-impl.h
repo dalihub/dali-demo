@@ -27,7 +27,7 @@ namespace Dali::Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
-class ImageChannelControl : public Dali::Toolkit::Internal::Control
+class ImageChannelControl : public Dali::Toolkit::ControlImpl
 {
 public:
   /**
@@ -41,7 +41,7 @@ public: // API
   /**
    * @copydoc ImageChannelControl::SetImage
    */
-  void SetImage(const std::string& url);
+  void SetImage(const Dali::String& url);
 
   /**
    * @copydoc ImageChannelControl::SetVisibility
@@ -106,7 +106,7 @@ private:
 
 private:
   // Implementation details
-  std::string                   mUrl;
+  Dali::String                  mUrl;
   Dali::Toolkit::Visual::Base   mVisual;
   Dali::Vector3                 mChannels;
   Dali::Toolkit::TransitionData mEnableVisibilityTransition;

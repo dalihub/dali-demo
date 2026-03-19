@@ -27,7 +27,7 @@ namespace Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
-class ShadowButton : public Dali::Toolkit::Internal::Control
+class ShadowButton : public Dali::Toolkit::ControlImpl
 {
 public:
   /**

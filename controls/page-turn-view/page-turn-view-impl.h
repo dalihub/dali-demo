@@ -33,7 +33,7 @@ namespace Dali::Demo
 {
 namespace Internal
 {
-class PageTurnView : public Toolkit::Internal::Control
+class PageTurnView : public Toolkit::ControlImpl
 {
 protected:
   /**
@@ -48,7 +48,7 @@ protected:
     /**
      * Destructor
      */
-    ~Page(){};
+    ~Page() {};
 
     /**
      * Set the page texture content
@@ -340,7 +340,7 @@ public: //signal and property
    * @return True if the signal was connected.
    * @post If a signal was connected, ownership of functor was passed to CallbackBase. Otherwise the caller is responsible for deleting the unused functor.
    */
-  static bool DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const std::string& signalName, FunctorDelegate* functor);
+  static bool DoConnectSignal(BaseObject* object, ConnectionTrackerInterface* tracker, const Dali::String& signalName, FunctorDelegate* functor);
 
   // Properties
 
@@ -368,10 +368,10 @@ private:
   PageTurnView& operator=(const PageTurnView& rhs);
 
 protected:
-  Layer               mTurningPageLayer;      ///< The layer for the turning page, to avoid possible depth conflict
-  Demo::ShadowView    mShadowView;            ///< The shadow view control for shadow casting
-  Actor               mShadowPlaneBackground; ///< The plane for the shadow to cast on
-  Actor               mPointLight;            ///< The point light used for shadow casting
+  Layer            mTurningPageLayer;      ///< The layer for the turning page, to avoid possible depth conflict
+  Demo::ShadowView mShadowView;            ///< The shadow view control for shadow casting
+  Actor            mShadowPlaneBackground; ///< The plane for the shadow to cast on
+  Actor            mPointLight;            ///< The point light used for shadow casting
 
   PageFactory* const mPageFactory;       ///< The factory which provides the page actors
   Shader             mTurnEffectShader;  ///< The group of PageTurnEffects

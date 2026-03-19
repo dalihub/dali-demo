@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,16 @@
 #include <dali/public-api/rendering/texture.h>
 
 // INTERNAL INCLUDES
+#include <dali/integration-api/string-utils.h>
 #include "generated/metaball-frag.h"
 #include "generated/metaball-refraction-frag.h"
 #include "generated/metaball-vert.h"
 #include "shared/utility.h" // DemoHelper::LoadTexture
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -311,7 +317,7 @@ Geometry MetaballExplosionController::CreateGeometry(bool aspectMappedTexture)
 void MetaballExplosionController::CreateMetaballActors()
 {
   // Create the shader for the metaballs, tell DALi that shader modifies geometry so we dont need to set a meaningless size
-  Shader shader = Shader::New(SHADER_METABALL_VERT, SHADER_METABALL_FRAG, Shader::Hint::MODIFIES_GEOMETRY);
+  Shader shader = Shader::New(ToDaliStringView(SHADER_METABALL_VERT), ToDaliStringView(SHADER_METABALL_FRAG), Shader::Hint::MODIFIES_GEOMETRY);
 
   Geometry metaballGeom = CreateGeometry();
   // Reuse same renderer for each actor
@@ -375,7 +381,7 @@ void MetaballExplosionController::CreateMetaballImage()
 void MetaballExplosionController::CreateComposition()
 {
   //Create new shader
-  Shader shader = Shader::New(SHADER_METABALL_VERT, SHADER_METABALL_REFRACTION_FRAG);
+  Shader shader = Shader::New(ToDaliStringView(SHADER_METABALL_VERT), ToDaliStringView(SHADER_METABALL_REFRACTION_FRAG));
 
   // Create new texture set
   auto textureSet = TextureSet::New();

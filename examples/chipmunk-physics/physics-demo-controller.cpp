@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@
 #include <dali/devel-api/adaptor-framework/key-devel.h>
 #include <dali/devel-api/events/hit-test-algorithm.h>
 #include <dali/integration-api/debug.h>
+#include <dali/integration-api/stream-operators.h>
+#include <dali/integration-api/string-utils.h>
 
 #include <chipmunk/chipmunk.h>
 #include <iostream>
@@ -32,6 +34,8 @@
 #include "letter-l.h"
 #include "split-letter-d.h"
 
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
 using namespace Dali;
 using namespace Dali::Toolkit::Physics;
 
@@ -199,7 +203,7 @@ public:
     const float BALL_ELASTICITY = 0.5f;
     const float BALL_FRICTION   = 0.5f;
 
-    auto ball                   = Toolkit::ImageView::New(BALL_IMAGES[rand() % 4]);
+    auto ball                   = Toolkit::ImageView::New(ToDaliString(BALL_IMAGES[rand() % 4]));
     ball[Actor::Property::NAME] = "Ball";
     ball[Actor::Property::SIZE] = Vector2(26, 26); // Halve the image size
     cpBody* body                = cpSpaceAddBody(space, cpBodyNew(BALL_MASS, cpMomentForCircle(BALL_MASS, 0.0f, BALL_RADIUS, cpvzero)));
@@ -231,7 +235,7 @@ public:
   void CreateLogo(cpSpace* space)
   {
     const float MASS = 20.0f;
-    auto        logo = Toolkit::ImageView::New(LOGO);
+    auto        logo = Toolkit::ImageView::New(ToDaliString(LOGO));
     Vector2     logoSize{368, 208};
     logo[Actor::Property::SIZE] = logoSize; // Double in size
 
@@ -264,10 +268,10 @@ public:
       cpShapeFilterNew(LETTER_GROUP_3, LETTER_3_COLLIDES_WITH, COLLISION_MASK),
       cpShapeFilterNew(LETTER_GROUP_4, LETTER_4_COLLIDES_WITH, COLLISION_MASK)};
 
-    static const std::string NAME[4] = {"d", "a", "l", "i"};
+    static const String NAME[4] = {"d", "a", "l", "i"};
     for(int index = 0; index < 4; ++index)
     {
-      auto letter                   = Toolkit::ImageView::New(LETTER_IMAGES[index]);
+      auto letter                   = Toolkit::ImageView::New(ToDaliString(LETTER_IMAGES[index]));
       letter[Actor::Property::NAME] = NAME[index];
 
       cpBody* body = cpSpaceAddBody(space, cpBodyNew(LETTER_MASS, cpMomentForCircle(LETTER_MASS, 0.0f, RADIUS, cpvzero)));
@@ -463,7 +467,7 @@ public:
           {
             mPickedBody    = body.Get<cpBody*>();
             mSelectedActor = mPhysicsAdaptor.GetPhysicsActor(mPickedBody);
-            std::cout << "PhysicsActor: " << mPhysicsAdaptor.GetRootActor().FindChildById(mSelectedActor.GetId()).GetProperty<std::string>(Actor::Property::NAME) << std::endl;
+            std::cout << "PhysicsActor: " << mPhysicsAdaptor.GetRootActor().FindChildById(mSelectedActor.GetId()).GetProperty<String>(Actor::Property::NAME) << std::endl;
 
             mPickedSavedState = cpBodyIsSleeping(mPickedBody);
             cpBodyActivate(mPickedBody);
@@ -551,12 +555,12 @@ public:
           {
             mApplication.Quit();
           }
-          else if(!event.GetKeyString().compare(" "))
+          else if(event.GetKeyString() == " ")
           {
             integrateState = true ^ integrateState;
             mPhysicsAdaptor.SetIntegrationState(integrateState ? PhysicsAdaptor::IntegrationState::ON : PhysicsAdaptor::IntegrationState::OFF);
           }
-          else if(!event.GetKeyString().compare("m"))
+          else if(event.GetKeyString() == "m")
           {
             debugState = true ^ debugState;
             if(debugState && !mPhysicsDebugLayer)
@@ -565,7 +569,7 @@ public:
             }
             mPhysicsAdaptor.SetDebugState(debugState ? PhysicsAdaptor::DebugState::ON : PhysicsAdaptor::DebugState::OFF);
           }
-          else if(!event.GetKeyString().compare("w"))
+          else if(event.GetKeyString() == "w")
           {
             if(mSelectedActor)
             {
@@ -577,7 +581,7 @@ public:
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
-          else if(!event.GetKeyString().compare("s"))
+          else if(event.GetKeyString() == "s")
           {
             if(mSelectedActor)
             {
@@ -589,7 +593,7 @@ public:
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
-          else if(!event.GetKeyString().compare("a"))
+          else if(event.GetKeyString() == "a")
           {
             if(mSelectedActor)
             {
@@ -601,7 +605,7 @@ public:
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
-          else if(!event.GetKeyString().compare("d"))
+          else if(event.GetKeyString() == "d")
           {
             if(mSelectedActor)
             {
@@ -613,7 +617,7 @@ public:
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
-          else if(!event.GetKeyString().compare("q"))
+          else if(event.GetKeyString() == "q")
           {
             // Rotate anti-clockwise
             if(mSelectedActor)
@@ -631,7 +635,7 @@ public:
               mPhysicsAdaptor.CreateSyncPoint();
             }
           }
-          else if(!event.GetKeyString().compare("e"))
+          else if(event.GetKeyString() == "e")
           {
             // Rotate clockwise using native physics APIs
             if(mSelectedActor)

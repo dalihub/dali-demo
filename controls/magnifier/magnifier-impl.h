@@ -19,10 +19,10 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/public-api/actors/camera-actor.h>
 #include <dali/public-api/actors/layer.h>
 #include <dali/public-api/render-tasks/render-task.h>
-#include <dali-toolkit/public-api/controls/control-impl.h>
 
 // INTERNAL INCLUDES
 #include "magnifier.h"
@@ -38,7 +38,7 @@ typedef IntrusivePtr<Magnifier> MagnifierPtr;
 /**
  * @copydoc Demo::Magnifier
  */
-class Magnifier : public Toolkit::Internal::Control
+class Magnifier : public Toolkit::ControlImpl
 {
 public:
   /**
@@ -117,7 +117,7 @@ protected:
 
 private:
   /**
-   * @copydoc Toolkit::Internal::Control::OnInitialize()
+   * @copydoc Toolkit::ControlImpl::OnInitialize()
    */
   void OnInitialize() override;
 

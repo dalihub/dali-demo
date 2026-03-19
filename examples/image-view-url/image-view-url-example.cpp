@@ -18,8 +18,14 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/image-loader/texture-manager.h>
 
+#include <dali/integration-api/string-utils.h>
 #include "generated/image-view-url-frag.h"
 #include "shared/view.h"
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
@@ -100,7 +106,7 @@ private:
 
     {
       // create actor to render input with applied shader
-      mActorForInput = Toolkit::ImageView::New(url);
+      mActorForInput = Toolkit::ImageView::New(ToDaliString(url));
       mActorForInput.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mActorForInput.SetProperty(Actor::Property::SIZE, TARGET_SIZE);
       Property::Map customShader;

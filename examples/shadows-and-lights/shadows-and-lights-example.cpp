@@ -22,7 +22,13 @@
 
 // INTERNAL INCLUDES
 #include <controls/shadow-view/shadow-view.h>
+#include <dali/integration-api/string-utils.h>
 #include <shared/view.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Dali::Toolkit;
@@ -175,7 +181,7 @@ public:
     toolBar.AddControl(mTitleActor, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarTitlePercentage, Demo::Alignment::HORIZONTAL_CENTER);
 
     // Set Title text
-    mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT));
+    mTitleActor.SetProperty(TextLabel::Property::TEXT, String(APPLICATION_TITLE_PAN_LIGHT));
 
     // Add a reset button
     Toolkit::PushButton resetButton = Toolkit::PushButton::New();
@@ -241,7 +247,8 @@ public:
     mCastingLight.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
     mCastingLight.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 800.0f) * scaleFactor);
 
-    TextLabel text = TextLabel::New("Light");
+    TextLabel text = TextLabel::New();
+    text.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Light"));
     text.SetProperty(TextLabel::Property::POINT_SIZE, 20.0f);
     text.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     text.SetProperty(Actor::Property::COLOR, Color::BLUE);
@@ -425,19 +432,19 @@ public:
     {
       case PAN_LIGHT:
         mPanState = ROTATE_OBJECT;
-        mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_ROTATE_OBJECT));
+        mTitleActor.SetProperty(TextLabel::Property::TEXT, APPLICATION_TITLE_ROTATE_OBJECT);
         break;
       case ROTATE_OBJECT:
         mPanState = ROTATE_SCENE;
-        mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_ROTATE_SCENE));
+        mTitleActor.SetProperty(TextLabel::Property::TEXT, APPLICATION_TITLE_ROTATE_SCENE);
         break;
       case ROTATE_SCENE:
         mPanState = PAN_SCENE;
-        mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_SCENE));
+        mTitleActor.SetProperty(TextLabel::Property::TEXT, APPLICATION_TITLE_PAN_SCENE);
         break;
       case PAN_SCENE:
         mPanState = PAN_LIGHT;
-        mTitleActor.SetProperty(TextLabel::Property::TEXT, std::string(APPLICATION_TITLE_PAN_LIGHT));
+        mTitleActor.SetProperty(TextLabel::Property::TEXT, APPLICATION_TITLE_PAN_LIGHT);
         break;
       default:
         break;

@@ -31,7 +31,7 @@ namespace
 const char* const IMAGE_MASK(DEMO_IMAGE_DIR "contact-cards-mask.png");
 } // unnamed namespace
 
-Dali::Toolkit::Control Create(const std::string& imagePath)
+Dali::Toolkit::Control Create(const Dali::String& imagePath)
 {
   Control maskedImage = ImageView::New();
   maskedImage.SetProperty(

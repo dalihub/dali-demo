@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,13 @@
 
 // INTERNAL INCLUDES
 #include <dali/devel-api/adaptor-framework/file-stream.h>
+#include <dali/integration-api/stream-operators.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using namespace Toolkit;
@@ -318,20 +325,20 @@ private:
     }
     std::ostringstream oss;
     oss << "Focus changed from : [";
-    oss << (from ? from.GetProperty<std::string>(Actor::Property::NAME) : "(nil)");
+    oss << (from ? from.GetProperty<String>(Actor::Property::NAME) : "(nil)");
     oss << "] -> [";
-    oss << (to ? to.GetProperty<std::string>(Actor::Property::NAME) : "(nil)");
+    oss << (to ? to.GetProperty<String>(Actor::Property::NAME) : "(nil)");
     oss << "]";
-    ApplyBackLog(oss.str());
+    ApplyBackLog(ToDaliString(oss.str()));
   }
 
   void OnFocusGained(Control control)
   {
     std::ostringstream oss;
     oss << "Focus gained : [";
-    oss << (control ? control.GetProperty<std::string>(Actor::Property::NAME) : "(nil)");
+    oss << (control ? control.GetProperty<String>(Actor::Property::NAME) : "(nil)");
     oss << "]";
-    ApplyBackLog(oss.str());
+    ApplyBackLog(ToDaliString(oss.str()));
 
     Model model = Model::DownCast(control);
     if(model)
@@ -351,14 +358,14 @@ private:
   {
     std::ostringstream oss;
     oss << "Focus lost : [";
-    oss << (control ? control.GetProperty<std::string>(Actor::Property::NAME) : "(nil)");
+    oss << (control ? control.GetProperty<String>(Actor::Property::NAME) : "(nil)");
     oss << "]";
-    ApplyBackLog(oss.str());
+    ApplyBackLog(ToDaliString(oss.str()));
 
     Model model = Model::DownCast(control);
     if(model)
     {
-      bool isSubModel = model.GetProperty<std::string>(Actor::Property::NAME) == "SubModel";
+      bool isSubModel = model.GetProperty<String>(Actor::Property::NAME) == "SubModel";
       ApplyAllMaterialPropertyRecursively(
         model.GetModelRoot(),
         {
@@ -460,13 +467,13 @@ private:
       for(const auto& log : mBackLog)
       {
         oss << log;
-        if(log.length() == 0 || log.back() != '\n')
+        if(log.Size() == 0 || ToStdString(log).back() != '\n')
         {
           oss << "\n";
         }
       }
 
-      mDebugLabel[TextLabel::Property::TEXT] = oss.str();
+      mDebugLabel[TextLabel::Property::TEXT] = ToPropertyValue(oss.str());
     }
     else
     {
@@ -477,7 +484,7 @@ private:
     }
   }
 
-  void ApplyBackLog(std::string message)
+  void ApplyBackLog(String message)
   {
     if(mBackLog.size() == MAX_BACKLOG_COUNT)
     {
@@ -540,7 +547,7 @@ private:
   TextLabel mDebugLabel;
   bool      mShowDebugLabel{true};
 
-  std::vector<std::string> mBackLog;
+  std::vector<String> mBackLog;
 
   Timer   mScreenExtentTimer;
   Control mMainModelAABB;

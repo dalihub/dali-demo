@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -456,7 +456,7 @@ public:
           {
             mApplication.Quit();
           }
-          else if(!event.GetKeyString().compare(" "))
+          else if(event.GetKeyString() == " ")
           {
             if(mIntegrationState == PhysicsAdaptor::IntegrationState::ON)
             {
@@ -468,7 +468,7 @@ public:
             }
             mPhysicsAdaptor.SetIntegrationState(mIntegrationState);
           }
-          else if(!event.GetKeyString().compare("m"))
+          else if(event.GetKeyString() == "m")
           {
             if(mDebugState == PhysicsAdaptor::DebugState::ON)
             {
@@ -484,7 +484,7 @@ public:
             }
             mPhysicsAdaptor.SetDebugState(mDebugState);
           }
-          else if(!event.GetKeyString().compare("w"))
+          else if(event.GetKeyString() == "w")
           {
             Vector3 pos = mSelectedActor.GetActorPosition();
             mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(0, 10, 0));
@@ -493,7 +493,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("s"))
+          else if(event.GetKeyString() == "s")
           {
             Vector3 pos = mSelectedActor.GetActorPosition();
             mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(0, -10, 0));
@@ -502,7 +502,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("a"))
+          else if(event.GetKeyString() == "a")
           {
             Vector3 pos = mSelectedActor.GetActorPosition();
             mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(-10, 0, 0));
@@ -511,7 +511,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("d"))
+          else if(event.GetKeyString() == "d")
           {
             Vector3 pos = mSelectedActor.GetActorPosition();
             mSelectedActor.AsyncSetPhysicsPosition(pos + Vector3(10, 0, 0));
@@ -520,7 +520,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("q"))
+          else if(event.GetKeyString() == "q")
           {
             Quaternion quat = mSelectedActor.GetActorRotation();
             quat *= Quaternion(Radian(-0.1f), Vector3::ZAXIS);
@@ -530,7 +530,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("e"))
+          else if(event.GetKeyString() == "e")
           {
             Quaternion quat = mSelectedActor.GetActorRotation();
             quat *= Quaternion(Radian(0.1f), Vector3::ZAXIS);
@@ -540,7 +540,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("z"))
+          else if(event.GetKeyString() == "z")
           {
             Quaternion quat = mSelectedActor.GetActorRotation();
             quat *= Quaternion(Radian(-0.1f), Vector3::YAXIS);
@@ -550,7 +550,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("x"))
+          else if(event.GetKeyString() == "x")
           {
             Quaternion quat = mSelectedActor.GetActorRotation();
             quat *= Quaternion(Radian(0.1f), Vector3::YAXIS);
@@ -560,7 +560,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("c"))
+          else if(event.GetKeyString() == "c")
           {
             Quaternion quat = mSelectedActor.GetActorRotation();
             quat *= Quaternion(Radian(-0.1f), Vector3::XAXIS);
@@ -570,7 +570,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("v"))
+          else if(event.GetKeyString() == "v")
           {
             Quaternion quat = mSelectedActor.GetActorRotation();
             quat *= Quaternion(Radian(0.1f), Vector3::XAXIS);
@@ -580,7 +580,7 @@ public:
             { body->activate(true); });
             mPhysicsAdaptor.CreateSyncPoint();
           }
-          else if(!event.GetKeyString().compare("p"))
+          else if(event.GetKeyString() == "p")
           {
             mSelectedActor.AsyncSetPhysicsPosition(Vector3::ZERO);
             mSelectedActor.AsyncSetPhysicsRotation(Quaternion(Radian(0.001f), Vector3::XAXIS));

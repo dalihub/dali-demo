@@ -16,6 +16,12 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/integration-api/string-utils.h>
+using Dali::Integration::GetStdString;
+using Dali::Integration::ToDaliString;
+using Dali::Integration::ToDaliStringView;
+using Dali::Integration::ToPropertyValue;
+using Dali::Integration::ToStdString;
 
 using namespace Dali;
 using Dali::Toolkit::TextLabel;
@@ -41,7 +47,8 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
 
-    TextLabel textLabel = TextLabel::New("Hello World");
+    TextLabel textLabel = TextLabel::New();
+    textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Hello World"));
     textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
     textLabel.SetProperty(Dali::Actor::Property::NAME, "helloWorldLabel");
     window.Add(textLabel);
