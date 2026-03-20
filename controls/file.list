@@ -37,6 +37,14 @@ SET( controls_src_files
   ${controls_src_dir}/super-blur-view/super-blur-view-impl.cpp
   ${controls_src_dir}/tool-bar/tool-bar.cpp
   ${controls_src_dir}/tool-bar/tool-bar-impl.cpp
+  ${controls_src_dir}/transition-effects/cube-transition-cross-effect.cpp
+  ${controls_src_dir}/transition-effects/cube-transition-cross-effect-impl.cpp
+  ${controls_src_dir}/transition-effects/cube-transition-effect.cpp
+  ${controls_src_dir}/transition-effects/cube-transition-effect-impl.cpp
+  ${controls_src_dir}/transition-effects/cube-transition-fold-effect.cpp
+  ${controls_src_dir}/transition-effects/cube-transition-fold-effect-impl.cpp
+  ${controls_src_dir}/transition-effects/cube-transition-wave-effect.cpp
+  ${controls_src_dir}/transition-effects/cube-transition-wave-effect-impl.cpp
 )
 
 SET( SOURCES ${SOURCES}

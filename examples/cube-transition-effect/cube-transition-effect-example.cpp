@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,20 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/buttons/toggle-button.h>
+#include <dali/dali.h>
+#include <dali/integration-api/string-utils.h>
 #include <math.h>
 
 // INTERNAL INCLUDES
-#include "shared/utility.h"
-#include "shared/view.h"
+#include <controls/transition-effects/cube-transition-cross-effect.h>
+#include <controls/transition-effects/cube-transition-effect.h>
+#include <controls/transition-effects/cube-transition-fold-effect.h>
+#include <controls/transition-effects/cube-transition-wave-effect.h>
+#include <shared/utility.h>
+#include <shared/view.h>
 
-#include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/buttons/toggle-button.h>
-#include <dali-toolkit/devel-api/transition-effects/cube-transition-cross-effect.h>
-#include <dali-toolkit/devel-api/transition-effects/cube-transition-effect.h>
-#include <dali-toolkit/devel-api/transition-effects/cube-transition-fold-effect.h>
-#include <dali-toolkit/devel-api/transition-effects/cube-transition-wave-effect.h>
-#include <dali/dali.h>
-#include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -153,7 +153,7 @@ private:
    * @param[in] effect The cube effect used for the transition
    * @param[in] texture The target Texture of the completed transition
    */
-  void OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, Texture image);
+  void OnTransitionCompleted(Demo::CubeTransitionEffect effect, Texture image);
   /**
    * Callback function of timer tick
    * The timer is used to count the image display duration in slideshow,
@@ -183,10 +183,10 @@ private:
 
   PanGestureDetector mPanGestureDetector;
 
-  Toolkit::CubeTransitionEffect mCubeWaveEffect;
-  Toolkit::CubeTransitionEffect mCubeCrossEffect;
-  Toolkit::CubeTransitionEffect mCubeFoldEffect;
-  Toolkit::CubeTransitionEffect mCurrentEffect;
+  Demo::CubeTransitionEffect mCubeWaveEffect;
+  Demo::CubeTransitionEffect mCubeCrossEffect;
+  Demo::CubeTransitionEffect mCubeFoldEffect;
+  Demo::CubeTransitionEffect mCurrentEffect;
 
   bool                mSlideshow;
   Timer               mViewTimer;
@@ -247,7 +247,7 @@ void CubeTransitionApp::OnInit(Application& application)
   mCurrentTexture = LoadWindowFillingTexture(IMAGES[mIndex]);
 
   // use small cubes
-  mCubeWaveEffect = Toolkit::CubeTransitionWaveEffect::New(NUM_ROWS_WAVE, NUM_COLUMNS_WAVE);
+  mCubeWaveEffect = Demo::CubeTransitionWaveEffect::New(NUM_ROWS_WAVE, NUM_COLUMNS_WAVE);
   mCubeWaveEffect.SetTransitionDuration(ANIMATION_DURATION_WAVE);
   mCubeWaveEffect.SetCubeDisplacement(CUBE_DISPLACEMENT_WAVE);
   mCubeWaveEffect.TransitionCompletedSignal().Connect(this, &CubeTransitionApp::OnTransitionCompleted);
@@ -257,7 +257,7 @@ void CubeTransitionApp::OnInit(Application& application)
   mCubeWaveEffect.SetCurrentTexture(mCurrentTexture);
 
   // use big cubes
-  mCubeCrossEffect = Toolkit::CubeTransitionCrossEffect::New(NUM_ROWS_CROSS, NUM_COLUMNS_CROSS);
+  mCubeCrossEffect = Demo::CubeTransitionCrossEffect::New(NUM_ROWS_CROSS, NUM_COLUMNS_CROSS);
   mCubeCrossEffect.SetTransitionDuration(ANIMATION_DURATION_CROSS);
   mCubeCrossEffect.SetCubeDisplacement(CUBE_DISPLACEMENT_CROSS);
   mCubeCrossEffect.TransitionCompletedSignal().Connect(this, &CubeTransitionApp::OnTransitionCompleted);
@@ -266,7 +266,7 @@ void CubeTransitionApp::OnInit(Application& application)
   mCubeCrossEffect.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mCubeCrossEffect.SetCurrentTexture(mCurrentTexture);
 
-  mCubeFoldEffect = Toolkit::CubeTransitionFoldEffect::New(NUM_ROWS_FOLD, NUM_COLUMNS_FOLD);
+  mCubeFoldEffect = Demo::CubeTransitionFoldEffect::New(NUM_ROWS_FOLD, NUM_COLUMNS_FOLD);
   mCubeFoldEffect.SetTransitionDuration(ANIMATION_DURATION_FOLD);
   mCubeFoldEffect.TransitionCompletedSignal().Connect(this, &CubeTransitionApp::OnTransitionCompleted);
 
@@ -370,7 +370,7 @@ bool CubeTransitionApp::OnSildeshowButtonClicked(Toolkit::Button button)
   return true;
 }
 
-void CubeTransitionApp::OnTransitionCompleted(Toolkit::CubeTransitionEffect effect, Texture texture)
+void CubeTransitionApp::OnTransitionCompleted(Demo::CubeTransitionEffect effect, Texture texture)
 {
   if(mSlideshow)
   {
