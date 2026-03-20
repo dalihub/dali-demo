@@ -19,7 +19,9 @@
 #include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/scene.h>
+#include <dali/integration-api/stream-operators.h>
 #include <dali/integration-api/string-utils.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;

@@ -36,6 +36,7 @@
 #include "shared/utility.h"
 #include "shared/view.h"
 
+#include <dali/integration-api/stream-operators.h>
 #include <dali/integration-api/string-utils.h>
 #include <ifaddrs.h>
 #include <net/if.h>
@@ -174,7 +175,7 @@ void AppendIpAddress(std::ostringstream& stream)
 void AppendGraphicsInformation(std::ostringstream& stream)
 {
   stream << std::endl
-         << Graphics::GetBackendInformation();
+         << ToDaliString(Graphics::GetBackendInformation());
 }
 
 /**
