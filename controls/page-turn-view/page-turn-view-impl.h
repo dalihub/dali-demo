@@ -22,6 +22,7 @@
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/devel-api/common/map-wrapper.h>
 #include <dali/public-api/actors/layer.h>
+#include <dali/public-api/common/vector-wrapper.h>
 #include <dali/public-api/rendering/renderer.h>
 
 // INTERNAL INCLUDES
@@ -310,7 +311,7 @@ private: // implemented differently by PageTurnLandscapeView and PageTurnPortrai
   {
   }
 
-public: //signal and property
+public: // signal and property
   /**
    * @copydoc Toolkit::PageTurnView::PageTurnStartedSignal()
    */
@@ -361,10 +362,10 @@ public: //signal and property
   static Property::Value GetProperty(BaseObject* object, Property::Index index);
 
 private:
-  //Undefined
+  // Undefined
   PageTurnView(const PageTurnView&);
 
-  //undefined
+  // undefined
   PageTurnView& operator=(const PageTurnView& rhs);
 
 protected:

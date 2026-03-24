@@ -22,6 +22,7 @@
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/devel-api/common/stage.h>
 #include <dali/public-api/actors/camera-actor.h>
+#include <dali/public-api/common/vector-wrapper.h>
 #include <dali/public-api/render-tasks/render-task.h>
 #include <dali/public-api/rendering/frame-buffer.h>
 #include <dali/public-api/rendering/geometry.h>
@@ -141,7 +142,7 @@ private:
   void SetBubbleParameter(BubbleRenderer& bubbleRenderer, unsigned int curUniform, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement);
 
 private:
-  Actor       mBubbleRoot;        ///<The bubble root actor. Need to add it to stage to get the bubbles rendered.
+  Actor       mBubbleRoot;        ///< The bubble root actor. Need to add it to stage to get the bubbles rendered.
   Texture     mShapeTexture;      ///< The alpha channnel of this texture defines the bubble shape.
   Texture     mBackgroundTexture; ///< The original background texture
   Texture     mEffectTexture;     ///< Texture which stores the adjusted color of the background image.The bubbles pick color from this image.

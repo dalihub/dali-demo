@@ -21,6 +21,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/public-api/animation/animation.h>
+#include <dali/public-api/common/vector-wrapper.h>
 #include <dali/public-api/rendering/renderer.h>
 
 // INTERNAL INCLUDES
