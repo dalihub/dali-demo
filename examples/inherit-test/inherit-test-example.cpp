@@ -16,6 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/integration-api/stream-operators.h>
 #include <dali/integration-api/string-utils.h>
 #include <sstream>
 using Dali::Integration::GetStdString;
