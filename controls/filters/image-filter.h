@@ -19,10 +19,11 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/public-api/actors/camera-actor.h>
+#include <dali/public-api/common/vector-wrapper.h>
 #include <dali/public-api/rendering/frame-buffer.h>
 #include <dali/public-api/rendering/texture.h>
-#include <dali-toolkit/public-api/controls/control-impl.h>
 
 // INTERNAL INCLUDES
 #include <controls/effects-view/effects-view.h>
