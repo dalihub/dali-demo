@@ -21,6 +21,7 @@
 
 #include <dali/devel-api/adaptor-framework/key-devel.h>
 #include <dali/devel-api/events/hit-test-algorithm.h>
+#include <dali/integration-api/stream-operators.h>
 
 #include <iostream>
 #include <string>
