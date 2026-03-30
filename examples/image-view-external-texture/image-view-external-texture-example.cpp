@@ -175,7 +175,7 @@ Dali::String ConvertFileToImageUrlString(const char* url, UrlType type)
       {
         PixelData pixelData = Devel::PixelBuffer::Convert(pixelBuffer);
 
-        imageUrl = Dali::Toolkit::Image::GenerateUrl(pixelData);
+        imageUrl = Dali::Toolkit::ImageUrlUtils::GenerateUrl(pixelData);
       }
       converted = true;
       break;
@@ -186,7 +186,7 @@ Dali::String ConvertFileToImageUrlString(const char* url, UrlType type)
 
       if(rawBuffer)
       {
-        imageUrl  = Dali::Toolkit::Image::GenerateUrl(rawBuffer);
+        imageUrl  = Dali::Toolkit::ImageUrlUtils::GenerateUrl(rawBuffer);
         converted = true;
       }
       break;

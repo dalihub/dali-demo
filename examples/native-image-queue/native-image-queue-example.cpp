@@ -313,7 +313,7 @@ public:
 
     if(mNativeSource)
     {
-      ImageUrl nativeImageUrl = Image::GenerateUrl(mNativeSource, false);
+      ImageUrl nativeImageUrl = ImageUrlUtils::GenerateUrl(mNativeSource, false);
 
       ImageView nativeImageViewer = ImageView::New(nativeImageUrl.GetUrl());
       nativeImageViewer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
@@ -329,7 +329,7 @@ public:
     }
     if(mNativeQueue)
     {
-      ImageUrl nativeImageUrl = Image::GenerateUrl(mNativeQueue, false);
+      ImageUrl nativeImageUrl = ImageUrlUtils::GenerateUrl(mNativeQueue, false);
 
       ImageView nativeImageViewer = ImageView::New(nativeImageUrl.GetUrl());
       nativeImageViewer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);

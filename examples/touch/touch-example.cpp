@@ -419,7 +419,7 @@ public:
       renderTask.SetScreenToFrameBufferMappingActor(positionControl);
       renderTask.GetCameraActor().SetInvertYAxis(true);
 
-      Dali::Toolkit::ImageUrl imageUrl = Dali::Toolkit::Image::GenerateUrl(frameBuffer, 0u);
+      Dali::Toolkit::ImageUrl imageUrl = Dali::Toolkit::ImageUrlUtils::GenerateUrl(frameBuffer, 0u);
       Property::Map           imagePropertyMap;
       imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
       imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, imageUrl.GetUrl());
@@ -580,7 +580,7 @@ public:
     renderTask.SetScreenToFrameBufferMappingActor(positionControl);
     renderTask.GetCameraActor().SetInvertYAxis(false);
 
-    Dali::Toolkit::ImageUrl imageUrl = Dali::Toolkit::Image::GenerateUrl(frameBuffer, 0u);
+    Dali::Toolkit::ImageUrl imageUrl = Dali::Toolkit::ImageUrlUtils::GenerateUrl(frameBuffer, 0u);
     Property::Map           imagePropertyMap;
     imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
     imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, imageUrl.GetUrl());
