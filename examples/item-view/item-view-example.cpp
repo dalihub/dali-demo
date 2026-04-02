@@ -592,11 +592,11 @@ public:
 
       if(tick && tick.GetCurrentProperty<bool>(Actor::Property::VISIBLE))
       {
-        removeList.push_back(mItemView.GetItemId(child));
+        removeList.PushBack(mItemView.GetItemId(child));
       }
     }
 
-    if(!removeList.empty())
+    if(!removeList.Empty())
     {
       mItemView.RemoveItems(removeList, 0.5f);
     }
@@ -690,11 +690,11 @@ public:
 
       if(tick && tick.GetCurrentProperty<bool>(Actor::Property::VISIBLE))
       {
-        insertList.push_back(Item(mItemView.GetItemId(child), NewItem(rand())));
+        insertList.PushBack(Item(mItemView.GetItemId(child), NewItem(rand())));
       }
     }
 
-    if(!insertList.empty())
+    if(!insertList.Empty())
     {
       mItemView.InsertItems(insertList, 0.5f);
     }
@@ -784,11 +784,11 @@ public:
 
       if(tick && tick.GetCurrentProperty<bool>(Actor::Property::VISIBLE))
       {
-        replaceList.push_back(Item(mItemView.GetItemId(child), NewItem(rand())));
+        replaceList.PushBack(Item(mItemView.GetItemId(child), NewItem(rand())));
       }
     }
 
-    if(!replaceList.empty())
+    if(!replaceList.Empty())
     {
       mItemView.ReplaceItems(replaceList, 0.5f);
     }
