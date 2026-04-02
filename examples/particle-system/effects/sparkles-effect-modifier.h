@@ -2,7 +2,7 @@
 #define DALI_PARTICLES_SPARKLES_EFFECT_MODIFIER_H
 
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 #include <dali-toolkit/public-api/particle-system/particle-modifier.h>
 #include <dali-toolkit/public-api/particle-system/particle-source.h>
 #include <dali-toolkit/public-api/particle-system/particle.h>
-#include <dali/public-api/common/vector-wrapper.h>
+#include <dali/devel-api/common/vector-wrapper.h>
 #include <dali/public-api/object/weak-handle.h>
 #include <ctime>
 
