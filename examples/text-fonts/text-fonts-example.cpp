@@ -73,7 +73,7 @@ public:
   void CreateTextLabel(TextLabel& textLabel, std::string textString, const Vector4& color, bool infoLabel = false)
   {
     textLabel = TextLabel::New(ToDaliString(textString));
-    textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    textLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
     textLabel.SetProperty(TextLabel::Property::MULTI_LINE, true);
@@ -98,14 +98,14 @@ public:
   {
     container = Control::New();
     container.SetProperty(Actor::Property::SIZE, size);
-    container.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    container.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     container.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
   }
 
   void CreateFolderButton(PushButton& button)
   {
     button = PushButton::New();
-    button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    button.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     button.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     button.SetProperty(Actor::Property::SIZE, Vector2(50.0f, 50.0f));
   }

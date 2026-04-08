@@ -66,7 +66,7 @@ public:
     // Create drawable actor
     mGLActor = DrawableActor::New(*mRenderCallback);
 
-    mGLActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mGLActor.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mGLActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
 
     // Set size on the actor (half the window size to show that glClear() and scissor test work together)
@@ -79,7 +79,7 @@ public:
     // Create TextLabel
     mTextLabel = TextLabel::New();
     mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("This text overlays DrawableActor"));
-    mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mTextLabel.SetProperty(Dali::Actor::Property::NAME, "SomeTextLabel");
     window.Add(mTextLabel);
 

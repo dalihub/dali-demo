@@ -65,14 +65,14 @@ public:
     title.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Clipping draw order verification"));
     title.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     title.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
-    title.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    title.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     title.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     // Create the description label.
     TextLabel description = TextLabel::New("The bottom tree should have the same draw order as the top tree.\nThey should look identical except \"C\" is clipped on the bottom tree.");
     description.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     description.SetProperty(TextLabel::Property::MULTI_LINE, true);
-    description.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    description.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     description.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 1.0f, 0.5f));
     window.Add(description);
 
@@ -95,7 +95,7 @@ public:
      *    +---------------+
      */
     TableView view = TableView::New(4, 1);
-    view.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    view.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     view.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     view.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
@@ -135,7 +135,7 @@ public:
     for(int tree = 0; tree < 2; ++tree)
     {
       Control container = Control::New();
-      container.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+      container.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
       container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       container.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       Vector4 backgroundColor = tree == 0 ? Vector4(0.77f, 1.0f, 0.77f, 1.0f) : Vector4(0.8f, 0.8f, 1.0f, 1.0f);
@@ -148,10 +148,10 @@ public:
         std::stringstream labelStream;
         labelStream << static_cast<char>(static_cast<char>(i) + 'A');
         TextLabel textLabel = TextLabel::New(ToDaliString(labelStream.str()));
-        textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+        textLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
 
         image[i] = ImageView::New(images[i]);
-        image[i].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+        image[i].SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
 
         // Calculate the relative positioning for the images and labels.
         float depth = static_cast<float>(i == 0 ? 0 : ((i - 1) % 2) + 1);
@@ -176,7 +176,7 @@ public:
       TextLabel   treeLabel = TextLabel::New(ToDaliString(treeText));
       treeLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
       treeLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "BOTTOM");
-      treeLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+      treeLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
       treeLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
       container.Add(treeLabel);
 

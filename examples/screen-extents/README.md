@@ -15,7 +15,7 @@ The Screen Extents Example helps you visually understand how an actor is positio
 - **Scale**: 0.5x scaling applied
 - **Rotation**: 45-degree rotation around Z-axis
 - **Parent Origin**: Center
-- **Anchor Point**: Top-left
+- **Pivot**: Top-left
 
 ### Screen Coordinate Calculation
 - `CalculateScreenPosition()`: Calculates the absolute screen position of the actor
@@ -36,14 +36,14 @@ The Screen Extents Example helps you visually understand how an actor is positio
 
 ## Core Concepts
 
-### Parent Origin and Anchor Point
+### Parent Origin and Pivot
 The example supports 9 standard positions:
 - `TOP_LEFT`, `TOP_CENTER`, `TOP_RIGHT`
 - `CENTER_LEFT`, `CENTER`, `CENTER_RIGHT`
 - `BOTTOM_LEFT`, `BOTTOM_CENTER`, `BOTTOM_RIGHT`
 
 **Parent Origin**: The reference point within the parent actor where the child actor is positioned
-**Anchor Point**: The reference point within the actor itself for positioning
+**Pivot**: The reference point within the actor itself for positioning
 
 ### Screen Coordinates vs Current Coordinates
 - **Screen Coordinates**: Final absolute coordinates on the rendered screen

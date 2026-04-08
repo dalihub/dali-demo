@@ -1,7 +1,7 @@
 #ifndef PARTICLES_UTILS_H_
 #define PARTICLES_UTILS_H_
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ enum RendererOptions
 ///@note If textures is not a valid handle, an empty texture set will be created.
 Dali::Renderer CreateRenderer(Dali::TextureSet textures, Dali::Geometry geometry, Dali::Shader shader, uint32_t options = OPTION_NONE);
 
-///@brief Sets @a actor's anchor point and parent origin to center.
+///@brief Sets @a actor's pivot and parent origin to center.
 void CenterActor(Dali::Actor actor);
 
 ///@brief Creates an empty and centered actor.
@@ -74,10 +74,10 @@ Dali::Actor CreateActor();
 Dali::Renderer CloneRenderer(Dali::Renderer original);
 
 ///@brief Creates a copy of @a original, cloning each renderer, and a select set
-/// of properties: parent origin, anchor point, size, position, orientation, scale,
+/// of properties: parent origin, pivot, size, position, orientation, scale,
 /// visible, color and name.
 ///@note Does not copy resize policy related properties, as setting those, even if
 /// default, will break the ability to specify a size for the actor in Z.
 Dali::Actor CloneActor(Dali::Actor original);
 
-#endif //PARTICLES_UTILS_H_
+#endif // PARTICLES_UTILS_H_

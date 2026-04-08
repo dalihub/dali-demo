@@ -66,12 +66,12 @@ class ShadowView;
  *  Image image = Image::New(...);
  *  ImageView imageView = ImageView::New(image);
  *  imageView.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
- *  imageView.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+ *  imageView.SetProperty( Actor::Property::PIVOT, Pivot::CENTER );
  *  shadowView.Add(imageView);\n Add the renderable actor to the shadow view
  *
  *  ImageView shadowPlaneBg = ImageView::New(); //This will be the shadow plane
  *  shadowPlaneBg.SetProperty( Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER );
- *  shadowPlaneBg.SetProperty( Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER );
+ *  shadowPlaneBg.SetProperty( Actor::Property::PIVOT, Pivot::CENTER );
  *  shadowPlaneBg.SetProperty( Actor::Property::SIZE, Vector2(700.0f, 700.0f) );
  *  shadowPlaneBg.SetProperty( Actor::Property::POSITION, Vector3(0.0f, 0.0f, -30.0f) ); //Just behind the image view.
  *  shadowView.SetShadowPlaneBackground(ShadowPlane);

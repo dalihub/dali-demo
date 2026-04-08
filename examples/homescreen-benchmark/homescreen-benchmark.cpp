@@ -155,14 +155,14 @@ public:
 
     mScrollParent = Actor::New();
     mScrollParent.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mScrollParent.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mScrollParent.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mScrollParent.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     // create background
     Toolkit::ImageView background = Toolkit::ImageView::New(BACKGROUND_IMAGE);
     window.Add(background);
     background.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    background.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    background.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     background.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     PopulatePages();
@@ -199,7 +199,7 @@ public:
 
     pageActor.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.5f));
     pageActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    pageActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    pageActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     pageActor.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     pageActor.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(PAGE_SCALE_FACTOR_X, PAGE_SCALE_FACTOR_Y, 1.0f));
     return pageActor;
@@ -219,7 +219,7 @@ public:
     imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
     imageView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     imageView.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
-    imageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    imageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     imageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     imageView.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(IMAGE_AREA, IMAGE_AREA, 1.0f));
 
@@ -231,7 +231,7 @@ public:
     Toolkit::CheckBoxButton button = Toolkit::CheckBoxButton::New();
     button.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     button.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
-    button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    button.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     button.SetProperty(Toolkit::Button::Property::SELECTED, (currentIconIndex % 2 == 0)); // Select half the button
 
@@ -259,7 +259,7 @@ public:
       {
         // Create parent icon view
         Toolkit::Control iconView = Toolkit::Control::New();
-        iconView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+        iconView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
         iconView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
 
         if(!mConfig.mTableViewEnabled)
@@ -297,7 +297,7 @@ public:
           if(useTextLabel)
           {
             Toolkit::TextLabel textLabel = Toolkit::TextLabel::New(DEMO_APPS_NAMES[currentIconIndex]);
-            textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+            textLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
             textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
             textLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
             textLabel.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(1.0f, 1.0f, 1.0f, 1.0f)); // White.
@@ -313,7 +313,7 @@ public:
 
             Toolkit::Control control = Toolkit::Control::New();
             control.SetProperty(Toolkit::Control::Property::BACKGROUND, map);
-            control.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+            control.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
             control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
             icon.Add(control);
           }
@@ -368,7 +368,7 @@ public:
 
       // Move page 'a little bit up'.
       page.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      page.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      page.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       page.SetProperty(Actor::Property::POSITION, Vector3(windowSize.x * i, 0.0f, 0.0f));
       mScrollParent.Add(page);
     }

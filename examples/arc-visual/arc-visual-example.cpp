@@ -87,7 +87,7 @@ private:
     mStartAngleLabel = TextLabel::New();
     mStartAngleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("1"));
     mStartAngleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mStartAngleLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT);
+    mStartAngleLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     mStartAngleLabel.SetProperty(Actor::Property::POSITION, Vector2(-30.0f, -10.0f));
     mStartAngleLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
     mStartAngleLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
@@ -99,7 +99,7 @@ private:
     mSweepAngleLabel = TextLabel::New();
     mSweepAngleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("2"));
     mSweepAngleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mSweepAngleLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mSweepAngleLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mSweepAngleLabel.SetProperty(Actor::Property::POSITION, Vector2(0.0f, -10.0f));
     mSweepAngleLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
     mSweepAngleLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
@@ -111,7 +111,7 @@ private:
     mThicknessLabel = TextLabel::New();
     mThicknessLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("3"));
     mThicknessLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mThicknessLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
+    mThicknessLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     mThicknessLabel.SetProperty(Actor::Property::POSITION, Vector2(30.0f, -10.0f));
     mThicknessLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
     mThicknessLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
@@ -123,7 +123,7 @@ private:
     mPlusTextLabel = TextLabel::New();
     mPlusTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("+"));
     mPlusTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mPlusTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mPlusTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mPlusTextLabel.SetProperty(Actor::Property::POSITION, Vector2(20.0f, 10.0f));
     mPlusTextLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
     mPlusTextLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
@@ -135,7 +135,7 @@ private:
     mMinusTextLabel = TextLabel::New();
     mMinusTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("-"));
     mMinusTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mMinusTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
+    mMinusTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_RIGHT);
     mMinusTextLabel.SetProperty(Actor::Property::POSITION, Vector2(-20.0f, 10.0f));
     mMinusTextLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
     mMinusTextLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);

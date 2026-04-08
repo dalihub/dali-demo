@@ -64,7 +64,7 @@ Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
 {
   Dali::Layer toolBarLayer = Dali::Layer::New();
   toolBarLayer.SetProperty(Dali::Actor::Property::NAME, "TOOLBAR_LAYER");
-  toolBarLayer.SetProperty(Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_CENTER);
+  toolBarLayer.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::TOP_CENTER);
   toolBarLayer.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::TOP_CENTER);
   toolBarLayer.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::WIDTH);
   toolBarLayer.SetProperty(Dali::Actor::Property::SIZE, Dali::Vector2(0.0f, style.mToolBarHeight));
@@ -79,7 +79,7 @@ Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
   background["url"] = ToPropertyValue(toolbarImagePath);
   toolBar.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, background);
   toolBar.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::TOP_CENTER);
-  toolBar.SetProperty(Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_CENTER);
+  toolBar.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::TOP_CENTER);
   toolBar.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
   // Add the tool bar to the tool bar layer.
@@ -89,7 +89,7 @@ Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
   if(!title.empty())
   {
     Dali::Toolkit::TextLabel label = Dali::Toolkit::TextLabel::New();
-    label.SetProperty(Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::TOP_LEFT);
+    label.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::TOP_LEFT);
     label.SetStyleName("ToolbarLabel");
     label.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToPropertyValue(title));
     label.SetProperty(Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -116,7 +116,7 @@ Dali::Layer CreateView(Dali::Application&      application,
 
   // Create default View.
   view = Dali::Toolkit::Control::New();
-  view.SetProperty(Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER);
+  view.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::CENTER);
   view.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
   view.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
@@ -145,7 +145,7 @@ Dali::Layer CreateView(Dali::Application&      application,
 
   // Create a content layer.
   Dali::Layer contentLayer = Dali::Layer::New();
-  contentLayer.SetProperty(Dali::Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER);
+  contentLayer.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::CENTER);
   contentLayer.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
   contentLayer.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
   view.Add(contentLayer);

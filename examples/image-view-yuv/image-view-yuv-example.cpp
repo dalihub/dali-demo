@@ -81,7 +81,7 @@ public:
     mTableView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mTableView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mTableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mTableView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mTableView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mWindow.Add(mTableView);
 
     for(unsigned int index = 0u; index < NUM_IMAGE_INFOS; ++index)
@@ -126,7 +126,7 @@ public:
       label.SetProperty(TextLabel::Property::TEXT, "Press \'R\' key to Attach / Detach images\nPress \'T\' key to Detach and Attach images immediatly\n");
       label.SetProperty(TextLabel::Property::MULTI_LINE, true);
       label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-      label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+      label.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
       mWindow.Add(label);
     }
   }

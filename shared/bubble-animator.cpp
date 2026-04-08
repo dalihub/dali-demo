@@ -100,7 +100,7 @@ void BubbleAnimator::Initialize(Dali::Actor parent, Dali::Actor scrollView)
   // Populate background and bubbles - needs to be scrollViewLayer so scroll ends show
   Actor bubbleContainer = Actor::New();
   bubbleContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-  bubbleContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  bubbleContainer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   bubbleContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   AddBackgroundActors(bubbleContainer, NUM_BACKGROUND_IMAGES);
   parent.Add(bubbleContainer);

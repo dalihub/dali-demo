@@ -305,7 +305,7 @@ public:
     }
 
     TextLabel supportedLabel = TextLabel::New();
-    supportedLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    supportedLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     supportedLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     supportedLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(
                                                             std::string("Support NativeImage ") + std::string(mNativeSourceSupported ? "T" : "F") + std::string(" Queue ") + std::string(mNativeSourceQueueSupported ? "T" : "F")));
@@ -316,7 +316,7 @@ public:
       ImageUrl nativeImageUrl = ImageUrlUtils::GenerateUrl(mNativeSource, false);
 
       ImageView nativeImageViewer = ImageView::New(nativeImageUrl.GetUrl());
-      nativeImageViewer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      nativeImageViewer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       nativeImageViewer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       nativeImageViewer.SetProperty(Actor::Property::SIZE, Vector2(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT));
       nativeImageViewer.SetProperty(Actor::Property::POSITION, Vector2(-(NATIVE_IMAGE_WIDTH * 0.5f + 1.0f), 0.0f));
@@ -332,7 +332,7 @@ public:
       ImageUrl nativeImageUrl = ImageUrlUtils::GenerateUrl(mNativeQueue, false);
 
       ImageView nativeImageViewer = ImageView::New(nativeImageUrl.GetUrl());
-      nativeImageViewer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      nativeImageViewer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       nativeImageViewer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       nativeImageViewer.SetProperty(Actor::Property::SIZE, Vector2(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT));
       nativeImageViewer.SetProperty(Actor::Property::POSITION, Vector2(NATIVE_IMAGE_WIDTH * 0.5f + 1.0f, 0.0f));
@@ -345,7 +345,7 @@ public:
     }
 
     mBlurView = Control::New();
-    mBlurView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mBlurView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mBlurView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mBlurView.SetProperty(Actor::Property::SIZE, Vector2(752.0f, 125.0f));
     mBlurView.SetBackgroundColor(Vector4(0.5f, 0.3f, 0.2f, 0.2f));

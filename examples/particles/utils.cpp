@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -175,7 +175,7 @@ Renderer CreateRenderer(TextureSet textures, Geometry geometry, Shader shader, u
 
 void CenterActor(Actor actor)
 {
-  actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 }
 
@@ -222,7 +222,7 @@ Actor CloneActor(Actor original)
   // relayout, which in turn will result in losing the ability to set Z size.
   for(auto i : {
         Actor::Property::PARENT_ORIGIN,
-        Actor::Property::ANCHOR_POINT,
+        Actor::Property::PIVOT,
         Actor::Property::SIZE,
         Actor::Property::POSITION,
         Actor::Property::ORIENTATION,

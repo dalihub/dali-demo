@@ -278,7 +278,7 @@ public:
 
     // Create a text label for error message when a model is failed to load
     mTextLabel = TextLabel::New();
-    mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mTextLabel.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
     mTextLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
@@ -340,7 +340,7 @@ public:
     mModel = Dali::Scene3D::Model::New(ToDaliString(modelUrl));
     mModel.SetProperty(Dali::Actor::Property::SIZE, model_list[index].size);
     mModel.SetProperty(Dali::Actor::Property::POSITION_Y, model_list[index].yPosition);
-    mModel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mModel.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mModel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mModel.SetImageBasedLightSource(ToDaliString(uri_diffuse_texture), ToDaliString(uri_specular_texture), 0.6f);
 
@@ -475,7 +475,7 @@ public:
     mSkyboxActor = Actor::New();
     mSkyboxActor.SetProperty(Dali::Actor::Property::NAME, "SkyBox");
     mSkyboxActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mSkyboxActor.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mSkyboxActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mSkyboxActor.SetProperty(Dali::Actor::Property::POSITION, mCameraPosition);
     mSkyboxActor.AddRenderer(mSkyboxRenderer);
     mWindow.Add(mSkyboxActor);

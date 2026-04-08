@@ -38,7 +38,7 @@ using Dali::Integration::ToStdString;
 using namespace Dali;
 using namespace Dali::Toolkit::Physics;
 using namespace Dali::ParentOrigin;
-using namespace Dali::AnchorPoint;
+using namespace Dali::Pivot;
 
 #if defined(DEBUG_ENABLED)
 Debug::Filter* gPhysicsDemo = Debug::Filter::New(Debug::Concise, false, "LOG_PHYSICS_EXAMPLE");
@@ -228,7 +228,7 @@ public:
     mAnimationSimRootActor = Layer::New();
     mAnimationSimRootActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mAnimationSimRootActor[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::CENTER;
-    mAnimationSimRootActor[Actor::Property::ANCHOR_POINT]  = Dali::AnchorPoint::CENTER;
+    mAnimationSimRootActor[Actor::Property::PIVOT]  = Dali::Pivot::CENTER;
 
     mWindow.Add(mAnimationSimRootActor);
     std::ostringstream oss;
@@ -237,7 +237,7 @@ public:
     mAnimationSimRootActor.Add(title);
     title[Toolkit::TextLabel::Property::TEXT_COLOR]           = Color::WHITE;
     title[Actor::Property::PARENT_ORIGIN]                     = Dali::ParentOrigin::TOP_CENTER;
-    title[Actor::Property::ANCHOR_POINT]                      = Dali::AnchorPoint::TOP_CENTER;
+    title[Actor::Property::PIVOT]                      = Dali::Pivot::TOP_CENTER;
     title[Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
     title.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
 
@@ -247,7 +247,7 @@ public:
     {
       Actor ball = mBallActors[i]          = Toolkit::ImageView::New(ToDaliString(BALL_IMAGES[rand() % 4]));
       ball[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::CENTER;
-      ball[Actor::Property::ANCHOR_POINT]  = Dali::AnchorPoint::CENTER;
+      ball[Actor::Property::PIVOT]  = Dali::Pivot::CENTER;
 
       ball[Actor::Property::NAME]     = "Ball";
       ball[Actor::Property::SIZE]     = BALL_SIZE; // Halve the image size
@@ -400,7 +400,7 @@ public:
     mPhysicsRoot.Add(title);
     title[Toolkit::TextLabel::Property::TEXT_COLOR]           = Color::WHITE;
     title[Actor::Property::PARENT_ORIGIN]                     = Dali::ParentOrigin::TOP_CENTER;
-    title[Actor::Property::ANCHOR_POINT]                      = Dali::AnchorPoint::TOP_CENTER;
+    title[Actor::Property::PIVOT]                      = Dali::Pivot::TOP_CENTER;
     title[Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
     title.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     title.RaiseToTop();

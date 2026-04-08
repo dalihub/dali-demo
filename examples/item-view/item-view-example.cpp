@@ -236,7 +236,7 @@ public:
     // Create a delete button (bottom right of screen)
     mDeleteButton = Toolkit::PushButton::New();
     mDeleteButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
-    mDeleteButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT);
+    mDeleteButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     mDeleteButton.SetProperty(Actor::Property::POSITION, Vector2(BUTTON_BORDER, BUTTON_BORDER));
     mDeleteButton.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
     mDeleteButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, DELETE_IMAGE);
@@ -251,7 +251,7 @@ public:
     // Create an insert button (bottom right of screen)
     mInsertButton = Toolkit::PushButton::New();
     mInsertButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
-    mInsertButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT);
+    mInsertButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     mInsertButton.SetProperty(Actor::Property::POSITION, Vector2(BUTTON_BORDER, BUTTON_BORDER));
     mInsertButton.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
     mInsertButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, INSERT_IMAGE);
@@ -266,7 +266,7 @@ public:
     // Create an replace button (bottom right of screen)
     mReplaceButton = Toolkit::PushButton::New();
     mReplaceButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
-    mReplaceButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT);
+    mReplaceButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     mReplaceButton.SetProperty(Actor::Property::POSITION, Vector2(BUTTON_BORDER, BUTTON_BORDER));
     mReplaceButton.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
     mReplaceButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, REPLACE_IMAGE);
@@ -281,7 +281,7 @@ public:
     // Create the item view actor
     mItemView = ItemView::New(*this);
     mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mItemView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mItemView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     // Display item view on the window
     window.Add(mItemView);
@@ -882,7 +882,7 @@ public: // From ItemFactory
     // Add a border image child actor
     ImageView borderActor = ImageView::New();
     borderActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    borderActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    borderActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     borderActor.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
     borderActor.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f));
     borderActor.SetProperty(Actor::Property::COLOR_MODE, USE_PARENT_COLOR);
@@ -907,7 +907,7 @@ public: // From ItemFactory
     checkbox.SetProperty(Dali::Actor::Property::NAME, "CheckBox");
     checkbox.SetProperty(Actor::Property::COLOR_MODE, USE_PARENT_COLOR);
     checkbox.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
-    checkbox.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
+    checkbox.SetProperty(Actor::Property::PIVOT, Pivot::TOP_RIGHT);
     checkbox.SetProperty(Actor::Property::SIZE, Vector2(spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f));
     checkbox.SetProperty(Actor::Property::POSITION, Vector2(-SELECTION_BORDER_WIDTH, SELECTION_BORDER_WIDTH));
     checkbox.SetProperty(Actor::Property::POSITION_Z, 0.1f);
@@ -929,7 +929,7 @@ public: // From ItemFactory
     tick.SetProperty(Dali::Actor::Property::NAME, "Tick");
     tick.SetProperty(Actor::Property::COLOR_MODE, USE_PARENT_COLOR);
     tick.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
-    tick.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
+    tick.SetProperty(Actor::Property::PIVOT, Pivot::TOP_RIGHT);
     tick.SetProperty(Actor::Property::SIZE, Vector2(spiralItemSize.width * 0.2f, spiralItemSize.width * 0.2f));
     tick.SetProperty(Actor::Property::POSITION_Z, 0.2f);
     tick.SetProperty(Actor::Property::VISIBLE, false);

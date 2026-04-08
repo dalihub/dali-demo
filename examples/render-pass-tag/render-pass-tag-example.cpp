@@ -137,7 +137,7 @@ public:
     mWindow.SetBackgroundColor(Color::WHITE);
 
     Dali::Toolkit::Control control = Dali::Toolkit::Control::New();
-    control.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    control.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     control.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     control.SetProperty(Dali::Actor::Property::SIZE, Vector2(300.0f, 300.0f));
     mWindow.Add(control);
@@ -174,7 +174,7 @@ public:
     float       cameraDefaultZPosition = cameraActor.GetProperty<float>(Dali::Actor::Property::POSITION_Z);
     cameraActor.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.0f, 0.0f, cameraDefaultZPosition));
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    cameraActor.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    cameraActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     renderTask.SetCameraActor(cameraActor);
     mWindow.Add(cameraActor);
 

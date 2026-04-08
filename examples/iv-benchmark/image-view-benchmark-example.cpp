@@ -116,7 +116,7 @@ public:
       rawView.SetBackgroundColor(Color::BLUE);
       customColorLogger.AddMarker(PerformanceLogger::Marker::END_EVENT);
       rawView[Actor::Property::PARENT_ORIGIN] = ParentOrigin::TOP_LEFT;
-      rawView[Actor::Property::ANCHOR_POINT]  = AnchorPoint::TOP_LEFT;
+      rawView[Actor::Property::PIVOT]  = Pivot::TOP_LEFT;
       rawView[Actor::Property::SIZE]          = Vector2((float)window.GetSize().GetWidth(), height);
       rawView[Actor::Property::POSITION]      = Vector2(0.0f, height * (i + 1));
 
@@ -133,7 +133,7 @@ public:
         bgView.SetBackgroundColor(Color::CRIMSON);
         customColorLogger.AddMarker(PerformanceLogger::Marker::END_EVENT);
         bgView[Actor::Property::PARENT_ORIGIN] = ParentOrigin::TOP_LEFT;
-        bgView[Actor::Property::ANCHOR_POINT]  = AnchorPoint::TOP_LEFT;
+        bgView[Actor::Property::PIVOT]  = Pivot::TOP_LEFT;
         bgView[Actor::Property::SIZE]          = Vector2(width * 0.9f, height * 0.9f);
         bgView[Actor::Property::POSITION]      = Vector2(width * j + width * 0.05f, height * 0.05f);
         rawView.Add(bgView);

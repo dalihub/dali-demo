@@ -80,7 +80,7 @@ public:
     // Add a text label to the window
     TextLabel textLabel = TextLabel::New();
     textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Window Example"));
-    textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    textLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     textLabel.SetProperty(Actor::Property::NAME, "WindowExampleLabel");
     textLabel.SetBackgroundColor(Color::RED);
@@ -90,14 +90,14 @@ public:
     mClipControl = Control::New();
     mClipControl.SetProperty(Actor::Property::SIZE, Vector2(250.0f, 100.0f));
     mClipControl.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.75f, 0.75f, 0.5f));
-    mClipControl.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mClipControl.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mClipControl.SetBackgroundColor(Color::BLUE);
     window.Add(mClipControl);
 
     auto child = Control::New();
     child.SetProperty(Actor::Property::SIZE, Vector2(100.0f, 250.0f));
-    child.SetProperty(Actor::Property::PARENT_ORIGIN, AnchorPoint::CENTER);
-    child.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    child.SetProperty(Actor::Property::PARENT_ORIGIN, Pivot::CENTER);
+    child.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     child.SetBackgroundColor(Color::GREEN);
     mClipControl.Add(child);
 
@@ -305,7 +305,7 @@ public:
 
     mTextLabel2 = TextLabel::New();
     mTextLabel2.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Second window"));
-    mTextLabel2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mTextLabel2.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mTextLabel2.SetProperty(Actor::Property::NAME, "Second Window");
     mSecondWindow.Add(mTextLabel2);
 

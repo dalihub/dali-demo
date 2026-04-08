@@ -71,7 +71,7 @@ public:
 
     mWebView = Toolkit::WebView::New("ko-KR", "Asia/Seoul");
     mWebView.SetProperty(Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
-    mWebView.SetProperty(Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER);
+    mWebView.SetProperty(Actor::Property::PIVOT, Dali::Pivot::CENTER);
     mWebView.SetProperty(Actor::Property::POSITION, Vector2(0, 0));
     mWebView.SetProperty(Actor::Property::SIZE, Vector2(width, height));
     mWebView.RegisterPageLoadStartedCallback(std::bind(&WebViewController::OnPageLoadStarted, this, std::placeholders::_1));
@@ -82,7 +82,7 @@ public:
     window.Add(mWebView);
 
     mAddressLabel = Toolkit::TextLabel::New(ToDaliString(url));
-    mAddressLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mAddressLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mAddressLabel.SetProperty(Toolkit::TextLabel::Property::POINT_SIZE, fontSize);
     mAddressLabel.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
     mAddressLabel.SetBackgroundColor(Vector4(0, 0, 0, 0.5f));

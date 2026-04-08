@@ -196,7 +196,7 @@ ImageView CreateImageView(const std::string& filename, int width, int height, Da
 
   imageView.SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(filename));
   imageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  imageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  imageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
   return imageView;
 }
@@ -328,7 +328,7 @@ public:
     SetTitle(APPLICATION_TITLE);
 
     mOffWindowImageViews = Actor::New();
-    mOffWindowImageViews.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mOffWindowImageViews.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mOffWindowImageViews.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mOffWindowImageViews.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
@@ -352,7 +352,7 @@ public:
     mScrollView.ScrollStartedSignal().Connect(this, &ImageScalingIrregularGridController::OnScrollStarted);
     mScrollView.ScrollCompletedSignal().Connect(this, &ImageScalingIrregularGridController::OnScrollCompleted);
 
-    mScrollView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mScrollView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mScrollView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     mScrollView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -377,14 +377,14 @@ public:
     // Create the scroll bar
     mScrollBarVertical = ScrollBar::New(Toolkit::ScrollBar::VERTICAL);
     mScrollBarVertical.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
-    mScrollBarVertical.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
+    mScrollBarVertical.SetProperty(Actor::Property::PIVOT, Pivot::TOP_RIGHT);
     mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
     mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
     mScrollView.Add(mScrollBarVertical);
 
     mScrollBarHorizontal = ScrollBar::New(Toolkit::ScrollBar::HORIZONTAL);
     mScrollBarHorizontal.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    mScrollBarHorizontal.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mScrollBarHorizontal.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mScrollBarHorizontal.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
     mScrollBarHorizontal.SetProperty(Actor::Property::ORIENTATION, Quaternion(Quaternion(Radian(1.5f * Math::PI), Vector3::ZAXIS)));
     mScrollView.Add(mScrollBarHorizontal);
@@ -460,7 +460,7 @@ public:
     Actor gridActor = Actor::New();
     gridActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     gridActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    gridActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    gridActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     // Work out the constants of the grid and cell dimensions and positions:
     const float   cellWidth  = fieldWidth / gridWidth;

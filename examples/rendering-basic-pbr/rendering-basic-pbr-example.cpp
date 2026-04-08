@@ -114,7 +114,7 @@ public:
     mAnimation = Animation::New(1.0f);
     mLabel     = TextLabel::New();
     mLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("R:1 M:0"));
-    mLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     mLabel.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize().GetWidth() * 0.75f, window.GetSize().GetHeight() * 0.083f));
     mLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -287,18 +287,18 @@ public:
     mUiRoot              = Actor::New();
     m3dRoot              = Actor::New();
     CameraActor cameraUi = CameraActor::New(window.GetSize());
-    cameraUi.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    cameraUi.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     cameraUi.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     RenderTask rendertask = window.GetRenderTaskList().CreateTask();
     rendertask.SetCameraActor(cameraUi);
     rendertask.SetSourceActor(mUiRoot);
 
-    mUiRoot.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mUiRoot.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mUiRoot.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mUiRoot.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize()));
 
-    m3dRoot.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    m3dRoot.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     m3dRoot.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     // Setting camera parameters for 3D Scene

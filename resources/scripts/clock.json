@@ -6,7 +6,7 @@
       "size": [10, 200, 1],
       "position": [0, 0, -2],
       "parentOrigin": [0.5, 0.5, 0.5],
-      "anchorPoint": [0.5, 1, 0.5],
+      "pivot": [0.5, 1, 0.5],
       "background": {
         "visualType": "COLOR",
         "mixColor": [0.71, 0, 0, 1]
@@ -25,7 +25,7 @@
       "size": [11, 180, 1],
       "position": [0, 0, -2],
       "parentOrigin": [0.5, 0.5, 0.5],
-      "anchorPoint": [0.5, 1, 0.5],
+      "pivot": [0.5, 1, 0.5],
       "background": {
         "visualType": "COLOR",
         "mixColor": [0, 0.14200000000000013, 0.71, 0.7]
@@ -43,7 +43,7 @@
       "size": [12, 120, 1],
       "position": [0, 0, 0],
       "parentOrigin": [0.5, 0.5, 0.5],
-      "anchorPoint": [0.5, 1, 0.5],
+      "pivot": [0.5, 1, 0.5],
       "background": {
         "visualType": "COLOR",
         "mixColor": [0.057450000000000064, 0.3, 0.0030000000000000027, 0.7]

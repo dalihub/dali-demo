@@ -54,7 +54,7 @@ public:
     mTextLabel = TextLabel::New();
     mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Tilt Sensor Demo"));
     mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mTextLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     mTextLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);

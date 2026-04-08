@@ -69,7 +69,7 @@ public:
     // Create a text label and set the text color to black
     mTextLabel = TextLabel::New();
     mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Black to Red Animation\nNew opacity animation at 50% Red"));
-    mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mTextLabel.SetProperty(TextLabel::Property::MULTI_LINE, true);
     mTextLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");

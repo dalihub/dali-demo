@@ -361,7 +361,7 @@ public:
 
     mActor = Actor::New();
     mActor.SetProperty(Dali::Actor::Property::NAME, "Cube");
-    mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mActor.AddRenderer(mRenderer);
 
@@ -422,7 +422,7 @@ public:
 
     mSkyboxActor = Actor::New();
     mSkyboxActor.SetProperty(Dali::Actor::Property::NAME, "SkyBox");
-    mSkyboxActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mSkyboxActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mSkyboxActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mSkyboxActor.SetProperty(Actor::Property::POSITION, CAMERA_DEFAULT_POSITION);
     mSkyboxActor.AddRenderer(mSkyboxRenderer);

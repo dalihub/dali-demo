@@ -398,7 +398,7 @@ void ShadowButton::ResetVisual(
 
 bool IsTransformProperty(const String& property)
 {
-  const char* transformProperties[]    = {"size", "offset", "origin", "anchorPoint", "offsetPolicy", "sizePolicy"};
+  const char* transformProperties[]    = {"size", "offset", "origin", "pivot", "offsetPolicy", "sizePolicy"};
   const int   NUM_TRANSFORM_PROPERTIES = sizeof(transformProperties) / sizeof(const char*);
 
   bool found = false;
@@ -417,7 +417,7 @@ void ShadowButton::StoreTargetLayouts(TransitionData transitionData)
 {
   // Pseudo code
   // foreach animator in transitionData
-  //   if animator{"property"} in [ "size", "offset", "origin", "anchorPoint", "offsetPolicy", "sizePolicy" ]
+  //   if animator{"property"} in [ "size", "offset", "origin", "pivot", "offsetPolicy", "sizePolicy" ]
   //     transforms{ animator{"target"} }->{animator{"property"}} = animator{"targetValue"}
 
   for(unsigned int i = 0; i < transitionData.Count(); ++i)

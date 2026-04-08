@@ -145,13 +145,13 @@ void EffectsViewApp::OnAppInitialize(Application& application)
   Vector2 effectsViewSize(mWindowSize.width, mWindowSize.height * 0.25f);
   mDropShadowView = CreateEffectsView(EffectsView::DROP_SHADOW, effectsViewSize, mEffectSize);
   mDropShadowView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  mDropShadowView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+  mDropShadowView.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
   mDropShadowView.SetProperty(Actor::Property::POSITION_Z, -mWindowSize.height * 0.1f);
   mContents.Add(mDropShadowView);
 
   mEmbossView = CreateEffectsView(EffectsView::EMBOSS, effectsViewSize, mEffectSize);
   mEmbossView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  mEmbossView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+  mEmbossView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
   mEmbossView.SetProperty(Actor::Property::POSITION_Z, mWindowSize.height * 0.1f);
   mContents.Add(mEmbossView);
 
@@ -171,7 +171,7 @@ EffectsView EffectsViewApp::CreateEffectsView(EffectsView::EffectType type, cons
   String    text = (type == EffectsView::DROP_SHADOW) ? "Drop Shadow" : "Emboss";
   TextLabel textActor(TextLabel::New(text));
   textActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT);
-  textActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+  textActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
   textActor.SetProperty(Actor::Property::SIZE, viewSize);
   textActor.SetProperty(Actor::Property::POSITION, Vector2(viewSize.width * 0.4f, viewSize.height * 0.3f));
   textActor.SetProperty(TextLabel::Property::POINT_SIZE, 14.f);
@@ -180,7 +180,7 @@ EffectsView EffectsViewApp::CreateEffectsView(EffectsView::EffectType type, cons
   // image
   ImageView icon = ImageView::New(TEST_IMAGE);
   icon.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT);
-  icon.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+  icon.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
   icon.SetProperty(Actor::Property::POSITION_X, viewSize.width * 0.1f);
   icon.SetProperty(Actor::Property::SIZE, Vector2(viewSize.height * 0.8f, viewSize.height * 0.8f));
   effectsView.Add(icon);

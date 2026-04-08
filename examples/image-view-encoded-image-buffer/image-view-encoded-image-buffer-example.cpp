@@ -190,7 +190,7 @@ private:
     ImageView view = ImageView::New();
     view.SetProperty(Actor::Property::SIZE, IMAGE_VIEW_SIZE);
     view.SetProperty(Actor::Property::POSITION, Vector2(IMAGE_VIEW_SIZE.x * offset_x, IMAGE_VIEW_SIZE.y * offset_y + mToolBar.GetNaturalSize().y));
-    view.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    view.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     Property::Map imagePropertyMap;
     imagePropertyMap.Insert(Visual::Property::TYPE, Visual::IMAGE);

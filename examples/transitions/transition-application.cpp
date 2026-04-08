@@ -80,7 +80,7 @@ void TransitionApplication::Create(Application& application)
   TableView contentLayout = TableView::New(3, 1);
   contentLayout.SetProperty(Dali::Actor::Property::NAME, "ContentLayout");
   contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-  contentLayout.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+  contentLayout.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
   contentLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
   contentLayout.SetCellPadding(Vector2(0.0f, 5.0f));
   contentLayout.SetBackgroundColor(Vector4(0.949, 0.949, 0.949, 1.0));
@@ -108,7 +108,7 @@ void TransitionApplication::Create(Application& application)
   mShadowButton = ShadowButton::New();
   mShadowButton.SetProperty(Dali::Actor::Property::NAME, "ShadowButton");
   mShadowButton.SetActiveState(false);
-  mShadowButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mShadowButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mShadowButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mShadowButton.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   mShadowButton.SetProperty(DevelControl::Property::STATE, DevelControl::DISABLED);

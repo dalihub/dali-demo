@@ -160,7 +160,7 @@ Dali::Renderer CubeRenderer::CreateRenderer(TextureSet textures)
 Actor CubeRenderer::CreateActor(Vector3 size, Vector4 color)
 {
   Actor actor = Actor::New();
-  actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   actor.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
   // Mesh is 2x2x2, so halve the size
@@ -178,7 +178,7 @@ Actor CubeRenderer::CreateActor(Vector3 size, Vector4 color)
 Actor CubeRenderer::CreateActor(Vector3 size, std::string url)
 {
   Actor actor = Actor::New();
-  actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   actor.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
   actor.SetProperty(Actor::Property::SIZE, Vector3(size.x, size.y, size.z) * 0.5f);

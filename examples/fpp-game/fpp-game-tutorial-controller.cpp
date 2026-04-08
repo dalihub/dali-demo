@@ -115,7 +115,7 @@ void FppGameTutorialController::DisplayTutorial(Dali::Window window)
   // left tutorial text label
   mLeftLabel = Toolkit::TextLabel::New("Touch here to walk");
   mLeftLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  mLeftLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mLeftLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mLeftLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   mLeftLabel.SetProperty(Actor::Property::SIZE, Vector3(windowSize.x * 0.5, windowSize.y, 1.0f));
   mLeftLabel.SetProperty(Toolkit::Control::Property::BACKGROUND,
@@ -127,7 +127,7 @@ void FppGameTutorialController::DisplayTutorial(Dali::Window window)
   // right tutorial text label
   mRightLabel = Toolkit::TextLabel::New("Touch here to look around");
   mRightLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  mRightLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mRightLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mRightLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   mRightLabel.SetProperty(Actor::Property::SIZE, Vector3(windowSize.x * 0.5, windowSize.y, 1.0f));
   mRightLabel.SetProperty(Toolkit::Control::Property::BACKGROUND,

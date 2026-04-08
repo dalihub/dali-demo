@@ -80,7 +80,7 @@ void ExpandingButtons::OnInitialize()
   mExpandButton.SetProperty(Button::Property::TOGGLABLE, true);
   mExpandButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, STYLES_IMAGE); // Default for Styles
   mExpandButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, TICK_IMAGE_IMAGE);
-  mExpandButton.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+  mExpandButton.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
   Self().Add(mExpandButton);
 }
 

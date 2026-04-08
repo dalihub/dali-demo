@@ -80,7 +80,7 @@ public:
   void CreateBox(const std::string& name, Actor& box, Actor parent, const Vector2& size)
   {
     box.SetProperty(Dali::Actor::Property::NAME, ToDaliString(name));
-    box.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    box.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     box.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     box.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
     box.SetResizePolicy(ResizePolicy::FIXED, Dimension::WIDTH);
@@ -100,7 +100,7 @@ public:
     label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     label.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
     label.SetProperty(Actor::Property::PADDING, Padding(1.0f, 1.0f, 1.0f, 1.0f));
-    label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    label.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     parent.Add(label);
 
@@ -112,7 +112,7 @@ public:
     button.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     button.SetProperty(Actor::Property::SIZE, Vector2(BOX_SIZE.height, BOX_SIZE.height));
     button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
-    button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    button.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     parent.Add(button);
   }
 
@@ -131,7 +131,7 @@ public:
     rootActor.SetProperty(Dali::Actor::Property::NAME, "rootActor");
     rootActor.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     rootActor.SetProperty(Actor::Property::SIZE, mWindowSize);
-    rootActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    rootActor.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     window.Add(rootActor);
 
@@ -143,7 +143,7 @@ public:
     Control desktop = Control::New();
     desktop.SetBackgroundColor(Color::WHITE);
     desktop.SetProperty(Dali::Actor::Property::NAME, "desktopActor");
-    desktop.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    desktop.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     desktop.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     desktop.SetProperty(Actor::Property::SIZE, targetActorSize);
 
@@ -163,7 +163,7 @@ public:
     TextField field = TextField::New();
     field.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     field.SetProperty(Actor::Property::PADDING, Padding(1.0f, 1.0f, 1.0f, 1.0f));
-    field.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    field.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     field.SetProperty(TextField::Property::PLACEHOLDER_TEXT, "Enter Folder Name");
     field.SetProperty(TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>(SCREEN_BORDER, SCREEN_BORDER, mWindowSize.width - SCREEN_BORDER * 2, mWindowSize.height - SCREEN_BORDER * 2));
     boxA.Add(field);
@@ -212,7 +212,7 @@ public:
     colorButton.SetProperty(Button::Property::TOGGLABLE, true);
     colorButton.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::COLOR).Add(ColorVisual::Property::MIX_COLOR, Color::RED));
     colorButton.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::COLOR).Add(ColorVisual::Property::MIX_COLOR, Color::BLACK));
-    colorButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    colorButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     colorButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     colorButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     colorButton.SetProperty(Actor::Property::SIZE, Vector2(BOX_SIZE.height, BOX_SIZE.height));
@@ -226,7 +226,7 @@ public:
       alignButton.SetProperty(Dali::Actor::Property::NAME, ALIGNMENT_TABLE[i]);
 
       // Place first button to left aligned, second center aligned and third right aligned
-      alignButton.SetProperty(Actor::Property::ANCHOR_POINT, Vector3(i * 0.5f, 0.0f, 0.5f));
+      alignButton.SetProperty(Actor::Property::PIVOT, Vector3(i * 0.5f, 0.0f, 0.5f));
       alignButton.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(i * 0.5f, 0.0f, 0.5f));
 
       rootActor.Add(alignButton);

@@ -66,7 +66,7 @@ private:
     Control label = TextLabel::New();
     label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Hover over buttons to see tooltip"));
     label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    label.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     label.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "Center");
     window.Add(label);
 
@@ -155,7 +155,7 @@ private:
       previousPosition += POSITION_INCREMENTER;
       control.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
       control.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.75, 0.1, 1.0));
-      control.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      control.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       control.SetProperty(Actor::Property::POSITION_Y, windowSize.height * previousPosition);
     }

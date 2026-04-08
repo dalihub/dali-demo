@@ -260,7 +260,7 @@ public:
 
     // Create a table view to show a pair of buttons above each image.
     mTable = Toolkit::TableView::New(CellPlacement::NUMBER_OF_ROWS, NUMBER_OF_VISUAL_TYPE);
-    mTable.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mTable.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     Vector3 offset(0.9f, 0.70f, 0.0f);
@@ -290,7 +290,7 @@ public:
       Toolkit::PushButton button = Toolkit::PushButton::New();
       button.SetProperty(Toolkit::Button::Property::LABEL, "Mask image change");
       button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-      button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+      button.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
       button.ClickedSignal().Connect(this, &ImageViewController::ChangeMaskImageUrl);
       button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
@@ -301,7 +301,7 @@ public:
       button2.SetProperty(Toolkit::Button::Property::LABEL, ToPropertyValue(
                                                               std::string("Image-") + std::string(BUTTON_LABEL_SUFFIX[UrlType::REGULAR_IMAGE])));
       button2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-      button2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+      button2.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
       button2.ClickedSignal().Connect(this, &ImageViewController::ChangeImageUrlType);
       button2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       button2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
@@ -312,7 +312,7 @@ public:
       button3.SetProperty(Toolkit::Button::Property::LABEL, ToPropertyValue(
                                                               std::string("Mask-") + std::string(BUTTON_LABEL_SUFFIX[UrlType::REGULAR_IMAGE])));
       button3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-      button3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+      button3.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
       button3.ClickedSignal().Connect(this, &ImageViewController::ChangeMaskImageUrlType);
       button3.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       button3.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
@@ -322,7 +322,7 @@ public:
       mImageViews[x] = Toolkit::ImageView::New();
       mImageViews[x].SetProperty(Toolkit::ImageView::Property::IMAGE, CreateImageVisualPropertyMap(static_cast<ImageVisualType>(x)));
       mImageViews[x].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      mImageViews[x].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      mImageViews[x].SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       mImageViews[x].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       mTable.AddChild(mImageViews[x], Toolkit::TableView::CellPosition(CellPlacement::IMAGE, x));
     }

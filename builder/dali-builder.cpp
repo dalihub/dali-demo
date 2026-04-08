@@ -229,7 +229,7 @@ private:
     {
       layer = Layer::New();
       layer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      layer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      layer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       layer.SetProperty(Actor::Property::SIZE, window.GetRootLayer().GetCurrentProperty<Vector3>(Actor::Property::SIZE));
       window.GetRootLayer().Add(layer);
 

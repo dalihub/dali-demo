@@ -89,7 +89,7 @@ Actor CreateBackground(std::string stylename)
   Control background = Control::New();
   background.SetStyleName(ToDaliString(stylename));
   background.SetProperty(Actor::Property::NAME, "BACKGROUND");
-  background.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  background.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   background.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   background.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   return background;
@@ -307,7 +307,7 @@ void DaliTableView::Initialize(Application& application)
   // Add logo
   ImageView logo = ImageView::New(ToDaliString(LOGO_PATH));
   logo.SetProperty(Actor::Property::NAME, "LOGO_IMAGE");
-  logo.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+  logo.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
   logo.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.1f, 0.5f));
   logo.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   // The logo should appear on top of everything.
@@ -321,7 +321,7 @@ void DaliTableView::Initialize(Application& application)
 
   // Scrollview occupying the majority of the screen
   mScrollView = ScrollView::New();
-  mScrollView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+  mScrollView.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
   mScrollView.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 1.0f - 0.05f, 0.5f));
   mScrollView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
   mScrollView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
@@ -464,7 +464,7 @@ void DaliTableView::Populate()
     {
       // Create Table
       TableView page = TableView::New(ROWS_PER_PAGE, EXAMPLES_PER_ROW);
-      page.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      page.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       page.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       page.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       mScrollView.Add(page);
@@ -525,7 +525,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   // Create an ImageView for the 9-patch border around the tile.
   ImageView borderImage = ImageView::New();
   borderImage.SetStyleName("DemoTileBorder");
-  borderImage.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  borderImage.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   borderImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   borderImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   borderImage.SetProperty(Actor::Property::OPACITY, 0.8f);
@@ -533,7 +533,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   focusableTile.Add(borderImage);
 
   TextLabel label = TextLabel::New();
-  label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  label.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   label.SetStyleName("LauncherLabel");
   label.SetProperty(TextLabel::Property::MULTI_LINE, true);

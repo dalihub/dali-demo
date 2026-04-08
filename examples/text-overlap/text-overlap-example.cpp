@@ -64,7 +64,7 @@ void TextOverlapController::Create(Application& app)
   for(int i = 0; i < NUMBER_OF_LABELS; ++i)
   {
     mLabels[i].SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
-    mLabels[i].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mLabels[i].SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mLabels[i].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mLabels[i].SetProperty(Actor::Property::POSITION, Vector2(0, (i * 2 + 1) * windowSize.height * 0.25f));
   }
@@ -75,7 +75,7 @@ void TextOverlapController::Create(Application& app)
   mSwapButton = PushButton::New();
   mSwapButton.SetProperty(Button::Property::LABEL, "Swap depth order");
   mSwapButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-  mSwapButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+  mSwapButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
   mSwapButton.ClickedSignal().Connect(this, &TextOverlapController::OnClicked);
   mSwapButton.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
   mSwapButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);

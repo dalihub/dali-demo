@@ -46,7 +46,7 @@ DALI_TYPE_REGISTRATION_END()
 Actor CreateTile(const Vector4& samplerRect)
 {
   Actor tile = Actor::New();
-  tile.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  tile.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   tile.RegisterProperty("uTextureRect", samplerRect);
   return tile;
 }
@@ -164,7 +164,7 @@ void CubeTransitionEffect::Initialize()
   // create the box parents
   mBoxRoot = Actor::New();
   mBoxRoot.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  mBoxRoot.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mBoxRoot.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
   mCurrentTiles.clear();
   mTargetTiles.clear();
@@ -194,7 +194,7 @@ void CubeTransitionEffect::Initialize()
 
       Actor box = Actor::New();
       box.SetProperty(Actor::Property::PARENT_ORIGIN, anchor + offset);
-      box.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      box.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
       box.Add(currentTile);
       box.Add(targetTile);

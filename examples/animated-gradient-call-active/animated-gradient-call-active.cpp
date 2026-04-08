@@ -181,7 +181,7 @@ public:
 
     mBackground = Control::New();
     mBackground.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mBackground.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mBackground.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mBackground.SetProperty(Actor::Property::SIZE, WINDOW_SIZE);
 
     INCOME_BACKGROUND.Insert(GradientVisual::Property::CENTER, WINDOW_SIZE * 0.5f);
@@ -226,20 +226,20 @@ private:
     mButtonIconDecall = ImageView::New();
     mButtonIconDecall.SetImage(ICON_DECALL_IMAGE);
     mButtonIconDecall.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mButtonIconDecall.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mButtonIconDecall.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mButtonIconDecall.SetProperty(Actor::Property::SIZE, ICON_DECALL_SIZE * SCALED_WIDTH);
     mButtonIconDecall.SetProperty(Actor::Property::POSITION, ICON_DECALL_POSITION * SCALED_WIDTH);
 
     mButtonIconBattery = ImageView::New();
     mButtonIconBattery.SetImage(ICON_BATTERY_IMAGE);
     mButtonIconBattery.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mButtonIconBattery.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mButtonIconBattery.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mButtonIconBattery.SetProperty(Actor::Property::SIZE, ICON_BATTERY_SIZE * SCALED_WIDTH);
     mButtonIconBattery.SetProperty(Actor::Property::POSITION, ICON_BATTERY_POSITION * SCALED_WIDTH);
 
     mCallStartButton = PushButton::New();
     mCallStartButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mCallStartButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mCallStartButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mCallStartButton.SetProperty(Actor::Property::SIZE, BUTTON_CALL_START_SIZE * SCALED_WIDTH);
     mCallStartButton.SetProperty(Actor::Property::POSITION, BUTTON_CALL_START_POSITION * SCALED_WIDTH);
     mCallStartButton.ClickedSignal().Connect(this, &CallController::OnButtonClicked);
@@ -254,7 +254,7 @@ private:
 
     mLabelIncoming = TextLabel::New(LABEL_INCOMING_STR);
     mLabelIncoming.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mLabelIncoming.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLabelIncoming.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLabelIncoming.SetProperty(Actor::Property::SIZE, LABEL_INCOMING_SIZE * SCALED_WINDOW_SIZE);
     mLabelIncoming.SetProperty(Actor::Property::POSITION, LABEL_INCOMING_POSITION * SCALED_WINDOW_SIZE_3);
     mLabelIncoming.SetProperty(Actor::Property::VISIBLE, true);
@@ -265,7 +265,7 @@ private:
 
     mLabelName = TextLabel::New(LABEL_NAME_STR);
     mLabelName.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mLabelName.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLabelName.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLabelName.SetProperty(Actor::Property::SIZE, LABEL_NAME_SIZE * SCALED_WINDOW_SIZE);
     mLabelName.SetProperty(Actor::Property::POSITION, LABEL_NAME_POSITION * SCALED_WINDOW_SIZE_3);
     mLabelName.SetProperty(Actor::Property::VISIBLE, true);
@@ -276,7 +276,7 @@ private:
 
     mLabelNumber = TextLabel::New(LABEL_NUMBER_STR);
     mLabelNumber.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mLabelNumber.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLabelNumber.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLabelNumber.SetProperty(Actor::Property::SIZE, LABEL_NUMBER_SIZE * SCALED_WINDOW_SIZE);
     mLabelNumber.SetProperty(Actor::Property::POSITION, LABEL_NUMBER_POSITION * SCALED_WINDOW_SIZE_3);
     mLabelNumber.SetProperty(Actor::Property::VISIBLE, true);
@@ -287,7 +287,7 @@ private:
 
     mLabelDecline = TextLabel::New(LABEL_DECLINE_STR);
     mLabelDecline.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mLabelDecline.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mLabelDecline.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mLabelDecline.SetProperty(Actor::Property::SIZE, LABEL_DECLINE_SIZE * SCALED_WINDOW_SIZE);
     mLabelDecline.SetProperty(Actor::Property::POSITION, LABEL_DECLINE_POSITION * SCALED_WIDTH);
     mLabelDecline.SetProperty(Actor::Property::VISIBLE, true);
@@ -307,20 +307,20 @@ private:
   {
     mButtonClip = Control::New();
     mButtonClip.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mButtonClip.SetProperty(Actor::Property::ANCHOR_POINT, ParentOrigin::BOTTOM_CENTER);
+    mButtonClip.SetProperty(Actor::Property::PIVOT, ParentOrigin::BOTTOM_CENTER);
     mButtonClip.SetProperty(Actor::Property::SIZE, BUTTON_DECALL_SIZE * SCALED_WIDTH);
     mButtonClip.SetProperty(Actor::Property::POSITION, BUTTON_DECALL_CLIP_POSITION * SCALED_WIDTH);
 
     mButtonIcon = ImageView::New();
     mButtonIcon.SetImage(BUTTON_DECALL_ICON_IMAGE);
     mButtonIcon.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mButtonIcon.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mButtonIcon.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mButtonIcon.SetProperty(Actor::Property::SIZE, BUTTON_DECALL_ICON_SIZE * SCALED_WIDTH);
     mButtonIcon.SetProperty(Actor::Property::POSITION, BUTTON_DECALL_ICON_POSITION * SCALED_WIDTH);
 
     mCallEndButton = PushButton::New();
     mCallEndButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mCallEndButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mCallEndButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mCallEndButton.SetProperty(Actor::Property::SIZE, BUTTON_DECALL_SIZE * SCALED_WIDTH);
     mCallEndButton.SetProperty(Actor::Property::POSITION, BUTTON_DECALL_POSITION * SCALED_WIDTH);
     mCallEndButton.ClickedSignal().Connect(this, &CallController::OnButtonClicked);
@@ -334,7 +334,7 @@ private:
 
     mLabelTime = TextLabel::New(LABEL_TIME_STR);
     mLabelTime.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mLabelTime.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLabelTime.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLabelTime.SetProperty(Actor::Property::SIZE, LABEL_TIME_SIZE * SCALED_WINDOW_SIZE);
     mLabelTime.SetProperty(Actor::Property::POSITION, LABEL_TIME_POSITION * SCALED_WINDOW_SIZE_3);
     mLabelTime.SetProperty(Actor::Property::VISIBLE, false);

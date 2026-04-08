@@ -70,7 +70,7 @@ public:
     mVideoView = Toolkit::VideoView::New();
     window.Add(mVideoView);
     mVideoView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mVideoView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mVideoView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mVideoView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     mVideoView.SetProperty(Actor::Property::SIZE, Vector2(INIT_WIDTH, INIT_HEIGHT));
     mVideoView.SetProperty(VideoView::Property::LOOPING, true);
@@ -79,14 +79,14 @@ public:
 
     mMenu = Layer::New();
     mMenu.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    mMenu.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
+    mMenu.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     mMenu.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mMenu.SetProperty(Actor::Property::SIZE, Vector2(INIT_WIDTH, 120));
     mVideoView.Add(mMenu);
 
     mPlayButton = PushButton::New();
     mPlayButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mPlayButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mPlayButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mPlayButton.SetProperty(Dali::Actor::Property::NAME, "Play");
     mPlayButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mPlayButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));
@@ -95,7 +95,7 @@ public:
 
     mPauseButton = PushButton::New();
     mPauseButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mPauseButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mPauseButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mPauseButton.SetProperty(Dali::Actor::Property::NAME, "Pause");
     mPauseButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mPauseButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));
@@ -104,7 +104,7 @@ public:
 
     mChangeButton = PushButton::New();
     mChangeButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mChangeButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mChangeButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mChangeButton.SetProperty(Dali::Actor::Property::NAME, "Change");
     mChangeButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mChangeButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));
@@ -113,7 +113,7 @@ public:
 
     mBackwardButton = PushButton::New();
     mBackwardButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mBackwardButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mBackwardButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mBackwardButton.SetProperty(Dali::Actor::Property::NAME, "Backward");
     mBackwardButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mBackwardButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));
@@ -122,7 +122,7 @@ public:
 
     mForwardButton = PushButton::New();
     mForwardButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mForwardButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mForwardButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mForwardButton.SetProperty(Dali::Actor::Property::NAME, "Forward");
     mForwardButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mForwardButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));

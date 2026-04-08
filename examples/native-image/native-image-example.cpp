@@ -98,14 +98,14 @@ public:
     mButtonArea = Layer::New();
     mButtonArea.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x, BUTTON_HEIGHT));
     mButtonArea.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mButtonArea.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mButtonArea.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     window.Add(mButtonArea);
 
     mButtonShow = PushButton::New();
     mButtonShow.SetProperty(Button::Property::TOGGLABLE, true);
     mButtonShow.SetProperty(Toolkit::Button::Property::LABEL, "SHOW");
     mButtonShow.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mButtonShow.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonShow.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mButtonShow.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
     mButtonShow.ClickedSignal().Connect(this, &NativeImageController::OnButtonSelected);
     mButtonArea.Add(mButtonShow);
@@ -114,7 +114,7 @@ public:
     mButtonRefreshAlways.SetProperty(Button::Property::TOGGLABLE, true);
     mButtonRefreshAlways.SetProperty(Toolkit::Button::Property::LABEL, "ALWAYS");
     mButtonRefreshAlways.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mButtonRefreshAlways.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonRefreshAlways.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mButtonRefreshAlways.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
     mButtonRefreshAlways.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 1.0f, 0.0f));
     mButtonRefreshAlways.StateChangedSignal().Connect(this, &NativeImageController::OnButtonSelected);
@@ -123,7 +123,7 @@ public:
     mButtonRefreshOnce = PushButton::New();
     mButtonRefreshOnce.SetProperty(Toolkit::Button::Property::LABEL, "ONCE");
     mButtonRefreshOnce.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mButtonRefreshOnce.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonRefreshOnce.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mButtonRefreshOnce.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
     mButtonRefreshOnce.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 2.0f, 0.0f));
     mButtonRefreshOnce.ClickedSignal().Connect(this, &NativeImageController::OnButtonSelected);
@@ -132,7 +132,7 @@ public:
     mButtonCapture = PushButton::New();
     mButtonCapture.SetProperty(Toolkit::Button::Property::LABEL, "CAPTURE");
     mButtonCapture.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mButtonCapture.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonCapture.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mButtonCapture.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
     mButtonCapture.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 3.0f, 0.0f));
     mButtonCapture.ClickedSignal().Connect(this, &NativeImageController::OnButtonSelected);
@@ -141,7 +141,7 @@ public:
     mButtonReset = PushButton::New();
     mButtonReset.SetProperty(Toolkit::Button::Property::LABEL, "RESET");
     mButtonReset.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mButtonReset.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mButtonReset.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mButtonReset.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x / BUTTON_COUNT, BUTTON_HEIGHT));
     mButtonReset.SetProperty(Actor::Property::POSITION, Vector2((windowSize.x / BUTTON_COUNT) * 4.0f, 0.0f));
     mButtonReset.ClickedSignal().Connect(this, &NativeImageController::OnButtonSelected);
@@ -158,19 +158,19 @@ public:
     mTopContentArea = Actor::New();
     mTopContentArea.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x, contentHeight));
     mTopContentArea.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mTopContentArea.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mTopContentArea.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mTopContentArea.SetProperty(Actor::Property::POSITION_Y, BUTTON_HEIGHT);
     window.Add(mTopContentArea);
 
     mBottomContentArea = Actor::New();
     mBottomContentArea.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x, contentHeight));
     mBottomContentArea.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mBottomContentArea.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mBottomContentArea.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     window.Add(mBottomContentArea);
 
     mSourceActor = ImageView::New(ToDaliString(JPG_FILENAME));
     mSourceActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mSourceActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mSourceActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mTopContentArea.Add(mSourceActor);
 
     Animation animation = Animation::New(2.f);
@@ -186,7 +186,7 @@ public:
     TextLabel textLabel1 = TextLabel::New();
     textLabel1.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Image"));
     textLabel1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    textLabel1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    textLabel1.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mTopContentArea.Add(textLabel1);
 
     // Wait until button press before creating mOffscreenRenderTask
@@ -194,7 +194,7 @@ public:
     TextLabel textLabel2 = TextLabel::New();
     textLabel2.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Native Image"));
     textLabel2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    textLabel2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    textLabel2.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mBottomContentArea.Add(textLabel2);
   }
 
@@ -216,7 +216,7 @@ public:
 
       mCameraActor = CameraActor::New(imageSize);
       mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, AnchorPoint::CENTER);
+      mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, Pivot::CENTER);
       mTopContentArea.Add(mCameraActor);
 
       RenderTaskList taskList = window.GetRenderTaskList();
@@ -250,7 +250,7 @@ public:
 
         mDisplayActor = Actor::New();
         mDisplayActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-        mDisplayActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        mDisplayActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
         Geometry geometry = DemoHelper::CreateTexturedQuad();
 

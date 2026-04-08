@@ -134,7 +134,7 @@ public:
 
     mDisplayActor = Actor::New();
     mDisplayActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mDisplayActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mDisplayActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     Geometry geometry = DemoHelper::CreateTexturedQuad();
 

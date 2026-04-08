@@ -143,7 +143,7 @@ private:
 
     // Create a SceneView and set the Skybox
     mSceneView = Handle::New<SceneView>({{Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-                                         {Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+                                         {Actor::Property::PIVOT, Pivot::CENTER},
                                          {Actor::Property::SIZE, windowSize}});
     mSceneView.SetSkybox(CUBEMAP_SKY_BOX_URL);
     mWindow.Add(mSceneView);
@@ -152,7 +152,7 @@ private:
     mMainModel = Model::New(MODEL_URL);
     mMainModel.SetProperties({
       {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-      {Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+      {Actor::Property::PIVOT, Pivot::CENTER},
       {Actor::Property::POSITION, Vector3::ZERO},
       {Actor::Property::SIZE, MODEL_SIZE},
       {Actor::Property::NAME, "MainModel"},
@@ -165,7 +165,7 @@ private:
     mSubModel = Model::New(SUB_MODEL_URL);
     mSubModel.SetProperties({
       {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-      {Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+      {Actor::Property::PIVOT, Pivot::CENTER},
       {Actor::Property::POSITION, Vector3(MODEL_SIZE.x, MODEL_SIZE.y * 0.5f, 0.0f)},
       {Actor::Property::SIZE, SUB_MODEL_SIZE},
       {Actor::Property::SCALE, SUB_MODEL_SCALE},
@@ -183,7 +183,7 @@ private:
     cameraActor.SetType(Camera::LOOK_AT_TARGET);
     cameraActor.SetTargetPosition(Vector3::ZERO);
     cameraActor.Unparent();
-    Actor rotatingActor = Handle::New<Actor>({{Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+    Actor rotatingActor = Handle::New<Actor>({{Actor::Property::PIVOT, Pivot::CENTER},
                                               {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER}});
     rotatingActor.Add(cameraActor);
     mSceneView.Add(rotatingActor);
@@ -439,7 +439,7 @@ private:
     {
       mDebugLabel                                  = TextLabel::New();
       mDebugLabel[Actor::Property::PARENT_ORIGIN]  = ParentOrigin::TOP_LEFT;
-      mDebugLabel[Actor::Property::ANCHOR_POINT]   = AnchorPoint::TOP_LEFT;
+      mDebugLabel[Actor::Property::PIVOT]   = Pivot::TOP_LEFT;
       mDebugLabel[TextLabel::Property::MULTI_LINE] = true;
       mDebugLabel[Control::Property::BACKGROUND]   = Vector4(1.0f, 1.0f, 1.0f, 0.2f);
     }
@@ -513,7 +513,7 @@ private:
       mMainModelAABB = Control::New();
       mMainModelAABB.SetProperties({
         {Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT},
-        {Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT},
+        {Actor::Property::PIVOT, Pivot::TOP_LEFT},
         {Control::Property::BACKGROUND, Vector4(0.0f, 0.0f, 1.0f, 0.2f)},
       });
       mWindow.GetOverlayLayer().Add(mMainModelAABB);
@@ -523,7 +523,7 @@ private:
       mSubModelAABB = Control::New();
       mSubModelAABB.SetProperties({
         {Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT},
-        {Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT},
+        {Actor::Property::PIVOT, Pivot::TOP_LEFT},
         {Control::Property::BACKGROUND, Vector4(1.0f, 0.0f, 0.0f, 0.2f)},
       });
       mWindow.GetOverlayLayer().Add(mSubModelAABB);

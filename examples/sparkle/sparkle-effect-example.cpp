@@ -96,7 +96,7 @@ private:
 
     mCircleBackground = ImageView::New(CIRCLE_BACKGROUND_IMAGE);
     mCircleBackground.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mCircleBackground.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mCircleBackground.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     window.Add(mCircleBackground);
 

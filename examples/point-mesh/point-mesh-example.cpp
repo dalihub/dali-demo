@@ -137,7 +137,7 @@ public:
     mRenderer.SetProperty(Renderer::Property::DEPTH_INDEX, 0);
 
     mMeshActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mMeshActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mMeshActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     window.Add(mMeshActor);
 
     Animation animation = Animation::New(15);

@@ -63,7 +63,7 @@ private:
 
     mImageView = Toolkit::ImageView::New(BACKGROUND_IMAGE);
     mImageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mImageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mImageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     float excessWidth = std::max(0.0f, (BACKGROUND_IMAGE_WIDTH - windowSize.width) * 0.5f);
 
@@ -87,28 +87,28 @@ private:
 
     Layer onTop = Layer::New();
     onTop.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    onTop.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    onTop.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     onTop.SetProperty(Actor::Property::SIZE, windowSize);
     window.Add(onTop);
     onTop.RaiseToTop();
 
     mOnLabel = TextLabel::New();
     mOnLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Blur ON"));
-    mOnLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mOnLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mOnLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::GREEN);
     mOnLabel.SetProperty(Actor::Property::VISIBLE, false);
     onTop.Add(mOnLabel);
 
     mOffLabel = TextLabel::New();
     mOffLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Blur OFF"));
-    mOffLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mOffLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mOffLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
     mOffLabel.SetProperty(Actor::Property::VISIBLE, true);
     onTop.Add(mOffLabel);
 
     mGaussianBlurView = GaussianBlurView::New(30, 8.0f, Pixel::RGBA8888, 0.5f, 0.5f, false);
     mGaussianBlurView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mGaussianBlurView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mGaussianBlurView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mGaussianBlurView.SetProperty(Actor::Property::SIZE, windowSize);
     window.Add(mGaussianBlurView);
 

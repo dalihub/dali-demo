@@ -221,7 +221,7 @@ public:
     window.KeyEventSignal().Connect(this, &PerfScroll::OnKeyEvent);
 
     mParent = Actor::New();
-    mParent.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mParent.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     window.Add(mParent);
 
     if(gUseMesh)

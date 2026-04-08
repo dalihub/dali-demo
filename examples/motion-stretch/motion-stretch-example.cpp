@@ -188,7 +188,7 @@ public:
     mMotionStretchImageView     = ImageView::New();
     mMotionStretchImageView.SetProperty(Toolkit::ImageView::Property::IMAGE, mMotionStretchEffect);
     mMotionStretchImageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mMotionStretchImageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mMotionStretchImageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mMotionStretchImageView.SetProperty(Actor::Property::SIZE, Vector2(MOTION_STRETCH_ACTOR_WIDTH, MOTION_STRETCH_ACTOR_HEIGHT));
     // Add stretch padding
 

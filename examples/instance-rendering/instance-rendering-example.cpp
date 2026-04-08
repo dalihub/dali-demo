@@ -166,7 +166,7 @@ public:
     mUniformBlocks = UniformBlock::New("SharedVertexBlock");
 
     mActor = Actor::New();
-    mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mActor.SetProperty(Actor::Property::POSITION, Vector3::ZERO);
     mActor.SetProperty(Actor::Property::SIZE, Vector2(VIEW_SIZE, VIEW_SIZE));
@@ -190,7 +190,7 @@ public:
     }
 
     mLabel = TextLabel::New();
-    mLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     mLabel.SetBackgroundColor(Vector4(1.0f, 1.0f, 1.0f, 0.5f));
     window.GetRootLayer().Add(mLabel);

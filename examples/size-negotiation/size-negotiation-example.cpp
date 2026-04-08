@@ -137,7 +137,7 @@ public:
 
     mItemView = Toolkit::ItemView::New(*this);
     mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mItemView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mItemView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mItemView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     // Use a grid layout for tests
@@ -185,7 +185,7 @@ public:
     Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty(Dali::Actor::Property::NAME, "popup");
     popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    popup.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     popup.SetProperty(Actor::Property::SIZE, Vector2(POPUP_WIDTH_DP, 0.0f));
     popup.SetProperty(Toolkit::Popup::Property::TAIL_VISIBILITY, false);
 
@@ -375,7 +375,7 @@ public:
         backing.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fixed");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -389,7 +389,7 @@ public:
         backing.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fill");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -403,7 +403,7 @@ public:
         backing.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fixed");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -435,7 +435,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fit");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -451,7 +451,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fill");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -468,7 +468,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fit");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -499,7 +499,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fill");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -520,7 +520,7 @@ public:
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
         text.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
 
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         backing.Add(text);
 
@@ -532,7 +532,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fill");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -568,7 +568,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fit");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -585,7 +585,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fit");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -602,7 +602,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fit");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -638,7 +638,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fit");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -655,7 +655,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fit");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -689,7 +689,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fixed");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -706,7 +706,7 @@ public:
 
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Fit");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-        text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        text.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         text.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");

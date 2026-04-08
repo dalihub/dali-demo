@@ -48,50 +48,50 @@ public:
     window.SetBackgroundColor(Color::WHITE);
 
     Dali::Toolkit::Control control = Dali::Toolkit::Control::New();
-    control.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    control.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     control.SetProperty(Dali::Actor::Property::SIZE, Vector2(250, 1000));
     control.SetProperty(Dali::Actor::Property::POSITION_X, 250);
     control.SetBackgroundColor(Color::PINK);
     window.Add(control);
 
     mGentle = Dali::Toolkit::TextLabel::New("Gentle");
-    mGentle.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mGentle.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mGentle.SetProperty(Dali::Actor::Property::NAME, "Gentle");
     mGentle.SetProperty(Dali::Actor::Property::POSITION_Y, 0.0f);
     window.Add(mGentle);
 
     mQuick = Dali::Toolkit::TextLabel::New("Quick");
-    mQuick.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mQuick.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mQuick.SetProperty(Dali::Actor::Property::NAME, "Quick");
     mQuick.SetProperty(Dali::Actor::Property::POSITION_Y, 100.0f);
     window.Add(mQuick);
 
     mBouncy = Dali::Toolkit::TextLabel::New("Bouncy");
-    mBouncy.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mBouncy.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mBouncy.SetProperty(Dali::Actor::Property::NAME, "Bouncy");
     mBouncy.SetProperty(Dali::Actor::Property::POSITION_Y, 200.0f);
     window.Add(mBouncy);
 
     mSlow = Dali::Toolkit::TextLabel::New("Slow");
-    mSlow.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mSlow.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mSlow.SetProperty(Dali::Actor::Property::NAME, "Slow");
     mSlow.SetProperty(Dali::Actor::Property::POSITION_Y, 300.0f);
     window.Add(mSlow);
 
     mS100D10M1 = Dali::Toolkit::TextLabel::New("S100_D10_M1");
-    mS100D10M1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mS100D10M1.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mS100D10M1.SetProperty(Dali::Actor::Property::NAME, "S100_D10_M1");
     mS100D10M1.SetProperty(Dali::Actor::Property::POSITION_Y, 400.0f);
     window.Add(mS100D10M1);
 
     mS4420D20_8M1 = Dali::Toolkit::TextLabel::New("S4420_D20.8_M1");
-    mS4420D20_8M1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mS4420D20_8M1.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mS4420D20_8M1.SetProperty(Dali::Actor::Property::NAME, "S4420_D20.8_M1");
     mS4420D20_8M1.SetProperty(Dali::Actor::Property::POSITION_Y, 500.0f);
     window.Add(mS4420D20_8M1);
 
     mS1000D10M10 = Dali::Toolkit::TextLabel::New("S1000_D10_M10");
-    mS1000D10M10.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mS1000D10M10.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mS1000D10M10.SetProperty(Dali::Actor::Property::NAME, "S1000_D10_M10");
     mS1000D10M10.SetProperty(Dali::Actor::Property::POSITION_Y, 600.0f);
     window.Add(mS1000D10M10);

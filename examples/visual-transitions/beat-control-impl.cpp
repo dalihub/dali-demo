@@ -74,7 +74,7 @@ Internal::BeatControl::BeatControl()
 : ControlImpl(ControlBehaviour(CONTROL_BEHAVIOUR_DEFAULT)),
   mTransformSize(1.0f, 1.0f),
   mTransformOrigin(Align::CENTER),
-  mTransformAnchorPoint(Align::CENTER),
+  mTransformPivot(Align::CENTER),
   mAnimationPlaying(0)
 {
 }
@@ -203,10 +203,10 @@ void BeatControl::RelayoutVisuals(const Vector2& targetSize)
       Vector2       size(targetSize);
       Property::Map transformMap;
       // Make the visual half the size of the control, but leave
-      // origin and anchor point at center, position is relative, but Zer0
-      transformMap[Visual::Transform::Property::SIZE]         = mTransformSize;
-      transformMap[Visual::Transform::Property::ORIGIN]       = mTransformOrigin;
-      transformMap[Visual::Transform::Property::ANCHOR_POINT] = mTransformAnchorPoint;
+      // origin and pivot at center, position is relative, but Zer0
+      transformMap[Visual::Transform::Property::SIZE]   = mTransformSize;
+      transformMap[Visual::Transform::Property::ORIGIN] = mTransformOrigin;
+      transformMap[Visual::Transform::Property::PIVOT]  = mTransformPivot;
       mVisual.SetTransformAndSize(transformMap, size);
     }
   }
@@ -259,7 +259,7 @@ void BeatControl::SetProperty(BaseObject* object, Property::Index index, const P
             Property::Map* transformMap = transformValue->GetMap();
             if(transformMap)
             {
-              // We'll increment this whenever SIZE, ORIGIN or ANCHOR_POINT's are modified as we won't need to create a new visual if only these properties are used
+              // We'll increment this whenever SIZE, ORIGIN or PIVOT's are modified as we won't need to create a new visual if only these properties are used
               // If there are more properties in the transform map, then we need to create a new visual
               unsigned int sizeAndPositionPropertyCount = 0;
 
@@ -281,13 +281,13 @@ void BeatControl::SetProperty(BaseObject* object, Property::Index index, const P
                 }
               }
 
-              Property::Value* anchorPointValue = transformMap->Find(Visual::Transform::Property::ANCHOR_POINT, "anchorPoint");
-              if(anchorPointValue)
+              Property::Value* pivotValue = transformMap->Find(Visual::Transform::Property::PIVOT, "pivot");
+              if(pivotValue)
               {
                 int intValue = 0;
-                if(anchorPointValue->Get(intValue))
+                if(pivotValue->Get(intValue))
                 {
-                  impl.mTransformAnchorPoint = static_cast<Toolkit::Align::Type>(intValue);
+                  impl.mTransformPivot = static_cast<Toolkit::Align::Type>(intValue);
                   ++sizeAndPositionPropertyCount;
                 }
               }

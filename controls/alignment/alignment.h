@@ -44,7 +44,7 @@ class Alignment;
  * @SINCE_1_0.0
  * @note The use of scaling property will override all constraints applied to actors.
  *
- * All actors added to an alignment are going to be set with the same anchor point and parent origin. And if the scaling property is set to a value
+ * All actors added to an alignment are going to be set with the same pivot and parent origin. And if the scaling property is set to a value
  * different than SCALE_NONE, constraints as well.
  */
 class DALI_DEMO_CONTROLS_API Alignment : public Toolkit::Control

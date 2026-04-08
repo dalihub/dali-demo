@@ -241,7 +241,7 @@ Actor CreateSceneFromGLTF(
 
     actor.SetProperty(Actor::Property::SIZE, Vector3(1, 1, 1));
     actor.SetProperty(Dali::Actor::Property::NAME, ToDaliString(node.name));
-    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     actor.SetProperty(Actor::Property::POSITION, Vector3(node.translation[0], node.translation[1], node.translation[2]));
     actor.SetProperty(Actor::Property::SCALE, Vector3(node.scale[0], node.scale[1], node.scale[2]));
@@ -289,7 +289,7 @@ Actor CreateSceneFromGLTF(
       cameraActor.SetFieldOfView(camera->yfov);
 
       cameraActor.SetProperty(CameraActor::Property::INVERT_Y_AXIS, true);
-      cameraActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      cameraActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       cameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
       cameras.emplace_back(cameraActor);
@@ -349,7 +349,7 @@ private:
     mLayer3D.SetProperty(Actor::Property::SIZE, Vector2(windowWidth, windowHeight));
     window.Add(mLayer3D);
 
-    mLayer3D.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLayer3D.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLayer3D.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mLayer3D.SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
     mLayer3D.SetProperty(Layer::Property::DEPTH_TEST, true);
@@ -453,7 +453,7 @@ private:
     Actor   panScreen  = Actor::New();
     Vector2 windowSize = window.GetSize();
     panScreen.SetProperty(Actor::Property::SIZE, windowSize);
-    panScreen.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    panScreen.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     panScreen.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     auto camera2d = window.GetRenderTaskList().GetTask(0).GetCameraActor();
     panScreen.SetProperty(Actor::Property::POSITION, Vector3(0, 0, camera2d.GetNearClippingPlane()));

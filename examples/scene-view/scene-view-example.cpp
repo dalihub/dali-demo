@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ private:
 
     // Create a SceneView and set the Skybox
     SceneView sceneView = Handle::New<SceneView>({{Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-                                                  {Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+                                                  {Actor::Property::PIVOT, Pivot::CENTER},
                                                   {Actor::Property::SIZE, windowSize}});
     sceneView.SetSkybox(CUBEMAP_SKY_BOX_URL);
     window.Add(sceneView);
@@ -69,7 +69,7 @@ private:
     Model model = Model::New(MODEL_URL);
     model.SetProperties({
       {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-      {Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+      {Actor::Property::PIVOT, Pivot::CENTER},
       {Actor::Property::SIZE, MODEL_SIZE},
     });
     model.SetImageBasedLightSource(CUBEMAP_IRRADIANCE_URL, CUBEMAP_SKY_BOX_URL);
@@ -82,7 +82,7 @@ private:
     cameraActor.SetType(Camera::LOOK_AT_TARGET);
     cameraActor.SetTargetPosition(Vector3::ZERO);
     cameraActor.Unparent();
-    Actor rotatingActor = Handle::New<Actor>({{Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+    Actor rotatingActor = Handle::New<Actor>({{Actor::Property::PIVOT, Pivot::CENTER},
                                               {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER}});
     rotatingActor.Add(cameraActor);
     sceneView.Add(rotatingActor);

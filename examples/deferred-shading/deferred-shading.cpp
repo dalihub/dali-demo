@@ -286,7 +286,7 @@ Renderer CreateRenderer(TextureSet textures, Geometry geometry, Shader shader, u
 //=============================================================================
 void CenterActor(Actor actor)
 {
-  actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 }
 

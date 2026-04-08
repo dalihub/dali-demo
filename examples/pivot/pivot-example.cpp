@@ -46,7 +46,7 @@ const TimePeriod                     SCALE_ANIMATION_TIME_PERIOD(0.15f, 0.85f);
 } // unnamed namespace
 
 /**
- * @brief Demonstrates how to animate a control in a layout-container using the anchor point as the pivot.
+ * @brief Demonstrates how to animate a control in a layout-container using the pivot as the pivot.
  *
  * Positions of the controls in the layout-container will be set using the top-left of the control.
  */
@@ -76,7 +76,7 @@ private:
 
     // Create a table view.
     TableView tableView = TableView::New(TABLE_VIEW_ROWS, TABLE_VIEW_COLUMNS);
-    tableView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    tableView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     tableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     tableView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     tableView.SetProperty(Actor::Property::SIZE_MODE_FACTOR, TABLE_VIEW_SIZE_MODE_FACTOR);
@@ -86,28 +86,28 @@ private:
     mTapDetector = TapGestureDetector::New();
     mTapDetector.DetectedSignal().Connect(this, &PivotController::OnTap);
 
-    Vector3 anchorPoint(AnchorPoint::CENTER); // This will be changed depending on the row and column.
+    Vector3 pivot(Pivot::CENTER); // This will be changed depending on the row and column.
 
     // Add controls to the table-view - each control will have a random color.
     for(int row = 0; row < TABLE_VIEW_ROWS; ++row)
     {
-      anchorPoint.y = (row % TABLE_VIEW_ROWS) * (1.0f / (TABLE_VIEW_ROWS - 1)); // Calculate this row's y anchor-point.
+      pivot.y = (row % TABLE_VIEW_ROWS) * (1.0f / (TABLE_VIEW_ROWS - 1)); // Calculate this row's y anchor-point.
 
       for(int column = 0; column < TABLE_VIEW_COLUMNS; ++column)
       {
-        anchorPoint.x = (column % TABLE_VIEW_COLUMNS) * (1.0f / (TABLE_VIEW_COLUMNS - 1)); // Calculate this column's x anchor-point.
+        pivot.x = (column % TABLE_VIEW_COLUMNS) * (1.0f / (TABLE_VIEW_COLUMNS - 1)); // Calculate this column's x anchor-point.
 
         // Create a control with a randomly chosen background color.
         Control control = Control::New();
         control.SetBackgroundColor(Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f));
         control.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-        control.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false); // Ensures the position always uses top-left for its calculations.
-        control.SetProperty(Actor::Property::ANCHOR_POINT, anchorPoint);         // This anchor-point is used for the rotation and the scale.
+        control.SetProperty(Actor::Property::POSITION_USES_PIVOT, false); // Ensures the position always uses top-left for its calculations.
+        control.SetProperty(Actor::Property::PIVOT, pivot);               // This anchor-point is used for the rotation and the scale.
 
         // Add to the table-view
         tableView.AddChild(control, TableView::CellPosition(row, column));
 
-        // Attach each control to the tap-detector so we can start the animation around our anchor point.
+        // Attach each control to the tap-detector so we can start the animation around our pivot.
         mTapDetector.Attach(control);
       }
     }

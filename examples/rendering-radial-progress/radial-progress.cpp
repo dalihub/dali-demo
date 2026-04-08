@@ -71,7 +71,7 @@ public:
 
     // 1. Create actor to show the effect
     mActor = Actor::New();
-    mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mActor.SetProperty(Actor::Property::SIZE, Vector2(TEXTURE_WIDTH, TEXTURE_HEIGHT));
     mActor.RegisterProperty("uProgress", float(1.0f));

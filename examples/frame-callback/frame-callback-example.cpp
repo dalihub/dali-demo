@@ -106,7 +106,7 @@ private:
     for(int i = 0; yPos < windowSize.height; ++i)
     {
       ImageView imageView = ImageView::New(IMAGE_NAME);
-      imageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+      imageView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
       imageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       imageView.SetProperty(Actor::Property::POSITION_Y, yPos);
       yPos += imageView.GetNaturalSize().height;
@@ -129,7 +129,7 @@ private:
     mTextLabel = TextLabel::New(TEXT_ENABLED);
     mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, TEXT_COLOR_ENABLED);
     mTextLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
-    mTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     window.Add(mTextLabel);
 

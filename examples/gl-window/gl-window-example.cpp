@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ public:
         {TextLabel::Property::TEXT_COLOR, Color::BLACK},
         {TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER},
         {TextLabel::Property::VERTICAL_ALIGNMENT, VerticalAlignment::CENTER},
-        {Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+        {Actor::Property::PIVOT, Pivot::CENTER},
         {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
         {Dali::Actor::Property::NAME, "label"},
       });

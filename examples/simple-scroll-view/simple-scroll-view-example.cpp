@@ -72,7 +72,7 @@ private:
 
     // Create a scroll view and set our desired properties
     ScrollView scrollView = ScrollView::New();
-    scrollView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    scrollView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     scrollView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     scrollView.SetProperty(Actor::Property::SIZE, pageSize);
     scrollView.SetAxisAutoLock(true);
@@ -111,7 +111,7 @@ private:
     Actor page = Actor::New();
     page.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     page.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    page.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    page.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     Window window = mApplication.GetWindow();
 
@@ -135,7 +135,7 @@ private:
         item.SetProperty(Actor::Property::POSITION, position + imageSize * 0.5f);
         item.SetProperty(Actor::Property::SIZE, imageSize);
         item.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-        item.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        item.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         item.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
         item.SetProperty(TextLabel::Property::PIXEL_SIZE, textPixelSize);
         item.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
