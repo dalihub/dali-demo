@@ -21,6 +21,7 @@
 
 // INTERNAL INCLUDES
 #include <dali/devel-api/adaptor-framework/file-stream.h>
+#include <dali/devel-api/object/property-map-devel.h>
 
 using namespace Dali;
 using namespace Toolkit;
@@ -59,31 +60,31 @@ private:
     const Vector2 windowSize = window.GetSize();
 
     // Create a SceneView and set the Skybox
-    SceneView sceneView = Handle::New<SceneView>({{Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-                                                  {Actor::Property::PIVOT, Pivot::CENTER},
-                                                  {Actor::Property::SIZE, windowSize}});
+    SceneView sceneView = Handle::New<SceneView>(CreatePropertyMap({{Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
+                                                                    {Actor::Property::PIVOT, Pivot::CENTER},
+                                                                    {Actor::Property::SIZE, windowSize}}));
     sceneView.SetSkybox(CUBEMAP_SKY_BOX_URL);
     window.Add(sceneView);
 
     // Load the model and set IBL
     Model model = Model::New(MODEL_URL);
-    model.SetProperties({
+    model.SetProperties(CreatePropertyMap({
       {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
       {Actor::Property::PIVOT, Pivot::CENTER},
       {Actor::Property::SIZE, MODEL_SIZE},
-    });
+    }));
     model.SetImageBasedLightSource(CUBEMAP_IRRADIANCE_URL, CUBEMAP_SKY_BOX_URL);
     sceneView.Add(model);
 
     // Create a new camera and reparent as we want to rotate the camera around the origin
-    CameraActor cameraActor = Handle::New<CameraActor>({{Actor::Property::NAME, CAMERA_NAME}});
+    CameraActor cameraActor = Handle::New<CameraActor>(CreatePropertyMap({{Actor::Property::NAME, CAMERA_NAME}}));
     sceneView.AddCamera(cameraActor);
     sceneView.SelectCamera(CAMERA_NAME);
     cameraActor.SetType(Camera::LOOK_AT_TARGET);
     cameraActor.SetTargetPosition(Vector3::ZERO);
     cameraActor.Unparent();
-    Actor rotatingActor = Handle::New<Actor>({{Actor::Property::PIVOT, Pivot::CENTER},
-                                              {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER}});
+    Actor rotatingActor = Handle::New<Actor>(CreatePropertyMap({{Actor::Property::PIVOT, Pivot::CENTER},
+                                                                {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER}}));
     rotatingActor.Add(cameraActor);
     sceneView.Add(rotatingActor);
 

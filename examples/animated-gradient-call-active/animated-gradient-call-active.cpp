@@ -18,6 +18,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
+#include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/string-utils.h>
 #include <iostream>
@@ -98,7 +99,7 @@ const char* const LABEL_DECLINE_STR("Decline Message");
 const char* const LABEL_TIME_STR("1:03");
 
 // Gradient visual
-const Property::Map DECLINE_BUTTON_BACKGROUND = {
+const Property::Map DECLINE_BUTTON_BACKGROUND  = CreatePropertyMap({
   {Visual::Property::TYPE, Visual::GRADIENT},
   {GradientVisual::Property::START_POSITION, Vector2(-(BUTTON_DECALL_SIZE.x + BUTTON_DECALL_SIZE.y) * 0.5f, (BUTTON_DECALL_SIZE.x + BUTTON_DECALL_SIZE.y) * 0.5f)},
   {GradientVisual::Property::END_POSITION, Vector2((BUTTON_DECALL_SIZE.x + BUTTON_DECALL_SIZE.y) * 0.5f, -(BUTTON_DECALL_SIZE.x + BUTTON_DECALL_SIZE.y) * 0.5f)},
@@ -106,11 +107,11 @@ const Property::Map DECLINE_BUTTON_BACKGROUND = {
   {GradientVisual::Property::STOP_COLOR, Property::Array().Add(Vector4(0.8941f, 0.0078f, 0.0078f, 1.0f)).Add(Vector4(1.0f, 0.5961f, 0.0f, 1.0f))},
   {GradientVisual::Property::SPREAD_METHOD, GradientVisual::SpreadMethod::REFLECT},
   {GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE},
-};
+});
 constexpr float DECLINE_ANIMATION_DURATION = 3.0f;
 constexpr float DECLINE_ANIMATION_DELAY    = 1.2f;
 
-Property::Map INCOME_BACKGROUND = {
+Property::Map INCOME_BACKGROUND = CreatePropertyMap({
   {Visual::Property::TYPE, Visual::GRADIENT},
   //{GradientVisual::Property::CENTER, Vector2::ZERO}, ///< Will be added at OnCreate time.
   {GradientVisual::Property::RADIUS, 180.0f},
@@ -118,10 +119,10 @@ Property::Map INCOME_BACKGROUND = {
   {GradientVisual::Property::STOP_COLOR, Property::Array().Add(Vector4(0.1333f, 0.1647f, 0.2941f, 1.0f)).Add(Vector4(0.0784f, 0.3961f, 0.4863f, 1.0f))},
   {GradientVisual::Property::SPREAD_METHOD, GradientVisual::SpreadMethod::REFLECT},
   {GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE},
-};
+});
 constexpr float INCOME_ANIMATION_DURATION = 1.25f;
 
-Property::Map ACTIVE_BACKGROUND = {
+Property::Map ACTIVE_BACKGROUND = CreatePropertyMap({
   {Visual::Property::TYPE, Visual::GRADIENT},
   //{GradientVisual::Property::CENTER, Vector2::ZERO}, ///< Will be added at OnCreate time.
   {GradientVisual::Property::RADIUS, 180.0f},
@@ -129,7 +130,7 @@ Property::Map ACTIVE_BACKGROUND = {
   {GradientVisual::Property::STOP_COLOR, Property::Array().Add(Vector4(0.1066f, 0.1318f, 0.2353f, 1.0f)).Add(Vector4(0.0627f, 0.3169f, 0.3890f, 1.0f))},
   {GradientVisual::Property::SPREAD_METHOD, GradientVisual::SpreadMethod::REFLECT},
   {GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE},
-};
+});
 constexpr float ACTIVE_ANIMATION_DURATION = 4.0f;
 
 } // unnamed namespace

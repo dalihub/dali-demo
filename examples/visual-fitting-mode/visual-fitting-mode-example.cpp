@@ -18,6 +18,9 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/devel-api/object/handle-devel.h>
+#include <dali/devel-api/object/property-array-devel.h>
+#include <dali/devel-api/object/property-map-devel.h>
+#include <dali/devel-api/object/property-value-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -33,14 +36,14 @@ namespace
 const char* const IMAGE_NAME = DEMO_IMAGE_DIR "gallery-medium-1.jpg"; ///< The image to use.
 const Vector3     IMAGE_SIZE = Vector3(300, 200, 0);                  ///< The size of the image-views.
 
-const float           BORDER_SIZE = 2.0f; ///< The size of the border.
-const Property::Value BORDER              ///< The border to use for each image-view.
+const float           BORDER_SIZE = 2.0f;                ///< The size of the border.
+const Property::Value BORDER      = CreatePropertyValue( ///< The border to use for each image-view.
   {
     {Visual::Property::TYPE, Visual::BORDER},
     {BorderVisual::Property::COLOR, Color::RED},
-    {BorderVisual::Property::SIZE, BORDER_SIZE}};
-const Extents LARGE_PADDING(100.0f, 100.0f, 2.0f, 2.0f);                               ///< The large padding extents.
-const Extents BORDER_ONLY_PADDING(BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE); ///< The border only padding extents.
+    {BorderVisual::Property::SIZE, BORDER_SIZE}});
+const Extents         LARGE_PADDING(100.0f, 100.0f, 2.0f, 2.0f);                               ///< The large padding extents.
+const Extents         BORDER_ONLY_PADDING(BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE); ///< The border only padding extents.
 
 const std::string INSTRUCTIONS_TEXT = "\n(Tap or Key Press To Change)";                 ///< Instructions on how to change the padding mode.
 const std::string LARGE_PADDING_TEXT("Padding: Left/Right Large" + INSTRUCTIONS_TEXT);  ///< Label to shown when large padding enabled.
@@ -48,43 +51,40 @@ const std::string BORDER_ONLY_PADDING_TEXT("Padding: Border Only" + INSTRUCTIONS
 const std::string FILL_LABEL("FILL");
 const std::string FIT_KEEP_ASPECT_LABEL("FIT\nKEEP ASPECT");
 
-const Property::Map TEXT_LABEL_PROPERTIES ///< All the properties of the Large Text Label shown in the example.
-  {
-    {Actor::Property::PIVOT, Pivot::CENTER},
-    {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-    {Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
-    {Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
-    {Control::Property::BACKGROUND,
-     {{Toolkit::Visual::Property::TYPE, Visual::GRADIENT},
-      {GradientVisual::Property::STOP_COLOR, Property::Array{Vector4(167.0f, 207.0f, 223.0f, 255.0f) / 255.0f, Vector4(0.0f, 64.0f, 137.0f, 255.0f) / 255.0f}},
-      {GradientVisual::Property::START_POSITION, Vector2(0.0f, -0.5f)},
-      {GradientVisual::Property::END_POSITION, Vector2(0.0f, 0.5f)}}},
-    {TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER},
-    {TextLabel::Property::VERTICAL_ALIGNMENT, VerticalAlignment::CENTER},
-    {TextLabel::Property::MULTI_LINE, true}};
+const Property::Map TEXT_LABEL_PROPERTIES = CreatePropertyMap({///< All the properties of the Large Text Label shown in the example.
+                                                               {Actor::Property::PIVOT, Pivot::CENTER},
+                                                               {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
+                                                               {Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
+                                                               {Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
+                                                               {Control::Property::BACKGROUND,
+                                                                CreatePropertyMap({{Toolkit::Visual::Property::TYPE, Visual::GRADIENT},
+                                                                                   {GradientVisual::Property::STOP_COLOR, CreatePropertyArray({Vector4(167.0f, 207.0f, 223.0f, 255.0f) / 255.0f, Vector4(0.0f, 64.0f, 137.0f, 255.0f) / 255.0f})},
+                                                                                   {GradientVisual::Property::START_POSITION, Vector2(0.0f, -0.5f)},
+                                                                                   {GradientVisual::Property::END_POSITION, Vector2(0.0f, 0.5f)}})},
+                                                               {TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER},
+                                                               {TextLabel::Property::VERTICAL_ALIGNMENT, VerticalAlignment::CENTER},
+                                                               {TextLabel::Property::MULTI_LINE, true}});
 
-const Property::Map FILL_IMAGE_PROPERTIES ///< The basic properties of the Fill image view.
-  {
-    {Actor::Property::PIVOT, Pivot::TOP_CENTER},
-    {Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER},
-    {Actor::Property::SIZE, IMAGE_SIZE},
-    {Control::Property::BACKGROUND, BORDER}};
+const Property::Map FILL_IMAGE_PROPERTIES = CreatePropertyMap({///< The basic properties of the Fill image view.
+                                                               {Actor::Property::PIVOT, Pivot::TOP_CENTER},
+                                                               {Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER},
+                                                               {Actor::Property::SIZE, IMAGE_SIZE},
+                                                               {Control::Property::BACKGROUND, BORDER}});
 
-const Property::Map FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES ///< The basic properties of the Fit Keep Aspect image view.
-  {
-    {Actor::Property::PIVOT, Pivot::BOTTOM_CENTER},
-    {Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER},
-    {Actor::Property::SIZE, IMAGE_SIZE},
-    {Control::Property::BACKGROUND, BORDER}};
+const Property::Map FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES = CreatePropertyMap({///< The basic properties of the Fit Keep Aspect image view.
+                                                                                      {Actor::Property::PIVOT, Pivot::BOTTOM_CENTER},
+                                                                                      {Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER},
+                                                                                      {Actor::Property::SIZE, IMAGE_SIZE},
+                                                                                      {Control::Property::BACKGROUND, BORDER}});
 
-const Property::Map OVERLAY_LABEL_PROPERTIES ///< The image view overlay label properties
-  {
-    {TextLabel::Property::TEXT_COLOR, Color::WHITE},
-    {TextLabel::Property::OUTLINE, {{"color", Color::BLACK}, {"width", 1.0f}}},
-    {TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER},
-    {TextLabel::Property::VERTICAL_ALIGNMENT, VerticalAlignment::CENTER},
-    {TextLabel::Property::MULTI_LINE, true},
-  };
+const Property::Map OVERLAY_LABEL_PROPERTIES = CreatePropertyMap({
+  ///< The image view overlay label properties
+  {TextLabel::Property::TEXT_COLOR, Color::WHITE},
+  {TextLabel::Property::OUTLINE, CreatePropertyMap({{"color", Color::BLACK}, {"width", 1.0f}})},
+  {TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER},
+  {TextLabel::Property::VERTICAL_ALIGNMENT, VerticalAlignment::CENTER},
+  {TextLabel::Property::MULTI_LINE, true},
+});
 } // unnamed namespace
 
 /**
@@ -133,10 +133,9 @@ private:
     // Create an ImageView that Keeps the aspect ratio while fitting within the given size
     mFitKeepAspectRatioImage = Handle::New<ImageView>(FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES);
     mFitKeepAspectRatioImage.SetProperty(ImageView::Property::IMAGE,
-                                         Property::Map{
-                                           {Visual::Property::TYPE, Visual::IMAGE},
-                                           {ImageVisual::Property::URL, ToPropertyValue(IMAGE_NAME)},
-                                           {DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FIT_KEEP_ASPECT_RATIO}});
+                                         CreatePropertyMap({{Visual::Property::TYPE, Visual::IMAGE},
+                                                            {ImageVisual::Property::URL, ToPropertyValue(IMAGE_NAME)},
+                                                            {DevelVisual::Property::VISUAL_FITTING_MODE, DevelVisual::FIT_KEEP_ASPECT_RATIO}}));
     window.Add(mFitKeepAspectRatioImage);
 
     // Create an overlay label for fill image

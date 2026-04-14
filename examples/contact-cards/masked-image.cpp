@@ -20,6 +20,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/object/property-map-devel.h>
 
 namespace MaskedImage
 {
@@ -36,9 +37,9 @@ Dali::Toolkit::Control Create(const Dali::String& imagePath)
   Control maskedImage = ImageView::New();
   maskedImage.SetProperty(
     Toolkit::ImageView::Property::IMAGE,
-    Property::Map{{Visual::Property::TYPE, Toolkit::Visual::Type::IMAGE},
-                  {ImageVisual::Property::URL, imagePath},
-                  {ImageVisual::Property::ALPHA_MASK_URL, IMAGE_MASK}});
+    CreatePropertyMap({{Visual::Property::TYPE, Toolkit::Visual::Type::IMAGE},
+                       {ImageVisual::Property::URL, imagePath},
+                       {ImageVisual::Property::ALPHA_MASK_URL, IMAGE_MASK}}));
   return maskedImage;
 }
 

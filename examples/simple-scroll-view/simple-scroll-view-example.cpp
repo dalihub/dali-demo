@@ -18,6 +18,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -140,7 +141,7 @@ private:
         item.SetProperty(TextLabel::Property::PIXEL_SIZE, textPixelSize);
         item.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
         item.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, VerticalAlignment::CENTER);
-        item.SetProperty(TextLabel::Property::OUTLINE, Property::Map{{"width", 2}, {"color", Color::WHITE}});
+        item.SetProperty(TextLabel::Property::OUTLINE, CreatePropertyMap({{"width", 2}, {"color", Color::WHITE}}));
         item.SetProperty(Control::Property::BACKGROUND, Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 0.7f));
         page.Add(item);
       }

@@ -24,6 +24,7 @@
 
 // INTERNAL INCLUDES
 #include <dali/devel-api/adaptor-framework/file-stream.h>
+#include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/stream-operators.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
@@ -142,15 +143,15 @@ private:
     const Vector2 windowSize = mWindow.GetSize();
 
     // Create a SceneView and set the Skybox
-    mSceneView = Handle::New<SceneView>({{Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-                                         {Actor::Property::PIVOT, Pivot::CENTER},
-                                         {Actor::Property::SIZE, windowSize}});
+    mSceneView = Handle::New<SceneView>(CreatePropertyMap({{Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
+                                                           {Actor::Property::PIVOT, Pivot::CENTER},
+                                                           {Actor::Property::SIZE, windowSize}}));
     mSceneView.SetSkybox(CUBEMAP_SKY_BOX_URL);
     mWindow.Add(mSceneView);
 
     // Load the model and set IBL
     mMainModel = Model::New(MODEL_URL);
-    mMainModel.SetProperties({
+    mMainModel.SetProperties(CreatePropertyMap({
       {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
       {Actor::Property::PIVOT, Pivot::CENTER},
       {Actor::Property::POSITION, Vector3::ZERO},
@@ -158,12 +159,12 @@ private:
       {Actor::Property::NAME, "MainModel"},
       {Actor::Property::KEYBOARD_FOCUSABLE, true},
       {DevelActor::Property::TOUCH_FOCUSABLE, true},
-    });
+    }));
     mMainModel.SetImageBasedLightSource(CUBEMAP_IRRADIANCE_URL, CUBEMAP_SKY_BOX_URL);
     mSceneView.Add(mMainModel);
 
     mSubModel = Model::New(SUB_MODEL_URL);
-    mSubModel.SetProperties({
+    mSubModel.SetProperties(CreatePropertyMap({
       {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
       {Actor::Property::PIVOT, Pivot::CENTER},
       {Actor::Property::POSITION, Vector3(MODEL_SIZE.x, MODEL_SIZE.y * 0.5f, 0.0f)},
@@ -172,19 +173,19 @@ private:
       {Actor::Property::NAME, "SubModel"},
       {Actor::Property::KEYBOARD_FOCUSABLE, true},
       {DevelActor::Property::TOUCH_FOCUSABLE, true},
-    });
+    }));
     mSubModel.SetImageBasedLightSource(CUBEMAP_IRRADIANCE_URL, CUBEMAP_SKY_BOX_URL, 0.25f);
     mSceneView.Add(mSubModel);
 
     // Create a new camera and reparent as we want to rotate the camera around the origin
-    CameraActor cameraActor = Handle::New<CameraActor>({{Actor::Property::NAME, CAMERA_NAME}});
+    CameraActor cameraActor = Handle::New<CameraActor>(CreatePropertyMap({{Actor::Property::NAME, CAMERA_NAME}}));
     mSceneView.AddCamera(cameraActor);
     mSceneView.SelectCamera(CAMERA_NAME);
     cameraActor.SetType(Camera::LOOK_AT_TARGET);
     cameraActor.SetTargetPosition(Vector3::ZERO);
     cameraActor.Unparent();
-    Actor rotatingActor = Handle::New<Actor>({{Actor::Property::PIVOT, Pivot::CENTER},
-                                              {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER}});
+    Actor rotatingActor = Handle::New<Actor>(CreatePropertyMap({{Actor::Property::PIVOT, Pivot::CENTER},
+                                                                {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER}}));
     rotatingActor.Add(cameraActor);
     mSceneView.Add(rotatingActor);
 
@@ -439,7 +440,7 @@ private:
     {
       mDebugLabel                                  = TextLabel::New();
       mDebugLabel[Actor::Property::PARENT_ORIGIN]  = ParentOrigin::TOP_LEFT;
-      mDebugLabel[Actor::Property::PIVOT]   = Pivot::TOP_LEFT;
+      mDebugLabel[Actor::Property::PIVOT]          = Pivot::TOP_LEFT;
       mDebugLabel[TextLabel::Property::MULTI_LINE] = true;
       mDebugLabel[Control::Property::BACKGROUND]   = Vector4(1.0f, 1.0f, 1.0f, 0.2f);
     }
@@ -511,21 +512,21 @@ private:
     if(mWindow && !mMainModelAABB)
     {
       mMainModelAABB = Control::New();
-      mMainModelAABB.SetProperties({
+      mMainModelAABB.SetProperties(CreatePropertyMap({
         {Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT},
         {Actor::Property::PIVOT, Pivot::TOP_LEFT},
         {Control::Property::BACKGROUND, Vector4(0.0f, 0.0f, 1.0f, 0.2f)},
-      });
+      }));
       mWindow.GetOverlayLayer().Add(mMainModelAABB);
     }
     if(mWindow && !mSubModelAABB)
     {
       mSubModelAABB = Control::New();
-      mSubModelAABB.SetProperties({
+      mSubModelAABB.SetProperties(CreatePropertyMap({
         {Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT},
         {Actor::Property::PIVOT, Pivot::TOP_LEFT},
         {Control::Property::BACKGROUND, Vector4(1.0f, 0.0f, 0.0f, 0.2f)},
-      });
+      }));
       mWindow.GetOverlayLayer().Add(mSubModelAABB);
     }
 
