@@ -213,7 +213,7 @@ public:
     Actor actor = Actor::New();
     actor.AddRenderer(renderer);
 
-    actor.SetProperty(Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PIVOT, Dali::Pivot::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
     actor.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 

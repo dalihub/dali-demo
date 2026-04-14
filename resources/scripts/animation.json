@@ -100,7 +100,7 @@
     "name":"greeting2",
     "type": "TextLabel",
     "parentOrigin": "CENTER",
-    "anchorPoint": "CENTER",
+    "pivot": "CENTER",
     "size": [200, 200, 1],
     "orientation": [0, 0, 39],
     "position": [-150, -50, 0],
@@ -113,7 +113,7 @@
   }, {
     "type": "TextLabel", // styles can be additive
     "parentOrigin": "CENTER",
-    "anchorPoint": "CENTER",
+    "pivot": "CENTER",
     "size": [200, 200, 1],
     "text": "or the image.."
   }, {

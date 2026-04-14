@@ -126,7 +126,7 @@ void ShadowView::SetShadowPlaneBackground(Actor shadowPlaneBackground)
   mShadowPlane = Actor::New();
   mShadowPlane.SetProperty(Actor::Property::NAME, "SHADOW_PLANE");
   mShadowPlane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  mShadowPlane.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mShadowPlane.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   Renderer   shadowRenderer = Toolkit::DevelControl::CreateRenderer(SHADER_SHADOW_VIEW_RENDER_SHADER_VERT, SHADER_SHADOW_VIEW_RENDER_SHADER_FRAG, Shader::Hint::OUTPUT_IS_TRANSPARENT, "SHADOW_VIEW_RENDER_SHADER", Uint16Pair(20, 20));
   TextureSet textureSet     = shadowRenderer.GetTextures();
   textureSet.SetTexture(0u, mOutputFrameBuffer.GetColorTexture());

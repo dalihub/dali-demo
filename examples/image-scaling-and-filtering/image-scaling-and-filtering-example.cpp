@@ -227,7 +227,7 @@ public:
 
     Toolkit::ImageView background = Toolkit::ImageView::New();
     background.SetProperty(Toolkit::ImageView::Property::IMAGE, backgroundImage);
-    background.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    background.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     background.SetProperty(Actor::Property::SIZE, windowSize);
     window.Add(background);
 
@@ -236,14 +236,14 @@ public:
 
     mDesiredBox.SetProperty(Actor::Property::SIZE, windowSize * mImageWindowScale);
     mDesiredBox.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mDesiredBox.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mDesiredBox.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     // Initialize the actor
     mImageView = Toolkit::ImageView::New(IMAGE_PATHS[0]);
 
     // Reposition the actor
     mImageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mImageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mImageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     // Display the actor on the window
     mDesiredBox.Add(mImageView);
@@ -258,13 +258,13 @@ public:
     mGrabCorner = Toolkit::ImageView::New(RESIZE_HANDLE_IMAGE);
     mGrabCorner.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     mGrabCorner.SetProperty(Dali::Actor::Property::NAME, "GrabCorner");
-    mGrabCorner.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT);
+    mGrabCorner.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     mGrabCorner.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
     mGrabCorner.SetProperty(Actor::Property::POSITION, Vector2(-BORDER_WIDTH, -BORDER_WIDTH));
     mGrabCorner.SetProperty(Actor::Property::OPACITY, 0.6f);
 
     Layer grabCornerLayer = Layer::New();
-    grabCornerLayer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT);
+    grabCornerLayer.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     grabCornerLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
     grabCornerLayer.Add(mGrabCorner);
     mDesiredBox.Add(grabCornerLayer);
@@ -292,7 +292,7 @@ public:
     Dali::Layer controlsLayer = Dali::Layer::New();
     controlsLayer.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     controlsLayer.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(1.0f, 1.0f, 1.0f));
-    controlsLayer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    controlsLayer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     controlsLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     window.Add(controlsLayer);
 
@@ -301,7 +301,7 @@ public:
     Toolkit::ImageView imagePrevious = Toolkit::ImageView::New(DALI_ICON_PLAY, ImageDimensions(playWidth, playWidth));
 
     // Last image button:
-    imagePrevious.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    imagePrevious.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     imagePrevious.RotateBy(Radian(3.14159265358979323846f), Vector3(0, 1.0f, 0));
     imagePrevious.SetProperty(Actor::Property::POSITION_Y, playWidth * 0.5f);
     imagePrevious.SetProperty(Actor::Property::POSITION_X, playWidth + playWidth * 0.5f);
@@ -312,7 +312,7 @@ public:
 
     // Next image button:
     Toolkit::ImageView imageNext = Toolkit::ImageView::New(DALI_ICON_PLAY, ImageDimensions(playWidth, playWidth));
-    imageNext.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
+    imageNext.SetProperty(Actor::Property::PIVOT, Pivot::TOP_RIGHT);
     imageNext.SetProperty(Actor::Property::POSITION_Y, playWidth * 0.5f);
     imageNext.SetProperty(Actor::Property::POSITION_X, windowSize.x - playWidth * 0.5f);
     imageNext.SetProperty(Actor::Property::OPACITY, 0.6f);
@@ -330,7 +330,7 @@ public:
     modesGroupBackground.SetCellPadding(Size(MARGIN_SIZE * 0.5f, MARGIN_SIZE));
     modesGroupBackground.SetFitHeight(0);
 
-    modesGroupBackground.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
+    modesGroupBackground.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     modesGroupBackground.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     modesGroupBackground.SetProperty(Actor::Property::POSITION, Vector2(0.0f, 0.0f));
 
@@ -401,7 +401,7 @@ public:
     Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty(Dali::Actor::Property::NAME, "POPUP");
     popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    popup.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     popup.SetProperty(Actor::Property::SIZE, Vector2(POPUP_WIDTH_DP, 0.0f));
 
     popup.OutsideTouchedSignal().Connect(this, &ImageScalingAndFilteringController::OnPopupOutsideTouched);
@@ -415,7 +415,7 @@ public:
     button.SetProperty(Dali::Actor::Property::NAME, id);
     button.SetProperty(Toolkit::Button::Property::LABEL, id);
 
-    button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    button.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);

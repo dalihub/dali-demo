@@ -39,7 +39,7 @@ void AddText(Control textContainer, std::string text, unsigned int yIndex)
 {
   auto label = TextLabel::New(ToDaliString(text));
   label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-  label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+  label.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
   label.SetProperty(Actor::Property::SIZE, Vector2(300, TEXT_HEIGHT));
   label.SetProperty(Actor::Property::POSITION_Y, yIndex * TEXT_HEIGHT);
   textContainer.Add(label);
@@ -106,14 +106,14 @@ private:
     CreateAnimatingScene();
 
     auto textContainer = Control::New();
-    textContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    textContainer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     AddText(textContainer, "Click to add callback", 1);
     AddText(textContainer, "Press 1 to add callback", 2);
     AddText(textContainer, "Press 2 to clear callback", 3);
     AddText(textContainer, "Press 3 to toggle keep alive", 4);
 
     mSpinner = TextLabel::New("");
-    mSpinner.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mSpinner.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mSpinner.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mSpinner.SetProperty(Actor::Property::SIZE, Vector2(100, 100));
 
@@ -141,10 +141,10 @@ private:
     mImageActor2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     mImageActor1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT);
-    mImageActor1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_RIGHT);
+    mImageActor1.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_RIGHT);
 
     mImageActor3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT);
-    mImageActor3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+    mImageActor3.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
 
     mSceneActor.Add(mImageActor2);
     mImageActor2.Add(mImageActor1);

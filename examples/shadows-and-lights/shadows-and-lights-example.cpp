@@ -216,14 +216,14 @@ public:
     mShadowView = ShadowView::New();
     mShadowView.SetProperty(Dali::Actor::Property::NAME, "Container");
     mShadowView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mShadowView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mShadowView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mShadowView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mShadowView.SetPointLightFieldOfView(Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
     mShadowPlaneBg = ImageView::New(DEMO_IMAGE_DIR "brick-wall.jpg");
     mShadowPlaneBg.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mShadowPlaneBg.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mShadowPlaneBg.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mShadowPlaneBg.SetProperty(Dali::Actor::Property::NAME, "Plane");
     mShadowPlaneBg.SetProperty(Actor::Property::SIZE, Vector2(1000.0f, 1000.0f));
     mContents.Add(mShadowPlaneBg);
@@ -234,7 +234,7 @@ public:
 
     mLightAnchor = Actor::New();
     mLightAnchor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mLightAnchor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLightAnchor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLightAnchor.SetProperty(Actor::Property::ORIENTATION, CalculateWorldRotation(mLightXRotation, mLightYRotation));
 
     // Work out a scaling factor as the initial light position was calculated for desktop
@@ -244,7 +244,7 @@ public:
 
     mCastingLight = Actor::New();
     mCastingLight.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mCastingLight.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mCastingLight.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mCastingLight.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 800.0f) * scaleFactor);
 
     TextLabel text = TextLabel::New();
@@ -278,10 +278,10 @@ public:
     mImageActor2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     mImageActor1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT);
-    mImageActor1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_RIGHT);
+    mImageActor1.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_RIGHT);
 
     mImageActor3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT);
-    mImageActor3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+    mImageActor3.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
 
     mSceneActor.Add(mImageActor2);
     mImageActor2.Add(mImageActor1);

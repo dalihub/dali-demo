@@ -66,7 +66,7 @@ private:
     auto windowSize = window.GetSize();
 
     // Set up emitter actor to be the full size of the window as some particles may be outside a particular size
-    mEmitterActor = Handle::New<Actor>({{Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+    mEmitterActor = Handle::New<Actor>({{Actor::Property::PIVOT, Pivot::CENTER},
                                         {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
                                         {Actor::Property::POSITION, Vector2::ZERO},
                                         {Actor::Property::SIZE, Vector2(windowSize.GetWidth(), windowSize.GetHeight())}});
@@ -82,7 +82,7 @@ private:
     window.KeyEventSignal().Connect(this, &ParticleEffectController::OnKeyEvent);
 
     // Create a Text Label at the bottom of the screen
-    mTextLabel = Handle::New<TextLabel>({{Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER},
+    mTextLabel = Handle::New<TextLabel>({{Actor::Property::PIVOT, Pivot::BOTTOM_CENTER},
                                          {Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER},
                                          {TextLabel::Property::MULTI_LINE, true},
                                          {TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER},

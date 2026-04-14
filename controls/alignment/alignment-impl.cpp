@@ -33,7 +33,7 @@ namespace Internal
 {
 namespace
 {
-//Type Registration
+// Type Registration
 BaseHandle Create()
 {
   return Demo::Alignment::New();
@@ -191,33 +191,33 @@ void Alignment::OnInitialize()
 void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
 {
   // lay out the actors
-  Vector3 anchorPointAndParentOrigin = Vector3::ZERO;
-  anchorPointAndParentOrigin.z       = 0.5f;
-  // anchorPoint.x is initialized to 0.0, which is HORIZONTAL_LEFT
+  Vector3 pivotAndParentOrigin = Vector3::ZERO;
+  pivotAndParentOrigin.z       = 0.5f;
+  // pivot.x is initialized to 0.0, which is HORIZONTAL_LEFT
   if(Demo::Alignment::HORIZONTAL_CENTER == mHorizontal)
   {
-    anchorPointAndParentOrigin.x = 0.5f;
+    pivotAndParentOrigin.x = 0.5f;
   }
   else if(Demo::Alignment::HORIZONTAL_RIGHT == mHorizontal)
   {
-    anchorPointAndParentOrigin.x = 1.0f;
+    pivotAndParentOrigin.x = 1.0f;
   }
-  // anchorPoint.y is initialized to 0.0, which is VERTICAL_TOP
+  // pivot.y is initialized to 0.0, which is VERTICAL_TOP
   if(Demo::Alignment::VERTICAL_CENTER == mVertical)
   {
-    anchorPointAndParentOrigin.y = 0.5f;
+    pivotAndParentOrigin.y = 0.5f;
   }
   else if(Demo::Alignment::VERTICAL_BOTTOM == mVertical)
   {
-    anchorPointAndParentOrigin.y = 1.0f;
+    pivotAndParentOrigin.y = 1.0f;
   }
 
   for(unsigned int i = 0, childCount = Self().GetChildCount(); i < childCount; ++i)
   {
     Actor child = Self().GetChildAt(i);
 
-    child.SetProperty(Actor::Property::ANCHOR_POINT, anchorPointAndParentOrigin);
-    child.SetProperty(Actor::Property::PARENT_ORIGIN, anchorPointAndParentOrigin);
+    child.SetProperty(Actor::Property::PIVOT, pivotAndParentOrigin);
+    child.SetProperty(Actor::Property::PARENT_ORIGIN, pivotAndParentOrigin);
 
     Vector2 currentChildSize(child.GetTargetSize().GetVectorXY());
     if(currentChildSize == Vector2::ZERO)

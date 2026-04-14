@@ -50,7 +50,7 @@
       "type": "SuperBlurView",
       "name": "superBlur",
       "parentOrigin": "TOP_CENTER",
-      "anchorPoint": "TOP_CENTER",
+      "pivot": "TOP_CENTER",
       "size": [800, 1280, 0],
       "imageUrl": "{DEMO_IMAGE_DIR}background-4.jpg"
     },
@@ -60,7 +60,7 @@
       "type": "PushButton",
       "name": "toggleButton",
       "parentOrigin": "BOTTOM_CENTER",
-      "anchorPoint": "BOTTOM_CENTER",
+      "pivot": "BOTTOM_CENTER",
       "position": [0, 0, 0],
       "size": [200, 100, 0],
       "label": "Blur",

@@ -47,7 +47,7 @@ const Property::Value SHADOW{
   {Visual::Property::TRANSFORM,
    Property::Map{{Visual::Transform::Property::SIZE, NO_BLUR_SIZE_VALUE},
                  {Visual::Transform::Property::ORIGIN, Align::CENTER},
-                 {Visual::Transform::Property::ANCHOR_POINT, Align::CENTER}}}};
+                 {Visual::Transform::Property::PIVOT, Align::CENTER}}}};
 
 } // namespace
 

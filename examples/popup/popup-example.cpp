@@ -157,7 +157,7 @@ public:
     // Add title to the tool bar.
     mItemView = Toolkit::ItemView::New(*this);
     mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mItemView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mItemView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mItemView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     // Use a grid layout for tests
@@ -341,7 +341,7 @@ public:
     Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty(Dali::Actor::Property::NAME, "popup");
     popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    popup.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     popup.SetProperty(Actor::Property::SIZE, Vector2(POPUP_WIDTH_DP, 0.0f));
     popup.SetProperty(Toolkit::Popup::Property::TAIL_VISIBILITY, false);
 
@@ -365,12 +365,12 @@ public:
       footer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       footer.SetResizePolicy(ResizePolicy::FIXED, Dimension::HEIGHT);
       footer.SetProperty(Actor::Property::SIZE, Vector2(0.0f, 130.0f));
-      footer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      footer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       footer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
       Actor okButton = CreateOKButton();
       okButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      okButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      okButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       okButton.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
       okButton.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(-20.0f, -20.0f, 0.0));
 
@@ -378,12 +378,12 @@ public:
       {
         Toolkit::TableView controlLayout = Toolkit::TableView::New(1, 2);
         controlLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-        controlLayout.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        controlLayout.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         controlLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
         Actor cancelButton = CreateCancelButton();
         cancelButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-        cancelButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        cancelButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
         cancelButton.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
         cancelButton.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(-20.0f, -20.0f, 0.0));
 

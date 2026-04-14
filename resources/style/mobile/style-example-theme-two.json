@@ -162,7 +162,7 @@
           "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
           "sizePolicy":["RELATIVE", "RELATIVE"],
           "origin":"CENTER_BEGIN",
-          "anchorPoint":"CENTER_BEGIN"
+          "pivot":"CENTER_BEGIN"
         }
       },
       "checkboxFgVisual":{
@@ -174,7 +174,7 @@
           "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
           "sizePolicy":["RELATIVE", "RELATIVE"],
           "origin":"CENTER_BEGIN",
-          "anchorPoint":"CENTER_BEGIN"
+          "pivot":"CENTER_BEGIN"
         }
       },
       "labelVisual":{
@@ -191,7 +191,7 @@
           "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
           "sizePolicy":["RELATIVE", "RELATIVE"],
           "origin":"CENTER_END",
-          "anchorPoint":"CENTER_END"
+          "pivot":"CENTER_END"
         }
       },
       "activeTransition":

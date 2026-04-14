@@ -101,8 +101,8 @@ public:
   TextLabel SetupTextLabel(int type)
   {
     TextLabel label = TextLabel::New();
-    label.SetProperty(Actor::Property::ANCHOR_POINT, ParentOrigin::TOP_LEFT);
-    label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    label.SetProperty(Actor::Property::PIVOT, ParentOrigin::TOP_LEFT);
+    label.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     label.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
     label.SetProperty(TextLabel::Property::POINT_SIZE, 12.0f);
     Property::Map shadowMap;
@@ -209,7 +209,7 @@ public:
     mItemView = ItemView::New(*this);
 
     mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mItemView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mItemView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     mLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
     mLayout->SetItemSize(Vector3(windowSize.width, 60.0f, 0.0f));
@@ -257,7 +257,7 @@ public:
     }
 
     mLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mLayer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mLayer.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mLayer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mLayer.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::HEIGHT);
     mLayer.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, -DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight, 0.0f));
@@ -301,7 +301,7 @@ public:
 
     mIndicator = Toolkit::ImageView::New(INDICATOR_IMAGE);
     mIndicator.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mIndicator.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mIndicator.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mIndicator.SetProperty(Actor::Property::VISIBLE, false);
 
     // Create a back button in the left of toolbar
@@ -315,7 +315,7 @@ public:
     // Create a navigation view to navigate different types of text labels
     mNavigationView = NavigationView::New();
     mNavigationView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mNavigationView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mNavigationView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mNavigationView.SetBackgroundColor(Color::WHITE);
     window.Add(mNavigationView);
 

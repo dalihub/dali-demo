@@ -190,7 +190,7 @@ public:
     // Create the base flex container
     mFlexContainer = FlexContainer::New();
     mFlexContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mFlexContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mFlexContainer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mFlexContainer.SetProperty(Actor::Property::SIZE, Vector2(windowSize.width, windowSize.height - VIEW_STYLE.mToolBarHeight));
     mFlexContainer.SetProperty(Actor::Property::POSITION_Y, VIEW_STYLE.mToolBarHeight);
     mFlexContainer.SetProperty(FlexContainer::Property::FLEX_DIRECTION, FlexContainer::COLUMN); // column as main axis
@@ -207,7 +207,7 @@ public:
     // Create the flex container for the flex items and add it to the base flex container
     mFlexItemContainer = FlexContainer::New();
     mFlexItemContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mFlexItemContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mFlexItemContainer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mFlexItemContainer.SetBackgroundColor(Color::YELLOW);
     mFlexItemContainer.SetProperty(FlexContainer::Property::FLEX_DIRECTION, mCurrentFlexDirection);
     mFlexItemContainer.SetProperty(FlexContainer::Property::FLEX_WRAP, mCurrentFlexWrap);
@@ -218,7 +218,7 @@ public:
     for(int i = 0; i < NUM_FLEX_ITEMS; i++)
     {
       PushButton flexItem = PushButton::New();
-      flexItem.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      flexItem.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       flexItem.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
 
       // Set different background colour to help to identify different items

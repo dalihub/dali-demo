@@ -444,25 +444,25 @@ public:
 
     mPrevButton = Toolkit::PushButton::New();
     mPrevButton.SetProperty(Toolkit::Button::Property::LABEL, PREV_BUTTON_TEXT);
-    mPrevButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mPrevButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mPrevButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     window.Add(mPrevButton);
     mPrevButton.ClickedSignal().Connect(this, &CanvasViewController::OnPrevButtonClicked);
 
     mNextButton = Toolkit::PushButton::New();
     mNextButton.SetProperty(Toolkit::Button::Property::LABEL, LEFT_BUTTON_TEXT);
-    mNextButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
+    mNextButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_RIGHT);
     mNextButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
     window.Add(mNextButton);
     mNextButton.ClickedSignal().Connect(this, &CanvasViewController::OnNextButtonClicked);
 
     mCanvasView = Toolkit::CanvasView::New();
     mCanvasView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mCanvasView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mCanvasView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mCanvasView.SetProperty(Actor::Property::SIZE, windowSize);
 
     mTitle                                                     = Toolkit::TextLabel::New(VIEW_LABEL[BASIC_SHAPE_VIEW]);
-    mTitle[Actor::Property::ANCHOR_POINT]                      = AnchorPoint::TOP_CENTER;
+    mTitle[Actor::Property::PIVOT]                      = Pivot::TOP_CENTER;
     mTitle[Actor::Property::PARENT_ORIGIN]                     = Vector3(0.5f, 0.0f, 0.5f);
     mTitle[Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT] = "CENTER";
     mTitle[Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT]   = "CENTER";

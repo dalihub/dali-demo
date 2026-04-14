@@ -74,15 +74,15 @@ public:
     rubric.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     rubric.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
     rubric.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    rubric.SetProperty(Actor::Property::ANCHOR_POINT, ParentOrigin::TOP_CENTER);
+    rubric.SetProperty(Actor::Property::PIVOT, ParentOrigin::TOP_CENTER);
     mWindow.Add(rubric);
 
     mImageView1 = Toolkit::ImageView::New("https://raw.githubusercontent.com/dalihub/dali-test/refs/heads/master/visual-tests/remote-download/images/rockstar.jpg");
 
     mImageView1.SetProperty(Dali::Actor::Property::NAME, "mImageView1");
     mImageView1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mImageView1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
-    mImageView1.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
+    mImageView1.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
+    mImageView1.SetProperty(Actor::Property::POSITION_USES_PIVOT, false);
     mImageView1.SetProperty(Actor::Property::POSITION, Vector2(0, 50));
     mImageView1.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     mWindow.Add(mImageView1);
@@ -90,8 +90,8 @@ public:
     mImageView2 = Toolkit::ImageView::New("https://raw.githubusercontent.com/dalihub/dali-test/refs/heads/master/visual-tests/remote-download/images/stars.jpg");
     mImageView2.SetProperty(Dali::Actor::Property::NAME, "mImageView2");
     mImageView2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mImageView2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
-    mImageView2.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
+    mImageView2.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
+    mImageView2.SetProperty(Actor::Property::POSITION_USES_PIVOT, false);
     mImageView2.SetProperty(Actor::Property::POSITION, Vector2(400, 100));
     mImageView2.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     mWindow.Add(mImageView2);
@@ -99,8 +99,8 @@ public:
     mImageView3 = Toolkit::ImageView::New("https://raw.githubusercontent.com/dalihub/dali-test/refs/heads/master/visual-tests/remote-download/images/stormtrooper.jpg");
     mImageView3.SetProperty(Dali::Actor::Property::NAME, "mImageView3");
     mImageView3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mImageView3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
-    mImageView3.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
+    mImageView3.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
+    mImageView3.SetProperty(Actor::Property::POSITION_USES_PIVOT, false);
     mImageView3.SetProperty(Actor::Property::POSITION, Vector2(0, 400));
     mImageView3.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     mWindow.Add(mImageView3);
@@ -108,8 +108,8 @@ public:
     mImageView5 = Toolkit::ImageView::New("http://static.midomi.com/h/images/w/weather_sunny.png");
     mImageView5.SetProperty(Dali::Actor::Property::NAME, "mImageView5");
     mImageView5.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mImageView5.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
-    mImageView5.SetProperty(Actor::Property::POSITION_USES_ANCHOR_POINT, false);
+    mImageView5.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
+    mImageView5.SetProperty(Actor::Property::POSITION_USES_PIVOT, false);
     mImageView5.SetProperty(Actor::Property::POSITION, Vector2(800, 100));
     mImageView5.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     mWindow.Add(mImageView5);

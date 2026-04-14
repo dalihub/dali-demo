@@ -132,7 +132,7 @@ private:
 
     // Use a gradient visual to render the background gradient.
     Toolkit::Control background = Dali::Toolkit::Control::New();
-    background.SetProperty(Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER);
+    background.SetProperty(Actor::Property::PIVOT, Dali::Pivot::CENTER);
     background.SetProperty(Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
     background.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
@@ -157,7 +157,7 @@ private:
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label = Toolkit::TextLabel::New(APPLICATION_TITLE);
-    label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    label.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     // Set the parent origin to a small percentage below the top (so the demo will scale for different resolutions).
     label.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.03f, 0.5f));
     label.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -167,7 +167,7 @@ private:
 
     // Layer to hold the 3D scene.
     Layer layer = Layer::New();
-    layer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    layer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     // Set the parent origin to a small percentage below the center (so the demo will scale for different resolutions).
     layer.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.58f, 0.5f));
     layer.SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_UI);
@@ -290,7 +290,7 @@ private:
   Actor CreateMainCubeObject(Geometry& geometry, Vector3 size, TextureSet& textureSet)
   {
     Toolkit::Control container = Toolkit::Control::New();
-    container.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    container.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     container.SetProperty(Actor::Property::SIZE, Vector2(size));
     container.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
@@ -327,7 +327,7 @@ private:
   Actor CreateFloorObject(Geometry& geometry, Vector3 size)
   {
     Toolkit::Control container = Toolkit::Control::New();
-    container.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    container.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     container.SetProperty(Actor::Property::SIZE, Vector2(size));
     container.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
@@ -365,7 +365,7 @@ private:
   Actor CreateStencilPlaneObject(Vector3 size)
   {
     Toolkit::Control container = Toolkit::Control::New();
-    container.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    container.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     container.SetProperty(Actor::Property::SIZE, Vector2(size));
     container.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
@@ -414,7 +414,7 @@ private:
   Actor CreateReflectionCubeObject(Vector3 size, TextureSet& textureSet)
   {
     Toolkit::Control container = Toolkit::Control::New();
-    container.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    container.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     container.SetProperty(Actor::Property::SIZE, Vector2(size));
     container.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);

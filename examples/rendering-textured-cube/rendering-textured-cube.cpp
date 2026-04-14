@@ -224,7 +224,7 @@ public:
 
     float quarterWindowSize = std::min(windowSize.GetWidth(), windowSize.GetHeight()) * 0.25f;
     mActor                  = Actor::New();
-    mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mActor.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
     mActor.SetProperty(Actor::Property::SIZE, Vector3(quarterWindowSize, quarterWindowSize, quarterWindowSize));

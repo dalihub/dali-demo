@@ -62,7 +62,7 @@ public:
     Vector2 windowSize(window.GetSize().GetWidth(), window.GetSize().GetHeight());
 
     Dali::Scene3D::SceneView sceneView = Scene3D::SceneView::New();
-    sceneView.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    sceneView.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::SIZE, windowSize);
     sceneView.SetBackgroundColor(Color::BEIGE);
@@ -72,13 +72,13 @@ public:
     Dali::Toolkit::Control parent = Dali::Toolkit::Control::New();
     parent.SetBackgroundColor(Color::BLUE);
     parent.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    parent.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    parent.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     parent.SetProperty(Dali::Actor::Property::SIZE, Vector2(100, 100));
 
     Dali::Toolkit::Control child = Dali::Toolkit::Control::New();
     child.SetBackgroundColor(Color::RED);
     child.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    child.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    child.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     child.SetProperty(Dali::Actor::Property::SIZE, Vector2(100, 100));
     child.SetProperty(Dali::Actor::Property::POSITION, Vector2(25, 100));
     parent.Add(child);
@@ -147,7 +147,7 @@ public:
     if(!mGuideText)
     {
       mGuideText = TextLabel::New();
-      mGuideText.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
+      mGuideText.SetProperty(Dali::Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
       mGuideText.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
       mGuideText.SetProperty(Dali::Toolkit::TextLabel::Property::POINT_SIZE, 30.0f);
       mGuideText.SetProperty(Dali::Toolkit::TextLabel::Property::MULTI_LINE, true);

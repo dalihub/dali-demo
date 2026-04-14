@@ -162,7 +162,7 @@ public:
     contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     contentLayout.SetCellPadding(Size(30, 30));
     contentLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    contentLayout.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    contentLayout.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mContentLayer.Add(contentLayout);
 
     // Create a TextLabel for the application title.
@@ -179,7 +179,7 @@ public:
     mGrid.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
 
     mGrid.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mGrid.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mGrid.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mGrid.SetBackgroundColor(GRID_BACKGROUND_COLOR);
 
     contentLayout.AddChild(mGrid, gridPosition);
@@ -228,7 +228,7 @@ public:
 
     mAnimIcon1 = ImageView::New(CIRCLE1_IMAGE);
     mAnimIcon1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mAnimIcon1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mAnimIcon1.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     // Would like some means of setting and animating position as a percentage of
     // parent size without using constraints, but this will have to suffice for the moment.
@@ -269,7 +269,7 @@ public:
   void CreateBackground(Window window)
   {
     Toolkit::Control background = Dali::Toolkit::Control::New();
-    background.SetProperty(Actor::Property::ANCHOR_POINT, Dali::AnchorPoint::CENTER);
+    background.SetProperty(Actor::Property::PIVOT, Dali::Pivot::CENTER);
     background.SetProperty(Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
     background.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
@@ -375,14 +375,14 @@ public:
     progressionLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Progression"));
     progressionLabel.SetProperty(TextLabel::Property::POINT_SIZE, AXIS_LABEL_POINT_SIZE);
     progressionLabel.SetProperty(Actor::Property::ORIENTATION, Quaternion(Radian(Degree(-90.0f)), Vector3::ZAXIS));
-    progressionLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
+    progressionLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     progressionLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     CreateLine(progressionLabel, ParentOrigin::BOTTOM_LEFT);
 
     TextLabel timeLabel = TextLabel::New();
     timeLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Time"));
     timeLabel.SetProperty(TextLabel::Property::POINT_SIZE, AXIS_LABEL_POINT_SIZE);
-    timeLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    timeLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     timeLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     CreateLine(timeLabel, ParentOrigin::TOP_LEFT);
 
@@ -393,7 +393,7 @@ public:
   void CreateLine(Actor parent, const Vector3& parentOrigin)
   {
     Control control = Control::New();
-    control.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    control.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     control.SetProperty(Actor::Property::PARENT_ORIGIN, parentOrigin);
     control.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     control.SetProperty(Actor::Property::SIZE_HEIGHT, AXIS_LINE_SIZE);

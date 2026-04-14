@@ -393,7 +393,7 @@ Actor Slider::CreateHitRegion()
 {
   Actor hitRegion = Actor::New();
   hitRegion.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  hitRegion.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  hitRegion.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   hitRegion.TouchedSignal().Connect(this, &Slider::OnTouch);
 
   return hitRegion;
@@ -404,7 +404,7 @@ Dali::Toolkit::ImageView Slider::CreateTrack()
   Dali::Toolkit::ImageView track = Dali::Toolkit::ImageView::New();
   track.SetProperty(Dali::Actor::Property::NAME, "SliderTrack");
   track.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  track.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  track.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   return track;
 }
 
@@ -466,7 +466,7 @@ Toolkit::ImageView Slider::CreateProgress()
   Toolkit::ImageView progress = Toolkit::ImageView::New();
   progress.SetProperty(Dali::Actor::Property::NAME, "SliderProgress");
   progress.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT);
-  progress.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+  progress.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
 
   return progress;
 }
@@ -592,7 +592,7 @@ Toolkit::ImageView Slider::CreateHandle()
   Toolkit::ImageView handle = Toolkit::ImageView::New();
   handle.SetProperty(Dali::Actor::Property::NAME, "SliderHandle");
   handle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT);
-  handle.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  handle.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
   return handle;
 }
@@ -603,7 +603,7 @@ Toolkit::ImageView Slider::CreatePopupArrow()
   arrow.SetStyleName("SliderPopupArrow");
   arrow.SetProperty(Dali::Actor::Property::NAME, "SliderPopupArrow");
   arrow.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-  arrow.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+  arrow.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
 
   return arrow;
 }
@@ -614,7 +614,7 @@ Toolkit::TextLabel Slider::CreatePopupText()
   textLabel.SetProperty(Dali::Actor::Property::NAME, "SliderPopupTextLabel");
   textLabel.SetStyleName("SliderPopupTextLabel");
   textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  textLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   textLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   textLabel.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
   textLabel.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
@@ -628,7 +628,7 @@ Toolkit::ImageView Slider::CreatePopup()
   Toolkit::ImageView popup = Toolkit::ImageView::New();
   popup.SetProperty(Dali::Actor::Property::NAME, "SliderPopup");
   popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-  popup.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+  popup.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
   popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH);
 
   mValueTextLabel = CreatePopupText();
@@ -700,7 +700,7 @@ void Slider::CreateHandleValueDisplay()
     mHandleValueTextLabel.SetProperty(Dali::Actor::Property::NAME, "SliderHandleTextLabel");
     mHandleValueTextLabel.SetStyleName("SliderHandleTextLabel");
     mHandleValueTextLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mHandleValueTextLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mHandleValueTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mHandleValueTextLabel.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     mHandleValueTextLabel.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     mHandleValueTextLabel.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_HIGHLIGHTABLE, false);
@@ -717,7 +717,7 @@ Actor Slider::CreateValueDisplay()
 {
   Actor popup = Actor::New();
   popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-  popup.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+  popup.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
 
   mPopupArrow = CreatePopupArrow();
   popup.Add(mPopupArrow);

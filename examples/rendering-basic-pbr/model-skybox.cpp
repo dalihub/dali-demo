@@ -62,7 +62,7 @@ void ModelSkybox::Init(const Vector3& size)
   renderer.SetProperty(Renderer::Property::FACE_CULLING_MODE, FaceCullingMode::BACK);
 
   mActor = Actor::New();
-  mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mActor.SetProperty(Actor::Property::SIZE, size);
   mActor.AddRenderer(renderer);

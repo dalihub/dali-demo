@@ -283,7 +283,7 @@ public:
     mItemView = ItemView::New(*this);
 
     mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mItemView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mItemView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
 
     mLayout->SetItemSize(Vector3(window.GetSize().GetWidth(), 50, 1));
@@ -449,7 +449,7 @@ public:
     ReloadJsonFile(name, mBuilder, mBuilderLayer);
 
     mBuilderLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mBuilderLayer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mBuilderLayer.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     Dali::Vector3 size = mApp.GetWindow().GetRootLayer().GetCurrentProperty<Vector3>(Actor::Property::SIZE);
     size.y -= DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight;
     mBuilderLayer.SetProperty(Actor::Property::SIZE, size);
@@ -484,7 +484,7 @@ public:
 
     mNavigationView = Demo::NavigationView::New();
     mNavigationView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mNavigationView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mNavigationView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     window.Add(mNavigationView);
 

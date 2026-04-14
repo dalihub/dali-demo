@@ -297,12 +297,12 @@ private:
     mPaddle.Add(mPaddleHandle);
     mPaddle.Add(mPaddleImage);
     mPaddleHandle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mPaddleHandle.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mPaddleHandle.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mPaddleHandle.SetProperty(Actor::Property::POSITION, Vector2(0.0f, windowSize.width * 0.0125f));
     mPaddleImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mPaddleImage.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mPaddleImage.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mPaddle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mPaddle.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mPaddle.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mPaddleFullSize = PADDLE_SIZE * windowSize.width;
     mPaddle.SetProperty(Actor::Property::SIZE, mPaddleFullSize + mPaddleHitMargin);
     mPaddleHandle.SetProperty(Actor::Property::SIZE, PADDLE_HANDLE_SIZE * windowSize.width);
@@ -380,7 +380,7 @@ private:
     }
 
     mLevelContainer = Actor::New();
-    mLevelContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLevelContainer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLevelContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mLevelContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
@@ -559,7 +559,7 @@ private:
     ImageView brick       = ImageView::New();
     brick.SetProperty(ImageView::Property::IMAGE, mBrickImageMap);
     brick.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    brick.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    brick.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     brick.SetProperty(Actor::Property::POSITION, position);
 
     // Add a constraint on the brick between it and the ball generating a collision-property
@@ -593,7 +593,7 @@ private:
     ImageView actor = ImageView::New();
     actor.SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     return actor;
   }
 

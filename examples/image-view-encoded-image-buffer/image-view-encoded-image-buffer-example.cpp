@@ -19,8 +19,8 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/animated-vector-image-visual-actions-devel.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
+#include <dali-toolkit/public-api/image-loader/image-url-utils.h>
 #include <dali-toolkit/public-api/image-loader/image-url.h>
-#include <dali-toolkit/public-api/image-loader/image.h>
 #include <dali/dali.h>
 #include <dali/public-api/adaptor-framework/encoded-image-buffer.h>
 #include <string>
@@ -106,8 +106,8 @@ public:
   {
     // The Init signal is received once (only) during the Application lifetime
 
-    ImageUrl backgroundImageUrl = Image::GenerateUrl(ConvertFileToEncodedImageBuffer(BACKGROUND_IMAGE));
-    ImageUrl toolbarImageUrl    = Image::GenerateUrl(ConvertFileToEncodedImageBuffer(TOOLBAR_IMAGE));
+    ImageUrl backgroundImageUrl = ImageUrlUtils::GenerateUrl(ConvertFileToEncodedImageBuffer(BACKGROUND_IMAGE));
+    ImageUrl toolbarImageUrl    = ImageUrlUtils::GenerateUrl(ConvertFileToEncodedImageBuffer(TOOLBAR_IMAGE));
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.
@@ -151,7 +151,7 @@ private:
       mImageBuffer.SetImageType(EncodedImageBuffer::ImageType::ANIMATED_VECTOR_IMAGE);
     }
 
-    mImageUrl = Image::GenerateUrl(mImageBuffer);
+    mImageUrl = ImageUrlUtils::GenerateUrl(mImageBuffer);
   }
 
   void UpdateImageViews()
@@ -190,7 +190,7 @@ private:
     ImageView view = ImageView::New();
     view.SetProperty(Actor::Property::SIZE, IMAGE_VIEW_SIZE);
     view.SetProperty(Actor::Property::POSITION, Vector2(IMAGE_VIEW_SIZE.x * offset_x, IMAGE_VIEW_SIZE.y * offset_y + mToolBar.GetNaturalSize().y));
-    view.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    view.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     Property::Map imagePropertyMap;
     imagePropertyMap.Insert(Visual::Property::TYPE, Visual::IMAGE);

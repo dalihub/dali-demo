@@ -21,8 +21,8 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/common/vector-wrapper.h>
 #include <dali/public-api/actors/camera-actor.h>
-#include <dali/public-api/common/vector-wrapper.h>
 #include <dali/public-api/render-tasks/render-task.h>
 #include <dali/public-api/rendering/frame-buffer.h>
 #include <dali/public-api/rendering/geometry.h>

@@ -214,7 +214,7 @@ private:
     Vector2 windowSize = window.GetSize();
 
     mScrollView = ScrollView::New();
-    mScrollView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mScrollView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mScrollView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mContentLayer.Add(mScrollView);
     mScrollView.SetProperty(Actor::Property::SIZE, windowSize);
@@ -277,7 +277,7 @@ private:
     Actor page = Actor::New();
     page.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     page.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    page.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    page.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     Window  window     = mApplication.GetWindow();
     Vector2 windowSize = window.GetSize();
@@ -295,7 +295,7 @@ private:
         ImageView image = CreateImage(GetNextImagePath(), imageSize.x, imageSize.y);
 
         image.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-        image.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+        image.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
         Vector3 position(margin * 0.5f + (imageSize.x + margin) * column - windowSize.width * 0.5f,
                          margin * 0.5f + (imageSize.y + margin) * row - windowSize.height * 0.5f,
@@ -469,7 +469,7 @@ private:
 
     actor.SetProperty(Dali::Actor::Property::NAME, ToDaliString(filename));
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     actor.TouchedSignal().Connect(this, &ExampleController::OnTouchImage);
     return actor;

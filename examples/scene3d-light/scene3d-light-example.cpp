@@ -59,7 +59,7 @@ public:
     window.SetBackgroundColor(Color::WHITE);
 
     sceneView = Scene3D::SceneView::New();
-    sceneView.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    sceneView.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     sceneView.SetProperty(Dali::Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
@@ -79,7 +79,7 @@ public:
     keyFrames.Add(1.0f, Quaternion(Radian(Degree(0.0f)), Vector3::YAXIS));
 
     Actor dummyActor = Actor::New();
-    dummyActor.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    dummyActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     dummyActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     dummyActor.Add(light1);
     sceneView.Add(dummyActor);
@@ -137,7 +137,7 @@ public:
     auto text = TextLabel::New();
     text.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Press keys 0-9 to change lighting"));
     text[Actor::Property::PARENT_ORIGIN]  = ParentOrigin::BOTTOM_CENTER;
-    text[Actor::Property::ANCHOR_POINT]   = AnchorPoint::BOTTOM_CENTER;
+    text[Actor::Property::PIVOT]   = Pivot::BOTTOM_CENTER;
     text[TextLabel::Property::TEXT_COLOR] = Color::BLACK;
     window.Add(text);
 

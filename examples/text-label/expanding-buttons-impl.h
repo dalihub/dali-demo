@@ -21,6 +21,8 @@
 #include <dali/public-api/object/weak-handle.h>
 #include "expanding-buttons.h"
 
+#include <vector>
+
 namespace Dali::Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name

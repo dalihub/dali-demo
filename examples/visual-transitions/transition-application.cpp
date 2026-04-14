@@ -81,7 +81,7 @@ void TransitionApplication::Create(Application& application)
   TableView contentLayout = TableView::New(4, 1);
   contentLayout.SetProperty(Dali::Actor::Property::NAME, "ContentLayout");
   contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-  contentLayout.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+  contentLayout.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
   contentLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
   contentLayout.SetCellPadding(Vector2(0.0f, 5.0f));
 
@@ -103,7 +103,7 @@ void TransitionApplication::Create(Application& application)
   mBeatControl.SetProperty(Dali::Actor::Property::NAME, "BeatControl");
   mBeatControl.SetProperty(BeatControl::Property::BEAT_VISUAL, Property::Map().Add(Visual::Property::TRANSFORM, Property::Map().Add(Visual::Transform::Property::SIZE, Vector2(0.5f, 0.5f))));
 
-  mBeatControl.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mBeatControl.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mBeatControl.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mBeatControl.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   contentLayout.Add(mBeatControl);

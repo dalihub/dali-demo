@@ -63,7 +63,7 @@ private:
 
     mSuperBlurView = SuperBlurView::New(DEFAULT_BLUR_LEVEL);
     mSuperBlurView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mSuperBlurView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mSuperBlurView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mSuperBlurView.SetProperty(Actor::Property::SIZE, Vector2(800, 1280));
     mSuperBlurView.SetProperty(SuperBlurView::Property::IMAGE_URL, ToPropertyValue(BACKGROUND_IMAGE));
     window.Add(mSuperBlurView);
@@ -76,7 +76,7 @@ private:
 
     mPushButton = PushButton::New();
     mPushButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mPushButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mPushButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mPushButton.SetProperty(Button::Property::LABEL, "Blur");
     mPushButton.PressedSignal().Connect(this, &SuperBlurViewExample::OnButtonPressed);
     mPushButton.ReleasedSignal().Connect(this, &SuperBlurViewExample::OnButtonReleased);

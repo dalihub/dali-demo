@@ -189,7 +189,7 @@ Dali::Toolkit::Control Create(const Dali::String& imagePath, Property::Index& pr
   Control image = ImageView::New(imagePath);
   image.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   image.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  image.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  image.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   clippedImage.Add(image);
 
   return clippedImage;

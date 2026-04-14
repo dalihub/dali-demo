@@ -134,12 +134,12 @@ public:
     //Main, central model
     mContainers[0].SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(MODEL_SCALE, MODEL_SCALE, 0.0f));
     mContainers[0].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mContainers[0].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mContainers[0].SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     //Top left model
     mContainers[1].SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(MODEL_SCALE / 3.0f, MODEL_SCALE / 3.0f, 0.0f));
     mContainers[1].SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.05, 0.03, 0.5)); //Offset from top left
-    mContainers[1].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mContainers[1].SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     //Set up models
     for(int i = 0; i < NUM_MESHES; i++)
@@ -148,7 +148,7 @@ public:
       Control control = Control::New();
       control.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      control.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      control.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       mContainers[i].Add(control);
 
       //Make model spin to demonstrate 3D
@@ -174,7 +174,7 @@ public:
     //Actor for positioning model and shading mode buttons.
     Actor positionActorModel = Actor::New();
     positionActorModel.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(BUTTONS_OFFSET_SIDE, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5));
-    positionActorModel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    positionActorModel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     layer.Add(positionActorModel);
 
     //Create button for model changing.
@@ -182,7 +182,7 @@ public:
     modelButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     modelButton.ClickedSignal().Connect(this, &MeshVisualController::OnChangeModelClicked);
     modelButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    modelButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    modelButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     modelButton.SetProperty(Toolkit::Button::Property::LABEL, "Model");
     positionActorModel.Add(modelButton);
 
@@ -191,7 +191,7 @@ public:
     shadingModeButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     shadingModeButton.ClickedSignal().Connect(this, &MeshVisualController::OnChangeShadingModeClicked);
     shadingModeButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    shadingModeButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    shadingModeButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     shadingModeButton.SetProperty(Toolkit::Button::Property::LABEL, "Shading Mode");
     positionActorModel.Add(shadingModeButton);
 
@@ -201,7 +201,7 @@ public:
     changeTitleLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     changeTitleLabel.SetProperty(TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}");
     changeTitleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    changeTitleLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    changeTitleLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     modelButton.Add(changeTitleLabel);
 
     //Create button for pausing animations.
@@ -209,14 +209,14 @@ public:
     pauseButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     pauseButton.ClickedSignal().Connect(this, &MeshVisualController::OnPauseClicked);
     pauseButton.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5));
-    pauseButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    pauseButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     pauseButton.SetProperty(Toolkit::Button::Property::LABEL, PAUSE);
     layer.Add(pauseButton);
 
     //Actor for positioning light position buttons.
     Actor positionActorLight = Actor::New();
     positionActorLight.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(1.0 - BUTTONS_OFFSET_SIDE, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5));
-    positionActorLight.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    positionActorLight.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     layer.Add(positionActorLight);
 
     //Create button for switching between manual and fixed light position.
@@ -224,7 +224,7 @@ public:
     lightModeButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     lightModeButton.ClickedSignal().Connect(this, &MeshVisualController::OnChangeLightModeClicked);
     lightModeButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    lightModeButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    lightModeButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     lightModeButton.SetProperty(Toolkit::Button::Property::LABEL, FIXED);
     positionActorLight.Add(lightModeButton);
 
@@ -233,7 +233,7 @@ public:
     lightSideButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     lightSideButton.ClickedSignal().Connect(this, &MeshVisualController::OnChangeLightSideClicked);
     lightSideButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    lightSideButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    lightSideButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     lightSideButton.SetProperty(Toolkit::Button::Property::LABEL, FRONT);
     positionActorLight.Add(lightSideButton);
 
@@ -243,7 +243,7 @@ public:
     lightTitleLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     lightTitleLabel.SetProperty(TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}");
     lightTitleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    lightTitleLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    lightTitleLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     lightModeButton.Add(lightTitleLabel);
   }
 
@@ -274,7 +274,7 @@ public:
 
     //Set position relative to top left, as the light source property is also relative to the top left.
     mLightSource.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mLightSource.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLightSource.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLightSource.SetProperty(Actor::Property::POSITION, Vector2(windowSize.width * 0.85f, windowSize.height * 0.125));
 
     //Supply an image to represent the light.
@@ -287,7 +287,7 @@ public:
     Layer upperLayer = Layer::New();
     upperLayer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     upperLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    upperLayer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    upperLayer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     baseLayer.Add(upperLayer);
     upperLayer.Add(mLightSource);
@@ -323,7 +323,7 @@ public:
     Property::Map map;
     map.Insert(Toolkit::Visual::Property::TYPE, Visual::MESH);
     map.Insert(Visual::Property::TRANSFORM,
-               Property::Map().Add(Visual::Transform::Property::ORIGIN, Align::CENTER).Add(Visual::Transform::Property::ANCHOR_POINT, Align::CENTER));
+               Property::Map().Add(Visual::Transform::Property::ORIGIN, Align::CENTER).Add(Visual::Transform::Property::PIVOT, Align::CENTER));
     map.Insert(MeshVisual::Property::OBJECT_URL, MODEL_FILE_TABLE[mModelIndex]);
     map.Insert(MeshVisual::Property::MATERIAL_URL, MATERIAL_FILE_TABLE[mModelIndex]);
     map.Insert(MeshVisual::Property::TEXTURES_PATH, ToPropertyValue(TEXTURES_PATH));

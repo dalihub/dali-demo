@@ -269,7 +269,7 @@ PageTurnView::Page::Page()
 : isTurnBack(false)
 {
   actor = Actor::New();
-  actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+  actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
   actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT);
   actor.SetProperty(Actor::Property::VISIBLE, false);
 
@@ -400,7 +400,7 @@ void PageTurnView::OnInitialize()
 
   // create the layer for turning pages
   mTurningPageLayer = Layer::New();
-  mTurningPageLayer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+  mTurningPageLayer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
   mTurningPageLayer.SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
   mTurningPageLayer.Raise();
 
@@ -458,7 +458,7 @@ void PageTurnView::SetupShadowView()
   mShadowView    = Demo::ShadowView::New(0.25f, 0.25f);
   Vector3 origin = mTurningPageLayer.GetCurrentProperty<Vector3>(Actor::Property::PARENT_ORIGIN);
   mShadowView.SetProperty(Actor::Property::PARENT_ORIGIN, origin);
-  mShadowView.SetProperty(Actor::Property::ANCHOR_POINT, origin);
+  mShadowView.SetProperty(Actor::Property::PIVOT, origin);
   mShadowView.SetPointLightFieldOfView(Math::PI / 2.0f);
   mShadowView.SetShadowColor(DEFAULT_SHADOW_COLOR);
 
@@ -469,7 +469,7 @@ void PageTurnView::SetupShadowView()
   mShadowView.SetShadowPlaneBackground(mShadowPlaneBackground);
 
   mPointLight = Actor::New();
-  mPointLight.SetProperty(Actor::Property::ANCHOR_POINT, origin);
+  mPointLight.SetProperty(Actor::Property::PIVOT, origin);
   mPointLight.SetProperty(Actor::Property::PARENT_ORIGIN, origin);
   mPointLight.SetProperty(Actor::Property::POSITION, Vector3(0.f, 0.f, mPageSize.width * POINT_LIGHT_HEIGHT_RATIO));
   Self().Add(mPointLight);

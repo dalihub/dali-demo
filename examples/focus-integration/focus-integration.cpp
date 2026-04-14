@@ -69,7 +69,7 @@ public:
     TableView contentTable = TableView::New(2, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     contentTable.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-    contentTable.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    contentTable.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     contentTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     contentTable.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5f));
     contentTable.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);

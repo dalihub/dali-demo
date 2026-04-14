@@ -108,7 +108,7 @@ public:
     mRenderer.SetProperty(Renderer::Property::DEPTH_INDEX, 0);
 
     mMeshActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mMeshActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mMeshActor.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     window.Add(mMeshActor);
 
     mRenderer2 = Renderer::New(mGeometry, mShader);
@@ -126,7 +126,7 @@ public:
     mRenderer2.SetProperty(Renderer::Property::DEPTH_INDEX, 0);
 
     mMeshActor2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mMeshActor2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mMeshActor2.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     window.Add(mMeshActor2);
 
     Animation animation = Animation::New(5);

@@ -128,7 +128,7 @@ public:
 
     // Place to right of parent.
     mColorContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT);
-    mColorContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+    mColorContainer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
     colorLabel.Add(mColorContainer);
 
     // Add border to highlight harder-to-see colors.
@@ -143,7 +143,7 @@ public:
     mColorButtonOption.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mColorButtonOption.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.9f, 0.9f, 0.0f)); // Smaller than container to show border.
     mColorButtonOption.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mColorButtonOption.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mColorButtonOption.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     SetButtonColor(mColorButtonOption, Color::BLACK);
 
@@ -156,7 +156,7 @@ public:
     // Create the text editor.
     mEditor = TextEditor::New();
     mEditor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mEditor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mEditor.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mEditor.SetProperty(Actor::Property::POSITION, Vector3(0.f, toolBarHeight * 2.0f, 0.f));
     mEditor.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mEditor.SetProperty(Actor::Property::SIZE_MODE_FACTOR, TEXT_EDITOR_RELATIVE_SIZE);
@@ -199,7 +199,7 @@ public:
 
     // Place below color selection button.
     mButtonContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mButtonContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mButtonContainer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mButtonContainer.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 2.f * TOOLBAR_PADDING, 0.f));
     mColorContainer.Add(mButtonContainer);
 

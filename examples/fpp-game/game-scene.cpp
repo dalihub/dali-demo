@@ -148,7 +148,7 @@ bool GameScene::Load(Window window, const char* filename)
 
   // add all to the window
   mRootActor = Actor::New();
-  mRootActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mRootActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mRootActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   window.GetRootLayer().Add(mRootActor);
   mRootActor.SetProperty(Actor::Property::SCALE, Vector3(-1.0, 1.0, 1.0));
@@ -157,7 +157,7 @@ bool GameScene::Load(Window window, const char* filename)
   for(size_t i = 0; i < mEntities.Size(); ++i)
   {
     Actor actor(mEntities[i]->GetActor());
-    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mRootActor.Add(actor);
     mEntities[i]->UpdateRenderer();

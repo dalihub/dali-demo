@@ -82,7 +82,7 @@ public:
 
     // Creates the background gradient
     Toolkit::Control background                = Dali::Toolkit::Control::New();
-    background[Actor::Property::ANCHOR_POINT]  = Dali::AnchorPoint::CENTER;
+    background[Actor::Property::PIVOT]  = Dali::Pivot::CENTER;
     background[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::CENTER;
     background.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
@@ -104,7 +104,7 @@ public:
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label                                  = Toolkit::TextLabel::New(APPLICATION_TITLE);
-    label[Actor::Property::ANCHOR_POINT]                      = AnchorPoint::TOP_CENTER;
+    label[Actor::Property::PIVOT]                      = Pivot::TOP_CENTER;
     label[Actor::Property::PARENT_ORIGIN]                     = Vector3(0.5f, 0.0f, 0.5f);
     label[Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT] = "CENTER";
     label[Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT]   = "CENTER";
@@ -183,7 +183,7 @@ public:
     Actor actor                          = Actor::New();
     actor[Actor::Property::SIZE]         = Vector2(400.0f, 400.0f);
     actor[Actor::Property::POSITION]     = center;
-    actor[Actor::Property::ANCHOR_POINT] = AnchorPoint::CENTER;
+    actor[Actor::Property::PIVOT] = Pivot::CENTER;
     actor[Actor::Property::COLOR]        = Color::YELLOW;
     actor.AddRenderer(renderer);
 
@@ -275,7 +275,7 @@ public:
     Actor actor                          = Actor::New();
     actor[Actor::Property::SIZE]         = Vector2(400.0f, 400.0f);
     actor[Actor::Property::POSITION]     = center;
-    actor[Actor::Property::ANCHOR_POINT] = AnchorPoint::CENTER;
+    actor[Actor::Property::PIVOT] = Pivot::CENTER;
     actor.AddRenderer(renderer);
 
     Window window = mApplication.GetWindow();
@@ -376,7 +376,7 @@ public:
     Actor actor                          = Actor::New();
     actor[Actor::Property::SIZE]         = Vector2(400.0f, 400.0f);
     actor[Actor::Property::POSITION]     = center;
-    actor[Actor::Property::ANCHOR_POINT] = AnchorPoint::CENTER;
+    actor[Actor::Property::PIVOT] = Pivot::CENTER;
     actor[Actor::Property::COLOR]        = Color::RED;
     actor.AddRenderer(renderer);
 

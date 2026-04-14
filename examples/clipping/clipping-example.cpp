@@ -84,7 +84,7 @@ private:
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label = Toolkit::TextLabel::New(APPLICATION_TITLE);
-    label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    label.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     label.SetProperty(Actor::Property::PARENT_ORIGIN, APPLICATION_TITLE_PARENT_ORIGIN);
     label.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     label.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
@@ -94,7 +94,7 @@ private:
     // Create an item-view which clips its children.
     mItemView = ItemView::New(mClippingItemFactory);
     mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mItemView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mItemView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mItemView.SetProperty(Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN); // Enable clipping. No need to create any renderers.
     window.Add(mItemView);
 
@@ -118,7 +118,7 @@ private:
     // Create a border around item-view (as item-view is clipping its children, we should NOT add this as a child of item-view).
     Control border = Control::New();
     border.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    border.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    border.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     border.SetProperty(Control::Property::BACKGROUND,
                        Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::BORDER).Add(BorderVisual::Property::COLOR, Color::WHITE).Add(BorderVisual::Property::SIZE, 2.0f).Add(BorderVisual::Property::ANTI_ALIASING, true));
     border.SetProperty(Actor::Property::SIZE, Vector3(itemViewLayoutSize.x + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.y + ITEM_VIEW_BORDER_SIZE * 2.0f, itemViewLayoutSize.z + ITEM_VIEW_BORDER_SIZE * 2.0f));
@@ -132,7 +132,7 @@ private:
     // Create a button to toggle the clipping mode
     PushButton button = Toolkit::PushButton::New();
     button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    button.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     button.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);

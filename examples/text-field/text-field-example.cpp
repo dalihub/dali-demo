@@ -86,7 +86,7 @@ public:
     PushButton button = PushButton::New();
     button.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, FOLDER_ICON_IMAGE);
     button.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, FOLDER_OPEN_ICON_IMAGE);
-    button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    button.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     return button;
   }
 
@@ -113,7 +113,7 @@ public:
   {
     TextField field = TextField::New();
     field.SetProperty(Dali::Actor::Property::NAME, "textField");
-    field.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    field.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     field.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     field.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
     field.SetProperty(TextField::Property::TEXT, text);
@@ -129,7 +129,7 @@ public:
   {
     Popup popup = Popup::New();
     popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    popup.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH);
     popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
     popup.TouchedSignal().Connect(this, &TextFieldExample::OnPopupTouched);

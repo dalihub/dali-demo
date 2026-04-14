@@ -69,7 +69,7 @@ public:
     mTableView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mTableView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mTableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mTableView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mTableView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mTableView.TouchedSignal().Connect(this, &EmojiExample::OnTouch);
     window.Add(mTableView);
 
@@ -80,7 +80,7 @@ public:
 
       TextLabel label = TextLabel::New(ToDaliString(text));
       label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-      label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+      label.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
       label.SetProperty(TextLabel::Property::MULTI_LINE, true);
 
       mTableView.SetFitHeight(index);

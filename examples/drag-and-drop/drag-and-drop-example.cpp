@@ -89,7 +89,7 @@ public:
     TextLabel hintText = TextLabel::New();
     hintText.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("please drag one textlabel, move and drop on other textlabel"));
     hintText.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    hintText.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
+    hintText.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     hintText.SetProperty(TextLabel::Property::MULTI_LINE, true);
     window.Add(hintText);
 
@@ -104,7 +104,7 @@ public:
       std::string str = "textlabel " + std::to_string(i);
       mTextLabel[i]   = TextLabel::New(ToDaliString(str));
       mTextLabel[i].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-      mTextLabel[i].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      mTextLabel[i].SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       mTextLabel[i].SetProperty(Dali::Actor::Property::NAME, ToDaliString(str));
       mTextLabel[i].SetProperty(Actor::Property::LEAVE_REQUIRED, true);
       mTextLabel[i].SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");

@@ -50,7 +50,7 @@ const std::string FIT_KEEP_ASPECT_LABEL("FIT\nKEEP ASPECT");
 
 const Property::Map TEXT_LABEL_PROPERTIES ///< All the properties of the Large Text Label shown in the example.
   {
-    {Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER},
+    {Actor::Property::PIVOT, Pivot::CENTER},
     {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
     {Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
     {Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
@@ -65,14 +65,14 @@ const Property::Map TEXT_LABEL_PROPERTIES ///< All the properties of the Large T
 
 const Property::Map FILL_IMAGE_PROPERTIES ///< The basic properties of the Fill image view.
   {
-    {Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER},
+    {Actor::Property::PIVOT, Pivot::TOP_CENTER},
     {Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER},
     {Actor::Property::SIZE, IMAGE_SIZE},
     {Control::Property::BACKGROUND, BORDER}};
 
 const Property::Map FIT_KEEP_ASPECT_RATIO_IMAGE_BASIC_PROPERTIES ///< The basic properties of the Fit Keep Aspect image view.
   {
-    {Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER},
+    {Actor::Property::PIVOT, Pivot::BOTTOM_CENTER},
     {Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER},
     {Actor::Property::SIZE, IMAGE_SIZE},
     {Control::Property::BACKGROUND, BORDER}};

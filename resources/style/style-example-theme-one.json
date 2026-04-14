@@ -142,7 +142,7 @@
                 "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
                 "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_BEGIN",
-                "anchorPoint":"CENTER_BEGIN"
+                "pivot":"CENTER_BEGIN"
               },
               "depthIndex":1
             },
@@ -161,7 +161,7 @@
                 "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
                 "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_END",
-                "anchorPoint":"CENTER_END"
+                "pivot":"CENTER_END"
               },
               "depthIndex":1
             }
@@ -182,7 +182,7 @@
                     "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
                     "sizePolicy":["RELATIVE", "RELATIVE"],
                     "origin":"CENTER_BEGIN",
-                    "anchorPoint":"CENTER_BEGIN"
+                    "pivot":"CENTER_BEGIN"
                   },
                   "depthIndex":2
                 }
@@ -272,7 +272,7 @@
                 "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
                 "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_BEGIN",
-                "anchorPoint":"CENTER_BEGIN"
+                "pivot":"CENTER_BEGIN"
               },
               "depthIndex":0
             },
@@ -286,7 +286,7 @@
                 "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
                 "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_BEGIN",
-                "anchorPoint":"CENTER_BEGIN"
+                "pivot":"CENTER_BEGIN"
               },
               "depthIndex":1
             },
@@ -305,7 +305,7 @@
                 "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
                 "sizePolicy":["RELATIVE", "RELATIVE"],
                 "origin":"CENTER_END",
-                "anchorPoint":"CENTER_END"
+                "pivot":"CENTER_END"
               },
               "depthIndex":1
             }
@@ -325,7 +325,7 @@
                     "offsetPolicy":["ABSOLUTE", "ABSOLUTE"],
                     "sizePolicy":["RELATIVE", "RELATIVE"],
                     "origin":"CENTER_BEGIN",
-                    "anchorPoint":"CENTER_BEGIN"
+                    "pivot":"CENTER_BEGIN"
                   },
                   "depthIndex":2
                 }

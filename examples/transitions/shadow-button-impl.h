@@ -23,6 +23,8 @@
 #include <dali/public-api/animation/animation.h>
 #include "shadow-button.h"
 
+#include <vector>
+
 namespace Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name

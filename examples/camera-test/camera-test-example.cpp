@@ -80,13 +80,13 @@ struct BoundaryConstraint
 
     if(centered)
     {
-      // AnchorPoint is center of actor
+      // Pivot is center of actor
       current.x = Dali::Clamp(curPos.x, 0.0f, boundarySize.x);
       current.y = Dali::Clamp(curPos.y, 0.0f, boundarySize.y);
     }
     else
     {
-      // Anchor point is top left of actor.
+      // Pivot is top left of actor.
       current.x = Dali::Clamp(curPos.x, 0.0f, boundarySize.x - curSize.x);
       current.y = Dali::Clamp(curPos.y, 0.0f, boundarySize.y - curSize.y);
     }
@@ -170,7 +170,7 @@ public:
     overlayLayer.SetProperty(Actor::Property::POSITION, Vector3::ZERO);
     overlayLayer.SetProperty(Actor::Property::SIZE, windowSize);
     overlayLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    overlayLayer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    overlayLayer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     overlayRenderTask = CreateOverlayRenderTask(window, windowSize, overlayLayer);
 
@@ -179,7 +179,7 @@ public:
     initialCameraPosition = Vector3(windowSize.x / 6.0f, windowSize.y * 0.5f, 0);
 
     cameraFrame = CreateFrame(Vector2(initialCameraSize), sceneSize, "Camera");
-    cameraFrame.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    cameraFrame.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     cameraFrame.SetProperty(Actor::Property::POSITION, initialCameraPosition);
 
     cameraGrabHandle = CreateCornerHandle(cameraFrame);
@@ -191,7 +191,7 @@ public:
 
     viewportFrame = CreateFrame(Vector2(initialViewportPosition), Vector2(initialViewportSize), "Viewport");
     viewportFrame.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(1.0f / 3.0f, 0.0f, 0.5f)); // TL of 2nd third of screen
-    viewportFrame.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    viewportFrame.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     viewportGrabHandle = CreateCornerHandle(viewportFrame);
     viewportGrabCenter = CreateCenterHandle(viewportFrame);
@@ -246,13 +246,13 @@ public:
     viewLayer.SetProperty(Actor::Property::POSITION, Vector3(position));
     viewLayer.SetProperty(Actor::Property::SIZE, size);
     viewLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_LEFT);
-    viewLayer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+    viewLayer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
 
     auto bg = Control::New();
     bg.SetBackgroundColor(Vector4(0.1, 0.0, 0.1, 0.5));
     bg.SetProperty(Actor::Property::SIZE, size);
     bg.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    bg.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    bg.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     viewLayer.Add(bg);
 
     auto label = TextLabel::New();
@@ -261,7 +261,7 @@ public:
     label[TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
     label[TextLabel::Property::TEXT_COLOR]           = Color::WHITE;
     label[Actor::Property::PARENT_ORIGIN]            = ParentOrigin::TOP_CENTER;
-    label[Actor::Property::ANCHOR_POINT]             = AnchorPoint::TOP_CENTER;
+    label[Actor::Property::PIVOT]                    = Pivot::TOP_CENTER;
     viewLayer.Add(label);
 
     int i = 0;
@@ -274,7 +274,7 @@ public:
       printf("ActorId: %d\n", imageView.GetProperty<int>(Actor::Property::ID));
 
       imageView.SetProperty(Actor::Property::PARENT_ORIGIN, offsets[i]);
-      imageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      imageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       imageView.SetProperty(Actor::Property::POSITION, Vector3((0.5f - offsets[i].x) * 50.0f, (0.5f - offsets[i].y) * 50.0f, 0.0f));
       imageView.SetProperty(Actor::Property::SIZE, Vector2(97.0f, 97.0f));
       ++i;
@@ -288,7 +288,7 @@ public:
     Actor layoutContainer                           = Actor::New();
     layoutContainer[Actor::Property::SIZE]          = Vector3(sceneSize.x, sceneSize.y, sceneSize.x);
     layoutContainer[Actor::Property::PARENT_ORIGIN] = ParentOrigin::TOP_RIGHT;
-    layoutContainer[Actor::Property::ANCHOR_POINT]  = AnchorPoint::TOP_RIGHT;
+    layoutContainer[Actor::Property::PIVOT]         = Pivot::TOP_RIGHT;
 
     auto bg = Control::New();
     bg.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -302,7 +302,7 @@ public:
     TableView actorProps = TableView::New(7, 2);
     actorProps.SetProperty(Actor::Property::NAME, "ActorSliderLayout");
     actorProps.SetProperty(Actor::Property::SIZE, Vector3(sceneSize.x, sceneSize.y, sceneSize.x));
-    actorProps.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    actorProps.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     actorProps.SetFitWidth(0);
     actorProps.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
 
@@ -323,7 +323,7 @@ public:
       slider.SetProperty(Actor::Property::NAME, ToPropertyValue(sliderStyleName.str()));
       slider.SetStyleName("ThinSlider");
       slider.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      slider.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      slider.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       slider.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       slider.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
       slider.SetProperty(Slider::Property::LOWER_BOUND, -180.0f);
@@ -345,14 +345,14 @@ public:
     fovLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
     fovLabel[TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
     fovLabel[Actor::Property::PARENT_ORIGIN]            = ParentOrigin::CENTER;
-    fovLabel[Actor::Property::ANCHOR_POINT]             = AnchorPoint::CENTER;
+    fovLabel[Actor::Property::PIVOT]                    = Pivot::CENTER;
     actorProps.AddChild(fovLabel, TableView::CellPosition(i, 0));
 
     auto slider = Slider::New();
     slider.SetProperty(Actor::Property::NAME, "FOVSlider");
     slider.SetStyleName("ThinSlider");
     slider.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    slider.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    slider.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     slider.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     slider.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
     slider.SetProperty(Slider::Property::LOWER_BOUND, 1.0f);
@@ -371,7 +371,7 @@ public:
     cameraDetail[TextLabel::Property::MULTI_LINE]           = true;
     cameraDetail[TextLabel::Property::TEXT_COLOR]           = Color::WHITE;
     cameraDetail[Actor::Property::PARENT_ORIGIN]            = ParentOrigin::BOTTOM_CENTER;
-    cameraDetail[Actor::Property::ANCHOR_POINT]             = AnchorPoint::BOTTOM_CENTER;
+    cameraDetail[Actor::Property::PIVOT]                    = Pivot::BOTTOM_CENTER;
 
     cameraDetail[Actor::Property::POSITION] = Vector3(0.0f, -15.0f, 0.0f);
     cameraDetail.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
@@ -425,7 +425,7 @@ public:
     CameraActor overlayCameraActor = CameraActor::New();
     overlayCameraActor.SetType(Camera::FREE_LOOK);
     overlayCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    overlayCameraActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    overlayCameraActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     overlayCameraActor.SetProperty(Actor::Property::POSITION, Vector2::ZERO);
     overlayCameraActor.SetProperty(Actor::Property::SIZE, windowSize);
     overlayCameraActor.SetPerspectiveProjection(windowSize);
@@ -452,7 +452,7 @@ public:
     Actor frame = Toolkit::ImageView::New(BORDER_IMAGE);
     frame.SetProperty(Dali::Actor::Property::NAME, "ContentFrame");
     frame.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    frame.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    frame.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     frame.SetProperty(Actor::Property::SIZE, size);
     frame.SetProperty(Actor::Property::POSITION, position);
 
@@ -461,7 +461,7 @@ public:
     frameLabel[TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
     frameLabel[TextLabel::Property::TEXT_COLOR]           = Color::YELLOW;
     frameLabel[Actor::Property::PARENT_ORIGIN]            = ParentOrigin::BOTTOM_CENTER;
-    frameLabel[Actor::Property::ANCHOR_POINT]             = AnchorPoint::BOTTOM_CENTER;
+    frameLabel[Actor::Property::PIVOT]                    = Pivot::BOTTOM_CENTER;
     frameLabel[Actor::Property::POSITION]                 = Vector3(0.0f, 15.0f, 0.0f);
     frame.Add(frameLabel);
 
@@ -474,7 +474,7 @@ public:
     cornerHandle.SetProperty(Dali::Actor::Property::NAME, "GrabHandle");
     cornerHandle.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     cornerHandle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
-    cornerHandle.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_RIGHT);
+    cornerHandle.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     cornerHandle.SetProperty(Actor::Property::POSITION, Vector2(-BORDER_WIDTH, -BORDER_WIDTH));
     cornerHandle.SetProperty(Actor::Property::OPACITY, 0.6f);
     parent.Add(cornerHandle);
@@ -487,12 +487,12 @@ public:
     grabCenter.SetProperty(Dali::Actor::Property::NAME, "GrabCenter");
     grabCenter.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     grabCenter.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    grabCenter.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    grabCenter.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     Toolkit::ImageView grabCenter2 = Toolkit::ImageView::New(CIRCLE_POINT);
     grabCenter2.SetProperty(Dali::Actor::Property::NAME, "GrabCenter2");
     grabCenter2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     grabCenter2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    grabCenter2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    grabCenter2.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     grabCenter.Add(grabCenter2);
     grabCenter.SetProperty(Actor::Property::OPACITY, 0.6f);
     parent.Add(grabCenter);

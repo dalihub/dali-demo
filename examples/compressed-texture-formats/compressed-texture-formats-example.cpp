@@ -93,7 +93,7 @@ public:
 
     // Setup a TableView to hold a grid of images and labels.
     Toolkit::TableView table = Toolkit::TableView::New(3u, 2u);
-    table.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    table.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     table.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     table.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     table.SetRelativeWidth(0u, 0.5f);
@@ -105,7 +105,7 @@ public:
     // Add text labels.
     TextLabel textLabel = TextLabel::New();
     textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ETC1 (KTX):"));
-    textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    textLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     textLabel.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
@@ -114,7 +114,7 @@ public:
 
     textLabel = TextLabel::New();
     textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ASTC (KTX) 4x4 linear:"));
-    textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    textLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     textLabel.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
@@ -123,7 +123,7 @@ public:
 
     textLabel = TextLabel::New();
     textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ASTC (Native) 4x4 linear:"));
-    textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    textLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     textLabel.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
@@ -136,21 +136,21 @@ public:
 
     // Add images.
     Actor actor = Actor::New();
-    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     AddImage(IMAGE_FILENAME_ETC, actor, geometry, shader);
     table.AddChild(actor, Toolkit::TableView::CellPosition(0u, 1u));
     table.SetCellAlignment(Toolkit::TableView::CellPosition(0u, 1u), HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
 
     actor = Actor::New();
-    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     AddImage(IMAGE_FILENAME_ASTC_LINEAR, actor, geometry, shader);
     table.AddChild(actor, Toolkit::TableView::CellPosition(1u, 1u));
     table.SetCellAlignment(Toolkit::TableView::CellPosition(1u, 1u), HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
 
     actor = Actor::New();
-    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     AddImage(IMAGE_FILENAME_ASTC_LINEAR_NATIVE, actor, geometry, shader);
     table.AddChild(actor, Toolkit::TableView::CellPosition(2u, 1u));

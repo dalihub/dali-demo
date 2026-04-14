@@ -95,7 +95,7 @@ public:
     //Set up layer to place UI on.
     Layer layer = Layer::New();
     layer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    layer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    layer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     layer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     layer.SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_UI); //We use a 2D layer as this is closer to UI work than full 3D scene creation.
     layer.SetProperty(Layer::Property::DEPTH_TEST, true);          //Enable depth testing, as otherwise the 2D layer would not do so.
@@ -156,7 +156,7 @@ public:
     //Used to layout the title and the buttons below it.
     Control topAlignment = Control::New();
     topAlignment.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    topAlignment.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    topAlignment.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     topAlignment.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     topAlignment.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
     layer.Add(topAlignment);
@@ -165,7 +165,7 @@ public:
     mShapeTitle = TextLabel::New();
     mShapeTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("DEFAULT"));
     mShapeTitle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mShapeTitle.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mShapeTitle.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mShapeTitle.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     mShapeTitle.SetProperty(Actor::Property::PADDING, Padding(elementPadding, elementPadding, elementPadding, elementPadding));
     topAlignment.Add(mShapeTitle);
@@ -173,7 +173,7 @@ public:
     //Create a variable-length container that can wrap buttons around as more are added.
     FlexContainer buttonContainer = FlexContainer::New();
     buttonContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    buttonContainer.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    buttonContainer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     buttonContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     buttonContainer.SetResizePolicy(ResizePolicy::FIXED, Dimension::HEIGHT);
     buttonContainer.SetProperty(Actor::Property::PADDING, Padding(containerPadding, containerPadding, containerPadding, containerPadding));
@@ -186,7 +186,7 @@ public:
     {
       PushButton button = Toolkit::PushButton::New();
       button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      button.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      button.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
       button.SetProperty(Actor::Property::PADDING, Padding(elementPadding, elementPadding, elementPadding, elementPadding));
       button.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGE_URL[modelNumber]);
@@ -237,7 +237,7 @@ public:
     //Create table to hold sliders and their corresponding labels.
     mSliderTable = Toolkit::TableView::New(MAX_PROPERTIES, 2);
     mSliderTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mSliderTable.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mSliderTable.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mSliderTable.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mSliderTable.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.9, 0.3, 0.0)); //90% of width, 30% of height.
     mSliderTable.SetFitWidth(0);                                                         //Label column should fit to natural size of label.
@@ -251,7 +251,7 @@ public:
       //Create slider
       Slider slider = Slider::New();
       slider.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      slider.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      slider.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       slider.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       slider.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       slider.ValueChangedSignal().Connect(this, &PrimitiveShapesController::OnSliderValueChanged);
@@ -264,7 +264,7 @@ public:
       //Create slider label
       TextLabel sliderLabel = TextLabel::New();
       sliderLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      sliderLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      sliderLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       sliderLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
       mSliderLabels.push_back(sliderLabel);
 
@@ -314,13 +314,13 @@ public:
     container.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     container.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.9, 0.3, 0.0)); //90% of width, 30% of height.
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    container.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    container.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     layer.Add(container);
 
     //Create control to display the 3D primitive.
     mModel = Control::New();
     mModel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mModel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mModel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mModel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     container.Add(mModel);
 
@@ -357,7 +357,7 @@ public:
     mVisualMap[Toolkit::Visual::Property::TYPE]      = Visual::PRIMITIVE;
     mVisualMap[PrimitiveVisual::Property::MIX_COLOR] = mColor;
     mVisualMap[Visual::Property::TRANSFORM] =
-      Property::Map().Add(Visual::Transform::Property::ORIGIN, Align::CENTER).Add(Visual::Transform::Property::ANCHOR_POINT, Align::CENTER);
+      Property::Map().Add(Visual::Transform::Property::ORIGIN, Align::CENTER).Add(Visual::Transform::Property::PIVOT, Align::CENTER);
   }
 
   //Sets the 3D model to a sphere and modifies the sliders appropriately.
@@ -544,7 +544,7 @@ public:
 
     TextLabel sliderLabel = TextLabel::New(ToDaliString(visualPropertyLabel));
     sliderLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    sliderLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    sliderLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     sliderLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
 
     mSliderTable.AddChild(sliderLabel, TableView::CellPosition(sliderIndex, 0));

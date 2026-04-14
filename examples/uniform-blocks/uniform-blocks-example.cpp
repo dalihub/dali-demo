@@ -125,7 +125,7 @@ public:
   void AddActor(int n)
   {
     Actor actor = Actor::New();
-    actor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     actor.SetProperty(Actor::Property::POSITION, Vector3(Random::Range(-200.0f, 200.0f), Random::Range(-300.0f, 300.0f), 0.0f));
     actor.SetProperty(Actor::Property::SIZE, Vector2(32, 32));

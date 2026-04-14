@@ -81,18 +81,18 @@ constexpr Vector3 PARENT_ORIGIN_LIST[] = {
 };
 constexpr int PARENT_ORIGIN_LIST_COUNT = sizeof(PARENT_ORIGIN_LIST) / sizeof(PARENT_ORIGIN_LIST[0]);
 
-constexpr Vector3 ANCHOR_POINT_LIST[] = {
-  AnchorPoint::TOP_LEFT,
-  AnchorPoint::TOP_CENTER,
-  AnchorPoint::TOP_RIGHT,
-  AnchorPoint::CENTER_LEFT,
-  AnchorPoint::CENTER,
-  AnchorPoint::CENTER_RIGHT,
-  AnchorPoint::BOTTOM_LEFT,
-  AnchorPoint::BOTTOM_CENTER,
-  AnchorPoint::BOTTOM_RIGHT,
+constexpr Vector3 PIVOT_LIST[] = {
+  Pivot::TOP_LEFT,
+  Pivot::TOP_CENTER,
+  Pivot::TOP_RIGHT,
+  Pivot::CENTER_LEFT,
+  Pivot::CENTER,
+  Pivot::CENTER_RIGHT,
+  Pivot::BOTTOM_LEFT,
+  Pivot::BOTTOM_CENTER,
+  Pivot::BOTTOM_RIGHT,
 };
-constexpr int ANCHOR_POINT_LIST_COUNT = sizeof(ANCHOR_POINT_LIST) / sizeof(ANCHOR_POINT_LIST[0]);
+constexpr int PIVOT_LIST_COUNT = sizeof(PIVOT_LIST) / sizeof(PIVOT_LIST[0]);
 } // namespace
 
 // This example shows how to create and display Hello World! using a simple TextActor
@@ -128,7 +128,7 @@ public:
     }
 
     mTitle = TextLabel::New();
-    mTitle.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mTitle.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mTitle.SetProperty(TextLabel::Property::MULTI_LINE, true);
     mWindow.Add(mTitle);
 
@@ -177,10 +177,10 @@ public:
         mParentOriginIndex = (mParentOriginIndex + 1) % PARENT_ORIGIN_LIST_COUNT;
         needUpdate         = true;
       }
-      else if(event.GetKeyName() == "5") // AnchorPoint
+      else if(event.GetKeyName() == "5") // Pivot
       {
-        mAnchorPointIndex = (mAnchorPointIndex + 1) % ANCHOR_POINT_LIST_COUNT;
-        needUpdate        = true;
+        mPivotIndex = (mPivotIndex + 1) % PIVOT_LIST_COUNT;
+        needUpdate  = true;
       }
       else if(event.GetKeyName() == "6") // Size
       {
@@ -222,13 +222,13 @@ public:
     mParent = Control::New();
     mParent.SetBackgroundColor(Color::BLUE);
     mParent.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mParent.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mParent.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mParent.SetProperty(Actor::Property::SIZE, Vector3(parentViewSize));
     mParent.SetProperty(Actor::Property::POSITION, Vector3::ZERO);
     mParent.SetProperty(Actor::Property::SCALE, Vector3(parentViewScale.x, parentViewScale.y, 1.0f));
 
     Vector3 parentOrigin        = PARENT_ORIGIN_LIST[mParentOriginIndex];
-    Vector3 anchorPoint         = ANCHOR_POINT_LIST[mAnchorPointIndex];
+    Vector3 pivot               = PIVOT_LIST[mPivotIndex];
     Vector2 currentViewSize     = CURRENT_VIEW_SIZE_LIST[mCurrentSizeIndex];
     Vector2 currentViewPosition = CURRENT_VIEW_POSITION_LIST[mCurrentPositionIndex];
     Vector2 currentViewScale    = CURRENT_VIEW_SCALE_LIST[mCurrentScaleIndex];
@@ -240,7 +240,7 @@ public:
     mCurrent = Control::New();
     mCurrent.SetBackgroundColor(Color::RED);
     mCurrent.SetProperty(Actor::Property::PARENT_ORIGIN, parentOrigin);
-    mCurrent.SetProperty(Actor::Property::ANCHOR_POINT, anchorPoint);
+    mCurrent.SetProperty(Actor::Property::PIVOT, pivot);
     mCurrent.SetProperty(Actor::Property::SIZE, Vector3(currentViewSize));
     mCurrent.SetProperty(Actor::Property::POSITION, Vector3(currentViewPosition));
     mCurrent.SetProperty(Actor::Property::SCALE, Vector3(currentViewScale.x, currentViewScale.y, 1.0f));
@@ -277,7 +277,7 @@ public:
     Vector2 parentViewScale = PARENT_VIEW_SCALE_LIST[mParentScaleIndex];
 
     Vector3 parentOrigin        = PARENT_ORIGIN_LIST[mParentOriginIndex];
-    Vector3 anchorPoint         = ANCHOR_POINT_LIST[mAnchorPointIndex];
+    Vector3 pivot               = PIVOT_LIST[mPivotIndex];
     Vector2 currentViewSize     = CURRENT_VIEW_SIZE_LIST[mCurrentSizeIndex];
     Vector2 currentViewPosition = CURRENT_VIEW_POSITION_LIST[mCurrentPositionIndex];
     Vector2 currentViewScale    = CURRENT_VIEW_SCALE_LIST[mCurrentScaleIndex];
@@ -298,7 +298,7 @@ public:
     oss << "parentViewScale : " << parentViewScale << "\n";
     oss << "\n";
     oss << "parentOrigin : " << parentOrigin << "\n";
-    oss << "anchorPoint : " << anchorPoint << "\n";
+    oss << "pivot : " << pivot << "\n";
     oss << "currentViewSize : " << currentViewSize << "\n";
     oss << "currentViewPosition : " << currentViewPosition << "\n";
     oss << "currentViewScale : " << currentViewScale << "\n";
@@ -311,7 +311,7 @@ public:
     oss << "Key 2 : Change ParentView's Size\n";
     oss << "Key 3 : Change ParentView's Scale\n";
     oss << "Key 4 : Change CurrentView's ParentOrigin\n";
-    oss << "Key 5 : Change CurrentView's AnchorPoint\n";
+    oss << "Key 5 : Change CurrentView's Pivot\n";
     oss << "Key 6 : Change CurrentView's Size\n";
     oss << "Key 7 : Change CurrentView's Position\n";
     oss << "Key 8 : Change CurrentView's Scale\n";
@@ -338,7 +338,7 @@ private:
   int mCurrentPositionIndex = 0;
   int mCurrentScaleIndex    = 0;
   int mParentOriginIndex    = 0;
-  int mAnchorPointIndex     = 0;
+  int mPivotIndex           = 0;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

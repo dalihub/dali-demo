@@ -117,7 +117,7 @@ private:
 
     // Create an ImageView to visually demonstrate the ignored state
     mImageView = ImageView::New();
-    mImageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mImageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mImageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mImageView.SetProperty(Actor::Property::SIZE, Vector2(200, 200));
     mImageView.SetProperty(Dali::Actor::Property::NAME, "demoImageView");
@@ -135,7 +135,7 @@ private:
     // "Visible" Label
     mVisibleLabel = TextLabel::New();
     mVisibleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Visible"));
-    mVisibleLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mVisibleLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mVisibleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mVisibleLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
     mVisibleLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -145,7 +145,7 @@ private:
     // "Ignored" Label
     mIgnoredLabel = TextLabel::New();
     mIgnoredLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Ignored"));
-    mIgnoredLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mIgnoredLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mIgnoredLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mIgnoredLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::RED); // Use red to distinguish
     mIgnoredLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -175,7 +175,7 @@ private:
 
     mLessThanLabel = TextLabel::New();
     mLessThanLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("1 -> 0 Notified"));
-    mLessThanLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mLessThanLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mLessThanLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mLessThanLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
     mLessThanLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "BEGIN");
@@ -189,7 +189,7 @@ private:
 
     mGreaterThanLabel = TextLabel::New();
     mGreaterThanLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("0 -> 1 Notified"));
-    mGreaterThanLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_RIGHT);
+    mGreaterThanLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_RIGHT);
     mGreaterThanLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
     mGreaterThanLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::BLACK);
     mGreaterThanLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "END");

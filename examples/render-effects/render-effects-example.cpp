@@ -149,20 +149,20 @@ public:
       Toolkit::ImageView weatherIcon = Toolkit::ImageView::New(SUN_CLOUD_ICON_IMAGE);
       weatherIcon.SetProperty(Actor::Property::SIZE, Vector2(120.0f, 100.0f));
       weatherIcon.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      weatherIcon.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
+      weatherIcon.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
       weatherIcon.SetProperty(Actor::Property::POSITION, Vector2(30.0f, 30.0f));
       weatherPanel.Add(weatherIcon);
 
       label = SetUpTextLabelProperties("18", Color::WHITE, "END", 25.0f);
       label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-      label.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      label.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       label.SetProperty(Actor::Property::POSITION_X, 100.0f);
       label.SetProperty(Actor::Property::POSITION_Y, -50.0f);
       weatherPanel.Add(label);
 
       Toolkit::TextLabel unitLabel = SetUpTextLabelProperties("°C", Color::WHITE, "BEGIN");
       unitLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
-      unitLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      unitLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       label.Add(unitLabel);
 
       UIPanel.Add(weatherPanel);
@@ -231,7 +231,7 @@ public:
 
       Toolkit::TextLabel unitLabel = SetUpTextLabelProperties("°C", Color::WHITE, "BEGIN");
       unitLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
-      unitLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      unitLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       label.Add(unitLabel);
 
       label = SetUpTextLabelProperties("Living room", Color::WHITE, "BEGIN", 13.0f);
@@ -283,7 +283,7 @@ public:
     // TOP
     Toolkit::ImageView icon = Toolkit::ImageView::New(ToDaliString(iconURL));
     icon.SetProperty(Actor::Property::SIZE, Vector2(50.0f, 50.0f));
-    icon.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    icon.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     icon.SetProperty(Actor::Property::POSITION, size * 0.1f);
     panel.Add(icon);
 

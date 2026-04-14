@@ -45,16 +45,16 @@ class HelloWorldController : public ConnectionTracker
     ParentOrigin::BOTTOM_CENTER,
     ParentOrigin::BOTTOM_RIGHT};
 
-  const Vector3 AnchorPointList[OriginTypes] = {
-    AnchorPoint::TOP_LEFT,
-    AnchorPoint::TOP_CENTER,
-    AnchorPoint::TOP_RIGHT,
-    AnchorPoint::CENTER_LEFT,
-    AnchorPoint::CENTER,
-    AnchorPoint::CENTER_RIGHT,
-    AnchorPoint::BOTTOM_LEFT,
-    AnchorPoint::BOTTOM_CENTER,
-    AnchorPoint::BOTTOM_RIGHT};
+  const Vector3 PivotList[OriginTypes] = {
+    Pivot::TOP_LEFT,
+    Pivot::TOP_CENTER,
+    Pivot::TOP_RIGHT,
+    Pivot::CENTER_LEFT,
+    Pivot::CENTER,
+    Pivot::CENTER_RIGHT,
+    Pivot::BOTTOM_LEFT,
+    Pivot::BOTTOM_CENTER,
+    Pivot::BOTTOM_RIGHT};
 
 public:
   HelloWorldController(Application& application)
@@ -78,45 +78,45 @@ public:
     control.SetProperty(Actor::Property::SCALE, Vector3(0.5f, 0.5f, 1.0f));
     control.SetProperty(Actor::Property::ORIENTATION, Quaternion(Radian(Degree(45.0f)), Vector3::ZAXIS));
     control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    control.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    control.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     control.SetBackgroundColor(Color::BLUE);
     window.Add(control);
 
     SetMarker();
 
     TextLabel keyGuide = TextLabel::New();
-    keyGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Arrow Key : Move\nr : Rotate ClockWise\nR : Rotate CounterClockWise\nc : Change ParentOrigin\nC : Change AnchorPoint\ns : Scale Down\nS : Scale Up");
+    keyGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Arrow Key : Move\nr : Rotate ClockWise\nR : Rotate CounterClockWise\nc : Change ParentOrigin\nC : Change Pivot\ns : Scale Down\nS : Scale Up");
     keyGuide.SetProperty(Dali::Toolkit::TextLabel::Property::MULTI_LINE, true);
     keyGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    keyGuide.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    keyGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     window.Add(keyGuide);
 
     TextLabel screenExtentsColorGuide = TextLabel::New();
     screenExtentsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Screen Extents");
     screenExtentsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(1.0f, 1.0f, 0.0f, 0.3f));
     screenExtentsColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    screenExtentsColorGuide.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    screenExtentsColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     keyGuide.Add(screenExtentsColorGuide);
 
     TextLabel screenPositionColorGuide = TextLabel::New();
     screenPositionColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Screen Position");
     screenPositionColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(1.0f, 0.0f, 0.0f, 0.8f));
     screenPositionColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    screenPositionColorGuide.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    screenPositionColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     screenExtentsColorGuide.Add(screenPositionColorGuide);
 
     TextLabel currentScreenExtentsColorGuide = TextLabel::New();
     currentScreenExtentsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Current Screen Extents");
     currentScreenExtentsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(0.0f, 1.0f, 1.0f, 0.3f));
     currentScreenExtentsColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    currentScreenExtentsColorGuide.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    currentScreenExtentsColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     screenPositionColorGuide.Add(currentScreenExtentsColorGuide);
 
     TextLabel currentScreenPositionColorGuide = TextLabel::New();
     currentScreenPositionColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Current Screen Position");
     currentScreenPositionColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(0.0f, 1.0f, 0.0f, 0.8f));
     currentScreenPositionColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    currentScreenPositionColorGuide.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    currentScreenPositionColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     currentScreenExtentsColorGuide.Add(currentScreenPositionColorGuide);
 
     // Respond to a touch anywhere on the window
@@ -141,7 +141,7 @@ public:
     if(!extentsMarker)
     {
       extentsMarker = Toolkit::Control::New();
-      extentsMarker.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      extentsMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
       extentsMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
       extentsMarker.SetBackgroundColor(Vector4(1.0f, 1.0f, 0.0f, 0.3f));
       window.Add(extentsMarker);
@@ -151,7 +151,7 @@ public:
     {
       screenPositionMarker = Toolkit::Control::New();
       screenPositionMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(10, 10));
-      screenPositionMarker.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      screenPositionMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
       screenPositionMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
       screenPositionMarker.SetBackgroundColor(Vector4(1.0f, 0.0f, 0.0f, 0.8f));
       window.Add(screenPositionMarker);
@@ -160,7 +160,7 @@ public:
     if(!currentExtentsMarker)
     {
       currentExtentsMarker = Toolkit::Control::New();
-      currentExtentsMarker.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      currentExtentsMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
       currentExtentsMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
       currentExtentsMarker.SetBackgroundColor(Vector4(0.0f, 1.0f, 1.0f, 0.3f));
       window.Add(currentExtentsMarker);
@@ -170,7 +170,7 @@ public:
     {
       currentScreenPositionMarker = Toolkit::Control::New();
       currentScreenPositionMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(10, 10));
-      currentScreenPositionMarker.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      currentScreenPositionMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
       currentScreenPositionMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
       currentScreenPositionMarker.SetBackgroundColor(Vector4(0.0f, 1.0f, 0.0f, 0.8f));
       window.Add(currentScreenPositionMarker);
@@ -238,8 +238,8 @@ public:
       }
       if(event.GetKeyString() == "C")
       {
-        anchorPointIdx++;
-        anchorPointIdx = anchorPointIdx % OriginTypes;
+        pivotIdx++;
+        pivotIdx = pivotIdx % OriginTypes;
       }
       if(event.GetKeyString() == "s")
       {
@@ -258,7 +258,7 @@ public:
         }
       }
       control.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOriginList[parentOriginIdx]);
-      control.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPointList[anchorPointIdx]);
+      control.SetProperty(Dali::Actor::Property::PIVOT, PivotList[pivotIdx]);
       control.SetProperty(Dali::Actor::Property::POSITION, controlPosition);
       control.SetProperty(Dali::Actor::Property::ORIENTATION, controlOrientation);
       control.SetProperty(Dali::Actor::Property::SCALE, controlScale);
@@ -268,7 +268,7 @@ public:
 
 private:
   uint32_t         parentOriginIdx{4};
-  uint32_t         anchorPointIdx{0};
+  uint32_t         pivotIdx{0};
   Toolkit::Control extentsMarker;
   Toolkit::Control screenPositionMarker;
   Toolkit::Control currentExtentsMarker;

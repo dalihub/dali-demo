@@ -124,7 +124,7 @@ public:
 
     TextLabel textLabel = TextLabel::New();
     textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Precomile Shader"));
-    textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    textLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     textLabel.SetProperty(Dali::Actor::Property::NAME, "Precompile Shader");
     window.Add(textLabel);
 

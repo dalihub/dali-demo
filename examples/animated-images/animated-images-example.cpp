@@ -59,15 +59,15 @@ const char* ARRAY_RADIO_BUTTON_NAME("Array");
 /// Structure to specify the layout information for the animated images views.
 struct ImageLayoutInfo
 {
-  Vector3 anchorPoint;
+  Vector3 pivot;
   Vector3 parentOrigin;
   float   yPosition;
 };
 
 ImageLayoutInfo IMAGE_LAYOUT_INFO[ANIMATED_IMAGE_COUNT] =
   {
-    {AnchorPoint::BOTTOM_CENTER, ParentOrigin::CENTER, -80.0f},
-    {AnchorPoint::TOP_CENTER, ParentOrigin::CENTER, 80.0f}};
+    {Pivot::BOTTOM_CENTER, ParentOrigin::CENTER, -80.0f},
+    {Pivot::TOP_CENTER, ParentOrigin::CENTER, 80.0f}};
 
 } // unnamed namespace
 
@@ -138,7 +138,7 @@ private:
     radioButtonLayout.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
     radioButtonLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     radioButtonLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    radioButtonLayout.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    radioButtonLayout.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     radioButtonLayout.SetFitHeight(0);
     radioButtonLayout.AddChild(mAnimatedImageButton, TableView::CellPosition(0, 0));
     radioButtonLayout.AddChild(mArrayButton, TableView::CellPosition(0, 1));
@@ -184,7 +184,7 @@ private:
       // Create and lay out the image view according to the index
       control = Toolkit::ImageView::New();
       control.SetProperty(Toolkit::ImageView::Property::IMAGE, SetupViewProperties(mImageType, index));
-      control.SetProperty(Actor::Property::ANCHOR_POINT, IMAGE_LAYOUT_INFO[index].anchorPoint);
+      control.SetProperty(Actor::Property::PIVOT, IMAGE_LAYOUT_INFO[index].pivot);
       control.SetProperty(Actor::Property::PARENT_ORIGIN, IMAGE_LAYOUT_INFO[index].parentOrigin);
       control.SetProperty(Actor::Property::POSITION_Y, IMAGE_LAYOUT_INFO[index].yPosition);
 
@@ -233,7 +233,7 @@ private:
     animateButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, PLAY_ICON_UNSELECTED);
     animateButton.SetProperty(Toolkit::Button::Property::SELECTED_BACKGROUND_VISUAL, PLAY_ICON_SELECTED);
     animateButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    animateButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    animateButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     animateButton.ClickedSignal().Connect(this, &AnimatedImageController::OnPlayButtonClicked);
     control.Add(animateButton);
 

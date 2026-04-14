@@ -114,7 +114,7 @@ public:
     window.KeyEventSignal().Connect(this, &BenchmarkColor::OnKeyEvent);
 
     mRootActor = Actor::New();
-    mRootActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mRootActor.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mRootActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mRootActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mRootActor.SetProperty(Actor::Property::OPACITY, 0.8f); ///< Do not make it as 1.0f, to avoid full-opaque optimization.
@@ -129,7 +129,7 @@ public:
       for(auto j = 0u; j < mColumns; ++j)
       {
         Control control = Control::New();
-        control.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+        control.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
         control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
         control.SetProperty(Actor::Property::POSITION, Vector3(j * mSize.x, i * mSize.y, 0.0f));
         control.SetProperty(Actor::Property::SIZE, mSize);

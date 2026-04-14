@@ -110,7 +110,7 @@ public:
     fontClient.GetFontId(bitmapColorFont);
 
     TextLabel label01 = TextLabel::New();
-    label01.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    label01.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     label01.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     label01.SetProperty(Actor::Property::SIZE, Vector2(400.f, 50.f));
     label01.SetProperty(Actor::Property::POSITION, Vector2(0.f, -100.f));
@@ -126,7 +126,7 @@ public:
     window.Add(label01);
 
     TextLabel label02 = TextLabel::New();
-    label02.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    label02.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     label02.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     label02.SetProperty(Actor::Property::SIZE, Vector2(400.f, 50.f));
     label02.SetProperty(Actor::Property::POSITION, Vector2(0.f, -50.f));
@@ -141,7 +141,7 @@ public:
     window.Add(label02);
 
     TextLabel label03 = TextLabel::New();
-    label03.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    label03.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     label03.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     label03.SetProperty(Actor::Property::SIZE, Vector2(400.f, 50.f));
     label03.SetProperty(Actor::Property::POSITION, Vector2(0.f, 0.f));
@@ -155,7 +155,7 @@ public:
     window.Add(label03);
 
     TextLabel label04 = TextLabel::New();
-    label04.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    label04.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     label04.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     label04.SetProperty(Actor::Property::SIZE, Vector2(400.f, 50.f));
     label04.SetProperty(Actor::Property::POSITION, Vector2(0.f, 50.f));

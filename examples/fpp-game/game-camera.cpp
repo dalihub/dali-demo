@@ -183,7 +183,7 @@ bool GameCamera::OnTick()
 void GameCamera::InitialiseDefaultCamera()
 {
   mCameraActor.SetProperty(Dali::Actor::Property::NAME, "GameCamera");
-  mCameraActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mCameraActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mCameraActor.SetFieldOfView(Radian(Degree(mFovY)));
 
@@ -202,7 +202,7 @@ void GameCamera::CreateInterceptorActor()
   mInterceptorActor.SetProperty(Dali::Actor::Property::NAME, "GameInputInterceptor");
   mInterceptorActor.SetProperty(Actor::Property::SIZE, Vector3(mSceneSize.x, mSceneSize.y, 1));
   mInterceptorActor.SetProperty(Actor::Property::POSITION, Vector3(0.0, 0.0, 1.0));
-  mInterceptorActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+  mInterceptorActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mInterceptorActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mCameraActor.Add(mInterceptorActor);
 

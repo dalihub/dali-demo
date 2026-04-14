@@ -20,8 +20,8 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/public-api/controls/control-impl.h>
+#include <dali/devel-api/common/vector-wrapper.h>
 #include <dali/public-api/actors/layer.h>
-#include <dali/public-api/common/vector-wrapper.h>
 
 #include <list>
 

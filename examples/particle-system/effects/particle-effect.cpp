@@ -26,8 +26,8 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/public-api/particle-system/particle-domain.h>
 #include <dali-toolkit/public-api/particle-system/particle-renderer.h>
+#include <dali/devel-api/common/vector-wrapper.h>
 #include <dali/integration-api/string-utils.h>
-#include <dali/public-api/common/vector-wrapper.h>
 
 #include <functional>
 

@@ -20,7 +20,7 @@
     {
       "type": "PushButton",
       "parentOrigin": "TOP_CENTER",
-      "anchorPoint": "TOP_CENTER",
+      "pivot": "TOP_CENTER",
       "position": [0, 0, 0],
       "widthResizePolicy":"FILL_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
@@ -32,7 +32,7 @@
     {
       "type": "PushButton",
       "parentOrigin": "CENTER",
-      "anchorPoint": "CENTER",
+      "pivot": "CENTER",
       "position": [0, 0, 0],
       "widthResizePolicy":"FILL_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",
@@ -46,7 +46,7 @@
       "type": "PushButton",
       "name": "toggleButton",
       "parentOrigin": "BOTTOM_CENTER",
-      "anchorPoint": "BOTTOM_CENTER",
+      "pivot": "BOTTOM_CENTER",
       "position": [0, 0, 0],
       "widthResizePolicy":"FILL_TO_PARENT",
       "heightResizePolicy":"SIZE_RELATIVE_TO_PARENT",

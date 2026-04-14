@@ -62,7 +62,7 @@ public:
     mLabel = TextLabel::New();
     mLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("A Quick Brown Fox Jumps Over The Lazy Dog"));
     mLabel.SetProperty(Dali::Actor::Property::NAME, "SimpleTextLabel");
-    mLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mLabel.SetProperty(Actor::Property::SIZE, Vector2(400.f, 400.f));
     mLabel.SetProperty(TextLabel::Property::MULTI_LINE, true);

@@ -105,7 +105,7 @@ public:
     Toolkit::TableView contentTable = Toolkit::TableView::New(4, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     contentTable.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-    contentTable.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    contentTable.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     contentTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     contentTable.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5f));
 
@@ -162,7 +162,7 @@ public:
 
       mRadioButtonImage1 = Dali::Toolkit::RadioButton::New("1");
       mRadioButtonImage1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-      mRadioButtonImage1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      mRadioButtonImage1.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       mRadioButtonImage1.SetProperty(Actor::Property::POSITION, Vector2(0, DP(radioY)));
       mRadioButtonImage1.SetProperty(Toolkit::Button::Property::SELECTED, true);
 
@@ -179,7 +179,7 @@ public:
 
       mRadioButtonImage2 = Dali::Toolkit::RadioButton::New("2");
       mRadioButtonImage2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-      mRadioButtonImage2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      mRadioButtonImage2.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       mRadioButtonImage2.SetProperty(Actor::Property::POSITION, Vector2(0, DP(radioY)));
 
       imageSelectTableView.AddChild(mRadioButtonImage2, Toolkit::TableView::CellPosition(1, 0));
@@ -195,7 +195,7 @@ public:
 
       mRadioButtonImage3 = Dali::Toolkit::RadioButton::New("3");
       mRadioButtonImage3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-      mRadioButtonImage3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      mRadioButtonImage3.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       mRadioButtonImage3.SetProperty(Actor::Property::POSITION, Vector2(0, DP(radioY)));
 
       imageSelectTableView.AddChild(mRadioButtonImage3, Toolkit::TableView::CellPosition(2, 0));
@@ -265,7 +265,7 @@ public:
       Toolkit::RadioButton radioButton = Dali::Toolkit::RadioButton::New("Select enabled");
       radioButton.SetProperty(Dali::Actor::Property::NAME, "radioSelectEnable");
       radioButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-      radioButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      radioButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       radioButton.SetProperty(Actor::Property::POSITION, Vector2(0, 0));
       radioButton.SetProperty(Toolkit::Button::Property::SELECTED, true);
 
@@ -279,7 +279,7 @@ public:
       Toolkit::RadioButton radioButton = Dali::Toolkit::RadioButton::New("Select disabled");
       radioButton.SetProperty(Dali::Actor::Property::NAME, "radioSelectDisable");
       radioButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-      radioButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      radioButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       radioButton.SetProperty(Actor::Property::POSITION, Vector2(0, DP(50)));
 
       radioButton.StateChangedSignal().Connect(this, &ButtonsController::EnableSelectButton);

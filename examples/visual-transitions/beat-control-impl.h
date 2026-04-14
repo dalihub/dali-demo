@@ -128,7 +128,7 @@ private:
   Dali::Animation               mFadeAnimation;
   Dali::Vector2                 mTransformSize;
   Dali::Toolkit::Align::Type    mTransformOrigin;
-  Dali::Toolkit::Align::Type    mTransformAnchorPoint;
+  Dali::Toolkit::Align::Type    mTransformPivot;
   int                           mAnimationPlaying;
 };
 

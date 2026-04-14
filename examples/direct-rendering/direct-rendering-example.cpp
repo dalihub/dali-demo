@@ -112,7 +112,7 @@ struct RenderView
     glView.SetGraphicsConfig(true, false, 0, Toolkit::GlView::GraphicsApiVersion::GLES_VERSION_3_0);
     glView.RegisterGlCallbacks(mGlInitCallback, mGlRenderCallback, mGlTerminateCallback);
 
-    glView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    glView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     glView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
 
     // Set size on the actor (half the window size to show that glClear() and scissor test work together)
@@ -137,7 +137,7 @@ struct RenderView
 
     TextLabel textLabel = TextLabel::New(ToDaliString(strMode));
     textLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
-    textLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    textLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     textLabel.SetProperty(Dali::Actor::Property::NAME, "label");
     textLabel.SetProperty(Dali::Actor::Property::POSITION, Vector2(0, 0));

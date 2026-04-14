@@ -87,7 +87,7 @@ private:
 
     mProgressBarDefault = ProgressBar::New();
     mProgressBarDefault.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mProgressBarDefault.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mProgressBarDefault.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mProgressBarDefault.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mProgressBarDefault.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mProgressBarDefault.ValueChangedSignal().Connect(this, &ProgressBarExample::OnValueChanged);
@@ -95,13 +95,13 @@ private:
     // Creates a progress bar in circular style
     mProgressBarCircular = ProgressBar::New(ProgressBar::Style::CIRCULAR);
     mProgressBarCircular.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mProgressBarCircular.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mProgressBarCircular.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mProgressBarCircular.SetProperty(Actor::Property::SIZE, Vector2(CIRCULAR_PROGRESS_BAR_SIZE, CIRCULAR_PROGRESS_BAR_SIZE));
 
     Toolkit::TableView contentTable = Toolkit::TableView::New(2, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     contentTable.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-    contentTable.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    contentTable.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     contentTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     contentTable.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5f));
 

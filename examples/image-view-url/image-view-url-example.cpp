@@ -157,7 +157,7 @@ private:
     mImageView = Toolkit::ImageView::New(url);
 
     mImageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mImageView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mImageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mContent.Add(mImageView);
   }
 

@@ -236,7 +236,7 @@ public:
     Constraint constraint = Constraint::New<Vector3>(mMagnifier, Actor::Property::POSITION, ConfinementConstraint(Vector3(0.5f, 0.5f, 0.0f), Vector2::ONE * MAGNIFIER_INDENT, Vector2::ONE * MAGNIFIER_INDENT));
     constraint.AddSource(LocalSource(Actor::Property::SIZE));
     constraint.AddSource(LocalSource(Actor::Property::PARENT_ORIGIN));
-    constraint.AddSource(LocalSource(Actor::Property::ANCHOR_POINT));
+    constraint.AddSource(LocalSource(Actor::Property::PIVOT));
     constraint.AddSource(ParentSource(Actor::Property::SIZE));
     constraint.SetRemoveAction(Constraint::DISCARD);
     constraint.Apply();

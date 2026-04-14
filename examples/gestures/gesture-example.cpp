@@ -83,7 +83,7 @@ void AddHelpInfo(const std::string&& string, const Vector2& windowSize, Actor pa
   Actor   text = TextLabel::New(ToDaliString(string));
   Vector3 position(windowSize * HELP_TEXT_POSITION_MULTIPLIER);
 
-  text.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+  text.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
   text.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
   text.SetProperty(Actor::Property::POSITION, position);
   text.SetProperty(Actor::Property::OPACITY, 0.0f);

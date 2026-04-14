@@ -160,7 +160,7 @@ public:
       }
 
       mCard[k].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      mCard[k].SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      mCard[k].SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       mCard[k].SetProperty(Actor::Property::SIZE, Vector2(mSize.x, mSize.y));
       mCard[k].SetProperty(Actor::Property::POSITION, Vector2(mPosition[k].x, mPosition[k].y));
 
@@ -305,7 +305,7 @@ public:
 
     mBackground = Control::New();
     mBackground.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mBackground.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mBackground.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mBackground.SetProperty(Actor::Property::SIZE, WINDOW_SIZE * 2.0f);
 
     mWindow.Add(mBackground);
@@ -517,13 +517,13 @@ private:
     mAddButton = ImageView::New();
     mAddButton.SetImage(BUTTON_ADD_IMAGE);
     mAddButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    mAddButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_CENTER);
+    mAddButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mAddButton.SetProperty(Actor::Property::SIZE, BUTTON_ADD_SIZE * SCALED_WIDTH);
     mAddButton.SetProperty(Actor::Property::POSITION, BUTTON_ADD_POSITION * SCALED_WIDTH);
 
     mLabel1 = TextLabel::New(LABEL_TICKET_STR);
     mLabel1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mLabel1.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mLabel1.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mLabel1.SetProperty(Actor::Property::SIZE, LABEL_TICKET_SIZE * SCALED_WIDTH);
     mLabel1.SetProperty(Actor::Property::POSITION, LABEL_TICKET_POSITION * SCALED_WIDTH);
     mLabel1.SetProperty(Actor::Property::VISIBLE, true);
@@ -534,7 +534,7 @@ private:
 
     mLabel2 = TextLabel::New(LABEL_HOLD_STR);
     mLabel2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mLabel2.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLabel2.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLabel2.SetProperty(Actor::Property::SIZE, LABEL_HOLD_SIZE * SCALED_WIDTH);
     mLabel2.SetProperty(Actor::Property::POSITION, LABEL_HOLD_POSITION * SCALED_WIDTH);
     mLabel2.SetProperty(Actor::Property::VISIBLE, false);
@@ -545,7 +545,7 @@ private:
 
     mLabel3 = TextLabel::New(LABEL_TERMINAL_STR);
     mLabel3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mLabel3.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mLabel3.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLabel3.SetProperty(Actor::Property::SIZE, LABEL_TERMINAL_SIZE * SCALED_WIDTH);
     mLabel3.SetProperty(Actor::Property::POSITION, LABEL_TERMINAL_POSITION * SCALED_WIDTH);
     mLabel3.SetProperty(Actor::Property::VISIBLE, false);

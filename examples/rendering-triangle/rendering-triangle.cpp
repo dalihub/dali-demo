@@ -139,7 +139,7 @@ public:
     Window window = mApplication.GetWindow();
     Size   size   = Vector2(window.GetSize()) * 0.25f;
     mActor        = Actor::New();
-    mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mActor.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
     mActor.SetProperty(Actor::Property::COLOR, Color::RED);

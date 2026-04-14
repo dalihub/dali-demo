@@ -101,7 +101,7 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::BLACK);
     mLabel = TextLabel::New(material[MaterialID].name);
-    mLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_CENTER);
+    mLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mLabel.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.0f, 0.5f));
     mLabel.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize().GetWidth() * 0.5f, window.GetSize().GetHeight() * 0.083f));
     mLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
@@ -111,7 +111,7 @@ public:
     mButton = PushButton::New();
     mButton.SetProperty(Button::Property::LABEL, "Exit");
     mButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mButton.ClickedSignal().Connect(this, &BasicLightController::OnExit);
     mButton.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.1f, 0.5f));
     mButton.SetStyleName(CUSTOM_BASIC_LIGHT_THEME);
@@ -306,7 +306,7 @@ public:
     const float quarterWindowSize = std::min(windowSize.GetWidth(), windowSize.GetHeight()) * 0.25f;
     mActor                        = Actor::New();
     mActor.SetProperty(Actor::Property::COLOR, Vector4(1.0f, 1.0f, 0.6f, 1.0f));
-    mActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mActor.SetProperty(Actor::Property::SIZE, Vector3(quarterWindowSize, quarterWindowSize, quarterWindowSize));
     mActor.AddRenderer(mRenderer);

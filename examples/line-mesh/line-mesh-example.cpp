@@ -170,7 +170,7 @@ public:
     mRenderer.SetProperty(Renderer::Property::DEPTH_INDEX, 0);
 
     mMeshActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mMeshActor.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    mMeshActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     window.Add(mMeshActor);
 
     Animation animation = Animation::New(5);
@@ -192,7 +192,7 @@ public:
 
     Toolkit::TableView modeSelectTableView = Toolkit::TableView::New(4, 1);
     modeSelectTableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    modeSelectTableView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    modeSelectTableView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     modeSelectTableView.SetFitHeight(0);
     modeSelectTableView.SetFitHeight(1);
     modeSelectTableView.SetFitHeight(2);
@@ -216,7 +216,7 @@ public:
                           .Add(Toolkit::TextVisual::Property::TEXT_COLOR, Vector4(0.8f, 0.8f, 0.8f, 1.0f)));
 
       radio.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-      radio.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+      radio.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
       radio.SetProperty(Toolkit::Button::Property::SELECTED, i == 0);
       radio.PressedSignal().Connect(this, &ExampleController::OnButtonPressed);
       mButtons[i] = radio;
@@ -226,7 +226,7 @@ public:
     Toolkit::TableView elementCountTableView = Toolkit::TableView::New(1, 3);
     elementCountTableView.SetCellPadding(Vector2(6.0f, 0.0f));
     elementCountTableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    elementCountTableView.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
+    elementCountTableView.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     elementCountTableView.SetFitHeight(0);
     elementCountTableView.SetFitWidth(0);
     elementCountTableView.SetFitWidth(1);
@@ -234,19 +234,19 @@ public:
     mMinusButton = Toolkit::PushButton::New();
     mMinusButton.SetProperty(Toolkit::Button::Property::LABEL, "<<");
     mMinusButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mMinusButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+    mMinusButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
 
     mPlusButton = Toolkit::PushButton::New();
     mPlusButton.SetProperty(Toolkit::Button::Property::LABEL, ">>");
     mPlusButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mPlusButton.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_RIGHT);
+    mPlusButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_RIGHT);
 
     mMinusButton.ClickedSignal().Connect(this, &ExampleController::OnButtonClicked);
     mPlusButton.ClickedSignal().Connect(this, &ExampleController::OnButtonClicked);
 
     mIndicesCountLabel = Toolkit::TextLabel::New();
     mIndicesCountLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mIndicesCountLabel.SetProperty(Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mIndicesCountLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     std::stringstream str;
     str << mCurrentIndexCount;

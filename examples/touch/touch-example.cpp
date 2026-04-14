@@ -70,7 +70,7 @@ public:
     mKeyDescription = Dali::Toolkit::TextLabel::New("C : Major Scenario Type Change\n1 ~ 0 : Scenario Detail Change\nG : PropagationType::GEOMETRY\nP : PropagationType::PARENT");
     mKeyDescription.SetProperty(Dali::Toolkit::TextLabel::Property::MULTI_LINE, true);
     mKeyDescription.SetProperty(Dali::Actor::Property::NAME, "mKeyDescription");
-    mKeyDescription.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::BOTTOM_LEFT);
+    mKeyDescription.SetProperty(Dali::Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     mKeyDescription.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     window.Add(mKeyDescription);
 
@@ -80,25 +80,25 @@ public:
 
     mScenarioTypeLabel = Dali::Toolkit::TextLabel::New();
     mScenarioTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mScenarioTypeLabelString));
-    mScenarioTypeLabel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mScenarioTypeLabel.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mScenarioTypeLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     window.Add(mScenarioTypeLabel);
 
     mScenarioDetailLabel = Dali::Toolkit::TextLabel::New();
     mScenarioDetailLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mScenarioDetailLabelString));
-    mScenarioDetailLabel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mScenarioDetailLabel.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mScenarioDetailLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     mScenarioTypeLabel.Add(mScenarioDetailLabel);
 
     mPropagationTypeLabel = Dali::Toolkit::TextLabel::New();
     mPropagationTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mPropagationTypeLabelString));
-    mPropagationTypeLabel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    mPropagationTypeLabel.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mPropagationTypeLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     mScenarioDetailLabel.Add(mPropagationTypeLabel);
 
     Toolkit::Control touchableControl = Toolkit::Control::New();
     touchableControl.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, basicColorMap);
-    touchableControl.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    touchableControl.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     touchableControl.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     touchableControl.SetProperty(Dali::Actor::Property::SIZE, 30);
     mPropagationTypeLabel.Add(touchableControl);
@@ -106,13 +106,13 @@ public:
     Dali::Toolkit::TextLabel touchableExampleLabel = Dali::Toolkit::TextLabel::New();
     touchableExampleLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Touchable Control");
     touchableExampleLabel.SetProperty(Dali::Actor::Property::SIZE_WIDTH, 1500.0f);
-    touchableExampleLabel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+    touchableExampleLabel.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER_LEFT);
     touchableExampleLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT);
     touchableControl.Add(touchableExampleLabel);
 
     Toolkit::Control notTouchableControl = Toolkit::Control::New();
     notTouchableControl.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, notTouchableColorMap);
-    notTouchableControl.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    notTouchableControl.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     notTouchableControl.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     notTouchableControl.SetProperty(Dali::Actor::Property::SIZE, 30);
     touchableControl.Add(notTouchableControl);
@@ -120,13 +120,13 @@ public:
     Dali::Toolkit::TextLabel notTouchableExampleLabel = Dali::Toolkit::TextLabel::New();
     notTouchableExampleLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Not Touchable Control (Not Consume, No Touch Event etc.)");
     notTouchableExampleLabel.SetProperty(Dali::Actor::Property::SIZE_WIDTH, 1500.0f);
-    notTouchableExampleLabel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+    notTouchableExampleLabel.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER_LEFT);
     notTouchableExampleLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT);
     notTouchableControl.Add(notTouchableExampleLabel);
 
     Toolkit::Control touchedControl = Toolkit::Control::New();
     touchedControl.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, touchedColorMap);
-    touchedControl.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    touchedControl.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     touchedControl.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     touchedControl.SetProperty(Dali::Actor::Property::SIZE, 30);
     notTouchableControl.Add(touchedControl);
@@ -134,7 +134,7 @@ public:
     Dali::Toolkit::TextLabel touchedExampleLabel = Dali::Toolkit::TextLabel::New();
     touchedExampleLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Touched Control");
     touchedExampleLabel.SetProperty(Dali::Actor::Property::SIZE_WIDTH, 1500.0f);
-    touchedExampleLabel.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER_LEFT);
+    touchedExampleLabel.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER_LEFT);
     touchedExampleLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT);
     touchedControl.Add(touchedExampleLabel);
 
@@ -183,7 +183,7 @@ public:
     Toolkit::Control control = Toolkit::Control::New();
     control.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, map);
     control.SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(name));
-    control.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    control.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     control.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     control.SetProperty(Dali::Actor::Property::POSITION, position);
     control.SetProperty(Dali::Actor::Property::SIZE, size);
@@ -195,7 +195,7 @@ public:
 
     Dali::Toolkit::TextLabel tag = Dali::Toolkit::TextLabel::New(ToDaliStringView(name));
     tag.SetProperty(Dali::Actor::Property::SIZE_WIDTH, 1500.0f);
-    tag.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    tag.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     tag.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     control.Add(tag);
     mActorList.push_back(tag);
@@ -232,7 +232,7 @@ public:
     window.Add(control1);
 
     Layer layer = Layer::New();
-    layer.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::TOP_LEFT);
+    layer.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     layer.SetProperty(Dali::Actor::Property::NAME, "layer");
     layer.SetProperty(Dali::Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     layer.SetProperty(Dali::Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
@@ -386,7 +386,7 @@ public:
     float             cameraDefaultZPosition = cameraActor.GetProperty<float>(Dali::Actor::Property::POSITION_Z);
     cameraActor.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.0f, 0.0f, cameraDefaultZPosition));
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    cameraActor.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    cameraActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mActorList.push_back(cameraActor);
     window.Add(cameraActor);
 
@@ -403,7 +403,7 @@ public:
     {
       positionControl = Toolkit::Control::New();
       positionControl.SetProperty(Dali::Actor::Property::NAME, "Maping Actor");
-      positionControl.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      positionControl.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
       positionControl.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mActorList.push_back(positionControl);
 
@@ -419,7 +419,7 @@ public:
       renderTask.SetScreenToFrameBufferMappingActor(positionControl);
       renderTask.GetCameraActor().SetInvertYAxis(true);
 
-      Dali::Toolkit::ImageUrl imageUrl = Dali::Toolkit::Image::GenerateUrl(frameBuffer, 0u);
+      Dali::Toolkit::ImageUrl imageUrl = Dali::Toolkit::ImageUrlUtils::GenerateUrl(frameBuffer, 0u);
       Property::Map           imagePropertyMap;
       imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
       imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, imageUrl.GetUrl());
@@ -431,7 +431,7 @@ public:
     {
       positionControl = Toolkit::Control::New();
       positionControl.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, basicColorMap);
-      positionControl.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+      positionControl.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
       positionControl.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mActorList.push_back(positionControl);
 
@@ -458,7 +458,7 @@ public:
     float             cameraDefaultZPosition = cameraActor.GetProperty<float>(Dali::Actor::Property::POSITION_Z);
     cameraActor.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.0f, 0.0f, cameraDefaultZPosition));
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    cameraActor.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    cameraActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mActorList.push_back(cameraActor);
     window.Add(cameraActor);
 
@@ -506,7 +506,7 @@ public:
     float             cameraDefaultZPosition = cameraActor.GetProperty<float>(Dali::Actor::Property::POSITION_Z);
     cameraActor.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.0f, 0.0f, cameraDefaultZPosition));
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    cameraActor.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    cameraActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mActorList.push_back(cameraActor);
     window.Add(cameraActor);
 
@@ -521,7 +521,7 @@ public:
     Toolkit::Control positionControl;
     positionControl = Toolkit::Control::New();
     positionControl.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, basicColorMap);
-    positionControl.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    positionControl.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     positionControl.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mActorList.push_back(positionControl);
 
@@ -549,7 +549,7 @@ public:
     float             cameraDefaultZPosition = cameraActor.GetProperty<float>(Dali::Actor::Property::POSITION_Z);
     cameraActor.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.0f, 0.0f, cameraDefaultZPosition));
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    cameraActor.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    cameraActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mActorList.push_back(cameraActor);
     window.Add(cameraActor);
 
@@ -564,7 +564,7 @@ public:
     Toolkit::Control positionControl;
     positionControl = Toolkit::Control::New();
     positionControl.SetProperty(Dali::Actor::Property::NAME, "Maping Actor");
-    positionControl.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    positionControl.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     positionControl.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mActorList.push_back(positionControl);
 
@@ -580,7 +580,7 @@ public:
     renderTask.SetScreenToFrameBufferMappingActor(positionControl);
     renderTask.GetCameraActor().SetInvertYAxis(false);
 
-    Dali::Toolkit::ImageUrl imageUrl = Dali::Toolkit::Image::GenerateUrl(frameBuffer, 0u);
+    Dali::Toolkit::ImageUrl imageUrl = Dali::Toolkit::ImageUrlUtils::GenerateUrl(frameBuffer, 0u);
     Property::Map           imagePropertyMap;
     imagePropertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
     imagePropertyMap.Insert(Toolkit::ImageVisual::Property::URL, imageUrl.GetUrl());
@@ -734,7 +734,7 @@ public:
     mScenarioDetailLabelString = "3D Scene With Simple Object";
 
     Dali::Scene3D::SceneView sceneView = Scene3D::SceneView::New();
-    sceneView.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    sceneView.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::NAME, "SCENEVIEW");
     //    sceneView.SetProperty(Dali::Actor::Property::POSITION, Vector2(-200.0f, -200.0f));
@@ -768,7 +768,7 @@ public:
     mScenarioDetailLabelString = "3D Scene with Panel";
 
     Dali::Scene3D::SceneView sceneView = Scene3D::SceneView::New();
-    sceneView.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    sceneView.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::NAME, "SCENEVIEW");
     sceneView.SetProperty(Dali::Actor::Property::SIZE, Vector2(1000.0f, 800.0f));
@@ -814,7 +814,7 @@ public:
     mScenarioDetailLabelString = "3D Scene with Multi Overlapped Models";
 
     Dali::Scene3D::SceneView sceneView = Scene3D::SceneView::New();
-    sceneView.SetProperty(Dali::Actor::Property::ANCHOR_POINT, AnchorPoint::CENTER);
+    sceneView.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::NAME, "SCENEVIEW");
     sceneView.SetProperty(Dali::Actor::Property::SIZE, Vector2(1000.0f, 800.0f));
