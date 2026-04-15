@@ -255,7 +255,7 @@ public:
 
     Toolkit::ImageView image = Toolkit::ImageView::New(ENABLED_IMAGE);
     image.SetProperty(Actor::Property::SIZE, Vector2(DP(RADIO_LABEL_THUMBNAIL_SIZE), DP(RADIO_LABEL_THUMBNAIL_SIZE)));
-    image.SetProperty(Actor::Property::PADDING, Padding(DP(20.0f), 0.0f, 0.0f, 0.0f));
+    image.SetProperty(Actor::Property::PADDING, Vector4(DP(20.0f), 0.0f, 0.0f, 0.0f));
     tableView.AddChild(image, Toolkit::TableView::CellPosition(0, 1));
 
     radioButtonsGroup1.Add(tableView);

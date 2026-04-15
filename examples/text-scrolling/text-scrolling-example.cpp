@@ -99,7 +99,7 @@ public:
     label = TextLabel::New(ToDaliString(text));
     label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     label.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
-    label.SetProperty(Actor::Property::PADDING, Padding(1.0f, 1.0f, 1.0f, 1.0f));
+    label.SetProperty(Actor::Property::PADDING, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
     label.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     parent.Add(label);
@@ -162,7 +162,7 @@ public:
     // Create TextField
     TextField field = TextField::New();
     field.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    field.SetProperty(Actor::Property::PADDING, Padding(1.0f, 1.0f, 1.0f, 1.0f));
+    field.SetProperty(Actor::Property::PADDING, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
     field.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     field.SetProperty(TextField::Property::PLACEHOLDER_TEXT, "Enter Folder Name");
     field.SetProperty(TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>(SCREEN_BORDER, SCREEN_BORDER, mWindowSize.width - SCREEN_BORDER * 2, mWindowSize.height - SCREEN_BORDER * 2));
