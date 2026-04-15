@@ -40,11 +40,16 @@ struct YuvImageInfo
 
 static const YuvImageInfo IMAGE_INFOS[] =
   {
+    // YUV images
     {"YUV444", DEMO_IMAGE_DIR "gallery-small-1.jpg"},
     {"YUV420", DEMO_IMAGE_DIR "gallery-small-1-yuv420.jpg"},
     {"YUV422", DEMO_IMAGE_DIR "woodEffect.jpg"},
     ///< TODO : Need to collect more kinds of YUV!
     /// Required resources : GRAY, YUV_440, YUV_411, YUV_441
+
+    // Non-YUV images.
+    {"PNG", DEMO_IMAGE_DIR "application-icon-0.png"},
+    {"ETC1", DEMO_IMAGE_DIR "tx-etc1.ktx"},
 };
 static const int NUM_IMAGE_INFOS = (sizeof(IMAGE_INFOS) / sizeof(IMAGE_INFOS[0]));
 
