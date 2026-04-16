@@ -25,6 +25,7 @@
 #include <dali-toolkit/public-api/particle-system/particle-types.h>
 
 #include <dali-toolkit/public-api/particle-system/particle-modifier.h>
+#include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/string-utils.h>
 
 #include "effects/particle-effect.h"
@@ -66,10 +67,10 @@ private:
     auto windowSize = window.GetSize();
 
     // Set up emitter actor to be the full size of the window as some particles may be outside a particular size
-    mEmitterActor = Handle::New<Actor>({{Actor::Property::PIVOT, Pivot::CENTER},
-                                        {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-                                        {Actor::Property::POSITION, Vector2::ZERO},
-                                        {Actor::Property::SIZE, Vector2(windowSize.GetWidth(), windowSize.GetHeight())}});
+    mEmitterActor = Handle::New<Actor>(CreatePropertyMap({{Actor::Property::PIVOT, Pivot::CENTER},
+                                                          {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
+                                                          {Actor::Property::POSITION, Vector2::ZERO},
+                                                          {Actor::Property::SIZE, Vector2(windowSize.GetWidth(), windowSize.GetHeight())}}));
     window.Add(mEmitterActor);
 
     // Create a tap gesture detector, attach the actor & connect
@@ -82,11 +83,11 @@ private:
     window.KeyEventSignal().Connect(this, &ParticleEffectController::OnKeyEvent);
 
     // Create a Text Label at the bottom of the screen
-    mTextLabel = Handle::New<TextLabel>({{Actor::Property::PIVOT, Pivot::BOTTOM_CENTER},
-                                         {Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER},
-                                         {TextLabel::Property::MULTI_LINE, true},
-                                         {TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER},
-                                         {TextLabel::Property::TEXT_COLOR, Color::WHITE}});
+    mTextLabel = Handle::New<TextLabel>(CreatePropertyMap({{Actor::Property::PIVOT, Pivot::BOTTOM_CENTER},
+                                                           {Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER},
+                                                           {TextLabel::Property::MULTI_LINE, true},
+                                                           {TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER},
+                                                           {TextLabel::Property::TEXT_COLOR, Color::WHITE}}));
     window.Add(mTextLabel);
 
     // Create a fade out animation for the text label after a few seconds

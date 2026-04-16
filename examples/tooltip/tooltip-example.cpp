@@ -18,6 +18,8 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/tooltip/tooltip-properties.h>
+#include <dali/devel-api/object/property-array-devel.h>
+#include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -96,20 +98,21 @@ private:
     SetLabel(customFromCode, "Custom From Code");
     Layout(customFromCode, windowSize);
     customFromCode.SetProperty(DevelControl::Property::TOOLTIP,
-                               {{Tooltip::Property::CONTENT,
-                                 Property::Array{{{{Toolkit::Visual::Property::TYPE, Visual::IMAGE},
-                                                   {ImageVisual::Property::URL, DEMO_IMAGE_DIR "Logo-for-demo.png"}}},
-                                                 {{{Toolkit::Visual::Property::TYPE, Visual::TEXT},
-                                                   {TextVisual::Property::TEXT_COLOR, Color::WHITE},
-                                                   {TextVisual::Property::TEXT, "Custom coded style\nat hover point"},
-                                                   {TextVisual::Property::MULTI_LINE, true},
-                                                   {TextVisual::Property::HORIZONTAL_ALIGNMENT, "CENTER"},
-                                                   {TextVisual::Property::POINT_SIZE, 16}}}}},
-                                {Tooltip::Property::LAYOUT, Vector2(2, 1)},
-                                {Tooltip::Property::POSITION, Tooltip::Position::HOVER_POINT},
-                                {Tooltip::Property::BACKGROUND,
-                                 {{Tooltip::Background::Property::VISUAL, DEMO_IMAGE_DIR "tooltip.9.png"},
-                                  {Tooltip::Background::Property::BORDER, Rect<int>(1, 5, 5, 1)}}}});
+                               CreatePropertyMap({{Tooltip::Property::CONTENT,
+                                                   CreatePropertyArray(
+                                                     {CreatePropertyMap({{Toolkit::Visual::Property::TYPE, Visual::IMAGE},
+                                                                         {ImageVisual::Property::URL, DEMO_IMAGE_DIR "Logo-for-demo.png"}}),
+                                                      CreatePropertyMap({{Toolkit::Visual::Property::TYPE, Visual::TEXT},
+                                                                         {TextVisual::Property::TEXT_COLOR, Color::WHITE},
+                                                                         {TextVisual::Property::TEXT, "Custom coded style\nat hover point"},
+                                                                         {TextVisual::Property::MULTI_LINE, true},
+                                                                         {TextVisual::Property::HORIZONTAL_ALIGNMENT, "CENTER"},
+                                                                         {TextVisual::Property::POINT_SIZE, 16}})})},
+                                                  {Tooltip::Property::LAYOUT, Vector2(2, 1)},
+                                                  {Tooltip::Property::POSITION, Tooltip::Position::HOVER_POINT},
+                                                  {Tooltip::Property::BACKGROUND,
+                                                   CreatePropertyMap({{Tooltip::Background::Property::VISUAL, DEMO_IMAGE_DIR "tooltip.9.png"},
+                                                                      {Tooltip::Background::Property::BORDER, Rect<int>(1, 5, 5, 1)}})}}));
     window.Add(customFromCode);
   }
 

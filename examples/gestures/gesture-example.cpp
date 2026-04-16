@@ -17,6 +17,8 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/object/property-array-devel.h>
+#include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <string>
 using Dali::Integration::GetStdString;
@@ -32,16 +34,16 @@ using namespace std;
 namespace
 {
 const Property::Value BACKGROUND{
-  {Toolkit::Visual::Property::TYPE, Visual::GRADIENT},
-  {GradientVisual::Property::STOP_COLOR, Property::Array{Vector4(167.0f, 207.0f, 223.0f, 255.0f) / 255.0f, Vector4(0.0f, 64.0f, 137.0f, 255.0f) / 255.0f}},
-  {GradientVisual::Property::START_POSITION, Vector2(0.0f, -0.5f)},
-  {GradientVisual::Property::END_POSITION, Vector2(0.0f, 0.5f)}};
+  CreatePropertyMap({{Toolkit::Visual::Property::TYPE, Visual::GRADIENT},
+                     {GradientVisual::Property::STOP_COLOR, CreatePropertyArray({Vector4(167.0f, 207.0f, 223.0f, 255.0f) / 255.0f, Vector4(0.0f, 64.0f, 137.0f, 255.0f) / 255.0f})},
+                     {GradientVisual::Property::START_POSITION, Vector2(0.0f, -0.5f)},
+                     {GradientVisual::Property::END_POSITION, Vector2(0.0f, 0.5f)}})};
 
 const Property::Value CONTROL_BACKGROUND{
-  {Toolkit::Visual::Property::TYPE, Visual::GRADIENT},
-  {GradientVisual::Property::STOP_COLOR, Property::Array{Vector4(234.0f, 185.0f, 45.0f, 255.0f) / 255.0f, Vector4(199.0f, 152.0f, 16.0f, 255.0f) / 255.0f}},
-  {GradientVisual::Property::CENTER, Vector2::ZERO},
-  {GradientVisual::Property::RADIUS, 0.5f}};
+  CreatePropertyMap({{Toolkit::Visual::Property::TYPE, Visual::GRADIENT},
+                     {GradientVisual::Property::STOP_COLOR, CreatePropertyArray({Vector4(234.0f, 185.0f, 45.0f, 255.0f) / 255.0f, Vector4(199.0f, 152.0f, 16.0f, 255.0f) / 255.0f})},
+                     {GradientVisual::Property::CENTER, Vector2::ZERO},
+                     {GradientVisual::Property::RADIUS, 0.5f}})};
 
 const float   HELP_ANIMATION_DURATION(25.0f);
 const float   HELP_ANIMATION_SEGMENT_TIME(5.0f);
