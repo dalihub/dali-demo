@@ -551,7 +551,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   focusableTile.TouchedSignal().Connect(this, &DaliTableView::OnTilePressed);
   focusableTile.HoveredSignal().Connect(this, &DaliTableView::OnTileHovered);
   focusableTile.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::PUSH_BUTTON);
-  DevelControl::AccessibilityActivateSignal(focusableTile).Connect(this, [=]()
+  DevelControl::AccessibilityActivateSignal(focusableTile).Connect(this, [this, focusableTile]()
   {
     DoTilePress(focusableTile, PointState::DOWN);
     DoTilePress(focusableTile, PointState::UP);
