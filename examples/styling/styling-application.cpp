@@ -382,7 +382,7 @@ Actor StylingApplication::CreateContentPane()
   contentPane.SetProperty(Dali::Actor::Property::NAME, "ContentPane");
   contentPane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   contentPane.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  contentPane.SetProperty(Actor::Property::PADDING, Padding(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
+  contentPane.SetProperty(Actor::Property::PADDING, Vector4(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
   return contentPane;
 }
 
@@ -392,7 +392,7 @@ Actor StylingApplication::CreateResizableContentPane()
   contentPane.SetProperty(Dali::Actor::Property::NAME, "ContentPane");
   contentPane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   contentPane.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  contentPane.SetProperty(Actor::Property::PADDING, Padding(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
+  contentPane.SetProperty(Actor::Property::PADDING, Vector4(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
 
   Toolkit::ImageView grabHandle = Toolkit::ImageView::New(RESIZE_HANDLE_IMAGE);
   grabHandle.SetProperty(Dali::Actor::Property::NAME, "GrabHandle");
@@ -439,7 +439,7 @@ Popup StylingApplication::CreateResetPopup()
   text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
   text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
   text.SetProperty(TextLabel::Property::MULTI_LINE, true);
-  text.SetProperty(Actor::Property::PADDING, Padding(10.0f, 10.0f, 20.0f, 0.0f));
+  text.SetProperty(Actor::Property::PADDING, Vector4(10.0f, 10.0f, 0.0f, 20.0f));
   popup.SetContent(text);
 
   ImageView footer = ImageView::New(DEFAULT_CONTROL_AREA_IMAGE_PATH);

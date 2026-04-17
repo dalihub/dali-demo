@@ -167,7 +167,7 @@ public:
     mShapeTitle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mShapeTitle.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mShapeTitle.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-    mShapeTitle.SetProperty(Actor::Property::PADDING, Padding(elementPadding, elementPadding, elementPadding, elementPadding));
+    mShapeTitle.SetProperty(Actor::Property::PADDING, Vector4(elementPadding, elementPadding, elementPadding, elementPadding));
     topAlignment.Add(mShapeTitle);
 
     //Create a variable-length container that can wrap buttons around as more are added.
@@ -176,7 +176,7 @@ public:
     buttonContainer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     buttonContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     buttonContainer.SetResizePolicy(ResizePolicy::FIXED, Dimension::HEIGHT);
-    buttonContainer.SetProperty(Actor::Property::PADDING, Padding(containerPadding, containerPadding, containerPadding, containerPadding));
+    buttonContainer.SetProperty(Actor::Property::PADDING, Vector4(containerPadding, containerPadding, containerPadding, containerPadding));
     buttonContainer.SetProperty(FlexContainer::Property::FLEX_DIRECTION, FlexContainer::ROW);
     buttonContainer.SetProperty(FlexContainer::Property::FLEX_WRAP, FlexContainer::WRAP);
     topAlignment.Add(buttonContainer);
@@ -188,7 +188,7 @@ public:
       button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       button.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-      button.SetProperty(Actor::Property::PADDING, Padding(elementPadding, elementPadding, elementPadding, elementPadding));
+      button.SetProperty(Actor::Property::PADDING, Vector4(elementPadding, elementPadding, elementPadding, elementPadding));
       button.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGE_URL[modelNumber]);
       button.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, BUTTON_IMAGE_URL[modelNumber]);
       button.RegisterProperty("modelNumber", Property::Value(modelNumber));

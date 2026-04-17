@@ -200,7 +200,7 @@ Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrac
   contentActor.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
   contentActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
   contentActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-  contentActor.SetProperty(Actor::Property::PADDING, Padding(0.0f, 0.0f, 20.0f, 0.0f));
+  contentActor.SetProperty(Actor::Property::PADDING, Vector4(0.0f, 0.0f, 0.0f, 20.0f));
 
   popup.SetTitle(titleActor);
   popup.SetContent(contentActor);
@@ -328,7 +328,7 @@ void DaliTableView::Initialize(Application& application)
   mScrollView.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, 0.6f, 0.0f));
 
   const float buttonsPageMargin = (1.0f - TABLE_RELATIVE_SIZE.x) * 0.5f * windowSize.GetWidth();
-  mScrollView.SetProperty(Actor::Property::PADDING, Padding(buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f));
+  mScrollView.SetProperty(Actor::Property::PADDING, Vector4(buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f));
 
   mScrollView.SetAxisAutoLock(true);
   mScrollView.ScrollCompletedSignal().Connect(this, &DaliTableView::OnScrollComplete);
@@ -483,7 +483,7 @@ void DaliTableView::Populate()
           Vector2 position(static_cast<float>(column) / (EXAMPLES_PER_ROW - 1.0f), static_cast<float>(row) / (EXAMPLES_PER_ROW - 1.0f));
           Actor   tile = CreateTile(example.name, example.title, Vector3(tileParentMultiplier, tileParentMultiplier, 1.0f), position);
 
-          tile.SetProperty(Actor::Property::PADDING, Padding(margin, margin, margin, margin));
+          tile.SetProperty(Actor::Property::PADDING, Vector4(margin, margin, margin, margin));
           page.AddChild(tile, TableView::CellPosition(row, column));
 
           iter++;
@@ -543,7 +543,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
 
   // Pad around the label as its size is the same as the 9-patch border. It will overlap it without padding.
-  label.SetProperty(Actor::Property::PADDING, Padding(TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING));
+  label.SetProperty(Actor::Property::PADDING, Vector4(TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING));
   DevelControl::AppendAccessibilityRelation(label, focusableTile, Accessibility::RelationType::CONTROLLED_BY);
   focusableTile.Add(label);
 
