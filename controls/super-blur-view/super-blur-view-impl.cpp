@@ -19,7 +19,6 @@
 #include "super-blur-view-impl.h"
 
 // EXTERNAL INCLUDES
-#include <cmath>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/public-api/image-loader/sync-image-loader.h>
@@ -32,6 +31,7 @@
 #include <dali/public-api/animation/constraint.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/rendering/renderer.h>
+#include <cmath>
 
 // INTERNAL INCLUDES
 #include <controls/shaders/control-renderers-frag.h>
@@ -117,7 +117,7 @@ DALI_TYPE_REGISTRATION_END()
 } // unnamed namespace
 
 SuperBlurView::SuperBlurView(unsigned int blurLevels)
-: Toolkit::ControlImpl(ControlBehaviour(DISABLE_SIZE_NEGOTIATION | DISABLE_STYLE_CHANGE_SIGNALS)),
+: Toolkit::ControlImpl(ControlBehaviour(static_cast<ControlBehaviour>(DISABLE_SIZE_NEGOTIATION) | DISABLE_STYLE_CHANGE_SIGNALS)),
   mTargetSize(Vector2::ZERO),
   mBlurStrengthPropertyIndex(Property::INVALID_INDEX),
   mBlurLevels(blurLevels),
