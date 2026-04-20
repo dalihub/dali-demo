@@ -21,6 +21,7 @@
 // EXTERNAL INCLUDES
 #include <dali/devel-api/common/vector-wrapper.h>
 #include <dali/public-api/images/pixel-data.h>
+#include <string>
 
 using namespace Dali;
 
