@@ -19,6 +19,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/toggle-button.h>
 #include <dali/dali.h>
+#include <dali/devel-api/object/property-array-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <math.h>
 
@@ -222,9 +223,9 @@ void CubeTransitionApp::OnInit(Application& application)
   Toolkit::ToggleButton effectChangeToggleButton = Toolkit::ToggleButton::ToggleButton::New();
 
   effectChangeToggleButton.SetProperty(Toolkit::ToggleButton::Property::STATE_VISUALS,
-                                       Property::Array{EFFECT_WAVE_IMAGE,
-                                                       EFFECT_CROSS_IMAGE,
-                                                       EFFECT_FOLD_IMAGE});
+                                       CreatePropertyArray({EFFECT_WAVE_IMAGE,
+                                                            EFFECT_CROSS_IMAGE,
+                                                            EFFECT_FOLD_IMAGE}));
 
   effectChangeToggleButton.ClickedSignal().Connect(this, &CubeTransitionApp::OnEffectButtonClicked);
   mToolBar.AddControl(effectChangeToggleButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_RIGHT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);

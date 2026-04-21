@@ -28,7 +28,7 @@
       "content": {
         "type": "TextLabel",
         "text": "Content text",
-        "padding": [20, 20, 20, 0],
+        "padding": [20, 20, 0, 20],
         "textColor": [1, 1, 1, 1]
       },
       "footer": {
@@ -155,7 +155,7 @@
       "content": {
         "type": "TextLabel",
         "text": "Content text",
-        "padding": [20, 20, 20, 0],
+        "padding": [20, 20, 0, 20],
         "textColor": [1, 1, 1, 1]
       },
       "footer": {

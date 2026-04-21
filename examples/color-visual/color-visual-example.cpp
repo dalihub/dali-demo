@@ -19,6 +19,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/color-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -42,12 +43,12 @@ const float   ANIMATION_DURATION(2.0f);
 constexpr Vector4 CORNER_RADIUS_VALUE(30.0f, 30.0f, 30.0f, 30.0f);
 
 const Property::Value SHADOW{
-  {Visual::Property::TYPE, Visual::COLOR},
-  {Visual::Property::MIX_COLOR, Vector4(0.0f, 0.0f, 0.0f, 0.5f)},
-  {Visual::Property::TRANSFORM,
-   Property::Map{{Visual::Transform::Property::SIZE, NO_BLUR_SIZE_VALUE},
-                 {Visual::Transform::Property::ORIGIN, Align::CENTER},
-                 {Visual::Transform::Property::PIVOT, Align::CENTER}}}};
+  CreatePropertyMap({{Visual::Property::TYPE, Visual::COLOR},
+                     {Visual::Property::MIX_COLOR, Vector4(0.0f, 0.0f, 0.0f, 0.5f)},
+                     {Visual::Property::TRANSFORM,
+                      CreatePropertyMap({{Visual::Transform::Property::SIZE, NO_BLUR_SIZE_VALUE},
+                                         {Visual::Transform::Property::ORIGIN, Align::CENTER},
+                                         {Visual::Transform::Property::PIVOT, Align::CENTER}})}})};
 
 } // namespace
 

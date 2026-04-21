@@ -21,6 +21,7 @@
 #include <dali-toolkit/devel-api/visuals/arc-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-actions-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali/devel-api/object/property-value-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -39,19 +40,17 @@ const float SWEEP_ANGLE_INITIAL_VALUE(90.0f);
 const float SWEEP_ANGLE_TARGET_VALUE(360.0f);
 const float ANIMATION_DURATION(3.0f);
 
-const Property::Value BACKGROUND{
-  {Visual::Property::TYPE, DevelVisual::ARC},
-  {Visual::Property::MIX_COLOR, Color::RED},
-  {DevelArcVisual::Property::START_ANGLE, 0.0f},
-  {DevelArcVisual::Property::SWEEP_ANGLE, 90.0f},
-  {DevelArcVisual::Property::CAP, DevelArcVisual::Cap::ROUND},
-  {DevelArcVisual::Property::THICKNESS, 20.0f}};
+const Property::Value BACKGROUND = CreatePropertyValue({{Visual::Property::TYPE, DevelVisual::ARC},
+                                                        {Visual::Property::MIX_COLOR, Color::RED},
+                                                        {DevelArcVisual::Property::START_ANGLE, 0.0f},
+                                                        {DevelArcVisual::Property::SWEEP_ANGLE, 90.0f},
+                                                        {DevelArcVisual::Property::CAP, DevelArcVisual::Cap::ROUND},
+                                                        {DevelArcVisual::Property::THICKNESS, 20.0f}});
 
-const Property::Value TEXT_BACKGROUND{
-  {Visual::Property::TYPE, Visual::COLOR},
-  {ColorVisual::Property::MIX_COLOR, Vector4(0.8f, 0.8f, 0.8f, 1.0f)},
-  {DevelVisual::Property::CORNER_RADIUS, 0.5f},
-  {DevelVisual::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::RELATIVE}};
+const Property::Value TEXT_BACKGROUND = CreatePropertyValue({{Visual::Property::TYPE, Visual::COLOR},
+                                                             {ColorVisual::Property::MIX_COLOR, Vector4(0.8f, 0.8f, 0.8f, 1.0f)},
+                                                             {DevelVisual::Property::CORNER_RADIUS, 0.5f},
+                                                             {DevelVisual::Property::CORNER_RADIUS_POLICY, Toolkit::Visual::Transform::Policy::RELATIVE}});
 
 } // namespace
 

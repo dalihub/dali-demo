@@ -504,7 +504,7 @@ public:
       text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
       text.SetProperty(TextLabel::Property::MULTI_LINE, true);
-      text.SetProperty(Actor::Property::PADDING, Padding(10.0f, 10.0f, 20.0f, 0.0f));
+      text.SetProperty(Actor::Property::PADDING, Vector4(10.0f, 10.0f, 0.0f, 20.0f));
       mPopup.SetContent(text);
 
       SetupPopup(mPopup, button);
@@ -521,7 +521,7 @@ public:
       text.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
       text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
-      text.SetProperty(Actor::Property::PADDING, Padding(20.0f, 20.0f, 20.0f, 20.0f));
+      text.SetProperty(Actor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
 
       mPopup.Add(text);
 
@@ -533,7 +533,7 @@ public:
       Toolkit::ImageView image = Toolkit::ImageView::New(IMAGE2);
       image.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       image.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
-      image.SetProperty(Actor::Property::PADDING, Padding(20.0f, 20.0f, 20.0f, 20.0f));
+      image.SetProperty(Actor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
 
       mPopup.Add(image);
 
@@ -550,7 +550,7 @@ public:
       text.SetProperty(TextLabel::Property::MULTI_LINE, true);
       text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
-      text.SetProperty(Actor::Property::PADDING, Padding(20.0f, 20.0f, 20.0f, 20.0f));
+      text.SetProperty(Actor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
 
       mPopup.Add(text);
 
@@ -565,7 +565,7 @@ public:
       text.SetProperty(Dali::Actor::Property::NAME, "POPUP_CONTENT_TEXT");
       text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
       text.SetProperty(TextLabel::Property::MULTI_LINE, true);
-      text.SetProperty(Actor::Property::PADDING, Padding(20.0f, 20.0f, 20.0f, 20.0f));
+      text.SetProperty(Actor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
 
       mPopup.Add(text);
 
@@ -586,7 +586,7 @@ public:
       text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
       text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
       text.SetProperty(TextLabel::Property::MULTI_LINE, true);
-      text.SetProperty(Actor::Property::PADDING, Padding(10.0f, 10.0f, 20.0f, 0.0f));
+      text.SetProperty(Actor::Property::PADDING, Vector4(10.0f, 10.0f, 0.0f, 20.0f));
 
       mPopup.Add(text);
 
@@ -604,7 +604,7 @@ public:
       content.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       content.SetFitHeight(0);
       content.SetFitHeight(1);
-      content.SetProperty(Actor::Property::PADDING, Padding(20.0f, 20.0f, 20.0f, 0.0f));
+      content.SetProperty(Actor::Property::PADDING, Vector4(20.0f, 20.0f, 0.0f, 20.0f));
 
       // Text
       {
@@ -623,7 +623,7 @@ public:
         image.SetProperty(Dali::Actor::Property::NAME, "COMPLEX_IMAGE");
         image.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
         image.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
-        image.SetProperty(Actor::Property::PADDING, Padding(20.0f, 0.0f, 0.0f, 0.0f));
+        image.SetProperty(Actor::Property::PADDING, Vector4(20.0f, 0.0f, 0.0f, 0.0f));
         content.AddChild(image, Toolkit::TableView::CellPosition(0, 1));
       }
 
@@ -634,7 +634,7 @@ public:
         root.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
         root.SetFitHeight(0);
         root.SetFitWidth(0);
-        root.SetProperty(Actor::Property::PADDING, Padding(0.0f, 0.0f, 0.0f, 20.0f));
+        root.SetProperty(Actor::Property::PADDING, Vector4(0.0f, 0.0f, 20.0f, 0.0f));
 
         Toolkit::CheckBoxButton checkBox = Toolkit::CheckBoxButton::New();
         checkBox.SetProperty(Actor::Property::SIZE, Vector2(48, 48));
@@ -643,7 +643,7 @@ public:
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Don't show again");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
         Actor textActor = text;
-        textActor.SetProperty(Actor::Property::PADDING, Padding(20.0f, 0.0f, 0.0f, 10.0f));
+        textActor.SetProperty(Actor::Property::PADDING, Vector4(20.0f, 0.0f, 10.0f, 0.0f));
 
         root.AddChild(text, Toolkit::TableView::CellPosition(0, 1));
 

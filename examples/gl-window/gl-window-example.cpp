@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/adaptor-framework/gl-window.h>
+#include <dali/devel-api/object/property-map-devel.h>
 #include "../direct-rendering/native-renderer.h"
 
 using namespace Dali;
@@ -44,7 +45,7 @@ public:
 
     // Create a textLabel to add to our main window
     auto textLabel = Handle::New<TextLabel>(
-      {
+      CreatePropertyMap({
         {TextLabel::Property::TEXT, "Touch here to Exit"},
         {TextLabel::Property::TEXT_COLOR, Color::BLACK},
         {TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER},
@@ -52,7 +53,7 @@ public:
         {Actor::Property::PIVOT, Pivot::CENTER},
         {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
         {Dali::Actor::Property::NAME, "label"},
-      });
+      }));
     window.Add(textLabel);
 
     // Create GL Window and give it the same size as the main window

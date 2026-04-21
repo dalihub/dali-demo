@@ -21,6 +21,7 @@
 
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/object/property-map-devel.h>
 
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/color-visual-properties-devel.h>
@@ -151,21 +152,21 @@ public:
         }
         if(gControlPropertyUses & ControlPropertyUsesFlag::SHADOW)
         {
-          Property::Map map{
+          Property::Map map = CreatePropertyMap({
             {Visual::Property::TYPE, Visual::COLOR},
             {Visual::Property::MIX_COLOR, Vector4(1.0f, 1.0f, 1.0f, 1.0f)},
             {DevelColorVisual::Property::BLUR_RADIUS, std::min(mSize.x, mSize.y) * 0.15f},
             {DevelColorVisual::Property::CUTOUT_POLICY, DevelColorVisual::CutoutPolicy::CUTOUT_VIEW_WITH_CORNER_RADIUS},
             {Visual::Property::TRANSFORM,
-             Property::Map{
+             CreatePropertyMap({
                {Visual::Transform::Property::OFFSET, Vector2(0.0f, 0.05f)},
-             }},
-          };
+             })},
+          });
           control.SetProperty(DevelControl::Property::SHADOW, map);
         }
         if(gControlPropertyUses & ControlPropertyUsesFlag::INNER_SHADOW)
         {
-          Property::Map map{
+          Property::Map map = CreatePropertyMap({
             {Visual::Property::TYPE, Visual::COLOR},
             {Visual::Property::MIX_COLOR, Vector4(0.0f, 0.0f, 0.0f, 0.0f)},
             {DevelVisual::Property::BORDERLINE_WIDTH, std::min(mSize.x, mSize.y) * 0.3f},
@@ -174,10 +175,10 @@ public:
             {DevelColorVisual::Property::BLUR_RADIUS, std::min(mSize.x, mSize.y) * 0.05f},
             {DevelColorVisual::Property::CUTOUT_POLICY, DevelColorVisual::CutoutPolicy::CUTOUT_OUTSIDE_WITH_CORNER_RADIUS},
             {Visual::Property::TRANSFORM,
-             Property::Map{
+             CreatePropertyMap({
                {Visual::Transform::Property::OFFSET, Vector2(0.15f, 0.10f)},
-             }},
-          };
+             })},
+          });
           control.SetProperty(DevelControl::Property::INNER_SHADOW, map);
         }
         if(gControlPropertyUses & ControlPropertyUsesFlag::OFFSCREEN_RENDERING)
@@ -186,13 +187,13 @@ public:
         }
         if(gControlPropertyUses & ControlPropertyUsesFlag::BORDERLINE_WIDTH_VISUAL)
         {
-          Property::Map map{
+          Property::Map map = CreatePropertyMap({
             {Visual::Property::TYPE, Visual::COLOR},
             {Visual::Property::MIX_COLOR, Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f)},
             {DevelVisual::Property::BORDERLINE_WIDTH, std::min(mSize.x, mSize.y) * 0.1f},
             {DevelVisual::Property::BORDERLINE_COLOR, Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f)},
             {DevelVisual::Property::BORDERLINE_OFFSET, -1.0f},
-          };
+          });
           control.SetProperty(Control::Property::BACKGROUND, map);
         }
         else

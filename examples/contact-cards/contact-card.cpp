@@ -22,6 +22,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/object/property-map-devel.h>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
@@ -119,8 +120,8 @@ ContactCard::ContactCard(
   // Create a control which will be used for the background and to clip the contents
   mContactCard = Control::New();
   mContactCard.SetProperty(Control::Property::BACKGROUND,
-                           Property::Map{{Toolkit::Visual::Property::TYPE, Visual::COLOR},
-                                         {ColorVisual::Property::MIX_COLOR, Color::WHITE}});
+                           CreatePropertyMap({{Toolkit::Visual::Property::TYPE, Visual::COLOR},
+                                              {ColorVisual::Property::MIX_COLOR, Color::WHITE}}));
   mContactCard.SetProperty(Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN);
   mContactCard.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
   mContactCard.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
@@ -132,8 +133,8 @@ ContactCard::ContactCard(
   mHeader = Control::New();
   mHeader.SetProperty(Actor::Property::SIZE, mContactCardLayoutInfo.headerSize);
   mHeader.SetProperty(Control::Property::BACKGROUND,
-                      Property::Map{{Toolkit::Visual::Property::TYPE, Visual::COLOR},
-                                    {ColorVisual::Property::MIX_COLOR, HEADER_COLOR}});
+                      CreatePropertyMap({{Toolkit::Visual::Property::TYPE, Visual::COLOR},
+                                         {ColorVisual::Property::MIX_COLOR, HEADER_COLOR}}));
   mHeader.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
   mHeader.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
   mHeader.SetProperty(Actor::Property::POSITION, Vector2(mContactCardLayoutInfo.headerFoldedPosition.x, mContactCardLayoutInfo.headerFoldedPosition.y));

@@ -337,7 +337,7 @@ public:
         mRenderer.RegisterUniqueProperty("uInstanceIndex", static_cast<int32_t>(i));
 
         // Increase update area extents, for partial rendering.
-        mRenderer[DevelRenderer::Property::UPDATE_AREA_EXTENTS] = Dali::Extents(offsetXRange, offsetXRange, offsetYRange, offsetYRange);
+        mRenderer[DevelRenderer::Property::UPDATE_AREA_MARGIN] = Dali::Extents(offsetXRange, offsetXRange, offsetYRange, offsetYRange);
 
         mActor.AddRenderer(mRenderer);
       }
@@ -349,7 +349,7 @@ public:
       mRenderer[DevelRenderer::Property::INSTANCE_COUNT] = static_cast<int32_t>(INSTANCE_COUNT_PER_DRAW);
 
       // Increase update area extents, for partial rendering.
-      mRenderer[DevelRenderer::Property::UPDATE_AREA_EXTENTS] = Dali::Extents(offsetXRange, offsetXRange, offsetYRange, offsetYRange);
+      mRenderer[DevelRenderer::Property::UPDATE_AREA_MARGIN] = Dali::Extents(offsetXRange, offsetXRange, offsetYRange, offsetYRange);
 
       mActor.AddRenderer(mRenderer);
     }
