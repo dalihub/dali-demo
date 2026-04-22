@@ -149,8 +149,6 @@ const char* NINEPATCH_IMAGE_PATH[] = {
 const unsigned int NUM_IMAGES           = sizeof(IMAGE_PATH) / sizeof(char*);
 const unsigned int NUM_NINEPATCH_IMAGES = sizeof(NINEPATCH_IMAGE_PATH) / sizeof(char*);
 
-const float ANIMATION_TIME(5.0f); // animation length in seconds
-
 struct VertexWithTexture
 {
   Vector2 position;

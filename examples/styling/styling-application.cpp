@@ -62,8 +62,7 @@ const char* RESIZE_HANDLE_IMAGE(DEMO_IMAGE_DIR "resize-handle.png");
 
 const int NUMBER_OF_THEMES(3); // The default theme is considered.
 
-const Vector4 BACKGROUND_COLOUR(1.0f, 1.0f, 1.0f, 0.15f);
-const int     BORDER_WIDTH(4);
+const int BORDER_WIDTH(4);
 
 const char* const SMALL_IMAGE_1 = DEMO_IMAGE_DIR "gallery-small-14.jpg";
 const char* const BIG_IMAGE_1   = DEMO_IMAGE_DIR "gallery-large-4.jpg";
@@ -77,10 +76,7 @@ const char* const BIG_IMAGE_3   = DEMO_IMAGE_DIR "gallery-large-11.jpg";
 // Layout
 const int MARGIN_SIZE = 10;
 
-const int RADIO_LABEL_THUMBNAIL_SIZE       = 60;
-const int RADIO_LABEL_THUMBNAIL_SIZE_SMALL = 40;
-const int RADIO_IMAGE_SPACING              = 8;
-const int BUTTON_HEIGHT                    = 48;
+const int RADIO_LABEL_THUMBNAIL_SIZE = 60;
 
 Property::Index GetChannelProperty(int index)
 {

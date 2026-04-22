@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,33 +69,6 @@ constexpr GLfloat CUBE_VERTICES[] = {-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0
 constexpr GLfloat CUBE_COLOURS[] = {1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f};
 
 constexpr GLushort CUBE_INDICES[] = {0, 2, 3, 0, 1, 3, 4, 6, 7, 4, 5, 7, 8, 9, 10, 11, 8, 10, 12, 13, 14, 15, 12, 14, 16, 17, 18, 16, 19, 18, 20, 21, 22, 20, 23, 22};
-
-constexpr float QUAD_VERTS[] = {
-  // positions          // colors           // texture coords
-  1.0f,
-  1.0f,
-  1.0f,
-  -1.0f,
-  -1.0f,
-  -1.0f,
-  -1.0f,
-  1.0f,
-};
-
-constexpr unsigned short QUAD_INDICES[] = {
-  0, 1, 2, 3, 0, 2};
-
-constexpr float QUAD_UV[] = {
-  // positions          // colors           // texture coords
-  1.0f,
-  1.0f, // top right
-  1.0f,
-  0.0f, // bottom right
-  0.0f,
-  0.0f, // bottom left
-  0.0f,
-  1.0f // top left
-};
 
 float matrixDegreesToRadians(float degrees)
 {
@@ -349,8 +322,6 @@ GLuint NativeRenderer::LoadShader(GLenum shaderType, const char* shaderSource)
 
 void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
 {
-  uint32_t drawCount = 0;
-
   float& angle = mAngle;
 
   [[maybe_unused]] auto x = mCreateInfo.viewportX; // float(mWidth - input.size.width) * 0.5f;
@@ -416,7 +387,6 @@ void NativeRenderer::RenderCube(const Dali::RenderCallbackInput& input)
     GL(glUniformMatrix4fv(mProjectionLocation, 1, GL_FALSE, mProjectionMatrix));
     GL(glUniformMatrix4fv(mModelViewLocation, 1, GL_FALSE, mModelViewMatrix));
     GL(glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, CUBE_INDICES));
-    drawCount++;
   }
   angle += 1;
   if(angle > 360)

@@ -141,7 +141,6 @@ struct HSVColorConstraint
 };
 
 const float   STYLE_BUTTON_POSTION_RELATIVE_TO_WINDOW = 0.9f;
-const float   BUTTON_SIZE_RATIO_TO_WINDOW             = 0.1f;
 const float   OUTLINE_WIDTH                           = 2.0f;
 const Vector2 SHADOW_OFFSET                           = Vector2(2.0f, 2.0f);
 const int     GAP_BETWEEN_BUTTONS                     = 3;
@@ -167,7 +166,6 @@ public:
     mLanguageId(0u),
     mAlignment(0u),
     mHueAngleIndex(Property::INVALID_INDEX),
-    mOverrideMixColorIndex(Property::INVALID_INDEX),
     mColorButtonsHidden(true),
     mCollapseColorsAndStyles(false)
   {
@@ -782,7 +780,6 @@ private:
   unsigned int    mLanguageId;
   unsigned int    mAlignment;
   Property::Index mHueAngleIndex;
-  Property::Index mOverrideMixColorIndex;
 
   bool mColorButtonsHidden;
   bool mCollapseColorsAndStyles;

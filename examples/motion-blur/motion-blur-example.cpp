@@ -58,8 +58,7 @@ const char* MOTION_BLUR_ACTOR_IMAGES[] = {
   MOTION_BLUR_ACTOR_IMAGE5,
 };
 
-const int NUM_ACTOR_ANIMATIONS  = 4;
-const int NUM_CAMERA_ANIMATIONS = 2;
+const int NUM_ACTOR_ANIMATIONS = 4;
 
 const char* BACKGROUND_IMAGE_PATH = DEMO_IMAGE_DIR "background-default.png";
 
@@ -71,15 +70,6 @@ const char* EFFECTS_OFF_ICON(DEMO_IMAGE_DIR "icon-effects-off.png");
 const char* EFFECTS_OFF_ICON_SELECTED(DEMO_IMAGE_DIR "icon-effects-off-selected.png");
 const char* EFFECTS_ON_ICON(DEMO_IMAGE_DIR "icon-effects-on.png");
 const char* EFFECTS_ON_ICON_SELECTED(DEMO_IMAGE_DIR "icon-effects-on-selected.png");
-
-const float UI_MARGIN = 4.0f; ///< Screen Margin for placement of UI buttons
-
-const Vector3 BUTTON_SIZE_CONSTRAINT(0.24f, 0.09f, 1.0f);
-const Vector3 BUTTON_TITLE_LABEL_TAP_HERE_SIZE_CONSTRAINT(0.55f, 0.06f, 1.0f);
-const Vector3 BUTTON_TITLE_LABEL_INSTRUCTIONS_POPUP_SIZE_CONSTRAINT(1.0f, 1.0f, 1.0f);
-
-// move this button down a bit so it is visible on target and not covered up by toolbar
-const float BUTTON_TITLE_LABEL_Y_OFFSET = 0.05f;
 
 const float ORIENTATION_DURATION = 0.5f; ///< Time to rotate to new orientation.
 

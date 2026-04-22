@@ -211,7 +211,7 @@ public:
     cpShape* shape = cpSpaceAddShape(space, cpCircleShapeNew(body, BALL_RADIUS, cpvzero));
     cpShapeSetElasticity(shape, BALL_ELASTICITY);
     cpShapeSetFriction(shape, BALL_FRICTION);
-    //cpShapeSetFilter(shape, cpShapeFilterNew(BALL_GROUP, BALL_COLLIDES_WITH, COLLISION_MASK));
+    cpShapeSetFilter(shape, cpShapeFilterNew(BALL_GROUP, BALL_COLLIDES_WITH, COLLISION_MASK));
     ball.RegisterProperty("uBrightness", 0.0f);
 
     PhysicsActor physicsBall = mPhysicsAdaptor.AddActorBody(ball, body);
@@ -694,8 +694,6 @@ private:
   cpConstraint*             mPickedConstraint{nullptr};
   int                       mPickedSavedState = -1; /// 0 : Active, 1 : Sleeping
   Timer                     mPopcornTimer;
-
-  PhysicsAdaptor::DebugState mDebugState{PhysicsAdaptor::DebugState::OFF};
 
   cpShape* mLeftBound{nullptr};
   cpShape* mRightBound{nullptr};

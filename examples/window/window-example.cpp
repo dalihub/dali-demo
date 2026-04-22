@@ -42,8 +42,6 @@ public:
   WindowExampleController(Application& application)
   : mApplication(application),
     manualRotationFlag(false),
-    rotationCount(0),
-    rot(0),
     enableTimer(false),
     bChangedOrientation(false),
     isRotating(false),
@@ -578,8 +576,6 @@ private:
   Application& mApplication;
   Control      mClipControl{};
   bool         manualRotationFlag{false};
-  int          rotationCount{0};
-  int          rot{0};
   Timer        mTimer{};
   TextLabel    mTextLabel2{};
   bool         enableTimer{false};
@@ -589,8 +585,6 @@ private:
 
   Dali::Window            mSecondWindow{};
   Dali::WindowOrientation currentOrientation{Dali::WindowOrientation::NO_ORIENTATION_PREFERENCE};
-
-  CallbackBase* mPresentCallback{nullptr};
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

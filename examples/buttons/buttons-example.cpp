@@ -53,10 +53,8 @@ const char* const ENABLED_IMAGE = DEMO_IMAGE_DIR "item-select-check.png";
 const Vector4 BACKGROUND_COLOUR(0.25f, 0.25f, 0.25f, 0.15f);
 
 // Layout sizes
-const int RADIO_LABEL_THUMBNAIL_SIZE       = 50;
-const int RADIO_LABEL_THUMBNAIL_SIZE_SMALL = 40;
-const int RADIO_IMAGE_SPACING              = 8;
-const int BUTTON_HEIGHT                    = 48;
+const int RADIO_LABEL_THUMBNAIL_SIZE = 50;
+const int RADIO_IMAGE_SPACING        = 8;
 
 const int MARGIN_SIZE = 10;
 const int TOP_MARGIN  = 85;

@@ -49,12 +49,6 @@ const float CAMERA_DEFAULT_NEAR(0.1f);
 
 // Far plane
 const float CAMERA_DEFAULT_FAR(100.0f);
-
-// Default forward vector
-const Vector3 CAMERA_FORWARD(0.0f, 0.0f, 1.0f);
-
-// Default up vector
-const Vector3 CAMERA_UP(Vector3::YAXIS);
 } // namespace
 
 LookCamera::LookCamera()

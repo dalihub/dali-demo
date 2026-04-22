@@ -135,8 +135,6 @@ const float MIN_SWIPE_SPEED    = 5.0f;
 
 const float SELECTION_BORDER_WIDTH = 3.0f;
 const float BUTTON_BORDER          = -10.0f;
-const float MENU_OPTION_HEIGHT(140.0f);
-const float LABEL_TEXT_SIZE_Y = 20.0f;
 
 const Vector3 INITIAL_OFFSCREEN_POSITION(1000.0f, 0, -1000.0f);
 

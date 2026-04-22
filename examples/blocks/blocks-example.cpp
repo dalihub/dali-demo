@@ -50,18 +50,12 @@ const char* BRICK_IMAGE_PATH[] = {DEMO_IMAGE_DIR "blocks-brick-1.png",
                                   DEMO_IMAGE_DIR "blocks-brick-3.png",
                                   DEMO_IMAGE_DIR "blocks-brick-4.png"};
 
-const int     TOTAL_BRICKS(4); ///< Total bricks in game.
-const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
+const int TOTAL_BRICKS(4); ///< Total bricks in game.
 
-const float   SCREEN_MARGIN    = 10.0f;                       ///< Margin indentation around screen
-const Vector3 MENU_BUTTON_SIZE = Vector3(0.15f, 0.05f, 1.0f); ///< Standard Menu Buttons.
-
-const float   MAX_ANIMATION_DURATION = 60.0f;            ///< 60 seconds animations. Long enough for ball to hit an obstacle.
-const float   BALL_VELOCITY          = 300.0f;           ///< Ball velocity in pixels/second.
-const float   MAX_VELOCITY           = 500.0f;           ///< Max. velocity in pixels/second.
-const Vector3 PADDLE_COLLISION_MARGIN(0.0f, 0.0f, 0.0f); ///< Collision margin for ball-paddle detection.
-const Vector3 BRICK_COLLISION_MARGIN(0.0f, 0.0f, 0.0f);  ///< Collision margin for ball-brick detection.
-const Vector3 INITIAL_BALL_DIRECTION(1.0f, 1.0f, 0.0f);  ///< Initial ball direction.
+const float   MAX_ANIMATION_DURATION = 60.0f;           ///< 60 seconds animations. Long enough for ball to hit an obstacle.
+const float   BALL_VELOCITY          = 300.0f;          ///< Ball velocity in pixels/second.
+const float   MAX_VELOCITY           = 500.0f;          ///< Max. velocity in pixels/second.
+const Vector3 BRICK_COLLISION_MARGIN(0.0f, 0.0f, 0.0f); ///< Collision margin for ball-brick detection.
 
 const String WOBBLE_PROPERTY_NAME("wobbleProperty");       ///< Wobble property name.
 const String COLLISION_PROPERTY_NAME("collisionProperty"); ///< Collision property name.

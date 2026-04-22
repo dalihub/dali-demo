@@ -57,12 +57,6 @@ const char* SCENE_IMAGE_3(DEMO_IMAGE_DIR "gallery-small-48.jpg");
 const float MIN_PINCH_SCALE(0.3f);
 const float MAX_PINCH_SCALE(2.05f);
 
-const float   R3_2(0.8660254);
-const Vector3 TOP_POINT(0.0f, -1.0f, 0.0f);
-const Vector3 LEFT_POINT(-R3_2, 0.5f, 0.0f);
-const Vector3 RIGHT_POINT(R3_2, 0.5f, 0.0f);
-const Vector3 FRONT_POINT(0.0f, 0.0f, 20.0f);
-
 const Vector2 DEFAULT_WINDOW_SIZE(480.0f, 800.0f);
 
 const float X_ROTATION_DISPLACEMENT_FACTOR  = 60.f;
@@ -112,8 +106,6 @@ public:
     mObjectYRotation(0.0f),
     mPinchScale(0.6f),
     mScaleAtPinchStart(0.6f),
-    mAngle1Index(Property::INVALID_INDEX),
-    mAngle3Index(Property::INVALID_INDEX),
     mTitleActor(),
     mPanState(PAN_LIGHT)
   {
@@ -495,9 +487,6 @@ private:
   Radian               mObjectYRotation;
   float                mPinchScale;
   float                mScaleAtPinchStart;
-
-  Property::Index mAngle1Index;
-  Property::Index mAngle3Index;
 
   Toolkit::TextLabel mTitleActor;
 

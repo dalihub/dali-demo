@@ -81,10 +81,7 @@ DALI_TYPE_REGISTRATION_END()
 
 const float MARK_SNAP_TOLERANCE = 0.05f; // 5% of slider width
 
-const int VALUE_VIEW_SHOW_DURATION      = 1000; // millisec
-const int VALUE_VIEW_SHOW_DURATION_LONG = 2000; // millisec
-
-const float VALUE_VERTICAL_OFFSET = 48.0f;
+const int VALUE_VIEW_SHOW_DURATION = 1000; // millisec
 
 const float DEFAULT_WIDTH         = 0.0f;
 const float DEFAULT_HEIGHT        = 27.0f;
@@ -104,9 +101,7 @@ const Vector2 DEFAULT_HANDLE_SIZE(DEFAULT_HANDLE_HEIGHT, DEFAULT_HANDLE_HEIGHT);
 
 const Vector4 DEFAULT_DISABLED_COLOR(0.5f, 0.5f, 0.5f, 1.0f);
 
-const float VALUE_POPUP_MARGIN    = 10.0f;
-const float VALUE_POPUP_HEIGHT    = 81.0f;
-const float VALUE_POPUP_MIN_WIDTH = 54.0f;
+const float VALUE_POPUP_HEIGHT = 81.0f;
 
 const float DEFAULT_LOWER_BOUND     = 0.0f;
 const float DEFAULT_UPPER_BOUND     = 1.0f;

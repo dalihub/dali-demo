@@ -71,8 +71,6 @@ const float   NORMAL_MAP_WEIGHT = 0.05f;
 const float   SPECULARITY       = 512.f;
 const float   PARALLAX_AMOUNT   = .25f;
 
-const float TILT_RANGE_DEGREES = 30.f;
-
 const float TRANSITION_DURATION   = 1.2f;
 const float TRANSITION_TIME_SCALE = 6.f;
 

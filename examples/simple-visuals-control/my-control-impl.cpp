@@ -49,12 +49,6 @@ DALI_PROPERTY_REGISTRATION(Demo, MyControl, "iconVisual", MAP, ICON_VISUAL)
 
 DALI_TYPE_REGISTRATION_END();
 
-// Add an enum to string conversion entry for the control's visuals.  In this case just the icon visual.
-// Enables Setting of the property using enums or strings.
-DALI_ENUM_TO_STRING_TABLE_BEGIN(VISUAL_PROPERTIES)
-  {"iconVisual", Demo::MyControl::Property::ICON_VISUAL},
-DALI_ENUM_TO_STRING_TABLE_END(VISUAL_PROPERTIES)
-
 } // anonymous namespace
 
 Internal::MyControl::MyControl()

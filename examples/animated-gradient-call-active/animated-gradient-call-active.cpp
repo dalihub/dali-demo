@@ -48,8 +48,6 @@ float   FONT_SCALE           = 0.25f;
 const float CHANGE_DURATION = 0.2f;
 
 // const parameters for icon position and size when resolution is 360x360
-const Vector2 ICON_CALL_SIZE             = Vector2(54.0f, 54.0f);
-const Vector3 ICON_CALL_POSITION         = Vector3(0.0f, 0.0f, 0.0f);
 const Vector2 ICON_DECALL_SIZE           = Vector2(54.0f, 54.0f);
 const Vector3 ICON_DECALL_POSITION       = Vector3(141.0f, 0.0f, 0.0f);
 const Vector2 ICON_BATTERY_SIZE          = Vector2(14.0f, 23.0f);
@@ -108,10 +106,10 @@ const Property::Map DECLINE_BUTTON_BACKGROUND  = CreatePropertyMap({
   {GradientVisual::Property::SPREAD_METHOD, GradientVisual::SpreadMethod::REFLECT},
   {GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE},
 });
-constexpr float DECLINE_ANIMATION_DURATION = 3.0f;
-constexpr float DECLINE_ANIMATION_DELAY    = 1.2f;
+constexpr float     DECLINE_ANIMATION_DURATION = 3.0f;
+constexpr float     DECLINE_ANIMATION_DELAY    = 1.2f;
 
-Property::Map INCOME_BACKGROUND = CreatePropertyMap({
+Property::Map   INCOME_BACKGROUND         = CreatePropertyMap({
   {Visual::Property::TYPE, Visual::GRADIENT},
   //{GradientVisual::Property::CENTER, Vector2::ZERO}, ///< Will be added at OnCreate time.
   {GradientVisual::Property::RADIUS, 180.0f},
@@ -122,7 +120,7 @@ Property::Map INCOME_BACKGROUND = CreatePropertyMap({
 });
 constexpr float INCOME_ANIMATION_DURATION = 1.25f;
 
-Property::Map ACTIVE_BACKGROUND = CreatePropertyMap({
+Property::Map   ACTIVE_BACKGROUND         = CreatePropertyMap({
   {Visual::Property::TYPE, Visual::GRADIENT},
   //{GradientVisual::Property::CENTER, Vector2::ZERO}, ///< Will be added at OnCreate time.
   {GradientVisual::Property::RADIUS, 180.0f},
@@ -142,16 +140,7 @@ class CallController : public ConnectionTracker
 public:
   CallController(Application& application)
   : mApplication(application),
-    mColorStart(0.0f, 0.0f, 0.0f, 0.0f),
-    mColorEnd(0.0f, 0.0f, 0.0f, 0.0f),
-    mColorReduce(0.0f, 0.0f, 0.0f, 0.0f),
-    mButtonColorStart(0.0f, 0.0f, 0.0f, 0.0f),
-    mButtonColorEnd(0.0f, 0.0f, 0.0f, 0.0f),
-    mDuration(0.0f),
-    mBackgroundDurationIncoming(0.0f),
-    mBackgroundDurationActive(0.0f),
-    mButtonDuration(0.0f),
-    mButtonDelay(0.0f)
+    mDuration(0.0f)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &CallController::Create);
@@ -450,7 +439,6 @@ private:
   // Show when call active
   PushButton mCallEndButton;
   ImageView  mButtonIcon;
-  Control    mButtonBackground;
   Control    mButtonClip;
   TextLabel  mLabelTime;
 
@@ -463,18 +451,7 @@ private:
   Animation mActiveAnimation;
   Animation mDeclineAnimation;
 
-  Vector4 mColorStart;
-  Vector4 mColorEnd;
-  Vector4 mColorReduce;
-
-  Vector4 mButtonColorStart;
-  Vector4 mButtonColorEnd;
-
   float mDuration;
-  float mBackgroundDurationIncoming;
-  float mBackgroundDurationActive;
-  float mButtonDuration;
-  float mButtonDelay;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

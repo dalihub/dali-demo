@@ -41,7 +41,6 @@ namespace
 
 // Application constants:
 const char* const APPLICATION_TITLE("Renderer Stencil API Demo");
-const char* const BACKGROUND_IMAGE(DEMO_IMAGE_DIR "background-gradient.jpg");
 
 // Texture filenames:
 const char* const CUBE_TEXTURE(DEMO_IMAGE_DIR "people-medium-1.jpg");

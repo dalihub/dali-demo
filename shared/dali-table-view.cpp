@@ -151,7 +151,6 @@ void AppendIpAddress(std::ostringstream& stream)
     head = interfaceAddresses;
 
     char host[NI_MAXHOST];
-    int  n = 0;
     while(interfaceAddresses)
     {
       if(strcmp(interfaceAddresses->ifa_name, "lo"))
@@ -162,7 +161,6 @@ void AppendIpAddress(std::ostringstream& stream)
           if(getnameinfo(address, sizeof(struct sockaddr_in), host, NI_MAXHOST, nullptr, 0, NI_NUMERICHOST) == 0)
           {
             stream << interfaceAddresses->ifa_name << ": " << host << std::endl;
-            ++n;
           }
         }
       }

@@ -45,7 +45,6 @@ class GaussianBlurViewExample : public ConnectionTracker
 public:
   GaussianBlurViewExample(Application& application)
   : mApplication(application),
-    mExcessWidth(0.0f),
     mStrength(1.0f),
     mActivate(false)
   {
@@ -177,7 +176,6 @@ private:
 
   GaussianBlurView mGaussianBlurView;
 
-  float mExcessWidth;
   float mStrength;
 
   bool mActivate;
