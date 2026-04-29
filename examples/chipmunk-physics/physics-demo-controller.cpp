@@ -158,7 +158,7 @@ public:
                                              windowSize.GetHeight() * 0.5f,
                                              0.0f));
 
-    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, windowSize);
+    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.GetWidth(), windowSize.GetHeight()));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
     mPhysicsRoot.TouchedSignal().Connect(this, &PhysicsDemoController::OnTouched);
 

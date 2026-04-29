@@ -90,7 +90,7 @@ public:
                                              windowSize.GetHeight() * 0.5f,
                                              -100.0f));
 
-    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, windowSize);
+    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.GetWidth(), windowSize.GetHeight()));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
 
     mPhysicsRoot.TouchedSignal().Connect(this, &PhysicsDemoController::OnTouched);
@@ -261,7 +261,7 @@ public:
   {
     Vector2 size(newSize.GetWidth(), newSize.GetHeight());
     window.GetRenderTaskList().GetTask(0).GetCameraActor().SetPerspectiveProjection(size);
-    mPhysicsAdaptor.SetTransformAndSize(mPhysicsTransform, newSize);
+    mPhysicsAdaptor.SetTransformAndSize(mPhysicsTransform, Uint16Pair(newSize.GetWidth(), newSize.GetHeight()));
   }
 
   bool OnTouched(Dali::Actor actor, const Dali::TouchEvent& touch)

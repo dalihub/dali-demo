@@ -88,7 +88,7 @@ public:
     window.KeyEventSignal().Connect(this, &NativeImageTestController::OnKeyEvent);
 
     // Load image
-    ImageDimensions    dimensions(window.GetSize());
+    ImageDimensions    dimensions(window.GetSize().GetWidth(), window.GetSize().GetHeight());
     Devel::PixelBuffer pixelBuffer = LoadImageFromFile(IMAGE_FILE, dimensions);
 
     if(!pixelBuffer)

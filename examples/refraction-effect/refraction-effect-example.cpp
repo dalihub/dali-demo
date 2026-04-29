@@ -172,7 +172,7 @@ private:
     mShaderFlat = Shader::New(ToDaliStringView(SHADER_REFRACTION_EFFECT_FLAT_VERT), ToDaliStringView(SHADER_REFRACTION_EFFECT_FLAT_FRAG));
     mGeometry   = CreateGeometry(MESH_FILES[mCurrentMeshId]);
 
-    Texture texture = DemoHelper::LoadWindowFillingTexture(window.GetSize(), TEXTURE_IMAGES[mCurrentTextureId]);
+    Texture texture = DemoHelper::LoadWindowFillingTexture(Uint16Pair(window.GetSize().GetWidth(), window.GetSize().GetHeight()), TEXTURE_IMAGES[mCurrentTextureId]);
     mTextureSet     = TextureSet::New();
     mTextureSet.SetTexture(0u, texture);
 
@@ -235,7 +235,7 @@ private:
   bool OnChangeTexture(Toolkit::Button button)
   {
     mCurrentTextureId = (mCurrentTextureId + 1) % NUM_TEXTURE_IMAGES;
-    Texture texture   = DemoHelper::LoadWindowFillingTexture(mApplication.GetWindow().GetSize(), TEXTURE_IMAGES[mCurrentTextureId]);
+    Texture texture   = DemoHelper::LoadWindowFillingTexture(Uint16Pair(mApplication.GetWindow().GetSize().GetWidth(), mApplication.GetWindow().GetSize().GetHeight()), TEXTURE_IMAGES[mCurrentTextureId]);
     mTextureSet.SetTexture(0u, texture);
     return true;
   }

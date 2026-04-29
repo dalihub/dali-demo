@@ -119,7 +119,7 @@ public:
     Vector2 windowSize(1280, 800);
     if(mWindow.GetSize().GetWidth() < 1280)
     {
-      mWindow.SetSize(Uint16Pair(windowSize.x, windowSize.y));
+      mWindow.SetSize(Window::WindowSize(windowSize.x, windowSize.y));
     }
     else
     {

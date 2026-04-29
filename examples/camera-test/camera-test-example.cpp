@@ -140,7 +140,7 @@ public:
     Vector2 windowSize(1280, 800);
     if(window.GetSize().GetWidth() < 1280)
     {
-      window.SetSize(Uint16Pair(windowSize.x, windowSize.y)); // 1280 divides into 427, 427, 426
+      window.SetSize(Window::WindowSize(windowSize.x, windowSize.y)); // 1280 divides into 427, 427, 426
     }
     else
     {

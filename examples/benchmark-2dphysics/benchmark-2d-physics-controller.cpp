@@ -182,7 +182,7 @@ public:
                                                    newSize.GetHeight() * 0.5f,
                                                    0.0f));
 
-          mPhysicsAdaptor.SetTransformAndSize(mPhysicsTransform, newSize);
+          mPhysicsAdaptor.SetTransformAndSize(mPhysicsTransform, Uint16Pair(newSize.GetWidth(), newSize.GetHeight()));
 
           auto     scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
           cpSpace* space          = scopedAccessor->GetNative().Get<cpSpace*>();
@@ -373,7 +373,7 @@ public:
                                              windowSize.GetHeight() * 0.5f,
                                              0.0f));
 
-    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, windowSize);
+    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.GetWidth(), windowSize.GetHeight()));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
     mWindow.Add(mPhysicsRoot);
 
