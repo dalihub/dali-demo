@@ -87,8 +87,6 @@ const unsigned GRID_CELL_PADDING = 4;
 /** The aspect ratio of cells in the image grid. */
 const float CELL_ASPECT_RATIO = 1.33333333333333333333f;
 
-const Dali::FittingMode::Type DEFAULT_SCALING_MODE = Dali::FittingMode::SCALE_TO_FILL;
-
 /** The number of times to spin an image on touching, each spin taking a second.*/
 const float SPIN_DURATION = 1.0f;
 
@@ -181,9 +179,8 @@ const unsigned int INITIAL_IMAGES_TO_LOAD = 10;
  * @param[in] filename The path of the image.
  * @param[in] width The width of the image in pixels.
  * @param[in] height The height of the image in pixels.
- * @param[in] fittingMode The mode to use when scaling the image to fit the desired dimensions.
  */
-ImageView CreateImageView(const std::string& filename, int width, int height, Dali::FittingMode::Type fittingMode)
+ImageView CreateImageView(const std::string& filename, int width, int height)
 {
   ImageView imageView = ImageView::New();
 
@@ -191,7 +188,6 @@ ImageView CreateImageView(const std::string& filename, int width, int height, Da
   map[Toolkit::ImageVisual::Property::URL]            = ToPropertyValue(filename);
   map[Toolkit::ImageVisual::Property::DESIRED_WIDTH]  = width;
   map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = height;
-  map[Toolkit::ImageVisual::Property::FITTING_MODE]   = fittingMode;
   imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
 
   imageView.SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(filename));
@@ -199,31 +195,6 @@ ImageView CreateImageView(const std::string& filename, int width, int height, Da
   imageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
   return imageView;
-}
-
-/** Cycle the scaling mode options. */
-Dali::FittingMode::Type NextMode(const Dali::FittingMode::Type oldMode)
-{
-  Dali::FittingMode::Type newMode = FittingMode::SHRINK_TO_FIT;
-  switch(oldMode)
-  {
-    case FittingMode::SHRINK_TO_FIT:
-      newMode = FittingMode::SCALE_TO_FILL;
-      break;
-    case FittingMode::SCALE_TO_FILL:
-      newMode = FittingMode::FIT_WIDTH;
-      break;
-    case FittingMode::FIT_WIDTH:
-      newMode = FittingMode::FIT_HEIGHT;
-      break;
-    case FittingMode::FIT_HEIGHT:
-      newMode = FittingMode::VISUAL_FITTING;
-      break;
-    case FittingMode::VISUAL_FITTING:
-      newMode = FittingMode::SHRINK_TO_FIT;
-      break;
-  }
-  return newMode;
 }
 
 /**
@@ -333,19 +304,19 @@ public:
     mOffWindowImageViews.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     // Build the main content of the widow:
-    PopulateContentLayer(DEFAULT_SCALING_MODE);
+    PopulateContentLayer();
   }
 
   /**
    * Build the main part of the application's view.
    */
-  void PopulateContentLayer(const Dali::FittingMode::Type fittingMode)
+  void PopulateContentLayer()
   {
     Window  window     = mApplication.GetWindow();
     Vector2 windowSize = window.GetSize();
 
     float fieldHeight;
-    Actor imageField = BuildImageField(windowSize.x, GRID_WIDTH, GRID_MAX_HEIGHT, fittingMode, fieldHeight);
+    Actor imageField = BuildImageField(windowSize.x, GRID_WIDTH, GRID_MAX_HEIGHT, fieldHeight);
 
     mScrollView = ScrollView::New();
 
@@ -406,11 +377,10 @@ public:
    * through square, to very tall. The images are direct children of the Dali::Actor
    * returned.
    **/
-  Actor BuildImageField(const float             fieldWidth,
-                        const unsigned          gridWidth,
-                        const unsigned          maxGridHeight,
-                        Dali::FittingMode::Type fittingMode,
-                        float&                  outFieldHeight)
+  Actor BuildImageField(const float    fieldWidth,
+                        const unsigned gridWidth,
+                        const unsigned maxGridHeight,
+                        float&         outFieldHeight)
   {
     // Generate the list of image configurations to be fitted into the field:
 
@@ -478,14 +448,12 @@ public:
       const Vector2          imageRegionCorner = gridOrigin + cellSize * Vector2(imageSource.cellX, imageSource.cellY);
       const Vector2          imagePosition     = imageRegionCorner + Vector2(GRID_CELL_PADDING, GRID_CELL_PADDING) + imageSize * 0.5f;
 
-      ImageView image = CreateImageView(imageSource.configuration.path, imageSize.x, imageSize.y, fittingMode);
+      ImageView image = CreateImageView(imageSource.configuration.path, imageSize.x, imageSize.y);
       image.SetProperty(Actor::Property::POSITION, Vector3(imagePosition.x, imagePosition.y, 0));
       image.SetProperty(Actor::Property::SIZE, imageSize);
       image.TouchedSignal().Connect(this, &ImageScalingIrregularGridController::OnTouchImage);
       image.ResourceReadySignal().Connect(this, &ImageScalingIrregularGridController::ResourceReadySignal);
-      mFittingModes[image.GetProperty<int>(Actor::Property::ID)] = fittingMode;
-      mResourceUrls[image.GetProperty<int>(Actor::Property::ID)] = imageSource.configuration.path;
-      mSizes[image.GetProperty<int>(Actor::Property::ID)]        = imageSize;
+
       if(count < INITIAL_IMAGES_TO_LOAD)
       {
         gridActor.Add(image);
@@ -517,24 +485,7 @@ public:
         animation.AnimateBy(Property(actor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360.0f * SPIN_DURATION)), Vector3::XAXIS), AlphaFunction::EASE_OUT);
         animation.Play();
 
-        // Change the scaling mode:
-        const unsigned          id        = actor.GetProperty<int>(Actor::Property::ID);
-        Dali::FittingMode::Type newMode   = NextMode(mFittingModes[id]);
-        const Vector2           imageSize = mSizes[actor.GetProperty<int>(Actor::Property::ID)];
-
-        ImageView imageView = ImageView::DownCast(actor);
-        if(imageView)
-        {
-          Property::Map map;
-          map[Visual::Property::TYPE]                = Visual::IMAGE;
-          map[ImageVisual::Property::URL]            = ToPropertyValue(mResourceUrls[id]);
-          map[ImageVisual::Property::DESIRED_WIDTH]  = imageSize.width + 0.5f;
-          map[ImageVisual::Property::DESIRED_HEIGHT] = imageSize.height + 0.5f;
-          map[ImageVisual::Property::FITTING_MODE]   = newMode;
-          imageView.SetProperty(ImageView::Property::IMAGE, map);
-        }
-
-        mFittingModes[id] = newMode;
+        // No fitting mode to cycle — just spin on touch.
       }
     }
     return false;
@@ -562,34 +513,6 @@ public:
    */
   bool OnToggleScalingTouched(Button button)
   {
-    const unsigned numChildren = mGridActor.GetChildCount();
-
-    for(unsigned i = 0; i < numChildren; ++i)
-    {
-      ImageView gridImageView = ImageView::DownCast(mGridActor.GetChildAt(i));
-      if(gridImageView)
-      {
-        // Cycle the scaling mode options:
-        unsigned int id = gridImageView.GetProperty<int>(Actor::Property::ID);
-
-        const Vector2           imageSize = mSizes[id];
-        Dali::FittingMode::Type newMode   = NextMode(mFittingModes[id]);
-
-        Property::Map map;
-        map[Visual::Property::TYPE]                = Visual::IMAGE;
-        map[ImageVisual::Property::URL]            = ToPropertyValue(mResourceUrls[id]);
-        map[ImageVisual::Property::DESIRED_WIDTH]  = imageSize.width;
-        map[ImageVisual::Property::DESIRED_HEIGHT] = imageSize.height;
-        map[ImageVisual::Property::FITTING_MODE]   = newMode;
-        gridImageView.SetProperty(ImageView::Property::IMAGE, map);
-
-        mFittingModes[id] = newMode;
-
-        SetTitle(std::string(newMode == FittingMode::SHRINK_TO_FIT ? "SHRINK_TO_FIT" : newMode == FittingMode::SCALE_TO_FILL ? "SCALE_TO_FILL"
-                                                                                     : newMode == FittingMode::FIT_WIDTH     ? "FIT_WIDTH"
-                                                                                                                             : "FIT_HEIGHT"));
-      }
-    }
     return true;
   }
 
@@ -641,11 +564,8 @@ private:
   ScrollView                                  mScrollView;          ///< ScrollView UI Component
   ScrollBar                                   mScrollBarVertical;
   ScrollBar                                   mScrollBarHorizontal;
-  bool                                        mScrolling;    ///< ScrollView scrolling state (true = scrolling, false = stationary)
-  std::map<unsigned, Dali::FittingMode::Type> mFittingModes; ///< Stores the current scaling mode of each image, keyed by image actor id.
-  std::map<unsigned, std::string>             mResourceUrls; ///< Stores the url of each image, keyed by image actor id.
-  std::map<unsigned, Vector2>                 mSizes;        ///< Stores the current size of each image, keyed by image actor id.
-  unsigned int                                mImagesLoaded; ///< How many images have been loaded
+  bool                            mScrolling;    ///< ScrollView scrolling state (true = scrolling, false = stationary)
+  unsigned int mImagesLoaded; ///< How many images have been loaded
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

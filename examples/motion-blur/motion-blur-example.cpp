@@ -87,7 +87,6 @@ void SetImageFittedInBox(ImageView& imageView, Property::Map& shaderEffect, cons
   // Load the image nicely scaled-down to fit within the specified max width and height:
   map[ImageVisual::Property::DESIRED_WIDTH]  = maxWidth;
   map[ImageVisual::Property::DESIRED_HEIGHT] = maxHeight;
-  map[ImageVisual::Property::FITTING_MODE]   = FittingMode::SHRINK_TO_FIT;
   map[ImageVisual::Property::SAMPLING_MODE]  = SamplingMode::BOX_THEN_LINEAR;
   map.Merge(shaderEffect);
 

@@ -82,31 +82,6 @@ const char* IMAGE_PATHS[] =
     NULL};
 const int NUM_IMAGE_PATHS = sizeof(IMAGE_PATHS) / sizeof(IMAGE_PATHS[0]) - 1u;
 
-/** Cycle the scaling mode options. */
-FittingMode::Type NextScalingMode(FittingMode::Type oldMode)
-{
-  FittingMode::Type newMode = FittingMode::SHRINK_TO_FIT;
-  switch(oldMode)
-  {
-    case FittingMode::SHRINK_TO_FIT:
-      newMode = FittingMode::SCALE_TO_FILL;
-      break;
-    case FittingMode::SCALE_TO_FILL:
-      newMode = FittingMode::FIT_WIDTH;
-      break;
-    case FittingMode::FIT_WIDTH:
-      newMode = FittingMode::FIT_HEIGHT;
-      break;
-    case FittingMode::FIT_HEIGHT:
-      newMode = FittingMode::VISUAL_FITTING;
-      break;
-    case FittingMode::VISUAL_FITTING:
-      newMode = FittingMode::SHRINK_TO_FIT;
-      break;
-  }
-  return newMode;
-}
-
 /** Cycle through filter mode options. */
 SamplingMode::Type NextFilterMode(SamplingMode::Type oldMode)
 {
@@ -160,14 +135,6 @@ SamplingMode::Type NextFilterMode(SamplingMode::Type oldMode)
   return newMode;
 }
 
-const char* StringFromScalingMode(FittingMode::Type scalingMode)
-{
-  return scalingMode == FittingMode::SCALE_TO_FILL ? "SCALE_TO_FILL" : scalingMode == FittingMode::SHRINK_TO_FIT ? "SHRINK_TO_FIT"
-                                                                     : scalingMode == FittingMode::FIT_WIDTH     ? "FIT_WIDTH"
-                                                                     : scalingMode == FittingMode::FIT_HEIGHT    ? "FIT_HEIGHT"
-                                                                                                                 : "UnknownScalingMode";
-}
-
 const char* StringFromFilterMode(SamplingMode::Type filterMode)
 {
   return filterMode == SamplingMode::BOX ? "BOX" : filterMode == SamplingMode::BOX_THEN_NEAREST ? "BOX_THEN_NEAREST"
@@ -193,7 +160,6 @@ public:
     mLastPinchScale(1.0f),
     mImageWindowScale(0.5f, 0.5f),
     mCurrentPath(0),
-    mFittingMode(FittingMode::FIT_WIDTH),
     mSamplingMode(SamplingMode::BOX_THEN_LINEAR),
     mImageLoading(false)
   {
@@ -219,7 +185,6 @@ public:
     backgroundImage.Insert(Toolkit::ImageVisual::Property::URL, BACKGROUND_IMAGE);
     backgroundImage.Insert(Toolkit::ImageVisual::Property::DESIRED_WIDTH, windowSize.width);
     backgroundImage.Insert(Toolkit::ImageVisual::Property::DESIRED_HEIGHT, windowSize.height);
-    backgroundImage.Insert(Toolkit::ImageVisual::Property::FITTING_MODE, FittingMode::SCALE_TO_FILL);
     backgroundImage.Insert(Toolkit::ImageVisual::Property::SAMPLING_MODE, SamplingMode::BOX_THEN_NEAREST);
 
     Toolkit::ImageView background = Toolkit::ImageView::New();
@@ -317,10 +282,10 @@ public:
     imageNext.SetProperty(Dali::Actor::Property::NAME, NEXT_BUTTON_ID);
     imageNext.TouchedSignal().Connect(this, &ImageScalingAndFilteringController::OnControlTouched);
 
-    // Buttons to popup selectors for fitting and sampling modes:
+    // Button to popup selector for sampling mode:
 
-    // Wrapper table to hold two buttons side by side:
-    Toolkit::TableView modesGroupBackground = Toolkit::TableView::New(1, 2);
+    // Wrapper table to hold the sampling mode button:
+    Toolkit::TableView modesGroupBackground = Toolkit::TableView::New(1, 1);
     modesGroupBackground.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     modesGroupBackground.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     modesGroupBackground.SetBackgroundColor(BACKGROUND_COLOUR);
@@ -332,28 +297,6 @@ public:
     modesGroupBackground.SetProperty(Actor::Property::POSITION, Vector2(0.0f, 0.0f));
 
     controlsLayer.Add(modesGroupBackground);
-
-    {
-      // Vertical table to hold label and button:
-      Toolkit::TableView fittingModeGroup = Toolkit::TableView::New(2, 1);
-      fittingModeGroup.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      fittingModeGroup.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-      fittingModeGroup.SetBackgroundColor(BACKGROUND_COLOUR);
-      fittingModeGroup.SetCellPadding(Size(MARGIN_SIZE * 0.5f, MARGIN_SIZE * 0.5f));
-      fittingModeGroup.SetFitHeight(0);
-      fittingModeGroup.SetFitHeight(1);
-
-      TextLabel label = TextLabel::New();
-      label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Image fitting mode:"));
-      label.SetStyleName(STYLE_LABEL_TEXT);
-      fittingModeGroup.Add(label);
-
-      Toolkit::PushButton button = CreateButton(FITTING_BUTTON_ID, StringFromScalingMode(mFittingMode));
-      fittingModeGroup.Add(button);
-      mFittingModeButton = button;
-
-      modesGroupBackground.Add(fittingModeGroup);
-    }
 
     {
       // Vertical table to hold label and button:
@@ -425,30 +368,7 @@ public:
 
   bool OnButtonClicked(Toolkit::Button button)
   {
-    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == FITTING_BUTTON_ID)
-    {
-      mPopup = CreatePopup();
-
-      // Four-row table to hold buttons:
-      Toolkit::TableView fittingModes = Toolkit::TableView::New(4, 1);
-      fittingModes.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      fittingModes.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
-      fittingModes.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5));
-      fittingModes.SetFitHeight(0);
-      fittingModes.SetFitHeight(1);
-      fittingModes.SetFitHeight(2);
-      fittingModes.SetFitHeight(3);
-
-      CreatePopupButton(fittingModes, StringFromScalingMode(FittingMode::SCALE_TO_FILL));
-      CreatePopupButton(fittingModes, StringFromScalingMode(FittingMode::SHRINK_TO_FIT));
-      CreatePopupButton(fittingModes, StringFromScalingMode(FittingMode::FIT_WIDTH));
-      CreatePopupButton(fittingModes, StringFromScalingMode(FittingMode::FIT_HEIGHT));
-
-      mPopup.SetContent(fittingModes);
-      mApplication.GetWindow().Add(mPopup);
-      mPopup.SetDisplayState(Toolkit::Popup::SHOWN);
-    }
-    else if(button.GetProperty<String>(Dali::Actor::Property::NAME) == SAMPLING_BUTTON_ID)
+    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == SAMPLING_BUTTON_ID)
     {
       mPopup = CreatePopup();
 
@@ -479,12 +399,6 @@ public:
       mApplication.GetWindow().Add(mPopup);
       mPopup.SetDisplayState(Toolkit::Popup::SHOWN);
     }
-    else if(CheckFittingModeButton(button, FittingMode::SCALE_TO_FILL) ||
-            CheckFittingModeButton(button, FittingMode::SHRINK_TO_FIT) ||
-            CheckFittingModeButton(button, FittingMode::FIT_WIDTH) ||
-            CheckFittingModeButton(button, FittingMode::FIT_HEIGHT))
-    {
-    }
     else if(CheckSamplingModeButton(button, SamplingMode::NEAREST) ||
             CheckSamplingModeButton(button, SamplingMode::LINEAR) ||
             CheckSamplingModeButton(button, SamplingMode::BOX) ||
@@ -496,21 +410,6 @@ public:
     {
     }
     return true;
-  }
-
-  bool CheckFittingModeButton(Actor& button, FittingMode::Type mode)
-  {
-    const char* const modeName = StringFromScalingMode(mode);
-    if(button.GetProperty<String>(Dali::Actor::Property::NAME) == modeName)
-    {
-      mFittingMode = mode;
-      mFittingModeButton.SetProperty(Toolkit::Button::Property::LABEL, modeName);
-      ResizeImage();
-      mPopup.SetDisplayState(Toolkit::Popup::HIDDEN);
-      mPopup.Reset();
-      return true;
-    }
-    return false;
   }
 
   bool CheckSamplingModeButton(Actor& button, SamplingMode::Type mode)
@@ -666,12 +565,6 @@ public:
         mSamplingMode = NextFilterMode(mSamplingMode);
         mSamplingModeButton.SetProperty(Toolkit::Button::Property::LABEL, StringFromFilterMode(mSamplingMode));
       }
-      // Cycle filter and scaling modes:
-      else if(event.GetKeyName() == "s")
-      {
-        mFittingMode = NextScalingMode(mFittingMode);
-        mFittingModeButton.SetProperty(Toolkit::Button::Property::LABEL, StringFromScalingMode(mFittingMode));
-      }
       else
       {
         return;
@@ -695,7 +588,6 @@ private:
     map[Toolkit::ImageVisual::Property::URL]            = path;
     map[Toolkit::ImageVisual::Property::DESIRED_WIDTH]  = imageSize.x;
     map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT] = imageSize.y;
-    map[Toolkit::ImageVisual::Property::FITTING_MODE]   = mFittingMode;
     map[Toolkit::ImageVisual::Property::SAMPLING_MODE]  = mSamplingMode;
 
     mImageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
@@ -717,7 +609,6 @@ private:
 private:
   Application&         mApplication;
   Toolkit::ImageView   mDesiredBox; //< Background rectangle to show requested image size.
-  Toolkit::PushButton  mFittingModeButton;
   Toolkit::PushButton  mSamplingModeButton;
   Toolkit::Popup       mPopup;
   PinchGestureDetector mPinchDetector;
@@ -727,7 +618,6 @@ private:
   Toolkit::ImageView   mImageView;
   Vector2              mImageWindowScale;
   int                  mCurrentPath;
-  FittingMode::Type    mFittingMode;
   SamplingMode::Type   mSamplingMode;
   bool                 mImageLoading;
 };

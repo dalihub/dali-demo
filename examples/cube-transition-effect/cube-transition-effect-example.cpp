@@ -391,7 +391,7 @@ bool CubeTransitionApp::OnTimerTick()
 Texture CubeTransitionApp::LoadWindowFillingTexture(const char* filepath)
 {
   ImageDimensions    dimensions(mApplication.GetWindow().GetSize());
-  Devel::PixelBuffer pixelBuffer = LoadImageFromFile(filepath, dimensions, FittingMode::SCALE_TO_FILL);
+  Devel::PixelBuffer pixelBuffer = LoadImageFromFile(filepath, dimensions);
   PixelData          pixelData   = Devel::PixelBuffer::Convert(pixelBuffer);
 
   Texture texture = Texture::New(TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight());

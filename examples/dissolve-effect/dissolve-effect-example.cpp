@@ -100,7 +100,6 @@ Toolkit::ImageView CreateWindowFillingImageView(const Vector2& windowSize, const
   map[Toolkit::ImageVisual::Property::URL]                 = imagePath;
   map[Toolkit::ImageVisual::Property::DESIRED_WIDTH]       = windowSize.x;
   map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT]      = windowSize.y;
-  map[Toolkit::ImageVisual::Property::FITTING_MODE]        = FittingMode::SCALE_TO_FILL;
   map[Toolkit::ImageVisual::Property::SAMPLING_MODE]       = SamplingMode::BOX_THEN_LINEAR;
   map[Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
   imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);

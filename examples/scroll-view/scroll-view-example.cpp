@@ -461,7 +461,6 @@ private:
     map[ImageVisual::Property::URL]            = ToDaliString(filename);
     map[ImageVisual::Property::DESIRED_WIDTH]  = width;
     map[ImageVisual::Property::DESIRED_HEIGHT] = height;
-    map[ImageVisual::Property::FITTING_MODE]   = FittingMode::SCALE_TO_FILL;
     map[ImageVisual::Property::SAMPLING_MODE]  = SamplingMode::BOX_THEN_LINEAR;
     actor.SetProperty(ImageView::Property::IMAGE, map);
 

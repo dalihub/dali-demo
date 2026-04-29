@@ -89,7 +89,7 @@ public:
 
     // Load image
     ImageDimensions    dimensions(window.GetSize());
-    Devel::PixelBuffer pixelBuffer = LoadImageFromFile(IMAGE_FILE, dimensions, FittingMode::SCALE_TO_FILL);
+    Devel::PixelBuffer pixelBuffer = LoadImageFromFile(IMAGE_FILE, dimensions);
 
     if(!pixelBuffer)
     {
