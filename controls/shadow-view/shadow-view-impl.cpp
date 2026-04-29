@@ -78,7 +78,6 @@ DALI_TYPE_REGISTRATION_END()
 const float BLUR_STRENGTH_DEFAULT = 1.0f;
 
 const Vector3 DEFAULT_LIGHT_POSITION(300.0f, 250.0f, 600.0f);
-const float   DEFAULT_FIELD_OF_VIEW_RADIANS = Math::PI / 4.0f; // 45 degrees
 
 const Vector4 DEFAULT_SHADOW_COLOR = Vector4(0.2f, 0.2f, 0.2f, 0.8f);
 
@@ -86,7 +85,6 @@ const char* const SHADER_LIGHT_CAMERA_PROJECTION_MATRIX_PROPERTY_NAME = "uLightC
 const char* const SHADER_LIGHT_CAMERA_VIEW_MATRIX_PROPERTY_NAME       = "uLightCameraViewMatrix";
 const char* const SHADER_SHADOW_COLOR_PROPERTY_NAME                   = "uShadowColor";
 const char* const BLUR_STRENGTH_PROPERTY_NAME                         = "BlurStrengthProperty";
-const char* const SHADOW_COLOR_PROPERTY_NAME                          = "ShadowColorProperty";
 
 } // namespace
 

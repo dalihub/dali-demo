@@ -57,7 +57,7 @@ void FppGameTutorialController::OnTouch(const TouchEvent& touchEvent)
 
   Vector2 sizeHalf(size * 0.5f);
 
-  for(size_t i = 0; i < touchEvent.GetPointCount(); ++i)
+  for(uint32_t i = 0; i < touchEvent.GetPointCount(); ++i)
   {
     Vector2 pos = touchEvent.GetScreenPosition(i);
     if(!isLandscape)

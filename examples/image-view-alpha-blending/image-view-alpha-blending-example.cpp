@@ -36,8 +36,7 @@ class ImageViewAlphaBlendApp : public ConnectionTracker
 {
 public:
   ImageViewAlphaBlendApp(Application& application)
-  : mApplication(application),
-    mIndex(0u)
+  : mApplication(application)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &ImageViewAlphaBlendApp::Create);
@@ -144,7 +143,6 @@ private:
 
 private:
   Application& mApplication;
-  unsigned int mIndex;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

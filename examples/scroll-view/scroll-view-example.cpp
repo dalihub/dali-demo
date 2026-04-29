@@ -47,8 +47,6 @@ const char* const EFFECT_SPIRAL_IMAGE_SELECTED(DEMO_IMAGE_DIR "icon-scroll-view-
 const char* const EFFECT_WAVE_IMAGE(DEMO_IMAGE_DIR "icon-effect-wave.png");
 const char* const EFFECT_WAVE_IMAGE_SELECTED(DEMO_IMAGE_DIR "icon-effect-wave-selected.png");
 
-const Vector3 ICON_SIZE(100.0f, 100.0f, 0.0f);
-
 const char* EFFECT_MODE_NAME[] = {
   "PageCarousel",
   "PageCube",

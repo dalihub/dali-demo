@@ -475,7 +475,7 @@ private:
     RegisterDepthProperties(depth, zNear, finalImageRenderer);
 
     auto       propInvProjection  = finalImageRenderer.RegisterProperty("uInvProjection", Matrix::IDENTITY);
-    Constraint cnstrInvProjection = Constraint::New<Matrix>(finalImageRenderer, propInvProjection, [zCameraPos, zNear, depth](Matrix& output, const PropertyInputContainer& input)
+    Constraint cnstrInvProjection = Constraint::New<Matrix>(finalImageRenderer, propInvProjection, [](Matrix& output, const PropertyInputContainer& input)
     {
       output = input[0]->GetMatrix();
       DALI_ASSERT_ALWAYS(output.Invert() && "Failed to invert projection matrix.");

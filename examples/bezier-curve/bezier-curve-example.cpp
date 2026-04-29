@@ -37,8 +37,6 @@ using namespace std;
 namespace
 {
 const Vector4     GRID_BACKGROUND_COLOR(0.85f, 0.85f, 0.85f, 1.0f);
-const Vector4     CONTROL_POINT1_COLOR(Color::MAGENTA);
-const Vector4     CONTROL_POINT2_COLOR(0.0, 0.9, 0.9, 1.0);
 const Vector3     CONTROL_POINT1_ORIGIN(-100, 200, 0);
 const Vector3     CONTROL_POINT2_ORIGIN(100, -200, 0);
 const char* const CIRCLE1_IMAGE(DEMO_IMAGE_DIR "circle1.png");

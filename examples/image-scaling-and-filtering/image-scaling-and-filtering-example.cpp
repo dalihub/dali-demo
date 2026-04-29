@@ -47,10 +47,8 @@ const char* const NEXT_BUTTON_ID     = "NEXT_BUTTON";
 const char* const PREVIOUS_BUTTON_ID = "PREVIOUS_BUTTON";
 const char* const DALI_ICON_PLAY     = DEMO_IMAGE_DIR "icon-play.png";
 
-const char* const FITTING_BUTTON_ID    = "FITTING_BUTTON";
-const char* const SAMPLING_BUTTON_ID   = "SAMPLING_BUTTON";
-const char* const FITTING_BUTTON_TEXT  = "Fitting";
-const char* const SAMPLING_BUTTON_TEXT = "Sampling";
+const char* const FITTING_BUTTON_ID  = "FITTING_BUTTON";
+const char* const SAMPLING_BUTTON_ID = "SAMPLING_BUTTON";
 
 const char* const STYLE_LABEL_TEXT  = "ImageScalingGroupLabel";
 const char* const STYLE_BUTTON_TEXT = "ImageScalingButton";
@@ -197,8 +195,7 @@ public:
     mCurrentPath(0),
     mFittingMode(FittingMode::FIT_WIDTH),
     mSamplingMode(SamplingMode::BOX_THEN_LINEAR),
-    mImageLoading(false),
-    mQueuedImageLoad(false)
+    mImageLoading(false)
   {
     // Connect to the Application's Init signal
     mApplication.InitSignal().Connect(this, &ImageScalingAndFilteringController::Create);
@@ -733,7 +730,6 @@ private:
   FittingMode::Type    mFittingMode;
   SamplingMode::Type   mSamplingMode;
   bool                 mImageLoading;
-  bool                 mQueuedImageLoad;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

@@ -34,8 +34,6 @@ using Dali::Integration::ToStdString;
 
 namespace
 {
-const int SEGMENTS = 16;
-
 struct Vertices
 {
   Vector<Vector3> positions;

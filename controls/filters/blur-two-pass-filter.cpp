@@ -40,14 +40,6 @@ namespace Dali::Demo::Internal
 {
 namespace
 {
-const float DEFAULT_KERNEL0[] = {12.0f / 16.0f, 2.0f / 16.0f, 2.0f / 16.0f};
-
-const float DEFAULT_KERNEL1[] = {8.0f / 16.0f, 2.75f / 16.0f, 2.75f / 16.0f, 1.25f / 16.0f, 1.25f / 16.0f};
-
-const float DEFAULT_KERNEL2[] = {5.0f / 16.0f, 2.75f / 16.0f, 2.75f / 16.0f, 1.75f / 16.0f, 1.75f / 16.0f, 1.5f / 16.0f, 1.5f / 16.0f};
-
-const float DEFAULT_KERNEL3[] = {3.0f / 16.0f, 2.0f / 16.0f, 2.0f / 16.0f, 2.0f / 16.0f, 2.0f / 16.0f, 2.0f / 16.0f, 2.0f / 16.0f, 0.5f / 16.0f, 0.5f / 16.0f};
-
 const float DEFAULT_KERNEL4[] = {2.0f / 16.0f, 1.5f / 16.0f, 1.5f / 16.0f, 1.5f / 16.0f, 1.5f / 16.0f, 1.0f / 16.0f, 1.0f / 16.0f, 1.0f / 16.0f, 1.0f / 16.0f, 1.0f / 16.0f, 1.0f / 16.0f, 0.5f / 16.0f, 0.5f / 16.0f, 0.5f / 16.0f, 0.5f / 16.0f};
 
 std::string GetOffsetUniformName(int index)
@@ -65,7 +57,6 @@ std::string GetWeightUniformName(int index)
 }
 
 const char* const BLUR_STRENGTH_UNIFORM_NAME("uBlurStrength");
-const char* const EFFECT_IMAGE_NAME("sEffect");
 
 } // namespace
 

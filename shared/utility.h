@@ -2,7 +2,7 @@
 #define DALI_DEMO_UTILITY_H
 
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 
 #include <dali/dali.h>
 #include <dali/devel-api/adaptor-framework/image-loading.h>
-#include <dali/public-api/math/uint-16-pair.h>
+#include <dali/public-api/math/int-pair.h>
 #include <dali/public-api/rendering/geometry.h>
 #include <dali/public-api/rendering/texture.h>
 

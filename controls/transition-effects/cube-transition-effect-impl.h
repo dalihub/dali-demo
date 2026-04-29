@@ -165,7 +165,7 @@ private:
    * This method is called after the CubeTransitionEffect has been initialized.  Derived classes should do
    * any second phase initialization by overriding this method.
    */
-  virtual void OnInitialize()
+  virtual void OnInitialize() override
   {
   }
 

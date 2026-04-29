@@ -62,8 +62,6 @@ public:
     mImageActor1(),
     mImageActor2(),
     mImageActor3(),
-    mAngle1Index(Property::INVALID_INDEX),
-    mAngle3Index(Property::INVALID_INDEX),
     mSceneActor(),
     mSceneAnimation(),
     mSpinner()
@@ -241,14 +239,12 @@ private:
   int                mLastRTC;
 
   // Scene objects:
-  ImageView       mImageActor1;
-  ImageView       mImageActor2;
-  ImageView       mImageActor3;
-  Property::Index mAngle1Index;
-  Property::Index mAngle3Index;
-  Layer           mSceneActor;
-  Animation       mSceneAnimation;
-  TextLabel       mSpinner;
+  ImageView mImageActor1;
+  ImageView mImageActor2;
+  ImageView mImageActor3;
+  Layer     mSceneActor;
+  Animation mSceneAnimation;
+  TextLabel mSpinner;
 };
 
 } // namespace Dali

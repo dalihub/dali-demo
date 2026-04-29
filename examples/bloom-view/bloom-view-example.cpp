@@ -42,21 +42,6 @@ const Rect<int> UI_PIXEL_AREA(0, 0, 720, 1280);
 const Rect<int> PANEL1_PIXEL_AREA(0, 0, 720, 39);
 const Rect<int> PANEL2_PIXEL_AREA(0, 39, 720, 100);
 
-const unsigned int NUM_MOVEMENT_ANIMATIONS = 2;
-
-// for animating bloom intensity on tap gesture
-const float PULSE_BLOOM_INCREASE_ANIM_TIME = 1.175;
-const float PULSE_BLOOM_DECREASE_ANIM_TIME = 2.4;
-const float PULSE_BLOOM_TOTAL_ANIM_TIME    = PULSE_BLOOM_INCREASE_ANIM_TIME + PULSE_BLOOM_DECREASE_ANIM_TIME;
-const float PULSE_BLOOM_INTENSITY_DEFAULT  = 1.0f;
-const float PULSE_BLOOM_INTENSITY_INCREASE = 3.0f;
-
-// These values depend on the button background image
-const Vector4 BUTTON_IMAGE_BORDER(16.0f, 16.0f, 16.0f, 20.0f);
-
-const float   UI_MARGIN = 4.0f; ///< Screen Margin for placement of UI buttons
-const Vector3 BUTTON_SIZE_CONSTRAINT(0.24f, 0.09f, 1.0f);
-
 } // namespace
 
 /**
@@ -66,8 +51,7 @@ class BloomExample : public ConnectionTracker
 {
 public:
   BloomExample(Application& application)
-  : mApplication(application),
-    mCurrentAnimation(0)
+  : mApplication(application)
   {
     application.InitSignal().Connect(this, &BloomExample::Create);
   }
@@ -206,12 +190,11 @@ private:
 
   Actor mObjectRootActor;
 
-  unsigned int mCurrentAnimation;
-  Animation    mRotationAnimation;
-  Animation    mResizeAnimation;
-  Animation    mTranslationAnimation;
-  Animation    mBlurAnimation;
-  Animation    mPulseBloomIntensityAnim;
+  Animation mRotationAnimation;
+  Animation mResizeAnimation;
+  Animation mTranslationAnimation;
+  Animation mBlurAnimation;
+  Animation mPulseBloomIntensityAnim;
 
   BloomView mBloomView;
 };

@@ -33,9 +33,6 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace EmojiStrings;
 
-// TODO Need to expose Text::RENDER.....
-const int ATLAS_RENDERER = 0;
-
 // This example shows how to create and display Hello World! using a simple TextActor
 //
 class EmojiExample : public ConnectionTracker

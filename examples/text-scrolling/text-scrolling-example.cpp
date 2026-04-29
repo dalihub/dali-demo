@@ -37,8 +37,7 @@ namespace
 const float   WINDOW_HEIGHT_MULTIPLIER(1.5f);
 const Vector2 BOX_SIZE(Vector2(330.0f, 80.0f));
 const Vector2 SCROLLING_BOX_SIZE(Vector2(330.0f, 40.0f));
-const float   MAX_OFFSCREEN_RENDERING_SIZE = 2048.f;
-const float   SCREEN_BORDER                = 5.0f; // Border around screen that Popups and handles will not exceed
+const float   SCREEN_BORDER = 5.0f; // Border around screen that Popups and handles will not exceed
 
 const char* ALIGNMENT_TABLE[] =
   {
