@@ -173,7 +173,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window  window     = application.GetWindow();
@@ -436,7 +436,7 @@ public:
     }
   }
 
-  bool OnControlTouched(Actor actor, const TouchEvent& event)
+  bool OnControlTouched(Actor actor, TouchEvent event)
   {
     if(event.GetPointCount() > 0)
     {
@@ -469,7 +469,7 @@ public:
     return false;
   }
 
-  void OnPinch(Actor actor, const PinchGesture& pinch)
+  void OnPinch(Actor actor, PinchGesture pinch)
   {
     if(pinch.GetState() == GestureState::STARTED)
     {
@@ -494,7 +494,7 @@ public:
     mLastPinchScale = scale;
   }
 
-  void OnPan(Actor actor, const PanGesture& gesture)
+  void OnPan(Actor actor, PanGesture gesture)
   {
     Window         window       = mApplication.GetWindow();
     Vector2        windowSize   = window.GetSize();
@@ -507,7 +507,7 @@ public:
     ResizeImage();
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -46,17 +46,17 @@ public:
   ~TransitionApplication();
 
   // Init signal handler
-  void Create(Application& application);
+  void Create(Application application);
 
   // Create the GUI components
   Toolkit::TextLabel CreateTitle(std::string title);
   Actor              CreateContentPane();
 
   // Key event handler
-  void OnKeyEvent(const KeyEvent& event);
+  void OnKeyEvent(KeyEvent event);
 
   bool OnActionButtonClicked(Button button);
-  bool OnVisualButtonClicked(Actor actor, const TouchEvent& touch);
+  bool OnVisualButtonClicked(Actor actor, TouchEvent touch);
 
   static const char* DEMO_THEME_ONE_PATH;
 

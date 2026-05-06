@@ -86,7 +86,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -633,7 +633,7 @@ public:
   }
 
   //Panning around the shape rotates it.
-  void OnPan(Actor actor, const PanGesture& gesture)
+  void OnPan(Actor actor, PanGesture gesture)
   {
     switch(gesture.GetState())
     {
@@ -682,7 +682,7 @@ public:
   }
 
   //If escape or the back button is pressed, quit the application (and return to the launcher)
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

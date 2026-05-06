@@ -120,7 +120,7 @@ void ExpandingButtons::Expand()
   mExpandCollapseAnimation.Play();
 }
 
-void ExpandingButtons::OnExpandAnimationFinished(Animation& animation)
+void ExpandingButtons::OnExpandAnimationFinished(Animation animation)
 {
   if(mStyleButtonsHidden)
   {

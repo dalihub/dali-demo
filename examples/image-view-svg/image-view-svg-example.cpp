@@ -65,7 +65,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -155,7 +155,7 @@ public:
   }
 
   // Callback of pan gesture, for moving the actors
-  void OnPanGesture(Actor actor, const PanGesture& gesture)
+  void OnPanGesture(Actor actor, PanGesture gesture)
   {
     if(gesture.GetState() == GestureState::CONTINUING)
     {
@@ -167,7 +167,7 @@ public:
   }
 
   // Callback of pinch gesture, for resizing the actors
-  void OnPinch(Actor actor, const PinchGesture& gesture)
+  void OnPinch(Actor actor, PinchGesture gesture)
   {
     switch(gesture.GetState())
     {
@@ -211,7 +211,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

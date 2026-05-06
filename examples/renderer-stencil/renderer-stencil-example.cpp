@@ -125,7 +125,7 @@ private:
    * This is called via the Init signal which is received once (only) during the Application lifetime.
    * @param[in] application The DALi application object
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
 
@@ -731,7 +731,7 @@ private:
    * @param[in] touch The touch information
    * @return True if the event has been handled
    */
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     // Quit the application.
     mApplication.Quit();
@@ -742,7 +742,7 @@ private:
    * @brief OnKeyEvent signal handler.
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

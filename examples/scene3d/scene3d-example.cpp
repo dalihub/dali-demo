@@ -266,7 +266,7 @@ Scene3DExample::Scene3DExample(Dali::Application& app)
 
 Scene3DExample::~Scene3DExample() = default;
 
-void Scene3DExample::OnInit(Application& app)
+void Scene3DExample::OnInit(Application app)
 {
   // get scenes
   auto resPath    = ToStdString(Application::GetResourcePath());
@@ -376,7 +376,7 @@ void Scene3DExample::OnKeyboardFocusChanged(Actor originalFocusedActor, Actor cu
   }
 }
 
-void Scene3DExample::OnTerminate(Application& app)
+void Scene3DExample::OnTerminate(Application app)
 {
   mTapDetector.Reset();
   mPanDetector.Reset();
@@ -392,7 +392,7 @@ void Scene3DExample::OnTerminate(Application& app)
   mItemFactory.reset();
 }
 
-void Scene3DExample::OnKey(const KeyEvent& e)
+void Scene3DExample::OnKey(KeyEvent e)
 {
   if(e.GetState() == KeyEvent::UP)
   {
@@ -424,7 +424,7 @@ void Scene3DExample::OnKey(const KeyEvent& e)
   }
 }
 
-void Scene3DExample::OnPan(Actor actor, const PanGesture& pan)
+void Scene3DExample::OnPan(Actor actor, PanGesture pan)
 {
   auto    windowSize = mApp.GetWindow().GetSize();
   Vector2 size{float(windowSize.GetWidth()), float(windowSize.GetHeight())};
@@ -440,7 +440,7 @@ void Scene3DExample::OnPan(Actor actor, const PanGesture& pan)
   mScene.SetProperty(Actor::Property::ORIENTATION, q * q0);
 }
 
-void Scene3DExample::OnTap(Dali::Actor actor, const Dali::TapGesture& tap)
+void Scene3DExample::OnTap(Dali::Actor actor, Dali::TapGesture tap)
 {
   mActivatedActor = actor;
 

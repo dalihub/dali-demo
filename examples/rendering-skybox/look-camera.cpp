@@ -148,7 +148,7 @@ void LookCamera::CreateInterceptorActor()
   mInterceptorActor.TouchedSignal().Connect(this, &LookCamera::OnTouch);
 }
 
-bool LookCamera::OnTouch(Actor actor, const TouchEvent& touch)
+bool LookCamera::OnTouch(Actor actor, TouchEvent touch)
 {
   for(int i = 0; i < (int)touch.GetPointCount() && i < 3; ++i)
   {

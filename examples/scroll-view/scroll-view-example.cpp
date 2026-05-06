@@ -164,7 +164,7 @@ public:
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void OnInit(Application& app)
+  void OnInit(Application app)
   {
     Window window = app.GetWindow();
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
@@ -498,7 +498,7 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The touch information.
    */
-  bool OnTouchImage(Actor actor, const TouchEvent& event)
+  bool OnTouchImage(Actor actor, TouchEvent event)
   {
     if((event.GetPointCount() > 0) && (!mScrolling))
     {
@@ -544,7 +544,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

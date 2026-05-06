@@ -84,7 +84,7 @@ public:
     mApplication.InitSignal().Connect(this, &AnimatedVectorImageViewController::Create);
   }
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     // The Init signal is received once (only) during the Application lifetime
 
@@ -272,7 +272,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

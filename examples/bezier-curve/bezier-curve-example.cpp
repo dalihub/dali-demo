@@ -123,7 +123,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = mApplication.GetWindow();
     window.KeyEventSignal().Connect(this, &BezierCurveExample::OnKeyEvent);
@@ -485,7 +485,7 @@ public:
     }
   }
 
-  bool OnTouchControlPoint(Actor controlPoint, const TouchEvent& event)
+  bool OnTouchControlPoint(Actor controlPoint, TouchEvent event)
   {
     if(event.GetPointCount() > 0)
     {
@@ -503,7 +503,7 @@ public:
     return false; // Don't mark this as consumed - let the layer get the touch
   }
 
-  bool OnTouchLayer(Actor actor, const TouchEvent& event)
+  bool OnTouchLayer(Actor actor, TouchEvent event)
   {
     if(event.GetPointCount() > 0)
     {
@@ -527,7 +527,7 @@ public:
     return false;
   }
 
-  void OnAnimationFinished(Animation& animation)
+  void OnAnimationFinished(Animation animation)
   {
     UpdateCurve();
   }
@@ -563,7 +563,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN && (IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK)))
     {

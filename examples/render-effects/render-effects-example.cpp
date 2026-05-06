@@ -69,7 +69,7 @@ public:
   {
   }
 
-  void Create(Dali::Application& application)
+  void Create(Dali::Application application)
   {
     window = application.GetWindow();
 
@@ -361,7 +361,7 @@ public:
     }
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

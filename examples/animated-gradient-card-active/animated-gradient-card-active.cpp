@@ -286,7 +286,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     mWindow = application.GetWindow();
@@ -320,7 +320,7 @@ public:
     Reset();
   }
 
-  bool OnTouchCards(Actor actor, const TouchEvent& data)
+  bool OnTouchCards(Actor actor, TouchEvent data)
   {
     if(data.GetPointCount() > 0)
     {
@@ -355,7 +355,7 @@ public:
     return true;
   }
 
-  bool OnTouchLayer(Actor actor, const TouchEvent& data)
+  bool OnTouchLayer(Actor actor, TouchEvent data)
   {
     if(data.GetPointCount() > 0)
     {
@@ -431,7 +431,7 @@ public:
     return false;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

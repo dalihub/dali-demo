@@ -98,7 +98,7 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& app)
+  void Create(Application app)
   {
     Window  window     = app.GetWindow();
     Vector2 windowSize = window.GetSize();
@@ -210,7 +210,7 @@ private:
   }
 
   // Callback function of the touch signal on the background
-  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& event)
+  bool OnTouch(Dali::Actor actor, Dali::TouchEvent event)
   {
     switch(event.GetState(0))
     {
@@ -275,7 +275,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

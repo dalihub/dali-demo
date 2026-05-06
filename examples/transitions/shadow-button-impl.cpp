@@ -167,7 +167,7 @@ void ShadowButton::StartTransition(Property::Index transitionId)
   }
 }
 
-void ShadowButton::OnTransitionFinished(Animation& src)
+void ShadowButton::OnTransitionFinished(Animation src)
 {
   ShadowButton::Transitions::iterator iter = mTransitions.begin();
   for(; iter != mTransitions.end(); ++iter)

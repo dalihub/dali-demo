@@ -245,7 +245,7 @@ public:
    * This method gets called once the main loop of application is up and running
    * @param[in] application Reference to the application instance
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     application.GetWindow().KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
@@ -611,7 +611,7 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The touch event
    */
-  bool OnTouchPaddle(Actor actor, const TouchEvent& event)
+  bool OnTouchPaddle(Actor actor, TouchEvent event)
   {
     if(event.GetPointCount() > 0)
     {
@@ -637,7 +637,7 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The touch event
    */
-  bool OnTouchLayer(Actor actor, const TouchEvent& event)
+  bool OnTouchLayer(Actor actor, TouchEvent event)
   {
     if(event.GetPointCount() > 0)
     {
@@ -663,7 +663,7 @@ private:
    * Notification: Ball hit left wall
    * @param source The notification
    */
-  void OnHitLeftWall(PropertyNotification& source)
+  void OnHitLeftWall(PropertyNotification source)
   {
     mBallVelocity.x = fabsf(mBallVelocity.x);
     ContinueAnimation();
@@ -673,7 +673,7 @@ private:
    * Notification: Ball hit right wall
    * @param source The notification
    */
-  void OnHitRightWall(PropertyNotification& source)
+  void OnHitRightWall(PropertyNotification source)
   {
     mBallVelocity.x = -fabsf(mBallVelocity.x);
     ContinueAnimation();
@@ -683,7 +683,7 @@ private:
    * Notification: Ball hit top wall
    * @param source The notification
    */
-  void OnHitTopWall(PropertyNotification& source)
+  void OnHitTopWall(PropertyNotification source)
   {
     mBallVelocity.y = fabsf(mBallVelocity.y);
     ContinueAnimation();
@@ -693,7 +693,7 @@ private:
    * Notification: Ball hit bottom wall
    * @param source The notification
    */
-  void OnHitBottomWall(PropertyNotification& source)
+  void OnHitBottomWall(PropertyNotification source)
   {
     if(mBallAnimation)
     {
@@ -719,7 +719,7 @@ private:
    * Paddle Shrink Animation complete.
    * @param[in] source The animation responsible for shrinking the paddle.
    */
-  void OnPaddleShrunk(Animation& source)
+  void OnPaddleShrunk(Animation source)
   {
     // Reposition Ball in start position, and make ball appear.
     mBall.SetProperty(Actor::Property::POSITION, mBallStartPosition);
@@ -738,7 +738,7 @@ private:
    * Notification: Ball hit paddle
    * @param source The notification
    */
-  void OnHitPaddle(PropertyNotification& source)
+  void OnHitPaddle(PropertyNotification source)
   {
     Actor   delegate        = Actor::DownCast(source.GetTarget());
     Vector3 collisionVector = delegate.GetCurrentProperty<Vector3>(source.GetTargetProperty());
@@ -773,7 +773,7 @@ private:
    * Notification: Ball hit brick
    * @param source The notification
    */
-  void OnHitBrick(PropertyNotification& source)
+  void OnHitBrick(PropertyNotification source)
   {
     Actor   brick           = Actor::DownCast(source.GetTarget());
     Vector3 collisionVector = brick.GetCurrentProperty<Vector3>(source.GetTargetProperty());
@@ -802,7 +802,7 @@ private:
    * Brick Destruction Animation complete.
    * @param[in] source The animation responsible for destroying the brick
    */
-  void OnBrickDestroyed(Animation& source)
+  void OnBrickDestroyed(Animation source)
   {
     // Remove brick from window, it's constraint and property notification should also remove themselves.
     Actor brick = mDestroyAnimationMap[source];
@@ -820,7 +820,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -56,7 +56,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
@@ -85,7 +85,7 @@ public:
     }
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& event)
+  bool OnTouch(Actor actor, TouchEvent event)
   {
     if(1u == event.GetPointCount())
     {
@@ -116,7 +116,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

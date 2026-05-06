@@ -131,7 +131,7 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window  window     = application.GetWindow();
     Vector2 windowSize = window.GetSize();
@@ -240,7 +240,7 @@ private:
     return true;
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& event)
+  bool OnTouch(Actor actor, TouchEvent event)
   {
     switch(event.GetState(0))
     {
@@ -294,7 +294,7 @@ private:
     return true;
   }
 
-  void OnTouchFinished(Animation& source)
+  void OnTouchFinished(Animation source)
   {
     mRenderer.SetShader(mShaderFlat);
     SetLightXYOffset(Vector2::ZERO);
@@ -447,7 +447,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

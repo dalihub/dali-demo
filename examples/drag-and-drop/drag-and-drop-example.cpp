@@ -75,7 +75,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     auto window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
@@ -129,7 +129,7 @@ public:
     mDragAndDropDetector.EndedSignal().Connect(this, &DragAndDropExample::OnEnd);
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -253,7 +253,7 @@ public:
     dropAnimation.Play();
   }
 
-  void DropAnimationFinished(Animation& animation)
+  void DropAnimationFinished(Animation animation)
   {
     for(unsigned int i = 0; i < TEXT_LABEL_NUM; i++)
     {

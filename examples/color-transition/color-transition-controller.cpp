@@ -138,7 +138,7 @@ void ColorTransitionController::SetOnFinished(OnFinished onFinished, void* data)
   mOnFinishedData = data;
 }
 
-void ColorTransitionController::OnTransitionFinished(Animation& anim)
+void ColorTransitionController::OnTransitionFinished(Animation anim)
 {
   // shift the secondary color down
   Vector3 color1 = mComposite.GetProperty(mPropRgb[1]).Get<Vector3>();

@@ -42,7 +42,7 @@ TextOverlapController::TextOverlapController(Application& app)
   app.TerminateSignal().Connect(this, &TextOverlapController::Destroy);
 }
 
-void TextOverlapController::Create(Application& app)
+void TextOverlapController::Create(Application app)
 {
   Window window = app.GetWindow();
   window.KeyEventSignal().Connect(this, &TextOverlapController::OnKeyEvent);
@@ -91,7 +91,7 @@ void TextOverlapController::Create(Application& app)
   mPanDetector.DetectedSignal().Connect(this, &TextOverlapController::OnPan);
 }
 
-void TextOverlapController::OnPan(Actor actor, const PanGesture& gesture)
+void TextOverlapController::OnPan(Actor actor, PanGesture gesture)
 {
   const GestureState state = gesture.GetState();
   if(!mGrabbedActor || state == GestureState::STARTED)
@@ -124,7 +124,7 @@ void TextOverlapController::OnPan(Actor actor, const PanGesture& gesture)
   }
 }
 
-void TextOverlapController::Destroy(Application& app)
+void TextOverlapController::Destroy(Application app)
 {
   mPanDetector.DetachAll();
   UnparentAndReset(mLabels[0]);
@@ -139,7 +139,7 @@ bool TextOverlapController::OnClicked(Button button)
   return false;
 }
 
-void TextOverlapController::OnKeyEvent(const KeyEvent& keyEvent)
+void TextOverlapController::OnKeyEvent(KeyEvent keyEvent)
 {
   if(keyEvent.GetState() == KeyEvent::DOWN &&
      (IsKey(keyEvent, DALI_KEY_BACK) ||

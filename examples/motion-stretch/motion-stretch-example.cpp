@@ -112,7 +112,7 @@ public:
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void OnInit(Application& app)
+  void OnInit(Application app)
   {
     // The Init signal is received once (only) during the Application lifetime
     Window window = app.GetWindow();
@@ -237,7 +237,7 @@ public:
   //
 
   // move to point on screen that was tapped
-  void OnTap(Actor actor, const TapGesture& tapGesture)
+  void OnTap(Actor actor, TapGesture tapGesture)
   {
     Vector3 destPos;
     float   originOffsetX, originOffsetY;
@@ -360,7 +360,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

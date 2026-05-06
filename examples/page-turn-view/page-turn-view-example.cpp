@@ -164,14 +164,14 @@ public:
 
   ~PageTurnExample();
 
-  void OnInit(Application& app);
+  void OnInit(Application app);
 
 private:
   void OnWindowResized(Window window, Window::WindowSize size);
 
   void Rotate(DemoOrientation orientation);
 
-  void OnKeyEvent(const KeyEvent& event);
+  void OnKeyEvent(KeyEvent event);
 
 private:
   Application& mApplication;
@@ -198,7 +198,7 @@ PageTurnExample::~PageTurnExample()
 /**
  * The Init signal is received once (only) during the Application lifetime
  */
-void PageTurnExample::OnInit(Application& app)
+void PageTurnExample::OnInit(Application app)
 {
   Window window = app.GetWindow();
   window.KeyEventSignal().Connect(this, &PageTurnExample::OnKeyEvent);
@@ -262,7 +262,7 @@ void PageTurnExample::Rotate(DemoOrientation orientation)
 /**
  * Main key event handler
  */
-void PageTurnExample::OnKeyEvent(const KeyEvent& event)
+void PageTurnExample::OnKeyEvent(KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

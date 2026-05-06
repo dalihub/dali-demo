@@ -267,7 +267,7 @@ void BubbleEmitter::SetBubbleDensity(unsigned int density)
 }
 
 // clear the resources created for the off screen rendering
-void BubbleEmitter::OnRenderFinished(RenderTask& source)
+void BubbleEmitter::OnRenderFinished(RenderTask source)
 {
   mRenderTaskRunning = false;
   Actor sourceActor  = source.GetSourceActor();
@@ -286,7 +286,7 @@ void BubbleEmitter::OnContextRegained()
   }
 }
 
-void BubbleEmitter::EmitBubble(Animation& animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement)
+void BubbleEmitter::EmitBubble(Animation animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement)
 {
   unsigned int curUniform = mCurrentBubble % mNumBubblePerRenderer;
   unsigned int groupIdx   = mCurrentBubble / mNumBubblePerRenderer;

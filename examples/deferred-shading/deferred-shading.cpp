@@ -340,7 +340,7 @@ public:
   }
 
 private:
-  void Create(Application& app)
+  void Create(Application app)
   {
     // Grab window, configure layer
     Window window    = app.GetWindow();
@@ -540,7 +540,7 @@ private:
     mPanDetector.Attach(window.GetRootLayer());
   }
 
-  void Destroy(Application& app)
+  void Destroy(Application app)
   {
     app.GetWindow().GetRenderTaskList().RemoveTask(mSceneRender);
     mSceneRender.Reset();
@@ -598,7 +598,7 @@ private:
     return light;
   }
 
-  void OnPan(Actor, PanGesture const& gesture)
+  void OnPan(Actor, PanGesture gesture)
   {
     Quaternion     q            = mAxis.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
     const Vector2& displacement = gesture.GetScreenDisplacement();
@@ -607,7 +607,7 @@ private:
     mAxis.SetProperty(Actor::Property::ORIENTATION, qy * qx * q);
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -145,7 +145,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime.
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Create benchmark script
     CreateScript();
@@ -176,7 +176,7 @@ public:
     window.KeyEventSignal().Connect(this, &HomescreenBenchmark::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     // Quit the application.
     mApplication.Quit();
@@ -411,7 +411,7 @@ public:
     mCurrentPage += pages;
   }
 
-  void OnAnimationEnd(Animation& source)
+  void OnAnimationEnd(Animation source)
   {
     if(mScriptFrame < mScriptFrameData.size())
     {
@@ -425,7 +425,7 @@ public:
     }
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

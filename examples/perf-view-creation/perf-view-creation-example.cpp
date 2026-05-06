@@ -272,7 +272,7 @@ public:
   ~PerfViewCreation() = default;
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     GetNanoseconds(mAppStartTime);
 
@@ -414,14 +414,14 @@ public:
     }
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -432,7 +432,7 @@ public:
     }
   }
 
-  void OnAppearAnimationFinished(Animation& animation)
+  void OnAppearAnimationFinished(Animation animation)
   {
     // We can assume that front of mControlList must be disappearing.
     auto currentControl = mCreatingControlList.front();
@@ -462,7 +462,7 @@ public:
 
     mRemovingAnimationList.push_back(disappearingAnimation);
   }
-  void OnDisappearAnimationFinished(Animation& animation)
+  void OnDisappearAnimationFinished(Animation animation)
   {
     // We can assume that front of mControlList must be deleted.
     mRemovingControlList.front().Unparent();

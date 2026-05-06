@@ -203,7 +203,7 @@ public:
   ~PerfScroll() = default;
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -237,7 +237,7 @@ public:
     ScrollAnimation();
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
@@ -325,11 +325,11 @@ public:
     Animation scrollAnimation = Animation::New(gScrollDuration);
     scrollAnimation.AnimateBy(Property(mParent, Actor::Property::POSITION), Vector3(-(PAGE_COUNT - 1.) * windowSize.x, 0.0f, 0.0f));
     scrollAnimation.Play();
-    scrollAnimation.FinishedSignal().Connect(this, [&](Animation&)
+    scrollAnimation.FinishedSignal().Connect(this, [&](Animation)
     { mApplication.Quit(); });
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

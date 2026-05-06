@@ -43,7 +43,7 @@ public:
   void RequestTransition(float duration, const Dali::Vector3& targetColor);
 
 private:
-  void OnTransitionFinished(Dali::Animation& anim);
+  void OnTransitionFinished(Dali::Animation anim);
 
   Dali::Actor           mComposite;
   Dali::Property::Index mPropFlow;

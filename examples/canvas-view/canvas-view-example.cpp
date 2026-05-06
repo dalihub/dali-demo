@@ -435,7 +435,7 @@ public:
   /**
    * @brief Create a view and set up the button and timer, and title.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     // The Init signal is received once (only) during the Application lifetime
     Window  window     = application.GetWindow();
@@ -563,7 +563,7 @@ public:
    *
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

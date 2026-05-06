@@ -102,7 +102,7 @@ public:
     // Nothing to do here
   }
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     // The Init signal is received once (only) during the Application lifetime
 
@@ -213,7 +213,7 @@ private:
     return true; // Keep tick always
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::UP)
     {
@@ -230,7 +230,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

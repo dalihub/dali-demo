@@ -79,7 +79,7 @@ private:
   /**
    * @copydoc PageTurnView::TurnedOver
    */
-  void TurnedOverBackwards(Animation& animation);
+  void TurnedOverBackwards(Animation animation);
 
 private:
   //Undefined

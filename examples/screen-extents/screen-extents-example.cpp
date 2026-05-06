@@ -67,7 +67,7 @@ public:
   ~HelloWorldController() = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     window = application.GetWindow();
@@ -126,7 +126,7 @@ public:
     window.KeyEventSignal().Connect(this, &HelloWorldController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
@@ -198,7 +198,7 @@ public:
     currentScreenPositionMarker.SetProperty(Dali::Actor::Property::POSITION, currentScreenPosition);
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     const float positionStep    = 2.0f;
     const float orientationStep = 2.0f;

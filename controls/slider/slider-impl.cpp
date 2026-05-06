@@ -223,7 +223,7 @@ void Slider::OnRelayout(const Vector2& size, RelayoutContainer& container)
   ControlImpl::OnRelayout(size, container);
 }
 
-bool Slider::OnTouch(Actor actor, const TouchEvent& touch)
+bool Slider::OnTouch(Actor actor, TouchEvent touch)
 {
   if(mState != DISABLED)
   {
@@ -251,7 +251,7 @@ bool Slider::OnTouch(Actor actor, const TouchEvent& touch)
   return false;
 }
 
-void Slider::OnPan(Actor actor, const PanGesture& gesture)
+void Slider::OnPan(Actor actor, PanGesture gesture)
 {
   // gesture.position is in local actor coordinates
   if(mState != DISABLED)

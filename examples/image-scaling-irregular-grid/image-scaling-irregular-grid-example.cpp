@@ -271,7 +271,7 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     std::cout << "ImageScalingIrregularGridController::Create" << std::endl;
 
@@ -474,7 +474,7 @@ public:
    * @param[in] actor The actor touched
    * @param[in] event The Touch information.
    */
-  bool OnTouchImage(Actor actor, const TouchEvent& event)
+  bool OnTouchImage(Actor actor, TouchEvent event)
   {
     if((event.GetPointCount() > 0) && (!mScrolling))
     {
@@ -495,7 +495,7 @@ public:
    * Main key event handler.
    * Quit on escape key.
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

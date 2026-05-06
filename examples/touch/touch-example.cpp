@@ -49,7 +49,7 @@ public:
   ~TouchController() = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     window = application.GetWindow();
@@ -147,7 +147,7 @@ public:
     window.KeyEventSignal().Connect(this, &TouchController::OnKeyEvent);
   }
 
-  bool OnTouchActor(Actor actor, const TouchEvent& touch)
+  bool OnTouchActor(Actor actor, TouchEvent touch)
   {
     // quit the application
     DALI_LOG_ERROR("touched : name : %s, id : %d\n", actor.GetProperty<String>(Dali::Actor::Property::NAME).CStr(), actor.GetProperty<int>(Dali::Actor::Property::ID));
@@ -159,7 +159,7 @@ public:
     return true;
   }
 
-  bool OnTouch3DActor(Actor actor, const TouchEvent& touch)
+  bool OnTouch3DActor(Actor actor, TouchEvent touch)
   {
     // quit the application
     DALI_LOG_ERROR("3D touched : name : %s, id : %d\n", actor.GetProperty<String>(Dali::Actor::Property::NAME).CStr(), actor.GetProperty<int>(Dali::Actor::Property::ID));
@@ -171,7 +171,7 @@ public:
     return true;
   }
 
-  bool OnTouchActorNotConsume(Actor actor, const TouchEvent& touch)
+  bool OnTouchActorNotConsume(Actor actor, TouchEvent touch)
   {
     // quit the application
     DALI_LOG_ERROR("touched But not consume : %d\n", actor.GetProperty<int>(Dali::Actor::Property::ID));
@@ -1056,7 +1056,7 @@ public:
     }
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

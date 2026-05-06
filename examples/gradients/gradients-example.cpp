@@ -63,7 +63,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     auto window = application.GetWindow();
@@ -197,7 +197,7 @@ public:
     mGradientControl.SetProperty(Control::Property::BACKGROUND, gradientMap);
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

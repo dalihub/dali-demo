@@ -337,7 +337,7 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window   window       = application.GetWindow();
@@ -469,7 +469,7 @@ private:
     mTickTimer.Start();
   }
 
-  void OnPan(Actor actor, const PanGesture& panGesture)
+  void OnPan(Actor actor, PanGesture panGesture)
   {
     Vector2 displacement = panGesture.GetScreenDisplacement();
     Vector2 rotation{displacement.y * -0.1f, displacement.x * 0.1f};
@@ -486,7 +486,7 @@ private:
     mReflectionCamera3D.SetProperty(DevelCameraActor::Property::REFLECTION_PLANE, Vector4(yAxis.x, yAxis.y, yAxis.z, 0.0f));
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

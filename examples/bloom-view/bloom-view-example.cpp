@@ -61,7 +61,7 @@ public:
   }
 
 public:
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window  window     = application.GetWindow();
     Vector2 windowSize = window.GetSize();
@@ -119,7 +119,7 @@ public:
     window.KeyEventSignal().Connect(this, &BloomExample::OnKeyEvent);
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -181,7 +181,7 @@ public:
 
   ~DirectRenderingExampleController() override = default; // Nothing to do in destructor
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Dali::Window window = application.GetWindow();
@@ -208,14 +208,14 @@ public:
     mDRView->Create(Vector2::ZERO, mode);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     // quit the application
     RequestApplicationQuit();
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

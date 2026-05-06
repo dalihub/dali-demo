@@ -899,7 +899,7 @@ void PageTurnView::PanFinished(const Vector2& gesturePosition, float gestureSpee
   mPageUpdated = true;
 }
 
-void PageTurnView::TurnedOver(Animation& animation)
+void PageTurnView::TurnedOver(Animation animation)
 {
   int pageId = mAnimationPageIdPair[animation];
   int index  = pageId % NUMBER_OF_CACHED_PAGES;
@@ -927,7 +927,7 @@ void PageTurnView::TurnedOver(Animation& animation)
   mPageTurnFinishedSignal.Emit(handle, static_cast<unsigned int>(pageId), mPages[index].isTurnBack);
 }
 
-void PageTurnView::SliddenBack(Animation& animation)
+void PageTurnView::SliddenBack(Animation animation)
 {
   int pageId = mAnimationPageIdPair[animation];
   int index  = pageId % NUMBER_OF_CACHED_PAGES;

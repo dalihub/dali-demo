@@ -90,17 +90,17 @@ public:
   /**
    * Creates the metaballs and initializes the scene
    */
-  void Create(Application& app);
+  void Create(Application app);
 
   /**
    * Touch handler, start the grow animation and creates additional metaballs
    */
-  bool OnTouch(Actor actor, const TouchEvent& touch);
+  bool OnTouch(Actor actor, TouchEvent touch);
 
   /**
    * Key event callback to quit the application on escape or back key
    */
-  void OnKeyEvent(const KeyEvent& event);
+  void OnKeyEvent(KeyEvent event);
 
 private: // Data
   Application& mApplication;
@@ -169,12 +169,12 @@ private: // Data
   /**
    * Function to launch the grow slow radius for the metaballs, and also the small variations for metaball[2] and [3]
    */
-  void LaunchRadiusIncSlowAnimations(Animation& source);
+  void LaunchRadiusIncSlowAnimations(Animation source);
 
   /**
    * Function to launch the animation to get the metaball[1] back to the center
    */
-  void LaunchGetBackToPositionAnimation(Animation& source);
+  void LaunchGetBackToPositionAnimation(Animation source);
 
   /**
    * Function to stop all animations related to the click of the user in the screen
@@ -213,7 +213,7 @@ MetaballRefracController::~MetaballRefracController()
   // Nothing to do here;
 }
 
-void MetaballRefracController::Create(Application& app)
+void MetaballRefracController::Create(Application app)
 {
   Window window = app.GetWindow();
 
@@ -505,7 +505,7 @@ void MetaballRefracController::CreateAnimations()
   mRadiusVarAnimation[3].SetLooping(true);
 }
 
-void MetaballRefracController::LaunchGetBackToPositionAnimation(Animation& source)
+void MetaballRefracController::LaunchGetBackToPositionAnimation(Animation source)
 {
   mMetaballPosVariationTo = Vector2(0, 0);
 
@@ -515,7 +515,7 @@ void MetaballRefracController::LaunchGetBackToPositionAnimation(Animation& sourc
   mPositionVarAnimation[1].Play();
 }
 
-void MetaballRefracController::LaunchRadiusIncSlowAnimations(Animation& source)
+void MetaballRefracController::LaunchRadiusIncSlowAnimations(Animation source)
 {
   for(uint32_t i = 0; i < METABALL_NUMBER; i++)
   {
@@ -580,7 +580,7 @@ void MetaballRefracController::SetPositionToMetaballs(const Vector2& metaballCen
   }
 }
 
-bool MetaballRefracController::OnTouch(Actor actor, const TouchEvent& touch)
+bool MetaballRefracController::OnTouch(Actor actor, TouchEvent touch)
 {
   const float aspect = mScreenSize.y / mScreenSize.x;
   switch(touch.GetState(0))
@@ -659,7 +659,7 @@ bool MetaballRefracController::OnTouch(Actor actor, const TouchEvent& touch)
   return true;
 }
 
-void MetaballRefracController::OnKeyEvent(const KeyEvent& event)
+void MetaballRefracController::OnKeyEvent(KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

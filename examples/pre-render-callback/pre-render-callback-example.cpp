@@ -90,7 +90,7 @@ private:
   /**
    * @brief Creates the scene.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     mWindow = application.GetWindow();
     mWindow.SetBackgroundColor(Color::WHITE);
@@ -176,7 +176,7 @@ private:
     mWindow.Add(mSceneActor);
   }
 
-  void OnTap(Actor /* actor */, const TapGesture& /* tap */)
+  void OnTap(Actor /* actor */, TapGesture /* tap */)
   {
     Adaptor::Get().SetPreRenderCallback(MakeCallback(this, &PreRenderCallbackController::OnPreRender));
   }
@@ -187,7 +187,7 @@ private:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

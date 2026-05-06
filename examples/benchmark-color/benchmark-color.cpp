@@ -99,7 +99,7 @@ public:
   ~BenchmarkColor() = default;
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -220,7 +220,7 @@ public:
       mTimer.Start();
     }
   }
-  void Destroy(Application& application)
+  void Destroy(Application application)
   {
     // Clean up:
     mTimer.Stop();
@@ -244,14 +244,14 @@ public:
     return false; // Stop the timer
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

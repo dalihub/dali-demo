@@ -158,7 +158,7 @@ void PageTurnPortraitView::OnTurnedOver(Actor actor, bool isLeftSide)
   }
 }
 
-void PageTurnPortraitView::TurnedOverBackwards(Animation& animation)
+void PageTurnPortraitView::TurnedOverBackwards(Animation animation)
 {
   TurnedOver(animation);
 }

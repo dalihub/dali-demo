@@ -71,7 +71,7 @@ public:
   ~PrecompileShaderController() = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     Property::Map imageShader;
     imageShader["shaderType"]   = "image";

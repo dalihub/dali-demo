@@ -47,19 +47,19 @@ public:
    * Handles tutorial touch input
    * @param[in] touchEvent Incoming touch event in the UI space
    */
-  void OnTouch(const Dali::TouchEvent& touchEvent);
+  void OnTouch(Dali::TouchEvent touchEvent);
 
   /**
    * Handles tutorial animation finished signal
    * @param[in] animation Animation object
    */
-  void OnTutorialAnimationFinished(Dali::Animation& animation);
+  void OnTutorialAnimationFinished(Dali::Animation animation);
 
   /**
    * Handles tutorial completion window
    * @param animation Animation object
    */
-  void OnTutorialComplete(Dali::Animation& animation);
+  void OnTutorialComplete(Dali::Animation animation);
 
 private:
   Dali::RenderTask         mTutorialRenderTask;    /// RenderTask associated with rendering tutorial

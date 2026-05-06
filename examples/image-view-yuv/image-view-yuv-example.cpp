@@ -73,7 +73,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     mWindow = application.GetWindow();
@@ -136,7 +136,7 @@ public:
     }
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -170,7 +170,7 @@ public:
     }
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& event)
+  bool OnTouch(Actor actor, TouchEvent event)
   {
     if(1u == event.GetPointCount())
     {

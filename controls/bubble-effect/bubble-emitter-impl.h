@@ -87,7 +87,7 @@ public:
   /**
    * @copydoc Demo::BubbleEmitter::EmitBubble
    */
-  void EmitBubble(Animation& animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement);
+  void EmitBubble(Animation animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement);
 
   /**
    * @copydoc Demo::BubbleEmitter::Restore
@@ -124,7 +124,7 @@ private:
    * Callback function of the finished signal of off-screen render task.
    * @param[in] source The render task used to create the color adjusted background texture.
    */
-  void OnRenderFinished(RenderTask& source);
+  void OnRenderFinished(RenderTask source);
 
   /**
    * Callback function from Stage to tell us if the context has been regained.

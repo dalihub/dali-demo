@@ -61,7 +61,7 @@ private:
   /**
    * Initialisation. This method gets called once the main loop of application is up and running
    */
-  void OnAppInitialize(Application& application);
+  void OnAppInitialize(Application application);
 
   /**
    * Create a effect view of drop shadow
@@ -93,7 +93,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event);
+  void OnKeyEvent(KeyEvent event);
 
 private:
   Application&       mApplication;
@@ -120,7 +120,7 @@ EffectsViewApp::~EffectsViewApp()
   // Nothing to do here;
 }
 
-void EffectsViewApp::OnAppInitialize(Application& application)
+void EffectsViewApp::OnAppInitialize(Application application)
 {
   // The Init signal is received once (only) during the Application lifetime
 
@@ -234,7 +234,7 @@ bool EffectsViewApp::ChangeEffectSize(Button button)
   return true;
 }
 
-void EffectsViewApp::OnKeyEvent(const KeyEvent& event)
+void EffectsViewApp::OnKeyEvent(KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

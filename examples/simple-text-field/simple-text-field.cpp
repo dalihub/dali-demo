@@ -55,7 +55,7 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &SimpleTextFieldExample::OnKeyEvent);
@@ -138,7 +138,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -157,7 +157,7 @@ private:
   PushButton   mBtnEditable;
 };
 
-void RunTest(Application& application)
+void RunTest(Application application)
 {
   SimpleTextFieldExample test(application);
 

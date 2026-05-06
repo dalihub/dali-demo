@@ -61,13 +61,13 @@ public:
   ///@brief Starts an animation to change the opacity of the particles to @a target.
   ///@param duration Number of seconds to complete transition in.
   ///@param target Target opacity in the 0..1.f range.
-  void Fade(float duration, float target, Dali::AlphaFunction alphaFn = Dali::AlphaFunction::DEFAULT, std::function<void(Dali::Animation&)> onFinished = nullptr);
+  void Fade(float duration, float target, Dali::AlphaFunction alphaFn = Dali::AlphaFunction::DEFAULT, std::function<void(Dali::Animation)> onFinished = nullptr);
 
   ///@brief Starts an animation to change the opacity of the particles to @a target.
   ///@param duration Number of seconds to complete transition in.
   ///@param target Target opacity in the 0..1.f range.
   ///@param from The value to set the opacity to prior to the animation.
-  void Fade(float duration, float target, float from, Dali::AlphaFunction alphaFn = Dali::AlphaFunction::DEFAULT, std::function<void(Dali::Animation&)> onFinished = nullptr);
+  void Fade(float duration, float target, float from, Dali::AlphaFunction alphaFn = Dali::AlphaFunction::DEFAULT, std::function<void(Dali::Animation)> onFinished = nullptr);
 
 private: // DATA
   struct ScatterProps

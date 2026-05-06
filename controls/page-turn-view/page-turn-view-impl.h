@@ -182,7 +182,7 @@ protected:
    * This method is a callback, connected when receiving the finished signal of a page turning over animation.
    * @param [in] the page turning over animation handle
    */
-  void TurnedOver(Animation& animation);
+  void TurnedOver(Animation animation);
 
   /**
    * This method organize the depth of the pages on stage
@@ -227,7 +227,7 @@ private:
    * This method is a callback, connected when receiving the finished signal of a page sliding back animation.
    * @param [in] the page sliding back animation handle
    */
-  void SliddenBack(Animation& animation);
+  void SliddenBack(Animation animation);
 
   /**
    * Stop the page turning animation and contraint.

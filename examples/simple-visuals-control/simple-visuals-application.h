@@ -60,14 +60,14 @@ private:
    *
    * @param[in] event In incoming key event
    */
-  void OnKeyEvent(const KeyEvent& event);
+  void OnKeyEvent(KeyEvent event);
 
   /**
    * @brief Called to initialise the application content
    *
    * @param[in] application A reference to the Application class.
    */
-  void Create(Application& application);
+  void Create(Application application);
 
 private:
   Application& mApplication; // Handle to the application that is created and passed in.

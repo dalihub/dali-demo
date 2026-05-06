@@ -59,7 +59,7 @@ public:
   ~WindowExampleController() = default;
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window and set the background colour
     Window window = application.GetWindow();
@@ -121,12 +121,12 @@ public:
     mTimer.TickSignal().Connect(this, &WindowExampleController::OnTimerTick);
   }
 
-  void Pause(Application& application)
+  void Pause(Application application)
   {
     DALI_LOG_RELEASE_INFO("Application is paused..***********************\n");
   }
 
-  void Resume(Application& application)
+  void Resume(Application application)
   {
     DALI_LOG_RELEASE_INFO("Application is resumed..***********************\n");
   }
@@ -230,7 +230,7 @@ public:
     }
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::DOWN)
     {
@@ -347,7 +347,7 @@ public:
     DALI_LOG_RELEASE_INFO("OnWindowResizedByServer, x:%d, y:%d, width:%d\n", size.GetWidth(), size.GetHeight());
   }
 
-  bool OnSubWindowTouch(Actor actor, const TouchEvent& touch)
+  bool OnSubWindowTouch(Actor actor, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::DOWN)
     {
@@ -409,7 +409,7 @@ public:
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     Dali::Window window = mApplication.GetWindow();
     if(event.GetState() == KeyEvent::DOWN)

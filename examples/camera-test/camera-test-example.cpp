@@ -133,7 +133,7 @@ public:
     mApp.InitSignal().Connect(this, &CameraTestExample::OnCreate);
   }
 
-  void OnCreate(Application& app)
+  void OnCreate(Application app)
   {
     // Use default camera.
     Window  window = app.GetWindow();
@@ -514,7 +514,7 @@ public:
     cameraDetail.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(oss.str()));
   }
 
-  void OnPan(Actor actor, const PanGesture& gesture)
+  void OnPan(Actor actor, PanGesture gesture)
   {
     if(actor == viewportGrabHandle)
     {
@@ -561,7 +561,7 @@ public:
     SetCameraDetailString();
   }
 
-  void OnDoubleTap(Actor actor, const TapGesture& gesture)
+  void OnDoubleTap(Actor actor, TapGesture gesture)
   {
     if(actor == viewportGrabHandle)
     {
@@ -604,7 +604,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -71,7 +71,7 @@ TransitionApplication::~TransitionApplication()
 {
 }
 
-void TransitionApplication::Create(Application& application)
+void TransitionApplication::Create(Application application)
 {
   Window window = application.GetWindow();
   window.KeyEventSignal().Connect(this, &TransitionApplication::OnKeyEvent);
@@ -279,7 +279,7 @@ void TransitionApplication::CreateVisualMap(int index, Property::Map& map)
   }
 }
 
-bool TransitionApplication::OnVisualButtonClicked(Actor actor, const TouchEvent& touch)
+bool TransitionApplication::OnVisualButtonClicked(Actor actor, TouchEvent touch)
 {
   if(touch.GetState(0) == PointState::FINISHED)
   {
@@ -322,7 +322,7 @@ bool TransitionApplication::OnActionButtonClicked(Button button)
   return true;
 }
 
-void TransitionApplication::OnKeyEvent(const KeyEvent& keyEvent)
+void TransitionApplication::OnKeyEvent(KeyEvent keyEvent)
 {
   static int keyPressed = 0;
 

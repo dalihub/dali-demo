@@ -88,7 +88,7 @@ private:
    * Initialize the SparkleEffectExample
    * @param[in] application The DALi application instance
    */
-  void OnInit(Application& application)
+  void OnInit(Application application)
   {
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &SparkleEffectExample::OnKeyEvent);
@@ -250,7 +250,7 @@ private:
   /*
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -264,7 +264,7 @@ private:
   /**
    * Callback of the TapGesture
    */
-  void OnTap(Actor actor, const TapGesture& tap)
+  void OnTap(Actor actor, TapGesture tap)
   {
     {
       PlayTapAnimation(5.f, tap.GetLocalPoint());
@@ -274,7 +274,7 @@ private:
   /**
    * Callback of the PanGesture
    */
-  void OnPan(Actor actor, const PanGesture& gesture)
+  void OnPan(Actor actor, PanGesture gesture)
   {
     if(gesture.GetState() == GestureState::FINISHED)
     {
@@ -462,7 +462,7 @@ private:
   /**
    * Callback of the animation finished signal
    */
-  void OnShakeAnimationFinished(Animation& animation)
+  void OnShakeAnimationFinished(Animation animation)
   {
     mShaking = false;
   }
@@ -470,7 +470,7 @@ private:
   /**
    * Callback of the animation finished signal
    */
-  void OnFadeAnimationFinished(Animation& animation)
+  void OnFadeAnimationFinished(Animation animation)
   {
     mFadeAnimation.Clear();
     mFadeAnimation.Reset();
@@ -479,7 +479,7 @@ private:
   /**
    * Callback of the animation finished signal
    */
-  void OnBreakAnimationFinished(Animation& animation)
+  void OnBreakAnimationFinished(Animation animation)
   {
     mEffect.SetProperty(mEffect.GetPropertyIndex(ToDaliString(BREAK_UNIFORM_NAME)), 0.f);
   }
@@ -487,7 +487,7 @@ private:
   /**
    * Callback of the animation finished signal
    */
-  void OnTapAnimationFinished(Animation& animation)
+  void OnTapAnimationFinished(Animation animation)
   {
     if(mTapAnimationIndexPair[animation] == static_cast<int>(mTapIndices.x))
     {
@@ -525,7 +525,7 @@ private:
   /**
    * Terminate the given animation
    */
-  void DestroyAnimation(Animation& animation)
+  void DestroyAnimation(Animation animation)
   {
     if(animation)
     {

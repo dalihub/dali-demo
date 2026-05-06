@@ -26,11 +26,11 @@ public:
   TextOverlapController(Dali::Application& app);
 
 private:
-  void Create(Dali::Application& app);
+  void Create(Dali::Application app);
   void Create2();
-  void Destroy(Dali::Application& app);
-  void OnPan(Dali::Actor actor, const Dali::PanGesture& gesture);
-  void OnKeyEvent(const Dali::KeyEvent& keyEvent);
+  void Destroy(Dali::Application app);
+  void OnPan(Dali::Actor actor, Dali::PanGesture gesture);
+  void OnKeyEvent(Dali::KeyEvent keyEvent);
   bool OnClicked(Dali::Toolkit::Button button);
 
 private:

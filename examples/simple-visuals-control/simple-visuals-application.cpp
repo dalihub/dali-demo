@@ -70,7 +70,7 @@ Dali::Actor SimpleVisualsApplication::OnKeyboardPreFocusChange(Dali::Actor curre
   return nextFocusActor;
 }
 
-void SimpleVisualsApplication::OnKeyEvent(const KeyEvent& keyEvent)
+void SimpleVisualsApplication::OnKeyEvent(KeyEvent keyEvent)
 {
   static int keyPressed = 0;
 
@@ -96,7 +96,7 @@ void SimpleVisualsApplication::OnKeyEvent(const KeyEvent& keyEvent)
   }
 }
 
-void SimpleVisualsApplication::Create(Application& application)
+void SimpleVisualsApplication::Create(Application application)
 {
   Window window = application.GetWindow();
   window.SetBackgroundColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));

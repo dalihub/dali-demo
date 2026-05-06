@@ -88,7 +88,7 @@ void BubbleEmitter::SetBubbleDensity(unsigned int density)
   GetImpl(*this).SetBubbleDensity(density);
 }
 
-void BubbleEmitter::EmitBubble(Animation& animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement)
+void BubbleEmitter::EmitBubble(Animation animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement)
 {
   GetImpl(*this).EmitBubble(animation, emitPosition, direction, displacement);
 }

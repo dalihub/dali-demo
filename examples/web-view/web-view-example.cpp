@@ -59,7 +59,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -104,7 +104,7 @@ public:
     mAddressLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, url.c_str());
   }
 
-  bool OnTouchText(Actor actor, const TouchEvent& touch)
+  bool OnTouchText(Actor actor, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::UP)
     {
@@ -116,7 +116,7 @@ public:
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

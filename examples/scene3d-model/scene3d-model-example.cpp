@@ -268,7 +268,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     mWindow = application.GetWindow();
     mWindow.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
@@ -306,7 +306,7 @@ public:
     mDoubleTapTime.TickSignal().Connect(this, &Scene3DModelExample::OnDoubleTapTime);
   }
 
-  bool OnWheel(Actor actor, const WheelEvent& wheelEvent)
+  bool OnWheel(Actor actor, WheelEvent wheelEvent)
   {
     mWheelDelta -= wheelEvent.GetDelta() * 0.025f;
     mWheelDelta = std::max(0.5f, mWheelDelta);
@@ -574,7 +574,7 @@ public:
   /**
    * This function will change the material Roughness, Metalness or the model orientation when touched
    */
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     const PointState::Type state = touch.GetState(0);
 
@@ -649,7 +649,7 @@ public:
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

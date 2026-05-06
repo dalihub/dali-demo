@@ -141,7 +141,7 @@ void ImageChannelControl::SetVisibility(bool visibility)
   }
 }
 
-void ImageChannelControl::OnStateChangeAnimationFinished(Animation& src)
+void ImageChannelControl::OnStateChangeAnimationFinished(Animation src)
 {
   mVisibility = mTargetVisibility;
 }

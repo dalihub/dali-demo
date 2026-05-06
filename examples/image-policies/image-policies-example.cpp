@@ -383,7 +383,7 @@ public:
   /**
    * Start of this example, called once when the application is initiated
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Property::Map gradientBackground;
     CreateGradient(gradientBackground);
@@ -530,7 +530,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

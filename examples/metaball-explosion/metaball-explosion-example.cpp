@@ -87,18 +87,18 @@ public:
   /**
    * Creates the metaballs and initializes the scene
    */
-  void Create(Application& app);
+  void Create(Application app);
 
   /**
    * Touch event handler to center metaballs at touch position
    * and start explosion animation on release
    */
-  bool OnTouch(Actor actor, const TouchEvent& touch);
+  bool OnTouch(Actor actor, TouchEvent touch);
 
   /**
    * Key event handler to quit application on escape or back key
    */
-  void OnKeyEvent(const KeyEvent& event);
+  void OnKeyEvent(KeyEvent event);
 
 private: // Data
   Application& mApplication;
@@ -171,12 +171,12 @@ private: // Data
   /**
    * Function to make metaballs come back to reset position
    */
-  void LaunchResetMetaballPosition(Animation& source);
+  void LaunchResetMetaballPosition(Animation source);
 
   /**
    * Function to set things at the end of the animation
    */
-  void EndDisperseAnimation(Animation& source);
+  void EndDisperseAnimation(Animation source);
 
   /**
    * Function to init dispersion of the metaballs one by one using a timer
@@ -223,7 +223,7 @@ MetaballExplosionController::~MetaballExplosionController()
   // Nothing to do here;
 }
 
-void MetaballExplosionController::Create(Application& app)
+void MetaballExplosionController::Create(Application app)
 {
   Window window = app.GetWindow();
 
@@ -478,7 +478,7 @@ void MetaballExplosionController::DisperseBallAnimation(uint32_t ball)
   }
 }
 
-void MetaballExplosionController::LaunchResetMetaballPosition(Animation& source)
+void MetaballExplosionController::LaunchResetMetaballPosition(Animation source)
 {
   for(uint32_t i = 0; i < METABALL_NUMBER; i++)
   {
@@ -493,7 +493,7 @@ void MetaballExplosionController::LaunchResetMetaballPosition(Animation& source)
   }
 }
 
-void MetaballExplosionController::EndDisperseAnimation(Animation& source)
+void MetaballExplosionController::EndDisperseAnimation(Animation source)
 {
   mCompositionActor.SetProperty(mPositionIndex, Vector2(0, 0));
 }
@@ -520,7 +520,7 @@ void MetaballExplosionController::SetPositionToMetaballs(const Vector2& metaball
   mCompositionActor.SetProperty(mPositionIndex, metaballCenter);
 }
 
-bool MetaballExplosionController::OnTouch(Actor actor, const TouchEvent& touch)
+bool MetaballExplosionController::OnTouch(Actor actor, TouchEvent touch)
 {
   float aspectR = mScreenSize.y / mScreenSize.x;
 
@@ -556,7 +556,7 @@ bool MetaballExplosionController::OnTouch(Actor actor, const TouchEvent& touch)
   return true;
 }
 
-void MetaballExplosionController::OnKeyEvent(const KeyEvent& event)
+void MetaballExplosionController::OnKeyEvent(KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

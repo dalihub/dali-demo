@@ -45,7 +45,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -81,14 +81,14 @@ public:
     }
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
     return true;
   }
 
-  void OnTilted(const TiltSensor& sensor)
+  void OnTilted(TiltSensor sensor)
   {
     Quaternion pitchRot(Radian(Degree(sensor.GetPitch() * 90.0f)), Vector3(1, 0, 0));
     Quaternion rollRot(Radian(Degree(sensor.GetRoll() * 90.0f)), Vector3(0, 1, 0));
@@ -103,7 +103,7 @@ public:
    * @brief OnKeyEvent signal handler.
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

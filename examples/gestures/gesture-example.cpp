@@ -136,7 +136,7 @@ private:
    *
    * @param[in]  application  Reference to the application class
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window & connect to the key event signal
     auto    window     = application.GetWindow();
@@ -218,7 +218,7 @@ private:
    * @param[in]  actor  The touched actor
    * @param[in]  touch  The touch event
    */
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     switch(touch.GetState(0))
     {
@@ -264,7 +264,7 @@ private:
    * @param[in]  actor      The actor that's been long-pressed
    * @param[in]  longPress  The long-press gesture information
    */
-  void OnLongPress(Actor actor, const LongPressGesture& longPress)
+  void OnLongPress(Actor actor, LongPressGesture longPress)
   {
     if(longPress.GetState() == GestureState::STARTED)
     {
@@ -288,7 +288,7 @@ private:
    * @param[in]  actor  The actor that's been panned
    * @param[in]  pan    The pan gesture information
    */
-  void OnPan(Actor actor, const PanGesture& pan)
+  void OnPan(Actor actor, PanGesture pan)
   {
     // Just move the actor by the displacement.
 
@@ -349,7 +349,7 @@ private:
    * @param[in]  actor The actor that's been tapped
    * @param[in]  tap   The tap gesture information
    */
-  void OnTap(Actor actor, const TapGesture& tap)
+  void OnTap(Actor actor, TapGesture tap)
   {
     // Do a short animation to show a tap has happened.
 
@@ -367,7 +367,7 @@ private:
    * @param[in]  actor  The actor that's been pinched
    * @param[in]  pinch  The pinch gesture information
    */
-  void OnPinch(Actor actor, const PinchGesture& pinch)
+  void OnPinch(Actor actor, PinchGesture pinch)
   {
     switch(pinch.GetState())
     {
@@ -415,7 +415,7 @@ private:
    * @param[in]  actor     The actor that's been pinched
    * @param[in]  rotation  The rotation gesture information
    */
-  void OnRotation(Actor actor, const RotationGesture& rotation)
+  void OnRotation(Actor actor, RotationGesture rotation)
   {
     switch(rotation.GetState())
     {
@@ -451,7 +451,7 @@ private:
    * Will use this to quit the application if Back or the Escape key is received.
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

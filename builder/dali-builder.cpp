@@ -193,7 +193,7 @@ public:
     fw.SetFilename(fn);
   };
 
-  void Create(Application& app)
+  void Create(Application app)
   {
     mTimer = Timer::New(500); // ms
     mTimer.TickSignal().Connect(this, &ExampleApp::OnTimer);
@@ -289,7 +289,7 @@ private:
   }
 
   // Process Key events to Quit on back-key
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

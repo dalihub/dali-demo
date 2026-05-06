@@ -107,7 +107,7 @@ private:
    * @brief Called to initialise the application content.
    * @param[in]  application  A reference to the Application class
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
     Window window = application.GetWindow();
@@ -264,7 +264,7 @@ private:
    * @details This method is used to pause the tapped animated image view.
    * @param[in]  actor  The actor that's tapped
    */
-  void OnTap(Dali::Actor actor, const Dali::TapGesture& /* tap */)
+  void OnTap(Dali::Actor actor, Dali::TapGesture /* tap */)
   {
     Control control = (actor == mActorDog) ? mActorDog : mActorLogo;
     PauseAnimatedImage(control);
@@ -291,7 +291,7 @@ private:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

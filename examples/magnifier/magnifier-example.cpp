@@ -197,7 +197,7 @@ public:
    * Invoked upon creation of application
    * @param[in] application The application instance
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
@@ -268,7 +268,7 @@ public:
    * Invoked whenever the animation finishes (every 60 seconds)
    * @param[in] animation The animation
    */
-  void OnAnimationFinished(Animation& animation)
+  void OnAnimationFinished(Animation animation)
   {
     animation.FinishedSignal().Disconnect(this, &ExampleController::OnAnimationFinished);
     animation.Clear();
@@ -303,7 +303,7 @@ public:
    * @param[in] actor The actor that received the touch
    * @param[in] event The touch-event information
    */
-  bool OnTouched(Actor actor, const TouchEvent& event)
+  bool OnTouched(Actor actor, TouchEvent event)
   {
     if(event.GetPointCount() > 0)
     {
@@ -379,7 +379,7 @@ public:
     mMagnifier.SetProperty(Actor::Property::POSITION, glassPosition);
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

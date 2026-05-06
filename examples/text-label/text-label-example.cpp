@@ -205,7 +205,7 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
 
@@ -506,7 +506,7 @@ public:
     }
   }
 
-  void OnColorButtonAnimationFinished(Animation& animation)
+  void OnColorButtonAnimationFinished(Animation animation)
   {
     animation.Clear();
     if(mColorButtonsHidden)
@@ -567,7 +567,7 @@ public:
   }
 
   // Resize the text-label with pan gesture
-  void OnPan(Actor actor, const PanGesture& gesture)
+  void OnPan(Actor actor, PanGesture gesture)
   {
     // Reset mLayoutSize when the pan starts
     GestureState state = gesture.GetState();
@@ -617,7 +617,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

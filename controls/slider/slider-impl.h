@@ -332,7 +332,7 @@ private:
    * @param[in] touch The touch info
    * @return If touch is handled or not
    */
-  bool OnTouch(Actor actor, const TouchEvent& touch);
+  bool OnTouch(Actor actor, TouchEvent touch);
 
   /**
    * Pan gesture event
@@ -340,7 +340,7 @@ private:
    * @param[in] actor The actor the event is raised for
    * @param[in] gesture The pan event info
    */
-  void OnPan(Actor actor, const PanGesture& gesture);
+  void OnPan(Actor actor, PanGesture gesture);
 
   /**
    * @copydoc Control::OnPan
