@@ -133,7 +133,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(KeyEvent event);
+  void OnKeyEvent(Window window, KeyEvent event);
   /**
    * Callback function of effect-switch button
    * Change the effect when the effect button is clicked
@@ -399,7 +399,7 @@ Texture CubeTransitionApp::LoadWindowFillingTexture(const char* filepath)
   return texture;
 }
 
-void CubeTransitionApp::OnKeyEvent(KeyEvent event)
+void CubeTransitionApp::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

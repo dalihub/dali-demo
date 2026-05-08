@@ -67,7 +67,7 @@ private: // methods
   void OnInit(Dali::Application app);
   void OnTerminate(Dali::Application app);
 
-  void OnKey(Dali::KeyEvent e);
+  void OnKey(Dali::Window window, Dali::KeyEvent e);
   void OnPan(Dali::Actor actor, Dali::PanGesture pan);
   void OnTap(Dali::Actor actor, Dali::TapGesture tap);
 

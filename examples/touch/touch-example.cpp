@@ -141,16 +141,21 @@ public:
     GenScene1();
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &TouchController::OnTouchActor);
+    window.TouchedSignal().Connect(this, &TouchController::OnWindowTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &TouchController::OnKeyEvent);
   }
 
+  void OnWindowTouch(Window window, TouchEvent touch)
+  {
+    OnTouchActor(window.GetRootLayer(), touch);
+  }
+
   bool OnTouchActor(Actor actor, TouchEvent touch)
   {
     // quit the application
-    DALI_LOG_ERROR("touched : name : %s, id : %d\n", actor.GetProperty<String>(Dali::Actor::Property::NAME).CStr(), actor.GetProperty<int>(Dali::Actor::Property::ID));
+    DALI_LOG_ERROR("touched : name : %s, id : %d\n", actor.GetProperty<Dali::String>(Dali::Actor::Property::NAME).CStr(), actor.GetProperty<int>(Dali::Actor::Property::ID));
     Toolkit::Control control = Toolkit::Control::DownCast(actor);
     if(control)
     {
@@ -1056,7 +1061,7 @@ public:
     }
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

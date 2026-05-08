@@ -27,8 +27,8 @@
 #include "dali/public-api/animation/animation.h"
 #include "dali/public-api/events/key-event.h"
 #include "dali/public-api/events/pan-gesture-detector.h"
-#include "dali/public-api/events/tap-gesture.h"
 #include "dali/public-api/events/tap-gesture-detector.h"
+#include "dali/public-api/events/tap-gesture.h"
 #include "dali/public-api/render-tasks/render-task-list.h"
 #include "dali/public-api/render-tasks/render-task.h"
 #include "utils.h"
@@ -342,7 +342,7 @@ private:
     mTimeAnim.Play();
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::UP) // single keystrokes
     {

@@ -354,7 +354,7 @@ public:
     toggleBackground.Add(mToggleButton);
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

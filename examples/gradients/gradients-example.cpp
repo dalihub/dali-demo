@@ -73,11 +73,11 @@ public:
     // The view is added to the window.
     Demo::ToolBar toolBar;
     Layer         content = DemoHelper::CreateView(application,
-                                           mView,
-                                           toolBar,
-                                           "",
-                                           TOOLBAR_IMAGE,
-                                           APPLICATION_TITLE);
+                                                   mView,
+                                                   toolBar,
+                                                   "",
+                                                   TOOLBAR_IMAGE,
+                                                   APPLICATION_TITLE);
 
     PushButton changeButton = Toolkit::PushButton::New();
     changeButton.SetProperty(Toolkit::Button::Property::UNSELECTED_BACKGROUND_VISUAL, CHANGE_ICON);
@@ -197,7 +197,7 @@ public:
     mGradientControl.SetProperty(Control::Property::BACKGROUND, gradientMap);
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -120,17 +120,17 @@ public:
     currentScreenExtentsColorGuide.Add(currentScreenPositionColorGuide);
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &HelloWorldController::OnTouch);
+    window.TouchedSignal().Connect(this, &HelloWorldController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &HelloWorldController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
   void SetMarker()
@@ -198,7 +198,7 @@ public:
     currentScreenPositionMarker.SetProperty(Dali::Actor::Property::POSITION, currentScreenPosition);
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     const float positionStep    = 2.0f;
     const float orientationStep = 2.0f;

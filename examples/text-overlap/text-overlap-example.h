@@ -30,7 +30,7 @@ private:
   void Create2();
   void Destroy(Dali::Application app);
   void OnPan(Dali::Actor actor, Dali::PanGesture gesture);
-  void OnKeyEvent(Dali::KeyEvent keyEvent);
+  void OnKeyEvent(Dali::Window window, Dali::KeyEvent keyEvent);
   bool OnClicked(Dali::Toolkit::Button button);
 
 private:

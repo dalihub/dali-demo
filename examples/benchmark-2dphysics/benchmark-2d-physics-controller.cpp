@@ -94,7 +94,7 @@ public:
     mWindow = application.GetWindow();
     mWindow.ResizeSignal().Connect(this, &Physics2dBenchmarkController::OnWindowResize);
     mWindow.KeyEventSignal().Connect(this, &Physics2dBenchmarkController::OnKeyEv);
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &Physics2dBenchmarkController::OnTouched);
+    mWindow.TouchedSignal().Connect(this, &Physics2dBenchmarkController::OnTouched);
     mWindow.SetBackgroundColor(Color::DARK_SLATE_GRAY);
 
     CreateSimulation();
@@ -194,13 +194,13 @@ public:
     }
   }
 
-  bool OnTouched(Dali::Actor actor, Dali::TouchEvent touch)
+  void OnTouched(Window window, TouchEvent touch)
   {
     mApplication.Quit();
-    return false;
+    return;
   }
 
-  void OnKeyEv(Dali::KeyEvent event)
+  void OnKeyEv(Window window, Dali::KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

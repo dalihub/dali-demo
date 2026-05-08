@@ -379,7 +379,7 @@ public:
     mMagnifier.SetProperty(Actor::Property::POSITION, glassPosition);
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

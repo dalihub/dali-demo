@@ -84,20 +84,20 @@ public:
     window.Add(mTextLabel);
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &DrawableActorExampleController::OnTouch);
+    window.TouchedSignal().Connect(this, &DrawableActorExampleController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &DrawableActorExampleController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

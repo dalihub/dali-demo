@@ -82,7 +82,7 @@ public:
 
     // Creates the background gradient
     Toolkit::Control background                = Dali::Toolkit::Control::New();
-    background[Actor::Property::PIVOT]  = Dali::Pivot::CENTER;
+    background[Actor::Property::PIVOT]         = Dali::Pivot::CENTER;
     background[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::CENTER;
     background.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
@@ -104,7 +104,7 @@ public:
 
     // Create a TextLabel for the application title.
     Toolkit::TextLabel label                                  = Toolkit::TextLabel::New(APPLICATION_TITLE);
-    label[Actor::Property::PIVOT]                      = Pivot::TOP_CENTER;
+    label[Actor::Property::PIVOT]                             = Pivot::TOP_CENTER;
     label[Actor::Property::PARENT_ORIGIN]                     = Vector3(0.5f, 0.0f, 0.5f);
     label[Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT] = "CENTER";
     label[Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT]   = "CENTER";
@@ -180,11 +180,11 @@ public:
     Renderer renderer                        = Renderer::New(geometry, shader);
     renderer[Renderer::Property::BLEND_MODE] = BlendMode::ON;
 
-    Actor actor                          = Actor::New();
-    actor[Actor::Property::SIZE]         = Vector2(400.0f, 400.0f);
-    actor[Actor::Property::POSITION]     = center;
-    actor[Actor::Property::PIVOT] = Pivot::CENTER;
-    actor[Actor::Property::COLOR]        = Color::YELLOW;
+    Actor actor                      = Actor::New();
+    actor[Actor::Property::SIZE]     = Vector2(400.0f, 400.0f);
+    actor[Actor::Property::POSITION] = center;
+    actor[Actor::Property::PIVOT]    = Pivot::CENTER;
+    actor[Actor::Property::COLOR]    = Color::YELLOW;
     actor.AddRenderer(renderer);
 
     Window window = mApplication.GetWindow();
@@ -272,10 +272,10 @@ public:
     Renderer renderer                        = Renderer::New(geometry, shader);
     renderer[Renderer::Property::BLEND_MODE] = BlendMode::ON;
 
-    Actor actor                          = Actor::New();
-    actor[Actor::Property::SIZE]         = Vector2(400.0f, 400.0f);
-    actor[Actor::Property::POSITION]     = center;
-    actor[Actor::Property::PIVOT] = Pivot::CENTER;
+    Actor actor                      = Actor::New();
+    actor[Actor::Property::SIZE]     = Vector2(400.0f, 400.0f);
+    actor[Actor::Property::POSITION] = center;
+    actor[Actor::Property::PIVOT]    = Pivot::CENTER;
     actor.AddRenderer(renderer);
 
     Window window = mApplication.GetWindow();
@@ -373,11 +373,11 @@ public:
     Renderer renderer                        = Renderer::New(geometry, shader);
     renderer[Renderer::Property::BLEND_MODE] = BlendMode::ON;
 
-    Actor actor                          = Actor::New();
-    actor[Actor::Property::SIZE]         = Vector2(400.0f, 400.0f);
-    actor[Actor::Property::POSITION]     = center;
-    actor[Actor::Property::PIVOT] = Pivot::CENTER;
-    actor[Actor::Property::COLOR]        = Color::RED;
+    Actor actor                      = Actor::New();
+    actor[Actor::Property::SIZE]     = Vector2(400.0f, 400.0f);
+    actor[Actor::Property::POSITION] = center;
+    actor[Actor::Property::PIVOT]    = Pivot::CENTER;
+    actor[Actor::Property::COLOR]    = Color::RED;
     actor.AddRenderer(renderer);
 
     Window window = mApplication.GetWindow();
@@ -417,7 +417,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN && (IsKey(event, DALI_KEY_ESCAPE) || IsKey(event, DALI_KEY_BACK)))
     {

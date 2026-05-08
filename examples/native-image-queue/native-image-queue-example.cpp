@@ -352,7 +352,7 @@ public:
     mBlurView.SetRenderEffect(Toolkit::BackgroundBlurEffect::New(40u));
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

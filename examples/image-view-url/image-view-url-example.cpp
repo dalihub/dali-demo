@@ -132,9 +132,9 @@ private:
       renderTask.SetCameraActor(cameraActor);
 
       mOutputTexture   = Texture::New(TextureType::TEXTURE_2D,
-                                    Pixel::RGBA8888,
-                                    unsigned(TARGET_SIZE.width),
-                                    unsigned(TARGET_SIZE.height));
+                                      Pixel::RGBA8888,
+                                      unsigned(TARGET_SIZE.width),
+                                      unsigned(TARGET_SIZE.height));
       auto framebuffer = FrameBuffer::New(TARGET_SIZE.width, TARGET_SIZE.height, FrameBuffer::Attachment::NONE);
       framebuffer.AttachColorTexture(mOutputTexture);
 
@@ -174,7 +174,7 @@ private:
     return true;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

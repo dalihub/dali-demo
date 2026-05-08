@@ -135,20 +135,20 @@ public:
     SetupView();
 
     // Respond to a touch anywhere on the window
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &InheritTestController::OnTouch);
+    mWindow.TouchedSignal().Connect(this, &InheritTestController::OnTouch);
 
     // Respond to key events
     mWindow.KeyEventSignal().Connect(this, &InheritTestController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

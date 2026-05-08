@@ -44,7 +44,7 @@ FppGameTutorialController::~FppGameTutorialController()
 {
 }
 
-void FppGameTutorialController::OnTouch(TouchEvent touchEvent)
+void FppGameTutorialController::OnTouch(Window window, TouchEvent touchEvent)
 {
   Vector2 size(mWindow.GetSize());
 

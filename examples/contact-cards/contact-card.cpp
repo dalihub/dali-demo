@@ -331,7 +331,7 @@ void ContactCard::OnAnimationFinished(Animation animation)
   }
 }
 
-void ContactCard::OnKeyEvent(KeyEvent event)
+void ContactCard::OnKeyEvent(Window window, KeyEvent event)
 {
   if((!mFolded) && // If we're folded then there's no need to do any more checking
      (event.GetState() == KeyEvent::DOWN))

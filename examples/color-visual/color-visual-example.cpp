@@ -85,13 +85,13 @@ public:
     window.Add(mImageView);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &ColorVisualExample::OnTouch);
+    window.TouchedSignal().Connect(this, &ColorVisualExample::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &ColorVisualExample::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::UP)
     {
@@ -125,10 +125,10 @@ public:
 
       mBlurEnabled = !mBlurEnabled;
     }
-    return true;
+    return;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

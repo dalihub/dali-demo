@@ -129,7 +129,7 @@ public:
     mDragAndDropDetector.EndedSignal().Connect(this, &DragAndDropExample::OnEnd);
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

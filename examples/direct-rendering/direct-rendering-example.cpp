@@ -188,7 +188,7 @@ public:
     window.SetBackgroundColor(Color::WHITE);
 
     window.KeyEventSignal().Connect(this, &DirectRenderingExampleController::OnKeyEvent);
-    window.GetRootLayer().TouchedSignal().Connect(this, &DirectRenderingExampleController::OnTouch);
+    window.TouchedSignal().Connect(this, &DirectRenderingExampleController::OnTouch);
 
     mDRView = std::make_unique<RenderView>(window);
 
@@ -208,14 +208,14 @@ public:
     mDRView->Create(Vector2::ZERO, mode);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     RequestApplicationQuit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

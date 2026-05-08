@@ -70,7 +70,7 @@ Dali::Actor SimpleVisualsApplication::OnKeyboardPreFocusChange(Dali::Actor curre
   return nextFocusActor;
 }
 
-void SimpleVisualsApplication::OnKeyEvent(KeyEvent keyEvent)
+void SimpleVisualsApplication::OnKeyEvent(Window window, KeyEvent keyEvent)
 {
   static int keyPressed = 0;
 

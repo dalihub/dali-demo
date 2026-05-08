@@ -29,8 +29,8 @@
 #include "dali/public-api/adaptor-framework/application.h"
 #include "dali/public-api/adaptor-framework/key.h"
 #include "dali/public-api/events/pan-gesture-detector.h"
-#include "dali/public-api/events/tap-gesture.h"
 #include "dali/public-api/events/tap-gesture-detector.h"
+#include "dali/public-api/events/tap-gesture.h"
 #include "dali/public-api/events/touch-event.h"
 #include "dali/public-api/object/property-index-ranges.h"
 #include "dali/public-api/render-tasks/render-task-list.h"
@@ -157,7 +157,7 @@ private:
     rootLayer.SetProperty(Layer::Property::BEHAVIOR, Layer::Behavior::LAYER_3D);
 
     window.KeyEventSignal().Connect(this, &ParticlesExample::OnKeyEvent);
-    window.GetRootLayer().TouchedSignal().Connect(this, &ParticlesExample::OnTouched);
+    window.TouchedSignal().Connect(this, &ParticlesExample::OnTouched);
 
     auto tiltSensor = TiltSensor::Get();
     if(tiltSensor.Start())
@@ -212,7 +212,7 @@ private:
     mTiltSensor.Start();
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::UP) // single keystrokes
     {
@@ -223,7 +223,7 @@ private:
     }
   }
 
-  bool OnTouched(Actor a, TouchEvent event)
+  void OnTouched(Window window, TouchEvent event)
   {
     if(event.GetPointCount() > 0)
     {
@@ -244,7 +244,7 @@ private:
       }
     }
 
-    return false;
+    return;
   }
 
   void OnDoubleTap(Actor /*actor*/, TapGesture /*gesture*/)

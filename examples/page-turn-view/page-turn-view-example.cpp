@@ -171,7 +171,7 @@ private:
 
   void Rotate(DemoOrientation orientation);
 
-  void OnKeyEvent(KeyEvent event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
 private:
   Application& mApplication;
@@ -262,7 +262,7 @@ void PageTurnExample::Rotate(DemoOrientation orientation)
 /**
  * Main key event handler
  */
-void PageTurnExample::OnKeyEvent(KeyEvent event)
+void PageTurnExample::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

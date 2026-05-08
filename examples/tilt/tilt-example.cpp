@@ -63,7 +63,7 @@ public:
     window.Add(mTextLabel);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &TiltController::OnTouch);
+    window.TouchedSignal().Connect(this, &TiltController::OnTouch);
 
     CreateSensor();
 
@@ -81,11 +81,11 @@ public:
     }
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
   void OnTilted(TiltSensor sensor)
@@ -103,7 +103,7 @@ public:
    * @brief OnKeyEvent signal handler.
    * @param[in] event The key event information
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

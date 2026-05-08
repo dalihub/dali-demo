@@ -93,7 +93,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(KeyEvent event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
 private:
   Application&       mApplication;
@@ -234,7 +234,7 @@ bool EffectsViewApp::ChangeEffectSize(Button button)
   return true;
 }
 
-void EffectsViewApp::OnKeyEvent(KeyEvent event)
+void EffectsViewApp::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

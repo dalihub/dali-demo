@@ -93,12 +93,12 @@ public:
    * Touch event handler to center metaballs at touch position
    * and start explosion animation on release
    */
-  bool OnTouch(Actor actor, TouchEvent touch);
+  void OnTouch(Window window, TouchEvent touch);
 
   /**
    * Key event handler to quit application on escape or back key
    */
-  void OnKeyEvent(KeyEvent event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
 private: // Data
   Application& mApplication;
@@ -252,7 +252,7 @@ void MetaballExplosionController::Create(Application app)
   mTimerDispersion.TickSignal().Connect(this, &MetaballExplosionController::OnTimerDispersionTick);
 
   // Connect the callback to the touch signal on the mesh actor
-  window.GetRootLayer().TouchedSignal().Connect(this, &MetaballExplosionController::OnTouch);
+  window.TouchedSignal().Connect(this, &MetaballExplosionController::OnTouch);
 }
 
 Geometry MetaballExplosionController::CreateGeometry(bool aspectMappedTexture)
@@ -520,7 +520,7 @@ void MetaballExplosionController::SetPositionToMetaballs(const Vector2& metaball
   mCompositionActor.SetProperty(mPositionIndex, metaballCenter);
 }
 
-bool MetaballExplosionController::OnTouch(Actor actor, TouchEvent touch)
+void MetaballExplosionController::OnTouch(Window window, TouchEvent touch)
 {
   float aspectR = mScreenSize.y / mScreenSize.x;
 
@@ -553,10 +553,10 @@ bool MetaballExplosionController::OnTouch(Actor actor, TouchEvent touch)
     default:
       break;
   }
-  return true;
+  return;
 }
 
-void MetaballExplosionController::OnKeyEvent(KeyEvent event)
+void MetaballExplosionController::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

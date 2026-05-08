@@ -160,7 +160,7 @@ private:
     StartEffect(EffectType(++mCurrentEffectType %= NUMBER_OF_EFFECTS));
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -427,7 +427,7 @@ public:
     return true;
   }
 
-  void OnKeyEv(Dali::KeyEvent event)
+  void OnKeyEv(Window window, Dali::KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

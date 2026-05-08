@@ -60,7 +60,7 @@ private:
    *
    * @param[in] event In incoming key event
    */
-  void OnKeyEvent(KeyEvent event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
   /**
    * @brief Called to initialise the application content

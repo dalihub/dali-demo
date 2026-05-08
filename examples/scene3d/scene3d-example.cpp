@@ -392,7 +392,7 @@ void Scene3DExample::OnTerminate(Application app)
   mItemFactory.reset();
 }
 
-void Scene3DExample::OnKey(KeyEvent e)
+void Scene3DExample::OnKey(Window window, KeyEvent e)
 {
   if(e.GetState() == KeyEvent::UP)
   {
@@ -419,7 +419,7 @@ void Scene3DExample::OnKey(KeyEvent e)
     }
     else
     {
-      mScene3DExtension->OnKey(e);
+      mScene3DExtension->OnKey(window, e);
     }
   }
 }
