@@ -116,25 +116,25 @@ public:
     label[Toolkit::TextLabel::Property::TEXT_COLOR] = Color::WHITE;
     label[Toolkit::TextLabel::Property::POINT_SIZE] = 12.0f;
     label[Actor::Property::PARENT_ORIGIN]           = ParentOrigin::BOTTOM_CENTER;
-    label[Actor::Property::PIVOT]            = Pivot::BOTTOM_CENTER;
+    label[Actor::Property::PIVOT]                   = Pivot::BOTTOM_CENTER;
     label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     window.Add(label);
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &AdvancedBlendModeController::OnTouch);
+    window.TouchedSignal().Connect(this, &AdvancedBlendModeController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &AdvancedBlendModeController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

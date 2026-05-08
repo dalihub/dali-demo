@@ -138,7 +138,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

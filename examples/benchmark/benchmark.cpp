@@ -211,7 +211,7 @@ public:
     mSize = Vector3(windowSize.x / mColumnsPerPage, windowSize.y / mRowsPerPage, 0.0f);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &Benchmark::OnTouch);
+    window.TouchedSignal().Connect(this, &Benchmark::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &Benchmark::OnKeyEvent);
@@ -228,11 +228,11 @@ public:
     ShowAnimation();
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
   const char* ImagePath(int i)
@@ -424,7 +424,7 @@ public:
     mHide.FinishedSignal().Connect(this, &Benchmark::OnAnimationEnd);
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

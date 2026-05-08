@@ -198,7 +198,7 @@ public:
     UpdateLabel(TestType::TEST_MULTIPLE_RENDERER);
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &InstanceRenderingController::OnTouch);
+    window.TouchedSignal().Connect(this, &InstanceRenderingController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &InstanceRenderingController::OnKeyEvent);
@@ -209,7 +209,7 @@ public:
     loopingAnimation.Play();
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     static int testNumber = 0;
     if(touch.GetState(0) == PointState::STARTED)
@@ -218,7 +218,7 @@ public:
       if(testNumber >= TestType::TEST_MAX)
       {
         mApplication.Quit();
-        return true;
+        return;
       }
       Window             window     = mApplication.GetWindow();
       Window::WindowSize windowSize = window.GetSize();
@@ -236,10 +236,10 @@ public:
         ChangeArrayValue(i);
       }
     }
-    return true;
+    return;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

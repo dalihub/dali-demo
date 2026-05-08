@@ -95,12 +95,12 @@ public:
   /**
    * Touch handler, start the grow animation and creates additional metaballs
    */
-  bool OnTouch(Actor actor, TouchEvent touch);
+  void OnTouch(Window window, TouchEvent touch);
 
   /**
    * Key event callback to quit the application on escape or back key
    */
-  void OnKeyEvent(KeyEvent event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
 private: // Data
   Application& mApplication;
@@ -235,7 +235,7 @@ void MetaballRefracController::Create(Application app)
   CreateAnimations();
 
   // Connect the callback to the touch signal on the mesh actor
-  window.GetRootLayer().TouchedSignal().Connect(this, &MetaballRefracController::OnTouch);
+  window.TouchedSignal().Connect(this, &MetaballRefracController::OnTouch);
 }
 
 Geometry MetaballRefracController::CreateGeometry(bool aspectMappedTexture)
@@ -580,7 +580,7 @@ void MetaballRefracController::SetPositionToMetaballs(const Vector2& metaballCen
   }
 }
 
-bool MetaballRefracController::OnTouch(Actor actor, TouchEvent touch)
+void MetaballRefracController::OnTouch(Window window, TouchEvent touch)
 {
   const float aspect = mScreenSize.y / mScreenSize.x;
   switch(touch.GetState(0))
@@ -656,10 +656,10 @@ bool MetaballRefracController::OnTouch(Actor actor, TouchEvent touch)
     default:
       break;
   }
-  return true;
+  return;
 }
 
-void MetaballRefracController::OnKeyEvent(KeyEvent event)
+void MetaballRefracController::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

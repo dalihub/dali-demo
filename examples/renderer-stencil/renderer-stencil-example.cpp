@@ -269,7 +269,7 @@ private:
     mBounceAnimation.Play();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &RendererStencilExample::OnTouch);
+    window.TouchedSignal().Connect(this, &RendererStencilExample::OnTouch);
     // Connect signals to allow Back and Escape to exit.
     window.KeyEventSignal().Connect(this, &RendererStencilExample::OnKeyEvent);
   }
@@ -731,18 +731,18 @@ private:
    * @param[in] touch The touch information
    * @return True if the event has been handled
    */
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // Quit the application.
     mApplication.Quit();
-    return true;
+    return;
   }
 
   /**
    * @brief OnKeyEvent signal handler.
    * @param[in] event The key event information
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

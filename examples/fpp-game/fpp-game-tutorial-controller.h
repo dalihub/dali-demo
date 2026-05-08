@@ -47,7 +47,7 @@ public:
    * Handles tutorial touch input
    * @param[in] touchEvent Incoming touch event in the UI space
    */
-  void OnTouch(Dali::TouchEvent touchEvent);
+  void OnTouch(Dali::Window window, Dali::TouchEvent touchEvent);
 
   /**
    * Handles tutorial animation finished signal

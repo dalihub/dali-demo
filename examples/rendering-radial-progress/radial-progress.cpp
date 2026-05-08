@@ -91,14 +91,14 @@ public:
     animation.Play();
 
     // 6. Exit the application when touched
-    window.GetRootLayer().TouchedSignal().Connect(this, &RadialProgressController::OnTouch);
+    window.TouchedSignal().Connect(this, &RadialProgressController::OnTouch);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
   /**
@@ -230,7 +230,7 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

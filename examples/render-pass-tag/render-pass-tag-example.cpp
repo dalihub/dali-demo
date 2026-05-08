@@ -193,20 +193,20 @@ public:
     renderer.SetTextures(textures);
 
     // Respond to a touch anywhere on the window
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &RenderPassTagController::OnTouch);
+    mWindow.TouchedSignal().Connect(this, &RenderPassTagController::OnTouch);
 
     // Respond to key events
     mWindow.KeyEventSignal().Connect(this, &RenderPassTagController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

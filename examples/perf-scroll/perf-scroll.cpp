@@ -215,7 +215,7 @@ public:
     mSize = Vector3(windowSize.x / mColumnsPerPage, windowSize.y / mRowsPerPage, 0.0f);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &PerfScroll::OnTouch);
+    window.TouchedSignal().Connect(this, &PerfScroll::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &PerfScroll::OnKeyEvent);
@@ -237,11 +237,11 @@ public:
     ScrollAnimation();
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
   const char* ImagePath(int i)
@@ -329,7 +329,7 @@ public:
     { mApplication.Quit(); });
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

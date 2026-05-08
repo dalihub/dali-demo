@@ -165,7 +165,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(KeyEvent event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
 private:
   Application&       mApplication;
@@ -328,7 +328,7 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
   mIsTransiting = true;
 }
 
-void DissolveEffectApp::OnKeyEvent(KeyEvent event)
+void DissolveEffectApp::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

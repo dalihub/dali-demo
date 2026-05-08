@@ -649,7 +649,7 @@ void StylingApplication::OnPan(Actor actor, PanGesture gesture)
   mContentPane.SetProperty(Actor::Property::SIZE, Vector2(size.GetVectorXY() + gesture.GetDisplacement() * 2.0f));
 }
 
-void StylingApplication::OnKeyEvent(KeyEvent keyEvent)
+void StylingApplication::OnKeyEvent(Window window, KeyEvent keyEvent)
 {
   static int keyPressed = 0;
 

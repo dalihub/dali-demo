@@ -45,13 +45,13 @@ public:
   void Create(Application application);
 
   // Create the GUI components
-  Actor              CreateContentPane();
-  Actor              CreateResizableContentPane();
-  Popup       CreateResetPopup();
-  TextLabel   CreateTitle(std::string title);
+  Actor     CreateContentPane();
+  Actor     CreateResizableContentPane();
+  Popup     CreateResetPopup();
+  TextLabel CreateTitle(std::string title);
 
   // Key event handler
-  void OnKeyEvent(KeyEvent event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
   // Button event handlers
   bool OnButtonStateChange(Button button);

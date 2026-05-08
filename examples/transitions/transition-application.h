@@ -50,7 +50,7 @@ public:
   Actor              CreateContentPane();
 
   // Key event handler
-  void OnKeyEvent(KeyEvent event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
   bool OnActionButtonClicked(Button button);
 

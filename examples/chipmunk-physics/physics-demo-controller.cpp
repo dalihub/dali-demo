@@ -522,7 +522,7 @@ public:
     return true;
   }
 
-  void OnKeyEv(Dali::KeyEvent event)
+  void OnKeyEv(Window window, Dali::KeyEvent event)
   {
     static bool integrateState{true};
     static bool debugState{DEBUG_STATE};

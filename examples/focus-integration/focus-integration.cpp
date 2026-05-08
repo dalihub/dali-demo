@@ -60,11 +60,11 @@ public:
     mWindow            = application.GetWindow();
     Vector2 windowSize = mWindow.GetSize();
     mContentLayer      = DemoHelper::CreateView(application,
-                                           mView,
-                                           mToolBar,
-                                           BACKGROUND_IMAGE,
-                                           TOOLBAR_IMAGE,
-                                           TOOLBAR_TITLE);
+                                                mView,
+                                                mToolBar,
+                                                BACKGROUND_IMAGE,
+                                                TOOLBAR_IMAGE,
+                                                TOOLBAR_TITLE);
 
     TableView contentTable = TableView::New(2, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
@@ -178,7 +178,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

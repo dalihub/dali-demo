@@ -159,18 +159,18 @@ public:
     window.Add(table);
 
     // Respond to touch and key signals
-    window.GetRootLayer().TouchedSignal().Connect(this, &CompressedTextureFormatsController::OnTouch);
+    window.TouchedSignal().Connect(this, &CompressedTextureFormatsController::OnTouch);
     window.KeyEventSignal().Connect(this, &CompressedTextureFormatsController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

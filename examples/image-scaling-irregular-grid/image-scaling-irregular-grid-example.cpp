@@ -495,7 +495,7 @@ public:
    * Main key event handler.
    * Quit on escape key.
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -555,17 +555,17 @@ public:
 private:
   Application& mApplication;
 
-  Layer                                       mContentLayer;        ///< The content layer (contains non gui chrome actors)
-  Toolkit::Control                            mView;                ///< The View instance.
-  Demo::ToolBar                               mToolBar;             ///< The View's Toolbar.
-  TextLabel                                   mTitleActor;          ///< The Toolbar's Title.
-  Actor                                       mGridActor;           ///< The container for the grid of images
-  Actor                                       mOffWindowImageViews; ///< ImageViews held off window until the inital batch have loaded their images
-  ScrollView                                  mScrollView;          ///< ScrollView UI Component
-  ScrollBar                                   mScrollBarVertical;
-  ScrollBar                                   mScrollBarHorizontal;
-  bool                            mScrolling;    ///< ScrollView scrolling state (true = scrolling, false = stationary)
-  unsigned int mImagesLoaded; ///< How many images have been loaded
+  Layer            mContentLayer;        ///< The content layer (contains non gui chrome actors)
+  Toolkit::Control mView;                ///< The View instance.
+  Demo::ToolBar    mToolBar;             ///< The View's Toolbar.
+  TextLabel        mTitleActor;          ///< The Toolbar's Title.
+  Actor            mGridActor;           ///< The container for the grid of images
+  Actor            mOffWindowImageViews; ///< ImageViews held off window until the inital batch have loaded their images
+  ScrollView       mScrollView;          ///< ScrollView UI Component
+  ScrollBar        mScrollBarVertical;
+  ScrollBar        mScrollBarHorizontal;
+  bool             mScrolling;    ///< ScrollView scrolling state (true = scrolling, false = stationary)
+  unsigned int     mImagesLoaded; ///< How many images have been loaded
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)

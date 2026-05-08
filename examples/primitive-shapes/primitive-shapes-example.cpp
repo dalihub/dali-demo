@@ -682,7 +682,7 @@ public:
   }
 
   //If escape or the back button is pressed, quit the application (and return to the launcher)
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

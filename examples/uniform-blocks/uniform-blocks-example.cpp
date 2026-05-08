@@ -66,7 +66,7 @@ public:
     }
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &UniformBlocksController::OnTouch);
+    window.TouchedSignal().Connect(this, &UniformBlocksController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &UniformBlocksController::OnKeyEvent);
@@ -87,7 +87,7 @@ public:
     return true;
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     static int testNumber = 0;
     if(touch.GetState(0) == PointState::STARTED)
@@ -108,10 +108,10 @@ public:
         parent.GetChildAt(i).AddRenderer(mRenderer);
       }
     }
-    return true;
+    return;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

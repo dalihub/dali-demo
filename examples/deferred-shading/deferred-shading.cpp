@@ -607,7 +607,7 @@ private:
     mAxis.SetProperty(Actor::Property::ORIENTATION, qy * qx * q);
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

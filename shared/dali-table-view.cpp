@@ -663,7 +663,7 @@ void DaliTableView::ApplyScrollViewEffect()
   mScrollView.ApplyEffect(mScrollViewEffect);
 }
 
-void DaliTableView::OnKeyEvent(KeyEvent event)
+void DaliTableView::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

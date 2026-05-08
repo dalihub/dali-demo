@@ -90,7 +90,7 @@ private:
    * Will use this to fold a contact card if it is unfolded.
    * @param[in]  event  The key event information
    */
-  void OnKeyEvent(Dali::KeyEvent event);
+  void OnKeyEvent(Dali::Window window, Dali::KeyEvent event);
 
   Dali::TapGestureDetector mTapDetector;  ///< Used for tap detection.
   Dali::Toolkit::Control   mContactCard;  ///< Used for the background and to clip the contents.

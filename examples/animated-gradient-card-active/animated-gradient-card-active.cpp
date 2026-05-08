@@ -316,7 +316,7 @@ public:
     SetupActors();
     SetupAnimation();
 
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &CardController::OnTouchLayer);
+    mWindow.TouchedSignal().Connect(this, &CardController::OnTouchLayer);
     Reset();
   }
 
@@ -355,7 +355,7 @@ public:
     return true;
   }
 
-  bool OnTouchLayer(Actor actor, TouchEvent data)
+  void OnTouchLayer(Window window, TouchEvent data)
   {
     if(data.GetPointCount() > 0)
     {
@@ -378,7 +378,7 @@ public:
         mLastTouchPos = data.GetScreenPosition(0);
       }
     }
-    return true;
+    return;
   }
 
   // Heuristic Scroll View
@@ -431,7 +431,7 @@ public:
     return false;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

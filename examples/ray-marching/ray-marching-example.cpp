@@ -29,9 +29,9 @@
 using Dali::Integration::ToDaliStringView;
 
 using namespace Dali;
+using Dali::Demo::ToolBar;
 using Dali::Toolkit::Control;
 using Dali::Toolkit::TextLabel;
-using Dali::Demo::ToolBar;
 
 const char* BACKGROUND_IMAGE("");
 const char* TOOLBAR_IMAGE(DEMO_IMAGE_DIR "top-bar.png");
@@ -120,7 +120,7 @@ public:
     // Get a handle to the window
     Window window = application.GetWindow();
 
-    window.GetRootLayer().TouchedSignal().Connect(this, &RayMarchingExample::OnTouch);
+    window.TouchedSignal().Connect(this, &RayMarchingExample::OnTouch);
 
     window.KeyEventSignal().Connect(this, &RayMarchingExample::OnKeyEvent);
 
@@ -140,17 +140,17 @@ public:
 
     AddContentLayer();
   }
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
   /**
    * Main key event handler
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

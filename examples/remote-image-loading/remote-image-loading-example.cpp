@@ -123,7 +123,7 @@ public:
     std::cout << "OnAnimationEnd" << std::endl;
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -134,7 +134,7 @@ public:
     }
   }
 
-  void OnKey(KeyEvent event)
+  void OnKey(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -142,7 +142,7 @@ public:
     }
   }
 
-  void OnTouch(TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::DOWN)
     {

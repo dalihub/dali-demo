@@ -486,7 +486,7 @@ private:
     mReflectionCamera3D.SetProperty(DevelCameraActor::Property::REFLECTION_PLANE, Vector4(yAxis.x, yAxis.y, yAxis.z, 0.0f));
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

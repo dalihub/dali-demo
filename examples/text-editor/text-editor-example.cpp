@@ -165,9 +165,9 @@ public:
 
     const Size boundingBoxSize(windowSize * TEXT_EDITOR_RELATIVE_SIZE.GetVectorXY());
     Rect<int>  boundingBox(0,
-                          static_cast<int>(toolBarHeight),
-                          static_cast<int>(boundingBoxSize.width),
-                          static_cast<int>(boundingBoxSize.height - toolBarHeight));
+                           static_cast<int>(toolBarHeight),
+                           static_cast<int>(boundingBoxSize.width),
+                           static_cast<int>(boundingBoxSize.height - toolBarHeight));
 
     mEditor.SetProperty(TextEditor::Property::DECORATION_BOUNDING_BOX, boundingBox);
     mEditor.SetProperty(TextEditor::Property::TEXT_COLOR, Color::BLACK);
@@ -222,7 +222,7 @@ public:
     }
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

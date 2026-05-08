@@ -462,7 +462,7 @@ public:
     mCanvasView.SetProperty(Actor::Property::SIZE, windowSize);
 
     mTitle                                                     = Toolkit::TextLabel::New(VIEW_LABEL[BASIC_SHAPE_VIEW]);
-    mTitle[Actor::Property::PIVOT]                      = Pivot::TOP_CENTER;
+    mTitle[Actor::Property::PIVOT]                             = Pivot::TOP_CENTER;
     mTitle[Actor::Property::PARENT_ORIGIN]                     = Vector3(0.5f, 0.0f, 0.5f);
     mTitle[Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT] = "CENTER";
     mTitle[Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT]   = "CENTER";
@@ -563,7 +563,7 @@ public:
    *
    * @param[in] event The key event information
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -134,7 +134,7 @@ public:
     PlayAnimation();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &BasicLightController::OnTouch);
+    window.TouchedSignal().Connect(this, &BasicLightController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &BasicLightController::OnKeyEvent);
@@ -143,7 +143,7 @@ public:
   /**
    * This function will change the material of the cube when touched
    */
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::UP)
     {
@@ -157,7 +157,7 @@ public:
       mLabel.SetProperty(TextLabel::Property::TEXT, material[MaterialID].name);
       mButton.SetProperty(Actor::Property::COLOR, Vector4(material[MaterialID].diffuse) + Vector4(0.0f, 0.0f, 0.0f, 1.0f));
     }
-    return true;
+    return;
   }
 
   /**
@@ -175,7 +175,7 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -170,17 +170,17 @@ public:
     window.Add(mScrollParent);
 
     // Respond to a click anywhere on the window.
-    window.GetRootLayer().TouchedSignal().Connect(this, &HomescreenBenchmark::OnTouch);
+    window.TouchedSignal().Connect(this, &HomescreenBenchmark::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &HomescreenBenchmark::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // Quit the application.
     mApplication.Quit();
-    return true;
+    return;
   }
 
   Actor AddPage()
@@ -425,7 +425,7 @@ public:
     }
   }
 
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

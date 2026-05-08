@@ -139,7 +139,7 @@ bool TextOverlapController::OnClicked(Button button)
   return false;
 }
 
-void TextOverlapController::OnKeyEvent(KeyEvent keyEvent)
+void TextOverlapController::OnKeyEvent(Window window, KeyEvent keyEvent)
 {
   if(keyEvent.GetState() == KeyEvent::DOWN &&
      (IsKey(keyEvent, DALI_KEY_BACK) ||

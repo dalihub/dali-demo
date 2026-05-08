@@ -289,7 +289,7 @@ private:
   }
 
   // Process Key events to Quit on back-key
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

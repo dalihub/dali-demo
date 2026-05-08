@@ -129,7 +129,7 @@ public:
     mTimer.TickSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnTick);
     mTimer.Start();
 
-    application.GetWindow().GetRootLayer().TouchedSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnTouch);
+    application.GetWindow().TouchedSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnTouch);
 
     application.GetWindow().KeyEventSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnKeyEvent);
   }
@@ -213,7 +213,7 @@ private:
     return true; // Keep tick always
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::UP)
     {
@@ -224,13 +224,13 @@ private:
       // Update image views
       UpdateImageViews();
     }
-    return true;
+    return;
   }
 
   /**
    * Main key event handler
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

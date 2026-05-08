@@ -63,17 +63,17 @@ public:
     CreateActor();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &DrawTriangleController::OnTouch);
+    window.TouchedSignal().Connect(this, &DrawTriangleController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &DrawTriangleController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, TouchEvent touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
   /**
@@ -82,7 +82,7 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent(KeyEvent event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

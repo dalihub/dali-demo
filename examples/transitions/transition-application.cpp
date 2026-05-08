@@ -199,7 +199,7 @@ bool TransitionApplication::OnActionButtonClicked(Button button)
   return true;
 }
 
-void TransitionApplication::OnKeyEvent(KeyEvent keyEvent)
+void TransitionApplication::OnKeyEvent(Window window, KeyEvent keyEvent)
 {
   static int keyPressed = 0;
 
