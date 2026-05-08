@@ -684,7 +684,7 @@ void ProgressBar::OnSceneConnection(int depth)
 void ProgressBar::ProgressBarAccessible::InitDefaultFeatures()
 {
   Toolkit::DevelControl::ControlAccessible::InitDefaultFeatures();
-  AddFeature<Dali::Accessibility::Value>(shared_from_this());
+  AddFeature<Dali::Accessibility::Value>(SharedFromThis());
 }
 
 double ProgressBar::ProgressBarAccessible::GetMinimum() const
