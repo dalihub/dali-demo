@@ -115,7 +115,7 @@ public:
       mTextLabel[i].SetProperty(Actor::Property::POSITION, Vector2(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * i));
       mDragAndDropDetector.Attach(mTextLabel[i]);
 
-      mRect[i]  = Rect<float>(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * i, TEXT_LABEL_WIDTH, TEXT_LABEL_HEIGHT);
+      mRect[i]  = Bounds(TEXT_LABEL_POSITION_X, TEXT_LABEL_POSITION_START_Y + TEXT_LABEL_HEIGHT * i, TEXT_LABEL_WIDTH, TEXT_LABEL_HEIGHT);
       mOrder[i] = i;
 
       window.Add(mTextLabel[i]);
@@ -148,7 +148,7 @@ public:
     control.SetProperty(Actor::Property::OPACITY, 0.1f);
     Vector2 screenPos = detector.GetCurrentScreenPosition();
     control.ScreenToLocal(mDragLocalPos.x, mDragLocalPos.y, screenPos.x, screenPos.y);
-    Rect<float> targetRect(screenPos.x, screenPos.y, 0.0f, 0.0f);
+    Bounds targetRect(screenPos.x, screenPos.y, 0.0f, 0.0f);
 
     for(unsigned int i = 0; i < TEXT_LABEL_NUM; i++)
     {
@@ -185,9 +185,9 @@ public:
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---OnDropped---\n");
     DALI_LOG_INFO(gDragAndDropFilter, Debug::General, "---control name is %s---\n", control.GetProperty<String>(Dali::Actor::Property::NAME).CStr());
 
-    Vector2     screenPos = detector.GetCurrentScreenPosition();
-    Rect<float> targetRect(screenPos.x, screenPos.y, 0.0f, 0.0f);
-    int         droppedIndex = -1;
+    Vector2 screenPos = detector.GetCurrentScreenPosition();
+    Bounds  targetRect(screenPos.x, screenPos.y, 0.0f, 0.0f);
+    int     droppedIndex = -1;
     for(unsigned int i = 0; i < TEXT_LABEL_NUM; i++)
     {
       if(mRect[i].Contains(targetRect))
@@ -273,8 +273,8 @@ private:
   Application&                       mApplication;
   Dali::Toolkit::DragAndDropDetector mDragAndDropDetector;
 
-  TextLabel   mTextLabel[TEXT_LABEL_NUM];
-  Rect<float> mRect[TEXT_LABEL_NUM];
+  TextLabel mTextLabel[TEXT_LABEL_NUM];
+  Bounds    mRect[TEXT_LABEL_NUM];
 
   int mOrder[TEXT_LABEL_NUM];
   int mDragIndex;

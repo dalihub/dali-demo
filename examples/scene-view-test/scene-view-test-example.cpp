@@ -498,7 +498,7 @@ private:
 
   void ApplyModelScreenExtent(Control aabb, Model model)
   {
-    Rect<float> screenExtent = Dali::DevelActor::CalculateCurrentScreenExtents(model);
+    Bounds screenExtent = Dali::DevelActor::CalculateCurrentScreenExtents(model);
 
     aabb[Actor::Property::POSITION_X]  = screenExtent.x;
     aabb[Actor::Property::POSITION_Y]  = screenExtent.y;
