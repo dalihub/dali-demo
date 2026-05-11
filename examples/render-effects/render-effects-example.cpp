@@ -71,7 +71,7 @@ public:
 
   void Create(Dali::Application application)
   {
-    window = application.GetWindow();
+    mWindow = application.GetWindow();
 
     // Background image
     {
@@ -85,7 +85,7 @@ public:
       backgroundImage.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
       backgroundImage.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
       backgroundLayer.Add(backgroundImage);
-      window.Add(backgroundLayer);
+      mWindow.Add(backgroundLayer);
     }
     {
       pannelLayer = Layer::New();
@@ -93,10 +93,10 @@ public:
       pannelLayer.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
       pannelLayer.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
 
-      window.Add(pannelLayer);
+      mWindow.Add(pannelLayer);
     }
 
-    Vector2 size = window.GetSize();
+    Vector2 size = mWindow.GetSize();
 
     // UI panel
     UIPanel = Toolkit::Control::New();
@@ -259,11 +259,11 @@ public:
     }
 
     // lower background layer
-    backgroundLayer.LowerBelow(window.GetRootLayer());
+    backgroundLayer.LowerBelow(mWindow.GetRootLayer());
 
     // Connect signals
-    window.KeyEventSignal().Connect(this, &RenderEffectController::OnKeyEvent);
-    window.ResizeSignal().Connect(this, &RenderEffectController::OnWindowResized);
+    mWindow.KeyEventSignal().Connect(this, &RenderEffectController::OnKeyEvent);
+    mWindow.ResizeSignal().Connect(this, &RenderEffectController::OnWindowResized);
   }
 
   Toolkit::Control CreateIconPanel(std::string title, std::string detail, bool isOn, std::string iconURL, Vector2 size)
@@ -432,7 +432,7 @@ public:
 private:
   Application& mApplication;
 
-  Window window;
+  Window mWindow;
   Layer  backgroundLayer;
   Layer  pannelLayer;
 

@@ -70,8 +70,8 @@ public:
   void Create(Application application)
   {
     // Get a handle to the window
-    window = application.GetWindow();
-    window.SetBackgroundColor(Color::WHITE);
+    mWindow = application.GetWindow();
+    mWindow.SetBackgroundColor(Color::WHITE);
 
     control = Toolkit::Control::New();
     control.SetProperty(Actor::Property::SIZE, Vector2(400, 300));
@@ -80,7 +80,7 @@ public:
     control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     control.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     control.SetBackgroundColor(Color::BLUE);
-    window.Add(control);
+    mWindow.Add(control);
 
     SetMarker();
 
@@ -89,7 +89,7 @@ public:
     keyGuide.SetProperty(Dali::Toolkit::TextLabel::Property::MULTI_LINE, true);
     keyGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     keyGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    window.Add(keyGuide);
+    mWindow.Add(keyGuide);
 
     TextLabel screenExtentsColorGuide = TextLabel::New();
     screenExtentsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Screen Extents");
@@ -120,10 +120,10 @@ public:
     currentScreenExtentsColorGuide.Add(currentScreenPositionColorGuide);
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &HelloWorldController::OnTouch);
+    mWindow.TouchedSignal().Connect(this, &HelloWorldController::OnTouch);
 
     // Respond to key events
-    window.KeyEventSignal().Connect(this, &HelloWorldController::OnKeyEvent);
+    mWindow.KeyEventSignal().Connect(this, &HelloWorldController::OnKeyEvent);
   }
 
   void OnTouch(Window window, TouchEvent touch)
@@ -144,7 +144,7 @@ public:
       extentsMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
       extentsMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
       extentsMarker.SetBackgroundColor(Vector4(1.0f, 1.0f, 0.0f, 0.3f));
-      window.Add(extentsMarker);
+      mWindow.Add(extentsMarker);
     }
 
     if(!screenPositionMarker)
@@ -154,7 +154,7 @@ public:
       screenPositionMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
       screenPositionMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
       screenPositionMarker.SetBackgroundColor(Vector4(1.0f, 0.0f, 0.0f, 0.8f));
-      window.Add(screenPositionMarker);
+      mWindow.Add(screenPositionMarker);
     }
 
     if(!currentExtentsMarker)
@@ -163,7 +163,7 @@ public:
       currentExtentsMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
       currentExtentsMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
       currentExtentsMarker.SetBackgroundColor(Vector4(0.0f, 1.0f, 1.0f, 0.3f));
-      window.Add(currentExtentsMarker);
+      mWindow.Add(currentExtentsMarker);
     }
 
     if(!currentScreenPositionMarker)
@@ -173,7 +173,7 @@ public:
       currentScreenPositionMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
       currentScreenPositionMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
       currentScreenPositionMarker.SetBackgroundColor(Vector4(0.0f, 1.0f, 0.0f, 0.8f));
-      window.Add(currentScreenPositionMarker);
+      mWindow.Add(currentScreenPositionMarker);
     }
 
     extentsMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(extents.width, extents.height));
@@ -273,7 +273,7 @@ private:
   Toolkit::Control screenPositionMarker;
   Toolkit::Control currentExtentsMarker;
   Toolkit::Control currentScreenPositionMarker;
-  Window           window;
+  Window           mWindow;
   Toolkit::Control control;
   Application&     mApplication;
 };

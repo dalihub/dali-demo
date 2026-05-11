@@ -52,8 +52,8 @@ public:
   void Create(Application application)
   {
     // Get a handle to the window
-    window = application.GetWindow();
-    window.SetBackgroundColor(Color::WHITE);
+    mWindow = application.GetWindow();
+    mWindow.SetBackgroundColor(Color::WHITE);
 
     basicColorMap[Toolkit::Visual::Property::TYPE]                  = Toolkit::Visual::COLOR;
     basicColorMap[Toolkit::ColorVisual::Property::MIX_COLOR]        = Color::RED;
@@ -72,7 +72,7 @@ public:
     mKeyDescription.SetProperty(Dali::Actor::Property::NAME, "mKeyDescription");
     mKeyDescription.SetProperty(Dali::Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     mKeyDescription.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    window.Add(mKeyDescription);
+    mWindow.Add(mKeyDescription);
 
     mScenarioTypeLabelString    = "Single RenderTask";
     mScenarioDetailLabelString  = "Single Object";
@@ -82,7 +82,7 @@ public:
     mScenarioTypeLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mScenarioTypeLabelString));
     mScenarioTypeLabel.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mScenarioTypeLabel.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    window.Add(mScenarioTypeLabel);
+    mWindow.Add(mScenarioTypeLabel);
 
     mScenarioDetailLabel = Dali::Toolkit::TextLabel::New();
     mScenarioDetailLabel.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToDaliString(mScenarioDetailLabelString));
@@ -141,10 +141,10 @@ public:
     GenScene1();
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &TouchController::OnWindowTouch);
+    mWindow.TouchedSignal().Connect(this, &TouchController::OnWindowTouch);
 
     // Respond to key events
-    window.KeyEventSignal().Connect(this, &TouchController::OnKeyEvent);
+    mWindow.KeyEventSignal().Connect(this, &TouchController::OnKeyEvent);
   }
 
   void OnWindowTouch(Window window, TouchEvent touch)
@@ -214,7 +214,7 @@ public:
 
     // Simple Touch
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
   }
 
   void GenScene2()
@@ -222,10 +222,10 @@ public:
     mScenarioDetailLabelString = "Simple 2 Object";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2");
-    window.Add(control2);
+    mWindow.Add(control2);
   }
 
   void GenScene3()
@@ -234,7 +234,7 @@ public:
 
     // Consuming
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Layer layer = Layer::New();
     layer.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
@@ -242,7 +242,7 @@ public:
     layer.SetProperty(Dali::Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     layer.SetProperty(Dali::Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     layer.SetProperty(Dali::Layer::Property::CONSUMES_TOUCH, true);
-    window.Add(layer);
+    mWindow.Add(layer);
     mActorList.push_back(layer);
 
     Toolkit::Control controlNotHit = CreateControl(notTouchableColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "Consume Layer", false);
@@ -261,7 +261,7 @@ public:
 
     // Propagation
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 230.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(80.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
@@ -278,7 +278,7 @@ public:
     // clipping
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 180.0f, "control1 with clipping");
     control1.SetProperty(Dali::Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_TO_BOUNDING_BOX);
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
@@ -293,7 +293,7 @@ public:
 
     // overlay
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2(230.0f, 180.0f), "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2(100.0f, 150.0f), "overlay control2 (parent : Control1)");
     control2.SetProperty(Dali::Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
@@ -310,7 +310,7 @@ public:
     // overlay in clipping
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 250.0f, "control1 with clipping");
     control1.SetProperty(Dali::Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_TO_BOUNDING_BOX);
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(100.0f, 50.0f), Vector2::ONE * 150.0f, "overlay control2 (parent : Control1)");
     control2.SetProperty(Dali::Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
@@ -329,7 +329,7 @@ public:
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 250.0f, "control1 with clipping");
     control1.SetProperty(Dali::Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_CHILDREN);
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(100.0f, 50.0f), Vector2::ONE * 150.0f, "overlay control2 (parent : Control1)");
     control2.SetProperty(Dali::Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
@@ -349,7 +349,7 @@ public:
     // clipping in overlay
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 180.0f, "control1");
     control1.SetProperty(Dali::Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_TO_BOUNDING_BOX);
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "overlay clipping control2 (parent : Control1)");
     control2.SetProperty(Dali::Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
@@ -370,7 +370,7 @@ public:
     // multiple overlay
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 180.0f, "control1 with clipping");
     control1.SetProperty(Dali::Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_TO_BOUNDING_BOX);
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "overlay control2 (parent : Control1)");
     control2.SetProperty(Dali::Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
@@ -393,9 +393,9 @@ public:
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     cameraActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mActorList.push_back(cameraActor);
-    window.Add(cameraActor);
+    mWindow.Add(cameraActor);
 
-    RenderTask renderTask = window.GetRenderTaskList().CreateTask();
+    RenderTask renderTask = mWindow.GetRenderTaskList().CreateTask();
     renderTask.SetRefreshRate(Dali::RenderTask::REFRESH_ALWAYS);
     renderTask.SetSourceActor(sourceActor);
     renderTask.SetCameraActor(cameraActor);
@@ -454,7 +454,7 @@ public:
     mScenarioDetailLabelString = "Simple copied Scene with Viewport";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
@@ -465,9 +465,9 @@ public:
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     cameraActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mActorList.push_back(cameraActor);
-    window.Add(cameraActor);
+    mWindow.Add(cameraActor);
 
-    RenderTask renderTask = window.GetRenderTaskList().CreateTask();
+    RenderTask renderTask = mWindow.GetRenderTaskList().CreateTask();
     renderTask.SetRefreshRate(Dali::RenderTask::REFRESH_ALWAYS);
     renderTask.SetSourceActor(control1);
     renderTask.SetCameraActor(cameraActor);
@@ -475,7 +475,7 @@ public:
     renderTask.SetClearEnabled(true);
     renderTask.GetCameraActor().SetInvertYAxis(false);
 
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = mWindow.GetSize();
     renderTask.SetViewport(Dali::Viewport(Vector4(windowSize.x / 2.0f + 200.0f, windowSize.y / 2.0f - 200.0f, 400, 400)));
 
     mRenderTaskList.push_back(renderTask);
@@ -486,7 +486,7 @@ public:
     mScenarioDetailLabelString = "Simple copied Scene with Viewport Guide Actor";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
@@ -494,7 +494,7 @@ public:
     Toolkit::Control positionControl = AddNewRenderTask(control1, Vector2(400.0f, 400.0f), false, false, Color::LIGHT_CORAL);
     positionControl.SetProperty(Dali::Actor::Property::POSITION, Vector2(400.0f, 0.0f));
     positionControl.SetProperty(Dali::Actor::Property::SIZE, Vector2(400.0f, 400.0f));
-    window.Add(positionControl);
+    mWindow.Add(positionControl);
   }
 
   void GenSceneV3()
@@ -502,7 +502,7 @@ public:
     mScenarioDetailLabelString = "Simple copied Scene with Viewport Guide Actor with invertYAxis true\n - Hit direction is following rendered result. (Engine knows how the render result is drawn.)";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
@@ -513,9 +513,9 @@ public:
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     cameraActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mActorList.push_back(cameraActor);
-    window.Add(cameraActor);
+    mWindow.Add(cameraActor);
 
-    RenderTask renderTask = window.GetRenderTaskList().CreateTask();
+    RenderTask renderTask = mWindow.GetRenderTaskList().CreateTask();
     renderTask.SetRefreshRate(Dali::RenderTask::REFRESH_ALWAYS);
     renderTask.SetSourceActor(control1);
     renderTask.SetCameraActor(cameraActor);
@@ -537,7 +537,7 @@ public:
 
     positionControl.SetProperty(Dali::Actor::Property::POSITION, Vector2(400.0f, 0.0f));
     positionControl.SetProperty(Dali::Actor::Property::SIZE, Vector2(400.0f, 400.0f));
-    window.Add(positionControl);
+    mWindow.Add(positionControl);
   }
 
   void GenSceneV4()
@@ -545,7 +545,7 @@ public:
     mScenarioDetailLabelString = "Simple copied Scene with MappingActor with invertYAxis false (with flip by using PixelArea)\n - Hit direction cannot be following rendered result. (Engine cannot know how the FBO is textured.)\n - To use MappingActor with invertYAxis false, need to flip the result by app.";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
@@ -556,9 +556,9 @@ public:
     cameraActor.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     cameraActor.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     mActorList.push_back(cameraActor);
-    window.Add(cameraActor);
+    mWindow.Add(cameraActor);
 
-    RenderTask renderTask = window.GetRenderTaskList().CreateTask();
+    RenderTask renderTask = mWindow.GetRenderTaskList().CreateTask();
     renderTask.SetRefreshRate(Dali::RenderTask::REFRESH_ALWAYS);
     renderTask.SetSourceActor(control1);
     renderTask.SetCameraActor(cameraActor);
@@ -598,7 +598,7 @@ public:
 
     positionControl.SetProperty(Dali::Actor::Property::POSITION, Vector2(400.0f, 0.0f));
     positionControl.SetProperty(Dali::Actor::Property::SIZE, Vector2(400.0f, 400.0f));
-    window.Add(positionControl);
+    mWindow.Add(positionControl);
   }
 
   void GenSceneV5()
@@ -606,13 +606,13 @@ public:
     mScenarioDetailLabelString = "Simple separated Scenes with Viewport Guide Actor";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
 
     Toolkit::Control control3 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control3");
-    window.Add(control3);
+    mWindow.Add(control3);
 
     Toolkit::Control control4 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control4 (parent : Control3)");
     control3.Add(control4);
@@ -620,7 +620,7 @@ public:
     Toolkit::Control positionControl = AddNewRenderTask(control3, Vector2(400.0f, 400.0f), false, true, Color::LIGHT_CYAN);
     positionControl.SetProperty(Dali::Actor::Property::POSITION, Vector2(400.0f, 0.0f));
     positionControl.SetProperty(Dali::Actor::Property::SIZE, Vector2(400.0f, 400.0f));
-    window.Add(positionControl);
+    mWindow.Add(positionControl);
   }
 
   void GenSceneV6()
@@ -628,7 +628,7 @@ public:
     mScenarioDetailLabelString = "Simple copied Scene with FBO";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
@@ -636,7 +636,7 @@ public:
     Toolkit::Control positionControl = AddNewRenderTask(control1, Vector2(400.0f, 400.0f), true, false, Color::LIGHT_GOLDEN_ROD_YELLOW);
     positionControl.SetProperty(Dali::Actor::Property::POSITION, Vector2(400.0f, 0.0f));
     positionControl.SetProperty(Dali::Actor::Property::SIZE, Vector2(400.0f, 400.0f));
-    window.Add(positionControl);
+    mWindow.Add(positionControl);
   }
 
   void GenSceneV7()
@@ -644,13 +644,13 @@ public:
     mScenarioDetailLabelString = "Simple separated Scenes Scene with FBO";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
 
     Toolkit::Control control3 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control3");
-    window.Add(control3);
+    mWindow.Add(control3);
 
     Toolkit::Control control4 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control4 (parent : Control3)");
     control3.Add(control4);
@@ -658,7 +658,7 @@ public:
     Toolkit::Control positionControl = AddNewRenderTask(control3, Vector2(400.0f, 400.0f), true, true, Color::LIGHT_GRAY);
     positionControl.SetProperty(Dali::Actor::Property::POSITION, Vector2(400.0f, 0.0f));
     positionControl.SetProperty(Dali::Actor::Property::SIZE, Vector2(400.0f, 400.0f));
-    window.Add(positionControl);
+    mWindow.Add(positionControl);
   }
 
   void GenSceneV8()
@@ -666,13 +666,13 @@ public:
     mScenarioDetailLabelString = "Multiple separated Scenes Scene with FBO";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2 (parent : Control1)");
     control1.Add(control2);
 
     Toolkit::Control control3 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control3");
-    window.Add(control3);
+    mWindow.Add(control3);
 
     Toolkit::Control control4 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control4 (parent : Control3)");
     control3.Add(control4);
@@ -680,10 +680,10 @@ public:
     Toolkit::Control positionControl1 = AddNewRenderTask(control3, Vector2(400.0f, 400.0f), true, true, Color::LIGHT_GREEN);
     positionControl1.SetProperty(Dali::Actor::Property::POSITION, Vector2(400.0f, 0.0f));
     positionControl1.SetProperty(Dali::Actor::Property::SIZE, Vector2(400.0f, 400.0f));
-    window.Add(positionControl1);
+    mWindow.Add(positionControl1);
 
     Toolkit::Control control5 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control5");
-    window.Add(control5);
+    mWindow.Add(control5);
 
     Toolkit::Control control6 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control6 (parent : Control5)");
     control5.Add(control6);
@@ -691,10 +691,10 @@ public:
     Toolkit::Control positionControl2 = AddNewRenderTask(control5, Vector2(400.0f, 400.0f), true, true, Color::LIGHT_GREY);
     positionControl2.SetProperty(Dali::Actor::Property::POSITION, Vector2(-400.0f, 0.0f));
     positionControl2.SetProperty(Dali::Actor::Property::SIZE, Vector2(400.0f, 400.0f));
-    window.Add(positionControl2);
+    mWindow.Add(positionControl2);
 
     Toolkit::Control control7 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "control7");
-    window.Add(control7);
+    mWindow.Add(control7);
 
     Toolkit::Control control8 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control8 (parent : Control7)");
     control7.Add(control8);
@@ -702,12 +702,12 @@ public:
     Toolkit::Control positionControl3 = AddNewRenderTask(control7, Vector2(400.0f, 300.0f), true, true, Color::LIGHT_PINK);
     positionControl3.SetProperty(Dali::Actor::Property::POSITION, Vector2(0.0f, -300.0f));
     positionControl3.SetProperty(Dali::Actor::Property::SIZE, Vector2(400.0f, 300.0f));
-    window.Add(positionControl3);
+    mWindow.Add(positionControl3);
 
     Toolkit::Control positionControl4 = AddNewRenderTask(control1, Vector2(300.0f, 200.0f), true, false, Color::LIGHT_SALMON);
     positionControl4.SetProperty(Dali::Actor::Property::POSITION, Vector2(0.0f, 300.0f));
     positionControl4.SetProperty(Dali::Actor::Property::SIZE, Vector2(300.0f, 200.0f));
-    window.Add(positionControl4);
+    mWindow.Add(positionControl4);
   }
 
   void GenSceneV9()
@@ -715,10 +715,10 @@ public:
     mScenarioDetailLabelString = "Multiple separated Scenes Scene with FBO";
 
     Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 500.0f, "control1");
-    window.Add(control1);
+    mWindow.Add(control1);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 500.0f, "control2");
-    window.Add(control2);
+    mWindow.Add(control2);
 
     Toolkit::Control positionControl1 = AddNewRenderTask(control2, Vector2(700.0f, 700.0f), true, true, Color::LIGHT_GREEN);
     control1.Add(positionControl1);
@@ -726,7 +726,7 @@ public:
     positionControl1.SetProperty(Dali::Actor::Property::SIZE, Vector2(500.0f, 500.0f));
 
     Toolkit::Control control3 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 500.0f, "control3");
-    window.Add(control3);
+    mWindow.Add(control3);
 
     Toolkit::Control positionControl2 = AddNewRenderTask(control3, Vector2(700.0f, 700.0f), true, true, Color::LIGHT_GREEN);
     control2.Add(positionControl2);
@@ -747,7 +747,7 @@ public:
     sceneView.SetBackgroundColor(Color::BEIGE);
     sceneView.UseFramebuffer(true);
     mActorList.push_back(sceneView);
-    window.Add(sceneView);
+    mWindow.Add(sceneView);
 
     CameraActor camera = sceneView.GetSelectedCamera();
     camera.SetProperty(Dali::Actor::Property::POSITION, Vector3(1.5f, 1.0f, 1.5f));
@@ -780,7 +780,7 @@ public:
     sceneView.SetBackgroundColor(Color::BEIGE);
     sceneView.UseFramebuffer(true);
     mActorList.push_back(sceneView);
-    window.Add(sceneView);
+    mWindow.Add(sceneView);
 
     Dali::Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 150.0f, "control1");
 
@@ -826,7 +826,7 @@ public:
     sceneView.SetBackgroundColor(Color::BEIGE);
     sceneView.UseFramebuffer(true);
     mActorList.push_back(sceneView);
-    window.Add(sceneView);
+    mWindow.Add(sceneView);
 
     Dali::Toolkit::Control control1 = CreateControl(basicColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 150.0f, "control1");
 
@@ -892,7 +892,7 @@ public:
 
     for(auto&& renderTask : mRenderTaskList)
     {
-      window.GetRenderTaskList().RemoveTask(renderTask);
+      mWindow.GetRenderTaskList().RemoveTask(renderTask);
     }
     mRenderTaskList.clear();
 
@@ -1176,7 +1176,7 @@ private:
   std::vector<FrameBuffer> mFrameBufferList;
   std::vector<Texture>     mTextureList;
   Application&             mApplication;
-  Window                   window;
+  Window                   mWindow;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
