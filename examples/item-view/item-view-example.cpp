@@ -197,7 +197,7 @@ public:
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void OnInit(Application& app)
+  void OnInit(Application app)
   {
     Window window = app.GetWindow();
     window.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
@@ -333,7 +333,7 @@ public:
     animation.Play();
   }
 
-  void AnimationFinished(Animation&)
+  void AnimationFinished(Animation)
   {
     SetLayout(mCurrentLayout);
 
@@ -489,7 +489,7 @@ public:
     mTapDetector.Reset();
   }
 
-  void RemoveOnTap(Actor actor, const TapGesture& tap)
+  void RemoveOnTap(Actor actor, TapGesture tap)
   {
     mItemView.RemoveItem(mItemView.GetItemId(actor), 0.5f);
   }
@@ -541,7 +541,7 @@ public:
     mDeleteButton.SetProperty(Actor::Property::VISIBLE, false);
   }
 
-  void SelectOnTap(Actor actor, const TapGesture& tap)
+  void SelectOnTap(Actor actor, TapGesture tap)
   {
     Actor tick = actor.FindChildByName("Tick");
     if(tick)
@@ -550,7 +550,7 @@ public:
     }
   }
 
-  void OnLongPress(Actor actor, const LongPressGesture& gesture)
+  void OnLongPress(Actor actor, LongPressGesture gesture)
   {
     switch(gesture.GetState())
     {
@@ -621,7 +621,7 @@ public:
     mTapDetector.Reset();
   }
 
-  void InsertOnTap(Actor actor, const TapGesture& tap)
+  void InsertOnTap(Actor actor, TapGesture tap)
   {
     ItemId id = mItemView.GetItemId(actor);
 
@@ -714,7 +714,7 @@ public:
     mTapDetector.DetectedSignal().Connect(this, &ItemViewExample::ReplaceOnTap);
   }
 
-  void ReplaceOnTap(Actor actor, const TapGesture& tap)
+  void ReplaceOnTap(Actor actor, TapGesture tap)
   {
     mItemView.ReplaceItem(Item(mItemView.GetItemId(actor), NewItem(rand())), 0.5f);
   }
@@ -962,7 +962,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

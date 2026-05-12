@@ -151,19 +151,19 @@ void BeatControl::StartFadeAnimation()
   mAnimationPlaying |= FADE_ANIMATION_RUNNING;
 }
 
-void BeatControl::OnBounceAnimationFinished(Animation& src)
+void BeatControl::OnBounceAnimationFinished(Animation src)
 {
   mAnimationPlaying &= ~BOUNCE_ANIMATION_RUNNING;
 }
-void BeatControl::OnXAnimationFinished(Animation& src)
+void BeatControl::OnXAnimationFinished(Animation src)
 {
   mAnimationPlaying &= ~X_ANIMATION_RUNNING;
 }
-void BeatControl::OnYAnimationFinished(Animation& src)
+void BeatControl::OnYAnimationFinished(Animation src)
 {
   mAnimationPlaying &= ~Y_ANIMATION_RUNNING;
 }
-void BeatControl::OnFadeAnimationFinished(Animation& src)
+void BeatControl::OnFadeAnimationFinished(Animation src)
 {
   mAnimationPlaying &= ~FADE_ANIMATION_RUNNING;
 }

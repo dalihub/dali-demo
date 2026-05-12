@@ -259,7 +259,7 @@ public:
    * Invoked upon creation of application
    * @param[in] application The application instance
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
@@ -304,7 +304,7 @@ public:
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

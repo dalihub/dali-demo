@@ -28,11 +28,10 @@ namespace DemoHelper
 {
 Dali::Texture LoadTexture(const char*              imagePath,
                           Dali::ImageDimensions    size                  = Dali::ImageDimensions(),
-                          Dali::FittingMode::Type  fittingMode           = Dali::FittingMode::DEFAULT,
                           Dali::SamplingMode::Type samplingMode          = Dali::SamplingMode::DEFAULT,
                           bool                     orientationCorrection = true)
 {
-  Dali::Devel::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, fittingMode, samplingMode, orientationCorrection);
+  Dali::Devel::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, samplingMode, orientationCorrection);
   Dali::Texture            texture     = Dali::Texture::New(Dali::TextureType::TEXTURE_2D,
                                                             pixelBuffer.GetPixelFormat(),
                                                             pixelBuffer.GetWidth(),
@@ -46,7 +45,7 @@ Dali::Texture LoadTexture(const char*              imagePath,
 
 Dali::Texture LoadWindowFillingTexture(Dali::Uint16Pair size, const char* imagePath)
 {
-  return LoadTexture(imagePath, size, Dali::FittingMode::SCALE_TO_FILL, Dali::SamplingMode::BOX_THEN_LINEAR);
+  return LoadTexture(imagePath, size, Dali::SamplingMode::BOX_THEN_LINEAR);
 }
 
 Dali::Geometry CreateTexturedQuad()

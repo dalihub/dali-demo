@@ -181,14 +181,14 @@ public:
 
   ~DirectRenderingExampleController() override = default; // Nothing to do in destructor
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Dali::Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
 
     window.KeyEventSignal().Connect(this, &DirectRenderingExampleController::OnKeyEvent);
-    window.GetRootLayer().TouchedSignal().Connect(this, &DirectRenderingExampleController::OnTouch);
+    window.TouchedSignal().Connect(this, &DirectRenderingExampleController::OnTouch);
 
     mDRView = std::make_unique<RenderView>(window);
 
@@ -208,14 +208,14 @@ public:
     mDRView->Create(Vector2::ZERO, mode);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     RequestApplicationQuit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

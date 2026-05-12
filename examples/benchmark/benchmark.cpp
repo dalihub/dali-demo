@@ -199,7 +199,7 @@ public:
   ~Benchmark() = default;
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -211,7 +211,7 @@ public:
     mSize = Vector3(windowSize.x / mColumnsPerPage, windowSize.y / mRowsPerPage, 0.0f);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &Benchmark::OnTouch);
+    window.TouchedSignal().Connect(this, &Benchmark::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &Benchmark::OnKeyEvent);
@@ -228,11 +228,11 @@ public:
     ShowAnimation();
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
   const char* ImagePath(int i)
@@ -281,7 +281,7 @@ public:
     }
   }
 
-  void OnAnimationEnd(Animation& source)
+  void OnAnimationEnd(Animation source)
   {
     if(source == mShow)
     {
@@ -424,7 +424,7 @@ public:
     mHide.FinishedSignal().Connect(this, &Benchmark::OnAnimationEnd);
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

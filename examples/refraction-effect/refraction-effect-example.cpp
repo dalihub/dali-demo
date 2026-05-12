@@ -131,7 +131,7 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window  window     = application.GetWindow();
     Vector2 windowSize = window.GetSize();
@@ -172,7 +172,7 @@ private:
     mShaderFlat = Shader::New(ToDaliStringView(SHADER_REFRACTION_EFFECT_FLAT_VERT), ToDaliStringView(SHADER_REFRACTION_EFFECT_FLAT_FRAG));
     mGeometry   = CreateGeometry(MESH_FILES[mCurrentMeshId]);
 
-    Texture texture = DemoHelper::LoadWindowFillingTexture(window.GetSize(), TEXTURE_IMAGES[mCurrentTextureId]);
+    Texture texture = DemoHelper::LoadWindowFillingTexture(Uint16Pair(window.GetSize().GetWidth(), window.GetSize().GetHeight()), TEXTURE_IMAGES[mCurrentTextureId]);
     mTextureSet     = TextureSet::New();
     mTextureSet.SetTexture(0u, texture);
 
@@ -235,12 +235,12 @@ private:
   bool OnChangeTexture(Toolkit::Button button)
   {
     mCurrentTextureId = (mCurrentTextureId + 1) % NUM_TEXTURE_IMAGES;
-    Texture texture   = DemoHelper::LoadWindowFillingTexture(mApplication.GetWindow().GetSize(), TEXTURE_IMAGES[mCurrentTextureId]);
+    Texture texture   = DemoHelper::LoadWindowFillingTexture(Uint16Pair(mApplication.GetWindow().GetSize().GetWidth(), mApplication.GetWindow().GetSize().GetHeight()), TEXTURE_IMAGES[mCurrentTextureId]);
     mTextureSet.SetTexture(0u, texture);
     return true;
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& event)
+  bool OnTouch(Actor actor, TouchEvent event)
   {
     switch(event.GetState(0))
     {
@@ -294,7 +294,7 @@ private:
     return true;
   }
 
-  void OnTouchFinished(Animation& source)
+  void OnTouchFinished(Animation source)
   {
     mRenderer.SetShader(mShaderFlat);
     SetLightXYOffset(Vector2::ZERO);
@@ -447,7 +447,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

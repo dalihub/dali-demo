@@ -70,7 +70,7 @@ private:
   /**
    * Callback when expand or collapse animation ends.
    */
-  void OnExpandAnimationFinished(Dali::Animation& animation);
+  void OnExpandAnimationFinished(Dali::Animation animation);
 
   /**
    * Called when the main button clicked.

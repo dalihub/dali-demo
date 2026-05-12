@@ -64,12 +64,12 @@ public:
   std::unique_ptr<Scene3DExtension> mScene3DExtension;
 
 private: // methods
-  void OnInit(Dali::Application& app);
-  void OnTerminate(Dali::Application& app);
+  void OnInit(Dali::Application app);
+  void OnTerminate(Dali::Application app);
 
-  void OnKey(const Dali::KeyEvent& e);
-  void OnPan(Dali::Actor actor, const Dali::PanGesture& pan);
-  void OnTap(Dali::Actor actor, const Dali::TapGesture& tap);
+  void OnKey(Dali::Window window, Dali::KeyEvent e);
+  void OnPan(Dali::Actor actor, Dali::PanGesture pan);
+  void OnTap(Dali::Actor actor, Dali::TapGesture tap);
 
   Dali::Actor OnKeyboardPreFocusChange(Dali::Actor current, Dali::Actor proposed, Dali::Toolkit::Control::KeyboardFocus::Direction direction);
   void        OnKeyboardFocusedActorActivated(Dali::Actor activatedActor);

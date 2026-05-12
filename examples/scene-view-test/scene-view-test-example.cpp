@@ -136,7 +136,7 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     mWindow                  = application.GetWindow();
@@ -225,7 +225,7 @@ private:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -498,7 +498,7 @@ private:
 
   void ApplyModelScreenExtent(Control aabb, Model model)
   {
-    Rect<float> screenExtent = Dali::DevelActor::CalculateCurrentScreenExtents(model);
+    Bounds screenExtent = Dali::DevelActor::CalculateCurrentScreenExtents(model);
 
     aabb[Actor::Property::POSITION_X]  = screenExtent.x;
     aabb[Actor::Property::POSITION_Y]  = screenExtent.y;

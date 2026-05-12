@@ -114,7 +114,7 @@ public:
     // Nothing to do here
   }
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     // The Init signal is received once (only) during the Application lifetime
     Window window = application.GetWindow();
@@ -673,7 +673,7 @@ public:
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

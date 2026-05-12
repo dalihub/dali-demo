@@ -115,7 +115,7 @@ StylingApplication::~StylingApplication()
 {
 }
 
-void StylingApplication::Create(Application& application)
+void StylingApplication::Create(Application application)
 {
   Window window = application.GetWindow();
   window.KeyEventSignal().Connect(this, &StylingApplication::OnKeyEvent);
@@ -643,13 +643,13 @@ void StylingApplication::PopupHidden()
   }
 }
 
-void StylingApplication::OnPan(Actor actor, const PanGesture& gesture)
+void StylingApplication::OnPan(Actor actor, PanGesture gesture)
 {
   Vector3 size = mContentPane.GetTargetSize();
   mContentPane.SetProperty(Actor::Property::SIZE, Vector2(size.GetVectorXY() + gesture.GetDisplacement() * 2.0f));
 }
 
-void StylingApplication::OnKeyEvent(const KeyEvent& keyEvent)
+void StylingApplication::OnKeyEvent(Window window, KeyEvent keyEvent)
 {
   static int keyPressed = 0;
 

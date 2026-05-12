@@ -87,7 +87,6 @@ void SetImageFittedInBox(ImageView& imageView, Property::Map& shaderEffect, cons
   // Load the image nicely scaled-down to fit within the specified max width and height:
   map[ImageVisual::Property::DESIRED_WIDTH]  = maxWidth;
   map[ImageVisual::Property::DESIRED_HEIGHT] = maxHeight;
-  map[ImageVisual::Property::FITTING_MODE]   = FittingMode::SHRINK_TO_FIT;
   map[ImageVisual::Property::SAMPLING_MODE]  = SamplingMode::BOX_THEN_LINEAR;
   map.Merge(shaderEffect);
 
@@ -135,7 +134,7 @@ public:
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void OnInit(Application& app)
+  void OnInit(Application app)
   {
     // The Init signal is received once (only) during the Application lifetime
     Window window = app.GetWindow();
@@ -263,7 +262,7 @@ public:
   //
 
   // move to point on screen that was tapped
-  void OnTap(Actor actor, const TapGesture& tapGesture)
+  void OnTap(Actor actor, TapGesture tapGesture)
   {
     Vector3 destPos;
     float   originOffsetX, originOffsetY;
@@ -386,7 +385,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

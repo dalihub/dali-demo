@@ -102,7 +102,7 @@ public:
     // Nothing to do here
   }
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     // The Init signal is received once (only) during the Application lifetime
 
@@ -129,7 +129,7 @@ public:
     mTimer.TickSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnTick);
     mTimer.Start();
 
-    application.GetWindow().GetRootLayer().TouchedSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnTouch);
+    application.GetWindow().TouchedSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnTouch);
 
     application.GetWindow().KeyEventSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnKeyEvent);
   }
@@ -213,7 +213,7 @@ private:
     return true; // Keep tick always
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::UP)
     {
@@ -224,13 +224,13 @@ private:
       // Update image views
       UpdateImageViews();
     }
-    return true;
+    return;
   }
 
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

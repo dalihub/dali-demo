@@ -99,7 +99,7 @@ public:
   ~BenchmarkColor() = default;
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -109,7 +109,7 @@ public:
     mSize = Vector3(windowSize.x / static_cast<float>(mColumns), windowSize.y / static_cast<float>(mRows), 0.0f);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &BenchmarkColor::OnTouch);
+    window.TouchedSignal().Connect(this, &BenchmarkColor::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &BenchmarkColor::OnKeyEvent);
@@ -220,7 +220,7 @@ public:
       mTimer.Start();
     }
   }
-  void Destroy(Application& application)
+  void Destroy(Application application)
   {
     // Clean up:
     mTimer.Stop();
@@ -244,14 +244,14 @@ public:
     return false; // Stop the timer
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -71,7 +71,7 @@ private:
    * @param[in]  actor    The tapped actor.
    * @param[in]  gesture  The tap gesture.
    */
-  void OnTap(Dali::Actor actor, const Dali::TapGesture& gesture);
+  void OnTap(Dali::Actor actor, Dali::TapGesture gesture);
 
   /**
    * @brief Animates the fold/unfold animation as required.
@@ -82,7 +82,7 @@ private:
    * @brief Called when the animation finishes.
    * @param[in]  animation  The animation which has just finished.
    */
-  void OnAnimationFinished(Dali::Animation& animation);
+  void OnAnimationFinished(Dali::Animation animation);
 
   /**
    * @brief Called when any key event is received
@@ -90,7 +90,7 @@ private:
    * Will use this to fold a contact card if it is unfolded.
    * @param[in]  event  The key event information
    */
-  void OnKeyEvent(const Dali::KeyEvent& event);
+  void OnKeyEvent(Dali::Window window, Dali::KeyEvent event);
 
   Dali::TapGestureDetector mTapDetector;  ///< Used for tap detection.
   Dali::Toolkit::Control   mContactCard;  ///< Used for the background and to clip the contents.

@@ -163,7 +163,7 @@ public:
    * @param[in] direction The direction used to constrain the bubble to move in an adjacent direction around it.
    * @param[in] displacement The displacement used to bound the moving distance of the bubble.
    */
-  void EmitBubble(Animation& animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement);
+  void EmitBubble(Animation animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement);
 
   /**
    * @brief Reset all the parameters controlling the bubbles after animation.

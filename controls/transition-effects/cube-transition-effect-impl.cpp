@@ -430,7 +430,7 @@ void CubeTransitionEffect::ResetToInitialState()
   }
 }
 
-void CubeTransitionEffect::OnTransitionFinished(Animation& source)
+void CubeTransitionEffect::OnTransitionFinished(Animation source)
 {
   std::swap(mCurrentTiles, mTargetTiles);
   std::swap(mCurrentRenderer, mTargetRenderer);

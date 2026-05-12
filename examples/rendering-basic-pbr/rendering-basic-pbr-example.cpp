@@ -106,7 +106,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -131,7 +131,7 @@ public:
     InitActors();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &BasicPbrController::OnTouch);
+    window.TouchedSignal().Connect(this, &BasicPbrController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &BasicPbrController::OnKeyEvent);
@@ -149,7 +149,7 @@ public:
   /**
    * This function will change the material Roughness, Metalness or the model orientation when touched
    */
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     const PointState::Type state = touch.GetState(0);
 
@@ -172,7 +172,6 @@ public:
       }
       case PointState::MOTION:
       {
-        const Window  window  = mApplication.GetWindow();
         const Size    size    = window.GetSize();
         const float   scaleX  = size.width;
         const float   scaleY  = size.height;
@@ -247,7 +246,7 @@ public:
         break;
       }
     }
-    return true;
+    return;
   }
 
   /**
@@ -256,7 +255,7 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

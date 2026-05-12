@@ -51,7 +51,7 @@ public:
   ~DrawableActorExampleController() override = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -84,20 +84,20 @@ public:
     window.Add(mTextLabel);
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &DrawableActorExampleController::OnTouch);
+    window.TouchedSignal().Connect(this, &DrawableActorExampleController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &DrawableActorExampleController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

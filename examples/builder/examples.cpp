@@ -347,7 +347,7 @@ public:
     mItemView.ActivateLayout(0, size, 0.0f /*immediate*/);
   }
 
-  void OnTap(Actor actor, const TapGesture& tap)
+  void OnTap(Actor actor, TapGesture tap)
   {
     ItemId id = mItemView.GetItemId(actor);
 
@@ -457,7 +457,7 @@ public:
     mNavigationView.Push(mBuilderLayer);
   }
 
-  void Create(Application& app)
+  void Create(Application app)
   {
     Window window = app.GetWindow();
 
@@ -528,7 +528,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

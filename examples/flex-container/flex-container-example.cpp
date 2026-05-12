@@ -116,7 +116,7 @@ public:
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void OnInit(Application& app)
+  void OnInit(Application app)
   {
     auto window = app.GetWindow();
     window.KeyEventSignal().Connect(this, &FlexContainerExample::OnKeyEvent);
@@ -327,7 +327,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

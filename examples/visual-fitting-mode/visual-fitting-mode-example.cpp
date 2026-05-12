@@ -110,7 +110,7 @@ private:
    * @brief Called to initialise the application content
    * @param[in] application A reference to the Application class.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -176,7 +176,7 @@ private:
    *
    * We just want to change the padding when this happens.
    */
-  void OnTap(Actor /* actor */, const TapGesture& /* tap */)
+  void OnTap(Actor /* actor */, TapGesture /* tap */)
   {
     ChangePadding();
   }
@@ -188,7 +188,7 @@ private:
    * the padding if any other key.
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -59,7 +59,7 @@ public:
    * @brief Called to initialise the application content
    * @param[in] application A reference to the Application class.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
     Window window = application.GetWindow();
@@ -92,7 +92,7 @@ public:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -109,7 +109,7 @@ public:
    * In our case, it's when the red component is greater than 50%.
    * Will use this notification to animate the opacity of the text-label to transparent.
    */
-  void RedComponentNotification(PropertyNotification& /* source */)
+  void RedComponentNotification(PropertyNotification /* source */)
   {
     Animation animation = Animation::New(OPACITY_ANIMATION_DURATION);
     animation.AnimateTo(Property(mTextLabel, Actor::Property::OPACITY), 0.0f);

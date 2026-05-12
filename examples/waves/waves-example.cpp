@@ -28,6 +28,7 @@
 #include "dali/public-api/events/key-event.h"
 #include "dali/public-api/events/pan-gesture-detector.h"
 #include "dali/public-api/events/tap-gesture-detector.h"
+#include "dali/public-api/events/tap-gesture.h"
 #include "dali/public-api/render-tasks/render-task-list.h"
 #include "dali/public-api/render-tasks/render-task.h"
 #include "utils.h"
@@ -156,7 +157,7 @@ private:
   Animation mTimeAnim;
   Animation mTransitionAnim;
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window    = application.GetWindow();
     auto   rootLayer = window.GetRootLayer();
@@ -245,7 +246,7 @@ private:
     mTimeAnim = animTime;
   }
 
-  void Destroy(Application& app)
+  void Destroy(Application app)
   {
     mCamera.Reset();
 
@@ -317,31 +318,31 @@ private:
     mTransitionAnim = anim;
   }
 
-  void OnTimeAnimFinished(Animation& anim)
+  void OnTimeAnimFinished(Animation anim)
   {
     anim.Play();
   }
 
-  void OnTransitionFinished(Animation& anim)
+  void OnTransitionFinished(Animation anim)
   {
     mTransitionAnim.Reset();
     mTimeAnim.FinishedSignal().Connect(this, &WavesExample::OnTimeAnimFinished);
     mTimeAnim.Play();
   }
 
-  void OnPause(Application& app)
+  void OnPause(Application app)
   {
     mTimeAnim.Pause();
     mTiltSensor.Stop();
   }
 
-  void OnResume(Application& app)
+  void OnResume(Application app)
   {
     mTiltSensor.Start();
     mTimeAnim.Play();
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::UP) // single keystrokes
     {
@@ -352,13 +353,13 @@ private:
     }
   }
 
-  void OnDoubleTap(Actor /*actor*/, const TapGesture& gesture)
+  void OnDoubleTap(Actor /*actor*/, TapGesture gesture)
   {
     Vector3 lightColor = mWaveShader.GetProperty(mULightColorSqr).Get<Vector3>();
     TriggerColorTransition(lightColor, RandomColor());
   }
 
-  void OnPan(Actor actor, const PanGesture& gesture)
+  void OnPan(Actor actor, PanGesture gesture)
   {
     auto tilt = gesture.GetDisplacement() / Vector2(mApp.GetWindow().GetSize());
     switch(gesture.GetState())
@@ -378,7 +379,7 @@ private:
     UpdateLightDirection();
   }
 
-  void OnTilted(const TiltSensor& sensor)
+  void OnTilted(TiltSensor sensor)
   {
     mTiltFilter.Add(Vector2(sensor.GetPitch(), sensor.GetRoll()));
 

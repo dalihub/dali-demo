@@ -53,7 +53,7 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
 
@@ -83,7 +83,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -100,7 +100,7 @@ private:
   TextLabel mLabel;
 };
 
-void RunTest(Application& application)
+void RunTest(Application application)
 {
   TextVisualExample test(application);
 

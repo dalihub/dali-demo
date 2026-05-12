@@ -42,16 +42,16 @@ public:
   ~StylingApplication();
 
   // Init signal handler
-  void Create(Application& application);
+  void Create(Application application);
 
   // Create the GUI components
-  Actor              CreateContentPane();
-  Actor              CreateResizableContentPane();
-  Popup       CreateResetPopup();
-  TextLabel   CreateTitle(std::string title);
+  Actor     CreateContentPane();
+  Actor     CreateResizableContentPane();
+  Popup     CreateResetPopup();
+  TextLabel CreateTitle(std::string title);
 
   // Key event handler
-  void OnKeyEvent(const KeyEvent& event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
   // Button event handlers
   bool OnButtonStateChange(Button button);
@@ -69,7 +69,7 @@ public:
   bool OnResetCancelled(Button button);
 
   // Grab handle handler
-  void OnPan(Actor actor, const PanGesture& gesture);
+  void OnPan(Actor actor, PanGesture gesture);
 
   static const char* DEMO_THEME_ONE_PATH;
   static const char* DEMO_THEME_TWO_PATH;

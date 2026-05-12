@@ -73,14 +73,14 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     mWindow = application.GetWindow();
 
     mWindow.KeyEventSignal().Connect(this, &ImageYuvController::OnKeyEvent);
     mWindow.SetBackgroundColor(Color::WHITE);
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &ImageYuvController::OnTouch);
+    mWindow.TouchedSignal().Connect(this, &ImageYuvController::OnTouch);
 
     mTableView = Toolkit::TableView::New(NUM_IMAGE_INFOS, 3);
     mTableView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
@@ -136,7 +136,7 @@ public:
     }
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -170,7 +170,7 @@ public:
     }
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& event)
+  void OnTouch(Window window, TouchEvent event)
   {
     if(1u == event.GetPointCount())
     {
@@ -192,7 +192,7 @@ public:
       }
     }
 
-    return true;
+    return;
   }
 
 private:

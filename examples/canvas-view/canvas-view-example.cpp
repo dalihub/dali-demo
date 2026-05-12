@@ -137,12 +137,12 @@ public:
     mTitle.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, VIEW_LABEL[BASIC_SHAPE_VIEW]);
 
     Dali::CanvasRenderer::Shape canvasBackground = Dali::CanvasRenderer::Shape::New();
-    canvasBackground.AddRect(Rect<float>(0.0f, 0.0f, windowSize.width, windowSize.height), Vector2::ZERO);
+    canvasBackground.AddRect(Bounds(0.0f, 0.0f, windowSize.width, windowSize.height), Vector2::ZERO);
     canvasBackground.SetFillColor(Color::WHITE);
     mCanvasView.AddDrawable(canvasBackground);
 
     Dali::CanvasRenderer::Shape shape1 = Dali::CanvasRenderer::Shape::New();
-    shape1.AddRect(Rect<float>(-50.0f, -50.0f, 100.0f, 100.0f), Vector2::ZERO);
+    shape1.AddRect(Bounds(-50.0f, -50.0f, 100.0f, 100.0f), Vector2::ZERO);
     shape1.SetFillColor(Vector4(0.0f, 0.5f, 0.0f, 0.5f));
     shape1.SetStrokeColor(Vector4(0.5f, 0.0f, 0.0f, 0.5f));
     shape1.SetStrokeWidth(10.0f);
@@ -151,7 +151,7 @@ public:
     shape1.Translate(Vector2(100.0f, 200.0f));
 
     mRoundedRect = Dali::CanvasRenderer::Shape::New();
-    mRoundedRect.AddRect(Rect<float>(10.0f, 350.0f, 200.0f, 140.0f), Vector2(40.0f, 40.0f));
+    mRoundedRect.AddRect(Bounds(10.0f, 350.0f, 200.0f, 140.0f), Vector2(40.0f, 40.0f));
     mRoundedRect.SetFillColor(Color::BLUE);
     mRoundedRect.SetStrokeColor(Color::YELLOW);
     mRoundedRect.SetStrokeWidth(10.0f);
@@ -219,12 +219,12 @@ public:
     mTitle.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, VIEW_LABEL[CLIP_PATH_VIEW]);
 
     Dali::CanvasRenderer::Shape canvasBackground = Dali::CanvasRenderer::Shape::New();
-    canvasBackground.AddRect(Rect<float>(0.0f, 0.0f, windowSize.width, windowSize.height), Vector2::ZERO);
+    canvasBackground.AddRect(Bounds(0.0f, 0.0f, windowSize.width, windowSize.height), Vector2::ZERO);
     canvasBackground.SetFillColor(Color::WHITE);
     mCanvasView.AddDrawable(canvasBackground);
 
     Dali::CanvasRenderer::Shape shape1 = Dali::CanvasRenderer::Shape::New();
-    shape1.AddRect(Rect<float>(-50.0f, -50.0f, 100.0f, 100.0f), Vector2::ZERO);
+    shape1.AddRect(Bounds(-50.0f, -50.0f, 100.0f, 100.0f), Vector2::ZERO);
     shape1.SetFillColor(Vector4(0.0f, 0.5f, 0.0f, 0.5f));
     shape1.SetStrokeColor(Vector4(0.5f, 0.0f, 0.0f, 0.5f));
     shape1.SetStrokeWidth(10.0f);
@@ -254,7 +254,7 @@ public:
     mCanvasView.AddDrawable(group1);
 
     Dali::CanvasRenderer::Shape shape3 = Dali::CanvasRenderer::Shape::New();
-    shape3.AddRect(Rect<float>(140.0f, 500.0f, 200.0f, 140.0f), Vector2(40.0f, 40.0f));
+    shape3.AddRect(Bounds(140.0f, 500.0f, 200.0f, 140.0f), Vector2(40.0f, 40.0f));
     shape3.SetFillColor(Color::BLUE);
     shape3.SetOpacity(0.5f);
     shape3.SetStrokeColor(Color::YELLOW);
@@ -291,7 +291,7 @@ public:
     mTitle.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, VIEW_LABEL[GRADIENT_VIEW]);
 
     Dali::CanvasRenderer::Shape canvasBackground = Dali::CanvasRenderer::Shape::New();
-    canvasBackground.AddRect(Rect<float>(0.0f, 0.0f, windowSize.width, windowSize.height), Vector2::ZERO);
+    canvasBackground.AddRect(Bounds(0.0f, 0.0f, windowSize.width, windowSize.height), Vector2::ZERO);
     canvasBackground.SetFillColor(Color::WHITE);
     mCanvasView.AddDrawable(canvasBackground);
 
@@ -311,7 +311,7 @@ public:
     radialGradient.SetSpread(Dali::CanvasRenderer::Gradient::Spread::REFLECT);
 
     Dali::CanvasRenderer::Shape roundedRect = Dali::CanvasRenderer::Shape::New();
-    roundedRect.AddRect(Rect<float>(50.0f, 100.0f, 380.0f, 140.0f), Vector2(40.0f, 40.0f));
+    roundedRect.AddRect(Bounds(50.0f, 100.0f, 380.0f, 140.0f), Vector2(40.0f, 40.0f));
     roundedRect.SetStrokeColor(Color::YELLOW);
     roundedRect.SetStrokeWidth(10.0f);
     roundedRect.SetStrokeJoin(Dali::CanvasRenderer::Shape::StrokeJoin::MITER);
@@ -325,7 +325,7 @@ public:
     radialGradient2.SetSpread(Dali::CanvasRenderer::Gradient::Spread::REPEAT);
 
     Dali::CanvasRenderer::Shape roundedRect2 = Dali::CanvasRenderer::Shape::New();
-    roundedRect2.AddRect(Rect<float>(50.0f, 250.0f, 380.0f, 140.0f), Vector2(40.0f, 40.0f));
+    roundedRect2.AddRect(Bounds(50.0f, 250.0f, 380.0f, 140.0f), Vector2(40.0f, 40.0f));
     roundedRect2.SetStrokeColor(Color::YELLOW);
     roundedRect2.SetStrokeWidth(10.0f);
     roundedRect2.SetStrokeJoin(Dali::CanvasRenderer::Shape::StrokeJoin::MITER);
@@ -373,7 +373,7 @@ public:
     mTitle.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, VIEW_LABEL[PICTURE_VIEW]);
 
     Dali::CanvasRenderer::Shape canvasBackground = Dali::CanvasRenderer::Shape::New();
-    canvasBackground.AddRect(Rect<float>(0.0f, 0.0f, windowSize.width, windowSize.height), Vector2::ZERO);
+    canvasBackground.AddRect(Bounds(0.0f, 0.0f, windowSize.width, windowSize.height), Vector2::ZERO);
     canvasBackground.SetFillColor(Color::WHITE);
     mCanvasView.AddDrawable(canvasBackground);
 
@@ -435,7 +435,7 @@ public:
   /**
    * @brief Create a view and set up the button and timer, and title.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     // The Init signal is received once (only) during the Application lifetime
     Window  window     = application.GetWindow();
@@ -462,7 +462,7 @@ public:
     mCanvasView.SetProperty(Actor::Property::SIZE, windowSize);
 
     mTitle                                                     = Toolkit::TextLabel::New(VIEW_LABEL[BASIC_SHAPE_VIEW]);
-    mTitle[Actor::Property::PIVOT]                      = Pivot::TOP_CENTER;
+    mTitle[Actor::Property::PIVOT]                             = Pivot::TOP_CENTER;
     mTitle[Actor::Property::PARENT_ORIGIN]                     = Vector3(0.5f, 0.0f, 0.5f);
     mTitle[Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT] = "CENTER";
     mTitle[Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT]   = "CENTER";
@@ -523,7 +523,7 @@ public:
     if(mViewCount == BASIC_SHAPE_VIEW)
     {
       mRoundedRect.ResetPath();
-      mRoundedRect.AddRect(Rect<float>(10.0f, 350.0f, 200.0f, 140.0f), Vector2(float(mCount % 80), float(mCount % 80)));
+      mRoundedRect.AddRect(Bounds(10.0f, 350.0f, 200.0f, 140.0f), Vector2(float(mCount % 80), float(mCount % 80)));
 
       mArc.ResetPath();
       mArc.AddArc(Vector2(100.0f, 650.0f), 80.0f, 10.0f, float(mCount % 180), true);
@@ -563,7 +563,7 @@ public:
    *
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

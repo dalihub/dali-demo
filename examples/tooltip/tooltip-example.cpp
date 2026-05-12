@@ -56,7 +56,7 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Set the window background color and connect to the window's key signal to allow Back and Escape to exit.
     Window window = application.GetWindow();
@@ -112,7 +112,7 @@ private:
                                                   {Tooltip::Property::POSITION, Tooltip::Position::HOVER_POINT},
                                                   {Tooltip::Property::BACKGROUND,
                                                    CreatePropertyMap({{Tooltip::Background::Property::VISUAL, DEMO_IMAGE_DIR "tooltip.9.png"},
-                                                                      {Tooltip::Background::Property::BORDER, Rect<int>(1, 5, 5, 1)}})}}));
+                                                                      {Tooltip::Background::Property::BORDER, Extents(1, 5, 5, 1)}})}}));
     window.Add(customFromCode);
   }
 
@@ -122,7 +122,7 @@ private:
    * Will use this to quit the application if Back or the Escape key is received
    * @param[in]  event  The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

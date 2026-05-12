@@ -292,7 +292,7 @@ void DaliTableView::SortAlphabetically(bool sortAlphabetically)
   mSortAlphabetically = sortAlphabetically;
 }
 
-void DaliTableView::Initialize(Application& application)
+void DaliTableView::Initialize(Application application)
 {
   Window window = application.GetWindow();
   window.KeyEventSignal().Connect(this, &DaliTableView::OnKeyEvent);
@@ -558,7 +558,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   return focusableTile;
 }
 
-bool DaliTableView::OnTilePressed(Actor actor, const TouchEvent& event)
+bool DaliTableView::OnTilePressed(Actor actor, TouchEvent event)
 {
   return DoTilePress(actor, event.GetState(0));
 }
@@ -613,7 +613,7 @@ bool DaliTableView::DoTilePress(Actor actor, PointState::Type pointState)
   return consumed;
 }
 
-void DaliTableView::OnPressedAnimationFinished(Dali::Animation& source)
+void DaliTableView::OnPressedAnimationFinished(Dali::Animation source)
 {
   mPressedAnimation.Reset();
   if(mPressedActor)
@@ -638,7 +638,7 @@ void DaliTableView::OnScrollComplete(const Dali::Vector2& position)
   mScrolling = false;
 }
 
-bool DaliTableView::OnScrollTouched(Actor actor, const TouchEvent& event)
+bool DaliTableView::OnScrollTouched(Actor actor, TouchEvent event)
 {
   if(PointState::DOWN == event.GetState(0))
   {
@@ -663,7 +663,7 @@ void DaliTableView::ApplyScrollViewEffect()
   mScrollView.ApplyEffect(mScrollViewEffect);
 }
 
-void DaliTableView::OnKeyEvent(const KeyEvent& event)
+void DaliTableView::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {
@@ -754,13 +754,13 @@ void DaliTableView::OnFocusedActorActivated(Dali::Actor activatedActor)
   }
 }
 
-bool DaliTableView::OnTileHovered(Actor actor, const HoverEvent& event)
+bool DaliTableView::OnTileHovered(Actor actor, HoverEvent event)
 {
   KeyboardFocusManager::Get().SetCurrentFocusActor(actor);
   return true;
 }
 
-void DaliTableView::OnLogoTapped(Dali::Actor actor, const Dali::TapGesture& tap)
+void DaliTableView::OnLogoTapped(Dali::Actor actor, Dali::TapGesture tap)
 {
   // Only show if currently fully hidden. If transitioning-out, the transition will not be interrupted.
   if(!mVersionPopup || (mVersionPopup.GetDisplayState() == Toolkit::Popup::HIDDEN))

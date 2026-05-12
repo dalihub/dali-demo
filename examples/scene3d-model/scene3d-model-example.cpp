@@ -268,7 +268,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     mWindow = application.GetWindow();
     mWindow.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
@@ -297,7 +297,7 @@ public:
     SetAnimation();
 
     // Respond to a click anywhere on the mWindow
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &Scene3DModelExample::OnTouch);
+    mWindow.TouchedSignal().Connect(this, &Scene3DModelExample::OnTouch);
     mWindow.KeyEventSignal().Connect(this, &Scene3DModelExample::OnKeyEvent);
     mWindow.GetRootLayer().WheelEventSignal().Connect(this, &Scene3DModelExample::OnWheel);
 
@@ -306,7 +306,7 @@ public:
     mDoubleTapTime.TickSignal().Connect(this, &Scene3DModelExample::OnDoubleTapTime);
   }
 
-  bool OnWheel(Actor actor, const WheelEvent& wheelEvent)
+  bool OnWheel(Actor actor, WheelEvent wheelEvent)
   {
     mWheelDelta -= wheelEvent.GetDelta() * 0.025f;
     mWheelDelta = std::max(0.5f, mWheelDelta);
@@ -574,7 +574,7 @@ public:
   /**
    * This function will change the material Roughness, Metalness or the model orientation when touched
    */
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     const PointState::Type state = touch.GetState(0);
 
@@ -646,10 +646,10 @@ public:
         break;
       }
     }
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

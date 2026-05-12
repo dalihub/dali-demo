@@ -157,7 +157,7 @@ public:
   ~InstanceRenderingController() = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -198,7 +198,7 @@ public:
     UpdateLabel(TestType::TEST_MULTIPLE_RENDERER);
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &InstanceRenderingController::OnTouch);
+    window.TouchedSignal().Connect(this, &InstanceRenderingController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &InstanceRenderingController::OnKeyEvent);
@@ -209,7 +209,7 @@ public:
     loopingAnimation.Play();
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     static int testNumber = 0;
     if(touch.GetState(0) == PointState::STARTED)
@@ -218,9 +218,8 @@ public:
       if(testNumber >= TestType::TEST_MAX)
       {
         mApplication.Quit();
-        return true;
+        return;
       }
-      Window             window     = mApplication.GetWindow();
       Window::WindowSize windowSize = window.GetSize();
       offsetXRange                  = static_cast<uint16_t>((windowSize.GetWidth() - VIEW_SIZE) / 2);
       offsetYRange                  = static_cast<uint16_t>((windowSize.GetHeight() - VIEW_SIZE) / 2);
@@ -236,10 +235,10 @@ public:
         ChangeArrayValue(i);
       }
     }
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

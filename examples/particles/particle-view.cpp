@@ -317,7 +317,7 @@ void ParticleView::SetScatterRay(Dali::Vector3 rayDir)
   ;
 }
 
-void ParticleView::Fade(float duration, float target, AlphaFunction alphaFn, std::function<void(Dali::Animation&)> onFinished)
+void ParticleView::Fade(float duration, float target, AlphaFunction alphaFn, std::function<void(Dali::Animation)> onFinished)
 {
   if(mFadeAnim)
   {
@@ -340,7 +340,7 @@ void ParticleView::Fade(float duration, float target, AlphaFunction alphaFn, std
   mFadeAnim = anim;
 }
 
-void ParticleView::Fade(float duration, float target, float from, AlphaFunction alphaFn, std::function<void(Dali::Animation&)> onFinished)
+void ParticleView::Fade(float duration, float target, float from, AlphaFunction alphaFn, std::function<void(Dali::Animation)> onFinished)
 {
   mMasterParticles.SetProperty(Actor::Property::COLOR_ALPHA, from);
   if(mSlaveParticles)

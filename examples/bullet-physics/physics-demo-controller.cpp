@@ -69,7 +69,7 @@ public:
   {
   }
 
-  void OnInit(Application& application)
+  void OnInit(Application application)
   {
     mWindow = application.GetWindow();
     mWindow.ResizeSignal().Connect(this, &PhysicsDemoController::OnWindowResize);
@@ -90,7 +90,7 @@ public:
                                              windowSize.GetHeight() * 0.5f,
                                              -100.0f));
 
-    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, windowSize);
+    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.GetWidth(), windowSize.GetHeight()));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
 
     mPhysicsRoot.TouchedSignal().Connect(this, &PhysicsDemoController::OnTouched);
@@ -252,7 +252,7 @@ public:
     }
   }
 
-  void OnTerminate(Application& application)
+  void OnTerminate(Application application)
   {
     UnparentAndReset(mPhysicsRoot);
   }
@@ -261,10 +261,10 @@ public:
   {
     Vector2 size(newSize.GetWidth(), newSize.GetHeight());
     window.GetRenderTaskList().GetTask(0).GetCameraActor().SetPerspectiveProjection(size);
-    mPhysicsAdaptor.SetTransformAndSize(mPhysicsTransform, newSize);
+    mPhysicsAdaptor.SetTransformAndSize(mPhysicsTransform, Uint16Pair(newSize.GetWidth(), newSize.GetHeight()));
   }
 
-  bool OnTouched(Dali::Actor actor, const Dali::TouchEvent& touch)
+  bool OnTouched(Dali::Actor actor, Dali::TouchEvent touch)
   {
     static enum {
       None,
@@ -398,7 +398,7 @@ public:
     return true;
   }
 
-  bool OnWheel(Actor actor, const WheelEvent& event)
+  bool OnWheel(Actor actor, WheelEvent event)
   {
     // Move camera along it's fwd axis
     auto            renderTask = mWindow.GetRenderTaskList().GetTask(0);
@@ -427,7 +427,7 @@ public:
     return true;
   }
 
-  void OnKeyEv(const Dali::KeyEvent& event)
+  void OnKeyEv(Window window, Dali::KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

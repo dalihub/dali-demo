@@ -97,7 +97,7 @@ private: // From Control
   virtual void OnStyleChange(Dali::Toolkit::StyleManager styleManager, Dali::StyleChange::Type change);
 
 private:
-  void OnStateChangeAnimationFinished(Dali::Animation& handle);
+  void OnStateChangeAnimationFinished(Dali::Animation handle);
 
 private:
   //undefined

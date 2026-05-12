@@ -75,21 +75,21 @@ public:
   ~NativeImageTestController() = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &NativeImageTestController::OnTouch);
+    window.TouchedSignal().Connect(this, &NativeImageTestController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &NativeImageTestController::OnKeyEvent);
 
     // Load image
-    ImageDimensions    dimensions(window.GetSize());
-    Devel::PixelBuffer pixelBuffer = LoadImageFromFile(IMAGE_FILE, dimensions, FittingMode::SCALE_TO_FILL);
+    ImageDimensions    dimensions(window.GetSize().GetWidth(), window.GetSize().GetHeight());
+    Devel::PixelBuffer pixelBuffer = LoadImageFromFile(IMAGE_FILE, dimensions);
 
     if(!pixelBuffer)
     {
@@ -152,14 +152,14 @@ public:
     window.Add(mDisplayActor);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

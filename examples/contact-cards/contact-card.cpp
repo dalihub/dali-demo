@@ -192,7 +192,7 @@ ContactCard::~ContactCard()
   }
 }
 
-void ContactCard::OnTap(Actor actor, const TapGesture& /* gesture */)
+void ContactCard::OnTap(Actor actor, TapGesture /* gesture */)
 {
   if(actor == mContactCard)
   {
@@ -309,7 +309,7 @@ void ContactCard::Animate()
   mFolded = !mFolded;
 }
 
-void ContactCard::OnAnimationFinished(Animation& animation)
+void ContactCard::OnAnimationFinished(Animation animation)
 {
   // Ensure the finishing animation is the latest as we do not want to change state if a previous animation has finished
   if(mAnimation == animation)
@@ -331,7 +331,7 @@ void ContactCard::OnAnimationFinished(Animation& animation)
   }
 }
 
-void ContactCard::OnKeyEvent(const KeyEvent& event)
+void ContactCard::OnKeyEvent(Window window, KeyEvent event)
 {
   if((!mFolded) && // If we're folded then there's no need to do any more checking
      (event.GetState() == KeyEvent::DOWN))

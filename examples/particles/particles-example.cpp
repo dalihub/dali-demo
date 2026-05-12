@@ -30,6 +30,7 @@
 #include "dali/public-api/adaptor-framework/key.h"
 #include "dali/public-api/events/pan-gesture-detector.h"
 #include "dali/public-api/events/tap-gesture-detector.h"
+#include "dali/public-api/events/tap-gesture.h"
 #include "dali/public-api/events/touch-event.h"
 #include "dali/public-api/object/property-index-ranges.h"
 #include "dali/public-api/render-tasks/render-task-list.h"
@@ -149,14 +150,14 @@ private:
 
   PanGestureDetector mPanGesture;
 
-  void OnInit(Application& application)
+  void OnInit(Application application)
   {
     Window window    = application.GetWindow();
     auto   rootLayer = window.GetRootLayer();
     rootLayer.SetProperty(Layer::Property::BEHAVIOR, Layer::Behavior::LAYER_3D);
 
     window.KeyEventSignal().Connect(this, &ParticlesExample::OnKeyEvent);
-    window.GetRootLayer().TouchedSignal().Connect(this, &ParticlesExample::OnTouched);
+    window.TouchedSignal().Connect(this, &ParticlesExample::OnTouched);
 
     auto tiltSensor = TiltSensor::Get();
     if(tiltSensor.Start())
@@ -192,7 +193,7 @@ private:
     mDoubleTapGesture.DetectedSignal().Connect(this, &ParticlesExample::OnDoubleTap);
   }
 
-  void OnTerminate(Application& app)
+  void OnTerminate(Application app)
   {
     UnparentAndReset(mWorld);
 
@@ -201,17 +202,17 @@ private:
     mTiltSensor.Reset();
   }
 
-  void OnPause(Application& app)
+  void OnPause(Application app)
   {
     mTiltSensor.Stop();
   }
 
-  void OnResume(Application& app)
+  void OnResume(Application app)
   {
     mTiltSensor.Start();
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::UP) // single keystrokes
     {
@@ -222,7 +223,7 @@ private:
     }
   }
 
-  bool OnTouched(Actor a, const TouchEvent& event)
+  void OnTouched(Window window, TouchEvent event)
   {
     if(event.GetPointCount() > 0)
     {
@@ -243,10 +244,10 @@ private:
       }
     }
 
-    return false;
+    return;
   }
 
-  void OnDoubleTap(Actor /*actor*/, const TapGesture& /*gesture*/)
+  void OnDoubleTap(Actor /*actor*/, TapGesture /*gesture*/)
   {
     if(!mExpiringParticles)
     {
@@ -257,7 +258,7 @@ private:
     }
   }
 
-  void OnPan(Actor actor, const PanGesture& gesture)
+  void OnPan(Actor actor, PanGesture gesture)
   {
     auto       tilt = gesture.GetDisplacement() / Vector2(mApp.GetWindow().GetSize()) * TILT_SCALE;
     Quaternion q(Radian(-tilt.y), Radian(tilt.x), Radian(0.f));
@@ -265,7 +266,7 @@ private:
     mWorld.SetProperty(Actor::Property::ORIENTATION, q * q0);
   }
 
-  void OnTilted(const TiltSensor& sensor)
+  void OnTilted(TiltSensor sensor)
   {
     mTiltFilter.Add(Vector2(sensor.GetPitch(), sensor.GetRoll()));
     Vector2    tilt = mTiltFilter.Filter() * TILT_RANGE_DEGREES;
@@ -319,7 +320,7 @@ private:
       mExpiringParticles->SetLinearVelocity(WORLD_LINEAR_VELOCITY * FADEOUT_SPEED_MULTIPLIER);
 
       auto& p = mExpiringParticles;
-      mExpiringParticles->Fade(FADE_DURATION, 0.f, AlphaFunction::EASE_IN, [&p](Animation&)
+      mExpiringParticles->Fade(FADE_DURATION, 0.f, AlphaFunction::EASE_IN, [&p](Animation)
       {
         p.reset();
       });

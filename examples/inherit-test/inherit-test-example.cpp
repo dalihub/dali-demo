@@ -110,7 +110,7 @@ public:
   ~InheritTestController() = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     mWindow = application.GetWindow();
@@ -119,7 +119,7 @@ public:
     Vector2 windowSize(1280, 800);
     if(mWindow.GetSize().GetWidth() < 1280)
     {
-      mWindow.SetSize(Uint16Pair(windowSize.x, windowSize.y));
+      mWindow.SetSize(Window::WindowSize(windowSize.x, windowSize.y));
     }
     else
     {
@@ -135,20 +135,20 @@ public:
     SetupView();
 
     // Respond to a touch anywhere on the window
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &InheritTestController::OnTouch);
+    mWindow.TouchedSignal().Connect(this, &InheritTestController::OnTouch);
 
     // Respond to key events
     mWindow.KeyEventSignal().Connect(this, &InheritTestController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

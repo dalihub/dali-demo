@@ -277,7 +277,7 @@ public:
   /**
    * @brief One-time setup in response to Application InitSignal.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
 
@@ -331,7 +331,7 @@ public:
   /**
    * @brief Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -345,7 +345,7 @@ public:
   /**
    * @brief Tap gesture handler
    */
-  void OnTap(Actor actor, const TapGesture& tap)
+  void OnTap(Actor actor, TapGesture tap)
   {
     mCurrentTextStyle = mItemView.GetItemId(actor);
 
@@ -367,7 +367,7 @@ public:
   /**
    * @brief Property notification handler
    */
-  void OnIndicatorVisible(PropertyNotification& source)
+  void OnIndicatorVisible(PropertyNotification source)
   {
     CreateTextLabels(mCurrentTextStyle);
 

@@ -51,7 +51,7 @@ public:
     }
   }
 
-  void OnKey(const Dali::KeyEvent& e)
+  void OnKey(Dali::Window window, Dali::KeyEvent e)
   {
     // This is a temporary hack for now to manually handle these key events.
     // We should links them to the animations automatically when loading the scene.
@@ -122,7 +122,7 @@ private:
     }
   }
 
-  void OnAnimationFinished(Dali::Animation& source)
+  void OnAnimationFinished(Dali::Animation source)
   {
     switch(mCurrentAnimationIndex)
     {
@@ -160,7 +160,7 @@ private:
     }
   }
 
-  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& touch)
+  bool OnTouch(Dali::Actor actor, Dali::TouchEvent touch)
   {
     bool processed = false;
 

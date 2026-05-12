@@ -131,7 +131,6 @@ Dali::Layer CreateView(Dali::Application&      application,
     map[Dali::Toolkit::ImageVisual::Property::URL]                 = ToPropertyValue(backgroundImagePath);
     map[Dali::Toolkit::ImageVisual::Property::DESIRED_WIDTH]       = window.GetSize().GetWidth();
     map[Dali::Toolkit::ImageVisual::Property::DESIRED_HEIGHT]      = window.GetSize().GetHeight();
-    map[Dali::Toolkit::ImageVisual::Property::FITTING_MODE]        = Dali::FittingMode::SCALE_TO_FILL;
     map[Dali::Toolkit::ImageVisual::Property::SAMPLING_MODE]       = Dali::SamplingMode::BOX_THEN_LINEAR;
     map[Dali::Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
     view.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, map);

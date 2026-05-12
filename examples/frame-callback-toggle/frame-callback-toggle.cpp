@@ -108,7 +108,7 @@ private:
   /**
    * @brief The Init signal is received once (only) during the Application lifetime
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window and stage
     Window window = application.GetWindow();
@@ -199,32 +199,32 @@ private:
     mGreaterThanLabel.SetIgnored(true);
 
     // Respond to a touch anywhere on the window to quit
-    window.GetRootLayer().TouchedSignal().Connect(this, &FrameCallbackToggleController::OnTouch);
+    window.TouchedSignal().Connect(this, &FrameCallbackToggleController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &FrameCallbackToggleController::OnKeyEvent);
   }
 
-  void OnLessThanNotify(PropertyNotification& source)
+  void OnLessThanNotify(PropertyNotification source)
   {
     mLessThanLabel.SetIgnored(false);
     mGreaterThanLabel.SetIgnored(true);
   }
 
-  void OnGreaterThanNotify(PropertyNotification& source)
+  void OnGreaterThanNotify(PropertyNotification source)
   {
     mLessThanLabel.SetIgnored(true);
     mGreaterThanLabel.SetIgnored(false);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

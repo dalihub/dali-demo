@@ -210,7 +210,7 @@ void GameCamera::CreateInterceptorActor()
   mInterceptorActor.TouchedSignal().Connect(this, &GameCamera::OnTouch);
 }
 
-bool GameCamera::OnTouch(Actor actor, const TouchEvent& touch)
+bool GameCamera::OnTouch(Actor actor, TouchEvent touch)
 {
   for(int i = 0; i < (int)touch.GetPointCount() && i < 3; ++i)
   {

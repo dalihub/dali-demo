@@ -44,7 +44,7 @@ FppGameTutorialController::~FppGameTutorialController()
 {
 }
 
-void FppGameTutorialController::OnTouch(const TouchEvent& touchEvent)
+void FppGameTutorialController::OnTouch(Window window, TouchEvent touchEvent)
 {
   Vector2 size(mWindow.GetSize());
 
@@ -165,13 +165,13 @@ void FppGameTutorialController::DisplayTutorial(Dali::Window window)
   animation.Play();
 }
 
-void FppGameTutorialController::OnTutorialAnimationFinished(Animation& animation)
+void FppGameTutorialController::OnTutorialAnimationFinished(Animation animation)
 {
   // touch signal will wait for a single touch on each side of screen
   mWindow.TouchedSignal().Connect(this, &FppGameTutorialController::OnTouch);
 }
 
-void FppGameTutorialController::OnTutorialComplete(Animation& animation)
+void FppGameTutorialController::OnTutorialComplete(Animation animation)
 {
   mWindow.Remove(mUiRoot);
   mUiRoot.Reset();

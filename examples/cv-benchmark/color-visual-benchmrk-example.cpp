@@ -55,7 +55,7 @@ public:
     // Nothing to do here;
   }
 
-  Window             window;
+  Window             mWindow;
   Timer              timer;
   std::list<Control> list;
 
@@ -68,15 +68,15 @@ public:
   PerformanceLogger customColorLogger;
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     n        = gRows;
     m        = gColumns;
     duration = gDurationMilliSeconds;
 
     StyleManager instance = StyleManager::Get();
-    window                = application.GetWindow();
-    window.SetBackgroundColor(Color::WHITE);
+    mWindow               = application.GetWindow();
+    mWindow.SetBackgroundColor(Color::WHITE);
 
     timer = Timer::New(duration);
     timer.TickSignal().Connect(this, &ColorVisualBenchmarkExample::OnTick);
@@ -91,13 +91,13 @@ public:
     customColorLogger.EnableLogging(true);
 
     // Respond to key events
-    window.KeyEventSignal().Connect(this, &ColorVisualBenchmarkExample::OnKeyEvent);
+    mWindow.KeyEventSignal().Connect(this, &ColorVisualBenchmarkExample::OnKeyEvent);
   }
 
   bool OnTick()
   {
-    float width  = (float)window.GetSize().GetWidth() / m;
-    float height = (float)window.GetSize().GetHeight() / n;
+    float width  = (float)mWindow.GetSize().GetWidth() / m;
+    float height = (float)mWindow.GetSize().GetHeight() / n;
 
     int i = n - 1;
     {
@@ -110,8 +110,8 @@ public:
       rawView.SetBackgroundColor(Color::BLUE);
       customColorLogger.AddMarker(PerformanceLogger::Marker::END_EVENT);
       rawView[Actor::Property::PARENT_ORIGIN] = ParentOrigin::TOP_LEFT;
-      rawView[Actor::Property::PIVOT]  = Pivot::TOP_LEFT;
-      rawView[Actor::Property::SIZE]          = Vector2((float)window.GetSize().GetWidth(), height);
+      rawView[Actor::Property::PIVOT]         = Pivot::TOP_LEFT;
+      rawView[Actor::Property::SIZE]          = Vector2((float)mWindow.GetSize().GetWidth(), height);
       rawView[Actor::Property::POSITION]      = Vector2(0.0f, height * (i + 1));
 
       for(int j = 0; j < m; j++)
@@ -127,14 +127,14 @@ public:
         bgView.SetBackgroundColor(Color::CRIMSON);
         customColorLogger.AddMarker(PerformanceLogger::Marker::END_EVENT);
         bgView[Actor::Property::PARENT_ORIGIN] = ParentOrigin::TOP_LEFT;
-        bgView[Actor::Property::PIVOT]  = Pivot::TOP_LEFT;
+        bgView[Actor::Property::PIVOT]         = Pivot::TOP_LEFT;
         bgView[Actor::Property::SIZE]          = Vector2(width * 0.9f, height * 0.9f);
         bgView[Actor::Property::POSITION]      = Vector2(width * j + width * 0.05f, height * 0.05f);
         rawView.Add(bgView);
       }
       customLoopLogger.AddMarker(PerformanceLogger::Marker::END_EVENT);
 
-      window.GetRootLayer().Add(rawView);
+      mWindow.GetRootLayer().Add(rawView);
       list.push_back(rawView);
 
       Animation animation = Animation::New(duration * 0.001f * (n + 1));
@@ -151,7 +151,7 @@ public:
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

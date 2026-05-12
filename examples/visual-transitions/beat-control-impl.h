@@ -100,10 +100,10 @@ private: // From Control
   virtual void OnStyleChange(Dali::Toolkit::StyleManager styleManager, Dali::StyleChange::Type change);
 
 private:
-  void OnBounceAnimationFinished(Dali::Animation& handle);
-  void OnXAnimationFinished(Dali::Animation& src);
-  void OnYAnimationFinished(Dali::Animation& src);
-  void OnFadeAnimationFinished(Dali::Animation& src);
+  void OnBounceAnimationFinished(Dali::Animation handle);
+  void OnXAnimationFinished(Dali::Animation src);
+  void OnYAnimationFinished(Dali::Animation src);
+  void OnFadeAnimationFinished(Dali::Animation src);
 
   /**
    * Relayout the visuals as a result of size negotiation

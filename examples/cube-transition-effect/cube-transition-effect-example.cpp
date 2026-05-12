@@ -119,13 +119,13 @@ private:
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void OnInit(Application& application);
+  void OnInit(Application application);
   /**
    * PanGesture callback. This method gets called when the pan gesture is detected.
    * @param[in] actor The actor receiving the pan gesture.
    * @param[in] gesture The detected pan gesture.
    */
-  void OnPanGesture(Actor actor, const PanGesture& gesture);
+  void OnPanGesture(Actor actor, PanGesture gesture);
   /**
    * Load the next image and start the transition;
    */
@@ -133,7 +133,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event);
+  void OnKeyEvent(Window window, KeyEvent event);
   /**
    * Callback function of effect-switch button
    * Change the effect when the effect button is clicked
@@ -208,7 +208,7 @@ CubeTransitionApp::~CubeTransitionApp()
   // Nothing to do
 }
 
-void CubeTransitionApp::OnInit(Application& application)
+void CubeTransitionApp::OnInit(Application application)
 {
   application.GetWindow().KeyEventSignal().Connect(this, &CubeTransitionApp::OnKeyEvent);
 
@@ -285,7 +285,7 @@ void CubeTransitionApp::OnInit(Application& application)
 }
 
 // signal handler, called when the pan gesture is detected
-void CubeTransitionApp::OnPanGesture(Actor actor, const PanGesture& gesture)
+void CubeTransitionApp::OnPanGesture(Actor actor, PanGesture gesture)
 {
   // does not response when the transition has not finished
   if(mIsImageLoading || mCubeWaveEffect.IsTransitioning() || mCubeCrossEffect.IsTransitioning() || mCubeFoldEffect.IsTransitioning() || mSlideshow)
@@ -390,8 +390,8 @@ bool CubeTransitionApp::OnTimerTick()
 
 Texture CubeTransitionApp::LoadWindowFillingTexture(const char* filepath)
 {
-  ImageDimensions    dimensions(mApplication.GetWindow().GetSize());
-  Devel::PixelBuffer pixelBuffer = LoadImageFromFile(filepath, dimensions, FittingMode::SCALE_TO_FILL);
+  ImageDimensions    dimensions(mApplication.GetWindow().GetSize().GetWidth(), mApplication.GetWindow().GetSize().GetHeight());
+  Devel::PixelBuffer pixelBuffer = LoadImageFromFile(filepath, dimensions);
   PixelData          pixelData   = Devel::PixelBuffer::Convert(pixelBuffer);
 
   Texture texture = Texture::New(TextureType::TEXTURE_2D, pixelData.GetPixelFormat(), pixelData.GetWidth(), pixelData.GetHeight());
@@ -399,7 +399,7 @@ Texture CubeTransitionApp::LoadWindowFillingTexture(const char* filepath)
   return texture;
 }
 
-void CubeTransitionApp::OnKeyEvent(const KeyEvent& event)
+void CubeTransitionApp::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {

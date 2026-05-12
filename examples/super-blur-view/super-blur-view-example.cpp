@@ -29,9 +29,9 @@ using Dali::Integration::ToPropertyValue;
 using Dali::Integration::ToStdString;
 
 using namespace Dali;
+using Dali::Demo::SuperBlurView;
 using Dali::Toolkit::Button;
 using Dali::Toolkit::PushButton;
-using Dali::Demo::SuperBlurView;
 
 namespace
 {
@@ -56,7 +56,7 @@ public:
   ~SuperBlurViewExample() = default;
 
 private:
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &SuperBlurViewExample::OnKeyEvent);
@@ -95,7 +95,7 @@ private:
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

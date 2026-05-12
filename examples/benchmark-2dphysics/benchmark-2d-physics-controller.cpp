@@ -89,12 +89,12 @@ public:
 
   ~Physics2dBenchmarkController() = default;
 
-  void OnInit(Application& application)
+  void OnInit(Application application)
   {
     mWindow = application.GetWindow();
     mWindow.ResizeSignal().Connect(this, &Physics2dBenchmarkController::OnWindowResize);
     mWindow.KeyEventSignal().Connect(this, &Physics2dBenchmarkController::OnKeyEv);
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &Physics2dBenchmarkController::OnTouched);
+    mWindow.TouchedSignal().Connect(this, &Physics2dBenchmarkController::OnTouched);
     mWindow.SetBackgroundColor(Color::DARK_SLATE_GRAY);
 
     CreateSimulation();
@@ -153,7 +153,7 @@ public:
     return false;
   }
 
-  void OnTerminate(Application& application)
+  void OnTerminate(Application application)
   {
     UnparentAndReset(mAnimationSimRootActor);
     UnparentAndReset(mPhysicsRoot);
@@ -182,7 +182,7 @@ public:
                                                    newSize.GetHeight() * 0.5f,
                                                    0.0f));
 
-          mPhysicsAdaptor.SetTransformAndSize(mPhysicsTransform, newSize);
+          mPhysicsAdaptor.SetTransformAndSize(mPhysicsTransform, Uint16Pair(newSize.GetWidth(), newSize.GetHeight()));
 
           auto     scopedAccessor = mPhysicsAdaptor.GetPhysicsAccessor();
           cpSpace* space          = scopedAccessor->GetNative().Get<cpSpace*>();
@@ -194,13 +194,13 @@ public:
     }
   }
 
-  bool OnTouched(Dali::Actor actor, const Dali::TouchEvent& touch)
+  void OnTouched(Window window, TouchEvent touch)
   {
     mApplication.Quit();
-    return false;
+    return;
   }
 
-  void OnKeyEv(const Dali::KeyEvent& event)
+  void OnKeyEv(Window window, Dali::KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -302,7 +302,7 @@ public:
     mBallAnimations[index].Play();
   }
 
-  void OnHitLeftWall(PropertyNotification& source)
+  void OnHitLeftWall(PropertyNotification source)
   {
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
@@ -316,7 +316,7 @@ public:
     }
   }
 
-  void OnHitRightWall(PropertyNotification& source)
+  void OnHitRightWall(PropertyNotification source)
   {
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
@@ -330,7 +330,7 @@ public:
     }
   }
 
-  void OnHitBottomWall(PropertyNotification& source)
+  void OnHitBottomWall(PropertyNotification source)
   {
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
@@ -344,7 +344,7 @@ public:
     }
   }
 
-  void OnHitTopWall(PropertyNotification& source)
+  void OnHitTopWall(PropertyNotification source)
   {
     auto actor = Actor::DownCast(source.GetTarget());
     if(actor)
@@ -373,7 +373,7 @@ public:
                                              windowSize.GetHeight() * 0.5f,
                                              0.0f));
 
-    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, windowSize);
+    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.GetWidth(), windowSize.GetHeight()));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
     mWindow.Add(mPhysicsRoot);
 

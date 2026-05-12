@@ -164,7 +164,7 @@ public:
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void OnInit(Application& app)
+  void OnInit(Application app)
   {
     Window window = app.GetWindow();
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
@@ -461,7 +461,6 @@ private:
     map[ImageVisual::Property::URL]            = ToDaliString(filename);
     map[ImageVisual::Property::DESIRED_WIDTH]  = width;
     map[ImageVisual::Property::DESIRED_HEIGHT] = height;
-    map[ImageVisual::Property::FITTING_MODE]   = FittingMode::SCALE_TO_FILL;
     map[ImageVisual::Property::SAMPLING_MODE]  = SamplingMode::BOX_THEN_LINEAR;
     actor.SetProperty(ImageView::Property::IMAGE, map);
 
@@ -499,7 +498,7 @@ private:
    * @param[in] actor The actor touched
    * @param[in] event The touch information.
    */
-  bool OnTouchImage(Actor actor, const TouchEvent& event)
+  bool OnTouchImage(Actor actor, TouchEvent event)
   {
     if((event.GetPointCount() > 0) && (!mScrolling))
     {
@@ -545,7 +544,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

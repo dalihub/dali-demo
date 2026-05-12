@@ -35,13 +35,13 @@ public:
 
   ~GlWindowExample() override = default; // Nothing to do in destructor
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Dali::Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
     window.KeyEventSignal().Connect(this, &GlWindowExample::OnKeyEvent);
-    window.GetRootLayer().TouchedSignal().Connect(this, &GlWindowExample::OnTouch);
+    window.TouchedSignal().Connect(this, &GlWindowExample::OnTouch);
 
     // Create a textLabel to add to our main window
     auto textLabel = Handle::New<TextLabel>(
@@ -90,18 +90,23 @@ public:
     mGlWindow.SetGraphicsConfig(true, false, 0, GlWindow::GlesVersion::VERSION_3_0);
     mGlWindow.SetPositionSize(PositionSize(0, 0, w, h));
     mGlWindow.SetRenderingMode(GlWindow::RenderingMode::CONTINUOUS);
-    mGlWindow.KeyEventSignal().Connect(this, &GlWindowExample::OnKeyEvent);
+    mGlWindow.KeyEventSignal().Connect(this, &GlWindowExample::OnGlKeyEvent);
     return 0;
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
+  {
+    OnGlKeyEvent(event);
+  }
+
+  void OnGlKeyEvent(KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -159,7 +159,7 @@ private:
    * Hide transition layer, show current image, and set isAnimating flag to false
    * @param[in] source The cube transition animation
    */
-  void OnTransitionFinished(Animation& source);
+  void OnTransitionFinished(Animation source);
 
   /**
    * This method is called after the CubeTransitionEffect has been initialized.  Derived classes should do

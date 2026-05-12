@@ -52,7 +52,7 @@ public:
   ~Scene3dLightController() = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -137,18 +137,18 @@ public:
     auto text = TextLabel::New();
     text.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Press keys 0-9 to change lighting"));
     text[Actor::Property::PARENT_ORIGIN]  = ParentOrigin::BOTTOM_CENTER;
-    text[Actor::Property::PIVOT]   = Pivot::BOTTOM_CENTER;
+    text[Actor::Property::PIVOT]          = Pivot::BOTTOM_CENTER;
     text[TextLabel::Property::TEXT_COLOR] = Color::BLACK;
     window.Add(text);
 
     // Respond to a touch anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &Scene3dLightController::OnTouch);
+    window.TouchedSignal().Connect(this, &Scene3dLightController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &Scene3dLightController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     const PointState::Type state = touch.GetState(0);
 
@@ -159,10 +159,10 @@ public:
         break;
       }
     }
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

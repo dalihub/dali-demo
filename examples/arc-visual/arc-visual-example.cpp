@@ -71,7 +71,7 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -144,13 +144,13 @@ private:
     window.Add(mMinusTextLabel);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &ArcVisualExample::OnTouch);
+    window.TouchedSignal().Connect(this, &ArcVisualExample::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &ArcVisualExample::OnKeyEvent);
   }
 
-  bool OnButtonTouch(Actor actor, const TouchEvent& touch)
+  bool OnButtonTouch(Actor actor, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::UP)
     {
@@ -189,7 +189,7 @@ private:
     return true;
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::UP)
     {
@@ -205,10 +205,10 @@ private:
       animation.AnimateTo(DevelControl::GetVisualProperty(mControl, Control::Property::BACKGROUND, DevelArcVisual::Property::SWEEP_ANGLE), SWEEP_ANGLE_TARGET_VALUE);
       animation.Play();
     }
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::UP)
     {

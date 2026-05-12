@@ -130,7 +130,7 @@ public:
   ~RenderPassTagController() = default; // Nothing to do in destructor
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     mWindow = application.GetWindow();
@@ -193,20 +193,20 @@ public:
     renderer.SetTextures(textures);
 
     // Respond to a touch anywhere on the window
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &RenderPassTagController::OnTouch);
+    mWindow.TouchedSignal().Connect(this, &RenderPassTagController::OnTouch);
 
     // Respond to key events
     mWindow.KeyEventSignal().Connect(this, &RenderPassTagController::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

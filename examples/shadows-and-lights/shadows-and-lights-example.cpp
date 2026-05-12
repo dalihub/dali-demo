@@ -138,7 +138,7 @@ public:
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void Create(Application& app)
+  void Create(Application app)
   {
     srand(0); // Want repeatable path
 
@@ -149,7 +149,7 @@ public:
     CreateScene();
   }
 
-  void CreateToolbarAndView(Application& app)
+  void CreateToolbarAndView(Application app)
   {
     // Creates a default view with a default tool bar.
     // The view is added to the window.
@@ -311,7 +311,7 @@ public:
     return p * q;
   }
 
-  void OnTap(Dali::Actor actor, const TapGesture& gesture)
+  void OnTap(Dali::Actor actor, TapGesture gesture)
   {
     if(mSceneAnimation)
     {
@@ -328,7 +328,7 @@ public:
     }
   }
 
-  void OnPan(Actor actor, const PanGesture& gesture)
+  void OnPan(Actor actor, PanGesture gesture)
   {
     switch(gesture.GetState())
     {
@@ -384,7 +384,7 @@ public:
     }
   }
 
-  void OnPinch(Actor actor, const PinchGesture& gesture)
+  void OnPinch(Actor actor, PinchGesture gesture)
   {
     if(gesture.GetState() == GestureState::STARTED)
     {
@@ -395,7 +395,7 @@ public:
     mContents.SetProperty(Actor::Property::SCALE, Vector3(mPinchScale, mPinchScale, mPinchScale));
   }
 
-  void Terminate(Application& app)
+  void Terminate(Application app)
   {
     if(mSceneActor)
     {
@@ -407,7 +407,7 @@ public:
     }
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

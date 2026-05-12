@@ -145,7 +145,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime.
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Create benchmark script
     CreateScript();
@@ -170,17 +170,17 @@ public:
     window.Add(mScrollParent);
 
     // Respond to a click anywhere on the window.
-    window.GetRootLayer().TouchedSignal().Connect(this, &HomescreenBenchmark::OnTouch);
+    window.TouchedSignal().Connect(this, &HomescreenBenchmark::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &HomescreenBenchmark::OnKeyEvent);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // Quit the application.
     mApplication.Quit();
-    return true;
+    return;
   }
 
   Actor AddPage()
@@ -411,7 +411,7 @@ public:
     mCurrentPage += pages;
   }
 
-  void OnAnimationEnd(Animation& source)
+  void OnAnimationEnd(Animation source)
   {
     if(mScriptFrame < mScriptFrameData.size())
     {
@@ -425,7 +425,7 @@ public:
     }
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

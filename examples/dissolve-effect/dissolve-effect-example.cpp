@@ -100,7 +100,6 @@ Toolkit::ImageView CreateWindowFillingImageView(const Vector2& windowSize, const
   map[Toolkit::ImageVisual::Property::URL]                 = imagePath;
   map[Toolkit::ImageVisual::Property::DESIRED_WIDTH]       = windowSize.x;
   map[Toolkit::ImageVisual::Property::DESIRED_HEIGHT]      = windowSize.y;
-  map[Toolkit::ImageVisual::Property::FITTING_MODE]        = FittingMode::SCALE_TO_FILL;
   map[Toolkit::ImageVisual::Property::SAMPLING_MODE]       = SamplingMode::BOX_THEN_LINEAR;
   map[Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
   imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
@@ -125,13 +124,13 @@ private:
   /**
    * This method gets called once the main loop of application is up and running
    */
-  void OnInit(Application& application);
+  void OnInit(Application application);
   /**
    * PanGesture callback. This method gets called when the pan gesture is detected.
    * @param[in] actor The actor receiving the pan gesture.
    * @param[in] gesture The detected pan gesture.
    */
-  void OnPanGesture(Actor actor, const PanGesture& gesture);
+  void OnPanGesture(Actor actor, PanGesture gesture);
 
   /**
    * Set up the animations for transition
@@ -156,7 +155,7 @@ private:
    * @param[in] effect The cube effect used for the transition
    * @param[in] imageActor The target imageActor of the completed transition
    */
-  void OnTransitionCompleted(Animation& source);
+  void OnTransitionCompleted(Animation source);
   /**
    * Callback function of timer tick
    * The timer is used to count the image display duration after cube transition in slideshow,
@@ -166,7 +165,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event);
+  void OnKeyEvent(Window window, KeyEvent event);
 
 private:
   Application&       mApplication;
@@ -215,7 +214,7 @@ DissolveEffectApp::~DissolveEffectApp()
   // Nothing to do
 }
 
-void DissolveEffectApp::OnInit(Application& application)
+void DissolveEffectApp::OnInit(Application application)
 {
   auto    window     = application.GetWindow();
   Vector2 windowSize = window.GetSize();
@@ -271,7 +270,7 @@ void DissolveEffectApp::OnInit(Application& application)
 }
 
 // signal handler, called when the pan gesture is detected
-void DissolveEffectApp::OnPanGesture(Actor actor, const PanGesture& gesture)
+void DissolveEffectApp::OnPanGesture(Actor actor, PanGesture gesture)
 {
   // does not response when the animation has not finished
   if(mIsTransiting || mSlideshow)
@@ -329,7 +328,7 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
   mIsTransiting = true;
 }
 
-void DissolveEffectApp::OnKeyEvent(const KeyEvent& event)
+void DissolveEffectApp::OnKeyEvent(Window window, KeyEvent event)
 {
   if(event.GetState() == KeyEvent::DOWN)
   {
@@ -381,7 +380,7 @@ bool DissolveEffectApp::OnSildeshowButtonClicked(Toolkit::Button button)
   return true;
 }
 
-void DissolveEffectApp::OnTransitionCompleted(Animation& source)
+void DissolveEffectApp::OnTransitionCompleted(Animation source)
 {
   if(mUseHighPrecision)
   {

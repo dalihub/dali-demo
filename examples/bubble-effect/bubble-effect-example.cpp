@@ -98,7 +98,7 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& app)
+  void Create(Application app)
   {
     Window  window     = app.GetWindow();
     Vector2 windowSize = window.GetSize();
@@ -109,11 +109,11 @@ private:
     // The view is added to the window.
     Demo::ToolBar toolBar;
     Layer         content = DemoHelper::CreateView(app,
-                                        mBackground,
-                                        toolBar,
-                                        "",
-                                        TOOLBAR_IMAGE,
-                                        APPLICATION_TITLE);
+                                                   mBackground,
+                                                   toolBar,
+                                                   "",
+                                                   TOOLBAR_IMAGE,
+                                                   APPLICATION_TITLE);
 
     // Add a button to change background. (right of toolbar)
     mChangeBackgroundButton = Toolkit::PushButton::New();
@@ -140,7 +140,7 @@ private:
                                         DEFAULT_NUMBER_OF_BUBBLES,
                                         DEFAULT_BUBBLE_SIZE);
 
-    mBubbleEmitter.SetBackground(DemoHelper::LoadWindowFillingTexture(window.GetSize(), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
+    mBubbleEmitter.SetBackground(DemoHelper::LoadWindowFillingTexture(Uint16Pair(window.GetSize().GetWidth(), window.GetSize().GetHeight()), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
 
     // Get the root actor of all bubbles, and add it to window.
     Actor bubbleRoot = mBubbleEmitter.GetRootActor();
@@ -210,7 +210,7 @@ private:
   }
 
   // Callback function of the touch signal on the background
-  bool OnTouch(Dali::Actor actor, const Dali::TouchEvent& event)
+  bool OnTouch(Dali::Actor actor, Dali::TouchEvent event)
   {
     switch(event.GetState(0))
     {
@@ -260,7 +260,7 @@ private:
       mCurrentBackgroundImageId = (mCurrentBackgroundImageId + 1) % NUM_BACKGROUND_IMAGES;
 
       //Update bubble emitter background
-      mBubbleEmitter.SetBackground(DemoHelper::LoadWindowFillingTexture(mApp.GetWindow().GetSize(), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
+      mBubbleEmitter.SetBackground(DemoHelper::LoadWindowFillingTexture(Uint16Pair(mApp.GetWindow().GetSize().GetWidth(), mApp.GetWindow().GetSize().GetHeight()), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
 
       // Set the application background
       mBackground.SetProperty(Toolkit::Control::Property::BACKGROUND, BACKGROUND_IMAGES[mCurrentBackgroundImageId]);
@@ -275,7 +275,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -290,11 +290,11 @@ private:
   Application&           mApp;
   Dali::Toolkit::Control mBackground;
 
-  Demo::BubbleEmitter    mBubbleEmitter;
-  Animation              mEmitAnimation;
-  Toolkit::PushButton    mChangeBackgroundButton;
-  Toolkit::PushButton    mChangeBubbleShapeButton;
-  Timer                  mTimerForBubbleEmission;
+  Demo::BubbleEmitter mBubbleEmitter;
+  Animation           mEmitAnimation;
+  Toolkit::PushButton mChangeBackgroundButton;
+  Toolkit::PushButton mChangeBubbleShapeButton;
+  Timer               mTimerForBubbleEmission;
 
   Vector3 mHSVDelta;
   Vector2 mCurrentTouchPosition;

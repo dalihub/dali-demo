@@ -59,7 +59,7 @@ public:
   ~WindowExampleController() = default;
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window and set the background colour
     Window window = application.GetWindow();
@@ -103,7 +103,7 @@ public:
     window.KeyEventSignal().Connect(this, &WindowExampleController::OnKeyEvent);
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &WindowExampleController::OnTouch);
+    window.TouchedSignal().Connect(this, &WindowExampleController::OnTouch);
     window.ResizeSignal().Connect(this, &WindowExampleController::OnWindowResized);
     DevelWindow::MovedSignal(window).Connect(this, &WindowExampleController::OnWindowMoved);
     DevelWindow::OrientationChangedSignal(window).Connect(this, &WindowExampleController::OnWindowOrientationChanged);
@@ -121,12 +121,12 @@ public:
     mTimer.TickSignal().Connect(this, &WindowExampleController::OnTimerTick);
   }
 
-  void Pause(Application& application)
+  void Pause(Application application)
   {
     DALI_LOG_RELEASE_INFO("Application is paused..***********************\n");
   }
 
-  void Resume(Application& application)
+  void Resume(Application application)
   {
     DALI_LOG_RELEASE_INFO("Application is resumed..***********************\n");
   }
@@ -230,7 +230,7 @@ public:
     }
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::DOWN)
     {
@@ -242,7 +242,6 @@ public:
       DALI_LOG_RELEASE_INFO("Main Window Touch Event : x:%d, y:%d\n", localX, localY);
       DALI_LOG_RELEASE_INFO("global position: x:%d, y:%d\n", globalX, globalY);
 
-      Dali::Window       window     = mApplication.GetWindow();
       Window::WindowSize windowSize = window.GetSize();
 
       DALI_LOG_RELEASE_INFO("window size: w:%d, h:%d\n", windowSize.GetWidth(), windowSize.GetHeight());
@@ -289,7 +288,7 @@ public:
         DevelWindow::RequestMoveToServer(window);
       }
     }
-    return true;
+    return;
   }
 
   //////////////////////////////////////////////////////////////////////////
@@ -307,7 +306,7 @@ public:
     mTextLabel2.SetProperty(Actor::Property::NAME, "Second Window");
     mSecondWindow.Add(mTextLabel2);
 
-    mSecondWindow.GetRootLayer().TouchedSignal().Connect(this, &WindowExampleController::OnSubWindowTouch);
+    mSecondWindow.TouchedSignal().Connect(this, &WindowExampleController::OnSubWindowTouch);
     mSecondWindow.ResizeSignal().Connect(this, &WindowExampleController::OnSubWindowResized);
     DevelWindow::MovedSignal(mSecondWindow).Connect(this, &WindowExampleController::OnSubWindowMoved);
     DevelWindow::MoveCompletedSignal(mSecondWindow).Connect(this, &WindowExampleController::OnSubWindowMovedByServer);
@@ -347,7 +346,7 @@ public:
     DALI_LOG_RELEASE_INFO("OnWindowResizedByServer, x:%d, y:%d, width:%d\n", size.GetWidth(), size.GetHeight());
   }
 
-  bool OnSubWindowTouch(Actor actor, const TouchEvent& touch)
+  void OnSubWindowTouch(Window window, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::DOWN)
     {
@@ -359,7 +358,6 @@ public:
       DALI_LOG_RELEASE_INFO("SubWindow Touch Event : x:%d, y:%d\n", localX, localY);
       DALI_LOG_RELEASE_INFO("global position: x:%d, y:%d\n", globalX, globalY);
 
-      Dali::Window       window     = mSecondWindow;
       Window::WindowSize windowSize = window.GetSize();
 
       DALI_LOG_RELEASE_INFO("window size: w:%d, h:%d\n", windowSize.GetWidth(), windowSize.GetHeight());
@@ -406,12 +404,11 @@ public:
         DevelWindow::RequestMoveToServer(window);
       }
     }
-    return true;
+    return;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
-    Dali::Window window = mApplication.GetWindow();
     if(event.GetState() == KeyEvent::DOWN)
     {
       if(IsKey(event, Dali::DALI_KEY_ESCAPE) || IsKey(event, Dali::DALI_KEY_BACK))

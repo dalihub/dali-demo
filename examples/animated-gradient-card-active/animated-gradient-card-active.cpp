@@ -286,7 +286,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     mWindow = application.GetWindow();
@@ -316,11 +316,11 @@ public:
     SetupActors();
     SetupAnimation();
 
-    mWindow.GetRootLayer().TouchedSignal().Connect(this, &CardController::OnTouchLayer);
+    mWindow.TouchedSignal().Connect(this, &CardController::OnTouchLayer);
     Reset();
   }
 
-  bool OnTouchCards(Actor actor, const TouchEvent& data)
+  bool OnTouchCards(Actor actor, TouchEvent data)
   {
     if(data.GetPointCount() > 0)
     {
@@ -355,7 +355,7 @@ public:
     return true;
   }
 
-  bool OnTouchLayer(Actor actor, const TouchEvent& data)
+  void OnTouchLayer(Window window, TouchEvent data)
   {
     if(data.GetPointCount() > 0)
     {
@@ -378,7 +378,7 @@ public:
         mLastTouchPos = data.GetScreenPosition(0);
       }
     }
-    return true;
+    return;
   }
 
   // Heuristic Scroll View
@@ -431,7 +431,7 @@ public:
     return false;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

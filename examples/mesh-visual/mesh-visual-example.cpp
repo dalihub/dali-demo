@@ -91,7 +91,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -393,7 +393,7 @@ public:
 
   //If the light source is touched, move it by dragging it.
   //If a model is touched, rotate it by panning around.
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     switch(touch.GetState(0))
     {
@@ -567,7 +567,7 @@ public:
   }
 
   //If escape or the back button is pressed, quit the application (and return to the launcher)
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -155,7 +155,7 @@ private:
 private:
   void StartTransition(Dali::Property::Index transitionId);
 
-  void OnTransitionFinished(Dali::Animation& handle);
+  void OnTransitionFinished(Dali::Animation handle);
 
   Transitions::iterator FindTransition(Dali::Property::Index index);
 

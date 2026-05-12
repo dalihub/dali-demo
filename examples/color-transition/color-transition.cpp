@@ -15,6 +15,7 @@
  *
  */
 #include <dali/integration-api/string-utils.h>
+#include <memory>
 #include "color-transition-controller.h"
 #include "dali-toolkit/dali-toolkit.h"
 #include "dali/dali.h"
@@ -101,7 +102,7 @@ private:
     me.OnTransitionFinished();
   }
 
-  void OnInit(Application& app)
+  void OnInit(Application app)
   {
     auto window     = mApp.GetWindow();
     auto windowSize = Vector2{window.GetSize()};
@@ -157,7 +158,7 @@ private:
     mController->SetOnFinished(OnTransitionFinished, this);
   }
 
-  void OnTerminate(Application& app)
+  void OnTerminate(Application app)
   {
     auto window = mApp.GetWindow();
     mDoubleTapDetector.Detach(window.GetRootLayer());
@@ -168,7 +169,7 @@ private:
     mController.reset();
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -179,7 +180,7 @@ private:
     }
   }
 
-  void OnDoubleTap(Actor /*actor*/, const TapGesture& tap)
+  void OnDoubleTap(Actor /*actor*/, TapGesture tap)
   {
     auto    window     = mApp.GetWindow();
     auto    windowSize = Vector2{window.GetSize()};

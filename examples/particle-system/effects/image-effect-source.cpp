@@ -55,7 +55,7 @@ ImageExplodeEffectSource::ImageExplodeEffectSource(ParticleEmitter& emitter, con
   filePath += imageFileName;
   ImageDimensions dimensions(width, height);
   // Pixel buffer will be used as a source of pixels (populating colors of particles based on image pixels)
-  Devel::PixelBuffer pixelBuffer = Dali::LoadImageFromFile(filePath, dimensions, FittingMode::SHRINK_TO_FIT, SamplingMode::DEFAULT, false);
+  Devel::PixelBuffer pixelBuffer = Dali::LoadImageFromFile(filePath, dimensions);
   mImageWidth                    = pixelBuffer.GetWidth();
   mImageHeight                   = pixelBuffer.GetHeight();
   mPixelBuffer                   = pixelBuffer;

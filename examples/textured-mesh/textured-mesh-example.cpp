@@ -75,7 +75,7 @@ public:
    * Invoked upon creation of application
    * @param[in] application The application instance
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     // The Init signal is received once (only) during the Application lifetime
 
@@ -157,7 +157,7 @@ public:
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

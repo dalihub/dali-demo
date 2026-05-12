@@ -55,16 +55,16 @@ public:
     mApplication.InitSignal().Connect(this, &FocusIntegrationExample::Create);
   }
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     mWindow            = application.GetWindow();
     Vector2 windowSize = mWindow.GetSize();
     mContentLayer      = DemoHelper::CreateView(application,
-                                           mView,
-                                           mToolBar,
-                                           BACKGROUND_IMAGE,
-                                           TOOLBAR_IMAGE,
-                                           TOOLBAR_TITLE);
+                                                mView,
+                                                mToolBar,
+                                                BACKGROUND_IMAGE,
+                                                TOOLBAR_IMAGE,
+                                                TOOLBAR_TITLE);
 
     TableView contentTable = TableView::New(2, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
@@ -166,7 +166,7 @@ public:
 
   // Callback for each controls.
   // Display current control name.
-  bool OnControlKeyEvent(Control control, const KeyEvent& event)
+  bool OnControlKeyEvent(Control control, KeyEvent event)
   {
     String controlName = control.GetProperty<String>(Dali::Actor::Property::NAME);
     mEventLabel.SetProperty(TextLabel::Property::TEXT, controlName + "'s KeyEvent works\n");
@@ -178,7 +178,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

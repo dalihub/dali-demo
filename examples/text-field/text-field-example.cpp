@@ -69,7 +69,7 @@ public:
   /**
    * One-time setup in response to Application InitSignal.
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
 
@@ -155,7 +155,7 @@ public:
     mField.Reset();
   }
 
-  bool OnPopupTouched(Actor actor, const TouchEvent& event)
+  bool OnPopupTouched(Actor actor, TouchEvent event)
   {
     // End edit mode for TextField if parent Popup touched.
     if((event.GetPointCount() > 0) && (mPopup == event.GetHitActor(0)))
@@ -187,7 +187,7 @@ public:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

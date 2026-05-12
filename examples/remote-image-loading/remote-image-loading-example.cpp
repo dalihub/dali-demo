@@ -60,7 +60,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     mWindow = application.GetWindow();
     mWindow.SetBackgroundColor(Color::BLACK);
@@ -118,12 +118,12 @@ public:
     mWindow.KeyEventSignal().Connect(this, &MyTester::OnKeyEvent);
   }
 
-  void OnAnimationEnd(Animation& source)
+  void OnAnimationEnd(Animation source)
   {
     std::cout << "OnAnimationEnd" << std::endl;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -134,7 +134,7 @@ public:
     }
   }
 
-  void OnKey(const KeyEvent& event)
+  void OnKey(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -142,7 +142,7 @@ public:
     }
   }
 
-  void OnTouch(const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::DOWN)
     {
@@ -150,7 +150,7 @@ public:
     }
   }
 
-  bool OnControlKeyEvent(Toolkit::Control control, const KeyEvent& event)
+  bool OnControlKeyEvent(Toolkit::Control control, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {
@@ -163,7 +163,7 @@ public:
     return false;
   }
 
-  bool OnControlTouch(Actor actor, const TouchEvent& touch)
+  bool OnControlTouch(Actor actor, TouchEvent touch)
   {
     if(touch.GetState(0) == PointState::DOWN)
     {

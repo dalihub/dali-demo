@@ -54,7 +54,7 @@ public:
   ~GaussianBlurViewExample() = default;
 
 private:
-  void Create(Application& application)
+  void Create(Application application)
   {
     auto    window     = application.GetWindow();
     Vector2 windowSize = window.GetSize();
@@ -114,10 +114,10 @@ private:
     mGaussianBlurView.Add(mImageView);
     mGaussianBlurView.SetProperty(mGaussianBlurView.GetBlurStrengthPropertyIndex(), mStrength);
 
-    window.GetRootLayer().TouchedSignal().Connect(this, &GaussianBlurViewExample::OnTouch);
+    window.TouchedSignal().Connect(this, &GaussianBlurViewExample::OnTouch);
   }
 
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     const PointState::Type state = touch.GetState(0);
 
@@ -126,7 +126,7 @@ private:
       ToggleBlurState();
     }
 
-    return true;
+    return;
   }
 
   void ToggleBlurState()
@@ -149,7 +149,7 @@ private:
     }
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

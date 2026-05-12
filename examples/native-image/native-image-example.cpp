@@ -77,7 +77,7 @@ public:
   }
 
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     // Get a handle to the window
     Window window = application.GetWindow();
@@ -282,7 +282,7 @@ public:
     mOffscreenRenderTask.FinishedSignal().Connect(this, &NativeImageController::DoCapture);
   }
 
-  void DoCapture(RenderTask& task)
+  void DoCapture(RenderTask task)
   {
     task.FinishedSignal().Disconnect(this, &NativeImageController::DoCapture);
 
@@ -345,7 +345,7 @@ public:
     return true;
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

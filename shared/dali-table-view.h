@@ -2,7 +2,7 @@
 #define DALI_DEMO_TABLEVIEW_H
 
 /*
- * Copyright (c) 2021 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@ private:                                                          // Application
    *
    * @param[in] app Application instance
    */
-  void Initialize(Dali::Application& app);
+  void Initialize(Dali::Application app);
 
   /**
    * Populates the contents (ScrollView) with all the
@@ -104,7 +104,7 @@ private:                                                          // Application
    *
    * @return Consume flag
    */
-  bool OnTilePressed(Dali::Actor actor, const Dali::TouchEvent& event);
+  bool OnTilePressed(Dali::Actor actor, Dali::TouchEvent event);
 
   /**
    * Called by OnTilePressed & Accessibility to do the appropriate action.
@@ -124,14 +124,14 @@ private:                                                          // Application
    *
    * @return Consume flag
    */
-  bool OnTileHovered(Dali::Actor actor, const Dali::HoverEvent& event);
+  bool OnTileHovered(Dali::Actor actor, Dali::HoverEvent event);
 
   /**
    * Signal emitted when the pressed animation has completed.
    *
    * @param[in] source The animation source.
    */
-  void OnPressedAnimationFinished(Dali::Animation& source);
+  void OnPressedAnimationFinished(Dali::Animation source);
 
   /**
    * Signal emitted when scrolling has started.
@@ -156,7 +156,7 @@ private:                                                          // Application
    *
    * @return Consume flag
    */
-  bool OnScrollTouched(Dali::Actor actor, const Dali::TouchEvent& event);
+  bool OnScrollTouched(Dali::Actor actor, Dali::TouchEvent event);
 
   /**
    * Setup the effect on the scroll view
@@ -171,7 +171,7 @@ private:                                                          // Application
   /**
    * Key event handler
    */
-  void OnKeyEvent(const Dali::KeyEvent& event);
+  void OnKeyEvent(Dali::Window window, Dali::KeyEvent event);
 
   /**
    * @brief Creates and sets up the custom effect used for the keyboard (and mouse) focus.
@@ -215,7 +215,7 @@ private:                                                          // Application
    * @param[in]  actor  The tapped actor
    * @param[in]  tap    The tap information.
    */
-  void OnLogoTapped(Dali::Actor actor, const Dali::TapGesture& tap);
+  void OnLogoTapped(Dali::Actor actor, Dali::TapGesture tap);
 
 private:
   Dali::Application&              mApplication;      ///< Application instance.

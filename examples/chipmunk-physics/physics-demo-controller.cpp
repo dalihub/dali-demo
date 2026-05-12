@@ -142,7 +142,7 @@ public:
   {
   }
 
-  void OnInit(Application& application)
+  void OnInit(Application application)
   {
     mWindow = application.GetWindow();
     mWindow.ResizeSignal().Connect(this, &PhysicsDemoController::OnWindowResize);
@@ -158,7 +158,7 @@ public:
                                              windowSize.GetHeight() * 0.5f,
                                              0.0f));
 
-    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, windowSize);
+    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.GetWidth(), windowSize.GetHeight()));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
     mPhysicsRoot.TouchedSignal().Connect(this, &PhysicsDemoController::OnTouched);
 
@@ -398,7 +398,7 @@ public:
     return constraint; // Constraint & joint are the same...
   }
 
-  void OnTerminate(Application& application)
+  void OnTerminate(Application application)
   {
     UnparentAndReset(mPhysicsRoot);
   }
@@ -429,7 +429,7 @@ public:
     return true;
   }
 
-  bool OnTouched(Dali::Actor actor, const Dali::TouchEvent& touch)
+  bool OnTouched(Dali::Actor actor, Dali::TouchEvent touch)
   {
     static enum {
       None,
@@ -522,7 +522,7 @@ public:
     return true;
   }
 
-  void OnKeyEv(const Dali::KeyEvent& event)
+  void OnKeyEv(Window window, Dali::KeyEvent event)
   {
     static bool integrateState{true};
     static bool debugState{DEBUG_STATE};

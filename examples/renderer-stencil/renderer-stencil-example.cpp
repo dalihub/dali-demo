@@ -125,7 +125,7 @@ private:
    * This is called via the Init signal which is received once (only) during the Application lifetime.
    * @param[in] application The DALi application object
    */
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
 
@@ -269,7 +269,7 @@ private:
     mBounceAnimation.Play();
 
     // Respond to a click anywhere on the window
-    window.GetRootLayer().TouchedSignal().Connect(this, &RendererStencilExample::OnTouch);
+    window.TouchedSignal().Connect(this, &RendererStencilExample::OnTouch);
     // Connect signals to allow Back and Escape to exit.
     window.KeyEventSignal().Connect(this, &RendererStencilExample::OnKeyEvent);
   }
@@ -731,18 +731,18 @@ private:
    * @param[in] touch The touch information
    * @return True if the event has been handled
    */
-  bool OnTouch(Actor actor, const TouchEvent& touch)
+  void OnTouch(Window window, TouchEvent touch)
   {
     // Quit the application.
     mApplication.Quit();
-    return true;
+    return;
   }
 
   /**
    * @brief OnKeyEvent signal handler.
    * @param[in] event The key event information
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

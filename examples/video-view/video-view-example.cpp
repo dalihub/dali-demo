@@ -62,7 +62,7 @@ public:
     mVideoView.Stop();
   }
 
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
     mWindowSize   = window.GetSize();
@@ -224,7 +224,7 @@ public:
     return true;
   }
 
-  void OnPan(Actor actor, const PanGesture& gesture)
+  void OnPan(Actor actor, PanGesture gesture)
   {
     if(!mIsFullScreen && gesture.GetState() == GestureState::CONTINUING)
     {
@@ -232,7 +232,7 @@ public:
     }
   }
 
-  void OnPinch(Actor actor, const PinchGesture& gesture)
+  void OnPinch(Actor actor, PinchGesture gesture)
   {
     GestureState state = gesture.GetState();
     if(state == GestureState::STARTED)
@@ -247,7 +247,7 @@ public:
     }
   }
 
-  void OnTap(Actor actor, const TapGesture& tapGesture)
+  void OnTap(Actor actor, TapGesture tapGesture)
   {
     if(!mIsFullScreen)
     {
@@ -265,7 +265,7 @@ private:
   /**
    * Main key event handler
    */
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -60,7 +60,7 @@ public:
 
 private:
   // The Init signal is received once (only) during the Application lifetime
-  void Create(Application& application)
+  void Create(Application application)
   {
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::BLACK);
@@ -76,7 +76,7 @@ private:
     // Create a tap gesture detector, attach the actor & connect
     mTapDetector = TapGestureDetector::New();
     mTapDetector.Attach(mEmitterActor);
-    mTapDetector.DetectedSignal().Connect(this, [&](Actor actor, const TapGesture& tap)
+    mTapDetector.DetectedSignal().Connect(this, [&](Actor actor, TapGesture tap)
     { NextEffect(); });
 
     // Respond to key events
@@ -160,7 +160,7 @@ private:
     StartEffect(EffectType(++mCurrentEffectType %= NUMBER_OF_EFFECTS));
   }
 
-  void OnKeyEvent(const KeyEvent& event)
+  void OnKeyEvent(Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

@@ -70,7 +70,7 @@ TransitionApplication::~TransitionApplication()
 {
 }
 
-void TransitionApplication::Create(Application& application)
+void TransitionApplication::Create(Application application)
 {
   Window window = application.GetWindow();
   window.KeyEventSignal().Connect(this, &TransitionApplication::OnKeyEvent);
@@ -199,7 +199,7 @@ bool TransitionApplication::OnActionButtonClicked(Button button)
   return true;
 }
 
-void TransitionApplication::OnKeyEvent(const KeyEvent& keyEvent)
+void TransitionApplication::OnKeyEvent(Window window, KeyEvent keyEvent)
 {
   static int keyPressed = 0;
 
