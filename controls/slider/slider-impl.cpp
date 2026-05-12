@@ -1420,7 +1420,7 @@ Property::Value Slider::GetProperty(BaseObject* object, Property::Index property
 void Slider::SliderAccessible::InitDefaultFeatures()
 {
   Toolkit::DevelControl::ControlAccessible::InitDefaultFeatures();
-  AddFeature<Dali::Accessibility::Value>(shared_from_this());
+  AddFeature<Dali::Accessibility::Value>(SharedFromThis());
 }
 
 double Slider::SliderAccessible::GetMinimum() const

@@ -15,6 +15,7 @@
  *
  */
 #include <dali/integration-api/string-utils.h>
+#include <memory>
 #include "color-transition-controller.h"
 #include "dali-toolkit/dali-toolkit.h"
 #include "dali/dali.h"
