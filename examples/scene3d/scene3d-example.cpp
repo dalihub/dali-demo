@@ -409,7 +409,6 @@ void Scene3DExample::OnKey(Window window, KeyEvent e)
         {
           KeyboardFocusManager::Get().SetCurrentFocusActor(mActivatedActor);
         }
-        auto window = mApp.GetWindow();
         window.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_UI);
       }
       else

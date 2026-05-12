@@ -220,7 +220,6 @@ public:
         mApplication.Quit();
         return;
       }
-      Window             window     = mApplication.GetWindow();
       Window::WindowSize windowSize = window.GetSize();
       offsetXRange                  = static_cast<uint16_t>((windowSize.GetWidth() - VIEW_SIZE) / 2);
       offsetYRange                  = static_cast<uint16_t>((windowSize.GetHeight() - VIEW_SIZE) / 2);

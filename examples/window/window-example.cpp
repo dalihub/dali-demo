@@ -242,7 +242,6 @@ public:
       DALI_LOG_RELEASE_INFO("Main Window Touch Event : x:%d, y:%d\n", localX, localY);
       DALI_LOG_RELEASE_INFO("global position: x:%d, y:%d\n", globalX, globalY);
 
-      Dali::Window       window     = mApplication.GetWindow();
       Window::WindowSize windowSize = window.GetSize();
 
       DALI_LOG_RELEASE_INFO("window size: w:%d, h:%d\n", windowSize.GetWidth(), windowSize.GetHeight());
