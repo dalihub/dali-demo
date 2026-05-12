@@ -172,7 +172,6 @@ public:
       }
       case PointState::MOTION:
       {
-        const Window  window  = mApplication.GetWindow();
         const Size    size    = window.GetSize();
         const float   scaleX  = size.width;
         const float   scaleY  = size.height;

@@ -371,7 +371,6 @@ public:
           }
           else
           {
-            Window window = mApplication.GetWindow();
             window.Add(mBlurView);
           }
         }
