@@ -112,7 +112,7 @@ private:
                                                   {Tooltip::Property::POSITION, Tooltip::Position::HOVER_POINT},
                                                   {Tooltip::Property::BACKGROUND,
                                                    CreatePropertyMap({{Tooltip::Background::Property::VISUAL, DEMO_IMAGE_DIR "tooltip.9.png"},
-                                                                      {Tooltip::Background::Property::BORDER, Rect<int>(1, 5, 5, 1)}})}}));
+                                                                      {Tooltip::Background::Property::BORDER, Extents(1, 5, 5, 1)}})}}));
     window.Add(customFromCode);
   }
 
