@@ -19,8 +19,8 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/common/stage-devel.h>
-#include <dali/devel-api/update/frame-callback-interface.h>
-#include <dali/devel-api/update/update-proxy.h>
+#include <dali/public-api/update/frame-callback-interface.h>
+#include <dali/public-api/update/update-proxy.h>
 
 #include <dali/integration-api/string-utils.h>
 #include <memory> ///< for std::unique_ptr
