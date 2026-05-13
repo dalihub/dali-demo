@@ -94,14 +94,14 @@ public:
     return 0;
   }
 
-  void OnTouch(Window window, TouchEvent touch)
+  void OnTouch(Dali::Window window, TouchEvent touch)
   {
     // quit the application
     mApplication.Quit();
     return;
   }
 
-  void OnKeyEvent(Window window, KeyEvent event)
+  void OnKeyEvent(Dali::Window window, KeyEvent event)
   {
     OnGlKeyEvent(event);
   }

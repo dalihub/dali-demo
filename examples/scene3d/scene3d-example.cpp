@@ -120,7 +120,7 @@ Actor CreateErrorMessage(std::string msg)
   return label;
 }
 
-void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition& scene, Actor root, std::vector<BlendshapeShaderConfigurationRequest>&& requests)
+void ConfigureBlendShapeShaders(ResourceBundle& resources, const SceneDefinition& scene, Actor root, Dali::Vector<BlendshapeShaderConfigurationRequest>&& requests)
 {
   std::vector<std::string> errors;
   auto                     onError = [&errors](const std::string& msg)
@@ -146,15 +146,15 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Dali::Ani
 
   auto path = pathProvider(ResourceType::Mesh) + sceneName;
 
-  ResourceBundle                                          resources;
-  SceneDefinition                                         scene;
-  SceneMetadata                                           metaData;
-  std::vector<Dali::Scene3D::Loader::AnimationDefinition> animations;
-  std::vector<AnimationGroupDefinition>                   animGroups;
-  std::vector<CameraParameters>                           cameraParameters;
-  std::vector<LightParameters>                            lights;
+  ResourceBundle                                           resources;
+  SceneDefinition                                          scene;
+  SceneMetadata                                            metaData;
+  Dali::Vector<Dali::Scene3D::Loader::AnimationDefinition> animations;
+  Dali::Vector<AnimationGroupDefinition>                   animGroups;
+  Dali::Vector<CameraParameters>                           cameraParameters;
+  Dali::Vector<LightParameters>                            lights;
 
-  animations.clear();
+  animations.Clear();
 
   LoadResult output{
     resources,
@@ -168,9 +168,9 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Dali::Ani
   Dali::Scene3D::Loader::ModelLoader modelLoader(ToDaliString(path), ToDaliString(pathProvider(ResourceType::Mesh) + "/"), output);
   modelLoader.LoadModel(pathProvider);
 
-  if(cameraParameters.empty())
+  if(cameraParameters.Empty())
   {
-    cameraParameters.push_back(CameraParameters());
+    cameraParameters.PushBack(CameraParameters());
     cameraParameters[0].matrix.SetTranslation(CAMERA_DEFAULT_POSITION);
   }
   cameraParameters[0].ConfigureCamera(camera);
@@ -211,9 +211,9 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Dali::Ani
   }
 
   generatedAnimations.clear();
-  if(!animations.empty())
+  if(!animations.Empty())
   {
-    generatedAnimations.reserve(animations.size());
+    generatedAnimations.reserve(animations.Size());
     auto getActor = [&](const Scene3D::Loader::AnimatedProperty& property)
     {
       Dali::Actor actor;
