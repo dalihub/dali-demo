@@ -208,14 +208,14 @@ public:
     mDRView->Create(Vector2::ZERO, mode);
   }
 
-  void OnTouch(Window window, TouchEvent touch)
+  void OnTouch(Dali::Window window, TouchEvent touch)
   {
     // quit the application
     RequestApplicationQuit();
     return;
   }
 
-  void OnKeyEvent(Window window, KeyEvent event)
+  void OnKeyEvent(Dali::Window window, KeyEvent event)
   {
     if(event.GetState() == KeyEvent::DOWN)
     {

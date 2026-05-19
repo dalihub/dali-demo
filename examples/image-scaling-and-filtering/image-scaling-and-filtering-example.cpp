@@ -47,7 +47,6 @@ const char* const NEXT_BUTTON_ID     = "NEXT_BUTTON";
 const char* const PREVIOUS_BUTTON_ID = "PREVIOUS_BUTTON";
 const char* const DALI_ICON_PLAY     = DEMO_IMAGE_DIR "icon-play.png";
 
-const char* const FITTING_BUTTON_ID  = "FITTING_BUTTON";
 const char* const SAMPLING_BUTTON_ID = "SAMPLING_BUTTON";
 
 const char* const STYLE_LABEL_TEXT  = "ImageScalingGroupLabel";
