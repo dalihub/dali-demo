@@ -28,6 +28,7 @@ BuildRequires:  pkgconfig(dali2-physics-3d)
 BuildRequires:  dali2-integration-devel
 BuildRequires:  dali2-adaptor-integration-devel
 BuildRequires:  dali2-toolkit-integration-devel
+BuildRequires:  dali2-scene3d-integration-devel
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(gles20)
 BuildRequires:  pkgconfig(glesv2)

@@ -16,6 +16,7 @@
  */
 
 #include <dali-scene3d/dali-scene3d.h>
+#include <dali-scene3d/integration-api/loader/environment-map-loader.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>

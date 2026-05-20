@@ -15,6 +15,15 @@
  *
  */
 #include "scene3d-example.h"
+#include <dali-scene3d/integration-api/loader/animated-property.h>
+#include <dali-scene3d/integration-api/loader/animation-definition.h>
+#include <dali-scene3d/integration-api/loader/camera-parameters.h>
+#include <dali-scene3d/integration-api/loader/index.h>
+#include <dali-scene3d/integration-api/loader/light-parameters.h>
+#include <dali-scene3d/integration-api/loader/model-loader.h>
+#include <dali-scene3d/integration-api/loader/resource-bundle.h>
+#include <dali-scene3d/integration-api/loader/scene-definition.h>
+#include <dali-scene3d/integration-api/loader/shader-manager.h>
 #include <dali/integration-api/string-utils.h>
 #include <dirent.h>
 #include <algorithm>
