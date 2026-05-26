@@ -17,7 +17,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/devel-api/common/stage-devel.h>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
@@ -134,7 +133,7 @@ private:
     window.Add(mTextLabel);
 
     // Set the FrameCallbackInterface on the root layer.
-    DevelStage::AddFrameCallback(Stage::GetCurrent(), mFrameCallback, window.GetRootLayer());
+    UiContext::Get().AddFrameCallback(mFrameCallback, window.GetRootLayer());
     mFrameCallbackEnabled = true;
   }
 
@@ -147,13 +146,13 @@ private:
   {
     if(mFrameCallbackEnabled)
     {
-      DevelStage::RemoveFrameCallback(Stage::GetCurrent(), mFrameCallback);
+      UiContext::Get().RemoveFrameCallback(mFrameCallback);
       mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(TEXT_DISABLED));
       mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, TEXT_COLOR_DISABLED);
     }
     else
     {
-      DevelStage::AddFrameCallback(Stage::GetCurrent(), mFrameCallback, actor);
+      UiContext::Get().AddFrameCallback(mFrameCallback, actor);
       mTextLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue(TEXT_ENABLED));
       mTextLabel.SetProperty(TextLabel::Property::TEXT_COLOR, TEXT_COLOR_ENABLED);
     }
