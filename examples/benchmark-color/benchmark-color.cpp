@@ -20,7 +20,6 @@
 #include <dali/dali.h>
 
 #include <dali/devel-api/actors/actor-devel.h>
-#include <dali/devel-api/common/stage.h>
 #include <dali/devel-api/object/property-map-devel.h>
 
 #include <dali-toolkit/devel-api/controls/control-devel.h>
@@ -214,7 +213,7 @@ public:
 
     if(mRunningDurationMilliSeconds > 0u)
     {
-      Stage::GetCurrent().KeepRendering(mRunningDurationMilliSeconds / 1000.0f + 30.0f);
+      window.KeepRendering(mRunningDurationMilliSeconds / 1000.0f + 30.0f);
       mTimer = Timer::New(mRunningDurationMilliSeconds);
       mTimer.TickSignal().Connect(this, &BenchmarkColor::OnTimer);
       mTimer.Start();
