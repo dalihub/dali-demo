@@ -18,7 +18,6 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/actor-devel.h>
-#include <dali/devel-api/common/stage-devel.h>
 #include <dali/public-api/update/frame-callback-interface.h>
 #include <dali/public-api/update/update-proxy.h>
 
@@ -110,10 +109,9 @@ private:
    */
   void Create(Application application)
   {
-    // Get a handle to the window and stage
+    // Get a handle to the window
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
-    Stage stage = Stage::GetCurrent(); // Get current Stage
 
     // Create an ImageView to visually demonstrate the ignored state
     mImageView = ImageView::New();
@@ -167,7 +165,7 @@ private:
     // Create and add the frame callback to toggle the ignored state every 2 seconds
     // Pass the label IDs to the IgnoredToggler
     mIgnoredToggler = std::make_unique<IgnoredToggler>(actorId, 2.0f, visibleLabelId, ignoredLabelId); // Manage with a unique_ptr or similar if needed
-    DevelStage::AddFrameCallback(stage, *mIgnoredToggler, stage.GetRootLayer());                       // Dali:: prefix not needed due to 'using namespace Dali;'
+    UiContext::Get().AddFrameCallback(*mIgnoredToggler, window.GetRootLayer());                        // Dali:: prefix not needed due to 'using namespace Dali;'
 
     // Connect property notification for world ignored.
     PropertyNotification lessThanNotification = mImageView.AddPropertyNotification(DevelActor::Property::IGNORED, LessThanCondition(0.5f));

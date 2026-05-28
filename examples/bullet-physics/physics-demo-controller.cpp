@@ -74,7 +74,7 @@ public:
     mWindow = application.GetWindow();
     mWindow.ResizeSignal().Connect(this, &PhysicsDemoController::OnWindowResize);
     mWindow.KeyEventSignal().Connect(this, &PhysicsDemoController::OnKeyEv);
-    Stage::GetCurrent().KeepRendering(30);
+    mWindow.KeepRendering(30);
     mWindow.SetBackgroundColor(Color::DARK_SLATE_GRAY);
     Window::WindowSize windowSize = mWindow.GetSize();
 
@@ -393,7 +393,7 @@ public:
       std::cout << "Dali scrnpos:" << screenCoords << "\nDali pos:    " << mBrick.GetActorPosition() << "\nDali rot:    " << mBrick.GetActorRotation() << "\nPhys pos:    " << mBrick.GetPhysicsPosition() << "\nPhys rot:    " << mBrick.GetPhysicsRotation() << "\n";
     }
 
-    Stage::GetCurrent().KeepRendering(30.0f);
+    mWindow.KeepRendering(30.0f);
 
     return true;
   }
