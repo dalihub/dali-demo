@@ -24,7 +24,6 @@
 #include <GLES3/gl3.h>
 #include <dali/graphics-api/graphics-buffer-create-info.h>
 
-#include <dali/devel-api/common/stage-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;

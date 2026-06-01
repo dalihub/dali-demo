@@ -22,7 +22,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
-#include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/public-api/animation/constraint.h>
@@ -100,7 +100,8 @@ BloomView::BloomView()
   mBloomSaturationPropertyIndex(Property::INVALID_INDEX),
   mImageIntensityPropertyIndex(Property::INVALID_INDEX),
   mImageSaturationPropertyIndex(Property::INVALID_INDEX),
-  mActivated(false)
+  mActivated(false),
+  mRenderTasksCreated(false)
 {
 }
 
@@ -123,7 +124,8 @@ BloomView::BloomView(const unsigned int blurNumSamples, const float blurBellCurv
   mBloomSaturationPropertyIndex(Property::INVALID_INDEX),
   mImageIntensityPropertyIndex(Property::INVALID_INDEX),
   mImageSaturationPropertyIndex(Property::INVALID_INDEX),
-  mActivated(false)
+  mActivated(false),
+  mRenderTasksCreated(false)
 {
 }
 
@@ -347,7 +349,7 @@ void BloomView::AllocateResources()
 
 void BloomView::CreateRenderTasks()
 {
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = DevelWindow::Get(Self()).GetRenderTaskList();
 
   // create render task to render our child actors to offscreen buffer
   mRenderChildrenTask = taskList.CreateTask();
@@ -358,7 +360,7 @@ void BloomView::CreateRenderTasks()
   mRenderChildrenTask.SetCameraActor(mRenderFullSizeCamera); // use camera that covers render target exactly
   mRenderChildrenTask.SetFrameBuffer(mRenderTargetForRenderingChildren);
 
-  // Extract the bright part of the image and render to a new buffer. Downsampling also occurs at this stage to save pixel fill, if it is set up.
+  // Extract the bright part of the image and render to a new buffer. Downsampling also occurs at this scene to save pixel fill, if it is set up.
   mBloomExtractTask = taskList.CreateTask();
   mBloomExtractTask.SetSourceActor(mBloomExtractActor);
   mBloomExtractTask.SetExclusive(true);
@@ -382,7 +384,7 @@ void BloomView::CreateRenderTasks()
 
 void BloomView::RemoveRenderTasks()
 {
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = DevelWindow::Get(Self()).GetRenderTaskList();
 
   taskList.RemoveTask(mRenderChildrenTask);
   taskList.RemoveTask(mBloomExtractTask);
@@ -392,25 +394,49 @@ void BloomView::RemoveRenderTasks()
   taskList.RemoveTask(mCompositeTask);
 }
 
+void BloomView::OnSceneConnection(int depth)
+{
+  if(mActivated && !mRenderTasksCreated)
+  {
+    CreateRenderTasks();
+    mRenderTasksCreated = true;
+  }
+  Toolkit::ControlImpl::OnSceneConnection(depth);
+}
+
+void BloomView::OnSceneDisconnection()
+{
+  if(mRenderTasksCreated)
+  {
+    RemoveRenderTasks();
+    mRenderTasksCreated = false;
+  }
+  Toolkit::ControlImpl::OnSceneDisconnection();
+}
+
 void BloomView::Activate()
 {
-  // make sure resources are allocated and start the render tasks processing
   AllocateResources();
-  CreateRenderTasks();
   mActivated = true;
+  if(Self().GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE))
+  {
+    CreateRenderTasks();
+    mRenderTasksCreated = true;
+  }
 }
 
 void BloomView::Deactivate()
 {
-  // stop render tasks processing
-  // Note: render target resources are automatically freed since we set the Image::Unused flag
-  RemoveRenderTasks();
+  if(mRenderTasksCreated)
+  {
+    RemoveRenderTasks();
+    mRenderTasksCreated = false;
+  }
 
   mRenderTargetForRenderingChildren.Reset();
   mBloomExtractTarget.Reset();
   mOutputRenderTarget.Reset();
 
-  // Reset children
   mBloomExtractActor.RemoveRenderer(0u);
   mTargetActor.RemoveRenderer(0u);
   mCompositeActor.RemoveRenderer(0u);

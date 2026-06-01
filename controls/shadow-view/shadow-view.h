@@ -52,7 +52,7 @@ class ShadowView;
  * The ShadowView is intended to provide simple planar projection shadows, Which means it needs a flat plane to cast shadows. So Shadows can't be cast on other objects.
  *
  * ************\n
- * NB: It is essential to remove the ShadowView from the stage and also to call Deactivate() on it when you are not using it. This will ensure that resources are freed and
+ * NB: It is essential to remove the ShadowView from the scene and also to call Deactivate() on it when you are not using it. This will ensure that resources are freed and
  * rendering stops.\n
  * ************\n
  *
@@ -78,11 +78,11 @@ class ShadowView;
  *
  *  Actor pointLight = Actor::New(); // This will be the light source
  *  pointLight.SetProperty( Actor::Property::POSITION, Vector3(300.0f, 250.0f, 600.0f) );
- *  Stage::GetCurrent().Add(pointLight);
+ *  window.Add(pointLight);
  *  shadowView.SetPointLight(pointLight);
  *
  *  // Start rendering the ShadowView
- *  Stage::GetCurrent().Add(ShadowPlane);
+ *  window.Add(ShadowPlane);
  *  shadowView.Activate();
  *  ...
  *
@@ -93,7 +93,7 @@ class ShadowView;
  *
  *  ...
  *  // Stop rendering the ShadowView
- *  Stage::GetCurrent().Remove(shadowView);
+ *  window.Remove(shadowView);
  *  shadowView.Deactivate();
  *  @endcode
  */
@@ -198,14 +198,14 @@ public:
   void SetShadowColor(Vector4 color);
 
   /**
-   * Start rendering the ShadowView. Must be called after you Add() it to the stage.
-   * @pre This Actor has been added to the stage.
+   * Start rendering the ShadowView. Must be called after you Add() it to the scene.
+   * @pre This Actor has been added to the scene.
    */
   void Activate();
 
   /**
-   * Stop rendering the ShadowView. Must be called after you Remove() it from the stage.
-   * @pre This Actor has been removed from the stage.
+   * Stop rendering the ShadowView. Must be called after you Remove() it from the scene.
+   * @pre This Actor has been removed from the scene.
    */
   void Deactivate();
 

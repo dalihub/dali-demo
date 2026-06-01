@@ -22,7 +22,7 @@
 #include <dali-toolkit/devel-api/controls/control-depth-index-ranges.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
-#include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/public-api/animation/constraint.h>
@@ -218,7 +218,7 @@ void EffectsView::SetEffectSize(int effectSize)
 
     for(size_t i = 0; i < numFilters; ++i)
     {
-      mFilters[i]->Enable();
+      mFilters[i]->Enable(mWindow);
     }
   }
 }
@@ -242,7 +242,7 @@ void EffectsView::OnSizeSet(const Vector3& targetSize)
 {
   mTargetSize = Vector2(targetSize);
 
-  // if we are already on stage, need to update render target sizes now to reflect the new size of this actor
+  // if we are already on scene, need to update render target sizes now to reflect the new size of this actor
   if(mEnabled)
   {
     if(mLastSize != Vector2::ZERO)
@@ -260,6 +260,8 @@ void EffectsView::OnSizeSet(const Vector3& targetSize)
 void EffectsView::OnSceneConnection(int depth)
 {
   Actor self(Self());
+
+  mWindow = DevelWindow::Get(self);
 
   // Create renderers
   mRendererPostFilter = Toolkit::DevelControl::CreateRenderer(SHADER_EFFECTS_VIEW_VERT,
@@ -294,6 +296,8 @@ void EffectsView::OnSceneDisconnection()
 
   self.RemoveRenderer(mRendererPostFilter);
   mRendererPostFilter.Reset();
+
+  mWindow.Reset();
 
   Toolkit::ControlImpl::OnSceneDisconnection();
 }
@@ -468,7 +472,7 @@ void EffectsView::CreateRenderTasks()
   {
     return;
   }
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
 
   // create render task to render our child actors to offscreen buffer
   mRenderTaskForChildren = taskList.CreateTask();
@@ -485,7 +489,7 @@ void EffectsView::CreateRenderTasks()
   const size_t numFilters(mFilters.Size());
   for(size_t i = 0; i < numFilters; ++i)
   {
-    mFilters[i]->Enable();
+    mFilters[i]->Enable(mWindow);
   }
 }
 
@@ -496,7 +500,7 @@ void EffectsView::RemoveRenderTasks()
     return;
   }
 
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
 
   taskList.RemoveTask(mRenderTaskForChildren);
 
@@ -509,7 +513,11 @@ void EffectsView::RemoveRenderTasks()
 
 void EffectsView::RefreshRenderTasks()
 {
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  if(!mWindow)
+  {
+    return;
+  }
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
 
   if(mRenderTaskForChildren)
   {

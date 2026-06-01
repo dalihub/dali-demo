@@ -19,19 +19,18 @@
 #include <controls/filters/emboss-filter.h>
 
 // EXTERNAL INCLUDES
-#include <dali/devel-api/common/stage.h>
+#include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
 #include <dali/public-api/rendering/renderer.h>
-#include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <sstream>
 
 // INTERNAL INCLUDES
-#include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/control-renderers-frag.h>
-#include <controls/shaders/emboss-filter-shader-frag.h>
+#include <controls/shaders/control-renderers-vert.h>
 #include <controls/shaders/emboss-filter-composite-shader-frag.h>
+#include <controls/shaders/emboss-filter-shader-frag.h>
 
 namespace Dali::Demo::Internal
 {
@@ -52,8 +51,9 @@ EmbossFilter::~EmbossFilter()
 {
 }
 
-void EmbossFilter::Enable()
+void EmbossFilter::Enable(Window window)
 {
+  mWindow                = window;
   mFrameBufferForEmboss1 = FrameBuffer::New(mTargetSize.width, mTargetSize.height, FrameBuffer::Attachment::NONE);
   Texture texture1       = Texture::New(TextureType::TEXTURE_2D, mPixelFormat, unsigned(mTargetSize.width), unsigned(mTargetSize.height));
   mFrameBufferForEmboss1.AttachColorTexture(texture1);
@@ -141,7 +141,7 @@ void EmbossFilter::Disable()
       mActorForComposite.Reset();
     }
 
-    RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+    RenderTaskList taskList = mWindow.GetRenderTaskList();
     if(mRenderTaskForEmboss1)
     {
       taskList.RemoveTask(mRenderTaskForEmboss1);
@@ -158,6 +158,7 @@ void EmbossFilter::Disable()
     }
 
     mRootActor.Reset();
+    mWindow.Reset();
   }
 }
 
@@ -192,7 +193,7 @@ void EmbossFilter::SetSize(const Vector2& size)
 
 void EmbossFilter::CreateRenderTasks()
 {
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
 
   mRenderTaskForEmboss1 = taskList.CreateTask();
   mRenderTaskForEmboss1.SetRefreshRate(mRefreshOnDemand ? RenderTask::REFRESH_ONCE : RenderTask::REFRESH_ALWAYS);

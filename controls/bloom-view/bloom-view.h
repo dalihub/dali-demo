@@ -57,7 +57,7 @@ class BloomView;
  * normal ways. It can be considered a 'portal' in the sense that all child actors are clipped to the BloomView actor bounds.
  *
  * ************\n
- * NB: It is essential to remove the BloomView from the stage and also to call Deactivate() on it when you are not using it. This will ensure that resources are freed and
+ * NB: It is essential to remove the BloomView from the scene and also to call Deactivate() on it when you are not using it. This will ensure that resources are freed and
  * rendering stops.\n
  * ************\n
  *
@@ -74,7 +74,7 @@ class BloomView;
  *  ...\n
  *
  *  // Start rendering the BloomView\n
- *  Stage::GetCurrent().Add(bloomView);\n
+ *  window.Add(bloomView);\n
  *  bloomView.Activate();\n
  *  ...\n
  *
@@ -85,7 +85,7 @@ class BloomView;
  *
  *  ...\n
  *  // Stop rendering the BloomView\n
- *  Stage::GetCurrent().Remove(bloomView);\n
+ *  window.Remove(bloomView);\n
  *  bloomView.Deactivate();\n
  */
 class DALI_DEMO_CONTROLS_API BloomView : public Toolkit::Control
@@ -168,12 +168,12 @@ public:
   static BloomView New(const unsigned int numSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale);
 
   /**
-   * Start rendering the BloomView. Must be called after you Add() it to the stage.
+   * Start rendering the BloomView. Must be called after you Add() it to the scene.
    */
   void Activate();
 
   /**
-   * Stop rendering the BloomView. Must be called after you Remove() it from the stage.
+   * Stop rendering the BloomView. Must be called after you Remove() it from the scene.
    */
   void Deactivate();
 

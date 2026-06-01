@@ -20,7 +20,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
-#include <dali/devel-api/common/stage.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
@@ -73,8 +72,9 @@ BlurTwoPassFilter::~BlurTwoPassFilter()
 {
 }
 
-void BlurTwoPassFilter::Enable()
+void BlurTwoPassFilter::Enable(Window window)
 {
+  mWindow = window;
   // create custom shader effect
   if(!GetKernelSize())
   {
@@ -165,7 +165,7 @@ void BlurTwoPassFilter::Disable()
       mActorForHorz.Reset();
     }
 
-    RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+    RenderTaskList taskList = mWindow.GetRenderTaskList();
 
     if(mRenderTaskForHorz)
     {
@@ -181,6 +181,7 @@ void BlurTwoPassFilter::Disable()
     }
 
     mRootActor.Reset();
+    mWindow.Reset();
   }
 }
 
@@ -226,7 +227,7 @@ Handle BlurTwoPassFilter::GetHandleForAnimateBlurStrength()
 
 void BlurTwoPassFilter::CreateRenderTasks()
 {
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
 
   // perform a horizontal blur targeting the internal buffer
   mRenderTaskForHorz = taskList.CreateTask();

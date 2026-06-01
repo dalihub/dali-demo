@@ -32,10 +32,10 @@ class Magnifier;
 }
 
 /**
- * Magnifier control is used to apply a magnify effect to content on the stage.
+ * Magnifier control is used to apply a magnify effect to content on the scene.
  *
  * This is done by rendering the contents of a SourceActor at a given source position
- * to the stage as a separate overlay. In addition to the contents, an optional frame
+ * to the scene as a separate overlay. In addition to the contents, an optional frame
  * is displayed around the magnified contents.
  */
 class DALI_DEMO_CONTROLS_API Magnifier : public Toolkit::Control

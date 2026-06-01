@@ -22,7 +22,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/public-api/image-loader/sync-image-loader.h>
-#include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/devel-api/scripting/scripting.h>
@@ -121,7 +121,8 @@ SuperBlurView::SuperBlurView(unsigned int blurLevels)
   mTargetSize(Vector2::ZERO),
   mBlurStrengthPropertyIndex(Property::INVALID_INDEX),
   mBlurLevels(blurLevels),
-  mResourcesCleared(true)
+  mResourcesCleared(true),
+  mBlurCompleted(false)
 {
   DALI_ASSERT_ALWAYS(mBlurLevels > 0 && " Minimal blur level is one, otherwise no blur is needed");
   mGaussianBlurView.assign(blurLevels, Toolkit::GaussianBlurView());
@@ -157,26 +158,29 @@ void SuperBlurView::OnInitialize()
   self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
 }
 
-void SuperBlurView::SetTexture(Texture texture)
+void SuperBlurView::SetTexture(Texture texture, Window window)
 {
-  mInputTexture = texture;
+  mInputTexture  = texture;
+  mBlurCompleted = false;
 
-  if(mTargetSize == Vector2::ZERO)
+  if(mTargetSize == Vector2::ZERO || !window)
   {
     return;
   }
+
+  mWindow = window;
 
   ClearBlurResource();
 
   Actor self(Self());
 
-  BlurTexture(0, mInputTexture);
+  BlurTexture(0, mInputTexture, window);
   DevelControl::SetRendererTexture(mRenderers[0], texture);
 
   unsigned int i = 1;
   for(; i < mBlurLevels; i++)
   {
-    BlurTexture(i, mBlurredImage[i - 1].GetColorTexture());
+    BlurTexture(i, mBlurredImage[i - 1].GetColorTexture(), window);
     DevelControl::SetRendererTexture(mRenderers[i], mBlurredImage[i - 1]);
   }
 
@@ -217,7 +221,7 @@ Texture SuperBlurView::GetBlurredTexture(unsigned int level)
   return frameBuffer.GetColorTexture();
 }
 
-void SuperBlurView::BlurTexture(unsigned int idx, Texture texture)
+void SuperBlurView::BlurTexture(unsigned int idx, Texture texture, Window window)
 {
   DALI_ASSERT_ALWAYS(mGaussianBlurView.size() > idx);
   mGaussianBlurView[idx] = Toolkit::GaussianBlurView::New(GAUSSIAN_BLUR_DEFAULT_NUM_SAMPLES + GAUSSIAN_BLUR_NUM_SAMPLES_INCREMENTATION * idx,
@@ -228,7 +232,7 @@ void SuperBlurView::BlurTexture(unsigned int idx, Texture texture)
                                                           true);
   mGaussianBlurView[idx].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mGaussianBlurView[idx].SetProperty(Actor::Property::SIZE, mTargetSize);
-  Stage::GetCurrent().Add(mGaussianBlurView[idx]);
+  window.Add(mGaussianBlurView[idx]);
 
   mGaussianBlurView[idx].SetUserImageAndOutputRenderTarget(texture, mBlurredImage[idx]);
 
@@ -242,6 +246,7 @@ void SuperBlurView::BlurTexture(unsigned int idx, Texture texture)
 void SuperBlurView::OnBlurViewFinished(Toolkit::GaussianBlurView blurView)
 {
   ClearBlurResource();
+  mBlurCompleted = true;
   Demo::SuperBlurView handle(GetOwner());
   mBlurFinishedSignal.Emit(handle);
 }
@@ -253,9 +258,10 @@ void SuperBlurView::ClearBlurResource()
     DALI_ASSERT_ALWAYS(mGaussianBlurView.size() == mBlurLevels && "must synchronize the GaussianBlurView group if blur levels got changed ");
     for(unsigned int i = 0; i < mBlurLevels; i++)
     {
-      Stage::GetCurrent().Remove(mGaussianBlurView[i]);
+      mWindow.Remove(mGaussianBlurView[i]);
       mGaussianBlurView[i].Deactivate();
     }
+    mWindow.Reset();
     mResourcesCleared = true;
   }
 }
@@ -279,9 +285,9 @@ void SuperBlurView::OnSizeSet(const Vector3& targetSize)
       mBlurredImage[i - 1].AttachColorTexture(texture);
     }
 
-    if(mInputTexture)
+    if(mInputTexture && mWindow)
     {
-      SetTexture(mInputTexture);
+      SetTexture(mInputTexture, mWindow);
     }
   }
 
@@ -318,13 +324,22 @@ void SuperBlurView::OnSceneConnection(int depth)
 
   if(mInputTexture)
   {
-    DevelControl::SetRendererTexture(mRenderers[0], mInputTexture);
-    unsigned int i = 1;
-    for(; i < mBlurLevels; i++)
+    if(!mWindow && !mBlurCompleted)
     {
+      // Texture was set before scene connection; trigger deferred blur now
+      SetTexture(mInputTexture, DevelWindow::Get(Self()));
+    }
+    else
+    {
+      // Blur already done or in progress; restore renderer textures
+      DevelControl::SetRendererTexture(mRenderers[0], mInputTexture);
+      unsigned int i = 1;
+      for(; i < mBlurLevels; i++)
+      {
+        DevelControl::SetRendererTexture(mRenderers[i], mBlurredImage[i - 1]);
+      }
       DevelControl::SetRendererTexture(mRenderers[i], mBlurredImage[i - 1]);
     }
-    DevelControl::SetRendererTexture(mRenderers[i], mBlurredImage[i - 1]);
   }
 }
 
@@ -367,7 +382,7 @@ void SuperBlurView::SetProperty(BaseObject* object, Property::Index propertyInde
           Texture texture = Texture::New(TextureType::TEXTURE_2D, pixels.GetPixelFormat(), pixels.GetWidth(), pixels.GetHeight());
           texture.Upload(pixels, 0, 0, 0, 0, pixels.GetWidth(), pixels.GetHeight());
 
-          superBlurViewImpl.SetTexture(texture);
+          superBlurViewImpl.SetTexture(texture, DevelWindow::Get(superBlurView));
         }
         else
         {

@@ -60,7 +60,7 @@ private:
   /**
    * The Saddle surface (Hyperbolic paraboloid)function is used to calculate the delay of rotating animation for each cube
    * This function calculates the Hyperbolic paraboloid parameters,
-   * and the translation and rotation params for mapping the current stage coordinate to the function defining coordinate system
+   * and the translation and rotation params for mapping the current scene coordinate to the function defining coordinate system
    * @param[in] position The press down position of panGesture
    * @param[in] displacement The displacement vector of panGesture
    */

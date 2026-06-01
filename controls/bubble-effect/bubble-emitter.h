@@ -20,6 +20,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/public-api/controls/control.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/rendering/texture.h>
 
 // INTERNAL INCLUDES
@@ -33,10 +34,10 @@ namespace Internal DALI_INTERNAL
  * @brief BubbleEmitter implementation class.
  */
 class BubbleEmitter;
-} // namespace DALI_INTERNAL
+} //namespace Internal DALI_INTERNAL
 
 /**
- * @brief BubbleEmitter is used to display lots of moving bubbles on the stage.
+ * @brief BubbleEmitter is used to display lots of moving bubbles on the scene.
  *
  * This is done by applying BubbleEffect to multiple specifically created meshActors.
  */
@@ -112,7 +113,7 @@ public:
   static BubbleEmitter DownCast(BaseHandle handle);
 
   /**
-   * @brief Return the root actor of all bubbles, should then be added to stage.
+   * @brief Return the root actor of all bubbles, should then be added to scene.
    *
    * @return The bubble root actor.
    */
@@ -122,11 +123,12 @@ public:
    * @brief Set Background image.
    *
    * The bubbles pick color from this image with HSV values adjusted.
+   * @param[in] window The window used to add/remove internal actors and render tasks.
    * @param[in] bgTexture The background texture which provide color to bubbles.
    * @param[in] hsvDelta The hsv channel difference used to adjust the background image color.
    *            If set these vector as Vector3::Zero, original colors are used.
    */
-  void SetBackground(Dali::Texture bgTexture, const Vector3& hsvDelta);
+  void SetBackground(Window window, Dali::Texture bgTexture, const Vector3& hsvDelta);
 
   /**
    * @brief Set bubble shape.

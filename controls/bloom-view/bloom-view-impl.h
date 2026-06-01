@@ -94,6 +94,8 @@ public:
 private:
   void OnInitialize() override;
   void OnSizeSet(const Vector3& targetSize) override;
+  void OnSceneConnection(int depth) override;
+  void OnSceneDisconnection() override;
 
   /**
    * @copydoc Toolkit::ControlImpl::OnChildAdd()
@@ -175,6 +177,7 @@ private:
   Property::Index mImageSaturationPropertyIndex;
 
   bool mActivated : 1;
+  bool mRenderTasksCreated : 1;
 
 private:
   // Undefined copy constructor.

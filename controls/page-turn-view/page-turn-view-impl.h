@@ -185,7 +185,7 @@ protected:
   void TurnedOver(Animation animation);
 
   /**
-   * This method organize the depth of the pages on stage
+   * This method organize the depth of the pages on scene
    * It is called when there is page added or removed from the control
    */
   void OrganizePageDepth();
@@ -231,7 +231,7 @@ private:
 
   /**
    * Stop the page turning animation and contraint.
-   * This method should be called when taking off stage or jump to a specified page.
+   * This method should be called when taking off scene or jump to a specified page.
    */
   void StopTurning();
 
@@ -265,7 +265,7 @@ private: // implemented differently by PageTurnLandscapeView and PageTurnPortrai
   virtual void OnPageTurnViewInitialize() = 0;
 
   /**
-   * This method is called after the a new page is added to the stage.
+   * This method is called after the a new page is added to the scene.
    * Could be re-implemented in subclasses to provide specific behaviour
    * @param[in] newPage The added page actor
    * @param[in] isLeftSide Which side the new page is added to
@@ -379,7 +379,7 @@ protected:
   Shader             mSpineEffectShader; ///< The book spine shader effect
   Geometry           mGeometry;          ///< The grid geometry for pages
 
-  std::vector<Page>        mPages;               ///< The vector of pages on stage
+  std::vector<Page>        mPages;               ///< The vector of pages on scene
   std::map<Animation, int> mAnimationPageIdPair; ///< The map to keep track which page actor is the animation act on
 
   Vector2 mPageSize;             ///< The page size

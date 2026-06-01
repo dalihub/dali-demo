@@ -140,7 +140,7 @@ private:
                                         DEFAULT_NUMBER_OF_BUBBLES,
                                         DEFAULT_BUBBLE_SIZE);
 
-    mBubbleEmitter.SetBackground(DemoHelper::LoadWindowFillingTexture(Uint16Pair(window.GetSize().GetWidth(), window.GetSize().GetHeight()), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
+    mBubbleEmitter.SetBackground(window, DemoHelper::LoadWindowFillingTexture(Uint16Pair(window.GetSize().GetWidth(), window.GetSize().GetHeight()), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
 
     // Get the root actor of all bubbles, and add it to window.
     Actor bubbleRoot = mBubbleEmitter.GetRootActor();
@@ -260,7 +260,7 @@ private:
       mCurrentBackgroundImageId = (mCurrentBackgroundImageId + 1) % NUM_BACKGROUND_IMAGES;
 
       //Update bubble emitter background
-      mBubbleEmitter.SetBackground(DemoHelper::LoadWindowFillingTexture(Uint16Pair(mApp.GetWindow().GetSize().GetWidth(), mApp.GetWindow().GetSize().GetHeight()), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
+      mBubbleEmitter.SetBackground(mApp.GetWindow(), DemoHelper::LoadWindowFillingTexture(Uint16Pair(mApp.GetWindow().GetSize().GetWidth(), mApp.GetWindow().GetSize().GetHeight()), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
 
       // Set the application background
       mBackground.SetProperty(Toolkit::Control::Property::BACKGROUND, BACKGROUND_IMAGES[mCurrentBackgroundImageId]);

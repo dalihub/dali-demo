@@ -45,7 +45,7 @@ public:
 
 public: // From ImageFilter
   /// @copydoc Dali::Demo::Internal::ImageFilter::Enable
-  void Enable() override;
+  void Enable(Window window) override;
 
   /// @copydoc Dali::Demo::Internal::ImageFilter::Disable
   void Disable() override;
