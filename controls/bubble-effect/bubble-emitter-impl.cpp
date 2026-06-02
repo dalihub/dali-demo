@@ -189,11 +189,6 @@ void BubbleEmitter::OnInitialize()
   // Create a cameraActor for the off screen render task.
   mCameraActor = CameraActor::New(mMovementArea);
   mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-
-  Stage stage = Stage::GetCurrent();
-
-  stage.Add(mCameraActor);
-  stage.ContextRegainedSignal().Connect(this, &BubbleEmitter::OnContextRegained);
 }
 
 Actor BubbleEmitter::GetRootActor()
@@ -201,17 +196,23 @@ Actor BubbleEmitter::GetRootActor()
   return mBubbleRoot;
 }
 
-void BubbleEmitter::SetBackground(Texture bgTexture, const Vector3& hsvDelta)
+void BubbleEmitter::SetBackground(Window window, Texture bgTexture, const Vector3& hsvDelta)
 {
+  mWindow            = window;
   mBackgroundTexture = bgTexture;
   mHSVDelta          = hsvDelta;
+
+  if(!mCameraActor.GetParent())
+  {
+    mWindow.Add(mCameraActor);
+  }
 
   //Create RenderTask source actor
   Actor sourceActor = Actor::New();
   sourceActor.SetProperty(Actor::Property::SIZE, mMovementArea);
   sourceActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   sourceActor.RegisterProperty("uHSVDelta", hsvDelta);
-  Stage::GetCurrent().Add(sourceActor);
+  mWindow.Add(sourceActor);
 
   //Create renderer
   Dali::Geometry geometry   = CreateTexturedQuad();
@@ -222,7 +223,7 @@ void BubbleEmitter::SetBackground(Texture bgTexture, const Vector3& hsvDelta)
   renderer.SetTextures(textureSet);
   sourceActor.AddRenderer(renderer);
 
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
   RenderTask     task     = taskList.CreateTask();
   task.SetRefreshRate(RenderTask::REFRESH_ONCE);
   task.SetSourceActor(sourceActor);
@@ -271,19 +272,8 @@ void BubbleEmitter::OnRenderFinished(RenderTask source)
 {
   mRenderTaskRunning = false;
   Actor sourceActor  = source.GetSourceActor();
-  Stage stage        = Stage::GetCurrent();
-  stage.Remove(sourceActor);
-  stage.GetRenderTaskList().RemoveTask(source);
-}
-
-void BubbleEmitter::OnContextRegained()
-{
-  // Context was lost, so the framebuffer has been destroyed. Re-create render task
-  // and trigger re-draw if not already running
-  if(!mRenderTaskRunning)
-  {
-    SetBackground(mBackgroundTexture, mHSVDelta);
-  }
+  mWindow.Remove(sourceActor);
+  mWindow.GetRenderTaskList().RemoveTask(source);
 }
 
 void BubbleEmitter::EmitBubble(Animation animation, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement)

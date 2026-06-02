@@ -50,7 +50,7 @@ public:
 
 public: // From ImageFilter
   /// @copydoc Dali::Toolkit::Internal::ImageFilter::Enable
-  void Enable() override;
+  void Enable(Window window) override;
 
   /// @copydoc Dali::Toolkit::Internal::ImageFilter::Disable
   void Disable() override;

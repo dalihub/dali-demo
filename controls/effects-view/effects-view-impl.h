@@ -21,6 +21,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/public-api/actors/camera-actor.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/common/dali-vector.h>
 #include <dali/public-api/render-tasks/render-task.h>
 #include <dali/public-api/rendering/frame-buffer.h>
@@ -140,12 +141,12 @@ private: // From Control
 
 private:
   /**
-   * Enable the effect when the control is set on stage
+   * Enable the effect when the control is set on scene
    */
   void Enable();
 
   /**
-   * Disable the effect when the control is set off stage
+   * Disable the effect when the control is set off scene
    */
   void Disable();
 
@@ -192,6 +193,8 @@ private:
   EffectsView& operator=(const EffectsView&);
 
 private: // attributes/properties
+  Window mWindow;
+
   /////////////////////////////////////////////////////////////
   // for rendering all user added children to offscreen target
   FrameBuffer mFrameBufferForChildren;

@@ -24,7 +24,7 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/public-api/visuals/border-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
-#include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/string-utils.h>
@@ -63,8 +63,8 @@ const float IMAGE_BORDER_INDENT = 5.0f; ///< Indent of border in pixels.
 
 struct CameraActorPositionConstraint
 {
-  CameraActorPositionConstraint(const Vector2& stageSize, float defaultCameraDistance = 0.0f)
-  : mStageSize(stageSize),
+  CameraActorPositionConstraint(const Vector2& windowSize, float defaultCameraDistance = 0.0f)
+  : mWindowSize(windowSize),
     mDefaultCameraDistance(defaultCameraDistance)
   {
   }
@@ -73,19 +73,19 @@ struct CameraActorPositionConstraint
   {
     const Vector3& sourcePosition = inputs[0]->GetVector3();
 
-    current.x = sourcePosition.x + mStageSize.x * 0.5f;
-    current.y = sourcePosition.y + mStageSize.y * 0.5f;
+    current.x = sourcePosition.x + mWindowSize.x * 0.5f;
+    current.y = sourcePosition.y + mWindowSize.y * 0.5f;
     current.z = sourcePosition.z + mDefaultCameraDistance;
   }
 
-  Vector2 mStageSize;
+  Vector2 mWindowSize;
   float   mDefaultCameraDistance;
 };
 
 struct RenderTaskViewportPositionConstraint
 {
-  RenderTaskViewportPositionConstraint(const Vector2& stageSize)
-  : mStageSize(stageSize)
+  RenderTaskViewportPositionConstraint(const Vector2& windowSize)
+  : mWindowSize(windowSize)
   {
   }
 
@@ -99,11 +99,11 @@ struct RenderTaskViewportPositionConstraint
     Vector3 size = inputs[1]->GetVector3() * inputs[2]->GetVector3(); /* magnifier-size * magnifier-scale */
 
     // Reposition, and resize viewport to reflect the world bounds of this Magnifier actor.
-    current.x += (mStageSize.width - size.width) * 0.5f;
-    current.y += (mStageSize.height - size.height) * 0.5f;
+    current.x += (mWindowSize.width - size.width) * 0.5f;
+    current.y += (mWindowSize.height - size.height) * 0.5f;
   }
 
-  Vector2 mStageSize;
+  Vector2 mWindowSize;
 };
 
 struct RenderTaskViewportSizeConstraint
@@ -149,7 +149,11 @@ Magnifier::Magnifier()
 
 void Magnifier::SetSourceActor(Actor actor)
 {
-  mTask.SetSourceActor(actor);
+  mTaskSourceActor = actor;
+  if(mTask)
+  {
+    mTask.SetSourceActor(actor);
+  }
 }
 
 Magnifier::~Magnifier()
@@ -158,8 +162,7 @@ Magnifier::~Magnifier()
 
 void Magnifier::OnInitialize()
 {
-  Actor   self = Self();
-  Vector2 stageSize(Stage::GetCurrent().GetSize());
+  Actor self = Self();
 
   // NOTE:
   // sourceActor is a dummy delegate actor that takes the source property position,
@@ -172,11 +175,24 @@ void Magnifier::OnInitialize()
   // Perhaps this is a bug in the way the constraint system factors into what is dirty
   // and what is not.
   mSourceActor = Actor::New();
-  Stage().GetCurrent().Add(mSourceActor);
   mSourceActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   Constraint constraint = Constraint::New<Vector3>(mSourceActor, Actor::Property::POSITION, EqualToConstraint());
   constraint.AddSource(Source(self, Demo::Magnifier::Property::SOURCE_POSITION));
   constraint.Apply();
+
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+}
+
+void Magnifier::OnSceneConnection(int depth)
+{
+  Actor self = Self();
+
+  mWindow = DevelWindow::Get(self);
+
+  Window::WindowSize winSize = mWindow.GetSize();
+  Vector2            windowSize(winSize.GetWidth(), winSize.GetHeight());
+
+  mWindow.Add(mSourceActor);
 
   // create the render task this will render content on top of everything
   // based on camera source position.
@@ -193,43 +209,61 @@ void Magnifier::OnInitialize()
   // NOTE: We can't interrogate the default camera's position as it is not known initially (takes 1 frame
   // for value to update).
   // But we can determine the initial position using the same formula:
-  // distance = stage.height * 0.5 / tan(FOV * 0.5)
+  // distance = scene.height * 0.5 / tan(FOV * 0.5)
 
-  RenderTaskList taskList   = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList   = mWindow.GetRenderTaskList();
   RenderTask     renderTask = taskList.GetTask(0u);
   float          fov        = renderTask.GetCameraActor().GetFieldOfView();
-  mDefaultCameraDistance    = (stageSize.height * 0.5f) / tanf(fov * 0.5f);
+  mDefaultCameraDistance    = (windowSize.height * 0.5f) / tanf(fov * 0.5f);
 
   // Use a 1 frame delayed source position to determine the camera actor's position.
   // This is necessary as the viewport is determined by the Magnifier's Actor's World position (which is computed
   // at the end of the update cycle i.e. after constraints have been applied.)
-  // Property::Index propertySourcePositionDelayed = mCameraActor.RegisterProperty("delayedSourcePosition",   Vector3::ZERO);
-
-  constraint = Constraint::New<Vector3>(mCameraActor, Actor::Property::POSITION, CameraActorPositionConstraint(stageSize, mDefaultCameraDistance));
+  Constraint constraint = Constraint::New<Vector3>(mCameraActor, Actor::Property::POSITION, CameraActorPositionConstraint(windowSize, mDefaultCameraDistance));
   constraint.AddSource(Source(mSourceActor, Actor::Property::WORLD_POSITION));
   constraint.Apply();
 
   // Apply constraint to render-task viewport position
-  constraint = Constraint::New<Vector2>(mTask, RenderTask::Property::VIEWPORT_POSITION, RenderTaskViewportPositionConstraint(stageSize));
+  constraint = Constraint::New<Vector2>(mTask, RenderTask::Property::VIEWPORT_POSITION, RenderTaskViewportPositionConstraint(windowSize));
   constraint.AddSource(Source(self, Actor::Property::WORLD_POSITION));
   constraint.AddSource(Source(self, Actor::Property::SIZE));
   constraint.AddSource(Source(self, Actor::Property::WORLD_SCALE));
   constraint.Apply();
 
-  // Apply constraint to render-task viewport position
+  // Apply constraint to render-task viewport size
   constraint = Constraint::New<Vector2>(mTask, RenderTask::Property::VIEWPORT_SIZE, RenderTaskViewportSizeConstraint());
   constraint.AddSource(Source(self, Actor::Property::SIZE));
   constraint.AddSource(Source(self, Actor::Property::WORLD_SCALE));
   constraint.Apply();
 
-  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  Toolkit::ControlImpl::OnSceneConnection(depth);
+}
+
+void Magnifier::OnSceneDisconnection()
+{
+  if(mWindow)
+  {
+    RenderTaskList taskList = mWindow.GetRenderTaskList();
+    if(mTask)
+    {
+      taskList.RemoveTask(mTask);
+      mTask.Reset();
+    }
+    if(mCameraActor)
+    {
+      mWindow.Remove(mCameraActor);
+      mCameraActor.Reset();
+    }
+    mWindow.Remove(mSourceActor);
+    mWindow.Reset();
+  }
+
+  Toolkit::ControlImpl::OnSceneDisconnection();
 }
 
 void Magnifier::InitializeRenderTask()
 {
-  Stage stage = Stage::GetCurrent();
-
-  RenderTaskList taskList = stage.GetRenderTaskList();
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
 
   mTask = taskList.CreateTask();
   mTask.SetInputEnabled(false);
@@ -239,8 +273,13 @@ void Magnifier::InitializeRenderTask()
   mCameraActor = CameraActor::New();
   mCameraActor.SetType(Camera::FREE_LOOK);
 
-  stage.Add(mCameraActor);
+  mWindow.Add(mCameraActor);
   mTask.SetCameraActor(mCameraActor);
+
+  if(mTaskSourceActor)
+  {
+    mTask.SetSourceActor(mTaskSourceActor);
+  }
 
   SetFrameVisibility(true);
 }
@@ -309,6 +348,11 @@ void Magnifier::SetMagnificationFactor(float value)
 
 void Magnifier::Update()
 {
+  if(!mCameraActor)
+  {
+    return;
+  }
+
   // TODO: Make Camera settings (fieldofview/aspectratio) as animatable constraints.
 
   // should be updated when:

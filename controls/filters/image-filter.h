@@ -22,6 +22,7 @@
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/devel-api/common/vector-wrapper.h>
 #include <dali/public-api/actors/camera-actor.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/rendering/frame-buffer.h>
 #include <dali/public-api/rendering/texture.h>
 
@@ -52,8 +53,9 @@ public:
 
   /**
    * Enable effect, allocates any necessary resources
+   * @param[in] window The window to create render tasks on
    */
-  virtual void Enable() = 0;
+  virtual void Enable(Window window) = 0;
 
   /**
    * Disable effect, releases any allocated resources
@@ -120,7 +122,7 @@ public:
   void CreateKernel(const float* weights, size_t count);
 
   /**
-   * Set the actor which acts as the root actor for all internal actors for connection to stage
+   * Set the actor which acts as the root actor for all internal actors for connection to scene
    * @param[in] rootActor   An actor which acts as the root actor for any internal actors that need
    *                        to be created
    */
@@ -144,6 +146,7 @@ protected:
   FilterKernel  mKernel;
   Actor         mRootActor;
   CameraActor   mCameraActor;
+  Window        mWindow;
   Vector4       mBackgroundColor;
   Vector2       mTargetSize;
   Pixel::Format mPixelFormat;

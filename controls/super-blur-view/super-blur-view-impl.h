@@ -23,6 +23,7 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/devel-api/common/vector-wrapper.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/rendering/frame-buffer.h>
 #include <dali/public-api/rendering/renderer.h>
 
@@ -49,7 +50,7 @@ public:
   /**
    * @copydoc Dali::Toolkit::SuperBlurView::SetImage
    */
-  void SetTexture(Texture texture);
+  void SetTexture(Texture texture, Window window);
 
   /**
    * @copydoc Dali::Toolkit::SuperBlurView::GetBlurStrengthPropertyIndex
@@ -136,8 +137,9 @@ private:
    * Carry out the idx-th pass of blurring
    * @param[in] idx The blur pass index
    * @param[in] texture The input texture for the current blurring, it is either the original image or the blurred texture from the previous pass
+   * @param[in] window The window to add the GaussianBlurView for processing
    */
-  void BlurTexture(unsigned int idx, Texture texture);
+  void BlurTexture(unsigned int idx, Texture texture, Window window);
 
   /**
    * Signal handler to tell when the last blur view completes
@@ -155,6 +157,7 @@ private:
   std::vector<FrameBuffer>               mBlurredImage;
   std::vector<Renderer>                  mRenderers;
   Texture                                mInputTexture;
+  Window                                 mWindow;
   Vector2                                mTargetSize;
 
   Demo::SuperBlurView::SuperBlurViewSignal mBlurFinishedSignal; ///< Signal emitted when blur has completed.
@@ -163,6 +166,7 @@ private:
   Property::Index mBlurStrengthPropertyIndex;
   unsigned int    mBlurLevels;
   bool            mResourcesCleared;
+  bool            mBlurCompleted;
 };
 
 } // namespace Internal

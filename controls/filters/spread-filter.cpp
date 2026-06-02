@@ -20,7 +20,6 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
-#include <dali/devel-api/common/stage.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
@@ -60,8 +59,9 @@ void SpreadFilter::SetSpread(float spread)
   mSpread = spread;
 }
 
-void SpreadFilter::Enable()
+void SpreadFilter::Enable(Window window)
 {
+  mWindow = window;
   // create actor to render input with applied emboss effect
   mActorForInput = Actor::New();
   mActorForInput.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -119,7 +119,7 @@ void SpreadFilter::Disable()
       mActorForHorz.Reset();
     }
 
-    RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+    RenderTaskList taskList = mWindow.GetRenderTaskList();
 
     if(mRenderTaskForHorz)
     {
@@ -131,6 +131,7 @@ void SpreadFilter::Disable()
     }
 
     mRootActor.Reset();
+    mWindow.Reset();
   }
 }
 
@@ -162,7 +163,7 @@ void SpreadFilter::SetSize(const Vector2& size)
 
 void SpreadFilter::CreateRenderTasks()
 {
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
 
   // perform a horizontal blur targeting the internal buffer
   mRenderTaskForHorz = taskList.CreateTask();

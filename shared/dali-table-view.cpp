@@ -77,7 +77,7 @@ const float   BUTTON_PRESS_ANIMATION_TIME = 0.35f; ///< Time to perform button s
 const int     EXAMPLES_PER_ROW            = 3;
 const int     ROWS_PER_PAGE               = 3;
 const int     EXAMPLES_PER_PAGE           = EXAMPLES_PER_ROW * ROWS_PER_PAGE;
-const Vector3 TABLE_RELATIVE_SIZE(0.95f, 0.9f, 0.8f); ///< TableView's relative size to the entire stage. The Y value means sum of the logo and table relative heights.
+const Vector3 TABLE_RELATIVE_SIZE(0.95f, 0.9f, 0.8f); ///< TableView's relative size to the entire scene. The Y value means sum of the logo and table relative heights.
 
 const char* const DEMO_BUILD_DATE = __DATE__ " " __TIME__;
 

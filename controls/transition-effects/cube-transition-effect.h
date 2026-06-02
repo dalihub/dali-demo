@@ -55,8 +55,8 @@ class CubeTransitionEffect;
  * //set the displacement of bouncing movement during cube's rotation
  * cubeEffect.SetCubeDisplacement( cubeDisplacement  );
  *
- * // Add to stage
- * stage.Add( cubeEffect );
+ * // Add to scene
+ * scene.Add( cubeEffect );
  *
  * // Set the current image,
  * // only need to set at beginning or when the current image was transitioned to with no effect or other effect
@@ -141,7 +141,7 @@ public:
 
   /**
    * Set the target texture to transit to
-   * @param[in] texture The new Texture showing on stage
+   * @param[in] texture The new Texture showing on scene
    */
   void SetTargetTexture(Texture texture);
 

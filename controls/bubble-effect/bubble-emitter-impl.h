@@ -20,9 +20,9 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/public-api/controls/control-impl.h>
-#include <dali/devel-api/common/stage.h>
 #include <dali/devel-api/common/vector-wrapper.h>
 #include <dali/public-api/actors/camera-actor.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/render-tasks/render-task.h>
 #include <dali/public-api/rendering/frame-buffer.h>
 #include <dali/public-api/rendering/geometry.h>
@@ -67,7 +67,7 @@ public:
   /**
    * @copydoc Demo::BubbleEmitter::SetBackground
    */
-  void SetBackground(Texture bgTexture, const Vector3& hsvDelta);
+  void SetBackground(Window window, Texture bgTexture, const Vector3& hsvDelta);
 
   /**
    * @copydoc Demo::BubbleEmitter::SetShape
@@ -127,11 +127,6 @@ private:
   void OnRenderFinished(RenderTask source);
 
   /**
-   * Callback function from Stage to tell us if the context has been regained.
-   */
-  void OnContextRegained();
-
-  /**
    * Set the uniform values to the shader effect to emit a bubble
    * @param[in] bubbleRenderer The BubbleRenderer
    * @param[in] curUniform The index of the uniform array in the shader
@@ -142,7 +137,8 @@ private:
   void SetBubbleParameter(BubbleRenderer& bubbleRenderer, unsigned int curUniform, const Vector2& emitPosition, const Vector2& direction, const Vector2& displacement);
 
 private:
-  Actor       mBubbleRoot;        ///< The bubble root actor. Need to add it to stage to get the bubbles rendered.
+  Window      mWindow;            ///< The window used to add/remove internal actors and render tasks.
+  Actor       mBubbleRoot;        ///< The bubble root actor. Need to add it to scene to get the bubbles rendered.
   Texture     mShapeTexture;      ///< The alpha channnel of this texture defines the bubble shape.
   Texture     mBackgroundTexture; ///< The original background texture
   Texture     mEffectTexture;     ///< Texture which stores the adjusted color of the background image.The bubbles pick color from this image.

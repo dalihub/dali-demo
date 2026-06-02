@@ -60,9 +60,9 @@ SuperBlurView::SuperBlurView(Dali::Internal::CustomActor* internal)
   VerifyCustomActorPointer<Internal::SuperBlurView>(internal);
 }
 
-void SuperBlurView::SetTexture(Texture texture)
+void SuperBlurView::SetTexture(Texture texture, Window window)
 {
-  GetImpl(*this).SetTexture(texture);
+  GetImpl(*this).SetTexture(texture, window);
 }
 
 Property::Index SuperBlurView::GetBlurStrengthPropertyIndex() const

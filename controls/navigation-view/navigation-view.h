@@ -36,7 +36,7 @@ class NavigationView;
 /**
  * @brief NavigationView implements a view that manages the navigation of hierarchical contents.
  *
- * An Actor is pushed onto the NavigationView, itself and its children are added to the stage.
+ * An Actor is pushed onto the NavigationView, itself and its children are added to the scene.
  * The actors currently shown are replaced.
  * When pop is called on the NavigationView, the current tree of Actors are removed and the previous set added back.
  * If pop is called on the last set of Actors then they remain, nothing is popped.

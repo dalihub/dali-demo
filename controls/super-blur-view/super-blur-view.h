@@ -19,8 +19,9 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/rendering/texture.h>
 #include <dali-toolkit/public-api/controls/control.h>
+#include <dali/public-api/adaptor-framework/window.h>
+#include <dali/public-api/rendering/texture.h>
 
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
@@ -41,7 +42,7 @@ class SuperBlurView;
  *  // initialise\n
  *  SuperBlurView blurView = SuperBlurView::New( blurLevels );\n
  *  blurView.SetProperty( Actor::Property::SIZE, size );  // it is important to set the display size before set the input image!!
- *  Stage::GetCurrent().Add(blurView);\n
+ *  window.Add(blurView);\n
  *
  *  // Set the input image
  *  blurView.SetProperty( SuperBlurView::Property::IMAGE_URL, url );\n
@@ -147,8 +148,9 @@ public:
    * @brief Sets a custom texture to be blurred.
    *
    * @param[in] texture The texture that the user wishes to blur
+   * @param[in] window  The window to use for blur processing
    */
-  void SetTexture(Texture texture);
+  void SetTexture(Texture texture, Window window);
 
   /**
    * @brief Get the index of the property that can be used to fade the blur in / out.

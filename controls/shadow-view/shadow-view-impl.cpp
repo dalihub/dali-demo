@@ -22,7 +22,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
-#include <dali/devel-api/common/stage.h>
+#include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/debug.h>
@@ -154,7 +154,11 @@ void ShadowView::SetPointLight(Actor pointLight)
 
 void ShadowView::SetPointLightFieldOfView(float fieldOfView)
 {
-  mCameraActor.SetFieldOfView(fieldOfView);
+  mCachedFieldOfView = fieldOfView;
+  if(mCameraActor)
+  {
+    mCameraActor.SetFieldOfView(fieldOfView);
+  }
 }
 
 void ShadowView::SetShadowColor(Vector4 color)
@@ -176,7 +180,7 @@ void ShadowView::SetShadowColor(Vector4 color)
 
 void ShadowView::Activate()
 {
-  DALI_ASSERT_ALWAYS(Self().GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE) && "ShadowView should be on stage before calling Activate()\n");
+  DALI_ASSERT_ALWAYS(Self().GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE) && "ShadowView should be on scene before calling Activate()\n");
 
   // make sure resources are allocated and start the render tasks processing
   CreateRenderTasks();
@@ -184,7 +188,7 @@ void ShadowView::Activate()
 
 void ShadowView::Deactivate()
 {
-  DALI_ASSERT_ALWAYS(Self().GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE) && "ShadowView should be on stage before calling Deactivate()\n")
+  DALI_ASSERT_ALWAYS(Self().GetProperty<bool>(Actor::Property::CONNECTED_TO_SCENE) && "ShadowView should be on scene before calling Deactivate()\n")
 
   // stop render tasks processing
   // Note: render target resources are automatically freed since we set the Image::Unused flag
@@ -202,36 +206,9 @@ void ShadowView::OnInitialize()
   mChildrenRoot.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mChildrenRoot.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
-  Vector2 stageSize = Stage::GetCurrent().GetSize();
-  mCameraActor      = CameraActor::New(stageSize);
-
-  mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-
-  // Target is constrained to point at the shadow plane origin
-  mCameraActor.SetNearClippingPlane(1.0f);
-  mCameraActor.SetType(Dali::Camera::FREE_LOOK); // Camera orientation constrained to point at shadow plane world position
-  mCameraActor.SetProperty(Actor::Property::ORIENTATION, Quaternion(Radian(Degree(180)), Vector3::YAXIS));
-  mCameraActor.SetProperty(Actor::Property::POSITION, DEFAULT_LIGHT_POSITION);
-
-  // Create render targets needed for rendering from light's point of view
-  mSceneFromLightRenderTarget = FrameBuffer::New(stageSize.width, stageSize.height, FrameBuffer::Attachment::NONE);
-  Texture textureFromLight    = Texture::New(TextureType::TEXTURE_2D, Pixel::RGBA8888, unsigned(stageSize.width), unsigned(stageSize.height));
-  mSceneFromLightRenderTarget.AttachColorTexture(textureFromLight);
-
-  mOutputFrameBuffer    = FrameBuffer::New(stageSize.width * 0.5f, stageSize.height * 0.5f, FrameBuffer::Attachment::NONE);
-  Texture outputTexture = Texture::New(TextureType::TEXTURE_2D, Pixel::RGBA8888, unsigned(stageSize.width * 0.5f), unsigned(stageSize.height * 0.5f));
-  mOutputFrameBuffer.AttachColorTexture(outputTexture);
-
-  //////////////////////////////////////////////////////
-  // Connect to actor tree
-
   Self().Add(mChildrenRoot);
-  Stage::GetCurrent().Add(mCameraActor);
 
   mBlurFilter.SetRefreshOnDemand(false);
-  mBlurFilter.SetInputTexture(mSceneFromLightRenderTarget.GetColorTexture());
-  mBlurFilter.SetOutputFrameBuffer(mOutputFrameBuffer);
-  mBlurFilter.SetSize(stageSize * 0.5f);
   mBlurFilter.SetPixelFormat(Pixel::RGBA8888);
 
   mBlurRootActor = Actor::New();
@@ -258,6 +235,55 @@ void ShadowView::OnInitialize()
   blurStrengthConstraint.Apply();
 
   Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+}
+
+void ShadowView::OnSceneConnection(int depth)
+{
+  mWindow = DevelWindow::Get(Self());
+
+  Window::WindowSize winSize = mWindow.GetSize();
+  Vector2            windowSize(winSize.GetWidth(), winSize.GetHeight());
+
+  mCameraActor = CameraActor::New(windowSize);
+  mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
+  mCameraActor.SetNearClippingPlane(1.0f);
+  mCameraActor.SetType(Dali::Camera::FREE_LOOK);
+  mCameraActor.SetProperty(Actor::Property::ORIENTATION, Quaternion(Radian(Degree(180)), Vector3::YAXIS));
+  mCameraActor.SetProperty(Actor::Property::POSITION, DEFAULT_LIGHT_POSITION);
+  if(mCachedFieldOfView >= 0.f)
+  {
+    mCameraActor.SetFieldOfView(mCachedFieldOfView);
+  }
+
+  mSceneFromLightRenderTarget = FrameBuffer::New(windowSize.width, windowSize.height, FrameBuffer::Attachment::NONE);
+  Texture textureFromLight    = Texture::New(TextureType::TEXTURE_2D, Pixel::RGBA8888, unsigned(windowSize.width), unsigned(windowSize.height));
+  mSceneFromLightRenderTarget.AttachColorTexture(textureFromLight);
+
+  mOutputFrameBuffer    = FrameBuffer::New(windowSize.width * 0.5f, windowSize.height * 0.5f, FrameBuffer::Attachment::NONE);
+  Texture outputTexture = Texture::New(TextureType::TEXTURE_2D, Pixel::RGBA8888, unsigned(windowSize.width * 0.5f), unsigned(windowSize.height * 0.5f));
+  mOutputFrameBuffer.AttachColorTexture(outputTexture);
+
+  mWindow.Add(mCameraActor);
+
+  mBlurFilter.SetInputTexture(mSceneFromLightRenderTarget.GetColorTexture());
+  mBlurFilter.SetOutputFrameBuffer(mOutputFrameBuffer);
+  mBlurFilter.SetSize(windowSize * 0.5f);
+
+  ConstrainCamera();
+
+  Toolkit::ControlImpl::OnSceneConnection(depth);
+}
+
+void ShadowView::OnSceneDisconnection()
+{
+  if(mCameraActor)
+  {
+    mWindow.Remove(mCameraActor);
+    mCameraActor.Reset();
+  }
+  mWindow.Reset();
+
+  Toolkit::ControlImpl::OnSceneDisconnection();
 }
 
 void ShadowView::OnChildAdd(Actor& child)
@@ -298,7 +324,7 @@ void ShadowView::ConstrainCamera()
 
 void ShadowView::CreateRenderTasks()
 {
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
 
   // We want the first task to render the scene from the light
   mRenderSceneTask = taskList.CreateTask();
@@ -314,12 +340,12 @@ void ShadowView::CreateRenderTasks()
   // the same shadow color at alpha 0.
   mRenderSceneTask.SetClearColor(mCachedBackgroundColor);
 
-  mBlurFilter.Enable();
+  mBlurFilter.Enable(mWindow);
 }
 
 void ShadowView::RemoveRenderTasks()
 {
-  RenderTaskList taskList = Stage::GetCurrent().GetRenderTaskList();
+  RenderTaskList taskList = mWindow.GetRenderTaskList();
 
   taskList.RemoveTask(mRenderSceneTask);
   mRenderSceneTask.Reset();

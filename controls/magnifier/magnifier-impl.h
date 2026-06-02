@@ -22,6 +22,7 @@
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/public-api/actors/camera-actor.h>
 #include <dali/public-api/actors/layer.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/render-tasks/render-task.h>
 
 // INTERNAL INCLUDES
@@ -122,6 +123,16 @@ private:
   void OnInitialize() override;
 
   /**
+   * @copydoc Toolkit::ControlImpl::OnSceneConnection
+   */
+  void OnSceneConnection(int depth) override;
+
+  /**
+   * @copydoc Toolkit::ControlImpl::OnSceneDisconnection
+   */
+  void OnSceneDisconnection() override;
+
+  /**
    * Initializes the render task required to render contents.
    */
   void InitializeRenderTask();
@@ -137,10 +148,12 @@ private:
   Magnifier& operator=(const Magnifier& rhs);
 
 private:
+  Window      mWindow;                ///< The window this magnifier is on
   RenderTask  mTask;                  ///< Render Task to render the source actor contents.
   CameraActor mCameraActor;           ///< CameraActor attached to RenderTask
   Actor       mFrame;                 ///< The Magnifier Frame
   Actor       mSourceActor;           ///< Source Delegate Actor represents the source position to read.
+  Actor       mTaskSourceActor;       ///< Source actor for the render task, cached if set before scene connection.
   float       mDefaultCameraDistance; ///< Default RenderTask's camera distance from target.
   Vector3     mActorSize;             ///< The Actor size
   float       mMagnificationFactor;   ///< Magnification factor 1.0f is default. same as content.

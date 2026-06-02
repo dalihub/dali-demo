@@ -47,7 +47,7 @@ public:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application application)
   {
-    // Get a handle to the stage
+    // Get a handle to the scene
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::BLACK);
 

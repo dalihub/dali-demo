@@ -22,6 +22,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 #include <memory>
+#include <vector>
 
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view.h>

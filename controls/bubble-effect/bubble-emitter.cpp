@@ -68,9 +68,9 @@ Actor BubbleEmitter::GetRootActor()
   return GetImpl(*this).GetRootActor();
 }
 
-void BubbleEmitter::SetBackground(Dali::Texture bgTexture, const Vector3& hsvDelta)
+void BubbleEmitter::SetBackground(Window window, Dali::Texture bgTexture, const Vector3& hsvDelta)
 {
-  GetImpl(*this).SetBackground(bgTexture, hsvDelta);
+  GetImpl(*this).SetBackground(window, bgTexture, hsvDelta);
 }
 
 void BubbleEmitter::SetBubbleShape(Dali::Texture shapeTexture)

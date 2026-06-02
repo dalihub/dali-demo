@@ -22,6 +22,7 @@
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali-toolkit/public-api/controls/image-view/image-view.h>
 #include <dali/public-api/actors/camera-actor.h>
+#include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/animation/constraints.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/render-tasks/render-task.h>
@@ -114,6 +115,8 @@ public:
 
 private:
   void OnInitialize() override;
+  void OnSceneConnection(int depth) override;
+  void OnSceneDisconnection() override;
 
   /**
    * @copydoc Toolkit::ControlImpl::OnChildAdd()
@@ -136,6 +139,8 @@ private:
   void CreateBlurFilter();
 
 private:
+  Window mWindow; ///< The window this shadow view is on
+
   Actor mShadowPlane;   // Shadow renders into this actor
   Actor mShadowPlaneBg; // mShadowPlane renders directly in front of this actor
   Actor mPointLight;    // Shadow is cast from this point light
@@ -154,8 +159,9 @@ private:
   Property::Map                     mShadowVisualMap;
   Demo::Internal::BlurTwoPassFilter mBlurFilter;
 
-  Vector4 mCachedShadowColor;     ///< Cached Shadow color.
-  Vector4 mCachedBackgroundColor; ///< Cached Shadow background color (same as shadow color but with alpha at 0.0)
+  Vector4 mCachedShadowColor;       ///< Cached Shadow color.
+  Vector4 mCachedBackgroundColor;   ///< Cached Shadow background color (same as shadow color but with alpha at 0.0)
+  float   mCachedFieldOfView{-1.f}; ///< Cached field of view, negative means not set.
 
   /////////////////////////////////////////////////////////////
   // Properties that can be animated
