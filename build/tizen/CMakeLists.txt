@@ -220,6 +220,12 @@ FOREACH(flag ${LOCAL_STYLE_IMAGES_LIST})
 ENDFOREACH(flag)
 MESSAGE("Installed style resources ${LOCAL_STYLE_IMAGES_LIST} to ${STYLE_DIR}/images")
 
+FILE(GLOB LOCAL_STYLE_IMAGES_LIST "${LOCAL_STYLE_DIR}/images/*.webp")
+FOREACH(flag ${LOCAL_STYLE_IMAGES_LIST})
+  INSTALL(FILES ${flag} DESTINATION ${STYLE_DIR}/images)
+ENDFOREACH(flag)
+MESSAGE("Installed style resources ${LOCAL_STYLE_IMAGES_LIST} to ${STYLE_DIR}/images")
+
 IF( ENABLE_PKG_CONFIGURE )
   SET(PKG_LIST dali2-core
                dali2-adaptor

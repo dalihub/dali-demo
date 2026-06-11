@@ -16,11 +16,12 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali/dali.h>
 #include <dali/integration-api/string-utils.h>
+
+#include <controls/popup/popup.h>
 #include "shared/view.h"
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -154,17 +155,17 @@ public:
     mContentLayer.Add(mItemView);
   }
 
-  void ShowPopup(Toolkit::Popup popup)
+  void ShowPopup(Demo::Popup popup)
   {
     mApplication.GetWindow().Add(popup);
-    popup.SetDisplayState(Toolkit::Popup::SHOWN);
+    popup.SetDisplayState(Demo::Popup::SHOWN);
   }
 
   void OnPopupOutsideTouched()
   {
     if(mPopup)
     {
-      mPopup.SetDisplayState(Toolkit::Popup::HIDDEN);
+      mPopup.SetDisplayState(Demo::Popup::HIDDEN);
     }
   }
 
@@ -177,17 +178,17 @@ public:
     }
   }
 
-  Toolkit::Popup CreatePopup()
+  Demo::Popup CreatePopup()
   {
     Window      window         = mApplication.GetWindow();
     const float POPUP_WIDTH_DP = window.GetSize().GetWidth() * 0.75f;
 
-    Toolkit::Popup popup = Toolkit::Popup::New();
+    Demo::Popup popup = Demo::Popup::New();
     popup.SetProperty(Dali::Actor::Property::NAME, "popup");
     popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     popup.SetProperty(Actor::Property::SIZE, Vector2(POPUP_WIDTH_DP, 0.0f));
-    popup.SetProperty(Toolkit::Popup::Property::TAIL_VISIBILITY, false);
+    popup.SetProperty(Demo::Popup::Property::TAIL_VISIBILITY, false);
 
     popup.OutsideTouchedSignal().Connect(this, &SizeNegotiationController::OnPopupOutsideTouched);
     popup.HiddenSignal().Connect(this, &SizeNegotiationController::PopupHidden);
@@ -813,8 +814,8 @@ private:
   Layer            mContentLayer; ///< Content layer.
 
   Toolkit::TextLabel mTitleActor; ///< Title text.
-  Toolkit::Popup     mMenu;       ///< The navigation menu.
-  Toolkit::Popup     mPopup;      ///< The current example popup.
+  Demo::Popup        mMenu;       ///< The navigation menu.
+  Demo::Popup        mPopup;      ///< The current example popup.
 
   Toolkit::ItemView mItemView; ///< ItemView to hold test images.
 };

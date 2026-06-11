@@ -24,13 +24,15 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <cstdio>
 #include <sstream>
+
+#include <controls/popup/popup.h>
 #include "image-channel-control.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;

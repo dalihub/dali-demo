@@ -20,7 +20,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <string>
 
-namespace Demo
+namespace Dali::Demo
 {
 namespace Internal
 {
@@ -116,6 +116,6 @@ public: // Not for public use
   BeatControl(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Demo
+} // namespace Dali::Demo
 
 #endif // DALI_DEMO_BEAT_CONTROL_H

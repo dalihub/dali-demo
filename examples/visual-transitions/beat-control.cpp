@@ -17,7 +17,7 @@
 #include "beat-control.h"
 #include "beat-control-impl.h"
 
-namespace Demo
+namespace Dali::Demo
 {
 BeatControl::BeatControl()
 {
@@ -87,4 +87,4 @@ BeatControl::BeatControl(Dali::Internal::CustomActor* internal)
   VerifyCustomActorPointer<Internal::BeatControl>(internal);
 }
 
-} //namespace Demo
+} //namespace Dali::Demo

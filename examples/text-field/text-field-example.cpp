@@ -22,13 +22,15 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <iostream>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
+
+#include <controls/popup/popup.h>
 #include "shared/multi-language-strings.h"
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -104,7 +106,7 @@ public:
     mPopup.Add(mField);
     mPopup.OutsideTouchedSignal().Connect(this, &TextFieldExample::OnPopupOutsideTouched);
     window.Add(mPopup);
-    mPopup.SetDisplayState(Popup::SHOWN);
+    mPopup.SetDisplayState(Demo::Popup::SHOWN);
 
     return true;
   }
@@ -125,9 +127,9 @@ public:
     return field;
   }
 
-  Popup CreatePopup()
+  Demo::Popup CreatePopup()
   {
-    Popup popup = Popup::New();
+    Demo::Popup popup = Demo::Popup::New();
     popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH);
@@ -150,7 +152,7 @@ public:
     // Hide & discard the pop-up
     if(mPopup)
     {
-      mPopup.SetDisplayState(Popup::HIDDEN);
+      mPopup.SetDisplayState(Demo::Popup::HIDDEN);
     }
     mField.Reset();
   }
@@ -206,8 +208,8 @@ private:
   String     mButtonLabel;
 
   // Pop-up contents
-  TextField mField;
-  Popup     mPopup;
+  TextField   mField;
+  Demo::Popup mPopup;
 };
 
 int DALI_EXPORT_API main(int argc, char** argv)
