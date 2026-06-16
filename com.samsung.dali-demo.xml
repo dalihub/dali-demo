@@ -58,6 +58,9 @@
 	<ui-application appid="bloom-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/bloom-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Bloom</label>
 	</ui-application>
+	<ui-application appid="blur-noise.example" exec="/usr/apps/com.samsung.dali-demo/bin/blur-noise.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Blur Noise</label>
+	</ui-application>
 	<ui-application appid="bubble-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/bubble-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Bubble Effect</label>
 	</ui-application>
