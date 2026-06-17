@@ -23,9 +23,7 @@
 using namespace Dali; // Needed for macros
 using namespace Dali::Toolkit;
 
-namespace Demo
-{
-namespace Internal
+namespace Dali::Demo::Internal
 {
 namespace
 {
@@ -369,5 +367,4 @@ Property::Value BeatControl::GetProperty(BaseObject* object, Property::Index pro
   return value;
 }
 
-} // namespace Internal
-} // namespace Demo
+} // namespace Dali::Demo::Internal

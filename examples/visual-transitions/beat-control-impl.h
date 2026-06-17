@@ -24,7 +24,7 @@
 #include <dali/public-api/animation/animation.h>
 #include "beat-control.h"
 
-namespace Demo
+namespace Dali::Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
@@ -148,6 +148,6 @@ inline const Internal::BeatControl& GetImpl(const Demo::BeatControl& handle)
   return static_cast<const Internal::BeatControl&>(object);
 }
 
-} // namespace Demo
+} // namespace Dali::Demo
 
 #endif //  DALI_DEMO_BEAT_CONTROL_IMPL_H

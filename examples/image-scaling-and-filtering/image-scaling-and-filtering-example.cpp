@@ -16,13 +16,15 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <iostream>
+
+#include <controls/popup/popup.h>
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -332,12 +334,12 @@ public:
     return button;
   }
 
-  Toolkit::Popup CreatePopup()
+  Demo::Popup CreatePopup()
   {
     Window      window         = mApplication.GetWindow();
     const float POPUP_WIDTH_DP = window.GetSize().GetWidth() * 0.75f;
 
-    Toolkit::Popup popup = Toolkit::Popup::New();
+    Demo::Popup popup = Demo::Popup::New();
     popup.SetProperty(Dali::Actor::Property::NAME, "POPUP");
     popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
@@ -396,7 +398,7 @@ public:
 
       mPopup.SetContent(samplingModes);
       mApplication.GetWindow().Add(mPopup);
-      mPopup.SetDisplayState(Toolkit::Popup::SHOWN);
+      mPopup.SetDisplayState(Demo::Popup::SHOWN);
     }
     else if(CheckSamplingModeButton(button, SamplingMode::NEAREST) ||
             CheckSamplingModeButton(button, SamplingMode::LINEAR) ||
@@ -419,7 +421,7 @@ public:
       mSamplingMode = mode;
       mSamplingModeButton.SetProperty(Toolkit::Button::Property::LABEL, modeName);
       ResizeImage();
-      mPopup.SetDisplayState(Toolkit::Popup::HIDDEN);
+      mPopup.SetDisplayState(Demo::Popup::HIDDEN);
       mPopup.Reset();
       return true;
     }
@@ -430,7 +432,7 @@ public:
   {
     if(mPopup)
     {
-      mPopup.SetDisplayState(Toolkit::Popup::HIDDEN);
+      mPopup.SetDisplayState(Demo::Popup::HIDDEN);
       mPopup.Reset();
     }
   }
@@ -514,7 +516,7 @@ public:
       {
         if(mPopup && mPopup.GetCurrentProperty<bool>(Actor::Property::VISIBLE))
         {
-          mPopup.SetDisplayState(Toolkit::Popup::HIDDEN);
+          mPopup.SetDisplayState(Demo::Popup::HIDDEN);
           mPopup.Reset();
         }
         else
@@ -609,7 +611,7 @@ private:
   Application&         mApplication;
   Toolkit::ImageView   mDesiredBox; //< Background rectangle to show requested image size.
   Toolkit::PushButton  mSamplingModeButton;
-  Toolkit::Popup       mPopup;
+  Demo::Popup          mPopup;
   PinchGestureDetector mPinchDetector;
   float                mLastPinchScale;
   Toolkit::ImageView   mGrabCorner;

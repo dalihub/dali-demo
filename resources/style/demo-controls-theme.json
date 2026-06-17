@@ -80,6 +80,22 @@
       "secondaryProgressValue":0.0,
       "indeterminate": false
     },
+    "Popup": {
+      "popupBackgroundImage": "{STYLE_DIR}/images/00_popup_bg.9.webp",
+      "tailUpImage": "{STYLE_DIR}/images/popup_tail_up.webp",
+      "tailDownImage": "{STYLE_DIR}/images/popup_tail_down.webp",
+      "tailLeftImage": "{STYLE_DIR}/images/popup_tail_left.webp",
+      "tailRightImage": "{STYLE_DIR}/images/popup_tail_right.webp",
+      "popupBackgroundBorder": [17, 17, 13, 13]
+    },
+    "ConfirmationPopup": {
+      "popupBackgroundImage":"{STYLE_DIR}/images/00_popup_bg.9.webp",
+      "tailUpImage":"{STYLE_DIR}/images/popup_tail_up.webp",
+      "tailDownImage":"{STYLE_DIR}/images/popup_tail_down.webp",
+      "tailLeftImage":"{STYLE_DIR}/images/popup_tail_left.webp",
+      "tailRightImage":"{STYLE_DIR}/images/popup_tail_right.webp",
+      "popupBackgroundBorder":[17, 17, 13, 13]
+    },
     "CircularProgressBar": {
       "size":[64,64],
       "trackVisual":{

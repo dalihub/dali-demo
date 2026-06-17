@@ -20,10 +20,10 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali/dali.h>
 
 // INTERNAL INCLUDES
+#include <controls/popup/popup.h>
 #include "bubble-animator.h"
 #include "example.h"
 
@@ -225,7 +225,7 @@ private:
   Dali::Toolkit::ScrollViewEffect mScrollViewEffect; ///< Effect to be applied to the scroll view
   Dali::Actor                     mPressedActor;     ///< The currently pressed actor.
   Dali::TapGestureDetector        mLogoTapDetector;  ///< To detect taps on the logo
-  Dali::Toolkit::Popup            mVersionPopup;     ///< Displays DALi library version information
+  Dali::Demo::Popup               mVersionPopup;     ///< Displays DALi library version information
   BubbleAnimator                  mBubbleAnimator;   ///< Provides bubble animations.
 
   /**
