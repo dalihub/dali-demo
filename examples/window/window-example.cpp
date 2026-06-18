@@ -151,7 +151,7 @@ public:
     Dali::Window window = mApplication.GetWindow();
     bool         ret    = true;
 
-    if(DevelWindow::IsWindowRotating(window) == true)
+    if(window.IsOrientationChanging() == true)
     {
       isRotating = true;
       DALI_LOG_RELEASE_INFO("Window is rotating!!!!\n");
@@ -199,28 +199,28 @@ public:
     DALI_LOG_RELEASE_INFO("Resize finish %d  x heigt %d\n", size.GetWidth(), size.GetHeight());
     if(bChangedOrientation)
     {
-      if(DevelWindow::GetCurrentOrientation(winHandle) == Dali::WindowOrientation::PORTRAIT)
+      if(winHandle.GetCurrentOrientation() == Dali::WindowOrientation::PORTRAIT)
       {
         DALI_LOG_RELEASE_INFO("DevelWindow::OnWindowResized, current orientation is Dali::WindowOrientation::PORTRAIT\n");
         PositionSize newWindowPosition(0, 0, 400, 300);
         DALI_LOG_RELEASE_INFO("DevelWindow::OnWindowResized, SetPositionSize(720 * 1280)\n");
         DevelWindow::SetPositionSize(winHandle, newWindowPosition);
       }
-      else if(DevelWindow::GetCurrentOrientation(winHandle) == Dali::WindowOrientation::LANDSCAPE)
+      else if(winHandle.GetCurrentOrientation() == Dali::WindowOrientation::LANDSCAPE)
       {
         DALI_LOG_RELEASE_INFO("DevelWindow::OnWindowResized, current orientation is Dali::WindowOrientation::LANDSCAPE\n");
         PositionSize newWindowPosition(0, 0, 1280, 720);
         DALI_LOG_RELEASE_INFO("DevelWindow::OnWindowResized, SetPositionSize(1280 * 720)\n");
         DevelWindow::SetPositionSize(winHandle, newWindowPosition);
       }
-      else if(DevelWindow::GetCurrentOrientation(winHandle) == Dali::WindowOrientation::PORTRAIT_INVERSE)
+      else if(winHandle.GetCurrentOrientation() == Dali::WindowOrientation::PORTRAIT_INVERSE)
       {
         DALI_LOG_RELEASE_INFO("DevelWindow::OnWindowResized, current orientation is Dali::WindowOrientation::PORTRAIT_INVERSE\n");
         PositionSize newWindowPosition(100, 100, 720, 1280);
         DALI_LOG_RELEASE_INFO("DevelWindow::OnWindowResized, SetPositionSize(100, 100, 720 * 1280)\n");
         DevelWindow::SetPositionSize(winHandle, newWindowPosition);
       }
-      else if(DevelWindow::GetCurrentOrientation(winHandle) == Dali::WindowOrientation::LANDSCAPE_INVERSE)
+      else if(winHandle.GetCurrentOrientation() == Dali::WindowOrientation::LANDSCAPE_INVERSE)
       {
         DALI_LOG_RELEASE_INFO("DevelWindow::OnWindowResized, current orientation is Dali::WindowOrientation::LANDSCAPE_INVERSE\n");
         PositionSize newWindowPosition(100, 100, 1280, 720);
@@ -245,7 +245,7 @@ public:
       Window::WindowSize windowSize = window.GetSize();
 
       DALI_LOG_RELEASE_INFO("window size: w:%d, h:%d\n", windowSize.GetWidth(), windowSize.GetHeight());
-      DevelWindow::EnableFloatingMode(window, true);
+      window.EnableFloatingMode(true);
 
       if((localX < MARGIN) && (localY < MARGIN)) // left top corner
       {
@@ -285,7 +285,7 @@ public:
       else
       {
         DALI_LOG_RELEASE_INFO("RequestMoveToServer\n", localX, localY);
-        DevelWindow::RequestMoveToServer(window);
+        window.RequestMoveToServer();
       }
     }
     return;
@@ -320,10 +320,10 @@ public:
 
     Rect<int> setInputRegion(0, 0, 1920, 1080);
     //mSecondWindow.SetInputRegion(setInputRegion);
-    DevelWindow::ExcludeInputRegion(mSecondWindow, setInputRegion);
+    mSecondWindow.ExcludeInputRegion(setInputRegion);
 
     Dali::Window window = mApplication.GetWindow();
-    DevelWindow::SetParent(mSecondWindow, window);
+    mSecondWindow.SetParent(window);
   }
 
   void OnSubWindowMoved(Dali::Window winHandle, Dali::Window::WindowPosition position)
@@ -361,7 +361,7 @@ public:
       Window::WindowSize windowSize = window.GetSize();
 
       DALI_LOG_RELEASE_INFO("window size: w:%d, h:%d\n", windowSize.GetWidth(), windowSize.GetHeight());
-      DevelWindow::EnableFloatingMode(window, true);
+      window.EnableFloatingMode(true);
 
       if((localX < MARGIN) && (localY < MARGIN)) // left top corner
       {
@@ -401,7 +401,7 @@ public:
       else
       {
         DALI_LOG_RELEASE_INFO("RequestMoveToServer\n", localX, localY);
-        DevelWindow::RequestMoveToServer(window);
+        window.RequestMoveToServer();
       }
     }
     return;
@@ -440,7 +440,7 @@ public:
           bColor = false;
         }
 
-        DevelWindow::AddFramePresentedCallback(window, MakeCallback(this, &WindowExampleController::PresentedCallback), count);
+        window.AddFramePresentedCallback(MakeCallback(this, &WindowExampleController::PresentedCallback), count);
       }
       else if(event.GetKeyName() == "3")
       {
@@ -496,25 +496,25 @@ public:
       else if(event.GetKeyName() == "6")
       {
         DALI_LOG_RELEASE_INFO("Maximize Test\n");
-        if(DevelWindow::IsMaximized(window))
+        if(window.IsMaximized())
         {
-          DevelWindow::Maximize(window, false);
+          window.Maximize(false);
         }
         else
         {
-          DevelWindow::Maximize(window, true);
+          window.Maximize(true);
         }
       }
       else if(event.GetKeyName() == "7")
       {
         DALI_LOG_RELEASE_INFO("Minimize Test\n");
-        if(DevelWindow::IsMinimized(window))
+        if(window.IsMinimized())
         {
-          DevelWindow::Minimize(window, false);
+          window.Minimize(false);
         }
         else
         {
-          DevelWindow::Minimize(window, true);
+          window.Minimize(true);
         }
       }
 
