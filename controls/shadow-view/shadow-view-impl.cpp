@@ -137,6 +137,19 @@ void ShadowView::SetShadowPlaneBackground(Actor shadowPlaneBackground)
   mShadowPlane.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
   mBlurRootActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+
+  // If ShadowView is already on scene (mCameraActor exists), set up shader constants now.
+  // Otherwise, SetShaderConstants() will be called later in OnSceneConnection().
+  if(mCameraActor)
+  {
+    // Set the output texture to the shadow plane renderer
+    if(mOutputFrameBuffer)
+    {
+      TextureSet textureSet = shadowRenderer.GetTextures();
+      textureSet.SetTexture(0u, mOutputFrameBuffer.GetColorTexture());
+    }
+    SetShaderConstants();
+  }
 }
 
 void ShadowView::SetPointLight(Actor pointLight)
@@ -270,8 +283,12 @@ void ShadowView::OnSceneConnection(int depth)
 
   mWindow.Add(mCameraActor);
 
-  // Set up shader constants now that mCameraActor is initialized
-  SetShaderConstants();
+  // Set up shader constants now that mCameraActor is initialized, but only if mShadowPlane exists
+  // (mShadowPlane is created in SetShadowPlaneBackground(), which may be called before or after OnSceneConnection)
+  if(mShadowPlane)
+  {
+    SetShaderConstants();
+  }
 
   mBlurFilter.SetInputTexture(mSceneFromLightRenderTarget.GetColorTexture());
   mBlurFilter.SetOutputFrameBuffer(mOutputFrameBuffer);
