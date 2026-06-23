@@ -105,10 +105,10 @@ public:
     // Respond to a click anywhere on the window
     window.TouchedSignal().Connect(this, &WindowExampleController::OnTouch);
     window.ResizeSignal().Connect(this, &WindowExampleController::OnWindowResized);
-    DevelWindow::MovedSignal(window).Connect(this, &WindowExampleController::OnWindowMoved);
-    DevelWindow::OrientationChangedSignal(window).Connect(this, &WindowExampleController::OnWindowOrientationChanged);
-    DevelWindow::MoveCompletedSignal(window).Connect(this, &WindowExampleController::OnWindowMovedByServer);
-    DevelWindow::ResizeCompletedSignal(window).Connect(this, &WindowExampleController::OnWindowResizedByServer);
+    window.MovedSignal().Connect(this, &WindowExampleController::OnWindowMoved);
+    window.OrientationChangedSignal().Connect(this, &WindowExampleController::OnWindowOrientationChanged);
+    window.MoveCompletedSignal().Connect(this, &WindowExampleController::OnWindowMovedByServer);
+    window.ResizeCompletedSignal().Connect(this, &WindowExampleController::OnWindowResizedByServer);
 
     window.AddAvailableOrientation(Dali::WindowOrientation::PORTRAIT);
     window.AddAvailableOrientation(Dali::WindowOrientation::LANDSCAPE);
@@ -308,9 +308,9 @@ public:
 
     mSecondWindow.TouchedSignal().Connect(this, &WindowExampleController::OnSubWindowTouch);
     mSecondWindow.ResizeSignal().Connect(this, &WindowExampleController::OnSubWindowResized);
-    DevelWindow::MovedSignal(mSecondWindow).Connect(this, &WindowExampleController::OnSubWindowMoved);
-    DevelWindow::MoveCompletedSignal(mSecondWindow).Connect(this, &WindowExampleController::OnSubWindowMovedByServer);
-    DevelWindow::ResizeCompletedSignal(mSecondWindow).Connect(this, &WindowExampleController::OnSubWindowResizedByServer);
+    mSecondWindow.MovedSignal().Connect(this, &WindowExampleController::OnSubWindowMoved);
+    mSecondWindow.MoveCompletedSignal().Connect(this, &WindowExampleController::OnSubWindowMovedByServer);
+    mSecondWindow.ResizeCompletedSignal().Connect(this, &WindowExampleController::OnSubWindowResizedByServer);
 
     mSecondWindow.AddAvailableOrientation(Dali::WindowOrientation::PORTRAIT);
     mSecondWindow.AddAvailableOrientation(Dali::WindowOrientation::LANDSCAPE);
