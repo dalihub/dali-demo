@@ -46,7 +46,8 @@ FppGameTutorialController::~FppGameTutorialController()
 
 void FppGameTutorialController::OnTouch(Window window, TouchEvent touchEvent)
 {
-  Vector2 size(mWindow.GetSize());
+  auto    positionSize = mWindow.GetPositionSize();
+  Vector2 size(positionSize.width, positionSize.height);
 
   bool isLandscape(size.x > size.y);
 
@@ -102,7 +103,8 @@ void FppGameTutorialController::DisplayTutorial(Dali::Window window)
 {
   mWindow = window;
 
-  Vector2 windowSize(mWindow.GetSize());
+  auto    positionSize = mWindow.GetPositionSize();
+  Vector2 windowSize(positionSize.width, positionSize.height);
   bool    isLandscape(windowSize.x > windowSize.y);
   if(!isLandscape)
   {
@@ -168,7 +170,7 @@ void FppGameTutorialController::DisplayTutorial(Dali::Window window)
 void FppGameTutorialController::OnTutorialAnimationFinished(Animation animation)
 {
   // touch signal will wait for a single touch on each side of screen
-  mWindow.TouchedSignal().Connect(this, &FppGameTutorialController::OnTouch);
+  mWindow.TouchEventSignal().Connect(this, &FppGameTutorialController::OnTouch);
 }
 
 void FppGameTutorialController::OnTutorialComplete(Animation animation)

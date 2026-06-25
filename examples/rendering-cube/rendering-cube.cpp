@@ -66,7 +66,7 @@ public:
     PlayAnimation();
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &DrawCubeController::OnTouch);
+    window.TouchEventSignal().Connect(this, &DrawCubeController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &DrawCubeController::OnKeyEvent);
@@ -197,10 +197,10 @@ public:
    */
   void CreateActor()
   {
-    Window     window     = mApplication.GetWindow();
-    const auto windowSize = window.GetSize();
+    Window window       = mApplication.GetWindow();
+    auto   positionSize = window.GetPositionSize();
 
-    float quarterWindowSize = std::min(windowSize.GetWidth(), windowSize.GetHeight()) * 0.25f;
+    float quarterWindowSize = std::min(positionSize.width, positionSize.height) * 0.25f;
     mActor                  = Actor::New();
     mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);

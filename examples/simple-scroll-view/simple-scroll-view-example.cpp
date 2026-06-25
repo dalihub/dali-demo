@@ -64,7 +64,7 @@ private:
   void OnInit(Application app)
   {
     Window  window     = app.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     window.SetBackgroundColor(Color::WHITE);
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 

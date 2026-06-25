@@ -65,7 +65,7 @@ public:
   void Create(Application application)
   {
     Window window = application.GetWindow();
-    mWindowSize   = window.GetSize();
+    mWindowSize   = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     mVideoView = Toolkit::VideoView::New();
     window.Add(mVideoView);

@@ -207,10 +207,10 @@ void PageTurnExample::OnInit(Application app)
   window.AddAvailableOrientation(WindowOrientation::LANDSCAPE);
   window.AddAvailableOrientation(WindowOrientation::PORTRAIT_INVERSE);
   window.AddAvailableOrientation(WindowOrientation::LANDSCAPE_INVERSE);
-  window.ResizeSignal().Connect(this, &PageTurnExample::OnWindowResized);
+  window.ResizedSignal().Connect(this, &PageTurnExample::OnWindowResized);
 
-  Window::WindowSize size = window.GetSize();
-  Rotate(size.GetWidth() > size.GetHeight() ? LANDSCAPE : PORTRAIT);
+  auto positionSize = window.GetPositionSize();
+  Rotate(positionSize.width > positionSize.height ? LANDSCAPE : PORTRAIT);
 }
 
 void PageTurnExample::OnWindowResized(Window window, Window::WindowSize size)
@@ -221,7 +221,7 @@ void PageTurnExample::OnWindowResized(Window window, Window::WindowSize size)
 void PageTurnExample::Rotate(DemoOrientation orientation)
 {
   Window  window     = mApplication.GetWindow();
-  Vector2 windowSize = window.GetSize();
+  Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
   if(mOrientation != orientation)
   {

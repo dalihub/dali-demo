@@ -129,7 +129,7 @@ public:
     mTimer.TickSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnTick);
     mTimer.Start();
 
-    application.GetWindow().TouchedSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnTouch);
+    application.GetWindow().TouchEventSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnTouch);
 
     application.GetWindow().KeyEventSignal().Connect(this, &ImageViewEncodedImageBufferApp::OnKeyEvent);
   }

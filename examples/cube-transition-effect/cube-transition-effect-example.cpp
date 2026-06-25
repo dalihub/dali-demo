@@ -239,7 +239,8 @@ void CubeTransitionApp::OnInit(Application application)
   mToolBar.AddControl(mSlideshowButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_CENTER, DemoHelper::DEFAULT_PLAY_PADDING);
 
   // Set size to window size to avoid seeing a black border on transition
-  mViewSize = application.GetWindow().GetSize();
+  auto positionSize = application.GetWindow().GetPositionSize();
+  mViewSize         = Vector2(positionSize.width, positionSize.height);
 
   // show the first image
   mCurrentTexture = LoadWindowFillingTexture(IMAGES[mIndex]);
@@ -390,7 +391,8 @@ bool CubeTransitionApp::OnTimerTick()
 
 Texture CubeTransitionApp::LoadWindowFillingTexture(const char* filepath)
 {
-  ImageDimensions    dimensions(mApplication.GetWindow().GetSize().GetWidth(), mApplication.GetWindow().GetSize().GetHeight());
+  auto               positionSize = mApplication.GetWindow().GetPositionSize();
+  ImageDimensions    dimensions(positionSize.width, positionSize.height);
   Devel::PixelBuffer pixelBuffer = LoadImageFromFile(filepath, dimensions);
   PixelData          pixelData   = Devel::PixelBuffer::Convert(pixelBuffer);
 

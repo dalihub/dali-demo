@@ -28,19 +28,19 @@ using namespace Dali;
 
 namespace
 {
-constexpr uint32_t BLUR_RADIUS       = 40u;
-constexpr float    BLUR_DOWNSCALE   = 0.25f;
-constexpr float    IMAGE_SIZE       = 200.0f;
-constexpr float    IMAGE_GAP_X      = 120.0f;
-constexpr float    IMAGE_GAP_Y      = 90.0f;
-constexpr float    BOARD_MOVE_X     = 180.0f;
-constexpr float    BOARD_MOVE_Y     = 140.0f;
-constexpr float    BOARD_MOVE_TIME  = 6.0f;
-constexpr float    DITHER_STEP      = 5.0f / 255.0f;
-constexpr float    DITHER_SCALE     = 0.2f;
-constexpr float    INITIAL_DITHER   = 0.1f;
-constexpr int      IMAGE_COLUMNS    = 6;
-constexpr int      IMAGE_ROWS       = 4;
+constexpr uint32_t BLUR_RADIUS     = 40u;
+constexpr float    BLUR_DOWNSCALE  = 0.25f;
+constexpr float    IMAGE_SIZE      = 200.0f;
+constexpr float    IMAGE_GAP_X     = 120.0f;
+constexpr float    IMAGE_GAP_Y     = 90.0f;
+constexpr float    BOARD_MOVE_X    = 180.0f;
+constexpr float    BOARD_MOVE_Y    = 140.0f;
+constexpr float    BOARD_MOVE_TIME = 6.0f;
+constexpr float    DITHER_STEP     = 5.0f / 255.0f;
+constexpr float    DITHER_SCALE    = 0.2f;
+constexpr float    INITIAL_DITHER  = 0.1f;
+constexpr int      IMAGE_COLUMNS   = 6;
+constexpr int      IMAGE_ROWS      = 4;
 
 const std::array<Vector4, 4> BACKGROUND_COLORS =
   {{
@@ -111,7 +111,7 @@ public:
     CreateStatusLabel();
 
     mWindow.KeyEventSignal().Connect(this, &BlurNoiseController::OnKeyEvent);
-    mWindow.ResizeSignal().Connect(this, &BlurNoiseController::OnWindowResized);
+    mWindow.ResizedSignal().Connect(this, &BlurNoiseController::OnWindowResized);
   }
 
 private:
@@ -146,7 +146,8 @@ private:
 
   void CreateFullscreenBlurPane()
   {
-    Vector2 windowSize = mWindow.GetSize();
+    auto    positionSize = mWindow.GetPositionSize();
+    Vector2 windowSize(positionSize.width, positionSize.height);
 
     mBlurPane = Toolkit::Control::New();
     mBlurPane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -304,7 +305,7 @@ private:
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {
-  Application application = Application::New(&argc, &argv);
+  Application         application = Application::New(&argc, &argv);
   BlurNoiseController controller(application);
   application.MainLoop();
   return 0;

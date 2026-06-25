@@ -103,7 +103,7 @@ private:
     window.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D); // The item-view spiral layout requires Layer 3D behaviour.
 
     // Calculate the size we would like our item-view layout to be, and then activate the layout.
-    const Vector2 windowSize = window.GetSize();
+    const Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     const Vector3 itemViewLayoutSize(ITEM_VIEW_LAYOUT_SIZE_SCALE.x * windowSize.x, ITEM_VIEW_LAYOUT_SIZE_SCALE.y * windowSize.y, ITEM_VIEW_LAYOUT_SIZE_SCALE.z * windowSize.x);
     mItemView.ActivateLayout(0, itemViewLayoutSize, 0.0f);
 

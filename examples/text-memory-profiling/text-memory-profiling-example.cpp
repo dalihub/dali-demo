@@ -110,8 +110,8 @@ public:
     label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
     label.SetProperty(TextLabel::Property::ENABLE_MARKUP, true);
 
-    Vector2 windowSize = mApplication.GetWindow().GetSize();
-    label.SetProperty(Actor::Property::POSITION, Vector3(Random::Range(0.0f, windowSize.x), Random::Range(0.0f, windowSize.y), 0.0f));
+    auto positionSize = mApplication.GetWindow().GetPositionSize();
+    label.SetProperty(Actor::Property::POSITION, Vector3(Random::Range(0.0f, positionSize.width), Random::Range(0.0f, positionSize.height), 0.0f));
 
     switch(type)
     {
@@ -185,7 +185,7 @@ public:
 
         shadowMap.Insert("offset", Vector2(0.0f, 0.0f));
         label.SetProperty(TextLabel::Property::SHADOW, shadowMap);
-        label.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x, windowSize.y * 0.25f)); // Set the text label in larger size
+        label.SetProperty(Actor::Property::SIZE, Vector2(positionSize.width, positionSize.height * 0.25f)); // Set the text label in larger size
         break;
       }
       default:
@@ -200,7 +200,7 @@ public:
    */
   void CreateMainMenu()
   {
-    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    auto positionSize = mApplication.GetWindow().GetPositionSize();
 
     mTapDetector = TapGestureDetector::New();
     mTapDetector.DetectedSignal().Connect(this, &TextMemoryProfilingExample::OnTap);
@@ -212,12 +212,12 @@ public:
     mItemView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     mLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
-    mLayout->SetItemSize(Vector3(windowSize.width, 60.0f, 0.0f));
+    mLayout->SetItemSize(Vector3(positionSize.width, 60.0f, 0.0f));
 
     mItemView.AddLayout(*mLayout);
 
     // Activate the layout
-    mItemView.ActivateLayout(0, Vector3(windowSize), 0.0f);
+    mItemView.ActivateLayout(0, Vector3(positionSize.width, positionSize.height, 0.0f), 0.0f);
   }
 
   /**

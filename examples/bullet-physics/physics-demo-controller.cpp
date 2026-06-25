@@ -72,11 +72,12 @@ public:
   void OnInit(Application application)
   {
     mWindow = application.GetWindow();
-    mWindow.ResizeSignal().Connect(this, &PhysicsDemoController::OnWindowResize);
+    mWindow.ResizedSignal().Connect(this, &PhysicsDemoController::OnWindowResize);
     mWindow.KeyEventSignal().Connect(this, &PhysicsDemoController::OnKeyEv);
     mWindow.KeepRendering(30);
     mWindow.SetBackgroundColor(Color::DARK_SLATE_GRAY);
-    Window::WindowSize windowSize = mWindow.GetSize();
+
+    auto positionSize = mWindow.GetPositionSize();
 
     auto cameraActor                                    = mWindow.GetRenderTaskList().GetTask(0).GetCameraActor();
     cameraActor[CameraActor::Property::FIELD_OF_VIEW]   = Math::PI / 2.5f; // 72 degrees
@@ -86,11 +87,11 @@ public:
     cameraActor[CameraActor::Property::TARGET_POSITION] = Vector3();
     cameraActor[CameraActor::Property::TYPE]            = Camera::LOOK_AT_TARGET;
     mPhysicsTransform.SetIdentityAndScale(Vector3(1.0f, -1.0f, 1.0f));
-    mPhysicsTransform.SetTranslation(Vector3(windowSize.GetWidth() * 0.5f,
-                                             windowSize.GetHeight() * 0.5f,
+    mPhysicsTransform.SetTranslation(Vector3(positionSize.width * 0.5f,
+                                             positionSize.height * 0.5f,
                                              -100.0f));
 
-    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.GetWidth(), windowSize.GetHeight()));
+    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(positionSize.width, positionSize.height));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
 
     mPhysicsRoot.TouchedSignal().Connect(this, &PhysicsDemoController::OnTouched);
@@ -102,12 +103,12 @@ public:
     auto bulletWorld    = scopedAccessor->GetNative().Get<btDiscreteDynamicsWorld*>();
     bulletWorld->setGravity(btVector3(0, -200, 0));
 
-    CreateGround(scopedAccessor, windowSize);
+    CreateGround(scopedAccessor, Window::WindowSize(positionSize.width, positionSize.height));
     mBrick         = CreateLargeBrick(scopedAccessor);
     mSelectedActor = mBrick;
 
     CreateBall(scopedAccessor);
-    CreateBrickPyramid(scopedAccessor, windowSize);
+    CreateBrickPyramid(scopedAccessor, Window::WindowSize(positionSize.width, positionSize.height));
 
     mPhysicsAdaptor.CreateSyncPoint();
   }

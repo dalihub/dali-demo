@@ -279,7 +279,9 @@ public:
     // Get a handle to the window
     mWindow = application.GetWindow();
     mWindow.SetBackgroundColor(Color::WHITE);
-    mWindowSize = mWindow.GetSize();
+
+    auto positionSize = mWindow.GetPositionSize();
+    mWindowSize       = Vector2(positionSize.width, positionSize.height);
 
     mWindow.GetRootLayer().SetProperty(Layer::Property::DEPTH_TEST, false);
 

@@ -64,7 +64,7 @@ public:
   void Create(Application application)
   {
     Window  window     = application.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     Vector2 viewSize(windowSize);
 
     mRootActor = Actor::New();

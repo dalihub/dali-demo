@@ -161,8 +161,9 @@ public:
     mItemView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     // Use a grid layout for tests
-    Vector2                windowSize = window.GetSize();
-    Toolkit::ItemLayoutPtr gridLayout = Toolkit::DefaultItemLayout::New(Toolkit::DefaultItemLayout::LIST);
+    auto                   positionSize = window.GetPositionSize();
+    Vector2                windowSize   = Vector2(positionSize.width, positionSize.height);
+    Toolkit::ItemLayoutPtr gridLayout   = Toolkit::DefaultItemLayout::New(Toolkit::DefaultItemLayout::LIST);
     Vector3                itemSize;
     gridLayout->GetItemSize(0, Vector3(windowSize), itemSize);
     itemSize.height = windowSize.y / 10;
@@ -199,7 +200,8 @@ public:
    */
   void SetupContextualResizePolicy(Toolkit::Popup& popup)
   {
-    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    auto    positionSize = mApplication.GetWindow().GetPositionSize();
+    Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
     // Some defaults when creating a new fixed size.
     // This is NOT a Vector2 so we can modify each dimension in a for-loop.
     float newSize[Dimension::DIMENSION_COUNT] = {windowSize.x * 0.75f, windowSize.y * 0.75f};
@@ -336,7 +338,7 @@ public:
   Toolkit::Popup CreatePopup()
   {
     Window      window         = mApplication.GetWindow();
-    const float POPUP_WIDTH_DP = window.GetSize().GetWidth() * 0.75f;
+    const float POPUP_WIDTH_DP = window.GetPositionSize().width * 0.75f;
 
     Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty(Dali::Actor::Property::NAME, "popup");

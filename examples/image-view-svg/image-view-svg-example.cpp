@@ -70,7 +70,7 @@ public:
     // Get a handle to the window
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     mActorSize         = windowSize / 2.f;
 
     window.KeyEventSignal().Connect(this, &ImageSvgController::OnKeyEvent);

@@ -82,7 +82,7 @@ public:
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
-    mWindowSize = window.GetSize();
+    mWindowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     Texture texture1 = DemoHelper::LoadTexture(MATERIAL_SAMPLE);
     Texture texture2 = DemoHelper::LoadTexture(MATERIAL_SAMPLE2);

@@ -248,10 +248,9 @@ void ShadowView::OnSceneConnection(int depth)
 {
   mWindow = DevelWindow::Get(Self());
 
-  Window::WindowSize winSize = mWindow.GetSize();
-  Vector2            windowSize(winSize.GetWidth(), winSize.GetHeight());
+  PositionSize windowSize = mWindow.GetPositionSize();
 
-  mCameraActor = CameraActor::New(windowSize);
+  mCameraActor = CameraActor::New(Vector2(windowSize.width, windowSize.height));
   mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mCameraActor.SetNearClippingPlane(1.0f);
   mCameraActor.SetType(Dali::Camera::FREE_LOOK);
@@ -292,7 +291,7 @@ void ShadowView::OnSceneConnection(int depth)
 
   mBlurFilter.SetInputTexture(mSceneFromLightRenderTarget.GetColorTexture());
   mBlurFilter.SetOutputFrameBuffer(mOutputFrameBuffer);
-  mBlurFilter.SetSize(windowSize * 0.5f);
+  mBlurFilter.SetSize(Vector2(windowSize.width, windowSize.height) * 0.5f);
 
   ConstrainCamera();
 

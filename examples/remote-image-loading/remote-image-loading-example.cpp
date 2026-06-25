@@ -65,7 +65,7 @@ public:
     mWindow = application.GetWindow();
     mWindow.SetBackgroundColor(Color::BLACK);
     mWindow.KeyEventSignal().Connect(this, &MyTester::OnKey);
-    mWindow.TouchedSignal().Connect(this, &MyTester::OnTouch);
+    mWindow.TouchEventSignal().Connect(this, &MyTester::OnTouch);
 
     TextLabel rubric = TextLabel::New();
     rubric.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("You will need a working internet connection to see the images below"));

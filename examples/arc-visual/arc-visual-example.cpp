@@ -144,7 +144,7 @@ private:
     window.Add(mMinusTextLabel);
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &ArcVisualExample::OnTouch);
+    window.TouchEventSignal().Connect(this, &ArcVisualExample::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &ArcVisualExample::OnKeyEvent);

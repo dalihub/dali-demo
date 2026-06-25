@@ -204,7 +204,7 @@ private:
     Renderer renderer = CreateRenderer(textures, geom, shader, OPTION_DEPTH_TEST | OPTION_DEPTH_WRITE);
 
     auto waves = CreateActor();
-    auto size  = Vector2(window.GetSize());
+    auto size  = Vector2(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
     waves.SetProperty(Actor::Property::SIZE, Vector3(size.x, 100.f, size.y));
     waves.SetProperty(Actor::Property::ORIENTATION, baseOrientation);
     waves.SetProperty(Actor::Property::COLOR, WAVES_COLOR);
@@ -293,7 +293,7 @@ private:
 
     auto   window = mApp.GetWindow();
     String uniformName("uScreenHalfSize");
-    shader.RegisterProperty(uniformName, Vector2(window.GetSize()) * .5f);
+    shader.RegisterProperty(uniformName, Vector2(Vector2(window.GetPositionSize().width, window.GetPositionSize().height)) * .5f);
     mWaveShader = shader;
 
     return shader;
@@ -361,7 +361,7 @@ private:
 
   void OnPan(Actor actor, PanGesture gesture)
   {
-    auto tilt = gesture.GetDisplacement() / Vector2(mApp.GetWindow().GetSize());
+    auto tilt = gesture.GetDisplacement() / Vector2(mApp.GetWindow().GetPositionSize().width, mApp.GetWindow().GetPositionSize().height);
     switch(gesture.GetState())
     {
       case GestureState::STARTED:

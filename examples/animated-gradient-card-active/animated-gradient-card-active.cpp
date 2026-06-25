@@ -293,12 +293,12 @@ public:
     mWindow.KeyEventSignal().Connect(this, &CardController::OnKeyEvent);
 
     // Get current device's width and height.
-    const Window::WindowSize windowSize = mWindow.GetSize();
-    WINDOW_SIZE                         = Vector2(windowSize.GetWidth(), windowSize.GetHeight());
-    SCALED_WINDOW_SIZE                  = WINDOW_SIZE / 360.0f;
-    SCALED_WINDOW_SIZE_3                = Vector3(SCALED_WINDOW_SIZE.x, SCALED_WINDOW_SIZE.y, 0.0f);
-    SCALED_WIDTH                        = SCALED_WINDOW_SIZE.x < SCALED_WINDOW_SIZE.y ? SCALED_WINDOW_SIZE.x : SCALED_WINDOW_SIZE.y;
-    SCALED_HEIGHT                       = SCALED_WIDTH;
+    const PositionSize windowSize = mWindow.GetPositionSize();
+    WINDOW_SIZE                   = Vector2(windowSize.width, windowSize.height);
+    SCALED_WINDOW_SIZE            = WINDOW_SIZE / 360.0f;
+    SCALED_WINDOW_SIZE_3          = Vector3(SCALED_WINDOW_SIZE.x, SCALED_WINDOW_SIZE.y, 0.0f);
+    SCALED_WIDTH                  = SCALED_WINDOW_SIZE.x < SCALED_WINDOW_SIZE.y ? SCALED_WINDOW_SIZE.x : SCALED_WINDOW_SIZE.y;
+    SCALED_HEIGHT                 = SCALED_WIDTH;
 
     // Note that this is heuristic value
     FONT_SCALE = 0.25f * WINDOW_SIZE.y / WINDOW_SIZE.x;
@@ -316,7 +316,7 @@ public:
     SetupActors();
     SetupAnimation();
 
-    mWindow.TouchedSignal().Connect(this, &CardController::OnTouchLayer);
+    mWindow.TouchEventSignal().Connect(this, &CardController::OnTouchLayer);
     Reset();
   }
 
@@ -388,7 +388,7 @@ public:
     {
       Vector2     diff        = (mLastTouchPos - mFirstTouchPos);
       float       offset      = PSEUDO_SCROLL_OFFSET;
-      const float windowWidth = mWindow.GetSize().GetWidth();
+      const float windowWidth = mWindow.GetPositionSize().width;
       // Scroll to right
       if(diff.x > windowWidth * offset)
       {

@@ -82,13 +82,13 @@ public:
     window.SetBackgroundColor(Color::WHITE);
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &NativeImageTestController::OnTouch);
+    window.TouchEventSignal().Connect(this, &NativeImageTestController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &NativeImageTestController::OnKeyEvent);
 
     // Load image
-    ImageDimensions    dimensions(window.GetSize().GetWidth(), window.GetSize().GetHeight());
+    ImageDimensions    dimensions(window.GetPositionSize().width, window.GetPositionSize().height);
     Devel::PixelBuffer pixelBuffer = LoadImageFromFile(IMAGE_FILE, dimensions);
 
     if(!pixelBuffer)

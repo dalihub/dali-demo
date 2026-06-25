@@ -286,7 +286,7 @@ public:
     mItemView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
 
-    mLayout->SetItemSize(Vector3(window.GetSize().GetWidth(), 50, 1));
+    mLayout->SetItemSize(Vector3(window.GetPositionSize().width, 50, 1));
 
     mItemView.AddLayout(*mLayout);
 
@@ -343,7 +343,7 @@ public:
     }
 
     // Activate the layout
-    Vector3 size(window.GetSize());
+    Vector3 size(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
     mItemView.ActivateLayout(0, size, 0.0f /*immediate*/);
   }
 
@@ -495,7 +495,7 @@ public:
     Property::Array stopColors;
     stopColors.PushBack(Color::WHITE);
     stopColors.PushBack(Vector4(0.45f, 0.70f, 0.80f, 1.0f)); // Medium bright, pastel blue
-    const float percentageWindowHeight = window.GetSize().GetHeight() * 0.6f;
+    const float percentageWindowHeight = window.GetPositionSize().height * 0.6f;
 
     Dali::Property::Map map{};
     map.Add(Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT);

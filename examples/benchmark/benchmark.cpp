@@ -204,14 +204,14 @@ public:
     // Get a handle to the window
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     window.GetRootLayer().SetProperty(Layer::Property::DEPTH_TEST, false);
 
     mSize = Vector3(windowSize.x / mColumnsPerPage, windowSize.y / mRowsPerPage, 0.0f);
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &Benchmark::OnTouch);
+    window.TouchEventSignal().Connect(this, &Benchmark::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &Benchmark::OnKeyEvent);
@@ -300,7 +300,7 @@ public:
   void ShowAnimation()
   {
     Window        window = mApplication.GetWindow();
-    const Vector2 windowSize(window.GetSize());
+    const Vector2 windowSize(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
     Vector3       initialPosition(windowSize.width * 0.5f, windowSize.height * 0.5f, 1000.0f);
 
     unsigned int totalColumns = mColumnsPerPage * mPageCount;
@@ -355,7 +355,7 @@ public:
   void ScrollAnimation()
   {
     Window  window = mApplication.GetWindow();
-    Vector3 windowSize(window.GetSize());
+    Vector3 windowSize(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
 
     mScroll = Animation::New(10.0f);
     size_t actorCount(static_cast<size_t>(mRowsPerPage) * mColumnsPerPage * mPageCount);

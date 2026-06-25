@@ -78,7 +78,7 @@ public:
   void Create(Application application)
   {
     Window        window     = application.GetWindow();
-    const Vector2 windowSize = window.GetSize();
+    const Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     // Creates the background gradient
     Toolkit::Control background                = Dali::Toolkit::Control::New();

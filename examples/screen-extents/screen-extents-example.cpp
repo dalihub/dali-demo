@@ -120,7 +120,7 @@ public:
     currentScreenExtentsColorGuide.Add(currentScreenPositionColorGuide);
 
     // Respond to a touch anywhere on the window
-    mWindow.TouchedSignal().Connect(this, &HelloWorldController::OnTouch);
+    mWindow.TouchEventSignal().Connect(this, &HelloWorldController::OnTouch);
 
     // Respond to key events
     mWindow.KeyEventSignal().Connect(this, &HelloWorldController::OnKeyEvent);

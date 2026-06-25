@@ -159,12 +159,12 @@ public:
     mWindow.KeyEventSignal().Connect(this, &CallController::OnKeyEvent);
 
     // Get current device's width and height.
-    const Window::WindowSize windowSize = mWindow.GetSize();
-    WINDOW_SIZE                         = Vector2(windowSize.GetWidth(), windowSize.GetHeight());
-    SCALED_WINDOW_SIZE                  = WINDOW_SIZE / 360.0f;
-    SCALED_WINDOW_SIZE_3                = Vector3(SCALED_WINDOW_SIZE.x, SCALED_WINDOW_SIZE.y, 0.0f);
-    SCALED_WIDTH                        = SCALED_WINDOW_SIZE.x < SCALED_WINDOW_SIZE.y ? SCALED_WINDOW_SIZE.x : SCALED_WINDOW_SIZE.y;
-    SCALED_HEIGHT                       = SCALED_WIDTH;
+    auto positionSize    = mWindow.GetPositionSize();
+    WINDOW_SIZE          = Vector2(positionSize.width, positionSize.height);
+    SCALED_WINDOW_SIZE   = WINDOW_SIZE / 360.0f;
+    SCALED_WINDOW_SIZE_3 = Vector3(SCALED_WINDOW_SIZE.x, SCALED_WINDOW_SIZE.y, 0.0f);
+    SCALED_WIDTH         = SCALED_WINDOW_SIZE.x < SCALED_WINDOW_SIZE.y ? SCALED_WINDOW_SIZE.x : SCALED_WINDOW_SIZE.y;
+    SCALED_HEIGHT        = SCALED_WIDTH;
 
     // Note that this is heuristic value
     FONT_SCALE = 0.25f * WINDOW_SIZE.y / WINDOW_SIZE.x;

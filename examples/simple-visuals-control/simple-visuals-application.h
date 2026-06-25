@@ -34,7 +34,7 @@ namespace Demo
  * @brief An application that uses the my-control to display 2 icons, if focus is allowed ( by using a keyboard or remote ) then the icons will change
  * depending on which one is focused.
  *
- * Inherits from connection tracker to manage connection and disconnection of signals,  In this case PreFocusChangeSignal
+ * Inherits from connection tracker to manage connection and disconnection of signals,  In this case PreFocusChangedSignal
  */
 class SimpleVisualsApplication : public ConnectionTracker
 {

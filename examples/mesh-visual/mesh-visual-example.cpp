@@ -256,7 +256,7 @@ public:
 
     //Set size of control based on screen dimensions.
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     if(windowSize.width < windowSize.height)
     {
       //Scale to width.
@@ -357,8 +357,8 @@ public:
 
     //Use window dimensions to place light at center, offset in z axis.
     Window  window        = mApplication.GetWindow();
-    float   width         = window.GetSize().GetWidth();
-    float   height        = window.GetSize().GetHeight();
+    float   width         = window.GetPositionSize().width;
+    float   height        = window.GetPositionSize().height;
     Vector3 lightPosition = Vector3(width / 2.0f, height / 2.0f, (mLightFront ? 1 : -1) * std::max(width, height) * 5.0f);
 
     //Set global light position
@@ -383,7 +383,7 @@ public:
   {
     //Set light position to the x and y of the light control, offset into/out of the screen.
     Vector3 controlPosition = mLightSource.GetCurrentProperty<Vector3>(Actor::Property::POSITION);
-    Vector3 lightPosition   = Vector3(controlPosition.x, controlPosition.y, (mLightFront ? 1 : -1) * mApplication.GetWindow().GetSize().GetWidth() / 2.0f);
+    Vector3 lightPosition   = Vector3(controlPosition.x, controlPosition.y, (mLightFront ? 1 : -1) * mApplication.GetWindow().GetPositionSize().width / 2.0f);
 
     for(int i = 0; i < NUM_MESHES; ++i)
     {

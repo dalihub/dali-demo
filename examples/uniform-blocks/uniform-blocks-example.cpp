@@ -66,7 +66,7 @@ public:
     }
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &UniformBlocksController::OnTouch);
+    window.TouchEventSignal().Connect(this, &UniformBlocksController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &UniformBlocksController::OnKeyEvent);

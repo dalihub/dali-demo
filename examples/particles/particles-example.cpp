@@ -157,7 +157,7 @@ private:
     rootLayer.SetProperty(Layer::Property::BEHAVIOR, Layer::Behavior::LAYER_3D);
 
     window.KeyEventSignal().Connect(this, &ParticlesExample::OnKeyEvent);
-    window.TouchedSignal().Connect(this, &ParticlesExample::OnTouched);
+    window.TouchEventSignal().Connect(this, &ParticlesExample::OnTouched);
 
     auto tiltSensor = TiltSensor::Get();
     if(tiltSensor.Start())
@@ -260,7 +260,8 @@ private:
 
   void OnPan(Actor actor, PanGesture gesture)
   {
-    auto       tilt = gesture.GetDisplacement() / Vector2(mApp.GetWindow().GetSize()) * TILT_SCALE;
+    auto       positionSize = mApp.GetWindow().GetPositionSize();
+    auto       tilt         = gesture.GetDisplacement() / Vector2(positionSize.width, positionSize.height) * TILT_SCALE;
     Quaternion q(Radian(-tilt.y), Radian(tilt.x), Radian(0.f));
     Quaternion q0 = mWorld.GetProperty(Actor::Property::ORIENTATION).Get<Quaternion>();
     mWorld.SetProperty(Actor::Property::ORIENTATION, q * q0);
@@ -276,7 +277,8 @@ private:
 
   Vector3 GetViewRay(const Vector2& screenPos)
   {
-    Vector2 screenSize    = mApp.GetWindow().GetSize();
+    auto    positionSize = mApp.GetWindow().GetPositionSize();
+    Vector2 screenSize(positionSize.width, positionSize.height);
     Vector2 normScreenPos = (screenPos / screenSize) * 2.f - Vector2::ONE;
 
     const float fov    = mCamera.GetProperty(CameraActor::Property::FIELD_OF_VIEW).Get<float>();

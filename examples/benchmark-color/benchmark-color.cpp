@@ -103,12 +103,12 @@ public:
     // Get a handle to the window
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::BLACK);
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     mSize = Vector3(windowSize.x / static_cast<float>(mColumns), windowSize.y / static_cast<float>(mRows), 0.0f);
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &BenchmarkColor::OnTouch);
+    window.TouchEventSignal().Connect(this, &BenchmarkColor::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &BenchmarkColor::OnKeyEvent);

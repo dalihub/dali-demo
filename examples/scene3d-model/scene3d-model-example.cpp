@@ -298,7 +298,7 @@ public:
     SetAnimation();
 
     // Respond to a click anywhere on the mWindow
-    mWindow.TouchedSignal().Connect(this, &Scene3DModelExample::OnTouch);
+    mWindow.TouchEventSignal().Connect(this, &Scene3DModelExample::OnTouch);
     mWindow.KeyEventSignal().Connect(this, &Scene3DModelExample::OnKeyEvent);
     mWindow.GetRootLayer().WheelEventSignal().Connect(this, &Scene3DModelExample::OnWheel);
 
@@ -599,9 +599,8 @@ public:
 
       case PointState::MOTION:
       {
-        const Size    size   = mWindow.GetSize();
-        const float   scaleX = size.width;
-        const float   scaleY = size.height;
+        const float   scaleX = mWindow.GetPositionSize().width;
+        const float   scaleY = mWindow.GetPositionSize().height;
         const Vector2 point  = touch.GetScreenPosition(0);
         mProcess             = false;
         // If the touch is not processed above, then change the model orientation

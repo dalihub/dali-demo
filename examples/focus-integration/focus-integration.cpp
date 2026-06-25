@@ -57,14 +57,14 @@ public:
 
   void Create(Application application)
   {
-    mWindow            = application.GetWindow();
-    Vector2 windowSize = mWindow.GetSize();
-    mContentLayer      = DemoHelper::CreateView(application,
-                                                mView,
-                                                mToolBar,
-                                                BACKGROUND_IMAGE,
-                                                TOOLBAR_IMAGE,
-                                                TOOLBAR_TITLE);
+    mWindow         = application.GetWindow();
+    auto windowSize = mWindow.GetPositionSize();
+    mContentLayer   = DemoHelper::CreateView(application,
+                                             mView,
+                                             mToolBar,
+                                             BACKGROUND_IMAGE,
+                                             TOOLBAR_IMAGE,
+                                             TOOLBAR_TITLE);
 
     TableView contentTable = TableView::New(2, 1);
     contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);

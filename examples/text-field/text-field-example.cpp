@@ -93,7 +93,7 @@ public:
   bool OnButtonClicked(Toolkit::Button button)
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     // Remove previously hidden pop-up
     UnparentAndReset(mPopup);

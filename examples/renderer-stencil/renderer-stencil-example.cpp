@@ -142,7 +142,7 @@ private:
     Property::Array stopColors;
     stopColors.PushBack(Vector4(0.17f, 0.24f, 0.35f, 1.0f)); // Dark, medium saturated blue  ( top   of screen)
     stopColors.PushBack(Vector4(0.45f, 0.70f, 0.80f, 1.0f)); // Medium bright, pastel blue   (bottom of screen)
-    const float percentageWindowHeight = window.GetSize().GetHeight() * 0.8f;
+    const float percentageWindowHeight = window.GetPositionSize().height * 0.8f;
 
     background.SetProperty(Toolkit::Control::Property::BACKGROUND, Dali::Property::Map()
                                                                      .Add(Toolkit::Visual::Property::TYPE, Dali::Toolkit::Visual::GRADIENT)
@@ -176,7 +176,7 @@ private:
     // Main cube:
     // Make the demo scalable with different resolutions by basing
     // the cube size on a percentage of the window size.
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     float   scaleSize(std::min(windowSize.width, windowSize.height));
     float   cubeWidth(scaleSize * CUBE_WIDTH_SCALE);
     Vector3 cubeSize(cubeWidth, cubeWidth, cubeWidth);
@@ -269,7 +269,7 @@ private:
     mBounceAnimation.Play();
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &RendererStencilExample::OnTouch);
+    window.TouchEventSignal().Connect(this, &RendererStencilExample::OnTouch);
     // Connect signals to allow Back and Escape to exit.
     window.KeyEventSignal().Connect(this, &RendererStencilExample::OnKeyEvent);
   }
@@ -495,7 +495,7 @@ private:
   Renderer CreateRenderer(Geometry geometry, Vector3 dimensions, bool textured, Vector4 color)
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     Shader  shader;
 
     if(textured)

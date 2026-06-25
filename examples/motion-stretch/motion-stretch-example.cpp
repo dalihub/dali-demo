@@ -129,8 +129,9 @@ public:
                                            APPLICATION_TITLE);
 
     // Ensure the content layer is a square so the touch area works in all orientations
-    Vector2 windowSize = window.GetSize();
-    float   size       = std::max(windowSize.width, windowSize.height);
+    auto    positionSize = window.GetPositionSize();
+    Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
+    float   size         = std::max(windowSize.width, windowSize.height);
     mContentLayer.SetProperty(Actor::Property::SIZE, Vector2(size, size));
 
     // Add an slideshow icon on the right of the title
@@ -160,7 +161,7 @@ public:
     winHandle.AddAvailableOrientation(Dali::WindowOrientation::LANDSCAPE);
     winHandle.AddAvailableOrientation(Dali::WindowOrientation::PORTRAIT_INVERSE);
     winHandle.AddAvailableOrientation(Dali::WindowOrientation::LANDSCAPE_INVERSE);
-    winHandle.ResizeSignal().Connect(this, &MotionStretchExampleApp::OnWindowResized);
+    winHandle.ResizedSignal().Connect(this, &MotionStretchExampleApp::OnWindowResized);
 
     // Make we always full swap for this demo application.
     winHandle.SetPartialUpdateEnabled(false);
@@ -203,7 +204,8 @@ public:
   void Rotate(DeviceOrientation orientation)
   {
     // Resize the root actor
-    const Vector2 targetSize = mApplication.GetWindow().GetSize();
+    auto          positionSize = mApplication.GetWindow().GetPositionSize();
+    const Vector2 targetSize   = Vector2(positionSize.width, positionSize.height);
 
     if(mOrientation != orientation)
     {
@@ -243,7 +245,8 @@ public:
     float   originOffsetX, originOffsetY;
 
     // rotate offset (from top left origin to centre) into actor space
-    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    auto    positionSize = mApplication.GetWindow().GetPositionSize();
+    Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
     actor.ScreenToLocal(originOffsetX, originOffsetY, windowSize.width * 0.5f, windowSize.height * 0.5f);
 
     // get dest point in local actor space

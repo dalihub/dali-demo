@@ -85,7 +85,7 @@ public:
     window.Add(mImageView);
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &ColorVisualExample::OnTouch);
+    window.TouchEventSignal().Connect(this, &ColorVisualExample::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &ColorVisualExample::OnKeyEvent);

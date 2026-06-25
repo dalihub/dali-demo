@@ -54,7 +54,7 @@ public:
     window.Add(textLabel);
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &HelloWorldController::OnTouch);
+    window.TouchEventSignal().Connect(this, &HelloWorldController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &HelloWorldController::OnKeyEvent);

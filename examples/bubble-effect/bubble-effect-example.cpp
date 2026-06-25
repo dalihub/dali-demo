@@ -100,8 +100,9 @@ private:
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application app)
   {
-    Window  window     = app.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Window  window       = app.GetWindow();
+    auto    positionSize = window.GetPositionSize();
+    Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
 
     window.KeyEventSignal().Connect(this, &BubbleEffectExample::OnKeyEvent);
 
@@ -140,7 +141,7 @@ private:
                                         DEFAULT_NUMBER_OF_BUBBLES,
                                         DEFAULT_BUBBLE_SIZE);
 
-    mBubbleEmitter.SetBackground(window, DemoHelper::LoadWindowFillingTexture(Uint16Pair(window.GetSize().GetWidth(), window.GetSize().GetHeight()), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
+    mBubbleEmitter.SetBackground(window, DemoHelper::LoadWindowFillingTexture(Uint16Pair(window.GetPositionSize().width, window.GetPositionSize().height), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
 
     // Get the root actor of all bubbles, and add it to window.
     Actor bubbleRoot = mBubbleEmitter.GetRootActor();
@@ -260,7 +261,7 @@ private:
       mCurrentBackgroundImageId = (mCurrentBackgroundImageId + 1) % NUM_BACKGROUND_IMAGES;
 
       //Update bubble emitter background
-      mBubbleEmitter.SetBackground(mApp.GetWindow(), DemoHelper::LoadWindowFillingTexture(Uint16Pair(mApp.GetWindow().GetSize().GetWidth(), mApp.GetWindow().GetSize().GetHeight()), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
+      mBubbleEmitter.SetBackground(mApp.GetWindow(), DemoHelper::LoadWindowFillingTexture(Uint16Pair(mApp.GetWindow().GetPositionSize().width, mApp.GetWindow().GetPositionSize().height), BACKGROUND_IMAGES[mCurrentBackgroundImageId]), mHSVDelta);
 
       // Set the application background
       mBackground.SetProperty(Toolkit::Control::Property::BACKGROUND, BACKGROUND_IMAGES[mCurrentBackgroundImageId]);

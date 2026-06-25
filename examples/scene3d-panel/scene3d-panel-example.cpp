@@ -59,7 +59,7 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
 
-    Vector2 windowSize(window.GetSize().GetWidth(), window.GetSize().GetHeight());
+    Vector2 windowSize(window.GetPositionSize().width, window.GetPositionSize().height);
 
     Dali::Scene3D::SceneView sceneView = Scene3D::SceneView::New();
     sceneView.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
@@ -101,7 +101,7 @@ public:
     animation.Play();
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &Scene3DPanelController::OnTouch);
+    window.TouchEventSignal().Connect(this, &Scene3DPanelController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &Scene3DPanelController::OnKeyEvent);

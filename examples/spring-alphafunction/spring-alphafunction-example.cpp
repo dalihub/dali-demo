@@ -132,7 +132,7 @@ public:
     animation.Play();
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &SpringAlphaFunctionController::OnTouch);
+    window.TouchEventSignal().Connect(this, &SpringAlphaFunctionController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &SpringAlphaFunctionController::OnKeyEvent);

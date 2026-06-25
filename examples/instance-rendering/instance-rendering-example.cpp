@@ -174,9 +174,9 @@ public:
     mFirstInstance      = 0u;
     mFirstInstanceIndex = mActor.RegisterProperty("uFirstInstance", static_cast<int32_t>(mFirstInstance));
 
-    Window::WindowSize windowSize = window.GetSize();
-    offsetXRange                  = static_cast<uint16_t>((windowSize.GetWidth() - VIEW_SIZE) / 2);
-    offsetYRange                  = static_cast<uint16_t>((windowSize.GetHeight() - VIEW_SIZE) / 2);
+    auto positionSize = window.GetPositionSize();
+    offsetXRange      = static_cast<uint16_t>((positionSize.width - VIEW_SIZE) / 2);
+    offsetYRange      = static_cast<uint16_t>((positionSize.height - VIEW_SIZE) / 2);
 
     CreateShader(TestType::TEST_MULTIPLE_RENDERER);
     CreateGeometry(TestType::TEST_MULTIPLE_RENDERER);
@@ -198,7 +198,7 @@ public:
     UpdateLabel(TestType::TEST_MULTIPLE_RENDERER);
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &InstanceRenderingController::OnTouch);
+    window.TouchEventSignal().Connect(this, &InstanceRenderingController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &InstanceRenderingController::OnKeyEvent);
@@ -220,9 +220,9 @@ public:
         mApplication.Quit();
         return;
       }
-      Window::WindowSize windowSize = window.GetSize();
-      offsetXRange                  = static_cast<uint16_t>((windowSize.GetWidth() - VIEW_SIZE) / 2);
-      offsetYRange                  = static_cast<uint16_t>((windowSize.GetHeight() - VIEW_SIZE) / 2);
+      auto positionSize = window.GetPositionSize();
+      offsetXRange      = static_cast<uint16_t>((positionSize.width - VIEW_SIZE) / 2);
+      offsetYRange      = static_cast<uint16_t>((positionSize.height - VIEW_SIZE) / 2);
 
       CreateShader(testNumber);
       CreateGeometry(testNumber);

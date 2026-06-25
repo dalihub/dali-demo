@@ -62,7 +62,9 @@ private:
     Window window = application.GetWindow();
     window.SetBackgroundColor(WINDOW_COLOR);
     window.KeyEventSignal().Connect(this, &TooltipController::OnKeyEvent);
-    const Vector2 windowSize = window.GetSize();
+
+    auto          positionSize = window.GetPositionSize();
+    const Vector2 windowSize(positionSize.width, positionSize.height);
 
     // Add a text label at the top for information purposes
     Control label = TextLabel::New();

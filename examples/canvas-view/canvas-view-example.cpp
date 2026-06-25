@@ -132,7 +132,7 @@ public:
   void CreateBasicShape()
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     mTitle.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, VIEW_LABEL[BASIC_SHAPE_VIEW]);
 
@@ -214,7 +214,7 @@ public:
   void CreateClipPathAndMask()
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     mTitle.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, VIEW_LABEL[CLIP_PATH_VIEW]);
 
@@ -287,7 +287,7 @@ public:
   void CreateGradient()
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     mTitle.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, VIEW_LABEL[GRADIENT_VIEW]);
 
     Dali::CanvasRenderer::Shape canvasBackground = Dali::CanvasRenderer::Shape::New();
@@ -369,7 +369,7 @@ public:
   void CreatePicture()
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     mTitle.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, VIEW_LABEL[PICTURE_VIEW]);
 
     Dali::CanvasRenderer::Shape canvasBackground = Dali::CanvasRenderer::Shape::New();
@@ -439,7 +439,7 @@ public:
   {
     // The Init signal is received once (only) during the Application lifetime
     Window  window     = application.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     window.KeyEventSignal().Connect(this, &CanvasViewController::OnKeyEvent);
 
     mPrevButton = Toolkit::PushButton::New();

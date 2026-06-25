@@ -63,7 +63,7 @@ public:
     window.Add(mTextLabel);
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &TiltController::OnTouch);
+    window.TouchEventSignal().Connect(this, &TiltController::OnTouch);
 
     CreateSensor();
 

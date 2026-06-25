@@ -203,7 +203,7 @@ public:
     window.KeyEventSignal().Connect(this, &ItemViewExample::OnKeyEvent);
     window.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
 
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.
@@ -366,7 +366,7 @@ public:
     // Set the new orientation to the layout
     mItemView.GetLayout(layoutId)->SetOrientation(static_cast<ControlOrientation::Type>(mOrientation / 90));
 
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     if(layoutId == DEPTH_LAYOUT)
     {
@@ -556,7 +556,8 @@ public:
     {
       case GestureState::STARTED:
       {
-        const Size& size = mApplication.GetWindow().GetSize();
+        auto       positionSize = mApplication.GetWindow().GetPositionSize();
+        const Size size(positionSize.width, positionSize.height);
 
         ItemRange range(0u, 0u);
         mItemView.GetItemsRange(range);
@@ -897,7 +898,8 @@ public: // From ItemFactory
     actor.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
 
     Vector3 spiralItemSize;
-    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    auto    positionSize = mApplication.GetWindow().GetPositionSize();
+    Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
     static_cast<ItemLayout&>(*mSpiralLayout).GetItemSize(0u, Vector3(windowSize), spiralItemSize);
 
     // Add a checkbox child actor; invisible until edit-mode is enabled

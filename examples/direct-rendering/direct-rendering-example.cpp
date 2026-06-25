@@ -73,8 +73,9 @@ struct RenderView
 
   int Create(const Vector2& pos, Toolkit::GlView::BackendMode mode)
   {
-    auto w = mWindow.GetSize().GetWidth();
-    auto h = mWindow.GetSize().GetHeight();
+    auto positionSize = mWindow.GetPositionSize();
+    auto w            = positionSize.width;
+    auto h            = positionSize.height;
 
     mWindow.SetBackgroundColor(Color::BLUE);
     NativeRenderer::CreateInfo info{};
@@ -188,7 +189,7 @@ public:
     window.SetBackgroundColor(Color::WHITE);
 
     window.KeyEventSignal().Connect(this, &DirectRenderingExampleController::OnKeyEvent);
-    window.TouchedSignal().Connect(this, &DirectRenderingExampleController::OnTouch);
+    window.TouchEventSignal().Connect(this, &DirectRenderingExampleController::OnTouch);
 
     mDRView = std::make_unique<RenderView>(window);
 

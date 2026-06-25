@@ -63,7 +63,7 @@ public:
     CreateActor();
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &DrawTriangleController::OnTouch);
+    window.TouchEventSignal().Connect(this, &DrawTriangleController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &DrawTriangleController::OnKeyEvent);
@@ -137,7 +137,7 @@ public:
   void CreateActor()
   {
     Window window = mApplication.GetWindow();
-    Size   size   = Vector2(window.GetSize()) * 0.25f;
+    Size   size   = Vector2(Vector2(window.GetPositionSize().width, window.GetPositionSize().height)) * 0.25f;
     mActor        = Actor::New();
     mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);

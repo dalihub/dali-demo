@@ -273,7 +273,7 @@ private:
   void AddContentLayer()
   {
     Window        window = mApplication.GetWindow();
-    const Vector3 windowSize(window.GetSize());
+    const Vector3 windowSize(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
 
     // Ball setup
     mBallStartPosition = windowSize * Vector3(BALL_START_POSITION);
@@ -384,7 +384,8 @@ private:
 
     if(mBrickImageMap.Empty())
     {
-      Vector2       windowSize(mApplication.GetWindow().GetSize());
+      auto          positionSize = mApplication.GetWindow().GetPositionSize();
+      Vector2       windowSize(positionSize.width, positionSize.height);
       const Vector2 brickSize(BRICK_SIZE * Vector2(windowSize.x, windowSize.x));
 
       mBrickImageMap["desiredWidth"]  = static_cast<int>(brickSize.width);
@@ -422,7 +423,8 @@ private:
    */
   void GenerateLevel0()
   {
-    Vector2       windowSize(mApplication.GetWindow().GetSize());
+    auto          positionSize = mApplication.GetWindow().GetPositionSize();
+    Vector2       windowSize(positionSize.width, positionSize.height);
     const Vector2 brickSize(BRICK_SIZE * windowSize.width);
 
     const int     columns = (0.85f * windowSize.width) / brickSize.width;  // 85 percent of the width of the screen covered with bricks.
@@ -446,7 +448,8 @@ private:
    */
   void GenerateLevel1()
   {
-    Vector2       windowSize(mApplication.GetWindow().GetSize());
+    auto          positionSize = mApplication.GetWindow().GetPositionSize();
+    Vector2       windowSize(positionSize.width, positionSize.height);
     const Vector2 brickSize(BRICK_SIZE * windowSize.width);
 
     const int     columns = (0.85f * windowSize.width) / brickSize.width;  // 85 percent of the width of the screen covered with bricks.
@@ -475,7 +478,8 @@ private:
    */
   void GenerateLevel2()
   {
-    Vector2       windowSize(mApplication.GetWindow().GetSize());
+    auto          positionSize = mApplication.GetWindow().GetPositionSize();
+    Vector2       windowSize(positionSize.width, positionSize.height);
     const Vector2 brickSize(BRICK_SIZE * windowSize.width);
 
     const int     columns = (0.85f * windowSize.width) / brickSize.width;  // 85 percent of the width of the screen covered with bricks.

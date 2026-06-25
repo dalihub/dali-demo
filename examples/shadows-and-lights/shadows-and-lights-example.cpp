@@ -231,8 +231,7 @@ public:
 
     // Work out a scaling factor as the initial light position was calculated for desktop
     // Need to scale light position as scene actor size is based on window size (i.e. much bigger on device)
-    Vector2 windowSize(mApp.GetWindow().GetSize());
-    float   scaleFactor = windowSize.x / DEFAULT_WINDOW_SIZE.x;
+    float scaleFactor = mApp.GetWindow().GetPositionSize().width / DEFAULT_WINDOW_SIZE.x;
 
     mCastingLight = Actor::New();
     mCastingLight.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);

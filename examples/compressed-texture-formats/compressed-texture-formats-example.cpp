@@ -159,7 +159,7 @@ public:
     window.Add(table);
 
     // Respond to touch and key signals
-    window.TouchedSignal().Connect(this, &CompressedTextureFormatsController::OnTouch);
+    window.TouchEventSignal().Connect(this, &CompressedTextureFormatsController::OnTouch);
     window.KeyEventSignal().Connect(this, &CompressedTextureFormatsController::OnKeyEvent);
   }
 

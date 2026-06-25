@@ -79,7 +79,7 @@ public:
   {
     auto window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
-    const auto windowHeight = window.GetSize().GetHeight();
+    const auto windowHeight = window.GetPositionSize().height;
 
     mDragAndDropDetector = Dali::Toolkit::DragAndDropDetector::New();
 

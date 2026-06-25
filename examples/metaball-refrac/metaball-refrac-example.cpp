@@ -219,7 +219,7 @@ void MetaballRefracController::Create(Application app)
 
   window.KeyEventSignal().Connect(this, &MetaballRefracController::OnKeyEvent);
 
-  mScreenSize = window.GetSize();
+  mScreenSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
   window.SetBackgroundColor(Color::BLACK);
 
@@ -235,7 +235,7 @@ void MetaballRefracController::Create(Application app)
   CreateAnimations();
 
   // Connect the callback to the touch signal on the mesh actor
-  window.TouchedSignal().Connect(this, &MetaballRefracController::OnTouch);
+  window.TouchEventSignal().Connect(this, &MetaballRefracController::OnTouch);
 }
 
 Geometry MetaballRefracController::CreateGeometry(bool aspectMappedTexture)

@@ -58,9 +58,9 @@ const Dali::Demo::Alignment::Padding DEFAULT_PLAY_PADDING(12.0f, 12.0f, 12.0f, 1
 const Dali::Demo::Alignment::Padding DEFAULT_MODE_SWITCH_PADDING(8.0f, 8.0f, 8.0f, 8.0f);
 
 Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
-                          const std::string&      toolbarImagePath,
-                          const std::string&      title,
-                          const ViewStyle&        style)
+                          const std::string&   toolbarImagePath,
+                          const std::string&   title,
+                          const ViewStyle&     style)
 {
   Dali::Layer toolBarLayer = Dali::Layer::New();
   toolBarLayer.SetProperty(Dali::Actor::Property::NAME, "TOOLBAR_LAYER");
@@ -126,11 +126,12 @@ Dali::Layer CreateView(Dali::Application&      application,
   // Set background image, loading it at screen resolution:
   if(!backgroundImagePath.empty())
   {
+    auto                positionSize = window.GetPositionSize();
     Dali::Property::Map map;
     map[Dali::Toolkit::Visual::Property::TYPE]                     = Dali::Toolkit::Visual::IMAGE;
     map[Dali::Toolkit::ImageVisual::Property::URL]                 = ToPropertyValue(backgroundImagePath);
-    map[Dali::Toolkit::ImageVisual::Property::DESIRED_WIDTH]       = window.GetSize().GetWidth();
-    map[Dali::Toolkit::ImageVisual::Property::DESIRED_HEIGHT]      = window.GetSize().GetHeight();
+    map[Dali::Toolkit::ImageVisual::Property::DESIRED_WIDTH]       = positionSize.width;
+    map[Dali::Toolkit::ImageVisual::Property::DESIRED_HEIGHT]      = positionSize.height;
     map[Dali::Toolkit::ImageVisual::Property::SAMPLING_MODE]       = Dali::SamplingMode::BOX_THEN_LINEAR;
     map[Dali::Toolkit::ImageVisual::Property::SYNCHRONOUS_LOADING] = true;
     view.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, map);

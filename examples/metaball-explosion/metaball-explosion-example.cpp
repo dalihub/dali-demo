@@ -229,7 +229,7 @@ void MetaballExplosionController::Create(Application app)
 
   window.KeyEventSignal().Connect(this, &MetaballExplosionController::OnKeyEvent);
 
-  mScreenSize = window.GetSize();
+  mScreenSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
   mTimeMultiplier = 1.0f;
 
@@ -252,7 +252,7 @@ void MetaballExplosionController::Create(Application app)
   mTimerDispersion.TickSignal().Connect(this, &MetaballExplosionController::OnTimerDispersionTick);
 
   // Connect the callback to the touch signal on the mesh actor
-  window.TouchedSignal().Connect(this, &MetaballExplosionController::OnTouch);
+  window.TouchEventSignal().Connect(this, &MetaballExplosionController::OnTouch);
 }
 
 Geometry MetaballExplosionController::CreateGeometry(bool aspectMappedTexture)

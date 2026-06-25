@@ -139,13 +139,13 @@ private:
   void Create(Application application)
   {
     // Get a handle to the window
-    mWindow                  = application.GetWindow();
-    const Vector2 windowSize = mWindow.GetSize();
+    mWindow           = application.GetWindow();
+    auto positionSize = mWindow.GetPositionSize();
 
     // Create a SceneView and set the Skybox
     mSceneView = Handle::New<SceneView>(CreatePropertyMap({{Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
                                                            {Actor::Property::PIVOT, Pivot::CENTER},
-                                                           {Actor::Property::SIZE, windowSize}}));
+                                                           {Actor::Property::SIZE, Vector2(positionSize.width, positionSize.height)}}));
     mSceneView.SetSkybox(CUBEMAP_SKY_BOX_URL);
     mWindow.Add(mSceneView);
 
@@ -199,7 +199,7 @@ private:
 
     // Respond to key events
     mWindow.KeyEventSignal().Connect(this, &SceneViewExample::OnKeyEvent);
-    mWindow.ResizeSignal().Connect(this, &SceneViewExample::OnWindowResize);
+    mWindow.ResizedSignal().Connect(this, &SceneViewExample::OnWindowResize);
 
     DevelKeyboardFocusManager::EnableDefaultAlgorithm(KeyboardFocusManager::Get(), true);
 
@@ -392,7 +392,6 @@ private:
   {
     if(mWindow && mSceneView)
     {
-      Window::WindowSize windowSize = mWindow.GetSize();
       switch(mResolutionType)
       {
         case ResolutionType::DEFAULT:
@@ -429,7 +428,8 @@ private:
       }
       else
       {
-        mSceneView.SetResolution(static_cast<uint32_t>(windowSize.GetWidth() * mResolutionRate), static_cast<uint32_t>(windowSize.GetHeight() * mResolutionRate));
+        auto positionSize = mWindow.GetPositionSize();
+        mSceneView.SetResolution(static_cast<uint32_t>(positionSize.width * mResolutionRate), static_cast<uint32_t>(positionSize.height * mResolutionRate));
       }
     }
   }

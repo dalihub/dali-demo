@@ -117,14 +117,15 @@ public:
     mWindow.SetBackgroundColor(Color::WHITE);
 
     Vector2 windowSize(1280, 800);
-    if(mWindow.GetSize().GetWidth() < 1280)
+    auto    positionSize = mWindow.GetPositionSize();
+    if(positionSize.width < 1280)
     {
-      mWindow.SetSize(Window::WindowSize(windowSize.x, windowSize.y));
+      mWindow.SetPositionSize(Dali::PositionSize(positionSize.x, positionSize.y, static_cast<int>(windowSize.x), static_cast<int>(windowSize.y)));
     }
     else
     {
-      windowSize.x = mWindow.GetSize().GetWidth();
-      windowSize.y = mWindow.GetSize().GetHeight();
+      windowSize.x = positionSize.width;
+      windowSize.y = positionSize.height;
     }
 
     mTitle = TextLabel::New();
@@ -135,7 +136,7 @@ public:
     SetupView();
 
     // Respond to a touch anywhere on the window
-    mWindow.TouchedSignal().Connect(this, &InheritTestController::OnTouch);
+    mWindow.TouchEventSignal().Connect(this, &InheritTestController::OnTouch);
 
     // Respond to key events
     mWindow.KeyEventSignal().Connect(this, &InheritTestController::OnKeyEvent);

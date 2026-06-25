@@ -123,7 +123,7 @@ void StylingApplication::Create(Application application)
 
   mContentPane = CreateContentPane();
   window.Add(mContentPane);
-  mContentPane.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize()));
+  mContentPane.SetProperty(Actor::Property::SIZE, Vector2(Vector2(window.GetPositionSize().width, window.GetPositionSize().height)));
 
   // Content panes:
   TableView contentLayout = TableView::New(5, 1);
@@ -421,7 +421,7 @@ Popup StylingApplication::CreateResetPopup()
   popup.SetStyleName("ResetPopup");
   popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  popup.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize().GetWidth() * 0.75f, 0.0f));
+  popup.SetProperty(Actor::Property::SIZE, Vector2(window.GetPositionSize().width * 0.75f, 0.0f));
   popup.SetProperty(Popup::Property::TAIL_VISIBILITY, false);
   popup.OutsideTouchedSignal().Connect(this, &StylingApplication::HidePopup);
   popup.HiddenSignal().Connect(this, &StylingApplication::PopupHidden);

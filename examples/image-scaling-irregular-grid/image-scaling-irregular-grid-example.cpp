@@ -313,7 +313,7 @@ public:
   void PopulateContentLayer()
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     float fieldHeight;
     Actor imageField = BuildImageField(windowSize.x, GRID_WIDTH, GRID_MAX_HEIGHT, fieldHeight);
