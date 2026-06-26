@@ -112,6 +112,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("text-scrolling.example", DALI_DEMO_STR_TITLE_TEXT_SCROLLING));
   demo.AddExample(Example("textured-mesh.example", DALI_DEMO_STR_TITLE_TEXTURED_MESH));
   demo.AddExample(Example("tilt.example", DALI_DEMO_STR_TITLE_TILT_SENSOR));
+  demo.AddExample(Example("tooltip.example", DALI_DEMO_STR_TITLE_TOOLTIP));
   demo.AddExample(Example("transitions.example", DALI_DEMO_STR_TITLE_VISUAL_TRANSITIONS));
   demo.AddExample(Example("web-view.example", DALI_DEMO_STR_TITLE_WEB_VIEW));
   demo.AddExample(Example("window.example", DALI_DEMO_STR_TITLE_WINDOW));
