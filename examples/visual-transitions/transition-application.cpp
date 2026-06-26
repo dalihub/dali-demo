@@ -49,7 +49,7 @@ void SetLabelText(Button button, const char* label)
 
 } // namespace
 
-namespace Dali::Demo
+namespace Demo
 {
 const char* TransitionApplication::DEMO_THEME_ONE_PATH(DEMO_STYLE_DIR "style-example-theme-one.json");
 const char* DALI_LOGO_PATH(DEMO_IMAGE_DIR "Logo-for-demo.png");
@@ -348,4 +348,4 @@ void TransitionApplication::OnKeyEvent(Window window, KeyEvent keyEvent)
   }
 }
 
-} // namespace Dali::Demo
+} // namespace Demo

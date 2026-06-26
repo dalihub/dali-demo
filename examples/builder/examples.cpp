@@ -20,6 +20,7 @@
 #include <dali-toolkit/devel-api/builder/builder.h>
 #include <dali-toolkit/devel-api/builder/json-parser.h>
 #include <dali-toolkit/devel-api/builder/tree-node.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali/dali.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali/integration-api/debug.h>
@@ -40,7 +41,6 @@
 
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view.h>
-#include <controls/popup/popup.h>
 #include <dali/integration-api/string-utils.h>
 #include <shared/view.h>
 using Dali::Integration::GetStdString;

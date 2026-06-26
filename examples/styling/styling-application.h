@@ -19,11 +19,10 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <cstdio>
 #include <sstream>
-
-#include <controls/popup/popup.h>
-#include <controls/slider/slider.h>
+#include "controls/slider/slider.h"
 #include "image-channel-control.h"
 
 // Internal includes
