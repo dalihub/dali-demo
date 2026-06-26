@@ -179,14 +179,14 @@ void AppendGraphicsInformation(std::ostringstream& stream)
 /**
  * Creates a popup that shows the version information of the DALi libraries and demo
  */
-Dali::Demo::Popup CreateVersionPopup(Application& application, ConnectionTrackerInterface& connectionTracker)
+Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrackerInterface& connectionTracker)
 {
   std::ostringstream stream;
   AppendVersionString(stream);
   AppendIpAddress(stream);
   AppendGraphicsInformation(stream);
 
-  Dali::Demo::Popup popup = Dali::Demo::Popup::New();
+  Dali::Toolkit::Popup popup = Dali::Toolkit::Popup::New();
 
   Toolkit::TextLabel titleActor = Toolkit::TextLabel::New("Version information");
   titleActor.SetProperty(Actor::Property::NAME, "titleActor");
@@ -213,12 +213,12 @@ Dali::Demo::Popup CreateVersionPopup(Application& application, ConnectionTracker
   popup.OutsideTouchedSignal().Connect(
     &connectionTracker,
     [popup]() mutable
+  {
+    if(popup && (popup.GetDisplayState() == Toolkit::Popup::SHOWN))
     {
-      if(popup && (popup.GetDisplayState() == Demo::Popup::SHOWN))
-      {
-        popup.SetDisplayState(Demo::Popup::HIDDEN);
-      }
-    });
+      popup.SetDisplayState(Popup::HIDDEN);
+    }
+  });
 
   return popup;
 }
@@ -671,9 +671,9 @@ void DaliTableView::OnKeyEvent(Window window, KeyEvent event)
     {
       // If there's a Popup, Hide it if it's contributing to the display in any way (EG. transitioning in or out).
       // Otherwise quit.
-      if(mVersionPopup && (mVersionPopup.GetDisplayState() != Demo::Popup::HIDDEN))
+      if(mVersionPopup && (mVersionPopup.GetDisplayState() != Toolkit::Popup::HIDDEN))
       {
-        mVersionPopup.SetDisplayState(Demo::Popup::HIDDEN);
+        mVersionPopup.SetDisplayState(Popup::HIDDEN);
       }
       else
       {
@@ -763,13 +763,13 @@ bool DaliTableView::OnTileHovered(Actor actor, HoverEvent event)
 void DaliTableView::OnLogoTapped(Dali::Actor actor, Dali::TapGesture tap)
 {
   // Only show if currently fully hidden. If transitioning-out, the transition will not be interrupted.
-  if(!mVersionPopup || (mVersionPopup.GetDisplayState() == Demo::Popup::HIDDEN))
+  if(!mVersionPopup || (mVersionPopup.GetDisplayState() == Toolkit::Popup::HIDDEN))
   {
     if(!mVersionPopup)
     {
       mVersionPopup = CreateVersionPopup(mApplication, *this);
     }
 
-    mVersionPopup.SetDisplayState(Demo::Popup::SHOWN);
+    mVersionPopup.SetDisplayState(Popup::SHOWN);
   }
 }

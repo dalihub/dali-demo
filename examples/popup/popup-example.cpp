@@ -16,12 +16,11 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/string-utils.h>
-
-#include <controls/popup/popup.h>
 #include "shared/view.h"
 
 using Dali::Integration::GetStdString;
@@ -198,7 +197,7 @@ public:
    * same visual appearance.
    * @param[in] popup The popup whose policies should be modified.
    */
-  void SetupContextualResizePolicy(Demo::Popup& popup)
+  void SetupContextualResizePolicy(Toolkit::Popup& popup)
   {
     Vector2 windowSize = mApplication.GetWindow().GetSize();
     // Some defaults when creating a new fixed size.
@@ -289,20 +288,20 @@ public:
     }
   }
 
-  void SetupPopup(Demo::Popup popup, Actor parent)
+  void SetupPopup(Toolkit::Popup popup, Actor parent)
   {
     if(mAnimationFade)
     {
-      popup.SetProperty(Demo::Popup::Property::ANIMATION_MODE, "FADE");
+      popup.SetProperty(Toolkit::Popup::Property::ANIMATION_MODE, "FADE");
     }
     else
     {
-      popup.SetProperty(Demo::Popup::Property::ANIMATION_MODE, "ZOOM");
+      popup.SetProperty(Toolkit::Popup::Property::ANIMATION_MODE, "ZOOM");
     }
 
     if(mContextual)
     {
-      popup.SetProperty(Demo::Popup::Property::CONTEXTUAL_MODE, "BELOW");
+      popup.SetProperty(Toolkit::Popup::Property::CONTEXTUAL_MODE, "BELOW");
 
       // Modify the preset demo resize policies (and size) to contextual ones.
       SetupContextualResizePolicy(popup);
@@ -314,14 +313,14 @@ public:
       mApplication.GetWindow().Add(popup);
     }
 
-    mPopup.SetDisplayState(Demo::Popup::SHOWN);
+    mPopup.SetDisplayState(Toolkit::Popup::SHOWN);
   }
 
   void HidePopup()
   {
     if(mPopup)
     {
-      mPopup.SetDisplayState(Demo::Popup::HIDDEN);
+      mPopup.SetDisplayState(Toolkit::Popup::HIDDEN);
     }
   }
 
@@ -334,17 +333,17 @@ public:
     }
   }
 
-  Demo::Popup CreatePopup()
+  Toolkit::Popup CreatePopup()
   {
     Window      window         = mApplication.GetWindow();
     const float POPUP_WIDTH_DP = window.GetSize().GetWidth() * 0.75f;
 
-    Demo::Popup popup = Demo::Popup::New();
+    Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty(Dali::Actor::Property::NAME, "popup");
     popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     popup.SetProperty(Actor::Property::SIZE, Vector2(POPUP_WIDTH_DP, 0.0f));
-    popup.SetProperty(Demo::Popup::Property::TAIL_VISIBILITY, false);
+    popup.SetProperty(Toolkit::Popup::Property::TAIL_VISIBILITY, false);
 
     popup.OutsideTouchedSignal().Connect(this, &PopupExample::HidePopup);
     popup.HiddenSignal().Connect(this, &PopupExample::PopupHidden);
@@ -352,9 +351,9 @@ public:
     return popup;
   }
 
-  Demo::Popup CreateConfirmationPopup(int numberOfButtons)
+  Toolkit::Popup CreateConfirmationPopup(int numberOfButtons)
   {
-    Demo::Popup confirmationPopup = Demo::Popup::New();
+    Toolkit::Popup confirmationPopup = Toolkit::Popup::New();
     confirmationPopup.SetProperty(Dali::Actor::Property::NAME, "MAIN-POPUP-SELF");
 
     if(numberOfButtons > 0)
@@ -486,11 +485,11 @@ public:
         BaseHandle baseHandle = typeInfo.CreateInstance();
         if(baseHandle)
         {
-          mPopup = Demo::Popup::DownCast(baseHandle);
+          mPopup = Toolkit::Popup::DownCast(baseHandle);
           mPopup.SetTitle(CreateTitle("This is a Toast Popup.\nIt will auto-hide itself"));
 
           mApplication.GetWindow().Add(mPopup);
-          mPopup.SetDisplayState(Demo::Popup::SHOWN);
+          mPopup.SetDisplayState(Toolkit::Popup::SHOWN);
         }
       }
     }
@@ -728,7 +727,7 @@ private:
   bool mContextual;    ///< True if currently using the contextual popup mode.
   bool mAnimationFade; ///< True if currently using the fade animation.
 
-  Demo::Popup mPopup; ///< The current example popup.
+  Toolkit::Popup mPopup; ///< The current example popup.
 
   Toolkit::ItemView mItemView; ///< ItemView to hold test images
 };

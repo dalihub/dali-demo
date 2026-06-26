@@ -19,17 +19,18 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
+//#include <dali-toolkit/devel-api/controls/slider/slider.h>
+#include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <cstdio>
 #include <sstream>
+#include "beat-control.h"
 
 // Internal includes
-#include <controls/popup/popup.h>
-#include "beat-control.h"
 
 using namespace Dali;
 using namespace Dali::Toolkit;
 
-namespace Dali::Demo
+namespace Demo
 {
 class TransitionApplication : public ConnectionTracker
 {
@@ -76,6 +77,6 @@ private:
   Property::Index mActionIndex;
 };
 
-} // Namespace Dali::Demo
+} // Namespace Demo
 
 #endif // DALI_DEMO_TRANSITION_APPLICATION_H
