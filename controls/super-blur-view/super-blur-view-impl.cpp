@@ -327,7 +327,7 @@ void SuperBlurView::OnSceneConnection(int depth)
     if(!mWindow && !mBlurCompleted)
     {
       // Texture was set before scene connection; trigger deferred blur now
-      SetTexture(mInputTexture, DevelWindow::Get(Self()));
+      SetTexture(mInputTexture, Window::Get(Self()));
     }
     else
     {
@@ -382,7 +382,7 @@ void SuperBlurView::SetProperty(BaseObject* object, Property::Index propertyInde
           Texture texture = Texture::New(TextureType::TEXTURE_2D, pixels.GetPixelFormat(), pixels.GetWidth(), pixels.GetHeight());
           texture.Upload(pixels, 0, 0, 0, 0, pixels.GetWidth(), pixels.GetHeight());
 
-          superBlurViewImpl.SetTexture(texture, DevelWindow::Get(superBlurView));
+          superBlurViewImpl.SetTexture(texture, Window::Get(superBlurView));
         }
         else
         {

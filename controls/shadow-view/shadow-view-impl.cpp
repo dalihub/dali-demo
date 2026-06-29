@@ -246,7 +246,7 @@ void ShadowView::OnInitialize()
 
 void ShadowView::OnSceneConnection(int depth)
 {
-  mWindow = DevelWindow::Get(Self());
+  mWindow = Window::Get(Self());
 
   PositionSize windowSize = mWindow.GetPositionSize();
 

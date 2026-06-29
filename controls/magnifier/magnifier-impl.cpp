@@ -187,7 +187,7 @@ void Magnifier::OnSceneConnection(int depth)
 {
   Actor self = Self();
 
-  mWindow = DevelWindow::Get(self);
+  mWindow = Window::Get(self);
 
   PositionSize winSize = mWindow.GetPositionSize();
   Vector2      windowSize(winSize.width, winSize.height);
