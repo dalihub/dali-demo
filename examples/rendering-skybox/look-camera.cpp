@@ -91,15 +91,15 @@ void LookCamera::Initialise(Window window, const Vector3& position, float fovY, 
 
 bool LookCamera::OnTick()
 {
-  Vector2 windowSize = mWindow.GetSize();
+  auto positionSize = mWindow.GetPositionSize();
 
   // ---------------------------------------------------------------------
   // update rotation
   Vector2 tmp(mScreenLookDelta);
   mScreenLookDelta = Vector2::ZERO;
 
-  float yaw   = ((tmp.y / windowSize.x) * CAMERA_SENSITIVITY);
-  float pitch = ((tmp.x / windowSize.y) * CAMERA_SENSITIVITY);
+  float yaw   = ((tmp.y / positionSize.width) * CAMERA_SENSITIVITY);
+  float pitch = ((tmp.x / positionSize.height) * CAMERA_SENSITIVITY);
   mCameraYawPitch.x -= yaw;
   mCameraYawPitch.y -= pitch;
   if(abs(mCameraYawPitch.x) > CAMERA_VERTICAL_LIMIT)
@@ -134,11 +134,11 @@ void LookCamera::InitialiseDefaultCamera()
 
 void LookCamera::CreateInterceptorActor()
 {
-  Vector2 windowSize = mWindow.GetSize();
+  auto positionSize = mWindow.GetPositionSize();
 
   mInterceptorActor = Actor::New();
   mInterceptorActor.SetProperty(Dali::Actor::Property::NAME, "InputInterceptor");
-  mInterceptorActor.SetProperty(Actor::Property::SIZE, Vector3(windowSize.width, windowSize.height, 1));
+  mInterceptorActor.SetProperty(Actor::Property::SIZE, Vector3(positionSize.width, positionSize.height, 1));
   mInterceptorActor.SetProperty(Actor::Property::POSITION, Vector3(0.0, 0.0, 1.0));
   mInterceptorActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mInterceptorActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);

@@ -203,7 +203,7 @@ public:
     window.Add(view);
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &ClippingDrawOrderVerification::OnTouch);
+    window.TouchEventSignal().Connect(this, &ClippingDrawOrderVerification::OnTouch);
   }
 
   void OnTouch(Window window, TouchEvent touch)

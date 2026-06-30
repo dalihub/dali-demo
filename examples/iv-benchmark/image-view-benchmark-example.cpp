@@ -102,8 +102,9 @@ public:
 
   bool OnTick()
   {
-    float width  = (float)mWindow.GetSize().GetWidth() / m;
-    float height = (float)mWindow.GetSize().GetHeight() / n;
+    auto  positionSize = mWindow.GetPositionSize();
+    float width        = (float)positionSize.width / m;
+    float height       = (float)positionSize.height / n;
 
     int i = n - 1;
     {
@@ -117,7 +118,7 @@ public:
       customColorLogger.AddMarker(PerformanceLogger::Marker::END_EVENT);
       rawView[Actor::Property::PARENT_ORIGIN] = ParentOrigin::TOP_LEFT;
       rawView[Actor::Property::PIVOT]         = Pivot::TOP_LEFT;
-      rawView[Actor::Property::SIZE]          = Vector2((float)mWindow.GetSize().GetWidth(), height);
+      rawView[Actor::Property::SIZE]          = Vector2((float)positionSize.width, height);
       rawView[Actor::Property::POSITION]      = Vector2(0.0f, height * (i + 1));
 
       for(int j = 0; j < m; j++)

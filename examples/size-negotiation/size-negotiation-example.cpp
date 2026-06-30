@@ -141,7 +141,7 @@ public:
     mItemView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     // Use a grid layout for tests
-    Vector2                windowSize = window.GetSize();
+    Vector2                windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     Toolkit::ItemLayoutPtr gridLayout = Toolkit::DefaultItemLayout::New(Toolkit::DefaultItemLayout::LIST);
     Vector3                itemSize;
     gridLayout->GetItemSize(0, Vector3(windowSize), itemSize);
@@ -180,7 +180,7 @@ public:
   Toolkit::Popup CreatePopup()
   {
     Window      window         = mApplication.GetWindow();
-    const float POPUP_WIDTH_DP = window.GetSize().GetWidth() * 0.75f;
+    const float POPUP_WIDTH_DP = window.GetPositionSize().width * 0.75f;
 
     Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty(Dali::Actor::Property::NAME, "popup");

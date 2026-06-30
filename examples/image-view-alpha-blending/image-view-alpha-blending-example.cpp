@@ -54,7 +54,7 @@ private:
     // Get a handle to the window
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ImageViewAlphaBlendApp::OnKeyEvent);
-    const Vector2         windowSize          = window.GetSize();
+    const Vector2         windowSize          = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     const bool            portraitOrientation = windowSize.width < windowSize.height;
     const Property::Index positionProperty    = portraitOrientation ? Actor::Property::POSITION_Y : Actor::Property::POSITION_X;
 

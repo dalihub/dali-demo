@@ -140,7 +140,7 @@ private:
   {
     // Get a handle to the window & connect to the key event signal
     auto    window     = application.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     window.KeyEventSignal().Connect(this, &GestureExample::OnKeyEvent);
 
     // Create a background with a linear gradient which matches parent size & is placed in the center.
@@ -321,7 +321,7 @@ private:
         anim.AnimateTo(Property(actor, Actor::Property::SCALE), actor.GetCurrentProperty<Vector3>(Actor::Property::SCALE) * PAN_MODE_END_ANIMATION_SCALE, AlphaFunction::BOUNCE);
 
         // Move actor back to center if we're out of bounds
-        Vector2 halfWindowSize = Vector2(mApplication.GetWindow().GetSize()) * 0.5f;
+        Vector2 halfWindowSize = Vector2(mApplication.GetWindow().GetPositionSize().width, mApplication.GetWindow().GetPositionSize().height) * 0.5f;
         if((abs(newPosition.x) > halfWindowSize.width) ||
            (abs(newPosition.y) > halfWindowSize.height))
         {

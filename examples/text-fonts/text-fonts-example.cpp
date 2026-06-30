@@ -121,7 +121,7 @@ public:
     {
       CreateContainer(mContainer4, mLayoutSize);
       Window  window     = mApplication.GetWindow();
-      Vector2 windowSize = window.GetSize();
+      Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
       mContainer4.SetProperty(Actor::Property::POSITION, Vector2(0, windowSize.height * 0.25f * 3));
       window.Add(mContainer4);
       // Info
@@ -154,7 +154,7 @@ public:
   void Create(Application application)
   {
     Window  window     = application.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     window.KeyEventSignal().Connect(this, &TextFontsExample::OnKeyEvent);
 

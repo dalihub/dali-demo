@@ -134,7 +134,7 @@ private:
   void Create(Application application)
   {
     Window  window     = application.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     window.KeyEventSignal().Connect(this, &RefractionEffectExample::OnKeyEvent);
 
@@ -172,7 +172,7 @@ private:
     mShaderFlat = Shader::New(ToDaliStringView(SHADER_REFRACTION_EFFECT_FLAT_VERT), ToDaliStringView(SHADER_REFRACTION_EFFECT_FLAT_FRAG));
     mGeometry   = CreateGeometry(MESH_FILES[mCurrentMeshId]);
 
-    Texture texture = DemoHelper::LoadWindowFillingTexture(Uint16Pair(window.GetSize().GetWidth(), window.GetSize().GetHeight()), TEXTURE_IMAGES[mCurrentTextureId]);
+    Texture texture = DemoHelper::LoadWindowFillingTexture(Uint16Pair(window.GetPositionSize().width, window.GetPositionSize().height), TEXTURE_IMAGES[mCurrentTextureId]);
     mTextureSet     = TextureSet::New();
     mTextureSet.SetTexture(0u, texture);
 
@@ -235,7 +235,7 @@ private:
   bool OnChangeTexture(Toolkit::Button button)
   {
     mCurrentTextureId = (mCurrentTextureId + 1) % NUM_TEXTURE_IMAGES;
-    Texture texture   = DemoHelper::LoadWindowFillingTexture(Uint16Pair(mApplication.GetWindow().GetSize().GetWidth(), mApplication.GetWindow().GetSize().GetHeight()), TEXTURE_IMAGES[mCurrentTextureId]);
+    Texture texture   = DemoHelper::LoadWindowFillingTexture(Uint16Pair(mApplication.GetWindow().GetPositionSize().width, mApplication.GetWindow().GetPositionSize().height), TEXTURE_IMAGES[mCurrentTextureId]);
     mTextureSet.SetTexture(0u, texture);
     return true;
   }
@@ -427,7 +427,8 @@ private:
     Vector3 bBoxSize(boundingBox[1] - boundingBox[0], boundingBox[3] - boundingBox[2], boundingBox[5] - boundingBox[4]);
     Vector3 bBoxMinCorner(boundingBox[0], boundingBox[2], boundingBox[4]);
 
-    Vector2 windowSize = mApplication.GetWindow().GetSize();
+    auto    positionSize = mApplication.GetWindow().GetPositionSize();
+    Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
     Vector3 scale(windowSize.x / bBoxSize.x, windowSize.y / bBoxSize.y, 1.f);
     scale.z = (scale.x + scale.y) / 2.f;
 

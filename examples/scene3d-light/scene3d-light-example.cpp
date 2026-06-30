@@ -142,7 +142,7 @@ public:
     window.Add(text);
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &Scene3dLightController::OnTouch);
+    window.TouchEventSignal().Connect(this, &Scene3dLightController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &Scene3dLightController::OnKeyEvent);

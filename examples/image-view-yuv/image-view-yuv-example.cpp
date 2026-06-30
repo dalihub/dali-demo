@@ -80,7 +80,7 @@ public:
 
     mWindow.KeyEventSignal().Connect(this, &ImageYuvController::OnKeyEvent);
     mWindow.SetBackgroundColor(Color::WHITE);
-    mWindow.TouchedSignal().Connect(this, &ImageYuvController::OnTouch);
+    mWindow.TouchEventSignal().Connect(this, &ImageYuvController::OnTouch);
 
     mTableView = Toolkit::TableView::New(NUM_IMAGE_INFOS, 3);
     mTableView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);

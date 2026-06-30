@@ -122,7 +122,7 @@ public:
     window.KeyEventSignal().Connect(this, &FlexContainerExample::OnKeyEvent);
     window.GetRootLayer().SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
 
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.

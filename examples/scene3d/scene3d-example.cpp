@@ -302,7 +302,7 @@ void Scene3DExample::OnInit(Application app)
   Property::Array stopColors;
   stopColors.PushBack(Color::BLACK);
   stopColors.PushBack(Vector4(0.45f, 0.7f, 0.8f, 1.f)); // Medium bright, pastel blue
-  const float percentageWindowHeight = window.GetSize().GetHeight() * 0.8f;
+  const float percentageWindowHeight = window.GetPositionSize().height * 0.8f;
 
   navigationView.SetProperty(Toolkit::Control::Property::BACKGROUND,
                              Dali::Property::Map()
@@ -324,7 +324,7 @@ void Scene3DExample::OnInit(Application app)
   items.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   items.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
 
-  Vector3 windowSize(window.GetSize());
+  Vector3 windowSize(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
   auto    itemLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
   itemLayout->SetItemSize(Vector3(windowSize.x * 0.9f, ITEM_HEIGHT, 1.f));
   items.AddLayout(*itemLayout);
@@ -434,8 +434,8 @@ void Scene3DExample::OnKey(Window window, KeyEvent e)
 
 void Scene3DExample::OnPan(Actor actor, PanGesture pan)
 {
-  auto    windowSize = mApp.GetWindow().GetSize();
-  Vector2 size{float(windowSize.GetWidth()), float(windowSize.GetHeight())};
+  auto    positionSize = mApp.GetWindow().GetPositionSize();
+  Vector2 size{float(positionSize.width), float(positionSize.height)};
   float   aspect = size.y / size.x;
 
   size /= ROTATION_SCALE;

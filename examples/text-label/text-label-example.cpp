@@ -210,7 +210,7 @@ public:
     Window window = application.GetWindow();
 
     window.KeyEventSignal().Connect(this, &TextLabelExample::OnKeyEvent);
-    mWindowSize = window.GetSize();
+    mWindowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     mButtonSize = Size(mWindowSize.height * 0.1, mWindowSize.height * 0.1); // Button size 1/10 of window height
 
     mContainer = Control::New();

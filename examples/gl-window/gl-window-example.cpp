@@ -41,7 +41,7 @@ public:
     Dali::Window window = application.GetWindow();
     window.SetBackgroundColor(Color::WHITE);
     window.KeyEventSignal().Connect(this, &GlWindowExample::OnKeyEvent);
-    window.TouchedSignal().Connect(this, &GlWindowExample::OnTouch);
+    window.TouchEventSignal().Connect(this, &GlWindowExample::OnTouch);
 
     // Create a textLabel to add to our main window
     auto textLabel = Handle::New<TextLabel>(
@@ -57,11 +57,12 @@ public:
     window.Add(textLabel);
 
     // Create GL Window and give it the same size as the main window
-    CreateGlWindow(window.GetSize());
+    auto positionSize = window.GetPositionSize();
+    CreateGlWindow(Vector2(positionSize.width, positionSize.height));
 
     // Resize main window to double the textLabel size so the GL Window takes focus
     auto textSize = textLabel.GetNaturalSize() * 2.0f;
-    window.SetSize({uint32_t(textSize.width), uint32_t(textSize.y)});
+    window.SetPositionSize(Dali::PositionSize(positionSize.x, positionSize.y, static_cast<int>(textSize.width), static_cast<int>(textSize.y)));
   }
 
   int CreateGlWindow(const Vector2& windowSize)

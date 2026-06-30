@@ -217,7 +217,7 @@ DissolveEffectApp::~DissolveEffectApp()
 void DissolveEffectApp::OnInit(Application application)
 {
   auto    window     = application.GetWindow();
-  Vector2 windowSize = window.GetSize();
+  Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
   window.KeyEventSignal().Connect(this, &DissolveEffectApp::OnKeyEvent);
 
   // Creates a default view with a default tool bar, the view is added to the window.
@@ -290,7 +290,8 @@ void DissolveEffectApp::OnPanGesture(Actor actor, PanGesture gesture)
       mIndex = (mIndex + NUM_IMAGES - 1) % NUM_IMAGES;
     }
 
-    mNextImage = CreateWindowFillingImageView(mApplication.GetWindow().GetSize(), IMAGES[mIndex]);
+    auto positionSize = mApplication.GetWindow().GetPositionSize();
+    mNextImage        = CreateWindowFillingImageView(Vector2(positionSize.width, positionSize.height), IMAGES[mIndex]);
     mNextImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mNextImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mNextImage.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
@@ -404,8 +405,9 @@ bool DissolveEffectApp::OnTimerTick()
   mTimerReady = true;
   if(mSlideshow)
   {
-    mIndex     = (mIndex + 1) % NUM_IMAGES;
-    mNextImage = CreateWindowFillingImageView(mApplication.GetWindow().GetSize(), IMAGES[mIndex]);
+    mIndex            = (mIndex + 1) % NUM_IMAGES;
+    auto positionSize = mApplication.GetWindow().GetPositionSize();
+    mNextImage        = CreateWindowFillingImageView(Vector2(positionSize.width, positionSize.height), IMAGES[mIndex]);
     mNextImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mNextImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mNextImage.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);

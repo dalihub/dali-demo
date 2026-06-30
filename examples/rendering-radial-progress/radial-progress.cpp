@@ -91,7 +91,7 @@ public:
     animation.Play();
 
     // 6. Exit the application when touched
-    window.TouchedSignal().Connect(this, &RadialProgressController::OnTouch);
+    window.TouchEventSignal().Connect(this, &RadialProgressController::OnTouch);
   }
 
   void OnTouch(Window window, TouchEvent touch)

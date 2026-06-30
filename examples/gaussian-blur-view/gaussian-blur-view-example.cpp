@@ -57,7 +57,7 @@ private:
   void Create(Application application)
   {
     auto    window     = application.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     window.KeyEventSignal().Connect(this, &GaussianBlurViewExample::OnKeyEvent);
 
     mImageView = Toolkit::ImageView::New(BACKGROUND_IMAGE);
@@ -114,7 +114,7 @@ private:
     mGaussianBlurView.Add(mImageView);
     mGaussianBlurView.SetProperty(mGaussianBlurView.GetBlurStrengthPropertyIndex(), mStrength);
 
-    window.TouchedSignal().Connect(this, &GaussianBlurViewExample::OnTouch);
+    window.TouchEventSignal().Connect(this, &GaussianBlurViewExample::OnTouch);
   }
 
   void OnTouch(Window window, TouchEvent touch)

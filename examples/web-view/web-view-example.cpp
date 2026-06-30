@@ -65,8 +65,8 @@ public:
     Window window = application.GetWindow();
     window.SetBackgroundColor(Vector4(0.2, 0.6, 1, 1));
 
-    float width    = window.GetSize().GetWidth();
-    float height   = window.GetSize().GetHeight();
+    float width    = window.GetPositionSize().width;
+    float height   = window.GetPositionSize().height;
     float fontSize = width * 0.02f;
 
     mWebView = Toolkit::WebView::New("ko-KR", "Asia/Seoul");

@@ -132,7 +132,7 @@ public:
 
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
 
-    mWindowSize = window.GetSize();
+    mWindowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     Initialise();
 

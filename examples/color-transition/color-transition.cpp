@@ -105,7 +105,7 @@ private:
   void OnInit(Application app)
   {
     auto window     = mApp.GetWindow();
-    auto windowSize = Vector2{window.GetSize()};
+    auto windowSize = Vector2{Vector2(window.GetPositionSize().width, window.GetPositionSize().height)};
 
     // create content root
     Actor content = Actor::New();
@@ -183,7 +183,7 @@ private:
   void OnDoubleTap(Actor /*actor*/, TapGesture tap)
   {
     auto    window     = mApp.GetWindow();
-    auto    windowSize = Vector2{window.GetSize()};
+    auto    windowSize = Vector2{Vector2(window.GetPositionSize().width, window.GetPositionSize().height)};
     Vector2 clip       = tap.GetScreenPoint() / windowSize - Vector2::ONE * .5f; // [-.5, .5]
     if(clip.Length() < .333f * .5f)
     {

@@ -128,7 +128,7 @@ void EffectsViewApp::OnAppInitialize(Application application)
   window.KeyEventSignal().Connect(this, &EffectsViewApp::OnKeyEvent);
   window.SetBackgroundColor(Color::WHITE);
 
-  mWindowSize = window.GetSize();
+  mWindowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
   // Creates a default view with a default tool bar.
   // The view is added to the window.

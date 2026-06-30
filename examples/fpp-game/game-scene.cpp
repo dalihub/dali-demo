@@ -164,7 +164,7 @@ bool GameScene::Load(Window window, const char* filename)
   }
 
   // update camera
-  mCamera.Initialise(window.GetRenderTaskList().GetTask(0).GetCameraActor(), 60.0f, 0.1f, 100.0f, window.GetSize());
+  mCamera.Initialise(window.GetRenderTaskList().GetTask(0).GetCameraActor(), 60.0f, 0.1f, 100.0f, Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
 
   return true;
 }

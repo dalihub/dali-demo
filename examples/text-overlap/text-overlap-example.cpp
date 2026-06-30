@@ -47,7 +47,7 @@ void TextOverlapController::Create(Application app)
   Window window = app.GetWindow();
   window.KeyEventSignal().Connect(this, &TextOverlapController::OnKeyEvent);
 
-  Vector2 windowSize = window.GetSize();
+  Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
   mLabels[0] = TextLabel::New("Text Label 1");
   mLabels[1] = TextLabel::New("Text Label 2");
@@ -111,7 +111,8 @@ void TextOverlapController::OnPan(Actor actor, PanGesture gesture)
   }
   else if(mGrabbedActor && state == GestureState::CONTINUING)
   {
-    Vector2        windowSize      = mApplication.GetWindow().GetSize();
+    auto           positionSize    = mApplication.GetWindow().GetPositionSize();
+    Vector2        windowSize      = Vector2(positionSize.width, positionSize.height);
     Vector3        size            = mGrabbedActor.GetCurrentProperty<Vector3>(Actor::Property::SIZE);
     const Vector2& gesturePosition = gesture.GetPosition();
 

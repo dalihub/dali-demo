@@ -347,7 +347,7 @@ private:
     auto   rootLayer = window.GetRootLayer();
     rootLayer.SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
 
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     float unit = windowSize.y / 24.f;
 

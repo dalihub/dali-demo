@@ -96,7 +96,8 @@ public:
       mWindow.Add(pannelLayer);
     }
 
-    Vector2 size = mWindow.GetSize();
+    auto    positionSize = mWindow.GetPositionSize();
+    Vector2 size(positionSize.width, positionSize.height);
 
     // UI panel
     UIPanel = Toolkit::Control::New();
@@ -263,7 +264,7 @@ public:
 
     // Connect signals
     mWindow.KeyEventSignal().Connect(this, &RenderEffectController::OnKeyEvent);
-    mWindow.ResizeSignal().Connect(this, &RenderEffectController::OnWindowResized);
+    mWindow.ResizedSignal().Connect(this, &RenderEffectController::OnWindowResized);
   }
 
   Toolkit::Control CreateIconPanel(std::string title, std::string detail, bool isOn, std::string iconURL, Vector2 size)

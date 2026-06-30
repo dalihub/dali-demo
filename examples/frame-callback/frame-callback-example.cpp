@@ -86,7 +86,7 @@ private:
 
     // Notify mFrameCallback about the window width.
     // Can call methods in mFrameCallback directly as we have not set it on the window yet.
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     mFrameCallback.SetWindowWidth(windowSize.width);
 
     // Detect taps on the root layer.

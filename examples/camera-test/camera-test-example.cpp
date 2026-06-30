@@ -138,14 +138,15 @@ public:
     // Use default camera.
     Window  window = app.GetWindow();
     Vector2 windowSize(1280, 800);
-    if(window.GetSize().GetWidth() < 1280)
+    auto    positionSize = window.GetPositionSize();
+    if(positionSize.width < 1280)
     {
-      window.SetSize(Window::WindowSize(windowSize.x, windowSize.y)); // 1280 divides into 427, 427, 426
+      window.SetPositionSize(Dali::PositionSize(positionSize.x, positionSize.y, static_cast<int>(windowSize.x), static_cast<int>(windowSize.y))); // 1280 divides into 427, 427, 426
     }
     else
     {
-      windowSize.x = window.GetSize().GetWidth();
-      windowSize.y = window.GetSize().GetHeight();
+      windowSize.x = positionSize.width;
+      windowSize.y = positionSize.height;
     }
 
     window.KeyEventSignal().Connect(this, &CameraTestExample::OnKeyEvent);

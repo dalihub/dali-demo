@@ -116,7 +116,7 @@ public:
     mLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("R:1 M:0"));
     mLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-    mLabel.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize().GetWidth() * 0.75f, window.GetSize().GetHeight() * 0.083f));
+    mLabel.SetProperty(Actor::Property::SIZE, Vector2(window.GetPositionSize().width * 0.75f, window.GetPositionSize().height * 0.083f));
     mLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     mLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     mLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
@@ -131,7 +131,7 @@ public:
     InitActors();
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &BasicPbrController::OnTouch);
+    window.TouchEventSignal().Connect(this, &BasicPbrController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &BasicPbrController::OnKeyEvent);
@@ -172,7 +172,7 @@ public:
       }
       case PointState::MOTION:
       {
-        const Size    size    = window.GetSize();
+        const Size    size    = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
         const float   scaleX  = size.width;
         const float   scaleY  = size.height;
         const Vector2 point   = touch.GetScreenPosition(0);
@@ -272,7 +272,7 @@ public:
   void InitActors()
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     mSkybox.Init(SKYBOX_SCALE);
     mModel[0].Init(mShader, SPHERE_URL, Vector3::ZERO, SPHERE_SCALE);
@@ -285,7 +285,7 @@ public:
     // Creating root and camera actor for rendertask for 3D Scene rendering
     mUiRoot              = Actor::New();
     m3dRoot              = Actor::New();
-    CameraActor cameraUi = CameraActor::New(window.GetSize());
+    CameraActor cameraUi = CameraActor::New(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
     cameraUi.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     cameraUi.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
@@ -295,7 +295,7 @@ public:
 
     mUiRoot.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mUiRoot.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mUiRoot.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize()));
+    mUiRoot.SetProperty(Actor::Property::SIZE, Vector2(Vector2(window.GetPositionSize().width, window.GetPositionSize().height)));
 
     m3dRoot.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     m3dRoot.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);

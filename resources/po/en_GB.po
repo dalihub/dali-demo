@@ -31,6 +31,9 @@ msgstr "Blocks"
 msgid "DALI_DEMO_STR_TITLE_BLOOM_VIEW"
 msgstr "Bloom"
 
+msgid "DALI_DEMO_STR_TITLE_BLUR_NOISE"
+msgstr "Blur Noise"
+
 msgid "DALI_DEMO_STR_TITLE_BUBBLES"
 msgstr "Bubbles"
 
@@ -318,6 +321,9 @@ msgstr "Text Scrolling"
 
 msgid "DALI_DEMO_STR_TITLE_TILT_SENSOR"
 msgstr "Tilt Sensor"
+
+msgid "DALI_DEMO_STR_TITLE_TOOLTIP"
+msgstr "Tooltip"
 
 msgid "DALI_DEMO_STR_TITLE_FPP_GAME"
 msgstr "FPP Game"

@@ -64,7 +64,7 @@ void ContactCardLayouter::AddContact(Dali::Window window, const std::string& con
     // Set up the common layouting info shared between all contact cards when first called
 
     mContactCardLayoutInfo.unfoldedPosition = mContactCardLayoutInfo.padding = Vector2(DEFAULT_PADDING, DEFAULT_PADDING);
-    mContactCardLayoutInfo.unfoldedSize                                      = Vector2(window.GetSize()) - mContactCardLayoutInfo.padding * (MINIMUM_ITEMS_PER_ROW_OR_COLUMN - 1.0f);
+    mContactCardLayoutInfo.unfoldedSize                                      = Vector2(Vector2(window.GetPositionSize().width, window.GetPositionSize().height)) - mContactCardLayoutInfo.padding * (MINIMUM_ITEMS_PER_ROW_OR_COLUMN - 1.0f);
 
     // Calculate the size of the folded card (use the minimum of width/height as size)
     mContactCardLayoutInfo.foldedSize       = (mContactCardLayoutInfo.unfoldedSize - (mContactCardLayoutInfo.padding * (MINIMUM_ITEMS_PER_ROW_OR_COLUMN - 1.0f))) / MINIMUM_ITEMS_PER_ROW_OR_COLUMN;

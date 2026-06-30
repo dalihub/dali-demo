@@ -261,7 +261,7 @@ void EffectsView::OnSceneConnection(int depth)
 {
   Actor self(Self());
 
-  mWindow = DevelWindow::Get(self);
+  mWindow = Window::Get(self);
 
   // Create renderers
   mRendererPostFilter = Toolkit::DevelControl::CreateRenderer(SHADER_EFFECTS_VIEW_VERT,

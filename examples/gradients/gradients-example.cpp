@@ -171,7 +171,8 @@ public:
       }
       case 1: // linear gradient with units as userSpaceOnUse
       {
-        Vector2 windowSize = Vector2(mApplication.GetWindow().GetSize()) * 0.8f;
+        auto    positionSize = mApplication.GetWindow().GetPositionSize();
+        Vector2 windowSize   = Vector2(positionSize.width, positionSize.height) * 0.8f;
         gradientMap.Insert(GradientVisual::Property::START_POSITION, Vector2::ZERO);
         gradientMap.Insert(GradientVisual::Property::END_POSITION, windowSize);
         gradientMap.Insert(GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE);
@@ -185,7 +186,8 @@ public:
       }
       default: // radial gradient with units as userSpaceOnUse
       {
-        Vector2 windowSize = mApplication.GetWindow().GetSize();
+        auto    positionSize = mApplication.GetWindow().GetPositionSize();
+        Vector2 windowSize(positionSize.width, positionSize.height);
         gradientMap.Insert(GradientVisual::Property::CENTER, windowSize * 0.8f);
         gradientMap.Insert(GradientVisual::Property::RADIUS, windowSize.Length() * 0.8f);
         gradientMap.Insert(GradientVisual::Property::UNITS, GradientVisual::Units::USER_SPACE);

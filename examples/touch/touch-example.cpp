@@ -141,7 +141,7 @@ public:
     GenScene1();
 
     // Respond to a touch anywhere on the window
-    mWindow.TouchedSignal().Connect(this, &TouchController::OnWindowTouch);
+    mWindow.TouchEventSignal().Connect(this, &TouchController::OnWindowTouch);
 
     // Respond to key events
     mWindow.KeyEventSignal().Connect(this, &TouchController::OnKeyEvent);
@@ -475,8 +475,8 @@ public:
     renderTask.SetClearEnabled(true);
     renderTask.GetCameraActor().SetInvertYAxis(false);
 
-    Vector2 windowSize = mWindow.GetSize();
-    renderTask.SetViewport(Dali::Viewport(Vector4(windowSize.x / 2.0f + 200.0f, windowSize.y / 2.0f - 200.0f, 400, 400)));
+    auto positionSize = mWindow.GetPositionSize();
+    renderTask.SetViewport(Dali::Viewport(Vector4(positionSize.width / 2.0f + 200.0f, positionSize.height / 2.0f - 200.0f, 400, 400)));
 
     mRenderTaskList.push_back(renderTask);
   }

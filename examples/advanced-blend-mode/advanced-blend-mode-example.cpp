@@ -121,7 +121,7 @@ public:
     window.Add(label);
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &AdvancedBlendModeController::OnTouch);
+    window.TouchEventSignal().Connect(this, &AdvancedBlendModeController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &AdvancedBlendModeController::OnKeyEvent);

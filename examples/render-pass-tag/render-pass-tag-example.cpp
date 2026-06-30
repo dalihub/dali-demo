@@ -193,7 +193,7 @@ public:
     renderer.SetTextures(textures);
 
     // Respond to a touch anywhere on the window
-    mWindow.TouchedSignal().Connect(this, &RenderPassTagController::OnTouch);
+    mWindow.TouchEventSignal().Connect(this, &RenderPassTagController::OnTouch);
 
     // Respond to key events
     mWindow.KeyEventSignal().Connect(this, &RenderPassTagController::OnKeyEvent);

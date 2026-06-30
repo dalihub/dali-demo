@@ -57,7 +57,7 @@ private:
   {
     // Get a handle to the window
     Window        window     = application.GetWindow();
-    const Vector2 windowSize = window.GetSize();
+    const Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     // Create a SceneView and set the Skybox
     SceneView sceneView = Handle::New<SceneView>(CreatePropertyMap({{Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},

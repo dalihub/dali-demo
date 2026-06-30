@@ -197,7 +197,7 @@ private:
     mGreaterThanLabel.SetIgnored(true);
 
     // Respond to a touch anywhere on the window to quit
-    window.TouchedSignal().Connect(this, &FrameCallbackToggleController::OnTouch);
+    window.TouchEventSignal().Connect(this, &FrameCallbackToggleController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &FrameCallbackToggleController::OnKeyEvent);

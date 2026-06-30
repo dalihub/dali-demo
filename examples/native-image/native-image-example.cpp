@@ -93,7 +93,7 @@ public:
   void CreateButtonArea()
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     mButtonArea = Layer::New();
     mButtonArea.SetProperty(Actor::Property::SIZE, Vector2(windowSize.x, BUTTON_HEIGHT));
@@ -151,7 +151,7 @@ public:
   void CreateContentAreas()
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     float contentHeight((windowSize.y - BUTTON_HEIGHT) / 2.0f);
 
@@ -203,7 +203,7 @@ public:
     if(!mOffscreenRenderTask)
     {
       Window  window     = mApplication.GetWindow();
-      Vector2 windowSize = window.GetSize();
+      Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
       float   contentHeight((windowSize.y - BUTTON_HEIGHT) / 2.0f);
       Vector2 imageSize(windowSize.x, contentHeight);

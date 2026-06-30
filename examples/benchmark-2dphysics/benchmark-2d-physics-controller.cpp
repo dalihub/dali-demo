@@ -92,9 +92,9 @@ public:
   void OnInit(Application application)
   {
     mWindow = application.GetWindow();
-    mWindow.ResizeSignal().Connect(this, &Physics2dBenchmarkController::OnWindowResize);
+    mWindow.ResizedSignal().Connect(this, &Physics2dBenchmarkController::OnWindowResize);
     mWindow.KeyEventSignal().Connect(this, &Physics2dBenchmarkController::OnKeyEv);
-    mWindow.TouchedSignal().Connect(this, &Physics2dBenchmarkController::OnTouched);
+    mWindow.TouchEventSignal().Connect(this, &Physics2dBenchmarkController::OnTouched);
     mWindow.SetBackgroundColor(Color::DARK_SLATE_GRAY);
 
     CreateSimulation();
@@ -217,7 +217,7 @@ public:
   {
     DALI_LOG_RELEASE_INFO("Creating animation simulation with %d balls\n", mBallNumber);
 
-    Window::WindowSize windowSize = mWindow.GetSize();
+    PositionSize windowSize = mWindow.GetPositionSize();
     mBallActors.resize(mBallNumber);
     mBallVelocity.resize(mBallNumber);
     mBallAnimations.resize(mBallNumber);
@@ -248,8 +248,8 @@ public:
 
       ball[Actor::Property::NAME]     = "Ball";
       ball[Actor::Property::SIZE]     = BALL_SIZE; // Halve the image size
-      int width                       = windowSize.GetWidth() / 2;
-      int height                      = windowSize.GetHeight() / 2;
+      int width                       = windowSize.width / 2;
+      int height                      = windowSize.height / 2;
       ball[Actor::Property::POSITION] = Vector3(Random::Range(margin - width, width - margin), Random::Range(margin - height, height - margin), 0.0f);
       ball.RegisterProperty("index", i);
       mAnimationSimRootActor.Add(ball);
@@ -258,7 +258,7 @@ public:
       mBallVelocity[i].Normalize();
       mBallVelocity[i] = mBallVelocity[i] * Random::Range(15.0f, 50.0f);
 
-      CreateBallNotification(i, windowSize);
+      CreateBallNotification(i, Window::WindowSize(windowSize.width, windowSize.height));
       ContinueAnimation(i);
     }
 
@@ -364,16 +364,16 @@ public:
   {
     DALI_LOG_RELEASE_INFO("Creating physics simulation with %d balls\n", mBallNumber);
 
-    Window::WindowSize windowSize = mWindow.GetSize();
+    PositionSize windowSize = mWindow.GetPositionSize();
 
     // Map Physics space (origin bottom left, +ve Y up)
     // to DALi space (origin center, +ve Y down)
     mPhysicsTransform.SetIdentityAndScale(Vector3(1.0f, -1.0f, 1.0f));
-    mPhysicsTransform.SetTranslation(Vector3(windowSize.GetWidth() * 0.5f,
-                                             windowSize.GetHeight() * 0.5f,
+    mPhysicsTransform.SetTranslation(Vector3(windowSize.width * 0.5f,
+                                             windowSize.height * 0.5f,
                                              0.0f));
 
-    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.GetWidth(), windowSize.GetHeight()));
+    mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.width, windowSize.height));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
     mWindow.Add(mPhysicsRoot);
 
@@ -381,7 +381,7 @@ public:
     cpSpace* space          = scopedAccessor->GetNative().Get<cpSpace*>();
     cpSpaceSetGravity(space, cpv(0, 0));
 
-    CreateBounds(space, windowSize);
+    CreateBounds(space, Window::WindowSize(windowSize.width, windowSize.height));
 
     for(int i = 0; i < mBallNumber; ++i)
     {
@@ -405,19 +405,19 @@ public:
 
   PhysicsActor CreateBall(cpSpace* space)
   {
-    Window::WindowSize windowSize      = mWindow.GetSize();
-    const float        BALL_MASS       = 10.0f;
-    const float        BALL_RADIUS     = BALL_SIZE.x * 0.25f;
-    const float        BALL_ELASTICITY = 1.0f;
-    const float        BALL_FRICTION   = 0.0f;
+    PositionSize windowSize      = mWindow.GetPositionSize();
+    const float  BALL_MASS       = 10.0f;
+    const float  BALL_RADIUS     = BALL_SIZE.x * 0.25f;
+    const float  BALL_ELASTICITY = 1.0f;
+    const float  BALL_FRICTION   = 0.0f;
 
     auto ball                   = Toolkit::ImageView::New(ToDaliString(BALL_IMAGES[rand() % 4]));
     ball[Actor::Property::NAME] = "Ball";
     ball[Actor::Property::SIZE] = BALL_SIZE * 0.5f;
     const float moment          = cpMomentForCircle(BALL_MASS, 0.0f, BALL_RADIUS, cpvzero);
     cpBody*     body            = cpBodyNew(BALL_MASS, moment);
-    const float fw              = (windowSize.GetWidth() - BALL_RADIUS);
-    const float fh              = (windowSize.GetHeight() - BALL_RADIUS);
+    const float fw              = (windowSize.width - BALL_RADIUS);
+    const float fh              = (windowSize.height - BALL_RADIUS);
     cpBodySetPosition(body, cpv(Random::Range(0, fw), Random::Range(0, fh)));
     cpBodySetVelocity(body, cpv(Random::Range(-100.0, 100.0), Random::Range(-100.0, 100.0)));
     cpSpaceAddBody(space, body);

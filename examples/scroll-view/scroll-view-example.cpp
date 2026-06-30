@@ -209,7 +209,7 @@ private:
   void AddContentLayer()
   {
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     mScrollView = ScrollView::New();
     mScrollView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
@@ -278,7 +278,7 @@ private:
     page.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     const float margin = 10.0f;
 
@@ -316,7 +316,7 @@ private:
     bool snap(true);
 
     Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     RulerPtr rulerX = CreateRuler(snap ? windowSize.width : 0.0f);
     RulerPtr rulerY = new DefaultRuler;

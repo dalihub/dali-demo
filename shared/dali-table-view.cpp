@@ -296,7 +296,7 @@ void DaliTableView::Initialize(Application application)
 {
   Window window = application.GetWindow();
   window.KeyEventSignal().Connect(this, &DaliTableView::OnKeyEvent);
-  const Window::WindowSize windowSize = window.GetSize();
+  auto positionSize = window.GetPositionSize();
 
   // Background
   mRootActor = CreateBackground("LauncherBackground");
@@ -325,7 +325,7 @@ void DaliTableView::Initialize(Application application)
   mScrollView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
   mScrollView.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, 0.6f, 0.0f));
 
-  const float buttonsPageMargin = (1.0f - TABLE_RELATIVE_SIZE.x) * 0.5f * windowSize.GetWidth();
+  const float buttonsPageMargin = (1.0f - TABLE_RELATIVE_SIZE.x) * 0.5f * positionSize.width;
   mScrollView.SetProperty(Actor::Property::PADDING, Vector4(buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f));
 
   mScrollView.SetAxisAutoLock(true);
@@ -333,7 +333,7 @@ void DaliTableView::Initialize(Application application)
   mScrollView.ScrollStartedSignal().Connect(this, &DaliTableView::OnScrollStart);
   mScrollView.TouchedSignal().Connect(this, &DaliTableView::OnScrollTouched);
 
-  mPageWidth = windowSize.GetWidth() * TABLE_RELATIVE_SIZE.x * 0.5f;
+  mPageWidth = positionSize.width * TABLE_RELATIVE_SIZE.x * 0.5f;
 
   mBubbleAnimator.Initialize(mRootActor, mScrollView);
 
@@ -350,7 +350,7 @@ void DaliTableView::Initialize(Application application)
 
   Dali::Window winHandle = application.GetWindow();
 
-  if(windowSize.GetWidth() <= windowSize.GetHeight())
+  if(positionSize.width <= positionSize.height)
   {
     winHandle.AddAvailableOrientation(Dali::WindowOrientation::PORTRAIT);
     winHandle.RemoveAvailableOrientation(Dali::WindowOrientation::LANDSCAPE);
@@ -443,8 +443,6 @@ void DaliTableView::ApplyCubeEffectToPages()
 
 void DaliTableView::Populate()
 {
-  const Window::WindowSize windowSize = mApplication.GetWindow().GetSize();
-
   mTotalPages = (mExampleList.size() + EXAMPLES_PER_PAGE - 1) / EXAMPLES_PER_PAGE;
 
   // Populate ScrollView.
@@ -492,7 +490,7 @@ void DaliTableView::Populate()
     }
   }
 
-  SetupScrollViewRulers(mScrollView, windowSize.GetWidth(), mPageWidth, mTotalPages);
+  SetupScrollViewRulers(mScrollView, mApplication.GetWindow().GetPositionSize().width, mPageWidth, mTotalPages);
 }
 
 Actor DaliTableView::CreateTile(const std::string& name, const std::string& title, const Dali::Vector3& sizeMultiplier, Vector2& position)
@@ -658,7 +656,8 @@ void DaliTableView::ApplyScrollViewEffect()
   }
 
   // Just one effect for now
-  mScrollViewEffect = SetupInnerPageCubeEffect(mApplication.GetWindow().GetSize(), mTotalPages);
+  auto positionSize = mApplication.GetWindow().GetPositionSize();
+  mScrollViewEffect = SetupInnerPageCubeEffect(Vector2(positionSize.width, positionSize.height), mTotalPages);
 
   mScrollView.ApplyEffect(mScrollViewEffect);
 }

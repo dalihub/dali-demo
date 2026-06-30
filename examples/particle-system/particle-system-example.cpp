@@ -64,13 +64,13 @@ private:
   {
     Window window = application.GetWindow();
     window.SetBackgroundColor(Color::BLACK);
-    auto windowSize = window.GetSize();
+    auto positionSize = window.GetPositionSize();
 
     // Set up emitter actor to be the full size of the window as some particles may be outside a particular size
     mEmitterActor = Handle::New<Actor>(CreatePropertyMap({{Actor::Property::PIVOT, Pivot::CENTER},
                                                           {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
                                                           {Actor::Property::POSITION, Vector2::ZERO},
-                                                          {Actor::Property::SIZE, Vector2(windowSize.GetWidth(), windowSize.GetHeight())}}));
+                                                          {Actor::Property::SIZE, Vector2(positionSize.width, positionSize.height)}}));
     window.Add(mEmitterActor);
 
     // Create a tap gesture detector, attach the actor & connect

@@ -175,8 +175,9 @@ public:
   void Create(Application application)
   {
     // Get a handle to the window
-    Window  window     = application.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Window  window       = application.GetWindow();
+    auto    positionSize = window.GetPositionSize();
+    Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
 
     // Background image:
     Dali::Property::Map backgroundImage;
@@ -247,8 +248,9 @@ public:
    */
   void CreateControls()
   {
-    Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
+    Window  window       = mApplication.GetWindow();
+    auto    positionSize = window.GetPositionSize();
+    Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
 
     Dali::Layer controlsLayer = Dali::Layer::New();
     controlsLayer.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
@@ -335,7 +337,7 @@ public:
   Toolkit::Popup CreatePopup()
   {
     Window      window         = mApplication.GetWindow();
-    const float POPUP_WIDTH_DP = window.GetSize().GetWidth() * 0.75f;
+    const float POPUP_WIDTH_DP = window.GetPositionSize().width * 0.75f;
 
     Toolkit::Popup popup = Toolkit::Popup::New();
     popup.SetProperty(Dali::Actor::Property::NAME, "POPUP");
@@ -496,7 +498,8 @@ public:
   void OnPan(Actor actor, PanGesture gesture)
   {
     Window         window       = mApplication.GetWindow();
-    Vector2        windowSize   = window.GetSize();
+    auto           positionSize = window.GetPositionSize();
+    Vector2        windowSize   = Vector2(positionSize.width, positionSize.height);
     const Vector2& displacement = gesture.GetDisplacement();
 
     // 1.0f and 0.75f are the maximum size caps of the resized image, as a factor of window-size.
@@ -580,7 +583,7 @@ private:
 
     const char* const path      = IMAGE_PATHS[mCurrentPath];
     Window            window    = mApplication.GetWindow();
-    Size              imageSize = Vector2(window.GetSize()) * mImageWindowScale;
+    Size              imageSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height) * mImageWindowScale;
     mImageView.SetProperty(Actor::Property::SIZE, imageSize);
 
     Property::Map map;
@@ -594,9 +597,10 @@ private:
 
   void ResizeImage()
   {
-    Window  window     = mApplication.GetWindow();
-    Vector2 windowSize = window.GetSize();
-    Size    imageSize  = windowSize * mImageWindowScale;
+    Window  window       = mApplication.GetWindow();
+    auto    positionSize = window.GetPositionSize();
+    Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
+    Size    imageSize    = windowSize * mImageWindowScale;
 
     LoadImage();
 

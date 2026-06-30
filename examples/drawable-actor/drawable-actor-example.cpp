@@ -57,7 +57,7 @@ public:
     window.SetBackgroundColor(Color::WHITE);
 
     // Create native renderer
-    mRenderer = MakeUnique<NativeRenderer>(window.GetSize().GetWidth(), window.GetSize().GetHeight());
+    mRenderer = MakeUnique<NativeRenderer>(window.GetPositionSize().width, window.GetPositionSize().height);
 
     // Create render callback
     mRenderCallback = RenderCallback::New<NativeRenderer>(mRenderer.Get(), &NativeRenderer::OnRender);
@@ -69,7 +69,7 @@ public:
     mGLActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
 
     // Set size on the actor (half the window size to show that glClear() and scissor test work together)
-    mGLActor.SetProperty(Actor::Property::SIZE, Size(window.GetSize()) * 0.75f);
+    mGLActor.SetProperty(Actor::Property::SIZE, Size(Vector2(window.GetPositionSize().width, window.GetPositionSize().height)) * 0.75f);
     mGLActor[Actor::Property::POSITION] = Vector3(50.0f, 50.0f, 0.0f);
 
     // Add actor to the scene
@@ -83,7 +83,7 @@ public:
     window.Add(mTextLabel);
 
     // Respond to a touch anywhere on the window
-    window.TouchedSignal().Connect(this, &DrawableActorExampleController::OnTouch);
+    window.TouchEventSignal().Connect(this, &DrawableActorExampleController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &DrawableActorExampleController::OnKeyEvent);

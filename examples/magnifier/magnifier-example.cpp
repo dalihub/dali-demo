@@ -201,7 +201,7 @@ public:
   {
     Window window = application.GetWindow();
     window.KeyEventSignal().Connect(this, &ExampleController::OnKeyEvent);
-    mWindowSize = window.GetSize();
+    mWindowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     // The Init signal is received once (only) during the Application lifetime
 

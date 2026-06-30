@@ -92,7 +92,7 @@ public:
     window.SetBackgroundColor(BACKGROUND_COLOR);
 
     // The window size.
-    const Vector2 windowSize = window.GetSize();
+    const Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     // Creates a default view with a default tool bar.
     // The view is added to the window.

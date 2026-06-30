@@ -349,7 +349,7 @@ void BloomView::AllocateResources()
 
 void BloomView::CreateRenderTasks()
 {
-  RenderTaskList taskList = DevelWindow::Get(Self()).GetRenderTaskList();
+  RenderTaskList taskList = Window::Get(Self()).GetRenderTaskList();
 
   // create render task to render our child actors to offscreen buffer
   mRenderChildrenTask = taskList.CreateTask();
@@ -384,7 +384,7 @@ void BloomView::CreateRenderTasks()
 
 void BloomView::RemoveRenderTasks()
 {
-  RenderTaskList taskList = DevelWindow::Get(Self()).GetRenderTaskList();
+  RenderTaskList taskList = Window::Get(Self()).GetRenderTaskList();
 
   taskList.RemoveTask(mRenderChildrenTask);
   taskList.RemoveTask(mBloomExtractTask);

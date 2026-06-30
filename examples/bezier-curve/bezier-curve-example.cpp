@@ -127,7 +127,7 @@ public:
   {
     Window window = mApplication.GetWindow();
     window.KeyEventSignal().Connect(this, &BezierCurveExample::OnKeyEvent);
-    const Vector2 windowSize          = window.GetSize();
+    const Vector2 windowSize          = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     const bool    orientationPortrait = windowSize.width < windowSize.height;
 
     unsigned int            tableViewRows    = 5;

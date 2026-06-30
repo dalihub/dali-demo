@@ -103,7 +103,7 @@ public:
     mLabel = TextLabel::New(material[MaterialID].name);
     mLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mLabel.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.0f, 0.5f));
-    mLabel.SetProperty(Actor::Property::SIZE, Vector2(window.GetSize().GetWidth() * 0.5f, window.GetSize().GetHeight() * 0.083f));
+    mLabel.SetProperty(Actor::Property::SIZE, Vector2(window.GetPositionSize().width * 0.5f, window.GetPositionSize().height * 0.083f));
     mLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     mLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     mLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -134,7 +134,7 @@ public:
     PlayAnimation();
 
     // Respond to a click anywhere on the window
-    window.TouchedSignal().Connect(this, &BasicLightController::OnTouch);
+    window.TouchEventSignal().Connect(this, &BasicLightController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &BasicLightController::OnKeyEvent);
@@ -300,10 +300,10 @@ public:
    */
   void CreateActor()
   {
-    Window     window     = mApplication.GetWindow();
-    const auto windowSize = window.GetSize();
+    Window window       = mApplication.GetWindow();
+    auto   positionSize = window.GetPositionSize();
 
-    const float quarterWindowSize = std::min(windowSize.GetWidth(), windowSize.GetHeight()) * 0.25f;
+    const float quarterWindowSize = std::min(positionSize.width, positionSize.height) * 0.25f;
     mActor                        = Actor::New();
     mActor.SetProperty(Actor::Property::COLOR, Vector4(1.0f, 1.0f, 0.6f, 1.0f));
     mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);

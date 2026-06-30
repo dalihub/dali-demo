@@ -170,7 +170,7 @@ public:
     window.Add(mScrollParent);
 
     // Respond to a click anywhere on the window.
-    window.TouchedSignal().Connect(this, &HomescreenBenchmark::OnTouch);
+    window.TouchEventSignal().Connect(this, &HomescreenBenchmark::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &HomescreenBenchmark::OnKeyEvent);
@@ -242,7 +242,7 @@ public:
   {
     Window window = mApplication.GetWindow();
 
-    Size        windowSize(window.GetSize());
+    Size        windowSize(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
     const float scaledHeight = windowSize.y * PAGE_SCALE_FACTOR_Y;
     const float scaledWidth  = windowSize.x * PAGE_SCALE_FACTOR_X;
     const float PADDING      = windowSize.y / 64.0f;
@@ -356,7 +356,8 @@ public:
 
   void PopulatePages()
   {
-    Vector3 windowSize(mApplication.GetWindow().GetSize());
+    auto    positionSize = mApplication.GetWindow().GetPositionSize();
+    Vector3 windowSize(positionSize.width, positionSize.height, 0.0f);
 
     for(int i = 0; i < mConfig.mPageCount; ++i)
     {
@@ -392,7 +393,8 @@ public:
   void ScrollPages(int pages, float duration, bool flick)
   {
     duration *= PAGE_DURATION_SCALE_FACTOR;
-    Vector3 windowSize(mApplication.GetWindow().GetSize());
+    auto    positionSize = mApplication.GetWindow().GetPositionSize();
+    Vector3 windowSize(positionSize.width, positionSize.height, 0.0f);
     mScrollAnimation = Animation::New(duration);
     if(flick)
     {

@@ -237,7 +237,7 @@ Actor CreateSceneFromGLTF(
   actors.reserve(nodes.size());
   for(const auto& node : nodes)
   {
-    auto actor = node.cameraId != 0xffffffff ? CameraActor::New(window.GetSize()) : Actor::New();
+    auto actor = node.cameraId != 0xffffffff ? CameraActor::New(Vector2(window.GetPositionSize().width, window.GetPositionSize().height)) : Actor::New();
 
     actor.SetProperty(Actor::Property::SIZE, Vector3(1, 1, 1));
     actor.SetProperty(Dali::Actor::Property::NAME, ToDaliString(node.name));
@@ -341,8 +341,8 @@ private:
   {
     // Get a handle to the window
     Window   window       = application.GetWindow();
-    uint32_t windowWidth  = uint32_t(window.GetSize().GetWidth());
-    uint32_t windowHeight = uint32_t(window.GetSize().GetHeight());
+    uint32_t windowWidth  = uint32_t(window.GetPositionSize().width);
+    uint32_t windowHeight = uint32_t(window.GetPositionSize().height);
 
     window.GetRenderTaskList().GetTask(0).SetClearEnabled(false);
     mLayer3D = Layer::New();
@@ -451,7 +451,7 @@ private:
     mAnimation.Play();
 
     Actor   panScreen  = Actor::New();
-    Vector2 windowSize = window.GetSize();
+    Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
     panScreen.SetProperty(Actor::Property::SIZE, windowSize);
     panScreen.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     panScreen.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);

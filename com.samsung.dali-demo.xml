@@ -58,6 +58,9 @@
 	<ui-application appid="bloom-view.example" exec="/usr/apps/com.samsung.dali-demo/bin/bloom-view.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Bloom</label>
 	</ui-application>
+	<ui-application appid="blur-noise.example" exec="/usr/apps/com.samsung.dali-demo/bin/blur-noise.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Blur Noise</label>
+	</ui-application>
 	<ui-application appid="bubble-effect.example" exec="/usr/apps/com.samsung.dali-demo/bin/bubble-effect.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Bubble Effect</label>
 	</ui-application>
@@ -414,6 +417,9 @@
 	</ui-application>
 	<ui-application appid="tl-benchmark.example" exec="/usr/apps/com.samsung.dali-demo/bin/tl-benchmark.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>TL Benchmark</label>
+	</ui-application>
+	<ui-application appid="tooltip.example" exec="/usr/apps/com.samsung.dali-demo/bin/tooltip.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Tooltip</label>
 	</ui-application>
 	<ui-application appid="touch.example" exec="/usr/apps/com.samsung.dali-demo/bin/touch.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Touch Algorithm</label>

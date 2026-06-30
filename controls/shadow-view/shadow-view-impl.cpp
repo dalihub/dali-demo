@@ -125,12 +125,8 @@ void ShadowView::SetShadowPlaneBackground(Actor shadowPlaneBackground)
   mShadowPlane.SetProperty(Actor::Property::NAME, "SHADOW_PLANE");
   mShadowPlane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mShadowPlane.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  Renderer   shadowRenderer = Toolkit::DevelControl::CreateRenderer(SHADER_SHADOW_VIEW_RENDER_SHADER_VERT, SHADER_SHADOW_VIEW_RENDER_SHADER_FRAG, Shader::Hint::OUTPUT_IS_TRANSPARENT, "SHADOW_VIEW_RENDER_SHADER", Uint16Pair(20, 20));
-  TextureSet textureSet     = shadowRenderer.GetTextures();
-  textureSet.SetTexture(0u, mOutputFrameBuffer.GetColorTexture());
+  Renderer shadowRenderer = Toolkit::DevelControl::CreateRenderer(SHADER_SHADOW_VIEW_RENDER_SHADER_VERT, SHADER_SHADOW_VIEW_RENDER_SHADER_FRAG, Shader::Hint::OUTPUT_IS_TRANSPARENT, "SHADOW_VIEW_RENDER_SHADER", Uint16Pair(20, 20));
   mShadowPlane.AddRenderer(shadowRenderer);
-
-  SetShaderConstants();
 
   // Rather than parent the shadow plane drawable and have constraints to move it to the same
   // position, instead parent the shadow plane drawable on the shadow plane passed in.
@@ -138,11 +134,22 @@ void ShadowView::SetShadowPlaneBackground(Actor shadowPlaneBackground)
   mShadowPlane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mShadowPlane.SetProperty(Actor::Property::POSITION_Z, 1.0f);
 
-  ConstrainCamera();
-
   mShadowPlane.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
   mBlurRootActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+
+  // If ShadowView is already on scene (mCameraActor exists), set up shader constants now.
+  // Otherwise, SetShaderConstants() will be called later in OnSceneConnection().
+  if(mCameraActor)
+  {
+    // Set the output texture to the shadow plane renderer
+    if(mOutputFrameBuffer)
+    {
+      TextureSet textureSet = shadowRenderer.GetTextures();
+      textureSet.SetTexture(0u, mOutputFrameBuffer.GetColorTexture());
+    }
+    SetShaderConstants();
+  }
 }
 
 void ShadowView::SetPointLight(Actor pointLight)
@@ -239,12 +246,11 @@ void ShadowView::OnInitialize()
 
 void ShadowView::OnSceneConnection(int depth)
 {
-  mWindow = DevelWindow::Get(Self());
+  mWindow = Window::Get(Self());
 
-  Window::WindowSize winSize = mWindow.GetSize();
-  Vector2            windowSize(winSize.GetWidth(), winSize.GetHeight());
+  PositionSize windowSize = mWindow.GetPositionSize();
 
-  mCameraActor = CameraActor::New(windowSize);
+  mCameraActor = CameraActor::New(Vector2(windowSize.width, windowSize.height));
   mCameraActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mCameraActor.SetNearClippingPlane(1.0f);
   mCameraActor.SetType(Dali::Camera::FREE_LOOK);
@@ -263,11 +269,29 @@ void ShadowView::OnSceneConnection(int depth)
   Texture outputTexture = Texture::New(TextureType::TEXTURE_2D, Pixel::RGBA8888, unsigned(windowSize.width * 0.5f), unsigned(windowSize.height * 0.5f));
   mOutputFrameBuffer.AttachColorTexture(outputTexture);
 
+  // Set the output texture to the shadow plane renderer now that the FrameBuffer is initialized
+  if(mShadowPlane)
+  {
+    Renderer shadowRenderer = mShadowPlane.GetRendererAt(0);
+    if(shadowRenderer)
+    {
+      TextureSet textureSet = shadowRenderer.GetTextures();
+      textureSet.SetTexture(0u, mOutputFrameBuffer.GetColorTexture());
+    }
+  }
+
   mWindow.Add(mCameraActor);
+
+  // Set up shader constants now that mCameraActor is initialized, but only if mShadowPlane exists
+  // (mShadowPlane is created in SetShadowPlaneBackground(), which may be called before or after OnSceneConnection)
+  if(mShadowPlane)
+  {
+    SetShaderConstants();
+  }
 
   mBlurFilter.SetInputTexture(mSceneFromLightRenderTarget.GetColorTexture());
   mBlurFilter.SetOutputFrameBuffer(mOutputFrameBuffer);
-  mBlurFilter.SetSize(windowSize * 0.5f);
+  mBlurFilter.SetSize(Vector2(windowSize.width, windowSize.height) * 0.5f);
 
   ConstrainCamera();
 
@@ -305,7 +329,7 @@ void ShadowView::OnChildRemove(Actor& child)
 
 void ShadowView::ConstrainCamera()
 {
-  if(mPointLight && mShadowPlane)
+  if(mPointLight && mShadowPlane && mCameraActor)
   {
     // Constrain camera to look directly at center of shadow plane. (mPointLight position
     // is under control of application, can't use transform inheritance)
