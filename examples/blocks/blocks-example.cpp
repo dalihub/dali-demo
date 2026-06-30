@@ -309,8 +309,8 @@ private:
 
     mPaddle.SetProperty(Actor::Property::POSITION, windowSize * Vector3(PADDLE_START_POSITION));
     mContentLayer.Add(mPaddle);
-    mPaddle.TouchedSignal().Connect(this, &ExampleController::OnTouchPaddle);
-    mContentLayer.TouchedSignal().Connect(this, &ExampleController::OnTouchLayer);
+    mPaddle.TouchEventSignal().Connect(this, &ExampleController::OnTouchPaddle);
+    mContentLayer.TouchEventSignal().Connect(this, &ExampleController::OnTouchLayer);
 
     const float margin(BALL_SIZE.width * windowSize.width * 0.5f);
 

@@ -67,7 +67,7 @@ public:
     mTableView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mTableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mTableView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    mTableView.TouchedSignal().Connect(this, &EmojiExample::OnTouch);
+    mTableView.TouchEventSignal().Connect(this, &EmojiExample::OnTouch);
     window.Add(mTableView);
 
     for(unsigned int index = 0u; index < NUMBER_OF_EMOJIS; ++index)

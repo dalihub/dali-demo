@@ -157,7 +157,7 @@ private:
     mTimerForBubbleEmission.TickSignal().Connect(this, &BubbleEffectExample::OnTimerTick);
 
     // Connect the callback to the touch signal on the background
-    mBackground.TouchedSignal().Connect(this, &BubbleEffectExample::OnTouch);
+    mBackground.TouchEventSignal().Connect(this, &BubbleEffectExample::OnTouch);
   }
 
   /***********

@@ -468,7 +468,7 @@ private:
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     actor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
-    actor.TouchedSignal().Connect(this, &ExampleController::OnTouchImage);
+    actor.TouchEventSignal().Connect(this, &ExampleController::OnTouchImage);
     return actor;
   }
 

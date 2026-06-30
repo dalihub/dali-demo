@@ -86,7 +86,7 @@ public:
     mAddressLabel.SetProperty(Toolkit::TextLabel::Property::POINT_SIZE, fontSize);
     mAddressLabel.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
     mAddressLabel.SetBackgroundColor(Vector4(0, 0, 0, 0.5f));
-    mAddressLabel.TouchedSignal().Connect(this, &WebViewController::OnTouchText);
+    mAddressLabel.TouchEventSignal().Connect(this, &WebViewController::OnTouchText);
     window.Add(mAddressLabel);
 
     // Respond to key events

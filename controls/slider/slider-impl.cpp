@@ -203,7 +203,7 @@ void Slider::OnInitialize()
   self.SetProperty(Actor::Property::SIZE, Vector2(DEFAULT_HIT_REGION.x, DEFAULT_HIT_REGION.y));
 
   // Connect to the touch signal
-  self.TouchedSignal().Connect(this, &Slider::OnTouch);
+  self.TouchEventSignal().Connect(this, &Slider::OnTouch);
 
   // Accessibility
   self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::SLIDER);
@@ -389,7 +389,7 @@ Actor Slider::CreateHitRegion()
   Actor hitRegion = Actor::New();
   hitRegion.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   hitRegion.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  hitRegion.TouchedSignal().Connect(this, &Slider::OnTouch);
+  hitRegion.TouchEventSignal().Connect(this, &Slider::OnTouch);
 
   return hitRegion;
 }

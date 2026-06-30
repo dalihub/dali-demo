@@ -331,7 +331,7 @@ void DaliTableView::Initialize(Application application)
   mScrollView.SetAxisAutoLock(true);
   mScrollView.ScrollCompletedSignal().Connect(this, &DaliTableView::OnScrollComplete);
   mScrollView.ScrollStartedSignal().Connect(this, &DaliTableView::OnScrollStart);
-  mScrollView.TouchedSignal().Connect(this, &DaliTableView::OnScrollTouched);
+  mScrollView.TouchEventSignal().Connect(this, &DaliTableView::OnScrollTouched);
 
   mPageWidth = positionSize.width * TABLE_RELATIVE_SIZE.x * 0.5f;
 
@@ -408,8 +408,8 @@ void DaliTableView::CreateFocusEffect()
   keyboardFocusManager.SetFocusIndicatorActor(mFocusEffect[0].actor);
 
   // Connect to the on & off scene signals of the indicator which represents when it is enabled & disabled respectively
-  mFocusEffect[0].actor.OnSceneSignal().Connect(this, &DaliTableView::OnFocusIndicatorEnabled);
-  mFocusEffect[0].actor.OffSceneSignal().Connect(this, &DaliTableView::OnFocusIndicatorDisabled);
+  mFocusEffect[0].actor.SceneConnectedSignal().Connect(this, &DaliTableView::OnFocusIndicatorEnabled);
+  mFocusEffect[0].actor.SceneDisconnectedSignal().Connect(this, &DaliTableView::OnFocusIndicatorDisabled);
 }
 
 void DaliTableView::OnFocusIndicatorEnabled(Actor /* actor */)
@@ -544,8 +544,8 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   focusableTile.Add(label);
 
   // Connect to the touch events
-  focusableTile.TouchedSignal().Connect(this, &DaliTableView::OnTilePressed);
-  focusableTile.HoveredSignal().Connect(this, &DaliTableView::OnTileHovered);
+  focusableTile.TouchEventSignal().Connect(this, &DaliTableView::OnTilePressed);
+  focusableTile.HoverEventSignal().Connect(this, &DaliTableView::OnTileHovered);
   focusableTile.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::PUSH_BUTTON);
   DevelControl::AccessibilityActivateSignal(focusableTile).Connect(this, [this, focusableTile]()
   {

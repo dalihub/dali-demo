@@ -94,7 +94,7 @@ public:
     mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(positionSize.width, positionSize.height));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
 
-    mPhysicsRoot.TouchedSignal().Connect(this, &PhysicsDemoController::OnTouched);
+    mPhysicsRoot.TouchEventSignal().Connect(this, &PhysicsDemoController::OnTouched);
     mPhysicsRoot.WheelEventSignal().Connect(this, &PhysicsDemoController::OnWheel);
 
     mWindow.Add(mPhysicsRoot);

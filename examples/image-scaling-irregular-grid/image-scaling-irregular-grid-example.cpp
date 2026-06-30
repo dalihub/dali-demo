@@ -45,6 +45,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/scroll-bar/scroll-bar.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <algorithm>
 #include <chrono> // std::chrono::system_clock
 #include <iostream>
@@ -360,7 +361,7 @@ public:
     mScrollBarHorizontal.SetProperty(Actor::Property::ORIENTATION, Quaternion(Quaternion(Radian(1.5f * Math::PI), Vector3::ZAXIS)));
     mScrollView.Add(mScrollBarHorizontal);
 
-    mScrollView.OnRelayoutSignal().Connect(this, &ImageScalingIrregularGridController::OnScrollViewRelayout);
+    DevelActor::OnRelayoutSignal(mScrollView).Connect(this, &ImageScalingIrregularGridController::OnScrollViewRelayout);
 
     // Scroll to top of grid so first images loaded are on-screen:
     mScrollView.ScrollTo(Vector2(0, -1000000));
@@ -451,7 +452,7 @@ public:
       ImageView image = CreateImageView(imageSource.configuration.path, imageSize.x, imageSize.y);
       image.SetProperty(Actor::Property::POSITION, Vector3(imagePosition.x, imagePosition.y, 0));
       image.SetProperty(Actor::Property::SIZE, imageSize);
-      image.TouchedSignal().Connect(this, &ImageScalingIrregularGridController::OnTouchImage);
+      image.TouchEventSignal().Connect(this, &ImageScalingIrregularGridController::OnTouchImage);
       image.ResourceReadySignal().Connect(this, &ImageScalingIrregularGridController::ResourceReadySignal);
 
       if(count < INITIAL_IMAGES_TO_LOAD)

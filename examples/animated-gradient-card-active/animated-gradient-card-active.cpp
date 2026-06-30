@@ -505,7 +505,7 @@ private:
     mCards.Init(mWindow);
     for(int k = 0; k < CARD_NUM; k++)
     {
-      mCards[k].TouchedSignal().Connect(this, &CardController::OnTouchCards);
+      mCards[k].TouchEventSignal().Connect(this, &CardController::OnTouchCards);
     }
     mNormalStartColor = mCards.GetColorBackground(mCards.mCurIndex);
     mNormalEndColor   = mCards.GetColorBackground(mCards.mCurIndex);

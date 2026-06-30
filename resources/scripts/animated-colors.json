@@ -834,7 +834,7 @@
       ],
       "signals": [
         {
-          "name": "onScene",
+          "name": "sceneConnected",
           "action": "play",
           "animation": "Animation_1"
         }

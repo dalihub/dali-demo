@@ -195,7 +195,7 @@ public:
     mActorList.push_back(control);
     if(hit)
     {
-      control.TouchedSignal().Connect(this, &TouchController::OnTouchActor);
+      control.TouchEventSignal().Connect(this, &TouchController::OnTouchActor);
     }
 
     Dali::Toolkit::TextLabel tag = Dali::Toolkit::TextLabel::New(ToDaliStringView(name));
@@ -267,7 +267,7 @@ public:
     control1.Add(control2);
 
     Toolkit::Control control3 = CreateControl(notTouchableColorMap, Vector2(100.0f, 100.0f), Vector2::ONE * 100.0f, "control3 Not Consume (parent : Control1)", false);
-    control3.TouchedSignal().Connect(this, &TouchController::OnTouchActorNotConsume);
+    control3.TouchEventSignal().Connect(this, &TouchController::OnTouchActorNotConsume);
     control1.Add(control3);
   }
 
@@ -765,7 +765,7 @@ public:
     model.SetBackgroundColor(Color::RED);
     mActorList.push_back(model);
     sceneView.Add(model);
-    model.TouchedSignal().Connect(this, &TouchController::OnTouch3DActor);
+    model.TouchEventSignal().Connect(this, &TouchController::OnTouch3DActor);
   }
 
   void GenScene3D2()
@@ -810,7 +810,7 @@ public:
     model.SetBackgroundColor(Color::RED);
     mActorList.push_back(model);
     sceneView.Add(model);
-    model.TouchedSignal().Connect(this, &TouchController::OnTouch3DActor);
+    model.TouchEventSignal().Connect(this, &TouchController::OnTouch3DActor);
     model.SetProperty(Dali::Actor::Property::ORIENTATION, Quaternion(Radian(Degree(-30.0f)), axis));
   }
 
@@ -847,7 +847,7 @@ public:
     axis.Normalize();
     mPanel.SetProperty(Dali::Actor::Property::ORIENTATION, Quaternion(Radian(Degree(45.0f)), axis));
     mPanel.SetBackgroundColor(Color::BLUE);
-    mPanel.TouchedSignal().Connect(this, &TouchController::OnTouch3DActor);
+    mPanel.TouchEventSignal().Connect(this, &TouchController::OnTouch3DActor);
 
     auto           modelName = std::string(DEMO_MODEL_DIR) + "DamagedHelmet.gltf";
     Scene3D::Model model     = Scene3D::Model::New(ToDaliString(modelName));
@@ -858,7 +858,7 @@ public:
     model.SetBackgroundColor(Color::RED);
     mActorList.push_back(model);
     sceneView.Add(model);
-    model.TouchedSignal().Connect(this, &TouchController::OnTouch3DActor);
+    model.TouchEventSignal().Connect(this, &TouchController::OnTouch3DActor);
 
     Scene3D::Model model3 = Scene3D::Model::New(ToDaliString(modelName));
     model3.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.0f, 0.5f, 1.0f));
@@ -868,7 +868,7 @@ public:
     model3.SetBackgroundColor(Color::RED);
     mActorList.push_back(model3);
     sceneView.Add(model3);
-    model3.TouchedSignal().Connect(this, &TouchController::OnTouch3DActor);
+    model3.TouchEventSignal().Connect(this, &TouchController::OnTouch3DActor);
 
     Scene3D::Model model2 = Scene3D::Model::New(ToDaliString(modelName));
     model2.SetProperty(Dali::Actor::Property::POSITION, Vector3(0.5f, 0.0f, 0.0f));
@@ -878,7 +878,7 @@ public:
     model2.SetBackgroundColor(Color::RED);
     mActorList.push_back(model2);
     sceneView.Add(model2);
-    model2.TouchedSignal().Connect(this, &TouchController::OnTouch3DActor);
+    model2.TouchEventSignal().Connect(this, &TouchController::OnTouch3DActor);
   }
 
   void ClearScene()

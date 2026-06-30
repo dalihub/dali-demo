@@ -271,7 +271,7 @@ public:
     imagePrevious.SetProperty(Actor::Property::OPACITY, 0.6f);
     controlsLayer.Add(imagePrevious);
     imagePrevious.SetProperty(Dali::Actor::Property::NAME, PREVIOUS_BUTTON_ID);
-    imagePrevious.TouchedSignal().Connect(this, &ImageScalingAndFilteringController::OnControlTouched);
+    imagePrevious.TouchEventSignal().Connect(this, &ImageScalingAndFilteringController::OnControlTouched);
 
     // Next image button:
     Toolkit::ImageView imageNext = Toolkit::ImageView::New(DALI_ICON_PLAY, ImageDimensions(playWidth, playWidth));
@@ -281,7 +281,7 @@ public:
     imageNext.SetProperty(Actor::Property::OPACITY, 0.6f);
     controlsLayer.Add(imageNext);
     imageNext.SetProperty(Dali::Actor::Property::NAME, NEXT_BUTTON_ID);
-    imageNext.TouchedSignal().Connect(this, &ImageScalingAndFilteringController::OnControlTouched);
+    imageNext.TouchEventSignal().Connect(this, &ImageScalingAndFilteringController::OnControlTouched);
 
     // Button to popup selector for sampling mode:
 

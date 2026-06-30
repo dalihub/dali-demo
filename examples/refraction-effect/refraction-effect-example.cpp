@@ -186,7 +186,7 @@ private:
     mContent.Add(mMeshActor);
 
     // Connect the callback to the touch signal on the mesh actor
-    mContent.TouchedSignal().Connect(this, &RefractionEffectExample::OnTouch);
+    mContent.TouchEventSignal().Connect(this, &RefractionEffectExample::OnTouch);
 
     // shader used when the finger is touching the screen. render refraction effect
     mShaderRefraction = Shader::New(ToDaliStringView(SHADER_REFRACTION_EFFECT_REFRACTION_VERT), ToDaliStringView(SHADER_REFRACTION_EFFECT_REFRACTION_FRAG));
