@@ -135,8 +135,8 @@ public:
 
   void SetMarker()
   {
-    auto screenPosition = Dali::DevelActor::CalculateScreenPosition(control);
-    auto extents        = Dali::DevelActor::CalculateScreenExtents(control);
+    auto screenPosition = control.CalculateScreenPosition();
+    auto extents        = control.CalculateScreenExtents();
 
     if(!extentsMarker)
     {
@@ -183,8 +183,8 @@ public:
 
   void UpdateMarker()
   {
-    auto screenPosition = Dali::DevelActor::CalculateScreenPosition(control);
-    auto extents        = Dali::DevelActor::CalculateScreenExtents(control);
+    auto screenPosition = control.CalculateScreenPosition();
+    auto extents        = control.CalculateScreenExtents();
 
     extentsMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(extents.width, extents.height));
     extentsMarker.SetProperty(Dali::Actor::Property::POSITION, Vector2(extents.x, extents.y));
