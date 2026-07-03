@@ -24,6 +24,7 @@
 #include <dali/public-api/object/property-array.h>
 #include <dali/public-api/object/property-map.h>
 
+#include <dali-toolkit/devel-api/controls/control-accessible.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali-toolkit/public-api/controls/image-view/image-view.h>

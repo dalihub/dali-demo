@@ -155,7 +155,7 @@ void SuperBlurView::OnInitialize()
 
   mBlurStrengthPropertyIndex = self.RegisterUniqueProperty("blurStrength", 0.f);
 
-  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::CONTAINER);
 }
 
 void SuperBlurView::SetTexture(Texture texture, Window window)

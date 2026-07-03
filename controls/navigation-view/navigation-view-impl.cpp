@@ -64,7 +64,7 @@ Demo::NavigationView NavigationView::New()
 
 void NavigationView::OnInitialize()
 {
-  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::CONTAINER);
 }
 
 void NavigationView::OnSceneConnection(int depth)

@@ -206,7 +206,7 @@ void Slider::OnInitialize()
   self.TouchEventSignal().Connect(this, &Slider::OnTouch);
 
   // Accessibility
-  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::SLIDER);
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::ADJUSTABLE);
   self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_HIGHLIGHTABLE, true);
 }
 
@@ -956,7 +956,7 @@ void Slider::SetValue(float value)
   auto accessible = GetAccessibleObject();
   if(DALI_LIKELY(accessible) && accessible->IsHighlighted())
   {
-    accessible->Emit(Dali::Accessibility::ObjectPropertyChangeEvent::VALUE);
+    accessible->Emit(Dali::Devel::Accessibility::ObjectPropertyChangeEvent::VALUE);
   }
 }
 

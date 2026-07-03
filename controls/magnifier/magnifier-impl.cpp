@@ -180,7 +180,7 @@ void Magnifier::OnInitialize()
   constraint.AddSource(Source(self, Demo::Magnifier::Property::SOURCE_POSITION));
   constraint.Apply();
 
-  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::CONTAINER);
 }
 
 void Magnifier::OnSceneConnection(int depth)

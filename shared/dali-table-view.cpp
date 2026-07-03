@@ -525,7 +525,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   borderImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   borderImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   borderImage.SetProperty(Actor::Property::OPACITY, 0.8f);
-  DevelControl::AppendAccessibilityRelation(borderImage, focusableTile, Accessibility::RelationType::CONTROLLED_BY);
+  DevelControl::AppendAccessibilityRelation(borderImage, focusableTile, Dali::Toolkit::Accessibility::RelationType::CONTROLLED_BY);
   focusableTile.Add(borderImage);
 
   TextLabel label = TextLabel::New();
@@ -540,13 +540,13 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
 
   // Pad around the label as its size is the same as the 9-patch border. It will overlap it without padding.
   label.SetProperty(Actor::Property::PADDING, Vector4(TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING));
-  DevelControl::AppendAccessibilityRelation(label, focusableTile, Accessibility::RelationType::CONTROLLED_BY);
+  DevelControl::AppendAccessibilityRelation(label, focusableTile, Dali::Toolkit::Accessibility::RelationType::CONTROLLED_BY);
   focusableTile.Add(label);
 
   // Connect to the touch events
   focusableTile.TouchEventSignal().Connect(this, &DaliTableView::OnTilePressed);
   focusableTile.HoverEventSignal().Connect(this, &DaliTableView::OnTileHovered);
-  focusableTile.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::PUSH_BUTTON);
+  focusableTile.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::BUTTON);
   DevelControl::AccessibilityActivateSignal(focusableTile).Connect(this, [this, focusableTile]()
   {
     DoTilePress(focusableTile, PointState::DOWN);
