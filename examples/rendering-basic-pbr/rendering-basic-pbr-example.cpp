@@ -131,7 +131,7 @@ public:
     InitActors();
 
     // Respond to a click anywhere on the window
-    window.TouchEventSignal().Connect(this, &BasicPbrController::OnTouch);
+    window.GetRootLayer().TouchEventSignal().Connect(this, &BasicPbrController::OnTouch);
 
     // Respond to key events
     window.KeyEventSignal().Connect(this, &BasicPbrController::OnKeyEvent);
@@ -149,7 +149,7 @@ public:
   /**
    * This function will change the material Roughness, Metalness or the model orientation when touched
    */
-  void OnTouch(Window window, TouchEvent touch)
+  bool OnTouch(Actor actor, TouchEvent touch)
   {
     const PointState::Type state = touch.GetState(0);
 
@@ -172,6 +172,7 @@ public:
       }
       case PointState::MOTION:
       {
+        Window        window  = mApplication.GetWindow();
         const Size    size    = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
         const float   scaleX  = size.width;
         const float   scaleY  = size.height;
@@ -246,7 +247,7 @@ public:
         break;
       }
     }
-    return;
+    return true;
   }
 
   /**
