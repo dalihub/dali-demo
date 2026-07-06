@@ -71,9 +71,9 @@ public:
     control_1.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     control_1.SetProperty(Actor::Property::POSITION, Vector2(0, 0));
     control_1.SetProperty(Actor::Property::SIZE, Vector2(600, 200));
-    if(Dali::Capabilities::IsBlendEquationSupported(Dali::DevelBlendEquation::SCREEN))
+    if(Dali::Capabilities::IsBlendEquationSupported(Dali::BlendEquation::SCREEN))
     {
-      control_1.SetProperty(Dali::Actor::Property::BLEND_EQUATION, Dali::DevelBlendEquation::LUMINOSITY);
+      control_1.SetProperty(Dali::Actor::Property::BLEND_EQUATION, Dali::BlendEquation::LUMINOSITY);
     }
     window.Add(control_1);
 
@@ -87,9 +87,9 @@ public:
     control_2.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     control_2.SetProperty(Actor::Property::POSITION, Vector2(0, 200));
     control_2.SetProperty(Actor::Property::SIZE, Vector2(600, 200));
-    if(Dali::Capabilities::IsBlendEquationSupported(Dali::DevelBlendEquation::SCREEN))
+    if(Dali::Capabilities::IsBlendEquationSupported(Dali::BlendEquation::SCREEN))
     {
-      control_2.SetProperty(Dali::Actor::Property::BLEND_EQUATION, Dali::DevelBlendEquation::LUMINOSITY);
+      control_2.SetProperty(Dali::Actor::Property::BLEND_EQUATION, Dali::BlendEquation::LUMINOSITY);
     }
     window.Add(control_2);
 
@@ -103,9 +103,9 @@ public:
     control_3.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     control_3.SetProperty(Actor::Property::POSITION, Vector2(0, 400));
     control_3.SetProperty(Actor::Property::SIZE, Vector2(600, 200));
-    if(Dali::Capabilities::IsBlendEquationSupported(Dali::DevelBlendEquation::SCREEN))
+    if(Dali::Capabilities::IsBlendEquationSupported(Dali::BlendEquation::SCREEN))
     {
-      control_3.SetProperty(Dali::Actor::Property::BLEND_EQUATION, Dali::DevelBlendEquation::LUMINOSITY);
+      control_3.SetProperty(Dali::Actor::Property::BLEND_EQUATION, Dali::BlendEquation::LUMINOSITY);
     }
     window.Add(control_3);
 
