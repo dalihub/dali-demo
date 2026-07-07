@@ -307,7 +307,7 @@ void ToolBar::OnInitialize()
   mLayout.SetRelativeWidth(0, mLeftRelativeSpace);
   mLayout.SetRelativeWidth(1, mRightRelativeSpace);
 
-  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::TOOL_BAR);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::TOOL_BAR);
 }
 
 void ToolBar::OnChildAdd(Actor& child)

@@ -185,7 +185,7 @@ const Demo::Alignment::Padding& Alignment::GetPadding() const
 
 void Alignment::OnInitialize()
 {
-  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::CONTAINER);
 }
 
 void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
