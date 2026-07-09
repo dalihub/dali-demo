@@ -247,6 +247,9 @@
 	<ui-application appid="particles.example" exec="/usr/apps/com.samsung.dali-demo/bin/particles.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Particles</label>
 	</ui-application>
+	<ui-application appid="perf-message-queue-stress.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-message-queue-stress.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Message Queue Stress Test</label>
+	</ui-application>
 	<ui-application appid="perf-scroll.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-scroll.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>perf-scroll</label>
 	</ui-application>
