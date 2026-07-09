@@ -241,7 +241,7 @@ void ShadowView::OnInitialize()
   blurStrengthConstraint.AddSource(Source(self, mBlurStrengthPropertyIndex));
   blurStrengthConstraint.Apply();
 
-  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::CONTAINER);
 }
 
 void ShadowView::OnSceneConnection(int depth)

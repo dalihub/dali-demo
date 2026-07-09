@@ -100,7 +100,7 @@ public:
     //Set up root layer to receive touch gestures.
     Layer rootLayer = window.GetRootLayer();
     rootLayer.RegisterProperty("Tag", LAYER_TAG); //Used to differentiate between different kinds of actor.
-    rootLayer.TouchedSignal().Connect(this, &MeshVisualController::OnTouch);
+    rootLayer.TouchEventSignal().Connect(this, &MeshVisualController::OnTouch);
 
     //Place models on the scene.
     SetupModels(rootLayer);
@@ -125,7 +125,7 @@ public:
       mContainers[i].SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
       mContainers[i].RegisterProperty("Tag", MODEL_TAG);            //Used to differentiate between different kinds of actor.
       mContainers[i].RegisterProperty("Model", Property::Value(i)); //Used to index into the model.
-      mContainers[i].TouchedSignal().Connect(this, &MeshVisualController::OnTouch);
+      mContainers[i].TouchEventSignal().Connect(this, &MeshVisualController::OnTouch);
       layer.Add(mContainers[i]);
     }
 
@@ -281,7 +281,7 @@ public:
     SetLightImage();
 
     //Connect to touch signal for dragging.
-    mLightSource.TouchedSignal().Connect(this, &MeshVisualController::OnTouch);
+    mLightSource.TouchEventSignal().Connect(this, &MeshVisualController::OnTouch);
 
     //Place the light source on a layer above the base, so that it is rendered above everything else.
     Layer upperLayer = Layer::New();

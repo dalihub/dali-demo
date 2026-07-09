@@ -22,6 +22,7 @@
 #include <dali-toolkit/public-api/controls/image-view/image-view.h>
 #include <dali-toolkit/public-api/controls/scrollable/scroll-view/scroll-view.h>
 #include <dali-toolkit/public-api/visuals/image-visual-properties.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/animation/constraint.h>
 #include <dali/public-api/math/random.h>
@@ -204,5 +205,5 @@ void BubbleAnimator::AddBackgroundActors(Actor layer, int count)
   }
 
   // Positioning will occur when the layer is relaid out
-  layer.OnRelayoutSignal().Connect(this, &BubbleAnimator::InitializeBackgroundActors);
+  DevelActor::OnRelayoutSignal(layer).Connect(this, &BubbleAnimator::InitializeBackgroundActors);
 }

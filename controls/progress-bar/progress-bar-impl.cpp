@@ -170,7 +170,7 @@ ProgressBar::~ProgressBar()
 void ProgressBar::OnInitialize()
 {
   // Accessibility
-  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::PROGRESS_BAR);
+  Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::PROGRESS_BAR);
   Self().SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_HIGHLIGHTABLE, true);
 }
 
@@ -279,7 +279,7 @@ void ProgressBar::SetProgressValue(float value)
     auto accessible = GetAccessibleObject();
     if(DALI_LIKELY(accessible) && accessible->IsHighlighted())
     {
-      accessible->Emit(Dali::Accessibility::ObjectPropertyChangeEvent::VALUE);
+      accessible->Emit(Dali::Devel::Accessibility::ObjectPropertyChangeEvent::VALUE);
     }
     RelayoutRequest();
   }

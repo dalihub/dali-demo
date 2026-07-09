@@ -117,7 +117,7 @@ private:
       auto actor = mSceneLoader->mScene.FindChildByName(actorName);
       if(actor)
       {
-        actor.TouchedSignal().Connect(this, &Scene3DExtension::OnTouch);
+        actor.TouchEventSignal().Connect(this, &Scene3DExtension::OnTouch);
       }
     }
   }

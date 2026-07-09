@@ -161,7 +161,7 @@ public:
 
     mPhysicsAdaptor = PhysicsAdaptor::New(mPhysicsTransform, Uint16Pair(windowSize.width, windowSize.height));
     mPhysicsRoot    = mPhysicsAdaptor.GetRootActor();
-    mPhysicsRoot.TouchedSignal().Connect(this, &PhysicsDemoController::OnTouched);
+    mPhysicsRoot.TouchEventSignal().Connect(this, &PhysicsDemoController::OnTouched);
 
     mWindow.Add(mPhysicsRoot);
     mPopcornTimer = Timer::New(7000);

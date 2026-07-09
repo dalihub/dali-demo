@@ -51,7 +51,7 @@ public:
 
   void ConnectEventSignal(Control control)
   {
-    control.TouchedSignal().Connect(this, &MyTester::OnControlTouch);
+    control.TouchEventSignal().Connect(this, &MyTester::OnControlTouch);
 
     control.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
     control.KeyEventSignal().Connect(this, &MyTester::OnControlKeyEvent);

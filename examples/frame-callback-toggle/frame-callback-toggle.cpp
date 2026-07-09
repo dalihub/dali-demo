@@ -168,7 +168,7 @@ private:
     UiContext::Get().AddFrameCallback(*mIgnoredToggler, window.GetRootLayer());                        // Dali:: prefix not needed due to 'using namespace Dali;'
 
     // Connect property notification for world ignored.
-    PropertyNotification lessThanNotification = mImageView.AddPropertyNotification(DevelActor::Property::IGNORED, LessThanCondition(0.5f));
+    PropertyNotification lessThanNotification = mImageView.AddPropertyNotification(Actor::Property::IGNORED, LessThanCondition(0.5f));
     lessThanNotification.NotifySignal().Connect(this, &FrameCallbackToggleController::OnLessThanNotify);
 
     mLessThanLabel = TextLabel::New();
@@ -182,7 +182,7 @@ private:
 
     mLessThanLabel.SetIgnored(true);
 
-    PropertyNotification greaterThanNotification = mImageView.AddPropertyNotification(DevelActor::Property::IGNORED, GreaterThanCondition(0.5f));
+    PropertyNotification greaterThanNotification = mImageView.AddPropertyNotification(Actor::Property::IGNORED, GreaterThanCondition(0.5f));
     greaterThanNotification.NotifySignal().Connect(this, &FrameCallbackToggleController::OnGreaterThanNotify);
 
     mGreaterThanLabel = TextLabel::New();

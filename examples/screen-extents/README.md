@@ -59,8 +59,8 @@ The example supports 9 standard positions:
 ## Technical Details
 
 The example demonstrates the use of:
-- `Dali::DevelActor::CalculateScreenPosition()` for position calculation
-- `Dali::DevelActor::CalculateScreenExtents()` for bounds calculation
+- `Dali::Actor::CalculateScreenPosition()` for position calculation
+- `Dali::Actor::CalculateScreenExtents()` for bounds calculation
 - `Dali::DevelActor::CalculateCurrentScreenExtents()` for current frame bounds
 - Real-time property updates and visual feedback
 

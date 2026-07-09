@@ -18,6 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include "generated/bezier-curve-frag.h"
 #include "generated/bezier-curve-vert.h"
 #include "shared/view.h"
@@ -151,7 +152,7 @@ public:
 
     mContentLayer = Layer::New();
     mContentLayer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mContentLayer.TouchedSignal().Connect(this, &BezierCurveExample::OnTouchLayer);
+    mContentLayer.TouchEventSignal().Connect(this, &BezierCurveExample::OnTouchLayer);
     mContentLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     window.Add(mContentLayer);
 
@@ -239,7 +240,7 @@ public:
     animContainer.Add(mAnimIcon1);
 
     // First UpdateCurve needs to run after size negotiation and after images have loaded
-    mGrid.OnRelayoutSignal().Connect(this, &BezierCurveExample::InitialUpdateCurve);
+    DevelActor::OnRelayoutSignal(mGrid).Connect(this, &BezierCurveExample::InitialUpdateCurve);
 
     auto controlPoint1 = Control::DownCast(mControlPoint1);
     if(controlPoint1)
@@ -320,7 +321,7 @@ public:
     constraint.AddSource(Source(parent, Actor::Property::SIZE));
     constraint.Apply();
 
-    actor.TouchedSignal().Connect(this, &BezierCurveExample::OnTouchControlPoint);
+    actor.TouchEventSignal().Connect(this, &BezierCurveExample::OnTouchControlPoint);
     return actor;
   }
 

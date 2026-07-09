@@ -132,7 +132,7 @@ public:
     popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH);
     popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
-    popup.TouchedSignal().Connect(this, &TextFieldExample::OnPopupTouched);
+    popup.TouchEventSignal().Connect(this, &TextFieldExample::OnPopupTouched);
 
     return popup;
   }

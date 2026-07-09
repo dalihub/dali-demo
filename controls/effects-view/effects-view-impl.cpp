@@ -235,7 +235,7 @@ void EffectsView::OnInitialize()
   mChildrenRoot.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   self.Add(mChildrenRoot);
 
-  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Accessibility::Role::FILLER);
+  self.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_ROLE, Dali::Toolkit::Accessibility::Role::CONTAINER);
 }
 
 void EffectsView::OnSizeSet(const Vector3& targetSize)

@@ -145,7 +145,7 @@ void LookCamera::CreateInterceptorActor()
   mCameraActor.Add(mInterceptorActor);
 
   // Connect TouchedSignal to interceptor actor
-  mInterceptorActor.TouchedSignal().Connect(this, &LookCamera::OnTouch);
+  mInterceptorActor.TouchEventSignal().Connect(this, &LookCamera::OnTouch);
 }
 
 bool LookCamera::OnTouch(Actor actor, TouchEvent touch)
