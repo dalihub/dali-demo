@@ -290,7 +290,7 @@ public:
 
     mItemView.AddLayout(*mLayout);
 
-    mItemView.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
+    mItemView.SetProperty(Actor::Property::FOCUSABLE, true);
 
     mFiles.clear();
     FileList files;

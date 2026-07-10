@@ -115,7 +115,7 @@ struct ItemFactoryImpl : Dali::Toolkit::ItemFactory
   {
     auto label = MakeLabel(mSceneNames[itemId]);
     mTapDetector.Attach(label);
-    label.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
+    label.SetProperty(Actor::Property::FOCUSABLE, true);
     return label;
   }
 };
@@ -322,7 +322,7 @@ void Scene3DExample::OnInit(Application app)
   auto items = ItemView::New(*mItemFactory);
   SetActorCentered(items);
   items.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-  items.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
+  items.SetProperty(Actor::Property::FOCUSABLE, true);
 
   Vector3 windowSize(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
   auto    itemLayout = DefaultItemLayout::New(DefaultItemLayout::LIST);
@@ -333,7 +333,7 @@ void Scene3DExample::OnInit(Application app)
   mItemLayout = itemLayout;
   mItemView   = items;
 
-  mItemView.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
+  mItemView.SetProperty(Actor::Property::FOCUSABLE, true);
   KeyboardFocusManager::Get().PreFocusChangeSignal().Connect(this, &Scene3DExample::OnKeyboardPreFocusChange);
   KeyboardFocusManager::Get().FocusedActorEnterKeySignal().Connect(this, &Scene3DExample::OnKeyboardFocusedActorActivated);
   KeyboardFocusManager::Get().FocusChangedSignal().Connect(this, &Scene3DExample::OnKeyboardFocusChanged);

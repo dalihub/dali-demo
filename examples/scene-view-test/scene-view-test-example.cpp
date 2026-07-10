@@ -157,8 +157,8 @@ private:
       {Actor::Property::POSITION, Vector3::ZERO},
       {Actor::Property::SIZE, MODEL_SIZE},
       {Actor::Property::NAME, "MainModel"},
-      {Actor::Property::KEYBOARD_FOCUSABLE, true},
-      {DevelActor::Property::TOUCH_FOCUSABLE, true},
+      {Actor::Property::FOCUSABLE, true},
+      {Actor::Property::FOCUS_ON_TOUCH, true},
     }));
     mMainModel.SetImageBasedLightSource(CUBEMAP_IRRADIANCE_URL, CUBEMAP_SKY_BOX_URL);
     mSceneView.Add(mMainModel);
@@ -171,8 +171,8 @@ private:
       {Actor::Property::SIZE, SUB_MODEL_SIZE},
       {Actor::Property::SCALE, SUB_MODEL_SCALE},
       {Actor::Property::NAME, "SubModel"},
-      {Actor::Property::KEYBOARD_FOCUSABLE, true},
-      {DevelActor::Property::TOUCH_FOCUSABLE, true},
+      {Actor::Property::FOCUSABLE, true},
+      {DevelActor::Property::FOCUS_ON_TOUCH, true},
     }));
     mSubModel.SetImageBasedLightSource(CUBEMAP_IRRADIANCE_URL, CUBEMAP_SKY_BOX_URL, 0.25f);
     mSceneView.Add(mSubModel);
