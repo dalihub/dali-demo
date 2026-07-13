@@ -53,7 +53,7 @@ public:
   {
     control.TouchEventSignal().Connect(this, &MyTester::OnControlTouch);
 
-    control.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
+    control.SetProperty(Actor::Property::FOCUSABLE, true);
     control.KeyEventSignal().Connect(this, &MyTester::OnControlKeyEvent);
     control.KeyInputFocusGainedSignal().Connect(this, &MyTester::OnFocusSet);
     control.KeyInputFocusLostSignal().Connect(this, &MyTester::OnFocusUnSet);

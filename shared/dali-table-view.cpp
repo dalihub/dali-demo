@@ -504,7 +504,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   focusableTile.SetProperty(Actor::Property::NAME, ToPropertyValue(name));
 
   // Set the tile to be keyboard focusable
-  focusableTile.SetProperty(Actor::Property::KEYBOARD_FOCUSABLE, true);
+  focusableTile.SetProperty(Actor::Property::FOCUSABLE, true);
 
   // Register a property with the ImageView. This allows us to inject the scroll-view position into the shader.
   Property::Value value         = Vector3(0.0f, 0.0f, 0.0f);
