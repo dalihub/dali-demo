@@ -21,6 +21,7 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <string>
 #include "shared/view.h"
@@ -405,7 +406,7 @@ public:
     mTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mTable.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     Vector3 offset(0.9f, 0.90f, 0.0f);
-    mTable.SetProperty(Actor::Property::SIZE_MODE_FACTOR, offset);
+    mTable.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, offset);
     mTable.SetFitHeight(TableRowPlacement::NEXT_BUTTON);
     mTable.SetFitHeight(TableRowPlacement::LOADING_STATUS);
     view.Add(mTable);

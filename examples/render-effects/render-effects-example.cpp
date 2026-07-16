@@ -77,21 +77,21 @@ public:
     {
       backgroundLayer = Layer::New();
       backgroundLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      backgroundLayer.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
-      backgroundLayer.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+      backgroundLayer.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+      backgroundLayer.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
 
       Toolkit::ImageView backgroundImage = Toolkit::ImageView::New(BACKGROUND_IMAGE);
       backgroundImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      backgroundImage.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
-      backgroundImage.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+      backgroundImage.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+      backgroundImage.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
       backgroundLayer.Add(backgroundImage);
       mWindow.Add(backgroundLayer);
     }
     {
       pannelLayer = Layer::New();
       pannelLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      pannelLayer.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
-      pannelLayer.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+      pannelLayer.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+      pannelLayer.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
 
       mWindow.Add(pannelLayer);
     }
@@ -305,12 +305,12 @@ public:
     // MIDDLE
     Toolkit::TextLabel textLabel = SetUpTextLabelProperties(title, Vector4::ONE, "BEGIN");
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    textLabel.SetProperty(Actor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
+    textLabel.SetProperty(DevelActor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
     panel.Add(textLabel);
 
     Toolkit::TextLabel detailLabel = SetUpTextLabelProperties(detail, Vector4::ONE, "BEGIN", 13.0f);
     detailLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    detailLabel.SetProperty(Actor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
+    detailLabel.SetProperty(DevelActor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
     detailLabel.SetProperty(Actor::Property::POSITION_Y, 30.0f);
     panel.Add(detailLabel);
 

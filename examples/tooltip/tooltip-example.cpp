@@ -18,6 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/tooltip/tooltip-properties.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/object/property-array-devel.h>
 #include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/string-utils.h>
@@ -159,7 +160,7 @@ private:
     {
       previousPosition += POSITION_INCREMENTER;
       control.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-      control.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.75, 0.1, 1.0));
+      control.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.75, 0.1, 1.0));
       control.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       control.SetProperty(Actor::Property::POSITION_Y, windowSize.height * previousPosition);

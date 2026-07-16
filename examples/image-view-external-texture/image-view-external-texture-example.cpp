@@ -23,6 +23,7 @@
 #include <dali-toolkit/devel-api/visuals/visual-actions-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/image-loading.h>
 #include <dali/devel-api/adaptor-framework/pixel-buffer.h>
 #include <dali/devel-api/adaptor-framework/window-devel.h>
@@ -264,7 +265,7 @@ public:
     mTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mTable.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     Vector3 offset(0.9f, 0.70f, 0.0f);
-    mTable.SetProperty(Actor::Property::SIZE_MODE_FACTOR, offset);
+    mTable.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, offset);
     mTable.SetFitHeight(CellPlacement::TOP_BUTTON);
     mTable.SetFitHeight(CellPlacement::MID_BUTTON);
     mTable.SetFitHeight(CellPlacement::LOWER_BUTTON);
