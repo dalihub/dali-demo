@@ -71,8 +71,8 @@ public:
     rubric.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("You will need a working internet connection to see the images below"));
     rubric.SetProperty(TextLabel::Property::MULTI_LINE, true);
     rubric.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
-    rubric.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    rubric.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(rubric, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(rubric, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
     rubric.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     rubric.SetProperty(Actor::Property::PIVOT, ParentOrigin::TOP_CENTER);
     mWindow.Add(rubric);

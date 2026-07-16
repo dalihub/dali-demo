@@ -17,6 +17,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/public-api/rendering/shader.h>
 
 // INTERNAL INCLUDES
@@ -133,7 +134,7 @@ private:
     Toolkit::Control background = Dali::Toolkit::Control::New();
     background.SetProperty(Actor::Property::PIVOT, Dali::Pivot::CENTER);
     background.SetProperty(Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
-    background.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(background, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
     // Set up the background gradient.
     Property::Array stopOffsets;
@@ -292,7 +293,7 @@ private:
     container.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     container.SetProperty(Actor::Property::SIZE, Vector2(size));
-    container.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(container, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
 
     // Create a renderer from the geometry and add the texture.
     Renderer renderer = CreateRenderer(geometry, size, true, CUBE_COLOR);
@@ -329,7 +330,7 @@ private:
     container.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     container.SetProperty(Actor::Property::SIZE, Vector2(size));
-    container.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(container, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
 
     // Create a renderer from the geometry and add the texture.
     TextureSet planeTextureSet = CreateTextureSet(FLOOR_TEXTURE);
@@ -367,7 +368,7 @@ private:
     container.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     container.SetProperty(Actor::Property::SIZE, Vector2(size));
-    container.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(container, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
 
     // We rotate the plane as the geometry is created flat in X & Y. We want it to span X & Z axis.
     container.SetProperty(Actor::Property::ORIENTATION, Quaternion(Degree(-90.0f), Degree(0.0f), Degree(0.0f)));
@@ -416,7 +417,7 @@ private:
     container.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     container.SetProperty(Actor::Property::SIZE, Vector2(size));
-    container.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(container, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
 
     // Create the cube geometry of unity size.
     // The "true" specifies we want the texture UVs flipped vertically as this is the reflection cube.

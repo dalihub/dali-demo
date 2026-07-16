@@ -91,7 +91,7 @@ Actor CreateBackground(std::string stylename)
   background.SetProperty(Actor::Property::NAME, "BACKGROUND");
   background.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   background.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  background.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(background, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   return background;
 }
 
@@ -203,9 +203,9 @@ Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrac
   popup.SetTitle(titleActor);
   popup.SetContent(contentActor);
 
-  popup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(popup, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
   popup.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.75f, 1.0f, 1.0f));
-  popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(popup, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
 
   application.GetWindow().Add(popup);
 
@@ -307,7 +307,7 @@ void DaliTableView::Initialize(Application application)
   logo.SetProperty(Actor::Property::NAME, "LOGO_IMAGE");
   logo.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
   logo.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.1f, 0.5f));
-  logo.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(logo, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   // The logo should appear on top of everything.
   logo.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
   mRootActor.Add(logo);
@@ -321,8 +321,8 @@ void DaliTableView::Initialize(Application application)
   mScrollView = ScrollView::New();
   mScrollView.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
   mScrollView.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 1.0f - 0.05f, 0.5f));
-  mScrollView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  mScrollView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(mScrollView, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(mScrollView, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
   mScrollView.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, 0.6f, 0.0f));
 
   const float buttonsPageMargin = (1.0f - TABLE_RELATIVE_SIZE.x) * 0.5f * positionSize.width;
@@ -381,7 +381,7 @@ void DaliTableView::CreateFocusEffect()
     mFocusEffect[i].actor = ImageView::New();
     mFocusEffect[i].actor.SetStyleName("FocusActor");
     mFocusEffect[i].actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mFocusEffect[i].actor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mFocusEffect[i].actor, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mFocusEffect[i].actor.SetProperty(Actor::Property::INHERIT_SCALE, false);
     mFocusEffect[i].actor.SetProperty(Actor::Property::COLOR_MODE, USE_OWN_COLOR);
 
@@ -462,7 +462,7 @@ void DaliTableView::Populate()
       TableView page = TableView::New(ROWS_PER_PAGE, EXAMPLES_PER_ROW);
       page.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       page.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-      page.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      DevelActor::SetResizePolicy(page, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       mScrollView.Add(page);
 
       // Calculate the number of images going across (columns) within a page, according to the screen resolution and dpi.
@@ -499,7 +499,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
 
   focusableTile.SetStyleName("DemoTile");
   focusableTile.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  focusableTile.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(focusableTile, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
   focusableTile.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, sizeMultiplier);
   focusableTile.SetProperty(Actor::Property::NAME, ToPropertyValue(name));
 
@@ -523,7 +523,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   borderImage.SetStyleName("DemoTileBorder");
   borderImage.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   borderImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  borderImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(borderImage, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   borderImage.SetProperty(Actor::Property::OPACITY, 0.8f);
   DevelControl::AppendAccessibilityRelation(borderImage, focusableTile, Dali::Toolkit::Accessibility::RelationType::CONTROLLED_BY);
   focusableTile.Add(borderImage);
@@ -536,7 +536,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   label.SetProperty(TextLabel::Property::TEXT, ToDaliString(title));
   label.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
   label.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
-  label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(label, ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
 
   // Pad around the label as its size is the same as the 9-patch border. It will overlap it without padding.
   label.SetProperty(DevelActor::Property::PADDING, Vector4(TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING));

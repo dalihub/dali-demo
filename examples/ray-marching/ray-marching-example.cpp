@@ -17,6 +17,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/file-stream.h>
 #include <dali/integration-api/debug.h>
 #include <stdio.h>
@@ -215,7 +216,7 @@ public:
 
     actor.SetProperty(Actor::Property::PIVOT, Dali::Pivot::CENTER);
     actor.SetProperty(Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
-    actor.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(actor, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
     mContentLayer.Add(actor);
   }

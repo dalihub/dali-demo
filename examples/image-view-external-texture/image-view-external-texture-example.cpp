@@ -32,6 +32,7 @@
 
 #include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -263,7 +264,7 @@ public:
     mTable = Toolkit::TableView::New(CellPlacement::NUMBER_OF_ROWS, NUMBER_OF_VISUAL_TYPE);
     mTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mTable.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mTable, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     Vector3 offset(0.9f, 0.70f, 0.0f);
     mTable.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, offset);
     mTable.SetFitHeight(CellPlacement::TOP_BUTTON);
@@ -272,7 +273,7 @@ public:
     mContentLayer.Add(mTable);
 
     Toolkit::TextLabel instructions = Toolkit::TextLabel::New(ToDaliString(EXAMPLE_INSTRUCTIONS));
-    instructions.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(instructions, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     instructions.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     instructions.SetProperty(Actor::Property::POSITION_Y, -50.0f);
     instructions.SetProperty(Toolkit::TextLabel::Property::ENABLE_AUTO_SCROLL, true);
@@ -293,8 +294,8 @@ public:
       button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       button.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
       button.ClickedSignal().Connect(this, &ImageViewController::ChangeMaskImageUrl);
-      button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(button, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(button, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       button.SetProperty(Dali::Actor::Property::NAME, ToDaliString(s));
       mTable.AddChild(button, Toolkit::TableView::CellPosition(CellPlacement::TOP_BUTTON, x));
 
@@ -304,8 +305,8 @@ public:
       button2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
       button2.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
       button2.ClickedSignal().Connect(this, &ImageViewController::ChangeImageUrlType);
-      button2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      button2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(button2, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(button2, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       button2.SetProperty(Dali::Actor::Property::NAME, ToDaliString(s));
       mTable.AddChild(button2, Toolkit::TableView::CellPosition(CellPlacement::MID_BUTTON, x));
 
@@ -315,8 +316,8 @@ public:
       button3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
       button3.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
       button3.ClickedSignal().Connect(this, &ImageViewController::ChangeMaskImageUrlType);
-      button3.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      button3.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(button3, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(button3, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       button3.SetProperty(Dali::Actor::Property::NAME, ToDaliString(s));
       mTable.AddChild(button3, Toolkit::TableView::CellPosition(CellPlacement::LOWER_BUTTON, x));
 
@@ -324,7 +325,7 @@ public:
       mImageViews[x].SetProperty(Toolkit::ImageView::Property::IMAGE, CreateImageVisualPropertyMap(static_cast<ImageVisualType>(x)));
       mImageViews[x].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mImageViews[x].SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-      mImageViews[x].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      Dali::DevelActor::SetResizePolicy(mImageViews[x], ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       mTable.AddChild(mImageViews[x], Toolkit::TableView::CellPosition(CellPlacement::IMAGE, x));
     }
 

@@ -20,7 +20,9 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -235,7 +237,7 @@ public:
 
       // Set a fixed size to the items so that we can wrap the line and test these
       // flex properties that only work when there are multiple lines in the layout
-      flexItem.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+      DevelActor::SetResizePolicy(flexItem, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
       // Make sure there are still extra space in the line after wrapping
       flexItem.SetProperty(Actor::Property::SIZE, Vector2(windowSize.width / NUM_FLEX_ITEMS * 1.25f, (windowSize.height - VIEW_STYLE.mToolBarHeight) * 0.95f / NUM_FLEX_ITEMS * 1.25f));
 

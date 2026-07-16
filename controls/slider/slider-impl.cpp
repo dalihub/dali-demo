@@ -611,7 +611,7 @@ Toolkit::TextLabel Slider::CreatePopupText()
   textLabel.SetStyleName("SliderPopupTextLabel");
   textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   textLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  textLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(textLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   textLabel.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
   textLabel.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
   textLabel.SetProperty(DevelActor::Property::PADDING, Vector4(POPUP_TEXT_PADDING, POPUP_TEXT_PADDING, 0.0f, 0.0f));
@@ -625,7 +625,7 @@ Toolkit::ImageView Slider::CreatePopup()
   popup.SetProperty(Dali::Actor::Property::NAME, "SliderPopup");
   popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
   popup.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
-  popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(popup, ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH);
 
   mValueTextLabel = CreatePopupText();
   popup.Add(mValueTextLabel);

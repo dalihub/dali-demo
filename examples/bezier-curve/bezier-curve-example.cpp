@@ -151,14 +151,14 @@ public:
     mControlPointZoomScale = mControlPointScale * 2.0f;
 
     mContentLayer = Layer::New();
-    mContentLayer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mContentLayer, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mContentLayer.TouchEventSignal().Connect(this, &BezierCurveExample::OnTouchLayer);
     mContentLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     window.Add(mContentLayer);
 
     TableView contentLayout = TableView::New(tableViewRows, tableViewColumns);
     contentLayout.SetProperty(Dali::Actor::Property::NAME, "contentLayout");
-    contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(contentLayout, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     contentLayout.SetCellPadding(Size(30, 30));
     contentLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     contentLayout.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
@@ -174,8 +174,8 @@ public:
 
     mGrid = Control::New();
 
-    mGrid.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
-    mGrid.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mGrid, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mGrid, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
 
     mGrid.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mGrid.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
@@ -213,11 +213,11 @@ public:
     auto animContainer = Control::New();
     animContainer.SetProperty(Dali::Actor::Property::NAME, "AnimationContainer");
     animContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    animContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(animContainer, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     auto animRail = Control::New();
     animRail.SetProperty(Control::Property::BACKGROUND, Property::Map().Add(Visual::Property::TYPE, Visual::IMAGE).Add(ImageVisual::Property::URL, ANIMATION_BACKGROUND));
-    animRail.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(animRail, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     animRail.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.666f, 0.2f, 1.0f));
     animRail.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     animContainer.Add(animRail);
@@ -270,7 +270,7 @@ public:
     Toolkit::Control background = Dali::Toolkit::Control::New();
     background.SetProperty(Actor::Property::PIVOT, Dali::Pivot::CENTER);
     background.SetProperty(Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
-    background.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(background, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
     Property::Map map;
     map.Insert(Visual::Property::TYPE, Visual::COLOR);
@@ -283,7 +283,7 @@ public:
   {
     // Create a mesh to draw the cubic as a single line
     mCurve = Actor::New();
-    mCurve.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mCurve, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mCurve.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     Shader shader = Shader::New(ToDaliStringView(SHADER_BEZIER_CURVE_VERT),
@@ -328,7 +328,7 @@ public:
   Actor CreateControlLine(VertexBuffer vertexBuffer)
   {
     Actor line = Actor::New();
-    line.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(line, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     line.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     Shader   shader   = Shader::New(ToDaliStringView(SHADER_BEZIER_CURVE_VERT),
@@ -394,7 +394,7 @@ public:
     Control control = Control::New();
     control.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     control.SetProperty(Actor::Property::PARENT_ORIGIN, parentOrigin);
-    control.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(control, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     control.SetProperty(Actor::Property::SIZE_HEIGHT, AXIS_LINE_SIZE);
     control.SetBackgroundColor(Color::BLACK);
     parent.Add(control);

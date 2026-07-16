@@ -17,6 +17,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <iostream>
 
 // INTERNAL INCLUDES
@@ -262,7 +263,7 @@ public:
       propertyMap.Insert(Toolkit::ImageVisual::Property::URL, ImagePath(i));
       propertyMap.Insert(Toolkit::Visual::Property::TYPE, Toolkit::Visual::IMAGE);
       mActor[i].SetProperty(Toolkit::ImageView::Property::IMAGE, propertyMap);
-      mActor[i].SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+      Dali::DevelActor::SetResizePolicy(mActor[i], ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
       mParent.Add(mActor[i]);
     }
   }

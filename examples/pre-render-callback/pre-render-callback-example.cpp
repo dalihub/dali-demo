@@ -16,9 +16,11 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/application-devel.h>
 #include <dali/integration-api/adaptor-framework/adaptor.h>
 #include <dali/integration-api/string-utils.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -132,9 +134,9 @@ private:
     mImageActor2 = ImageView::New(SCENE_IMAGE_2);
     mImageActor3 = ImageView::New(SCENE_IMAGE_3);
 
-    mImageActor1.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-    mImageActor2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-    mImageActor3.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mImageActor1, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mImageActor2, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mImageActor3, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
 
     mImageActor2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 

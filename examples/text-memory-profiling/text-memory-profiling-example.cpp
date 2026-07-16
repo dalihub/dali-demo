@@ -236,7 +236,7 @@ public:
   {
     TextLabel label = TextLabel::New(ToDaliString(TEXT_TYPE_STRING[itemId]));
     label.SetStyleName("BuilderLabel");
-    label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(label, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
 
     // Hook up tap detector
     mTapDetector.Attach(label);
@@ -259,8 +259,8 @@ public:
 
     mLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     mLayer.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
-    mLayer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mLayer.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mLayer, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mLayer, ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::HEIGHT);
     mLayer.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, -DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight, 0.0f));
 
     mNavigationView.Push(mLayer);
@@ -315,7 +315,7 @@ public:
 
     // Create a navigation view to navigate different types of text labels
     mNavigationView = NavigationView::New();
-    mNavigationView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mNavigationView, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mNavigationView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mNavigationView.SetBackgroundColor(Color::WHITE);
     window.Add(mNavigationView);

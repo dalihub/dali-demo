@@ -20,7 +20,9 @@
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -101,7 +103,7 @@ public:
     mGradientControl = Control::New();
     mGradientControl.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mGradientControl.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mGradientControl.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mGradientControl, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     Vector3 offset(0.9f, 0.7f, 0.0f);
     mGradientControl.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, offset);
     content.Add(mGradientControl);
