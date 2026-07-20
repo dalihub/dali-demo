@@ -1,4 +1,5 @@
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -132,12 +133,12 @@ public:
     //Position each container individually on screen
 
     //Main, central model
-    mContainers[0].SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(MODEL_SCALE, MODEL_SCALE, 0.0f));
+    mContainers[0].SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(MODEL_SCALE, MODEL_SCALE, 0.0f));
     mContainers[0].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mContainers[0].SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
     //Top left model
-    mContainers[1].SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(MODEL_SCALE / 3.0f, MODEL_SCALE / 3.0f, 0.0f));
+    mContainers[1].SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(MODEL_SCALE / 3.0f, MODEL_SCALE / 3.0f, 0.0f));
     mContainers[1].SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.05, 0.03, 0.5)); //Offset from top left
     mContainers[1].SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
@@ -262,14 +263,14 @@ public:
       //Scale to width.
       mLightSource.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
       mLightSource.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
-      mLightSource.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(LIGHT_SCALE, 0.0f, 0.0f));
+      mLightSource.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(LIGHT_SCALE, 0.0f, 0.0f));
     }
     else
     {
       //Scale to height.
       mLightSource.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
       mLightSource.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::WIDTH);
-      mLightSource.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, LIGHT_SCALE, 0.0f));
+      mLightSource.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, LIGHT_SCALE, 0.0f));
     }
 
     //Set position relative to top left, as the light source property is also relative to the top left.

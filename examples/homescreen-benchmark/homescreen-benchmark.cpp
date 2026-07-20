@@ -201,7 +201,7 @@ public:
     pageActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     pageActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     pageActor.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    pageActor.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(PAGE_SCALE_FACTOR_X, PAGE_SCALE_FACTOR_Y, 1.0f));
+    pageActor.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(PAGE_SCALE_FACTOR_X, PAGE_SCALE_FACTOR_Y, 1.0f));
     return pageActor;
   }
 
@@ -218,10 +218,10 @@ public:
 
     imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
     imageView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    imageView.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+    imageView.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
     imageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     imageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    imageView.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(IMAGE_AREA, IMAGE_AREA, 1.0f));
+    imageView.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(IMAGE_AREA, IMAGE_AREA, 1.0f));
 
     return imageView;
   }
@@ -230,7 +230,7 @@ public:
   {
     Toolkit::CheckBoxButton button = Toolkit::CheckBoxButton::New();
     button.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    button.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+    button.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
     button.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     button.SetProperty(Toolkit::Button::Property::SELECTED, (currentIconIndex % 2 == 0)); // Select half the button
@@ -272,7 +272,7 @@ public:
         else
         {
           iconView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-          iconView.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+          iconView.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
         }
 
         Actor icon;

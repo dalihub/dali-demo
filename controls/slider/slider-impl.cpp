@@ -19,6 +19,7 @@
 #include "slider-impl.h"
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/string-utils.h>
@@ -613,7 +614,7 @@ Toolkit::TextLabel Slider::CreatePopupText()
   textLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   textLabel.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
   textLabel.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
-  textLabel.SetProperty(Actor::Property::PADDING, Vector4(POPUP_TEXT_PADDING, POPUP_TEXT_PADDING, 0.0f, 0.0f));
+  textLabel.SetProperty(DevelActor::Property::PADDING, Vector4(POPUP_TEXT_PADDING, POPUP_TEXT_PADDING, 0.0f, 0.0f));
   textLabel.SetProperty(Toolkit::DevelControl::Property::ACCESSIBILITY_HIGHLIGHTABLE, false);
   return textLabel;
 }

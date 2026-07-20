@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include "controls/slider/slider.h"
 using Dali::Integration::GetStdString;
@@ -167,7 +168,7 @@ public:
     mShapeTitle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mShapeTitle.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mShapeTitle.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-    mShapeTitle.SetProperty(Actor::Property::PADDING, Vector4(elementPadding, elementPadding, elementPadding, elementPadding));
+    mShapeTitle.SetProperty(DevelActor::Property::PADDING, Vector4(elementPadding, elementPadding, elementPadding, elementPadding));
     topAlignment.Add(mShapeTitle);
 
     //Create a variable-length container that can wrap buttons around as more are added.
@@ -176,7 +177,7 @@ public:
     buttonContainer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     buttonContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     buttonContainer.SetResizePolicy(ResizePolicy::FIXED, Dimension::HEIGHT);
-    buttonContainer.SetProperty(Actor::Property::PADDING, Vector4(containerPadding, containerPadding, containerPadding, containerPadding));
+    buttonContainer.SetProperty(DevelActor::Property::PADDING, Vector4(containerPadding, containerPadding, containerPadding, containerPadding));
     buttonContainer.SetProperty(FlexContainer::Property::FLEX_DIRECTION, FlexContainer::ROW);
     buttonContainer.SetProperty(FlexContainer::Property::FLEX_WRAP, FlexContainer::WRAP);
     topAlignment.Add(buttonContainer);
@@ -188,7 +189,7 @@ public:
       button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       button.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-      button.SetProperty(Actor::Property::PADDING, Vector4(elementPadding, elementPadding, elementPadding, elementPadding));
+      button.SetProperty(DevelActor::Property::PADDING, Vector4(elementPadding, elementPadding, elementPadding, elementPadding));
       button.SetProperty(Button::Property::UNSELECTED_BACKGROUND_VISUAL, BUTTON_IMAGE_URL[modelNumber]);
       button.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, BUTTON_IMAGE_URL[modelNumber]);
       button.RegisterProperty("modelNumber", Property::Value(modelNumber));
@@ -239,10 +240,10 @@ public:
     mSliderTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     mSliderTable.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mSliderTable.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mSliderTable.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.9, 0.3, 0.0)); //90% of width, 30% of height.
-    mSliderTable.SetFitWidth(0);                                                         //Label column should fit to natural size of label.
-    mSliderTable.SetRelativeWidth(1, 1.0f);                                              //Slider column should fill remaining space.
-    mSliderTable.SetCellPadding(Vector2(10.0f, 0.0f));                                   //Leave a gap between the slider and its label.
+    mSliderTable.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.9, 0.3, 0.0)); //90% of width, 30% of height.
+    mSliderTable.SetFitWidth(0);                                                              //Label column should fit to natural size of label.
+    mSliderTable.SetRelativeWidth(1, 1.0f);                                                   //Slider column should fill remaining space.
+    mSliderTable.SetCellPadding(Vector2(10.0f, 0.0f));                                        //Leave a gap between the slider and its label.
     layer.Add(mSliderTable);
 
     //Set up sliders, and place labels next to them.
@@ -312,7 +313,7 @@ public:
     //Create a container to house the visual-holding actor, to provide a constant hitbox.
     Actor container = Actor::New();
     container.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    container.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.9, 0.3, 0.0)); //90% of width, 30% of height.
+    container.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.9, 0.3, 0.0)); //90% of width, 30% of height.
     container.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     container.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     layer.Add(container);

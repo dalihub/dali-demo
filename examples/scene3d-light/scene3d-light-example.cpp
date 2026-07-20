@@ -61,8 +61,8 @@ public:
     sceneView = Scene3D::SceneView::New();
     sceneView.SetProperty(Dali::Actor::Property::PIVOT, Pivot::CENTER);
     sceneView.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    sceneView.SetProperty(Dali::Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
-    sceneView.SetProperty(Dali::Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    sceneView.SetProperty(Dali::DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    sceneView.SetProperty(Dali::DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     sceneView.SetBackgroundColor(Color::BEIGE);
     sceneView.UseFramebuffer(true);
 

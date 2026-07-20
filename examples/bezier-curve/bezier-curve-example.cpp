@@ -218,7 +218,7 @@ public:
     auto animRail = Control::New();
     animRail.SetProperty(Control::Property::BACKGROUND, Property::Map().Add(Visual::Property::TYPE, Visual::IMAGE).Add(ImageVisual::Property::URL, ANIMATION_BACKGROUND));
     animRail.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    animRail.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.666f, 0.2f, 1.0f));
+    animRail.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.666f, 0.2f, 1.0f));
     animRail.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     animContainer.Add(animRail);
 

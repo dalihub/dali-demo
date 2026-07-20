@@ -21,6 +21,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/events/touch-event-integ.h>
 #include <cstdio>
 #include <sstream>
@@ -109,7 +110,7 @@ void SimpleVisualsApplication::Create(Application application)
   contentLayout.SetProperty(Dali::Actor::Property::NAME, "ContentLayout");
   contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
   contentLayout.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
-  contentLayout.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(1.0f, .5f, 1.0f));
+  contentLayout.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(1.0f, .5f, 1.0f));
   contentLayout.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   contentLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   contentLayout.SetCellPadding(Vector2(50.0f, 15.0f));

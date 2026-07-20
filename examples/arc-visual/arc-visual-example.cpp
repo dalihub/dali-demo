@@ -21,6 +21,7 @@
 #include <dali-toolkit/devel-api/visuals/arc-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-actions-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/object/property-value-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
@@ -89,8 +90,8 @@ private:
     mStartAngleLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     mStartAngleLabel.SetProperty(Actor::Property::POSITION, Vector2(-30.0f, -10.0f));
     mStartAngleLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
-    mStartAngleLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
-    mStartAngleLabel.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mStartAngleLabel.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mStartAngleLabel.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
     mStartAngleLabel.SetProperty(Control::Property::PADDING, Extents(20.0f, 20.0f, 10.0f, 10.0f));
     mStartAngleLabel.TouchEventSignal().Connect(this, &ArcVisualExample::OnButtonTouch);
     window.Add(mStartAngleLabel);
@@ -101,8 +102,8 @@ private:
     mSweepAngleLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mSweepAngleLabel.SetProperty(Actor::Property::POSITION, Vector2(0.0f, -10.0f));
     mSweepAngleLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
-    mSweepAngleLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
-    mSweepAngleLabel.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mSweepAngleLabel.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mSweepAngleLabel.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
     mSweepAngleLabel.SetProperty(Control::Property::PADDING, Extents(20.0f, 20.0f, 10.0f, 10.0f));
     mSweepAngleLabel.TouchEventSignal().Connect(this, &ArcVisualExample::OnButtonTouch);
     window.Add(mSweepAngleLabel);
@@ -113,8 +114,8 @@ private:
     mThicknessLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     mThicknessLabel.SetProperty(Actor::Property::POSITION, Vector2(30.0f, -10.0f));
     mThicknessLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
-    mThicknessLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
-    mThicknessLabel.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mThicknessLabel.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mThicknessLabel.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
     mThicknessLabel.SetProperty(Control::Property::PADDING, Extents(20.0f, 20.0f, 10.0f, 10.0f));
     mThicknessLabel.TouchEventSignal().Connect(this, &ArcVisualExample::OnButtonTouch);
     window.Add(mThicknessLabel);
@@ -125,8 +126,8 @@ private:
     mPlusTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mPlusTextLabel.SetProperty(Actor::Property::POSITION, Vector2(20.0f, 10.0f));
     mPlusTextLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
-    mPlusTextLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
-    mPlusTextLabel.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mPlusTextLabel.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mPlusTextLabel.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
     mPlusTextLabel.SetProperty(Control::Property::PADDING, Extents(20.0f, 20.0f, 10.0f, 10.0f));
     mPlusTextLabel.TouchEventSignal().Connect(this, &ArcVisualExample::OnButtonTouch);
     window.Add(mPlusTextLabel);
@@ -137,8 +138,8 @@ private:
     mMinusTextLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_RIGHT);
     mMinusTextLabel.SetProperty(Actor::Property::POSITION, Vector2(-20.0f, 10.0f));
     mMinusTextLabel.SetProperty(Control::Property::BACKGROUND, TEXT_BACKGROUND);
-    mMinusTextLabel.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
-    mMinusTextLabel.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mMinusTextLabel.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
+    mMinusTextLabel.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::USE_NATURAL_SIZE);
     mMinusTextLabel.SetProperty(Control::Property::PADDING, Extents(25.0f, 25.0f, 10.0f, 10.0f));
     mMinusTextLabel.TouchEventSignal().Connect(this, &ArcVisualExample::OnButtonTouch);
     window.Add(mMinusTextLabel);

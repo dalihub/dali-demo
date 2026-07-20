@@ -24,6 +24,7 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/public-api/visuals/border-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
@@ -299,7 +300,7 @@ void Magnifier::SetFrameVisibility(bool visible)
     mFrame.SetProperty(Actor::Property::INHERIT_POSITION, false);
     mFrame.SetProperty(Actor::Property::INHERIT_SCALE, true);
     mFrame.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
-    mFrame.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(IMAGE_BORDER_INDENT * 2.f - 2.f, IMAGE_BORDER_INDENT * 2.f - 2.f, 0.0f));
+    mFrame.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(IMAGE_BORDER_INDENT * 2.f - 2.f, IMAGE_BORDER_INDENT * 2.f - 2.f, 0.0f));
 
     Toolkit::VisualFactory visualFactory = Toolkit::VisualFactory::Get();
 

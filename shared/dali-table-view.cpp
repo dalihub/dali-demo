@@ -198,13 +198,13 @@ Dali::Toolkit::Popup CreateVersionPopup(Application& application, ConnectionTrac
   contentActor.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
   contentActor.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, HorizontalAlignment::CENTER);
   contentActor.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-  contentActor.SetProperty(Actor::Property::PADDING, Vector4(0.0f, 0.0f, 0.0f, 20.0f));
+  contentActor.SetProperty(DevelActor::Property::PADDING, Vector4(0.0f, 0.0f, 0.0f, 20.0f));
 
   popup.SetTitle(titleActor);
   popup.SetContent(contentActor);
 
   popup.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
-  popup.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.75f, 1.0f, 1.0f));
+  popup.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.75f, 1.0f, 1.0f));
   popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
 
   application.GetWindow().Add(popup);
@@ -323,10 +323,10 @@ void DaliTableView::Initialize(Application application)
   mScrollView.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 1.0f - 0.05f, 0.5f));
   mScrollView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
   mScrollView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
-  mScrollView.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, 0.6f, 0.0f));
+  mScrollView.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, 0.6f, 0.0f));
 
   const float buttonsPageMargin = (1.0f - TABLE_RELATIVE_SIZE.x) * 0.5f * positionSize.width;
-  mScrollView.SetProperty(Actor::Property::PADDING, Vector4(buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f));
+  mScrollView.SetProperty(DevelActor::Property::PADDING, Vector4(buttonsPageMargin, buttonsPageMargin, 0.0f, 0.0f));
 
   mScrollView.SetAxisAutoLock(true);
   mScrollView.ScrollCompletedSignal().Connect(this, &DaliTableView::OnScrollComplete);
@@ -479,7 +479,7 @@ void DaliTableView::Populate()
           Vector2 position(static_cast<float>(column) / (EXAMPLES_PER_ROW - 1.0f), static_cast<float>(row) / (EXAMPLES_PER_ROW - 1.0f));
           Actor   tile = CreateTile(example.name, example.title, Vector3(tileParentMultiplier, tileParentMultiplier, 1.0f), position);
 
-          tile.SetProperty(Actor::Property::PADDING, Vector4(margin, margin, margin, margin));
+          tile.SetProperty(DevelActor::Property::PADDING, Vector4(margin, margin, margin, margin));
           page.AddChild(tile, TableView::CellPosition(row, column));
 
           iter++;
@@ -500,7 +500,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   focusableTile.SetStyleName("DemoTile");
   focusableTile.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   focusableTile.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-  focusableTile.SetProperty(Actor::Property::SIZE_MODE_FACTOR, sizeMultiplier);
+  focusableTile.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, sizeMultiplier);
   focusableTile.SetProperty(Actor::Property::NAME, ToPropertyValue(name));
 
   // Set the tile to be keyboard focusable
@@ -539,7 +539,7 @@ Actor DaliTableView::CreateTile(const std::string& name, const std::string& titl
   label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
 
   // Pad around the label as its size is the same as the 9-patch border. It will overlap it without padding.
-  label.SetProperty(Actor::Property::PADDING, Vector4(TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING));
+  label.SetProperty(DevelActor::Property::PADDING, Vector4(TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING, TILE_LABEL_PADDING));
   DevelControl::AppendAccessibilityRelation(label, focusableTile, Dali::Toolkit::Accessibility::RelationType::CONTROLLED_BY);
   focusableTile.Add(label);
 

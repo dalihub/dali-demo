@@ -23,6 +23,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view.h>
@@ -260,7 +261,7 @@ public:
     mLayer.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     mLayer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mLayer.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::HEIGHT);
-    mLayer.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, -DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight, 0.0f));
+    mLayer.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, -DemoHelper::DEFAULT_VIEW_STYLE.mToolBarHeight, 0.0f));
 
     mNavigationView.Push(mLayer);
 

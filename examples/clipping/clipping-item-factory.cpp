@@ -24,6 +24,7 @@
 #include <dali-toolkit/public-api/visuals/border-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/image-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/object/property-map.h>
 using Dali::Integration::GetStdString;
@@ -122,7 +123,7 @@ Actor ClippingItemFactory::NewItem(unsigned int itemId)
   borderActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   borderActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   borderActor.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
-  borderActor.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f));
+  borderActor.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f));
   borderActor.SetProperty(Actor::Property::COLOR_MODE, USE_PARENT_COLOR);
   borderActor.SetProperty(ImageView::Property::IMAGE,
                           Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::BORDER).Add(BorderVisual::Property::COLOR, Color::WHITE).Add(BorderVisual::Property::SIZE, ITEM_BORDER_SIZE).Add(BorderVisual::Property::ANTI_ALIASING, true));

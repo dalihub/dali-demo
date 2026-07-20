@@ -21,6 +21,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -883,7 +884,7 @@ public: // From ItemFactory
     borderActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     borderActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     borderActor.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
-    borderActor.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f));
+    borderActor.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(2.0f * ITEM_BORDER_SIZE, 2.0f * ITEM_BORDER_SIZE, 0.0f));
     borderActor.SetProperty(Actor::Property::COLOR_MODE, USE_PARENT_COLOR);
 
     Property::Map borderProperty;
