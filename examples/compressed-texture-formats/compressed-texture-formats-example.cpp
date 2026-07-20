@@ -19,12 +19,14 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
 #include "generated/compressed-texture-formats-example-frag.h"
 #include "generated/compressed-texture-formats-example-vert.h"
 #include "shared/utility.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -95,7 +97,7 @@ public:
     Toolkit::TableView table = Toolkit::TableView::New(3u, 2u);
     table.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     table.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    table.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(table, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     table.SetRelativeWidth(0u, 0.5f);
     table.SetRelativeWidth(1u, 0.5f);
     table.SetRelativeHeight(0u, 1.0f / 3.0f);
@@ -107,7 +109,7 @@ public:
     textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ETC1 (KTX):"));
     textLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(textLabel, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     textLabel.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
     table.AddChild(textLabel, Toolkit::TableView::CellPosition(0u, 0u));
     table.SetCellAlignment(Toolkit::TableView::CellPosition(0u, 0u), HorizontalAlignment::LEFT, VerticalAlignment::CENTER);
@@ -116,7 +118,7 @@ public:
     textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ASTC (KTX) 4x4 linear:"));
     textLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(textLabel, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     textLabel.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
     table.AddChild(textLabel, Toolkit::TableView::CellPosition(1u, 0u));
     table.SetCellAlignment(Toolkit::TableView::CellPosition(1u, 0u), HorizontalAlignment::LEFT, VerticalAlignment::CENTER);
@@ -125,7 +127,7 @@ public:
     textLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ASTC (Native) 4x4 linear:"));
     textLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(textLabel, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     textLabel.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
     table.AddChild(textLabel, Toolkit::TableView::CellPosition(2u, 0u));
     table.SetCellAlignment(Toolkit::TableView::CellPosition(2u, 0u), HorizontalAlignment::LEFT, VerticalAlignment::CENTER);

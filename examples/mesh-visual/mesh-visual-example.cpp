@@ -123,7 +123,7 @@ public:
     for(int i = 0; i < NUM_MESHES; i++)
     {
       mContainers[i] = Actor::New();
-      mContainers[i].SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      Dali::DevelActor::SetResizePolicy(mContainers[i], ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
       mContainers[i].RegisterProperty("Tag", MODEL_TAG);            //Used to differentiate between different kinds of actor.
       mContainers[i].RegisterProperty("Model", Property::Value(i)); //Used to index into the model.
       mContainers[i].TouchEventSignal().Connect(this, &MeshVisualController::OnTouch);
@@ -147,7 +147,7 @@ public:
     {
       //Create control to display model
       Control control = Control::New();
-      control.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      DevelActor::SetResizePolicy(control, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       control.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       mContainers[i].Add(control);
@@ -180,7 +180,7 @@ public:
 
     //Create button for model changing.
     PushButton modelButton = Toolkit::PushButton::New();
-    modelButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(modelButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     modelButton.ClickedSignal().Connect(this, &MeshVisualController::OnChangeModelClicked);
     modelButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     modelButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
@@ -189,7 +189,7 @@ public:
 
     //Create button for shading mode changing.
     PushButton shadingModeButton = Toolkit::PushButton::New();
-    shadingModeButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(shadingModeButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     shadingModeButton.ClickedSignal().Connect(this, &MeshVisualController::OnChangeShadingModeClicked);
     shadingModeButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     shadingModeButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
@@ -199,7 +199,7 @@ public:
     //Text label title for changing model or shading mode.
     TextLabel changeTitleLabel = TextLabel::New();
     changeTitleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Change"));
-    changeTitleLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(changeTitleLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     changeTitleLabel.SetProperty(TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}");
     changeTitleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     changeTitleLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
@@ -207,7 +207,7 @@ public:
 
     //Create button for pausing animations.
     PushButton pauseButton = Toolkit::PushButton::New();
-    pauseButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(pauseButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     pauseButton.ClickedSignal().Connect(this, &MeshVisualController::OnPauseClicked);
     pauseButton.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5, 1.0 - BUTTONS_OFFSET_BOTTOM, 0.5));
     pauseButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
@@ -222,7 +222,7 @@ public:
 
     //Create button for switching between manual and fixed light position.
     PushButton lightModeButton = Toolkit::PushButton::New();
-    lightModeButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(lightModeButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     lightModeButton.ClickedSignal().Connect(this, &MeshVisualController::OnChangeLightModeClicked);
     lightModeButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     lightModeButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
@@ -231,7 +231,7 @@ public:
 
     //Create button for switching between front and back light position.
     PushButton lightSideButton = Toolkit::PushButton::New();
-    lightSideButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(lightSideButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     lightSideButton.ClickedSignal().Connect(this, &MeshVisualController::OnChangeLightSideClicked);
     lightSideButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     lightSideButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
@@ -241,7 +241,7 @@ public:
     //Text label title for light position mode.
     TextLabel lightTitleLabel = TextLabel::New();
     lightTitleLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Light Position"));
-    lightTitleLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(lightTitleLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     lightTitleLabel.SetProperty(TextLabel::Property::UNDERLINE, "{\"thickness\":\"2.0\"}");
     lightTitleLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     lightTitleLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
@@ -261,15 +261,15 @@ public:
     if(windowSize.width < windowSize.height)
     {
       //Scale to width.
-      mLightSource.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
-      mLightSource.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(mLightSource, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(mLightSource, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
       mLightSource.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(LIGHT_SCALE, 0.0f, 0.0f));
     }
     else
     {
       //Scale to height.
-      mLightSource.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
-      mLightSource.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(mLightSource, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(mLightSource, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::WIDTH);
       mLightSource.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, LIGHT_SCALE, 0.0f));
     }
 
@@ -286,7 +286,7 @@ public:
 
     //Place the light source on a layer above the base, so that it is rendered above everything else.
     Layer upperLayer = Layer::New();
-    upperLayer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(upperLayer, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     upperLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     upperLayer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 

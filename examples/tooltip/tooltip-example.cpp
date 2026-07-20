@@ -159,7 +159,7 @@ private:
     if(control)
     {
       previousPosition += POSITION_INCREMENTER;
-      control.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      DevelActor::SetResizePolicy(control, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
       control.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.75, 0.1, 1.0));
       control.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       control.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);

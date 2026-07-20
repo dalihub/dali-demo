@@ -116,7 +116,7 @@ public:
     mRootActor = Actor::New();
     mRootActor.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mRootActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-    mRootActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mRootActor, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mRootActor.SetProperty(Actor::Property::OPACITY, 0.8f); ///< Do not make it as 1.0f, to avoid full-opaque optimization.
 
     if(gControlPropertyUses & ControlPropertyUsesFlag::EQUAL_DEPTH_INDEX)

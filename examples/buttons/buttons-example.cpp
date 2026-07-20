@@ -102,8 +102,8 @@ public:
                                            TOOLBAR_TITLE);
 
     Toolkit::TableView contentTable = Toolkit::TableView::New(4, 1);
-    contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    contentTable.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(contentTable, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(contentTable, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     contentTable.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     contentTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     contentTable.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5f));
@@ -119,8 +119,8 @@ public:
 
     // Image selector radio group
     Toolkit::TableView radioGroup2Background = Toolkit::TableView::New(2, 2);
-    radioGroup2Background.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    radioGroup2Background.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(radioGroup2Background, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(radioGroup2Background, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     radioGroup2Background.SetBackgroundColor(BACKGROUND_COLOUR);
     radioGroup2Background.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
     radioGroup2Background.SetFitHeight(0);
@@ -131,7 +131,7 @@ public:
 
     Toolkit::TableView radioButtonsGroup2 = Toolkit::TableView::New(3, 1);
     radioButtonsGroup2.SetCellPadding(Size(0.0f, MARGIN_SIZE * 0.5f));
-    radioButtonsGroup2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(radioButtonsGroup2, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     for(unsigned int i = 0; i < radioButtonsGroup2.GetRows(); ++i)
     {
       radioButtonsGroup2.SetFitHeight(i);
@@ -142,7 +142,7 @@ public:
 
     // TableView to lay out 3x Radio buttons on the left, and 3x Image thumbnails on the right.
     Toolkit::TableView imageSelectTableView = Toolkit::TableView::New(3, 2);
-    imageSelectTableView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(imageSelectTableView, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     imageSelectTableView.SetFitHeight(0);
     imageSelectTableView.SetFitHeight(1);
     imageSelectTableView.SetFitHeight(2);
@@ -205,7 +205,7 @@ public:
     mUpdateButton = Toolkit::PushButton::New();
     mUpdateButton.SetProperty(Toolkit::Button::Property::LABEL, "Select");
     mUpdateButton.SetProperty(Dali::Actor::Property::NAME, "selectButton");
-    mUpdateButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mUpdateButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
 
     mUpdateButton.ClickedSignal().Connect(this, &ButtonsController::OnButtonClicked);
 
@@ -213,14 +213,14 @@ public:
 
     // ImageView to display selected image
     mImage = Toolkit::ImageView::New(BIG_IMAGE_1);
-    mImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mImage, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mImage.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
     radioGroup2Background.AddChild(mImage, Toolkit::TableView::CellPosition(0, 1, 2, 1));
 
     // The enable/disable radio group
     Toolkit::TableView radioGroup1Background = Toolkit::TableView::New(1, 1);
-    radioGroup1Background.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    radioGroup1Background.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(radioGroup1Background, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(radioGroup1Background, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     radioGroup1Background.SetBackgroundColor(BACKGROUND_COLOUR);
     radioGroup1Background.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
     radioGroup1Background.SetFitHeight(0);
@@ -230,7 +230,7 @@ public:
     // Radio group
     Toolkit::TableView radioButtonsGroup1 = Toolkit::TableView::New(2, 1);
     radioButtonsGroup1.SetCellPadding(Size(0.0f, MARGIN_SIZE * 0.5f));
-    radioButtonsGroup1.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(radioButtonsGroup1, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     for(unsigned int i = 0; i < radioButtonsGroup1.GetRows(); ++i)
     {
       radioButtonsGroup1.SetFitHeight(i);
@@ -241,15 +241,15 @@ public:
 
     // TableView to lay out 2x Radio buttons on the left, and 1x Tick image on the right.
     Toolkit::TableView tableView = Toolkit::TableView::New(2, 2);
-    tableView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(tableView, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     tableView.SetFitHeight(0);
     tableView.SetFitHeight(1);
     tableView.SetFitWidth(0);
     tableView.SetFitWidth(1);
 
     Toolkit::TextLabel textLabel = Toolkit::TextLabel::New("Select enabled");
-    textLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
-    textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(textLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(textLabel, ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
     textLabel.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
 
     Toolkit::ImageView image = Toolkit::ImageView::New(ENABLED_IMAGE);
@@ -288,8 +288,8 @@ public:
 
     // CheckBoxes
     Toolkit::TableView checkBoxBackground = Toolkit::TableView::New(3, 1);
-    checkBoxBackground.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    checkBoxBackground.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(checkBoxBackground, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(checkBoxBackground, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     checkBoxBackground.SetBackgroundColor(BACKGROUND_COLOUR);
     checkBoxBackground.SetCellPadding(Size(MARGIN_SIZE / 2.0f, MARGIN_SIZE / 2.0f));
 
@@ -305,7 +305,7 @@ public:
       mCheckboxButton1.SetProperty(Dali::Actor::Property::NAME, "checkbox1");
       mCheckboxButton1.SetProperty(Toolkit::Button::Property::LABEL, "CheckBox1 is unselected");
       mCheckboxButton1.StateChangedSignal().Connect(this, &ButtonsController::OnCheckBoxesSelected);
-      mCheckboxButton1.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(mCheckboxButton1, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
 
       checkBoxBackground.Add(mCheckboxButton1);
     }
@@ -316,7 +316,7 @@ public:
       mCheckboxButton2.SetProperty(Toolkit::Button::Property::LABEL, "CheckBox2 is selected");
       mCheckboxButton2.SetProperty(Toolkit::Button::Property::SELECTED, true);
       mCheckboxButton2.StateChangedSignal().Connect(this, &ButtonsController::OnCheckBoxesSelected);
-      mCheckboxButton2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(mCheckboxButton2, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
 
       checkBoxBackground.Add(mCheckboxButton2);
     }
@@ -326,15 +326,15 @@ public:
       mCheckboxButton3.SetProperty(Dali::Actor::Property::NAME, "checkbox3");
       mCheckboxButton3.SetProperty(Toolkit::Button::Property::LABEL, "CheckBox3 is unselected");
       mCheckboxButton3.StateChangedSignal().Connect(this, &ButtonsController::OnCheckBoxesSelected);
-      mCheckboxButton3.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(mCheckboxButton3, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
 
       checkBoxBackground.Add(mCheckboxButton3);
     }
 
     // Create togglabe button
     Toolkit::TableView toggleBackground = Toolkit::TableView::New(3, 1);
-    toggleBackground.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    toggleBackground.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(toggleBackground, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(toggleBackground, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     toggleBackground.SetBackgroundColor(BACKGROUND_COLOUR);
     toggleBackground.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
 
@@ -348,8 +348,8 @@ public:
     mToggleButton = Toolkit::PushButton::New();
     mToggleButton.SetProperty(Toolkit::Button::Property::TOGGLABLE, true);
     mToggleButton.SetProperty(Toolkit::Button::Property::LABEL, "Unselected");
-    mToggleButton.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mToggleButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mToggleButton, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mToggleButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mToggleButton.StateChangedSignal().Connect(this, &ButtonsController::OnButtonSelected);
 
     toggleBackground.Add(mToggleButton);

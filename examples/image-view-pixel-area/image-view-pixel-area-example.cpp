@@ -17,8 +17,11 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -105,7 +108,7 @@ private:
     mWrapLabel = Toolkit::TextLabel::New(" Automatic atlasing\n WrapMode: CLAMP_TO_EDGE, MIRRORED_REPEAT");
     mWrapLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     mWrapLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
-    mWrapLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mWrapLabel, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mWrapLabel.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
     mWrapLabel.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
     mContent.Add(mWrapLabel);
@@ -113,7 +116,7 @@ private:
     mPixelAreaLabel = Toolkit::TextLabel::New(" Use ImageVisual::Property::PIXEL_AREA\n ");
     mPixelAreaLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     mPixelAreaLabel.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
-    mPixelAreaLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mPixelAreaLabel, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mPixelAreaLabel.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
     mPixelAreaLabel.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
     mWrapLabel.Add(mPixelAreaLabel);

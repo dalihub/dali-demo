@@ -102,7 +102,7 @@ public:
     mTable = TableView::New(CellPlacement::NUMBER_OF_ROWS, NUMBER_OF_IMAGES);
     mTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mTable.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mTable, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     Vector3 offset(0.9f, 0.70f, 0.0f);
     mTable.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, offset);
     mTable.SetFitHeight(CellPlacement::TOP_BUTTON);
@@ -116,8 +116,8 @@ public:
       mPlayButtons[x].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       mPlayButtons[x].SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
       mPlayButtons[x].ClickedSignal().Connect(this, &AnimatedVectorImageViewController::OnPlayButtonClicked);
-      mPlayButtons[x].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      mPlayButtons[x].SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      Dali::DevelActor::SetResizePolicy(mPlayButtons[x], ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      Dali::DevelActor::SetResizePolicy(mPlayButtons[x], ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       std::string s = std::to_string(x);
       mPlayButtons[x].SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(s));
       mTable.AddChild(mPlayButtons[x], TableView::CellPosition(CellPlacement::TOP_BUTTON, x));
@@ -127,8 +127,8 @@ public:
       mStopButtons[x].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
       mStopButtons[x].SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
       mStopButtons[x].ClickedSignal().Connect(this, &AnimatedVectorImageViewController::OnStopButtonClicked);
-      mStopButtons[x].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      mStopButtons[x].SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      Dali::DevelActor::SetResizePolicy(mStopButtons[x], ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      Dali::DevelActor::SetResizePolicy(mStopButtons[x], ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       mStopButtons[x].SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(s));
       mTable.AddChild(mStopButtons[x], TableView::CellPosition(CellPlacement::LOWER_BUTTON, x));
 
@@ -141,7 +141,7 @@ public:
 
       mImageViews[x].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mImageViews[x].SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-      mImageViews[x].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      Dali::DevelActor::SetResizePolicy(mImageViews[x], ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       mImageViews[x].SetProperty(Dali::Actor::Property::NAME, ToPropertyValue(s));
 
       DevelControl::VisualEventSignal(mImageViews[x]).Connect(this, &AnimatedVectorImageViewController::OnVisualEvent);

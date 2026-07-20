@@ -16,6 +16,7 @@
  */
 
 // INTERNAL INCLUDES
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <fstream>
 #include <iostream>
@@ -39,6 +40,7 @@
 #include "particle-field.h"
 #include "particle-view.h"
 #include "utils.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -180,7 +182,7 @@ private:
 
     // Create world - particles and clock are added to it; this is what we apply tilt to.
     auto world = CreateActor();
-    world.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(world, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     window.Add(world);
     mWorld = world;
 

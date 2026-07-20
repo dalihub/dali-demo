@@ -24,13 +24,16 @@
 #include <dali-scene3d/integration-api/loader/resource-bundle.h>
 #include <dali-scene3d/integration-api/loader/scene-definition.h>
 #include <dali-scene3d/integration-api/loader/shader-manager.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <dirent.h>
 #include <algorithm>
 #include <cstring>
 #include <filesystem>
 #include <string_view>
+
 #include "scene3d-extension.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -87,7 +90,7 @@ StringVector ListFiles(
 TextLabel MakeLabel(std::string msg)
 {
   TextLabel label = TextLabel::New(ToDaliString(std::string("  ") + msg));
-  label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(label, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   label.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
   label.SetProperty(TextLabel::Property::PIXEL_SIZE, ITEM_HEIGHT * 4 / 7);
   label.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
@@ -292,7 +295,7 @@ void Scene3DExample::OnInit(Application app)
 
   // navigation view
   auto navigationView = NavigationView::New();
-  navigationView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(navigationView, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   SetActorCentered(navigationView);
 
   // Set up the background gradient.
@@ -321,7 +324,7 @@ void Scene3DExample::OnInit(Application app)
 
   auto items = ItemView::New(*mItemFactory);
   SetActorCentered(items);
-  items.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(items, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   items.SetProperty(Actor::Property::FOCUSABLE, true);
 
   Vector3 windowSize(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));

@@ -21,8 +21,11 @@
 // INTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -273,7 +276,7 @@ private:
   Actor CreatePage()
   {
     Actor page = Actor::New();
-    page.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(page, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     page.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     page.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
@@ -440,7 +443,7 @@ private:
   void ApplyEffectToPage(Actor page, unsigned int pageOrder)
   {
     page.RemoveConstraints();
-    page.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(page, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     ScrollViewPagePathEffect effect = ScrollViewPagePathEffect::DownCast(mScrollViewEffect);
     effect.ApplyToPage(page, pageOrder);

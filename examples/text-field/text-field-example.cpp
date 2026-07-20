@@ -23,12 +23,14 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <iostream>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
 #include "shared/multi-language-strings.h"
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -114,8 +116,8 @@ public:
     TextField field = TextField::New();
     field.SetProperty(Dali::Actor::Property::NAME, "textField");
     field.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    field.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    field.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(field, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(field, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
     field.SetProperty(TextField::Property::TEXT, text);
     field.SetProperty(TextField::Property::TEXT_COLOR, Vector4(0.0f, 1.0f, 1.0f, 1.0f)); // CYAN
     field.SetProperty(TextField::Property::PLACEHOLDER_TEXT, "Unnamed folder");
@@ -130,8 +132,8 @@ public:
     Popup popup = Popup::New();
     popup.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     popup.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-    popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH);
-    popup.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(popup, ResizePolicy::FIT_TO_CHILDREN, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(popup, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
     popup.TouchEventSignal().Connect(this, &TextFieldExample::OnPopupTouched);
 
     return popup;

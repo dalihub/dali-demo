@@ -128,7 +128,7 @@ void StylingApplication::Create(Application application)
   // Content panes:
   TableView contentLayout = TableView::New(5, 1);
   contentLayout.SetProperty(Dali::Actor::Property::NAME, "ContentLayout");
-  contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(contentLayout, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   contentLayout.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
   contentLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
   contentLayout.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
@@ -150,8 +150,8 @@ void StylingApplication::Create(Application application)
   mTitle.SetStyleName("Title");
   mTitle.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
   mTitle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
-  mTitle.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  mTitle.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(mTitle, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(mTitle, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
   mTitle.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
   contentLayout.Add(mTitle);
 
@@ -160,8 +160,8 @@ void StylingApplication::Create(Application application)
   TableView imageSelectLayout = TableView::New(1, 2);
   imageSelectLayout.SetProperty(Dali::Actor::Property::NAME, "ImageSelectLayout");
 
-  imageSelectLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  imageSelectLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(imageSelectLayout, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(imageSelectLayout, ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
   imageSelectLayout.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   imageSelectLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   imageSelectLayout.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
@@ -173,7 +173,7 @@ void StylingApplication::Create(Application application)
 
   TableView radioButtonsLayout = TableView::New(3, 2);
   radioButtonsLayout.SetProperty(Dali::Actor::Property::NAME, "RadioButtonsLayout");
-  radioButtonsLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(radioButtonsLayout, ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
   // Leave each row to fill to parent height
   // Set each column to fit to child width
   radioButtonsLayout.SetFitWidth(0);
@@ -215,13 +215,13 @@ void StylingApplication::Create(Application application)
   mImagePlacement = Actor::New();
   mImagePlacement.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mImagePlacement.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  mImagePlacement.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mImagePlacement, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   imageSelectLayout.AddChild(mImagePlacement, TableView::CellPosition(0, 1));
   imageSelectLayout.SetCellAlignment(TableView::CellPosition(0, 1), HorizontalAlignment::RIGHT, VerticalAlignment::CENTER);
 
   mIcc1 = ImageChannelControl::New(BIG_IMAGE_1);
   mIcc1.SetProperty(Dali::Actor::Property::NAME, "ICC1");
-  mIcc1.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mIcc1, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   mIcc1.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
   mIcc1.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mIcc1.SetVisibility(true);
@@ -230,7 +230,7 @@ void StylingApplication::Create(Application application)
 
   mIcc2 = ImageChannelControl::New(BIG_IMAGE_2);
   mIcc2.SetProperty(Dali::Actor::Property::NAME, "ICC2");
-  mIcc2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mIcc2, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   mIcc2.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
   mIcc2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mIcc2.SetVisibility(false);
@@ -239,7 +239,7 @@ void StylingApplication::Create(Application application)
 
   mIcc3 = ImageChannelControl::New(BIG_IMAGE_3);
   mIcc3.SetProperty(Dali::Actor::Property::NAME, "ICC3");
-  mIcc3.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mIcc3, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   mIcc3.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
   mIcc3.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mIcc3.SetVisibility(false);
@@ -252,8 +252,8 @@ void StylingApplication::Create(Application application)
   channelSliderLayout.SetProperty(Dali::Actor::Property::NAME, "ChannelSliderLayout");
 
   // Contains a column of check buttons and a column of sliders for R/G/B
-  channelSliderLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  channelSliderLayout.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(channelSliderLayout, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(channelSliderLayout, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
   channelSliderLayout.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   channelSliderLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   channelSliderLayout.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
@@ -293,8 +293,8 @@ void StylingApplication::Create(Application application)
     label.SetStyleName(ToDaliString(labelStyleName.str()));
     label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     label.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-    label.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
-    label.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(label, ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(label, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
 
     channelSliderLayout.AddChild(label, TableView::CellPosition(i, 1));
     channelSliderLayout.SetCellAlignment(TableView::CellPosition(i, 1), HorizontalAlignment::CENTER, VerticalAlignment::CENTER);
@@ -306,8 +306,8 @@ void StylingApplication::Create(Application application)
     mChannelSliders[i].SetStyleName(ToDaliString(sliderStyleName.str()));
     mChannelSliders[i].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mChannelSliders[i].SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-    mChannelSliders[i].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mChannelSliders[i].SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+    Dali::DevelActor::SetResizePolicy(mChannelSliders[i], ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    Dali::DevelActor::SetResizePolicy(mChannelSliders[i], ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
     mChannelSliders[i].SetProperty(Slider::Property::LOWER_BOUND, 0.0f);
     mChannelSliders[i].SetProperty(Slider::Property::UPPER_BOUND, 100.0f);
     mChannelSliders[i].SetProperty(Slider::Property::VALUE_PRECISION, 0);
@@ -326,7 +326,7 @@ void StylingApplication::Create(Application application)
   mResetButton = PushButton::New();
   mResetButton.SetProperty(Toolkit::Button::Property::LABEL, "Reset");
   mResetButton.SetProperty(Dali::Actor::Property::NAME, "ResetButton");
-  mResetButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mResetButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   mResetButton.ClickedSignal().Connect(this, &StylingApplication::OnResetClicked);
 
   contentLayout.Add(mResetButton);
@@ -338,14 +338,14 @@ void StylingApplication::Create(Application application)
 
   themeButtonLayout.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   themeButtonLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  themeButtonLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  themeButtonLayout.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(themeButtonLayout, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(themeButtonLayout, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
   themeButtonLayout.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
   themeButtonLayout.SetFitHeight(0);
 
   TextLabel label = TextLabel::New();
   label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Theme: "));
-  label.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(label, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   label.SetStyleName("ThemeLabel");
   label.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
   label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
@@ -359,8 +359,8 @@ void StylingApplication::Create(Application application)
     mThemeButtons[i].SetStyleName("ThemeButton");
     mThemeButtons[i].SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mThemeButtons[i].SetProperty(Actor::Property::PIVOT, ParentOrigin::CENTER);
-    mThemeButtons[i].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mThemeButtons[i].SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    Dali::DevelActor::SetResizePolicy(mThemeButtons[i], ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    Dali::DevelActor::SetResizePolicy(mThemeButtons[i], ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mThemeButtons[i].RegisterProperty("theme", i, Property::READ_WRITE);
     mThemeButtons[i].ClickedSignal().Connect(this, &StylingApplication::OnThemeButtonClicked);
     themeButtonLayout.AddChild(mThemeButtons[i], TableView::CellPosition(0, 1 + i));
@@ -392,7 +392,7 @@ Actor StylingApplication::CreateResizableContentPane()
 
   Toolkit::ImageView grabHandle = Toolkit::ImageView::New(RESIZE_HANDLE_IMAGE);
   grabHandle.SetProperty(Dali::Actor::Property::NAME, "GrabHandle");
-  grabHandle.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(grabHandle, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   grabHandle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
   grabHandle.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
   grabHandle.SetProperty(Actor::Property::POSITION, Vector2(-BORDER_WIDTH, -BORDER_WIDTH));
@@ -432,8 +432,8 @@ Popup StylingApplication::CreateResetPopup()
   text.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("This will reset the channel data to full value. Are you sure?"));
   text.SetProperty(Dali::Actor::Property::NAME, "PopupContentText");
   text.SetStyleName("PopupBody");
-  text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(text, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(text, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
   text.SetProperty(TextLabel::Property::MULTI_LINE, true);
   text.SetProperty(DevelActor::Property::PADDING, Vector4(10.0f, 10.0f, 0.0f, 20.0f));
   popup.SetContent(text);
@@ -441,8 +441,8 @@ Popup StylingApplication::CreateResetPopup()
   ImageView footer = ImageView::New(DEFAULT_CONTROL_AREA_IMAGE_PATH);
   footer.SetProperty(Dali::Actor::Property::NAME, "PopupFooter");
   footer.SetStyleName("PopupFooter");
-  footer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  footer.SetResizePolicy(ResizePolicy::FIXED, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(footer, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(footer, ResizePolicy::FIXED, Dimension::HEIGHT);
   footer.SetProperty(Actor::Property::SIZE, Vector2(0.0f, 80.0f));
   footer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   footer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -450,7 +450,7 @@ Popup StylingApplication::CreateResetPopup()
   TableView footerLayout = TableView::New(1, 2);
   footerLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   footerLayout.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  footerLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(footerLayout, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
   PushButton okayButton = PushButton::New();
   okayButton.SetProperty(Dali::Actor::Property::NAME, POPUP_CONTROL_OK_NAME);
@@ -459,7 +459,7 @@ Popup StylingApplication::CreateResetPopup()
   okayButton.ClickedSignal().Connect(this, &StylingApplication::OnReset);
   okayButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   okayButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  okayButton.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(okayButton, ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
   okayButton.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(-20.0f, -20.0f, 0.0f));
 
   PushButton cancelButton = PushButton::New();
@@ -469,7 +469,7 @@ Popup StylingApplication::CreateResetPopup()
   cancelButton.ClickedSignal().Connect(this, &StylingApplication::OnResetCancelled);
   cancelButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   cancelButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  cancelButton.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(cancelButton, ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
   cancelButton.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(-20.0f, -20.0f, 0.0f));
 
   footerLayout.SetCellAlignment(TableView::CellPosition(0, 0), HorizontalAlignment::CENTER, VerticalAlignment::CENTER);

@@ -22,7 +22,9 @@
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <iostream>
+
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -218,7 +220,7 @@ public:
     mPinchDetector.DetectedSignal().Connect(this, &ImageScalingAndFilteringController::OnPinch);
 
     mGrabCorner = Toolkit::ImageView::New(RESIZE_HANDLE_IMAGE);
-    mGrabCorner.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mGrabCorner, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     mGrabCorner.SetProperty(Dali::Actor::Property::NAME, "GrabCorner");
     mGrabCorner.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     mGrabCorner.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
@@ -253,7 +255,7 @@ public:
     Vector2 windowSize   = Vector2(positionSize.width, positionSize.height);
 
     Dali::Layer controlsLayer = Dali::Layer::New();
-    controlsLayer.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(controlsLayer, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     controlsLayer.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(1.0f, 1.0f, 1.0f));
     controlsLayer.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     controlsLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
@@ -287,8 +289,8 @@ public:
 
     // Wrapper table to hold the sampling mode button:
     Toolkit::TableView modesGroupBackground = Toolkit::TableView::New(1, 1);
-    modesGroupBackground.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    modesGroupBackground.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(modesGroupBackground, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(modesGroupBackground, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     modesGroupBackground.SetBackgroundColor(BACKGROUND_COLOUR);
     modesGroupBackground.SetCellPadding(Size(MARGIN_SIZE * 0.5f, MARGIN_SIZE));
     modesGroupBackground.SetFitHeight(0);
@@ -302,8 +304,8 @@ public:
     {
       // Vertical table to hold label and button:
       Toolkit::TableView samplingModeGroup = Toolkit::TableView::New(2, 1);
-      samplingModeGroup.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      samplingModeGroup.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(samplingModeGroup, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(samplingModeGroup, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       samplingModeGroup.SetBackgroundColor(BACKGROUND_COLOUR);
       samplingModeGroup.SetCellPadding(Size(MARGIN_SIZE * 0.5f, MARGIN_SIZE * 0.5f));
       samplingModeGroup.SetFitHeight(0);
@@ -328,8 +330,8 @@ public:
     button.SetStyleName(STYLE_BUTTON_TEXT);
     button.SetProperty(Dali::Actor::Property::NAME, id);
     button.SetProperty(Toolkit::Button::Property::LABEL, label);
-    button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(button, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(button, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     button.ClickedSignal().Connect(this, &ImageScalingAndFilteringController::OnButtonClicked);
     return button;
   }
@@ -358,8 +360,8 @@ public:
 
     button.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(button, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(button, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
 
     button.ClickedSignal().Connect(this, &ImageScalingAndFilteringController::OnButtonClicked);
 
@@ -375,8 +377,8 @@ public:
 
       // Table to hold buttons for each sampling mode:
       Toolkit::TableView samplingModes = Toolkit::TableView::New(8, 1);
-      samplingModes.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      samplingModes.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(samplingModes, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(samplingModes, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       samplingModes.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5));
       samplingModes.SetFitHeight(0);
       samplingModes.SetFitHeight(1);

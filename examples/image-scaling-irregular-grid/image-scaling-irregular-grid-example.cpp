@@ -302,7 +302,7 @@ public:
     mOffWindowImageViews = Actor::New();
     mOffWindowImageViews.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mOffWindowImageViews.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mOffWindowImageViews.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mOffWindowImageViews, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     // Build the main content of the widow:
     PopulateContentLayer();
@@ -327,7 +327,7 @@ public:
     mScrollView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mScrollView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
-    mScrollView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mScrollView, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     mScrollView.SetAxisAutoLock(true);
     mScrollView.SetAxisAutoLockGradient(1.0f);
@@ -350,14 +350,14 @@ public:
     mScrollBarVertical = ScrollBar::New(Toolkit::ScrollBar::VERTICAL);
     mScrollBarVertical.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
     mScrollBarVertical.SetProperty(Actor::Property::PIVOT, Pivot::TOP_RIGHT);
-    mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
-    mScrollBarVertical.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mScrollBarVertical, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mScrollBarVertical, Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
     mScrollView.Add(mScrollBarVertical);
 
     mScrollBarHorizontal = ScrollBar::New(Toolkit::ScrollBar::HORIZONTAL);
     mScrollBarHorizontal.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     mScrollBarHorizontal.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    mScrollBarHorizontal.SetResizePolicy(Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mScrollBarHorizontal, Dali::ResizePolicy::FIT_TO_CHILDREN, Dali::Dimension::WIDTH);
     mScrollBarHorizontal.SetProperty(Actor::Property::ORIENTATION, Quaternion(Quaternion(Radian(1.5f * Math::PI), Vector3::ZAXIS)));
     mScrollView.Add(mScrollBarHorizontal);
 
@@ -370,7 +370,7 @@ public:
   void OnScrollViewRelayout(Actor actor)
   {
     // Make the height of the horizontal scroll bar to be the same as the width of scroll view.
-    mScrollBarHorizontal.SetProperty(Actor::Property::SIZE, Vector2(0.0f, mScrollView.GetRelayoutSize(Dimension::WIDTH)));
+    mScrollBarHorizontal.SetProperty(Actor::Property::SIZE, Vector2(0.0f, DevelActor::GetRelayoutSize(mScrollView, Dimension::WIDTH)));
   }
 
   /**
@@ -429,7 +429,7 @@ public:
     // coordinates in a frame defined by a parent actor:
 
     Actor gridActor = Actor::New();
-    gridActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(gridActor, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     gridActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     gridActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 

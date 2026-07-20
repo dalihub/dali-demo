@@ -24,7 +24,9 @@
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <string>
+
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -122,7 +124,7 @@ public:
 
     imageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     imageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-    imageView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(imageView, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     return imageView;
   }
@@ -179,7 +181,7 @@ public:
     dualImageViewTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     dualImageViewTable.SetProperty(Dali::Actor::Property::NAME, "dualTable");
     dualImageViewTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    dualImageViewTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(dualImageViewTable, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     dualImageViewTable.SetCellPadding(Vector2(6.0f, 0.0f));
     TextLabel attached = TextLabel::New();
     attached.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("ATTACHED loaded image \nWill appear here"));
@@ -210,7 +212,7 @@ public:
     dualImageViewTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     dualImageViewTable.SetProperty(Dali::Actor::Property::NAME, "dualTable");
     dualImageViewTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    dualImageViewTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(dualImageViewTable, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     dualImageViewTable.SetCellPadding(Vector2(6.0f, 0.0f));
 
     TextLabel attached = TextLabel::New();
@@ -242,7 +244,7 @@ public:
     TableView dualImageViewTable = TableView::New(1, 2);
     dualImageViewTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     dualImageViewTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    dualImageViewTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(dualImageViewTable, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     dualImageViewTable.SetCellPadding(Vector2(6.0f, 0.0f));
 
     mTable.AddChild(dualImageViewTable, TableView::CellPosition(TableRowPlacement::IMAGE, 0));
@@ -265,7 +267,7 @@ public:
     TableView dualImageViewTable = TableView::New(1, 2);
     dualImageViewTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     dualImageViewTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    dualImageViewTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(dualImageViewTable, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     dualImageViewTable.SetCellPadding(Vector2(6.0f, 0.0f));
 
     mTable.AddChild(dualImageViewTable, TableView::CellPosition(TableRowPlacement::IMAGE, 0));
@@ -288,7 +290,7 @@ public:
     TableView dualImageViewTable = TableView::New(1, 2);
     dualImageViewTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     dualImageViewTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    dualImageViewTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(dualImageViewTable, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     dualImageViewTable.SetCellPadding(Vector2(6.0f, 0.0f));
 
     mTable.AddChild(dualImageViewTable, TableView::CellPosition(TableRowPlacement::IMAGE, 0));
@@ -328,7 +330,7 @@ public:
     TableView dualImageViewTable = TableView::New(1, 2);
     dualImageViewTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     dualImageViewTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    dualImageViewTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(dualImageViewTable, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     dualImageViewTable.SetCellPadding(Vector2(6.0f, 0.0f));
 
     mTable.AddChild(dualImageViewTable, TableView::CellPosition(TableRowPlacement::IMAGE, 0));
@@ -396,7 +398,7 @@ public:
     Toolkit::Control view = Toolkit::Control::New();
     view.SetProperty(Actor::Property::PIVOT, Dali::Pivot::CENTER);
     view.SetProperty(Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
-    view.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(view, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
     view.SetProperty(Toolkit::Control::Property::BACKGROUND, gradientBackground);
     window.Add(view);
 
@@ -404,7 +406,7 @@ public:
     mTable = TableView::New(TableRowPlacement::NUMBER_OF_ROWS, 1);
     mTable.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mTable.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mTable, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     Vector3 offset(0.9f, 0.90f, 0.0f);
     mTable.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, offset);
     mTable.SetFitHeight(TableRowPlacement::NEXT_BUTTON);
@@ -450,7 +452,7 @@ public:
     mInstructions.SetProperty(TextLabel::Property::MULTI_LINE, true);
     mInstructions.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
     mInstructions.SetProperty(TextLabel::Property::OUTLINE, outlineMap);
-    mInstructions.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mInstructions, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mTable.AddChild(mInstructions, TableView::CellPosition(TableRowPlacement::INSTRUCTIONS, 0));
     float value = mInstructions.GetProperty<float>(TextLabel::Property::PIXEL_SIZE);
     mTable.SetFixedHeight(TableRowPlacement::INSTRUCTIONS, value * 5); // Space allocated for example instructions

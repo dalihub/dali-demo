@@ -19,8 +19,10 @@
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <string.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -83,8 +85,8 @@ public:
     mWindow.TouchEventSignal().Connect(this, &ImageYuvController::OnTouch);
 
     mTableView = Toolkit::TableView::New(NUM_IMAGE_INFOS, 3);
-    mTableView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mTableView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mTableView, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mTableView, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mTableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mTableView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mWindow.Add(mTableView);

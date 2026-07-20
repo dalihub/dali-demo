@@ -154,14 +154,14 @@ public:
     Window window = application.GetWindow();
 
     mScrollParent = Actor::New();
-    mScrollParent.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mScrollParent, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mScrollParent.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mScrollParent.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
     // create background
     Toolkit::ImageView background = Toolkit::ImageView::New(BACKGROUND_IMAGE);
     window.Add(background);
-    background.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(background, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     background.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     background.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
@@ -200,7 +200,7 @@ public:
     pageActor.SetBackgroundColor(Vector4(0.0f, 0.0f, 0.0f, 0.5f));
     pageActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     pageActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-    pageActor.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(pageActor, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     pageActor.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(PAGE_SCALE_FACTOR_X, PAGE_SCALE_FACTOR_Y, 1.0f));
     return pageActor;
   }
@@ -217,7 +217,7 @@ public:
     map[Dali::Toolkit::ImageVisual::Property::URL] = ToDaliString(imagePath.str());
 
     imageView.SetProperty(Toolkit::ImageView::Property::IMAGE, map);
-    imageView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(imageView, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     imageView.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
     imageView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     imageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -229,7 +229,7 @@ public:
   Toolkit::Button CreateButton(const unsigned int currentIconIndex)
   {
     Toolkit::CheckBoxButton button = Toolkit::CheckBoxButton::New();
-    button.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(button, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
     button.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
     button.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -271,7 +271,7 @@ public:
         }
         else
         {
-          iconView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+          DevelActor::SetResizePolicy(iconView, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
           iconView.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
         }
 
@@ -299,7 +299,7 @@ public:
             Toolkit::TextLabel textLabel = Toolkit::TextLabel::New(DEMO_APPS_NAMES[currentIconIndex]);
             textLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
             textLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-            textLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+            DevelActor::SetResizePolicy(textLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
             textLabel.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(1.0f, 1.0f, 1.0f, 1.0f)); // White.
             textLabel.SetProperty(Toolkit::TextLabel::Property::POINT_SIZE, ((static_cast<float>(ROW_HEIGHT * LABEL_AREA) * 72.0f) / dpi.y) * 0.25f);
             textLabel.SetProperty(Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");

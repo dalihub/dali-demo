@@ -19,8 +19,10 @@
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <string>
 
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include "controls/slider/slider.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -292,7 +294,7 @@ public:
     layoutContainer[Actor::Property::PIVOT]         = Pivot::TOP_RIGHT;
 
     auto bg = Control::New();
-    bg.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(bg, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     bg[Actor::Property::PARENT_ORIGIN] = ParentOrigin::CENTER;
     bg.SetBackgroundColor(Vector4(0.05f, 0.05f, 0.1f, 1.0f));
     layoutContainer.Add(bg);
@@ -305,7 +307,7 @@ public:
     actorProps.SetProperty(Actor::Property::SIZE, Vector3(sceneSize.x, sceneSize.y, sceneSize.x));
     actorProps.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     actorProps.SetFitWidth(0);
-    actorProps.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(actorProps, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
 
     int i = 0;
     for(auto& image : images)
@@ -325,8 +327,8 @@ public:
       slider.SetStyleName("ThinSlider");
       slider.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       slider.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-      slider.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      slider.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(slider, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(slider, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
       slider.SetProperty(Slider::Property::LOWER_BOUND, -180.0f);
       slider.SetProperty(Slider::Property::UPPER_BOUND, 180.0f);
       slider.SetProperty(Slider::Property::VALUE_PRECISION, 0);
@@ -354,8 +356,8 @@ public:
     slider.SetStyleName("ThinSlider");
     slider.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     slider.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-    slider.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    slider.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(slider, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(slider, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
     slider.SetProperty(Slider::Property::LOWER_BOUND, 1.0f);
     slider.SetProperty(Slider::Property::UPPER_BOUND, 160.0f);
     slider.SetProperty(Slider::Property::VALUE_PRECISION, 0);
@@ -375,8 +377,8 @@ public:
     cameraDetail[Actor::Property::PIVOT]                    = Pivot::BOTTOM_CENTER;
 
     cameraDetail[Actor::Property::POSITION] = Vector3(0.0f, -15.0f, 0.0f);
-    cameraDetail.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    cameraDetail.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(cameraDetail, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(cameraDetail, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     layoutContainer.Add(cameraDetail);
 
     SetCameraDetailString();
@@ -473,7 +475,7 @@ public:
   {
     Actor cornerHandle = Toolkit::ImageView::New(RESIZE_HANDLE_IMAGE);
     cornerHandle.SetProperty(Dali::Actor::Property::NAME, "GrabHandle");
-    cornerHandle.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(cornerHandle, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     cornerHandle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
     cornerHandle.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     cornerHandle.SetProperty(Actor::Property::POSITION, Vector2(-BORDER_WIDTH, -BORDER_WIDTH));
@@ -486,12 +488,12 @@ public:
   {
     Actor grabCenter = Toolkit::ImageView::New(CIRCLE_STROKE);
     grabCenter.SetProperty(Dali::Actor::Property::NAME, "GrabCenter");
-    grabCenter.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(grabCenter, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     grabCenter.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     grabCenter.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     Toolkit::ImageView grabCenter2 = Toolkit::ImageView::New(CIRCLE_POINT);
     grabCenter2.SetProperty(Dali::Actor::Property::NAME, "GrabCenter2");
-    grabCenter2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(grabCenter2, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     grabCenter2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     grabCenter2.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     grabCenter.Add(grabCenter2);

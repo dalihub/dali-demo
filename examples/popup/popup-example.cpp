@@ -159,7 +159,7 @@ public:
     mItemView = Toolkit::ItemView::New(*this);
     mItemView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mItemView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-    mItemView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mItemView, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     // Use a grid layout for tests
     auto                   positionSize = window.GetPositionSize();
@@ -227,7 +227,7 @@ public:
       }
 
       bool               modifyPolicy = false;
-      ResizePolicy::Type policy       = popup.GetResizePolicy(policyDimension);
+      ResizePolicy::Type policy       = DevelActor::GetResizePolicy(popup, policyDimension);
       ResizePolicy::Type newPolicy(policy);
 
       // Switch on each policy type to determine the new behaviour.
@@ -279,7 +279,7 @@ public:
       if(modifyPolicy)
       {
         // Set the new policy for this dimension, if it has been modified.
-        popup.SetResizePolicy(newPolicy, policyDimension);
+        DevelActor::SetResizePolicy(popup, newPolicy, policyDimension);
         modifySize = true;
       }
     }
@@ -365,8 +365,8 @@ public:
       Toolkit::ImageView footer = Toolkit::ImageView::New(DEFAULT_CONTROL_AREA_IMAGE_PATH);
       footer.SetProperty(Dali::Actor::Property::NAME, "controlAreaImage");
       // Set up the container's layout.
-      footer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      footer.SetResizePolicy(ResizePolicy::FIXED, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(footer, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(footer, ResizePolicy::FIXED, Dimension::HEIGHT);
       footer.SetProperty(Actor::Property::SIZE, Vector2(0.0f, 130.0f));
       footer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
       footer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
@@ -374,7 +374,7 @@ public:
       Actor okButton = CreateOKButton();
       okButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       okButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-      okButton.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
+      DevelActor::SetResizePolicy(okButton, ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
       okButton.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(-20.0f, -20.0f, 0.0));
 
       if(numberOfButtons > 1)
@@ -382,12 +382,12 @@ public:
         Toolkit::TableView controlLayout = Toolkit::TableView::New(1, 2);
         controlLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         controlLayout.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-        controlLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+        DevelActor::SetResizePolicy(controlLayout, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
         Actor cancelButton = CreateCancelButton();
         cancelButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
         cancelButton.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-        cancelButton.SetResizePolicy(ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
+        DevelActor::SetResizePolicy(cancelButton, ResizePolicy::SIZE_FIXED_OFFSET_FROM_PARENT, Dimension::ALL_DIMENSIONS);
         cancelButton.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(-20.0f, -20.0f, 0.0));
 
         controlLayout.SetCellPadding(Size(10.0f, 10.0f));
@@ -504,8 +504,8 @@ public:
       Toolkit::TextLabel text = Toolkit::TextLabel::New("This will erase the image permanently. Are you sure?");
       text.SetProperty(Dali::Actor::Property::NAME, "POPUP_CONTENT_TEXT");
       text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-      text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(text, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(text, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
       text.SetProperty(TextLabel::Property::MULTI_LINE, true);
       text.SetProperty(DevelActor::Property::PADDING, Vector4(10.0f, 10.0f, 0.0f, 20.0f));
       mPopup.SetContent(text);
@@ -522,8 +522,8 @@ public:
       text.SetProperty(TextLabel::Property::MULTI_LINE, true);
       text.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
       text.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
-      text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(text, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(text, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
       text.SetProperty(DevelActor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
 
       mPopup.Add(text);
@@ -534,8 +534,8 @@ public:
     {
       mPopup                   = CreatePopup();
       Toolkit::ImageView image = Toolkit::ImageView::New(IMAGE2);
-      image.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      image.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(image, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(image, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
       image.SetProperty(DevelActor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
 
       mPopup.Add(image);
@@ -551,8 +551,8 @@ public:
       text.SetProperty(Dali::Actor::Property::NAME, "POPUP_CONTENT_TEXT");
       text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
       text.SetProperty(TextLabel::Property::MULTI_LINE, true);
-      text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(text, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(text, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
       text.SetProperty(DevelActor::Property::PADDING, Vector4(20.0f, 20.0f, 20.0f, 20.0f));
 
       mPopup.Add(text);
@@ -574,7 +574,7 @@ public:
 
       // Fix the popup's size.
       mPopup.SetProperty(Actor::Property::SIZE, Vector2(240.0f, 400.0f));
-      mPopup.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+      DevelActor::SetResizePolicy(mPopup, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
 
       SetupPopup(mPopup, button);
     }
@@ -586,8 +586,8 @@ public:
       Toolkit::TextLabel text = Toolkit::TextLabel::New(CONTENT_TEXT);
       text.SetProperty(Dali::Actor::Property::NAME, "POPUP_CONTENT_TEXT");
       text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
-      text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(text, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(text, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
       text.SetProperty(TextLabel::Property::MULTI_LINE, true);
       text.SetProperty(DevelActor::Property::PADDING, Vector4(10.0f, 10.0f, 0.0f, 20.0f));
 
@@ -603,8 +603,8 @@ public:
       // Content
       Toolkit::TableView content = Toolkit::TableView::New(2, 2);
       content.SetProperty(Dali::Actor::Property::NAME, "COMPLEX_TABLEVIEW");
-      content.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-      content.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+      DevelActor::SetResizePolicy(content, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+      DevelActor::SetResizePolicy(content, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
       content.SetFitHeight(0);
       content.SetFitHeight(1);
       content.SetProperty(DevelActor::Property::PADDING, Vector4(20.0f, 20.0f, 0.0f, 20.0f));
@@ -614,8 +614,8 @@ public:
         Toolkit::TextLabel text = Toolkit::TextLabel::New("Do you really want to quit?");
         text.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Color::WHITE);
         text.SetProperty(Toolkit::TextLabel::Property::MULTI_LINE, true);
-        text.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-        text.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+        DevelActor::SetResizePolicy(text, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+        DevelActor::SetResizePolicy(text, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
 
         content.AddChild(text, Toolkit::TableView::CellPosition(0, 0));
       }
@@ -624,8 +624,8 @@ public:
       {
         Toolkit::ImageView image = Toolkit::ImageView::New(IMAGE1);
         image.SetProperty(Dali::Actor::Property::NAME, "COMPLEX_IMAGE");
-        image.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-        image.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+        DevelActor::SetResizePolicy(image, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+        DevelActor::SetResizePolicy(image, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
         image.SetProperty(DevelActor::Property::PADDING, Vector4(20.0f, 0.0f, 0.0f, 0.0f));
         content.AddChild(image, Toolkit::TableView::CellPosition(0, 1));
       }
@@ -633,8 +633,8 @@ public:
       // Text 2
       {
         Toolkit::TableView root = Toolkit::TableView::New(1, 2);
-        root.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-        root.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+        DevelActor::SetResizePolicy(root, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+        DevelActor::SetResizePolicy(root, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
         root.SetFitHeight(0);
         root.SetFitWidth(0);
         root.SetProperty(DevelActor::Property::PADDING, Vector4(0.0f, 0.0f, 20.0f, 0.0f));
@@ -710,7 +710,7 @@ public: // From ItemFactory
     Toolkit::PushButton popupButton = Toolkit::PushButton::New();
     popupButton.SetProperty(Dali::Actor::Property::NAME, POPUP_BUTTON_ITEMS[itemId].name);
     popupButton.SetProperty(Toolkit::Button::Property::LABEL, POPUP_BUTTON_ITEMS[itemId].text);
-    popupButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(popupButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
 
     popupButton.ClickedSignal().Connect(this, &PopupExample::OnButtonClicked);
 
