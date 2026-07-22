@@ -21,6 +21,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/events/touch-event-integ.h>
 #include <cstdio>
 #include <sstream>
@@ -107,9 +108,9 @@ void SimpleVisualsApplication::Create(Application application)
   // Create a table view to parent the 2 MyControls
   TableView contentLayout = TableView::New(2, 2);
   contentLayout.SetProperty(Dali::Actor::Property::NAME, "ContentLayout");
-  contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  contentLayout.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
-  contentLayout.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(1.0f, .5f, 1.0f));
+  DevelActor::SetResizePolicy(contentLayout, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(contentLayout, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
+  contentLayout.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(1.0f, .5f, 1.0f));
   contentLayout.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   contentLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   contentLayout.SetCellPadding(Vector2(50.0f, 15.0f));
@@ -122,11 +123,11 @@ void SimpleVisualsApplication::Create(Application application)
 
   // Create 2 MyControls and add to table view.
   mMyControl = MyControl::New();
-  mMyControl.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mMyControl, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   mMyControl.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
 
   mMyControl2 = MyControl::New();
-  mMyControl2.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mMyControl2, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   mMyControl2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
   contentLayout.AddChild(mMyControl2, TableView::CellPosition(0, 0));

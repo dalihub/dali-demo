@@ -17,8 +17,10 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -67,8 +69,8 @@ public:
                                              TOOLBAR_TITLE);
 
     TableView contentTable = TableView::New(2, 1);
-    contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    contentTable.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(contentTable, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(contentTable, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     contentTable.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     contentTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     contentTable.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5f));
@@ -85,7 +87,7 @@ public:
     mEventLabel = TextLabel::New();
     mEventLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Controls don't get KeyEvent yet"));
     mEventLabel.SetProperty(Actor::Property::SIZE, Vector2(windowSize.width, windowSize.height * 0.1f));
-    mEventLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mEventLabel, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mEventLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     mEventLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     mEventLabel.SetBackgroundColor(Color::WHITE);
@@ -93,7 +95,7 @@ public:
 
     mContainer = TableView::New(4, 3);
     mContainer.SetProperty(Actor::Property::SIZE, Vector2(windowSize.width, windowSize.height * 0.4f));
-    mContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mContainer, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     mContainer.SetBackgroundColor(BACKGROUND_COLOUR);
     mContainer.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
     mContainer.SetRelativeHeight(0, 0.2f);
@@ -107,7 +109,7 @@ public:
     for(int i = 0; i < 6; i++)
     {
       TextLabel itemLabel = TextLabel::New(ToDaliString(ITEMNAME[i]));
-      itemLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      DevelActor::SetResizePolicy(itemLabel, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       itemLabel.SetBackgroundColor(BACKGROUND_COLOUR);
       itemLabel.SetProperty(TextLabel::Property::POINT_SIZE, 14.0f);
       itemLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
@@ -144,7 +146,7 @@ public:
       Control control = Control::DownCast(mContainer.GetChildAt(TableView::CellPosition((i / 3) * 2 + 1, i % 3)));
       control.SetProperty(Actor::Property::FOCUSABLE, true);
       control.SetProperty(Dali::Actor::Property::NAME, ITEMNAME[i]);
-      control.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      DevelActor::SetResizePolicy(control, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
       control.KeyEventSignal().Connect(this, &FocusIntegrationExample::OnControlKeyEvent);
     }
 

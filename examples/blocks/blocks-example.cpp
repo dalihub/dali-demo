@@ -24,8 +24,10 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -376,7 +378,7 @@ private:
     mLevelContainer = Actor::New();
     mLevelContainer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mLevelContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mLevelContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mLevelContainer, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
     mContentLayer.Add(mLevelContainer);
 

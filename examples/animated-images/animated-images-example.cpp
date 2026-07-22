@@ -20,7 +20,9 @@
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali-toolkit/devel-api/visuals/animated-image-visual-actions-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -135,8 +137,8 @@ private:
 
     Toolkit::TableView radioButtonLayout = Toolkit::TableView::New(1, 2);
     radioButtonLayout.SetProperty(Dali::Actor::Property::NAME, "RadioButtonsLayout");
-    radioButtonLayout.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
-    radioButtonLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(radioButtonLayout, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(radioButtonLayout, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     radioButtonLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     radioButtonLayout.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     radioButtonLayout.SetFitHeight(0);

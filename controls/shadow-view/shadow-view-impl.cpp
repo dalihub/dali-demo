@@ -22,6 +22,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
@@ -134,9 +135,9 @@ void ShadowView::SetShadowPlaneBackground(Actor shadowPlaneBackground)
   mShadowPlane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mShadowPlane.SetProperty(Actor::Property::POSITION_Z, 1.0f);
 
-  mShadowPlane.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mShadowPlane, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
-  mBlurRootActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mBlurRootActor, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
   // If ShadowView is already on scene (mCameraActor exists), set up shader constants now.
   // Otherwise, SetShaderConstants() will be called later in OnSceneConnection().
@@ -211,7 +212,7 @@ void ShadowView::OnInitialize()
 {
   // root actor to parent all user added actors. Used as source actor for shadow render task.
   mChildrenRoot.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  mChildrenRoot.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mChildrenRoot, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
 
   Self().Add(mChildrenRoot);
 

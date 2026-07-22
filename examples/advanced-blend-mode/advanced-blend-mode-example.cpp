@@ -117,7 +117,7 @@ public:
     label[Toolkit::TextLabel::Property::POINT_SIZE] = 12.0f;
     label[Actor::Property::PARENT_ORIGIN]           = ParentOrigin::BOTTOM_CENTER;
     label[Actor::Property::PIVOT]                   = Pivot::BOTTOM_CENTER;
-    label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(label, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
     window.Add(label);
 
     // Respond to a touch anywhere on the window

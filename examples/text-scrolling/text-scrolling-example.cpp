@@ -22,6 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -81,8 +82,8 @@ public:
     box.SetProperty(Dali::Actor::Property::NAME, ToDaliString(name));
     box.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     box.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    box.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
-    box.SetResizePolicy(ResizePolicy::FIXED, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(box, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(box, ResizePolicy::FIXED, Dimension::WIDTH);
     box.SetProperty(Actor::Property::SIZE, Vector2(size.width, 0.f));
     parent.Add(box);
 
@@ -96,9 +97,9 @@ public:
   void CreateLabel(Actor& label, const std::string text, Actor parent, bool scrollOnStart, PushButton button)
   {
     label = TextLabel::New(ToDaliString(text));
-    label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    label.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
-    label.SetProperty(Actor::Property::PADDING, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    DevelActor::SetResizePolicy(label, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(label, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+    label.SetProperty(DevelActor::Property::PADDING, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
     label.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     label.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     parent.Add(label);
@@ -108,7 +109,7 @@ public:
       label.SetProperty(TextLabel::Property::ENABLE_AUTO_SCROLL, true);
     }
 
-    button.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(button, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     button.SetProperty(Actor::Property::SIZE, Vector2(BOX_SIZE.height, BOX_SIZE.height));
     button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_RIGHT);
     button.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
@@ -128,7 +129,7 @@ public:
     // Create Root actor
     Actor rootActor = Actor::New();
     rootActor.SetProperty(Dali::Actor::Property::NAME, "rootActor");
-    rootActor.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(rootActor, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     rootActor.SetProperty(Actor::Property::SIZE, mWindowSize);
     rootActor.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
@@ -143,7 +144,7 @@ public:
     desktop.SetBackgroundColor(Color::WHITE);
     desktop.SetProperty(Dali::Actor::Property::NAME, "desktopActor");
     desktop.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    desktop.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(desktop, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     desktop.SetProperty(Actor::Property::SIZE, targetActorSize);
 
     rootActor.Add(desktop); // Add desktop (content) to offscreen actor
@@ -160,8 +161,8 @@ public:
 
     // Create TextField
     TextField field = TextField::New();
-    field.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    field.SetProperty(Actor::Property::PADDING, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    DevelActor::SetResizePolicy(field, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    field.SetProperty(DevelActor::Property::PADDING, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
     field.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     field.SetProperty(TextField::Property::PLACEHOLDER_TEXT, "Enter Folder Name");
     field.SetProperty(TextField::Property::DECORATION_BOUNDING_BOX, Rect<int>(SCREEN_BORDER, SCREEN_BORDER, mWindowSize.width - SCREEN_BORDER * 2, mWindowSize.height - SCREEN_BORDER * 2));
@@ -213,7 +214,7 @@ public:
     colorButton.SetProperty(Button::Property::SELECTED_BACKGROUND_VISUAL, Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::COLOR).Add(ColorVisual::Property::MIX_COLOR, Color::BLACK));
     colorButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
     colorButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
-    colorButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(colorButton, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     colorButton.SetProperty(Actor::Property::SIZE, Vector2(BOX_SIZE.height, BOX_SIZE.height));
     colorButton.ClickedSignal().Connect(this, &TextScrollingExample::OnColorButtonClicked);
     rootActor.Add(colorButton);

@@ -17,10 +17,12 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/object/property-array-devel.h>
 #include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <string>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -145,7 +147,7 @@ private:
 
     // Create a background with a linear gradient which matches parent size & is placed in the center.
     Actor background = Control::New();
-    background.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(background, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     background.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     background.SetProperty(Control::Property::BACKGROUND, BACKGROUND);
     window.Add(background);

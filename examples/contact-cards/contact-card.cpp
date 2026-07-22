@@ -161,7 +161,7 @@ ContactCard::ContactCard(
   mNameText.SetStyleName("ContactNameTextLabel");
   mNameText.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
   mNameText.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-  mNameText.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(mNameText, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
   mNameText.SetProperty(Actor::Property::POSITION, Vector2(mContactCardLayoutInfo.textFoldedPosition.x, mContactCardLayoutInfo.textFoldedPosition.y));
   mContactCard.Add(mNameText);
 

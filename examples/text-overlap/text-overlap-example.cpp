@@ -77,8 +77,8 @@ void TextOverlapController::Create(Application app)
   mSwapButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
   mSwapButton.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
   mSwapButton.ClickedSignal().Connect(this, &TextOverlapController::OnClicked);
-  mSwapButton.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  mSwapButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(mSwapButton, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(mSwapButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
   window.Add(mSwapButton);
 
   Layer rootLayer = window.GetRootLayer();

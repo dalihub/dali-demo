@@ -20,6 +20,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/public-api/animation/constraints.h>
@@ -97,9 +98,9 @@ void ToolBar::AddControl(Actor control, float relativeSize, Demo::Alignment::Typ
 
   // Create an alignment container where to place the control.
   Demo::Alignment alignmentContainer = Demo::Alignment::New(alignment);
-  alignmentContainer.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+  alignmentContainer.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
   alignmentContainer.SetPadding(padding);
-  alignmentContainer.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(alignmentContainer, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   alignmentContainer.Add(control);
 
   // Insert the control in the table view.
@@ -294,7 +295,7 @@ void ToolBar::OnInitialize()
   // Layout
   mLayout = Toolkit::TableView::New(1, 1);
   mLayout.SetProperty(Dali::Actor::Property::NAME, "TOOLBAR_LAYOUT");
-  mLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mLayout, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   mLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 
   Self().Add(mLayout);

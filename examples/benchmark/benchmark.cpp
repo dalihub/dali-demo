@@ -19,6 +19,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include "generated/benchmark-frag.h"
 #include "generated/benchmark-vert.h"
@@ -250,7 +251,7 @@ public:
     {
       mImageView[i] = ImageView::New(ImagePath(i));
       mImageView[i].SetProperty(Actor::Property::SIZE, Vector3(0.0f, 0.0f, 0.0f));
-      mImageView[i].SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+      Dali::DevelActor::SetResizePolicy(mImageView[i], ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
       window.Add(mImageView[i]);
     }
   }

@@ -20,6 +20,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
@@ -66,7 +67,7 @@ Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
   toolBarLayer.SetProperty(Dali::Actor::Property::NAME, "TOOLBAR_LAYER");
   toolBarLayer.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::TOP_CENTER);
   toolBarLayer.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::TOP_CENTER);
-  toolBarLayer.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::WIDTH);
+  Dali::DevelActor::SetResizePolicy(toolBarLayer, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::WIDTH);
   toolBarLayer.SetProperty(Dali::Actor::Property::SIZE, Dali::Vector2(0.0f, style.mToolBarHeight));
 
   // Raise tool bar layer to the top.
@@ -80,7 +81,7 @@ Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
   toolBar.SetProperty(Dali::Toolkit::Control::Property::BACKGROUND, background);
   toolBar.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::TOP_CENTER);
   toolBar.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::TOP_CENTER);
-  toolBar.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
+  Dali::DevelActor::SetResizePolicy(toolBar, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
   // Add the tool bar to the tool bar layer.
   toolBarLayer.Add(toolBar);
@@ -94,7 +95,7 @@ Dali::Layer CreateToolbar(Dali::Demo::ToolBar& toolBar,
     label.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, ToPropertyValue(title));
     label.SetProperty(Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     label.SetProperty(Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
-    label.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
+    Dali::DevelActor::SetResizePolicy(label, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
 
     // Add title to the tool bar.
     const float padding(style.mToolBarPadding);
@@ -118,7 +119,7 @@ Dali::Layer CreateView(Dali::Application&      application,
   view = Dali::Toolkit::Control::New();
   view.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::CENTER);
   view.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
-  view.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
+  Dali::DevelActor::SetResizePolicy(view, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
   // Add the view to the window before setting the background.
   window.Add(view);
@@ -147,7 +148,7 @@ Dali::Layer CreateView(Dali::Application&      application,
   Dali::Layer contentLayer = Dali::Layer::New();
   contentLayer.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::CENTER);
   contentLayer.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
-  contentLayer.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
+  Dali::DevelActor::SetResizePolicy(contentLayer, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
   view.Add(contentLayer);
   contentLayer.LowerBelow(toolBarLayer);
 
@@ -160,7 +161,7 @@ Dali::Toolkit::TextLabel CreateToolBarLabel(const std::string& text)
   label.SetStyleName("ToolbarLabel");
   label.SetProperty(Dali::Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
   label.SetProperty(Dali::Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
-  label.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
+  Dali::DevelActor::SetResizePolicy(label, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::HEIGHT);
 
   return label;
 }

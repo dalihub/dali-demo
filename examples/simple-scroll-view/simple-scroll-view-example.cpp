@@ -18,8 +18,10 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/object/property-map-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -110,7 +112,7 @@ private:
   Actor CreatePage(const Vector2& pageSize, int& textNumber)
   {
     Actor page = Actor::New();
-    page.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(page, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     page.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     page.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 

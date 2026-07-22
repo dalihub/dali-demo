@@ -133,8 +133,8 @@ private:
     PushButton button = Toolkit::PushButton::New();
     button.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
     button.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
-    button.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    button.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(button, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(button, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     button.SetProperty(Actor::Property::DRAW_MODE, DrawMode::OVERLAY_2D);
     button.SetProperty(Button::Property::LABEL, ToPropertyValue(BUTTON_LABEL));
     button.ClickedSignal().Connect(this, &ClippingExample::OnButtonClicked);

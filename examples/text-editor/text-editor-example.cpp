@@ -23,6 +23,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <sstream>
 
 // INTERNAL INCLUDES
@@ -116,15 +117,15 @@ public:
     // The button will be a child of this, so as to be placed next to it.
     TextLabel colorLabel = TextLabel::New();
     colorLabel.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Text Color: "));
-    colorLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
-    colorLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(colorLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(colorLabel, ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
     colorLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
 
     // Create a container for the color button, to layout the drop-down list below it.
     mColorContainer = Control::New();
-    mColorContainer.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::WIDTH);
-    mColorContainer.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
-    mColorContainer.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, BUTTON_PERCENTAGE, 0.0f));
+    DevelActor::SetResizePolicy(mColorContainer, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mColorContainer, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::HEIGHT);
+    mColorContainer.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.0f, BUTTON_PERCENTAGE, 0.0f));
 
     // Place to right of parent.
     mColorContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER_RIGHT);
@@ -140,8 +141,8 @@ public:
 
     // Create a 'select color' button.
     mColorButtonOption = Toolkit::PushButton::New();
-    mColorButtonOption.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mColorButtonOption.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(0.9f, 0.9f, 0.0f)); // Smaller than container to show border.
+    DevelActor::SetResizePolicy(mColorButtonOption, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    mColorButtonOption.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(0.9f, 0.9f, 0.0f)); // Smaller than container to show border.
     mColorButtonOption.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mColorButtonOption.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
@@ -158,8 +159,8 @@ public:
     mEditor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     mEditor.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mEditor.SetProperty(Actor::Property::POSITION, Vector3(0.f, toolBarHeight * 2.0f, 0.f));
-    mEditor.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mEditor.SetProperty(Actor::Property::SIZE_MODE_FACTOR, TEXT_EDITOR_RELATIVE_SIZE);
+    DevelActor::SetResizePolicy(mEditor, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    mEditor.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, TEXT_EDITOR_RELATIVE_SIZE);
 
     mEditor.SetBackgroundColor(TEXT_EDITOR_BACKGROUND_COLOR);
 
@@ -194,8 +195,8 @@ public:
   void CreateButtonContainer()
   {
     mButtonContainer = Toolkit::TableView::New(NUMBER_OF_COLORS, 1u);
-    mButtonContainer.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mButtonContainer.SetProperty(Actor::Property::SIZE_MODE_FACTOR, Vector3(1.0f, NUMBER_OF_COLORS, 1.0f));
+    DevelActor::SetResizePolicy(mButtonContainer, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    mButtonContainer.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, Vector3(1.0f, NUMBER_OF_COLORS, 1.0f));
 
     // Place below color selection button.
     mButtonContainer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_CENTER);
@@ -207,8 +208,8 @@ public:
     for(unsigned int index = 0u; index < NUMBER_OF_COLORS; ++index)
     {
       Toolkit::PushButton button = Toolkit::PushButton::New();
-      button.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-      button.SetProperty(Actor::Property::SIZE_MODE_FACTOR, buttonPercentage);
+      DevelActor::SetResizePolicy(button, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+      button.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, buttonPercentage);
 
       std::ostringstream s;
       s << "color" << index;

@@ -16,7 +16,9 @@
  */
 
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 #include "controls/progress-bar/progress-bar.h"
 #include "shared/view.h"
 
@@ -88,8 +90,8 @@ private:
     mProgressBarDefault = ProgressBar::New();
     mProgressBarDefault.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
     mProgressBarDefault.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
-    mProgressBarDefault.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mProgressBarDefault.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mProgressBarDefault, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mProgressBarDefault, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mProgressBarDefault.ValueChangedSignal().Connect(this, &ProgressBarExample::OnValueChanged);
 
     // Creates a progress bar in circular style
@@ -99,8 +101,8 @@ private:
     mProgressBarCircular.SetProperty(Actor::Property::SIZE, Vector2(CIRCULAR_PROGRESS_BAR_SIZE, CIRCULAR_PROGRESS_BAR_SIZE));
 
     Toolkit::TableView contentTable = Toolkit::TableView::New(2, 1);
-    contentTable.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    contentTable.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(contentTable, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(contentTable, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     contentTable.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     contentTable.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     contentTable.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE * 0.5f));
@@ -115,8 +117,8 @@ private:
 
     // Image selector for progress bar
     Toolkit::TableView progressBackground = Toolkit::TableView::New(2, 1);
-    progressBackground.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    progressBackground.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(progressBackground, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(progressBackground, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     progressBackground.SetBackgroundColor(BACKGROUND_COLOUR);
     progressBackground.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
     progressBackground.SetRelativeWidth(0, 1.0f);
@@ -132,8 +134,8 @@ private:
 
     // Create buttons
     Toolkit::TableView buttonBackground = Toolkit::TableView::New(3, 1);
-    buttonBackground.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    buttonBackground.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(buttonBackground, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(buttonBackground, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     buttonBackground.SetBackgroundColor(BACKGROUND_COLOUR);
     buttonBackground.SetCellPadding(Size(MARGIN_SIZE, MARGIN_SIZE));
 
@@ -146,24 +148,24 @@ private:
 
     mResetProgressButton = Toolkit::PushButton::New();
     mResetProgressButton.SetProperty(Toolkit::Button::Property::LABEL, "Reset");
-    mResetProgressButton.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mResetProgressButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mResetProgressButton, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mResetProgressButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mResetProgressButton.ClickedSignal().Connect(this, &ProgressBarExample::OnResetProgressButtonSelected);
 
     buttonBackground.Add(mResetProgressButton);
 
     mSetIndeterminateButton = Toolkit::PushButton::New();
     mSetIndeterminateButton.SetProperty(Toolkit::Button::Property::LABEL, "Toggle Indeterminate");
-    mSetIndeterminateButton.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mSetIndeterminateButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mSetIndeterminateButton, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mSetIndeterminateButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mSetIndeterminateButton.ClickedSignal().Connect(this, &ProgressBarExample::OnSetIndeterminateButtonSelected);
 
     buttonBackground.Add(mSetIndeterminateButton);
 
     mChangeThemeButton = Toolkit::PushButton::New();
     mChangeThemeButton.SetProperty(Toolkit::Button::Property::LABEL, "Change Theme");
-    mChangeThemeButton.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mChangeThemeButton.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mChangeThemeButton, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mChangeThemeButton, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mChangeThemeButton.ClickedSignal().Connect(this, &ProgressBarExample::OnChangeThemeButtonSelected);
 
     buttonBackground.Add(mChangeThemeButton);

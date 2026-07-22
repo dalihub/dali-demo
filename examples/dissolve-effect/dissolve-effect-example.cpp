@@ -258,8 +258,8 @@ void DissolveEffectApp::OnInit(Application application)
   // show the first image
   mCurrentImage = CreateWindowFillingImageView(windowSize, IMAGES[mIndex]);
   mCurrentImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  mCurrentImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-  mCurrentImage.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+  DevelActor::SetResizePolicy(mCurrentImage, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  mCurrentImage.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
   mParent.Add(mCurrentImage);
 
   mPanGestureDetector.Attach(mCurrentImage);
@@ -293,8 +293,8 @@ void DissolveEffectApp::OnPanGesture(Actor actor, PanGesture gesture)
     auto positionSize = mApplication.GetWindow().GetPositionSize();
     mNextImage        = CreateWindowFillingImageView(Vector2(positionSize.width, positionSize.height), IMAGES[mIndex]);
     mNextImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mNextImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mNextImage.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+    DevelActor::SetResizePolicy(mNextImage, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    mNextImage.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
     mNextImage.SetProperty(Actor::Property::POSITION_Z, INITIAL_DEPTH);
     mParent.Add(mNextImage);
     Vector2 size = Vector2(mCurrentImage.GetCurrentProperty<Vector3>(Actor::Property::SIZE));
@@ -409,8 +409,8 @@ bool DissolveEffectApp::OnTimerTick()
     auto positionSize = mApplication.GetWindow().GetPositionSize();
     mNextImage        = CreateWindowFillingImageView(Vector2(positionSize.width, positionSize.height), IMAGES[mIndex]);
     mNextImage.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mNextImage.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    mNextImage.SetProperty(Actor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
+    DevelActor::SetResizePolicy(mNextImage, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    mNextImage.SetProperty(DevelActor::Property::SIZE_SCALE_POLICY, SizeScalePolicy::FIT_WITH_ASPECT_RATIO);
     mNextImage.SetProperty(Actor::Property::POSITION_Z, INITIAL_DEPTH);
     mParent.Add(mNextImage);
     switch(mCentralLineIndex % 4)

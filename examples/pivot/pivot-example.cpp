@@ -78,8 +78,8 @@ private:
     TableView tableView = TableView::New(TABLE_VIEW_ROWS, TABLE_VIEW_COLUMNS);
     tableView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     tableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    tableView.SetResizePolicy(ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
-    tableView.SetProperty(Actor::Property::SIZE_MODE_FACTOR, TABLE_VIEW_SIZE_MODE_FACTOR);
+    DevelActor::SetResizePolicy(tableView, ResizePolicy::SIZE_RELATIVE_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    tableView.SetProperty(DevelActor::Property::SIZE_MODE_FACTOR, TABLE_VIEW_SIZE_MODE_FACTOR);
     window.Add(tableView);
 
     // Create a tap detector - we are going to rotate an actor round our anchor-point (pivot) when one of our controls is tapped.
@@ -100,7 +100,7 @@ private:
         // Create a control with a randomly chosen background color.
         Control control = Control::New();
         control.SetBackgroundColor(Vector4(Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), Random::Range(0.0f, 1.0f), 1.0f));
-        control.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+        DevelActor::SetResizePolicy(control, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
         control.SetProperty(Actor::Property::POSITION_USES_PIVOT, false); // Ensures the position always uses top-left for its calculations.
         control.SetProperty(Actor::Property::PIVOT, pivot);               // This anchor-point is used for the rotation and the scale.
 

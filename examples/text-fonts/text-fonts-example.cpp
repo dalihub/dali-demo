@@ -28,6 +28,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <iostream>
 
 // INTERNAL INCLUDES
@@ -74,8 +75,8 @@ public:
   {
     textLabel = TextLabel::New(ToDaliString(textString));
     textLabel.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    textLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(textLabel, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(textLabel, ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
     textLabel.SetProperty(TextLabel::Property::MULTI_LINE, true);
     if(infoLabel)
     {
@@ -106,7 +107,7 @@ public:
   {
     button = PushButton::New();
     button.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_CENTER);
-    button.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(button, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     button.SetProperty(Actor::Property::SIZE, Vector2(50.0f, 50.0f));
   }
 

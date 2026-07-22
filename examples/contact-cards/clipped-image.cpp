@@ -20,6 +20,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
@@ -187,7 +188,7 @@ Dali::Toolkit::Control Create(const Dali::String& imagePath, Property::Index& pr
 
   // Add the actual image to the control
   Control image = ImageView::New(imagePath);
-  image.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(image, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   image.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   image.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   clippedImage.Add(image);

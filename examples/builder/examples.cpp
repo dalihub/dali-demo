@@ -22,6 +22,7 @@
 #include <dali-toolkit/devel-api/builder/tree-node.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali/integration-api/debug.h>
 
@@ -358,7 +359,7 @@ public:
   {
     TextLabel label = TextLabel::New(ToDaliString(ShortName(text)));
     label.SetStyleName("BuilderLabel");
-    label.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(label, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
 
     // Hook up tap detector
     mTapDetector.Attach(label);
@@ -483,7 +484,7 @@ public:
     mToolBar.AddControl(backButton, DemoHelper::DEFAULT_VIEW_STYLE.mToolBarButtonPercentage, Demo::Alignment::HORIZONTAL_LEFT, DemoHelper::DEFAULT_MODE_SWITCH_PADDING);
 
     mNavigationView = Demo::NavigationView::New();
-    mNavigationView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mNavigationView, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mNavigationView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     window.Add(mNavigationView);

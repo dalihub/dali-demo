@@ -226,7 +226,7 @@ public:
     mGrabCorner.SetProperty(Dali::Actor::Property::NAME, "GrabCorner");
     mGrabCorner.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
     mGrabCorner.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
-    mGrabCorner.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mGrabCorner, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     mContainer.Add(mGrabCorner);
 
     mPanGestureDetector = PanGestureDetector::New();
@@ -252,8 +252,8 @@ public:
     // Add a border for the container so you can see the container is being resized while grabbing the handle.
     mBorder = Control::New();
     mBorder.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    mBorder.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mBorder.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mBorder, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mBorder, ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
 
     Dali::Property::Map border;
     border.Insert(Toolkit::Visual::Property::TYPE, Visual::BORDER);
@@ -646,13 +646,13 @@ public:
           }
           case KEY_F: // Fill vertically
           {
-            if(ResizePolicy::DIMENSION_DEPENDENCY == mLabel.GetResizePolicy(Dimension::HEIGHT))
+            if(ResizePolicy::DIMENSION_DEPENDENCY == DevelActor::GetResizePolicy(mLabel, Dimension::HEIGHT))
             {
-              mLabel.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
+              DevelActor::SetResizePolicy(mLabel, ResizePolicy::FILL_TO_PARENT, Dimension::HEIGHT);
             }
             else
             {
-              mLabel.SetResizePolicy(ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
+              DevelActor::SetResizePolicy(mLabel, ResizePolicy::DIMENSION_DEPENDENCY, Dimension::HEIGHT);
             }
             break;
           }

@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/object/handle-devel.h>
 #include <dali/devel-api/object/property-array-devel.h>
 #include <dali/devel-api/object/property-map-devel.h>
@@ -54,8 +55,8 @@ const std::string FIT_KEEP_ASPECT_LABEL("FIT\nKEEP ASPECT");
 const Property::Map TEXT_LABEL_PROPERTIES = CreatePropertyMap({///< All the properties of the Large Text Label shown in the example.
                                                                {Actor::Property::PIVOT, Pivot::CENTER},
                                                                {Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER},
-                                                               {Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
-                                                               {Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
+                                                               {DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
+                                                               {DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT},
                                                                {Control::Property::BACKGROUND,
                                                                 CreatePropertyMap({{Toolkit::Visual::Property::TYPE, Visual::GRADIENT},
                                                                                    {GradientVisual::Property::STOP_COLOR, CreatePropertyArray({Vector4(167.0f, 207.0f, 223.0f, 255.0f) / 255.0f, Vector4(0.0f, 64.0f, 137.0f, 255.0f) / 255.0f})},

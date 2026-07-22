@@ -239,16 +239,16 @@ public:
     Layer layer = Layer::New();
     layer.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
     layer.SetProperty(Dali::Actor::Property::NAME, "layer");
-    layer.SetProperty(Dali::Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
-    layer.SetProperty(Dali::Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    layer.SetProperty(Dali::DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    layer.SetProperty(Dali::DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     layer.SetProperty(Dali::Layer::Property::CONSUMES_TOUCH, true);
     mWindow.Add(layer);
     mActorList.push_back(layer);
 
     Toolkit::Control controlNotHit = CreateControl(notTouchableColorMap, Vector2(0.0f, 0.0f), Vector2::ONE * 100.0f, "Consume Layer", false);
     controlNotHit.SetProperty(Dali::Actor::Property::OPACITY, 0.5f);
-    controlNotHit.SetProperty(Dali::Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
-    controlNotHit.SetProperty(Dali::Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    controlNotHit.SetProperty(Dali::DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    controlNotHit.SetProperty(Dali::DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     layer.Add(controlNotHit);
 
     Toolkit::Control control2 = CreateControl(basicColorMap, Vector2(50.0f, 50.0f), Vector2::ONE * 100.0f, "control2");

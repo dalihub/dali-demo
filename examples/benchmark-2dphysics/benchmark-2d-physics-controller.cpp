@@ -19,6 +19,7 @@
 
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/key-devel.h>
 #include <dali/devel-api/events/hit-test-algorithm.h>
 #include <dali/integration-api/debug.h>
@@ -223,7 +224,7 @@ public:
     mBallAnimations.resize(mBallNumber);
 
     mAnimationSimRootActor = Layer::New();
-    mAnimationSimRootActor.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mAnimationSimRootActor, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mAnimationSimRootActor[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::CENTER;
     mAnimationSimRootActor[Actor::Property::PIVOT]         = Dali::Pivot::CENTER;
 
@@ -236,7 +237,7 @@ public:
     title[Actor::Property::PARENT_ORIGIN]                     = Dali::ParentOrigin::TOP_CENTER;
     title[Actor::Property::PIVOT]                             = Dali::Pivot::TOP_CENTER;
     title[Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
-    title.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(title, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
 
     const float margin(BALL_SIZE.width * 0.5f);
 
@@ -399,7 +400,7 @@ public:
     title[Actor::Property::PARENT_ORIGIN]                     = Dali::ParentOrigin::TOP_CENTER;
     title[Actor::Property::PIVOT]                             = Dali::Pivot::TOP_CENTER;
     title[Toolkit::TextLabel::Property::HORIZONTAL_ALIGNMENT] = HorizontalAlignment::CENTER;
-    title.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(title, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     title.RaiseToTop();
   }
 

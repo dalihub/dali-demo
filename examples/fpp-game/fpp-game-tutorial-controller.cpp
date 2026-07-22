@@ -19,12 +19,14 @@
 
 #include <dali-toolkit/public-api/visuals/color-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/actors/camera-actor.h>
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/events/touch-event.h>
 #include <dali/public-api/object/property-map.h>
 #include <dali/public-api/render-tasks/render-task-list.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -118,7 +120,7 @@ void FppGameTutorialController::DisplayTutorial(Dali::Window window)
   mLeftLabel = Toolkit::TextLabel::New("Touch here to walk");
   mLeftLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mLeftLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  mLeftLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mLeftLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   mLeftLabel.SetProperty(Actor::Property::SIZE, Vector3(windowSize.x * 0.5, windowSize.y, 1.0f));
   mLeftLabel.SetProperty(Toolkit::Control::Property::BACKGROUND,
                          Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::COLOR).Add(ColorVisual::Property::MIX_COLOR, Vector4(0.0, 0.0, 0.7, 0.2)));
@@ -130,7 +132,7 @@ void FppGameTutorialController::DisplayTutorial(Dali::Window window)
   mRightLabel = Toolkit::TextLabel::New("Touch here to look around");
   mRightLabel.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mRightLabel.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  mRightLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mRightLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   mRightLabel.SetProperty(Actor::Property::SIZE, Vector3(windowSize.x * 0.5, windowSize.y, 1.0f));
   mRightLabel.SetProperty(Toolkit::Control::Property::BACKGROUND,
                           Property::Map().Add(Toolkit::Visual::Property::TYPE, Visual::COLOR).Add(ColorVisual::Property::MIX_COLOR, Vector4(0.5, 0.0, 0.0, 0.2)));

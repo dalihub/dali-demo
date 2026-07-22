@@ -23,6 +23,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/devel-api/actors/actor-devel.h>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
@@ -68,8 +69,8 @@ public:
     window.SetBackgroundColor(Color::WHITE);
 
     mTableView = Toolkit::TableView::New(NUMBER_OF_LANGUAGES, 1);
-    mTableView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mTableView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mTableView, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mTableView, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mTableView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mTableView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mTableView.TouchEventSignal().Connect(this, &TextLabelMultiLanguageExample::OnTouch);

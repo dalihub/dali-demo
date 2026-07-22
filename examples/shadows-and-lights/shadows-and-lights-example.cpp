@@ -18,6 +18,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <iostream>
 
 // INTERNAL INCLUDES
@@ -209,7 +210,7 @@ public:
     mShadowView.SetProperty(Dali::Actor::Property::NAME, "Container");
     mShadowView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mShadowView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-    mShadowView.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mShadowView, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
     mShadowView.SetPointLightFieldOfView(Math::PI / 2.0f);
     mContents.Add(mShadowView);
 
@@ -241,7 +242,7 @@ public:
     TextLabel text = TextLabel::New();
     text.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Light"));
     text.SetProperty(TextLabel::Property::POINT_SIZE, 20.0f);
-    text.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(text, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     text.SetProperty(Actor::Property::COLOR, Color::BLUE);
 
     mCastingLight.Add(text);
@@ -262,9 +263,9 @@ public:
     mImageActor2 = ImageView::New(SCENE_IMAGE_2);
     mImageActor3 = ImageView::New(SCENE_IMAGE_3);
 
-    mImageActor1.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-    mImageActor2.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-    mImageActor3.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mImageActor1, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mImageActor2, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mImageActor3, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
 
     mImageActor2.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
 

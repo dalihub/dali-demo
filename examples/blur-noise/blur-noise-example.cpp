@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/public-api/events/key-event.h>
 
 #include <algorithm>
@@ -96,14 +97,14 @@ public:
 
     mImageLayer = Layer::New();
     mImageLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mImageLayer.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
-    mImageLayer.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    mImageLayer.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    mImageLayer.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     mWindow.Add(mImageLayer);
 
     mBlurLayer = Layer::New();
     mBlurLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mBlurLayer.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
-    mBlurLayer.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    mBlurLayer.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    mBlurLayer.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     mWindow.Add(mBlurLayer);
 
     CreateMovingImageBoard();
@@ -152,8 +153,8 @@ private:
     mBlurPane = Toolkit::Control::New();
     mBlurPane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mBlurPane.SetProperty(Actor::Property::SIZE, windowSize);
-    mBlurPane.SetProperty(Actor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
-    mBlurPane.SetProperty(Actor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    mBlurPane.SetProperty(DevelActor::Property::WIDTH_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
+    mBlurPane.SetProperty(DevelActor::Property::HEIGHT_RESIZE_POLICY, ResizePolicy::FILL_TO_PARENT);
     mBlurLayer.Add(mBlurPane);
 
     mBackgroundBlur = Toolkit::BackgroundBlurEffect::New(BLUR_RADIUS);

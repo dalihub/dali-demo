@@ -17,7 +17,9 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -71,7 +73,7 @@ public:
     window.Add(mVideoView);
     mVideoView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mVideoView.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-    mVideoView.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mVideoView, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
     mVideoView.SetProperty(Actor::Property::SIZE, Vector2(INIT_WIDTH, INIT_HEIGHT));
     mVideoView.SetProperty(VideoView::Property::LOOPING, true);
     mVideoView.SetProperty(VideoView::Property::MUTED, false);
@@ -80,7 +82,7 @@ public:
     mMenu = Layer::New();
     mMenu.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     mMenu.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
-    mMenu.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mMenu, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mMenu.SetProperty(Actor::Property::SIZE, Vector2(INIT_WIDTH, 120));
     mVideoView.Add(mMenu);
 
@@ -88,7 +90,7 @@ public:
     mPlayButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mPlayButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mPlayButton.SetProperty(Dali::Actor::Property::NAME, "Play");
-    mPlayButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mPlayButton, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mPlayButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));
     mPlayButton.SetProperty(Actor::Property::POSITION, Vector2(40, 10));
     mPlayButton.ClickedSignal().Connect(this, &VideoViewController::OnButtonClicked);
@@ -97,7 +99,7 @@ public:
     mPauseButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mPauseButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mPauseButton.SetProperty(Dali::Actor::Property::NAME, "Pause");
-    mPauseButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mPauseButton, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mPauseButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));
     mPauseButton.SetProperty(Actor::Property::POSITION, Vector2(40, 10));
     mPauseButton.ClickedSignal().Connect(this, &VideoViewController::OnButtonClicked);
@@ -106,7 +108,7 @@ public:
     mChangeButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mChangeButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mChangeButton.SetProperty(Dali::Actor::Property::NAME, "Change");
-    mChangeButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mChangeButton, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mChangeButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));
     mChangeButton.SetProperty(Actor::Property::POSITION, Vector2(140, 10));
     mChangeButton.ClickedSignal().Connect(this, &VideoViewController::OnButtonClicked);
@@ -115,7 +117,7 @@ public:
     mBackwardButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mBackwardButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mBackwardButton.SetProperty(Dali::Actor::Property::NAME, "Backward");
-    mBackwardButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mBackwardButton, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mBackwardButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));
     mBackwardButton.SetProperty(Actor::Property::POSITION, Vector2(240, 10));
     mBackwardButton.ClickedSignal().Connect(this, &VideoViewController::OnButtonClicked);
@@ -124,7 +126,7 @@ public:
     mForwardButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
     mForwardButton.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mForwardButton.SetProperty(Dali::Actor::Property::NAME, "Forward");
-    mForwardButton.SetResizePolicy(ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(mForwardButton, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mForwardButton.SetProperty(Actor::Property::SIZE, Vector2(BUTTON_SIZE, BUTTON_SIZE));
     mForwardButton.SetProperty(Actor::Property::POSITION, Vector2(340, 10));
     mForwardButton.ClickedSignal().Connect(this, &VideoViewController::OnButtonClicked);

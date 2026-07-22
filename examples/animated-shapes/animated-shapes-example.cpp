@@ -21,8 +21,11 @@
 #include "generated/animated-shapes-vert.h"
 #include "shared/view.h"
 
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 #include <sstream>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -84,7 +87,7 @@ public:
     Toolkit::Control background                = Dali::Toolkit::Control::New();
     background[Actor::Property::PIVOT]         = Dali::Pivot::CENTER;
     background[Actor::Property::PARENT_ORIGIN] = Dali::ParentOrigin::CENTER;
-    background.SetResizePolicy(Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
+    DevelActor::SetResizePolicy(background, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
 
     Dali::Property::Map map;
     map.Insert(Toolkit::Visual::Property::TYPE, Visual::GRADIENT);

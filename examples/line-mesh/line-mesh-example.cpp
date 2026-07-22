@@ -24,8 +24,10 @@
 #include "generated/line-mesh-vert.h"
 #include "shared/view.h"
 
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <sstream>
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -253,8 +255,8 @@ public:
     mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, ToPropertyValue(str.str()));
     mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(1.0, 1.0, 1.0, 1.0));
     mIndicesCountLabel.SetProperty(Toolkit::TextLabel::Property::VERTICAL_ALIGNMENT, "BOTTOM");
-    mIndicesCountLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
-    mIndicesCountLabel.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    DevelActor::SetResizePolicy(mIndicesCountLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::WIDTH);
+    DevelActor::SetResizePolicy(mIndicesCountLabel, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
 
     elementCountTableView.AddChild(mMinusButton, Toolkit::TableView::CellPosition(0, 0));
     elementCountTableView.AddChild(mIndicesCountLabel, Toolkit::TableView::CellPosition(0, 1));

@@ -25,10 +25,14 @@
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
+
 #include <cstdio>
 #include <sstream>
+
 #include "beat-control.h"
+
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;
@@ -80,7 +84,7 @@ void TransitionApplication::Create(Application application)
   // Content panes:
   TableView contentLayout = TableView::New(4, 1);
   contentLayout.SetProperty(Dali::Actor::Property::NAME, "ContentLayout");
-  contentLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(contentLayout, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   contentLayout.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
   contentLayout.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
   contentLayout.SetCellPadding(Vector2(0.0f, 5.0f));
@@ -93,8 +97,8 @@ void TransitionApplication::Create(Application application)
   mTitle.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Custom Control Transition Example"));
   mTitle.SetProperty(Dali::Actor::Property::NAME, "Title");
   mTitle.SetStyleName("Title");
-  mTitle.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  mTitle.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(mTitle, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(mTitle, ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
   mTitle.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
   contentLayout.Add(mTitle);
   contentLayout.SetFitHeight(0); // Fill width
@@ -105,14 +109,14 @@ void TransitionApplication::Create(Application application)
 
   mBeatControl.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   mBeatControl.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  mBeatControl.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(mBeatControl, ResizePolicy::FILL_TO_PARENT, Dimension::ALL_DIMENSIONS);
   contentLayout.Add(mBeatControl);
   // beat control should fill the tableview cell, so no change to default parameters
 
   TableView visualTypeLayout = TableView::New(1, NUMBER_OF_VISUAL_BUTTONS);
   visualTypeLayout.SetProperty(Dali::Actor::Property::NAME, "VisualTypeLayout");
-  visualTypeLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  visualTypeLayout.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(visualTypeLayout, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(visualTypeLayout, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
   visualTypeLayout.SetFitHeight(0);
 
   contentLayout.Add(visualTypeLayout);
@@ -128,8 +132,8 @@ void TransitionApplication::Create(Application application)
     mVisualButtons[i].SetProperty(Dali::Actor::Property::NAME, "VisualButton");
     mVisualButtons[i].SetStyleName("VisualButton");
     mVisualButtons[i].SetProperty(Actor::Property::SIZE, Vector2(0, 50));
-    mVisualButtons[i].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mVisualButtons[i].SetResizePolicy(ResizePolicy::FIXED, Dimension::HEIGHT);
+    Dali::DevelActor::SetResizePolicy(mVisualButtons[i], ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    Dali::DevelActor::SetResizePolicy(mVisualButtons[i], ResizePolicy::FIXED, Dimension::HEIGHT);
     mVisualIndex = mVisualButtons[i].RegisterProperty("visualId", i, Property::READ_WRITE);
     mVisualButtons[i].TouchEventSignal().Connect(this, &TransitionApplication::OnVisualButtonClicked);
     visualTypeLayout.AddChild(mVisualButtons[i], TableView::CellPosition(0, i));
@@ -137,13 +141,13 @@ void TransitionApplication::Create(Application application)
 
   TableView actionButtonLayout = TableView::New(1, NUMBER_OF_ACTION_BUTTONS + 1);
   actionButtonLayout.SetProperty(Dali::Actor::Property::NAME, "ThemeButtonsLayout");
-  actionButtonLayout.SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-  actionButtonLayout.SetResizePolicy(ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
+  DevelActor::SetResizePolicy(actionButtonLayout, ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+  DevelActor::SetResizePolicy(actionButtonLayout, ResizePolicy::FIT_TO_CHILDREN, Dimension::HEIGHT);
   actionButtonLayout.SetFitHeight(0);
 
   TextLabel label = TextLabel::New();
   label.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Action: "));
-  label.SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
+  DevelActor::SetResizePolicy(label, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
   label.SetStyleName("ActionLabel");
   actionButtonLayout.AddChild(label, TableView::CellPosition(0, 0));
   actionButtonLayout.SetCellAlignment(TableView::CellPosition(0, 0), HorizontalAlignment::LEFT, VerticalAlignment::CENTER);
@@ -153,8 +157,8 @@ void TransitionApplication::Create(Application application)
     mActionButtons[i] = PushButton::New();
     mActionButtons[i].SetProperty(Dali::Actor::Property::NAME, "ActionButton");
     mActionButtons[i].SetStyleName("ActionButton");
-    mActionButtons[i].SetResizePolicy(ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
-    mActionButtons[i].SetResizePolicy(ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
+    Dali::DevelActor::SetResizePolicy(mActionButtons[i], ResizePolicy::FILL_TO_PARENT, Dimension::WIDTH);
+    Dali::DevelActor::SetResizePolicy(mActionButtons[i], ResizePolicy::USE_NATURAL_SIZE, Dimension::HEIGHT);
     mActionIndex = mActionButtons[i].RegisterProperty("actionId", i, Property::READ_WRITE);
     mActionButtons[i].ClickedSignal().Connect(this, &TransitionApplication::OnActionButtonClicked);
     actionButtonLayout.AddChild(mActionButtons[i], TableView::CellPosition(0, 1 + i));
