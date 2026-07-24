@@ -31,9 +31,9 @@
 #include <dali-toolkit/public-api/visuals/text-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
 #include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/devel-api/size-negotiation/relayout-container.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/math/math-utils.h>
-#include <dali/public-api/size-negotiation/relayout-container.h>
 #include <algorithm>
 #include <cstring> // for strcmp
 #include <sstream>
