@@ -247,7 +247,7 @@ public:
     cpShapeSetFriction(logoShape, 0.9);
     cpShapeSetElasticity(logoShape, 0.0);
     auto    windowSize = mWindow.GetPositionSize();
-    Vector3 daliPos(0, -static_cast<float>(windowSize.width) / 2 + logoSize.height * 1.3f, 0);
+    Vector3 daliPos(0, -static_cast<float>(windowSize.height) / 2 + logoSize.height * 1.3f, 0);
     Vector3 physPos = mPhysicsAdaptor.TranslateToPhysicsSpace(daliPos);
     cpBodySetPosition(logoBody, cpv(physPos.x, physPos.y));
 
@@ -306,7 +306,7 @@ public:
       // Position the letters into the window
 
       float   cellW   = (static_cast<float>(windowSize.width) - 170) / 4;
-      float   cellC   = -static_cast<float>(windowSize.height) * 0.5f + cellW * (0.5f + index);
+      float   cellC   = -static_cast<float>(windowSize.width) * 0.5f + cellW * (0.5f + index);
       float   x       = 85 + cellC; // - 61.0f;
       Vector3 physPos = mPhysicsAdaptor.TranslateToPhysicsSpace(Vector3(x, 0, 0.0f));
 
@@ -441,7 +441,7 @@ public:
     auto screenCoords = touch.GetScreenPosition(0);
     // In this demo, physics space is equivalent to screen space with y inverted
     auto    windowSize = mWindow.GetPositionSize();
-    Vector3 rayPhysicsOrigin(screenCoords.x, static_cast<float>(windowSize.width) - screenCoords.y, 0.0f);
+    Vector3 rayPhysicsOrigin(screenCoords.x, static_cast<float>(windowSize.height) - screenCoords.y, 0.0f);
 
     switch(state)
     {
