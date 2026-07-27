@@ -21,6 +21,7 @@
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include "shared/view.h"
 using Dali::Integration::GetStdString;

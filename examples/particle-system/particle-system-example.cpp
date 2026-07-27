@@ -16,6 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 
 #include <dali-toolkit/public-api/particle-system/particle-domain.h>
 #include <dali-toolkit/public-api/particle-system/particle-emitter.h>

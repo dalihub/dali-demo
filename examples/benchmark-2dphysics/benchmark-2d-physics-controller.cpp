@@ -20,6 +20,7 @@
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/devel-api/events/hit-test-algorithm.h>
 #include <dali/integration-api/debug.h>
 #include <dali/public-api/adaptor-framework/key.h>

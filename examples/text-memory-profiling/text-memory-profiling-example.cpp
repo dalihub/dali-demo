@@ -24,6 +24,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view.h>

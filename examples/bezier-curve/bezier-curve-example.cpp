@@ -19,6 +19,7 @@
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include "generated/bezier-curve-frag.h"
 #include "generated/bezier-curve-vert.h"
 #include "shared/view.h"

@@ -20,6 +20,7 @@
 #include <dali-toolkit/public-api/visuals/color-visual-properties.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/actors/camera-actor.h>
 #include <dali/public-api/animation/animation.h>

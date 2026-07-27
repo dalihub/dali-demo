@@ -21,6 +21,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
