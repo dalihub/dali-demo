@@ -20,9 +20,9 @@
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
-#include <dali/devel-api/adaptor-framework/key-devel.h>
 #include <dali/devel-api/events/hit-test-algorithm.h>
 #include <dali/integration-api/debug.h>
+#include <dali/public-api/adaptor-framework/key.h>
 
 #include <chipmunk/chipmunk.h>
 #include <dali/integration-api/string-utils.h>

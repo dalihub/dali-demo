@@ -19,9 +19,9 @@
 #include "dali-physics/public-api/physics-actor.h"
 #include "dali-physics/public-api/physics-adaptor.h"
 
-#include <dali/devel-api/adaptor-framework/key-devel.h>
 #include <dali/devel-api/events/hit-test-algorithm.h>
 #include <dali/integration-api/stream-operators.h>
+#include <dali/public-api/adaptor-framework/key.h>
 
 #include <iostream>
 #include <string>
@@ -38,8 +38,8 @@ namespace KeyModifier
 {
 enum Key
 {
-  CONTROL_L = DevelKey::DALI_KEY_CONTROL_LEFT,
-  CONTROL_R = DevelKey::DALI_KEY_CONTROL_RIGHT,
+  CONTROL_L = Dali::DALI_KEY_CONTROL_LEFT,
+  CONTROL_R = Dali::DALI_KEY_CONTROL_RIGHT,
   SHIFT_L   = 50,
   SHIFT_R   = 62,
   ALT_L     = 64,

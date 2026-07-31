@@ -19,11 +19,11 @@
 
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
-#include <dali/devel-api/adaptor-framework/key-devel.h>
 #include <dali/devel-api/events/hit-test-algorithm.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/stream-operators.h>
 #include <dali/integration-api/string-utils.h>
+#include <dali/public-api/adaptor-framework/key.h>
 
 #include <chipmunk/chipmunk.h>
 #include <iostream>
@@ -49,8 +49,8 @@ namespace KeyModifier
 {
 enum Key
 {
-  CONTROL_L = DevelKey::DALI_KEY_CONTROL_LEFT,
-  CONTROL_R = DevelKey::DALI_KEY_CONTROL_RIGHT,
+  CONTROL_L = Dali::DALI_KEY_CONTROL_LEFT,
+  CONTROL_R = Dali::DALI_KEY_CONTROL_RIGHT,
   SHIFT_L   = 50,
   SHIFT_R   = 62,
   ALT_L     = 64,
