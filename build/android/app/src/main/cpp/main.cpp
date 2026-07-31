@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -149,6 +149,61 @@ void ExtractFontConfig(struct android_app* state, std::string assetFontConfig, s
   }
 }
 
+// Applies an arbitrary, caller-specified set of environment variables, given
+// as a single delimiter-separated string of KEY=VALUE pairs - e.g.
+//   "SOME_VAR=boo;SOME_OTHER_VAR=foo"
+// Both ';' and newline are accepted as separators, so this works equally
+// whether the string arrives as a single-line intent extra (`--es env
+// "A=1;B=2"`) or a multi-line AndroidManifest <meta-data> value. Generic by
+// design: it knows nothing about any specific variable - it just applies
+// whatever KEY=VALUE pairs it's given, so any number of variables can be set
+// this way.
+void ApplyEnvironmentVariablesFromString(const std::string& envString)
+{
+  size_t start = 0;
+  while(start <= envString.size())
+  {
+    size_t end = envString.find_first_of(";\n", start);
+    if(end == std::string::npos)
+    {
+      end = envString.size();
+    }
+
+    std::string pair = envString.substr(start, end - start);
+
+    // Trim surrounding whitespace, so "A=1; B=2" (space after the
+    // separator) and similar formatting quirks still parse correctly.
+    size_t first = pair.find_first_not_of(" \t");
+    if(first == std::string::npos)
+    {
+      pair.clear();
+    }
+    else
+    {
+      size_t last = pair.find_last_not_of(" \t");
+      pair        = pair.substr(first, last - first + 1);
+    }
+
+    if(!pair.empty())
+    {
+      size_t eq = pair.find('=');
+      if(eq != std::string::npos && eq > 0)
+      {
+        std::string key   = pair.substr(0, eq);
+        std::string value = pair.substr(eq + 1);
+        setenv(key.c_str(), value.c_str(), 1);
+        LOGV("DALI: Set environment variable from intent extra: %s=%s", key.c_str(), value.c_str());
+      }
+      else
+      {
+        LOGE("DALI: Ignoring malformed entry in 'env' extra (expected KEY=VALUE): %s", pair.c_str());
+      }
+    }
+
+    start = end + 1;
+  }
+}
+
 extern "C" void FcConfigPathInit(const char* path, const char* file);
 
 void android_main(struct android_app* state)
@@ -186,12 +241,31 @@ void android_main(struct android_app* state)
 
   DaliDemoNativeActivity nativeActivity(state->activity);
 
+  // Apply any caller-specified environment variables before dlopen(), so
+  // they're visible to the loaded library's own startup checks (e.g.
+  // DALi's runtime-toggle instrumentation, which reads its env var on every
+  // call and needs it set before the first call happens). Generic - this
+  // file has no knowledge of which variables might be passed; it applies
+  // whatever the caller provides. Same intent-extra-then-metadata fallback
+  // pattern as "start"/"arguments"/"graphics-backend" below, so a default
+  // set of variables can also be baked into the manifest's <meta-data> for
+  // launches that don't pass an intent extra at all.
+  std::string envParam = nativeActivity.GetIntentStringExtra("env");
+  if(envParam.empty())
+  {
+    envParam = nativeActivity.GetMetaData("env");
+  }
+  if(!envParam.empty())
+  {
+    ApplyEnvironmentVariablesFromString(envParam);
+  }
+
   int status = 0;
 
-  //dali requires Android 8 or higher
-  //Android 6+ support loading library directly from apk,
-  //therefore no need to extract to filesystem first then open by specifying full path
-  //unless there is need to do profiling, or export libraries so that other packages can use
+  // dali requires Android 8 or higher
+  // Android 6+ support loading library directly from apk,
+  // therefore no need to extract to filesystem first then open by specifying full path
+  // unless there is need to do profiling, or export libraries so that other packages can use
   std::string libpath = "libdali-demo.so";
 
   std::string callParam = nativeActivity.GetIntentStringExtra("start");
@@ -310,4 +384,4 @@ void android_main(struct android_app* state)
   std::exit(status);
 }
 
-//END_INCLUDE(all)
+// END_INCLUDE(all)
