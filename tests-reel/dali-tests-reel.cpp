@@ -49,6 +49,7 @@ int DALI_EXPORT_API main(int argc, char** argv)
   demo.AddExample(Example("instance-rendering.example", DALI_DEMO_STR_TITLE_INSTANCE_RENDERING));
   demo.AddExample(Example("pre-render-callback.example", DALI_DEMO_STR_TITLE_PRE_RENDER_CALLBACK));
   demo.AddExample(Example("precompile-shader.example", DALI_DEMO_STR_TITLE_PRECOMPILE_SHADER));
+  demo.AddExample(Example("perf-message-queue-stress.example", DALI_DEMO_STR_TITLE_PERF_MESSAGE_QUEUE_STRESS));
   demo.AddExample(Example("perf-scroll.example", DALI_DEMO_STR_TITLE_PERF_SCROLL));
   demo.AddExample(Example("perf-view-creation.example", DALI_DEMO_STR_TITLE_PERF_VIEW_CREATION));
   demo.AddExample(Example("point-mesh.example", DALI_DEMO_STR_TITLE_POINT_MESH));
