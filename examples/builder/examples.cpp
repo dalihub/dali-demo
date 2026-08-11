@@ -23,6 +23,7 @@
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali/integration-api/debug.h>
 

@@ -21,6 +21,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/public-api/animation/constraints.h>

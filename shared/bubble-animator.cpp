@@ -23,6 +23,7 @@
 #include <dali-toolkit/public-api/controls/scrollable/scroll-view/scroll-view.h>
 #include <dali-toolkit/public-api/visuals/image-visual-properties.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/animation/constraint.h>
 #include <dali/public-api/math/random.h>

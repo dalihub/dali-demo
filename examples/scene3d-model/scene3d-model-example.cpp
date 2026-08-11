@@ -19,6 +19,7 @@
 #include <dali-scene3d/integration-api/loader/environment-map-loader.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali/devel-api/adaptor-framework/file-stream.h>
 #include <dali/devel-api/adaptor-framework/image-loading.h>

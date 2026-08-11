@@ -22,6 +22,7 @@
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/integration-api/string-utils.h>
 
 using Dali::Integration::GetStdString;

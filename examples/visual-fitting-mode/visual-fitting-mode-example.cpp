@@ -18,6 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/devel-api/object/handle-devel.h>
 #include <dali/devel-api/object/property-array-devel.h>
 #include <dali/devel-api/object/property-map-devel.h>

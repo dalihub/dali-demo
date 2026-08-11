@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/integration-api/string-utils.h>
 
 #include "controls/progress-bar/progress-bar.h"

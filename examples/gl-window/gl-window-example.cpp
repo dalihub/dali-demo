@@ -16,6 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/devel-api/adaptor-framework/gl-window.h>
 #include <dali/devel-api/object/property-map-devel.h>
 #include "../direct-rendering/native-renderer.h"
