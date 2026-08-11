@@ -17,12 +17,12 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/canvas-view/canvas-view.h>
-#include <dali/devel-api/adaptor-framework/canvas-renderer/canvas-renderer-drawable-group.h>
-#include <dali/devel-api/adaptor-framework/canvas-renderer/canvas-renderer-gradient.h>
-#include <dali/devel-api/adaptor-framework/canvas-renderer/canvas-renderer-linear-gradient.h>
-#include <dali/devel-api/adaptor-framework/canvas-renderer/canvas-renderer-picture.h>
-#include <dali/devel-api/adaptor-framework/canvas-renderer/canvas-renderer-radial-gradient.h>
-#include <dali/devel-api/adaptor-framework/canvas-renderer/canvas-renderer-shape.h>
+#include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-drawable-group.h>
+#include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-gradient.h>
+#include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-linear-gradient.h>
+#include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-picture.h>
+#include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-radial-gradient.h>
+#include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-shape.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -301,13 +301,10 @@ public:
       dashPattern.PushBack(pattern);
     }
 
-    Dali::Vector<Dali::CanvasRenderer::Gradient::ColorStop> radialGradientStops;
-    radialGradientStops.PushBack({0.0f, Color::LIGHT_SEA_GREEN});
-    radialGradientStops.PushBack({1.0f, Color::BLUE_VIOLET});
-
     Dali::CanvasRenderer::RadialGradient radialGradient = Dali::CanvasRenderer::RadialGradient::New();
     radialGradient.SetBounds(Vector2(240, 170), 70);
-    radialGradient.SetColorStops(radialGradientStops);
+    radialGradient.AddColorStop(0.0f, Color::LIGHT_SEA_GREEN);
+    radialGradient.AddColorStop(1.0f, Color::BLUE_VIOLET);
     radialGradient.SetSpread(Dali::CanvasRenderer::Gradient::Spread::REFLECT);
 
     Dali::CanvasRenderer::Shape roundedRect = Dali::CanvasRenderer::Shape::New();
@@ -321,7 +318,8 @@ public:
 
     Dali::CanvasRenderer::RadialGradient radialGradient2 = Dali::CanvasRenderer::RadialGradient::New();
     radialGradient2.SetBounds(Vector2(240, 320), 70);
-    radialGradient2.SetColorStops(radialGradientStops);
+    radialGradient2.AddColorStop(0.0f, Color::LIGHT_SEA_GREEN);
+    radialGradient2.AddColorStop(1.0f, Color::BLUE_VIOLET);
     radialGradient2.SetSpread(Dali::CanvasRenderer::Gradient::Spread::REPEAT);
 
     Dali::CanvasRenderer::Shape roundedRect2 = Dali::CanvasRenderer::Shape::New();
@@ -333,22 +331,16 @@ public:
     roundedRect2.SetFillGradient(radialGradient2);
     mCanvasView.AddDrawable(roundedRect2);
 
-    Dali::Vector<Dali::CanvasRenderer::Gradient::ColorStop> stops;
-    stops.PushBack({0.0f, Color::RED});
-    stops.PushBack({0.5f, Color::BLUE});
-    stops.PushBack({1.0f, Color::GREEN});
-
     mLinearGradient = Dali::CanvasRenderer::LinearGradient::New();
     mLinearGradient.SetBounds(Vector2(-100, -100), Vector2(100, 100));
-    mLinearGradient.SetColorStops(stops);
-
-    Dali::Vector<Dali::CanvasRenderer::Gradient::ColorStop> strokeLinearGradientStops;
-    strokeLinearGradientStops.PushBack({0.0f, Color::SLATE_BLUE});
-    strokeLinearGradientStops.PushBack({1.0f, Color::MAROON});
+    mLinearGradient.AddColorStop(0.0f, Color::RED);
+    mLinearGradient.AddColorStop(0.5f, Color::BLUE);
+    mLinearGradient.AddColorStop(1.0f, Color::GREEN);
 
     Dali::CanvasRenderer::LinearGradient strokeLinearGradient = Dali::CanvasRenderer::LinearGradient::New();
     strokeLinearGradient.SetBounds(Vector2(-100, -100), Vector2(100, 100));
-    strokeLinearGradient.SetColorStops(strokeLinearGradientStops);
+    strokeLinearGradient.AddColorStop(0.0f, Color::SLATE_BLUE);
+    strokeLinearGradient.AddColorStop(1.0f, Color::MAROON);
 
     Dali::CanvasRenderer::Shape star = MakeStarShape();
     star.SetStrokeWidth(30.0f);
@@ -547,12 +539,10 @@ public:
     }
     else if(mViewCount == GRADIENT_VIEW)
     {
-      Dali::Vector<Dali::CanvasRenderer::Gradient::ColorStop> stops;
-      stops.PushBack({0.0f, Vector4(1.0f, 0.0f, 0.0f, 1.0f)});
-      stops.PushBack({!((mCount / 100) & 0x1) ? float(mCount % 100) / 100.0f : 1 - (float(mCount % 100) / 100.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f)});
-      stops.PushBack({1.0f, Vector4(0.0f, 1.0f, 1.0f, 1.0f)});
-
-      mLinearGradient.SetColorStops(stops);
+      mLinearGradient.ClearColorStops();
+      mLinearGradient.AddColorStop(0.0f, Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+      mLinearGradient.AddColorStop(!((mCount / 100) & 0x1) ? float(mCount % 100) / 100.0f : 1 - (float(mCount % 100) / 100.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+      mLinearGradient.AddColorStop(1.0f, Vector4(0.0f, 1.0f, 1.0f, 1.0f));
     }
     mCount++;
     return true;
