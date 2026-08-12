@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ namespace Dali::ParticleEffect
 {
 namespace
 {
-Vector4 GetColorAt(uint32_t x, uint32_t y, Devel::PixelBuffer& buffer)
+Vector4 GetColorAt(uint32_t x, uint32_t y, PixelBuffer& buffer)
 {
   if(buffer.GetPixelFormat() == Pixel::Format::RGBA8888)
   {
@@ -55,10 +55,10 @@ ImageExplodeEffectSource::ImageExplodeEffectSource(ParticleEmitter& emitter, con
   filePath += imageFileName;
   ImageDimensions dimensions(width, height);
   // Pixel buffer will be used as a source of pixels (populating colors of particles based on image pixels)
-  Devel::PixelBuffer pixelBuffer = Dali::LoadImageFromFile(filePath, dimensions);
-  mImageWidth                    = pixelBuffer.GetWidth();
-  mImageHeight                   = pixelBuffer.GetHeight();
-  mPixelBuffer                   = pixelBuffer;
+  PixelBuffer pixelBuffer = Dali::LoadImageFromFile(filePath, dimensions);
+  mImageWidth             = pixelBuffer.GetWidth();
+  mImageHeight            = pixelBuffer.GetHeight();
+  mPixelBuffer            = pixelBuffer;
 }
 
 void ImageExplodeEffectSource::Init()

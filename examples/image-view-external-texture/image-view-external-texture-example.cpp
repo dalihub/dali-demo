@@ -26,9 +26,9 @@
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/devel-api/adaptor-framework/image-loading.h>
-#include <dali/devel-api/adaptor-framework/pixel-buffer.h>
 #include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/integration-api/debug.h>
+#include <dali/public-api/adaptor-framework/pixel-buffer.h>
 #include <string>
 
 #include <dali/integration-api/string-utils.h>
@@ -173,10 +173,10 @@ Dali::String ConvertFileToImageUrlString(const char* url, UrlType type)
     }
     case EXTERNAL_TEXTURE:
     {
-      Devel::PixelBuffer pixelBuffer = LoadImageFromFile(url);
+      PixelBuffer pixelBuffer = LoadImageFromFile(url);
       if(pixelBuffer)
       {
-        PixelData pixelData = Devel::PixelBuffer::Convert(pixelBuffer);
+        PixelData pixelData = PixelBuffer::Convert(pixelBuffer);
 
         imageUrl = Dali::Toolkit::ImageUrlUtils::GenerateUrl(pixelData);
       }

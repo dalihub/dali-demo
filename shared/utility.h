@@ -31,13 +31,13 @@ Dali::Texture LoadTexture(const char*              imagePath,
                           Dali::SamplingMode::Type samplingMode          = Dali::SamplingMode::DEFAULT,
                           bool                     orientationCorrection = true)
 {
-  Dali::Devel::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, samplingMode, orientationCorrection);
-  Dali::Texture            texture     = Dali::Texture::New(Dali::TextureType::TEXTURE_2D,
-                                                            pixelBuffer.GetPixelFormat(),
-                                                            pixelBuffer.GetWidth(),
-                                                            pixelBuffer.GetHeight());
+  Dali::PixelBuffer pixelBuffer = LoadImageFromFile(imagePath, size, samplingMode, orientationCorrection);
+  Dali::Texture     texture     = Dali::Texture::New(Dali::TextureType::TEXTURE_2D,
+                                                     pixelBuffer.GetPixelFormat(),
+                                                     pixelBuffer.GetWidth(),
+                                                     pixelBuffer.GetHeight());
 
-  Dali::PixelData pixelData = Dali::Devel::PixelBuffer::Convert(pixelBuffer);
+  Dali::PixelData pixelData = Dali::PixelBuffer::Convert(pixelBuffer);
   texture.Upload(pixelData);
 
   return texture;

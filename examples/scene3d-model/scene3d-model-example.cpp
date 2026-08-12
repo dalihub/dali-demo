@@ -527,7 +527,7 @@ public:
     return destBuffer;
   }
 
-  void UploadTextureFace(Texture& texture, Devel::PixelBuffer pixelBuffer, int32_t faceIndex)
+  void UploadTextureFace(Texture& texture, PixelBuffer pixelBuffer, int32_t faceIndex)
   {
     uint8_t* imageBuffer   = pixelBuffer.GetBuffer();
     uint32_t bytesPerPixel = Pixel::GetBytesPerPixel(pixelBuffer.GetPixelFormat());

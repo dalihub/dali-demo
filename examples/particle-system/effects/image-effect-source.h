@@ -2,7 +2,7 @@
 #define DALI_IMAGE_EFFECT_SOURCE_H
 
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 #include <dali-toolkit/public-api/particle-system/particle-modifier.h>
 #include <dali-toolkit/public-api/particle-system/particle-source.h>
 #include <dali-toolkit/public-api/particle-system/particle.h>
-#include <dali/devel-api/adaptor-framework/pixel-buffer.h>
+#include <dali/public-api/adaptor-framework/pixel-buffer.h>
 #include <dali/public-api/object/weak-handle.h>
 #include <ctime>
 
@@ -53,7 +53,7 @@ public:
 
   uint32_t mStreamBasePos{0u};
 
-  Devel::PixelBuffer mPixelBuffer;
+  PixelBuffer mPixelBuffer;
 
   bool mShouldEmit{true};
 };
