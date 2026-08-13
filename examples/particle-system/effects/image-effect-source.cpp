@@ -16,8 +16,9 @@
  */
 
 #include "image-effect-source.h"
-#include <dali/devel-api/adaptor-framework/image-loading.h>
 #include <dali/devel-api/rendering/texture-devel.h>
+#include <dali/integration-api/string-utils.h>
+#include <dali/public-api/adaptor-framework/image-loading.h>
 #include <random>
 
 namespace Dali::ParticleEffect
@@ -55,7 +56,7 @@ ImageExplodeEffectSource::ImageExplodeEffectSource(ParticleEmitter& emitter, con
   filePath += imageFileName;
   ImageDimensions dimensions(width, height);
   // Pixel buffer will be used as a source of pixels (populating colors of particles based on image pixels)
-  PixelBuffer pixelBuffer = Dali::LoadImageFromFile(filePath, dimensions);
+  PixelBuffer pixelBuffer = Dali::LoadImageFromFile(Dali::Integration::ToDaliStringView(filePath), dimensions);
   mImageWidth             = pixelBuffer.GetWidth();
   mImageHeight            = pixelBuffer.GetHeight();
   mPixelBuffer            = pixelBuffer;

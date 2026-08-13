@@ -19,7 +19,7 @@
  */
 
 #include <dali/dali.h>
-#include <dali/devel-api/adaptor-framework/image-loading.h>
+#include <dali/public-api/adaptor-framework/image-loading.h>
 #include <dali/public-api/math/int-pair.h>
 #include <dali/public-api/rendering/geometry.h>
 #include <dali/public-api/rendering/texture.h>

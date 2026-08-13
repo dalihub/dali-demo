@@ -18,10 +18,10 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
-#include <dali/devel-api/adaptor-framework/image-loading.h>
 #include <dali/devel-api/adaptor-framework/native-image-devel.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/pixel-data-integ.h>
+#include <dali/public-api/adaptor-framework/image-loading.h>
 #include <dali/public-api/adaptor-framework/pixel-buffer.h>
 
 #include <tbm_surface.h>
@@ -89,7 +89,7 @@ public:
 
     // Load image
     ImageDimensions dimensions(window.GetPositionSize().width, window.GetPositionSize().height);
-    PixelBuffer     pixelBuffer = LoadImageFromFile(IMAGE_FILE, dimensions);
+    PixelBuffer     pixelBuffer = LoadImageFromFile(Dali::Integration::ToDaliStringView(IMAGE_FILE), dimensions);
 
     if(!pixelBuffer)
     {
