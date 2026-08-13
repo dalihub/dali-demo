@@ -250,6 +250,9 @@
 	<ui-application appid="perf-message-queue-stress.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-message-queue-stress.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>Message Queue Stress Test</label>
 	</ui-application>
+	<ui-application appid="perf-property-update.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-property-update.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
+		<label>Property Update Stress Test</label>
+	</ui-application>
 	<ui-application appid="perf-scroll.example" exec="/usr/apps/com.samsung.dali-demo/bin/perf-scroll.example" nodisplay="true" multiple="false" type="c++app" taskmanage="true">
 		<label>perf-scroll</label>
 	</ui-application>
