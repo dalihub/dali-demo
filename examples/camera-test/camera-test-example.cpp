@@ -508,7 +508,7 @@ public:
     std::ostringstream oss;
 
     auto pos  = cameraActor.GetCurrentProperty<Vector3>(Actor::Property::POSITION);
-    auto size = cameraFrame.GetTargetSize();
+    auto size = DevelActor::GetTargetSize(cameraFrame);
 
     oss << "Camera Detail: Pos: (" << pos.x << ", " << pos.y << ")" << std::endl;
     oss << "  Frame size: (" << size.x << ", " << size.y << ")" << std::endl;
@@ -522,7 +522,7 @@ public:
   {
     if(actor == viewportGrabHandle)
     {
-      auto size    = viewportFrame.GetTargetSize();
+      auto size    = DevelActor::GetTargetSize(viewportFrame);
       auto newSize = Vector2(size.GetVectorXY() + gesture.GetDisplacement() * 2.0f);
       viewportFrame.SetProperty(Actor::Property::SIZE, newSize);
     }
@@ -542,7 +542,7 @@ public:
     }
     else if(actor == cameraGrabHandle)
     {
-      auto size    = cameraFrame.GetTargetSize();
+      auto size    = DevelActor::GetTargetSize(cameraFrame);
       auto newSize = Vector2(size.GetVectorXY() + gesture.GetDisplacement() * 2.0f);
       cameraFrame.SetProperty(Actor::Property::SIZE, newSize);
       cameraActor.SetPerspectiveProjection(newSize);
