@@ -18,11 +18,11 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
-#include <dali/devel-api/adaptor-framework/image-loading.h>
 #include <dali/devel-api/adaptor-framework/native-image-devel.h>
-#include <dali/devel-api/adaptor-framework/pixel-buffer.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/pixel-data-integ.h>
+#include <dali/public-api/adaptor-framework/image-loading.h>
+#include <dali/public-api/adaptor-framework/pixel-buffer.h>
 
 #include <tbm_surface.h>
 #include <cstring> // memcpy
@@ -88,8 +88,8 @@ public:
     window.KeyEventSignal().Connect(this, &NativeImageTestController::OnKeyEvent);
 
     // Load image
-    ImageDimensions    dimensions(window.GetPositionSize().width, window.GetPositionSize().height);
-    Devel::PixelBuffer pixelBuffer = LoadImageFromFile(IMAGE_FILE, dimensions);
+    ImageDimensions dimensions(window.GetPositionSize().width, window.GetPositionSize().height);
+    PixelBuffer     pixelBuffer = LoadImageFromFile(Dali::Integration::ToDaliStringView(IMAGE_FILE), dimensions);
 
     if(!pixelBuffer)
     {
@@ -103,7 +103,7 @@ public:
 
     pixelBuffer.Resize(static_cast<uint16_t>(nativeImageWidth), static_cast<uint16_t>(nativeImageHeight));
 
-    PixelData pixelData = Devel::PixelBuffer::Convert(pixelBuffer);
+    PixelData pixelData = PixelBuffer::Convert(pixelBuffer);
 
     // Create native image with power-of-two dimensions
     mNativeImageSrc = Dali::NativeImage::New(nativeImageWidth, nativeImageHeight, Dali::NativeImage::COLOR_DEPTH_DEFAULT);

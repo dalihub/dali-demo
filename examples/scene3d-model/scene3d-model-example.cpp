@@ -22,10 +22,10 @@
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali/devel-api/adaptor-framework/file-stream.h>
-#include <dali/devel-api/adaptor-framework/image-loading.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/actors/camera-actor.h>
+#include <dali/public-api/adaptor-framework/image-loading.h>
 #include <cstring>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
@@ -527,7 +527,7 @@ public:
     return destBuffer;
   }
 
-  void UploadTextureFace(Texture& texture, Devel::PixelBuffer pixelBuffer, int32_t faceIndex)
+  void UploadTextureFace(Texture& texture, PixelBuffer pixelBuffer, int32_t faceIndex)
   {
     uint8_t* imageBuffer   = pixelBuffer.GetBuffer();
     uint32_t bytesPerPixel = Pixel::GetBytesPerPixel(pixelBuffer.GetPixelFormat());
