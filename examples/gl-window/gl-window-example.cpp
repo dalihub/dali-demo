@@ -16,6 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
 #include <dali/devel-api/adaptor-framework/gl-window.h>
 #include <dali/devel-api/object/property-map-devel.h>
@@ -62,7 +63,7 @@ public:
     CreateGlWindow(Vector2(positionSize.width, positionSize.height));
 
     // Resize main window to double the textLabel size so the GL Window takes focus
-    auto textSize = textLabel.GetNaturalSize() * 2.0f;
+    auto textSize = DevelActor::GetNaturalSize(textLabel) * 2.0f;
     window.SetPositionSize(Dali::PositionSize(positionSize.x, positionSize.y, static_cast<int>(textSize.width), static_cast<int>(textSize.y)));
   }
 

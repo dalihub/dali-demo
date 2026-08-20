@@ -19,6 +19,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 
 // INTERNAL INCLUDES
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include "frame-callback.h"
 using Dali::Integration::GetStdString;
@@ -108,7 +109,7 @@ private:
       imageView.SetProperty(Actor::Property::PIVOT, Pivot::TOP_CENTER);
       imageView.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_CENTER);
       imageView.SetProperty(Actor::Property::POSITION_Y, yPos);
-      yPos += imageView.GetNaturalSize().height;
+      yPos += DevelActor::GetNaturalSize(imageView).height;
 
       // Add the ID of the created ImageView to mFrameCallback.
       // Again, can call methods in mFrameCallback directly as we have not set it on the window yet.

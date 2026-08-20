@@ -223,7 +223,7 @@ void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
     Vector2 currentChildSize(DevelActor::GetTargetSize(child).GetVectorXY());
     if(currentChildSize == Vector2::ZERO)
     {
-      currentChildSize = child.GetNaturalSize();
+      currentChildSize = DevelActor::GetNaturalSize(child);
     }
 
     bool    renegotiate = true;
