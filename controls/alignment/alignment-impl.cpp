@@ -20,6 +20,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/devel-api/size-negotiation/relayout-container.h>
@@ -219,7 +220,7 @@ void Alignment::OnRelayout(const Vector2& size, RelayoutContainer& container)
     child.SetProperty(Actor::Property::PIVOT, pivotAndParentOrigin);
     child.SetProperty(Actor::Property::PARENT_ORIGIN, pivotAndParentOrigin);
 
-    Vector2 currentChildSize(child.GetTargetSize().GetVectorXY());
+    Vector2 currentChildSize(DevelActor::GetTargetSize(child).GetVectorXY());
     if(currentChildSize == Vector2::ZERO)
     {
       currentChildSize = child.GetNaturalSize();

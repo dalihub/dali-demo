@@ -148,7 +148,7 @@ void BubbleAnimator::InitializeBackgroundActors(Dali::Actor actor)
   mBackgroundAnimations.clear();
 
   // Create new animations
-  const Vector3 size = actor.GetTargetSize();
+  const Vector3 size = DevelActor::GetTargetSize(actor);
 
   for(unsigned int i = 0, childCount = actor.GetChildCount(); i < childCount; ++i)
   {

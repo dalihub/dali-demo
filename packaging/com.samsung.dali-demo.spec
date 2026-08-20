@@ -3,7 +3,7 @@
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
 Version:    2.5.35
-Release:    1
+Release:    2
 Group:      System/Libraries
 License:    Apache-2.0 and BSD-3-Clause and MIT
 URL:        https://review.tizen.org/git/?p=platform/core/uifw/dali-demo.git;a=summary

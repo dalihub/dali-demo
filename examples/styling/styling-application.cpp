@@ -646,7 +646,7 @@ void StylingApplication::PopupHidden()
 
 void StylingApplication::OnPan(Actor actor, PanGesture gesture)
 {
-  Vector3 size = mContentPane.GetTargetSize();
+  Vector3 size = DevelActor::GetTargetSize(mContentPane);
   mContentPane.SetProperty(Actor::Property::SIZE, Vector2(size.GetVectorXY() + gesture.GetDisplacement() * 2.0f));
 }
 
