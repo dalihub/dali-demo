@@ -22,6 +22,7 @@
 #include <dali-toolkit/public-api/image-loader/image-url-utils.h>
 #include <dali-toolkit/public-api/image-loader/image-url.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/public-api/adaptor-framework/encoded-image-buffer.h>
 #include <string>
 
@@ -189,7 +190,7 @@ private:
   {
     ImageView view = ImageView::New();
     view.SetProperty(Actor::Property::SIZE, IMAGE_VIEW_SIZE);
-    view.SetProperty(Actor::Property::POSITION, Vector2(IMAGE_VIEW_SIZE.x * offset_x, IMAGE_VIEW_SIZE.y * offset_y + mToolBar.GetNaturalSize().y));
+    view.SetProperty(Actor::Property::POSITION, Vector2(IMAGE_VIEW_SIZE.x * offset_x, IMAGE_VIEW_SIZE.y * offset_y + DevelActor::GetNaturalSize(mToolBar).y));
     view.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
 
     Property::Map imagePropertyMap;
