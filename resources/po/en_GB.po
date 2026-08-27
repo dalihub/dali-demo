@@ -208,6 +208,9 @@ msgstr "Particles"
 msgid "DALI_DEMO_STR_TITLE_PERF_MESSAGE_QUEUE_STRESS"
 msgstr "Message Queue Stress Test"
 
+msgid "DALI_DEMO_STR_TITLE_PERF_PROPERTY_UPDATE"
+msgstr "Property Update Stress Test"
+
 msgid "DALI_DEMO_STR_TITLE_PERF_SCROLL"
 msgstr "Scrolling Performance"
 
