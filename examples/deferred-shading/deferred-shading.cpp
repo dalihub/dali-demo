@@ -422,7 +422,7 @@ private:
       Vector3 size{Vector3::ONE * scale * unit * 2.f};
       a.SetProperty(Actor::Property::SIZE, size);
 
-      a.SetProperty(Actor::Property::COLOR, Color::WHITE * .25f + (Color::RED * (v.x + c) / (c * 2.f) + Color::GREEN * (v.y + c) / (c * 2.f) + Color::BLUE * (v.z + c) / (c * 2.f)) * .015625f);
+      a.SetProperty(Actor::Property::COLOR_MULTIPLIER, Color::WHITE * .25f + (Color::RED * (v.x + c) / (c * 2.f) + Color::GREEN * (v.y + c) / (c * 2.f) + Color::BLUE * (v.z + c) / (c * 2.f)) * .015625f);
       a.AddRenderer(meshRenderer);
 
       axis.Add(a);
@@ -553,7 +553,7 @@ private:
   {
     Actor light = Actor::New();
     CenterActor(light);
-    light.SetProperty(Actor::Property::COLOR, Color::WHITE);
+    light.SetProperty(Actor::Property::COLOR_MULTIPLIER, Color::WHITE);
     light.SetProperty(Actor::Property::POSITION, position);
 
     auto iPropRadius     = light.RegisterProperty("radius", radius);

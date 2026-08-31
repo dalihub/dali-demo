@@ -283,7 +283,7 @@ Actor CloneActor(Actor original)
         Actor::Property::ORIENTATION,
         Actor::Property::SCALE,
         Actor::Property::VISIBLE,
-        Actor::Property::COLOR,
+        Actor::Property::COLOR_MULTIPLIER,
         Actor::Property::NAME,
       })
   {

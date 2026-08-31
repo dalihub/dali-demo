@@ -120,7 +120,7 @@ public:
     mLabel.SetProperty(TextLabel::Property::HORIZONTAL_ALIGNMENT, "CENTER");
     mLabel.SetProperty(TextLabel::Property::VERTICAL_ALIGNMENT, "CENTER");
     mLabel.SetProperty(TextLabel::Property::TEXT_COLOR, Color::WHITE);
-    mLabel.SetProperty(Actor::Property::COLOR_ALPHA, 0.0f);
+    mLabel.SetProperty(Actor::Property::COLOR_MULTIPLIER_ALPHA, 0.0f);
     // Step 1. Create shader
     CreateModelShader();
 
@@ -167,7 +167,7 @@ public:
         mStartTouch = touch.GetScreenPosition(0);
         mPointZ     = mStartTouch;
         mAnimation.Stop();
-        mLabel.SetProperty(Actor::Property::COLOR_ALPHA, 1.0f);
+        mLabel.SetProperty(Actor::Property::COLOR_MULTIPLIER_ALPHA, 1.0f);
         break;
       }
       case PointState::MOTION:
@@ -237,7 +237,7 @@ public:
       {
         mDoubleTapTime.Start();
         mDoubleTap = true;
-        mAnimation.AnimateTo(Property(mLabel, Actor::Property::COLOR_ALPHA), 0.0f, TimePeriod(0.5f, 1.0f));
+        mAnimation.AnimateTo(Property(mLabel, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f, TimePeriod(0.5f, 1.0f));
         mAnimation.Play();
         break;
       }

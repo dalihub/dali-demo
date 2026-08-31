@@ -68,7 +68,7 @@ public:
     sceneView.UseFramebuffer(true);
 
     light1 = Scene3D::Light::New();
-    light1.SetProperty(Dali::Actor::Property::COLOR, Color::BROWN);
+    light1.SetProperty(Dali::Actor::Property::COLOR_MULTIPLIER, Color::BROWN);
     light1.SetProperty(Dali::Actor::Property::POSITION, Vector3(-2.0f, -0.5f, 0.0f));
     Dali::DevelActor::LookAt(light1, Vector3(0.0f, 0.0f, 0.0f));
     mAnimation                = Dali::Animation::New(5);
@@ -93,26 +93,26 @@ public:
     light1.EnableShadowSoftFiltering(true);
 
     light2 = Scene3D::Light::New();
-    light2.SetProperty(Dali::Actor::Property::COLOR, Color::WHITE * 0.4);
+    light2.SetProperty(Dali::Actor::Property::COLOR_MULTIPLIER, Color::WHITE * 0.4);
     light2.SetProperty(Dali::Actor::Property::POSITION, Vector3(-1.0f, 0.0f, 1.1f));
     Dali::DevelActor::LookAt(light2, Vector3(0.0, 0.0, 0.0f));
     light2.EnableShadow(true);
     sceneView.Add(light2);
 
     light3 = Scene3D::Light::New();
-    light3.SetProperty(Dali::Actor::Property::COLOR, Color::BLUE);
+    light3.SetProperty(Dali::Actor::Property::COLOR_MULTIPLIER, Color::BLUE);
     light3.SetProperty(Dali::Actor::Property::POSITION, Vector3(-2.0, 0.0, -0.6));
     Dali::DevelActor::LookAt(light3, Vector3(0.0f, 0.0f, 0.0f));
     sceneView.Add(light3);
 
     light4 = Scene3D::Light::New();
-    light4.SetProperty(Dali::Actor::Property::COLOR, Color::RED);
+    light4.SetProperty(Dali::Actor::Property::COLOR_MULTIPLIER, Color::RED);
     light4.SetProperty(Dali::Actor::Property::POSITION, Vector3(-1.0f, -1.0f, 1.1f));
     Dali::DevelActor::LookAt(light4, Vector3(0.0, 0.0, 0.0f));
     sceneView.Add(light4);
 
     light5 = Scene3D::Light::New();
-    light5.SetProperty(Dali::Actor::Property::COLOR, Color::GREEN);
+    light5.SetProperty(Dali::Actor::Property::COLOR_MULTIPLIER, Color::GREEN);
     light5.SetProperty(Dali::Actor::Property::POSITION, Vector3(-1.0f, 1.0f, 1.1f));
     Dali::DevelActor::LookAt(light5, Vector3(0.0, 0.0, 0.0f));
     sceneView.Add(light5);

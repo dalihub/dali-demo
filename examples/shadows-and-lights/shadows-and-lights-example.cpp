@@ -244,7 +244,7 @@ public:
     text.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Light"));
     text.SetProperty(TextLabel::Property::POINT_SIZE, 20.0f);
     DevelActor::SetResizePolicy(text, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-    text.SetProperty(Actor::Property::COLOR, Color::BLUE);
+    text.SetProperty(Actor::Property::COLOR_MULTIPLIER, Color::BLUE);
 
     mCastingLight.Add(text);
     mLightAnchor.Add(mCastingLight);

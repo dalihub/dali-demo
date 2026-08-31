@@ -184,12 +184,12 @@ void CubeTransitionEffect::Initialize()
       Vector4 textureRect(anchor.x, anchor.y, anchor.x + gridSizeInv.x, anchor.y + gridSizeInv.y);
 
       Actor currentTile = CreateTile(textureRect);
-      currentTile.SetProperty(Actor::Property::COLOR, FULL_BRIGHTNESS);
+      currentTile.SetProperty(Actor::Property::COLOR_MULTIPLIER, FULL_BRIGHTNESS);
       currentTile.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mCurrentTiles.push_back(currentTile);
 
       Actor targetTile = CreateTile(textureRect);
-      targetTile.SetProperty(Actor::Property::COLOR, HALF_BRIGHTNESS);
+      targetTile.SetProperty(Actor::Property::COLOR_MULTIPLIER, HALF_BRIGHTNESS);
       mTargetTiles.push_back(targetTile);
 
       Actor box = Actor::New();
@@ -406,7 +406,7 @@ void CubeTransitionEffect::ResetToInitialState()
   {
     it->SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.5f, 1.0f));
     it->SetProperty(Actor::Property::ORIENTATION, Quaternion(Radian(0.0f), Vector3::XAXIS));
-    it->SetProperty(Actor::Property::COLOR, FULL_BRIGHTNESS);
+    it->SetProperty(Actor::Property::COLOR_MULTIPLIER, FULL_BRIGHTNESS);
   }
   if(mCurrentRenderer)
   {
@@ -419,7 +419,7 @@ void CubeTransitionEffect::ResetToInitialState()
 
   for(ActorArray::iterator it = mTargetTiles.begin(); it != mTargetTiles.end(); ++it)
   {
-    it->SetProperty(Actor::Property::COLOR, HALF_BRIGHTNESS);
+    it->SetProperty(Actor::Property::COLOR_MULTIPLIER, HALF_BRIGHTNESS);
   }
   if(mTargetRenderer)
   {

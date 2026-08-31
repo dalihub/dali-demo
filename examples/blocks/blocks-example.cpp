@@ -632,7 +632,7 @@ private:
         mDragActor     = actor;
         mDragAnimation = Animation::New(0.25f);
         mDragAnimation.AnimateTo(Property(mDragActor, Actor::Property::SCALE), Vector3(1.1f, 1.1f, 1.0f), AlphaFunction::EASE_OUT);
-        mDragAnimation.AnimateTo(Property(mPaddleHandle, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunction::EASE_OUT);
+        mDragAnimation.AnimateTo(Property(mPaddleHandle, Actor::Property::COLOR_MULTIPLIER), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunction::EASE_OUT);
         mDragAnimation.Play();
       }
     }
@@ -657,7 +657,7 @@ private:
         {
           mDragAnimation = Animation::New(0.25f);
           mDragAnimation.AnimateTo(Property(mDragActor, Actor::Property::SCALE), Vector3(1.0f, 1.0f, 1.0f), AlphaFunction::EASE_IN);
-          mDragAnimation.AnimateTo(Property(mPaddleHandle, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 1.0f), AlphaFunction::EASE_OUT);
+          mDragAnimation.AnimateTo(Property(mPaddleHandle, Actor::Property::COLOR_MULTIPLIER), Vector4(1.0f, 1.0f, 1.0f, 1.0f), AlphaFunction::EASE_OUT);
           mDragAnimation.Play();
           mDragActor.Reset();
         }
@@ -730,9 +730,9 @@ private:
   {
     // Reposition Ball in start position, and make ball appear.
     mBall.SetProperty(Actor::Property::POSITION, mBallStartPosition);
-    mBall.SetProperty(Actor::Property::COLOR, Vector4(1.0f, 1.0f, 1.0f, 0.1f));
+    mBall.SetProperty(Actor::Property::COLOR_MULTIPLIER, Vector4(1.0f, 1.0f, 1.0f, 0.1f));
     Animation appear = Animation::New(0.5f);
-    appear.AnimateTo(Property(mBall, Actor::Property::COLOR), Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    appear.AnimateTo(Property(mBall, Actor::Property::COLOR_MULTIPLIER), Vector4(1.0f, 1.0f, 1.0f, 1.0f));
     appear.Play();
 
     if(!mLives)
@@ -799,7 +799,7 @@ private:
 
     // fade brick (destroy)
     Animation destroyAnimation = Animation::New(0.5f);
-    destroyAnimation.AnimateTo(Property(brick, Actor::Property::COLOR_ALPHA), 0.0f, AlphaFunction::EASE_IN);
+    destroyAnimation.AnimateTo(Property(brick, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f, AlphaFunction::EASE_IN);
     destroyAnimation.Play();
     destroyAnimation.FinishedSignal().Connect(this, &ExampleController::OnBrickDestroyed);
     mDestroyAnimationMap[destroyAnimation] = brick;

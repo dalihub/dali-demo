@@ -747,17 +747,17 @@ void Slider::UpdateSkin()
   {
     case NORMAL:
     {
-      mTrack.SetProperty(Actor::Property::COLOR, Color::WHITE);
-      mHandle.SetProperty(Actor::Property::COLOR, Color::WHITE);
-      mProgress.SetProperty(Actor::Property::COLOR, Color::WHITE);
+      mTrack.SetProperty(Actor::Property::COLOR_MULTIPLIER, Color::WHITE);
+      mHandle.SetProperty(Actor::Property::COLOR_MULTIPLIER, Color::WHITE);
+      mProgress.SetProperty(Actor::Property::COLOR_MULTIPLIER, Color::WHITE);
       break;
     }
     case DISABLED:
     {
       Vector4 disabledColor = GetDisabledColor();
-      mTrack.SetProperty(Actor::Property::COLOR, disabledColor);
-      mHandle.SetProperty(Actor::Property::COLOR, disabledColor);
-      mProgress.SetProperty(Actor::Property::COLOR, disabledColor);
+      mTrack.SetProperty(Actor::Property::COLOR_MULTIPLIER, disabledColor);
+      mHandle.SetProperty(Actor::Property::COLOR_MULTIPLIER, disabledColor);
+      mProgress.SetProperty(Actor::Property::COLOR_MULTIPLIER, disabledColor);
       break;
     }
     case PRESSED:

@@ -165,7 +165,7 @@ Actor CubeRenderer::CreateActor(Vector3 size, Vector4 color)
   actor.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
   // Mesh is 2x2x2, so halve the size
   actor.SetProperty(Actor::Property::SIZE, Vector3(size.x, size.y, size.z) * 0.5f);
-  actor.SetProperty(Actor::Property::COLOR, color);
+  actor.SetProperty(Actor::Property::COLOR_MULTIPLIER, color);
   if(!gCubeTextureSet)
   {
     gCubeTextureSet = CreateTexture(TEXTURE_URL);

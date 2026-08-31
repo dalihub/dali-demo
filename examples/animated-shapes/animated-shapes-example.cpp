@@ -188,7 +188,7 @@ public:
     actor[Actor::Property::SIZE]     = Vector2(400.0f, 400.0f);
     actor[Actor::Property::POSITION] = center;
     actor[Actor::Property::PIVOT]    = Pivot::CENTER;
-    actor[Actor::Property::COLOR]    = Color::YELLOW;
+    actor[Actor::Property::COLOR_MULTIPLIER]    = Color::YELLOW;
     actor.AddRenderer(renderer);
 
     Window window = mApplication.GetWindow();
@@ -381,7 +381,7 @@ public:
     actor[Actor::Property::SIZE]     = Vector2(400.0f, 400.0f);
     actor[Actor::Property::POSITION] = center;
     actor[Actor::Property::PIVOT]    = Pivot::CENTER;
-    actor[Actor::Property::COLOR]    = Color::RED;
+    actor[Actor::Property::COLOR_MULTIPLIER]    = Color::RED;
     actor.AddRenderer(renderer);
 
     Window window = mApplication.GetWindow();

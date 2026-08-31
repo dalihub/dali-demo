@@ -235,12 +235,12 @@ void ContactCard::Animate()
     mAnimation.AnimateTo(Property(mClippedImage, mClippedImagePropertyIndex), ClippedImage::QUAD_GEOMETRY, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_MESH_MORPH);
 
     // Fade out the opacity of the name, and animate into the unfolded position
-    mAnimation.AnimateTo(Property(mNameText, Actor::Property::COLOR_ALPHA), 0.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_NAME_OPACITY);
+    mAnimation.AnimateTo(Property(mNameText, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_NAME_OPACITY);
     mAnimation.AnimateTo(Property(mNameText, Actor::Property::POSITION_X), mContactCardLayoutInfo.textUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X);
     mAnimation.AnimateTo(Property(mNameText, Actor::Property::POSITION_Y), mContactCardLayoutInfo.textUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y);
 
     // Fade in the opacity of the detail, and animate into the unfolded position
-    mAnimation.AnimateTo(Property(mDetailText, Actor::Property::COLOR_ALPHA), 1.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_DETAIL_OPACITY);
+    mAnimation.AnimateTo(Property(mDetailText, Actor::Property::COLOR_MULTIPLIER_ALPHA), 1.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_DETAIL_OPACITY);
     mAnimation.AnimateTo(Property(mDetailText, Actor::Property::POSITION_X), mContactCardLayoutInfo.textUnfoldedPosition.x, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_X);
     mAnimation.AnimateTo(Property(mDetailText, Actor::Property::POSITION_Y), mContactCardLayoutInfo.textUnfoldedPosition.y, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_Y);
 
@@ -251,7 +251,7 @@ void ContactCard::Animate()
       Actor sibling = parent.GetChildAt(i);
       if(sibling != mContactCard)
       {
-        mAnimation.AnimateTo(Property(sibling, Actor::Property::COLOR_ALPHA), 0.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_SIBLING_OPACITY);
+        mAnimation.AnimateTo(Property(sibling, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f, ALPHA_FUNCTION_UNFOLD, TIME_PERIOD_UNFOLD_SIBLING_OPACITY);
         sibling.SetProperty(Actor::Property::SENSITIVE, false);
       }
     }
@@ -282,12 +282,12 @@ void ContactCard::Animate()
     mAnimation.AnimateTo(Property(mClippedImage, mClippedImagePropertyIndex), ClippedImage::CIRCLE_GEOMETRY, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_MESH_MORPH);
 
     // Fade in the opacity of the name, and animate into the folded position
-    mAnimation.AnimateTo(Property(mNameText, Actor::Property::COLOR_ALPHA), 1.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_NAME_OPACITY);
+    mAnimation.AnimateTo(Property(mNameText, Actor::Property::COLOR_MULTIPLIER_ALPHA), 1.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_NAME_OPACITY);
     mAnimation.AnimateTo(Property(mNameText, Actor::Property::POSITION_X), mContactCardLayoutInfo.textFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X);
     mAnimation.AnimateTo(Property(mNameText, Actor::Property::POSITION_Y), mContactCardLayoutInfo.textFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y);
 
     // Fade out the opacity of the detail, and animate into the folded position
-    mAnimation.AnimateTo(Property(mDetailText, Actor::Property::COLOR_ALPHA), 0.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_DETAIL_OPACITY);
+    mAnimation.AnimateTo(Property(mDetailText, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_DETAIL_OPACITY);
     mAnimation.AnimateTo(Property(mDetailText, Actor::Property::POSITION_X), mContactCardLayoutInfo.textFoldedPosition.x, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_X);
     mAnimation.AnimateTo(Property(mDetailText, Actor::Property::POSITION_Y), mContactCardLayoutInfo.textFoldedPosition.y, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_Y);
 
@@ -298,7 +298,7 @@ void ContactCard::Animate()
       Actor sibling = parent.GetChildAt(i);
       if(sibling != mContactCard)
       {
-        mAnimation.AnimateTo(Property(sibling, Actor::Property::COLOR_ALPHA), 1.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_SIBLING_OPACITY);
+        mAnimation.AnimateTo(Property(sibling, Actor::Property::COLOR_MULTIPLIER_ALPHA), 1.0f, ALPHA_FUNCTION_FOLD, TIME_PERIOD_FOLD_SIBLING_OPACITY);
         sibling.SetProperty(Actor::Property::SENSITIVE, true);
       }
     }

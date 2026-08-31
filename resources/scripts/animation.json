@@ -18,7 +18,7 @@
   // library of styles
   "styles": {
     "redTheme": {
-      "color": [1, 0, 0, 1]
+      "colorMultiplier": [1, 0, 0, 1]
     },
     "basicText": {
       "parentOrigin": "CENTER"

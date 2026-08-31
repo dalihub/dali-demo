@@ -98,12 +98,12 @@ void AddHelpInfo(const std::string&& string, const Vector2& windowSize, Actor pa
 
   // Animate IN
   TimePeriod timePeriod(startTime, HELP_ANIMATION_TRANSITION_DURATION);
-  animation.AnimateTo(Property(text, Actor::Property::COLOR_ALPHA), 1.0f, timePeriod);
+  animation.AnimateTo(Property(text, Actor::Property::COLOR_MULTIPLIER_ALPHA), 1.0f, timePeriod);
   animation.AnimateBy(Property(text, Actor::Property::POSITION_X), -position.x, timePeriod);
 
   // Animate OUT
   timePeriod.delaySeconds = endTime;
-  animation.AnimateTo(Property(text, Actor::Property::COLOR_ALPHA), 0.0f, timePeriod);
+  animation.AnimateTo(Property(text, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f, timePeriod);
   animation.AnimateBy(Property(text, Actor::Property::POSITION_X), -position.x, timePeriod);
 }
 
@@ -230,7 +230,7 @@ private:
         // When we get a touch point, change the color of the actor.
 
         Animation anim = Animation::New(TOUCH_MODE_ANIMATION_DURATION);
-        anim.AnimateTo(Property(actor, Actor::Property::COLOR), TOUCH_MODE_COLOR);
+        anim.AnimateTo(Property(actor, Actor::Property::COLOR_MULTIPLIER), TOUCH_MODE_COLOR);
         anim.Play();
         break;
       }
@@ -244,7 +244,7 @@ private:
           // If we're not panning, change the color back to normal.
 
           Animation anim = Animation::New(TOUCH_MODE_ANIMATION_DURATION);
-          anim.AnimateTo(Property(actor, Actor::Property::COLOR), Vector4::ONE);
+          anim.AnimateTo(Property(actor, Actor::Property::COLOR_MULTIPLIER), Vector4::ONE);
           anim.Play();
 
           // Stop the shake animation from looping.
@@ -320,7 +320,7 @@ private:
         // If we cancel or finish the pan, do an animation to indicate this and stop the shake animation.
 
         Animation anim = Animation::New(PAN_MODE_CHANGE_ANIMATION_DURATION);
-        anim.AnimateTo(Property(actor, Actor::Property::COLOR), Vector4::ONE);
+        anim.AnimateTo(Property(actor, Actor::Property::COLOR_MULTIPLIER), Vector4::ONE);
         anim.AnimateTo(Property(actor, Actor::Property::SCALE), actor.GetCurrentProperty<Vector3>(Actor::Property::SCALE) * PAN_MODE_END_ANIMATION_SCALE, AlphaFunction::BOUNCE);
 
         // Move actor back to center if we're out of bounds
@@ -359,7 +359,7 @@ private:
     Animation anim = Animation::New(TAP_ANIMATION_DURATION);
     anim.AnimateBy(Property(actor, Actor::Property::ORIENTATION), Quaternion(ANGLE_360, Vector3::ZAXIS));
     anim.AnimateTo(Property(actor, Actor::Property::SCALE), Vector3::ONE, AlphaFunction::LINEAR);
-    anim.AnimateTo(Property(actor, Actor::Property::COLOR), TAP_ANIMATION_COLOR, AlphaFunction::BOUNCE);
+    anim.AnimateTo(Property(actor, Actor::Property::COLOR_MULTIPLIER), TAP_ANIMATION_COLOR, AlphaFunction::BOUNCE);
     anim.AnimateTo(Property(actor, Actor::Property::POSITION), Vector3::ZERO, AlphaFunction::EASE_OUT_SQUARE);
     anim.Play();
   }

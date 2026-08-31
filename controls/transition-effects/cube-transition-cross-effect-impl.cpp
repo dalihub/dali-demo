@@ -140,8 +140,8 @@ void CubeTransitionCrossEffect::SetupAnimation(unsigned int actorIndex, unsigned
   mAnimation.AnimateTo(Property(mBoxes[actorIndex], Actor::Property::ORIENTATION), Quaternion(Radian(-angle), axis), AlphaFunction::EASE_IN_OUT_SINE);
   mAnimation.AnimateTo(Property(mBoxes[actorIndex], Actor::Property::POSITION), newLocalPosition, AlphaFunction::BOUNCE);
 
-  mAnimation.AnimateTo(Property(mCurrentTiles[actorIndex], Actor::Property::COLOR), HALF_BRIGHTNESS, AlphaFunction::EASE_OUT);
-  mAnimation.AnimateTo(Property(mTargetTiles[actorIndex], Actor::Property::COLOR), FULL_BRIGHTNESS, AlphaFunction::EASE_IN);
+  mAnimation.AnimateTo(Property(mCurrentTiles[actorIndex], Actor::Property::COLOR_MULTIPLIER), HALF_BRIGHTNESS, AlphaFunction::EASE_OUT);
+  mAnimation.AnimateTo(Property(mTargetTiles[actorIndex], Actor::Property::COLOR_MULTIPLIER), FULL_BRIGHTNESS, AlphaFunction::EASE_IN);
 }
 
 } // namespace Dali::Demo::Internal

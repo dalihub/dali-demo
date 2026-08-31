@@ -397,7 +397,7 @@ void DaliTableView::CreateFocusEffect()
     scaleKeyFrames.Add(KEYBOARD_FOCUS_ANIMATION_DURATION, KEYBOARD_FOCUS_FINAL_SCALE);
 
     mFocusEffect[i].animation = Animation::New(KEYBOARD_FOCUS_ANIMATION_DURATION);
-    mFocusEffect[i].animation.AnimateBetween(Property(mFocusEffect[i].actor, Actor::Property::COLOR_ALPHA), alphaKeyFrames);
+    mFocusEffect[i].animation.AnimateBetween(Property(mFocusEffect[i].actor, Actor::Property::COLOR_MULTIPLIER_ALPHA), alphaKeyFrames);
     mFocusEffect[i].animation.AnimateBetween(Property(mFocusEffect[i].actor, Actor::Property::SCALE), scaleKeyFrames);
 
     mFocusEffect[i].animation.SetLoopCount(KEYBOARD_FOCUS_ANIMATION_LOOP_COUNT);
