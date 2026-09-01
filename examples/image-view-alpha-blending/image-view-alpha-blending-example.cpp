@@ -90,7 +90,7 @@ private:
     Animation animation = Animation::New(10.f);
     animation.AnimateTo(Property(imageView0, Actor::Property::COLOR_MULTIPLIER), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod(2.f, 8.f));
     animation.AnimateTo(Property(imageView2, Actor::Property::COLOR_MULTIPLIER), Vector4(1.0f, 1.0f, 1.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod(2.f, 8.f));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
   }
 

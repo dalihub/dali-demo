@@ -119,7 +119,7 @@ private:
 
       // Create an animation and set the progress so that each image starts at a different point.
       Animation animation = Animation::New(ANIMATION_TIME);
-      animation.SetLooping(true);
+      animation.SetLoopCount(Animation::INFINITE_LOOP);
       animation.AnimateBetween(Property(imageView, Actor::Property::POSITION_X), keyFrames);
       animation.SetCurrentProgress(std::min(1.0f, ANIMATION_PROGRESS_MULTIPLIER * i));
       animation.Play();

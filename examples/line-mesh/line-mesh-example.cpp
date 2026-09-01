@@ -182,7 +182,7 @@ public:
     keyFrames.Add(1.0f, 1.0f);
 
     animation.AnimateBetween(Property(mMeshActor, morphAmountIndex), keyFrames, AlphaFunction(AlphaFunction::SIN));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
   }
 

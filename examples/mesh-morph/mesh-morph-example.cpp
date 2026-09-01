@@ -287,7 +287,7 @@ public:
 
     Animation animation = Animation::New(10);
     animation.AnimateTo(Property(mMeshActor, morphDeltaIndex), 1.f, StationarySin);
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     window.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));

@@ -211,7 +211,7 @@ private:
                                Vector4(relativeSubSize * i, relativeSubSize * j, relativeSubSize, relativeSubSize),
                                AlphaFunction::BOUNCE);
         }
-      mAnimation.SetLooping(true);
+      mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
       mAnimation.Play();
 
       mPixelAreaLabel.SetProperty(Toolkit::TextLabel::Property::TEXT, " Animate ImageView::Property::PIXEL_AREA \n     (Overwrite the ImageVisual property) ");

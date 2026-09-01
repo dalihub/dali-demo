@@ -208,7 +208,7 @@ public:
     window.GetRootLayer().Add(mRootActor);
 
     mAnimation = Animation::New(10.0f);
-    mAnimation.SetLooping(true);
+    mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mAnimation.AnimateTo(Property(mRootActor, Actor::Property::OPACITY), 0.2f); ///< Do not make it as 0.0f, to avoid full-transparent optimization.
     mAnimation.Play();
 

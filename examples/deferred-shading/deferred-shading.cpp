@@ -528,7 +528,7 @@ private:
 
     // Take them for a spin.
     Animation animLights = Animation::New(40.f);
-    animLights.SetLooping(true);
+    animLights.SetLoopCount(Animation::INFINITE_LOOP);
     animLights.AnimateBy(Property(lights, Actor::Property::ORIENTATION), Quaternion(Radian(M_PI * 2.f), Vector3::YAXIS));
     animLights.Play();
 

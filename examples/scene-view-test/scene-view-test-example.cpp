@@ -190,7 +190,7 @@ private:
     mSceneView.Add(rotatingActor);
 
     mCameraRotateAnimation = Animation::New(10.0f);
-    mCameraRotateAnimation.SetLooping(true);
+    mCameraRotateAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mCameraRotateAnimation.AnimateBy(Property(rotatingActor, Actor::Property::ORIENTATION), MODEL_ROTATION);
     if(mRotateCamera)
     {

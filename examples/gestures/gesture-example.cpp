@@ -211,7 +211,7 @@ private:
     AddHelpInfo("Press & Hold image to drag", windowSize, background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME);
     AddHelpInfo("Pinch image to resize", windowSize, background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME);
     AddHelpInfo("Move fingers in a circular motion on image to rotate", windowSize, background, helpAnimation, startTime += HELP_ANIMATION_SEGMENT_TIME, endTime += HELP_ANIMATION_SEGMENT_TIME);
-    helpAnimation.SetLooping(true);
+    helpAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     helpAnimation.Play();
   }
 
@@ -248,7 +248,7 @@ private:
           anim.Play();
 
           // Stop the shake animation from looping.
-          mShakeAnimation.SetLooping(false);
+          mShakeAnimation.SetLoopCount(1);
         }
         break;
       }
@@ -280,7 +280,7 @@ private:
       anim.Play();
 
       // Start the shake animation so the user knows when they are in pan mode.
-      mShakeAnimation.SetLooping(true);
+      mShakeAnimation.SetLoopCount(Animation::INFINITE_LOOP);
       mShakeAnimation.Play();
     }
   }
@@ -333,7 +333,7 @@ private:
         anim.Play();
 
         // Set end of pan configuration and disconnect the actor from the pan detector
-        mShakeAnimation.SetLooping(false);
+        mShakeAnimation.SetLoopCount(1);
         mPanStarted = false;
         mPanDetector.Detach(actor);
         break;

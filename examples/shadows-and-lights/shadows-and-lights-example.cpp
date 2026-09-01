@@ -297,7 +297,7 @@ public:
 
     mSceneAnimation.AnimateTo(Property(mImageActor2, angleIndex), Property::Value(-Dali::ANGLE_30), AlphaFunction::SIN);
 
-    mSceneAnimation.SetLooping(true);
+    mSceneAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mSceneAnimation.Play();
 
     mSceneActor.SetProperty(Actor::Property::SIZE, Vector2(250.0f, 250.0f));

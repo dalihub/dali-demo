@@ -158,7 +158,7 @@ public:
       float     spin              = i % 2 == 0 ? 1.0f : -1.0f; //Make actors spin in different directions to better show independence.
       rotationAnimation.AnimateBy(Property(control, Actor::Property::ORIENTATION),
                                   Quaternion(Degree(0.0f), Degree(spin * 360.0f), Degree(0.0f)));
-      rotationAnimation.SetLooping(true);
+      rotationAnimation.SetLoopCount(Animation::INFINITE_LOOP);
       rotationAnimation.Play();
 
       //Store model information in corresponding structs.

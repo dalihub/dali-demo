@@ -147,7 +147,7 @@ public:
 
     animation.AnimateBy(Property(mMeshActor, Actor::Property::ORIENTATION), Quaternion(Degree(360), Vector3::ZAXIS));
 
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     window.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));

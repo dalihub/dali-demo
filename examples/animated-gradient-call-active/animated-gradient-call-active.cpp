@@ -359,7 +359,7 @@ private:
     mDeclineAnimation = Animation::New(DECLINE_ANIMATION_DURATION);
 
     mDeclineAnimation.AnimateTo(DevelControl::GetVisualProperty(mCallEndButton, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), 2.0f, AlphaFunction::EASE_IN_OUT, TimePeriod(DECLINE_ANIMATION_DELAY, DECLINE_ANIMATION_DURATION - DECLINE_ANIMATION_DELAY));
-    mDeclineAnimation.SetLooping(true);
+    mDeclineAnimation.SetLoopCount(Animation::INFINITE_LOOP);
   }
 
   bool OnButtonClicked(Button button)
@@ -381,7 +381,7 @@ private:
       }
       mActiveAnimation = Animation::New(ACTIVE_ANIMATION_DURATION);
       mActiveAnimation.AnimateTo(DevelControl::GetVisualProperty(mBackground, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), -2.0f);
-      mActiveAnimation.SetLooping(true);
+      mActiveAnimation.SetLoopCount(Animation::INFINITE_LOOP);
       mActiveAnimation.Play();
     }
     else if(button == mCallEndButton)
@@ -417,7 +417,7 @@ private:
     }
     mIncomeAnimation = Animation::New(INCOME_ANIMATION_DURATION);
     mIncomeAnimation.AnimateTo(DevelControl::GetVisualProperty(mBackground, Control::Property::BACKGROUND, GradientVisual::Property::START_OFFSET), -2.0f);
-    mIncomeAnimation.SetLooping(true);
+    mIncomeAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mIncomeAnimation.Play();
   }
 

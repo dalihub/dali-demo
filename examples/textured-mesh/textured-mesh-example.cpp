@@ -140,7 +140,7 @@ public:
 
     animation.AnimateBetween(Property(mRenderer, fadeColorIndex), keyFrames, AlphaFunction(AlphaFunction::SIN));
     animation.AnimateBetween(Property(mRenderer2, fadeColorIndex2), keyFrames2, AlphaFunction(AlphaFunctionSineX2));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     window.SetBackgroundColor(Vector4(0.0f, 0.2f, 0.2f, 1.0f));

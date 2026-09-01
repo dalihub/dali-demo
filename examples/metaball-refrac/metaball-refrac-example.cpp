@@ -404,7 +404,7 @@ void MetaballRefracController::CreateAnimations()
   float    key;
 
   mPositionVarAnimation[1] = Animation::New(2.f);
-  mPositionVarAnimation[1].SetLooping(false);
+  mPositionVarAnimation[1].SetLoopCount(1);
   mPositionVarAnimation[1].Pause();
   mPositionVarAnimation[1].FinishedSignal().Connect(this, &MetaballRefracController::LaunchGetBackToPositionAnimation);
 
@@ -420,7 +420,7 @@ void MetaballRefracController::CreateAnimations()
 
   mPositionVarAnimation[2] = Animation::New(6.f);
   mPositionVarAnimation[2].AnimateBetween(Property(mMetaballs[2].actor, mMetaballs[2].positionVarIndex), keySinCosVariation);
-  mPositionVarAnimation[2].SetLooping(true);
+  mPositionVarAnimation[2].SetLoopCount(Animation::INFINITE_LOOP);
   mPositionVarAnimation[2].Pause();
 
   KeyFrames keyCosSinVariation = KeyFrames::New();
@@ -435,7 +435,7 @@ void MetaballRefracController::CreateAnimations()
 
   mPositionVarAnimation[3] = Animation::New(6.f);
   mPositionVarAnimation[3].AnimateBetween(Property(mMetaballs[3].actor, mMetaballs[3].positionVarIndex), keyCosSinVariation);
-  mPositionVarAnimation[3].SetLooping(true);
+  mPositionVarAnimation[3].SetLoopCount(Animation::INFINITE_LOOP);
   mPositionVarAnimation[3].Pause();
 
   //Animations for gravity
@@ -443,7 +443,7 @@ void MetaballRefracController::CreateAnimations()
   {
     mGravityAnimation[i] = Animation::New(25.f);
     mGravityAnimation[i].AnimateBy(Property(mMetaballs[i].actor, mMetaballs[i].gravityIndex), mGravity * 25.f * 3.f);
-    mGravityAnimation[i].SetLooping(false);
+    mGravityAnimation[i].SetLoopCount(1);
     mGravityAnimation[i].Pause();
   }
 
@@ -452,7 +452,7 @@ void MetaballRefracController::CreateAnimations()
   {
     mRadiusDecAnimation[i] = Animation::New(25.f);
     mRadiusDecAnimation[i].AnimateBy(Property(mMetaballs[i].actor, mMetaballs[i].radiusIndex), -0.004f * 25.f * 3.f);
-    mRadiusDecAnimation[i].SetLooping(false);
+    mRadiusDecAnimation[i].SetLoopCount(1);
     mRadiusDecAnimation[i].Pause();
   }
 
@@ -461,7 +461,7 @@ void MetaballRefracController::CreateAnimations()
   {
     mRadiusIncFastAnimation[i] = Animation::New(0.3f);
     mRadiusIncFastAnimation[i].AnimateBy(Property(mMetaballs[i].actor, mMetaballs[i].radiusIndex), 0.06f);
-    mRadiusIncFastAnimation[i].SetLooping(false);
+    mRadiusIncFastAnimation[i].SetLoopCount(1);
     mRadiusIncFastAnimation[i].Pause();
   }
   mRadiusIncFastAnimation[0].FinishedSignal().Connect(this, &MetaballRefracController::LaunchRadiusIncSlowAnimations);
@@ -471,7 +471,7 @@ void MetaballRefracController::CreateAnimations()
   {
     mRadiusIncSlowAnimation[i] = Animation::New(20.f);
     mRadiusIncSlowAnimation[i].AnimateBy(Property(mMetaballs[i].actor, mMetaballs[i].radiusIndex), 0.04f);
-    mRadiusIncSlowAnimation[i].SetLooping(false);
+    mRadiusIncSlowAnimation[i].SetLoopCount(1);
     mRadiusIncSlowAnimation[i].Pause();
   }
 
@@ -488,7 +488,7 @@ void MetaballRefracController::CreateAnimations()
   //Animation to change the size of the metaball
   mRadiusVarAnimation[2] = Animation::New(8.f);
   mRadiusVarAnimation[2].AnimateBetween(Property(mMetaballs[2].actor, mMetaballs[2].radiusVarIndex), keySin);
-  mRadiusVarAnimation[2].SetLooping(true);
+  mRadiusVarAnimation[2].SetLoopCount(Animation::INFINITE_LOOP);
 
   // Keyframes of a cos function
   KeyFrames keyCos = KeyFrames::New();
@@ -502,7 +502,7 @@ void MetaballRefracController::CreateAnimations()
   //Animation to change the size of the metaball
   mRadiusVarAnimation[3] = Animation::New(8.f);
   mRadiusVarAnimation[3].AnimateBetween(Property(mMetaballs[3].actor, mMetaballs[3].radiusVarIndex), keyCos);
-  mRadiusVarAnimation[3].SetLooping(true);
+  mRadiusVarAnimation[3].SetLoopCount(Animation::INFINITE_LOOP);
 }
 
 void MetaballRefracController::LaunchGetBackToPositionAnimation(Animation source)
@@ -510,7 +510,7 @@ void MetaballRefracController::LaunchGetBackToPositionAnimation(Animation source
   mMetaballPosVariationTo = Vector2(0, 0);
 
   mPositionVarAnimation[1] = Animation::New(1.f);
-  mPositionVarAnimation[1].SetLooping(false);
+  mPositionVarAnimation[1].SetLoopCount(1);
   mPositionVarAnimation[1].AnimateTo(Property(mMetaballs[1].actor, mMetaballs[1].positionVarIndex), Vector2(0, 0));
   mPositionVarAnimation[1].Play();
 }
@@ -622,7 +622,7 @@ void MetaballRefracController::OnTouch(Window window, TouchEvent touch)
         mPositionVarAnimation[1].Stop();
       }
       mPositionVarAnimation[1] = Animation::New(1.f);
-      mPositionVarAnimation[1].SetLooping(false);
+      mPositionVarAnimation[1].SetLoopCount(1);
       mPositionVarAnimation[1].AnimateTo(Property(mMetaballs[1].actor, mMetaballs[1].positionVarIndex), mMetaballPosVariationTo);
       mPositionVarAnimation[1].FinishedSignal().Connect(this, &MetaballRefracController::LaunchGetBackToPositionAnimation);
       mPositionVarAnimation[1].Play();

@@ -184,11 +184,11 @@ public:
     Renderer renderer                        = Renderer::New(geometry, shader);
     renderer[Renderer::Property::BLEND_MODE] = BlendMode::ON;
 
-    Actor actor                      = Actor::New();
-    actor[Actor::Property::SIZE]     = Vector2(400.0f, 400.0f);
-    actor[Actor::Property::POSITION] = center;
-    actor[Actor::Property::PIVOT]    = Pivot::CENTER;
-    actor[Actor::Property::COLOR_MULTIPLIER]    = Color::YELLOW;
+    Actor actor                              = Actor::New();
+    actor[Actor::Property::SIZE]             = Vector2(400.0f, 400.0f);
+    actor[Actor::Property::POSITION]         = center;
+    actor[Actor::Property::PIVOT]            = Pivot::CENTER;
+    actor[Actor::Property::COLOR_MULTIPLIER] = Color::YELLOW;
     actor.AddRenderer(renderer);
 
     Window window = mApplication.GetWindow();
@@ -213,7 +213,7 @@ public:
     k0.Add(0.5f, v5 + Vector3(0.0, 150.0f, 0.0f));
     k0.Add(1.0f, v5);
     animation.AnimateBetween(Property(shader, "uPosition[7]"), k0, AlphaFunction::EASE_IN_OUT_SINE);
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
   }
 
@@ -312,7 +312,7 @@ public:
     animation.AnimateBetween(Property(shader, shader.GetPropertyIndex("uPosition[10]")), k0, AlphaFunction::EASE_IN_OUT_SINE);
 
     animation.AnimateBy(Property(actor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(-90.0f)), Vector3::ZAXIS));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
   }
 
@@ -377,11 +377,11 @@ public:
     Renderer renderer                        = Renderer::New(geometry, shader);
     renderer[Renderer::Property::BLEND_MODE] = BlendMode::ON;
 
-    Actor actor                      = Actor::New();
-    actor[Actor::Property::SIZE]     = Vector2(400.0f, 400.0f);
-    actor[Actor::Property::POSITION] = center;
-    actor[Actor::Property::PIVOT]    = Pivot::CENTER;
-    actor[Actor::Property::COLOR_MULTIPLIER]    = Color::RED;
+    Actor actor                              = Actor::New();
+    actor[Actor::Property::SIZE]             = Vector2(400.0f, 400.0f);
+    actor[Actor::Property::POSITION]         = center;
+    actor[Actor::Property::PIVOT]            = Pivot::CENTER;
+    actor[Actor::Property::COLOR_MULTIPLIER] = Color::RED;
     actor.AddRenderer(renderer);
 
     Window window = mApplication.GetWindow();
@@ -414,7 +414,7 @@ public:
     animation.AnimateBetween(Property(shader, shader.GetPropertyIndex("uPosition[10]")), k0, AlphaFunction::EASE_IN_OUT_SINE);
 
     animation.AnimateBy(Property(actor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(90.0f)), Vector3::ZAXIS));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
   }
 

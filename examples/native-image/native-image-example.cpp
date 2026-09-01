@@ -180,7 +180,7 @@ public:
     animation.AnimateBy(Property(mSourceActor, Actor::Property::ORIENTATION), Quaternion(relativeRotationRadians, Vector3::ZAXIS), AlphaFunction::LINEAR, TimePeriod(0.5f, 0.5f));
     animation.AnimateBy(Property(mSourceActor, Actor::Property::ORIENTATION), Quaternion(relativeRotationRadians, Vector3::ZAXIS), AlphaFunction::LINEAR, TimePeriod(1.f, 0.5f));
     animation.AnimateBy(Property(mSourceActor, Actor::Property::ORIENTATION), Quaternion(relativeRotationRadians, Vector3::ZAXIS), AlphaFunction::LINEAR, TimePeriod(1.5f, 0.5f));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     TextLabel textLabel1 = TextLabel::New();

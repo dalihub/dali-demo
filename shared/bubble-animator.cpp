@@ -176,7 +176,7 @@ void BubbleAnimator::InitializeBackgroundActors(Dali::Actor actor)
     // Kickoff animation
     Animation animation = Animation::New(Random::Range(30.0f, 160.0f));
     animation.AnimateBy(Property(child, Actor::Property::POSITION), Vector3(0.0f, -2000.0f, 0.0f), AlphaFunction::LINEAR);
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
     mBackgroundAnimations.push_back(animation);
   }

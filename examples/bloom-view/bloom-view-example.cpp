@@ -153,7 +153,7 @@ public:
     mRotationAnimation = Animation::New(5.0f);
     mRotationAnimation.AnimateBy(Property(mObjectRootActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::YAXIS), AlphaFunction::EASE_IN_OUT);
     mRotationAnimation.SetEndAction(Animation::DISCARD);
-    mRotationAnimation.SetLooping(true);
+    mRotationAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mRotationAnimation.Play();
 
     // TRANSLATE
@@ -162,7 +162,7 @@ public:
     mTranslationAnimation.AnimateBy(Property(mObjectRootActor, Actor::Property::POSITION), Vector3(300.0f, 0.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod(2.5f, 2.5f));
     mTranslationAnimation.AnimateBy(Property(mObjectRootActor, Actor::Property::POSITION), Vector3(0.0f, 0.0f, 0.0f), AlphaFunction::BOUNCE, TimePeriod(5.0f, 2.5f));
     mTranslationAnimation.SetEndAction(Animation::DISCARD);
-    mTranslationAnimation.SetLooping(true);
+    mTranslationAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     //mTranslationAnimation.Play();
 
     // BLUR
@@ -170,7 +170,7 @@ public:
     mBlurAnimation.AnimateTo(Property(mBloomView, mBloomView.GetBlurStrengthPropertyIndex()), 0.0f, AlphaFunction::LINEAR, TimePeriod(0.0f, 0.5f));
     mBlurAnimation.AnimateTo(Property(mBloomView, mBloomView.GetBlurStrengthPropertyIndex()), 1.0f, AlphaFunction::LINEAR, TimePeriod(2.0f, 0.5f));
     mBlurAnimation.SetEndAction(Animation::DISCARD);
-    mBlurAnimation.SetLooping(true);
+    mBlurAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mBlurAnimation.Play();
   }
 
@@ -179,7 +179,7 @@ public:
     mPulseBloomIntensityAnim = Animation::New(2.5f);
     mPulseBloomIntensityAnim.AnimateTo(Property(mBloomView, mBloomView.GetBloomIntensityPropertyIndex()), 3.0f, AlphaFunction::BOUNCE, TimePeriod(2.5f));
     mPulseBloomIntensityAnim.SetEndAction(Animation::DISCARD);
-    mPulseBloomIntensityAnim.SetLooping(true);
+    mPulseBloomIntensityAnim.SetLoopCount(Animation::INFINITE_LOOP);
     mPulseBloomIntensityAnim.Play();
   }
 

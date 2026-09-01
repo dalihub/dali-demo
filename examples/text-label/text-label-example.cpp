@@ -275,7 +275,7 @@ public:
 
     Animation anim = Animation::New(50.0f);
     anim.AnimateTo(Property(mLabel, mHueAngleIndex), 6.28318f);
-    anim.SetLooping(true);
+    anim.SetLoopCount(Animation::INFINITE_LOOP);
     anim.Play();
 
     mContainer.RaiseToTop();

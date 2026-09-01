@@ -87,7 +87,7 @@ public:
 
     mAnimation.AnimateBetween(Dali::Property(dummyActor, Dali::Actor::Property::ORIENTATION), keyFrames);
     mAnimation.Play();
-    mAnimation.SetLooping(true);
+    mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     light1.Enable(true);
     light1.EnableShadow(true);
     light1.EnableShadowSoftFiltering(true);

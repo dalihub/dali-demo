@@ -207,7 +207,7 @@ private:
 
     mBoardAnimation = Animation::New(BOARD_MOVE_TIME / mSpeedMultiplier);
     mBoardAnimation.AnimateBetween(Property(mImageBoard, Actor::Property::POSITION), positions, AlphaFunction::LINEAR);
-    mBoardAnimation.SetLooping(true);
+    mBoardAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mBoardAnimation.Play();
   }
 

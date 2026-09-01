@@ -224,7 +224,7 @@ private:
                                  Quaternion(Degree(0.0f), Degree(0.0f), Degree(fullRotation)));
     mRotationAnimation.AnimateBy(Property(mCubes[REFLECTION_CUBE], Actor::Property::ORIENTATION),
                                  Quaternion(Degree(0.0f), Degree(fullRotation), Degree(0.0f)));
-    mRotationAnimation.SetLooping(true);
+    mRotationAnimation.SetLoopCount(Animation::INFINITE_LOOP);
 
     // Set up the cube bouncing animation.
     float totalTime       = ANIMATION_BOUNCE_TOTAL_TIME;
@@ -264,7 +264,7 @@ private:
       mBounceAnimation.AnimateBy(Property(mCubes[cube], Actor::Property::POSITION_Y), -heightChange, AlphaFunction::EASE_OUT_SQUARE, TimePeriod(halfTime + halfDeformationTime, halfTime - halfDeformationTime));
     }
 
-    mBounceAnimation.SetLooping(true);
+    mBounceAnimation.SetLoopCount(Animation::INFINITE_LOOP);
 
     // Start the animations.
     mRotationAnimation.Play();
