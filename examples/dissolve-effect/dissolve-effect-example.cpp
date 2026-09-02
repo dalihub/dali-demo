@@ -312,7 +312,7 @@ void DissolveEffectApp::StartTransition(Vector2 position, Vector2 displacement)
   mAnimation.AnimateTo(Property(mCurrentImage, "uPercentage"), 1.0f, AlphaFunction::LINEAR);
 
   mNextImage.SetProperty(Actor::Property::OPACITY, 0.0f);
-  mAnimation.AnimateTo(Property(mNextImage, Actor::Property::COLOR_ALPHA), 1.0f, AlphaFunction::LINEAR);
+  mAnimation.AnimateTo(Property(mNextImage, Actor::Property::COLOR_MULTIPLIER_ALPHA), 1.0f, AlphaFunction::LINEAR);
 
   if(mUseHighPrecision)
   {

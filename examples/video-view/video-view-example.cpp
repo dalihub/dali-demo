@@ -172,7 +172,7 @@ public:
 
     mRotationAnimation = Animation::New(2.f);
     mRotationAnimation.AnimateBy(Property(mVideoView, Actor::Property::ORIENTATION), Quaternion(Degree(0.f), Degree(360.f), Degree(0.f)));
-    mRotationAnimation.SetLooping(false);
+    mRotationAnimation.SetLoopCount(1);
 
     window.KeyEventSignal().Connect(this, &VideoViewController::OnKeyEvent);
   }

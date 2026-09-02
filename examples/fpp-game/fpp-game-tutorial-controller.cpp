@@ -76,7 +76,7 @@ void FppGameTutorialController::OnTouch(Window window, TouchEvent touchEvent)
       {
         mLeftTutorialComplete = true;
         Animation animation   = Animation::New(1.0f);
-        animation.AnimateTo(Property(mLeftLabel, Actor::Property::COLOR_ALPHA), 0.0f);
+        animation.AnimateTo(Property(mLeftLabel, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f);
 
         // connect complete signal
         if(mRightTutorialComplete)
@@ -90,7 +90,7 @@ void FppGameTutorialController::OnTouch(Window window, TouchEvent touchEvent)
       {
         mRightTutorialComplete = true;
         Animation animation    = Animation::New(1.0f);
-        animation.AnimateTo(Property(mRightLabel, Actor::Property::COLOR_ALPHA), 0.0f);
+        animation.AnimateTo(Property(mRightLabel, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f);
         // connect complete signal
         if(mLeftTutorialComplete)
         {
@@ -162,8 +162,8 @@ void FppGameTutorialController::DisplayTutorial(Dali::Window window)
   mWindow.Add(uiCamera);
 
   Animation animation = Animation::New(1.0f);
-  animation.AnimateTo(Property(mLeftLabel, Actor::Property::COLOR_ALPHA), 1.0f, AlphaFunction::EASE_OUT);
-  animation.AnimateTo(Property(mRightLabel, Actor::Property::COLOR_ALPHA), 1.0f, AlphaFunction::EASE_OUT);
+  animation.AnimateTo(Property(mLeftLabel, Actor::Property::COLOR_MULTIPLIER_ALPHA), 1.0f, AlphaFunction::EASE_OUT);
+  animation.AnimateTo(Property(mRightLabel, Actor::Property::COLOR_MULTIPLIER_ALPHA), 1.0f, AlphaFunction::EASE_OUT);
 
   animation.FinishedSignal().Connect(this, &FppGameTutorialController::OnTutorialAnimationFinished);
 

@@ -447,7 +447,7 @@ private:
                          Quaternion(Degree(359), Vector3(0.0, 1.0, 0.0)));
     mAnimation.AnimateBy(Property(milkyway, Actor::Property::ORIENTATION),
                          Quaternion(Degree(-359), Vector3(0.0, 1.0, 0.0)));
-    mAnimation.SetLooping(true);
+    mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mAnimation.Play();
 
     Actor   panScreen  = Actor::New();

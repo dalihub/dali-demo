@@ -499,7 +499,7 @@ public:
       keyframes.Add(i * lengthAnimation, Quaternion(Degree(i * 90.0), Vector3::YAXIS));
     }
     mAnimation.AnimateBetween(Property(mModel, Dali::Actor::Property::ORIENTATION), keyframes, Animation::Interpolation::LINEAR);
-    mAnimation.SetLooping(true);
+    mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mAnimation.Play();
   }
 

@@ -60,10 +60,10 @@ bool FrameCallback::Update(Dali::UpdateProxy& updateProxy, float /* elapsedSecon
 
       // Retrieve the actor's position and set make it more transparent the closer it is to the middle.
       Vector4 color;
-      if(updateProxy.GetColor(i, color))
+      if(updateProxy.GetColorMultiplier(i, color))
       {
         color.a = xTranslation / halfWidthPoint;
-        updateProxy.SetColor(i, color);
+        updateProxy.SetColorMultiplier(i, color);
       }
     }
   }

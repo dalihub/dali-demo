@@ -130,7 +130,7 @@ public:
     actor.SetProperty(Actor::Property::POSITION, Vector3(Random::Range(-200.0f, 200.0f), Random::Range(-300.0f, 300.0f), 0.0f));
     actor.SetProperty(Actor::Property::SIZE, Vector2(32, 32));
     Vector4 color(Random::Range(0.1f, 1.0f), Random::Range(0.1f, 1.0f), Random::Range(0.1f, 1.0f), 1.0f);
-    actor.SetProperty(Actor::Property::COLOR, color);
+    actor.SetProperty(Actor::Property::COLOR_MULTIPLIER, color);
 
     actor.AddRenderer(mRenderer);
 

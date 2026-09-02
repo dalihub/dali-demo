@@ -314,7 +314,7 @@ private:
   {
     Animation wanderAnimation = Animation::New(duration);
     wanderAnimation.AnimateTo(Property(mEffect, ToDaliString(PERCENTAGE_UNIFORM_NAME)), 1.f);
-    wanderAnimation.SetLooping(looping); // infinite playing
+    wanderAnimation.SetLoopCount(looping ? Animation::INFINITE_LOOP : 1); // infinite playing
 
     wanderAnimation.Play();
   }

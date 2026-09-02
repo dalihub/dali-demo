@@ -580,7 +580,7 @@ private:
 
     mActiveAnimation = Animation::New(mLoadingTime);
     mActiveAnimation.SetEndAction(Animation::EndAction::DISCARD);
-    mActiveAnimation.SetLooping(true);
+    mActiveAnimation.SetLoopCount(Animation::INFINITE_LOOP);
 
     if(index == 1)
     {

@@ -89,7 +89,7 @@ private:
     sceneView.Add(rotatingActor);
 
     Animation animation = Animation::New(10.0f);
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.AnimateBy(Property(rotatingActor, Actor::Property::ORIENTATION), MODEL_ROTATION);
     animation.Play();
 

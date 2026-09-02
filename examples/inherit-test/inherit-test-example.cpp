@@ -256,7 +256,7 @@ public:
     mAnimation = Animation::New(5.0f);
     mAnimation.AnimateBy(Property(mParent, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360.0f)), Vector3::ZAXIS));
     mAnimation.AnimateBy(Property(mCurrent, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360.0f)), Vector3::ZAXIS));
-    mAnimation.SetLooping(true);
+    mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mAnimation.PlayAfter(1.0f); // Play animation after world value printed
 
     mTimer = Timer::New(32);

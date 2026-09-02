@@ -211,7 +211,7 @@ private:
     // the animation which spin the light around the finger touch position
     mLightAnimation = Animation::New(2.f);
     mLightAnimation.AnimateTo(Property(mMeshActor, mSpinAngleIndex), Math::PI * 2.f);
-    mLightAnimation.SetLooping(true);
+    mLightAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mLightAnimation.Pause();
   }
 

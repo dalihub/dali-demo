@@ -207,7 +207,7 @@ private:
     auto size  = Vector2(Vector2(window.GetPositionSize().width, window.GetPositionSize().height));
     waves.SetProperty(Actor::Property::SIZE, Vector3(size.x, 100.f, size.y));
     waves.SetProperty(Actor::Property::ORIENTATION, baseOrientation);
-    waves.SetProperty(Actor::Property::COLOR, WAVES_COLOR);
+    waves.SetProperty(Actor::Property::COLOR_MULTIPLIER, WAVES_COLOR);
     waves.AddRenderer(renderer);
 
     window.Add(waves);
@@ -310,7 +310,7 @@ private:
     mTimeAnim.Stop();
 
     Animation anim = Animation::New(TRANSITION_DURATION);
-    anim.AnimateTo(Property(mWaves, Actor::Property::COLOR), Vector4(wavesColor), AlphaFunction::EASE_IN_OUT);
+    anim.AnimateTo(Property(mWaves, Actor::Property::COLOR_MULTIPLIER), Vector4(wavesColor), AlphaFunction::EASE_IN_OUT);
     anim.AnimateTo(Property(mWaveShader, mULightColorSqr), lightColor * lightColor, AlphaFunction::EASE_IN_OUT);
     anim.AnimateBy(Property(mWaveShader, mUTime), TRANSITION_DURATION * TIME_STEP * TRANSITION_TIME_SCALE, AlphaFunction::EASE_IN_OUT);
     anim.FinishedSignal().Connect(this, &WavesExample::OnTransitionFinished);

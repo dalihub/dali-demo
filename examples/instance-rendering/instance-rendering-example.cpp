@@ -205,7 +205,7 @@ public:
 
     Animation loopingAnimation = Animation::New(1.0f * static_cast<float>(INSTANCE_COUNT_MAX) / static_cast<float>(FIRST_INSTANCE_CHANGE_PER_SECOND));
     loopingAnimation.AnimateTo(Dali::Property(mActor, mFirstInstanceIndex), static_cast<int>(INSTANCE_COUNT_MAX - 1u));
-    loopingAnimation.SetLooping(true);
+    loopingAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     loopingAnimation.Play();
   }
 

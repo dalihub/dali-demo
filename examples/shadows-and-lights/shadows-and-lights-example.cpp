@@ -244,7 +244,7 @@ public:
     text.SetProperty(TextLabel::Property::TEXT, ToPropertyValue("Light"));
     text.SetProperty(TextLabel::Property::POINT_SIZE, 20.0f);
     DevelActor::SetResizePolicy(text, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-    text.SetProperty(Actor::Property::COLOR, Color::BLUE);
+    text.SetProperty(Actor::Property::COLOR_MULTIPLIER, Color::BLUE);
 
     mCastingLight.Add(text);
     mLightAnchor.Add(mCastingLight);
@@ -297,7 +297,7 @@ public:
 
     mSceneAnimation.AnimateTo(Property(mImageActor2, angleIndex), Property::Value(-Dali::ANGLE_30), AlphaFunction::SIN);
 
-    mSceneAnimation.SetLooping(true);
+    mSceneAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mSceneAnimation.Play();
 
     mSceneActor.SetProperty(Actor::Property::SIZE, Vector2(250.0f, 250.0f));

@@ -87,8 +87,8 @@ void CubeTransitionWaveEffect::OnStartTransition(Vector2 panPosition, Vector2 pa
       mAnimation.AnimateTo(Property(mBoxes[idx], Actor::Property::ORIENTATION), Quaternion(Radian(-angle), Vector3::YAXIS), AlphaFunction::EASE_OUT_SINE, TimePeriod(delay, thirdAnimationDuration));
       mAnimation.AnimateBy(Property(mBoxes[idx], Actor::Property::POSITION), Vector3(0.f, 0.f, -mCubeDisplacement), AlphaFunction::BOUNCE, TimePeriod(delay, thirdAnimationDuration));
 
-      mAnimation.AnimateTo(Property(mCurrentTiles[idx], Actor::Property::COLOR), HALF_BRIGHTNESS, AlphaFunction::EASE_OUT, TimePeriod(delay, thirdAnimationDuration));
-      mAnimation.AnimateTo(Property(mTargetTiles[idx], Actor::Property::COLOR), FULL_BRIGHTNESS, AlphaFunction::EASE_IN, TimePeriod(delay, thirdAnimationDuration));
+      mAnimation.AnimateTo(Property(mCurrentTiles[idx], Actor::Property::COLOR_MULTIPLIER), HALF_BRIGHTNESS, AlphaFunction::EASE_OUT, TimePeriod(delay, thirdAnimationDuration));
+      mAnimation.AnimateTo(Property(mTargetTiles[idx], Actor::Property::COLOR_MULTIPLIER), FULL_BRIGHTNESS, AlphaFunction::EASE_IN, TimePeriod(delay, thirdAnimationDuration));
     }
   }
 

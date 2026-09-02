@@ -80,7 +80,7 @@ private:
       mAnimation.AnimateTo(Property(mImageView, Actor::Property::POSITION_X), -excessWidth, TimePeriod(2.0f * qDuration, qDuration));
       mAnimation.AnimateTo(Property(mImageView, Actor::Property::POSITION_X), 0.0f, TimePeriod(3.0f * qDuration, qDuration));
 
-      mAnimation.SetLooping(true);
+      mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
       mAnimation.Play();
     }
 

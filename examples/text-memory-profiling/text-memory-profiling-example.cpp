@@ -362,7 +362,7 @@ public:
 
     mAnimation = Animation::New(0.8f);
     mAnimation.AnimateBy(Property(mIndicator, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(180.0f)), Vector3::ZAXIS));
-    mAnimation.SetLooping(true);
+    mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mAnimation.Play();
   }
 

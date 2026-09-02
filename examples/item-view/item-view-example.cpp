@@ -332,7 +332,7 @@ public:
   {
     Animation animation = Animation::New(mDurationSeconds);
     animation.FinishedSignal().Connect(this, &ItemViewExample::AnimationFinished);
-    animation.AnimateTo(Property(mItemView, Actor::Property::COLOR_ALPHA), 0.0f);
+    animation.AnimateTo(Property(mItemView, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f);
     animation.Play();
   }
 
@@ -341,7 +341,7 @@ public:
     SetLayout(mCurrentLayout);
 
     Animation animation = Animation::New(mDurationSeconds);
-    animation.AnimateTo(Property(mItemView, Actor::Property::COLOR_ALPHA), 1.0f);
+    animation.AnimateTo(Property(mItemView, Actor::Property::COLOR_MULTIPLIER_ALPHA), 1.0f);
     animation.Play();
   }
 

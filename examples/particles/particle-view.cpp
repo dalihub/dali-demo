@@ -172,9 +172,9 @@ ParticleView::~ParticleView()
 
 void ParticleView::SetColorRange(const ColorRange& range)
 {
-  mMasterParticles.SetProperty(Actor::Property::COLOR_RED, range.rgb0.r);
-  mMasterParticles.SetProperty(Actor::Property::COLOR_GREEN, range.rgb0.g);
-  mMasterParticles.SetProperty(Actor::Property::COLOR_BLUE, range.rgb0.b);
+  mMasterParticles.SetProperty(Actor::Property::COLOR_MULTIPLIER_RED, range.rgb0.r);
+  mMasterParticles.SetProperty(Actor::Property::COLOR_MULTIPLIER_GREEN, range.rgb0.g);
+  mMasterParticles.SetProperty(Actor::Property::COLOR_MULTIPLIER_BLUE, range.rgb0.b);
 
   mMasterParticles.SetProperty(mPropSecondaryColor, range.rgb1);
 }
@@ -264,8 +264,8 @@ void ParticleView::SetLinearVelocity(float v)
       world.Add(mMasterParticles);
     }
 
-    Constraint constraint = Constraint::New<Vector4>(slaveParticles, Actor::Property::COLOR, EqualToConstraint());
-    constraint.AddSource(Source(mMasterParticles, Actor::Property::COLOR));
+    Constraint constraint = Constraint::New<Vector4>(slaveParticles, Actor::Property::COLOR_MULTIPLIER, EqualToConstraint());
+    constraint.AddSource(Source(mMasterParticles, Actor::Property::COLOR_MULTIPLIER));
     constraint.Apply();
 
     constraint = Constraint::New<Vector3>(slaveParticles, propSecondaryColor, EqualToConstraint());
@@ -325,10 +325,10 @@ void ParticleView::Fade(float duration, float target, AlphaFunction alphaFn, std
   }
 
   Animation anim = Animation::New(duration);
-  anim.AnimateTo(Property(mMasterParticles, Actor::Property::COLOR_ALPHA), target, alphaFn);
+  anim.AnimateTo(Property(mMasterParticles, Actor::Property::COLOR_MULTIPLIER_ALPHA), target, alphaFn);
   if(mSlaveParticles)
   {
-    anim.AnimateTo(Property(mSlaveParticles, Actor::Property::COLOR_ALPHA), target, alphaFn);
+    anim.AnimateTo(Property(mSlaveParticles, Actor::Property::COLOR_MULTIPLIER_ALPHA), target, alphaFn);
   }
 
   if(onFinished)
@@ -342,10 +342,10 @@ void ParticleView::Fade(float duration, float target, AlphaFunction alphaFn, std
 
 void ParticleView::Fade(float duration, float target, float from, AlphaFunction alphaFn, std::function<void(Dali::Animation)> onFinished)
 {
-  mMasterParticles.SetProperty(Actor::Property::COLOR_ALPHA, from);
+  mMasterParticles.SetProperty(Actor::Property::COLOR_MULTIPLIER_ALPHA, from);
   if(mSlaveParticles)
   {
-    mSlaveParticles.SetProperty(Actor::Property::COLOR_ALPHA, from);
+    mSlaveParticles.SetProperty(Actor::Property::COLOR_MULTIPLIER_ALPHA, from);
   }
 
   Fade(duration, target, alphaFn, onFinished);

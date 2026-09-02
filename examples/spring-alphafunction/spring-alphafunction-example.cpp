@@ -98,37 +98,37 @@ public:
 
     Animation animation = Animation::New(1.0f); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mGentle, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction(Dali::AlphaFunction::SpringType::GENTLE));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     animation = Animation::New(1.0f); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mQuick, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction(Dali::AlphaFunction::SpringType::QUICK));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     animation = Animation::New(1.0f); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mBouncy, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction(Dali::AlphaFunction::SpringType::BOUNCY));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     animation = Animation::New(1.0f); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mSlow, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction(Dali::AlphaFunction::SpringType::SLOW));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     animation = Animation::New(SpringData{100.0f, 10.0f, 1.0f}.GetDuration()); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mS100D10M1, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction({100.0f, 10.0f, 1.0f}));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     animation = Animation::New(SpringData({4420.0f, 20.8f, 1.0f}).GetDuration()); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mS4420D20_8M1, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction({4420.0f, 20.8f, 1.0f}));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     animation = Animation::New(SpringData({1000.0f, 10.0f, 10.0f}).GetDuration()); // Set the longest duration.
     animation.AnimateTo(Dali::Property(mS1000D10M10, Dali::Actor::Property::POSITION_X), 500.0f, Dali::AlphaFunction({1000.0f, 10.0f, 10.0f}));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     // Respond to a touch anywhere on the window

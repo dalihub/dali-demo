@@ -96,7 +96,7 @@ public:
     Animation animation = Animation::New(15.0f);
     animation.AnimateTo(Dali::Property(mPanel, Dali::Actor::Property::ORIENTATION), Quaternion(Dali::Radian(M_PI), Vector3::YAXIS));
     animation.AnimateTo(Dali::Property(mPanel, Dali::Actor::Property::SIZE), Vector3(1.0f, 2.0f, 0.0f));
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.SetLoopingMode(Dali::Animation::LoopingMode::AUTO_REVERSE);
     animation.Play();
 

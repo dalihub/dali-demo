@@ -89,7 +89,7 @@ void EmbossFilter::Enable(Window window)
   mActorForComposite = Actor::New();
   mActorForComposite.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   mActorForComposite.SetProperty(Actor::Property::SIZE, mTargetSize);
-  mActorForComposite.SetProperty(Actor::Property::COLOR, Color::BLACK);
+  mActorForComposite.SetProperty(Actor::Property::COLOR_MULTIPLIER, Color::BLACK);
 
   mRootActor.Add(mActorForComposite);
 

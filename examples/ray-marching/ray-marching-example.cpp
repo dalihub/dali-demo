@@ -199,7 +199,7 @@ public:
     Animation animation = Animation::New(8.0f);
     animation.AnimateTo(Property(renderer, "uRadius"), 1.2f, AlphaFunction::BOUNCE);
     animation.AnimateTo(Property(renderer, "uAdjuster"), 4.0f, AlphaFunction::BOUNCE);
-    animation.SetLooping(true);
+    animation.SetLoopCount(Animation::INFINITE_LOOP);
     animation.Play();
 
     return renderer;

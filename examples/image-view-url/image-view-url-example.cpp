@@ -146,7 +146,7 @@ private:
 
       mActorForInput.SetProperty(mDeltaPropertyIndex, 0.f);
       mAnimation.AnimateTo(Property(mActorForInput, mDeltaPropertyIndex), Math::PI * 2.f);
-      mAnimation.SetLooping(true);
+      mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
       mAnimation.Play();
     }
   }

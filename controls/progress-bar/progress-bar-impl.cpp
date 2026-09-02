@@ -374,7 +374,7 @@ void ProgressBar::PlayIndeterminateVisualTransition()
 
   if(mIndeterminate && mIndeterminateVisualAni)
   {
-    mIndeterminateVisualAni.SetLooping(true);
+    mIndeterminateVisualAni.SetLoopCount(Animation::INFINITE_LOOP);
     mIndeterminateVisualAni.Play();
   }
 }

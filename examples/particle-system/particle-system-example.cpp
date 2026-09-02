@@ -93,7 +93,7 @@ private:
 
     // Create a fade out animation for the text label after a few seconds
     mTextLabelAnimation = Animation::New(TEXT_LABEL_ANIMATION_TIME);
-    mTextLabelAnimation.AnimateTo(Property(mTextLabel, Actor::Property::COLOR_ALPHA), 0.0f, TEXT_LABEL_ANIMATION_TIME_PERIOD);
+    mTextLabelAnimation.AnimateTo(Property(mTextLabel, Actor::Property::COLOR_MULTIPLIER_ALPHA), 0.0f, TEXT_LABEL_ANIMATION_TIME_PERIOD);
     mTextLabelAnimation.Play();
 
     // Start the default effect
@@ -151,7 +151,7 @@ private:
 
     // Set text and reset TextLabel properties and animation
     mTextLabel[Toolkit::TextLabel::Property::TEXT] = ToPropertyValue(effectName);
-    mTextLabel[Actor::Property::COLOR_ALPHA]       = 1.0f;
+    mTextLabel[Actor::Property::COLOR_MULTIPLIER_ALPHA]       = 1.0f;
     mTextLabelAnimation.SetCurrentProgress(0.0f);
     mTextLabelAnimation.Play();
   }

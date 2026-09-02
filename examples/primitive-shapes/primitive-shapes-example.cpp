@@ -333,7 +333,7 @@ public:
     mRotationAnimation = Animation::New(15.0f);
     mRotationAnimation.AnimateBy(Property(mModel, Actor::Property::ORIENTATION),
                                  Quaternion(Degree(0.0f), Degree(360.0f), Degree(0.0f)));
-    mRotationAnimation.SetLooping(true);
+    mRotationAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mRotationAnimation.Play();
 
     //Attach gesture detector to pan models when rotated.

@@ -439,7 +439,7 @@ void MetaballExplosionController::CreateAnimations()
 
     mPositionVarAnimation[i] = Animation::New(3.f);
     mPositionVarAnimation[i].AnimateBetween(Property(mMetaballs[i].actor, mMetaballs[i].positionVarIndex), keySinCosVariation);
-    mPositionVarAnimation[i].SetLooping(true);
+    mPositionVarAnimation[i].SetLoopCount(Animation::INFINITE_LOOP);
     mPositionVarAnimation[i].Play();
   }
 }

@@ -385,7 +385,7 @@ public:
   void ShowAnimation()
   {
     mShowAnimation = Animation::New(1.0f);
-    mShowAnimation.AnimateTo(Property(mScrollParent, Actor::Property::COLOR_ALPHA), 1.0f, AlphaFunction::EASE_IN_OUT);
+    mShowAnimation.AnimateTo(Property(mScrollParent, Actor::Property::COLOR_MULTIPLIER_ALPHA), 1.0f, AlphaFunction::EASE_IN_OUT);
     mShowAnimation.AnimateTo(Property(mScrollParent, Actor::Property::SCALE), Vector3::ONE, AlphaFunction::EASE_IN_OUT);
     mShowAnimation.FinishedSignal().Connect(this, &HomescreenBenchmark::OnAnimationEnd);
     mShowAnimation.Play();

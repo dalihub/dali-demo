@@ -229,7 +229,7 @@ private:
         float   jitterY      = RandomFloat(-mCellSize.y * 0.1f, mCellSize.y * 0.1f);
 
         cell.view[Actor::Property::POSITION] = basePosition + Vector3(jitterX, jitterY, 0.0f);
-        cell.view[Actor::Property::COLOR]    = RandomColor();
+        cell.view[Actor::Property::COLOR_MULTIPLIER]    = RandomColor();
         cell.view[Actor::Property::SIZE]     = Vector2(mCellSize.x, mCellSize.y) * (1.0f - VIEW_MARGIN_RATE) * RandomFloat(0.85f, 1.0f);
       }
     }
@@ -281,9 +281,9 @@ private:
     Actor target = Actor::DownCast(source.GetTarget());
     if(target)
     {
-      Vector4 color                  = target[Actor::Property::COLOR];
+      Vector4 color                  = target[Actor::Property::COLOR_MULTIPLIER];
       color.a                        = RandomFloat(0.6f, 1.0f);
-      target[Actor::Property::COLOR] = color;
+      target[Actor::Property::COLOR_MULTIPLIER] = color;
     }
   }
 

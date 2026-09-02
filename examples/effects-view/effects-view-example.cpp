@@ -206,7 +206,7 @@ void EffectsViewApp::AnimateEffectProperties(EffectsView& effectsView)
   animation.AnimateTo(Property(effectsView, EffectsView::Property::EFFECT_COLOR), Color::RED, TimePeriod(animationTime * 0.33f, animationTime * 0.33f));
   animation.AnimateTo(Property(effectsView, EffectsView::Property::EFFECT_COLOR), Color::BLACK, TimePeriod(animationTime * 0.66f, animationTime * 0.34f));
 
-  animation.SetLooping(true);
+  animation.SetLoopCount(Animation::INFINITE_LOOP);
   animation.Play();
 }
 

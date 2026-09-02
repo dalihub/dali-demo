@@ -115,7 +115,7 @@ public:
     mButton.ClickedSignal().Connect(this, &BasicLightController::OnExit);
     mButton.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.1f, 0.5f));
     mButton.SetStyleName(CUSTOM_BASIC_LIGHT_THEME);
-    mButton.SetProperty(Actor::Property::COLOR, Vector4(material[MaterialID].diffuse) + Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+    mButton.SetProperty(Actor::Property::COLOR_MULTIPLIER, Vector4(material[MaterialID].diffuse) + Vector4(0.0f, 0.0f, 0.0f, 1.0f));
     window.Add(mButton);
 
     // Step 1. Create shader
@@ -155,7 +155,7 @@ public:
       mShader.SetProperty(mShader.GetPropertyIndex("material.specular"), material[MaterialID].specular);
       mShader.SetProperty(mShader.GetPropertyIndex("material.shininess"), material[MaterialID].shininess * 128.0f);
       mLabel.SetProperty(TextLabel::Property::TEXT, material[MaterialID].name);
-      mButton.SetProperty(Actor::Property::COLOR, Vector4(material[MaterialID].diffuse) + Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+      mButton.SetProperty(Actor::Property::COLOR_MULTIPLIER, Vector4(material[MaterialID].diffuse) + Vector4(0.0f, 0.0f, 0.0f, 1.0f));
     }
     return;
   }
@@ -305,7 +305,7 @@ public:
 
     const float quarterWindowSize = std::min(positionSize.width, positionSize.height) * 0.25f;
     mActor                        = Actor::New();
-    mActor.SetProperty(Actor::Property::COLOR, Vector4(1.0f, 1.0f, 0.6f, 1.0f));
+    mActor.SetProperty(Actor::Property::COLOR_MULTIPLIER, Vector4(1.0f, 1.0f, 0.6f, 1.0f));
     mActor.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     mActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     mActor.SetProperty(Actor::Property::SIZE, Vector3(quarterWindowSize, quarterWindowSize, quarterWindowSize));
@@ -319,7 +319,7 @@ public:
   void PlayAnimation()
   {
     mAnimation = Animation::New(15.0f);
-    mAnimation.SetLooping(true);
+    mAnimation.SetLoopCount(Animation::INFINITE_LOOP);
     mAnimation.AnimateBy(Property(mActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::ZAXIS));
     mAnimation.AnimateBy(Property(mActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::YAXIS));
     mAnimation.AnimateBy(Property(mActor, Actor::Property::ORIENTATION), Quaternion(Radian(Degree(360)), Vector3::XAXIS));

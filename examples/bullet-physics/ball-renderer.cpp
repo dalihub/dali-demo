@@ -192,7 +192,7 @@ Actor BallRenderer::CreateActor(Vector3 size, Vector4 color)
   actor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   actor.SetProperty(Actor::Property::POSITION, Vector3(0.0f, 0.0f, 0.0f));
   actor.SetProperty(Actor::Property::SIZE, Vector3(size.x, size.y, size.z) * 0.5f);
-  actor.SetProperty(Actor::Property::COLOR, color);
+  actor.SetProperty(Actor::Property::COLOR_MULTIPLIER, color);
   if(!gBallTextureSet)
   {
     gBallTextureSet = CreateTexture(TEXTURE_URL);
