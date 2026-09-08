@@ -34,7 +34,7 @@
 // INTERNAL INCLUDES
 #include <controls/bubble-effect/bubble-emitter.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal
 {
@@ -180,6 +180,6 @@ inline const Internal::BubbleEmitter& GetImpl(const Dali::Demo::BubbleEmitter& o
   return static_cast<const Demo::Internal::BubbleEmitter&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_BUBBLE_EMMITER_H

@@ -17,7 +17,7 @@
 #include "expanding-buttons.h"
 #include "expanding-buttons-impl.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 ExpandingButtons::ExpandingButtons()
 {
@@ -82,4 +82,4 @@ ExpandingButtons::ExpandingButtons(Dali::Internal::CustomActor* internal)
   VerifyCustomActorPointer<Internal::ExpandingButtons>(internal);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

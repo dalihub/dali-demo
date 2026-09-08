@@ -18,7 +18,7 @@
 // CLASS HEADER
 #include <controls/transition-effects/cube-transition-fold-effect-impl.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 CubeTransitionFoldEffect::CubeTransitionFoldEffect(unsigned int numRows, unsigned int numColumns)
 : CubeTransitionEffect(numRows, numColumns)
@@ -134,4 +134,4 @@ void CubeTransitionFoldEffect::SetupAnimation(unsigned int actorIndex, unsigned 
   mAnimation.AnimateTo(Property(mTargetTiles[actorIndex], Actor::Property::COLOR_MULTIPLIER), FULL_BRIGHTNESS, AlphaFunction::EASE_IN);
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

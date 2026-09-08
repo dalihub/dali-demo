@@ -25,7 +25,7 @@
 #include <controls/dali-demo-controls-common.h>
 #include <dali-toolkit/public-api/controls/control.h>
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Demo
 {
@@ -235,6 +235,6 @@ public:
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE
 
 #endif // DALI_DEMO_CONTROLS_BLOOM_VIEW_H

@@ -25,7 +25,7 @@
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -133,6 +133,6 @@ public: // Not intended for application developers
   /// @endcond
 }; // class NavigationView
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_NAVIGATION_VIEW_H

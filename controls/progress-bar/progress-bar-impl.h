@@ -30,7 +30,7 @@
 // INTERNAL INCLUDES
 #include "progress-bar.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal
 {
@@ -334,6 +334,6 @@ inline const Demo::Internal::ProgressBar& GetImpl(const Demo::ProgressBar& pub)
   return static_cast<const Demo::Internal::ProgressBar&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_PROGRESS_BAR_H

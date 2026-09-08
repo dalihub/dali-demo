@@ -20,7 +20,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <string>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal
 {
@@ -122,6 +122,6 @@ public: // Not for public use
   ImageChannelControl(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_IMAGE_CHANNEL_CONTROL_H

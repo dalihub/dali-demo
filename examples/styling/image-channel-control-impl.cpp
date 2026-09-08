@@ -32,7 +32,7 @@ using Dali::Integration::ToStdString;
 
 using namespace Dali; // Needed for macros
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal
 {
@@ -320,4 +320,4 @@ Property::Value ImageChannelControl::GetProperty(BaseObject* object, Property::I
 }
 
 } // namespace Internal
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

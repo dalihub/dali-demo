@@ -63,7 +63,7 @@ using Dali::Integration::ToStdString;
 // to take account of the changed ShadowView object size, projecting to the unchanged render target sizes. This is done relative to the fixed render target / actor sizes
 // by using constraints relative to the ShadowView actor size.
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -394,4 +394,4 @@ void ShadowView::SetShaderConstants()
   mShadowColorPropertyIndex = mShadowPlane.RegisterProperty(SHADER_SHADOW_COLOR_PROPERTY_NAME, mCachedShadowColor);
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

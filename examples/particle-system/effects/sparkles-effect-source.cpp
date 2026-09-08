@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 #include "sparkles-effect-source.h"
 
-namespace Dali::ParticleEffect
+namespace DALI_NAMESPACE::ParticleEffect
 {
 static float LIFETIME = 3.0f;
 SparklesSource::SparklesSource(ParticleEmitter& emitter)
@@ -96,4 +96,4 @@ void SparklesSource::UpdateParticle(Vector3& position, Vector3& basePosition, Ve
   scale              = Vector3(initialScale, initialScale, 1);
 }
 
-} // namespace Dali::ParticleEffect
+} //namespace DALI_NAMESPACE::ParticleEffect

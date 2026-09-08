@@ -96,7 +96,7 @@ struct ActorOpacityConstraint
 
 } // namespace
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -412,4 +412,4 @@ Property::Value SuperBlurView::GetProperty(BaseObject* object, Property::Index p
   return value;
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

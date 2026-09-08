@@ -24,7 +24,7 @@
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 // Forward declarations
 class PageFactory;
@@ -195,6 +195,6 @@ public: // Not intended for application developers
   /// @endcond
 };
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_PAGE_TURN_VIEW_H

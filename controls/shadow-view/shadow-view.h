@@ -24,7 +24,7 @@
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -237,6 +237,6 @@ public:
   explicit DALI_INTERNAL ShadowView(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_SHADOW_VIEW_H

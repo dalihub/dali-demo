@@ -25,7 +25,7 @@
 // INTERNAL INCLUDES
 #include "tool-bar-impl.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 const Demo::Alignment::Padding ToolBar::DEFAULT_PADDING(0.f, 0.f, 0.f, 0.f);
 
@@ -76,4 +76,4 @@ ToolBar::ToolBar(Dali::Internal::CustomActor* internal)
   VerifyCustomActorPointer<Internal::ToolBar>(internal);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

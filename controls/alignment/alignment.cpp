@@ -24,7 +24,7 @@
 // INTERNAL INCLUDES
 #include "alignment-impl.h"
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Demo
 {
@@ -103,4 +103,4 @@ Alignment::Alignment(Dali::Internal::CustomActor* internal)
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE

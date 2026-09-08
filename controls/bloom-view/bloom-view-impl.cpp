@@ -40,7 +40,7 @@
 #include <controls/shaders/control-renderers-frag.h>
 #include <controls/shaders/control-renderers-vert.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -543,4 +543,4 @@ void BloomView::SetupProperties()
   imageSaturationConstraint.Apply();
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

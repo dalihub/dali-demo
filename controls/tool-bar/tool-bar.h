@@ -25,13 +25,13 @@
 #include "controls/alignment/alignment.h"
 #include "controls/dali-demo-controls-common.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal DALI_INTERNAL
 {
 // Forward declarations
 class ToolBar;
-} // namespace DALI_INTERNAL
+} //namespace Internal DALI_INTERNAL
 
 /**
  * Provides a tool bar where other controls (Dali::Actor) could be placed.
@@ -131,6 +131,6 @@ public: // Not intended for application developers
   explicit DALI_INTERNAL ToolBar(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_TOOL_BAR_H

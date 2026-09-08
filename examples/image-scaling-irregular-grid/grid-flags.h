@@ -23,7 +23,7 @@
 /** Controls the output of application logging. */
 //#define DEBUG_PRINT_GRID_DIAGNOSTICS
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Demo
 {
@@ -203,6 +203,6 @@ private:
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE
 
 #endif // DALI_DEMO_GRID_FLAGS_H

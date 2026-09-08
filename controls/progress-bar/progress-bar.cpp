@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include "progress-bar-impl.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 ProgressBar::ProgressBar()
 {
@@ -70,4 +70,4 @@ ProgressBar ProgressBar::DownCast(BaseHandle handle)
   return Control::DownCast<ProgressBar, Internal::ProgressBar>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

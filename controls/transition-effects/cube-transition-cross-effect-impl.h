@@ -22,7 +22,7 @@
 #include <controls/transition-effects/cube-transition-cross-effect.h>
 #include <controls/transition-effects/cube-transition-effect-impl.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class CubeTransitionCrossEffect;
 
@@ -102,6 +102,6 @@ inline const Internal::CubeTransitionCrossEffect& GetImpl(const Dali::Demo::Cube
   return static_cast<const Internal::CubeTransitionCrossEffect&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_CUBE_TRANSITION_CROSS_EFFECT_H

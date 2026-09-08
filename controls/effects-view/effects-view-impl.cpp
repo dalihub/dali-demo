@@ -44,7 +44,7 @@
 using namespace Dali::Toolkit;
 using namespace Dali::Toolkit::Internal;
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -592,4 +592,4 @@ Property::Value EffectsView::GetProperty(BaseObject* object, Property::Index pro
   return value;
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

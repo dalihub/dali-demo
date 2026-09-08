@@ -22,13 +22,13 @@
 #include "../dali-demo-controls-common.h"
 #include "page-turn-view.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal DALI_INTERNAL
 {
 // Forward declarations
 class PageTurnLandscapeView;
-} // namespace DALI_INTERNAL
+} //namespace Internal DALI_INTERNAL
 
 /**
  * @brief PageTurnLandscapeView provides a page turn view in landscape mode
@@ -100,6 +100,6 @@ public: // Not intended for application developers
   /// @endcond
 };
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_PAGE_TURN_LANDSCAPE_VIEW_H

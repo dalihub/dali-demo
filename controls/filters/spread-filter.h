@@ -24,7 +24,7 @@
 // INTERNAL INCLUDES
 #include <controls/filters/image-filter.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 /**
  * A spread/thicken filter. Expands an image into transparent areas.
@@ -84,6 +84,6 @@ private: // Attributes
   int mSpread;
 }; // class SpreadFilter
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_SPREAD_FILTER_H

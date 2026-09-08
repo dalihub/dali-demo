@@ -22,7 +22,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace // to register type
 {
@@ -109,4 +109,4 @@ Actor NavigationView::Pop()
   return poppedItem;
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

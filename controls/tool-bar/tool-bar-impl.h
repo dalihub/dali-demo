@@ -26,7 +26,7 @@
 // INTERNAL INCLUDES
 #include "tool-bar.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class ToolBar;
 
@@ -144,6 +144,6 @@ inline const Demo::Internal::ToolBar& GetImpl(const Demo::ToolBar& toolBar)
   return static_cast<const Demo::Internal::ToolBar&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_TOOL_BAR_H

@@ -30,7 +30,7 @@
 // INTERNAL INCLUDES
 #include <controls/super-blur-view/super-blur-view.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class SuperBlurView;
 
@@ -186,6 +186,6 @@ inline const Demo::Internal::SuperBlurView& GetImpl(const Demo::SuperBlurView& o
   return static_cast<const Demo::Internal::SuperBlurView&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_SUPER_BLUR_VIEW_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 #include "fire-ring-effect-modifier.h"
 #include "fire-ring-effect-source.h"
 
-namespace Dali::ParticleEffect
+namespace DALI_NAMESPACE::ParticleEffect
 {
 FireModifier::FireModifier(ParticleEmitter& emitter)
 : mEmitter(emitter)
@@ -104,4 +104,4 @@ void FireModifier::Update(ParticleList& particleList, uint32_t first, uint32_t c
     color = newColor;
   }
 }
-} //namespace Dali::ParticleEffect
+} //namespace DALI_NAMESPACE::ParticleEffect

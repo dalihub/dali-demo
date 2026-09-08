@@ -31,7 +31,7 @@
 // INTERNAL INCLUDES
 #include <controls/bloom-view/bloom-view.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class BloomView;
 
@@ -204,6 +204,6 @@ inline const Demo::Internal::BloomView& GetImpl(const Demo::BloomView& obj)
   return static_cast<const Demo::Internal::BloomView&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_BLOOM_VIEW_H

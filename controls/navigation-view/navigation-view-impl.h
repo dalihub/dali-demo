@@ -28,7 +28,7 @@
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class NavigationView;
 
@@ -117,6 +117,6 @@ inline const Demo::Internal::NavigationView& GetImpl(const Demo::NavigationView&
   return static_cast<const Demo::Internal::NavigationView&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_NAVIGATION_CONTROL_H

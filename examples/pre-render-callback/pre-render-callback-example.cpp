@@ -30,7 +30,7 @@ using Dali::Integration::ToStdString;
 
 using namespace Dali::Toolkit;
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 const char* SCENE_IMAGE_1(DEMO_IMAGE_DIR "gallery-small-10.jpg");
 const char* SCENE_IMAGE_2(DEMO_IMAGE_DIR "gallery-small-42.jpg");
@@ -250,7 +250,7 @@ private:
   TextLabel mSpinner;
 };
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE
 
 int DALI_EXPORT_API main(int argc, char** argv)
 {

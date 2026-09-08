@@ -2,7 +2,7 @@
 #define DALI_PARTICLE_EFFECT_H
 
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 #include <dali-toolkit/public-api/particle-system/particle-emitter.h>
 #include <memory>
 
-namespace Dali::ParticleEffect
+namespace DALI_NAMESPACE::ParticleEffect
 {
 
 using EffectIndex = uint32_t;
@@ -55,6 +55,6 @@ public:
 
   Dali::Toolkit::ParticleSystem::ParticleEmitter CreateEffectEmitter(EffectType effectType, Actor parentActor, const ParticleEffectParams& params);
 };
-} //namespace Dali::ParticleEffect
+} //namespace DALI_NAMESPACE::ParticleEffect
 
 #endif // DALI_PARTICLE_MANAGER_H

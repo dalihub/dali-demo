@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/transition-effects/cube-transition-cross-effect-impl.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 CubeTransitionCrossEffect::CubeTransitionCrossEffect(Internal::CubeTransitionCrossEffect& implementation)
 : CubeTransitionEffect(implementation)
@@ -39,4 +39,4 @@ CubeTransitionCrossEffect CubeTransitionCrossEffect::New(unsigned int numRows, u
   return Internal::CubeTransitionCrossEffect::New(numRows, numColumns);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

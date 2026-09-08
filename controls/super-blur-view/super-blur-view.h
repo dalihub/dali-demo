@@ -26,7 +26,7 @@
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Demo
 {
@@ -209,6 +209,6 @@ public: // Not intended for application developers
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE
 
 #endif // DALI_DEMO_CONTROLS_SUPER_BLUR_VIEW_H

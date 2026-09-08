@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/effects-view/effects-view-impl.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 EffectsView EffectsView::New(EffectType type)
 {
@@ -92,4 +92,4 @@ EffectsView::EffectsView(Dali::Internal::CustomActor* internal)
   VerifyCustomActorPointer<Internal::EffectsView>(internal);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

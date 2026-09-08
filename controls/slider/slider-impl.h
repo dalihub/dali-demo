@@ -33,7 +33,7 @@
 // INTERNAL INCLUDES
 #include "slider.h"
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Toolkit
 {
@@ -830,6 +830,6 @@ inline const Demo::Internal::Slider& GetImpl(const Demo::Slider& pub)
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_SLIDER_H

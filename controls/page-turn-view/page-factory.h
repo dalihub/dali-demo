@@ -24,7 +24,7 @@
 // INTERNAL INCLUDES
 #include "../dali-demo-controls-common.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 /**
  * @brief PageFactory is an abstract interface for providing textures to PageTurnView
@@ -40,7 +40,7 @@ public:
   /**
    * @brief Virtual destructor
    */
-  virtual ~PageFactory(){};
+  virtual ~PageFactory() {};
 
   /**
    * @brief Query the number of pages available from the factory.
@@ -73,5 +73,5 @@ public:
   }
 };
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 #endif // DALI_DEMO_CONTROLS_PAGE_FACTORY_H

@@ -23,7 +23,7 @@
 
 using namespace Dali;
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Demo
 {
@@ -81,4 +81,4 @@ Slider Slider::DownCast(BaseHandle handle)
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE

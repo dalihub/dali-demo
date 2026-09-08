@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include "page-turn-portrait-view-impl.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 PageTurnPortraitView::PageTurnPortraitView()
 : PageTurnView()
@@ -67,4 +67,4 @@ PageTurnPortraitView PageTurnPortraitView::DownCast(BaseHandle handle)
   return Control::DownCast<PageTurnPortraitView, Internal::PageTurnPortraitView>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

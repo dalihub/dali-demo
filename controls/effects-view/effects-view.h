@@ -19,13 +19,13 @@
  */
 
 // EXTERNAL INCLUDES
-#include <dali/public-api/images/pixel.h>
 #include <dali-toolkit/public-api/controls/control.h>
+#include <dali/public-api/images/pixel.h>
 
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -201,6 +201,6 @@ public: // Not intended for application developers
 
 }; // class EffectsView
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_EFFECTS_VIEW_H

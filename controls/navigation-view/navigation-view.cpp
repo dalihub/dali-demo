@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/navigation-view/navigation-view-impl.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 NavigationView::NavigationView()
 {
@@ -70,4 +70,4 @@ Actor NavigationView::Pop()
   return GetImpl(*this).Pop();
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

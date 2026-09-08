@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 #include "image-effect-modifier.h"
 #include "image-effect-source.h"
-namespace Dali::ParticleEffect
+namespace DALI_NAMESPACE::ParticleEffect
 {
 
 #define RAD(x) (float(x) * M_PI / 180.0f)
@@ -78,4 +78,4 @@ void ImageExplodeEffectModifier::Update(ParticleList& particleList, uint32_t fir
     position.z    = 500 + position.z;
   }
 }
-} //namespace Dali::ParticleEffect
+} //namespace DALI_NAMESPACE::ParticleEffect

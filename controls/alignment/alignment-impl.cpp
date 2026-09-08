@@ -26,7 +26,7 @@
 #include <dali/devel-api/size-negotiation/relayout-container.h>
 #include <dali/public-api/object/property-input.h>
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Demo
 {
@@ -308,4 +308,4 @@ Alignment::~Alignment()
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE

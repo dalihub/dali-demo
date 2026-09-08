@@ -24,7 +24,7 @@
 // INTERNAL INCLUDES
 #include "alignment.h"
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Demo
 {
@@ -135,6 +135,6 @@ inline const Demo::Internal::Alignment& GetImpl(const Demo::Alignment& alignment
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_ALIGNMENT_H
