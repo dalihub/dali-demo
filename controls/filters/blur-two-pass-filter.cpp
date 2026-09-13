@@ -35,7 +35,7 @@
 
 using Dali::Integration::ToDaliString;
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -263,4 +263,4 @@ void BlurTwoPassFilter::CreateRenderTasks()
   mRenderTaskForBlending.SetCameraActor(mCameraActor);
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

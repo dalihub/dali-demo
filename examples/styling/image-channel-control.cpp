@@ -15,12 +15,12 @@
  */
 
 #include "image-channel-control.h"
-#include "image-channel-control-impl.h"
 #include <dali/integration-api/string-utils.h>
+#include "image-channel-control-impl.h"
 
 using Dali::Integration::ToDaliString;
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 ImageChannelControl::ImageChannelControl()
 {
@@ -83,4 +83,4 @@ ImageChannelControl::ImageChannelControl(Dali::Internal::CustomActor* internal)
   VerifyCustomActorPointer<Internal::ImageChannelControl>(internal);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

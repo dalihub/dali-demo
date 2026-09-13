@@ -22,7 +22,7 @@
 #include "page-turn-landscape-view.h"
 #include "page-turn-view-impl.h"
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 class PageTurnLandscapeView : public PageTurnView
 {
@@ -75,6 +75,6 @@ private:
   PageTurnLandscapeView& operator=(const PageTurnLandscapeView& rhs);
 };
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_PAGE_TURN_LANDSCAPE_VIEW_IMPL_H

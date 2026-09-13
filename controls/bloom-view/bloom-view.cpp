@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/bloom-view/bloom-view-impl.h>
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Demo
 {
@@ -109,4 +109,4 @@ Property::Index BloomView::GetImageSaturationPropertyIndex() const
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE

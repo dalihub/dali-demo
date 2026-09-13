@@ -2,7 +2,7 @@
 #define DALI_IMAGE_EFFECT_MODIFIER_H
 
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 #include <dali/public-api/object/weak-handle.h>
 #include <ctime>
 
-namespace Dali::ParticleEffect
+namespace DALI_NAMESPACE::ParticleEffect
 {
 using namespace Dali::Toolkit::ParticleSystem;
 
@@ -44,6 +44,6 @@ public:
   float                       mAngle{0.0f};
 };
 
-} //namespace Dali::ParticleEffect
+} //namespace DALI_NAMESPACE::ParticleEffect
 
 #endif // DALI_IMAGE_EFFECT_MODIFIER_H

@@ -19,7 +19,6 @@
 #include "page-turn-view-impl.h"
 
 // EXTERNAL INCLUDES
-#include <cstring> // for strcmp
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
@@ -28,6 +27,7 @@
 #include <dali/integration-api/debug.h>
 #include <dali/public-api/animation/animation.h>
 #include <dali/public-api/animation/constraint.h>
+#include <cstring> // for strcmp
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>
@@ -230,7 +230,7 @@ struct ShadowBlurStrengthConstraint
 
 } // unnamed namespace
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -1102,4 +1102,4 @@ Property::Value PageTurnView::GetProperty(BaseObject* object, Property::Index in
   return value;
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

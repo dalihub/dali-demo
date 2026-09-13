@@ -20,7 +20,7 @@
 // INTERNAL INCLUDES
 #include <controls/transition-effects/cube-transition-effect.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -61,6 +61,6 @@ public: // Not intended for developer use
 
 }; // class CubeTransitionFoldEffect
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_CUBE_TRANSITION_FOLD_EFFECT_H

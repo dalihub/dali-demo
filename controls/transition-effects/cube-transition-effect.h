@@ -26,7 +26,7 @@
 // INTERNAL INCLUDES
 #include <controls/dali-demo-controls-common.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal DALI_INTERNAL
 {
@@ -210,6 +210,6 @@ public: // Not intended for developer use
 
 }; // class CubeTransitionEffect
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_CUBE_TRANSITION_EFFECT_H

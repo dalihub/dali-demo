@@ -37,7 +37,7 @@ using Dali::Integration::ToDaliString;
 #define DEMO_IMAGE_DIR ""
 #endif
 
-namespace Dali::ParticleEffect
+namespace DALI_NAMESPACE::ParticleEffect
 {
 using ParticleEmitter  = Dali::Toolkit::ParticleSystem::ParticleEmitter;
 using ParticleSource   = Dali::Toolkit::ParticleSystem::ParticleSource;
@@ -104,4 +104,4 @@ Dali::Toolkit::ParticleSystem::ParticleEmitter ParticleEffect::CreateEffectEmitt
   return emitter;
 }
 
-} //namespace Dali::ParticleEffect
+} //namespace DALI_NAMESPACE::ParticleEffect

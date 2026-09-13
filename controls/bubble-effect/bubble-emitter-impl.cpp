@@ -99,7 +99,7 @@ Dali::Geometry CreateTexturedQuad()
 
 } // namespace
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 BubbleEmitter::BubbleEmitter(const Vector2& movementArea,
                              Texture        shapeTexture,
@@ -363,4 +363,4 @@ void BubbleEmitter::SetBubbleParameter(BubbleRenderer& bubbleRenderer, unsigned 
   bubbleRenderer.SetPercentage(curUniform, 0.f);
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

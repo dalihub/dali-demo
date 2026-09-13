@@ -27,7 +27,7 @@
 #include <dali/public-api/object/weak-handle.h>
 #include <ctime>
 
-namespace Dali::ParticleEffect
+namespace DALI_NAMESPACE::ParticleEffect
 {
 using namespace Dali::Toolkit::ParticleSystem;
 
@@ -58,5 +58,5 @@ public:
   bool mShouldEmit{true};
 };
 
-} //namespace Dali::ParticleEffect
+} //namespace DALI_NAMESPACE::ParticleEffect
 #endif // DALI_IMAGE_EFFECT_SOURCE_H

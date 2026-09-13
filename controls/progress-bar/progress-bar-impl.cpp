@@ -47,7 +47,7 @@ using Dali::Integration::ToStdString;
 using namespace Dali::Toolkit;
 using namespace Dali::Toolkit::Internal;
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace // Unnamed namespace
 {
@@ -725,4 +725,4 @@ double ProgressBar::ProgressBarAccessible::GetMinimumIncrement() const
   return 0.0;
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/transition-effects/cube-transition-wave-effect-impl.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 CubeTransitionWaveEffect::CubeTransitionWaveEffect(Internal::CubeTransitionWaveEffect& implementation)
 : CubeTransitionEffect(implementation)
@@ -39,4 +39,4 @@ CubeTransitionWaveEffect CubeTransitionWaveEffect::New(unsigned int numRows, uns
   return Internal::CubeTransitionWaveEffect::New(numRows, numColumns);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

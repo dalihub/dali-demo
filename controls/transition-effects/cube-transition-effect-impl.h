@@ -27,7 +27,7 @@
 // INTERNAL INCLUDES
 #include <controls/transition-effects/cube-transition-effect.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class CubeTransitionEffect;
 
@@ -257,6 +257,6 @@ inline const Internal::CubeTransitionEffect& GetImpl(const Dali::Demo::CubeTrans
   return static_cast<const Internal::CubeTransitionEffect&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_CUBE_TRANSITION_EFFECT_H

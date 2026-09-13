@@ -33,7 +33,7 @@
 #include <controls/filters/blur-two-pass-filter.h>
 #include <controls/shadow-view/shadow-view.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class ShadowView;
 
@@ -195,6 +195,6 @@ inline const Demo::Internal::ShadowView& GetImpl(const Demo::ShadowView& obj)
   return static_cast<const Demo::Internal::ShadowView&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_SHADOW_VIEW_H

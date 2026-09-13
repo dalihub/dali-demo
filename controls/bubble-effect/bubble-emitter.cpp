@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/bubble-effect/bubble-emitter-impl.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 BubbleEmitter::BubbleEmitter()
 {
@@ -98,4 +98,4 @@ void BubbleEmitter::Restore()
   GetImpl(*this).Restore();
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

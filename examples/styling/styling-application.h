@@ -30,7 +30,7 @@ using namespace Dali;
 using namespace Dali::Toolkit;
 using namespace Dali::Demo;
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class StylingApplication : public ConnectionTracker
 {
@@ -94,6 +94,6 @@ private:
   PanGestureDetector  mPanGestureDetector;
 };
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_STYLING_APPLICATION_H

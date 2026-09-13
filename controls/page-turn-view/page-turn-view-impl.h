@@ -30,7 +30,7 @@
 #include <controls/page-turn-view/page-turn-view.h>
 #include <controls/shadow-view/shadow-view.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal
 {
@@ -441,6 +441,6 @@ inline const Demo::Internal::PageTurnView& GetImplementation(const Demo::PageTur
   return static_cast<const Demo::Internal::PageTurnView&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_PAGE_TURN_VIEW_IMPL_H

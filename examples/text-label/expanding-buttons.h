@@ -2,7 +2,7 @@
 #define DALI_DEMO_EXPANDING_BUTTONS_CONTROL_H
 
 /*
- * Copyright (c) 2025 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal
 {
@@ -102,6 +102,6 @@ public: // Not for public use
   ExpandingButtons(Dali::Internal::CustomActor* internal);
 };
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_EXPANDING_BUTTONS_CONTROL_H

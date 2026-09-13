@@ -25,7 +25,7 @@
 
 using Dali::Integration::ToDaliString;
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 BubbleRenderer::BubbleRenderer()
 : mRenderer(),
@@ -130,4 +130,4 @@ void BubbleRenderer::ResetProperties()
   }
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

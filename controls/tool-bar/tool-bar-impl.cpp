@@ -29,7 +29,7 @@
 // INTERNAL INCLUDES
 #include "controls/alignment/alignment.h"
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -334,4 +334,4 @@ void ToolBar::OnChildAdd(Actor& child)
   ControlImpl::OnChildAdd(child);
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

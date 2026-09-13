@@ -32,7 +32,7 @@ using Dali::Integration::ToDaliStringView;
 using Dali::Integration::ToPropertyValue;
 using Dali::Integration::ToStdString;
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -163,4 +163,4 @@ void PageTurnPortraitView::TurnedOverBackwards(Animation animation)
   TurnedOver(animation);
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

@@ -22,7 +22,7 @@
 #include <controls/transition-effects/cube-transition-effect-impl.h>
 #include <controls/transition-effects/cube-transition-wave-effect.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class CubeTransitionWaveEffect;
 
@@ -108,6 +108,6 @@ inline const Internal::CubeTransitionWaveEffect& GetImpl(const Dali::Demo::CubeT
   return static_cast<const Internal::CubeTransitionWaveEffect&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_CUBE_TRANSITION_WAVE_EFFECT_H

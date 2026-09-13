@@ -21,7 +21,7 @@
 
 using namespace Dali;
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Magnifier
@@ -69,4 +69,4 @@ void Magnifier::SetSourceActor(Actor actor)
   GetImpl(*this).SetSourceActor(actor);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

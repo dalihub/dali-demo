@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/transition-effects/cube-transition-effect-impl.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 CubeTransitionEffect::CubeTransitionEffect()
 {
@@ -112,4 +112,4 @@ CubeTransitionEffect::TransitionCompletedSignalType& CubeTransitionEffect::Trans
   return GetImpl(*this).TransitionCompletedSignal();
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

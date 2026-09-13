@@ -22,7 +22,7 @@
 #include <controls/transition-effects/cube-transition-effect-impl.h>
 #include <controls/transition-effects/cube-transition-fold-effect.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 class CubeTransitionFoldEffect;
 
@@ -88,6 +88,6 @@ inline const Internal::CubeTransitionFoldEffect& GetImpl(const Dali::Demo::CubeT
   return static_cast<const Internal::CubeTransitionFoldEffect&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_CUBE_TRANSITION_FOLD_EFFECT_H

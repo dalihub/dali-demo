@@ -32,7 +32,7 @@
 #include <controls/shaders/emboss-filter-composite-shader-frag.h>
 #include <controls/shaders/emboss-filter-shader-frag.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -226,4 +226,4 @@ void EmbossFilter::CreateRenderTasks()
   mRenderTaskForOutput.SetCameraActor(mCameraActor);
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

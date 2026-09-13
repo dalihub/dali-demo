@@ -42,7 +42,7 @@ using Dali::Integration::ToStdString;
 
 using namespace Dali;
 
-namespace Dali
+namespace DALI_NAMESPACE
 {
 namespace Demo
 {
@@ -1517,4 +1517,4 @@ double Slider::SliderAccessible::GetMinimumIncrement() const
 
 } // namespace Demo
 
-} // namespace Dali
+} //namespace DALI_NAMESPACE

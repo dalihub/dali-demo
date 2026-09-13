@@ -23,7 +23,7 @@
 
 #include <vector>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal // To use TypeRegistry, handle and body classes need the same name
 {
@@ -112,6 +112,6 @@ inline const Internal::ExpandingButtons& GetImpl(const Demo::ExpandingButtons& h
   return static_cast<const Internal::ExpandingButtons&>(object);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif //  DALI_DEMO_INTERNAL_EXPANDING_BUTTONS_IMPL_H

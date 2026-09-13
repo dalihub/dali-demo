@@ -27,7 +27,7 @@
 #include <dali/public-api/object/weak-handle.h>
 #include <ctime>
 
-namespace Dali::ParticleEffect
+namespace DALI_NAMESPACE::ParticleEffect
 {
 using namespace Dali::Toolkit::ParticleSystem;
 
@@ -79,6 +79,6 @@ public:
   uint32_t                          mAngle{0u};
 };
 
-} //namespace Dali::ParticleEffect
+} //namespace DALI_NAMESPACE::ParticleEffect
 
 #endif // DALI_PROJECT_FIRE_RING_EFFECT_MODIFIER_H

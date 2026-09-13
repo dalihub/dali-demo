@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/transition-effects/cube-transition-fold-effect-impl.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 CubeTransitionFoldEffect::CubeTransitionFoldEffect(Internal::CubeTransitionFoldEffect& implementation)
 : CubeTransitionEffect(implementation)
@@ -39,4 +39,4 @@ CubeTransitionFoldEffect CubeTransitionFoldEffect::New(unsigned int numRows, uns
   return Internal::CubeTransitionFoldEffect::New(numRows, numColumns);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

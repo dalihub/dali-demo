@@ -21,7 +21,7 @@
 #include <dali/public-api/adaptor-framework/image-loading.h>
 #include <random>
 
-namespace Dali::ParticleEffect
+namespace DALI_NAMESPACE::ParticleEffect
 {
 namespace
 {
@@ -119,4 +119,4 @@ uint32_t ImageExplodeEffectSource::Update(ParticleList& particleList, uint32_t c
   return mImageWidth * mImageHeight;
 }
 
-} // namespace Dali::ParticleEffect
+} //namespace DALI_NAMESPACE::ParticleEffect

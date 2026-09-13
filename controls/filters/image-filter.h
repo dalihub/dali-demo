@@ -29,7 +29,7 @@
 // INTERNAL INCLUDES
 #include <controls/effects-view/effects-view.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 /**
  * An interface class that provides a interface for image filters that perform
@@ -154,6 +154,6 @@ protected:
 
 }; // class Imagefilter
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_IMAGE_FILTER_H

@@ -29,7 +29,7 @@ using Dali::Integration::ToStdString;
 using namespace Dali;
 using namespace Dali::Toolkit;
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal
 {
@@ -176,4 +176,4 @@ Demo::ExpandingButtons::ExpandingButtonsSignalType& ExpandingButtons::Collapsing
 }
 
 } // namespace Internal
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

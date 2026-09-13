@@ -29,7 +29,7 @@
 
 using Dali::Integration::ToDaliStringView;
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 /**
  * Create the shader to be used by the renderer
@@ -46,6 +46,6 @@ inline Shader CreateBubbleShader(unsigned int numBubble)
   return shader;
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_BUBBLE_EFFECT_H

@@ -24,7 +24,7 @@
 // INTERNAL INCLUDES
 #include <controls/filters/image-filter.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 /**
  * A two pass blur filter, pass one performs a horizontal blur and pass two performs a
@@ -100,6 +100,6 @@ private: // Attributes
 
 }; // class BlurTwoPassFilter
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_BLUR_TWO_PASS_FILTER_H

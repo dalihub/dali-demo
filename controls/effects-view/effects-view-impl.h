@@ -30,7 +30,7 @@
 // INTERNAL INCLUDES
 #include <controls/effects-view/effects-view.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal
 {
@@ -252,6 +252,6 @@ inline const Demo::Internal::EffectsView& GetImpl(const Demo::EffectsView& effec
   return static_cast<const Demo::Internal::EffectsView&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_EFFECTS_VIEW_H

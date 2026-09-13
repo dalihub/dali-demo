@@ -26,7 +26,7 @@
 // INTERNAL INCLUDES
 #include <controls/filters/image-filter.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 /**
  * An embossing image filter, implements Dali::Toolkit::Internal::ImageFilter
@@ -80,6 +80,6 @@ private: // Attributes
   Actor       mActorForComposite;
 }; // class EmbossFilter
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_EMBOSS_FILTER_H

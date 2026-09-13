@@ -32,7 +32,7 @@
 
 using Dali::Integration::ToDaliStringView;
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 namespace
 {
@@ -468,4 +468,4 @@ bool CubeTransitionEffect::DoConnectSignal(BaseObject* object, ConnectionTracker
   return connected;
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

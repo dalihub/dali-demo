@@ -18,7 +18,7 @@
 // CLASS HEADER
 #include <controls/transition-effects/cube-transition-cross-effect-impl.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 CubeTransitionCrossEffect::CubeTransitionCrossEffect(unsigned int numRows, unsigned int numColumns)
 : CubeTransitionEffect(numRows, numColumns),
@@ -144,4 +144,4 @@ void CubeTransitionCrossEffect::SetupAnimation(unsigned int actorIndex, unsigned
   mAnimation.AnimateTo(Property(mTargetTiles[actorIndex], Actor::Property::COLOR_MULTIPLIER), FULL_BRIGHTNESS, AlphaFunction::EASE_IN);
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

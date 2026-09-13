@@ -28,7 +28,7 @@
 // INTERNAL INCLUDES
 #include "magnifier.h"
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 namespace Internal
 {
@@ -181,6 +181,6 @@ inline const Demo::Internal::Magnifier& GetImpl(const Demo::Magnifier& pub)
   return static_cast<const Demo::Internal::Magnifier&>(handle);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
 
 #endif // DALI_DEMO_CONTROLS_INTERNAL_MAGNIFIER_H

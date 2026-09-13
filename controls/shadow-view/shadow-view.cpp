@@ -28,7 +28,7 @@ const float GAUSSIAN_BLUR_VIEW_DEFAULT_DOWNSAMPLE_HEIGHT_SCALE = 1.0f;
 
 } // namespace
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 ShadowView::ShadowView()
 {
@@ -113,4 +113,4 @@ Property::Index ShadowView::GetShadowColorPropertyIndex() const
   return GetImpl(*this).GetShadowColorPropertyIndex();
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

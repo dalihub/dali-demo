@@ -18,7 +18,7 @@
 // CLASS HEADER
 #include <controls/transition-effects/cube-transition-wave-effect-impl.h>
 
-namespace Dali::Demo::Internal
+namespace DALI_NAMESPACE::Demo::Internal
 {
 CubeTransitionWaveEffect::CubeTransitionWaveEffect(unsigned int numRows, unsigned int numColumns)
 : CubeTransitionEffect(numRows, numColumns),
@@ -173,4 +173,4 @@ float CubeTransitionWaveEffect::CalculateDelay(float x, float y, bool forward)
   return (1.f + valueY * valueY / mSaddleAA - valueX * valueX / mSaddleBB);
 }
 
-} // namespace Dali::Demo::Internal
+} //namespace DALI_NAMESPACE::Demo::Internal

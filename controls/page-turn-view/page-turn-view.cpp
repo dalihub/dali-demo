@@ -23,7 +23,7 @@
 
 using namespace Dali;
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 PageTurnView::PageTurnView()
 {
@@ -83,4 +83,4 @@ PageTurnView::PagePanSignal& PageTurnView::PagePanFinishedSignal()
   return Demo::GetImplementation(*this).PagePanFinishedSignal();
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo

@@ -21,7 +21,7 @@
 // INTERNAL INCLUDES
 #include <controls/super-blur-view/super-blur-view-impl.h>
 
-namespace Dali::Demo
+namespace DALI_NAMESPACE::Demo
 {
 SuperBlurView::SuperBlurView()
 {
@@ -90,4 +90,4 @@ Texture SuperBlurView::GetBlurredTexture(unsigned int level)
   return GetImpl(*this).GetBlurredTexture(level);
 }
 
-} // namespace Dali::Demo
+} //namespace DALI_NAMESPACE::Demo
