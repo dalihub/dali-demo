@@ -22,6 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;

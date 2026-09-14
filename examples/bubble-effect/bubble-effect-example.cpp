@@ -18,6 +18,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 // INTERNAL INCLUDES
 #include <controls/bubble-effect/bubble-emitter.h>

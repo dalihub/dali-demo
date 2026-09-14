@@ -18,6 +18,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/public-api/update/frame-callback-interface.h>
 #include <dali/public-api/update/update-proxy.h>
 

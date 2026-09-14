@@ -26,6 +26,7 @@
 #include <dali-toolkit/devel-api/text/text-enumerations-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/object/handle-devel.h>
 #include <iostream>
 

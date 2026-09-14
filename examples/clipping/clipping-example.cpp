@@ -20,6 +20,7 @@
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 // INTERNAL INCLUDES
 #include <dali/integration-api/string-utils.h>

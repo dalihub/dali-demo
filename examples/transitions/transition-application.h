@@ -19,6 +19,7 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <cstdio>
 #include <sstream>
 #include "shadow-button.h"

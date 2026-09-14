@@ -22,6 +22,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 // INTERNAL INCLUDES
 #include "bubble-animator.h"

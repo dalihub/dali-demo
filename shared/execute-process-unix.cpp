@@ -19,6 +19,7 @@
 #include "execute-process.h"
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/common/dali-common.h>
 #include <unistd.h>

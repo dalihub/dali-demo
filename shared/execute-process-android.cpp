@@ -28,6 +28,7 @@
 
 #include <android_native_app_glue.h>
 #include <dali-demo-native-activity-jni.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/string-utils.h>
 
 using Dali::Integration::ToStdString;

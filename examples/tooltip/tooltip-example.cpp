@@ -20,6 +20,7 @@
 #include <dali-toolkit/devel-api/controls/tooltip/tooltip-properties.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/common/extents.h>
 #include <dali/devel-api/object/property-array-devel.h>
 #include <dali/devel-api/object/property-map-devel.h>

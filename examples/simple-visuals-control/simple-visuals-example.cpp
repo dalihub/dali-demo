@@ -21,6 +21,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 // INTERNAL INCLUDES
 #include "simple-visuals-application.h"

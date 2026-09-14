@@ -23,6 +23,7 @@
 #include <dali-toolkit/public-api/image-loader/image-url.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/public-api/adaptor-framework/encoded-image-buffer.h>
 #include <string>
 

@@ -16,6 +16,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include "dali-physics/public-api/physics-actor.h"
 #include "dali-physics/public-api/physics-adaptor.h"
 

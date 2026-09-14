@@ -19,6 +19,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/buttons/toggle-button.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/object/property-array-devel.h>
 #include <dali/integration-api/string-utils.h>
 #include <math.h>

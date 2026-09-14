@@ -17,6 +17,7 @@
 
 #include <dali-scene3d/dali-scene3d.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;

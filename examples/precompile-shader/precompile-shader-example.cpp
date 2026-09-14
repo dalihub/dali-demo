@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 // For Wait
 #include <dali/integration-api/string-utils.h>

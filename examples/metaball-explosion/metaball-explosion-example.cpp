@@ -27,6 +27,7 @@
 #include <dali/public-api/rendering/texture.h>
 
 // INTERNAL INCLUDES
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/string-utils.h>
 #include "generated/metaball-frag.h"
 #include "generated/metaball-refraction-frag.h"

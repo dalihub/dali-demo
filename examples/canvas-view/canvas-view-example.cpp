@@ -17,13 +17,14 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/canvas-view/canvas-view.h>
+#include <dali/devel-api/adaptor-framework/application.h>
+#include <dali/integration-api/string-utils.h>
 #include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-drawable-group.h>
 #include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-gradient.h>
 #include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-linear-gradient.h>
 #include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-picture.h>
 #include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-radial-gradient.h>
 #include <dali/public-api/adaptor-framework/canvas-renderer/canvas-renderer-shape.h>
-#include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;
 using Dali::Integration::ToDaliString;
 using Dali::Integration::ToDaliStringView;

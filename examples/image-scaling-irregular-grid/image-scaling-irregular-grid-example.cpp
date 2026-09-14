@@ -47,6 +47,7 @@
 #include <dali-toolkit/devel-api/controls/scroll-bar/scroll-bar.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <algorithm>
 #include <chrono> // std::chrono::system_clock
 #include <iostream>

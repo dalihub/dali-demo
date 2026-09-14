@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/drawable-actor.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 #include "native-renderer.h"
 
