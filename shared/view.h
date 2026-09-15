@@ -144,14 +144,14 @@ Dali::Layer CreateView(Dali::Application&      application,
   Dali::Layer toolBarLayer = CreateToolbar(toolBar, toolbarImagePath, title, style);
 
   // Add tool bar layer to the view.
-  view.Add(toolBarLayer);
+  Dali::DevelActor::Add(view, toolBarLayer);
 
   // Create a content layer.
   Dali::Layer contentLayer = Dali::Layer::New();
   contentLayer.SetProperty(Dali::Actor::Property::PIVOT, Dali::Pivot::CENTER);
   contentLayer.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, Dali::ParentOrigin::CENTER);
   Dali::DevelActor::SetResizePolicy(contentLayer, Dali::ResizePolicy::FILL_TO_PARENT, Dali::Dimension::ALL_DIMENSIONS);
-  view.Add(contentLayer);
+  Dali::DevelActor::Add(view, contentLayer);
   contentLayer.LowerBelow(toolBarLayer);
 
   return contentLayer;

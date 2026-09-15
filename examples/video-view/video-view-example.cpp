@@ -86,7 +86,7 @@ public:
     mMenu.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_LEFT);
     DevelActor::SetResizePolicy(mMenu, ResizePolicy::FIXED, Dimension::ALL_DIMENSIONS);
     mMenu.SetProperty(Actor::Property::SIZE, Vector2(INIT_WIDTH, 120));
-    mVideoView.Add(mMenu);
+    DevelActor::Add(mVideoView, mMenu);
 
     mPlayButton = PushButton::New();
     mPlayButton.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);

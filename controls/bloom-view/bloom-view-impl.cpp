@@ -22,6 +22,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/controls/control-renderers.h>
 #include <dali-toolkit/devel-api/controls/gaussian-blur-view/gaussian-blur-view.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
@@ -204,14 +205,14 @@ void BloomView::OnInitialize()
 
   ////////////////////////////////
   // Connect to actor tree
-  Self().Add(mChildrenRoot);
-  Self().Add(mInternalRoot);
-  mInternalRoot.Add(mBloomExtractActor);
-  mInternalRoot.Add(mGaussianBlurView);
-  mInternalRoot.Add(mCompositeActor);
-  mInternalRoot.Add(mTargetActor);
-  mInternalRoot.Add(mRenderDownsampledCamera);
-  mInternalRoot.Add(mRenderFullSizeCamera);
+  DevelActor::Add(Self(), mChildrenRoot);
+  DevelActor::Add(Self(), mInternalRoot);
+  DevelActor::Add(mInternalRoot, mBloomExtractActor);
+  DevelActor::Add(mInternalRoot, mGaussianBlurView);
+  DevelActor::Add(mInternalRoot, mCompositeActor);
+  DevelActor::Add(mInternalRoot, mTargetActor);
+  DevelActor::Add(mInternalRoot, mRenderDownsampledCamera);
+  DevelActor::Add(mInternalRoot, mRenderFullSizeCamera);
 
   // bind properties for / set shader constants to defaults
   SetupProperties();
@@ -250,7 +251,7 @@ void BloomView::OnChildAdd(Actor& child)
 {
   if(child != mChildrenRoot && child != mInternalRoot)
   {
-    mChildrenRoot.Add(child);
+    DevelActor::Add(mChildrenRoot, child);
   }
 
   Toolkit::ControlImpl::OnChildAdd(child);

@@ -18,6 +18,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/application.h>
 
 // INTERNAL INCLUDES
@@ -83,7 +84,7 @@ public:
     Layer backgroundLayer = Layer::New();
     backgroundLayer.SetProperty(Actor::Property::SIZE, viewSize);
     backgroundLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mBloomView.Add(backgroundLayer);
+    DevelActor::Add(mBloomView, backgroundLayer);
 
     // Create the background image
     ImageView backgroundImage = ImageView::New(BACKGROUND_IMAGE_PATH);
@@ -94,7 +95,7 @@ public:
     Layer foregroundLayer = Layer::New();
     foregroundLayer.SetProperty(Actor::Property::SIZE, viewSize);
     foregroundLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-    mBloomView.Add(foregroundLayer);
+    DevelActor::Add(mBloomView, foregroundLayer);
 
     // Create visible actors
     mObjectRootActor = Actor::New();
