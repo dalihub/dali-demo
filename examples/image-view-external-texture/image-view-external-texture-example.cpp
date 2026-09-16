@@ -25,6 +25,7 @@
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/integration-api/debug.h>
 #include <dali/public-api/adaptor-framework/image-loading.h>

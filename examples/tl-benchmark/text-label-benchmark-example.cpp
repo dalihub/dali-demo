@@ -20,6 +20,7 @@
 #include <dali-toolkit/devel-api/controls/text-controls/text-label-devel.h>
 #include <dali-toolkit/devel-api/styling/style-manager-devel.h>
 #include <dali-toolkit/devel-api/text/text-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/debug.h>
 
 #include <dali/devel-api/adaptor-framework/performance-logger.h>

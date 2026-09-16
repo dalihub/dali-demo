@@ -21,6 +21,7 @@
 #include <dali-scene3d/dali-scene3d.h>
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <memory>
 #include <vector>
 

@@ -26,6 +26,7 @@
 #include <dali-scene3d/integration-api/loader/shader-manager.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/string-utils.h>
 #include <dirent.h>
 #include <algorithm>

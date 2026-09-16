@@ -16,13 +16,13 @@
  */
 
 // INTERNAL INCLUDES
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <fstream>
 #include <iostream>
 #include <numeric>
 #include "dali/devel-api/adaptor-framework/tilt-sensor.h"
 #include "dali/public-api/actors/camera-actor.h"
 #include "dali/public-api/actors/layer.h"
-#include "dali/public-api/adaptor-framework/application.h"
 #include "dali/public-api/adaptor-framework/key.h"
 #include "dali/public-api/animation/animation.h"
 #include "dali/public-api/events/key-event.h"

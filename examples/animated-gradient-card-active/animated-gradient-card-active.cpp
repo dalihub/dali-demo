@@ -18,6 +18,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/string-utils.h>
 #include <iostream>

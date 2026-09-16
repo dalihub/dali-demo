@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/controls/table-view/table-view.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <string>
 
 #include <dali/devel-api/actors/actor-devel.h>

@@ -19,6 +19,7 @@
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/stream-operators.h>
 #include <dali/integration-api/string-utils.h>
 #include <shared/utility.h>

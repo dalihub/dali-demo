@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/camera-actor-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/adaptor-framework/file-stream.h>
 
 #include <map>

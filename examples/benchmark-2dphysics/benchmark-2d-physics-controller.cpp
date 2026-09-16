@@ -16,6 +16,7 @@
 
 #include <dali-physics/dali-physics.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 #include <dali-toolkit/devel-api/visuals/image-visual-properties-devel.h>
 #include <dali-toolkit/devel-api/visuals/visual-properties-devel.h>

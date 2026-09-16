@@ -18,6 +18,7 @@
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali/integration-api/debug.h>
 

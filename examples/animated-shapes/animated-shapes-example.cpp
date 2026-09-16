@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include "generated/animated-shapes-frag.h"
 #include "generated/animated-shapes-vert.h"
 #include "shared/view.h"

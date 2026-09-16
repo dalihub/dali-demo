@@ -16,6 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/adaptor-framework/window-devel.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/scene.h>

@@ -23,6 +23,7 @@
 #include "fpp-game-tutorial-controller.h"
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 using namespace Dali;
 

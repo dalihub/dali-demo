@@ -18,6 +18,7 @@
 // INTERNAL INCLUDES
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/string-utils.h>
 #include <fstream>
 #include <iostream>
@@ -28,7 +29,6 @@
 #include "dali/devel-api/adaptor-framework/tilt-sensor.h"
 #include "dali/public-api/actors/camera-actor.h"
 #include "dali/public-api/actors/layer.h"
-#include "dali/public-api/adaptor-framework/application.h"
 #include "dali/public-api/adaptor-framework/key.h"
 #include "dali/public-api/events/pan-gesture-detector.h"
 #include "dali/public-api/events/tap-gesture-detector.h"

@@ -32,6 +32,7 @@
 #include "generated/metaball-vert.h"
 #include "shared/utility.h" // DemoHelper::LoadTexture
 
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/string-utils.h>
 
 using Dali::Integration::ToDaliStringView;

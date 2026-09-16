@@ -19,6 +19,7 @@
 
 // External includes
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 //#include <dali-toolkit/devel-api/controls/slider/slider.h>
 #include <dali-toolkit/devel-api/controls/popup/popup.h>
 #include <cstdio>

@@ -27,6 +27,7 @@
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/adaptor-framework/graphics-backend.h>
 #include <dali/devel-api/images/distance-field.h>
 #include <algorithm>

@@ -23,6 +23,7 @@
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/adaptor-framework/window-system-devel.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/string-utils.h>

@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/image-loader/texture-manager.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 #include <dali/integration-api/string-utils.h>
 #include "generated/image-view-url-frag.h"

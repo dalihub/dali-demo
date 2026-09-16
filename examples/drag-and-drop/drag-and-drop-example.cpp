@@ -18,6 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/drag-drop-detector/drag-and-drop-detector.h>
 #include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/string-utils.h>
 using Dali::Integration::GetStdString;

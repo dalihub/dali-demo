@@ -17,7 +17,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/devel-api/focus-manager/keyinput-focus-manager.h>
-#include <dali/public-api/adaptor-framework/application.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/public-api/adaptor-framework/key.h>
 #include <dali/public-api/events/key-event.h>
 #include <vector>
