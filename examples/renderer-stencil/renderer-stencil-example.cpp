@@ -19,6 +19,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/actors/layer-devel.h>
 #include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/public-api/rendering/shader.h>
 
@@ -168,7 +169,7 @@ private:
     window.Add(label);
 
     // Layer to hold the 3D scene.
-    Layer layer = Layer::New();
+    Layer layer = DevelLayer::New();
     layer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
     // Set the parent origin to a small percentage below the center (so the demo will scale for different resolutions).
     layer.SetProperty(Actor::Property::PARENT_ORIGIN, Vector3(0.5f, 0.58f, 0.5f));
