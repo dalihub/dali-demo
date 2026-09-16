@@ -20,6 +20,7 @@
 
 // EXTERNAL INCLUDES
 #include <app_control.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/string-utils.h>
 #include <dali/public-api/common/dali-common.h>

@@ -19,8 +19,8 @@
  */
 
 // EXTERNAL INCLUDES
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/string-utils.h>
-#include <dali/public-api/adaptor-framework/application.h>
 
 using Dali::Integration::ToStdString;
 

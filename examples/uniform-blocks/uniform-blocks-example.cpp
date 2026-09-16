@@ -16,6 +16,7 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/public-api/rendering/uniform-block.h>
 
 #include <dali/integration-api/string-utils.h>

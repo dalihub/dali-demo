@@ -15,6 +15,7 @@
  *
  */
 
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <algorithm>
 #include <cstring>
 #include <iostream>

@@ -18,6 +18,7 @@
 // EXTERNAL INCLUDES
 #include <dali-scene3d/dali-scene3d.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 // INTERNAL INCLUDES
 #include <dali/devel-api/adaptor-framework/file-stream.h>

@@ -21,6 +21,7 @@
 
 // External includes
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 // Internal includes
 #include "styling-application.h"

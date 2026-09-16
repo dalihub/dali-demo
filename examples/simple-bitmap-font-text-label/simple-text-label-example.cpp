@@ -22,6 +22,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 #include <dali-toolkit/devel-api/text/bitmap-font.h>
 #include <dali/devel-api/text-abstraction/bitmap-font.h>

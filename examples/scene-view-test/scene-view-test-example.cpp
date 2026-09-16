@@ -18,6 +18,7 @@
 // EXTERNAL INCLUDES
 #include <dali-scene3d/dali-scene3d.h>
 #include <dali-toolkit/dali-toolkit.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 #include <dali-toolkit/devel-api/focus-manager/keyboard-focus-manager-devel.h>
 #include <dali/devel-api/actors/actor-devel.h>

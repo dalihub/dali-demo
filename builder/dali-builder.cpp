@@ -30,6 +30,7 @@
 #include <dali-toolkit/devel-api/builder/builder.h>
 #include <dali-toolkit/devel-api/builder/tree-node.h>
 #include <dali/dali.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 
 #include <algorithm>

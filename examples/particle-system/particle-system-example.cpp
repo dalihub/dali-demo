@@ -17,6 +17,7 @@
 
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 
 #include <dali-toolkit/public-api/particle-system/particle-domain.h>
 #include <dali-toolkit/public-api/particle-system/particle-emitter.h>
@@ -150,8 +151,8 @@ private:
     mCurrentEmitter.Start();
 
     // Set text and reset TextLabel properties and animation
-    mTextLabel[Toolkit::TextLabel::Property::TEXT] = ToPropertyValue(effectName);
-    mTextLabel[Actor::Property::COLOR_MULTIPLIER_ALPHA]       = 1.0f;
+    mTextLabel[Toolkit::TextLabel::Property::TEXT]      = ToPropertyValue(effectName);
+    mTextLabel[Actor::Property::COLOR_MULTIPLIER_ALPHA] = 1.0f;
     mTextLabelAnimation.SetCurrentProgress(0.0f);
     mTextLabelAnimation.Play();
   }

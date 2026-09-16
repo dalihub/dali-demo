@@ -20,6 +20,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali/dali.h>
 #include <dali/devel-api/actors/actor-enumerations-devel.h>
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/adaptor-framework/file-loader.h>
 #include <dali/devel-api/adaptor-framework/file-stream.h>
 #include <dali/integration-api/debug.h>

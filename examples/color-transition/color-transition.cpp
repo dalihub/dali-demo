@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+#include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/string-utils.h>
 #include <memory>
 #include "color-transition-controller.h"
