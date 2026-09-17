@@ -112,7 +112,7 @@ public:
     SetupButtons(rootLayer);
 
     //Add a light to the scene.
-    SetupLight(rootLayer);
+    SetupLight();
 
     //Allow for exiting of the application via key presses.
     window.KeyEventSignal().Connect(this, &MeshVisualController::OnKeyEvent);
@@ -250,8 +250,8 @@ public:
     lightModeButton.Add(lightTitleLabel);
   }
 
-  //Add a point light source the the scene, on a layer above the first.
-  void SetupLight(Layer baseLayer)
+  //Add a point light source to the scene.
+  void SetupLight()
   {
     //Create control to act as light source of scene.
     mLightSource = Control::New();
@@ -292,7 +292,7 @@ public:
     upperLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
     upperLayer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
 
-    baseLayer.Add(upperLayer);
+    window.Add(upperLayer);
     upperLayer.Add(mLightSource);
 
     //Decide which light to use to begin with.

@@ -47,7 +47,6 @@ public:
 
   // Create the GUI components
   Actor     CreateContentPane();
-  Actor     CreateResizableContentPane();
   Popup     CreateResetPopup();
   TextLabel CreateTitle(std::string title);
 
