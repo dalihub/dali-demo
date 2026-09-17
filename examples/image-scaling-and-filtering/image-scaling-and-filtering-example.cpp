@@ -233,7 +233,7 @@ public:
     grabCornerLayer.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
     grabCornerLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
     grabCornerLayer.Add(mGrabCorner);
-    mDesiredBox.Add(grabCornerLayer);
+    DevelActor::Add(mDesiredBox, grabCornerLayer);
 
     mPanGestureDetector = PanGestureDetector::New();
     mPanGestureDetector.Attach(mGrabCorner);

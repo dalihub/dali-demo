@@ -22,6 +22,8 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali-toolkit/public-api/visuals/visual-properties.h>
+#include <dali/devel-api/actors/actor-devel.h>
+#include <dali/devel-api/actors/layer-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 #include <dali/devel-api/object/type-registry.h>
 #include <dali/integration-api/debug.h>
@@ -399,7 +401,7 @@ void PageTurnView::OnInitialize()
   }
 
   // create the layer for turning pages
-  mTurningPageLayer = Layer::New();
+  mTurningPageLayer = DevelLayer::New();
   mTurningPageLayer.SetProperty(Actor::Property::PIVOT, Pivot::CENTER_LEFT);
   mTurningPageLayer.SetProperty(Layer::Property::BEHAVIOR, Layer::LAYER_3D);
   mTurningPageLayer.Raise();
@@ -407,7 +409,7 @@ void PageTurnView::OnInitialize()
   // Set control size and the parent origin of page layers
   OnPageTurnViewInitialize();
 
-  Self().Add(mTurningPageLayer);
+  DevelActor::Add(Self(), mTurningPageLayer);
 
   mTotalPageCount = static_cast<int>(mPageFactory->GetNumberOfPages());
   // add pages to the scene, and set depth for the stacked pages

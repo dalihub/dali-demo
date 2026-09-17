@@ -20,6 +20,7 @@
 
 // EXTERNAL INCLUDES
 #include <dali-toolkit/devel-api/controls/control-devel.h>
+#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/object/type-registry-helper.h>
 
 namespace DALI_NAMESPACE::Demo::Internal
@@ -90,7 +91,7 @@ void NavigationView::Push(Actor& actor)
 
   //push the new item into the stack and show it
   mContentStack.push_back(actor);
-  Self().Add(actor);
+  DevelActor::Add(Self(), actor);
 }
 
 Actor NavigationView::Pop()

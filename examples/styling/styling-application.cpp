@@ -60,7 +60,6 @@ const char* DEFAULT_CONTROL_AREA_IMAGE_PATH(DEMO_IMAGE_DIR "popup_button_backgro
 const char* POPUP_CONTROL_OK_NAME("PopupControlOk");
 const char* POPUP_CONTROL_CANCEL_NAME("PopupControlCancel");
 const char* BORDER_IMAGE(DEMO_IMAGE_DIR "border-4px.9.png");
-const char* RESIZE_HANDLE_IMAGE(DEMO_IMAGE_DIR "resize-handle.png");
 
 const int NUMBER_OF_THEMES(3); // The default theme is considered.
 
@@ -381,36 +380,6 @@ Actor StylingApplication::CreateContentPane()
   contentPane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
   contentPane.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
   contentPane.SetProperty(DevelActor::Property::PADDING, Vector4(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
-  return contentPane;
-}
-
-Actor StylingApplication::CreateResizableContentPane()
-{
-  Toolkit::ImageView contentPane = Toolkit::ImageView::New(BORDER_IMAGE);
-  contentPane.SetProperty(Dali::Actor::Property::NAME, "ContentPane");
-  contentPane.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
-  contentPane.SetProperty(Actor::Property::PIVOT, Pivot::CENTER);
-  contentPane.SetProperty(DevelActor::Property::PADDING, Vector4(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
-
-  Toolkit::ImageView grabHandle = Toolkit::ImageView::New(RESIZE_HANDLE_IMAGE);
-  grabHandle.SetProperty(Dali::Actor::Property::NAME, "GrabHandle");
-  DevelActor::SetResizePolicy(grabHandle, ResizePolicy::USE_NATURAL_SIZE, Dimension::ALL_DIMENSIONS);
-  grabHandle.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
-  grabHandle.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
-  grabHandle.SetProperty(Actor::Property::POSITION, Vector2(-BORDER_WIDTH, -BORDER_WIDTH));
-  grabHandle.SetProperty(Actor::Property::OPACITY, 0.6f);
-
-  Layer grabCornerLayer = Layer::New();
-  grabCornerLayer.SetProperty(Dali::Actor::Property::NAME, "GrabCornerLayer");
-  grabCornerLayer.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_RIGHT);
-  grabCornerLayer.SetProperty(Actor::Property::PIVOT, Pivot::BOTTOM_RIGHT);
-  grabCornerLayer.Add(grabHandle);
-  contentPane.Add(grabCornerLayer);
-
-  mPanGestureDetector = PanGestureDetector::New();
-  mPanGestureDetector.Attach(grabHandle);
-  mPanGestureDetector.DetectedSignal().Connect(this, &StylingApplication::OnPan);
-
   return contentPane;
 }
 
