@@ -90,11 +90,11 @@ Contains style / style images
 ##############################
 %build
 PREFIX="/usr"
-CXXFLAGS+=" -Wall -g -O2"
-LDFLAGS+=" -Wl,--rpath=$PREFIX/lib -Wl,--as-needed"
+CXXFLAGS="$CXXFLAGS -Wall -g -O2"
+LDFLAGS="$LDFLAGS -Wl,--rpath=$PREFIX/lib -Wl,--as-needed"
 
 %ifarch %{arm}
-CXXFLAGS+=" -D_ARCH_ARM_"
+CXXFLAGS="$CXXFLAGS -D_ARCH_ARM_"
 %endif
 
 cd %{_builddir}/%{name}-%{version}/build/tizen
@@ -150,10 +150,11 @@ cp -rf %{_builddir}/%{name}-%{version}/resources/style/images-common %{buildroot
 exit 0
 
 %post resources_1920x1080_rpi
-pushd %{dali_app_res_dir}
+_saved_dir=$(pwd)
+cd %{dali_app_res_dir}
 rm -rf style
 mv style_rpi style
-popd
+cd "$_saved_dir"
 
 ##############################
 # Pre Uninstall
@@ -163,9 +164,10 @@ popd
 case "$1" in
   0)
     %preun resources_1920x1080_rpi
-    pushd %{dali_app_res_dir}
+    _saved_dir=$(pwd)
+    cd %{dali_app_res_dir}
     mv style style_rpi
-    popd
+    cd "$_saved_dir"
   ;;
 esac
 
