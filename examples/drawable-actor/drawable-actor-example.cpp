@@ -48,7 +48,14 @@ public:
     mApplication.InitSignal().Connect(this, &DrawableActorExampleController::Create);
   }
 
-  ~DrawableActorExampleController() override = default; // Nothing to do in destructor
+  ~DrawableActorExampleController() override
+  {
+    // The render side holds a reference of its own, so the callback outlives mRenderer.
+    if(mRenderCallback)
+    {
+      mRenderCallback->Invalidate();
+    }
+  }
 
   // The Init signal is received once (only) during the Application lifetime
   void Create(Application application)
@@ -60,11 +67,10 @@ public:
     // Create native renderer
     mRenderer = MakeUnique<NativeRenderer>(window.GetPositionSize().width, window.GetPositionSize().height);
 
-    // Create render callback
+    // Create drawable actor. The render side takes a reference of the callback, and this
+    // keeps one of its own so it can detach mRenderer from it on the way out.
     mRenderCallback = RenderCallback::New<NativeRenderer>(mRenderer.Get(), &NativeRenderer::OnRender);
-
-    // Create drawable actor
-    mGLActor = DrawableActor::New(*mRenderCallback);
+    mGLActor        = DrawableActor::New(mRenderCallback);
 
     mGLActor.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mGLActor.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
@@ -111,7 +117,7 @@ public:
   TextLabel     mTextLabel;
   DrawableActor mGLActor;
 
-  UniquePtr<RenderCallback> mRenderCallback;
+  RenderCallbackPtr         mRenderCallback;
   UniquePtr<NativeRenderer> mRenderer{nullptr};
 
 private:
