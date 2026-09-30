@@ -146,11 +146,11 @@ private:
 
     if(mImageIndex == VECTOR_IMAGE_INDEX)
     {
-      mImageBuffer.SetImageType(EncodedImageBuffer::ImageType::VECTOR_IMAGE);
+      mImageBuffer.SetImageType(EncodedImageBuffer::ImageType::SVG);
     }
     else if(mImageIndex == ANIMATED_VECTOR_IMAGE_INDEX)
     {
-      mImageBuffer.SetImageType(EncodedImageBuffer::ImageType::ANIMATED_VECTOR_IMAGE);
+      mImageBuffer.SetImageType(EncodedImageBuffer::ImageType::LOTTIE);
     }
 
     mImageUrl = ImageUrlUtils::GenerateUrl(mImageBuffer);
