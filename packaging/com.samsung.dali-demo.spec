@@ -42,19 +42,23 @@ of the capability of the toolkit.
 # Resources
 ##############################
 
-%package resources_mobile
-Summary:    Specific resource files for a 720x1280 display on Tizen Mobile
+%package resources_720x1280
+Summary:    Specific resource files for a 720x1280 display
 Requires:   %{name} = %{version}-%{release}
-Conflicts:  %{name}-resources_rpi
-%description resources_mobile
-dali-demo specific resource files for a 720x1280 display on Tizen Mobile
+Conflicts:  %{name}-resources_1920x1080_rpi
+Provides:   %{name}-resources_mobile = %{version}-%{release}
+Obsoletes:  %{name}-resources_mobile < %{version}-%{release}
+%description resources_720x1280
+dali-demo specific resource files for a 720x1280 display
 Contains style / style images
 
-%package resources_rpi
+%package resources_1920x1080_rpi
 Summary:    Specific resource files for a 1920x1080 display on Raspberry Pi 4
 Requires:   %{name} = %{version}-%{release}
-Conflicts:  %{name}-resources_mobile
-%description resources_rpi
+Conflicts:  %{name}-resources_720x1280
+Provides:   %{name}-resources_rpi = %{version}-%{release}
+Obsoletes:  %{name}-resources_rpi < %{version}-%{release}
+%description resources_1920x1080_rpi
 dali-demo specific resource files for a 1920x1080 display on Raspberry Pi 4
 Contains style / style images
 
@@ -74,21 +78,23 @@ Contains style / style images
 %define locale_dir            %{dali_app_res_dir}/locale
 
 %if 0%{?rpi_style}
-%define local_style_dir       ../../resources/style/rpi
+%define local_style_dir       ../../resources/style/1920x1080_rpi
 %else
-%define local_style_dir       ../../resources/style/mobile
+%define local_style_dir       ../../resources/style/720x1280
 %endif
+# Both resolutions ship the same images.
+%define local_style_images_dir ../../resources/style/images-common
 
 ##############################
 # Build
 ##############################
 %build
 PREFIX="/usr"
-CXXFLAGS+=" -Wall -g -O2"
-LDFLAGS+=" -Wl,--rpath=$PREFIX/lib -Wl,--as-needed"
+CXXFLAGS="$CXXFLAGS -Wall -g -O2"
+LDFLAGS="$LDFLAGS -Wl,--rpath=$PREFIX/lib -Wl,--as-needed"
 
 %ifarch %{arm}
-CXXFLAGS+=" -D_ARCH_ARM_"
+CXXFLAGS="$CXXFLAGS -D_ARCH_ARM_"
 %endif
 
 cd %{_builddir}/%{name}-%{version}/build/tizen
@@ -101,6 +107,7 @@ cmake -DDALI_APP_DIR=%{dali_app_ro_dir}/bin \
 %endif
       -DENABLE_TRACE:BOOL=ON \
       -DLOCAL_STYLE_DIR=%{local_style_dir} \
+      -DLOCAL_STYLE_IMAGES_DIR=%{local_style_images_dir} \
       -DINTERNATIONALIZATION:BOOL=OFF \
       -DTIZEN:BOOL=ON \
 %if "%{?build_example_name}" != ""
@@ -132,7 +139,8 @@ mkdir -p %{buildroot}%{smack_rule_dir}
 cp -f %{_builddir}/%{name}-%{version}/%{name}.rule %{buildroot}%{smack_rule_dir}
 %endif
 
-cp -rf %{_builddir}/%{name}-%{version}/resources/style/rpi %{buildroot}/%{dali_app_res_dir}/style_rpi
+cp -rf %{_builddir}/%{name}-%{version}/resources/style/1920x1080_rpi %{buildroot}/%{dali_app_res_dir}/style_rpi
+cp -rf %{_builddir}/%{name}-%{version}/resources/style/images-common %{buildroot}/%{dali_app_res_dir}/style_rpi/images
 
 ##############################
 # Post Install
@@ -141,23 +149,25 @@ cp -rf %{_builddir}/%{name}-%{version}/resources/style/rpi %{buildroot}/%{dali_a
 /sbin/ldconfig
 exit 0
 
-%post resources_rpi
-pushd %{dali_app_res_dir}
+%post resources_1920x1080_rpi
+_saved_dir=$(pwd)
+cd %{dali_app_res_dir}
 rm -rf style
 mv style_rpi style
-popd
+cd "$_saved_dir"
 
 ##############################
 # Pre Uninstall
 ##############################
 
-%preun resources_rpi
+%preun resources_1920x1080_rpi
 case "$1" in
   0)
-    %preun resources_rpi
-    pushd %{dali_app_res_dir}
+    %preun resources_1920x1080_rpi
+    _saved_dir=$(pwd)
+    cd %{dali_app_res_dir}
     mv style style_rpi
-    popd
+    cd "$_saved_dir"
   ;;
 esac
 
@@ -199,7 +209,7 @@ exit 0
 %endif
 %license LICENSE
 
-%files resources_mobile
+%files resources_720x1280
 %if 0%{?enable_dali_smack_rules}
 %manifest com.samsung.dali-demo.manifest-smack
 %else
@@ -209,7 +219,7 @@ exit 0
 %{dali_app_res_dir}/style/*
 %{dali_app_res_dir}/style/images/*
 
-%files resources_rpi
+%files resources_1920x1080_rpi
 %if 0%{?enable_dali_smack_rules}
 %manifest com.samsung.dali-demo.manifest-smack
 %else
