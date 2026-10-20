@@ -294,12 +294,12 @@ public:
 
     mNativeQueue = NativeImageQueue::New(NATIVE_IMAGE_WIDTH, NATIVE_IMAGE_HEIGHT, NativeImageQueue::ColorFormat::BGRA8888);
 
-    mNativeQueue->SetQueueUsageHint(Dali::NativeImageQueue::QueueUsageType::ENQUEUE_DEQUEUE);
-
     // Check whether current platform support NativeImageQueue or not.
     if(mNativeQueue && !mNativeQueue->GetNativeImageQueue().Empty())
     {
       mNativeSourceQueueSupported = true;
+
+      mNativeQueue->SetQueueUsageHint(Dali::NativeImageQueue::QueueUsageType::ENQUEUE_DEQUEUE);
 
       mQueueRenderThreadPtr = new NativeImageQueueRenderThread(mNativeQueue);
       mQueueRenderThreadPtr->Start();
