@@ -439,7 +439,7 @@ public:
           bColor = false;
         }
 
-        window.AddFramePresentedCallback(MakeCallback(this, &WindowExampleController::PresentedCallback), count);
+        window.AddFramePresentedCallback(Callback<void(int32_t)>::New(this, &WindowExampleController::PresentedCallback), count);
       }
       else if(event.GetKeyName() == "3")
       {
