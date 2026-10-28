@@ -225,9 +225,9 @@ ENDFOREACH(flag)
 MESSAGE("Installed style resources ${LOCAL_STYLE_IMAGES_LIST} to ${STYLE_DIR}/images")
 
 IF( ENABLE_PKG_CONFIGURE )
-  SET(PKG_LIST dali2-core
-               dali2-adaptor
-               dali2-toolkit)
+  SET(PKG_LIST dali3-core
+               dali3-adaptor
+               dali3-toolkit)
 
   INCLUDE(FindPkgConfig)
   pkg_check_modules(REQUIRED_PKGS REQUIRED ${PKG_LIST})
@@ -236,7 +236,7 @@ IF( ENABLE_PKG_CONFIGURE )
         SET(REQUIRED_CFLAGS "${REQUIRED_CFLAGS} ${flag}")
   ENDFOREACH(flag)
 
-  pkg_check_modules(DALI_SCENE3D dali2-scene3d)
+  pkg_check_modules(DALI_SCENE3D dali3-scene3d)
   IF( DALI_SCENE3D_FOUND )
     FOREACH(flag ${DALI_SCENE3D_CFLAGS})
       SET(REQUIRED_CFLAGS "${REQUIRED_CFLAGS} ${flag}")
@@ -251,7 +251,7 @@ IF( ENABLE_PKG_CONFIGURE )
     SET( ENABLE_SCENE3D "ON" )
   ENDIF()
 
-  pkg_check_modules(DALI_PHYSICS_2D dali2-physics-2d chipmunk2d)
+  pkg_check_modules(DALI_PHYSICS_2D dali3-physics-2d chipmunk2d)
   IF( DALI_PHYSICS_2D_FOUND )
     FOREACH(flag ${DALI_PHYSICS_2D_CFLAGS})
       SET(OPTIONAL_PHYSICS_2D_CFLAGS "${OPTIONAL_PHYSICS_2D_CFLAGS} ${flag}")
@@ -267,7 +267,7 @@ IF( ENABLE_PKG_CONFIGURE )
     SET( ENABLE_PHYSICS_2D "ON" )
   ENDIF()
 
-  pkg_check_modules(DALI_PHYSICS_3D dali2-physics-3d bullet3)
+  pkg_check_modules(DALI_PHYSICS_3D dali3-physics-3d bullet3)
   IF( DALI_PHYSICS_3D_FOUND )
     FOREACH(flag ${DALI_PHYSICS_3D_CFLAGS})
       SET(OPTIONAL_PHYSICS_3D_CFLAGS "${OPTIONAL_PHYSICS_3D_CFLAGS} ${flag}")
@@ -332,16 +332,16 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     FIND_PACKAGE( unofficial-fontconfig REQUIRED )
   ENDIF()
 
-  FIND_PACKAGE( dali2-core REQUIRED )
-  FIND_PACKAGE( dali2-adaptor REQUIRED )
-  FIND_PACKAGE( dali2-toolkit REQUIRED )
+  FIND_PACKAGE( dali3-core REQUIRED )
+  FIND_PACKAGE( dali3-adaptor REQUIRED )
+  FIND_PACKAGE( dali3-toolkit REQUIRED )
 
-  FIND_PACKAGE( dali2-scene3d )
+  FIND_PACKAGE( dali3-scene3d )
 
   FIND_PACKAGE( chipmunk )
   FIND_PACKAGE( bullet3 )
-  FIND_PACKAGE( dali2-physics-2d )
-  FIND_PACKAGE( dali2-physics-3d )
+  FIND_PACKAGE( dali3-physics-2d )
+  FIND_PACKAGE( dali3-physics-3d )
 
   # Set up the include dir
   SET( INCLUDE_DIR $ENV{includedir} )
@@ -374,9 +374,9 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     unofficial::angle::libGLESv2
     WebP::webp
     WebP::webpdemux
-    dali2-core::dali2-core
-    dali2-adaptor::dali2-adaptor
-    dali2-toolkit::dali2-toolkit
+    dali3-core::dali3-core
+    dali3-adaptor::dali3-adaptor
+    dali3-toolkit::dali3-toolkit
   )
 
   IF ( WIN32 )
@@ -390,10 +390,10 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     )
   ENDIF()
 
-  IF (dali2-scene3d_FOUND)
+  IF (dali3-scene3d_FOUND)
     SET(REQUIRED_LIBS
       ${REQUIRED_LIBS}
-      dali2-scene3d::dali2-scene3d
+      dali3-scene3d::dali3-scene3d
     )
     SET( ENABLE_SCENE3D "ON" )
   ENDIF()
@@ -408,12 +408,12 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     SET(ENABLE_PHYSICS_3D "ON" )
   ENDIF()
 
-  IF (dali2-physics-2d_FOUND)
-    SET(DALI_PHYSICS_2D_LDFLAGS ${DALI_PHYSICS_2D_LDFLAGS} dali2-physics-2d::dali2-physics-2d)
+  IF (dali3-physics-2d_FOUND)
+    SET(DALI_PHYSICS_2D_LDFLAGS ${DALI_PHYSICS_2D_LDFLAGS} dali3-physics-2d::dali3-physics-2d)
   ENDIF()
 
-  IF (dali2-physics-3d_FOUND)
-    SET(DALI_PHYSICS_3D_LDFLAGS ${DALI_PHYSICS_3D_LDFLAGS} dali2-physics-3d::dali2-physics-3d)
+  IF (dali3-physics-3d_FOUND)
+    SET(DALI_PHYSICS_3D_LDFLAGS ${DALI_PHYSICS_3D_LDFLAGS} dali3-physics-3d::dali3-physics-3d)
   ENDIF()
 
 ELSEIF( UNIX )
