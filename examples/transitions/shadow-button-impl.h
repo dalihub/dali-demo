@@ -144,7 +144,7 @@ private:
     Dali::Property::Index mTransformId;
     Dali::Property::Map   mTransform;
 
-    Transform(Dali::Property::Index index, Dali::Property::Map& map)
+    Transform(Dali::Property::Index index, const Dali::Property::Map& map)
     : mTransformId(index),
       mTransform(map)
     {

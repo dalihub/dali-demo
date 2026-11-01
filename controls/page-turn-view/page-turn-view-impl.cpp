@@ -428,9 +428,9 @@ void PageTurnView::OnInitialize()
 
 Shader PageTurnView::CreateShader(const Property::Map& shaderMap)
 {
-  Shader           shader;
-  Property::Value* shaderValue = shaderMap.Find(Toolkit::Visual::Property::SHADER, CUSTOM_SHADER);
-  Property::Map    shaderSource;
+  Shader                 shader;
+  const Property::Value* shaderValue = shaderMap.Find(Toolkit::Visual::Property::SHADER, CUSTOM_SHADER);
+  Property::Map          shaderSource;
   if(shaderValue && shaderValue->Get(shaderSource))
   {
     std::string      vertexShader;
