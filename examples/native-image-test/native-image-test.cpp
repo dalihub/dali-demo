@@ -21,9 +21,9 @@
 #include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/devel-api/adaptor-framework/native-image-devel.h>
 #include <dali/integration-api/debug.h>
-#include <dali/integration-api/pixel-data-integ.h>
 #include <dali/public-api/adaptor-framework/image-loading.h>
-#include <dali/public-api/adaptor-framework/pixel-buffer.h>
+#include <dali/public-api/adaptor-framework/pixel-buffer-operations.h>
+#include <dali/public-api/images/pixel-buffer.h>
 
 #include <tbm_surface.h>
 #include <cstring> // memcpy
@@ -102,9 +102,7 @@ public:
     uint32_t nativeImageWidth  = NextPowerOfTwo(pixelBuffer.GetWidth());
     uint32_t nativeImageHeight = NextPowerOfTwo(pixelBuffer.GetHeight());
 
-    pixelBuffer.Resize(static_cast<uint16_t>(nativeImageWidth), static_cast<uint16_t>(nativeImageHeight));
-
-    PixelData pixelData = PixelBuffer::Convert(pixelBuffer);
+    Dali::PixelBufferOperations::Resize(pixelBuffer, static_cast<uint16_t>(nativeImageWidth), static_cast<uint16_t>(nativeImageHeight));
 
     // Create native image with power-of-two dimensions
     mNativeImageSrc = Dali::NativeImage::New(nativeImageWidth, nativeImageHeight, Dali::NativeImage::COLOR_DEPTH_DEFAULT);
@@ -123,8 +121,7 @@ public:
     Dali::Any source(mTbmSurface);
     mNativeImageSrc->SetSource(source);
 
-    auto pixelDataBuffer = Dali::Integration::GetPixelDataBuffer(pixelData);
-    if(!Dali::DevelNativeImage::SetPixels(*mNativeImageSrc, pixelDataBuffer.buffer, pixelData.GetPixelFormat()))
+    if(!Dali::DevelNativeImage::SetPixels(*mNativeImageSrc, pixelBuffer.GetBuffer(), pixelBuffer.GetPixelFormat()))
     {
       DALI_LOG_ERROR("Failed to set the pixel buffer to NativeImage.\n");
       return;

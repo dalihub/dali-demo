@@ -23,7 +23,7 @@
 #include <dali-toolkit/public-api/particle-system/particle-modifier.h>
 #include <dali-toolkit/public-api/particle-system/particle-source.h>
 #include <dali-toolkit/public-api/particle-system/particle.h>
-#include <dali/public-api/adaptor-framework/pixel-buffer.h>
+#include <dali/public-api/images/pixel-buffer.h>
 #include <dali/public-api/object/weak-handle.h>
 #include <ctime>
 
