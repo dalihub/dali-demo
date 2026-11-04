@@ -18,6 +18,7 @@
 #include <dali-toolkit/dali-toolkit.h>
 #include <dali-toolkit/devel-api/image-loader/texture-manager.h>
 #include <dali/devel-api/adaptor-framework/application.h>
+#include <dali/integration-api/shader-integ.h>
 
 #include <dali/integration-api/string-utils.h>
 #include "generated/image-view-url-frag.h"
@@ -111,7 +112,7 @@ private:
       mActorForInput.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::CENTER);
       mActorForInput.SetProperty(Actor::Property::SIZE, TARGET_SIZE);
       Property::Map customShader;
-      customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = Dali::Shader::GetFragmentShaderPrefix() + SHADER_IMAGE_VIEW_URL_FRAG.data();
+      customShader[Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = Dali::Integration::GetFragmentShaderPrefix() + SHADER_IMAGE_VIEW_URL_FRAG.data();
       Property::Map visualMap;
       visualMap.Insert(Toolkit::Visual::Property::SHADER, customShader);
       mActorForInput.SetProperty(Toolkit::ImageView::Property::IMAGE, visualMap);

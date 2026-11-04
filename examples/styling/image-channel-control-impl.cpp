@@ -19,6 +19,7 @@
 #include <dali-toolkit/devel-api/controls/control-devel.h>
 #include <dali-toolkit/devel-api/visual-factory/visual-factory.h>
 #include <dali/devel-api/object/type-registry-helper.h>
+#include <dali/integration-api/shader-integ.h>
 
 #include "generated/image-channel-control-frag.h"
 
@@ -88,7 +89,7 @@ void ImageChannelControl::SetImage(const String& url)
 
   Property::Map properties;
   Property::Map shader;
-  shader[Dali::Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = Dali::Shader::GetFragmentShaderPrefix() + SHADER_IMAGE_CHANNEL_CONTROL_FRAG.data();
+  shader[Dali::Toolkit::Visual::Shader::Property::FRAGMENT_SHADER] = Dali::Integration::GetFragmentShaderPrefix() + SHADER_IMAGE_CHANNEL_CONTROL_FRAG.data();
   properties[Dali::Toolkit::Visual::Property::TYPE]                = Dali::Toolkit::Visual::IMAGE;
   properties[Dali::Toolkit::Visual::Property::SHADER]              = shader;
   properties[Dali::Toolkit::ImageVisual::Property::URL]            = ToDaliString(url);

@@ -478,7 +478,8 @@ public:
     renderTask.GetCameraActor().SetInvertYAxis(false);
 
     auto positionSize = mWindow.GetPositionSize();
-    renderTask.SetViewport(Dali::Viewport(Vector4(positionSize.width / 2.0f + 200.0f, positionSize.height / 2.0f - 200.0f, 400, 400)));
+    renderTask.SetViewportPosition(Vector2(positionSize.width / 2.0f + 200.0f, positionSize.height / 2.0f - 200.0f));
+    renderTask.SetViewportSize(Vector2(400, 400));
 
     mRenderTaskList.push_back(renderTask);
   }
