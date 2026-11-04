@@ -411,7 +411,8 @@ private:
 
     auto task3D = window.GetRenderTaskList().CreateTask();
     task3D.SetSourceActor(mLayer3D);
-    task3D.SetViewport(Rect<int>(0, 0, windowWidth, windowHeight));
+    task3D.SetViewportPosition(Vector2::ZERO);
+    task3D.SetViewportSize(Vector2(windowWidth, windowHeight));
     task3D.SetCameraActor(cameraActor);
     task3D.SetClearColor(Color::BLACK);
     task3D.SetClearEnabled(true);
@@ -437,7 +438,8 @@ private:
     auto renderTask = window.GetRenderTaskList().CreateTask();
     renderTask.SetFrameBuffer(fb);
     renderTask.SetSourceActor(renderTaskSourceActor);
-    renderTask.SetViewport(Rect<int>(0, 0, windowWidth, windowHeight));
+    renderTask.SetViewportPosition(Vector2::ZERO);
+    renderTask.SetViewportSize(Vector2(windowWidth, windowHeight));
     renderTask.SetCameraActor(cameraRefActor);
     renderTask.SetClearColor(Color::BLACK);
     renderTask.SetClearEnabled(true);

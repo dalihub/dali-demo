@@ -2,7 +2,7 @@
 
 Name:       com.samsung.dali-demo
 Summary:    The OpenGLES Canvas Core Demo
-Version:    2.5.45
+Version:    2.5.46
 Release:    1
 Group:      System/Libraries
 License:    Apache-2.0 and BSD-3-Clause and MIT
@@ -19,16 +19,16 @@ BuildRequires:  pkgconfig(capi-appfw-app-control)
 BuildRequires:  pkgconfig(capi-media-player)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  gettext-tools
-BuildRequires:  pkgconfig(dali2-core)
-BuildRequires:  pkgconfig(dali2-adaptor)
-BuildRequires:  pkgconfig(dali2-toolkit)
-BuildRequires:  pkgconfig(dali2-scene3d)
-BuildRequires:  pkgconfig(dali2-physics-2d)
-BuildRequires:  pkgconfig(dali2-physics-3d)
-BuildRequires:  dali2-integration-devel
-BuildRequires:  dali2-adaptor-integration-devel
-BuildRequires:  dali2-toolkit-integration-devel
-BuildRequires:  dali2-scene3d-integration-devel
+BuildRequires:  pkgconfig(dali3-core)
+BuildRequires:  pkgconfig(dali3-adaptor)
+BuildRequires:  pkgconfig(dali3-toolkit)
+BuildRequires:  pkgconfig(dali3-scene3d)
+BuildRequires:  pkgconfig(dali3-physics-2d)
+BuildRequires:  pkgconfig(dali3-physics-3d)
+BuildRequires:  dali3-integration-devel
+BuildRequires:  dali3-adaptor-integration-devel
+BuildRequires:  dali3-toolkit-integration-devel
+BuildRequires:  dali3-scene3d-integration-devel
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(gles20)
 BuildRequires:  pkgconfig(glesv2)
