@@ -8,6 +8,15 @@ SET(CMAKE_C_STANDARD 99)
 SET(CMAKE_CXX_STANDARD 17)
 PROJECT(dali-demo C CXX)
 
+# Select the DALi packages used by the target platform.
+IF(NOT DALI_API_MAJOR)
+  IF(WIN32)
+    SET(DALI_API_MAJOR 2)
+  ELSE()
+    SET(DALI_API_MAJOR 3)
+  ENDIF()
+ENDIF()
+
 SET(dali-demo_VERSION_MAJOR 1)
 SET(dali-demo_VERSION_MINOR 0)
 
@@ -225,9 +234,9 @@ ENDFOREACH(flag)
 MESSAGE("Installed style resources ${LOCAL_STYLE_IMAGES_LIST} to ${STYLE_DIR}/images")
 
 IF( ENABLE_PKG_CONFIGURE )
-  SET(PKG_LIST dali3-core
-               dali3-adaptor
-               dali3-toolkit)
+  SET(PKG_LIST dali${DALI_API_MAJOR}-core
+               dali${DALI_API_MAJOR}-adaptor
+               dali${DALI_API_MAJOR}-toolkit)
 
   INCLUDE(FindPkgConfig)
   pkg_check_modules(REQUIRED_PKGS REQUIRED ${PKG_LIST})
@@ -236,7 +245,7 @@ IF( ENABLE_PKG_CONFIGURE )
         SET(REQUIRED_CFLAGS "${REQUIRED_CFLAGS} ${flag}")
   ENDFOREACH(flag)
 
-  pkg_check_modules(DALI_SCENE3D dali3-scene3d)
+  pkg_check_modules(DALI_SCENE3D dali${DALI_API_MAJOR}-scene3d)
   IF( DALI_SCENE3D_FOUND )
     FOREACH(flag ${DALI_SCENE3D_CFLAGS})
       SET(REQUIRED_CFLAGS "${REQUIRED_CFLAGS} ${flag}")
@@ -251,7 +260,7 @@ IF( ENABLE_PKG_CONFIGURE )
     SET( ENABLE_SCENE3D "ON" )
   ENDIF()
 
-  pkg_check_modules(DALI_PHYSICS_2D dali3-physics-2d chipmunk2d)
+  pkg_check_modules(DALI_PHYSICS_2D dali${DALI_API_MAJOR}-physics-2d chipmunk2d)
   IF( DALI_PHYSICS_2D_FOUND )
     FOREACH(flag ${DALI_PHYSICS_2D_CFLAGS})
       SET(OPTIONAL_PHYSICS_2D_CFLAGS "${OPTIONAL_PHYSICS_2D_CFLAGS} ${flag}")
@@ -267,7 +276,7 @@ IF( ENABLE_PKG_CONFIGURE )
     SET( ENABLE_PHYSICS_2D "ON" )
   ENDIF()
 
-  pkg_check_modules(DALI_PHYSICS_3D dali3-physics-3d bullet3)
+  pkg_check_modules(DALI_PHYSICS_3D dali${DALI_API_MAJOR}-physics-3d bullet3)
   IF( DALI_PHYSICS_3D_FOUND )
     FOREACH(flag ${DALI_PHYSICS_3D_CFLAGS})
       SET(OPTIONAL_PHYSICS_3D_CFLAGS "${OPTIONAL_PHYSICS_3D_CFLAGS} ${flag}")
@@ -332,16 +341,16 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     FIND_PACKAGE( unofficial-fontconfig REQUIRED )
   ENDIF()
 
-  FIND_PACKAGE( dali3-core REQUIRED )
-  FIND_PACKAGE( dali3-adaptor REQUIRED )
-  FIND_PACKAGE( dali3-toolkit REQUIRED )
+  FIND_PACKAGE( dali${DALI_API_MAJOR}-core REQUIRED )
+  FIND_PACKAGE( dali${DALI_API_MAJOR}-adaptor REQUIRED )
+  FIND_PACKAGE( dali${DALI_API_MAJOR}-toolkit REQUIRED )
 
-  FIND_PACKAGE( dali3-scene3d )
+  FIND_PACKAGE( dali${DALI_API_MAJOR}-scene3d )
 
   FIND_PACKAGE( chipmunk )
   FIND_PACKAGE( bullet3 )
-  FIND_PACKAGE( dali3-physics-2d )
-  FIND_PACKAGE( dali3-physics-3d )
+  FIND_PACKAGE( dali${DALI_API_MAJOR}-physics-2d )
+  FIND_PACKAGE( dali${DALI_API_MAJOR}-physics-3d )
 
   # Set up the include dir
   SET( INCLUDE_DIR $ENV{includedir} )
@@ -374,9 +383,9 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     unofficial::angle::libGLESv2
     WebP::webp
     WebP::webpdemux
-    dali3-core::dali3-core
-    dali3-adaptor::dali3-adaptor
-    dali3-toolkit::dali3-toolkit
+    dali${DALI_API_MAJOR}-core::dali${DALI_API_MAJOR}-core
+    dali${DALI_API_MAJOR}-adaptor::dali${DALI_API_MAJOR}-adaptor
+    dali${DALI_API_MAJOR}-toolkit::dali${DALI_API_MAJOR}-toolkit
   )
 
   IF ( WIN32 )
@@ -390,10 +399,10 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     )
   ENDIF()
 
-  IF (dali3-scene3d_FOUND)
+  IF (dali${DALI_API_MAJOR}-scene3d_FOUND)
     SET(REQUIRED_LIBS
       ${REQUIRED_LIBS}
-      dali3-scene3d::dali3-scene3d
+      dali${DALI_API_MAJOR}-scene3d::dali${DALI_API_MAJOR}-scene3d
     )
     SET( ENABLE_SCENE3D "ON" )
   ENDIF()
@@ -408,12 +417,12 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     SET(ENABLE_PHYSICS_3D "ON" )
   ENDIF()
 
-  IF (dali3-physics-2d_FOUND)
-    SET(DALI_PHYSICS_2D_LDFLAGS ${DALI_PHYSICS_2D_LDFLAGS} dali3-physics-2d::dali3-physics-2d)
+  IF (dali${DALI_API_MAJOR}-physics-2d_FOUND)
+    SET(DALI_PHYSICS_2D_LDFLAGS ${DALI_PHYSICS_2D_LDFLAGS} dali${DALI_API_MAJOR}-physics-2d::dali${DALI_API_MAJOR}-physics-2d)
   ENDIF()
 
-  IF (dali3-physics-3d_FOUND)
-    SET(DALI_PHYSICS_3D_LDFLAGS ${DALI_PHYSICS_3D_LDFLAGS} dali3-physics-3d::dali3-physics-3d)
+  IF (dali${DALI_API_MAJOR}-physics-3d_FOUND)
+    SET(DALI_PHYSICS_3D_LDFLAGS ${DALI_PHYSICS_3D_LDFLAGS} dali${DALI_API_MAJOR}-physics-3d::dali${DALI_API_MAJOR}-physics-3d)
   ENDIF()
 
 ELSEIF( UNIX )
