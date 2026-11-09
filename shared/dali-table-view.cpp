@@ -255,8 +255,8 @@ Dali::Toolkit::ScrollViewEffect SetupInnerPageCubeEffect(const Vector2 windowSiz
 void SetupScrollViewRulers(ScrollView& scrollView, const uint16_t windowWidth, const float pageWidth, const int totalPages)
 {
   // Update Ruler info. for the scroll-view
-  Dali::Toolkit::RulerPtr rulerX = new FixedRuler(pageWidth);
-  Dali::Toolkit::RulerPtr rulerY = new DefaultRuler();
+  Dali::Toolkit::RulerPtr rulerX = FixedRuler::New(pageWidth);
+  Dali::Toolkit::RulerPtr rulerY = DefaultRuler::New();
   rulerX->SetDomain(RulerDomain(0.0f, (totalPages + 1) * windowWidth * TABLE_RELATIVE_SIZE.x * 0.5f, true));
   rulerY->Disable();
   scrollView.SetRulerX(rulerX);

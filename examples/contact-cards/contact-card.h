@@ -59,6 +59,9 @@ public:
   ContactCard(Dali::Window window, const ContactCardLayoutInfo& contactCardLayoutInfo, const Dali::String& contactName, const Dali::String& contactAddress, const Dali::String& imagePath, const Dali::Vector2& position);
 
 private:
+  ContactCard(const ContactCard&)            = delete;
+  ContactCard& operator=(const ContactCard&) = delete;
+
   /**
    * @brief Private Destructor. Will only be deleted when ref-count goes to 0.
    *
