@@ -253,24 +253,24 @@ void BeatControl::SetProperty(BaseObject* object, Property::Index index, const P
         const Property::Map* map = value.GetMap();
         if(map)
         {
-          Property::Value* transformValue = map->Find(Visual::Property::TRANSFORM, "transform");
+          const Property::Value* transformValue = map->Find(Visual::Property::TRANSFORM, "transform");
           if(transformValue)
           {
-            Property::Map* transformMap = transformValue->GetMap();
+            const Property::Map* transformMap = transformValue->GetMap();
             if(transformMap)
             {
               // We'll increment this whenever SIZE, ORIGIN or PIVOT's are modified as we won't need to create a new visual if only these properties are used
               // If there are more properties in the transform map, then we need to create a new visual
               unsigned int sizeAndPositionPropertyCount = 0;
 
-              Property::Value* sizeValue = transformMap->Find(Visual::Transform::Property::SIZE, "size");
+              const Property::Value* sizeValue = transformMap->Find(Visual::Transform::Property::SIZE, "size");
               if(sizeValue)
               {
                 sizeValue->Get(impl.mTransformSize);
                 ++sizeAndPositionPropertyCount;
               }
 
-              Property::Value* originValue = transformMap->Find(Visual::Transform::Property::ORIGIN, "origin");
+              const Property::Value* originValue = transformMap->Find(Visual::Transform::Property::ORIGIN, "origin");
               if(originValue)
               {
                 int intValue = 0;
@@ -281,7 +281,7 @@ void BeatControl::SetProperty(BaseObject* object, Property::Index index, const P
                 }
               }
 
-              Property::Value* pivotValue = transformMap->Find(Visual::Transform::Property::PIVOT, "pivot");
+              const Property::Value* pivotValue = transformMap->Find(Visual::Transform::Property::PIVOT, "pivot");
               if(pivotValue)
               {
                 int intValue = 0;
