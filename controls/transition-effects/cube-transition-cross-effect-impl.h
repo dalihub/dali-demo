@@ -48,6 +48,7 @@ protected:
    * @copydoc Toolkit::Internal::CubeTransitionEffect::OnStartTransition
    */
   void OnStartTransition(Vector2 panPosition, Vector2 panDisplacement) override;
+  ~CubeTransitionCrossEffect() override = default;
 
 private:
   /**

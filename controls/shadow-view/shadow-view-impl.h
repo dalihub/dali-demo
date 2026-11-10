@@ -46,21 +46,6 @@ class ShadowView : public Toolkit::ControlImpl
 {
 public:
   /**
-   * @copydoc Dali::Demo::ShadowView::ShadowView
-   */
-  ShadowView();
-
-  /**
-   * @copydoc Dali::Demo::ShadowView::ShadowView
-   */
-  ShadowView(float downsampleWidthScale, float downsampleHeightScale);
-
-  /**
-   * @copydoc Dali::Demo::ShadowView::~ShadowView
-   */
-  virtual ~ShadowView();
-
-  /**
    * @copydoc Dali::Demo::ShadowView::New(float downsampleWidthScale, float downsampleHeightScale)
    */
   static Demo::ShadowView New(float downsampleWidthScale, float downsampleHeightScale);
@@ -112,6 +97,22 @@ public:
   }
 
   void SetShaderConstants();
+
+protected:
+  /**
+   * @copydoc Dali::Demo::ShadowView::ShadowView
+   */
+  ShadowView();
+
+  /**
+   * @copydoc Dali::Demo::ShadowView::ShadowView
+   */
+  ShadowView(float downsampleWidthScale, float downsampleHeightScale);
+
+  /**
+   * @copydoc Dali::Demo::ShadowView::~ShadowView
+   */
+  virtual ~ShadowView();
 
 private:
   void OnInitialize() override;
@@ -169,8 +170,6 @@ private:
   Property::Index mShadowColorPropertyIndex;
   float           mDownsampleWidthScale;
   float           mDownsampleHeightScale;
-
-private:
   // Undefined copy constructor.
   ShadowView(const ShadowView&);
 

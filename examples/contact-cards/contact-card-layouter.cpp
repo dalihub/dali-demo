@@ -98,7 +98,7 @@ void ContactCardLayouter::AddContact(Dali::Window window, const std::string& con
   }
 
   // Create a new contact card and add to our container
-  mContactCards.push_back(new ContactCard(window, mContactCardLayoutInfo, ToDaliString(contactName), ToDaliString(contactAddress), ToDaliString(imagePath), NextCardPosition()));
+  mContactCards.push_back(ContactCard::New(window, mContactCardLayoutInfo, ToDaliString(contactName), ToDaliString(contactAddress), ToDaliString(imagePath), NextCardPosition()));
 }
 
 const Vector2& ContactCardLayouter::NextCardPosition()

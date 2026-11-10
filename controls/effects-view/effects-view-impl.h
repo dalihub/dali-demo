@@ -46,17 +46,6 @@ public:
   /// @copydoc Dali::Demo::EffectsView New()
   static Demo::EffectsView New();
 
-  /**
-   * Construct a new EffectsView.
-   * @copydoc Demo::EffectsView New()
-   */
-  EffectsView();
-
-  /**
-   * A reference counted object may only be deleted by calling Unreference()
-   */
-  virtual ~EffectsView();
-
 public:
   /// @copydoc Dali::Demo::EffectsView::SetType
   void SetType(Demo::EffectsView::EffectType type);
@@ -107,6 +96,18 @@ public:
    * @return The current value of the property.
    */
   static Property::Value GetProperty(BaseObject* object, Property::Index propertyIndex);
+
+protected:
+  /**
+   * Construct a new EffectsView.
+   * @copydoc Demo::EffectsView New()
+   */
+  EffectsView();
+
+  /**
+   * A reference counted object may only be deleted by calling Unreference()
+   */
+  virtual ~EffectsView();
 
 private: // From Control
   /**
@@ -184,8 +185,6 @@ private:
    * Remove ImageFilters
    */
   void RemoveFilters();
-
-private:
   // Undefined
   EffectsView(const EffectsView&);
 

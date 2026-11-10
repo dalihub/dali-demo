@@ -47,11 +47,6 @@ class BubbleEmitter : public Toolkit::ControlImpl
 {
 public:
   /**
-   * Destructor
-   */
-  ~BubbleEmitter();
-
-  /**
    * @copydoc Demo::BubbleEmitter::New
    */
   static Demo::BubbleEmitter New(const Vector2& winSize,
@@ -93,6 +88,12 @@ public:
    * @copydoc Demo::BubbleEmitter::Restore
    */
   void Restore();
+
+protected:
+  /**
+   * Destructor
+   */
+  ~BubbleEmitter();
 
 private:
   /**
