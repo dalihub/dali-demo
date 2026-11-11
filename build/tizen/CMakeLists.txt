@@ -8,6 +8,11 @@ SET(CMAKE_C_STANDARD 99)
 SET(CMAKE_CXX_STANDARD 17)
 PROJECT(dali-demo C CXX)
 
+# Enable shadow errors for GNU builds; validate other compilers separately.
+IF(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  ADD_COMPILE_OPTIONS(-Werror=shadow)
+ENDIF()
+
 SET(dali-demo_VERSION_MAJOR 1)
 SET(dali-demo_VERSION_MINOR 0)
 
