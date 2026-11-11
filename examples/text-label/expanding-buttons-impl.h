@@ -35,16 +35,6 @@ public:
    */
   static Demo::ExpandingButtons New();
 
-  /**
-   * Constructor
-   */
-  ExpandingButtons();
-
-  /**
-   * Destructor
-   */
-  ~ExpandingButtons();
-
 public: // API
   void RegisterButton(Dali::Toolkit::Control& control);
 
@@ -54,6 +44,17 @@ public: // API
 
 public: // Signals
   Demo::ExpandingButtons::ExpandingButtonsSignalType& CollapsingSignal();
+
+protected:
+  /**
+   * Constructor
+   */
+  ExpandingButtons();
+
+  /**
+   * Destructor
+   */
+  ~ExpandingButtons();
 
 private: // From Control
   /**
@@ -76,8 +77,6 @@ private:
    * Called when the main button clicked.
    */
   bool OnExpandButtonClicked(Dali::Toolkit::Button button);
-
-private:
   //undefined
   ExpandingButtons(const ExpandingButtons&);
   ExpandingButtons& operator=(const ExpandingButtons&);

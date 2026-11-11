@@ -48,6 +48,7 @@ protected:
    * @copydoc Demo::Internal::CubeTransitionEffect::OnStartTransition
    */
   void OnStartTransition(Vector2 panPosition, Vector2 panDisplacement) override;
+  ~CubeTransitionWaveEffect() override = default;
 
 private:
   /**

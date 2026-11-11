@@ -194,7 +194,7 @@ Actor LoadScene(std::string sceneName, CameraActor camera, std::vector<Dali::Ani
   std::string           extension = modelPath.extension();
   std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 
-  Scene3D::Loader::ShaderManagerPtr shaderManager  = (extension == GLTF_EXTENSION) ? new Scene3D::Loader::ShaderManager() : nullptr;
+  Scene3D::Loader::ShaderManagerPtr shaderManager  = (extension == GLTF_EXTENSION) ? Scene3D::Loader::ShaderManager::New() : Scene3D::Loader::ShaderManagerPtr{};
   ViewProjection                    viewProjection = cameraParameters[0].GetViewProjection();
   Transforms                        xforms{
     MatrixStack{},
