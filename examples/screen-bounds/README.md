@@ -1,12 +1,12 @@
-# Screen Extents Example
+# Screen Bounds Example
 
-This example demonstrates how to calculate and visualize an actor's screen position and extents in the DALi framework.
+This example demonstrates how to calculate and visualize an actor's screen position and bounds in the DALi framework.
 
 ## Overview
 
-The Screen Extents Example helps you visually understand how an actor is positioned and how its size is calculated on the screen. You can see the real-time screen coordinates and bounding box of an actor with various transformations (position, rotation, scale) applied.
+The Screen Bounds Example helps you visually understand how an actor is positioned and how its size is calculated on the screen. You can see the real-time screen coordinates and bounding box of an actor with various transformations (position, rotation, scale) applied.
 
-![Screen Extents Example](screen-extents-example.png)
+![Screen Bounds Example](screen-bounds-example.png)
 
 ## Key Features
 
@@ -19,13 +19,13 @@ The Screen Extents Example helps you visually understand how an actor is positio
 
 ### Screen Coordinate Calculation
 - `CalculateScreenPosition()`: Calculates the absolute screen position of the actor
-- `CalculateScreenExtents()`: Calculates the screen bounding box of the actor
-- `CalculateCurrentScreenExtents()`: Calculates the current frame's screen extents
+- `CalculateScreenBounds()`: Calculates the screen bounding box of the actor
+- `CalculateCurrentScreenBounds()`: Calculates the current frame's screen bounds
 
 ### Visual Markers
-- **Yellow semi-transparent rectangle**: Shows the actor's screen extents
+- **Yellow semi-transparent rectangle**: Shows the actor's screen bounds
 - **Red dot**: Shows the actor's screen position
-- **Cyan semi-transparent rectangle**: Shows the current frame's screen extents
+- **Cyan semi-transparent rectangle**: Shows the current frame's screen bounds
 - **Green dot**: Shows the current frame's screen position
 
 ### Keyboard Interaction
@@ -53,15 +53,15 @@ The example supports 9 standard positions:
 
 1. Run the example to see a blue control with visual markers
 2. Use keyboard controls to modify the actor properties
-3. Observe how the markers update to show the calculated screen positions and extents
+3. Observe how the markers update to show the calculated screen positions and bounds
 4. Touch the screen to exit the application
 
 ## Technical Details
 
 The example demonstrates the use of:
 - `Dali::Actor::CalculateScreenPosition()` for position calculation
-- `Dali::Actor::CalculateScreenExtents()` for bounds calculation
-- `Dali::DevelActor::CalculateCurrentScreenExtents()` for current frame bounds
+- `Dali::Actor::CalculateScreenBounds()` for bounds calculation
+- `Dali::Actor::CalculateCurrentScreenBounds()` for current frame bounds
 - Real-time property updates and visual feedback
 
 This example is particularly useful for understanding UI layout, touch event handling, and coordinate system transformations in DALi applications.

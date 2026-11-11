@@ -376,10 +376,10 @@ void ShadowButton::ResetVisual(
     }
 
     // Extract transform maps out of the visual definition and store them
-    Property::Value* transformValue = map->Find(Visual::Property::TRANSFORM, "transform");
+    const Property::Value* transformValue = map->Find(Visual::Property::TRANSFORM, "transform");
     if(transformValue)
     {
-      Property::Map* transformMap = transformValue->GetMap();
+      const Property::Map* transformMap = transformValue->GetMap();
       if(transformMap)
       {
         ShadowButton::Transforms::iterator iter = FindTransform(index);

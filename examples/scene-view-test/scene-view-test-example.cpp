@@ -210,11 +210,11 @@ private:
     mSubModel.KeyInputFocusLostSignal().Connect(this, &SceneViewExample::OnFocusLost);
     KeyboardFocusManager::Get().FocusChangedSignal().Connect(this, &SceneViewExample::OnFocusChanged);
 
-    mScreenExtentTimer = Timer::New(16);
-    mScreenExtentTimer.TickSignal().Connect(this, &SceneViewExample::OnTick);
-    if(mShowScreenExtent)
+    mScreenBoundsTimer = Timer::New(16);
+    mScreenBoundsTimer.TickSignal().Connect(this, &SceneViewExample::OnTick);
+    if(mShowScreenBounds)
     {
-      mScreenExtentTimer.Start();
+      mScreenBoundsTimer.Start();
     }
 
     ApplyDebugLog();
@@ -284,25 +284,25 @@ private:
       }
       else if(event.GetKeyName() == "6")
       {
-        mShowScreenExtent ^= true;
-        if(mScreenExtentTimer)
+        mShowScreenBounds ^= true;
+        if(mScreenBoundsTimer)
         {
-          if(!mShowScreenExtent && mScreenExtentTimer.IsRunning())
+          if(!mShowScreenBounds && mScreenBoundsTimer.IsRunning())
           {
-            mScreenExtentTimer.Stop();
+            mScreenBoundsTimer.Stop();
           }
-          else if(mShowScreenExtent && !mScreenExtentTimer.IsRunning())
+          else if(mShowScreenBounds && !mScreenBoundsTimer.IsRunning())
           {
-            mScreenExtentTimer.Start();
+            mScreenBoundsTimer.Start();
           }
         }
         if(mMainModelAABB)
         {
-          mMainModelAABB[Actor::Property::VISIBLE] = mShowScreenExtent;
+          mMainModelAABB[Actor::Property::VISIBLE] = mShowScreenBounds;
         }
         if(mSubModelAABB)
         {
-          mSubModelAABB[Actor::Property::VISIBLE] = mShowScreenExtent;
+          mSubModelAABB[Actor::Property::VISIBLE] = mShowScreenBounds;
         }
       }
       ApplyDebugLog();
@@ -381,9 +381,9 @@ private:
 
   bool OnTick()
   {
-    if(mShowScreenExtent)
+    if(mShowScreenBounds)
     {
-      RecalculateScreenExtent();
+      RecalculateScreenBounds();
     }
     return true;
   }
@@ -464,7 +464,7 @@ private:
                                                                                                                           : "ERROR")
           << " (Scale rate : " << mResolutionRate << ")\n";
       oss << "Key 5 : Toggle to Rotate camera. Currently " << (mRotateCamera ? "ON" : "OFF") << "\n";
-      oss << "Key 6 : Toggle to show Model ScreenExtent. Currently " << (mShowScreenExtent ? "ON" : "OFF") << "\n";
+      oss << "Key 6 : Toggle to show Model ScreenExtent. Currently " << (mShowScreenBounds ? "ON" : "OFF") << "\n";
 
       for(const auto& log : mBackLog)
       {
@@ -497,18 +497,18 @@ private:
     ApplyDebugLog();
   }
 
-  void ApplyModelScreenExtent(Control aabb, Model model)
+  void ApplyModelScreenBounds(Control aabb, Model model)
   {
-    Bounds screenExtent = Dali::DevelActor::CalculateCurrentScreenExtents(model);
+    Bounds screenBounds = model.CalculateCurrentScreenBounds();
 
-    aabb[Actor::Property::POSITION_X]  = screenExtent.x;
-    aabb[Actor::Property::POSITION_Y]  = screenExtent.y;
-    aabb[Actor::Property::SIZE_WIDTH]  = screenExtent.width;
-    aabb[Actor::Property::SIZE_HEIGHT] = screenExtent.height;
+    aabb[Actor::Property::POSITION_X]  = screenBounds.x;
+    aabb[Actor::Property::POSITION_Y]  = screenBounds.y;
+    aabb[Actor::Property::SIZE_WIDTH]  = screenBounds.width;
+    aabb[Actor::Property::SIZE_HEIGHT] = screenBounds.height;
   }
 
 private:
-  void RecalculateScreenExtent()
+  void RecalculateScreenBounds()
   {
     if(mWindow && !mMainModelAABB)
     {
@@ -531,8 +531,8 @@ private:
       mWindow.GetOverlayLayer().Add(mSubModelAABB);
     }
 
-    ApplyModelScreenExtent(mMainModelAABB, mMainModel);
-    ApplyModelScreenExtent(mSubModelAABB, mSubModel);
+    ApplyModelScreenBounds(mMainModelAABB, mMainModel);
+    ApplyModelScreenBounds(mSubModelAABB, mSubModel);
   }
 
 private:
@@ -551,14 +551,14 @@ private:
 
   std::vector<String> mBackLog;
 
-  Timer   mScreenExtentTimer;
+  Timer   mScreenBoundsTimer;
   Control mMainModelAABB;
   Control mSubModelAABB;
 
   bool mUseFrameBuffer{false};
   bool mUseFrameBufferMultiSample{false};
   bool mRotateCamera{true};
-  bool mShowScreenExtent{false};
+  bool mShowScreenBounds{false};
 
   ResolutionType mResolutionType{ResolutionType::DEFAULT};
   float          mResolutionRate{0.0f};
