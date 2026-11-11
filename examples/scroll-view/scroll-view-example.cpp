@@ -324,7 +324,7 @@ private:
     Vector2 windowSize = Vector2(window.GetPositionSize().width, window.GetPositionSize().height);
 
     RulerPtr rulerX = CreateRuler(snap ? windowSize.width : 0.0f);
-    RulerPtr rulerY = new DefaultRuler;
+    RulerPtr rulerY = DefaultRuler::New();
     rulerX->SetDomain(RulerDomain(0.0f, windowSize.x * PAGE_COLUMNS, false));
     rulerY->Disable();
 
@@ -431,9 +431,9 @@ private:
   {
     if(gridSize <= Math::MACHINE_EPSILON_0)
     {
-      return new DefaultRuler();
+      return DefaultRuler::New();
     }
-    return new FixedRuler(gridSize);
+    return FixedRuler::New(gridSize);
   }
   // end switch
   /**
