@@ -41,9 +41,20 @@ IF (NOT "${ENABLE_TBM}" )
   ENDIF()
 ENDIF()
 
-FIND_PROGRAM( SHADER_GENERATOR "dali-shader-generator" )
+# dali-toolkit publishes the generator's installed path in its pkg-config
+# file (the name carries the DALi API major); otherwise search the PATH.
+# The pkg-config answer goes to its own variable: FIND_PROGRAM would not
+# overwrite a normal variable that is already set, even to an empty value.
+IF( PKG_CONFIG_FOUND )
+  PKG_GET_VARIABLE( SHADER_GENERATOR_INSTALLED dali3-toolkit shader_generator )
+ENDIF()
+IF( SHADER_GENERATOR_INSTALLED AND EXISTS ${SHADER_GENERATOR_INSTALLED} )
+  SET( SHADER_GENERATOR ${SHADER_GENERATOR_INSTALLED} )
+ELSE()
+  FIND_PROGRAM( SHADER_GENERATOR "dali3-shader-generator" )
+ENDIF()
 IF( NOT SHADER_GENERATOR )
-  MESSAGE( FATAL_ERROR "dali-shader-generator not found!" )
+  MESSAGE( FATAL_ERROR "dali3-shader-generator not found!" )
 ENDIF()
 
 FUNCTION(INSTALL_EXAMPLES EXAMPLE)

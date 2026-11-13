@@ -256,7 +256,7 @@ IF( ENABLE_PKG_CONFIGURE )
     SET( ENABLE_SCENE3D "ON" )
   ENDIF()
 
-  pkg_check_modules(DALI_PHYSICS_2D dali3-physics-2d chipmunk2d)
+  pkg_check_modules(DALI_PHYSICS_2D dali3-physics-2d dali3-chipmunk2d)
   IF( DALI_PHYSICS_2D_FOUND )
     FOREACH(flag ${DALI_PHYSICS_2D_CFLAGS})
       SET(OPTIONAL_PHYSICS_2D_CFLAGS "${OPTIONAL_PHYSICS_2D_CFLAGS} ${flag}")
@@ -272,7 +272,7 @@ IF( ENABLE_PKG_CONFIGURE )
     SET( ENABLE_PHYSICS_2D "ON" )
   ENDIF()
 
-  pkg_check_modules(DALI_PHYSICS_3D dali3-physics-3d bullet3)
+  pkg_check_modules(DALI_PHYSICS_3D dali3-physics-3d dali3-bullet3)
   IF( DALI_PHYSICS_3D_FOUND )
     FOREACH(flag ${DALI_PHYSICS_3D_CFLAGS})
       SET(OPTIONAL_PHYSICS_3D_CFLAGS "${OPTIONAL_PHYSICS_3D_CFLAGS} ${flag}")
@@ -343,8 +343,8 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
 
   FIND_PACKAGE( dali3-scene3d )
 
-  FIND_PACKAGE( chipmunk )
-  FIND_PACKAGE( bullet3 )
+  FIND_PACKAGE( dali3-chipmunk )
+  FIND_PACKAGE( dali3-bullet3 )
   FIND_PACKAGE( dali3-physics-2d )
   FIND_PACKAGE( dali3-physics-3d )
 
@@ -403,13 +403,13 @@ IF( WIN32 OR APPLE ) # WIN32 includes x64 as well according to the cmake doc.
     SET( ENABLE_SCENE3D "ON" )
   ENDIF()
 
-  IF (chipmunk_FOUND)
-    SET(DALI_PHYSICS_2D_LDFLAGS ${DALI_PHYSICS_2D_LDFLAGS} -lchipmunk)
+  IF (dali3-chipmunk_FOUND)
+    SET(DALI_PHYSICS_2D_LDFLAGS ${DALI_PHYSICS_2D_LDFLAGS} -ldali3-chipmunk)
     SET(ENABLE_PHYSICS_2D "ON" )
   ENDIF()
 
-  IF (bullet3_FOUND)
-    SET(DALI_PHYSICS_3D_LDFLAGS ${OPTIONAL_PHYSICS_3D_LDFLAGS} -lbullet3)
+  IF (dali3-bullet3_FOUND)
+    SET(DALI_PHYSICS_3D_LDFLAGS ${OPTIONAL_PHYSICS_3D_LDFLAGS} -ldali3-bullet3)
     SET(ENABLE_PHYSICS_3D "ON" )
   ENDIF()
 

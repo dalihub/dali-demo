@@ -27,8 +27,10 @@ TARGET_INCLUDE_DIRECTORIES(native-activity PRIVATE
   ${ANDROID_NDK}/sources/android/native_app_glue)
 
 INCLUDE_DIRECTORIES(.)
+# DALi installs its headers under include/dali3. That path comes first, so headers left in
+# include/dali by an older DALi cannot shadow the current ones.
+INCLUDE_DIRECTORIES(${DALI_ENV_DIR}/include/dali3)
 INCLUDE_DIRECTORIES(${DALI_ENV_DIR}/include)
-INCLUDE_DIRECTORIES(${DALI_ENV_DIR}/include/dali)
 
 IF(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   SET(ENABLE_TRACE ON)
