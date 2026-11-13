@@ -70,7 +70,7 @@ private: // From Control
   /**
    * @copydoc Toolkit::Control::OnInitialize()
    */
-  virtual void OnInitialize();
+  void OnInitialize() override;
 
   /**
    *  undefined constructor and operator=
