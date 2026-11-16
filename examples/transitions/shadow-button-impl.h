@@ -36,8 +36,6 @@ public:
    * Instantiate a new ShadowButton object
    */
   static Demo::ShadowButton New();
-  ShadowButton();
-  ~ShadowButton();
 
 public: // API
   /**
@@ -82,6 +80,10 @@ public: // Properties
    * @return The current value of the property.
    */
   static Dali::Property::Value GetProperty(Dali::BaseObject* object, Dali::Property::Index propertyIndex);
+
+protected:
+  ShadowButton();
+  ~ShadowButton();
 
 private: // From Control
   /**
@@ -181,8 +183,6 @@ private:
                        const Dali::Property::Value& value);
 
   void StoreTargetLayouts(Dali::Toolkit::TransitionData transitionData);
-
-private:
   // undefined
   ShadowButton(const ShadowButton&);
   ShadowButton& operator=(const ShadowButton&);

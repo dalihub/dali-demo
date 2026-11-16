@@ -40,11 +40,6 @@ public:
    */
   static Demo::MyControl New();
 
-  /**
-   * @brief Default constructor
-   */
-  MyControl();
-
 public: // Properties
   /**
    * @brief Called when a property of an object of this type is set.
@@ -64,20 +59,24 @@ public: // Properties
    */
   static Dali::Property::Value GetProperty(Dali::BaseObject* object, Dali::Property::Index propertyIndex);
 
+protected:
+  /**
+   * @brief Default constructor
+   */
+  MyControl();
+  ~MyControl() override = default;
+
 private: // From Control
   /**
    * @copydoc Toolkit::Control::OnInitialize()
    */
   virtual void OnInitialize();
 
-private:
   /**
    *  undefined constructor and operator=
    */
   MyControl(const MyControl&);
   MyControl& operator=(const MyControl&);
-
-private:
 };
 
 } // namespace Internal

@@ -87,8 +87,8 @@ private:
     scrollView.SetProperty(Actor::Property::CLIPPING_MODE, ClippingMode::CLIP_TO_BOUNDING_BOX);
 
     // Create rulers for the X and Y domains, we want to disable vertical scrolling but enable horizontal scrolling
-    RulerPtr rulerX = new FixedRuler(pageSize.width); // Snaps to a multiple of this when flicking
-    RulerPtr rulerY = new DefaultRuler;
+    RulerPtr rulerX = FixedRuler::New(pageSize.width); // Snaps to a multiple of this when flicking
+    RulerPtr rulerY = DefaultRuler::New();
     rulerX->SetDomain(RulerDomain(0.0f, pageSize.width * NUMBER_OF_PAGES, true)); // Set the domain to equal the number of pages used
     rulerY->Disable();
 

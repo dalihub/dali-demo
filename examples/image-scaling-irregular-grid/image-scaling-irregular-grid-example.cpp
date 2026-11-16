@@ -336,11 +336,11 @@ public:
 
     // Restrict scrolling to mostly vertical only, but with some horizontal wiggle-room:
 
-    RulerPtr rulerX = new FixedRuler(windowSize.width);                                    //< Pull the view back to the grid's centre-line when touch is release using a snapping ruler.
+    RulerPtr rulerX = FixedRuler::New(windowSize.width);                                   //< Pull the view back to the grid's centre-line when touch is release using a snapping ruler.
     rulerX->SetDomain(RulerDomain(windowSize.width * -0.125f, windowSize.width * 1.125f)); //< Scroll slightly left/right of image field.
     mScrollView.SetRulerX(rulerX);
 
-    RulerPtr rulerY = new DefaultRuler(); //< Snap in multiples of a screen / window height
+    RulerPtr rulerY = DefaultRuler::New(); //< Snap in multiples of a screen / window height
     rulerY->SetDomain(RulerDomain(-fieldHeight * 0.5f + windowSize.height * 0.5f - GRID_CELL_PADDING, fieldHeight * 0.5f + windowSize.height * 0.5f + GRID_CELL_PADDING));
     mScrollView.SetRulerY(rulerY);
 

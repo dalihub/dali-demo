@@ -34,8 +34,6 @@ public:
    * Instantiate a new ImageChannelControl object
    */
   static Demo::ImageChannelControl New();
-  ImageChannelControl();
-  ~ImageChannelControl();
 
 public: // API
   /**
@@ -64,6 +62,10 @@ public: // Properties
    * @return The current value of the property.
    */
   static Dali::Property::Value GetProperty(Dali::BaseObject* object, Dali::Property::Index propertyIndex);
+
+protected:
+  ImageChannelControl();
+  ~ImageChannelControl();
 
 private: // From Control
   /**
@@ -98,8 +100,6 @@ private: // From Control
 
 private:
   void OnStateChangeAnimationFinished(Dali::Animation handle);
-
-private:
   //undefined
   ImageChannelControl(const ImageChannelControl&);
   ImageChannelControl& operator=(const ImageChannelControl&);

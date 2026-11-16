@@ -44,21 +44,6 @@ class BloomView : public Toolkit::ControlImpl
 {
 public:
   /**
-   * @copydoc Dali::Demo::BloomView::BloomView
-   */
-  BloomView();
-
-  /**
-   * @copydoc Dali::Demo::BloomView::BloomView
-   */
-  BloomView(const unsigned int numSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale);
-
-  /**
-   * @copydoc Dali::Demo::BloomView::~BloomView
-   */
-  virtual ~BloomView();
-
-  /**
    * @copydoc Dali::Demo::BloomView::New
    */
   static Dali::Demo::BloomView New();
@@ -90,6 +75,22 @@ public:
   {
     return mImageSaturationPropertyIndex;
   }
+
+protected:
+  /**
+   * @copydoc Dali::Demo::BloomView::BloomView
+   */
+  BloomView();
+
+  /**
+   * @copydoc Dali::Demo::BloomView::BloomView
+   */
+  BloomView(const unsigned int numSamples, const float blurBellCurveWidth, const Pixel::Format renderTargetPixelFormat, const float downsampleWidthScale, const float downsampleHeightScale);
+
+  /**
+   * @copydoc Dali::Demo::BloomView::~BloomView
+   */
+  virtual ~BloomView();
 
 private:
   void OnInitialize() override;
@@ -178,8 +179,6 @@ private:
 
   bool mActivated : 1;
   bool mRenderTasksCreated : 1;
-
-private:
   // Undefined copy constructor.
   BloomView(const BloomView&);
 

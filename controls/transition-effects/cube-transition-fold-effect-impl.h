@@ -48,6 +48,7 @@ protected:
    * @copydoc Toolkit::CubeTransitionEffect::OnStartTransition
    */
   void OnStartTransition(Vector2 panPosition, Vector2 panDisplacement) override;
+  ~CubeTransitionFoldEffect() override = default;
 
 private:
   /**

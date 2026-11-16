@@ -23,6 +23,7 @@
 #include <dali/public-api/actors/actor.h>
 #include <dali/public-api/adaptor-framework/window.h>
 #include <dali/public-api/animation/animation.h>
+#include <dali/public-api/common/intrusive-ptr.h>
 #include <dali/public-api/events/tap-gesture-detector.h>
 #include <dali/public-api/object/ref-object.h>
 #include <string>
@@ -43,7 +44,7 @@ struct ContactCardLayoutInfo;
  */
 class ContactCard : public Dali::RefObject
 {
-public:
+protected:
   /**
    * @brief Constructor.
    *
@@ -59,6 +60,9 @@ public:
   ContactCard(Dali::Window window, const ContactCardLayoutInfo& contactCardLayoutInfo, const Dali::String& contactName, const Dali::String& contactAddress, const Dali::String& imagePath, const Dali::Vector2& position);
 
 private:
+  ContactCard(const ContactCard&)            = delete;
+  ContactCard& operator=(const ContactCard&) = delete;
+
   /**
    * @brief Private Destructor. Will only be deleted when ref-count goes to 0.
    *
@@ -108,6 +112,15 @@ private:
   const Dali::Vector2          foldedPosition;             ///< The unique position of this card when it is folded.
   Dali::Property::Index        mClippedImagePropertyIndex; ///< Index used to animate the clipping of mClippedImage.
   bool                         mFolded;                    ///< Whether the contact card is folded or not.
+
+public:
+  /**
+   * @brief Creates a reference-counted implementation.
+   */
+  static Dali::IntrusivePtr<ContactCard> New(Dali::Window window, const ContactCardLayoutInfo& contactCardLayoutInfo, const Dali::String& contactName, const Dali::String& contactAddress, const Dali::String& imagePath, const Dali::Vector2& position)
+  {
+    return Dali::IntrusivePtr<ContactCard>(new ContactCard(window, contactCardLayoutInfo, contactName, contactAddress, imagePath, position));
+  }
 };
 
 #endif // CONTACT_CARD_H

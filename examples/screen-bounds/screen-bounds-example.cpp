@@ -16,7 +16,6 @@
  */
 
 #include <dali-toolkit/dali-toolkit.h>
-#include <dali/devel-api/actors/actor-devel.h>
 #include <dali/devel-api/adaptor-framework/application.h>
 #include <dali/integration-api/debug.h>
 #include <dali/integration-api/string-utils.h>
@@ -92,33 +91,33 @@ public:
     keyGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
     mWindow.Add(keyGuide);
 
-    TextLabel screenExtentsColorGuide = TextLabel::New();
-    screenExtentsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Screen Extents");
-    screenExtentsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(1.0f, 1.0f, 0.0f, 0.3f));
-    screenExtentsColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    screenExtentsColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    keyGuide.Add(screenExtentsColorGuide);
+    TextLabel screenBoundsColorGuide = TextLabel::New();
+    screenBoundsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Screen Extents");
+    screenBoundsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(1.0f, 1.0f, 0.0f, 0.3f));
+    screenBoundsColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
+    screenBoundsColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
+    keyGuide.Add(screenBoundsColorGuide);
 
     TextLabel screenPositionColorGuide = TextLabel::New();
     screenPositionColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Screen Position");
     screenPositionColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(1.0f, 0.0f, 0.0f, 0.8f));
     screenPositionColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     screenPositionColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    screenExtentsColorGuide.Add(screenPositionColorGuide);
+    screenBoundsColorGuide.Add(screenPositionColorGuide);
 
-    TextLabel currentScreenExtentsColorGuide = TextLabel::New();
-    currentScreenExtentsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Current Screen Extents");
-    currentScreenExtentsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(0.0f, 1.0f, 1.0f, 0.3f));
-    currentScreenExtentsColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
-    currentScreenExtentsColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    screenPositionColorGuide.Add(currentScreenExtentsColorGuide);
+    TextLabel currentScreenBoundsColorGuide = TextLabel::New();
+    currentScreenBoundsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Current Screen Extents");
+    currentScreenBoundsColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(0.0f, 1.0f, 1.0f, 0.3f));
+    currentScreenBoundsColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
+    currentScreenBoundsColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
+    screenPositionColorGuide.Add(currentScreenBoundsColorGuide);
 
     TextLabel currentScreenPositionColorGuide = TextLabel::New();
     currentScreenPositionColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT, "Actor's Current Screen Position");
     currentScreenPositionColorGuide.SetProperty(Dali::Toolkit::TextLabel::Property::TEXT_COLOR, Vector4(0.0f, 1.0f, 0.0f, 0.8f));
     currentScreenPositionColorGuide.SetProperty(Actor::Property::PARENT_ORIGIN, ParentOrigin::BOTTOM_LEFT);
     currentScreenPositionColorGuide.SetProperty(Actor::Property::PIVOT, Pivot::TOP_LEFT);
-    currentScreenExtentsColorGuide.Add(currentScreenPositionColorGuide);
+    currentScreenBoundsColorGuide.Add(currentScreenPositionColorGuide);
 
     // Respond to a touch anywhere on the window
     mWindow.TouchEventSignal().Connect(this, &HelloWorldController::OnTouch);
@@ -137,15 +136,15 @@ public:
   void SetMarker()
   {
     auto screenPosition = control.CalculateScreenPosition();
-    auto extents        = control.CalculateScreenExtents();
+    auto bounds         = control.CalculateScreenBounds();
 
-    if(!extentsMarker)
+    if(!boundsMarker)
     {
-      extentsMarker = Toolkit::Control::New();
-      extentsMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
-      extentsMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-      extentsMarker.SetBackgroundColor(Vector4(1.0f, 1.0f, 0.0f, 0.3f));
-      mWindow.Add(extentsMarker);
+      boundsMarker = Toolkit::Control::New();
+      boundsMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
+      boundsMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+      boundsMarker.SetBackgroundColor(Vector4(1.0f, 1.0f, 0.0f, 0.3f));
+      mWindow.Add(boundsMarker);
     }
 
     if(!screenPositionMarker)
@@ -158,13 +157,13 @@ public:
       mWindow.Add(screenPositionMarker);
     }
 
-    if(!currentExtentsMarker)
+    if(!currentBoundsMarker)
     {
-      currentExtentsMarker = Toolkit::Control::New();
-      currentExtentsMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
-      currentExtentsMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
-      currentExtentsMarker.SetBackgroundColor(Vector4(0.0f, 1.0f, 1.0f, 0.3f));
-      mWindow.Add(currentExtentsMarker);
+      currentBoundsMarker = Toolkit::Control::New();
+      currentBoundsMarker.SetProperty(Dali::Actor::Property::PIVOT, Pivot::TOP_LEFT);
+      currentBoundsMarker.SetProperty(Dali::Actor::Property::PARENT_ORIGIN, ParentOrigin::TOP_LEFT);
+      currentBoundsMarker.SetBackgroundColor(Vector4(0.0f, 1.0f, 1.0f, 0.3f));
+      mWindow.Add(currentBoundsMarker);
     }
 
     if(!currentScreenPositionMarker)
@@ -177,25 +176,25 @@ public:
       mWindow.Add(currentScreenPositionMarker);
     }
 
-    extentsMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(extents.width, extents.height));
-    extentsMarker.SetProperty(Dali::Actor::Property::POSITION, Vector2(extents.x, extents.y));
+    boundsMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(bounds.width, bounds.height));
+    boundsMarker.SetProperty(Dali::Actor::Property::POSITION, Vector2(bounds.x, bounds.y));
     screenPositionMarker.SetProperty(Dali::Actor::Property::POSITION, screenPosition);
   }
 
   void UpdateMarker()
   {
     auto screenPosition = control.CalculateScreenPosition();
-    auto extents        = control.CalculateScreenExtents();
+    auto bounds         = control.CalculateScreenBounds();
 
-    extentsMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(extents.width, extents.height));
-    extentsMarker.SetProperty(Dali::Actor::Property::POSITION, Vector2(extents.x, extents.y));
+    boundsMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(bounds.width, bounds.height));
+    boundsMarker.SetProperty(Dali::Actor::Property::POSITION, Vector2(bounds.x, bounds.y));
     screenPositionMarker.SetProperty(Dali::Actor::Property::POSITION, screenPosition);
 
     auto currentScreenPosition = control.GetProperty<Vector2>(Dali::Actor::Property::SCREEN_POSITION);
-    auto currentExtents        = Dali::DevelActor::CalculateCurrentScreenExtents(control);
+    auto currentBounds         = control.CalculateCurrentScreenBounds();
 
-    currentExtentsMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(currentExtents.width, currentExtents.height));
-    currentExtentsMarker.SetProperty(Dali::Actor::Property::POSITION, Vector2(currentExtents.x, currentExtents.y));
+    currentBoundsMarker.SetProperty(Dali::Actor::Property::SIZE, Vector2(currentBounds.width, currentBounds.height));
+    currentBoundsMarker.SetProperty(Dali::Actor::Property::POSITION, Vector2(currentBounds.x, currentBounds.y));
     currentScreenPositionMarker.SetProperty(Dali::Actor::Property::POSITION, currentScreenPosition);
   }
 
@@ -270,9 +269,9 @@ public:
 private:
   uint32_t         parentOriginIdx{4};
   uint32_t         pivotIdx{0};
-  Toolkit::Control extentsMarker;
+  Toolkit::Control boundsMarker;
   Toolkit::Control screenPositionMarker;
-  Toolkit::Control currentExtentsMarker;
+  Toolkit::Control currentBoundsMarker;
   Toolkit::Control currentScreenPositionMarker;
   Window           mWindow;
   Toolkit::Control control;
