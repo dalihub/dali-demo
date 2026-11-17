@@ -22,6 +22,7 @@
 #include <dali-toolkit/public-api/controls/control-impl.h>
 #include <dali/devel-api/common/vector-wrapper.h>
 #include <dali/public-api/animation/animation.h>
+#include <dali/public-api/common/intrusive-ptr.h>
 #include <dali/public-api/rendering/renderer.h>
 
 // INTERNAL INCLUDES
@@ -39,11 +40,6 @@ namespace Internal
 class CubeTransitionEffect : public Toolkit::ControlImpl
 {
 public:
-  /**
-   * Destructor
-   */
-  ~CubeTransitionEffect();
-
   /**
    * @copydoc Demo::CubeTransitionEffect::SetTransitionDuration
    */
@@ -111,6 +107,14 @@ public: // Signal
   Demo::CubeTransitionEffect::TransitionCompletedSignalType& TransitionCompletedSignal();
 
   /**
+   * @brief Creates a reference-counted implementation.
+   */
+  static Dali::IntrusivePtr<CubeTransitionEffect> New(unsigned int numRows, unsigned int numColumns)
+  {
+    return Dali::IntrusivePtr<CubeTransitionEffect>(new CubeTransitionEffect(numRows, numColumns));
+  }
+
+  /**
    * Connects a callback function with the object's signals.
    * @param[in] object The object providing the signal.
    * @param[in] tracker Used to disconnect the signal.
@@ -123,6 +127,11 @@ public: // Signal
 
 protected:
   /**
+   * Destructor
+   */
+  ~CubeTransitionEffect();
+
+  /**
    * @copydoc Toolkit::ControlImpl::OnSceneConnection()
    */
   void OnSceneConnection(int depth) override;
@@ -132,7 +141,6 @@ protected:
    */
   void OnSceneDisconnection() override;
 
-protected:
   /**
    * Construct a new CubeTransitionEffect object
    * Called in the constructor of subclasses

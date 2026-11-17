@@ -35,8 +35,6 @@ public:
    * Instantiate a new BeatControl object
    */
   static Demo::BeatControl New();
-  BeatControl();
-  ~BeatControl();
 
 public: // API
   void StartBounceAnimation();
@@ -63,6 +61,10 @@ public: // Properties
    * @return The current value of the property.
    */
   static Dali::Property::Value GetProperty(Dali::BaseObject* object, Dali::Property::Index propertyIndex);
+
+protected:
+  BeatControl();
+  ~BeatControl();
 
 private: // From Control
   /**
@@ -109,8 +111,6 @@ private:
    * Relayout the visuals as a result of size negotiation
    */
   void RelayoutVisuals(const Dali::Vector2& targetSize);
-
-private:
   //undefined
   BeatControl(const BeatControl&);
   BeatControl& operator=(const BeatControl&);

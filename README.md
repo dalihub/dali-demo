@@ -47,6 +47,9 @@ Then run the following commands:
          $ cmake -DCMAKE_INSTALL_PREFIX=$DESKTOP_PREFIX .
          $ make install -j8
 
+dali-demo builds against the dali3 names only; it has no DALi 2.x mode (see
+"Install layout and the DALi 2.x names" in the dali-core README).
+
 ### DEBUG Builds
 
 Specify a debug build when building for desktop by passing the following parameter to cmake:
@@ -206,11 +209,11 @@ vcpkg-script folder in the windows-dependencies repository.
 
     i.e
     $ setx DALI_ENV_FOLDER C:/Users/username/dali-env
-    $ setx DALI_IMAGE_DIR $DALI_ENV_FOLDER/share/dali/toolkit/images/
-    $ setx DALI_SOUND_DIR $DALI_ENV_FOLDER/share/dali/toolkit/sounds/
-    $ setx DALI_STYLE_DIR $DALI_ENV_FOLDER/share/dali/toolkit/styles/
-    $ setx DALI_STYLE_IMAGE_DIR $DALI_ENV_FOLDER/share/dali/toolkit/styles/images/
-    $ setx DALI_DATA_READ_ONLY_DIR $DALI_ENV_FOLDER/share/dali/
+    $ setx DALI_IMAGE_DIR $DALI_ENV_FOLDER/share/dali3/toolkit/images/
+    $ setx DALI_SOUND_DIR $DALI_ENV_FOLDER/share/dali3/toolkit/sounds/
+    $ setx DALI_STYLE_DIR $DALI_ENV_FOLDER/share/dali3/toolkit/styles/
+    $ setx DALI_STYLE_IMAGE_DIR $DALI_ENV_FOLDER/share/dali3/toolkit/styles/images/
+    $ setx DALI_DATA_READ_ONLY_DIR $DALI_ENV_FOLDER/share/dali3/
 
 ## 5. Building for MacOS
 

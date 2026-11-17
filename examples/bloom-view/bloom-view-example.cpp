@@ -38,12 +38,6 @@ namespace
 {
 const char* BACKGROUND_IMAGE_PATH(DEMO_IMAGE_DIR "desktop_background_1440x2560.png");
 const char* UI_DIFFUSE_IMAGE(DEMO_IMAGE_DIR "UI-Leather-DIFF.png");
-
-const Rect<int> UI_PIXEL_AREA(0, 0, 720, 1280);
-
-const Rect<int> PANEL1_PIXEL_AREA(0, 0, 720, 39);
-const Rect<int> PANEL2_PIXEL_AREA(0, 39, 720, 100);
-
 } // namespace
 
 /**
